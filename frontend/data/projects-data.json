@@ -1,0 +1,6 @@
+{
+    "Optimism": {
+        "website": "https://optimism.io/",
+        "description": "Optimistic Rollup is a layer 2 scaling solution that scales both transaction throughput and computation on Ethereum. The backbone of our implementation is the Optimistic Virtual Machine (OVM), which is fully compatible with the EVM."
+    }
+}
