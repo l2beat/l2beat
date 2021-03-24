@@ -1,0 +1,56 @@
+{
+   "_comment": "coinpaprika ids @ https://api.coinpaprika.com/v1/coins",
+   "output":"/home/pk/Maker/EODbalance/treasury_optimism.json",
+   "tokens":{
+      "DAI":{
+         "address":"0x6b175474e89094c44da98b954eedeac495271d0f",
+         "stablecoin":true,
+         "decimals":18,
+         "coinpaprika_id": "dai-dai"
+      },
+      "USDC":{
+         "address":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+         "stablecoin":true,
+         "decimals":6,
+         "coinpaprika_id": "usdc-usd-coin"
+      },
+      "USDT":{
+         "address":"0xdac17f958d2ee523a2206206994597c13d831ec7",
+         "stablecoin":true,
+         "decimals":6,
+         "coinpaprika_id": "usdt-tether"
+      },
+      "GLM":{
+         "address":"0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "glm-golem"
+      },
+      "WBTC":{
+         "address":"0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+         "stablecoin":false,
+         "decimals":8,
+         "coinpaprika_id": "wbtc-wrapped-bitcoin"
+      },
+      "SNX":{
+         "address":"0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "snx-synthetix-network-token"
+      }
+   },
+   "l2s":{
+      "Optimism":{
+         "bridges":[
+            {
+               "address":"0x045e507925d2e05D114534D0810a1abD94aca8d6",
+               "deployed_at_date":"2021-01-14 23:50:12",
+               "deployed_at_block":11656238,
+               "tokens":[
+                  "SNX"
+               ]
+            }
+         ]
+      }
+   }
+}
