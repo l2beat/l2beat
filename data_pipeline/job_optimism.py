@@ -203,23 +203,3 @@ if sys.argv and len(sys.argv) == 2:
 else:
     print('Please pass one and only one argument (a .json config file)')
     # print('Pass .json job configuration as first argument to run the script')
-
-
-
-    # ,
-    #   "zkSync":{
-    #      "bridges":[
-    #         {
-    #            "address":"0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-    #            "deployed_at_date":"2020-06-15 10:58:27",
-    #            "deployed_at_block":10269890,
-    #            "tokens":[
-    #               "DAI",
-    #               "USDC",
-    #               "USDT",
-    #               "GLM",
-    #               "WBTC"
-    #            ]
-    #         }
-    #      ]
-    #   }
