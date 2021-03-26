@@ -28,7 +28,7 @@ const projectColors: Record<string, string> = {
 }
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
-  const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }) => ({ x: new Date(x), y })), [l2Data])
+  const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
 
   const badgeText = Math.abs(tvlDelta) < 0.01 ? `${tvlDelta > 0 ? '>' : '<-'}0.01%` : `${tvlDelta.toFixed(2)}%`
 
@@ -110,17 +110,17 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
 }
 export async function getStaticProps() {
   const TVLDataSorted = l2Data.data.sort(tvlSorter)
-  const tvlHistory = TVLDataSorted.map((point) => ({
+  const tvlHistory = TVLDataSorted.map((point: any) => ({
     x: point.date,
     y: point.usd,
   }))
 
-  const dominant = Object.entries(l2Data.l2s).sort(([, data1], [, data2]) => data2.TVL - data1.TVL)
+  const dominant = Object.entries(l2Data.l2s).sort(([, data1]: any, [, data2]: any) => data2.TVL - data1.TVL)
 
   const tvlDelta =
     (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
 
-  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]) => {
+  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]: any) => {
     const tvlData = data.data.sort(tvlSorter).reverse()
 
     return {
@@ -138,7 +138,7 @@ export async function getStaticProps() {
       tvlHistory,
       dominant: {
         name: dominant[0][0],
-        share: (dominant[0][1].TVL / l2Data.TVL) * 100,
+        share: ((dominant as any)[0][1].TVL / l2Data.TVL) * 100,
       },
       tvlDelta,
       l2sTable,
