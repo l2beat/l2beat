@@ -22,7 +22,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
   const { query } = useRouter()
   console.log(props)
 
-  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }) => ({ x: new Date(x), y })), [l2Data])
+  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
 
   const badgeText =
     Math.abs(props.tvl) < 0.01 ? `${props.tvlDelta > 0 ? '>' : '<-'}0.01%` : `${props.tvlDelta.toFixed(2)}%`
@@ -58,7 +58,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <div className={styles.tvl}>${millify(props.tvl)}</div>
             <div className={styles.description}>Total value locked</div>
             <div className={styles.dominance}>
-              <Link href={props.projectMeta.website}>
+              <Link href={(props as any).projectMeta.website}>
                 <div className={styles.projectWebsite}>
                   {props.name}
                   <LinkIcon fontSize="large" />
@@ -89,11 +89,11 @@ export function getStaticPaths() {
 }
 
 export function getStaticProps(params: { params: { project: string } }) {
-  const [name, projectData] = Object.entries(l2Data.l2s).find(
+  const [name, projectData]: any = Object.entries(l2Data.l2s).find(
     ([projectName]) => projectName.toLowerCase() === params.params.project,
   )!
 
-  const tvlData = projectData.data.sort(tvlSorter).map((point) => ({ x: point.date, y: point.usd }))
+  const tvlData = projectData.data.sort(tvlSorter).map((point: any) => ({ x: point.date, y: point.usd }))
 
   const tvlDelta =
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
