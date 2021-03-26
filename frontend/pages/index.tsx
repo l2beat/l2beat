@@ -1,25 +1,25 @@
-import React from 'react';
+import React from 'react'
 import 'react-vis/dist/style.css'
 import styles from '../styles/Home.module.scss'
 import millify from 'millify'
-import cx from 'classnames';
+import cx from 'classnames'
 
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import TrendingDownIcon from '@material-ui/icons/TrendingDown';
-import TrendingFlatIcon from '@material-ui/icons/TrendingFlat';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import ListIcon from '@material-ui/icons/List';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import TrendingDownIcon from '@material-ui/icons/TrendingDown'
+import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
+import ListIcon from '@material-ui/icons/List'
 
-import l2Data from '../data/l2-data.json';
-import { AppContainer } from '../components/AppContainer';
-import Link from 'next/link';
-import { PageGrid } from '../components/PageGrid';
-import { Graph } from '../components/Graph';
-import { tvlSorter } from '../utils/tvlSorter';
+import { l2Data } from '../data'
+import { AppContainer } from '../components/AppContainer'
+import Link from 'next/link'
+import { PageGrid } from '../components/PageGrid'
+import { Graph } from '../components/Graph'
+import { tvlSorter } from '../utils/tvlSorter'
 
-type Unpack<T> = T extends Promise<infer U> ? U : never;
-type Props = Unpack<ReturnType<typeof getStaticProps>>['props'];
+type Unpack<T> = T extends Promise<infer U> ? U : never
+type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
 
 const projectColors: Record<string, string> = {
   optimism: '#EE6C72',
@@ -28,39 +28,24 @@ const projectColors: Record<string, string> = {
 }
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
-  const tvlHistory = React.useMemo(() => tvlHistory_
-    .map(({ x, y }) => ({ x: new Date(x), y }))
-    , [l2Data])
+  const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }) => ({ x: new Date(x), y })), [l2Data])
 
-  const badgeText = Math.abs(tvlDelta) < 0.01
-    ? `${tvlDelta > 0 ? '>' : '<-'}0.01%`
-    : `${(tvlDelta).toFixed(2)}%`
+  const badgeText = Math.abs(tvlDelta) < 0.01 ? `${tvlDelta > 0 ? '>' : '<-'}0.01%` : `${tvlDelta.toFixed(2)}%`
 
   return (
     <AppContainer>
-      <h2 className={styles.overview}>
-        Projects overview
-      </h2>
+      <h2 className={styles.overview}>Projects overview</h2>
       <PageGrid>
         <div className={styles.card}>
-          <Graph
-            title="Total value locked in USD"
-            data={tvlHistory}
-          />
+          <Graph title="Total value locked in USD" data={tvlHistory} />
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
           <div className={styles.title}>
             <MonetizationOnIcon />
             <h3>Overview</h3>
-            <div className={cx(styles.badge, { [styles.badgeUp]: tvlDelta > 0, [styles.badgeDown]: tvlDelta < 0, })}>
+            <div className={cx(styles.badge, { [styles.badgeUp]: tvlDelta > 0, [styles.badgeDown]: tvlDelta < 0 })}>
               {badgeText}
-              {
-                tvlDelta === 0
-                  ? <TrendingFlatIcon />
-                  : tvlDelta > 0
-                    ? <TrendingUpIcon />
-                    : <TrendingDownIcon />
-              }
+              {tvlDelta === 0 ? <TrendingFlatIcon /> : tvlDelta > 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
             </div>
           </div>
           <div className={styles.overview}>
@@ -84,39 +69,32 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </colgroup>
             <thead>
               <tr className={styles.tableHeader}>
-                <th>
-                  name
-                  </th>
-                <th className={styles.alignRight}>
-                  Value locked
-                  </th>
-                <th className={styles.alignRight}>
-                  Market share
-                  </th>
+                <th>name</th>
+                <th className={styles.alignRight}>Value locked</th>
+                <th className={styles.alignRight}>Market share</th>
               </tr>
             </thead>
             <tbody>
-              {
-                l2sTable.map(rowData => (
-                  <tr className={styles.dataRow}>
-                    <td>
-                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                        <div className={styles.projectBadge} style={{ background: projectColors[rowData.name.toLowerCase()] || projectColors.default }}></div>
-                        <div>{rowData.name}</div>
-                      </div>
-                    </td>
-                    <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
-                    <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
-                    <td className={cx(styles.alignRight)}>
-                      <Link href={`/project/${rowData.name.toLowerCase()}`}>
-                        <div className={styles.projectLink}>
-                          View project
-                        </div>
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              }
+              {l2sTable.map((rowData) => (
+                <tr className={styles.dataRow}>
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                      <div
+                        className={styles.projectBadge}
+                        style={{ background: projectColors[rowData.name.toLowerCase()] || projectColors.default }}
+                      ></div>
+                      <div>{rowData.name}</div>
+                    </div>
+                  </td>
+                  <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
+                  <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
+                  <td className={cx(styles.alignRight)}>
+                    <Link href={`/project/${rowData.name.toLowerCase()}`}>
+                      <div className={styles.projectLink}>View project</div>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -132,32 +110,27 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
 }
 export async function getStaticProps() {
   const TVLDataSorted = l2Data.data.sort(tvlSorter)
-  const tvlHistory = TVLDataSorted
-    .map(point => ({
-      x: point.date,
-      y: point.usd,
-    }))
+  const tvlHistory = TVLDataSorted.map((point) => ({
+    x: point.date,
+    y: point.usd,
+  }))
 
-  const dominant = Object.entries(l2Data.l2s)
-    .sort(([, data1], [, data2]) => data2.TVL - data1.TVL)
+  const dominant = Object.entries(l2Data.l2s).sort(([, data1], [, data2]) => data2.TVL - data1.TVL)
 
-  const tvlDelta = (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
+  const tvlDelta =
+    (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
 
-  const l2sTable = Object.entries(l2Data.l2s)
-    .map(([name, data]) => {
-      const tvlData = data.data
-        .sort(tvlSorter)
-        .reverse()
+  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]) => {
+    const tvlData = data.data.sort(tvlSorter).reverse()
 
-      return {
-        name,
-        tvl: data.TVL,
-        share: (data.TVL / l2Data.TVL) * 100,
-        change: ((tvlData[0].usd / tvlData[1].usd) * 100) - 100,
-        tvlData,
-      }
-    })
-
+    return {
+      name,
+      tvl: data.TVL,
+      share: (data.TVL / l2Data.TVL) * 100,
+      change: (tvlData[0].usd / tvlData[1].usd) * 100 - 100,
+      tvlData,
+    }
+  })
 
   return {
     props: {
@@ -165,10 +138,10 @@ export async function getStaticProps() {
       tvlHistory,
       dominant: {
         name: dominant[0][0],
-        share: (dominant[0][1].TVL / l2Data.TVL) * 100
+        share: (dominant[0][1].TVL / l2Data.TVL) * 100,
       },
       tvlDelta,
-      l2sTable
+      l2sTable,
     },
   }
 }
