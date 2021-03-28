@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yarn gen:scss & next dev",
-    "build": "next build",
+    "build": "yarn gen:scss && next build",
     "start": "next start",
     "gen:scss": "tsm \"./**/*.scss\" --ignore \"./node_modules/**/*\" --watch",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
