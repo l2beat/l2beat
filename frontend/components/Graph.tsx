@@ -41,8 +41,27 @@ interface DataPoint {
   x: Date
   y: number
 }
+
+function useScreenElementWith(element: HTMLElement | null) {
+  const [rect, setRect] = React.useState<DOMRect | null>(null);
+  React.useEffect(() => {
+    if (element === null) {
+      return
+    }
+    const handler = () => {
+      setRect(element.getBoundingClientRect())
+    }
+    handler()
+    window.addEventListener('resize', handler)
+
+    return () => window.removeEventListener('resize', handler)
+  }, [element])
+  return rect
+}
 export function Graph({ data, title }: { data: DataPoint[]; title: string }) {
   const [filtersState, setFilters] = React.useState(Filter.ALL)
+  const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null);
+  const rect = useScreenElementWith(wrapper)
 
   const filteredData = React.useMemo(
     () =>
@@ -63,7 +82,7 @@ export function Graph({ data, title }: { data: DataPoint[]; title: string }) {
 
   return (
     <>
-      <div className={styles.title}>
+      <div ref={node => setWrapper(node)} className={styles.title}>
         <TimelineIcon />
         <h3>{title}</h3>
         <div className={styles.filterWrapper}>
@@ -72,7 +91,7 @@ export function Graph({ data, title }: { data: DataPoint[]; title: string }) {
           <FilterButton filterBy={Filter.THIRTY_DAYS} label="30 days" setFilters={setFilters} selected={filtersState} />
         </div>
       </div>
-      <TVLHistory data={filteredData as any} />
+      <TVLHistory width={rect?.width} data={filteredData as any} />
     </>
   )
 }
