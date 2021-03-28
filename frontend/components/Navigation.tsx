@@ -25,7 +25,7 @@ export const Navigation = () => {
       </Link>
       <nav title="Main navigation" className={styles.linksWrapper}>
         <div className={styles.link}>
-          <Link href="#">FAQ</Link>
+          <Link href="/faq">FAQ</Link>
         </div>
         <div className={styles.link}>
           <a href="https://github.com/krzkaczor/l2beat">

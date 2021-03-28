@@ -1,25 +1,23 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import { AppContainer } from '../../components/AppContainer'
-import { PageGrid } from '../../components/PageGrid'
-import styles from '../../styles/Home.module.scss'
-import millify from 'millify'
 import 'react-vis/dist/style.css'
-import cx from 'classnames'
 
+import LinkIcon from '@material-ui/icons/Link'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import TrendingDownIcon from '@material-ui/icons/TrendingDown'
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
-import LinkIcon from '@material-ui/icons/Link'
-
-import { l2Data, projectsMetaData } from '../../data'
-import { Graph } from '../../components/Graph'
-import { tvlSorter } from '../../utils/tvlSorter'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import cx from 'classnames'
+import millify from 'millify'
 import Link from 'next/link'
+import React from 'react'
+
+import { AppContainer } from '../../components/AppContainer'
+import { Graph } from '../../components/Graph'
+import { PageGrid } from '../../components/PageGrid'
+import { l2Data, projectsMetaData } from '../../data'
+import styles from '../../styles/Home.module.scss'
+import { tvlSorter } from '../../utils/tvlSorter'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
-  const { query } = useRouter()
   console.log(props)
 
   const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
@@ -65,7 +63,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
                 </div>
               </Link>
             </div>
-            <div className={styles.description}>project website</div>
+            <div className={styles.description}>Project website</div>
           </div>
         </div>
       </PageGrid>
