@@ -65,7 +65,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
                 </div>
               </Link>
             </div>
-            <div className={styles.description}>project website</div>
+            <div className={styles.description}>Project website</div>
           </div>
         </div>
       </PageGrid>

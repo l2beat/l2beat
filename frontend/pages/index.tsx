@@ -10,6 +10,7 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown'
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import ListIcon from '@material-ui/icons/List'
+import LinkIcon from '@material-ui/icons/Link'
 
 import { l2Data } from '../data'
 import { AppContainer } from '../components/AppContainer'
@@ -103,6 +104,21 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <MenuBookIcon />
             <h3>Learn about layer 2</h3>
           </div>
+
+          <ul>
+            <li>
+              <a href="https://ethereum.org/en/developers/docs/layer-2-scaling/">Confused? Layer 2 primer</a>
+            </li>
+            <li>
+              <a href="https://vitalik.ca/general/2021/01/05/rollup.html">An Incomplete Guide to Rollups</a>
+            </li>
+            <li>
+              <a href="https://research.paradigm.xyz/rollups">Everything you need to know about Optimistic Rollup</a>
+            </li>
+            <li>
+              <a href="https://research.paradigm.xyz/optimism">How does Optimism's Rollup really work?</a>
+            </li>
+          </ul>
         </div>
       </PageGrid>
     </AppContainer>
