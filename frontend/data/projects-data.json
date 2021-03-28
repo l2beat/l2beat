@@ -4,7 +4,7 @@
     "description": "Optimistic Rollup is a layer 2 scaling solution that scales both transaction throughput and computation on Ethereum. The backbone of our implementation is the Optimistic Virtual Machine (OVM), which is fully compatible with the EVM."
   },
   "zksync": {
-    "website": "https://optimism.io/",
-    "description": "Optimistic Rollup is a layer 2 scaling solution that scales both transaction throughput and computation on Ethereum. The backbone of our implementation is the Optimistic Virtual Machine (OVM), which is fully compatible with the EVM."
+    "website": "https://zksync.io/",
+    "description": "zkSync is a scaling and privacy engine for Ethereum. Its current functionality scope includes low gas transfers of ETH and ERC20 tokens in the Ethereum network. This document is a high-level description of the zkSync development ecosystem."
   }
 }
