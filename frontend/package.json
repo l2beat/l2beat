@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --check \"./**/*.ts\"",
-    "format:fix": "prettier --write \"./**/*.ts\""
+    "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
+    "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\""
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",

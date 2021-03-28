@@ -1,29 +1,30 @@
 .container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 16px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
 }
 
 .logo {
-    text-transform: uppercase;
-    font-size: var(--font-secondary);
-    margin-left: 10px;
-    flex: 2;
-    cursor: pointer;
+  text-transform: uppercase;
+  font-size: var(--font-secondary);
+  margin-left: 10px;
+  flex: 2;
+  cursor: pointer;
 }
 
 .logoIcon {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .linksWrapper {
-    max-width: 300px;
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
+  max-width: 70px;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .link {
-    justify-self: flex-end;
+  justify-self: flex-end;
 }
