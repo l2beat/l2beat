@@ -1,22 +1,21 @@
-import React from 'react'
 import 'react-vis/dist/style.css'
-import styles from '../styles/Home.module.scss'
-import millify from 'millify'
-import cx from 'classnames'
 
+import ListIcon from '@material-ui/icons/List'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import TrendingDownIcon from '@material-ui/icons/TrendingDown'
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
-import MenuBookIcon from '@material-ui/icons/MenuBook'
-import ListIcon from '@material-ui/icons/List'
-import LinkIcon from '@material-ui/icons/Link'
-
-import { l2Data } from '../data'
-import { AppContainer } from '../components/AppContainer'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import cx from 'classnames'
+import millify from 'millify'
 import Link from 'next/link'
-import { PageGrid } from '../components/PageGrid'
+import React from 'react'
+
+import { AppContainer } from '../components/AppContainer'
 import { Graph } from '../components/Graph'
+import { PageGrid } from '../components/PageGrid'
+import { l2Data } from '../data'
+import styles from '../styles/Home.module.scss'
 import { tvlSorter } from '../utils/tvlSorter'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never

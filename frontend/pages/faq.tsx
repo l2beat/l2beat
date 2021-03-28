@@ -1,23 +1,11 @@
-import React from 'react'
 import 'react-vis/dist/style.css'
-import styles from '../styles/Home.module.scss'
-import millify from 'millify'
+
 import cx from 'classnames'
+import React from 'react'
 
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
-import TrendingDownIcon from '@material-ui/icons/TrendingDown'
-import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
-import MenuBookIcon from '@material-ui/icons/MenuBook'
-import ListIcon from '@material-ui/icons/List'
-import LinkIcon from '@material-ui/icons/Link'
-
-import { l2Data } from '../data'
 import { AppContainer } from '../components/AppContainer'
-import Link from 'next/link'
 import { PageGrid } from '../components/PageGrid'
-import { Graph } from '../components/Graph'
-import { tvlSorter } from '../utils/tvlSorter'
+import styles from '../styles/Home.module.scss'
 
 export default function Faq() {
   return (
