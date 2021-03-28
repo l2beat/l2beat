@@ -91,7 +91,7 @@ export function Graph({ data, title }: { data: DataPoint[]; title: string }) {
           <FilterButton filterBy={Filter.THIRTY_DAYS} label="30 days" setFilters={setFilters} selected={filtersState} />
         </div>
       </div>
-      <TVLHistory width={rect?.width} data={filteredData as any} />
+      {rect && <TVLHistory width={rect.width} data={filteredData as any} />}
     </>
   )
 }
