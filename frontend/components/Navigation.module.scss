@@ -22,7 +22,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: auto;
+
+  a {
+    color: var(--text);
+  }
 }
 
 .link {

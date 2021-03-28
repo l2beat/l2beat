@@ -31,13 +31,21 @@ export const Navigation = () => {
 
     return (
         <header className={styles.container}>
+            <Image
+                className={styles.logoIcon}
+                onClick={() => push(HomePath)}
+                width={40}
+                height={40}
+                src="/logo.svg"
+                alt="l2beat logo"
+            />
             <Link href={HomePath}>
                 <h1 className={styles.headerLink}>l2beat</h1>
             </Link>
             <Logo />
             <nav title="Main navigation" className={styles.linksWrapper}>
                 <div className={styles.link}>
-                    <Link href="#">FAQ</Link>
+                    <Link href="/faq">FAQ</Link>
                 </div>
                 <div className={styles.link}>
                     <a href="https://github.com/krzkaczor/l2beat">
