@@ -1,6 +1,6 @@
 $mediaMaxWidth: 1124px;
-$mediaBp1Width: 780px;
-$mediaMinWidth: 600px;
+$mediaBp1Width: 850px;
+$mediaMinWidth: 650px;
 
 @function translate-media-condition($c) {
   $condMap: (

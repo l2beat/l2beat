@@ -36,7 +36,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
     <AppContainer>
       <h2 className={styles.overview}>Projects overview</h2>
       <PageGrid>
-        <div className={styles.card}>
+        <div className={cx(styles.card, styles.graph)}>
           <Graph title="Total value locked in USD" data={tvlHistory} />
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
@@ -55,7 +55,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <div className={styles.description}>{dominant.name} dominance</div>
           </div>
         </div>
-        <div className={cx(styles.card, styles.cardBg)}>
+        <div className={cx(styles.card, styles.cardBg, styles.projectsList)}>
           <div className={styles.title}>
             <ListIcon />
             <h3>Projects list</h3>
