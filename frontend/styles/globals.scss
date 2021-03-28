@@ -1,19 +1,19 @@
 :root {
-  --primary: #6EDBD0;
-  --primary-light: #A1F4EC;
-  --primary-dark: #5CBAB0;
+  --primary: #6edbd0;
+  --primary-light: #a1f4ec;
+  --primary-dark: #5cbab0;
 
   --text: black;
   --text-contrast: white;
-  --text-muted: #8C8C8C;
+  --text-muted: #8c8c8c;
   --text-link: #2ca095;
 
   --positive: #93d064;
-  --negative: #E9696E;
+  --negative: #e9696e;
 
-  --gray-01: #FAFAFA;
-  --gray-02: #EFEFF2;
-  --gray-03: #A9A9A9;
+  --gray-01: #fafafa;
+  --gray-02: #efeff2;
+  --gray-03: #a9a9a9;
 
   --radius-sd: 12px;
 
@@ -25,13 +25,12 @@
   --font-small: 12px;
 }
 
-
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
 }
 
 a {

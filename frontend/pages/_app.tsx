@@ -1,7 +1,7 @@
 import '../styles/globals.scss'
 import Head from 'next/head'
 
-function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>, pageProps: any }) {
+function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>; pageProps: any }) {
   return (
     <>
       <Head>
@@ -10,7 +10,8 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>,
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
       </Head>
       <Component {...pageProps} />
-    </>)
+    </>
+  )
 }
 
 export default MyApp
