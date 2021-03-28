@@ -15,12 +15,11 @@ import { Graph } from '../../components/Graph'
 import { PageGrid } from '../../components/PageGrid'
 import { l2Data, projectsMetaData } from '../../data'
 import styles from '../../styles/Home.module.scss'
-import { tvlSorter } from '../../utils/tvlSorter'
+import { dateSorter } from '../../utils/dateSorter'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
-  console.log(props)
-
-  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
+  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
+  const noOfTxs = React.useMemo(() => props.noOfTxsData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
 
   const badgeText =
     Math.abs(props.tvl) < 0.01 ? `${props.tvlDelta > 0 ? '>' : '<-'}0.01%` : `${props.tvlDelta.toFixed(2)}%`
@@ -66,6 +65,9 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <div className={styles.description}>Project website</div>
           </div>
         </div>
+        <div className={styles.card}>
+          <Graph title={`${props.name} # of txs`} data={noOfTxs} />
+        </div>
       </PageGrid>
     </AppContainer>
   )
@@ -91,7 +93,10 @@ export function getStaticProps(params: { params: { project: string } }) {
     ([projectName]) => projectName.toLowerCase() === params.params.project,
   )!
 
-  const tvlData = projectData.data.sort(tvlSorter).map((point: any) => ({ x: point.date, y: point.usd }))
+  const tvlData = projectData.data.sort(dateSorter).map((point: any) => ({ x: point.date, y: point.usd }))
+  const noOfTxsData = projectData.data
+    .sort(dateSorter)
+    .map((point: any) => ({ x: point.date, y: point.number_of_transactions || 0 }))
 
   const tvlDelta =
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
@@ -101,6 +106,6 @@ export function getStaticProps(params: { params: { project: string } }) {
   )!
 
   return {
-    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta },
+    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta, noOfTxsData },
   }
 }

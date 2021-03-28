@@ -16,7 +16,7 @@ import { Graph } from '../components/Graph'
 import { PageGrid } from '../components/PageGrid'
 import { l2Data } from '../data'
 import styles from '../styles/Home.module.scss'
-import { tvlSorter } from '../utils/tvlSorter'
+import { dateSorter } from '../utils/dateSorter'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
@@ -124,7 +124,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
   )
 }
 export async function getStaticProps() {
-  const TVLDataSorted = l2Data.data.sort(tvlSorter)
+  const TVLDataSorted = l2Data.data.sort(dateSorter)
   const tvlHistory = TVLDataSorted.map((point: any) => ({
     x: point.date,
     y: point.usd,
@@ -136,7 +136,7 @@ export async function getStaticProps() {
     (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
 
   const l2sTable = Object.entries(l2Data.l2s).map(([name, data]: any) => {
-    const tvlData = data.data.sort(tvlSorter).reverse()
+    const tvlData = data.data.sort(dateSorter).reverse()
 
     return {
       name,
