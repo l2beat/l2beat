@@ -12,7 +12,7 @@ export const Navigation = () => {
 
   return (
     <header className={styles.container}>
-      <Image
+      <img
         className={styles.logoIcon}
         onClick={() => push(HomePath)}
         width={40}
