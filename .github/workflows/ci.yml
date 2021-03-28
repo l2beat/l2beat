@@ -22,6 +22,7 @@ jobs:
 
       - name: Cache YARN dependencies
         uses: actions/cache@v2
+        working-directory: ./frontend
         with:
           path: |
             node_modules
@@ -30,5 +31,7 @@ jobs:
           restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
 
       - run: yarn --no-progress --non-interactive --frozen-lockfile
+        working-directory: ./frontend
 
       - run: yarn format
+        working-directory: ./frontend
