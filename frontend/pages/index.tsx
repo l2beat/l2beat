@@ -46,7 +46,18 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
           <div className={styles.title}>
             <MonetizationOnIcon />
             <h3>Overview</h3>
-            <div className={cx(styles.badge, { [styles.badgeUp]: tvlDelta > 0, [styles.badgeDown]: tvlDelta < 0 })}>
+            <div
+              className={cx(
+                styles.badge,
+                {
+                  [styles.badgeUp]: tvlDelta > 0,
+                  [styles.badgeDown]: tvlDelta < 0,
+                },
+                'tooltip',
+              )}
+              tabIndex={0}
+              data-content="24h change"
+            >
               {badgeText}
               {tvlDelta === 0 ? <TrendingFlatIcon /> : tvlDelta > 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
             </div>
