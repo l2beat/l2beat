@@ -7,11 +7,11 @@
   grid-gap: 24px;
   width: 100%;
 
-  @include media("<maxWidth", ">minWidth") {
+  @include media('<maxWidth', '>minWidth') {
     grid-template-columns: 1fr 1fr;
   }
 
-  @include media("<minWidth") {
+  @include media('<minWidth') {
     grid-template-columns: 1fr;
   }
 }

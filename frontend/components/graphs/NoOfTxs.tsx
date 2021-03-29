@@ -26,7 +26,7 @@ export const NoOfTxs = React.memo(({ data, container }: Props) => {
   }, [data])
 
   if (container === null) {
-    return null;
+    return null
   }
 
   return (

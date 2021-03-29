@@ -43,10 +43,14 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <MonetizationOnIcon />
             <h3>Overview</h3>
             <div
-              className={cx(styles.badge, {
-                [styles.badgeUp]: props.tvlDelta > 0,
-                [styles.badgeDown]: props.tvlDelta < 0,
-              }, 'tooltip')}
+              className={cx(
+                styles.badge,
+                {
+                  [styles.badgeUp]: props.tvlDelta > 0,
+                  [styles.badgeDown]: props.tvlDelta < 0,
+                },
+                'tooltip',
+              )}
               tabIndex={0}
               data-content="24h change"
             >
@@ -83,9 +87,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </div>
         )}
 
-        <div className={cx(styles.card, styles.cardBg, styles.projectDescription)}>
-          Project description
-        </div>
+        <div className={cx(styles.card, styles.cardBg, styles.projectDescription)}>Project description</div>
       </PageGrid>
     </AppContainer>
   )
