@@ -43,7 +43,7 @@ interface DataPoint {
 }
 
 function useScreenElementWith(element: HTMLElement | null) {
-  const [rect, setRect] = React.useState<DOMRect | null>(null);
+  const [rect, setRect] = React.useState<DOMRect | null>(null)
   React.useEffect(() => {
     if (element === null) {
       return
@@ -60,7 +60,7 @@ function useScreenElementWith(element: HTMLElement | null) {
 }
 export function Graph({ data, title }: { data: DataPoint[]; title: string }) {
   const [filtersState, setFilters] = React.useState(Filter.ALL)
-  const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null);
+  const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null)
   const rect = useScreenElementWith(wrapper)
 
   const filteredData = React.useMemo(
@@ -82,7 +82,7 @@ export function Graph({ data, title }: { data: DataPoint[]; title: string }) {
 
   return (
     <>
-      <div ref={node => setWrapper(node)} className={styles.title}>
+      <div ref={(node) => setWrapper(node)} className={styles.title}>
         <TimelineIcon />
         <h3>{title}</h3>
         <div className={styles.filterWrapper}>
