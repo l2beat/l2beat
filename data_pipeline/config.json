@@ -1,6 +1,6 @@
 {
    "_comment": "coinpaprika ids @ https://api.coinpaprika.com/v1/coins",
-   "output":"/home/ubuntu/l2beat/treasury_optimism.json",
+   "output":"data/output.json",
    "tokens":{
       "DAI":{
          "address":"0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -48,6 +48,22 @@
                "deployed_at_block":11656238,
                "tokens":[
                   "SNX"
+               ]
+            }
+         ]
+      },
+      "zkSync":{
+         "bridges":[
+            {
+               "address":"0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+               "deployed_at_date":"2020-06-15 10:58:27",
+               "deployed_at_block":10269890,
+               "tokens":[
+                  "DAI",
+                  "USDC",
+                  "USDT",
+                  "GLM",
+                  "WBTC"
                ]
             }
          ]

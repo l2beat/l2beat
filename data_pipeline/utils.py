@@ -60,21 +60,3 @@ def eod_balance_of(token, address, day=None):
     return balance
 
 # tool to compare results: https://etherscan.io/tokencheck-tool
-
-
-def get_optimism_batches(date):
-
-    query = """select l.block_timestamp, l.block_number, tx.`hash`, tx.gas, tx.gas_price, l.`data`
-            from bigquery-public-data.crypto_ethereum.logs as l 
-            left join bigquery-public-data.crypto_ethereum.transactions tx
-            on l.transaction_hash = tx.`hash`
-            where date(l.block_timestamp) = '{}'
-            and date(tx.block_timestamp) = '{}'
-            and tx.to_address = '0xed2701f7135eab0d7ca02e6ab634ad6cbe159ffb'
-            and topics[safe_offset(0)] in ('0x127186556e7be68c7e31263195225b4de02820707889540969f62c05cf73525e')
-            order by l.block_number;
-            """.format(date, date)
-    
-    batches = bq_query(query)
-
-    return batches
