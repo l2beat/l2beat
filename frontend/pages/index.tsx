@@ -12,7 +12,8 @@ import Link from 'next/link'
 import React from 'react'
 
 import { AppContainer } from '../components/AppContainer'
-import { Graph } from '../components/Graph'
+import { Graph } from '../components/graphs/Graph'
+import { TVLHistory } from '../components/graphs/TVLHistory'
 import { PageGrid } from '../components/PageGrid'
 import { l2Data } from '../data'
 import styles from '../styles/Home.module.scss'
@@ -37,7 +38,9 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
       <h2 className={styles.overview}>Projects overview</h2>
       <PageGrid>
         <div className={styles.card}>
-          <Graph title="Total value locked in USD" data={tvlHistory} />
+          <Graph title="Total value locked in USD" data={tvlHistory}>
+            {(data) => <TVLHistory data={data} />}
+          </Graph>
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
           <div className={styles.title}>

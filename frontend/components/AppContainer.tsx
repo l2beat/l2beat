@@ -1,5 +1,6 @@
-import React from 'react'
 import Head from 'next/head'
+import React from 'react'
+
 import styles from '../styles/Home.module.scss'
 import { Navigation } from './Navigation'
 export function AppContainer(props: React.PropsWithChildren<{}>) {

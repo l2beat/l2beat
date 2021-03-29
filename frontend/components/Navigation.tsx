@@ -1,8 +1,7 @@
+import GitHubIcon from '@material-ui/icons/GitHub'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useRef } from 'react'
-import GitHubIcon from '@material-ui/icons/GitHub'
 
 import styles from './Navigation.module.scss'
 

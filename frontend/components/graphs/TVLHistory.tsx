@@ -1,16 +1,16 @@
+import HM from 'human-readable-numbers'
 import React from 'react'
 import {
-  XYPlot,
-  LineSeries,
-  LineSeriesPoint,
-  XAxis,
-  YAxis,
   Highlight,
   HighlightArea,
   HorizontalGridLines,
+  LineSeries,
+  LineSeriesPoint,
   VerticalGridLines,
+  XAxis,
+  XYPlot,
+  YAxis,
 } from 'react-vis'
-import HM from 'human-readable-numbers'
 
 interface Props {
   data: LineSeriesPoint[]
