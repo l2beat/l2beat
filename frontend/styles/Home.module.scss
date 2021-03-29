@@ -7,6 +7,10 @@
   align-items: center;
   max-width: 1124px;
   margin: 0 auto;
+
+  @include media("<minWidth") {
+    margin: 0 20px;
+  }
 }
 
 .main {

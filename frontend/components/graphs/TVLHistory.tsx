@@ -14,10 +14,10 @@ import {
 
 interface Props {
     data: LineSeriesPoint[]
-    width?: number
+    container: DOMRect | null
 }
 
-export const TVLHistory = React.memo(({ data, width }: Props) => {
+export const TVLHistory = React.memo(({ data, container }: Props) => {
     const [lastDrawLocation, setDrawLocation] = React.useState<HighlightArea | null>(null)
     const primaryColor = '#5CBAB0'
 
@@ -25,13 +25,17 @@ export const TVLHistory = React.memo(({ data, width }: Props) => {
         setDrawLocation(null)
     }, [data])
 
+    if (container === null) {
+        return null
+    }
+
     return (
         <XYPlot
             xDomain={lastDrawLocation && [lastDrawLocation.left, lastDrawLocation.right]}
             yDomain={lastDrawLocation && [lastDrawLocation.bottom, lastDrawLocation.top]}
             margin={{ left: 50, right: 10, top: 10, bottom: 40 }}
             height={300}
-            width={width || 600}
+            width={container.width}
         >
             <HorizontalGridLines />
             <VerticalGridLines />

@@ -3,6 +3,7 @@ import cx from 'classnames'
 import React, { ReactElement } from 'react'
 
 import styles from '../../styles/Home.module.scss'
+import { useScreenElementWith } from '../../utils/useScreenElementWith'
 export enum Filter {
   ALL,
   NINETY_DAYS,
@@ -45,25 +46,8 @@ interface DataPoint {
 interface GraphProps {
   data: DataPoint[]
   title: string
-  children: (data: any[]) => ReactElement
+  children: (data: any[], container: DOMRect | null) => ReactElement
   icon?: ReactElement
-}
-
-function useScreenElementWith(element: HTMLElement | null) {
-  const [rect, setRect] = React.useState<DOMRect | null>(null);
-  React.useEffect(() => {
-    if (element === null) {
-      return
-    }
-    const handler = () => {
-      setRect(element.getBoundingClientRect())
-    }
-    handler()
-    window.addEventListener('resize', handler)
-
-    return () => window.removeEventListener('resize', handler)
-  }, [element])
-  return rect
 }
 
 export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => {
@@ -99,7 +83,7 @@ export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => 
           <FilterButton filterBy={Filter.THIRTY_DAYS} label="30 days" setFilters={setFilters} selected={filtersState} />
         </div>
       </div>
-      {children(filteredData)}
+      {children(filteredData, rect)}
     </>
   )
 }

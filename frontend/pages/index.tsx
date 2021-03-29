@@ -39,7 +39,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
       <PageGrid>
         <div className={cx(styles.card, styles.graph)}>
           <Graph title="Total value locked in USD" data={tvlHistory}>
-            {(data) => <TVLHistory data={data} />}
+            {(data, container) => <TVLHistory container={container} data={data} />}
           </Graph>
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
@@ -90,7 +90,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </thead>
             <tbody>
               {l2sTable.map((rowData) => (
-                <tr className={styles.dataRow}>
+                <tr key={rowData.name} className={styles.dataRow}>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'baseline' }}>
                       <div
@@ -117,7 +117,6 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <MenuBookIcon />
             <h3>Learn about layer 2</h3>
           </div>
-
           <ul>
             <li>
               <a href="https://ethereum.org/en/developers/docs/layer-2-scaling/">Confused? Layer 2 primer</a>
