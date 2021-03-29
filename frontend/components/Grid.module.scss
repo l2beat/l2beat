@@ -10,4 +10,8 @@
   @include media("<bp1Width") {
     grid-template-columns: 1fr 1fr;
   }
+
+  @include media("<minWidth") {
+    grid-template-columns: 1fr;
+  }
 }
