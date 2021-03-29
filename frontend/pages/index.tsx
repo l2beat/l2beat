@@ -98,7 +98,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </tbody>
           </table>
         </div>
-        <div className={cx(styles.card, styles.cardBg)}>
+        <div className={cx(styles.card, styles.cardBg, styles.faq)}>
           <div className={styles.title}>
             <MenuBookIcon />
             <h3>Learn about layer 2</h3>

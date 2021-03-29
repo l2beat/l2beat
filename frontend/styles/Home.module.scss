@@ -38,7 +38,7 @@
 }
 
 .graph {
-  @include media("<maxWidth") {
+  @include media("<maxWidth", ">minWidth") {
     grid-row: 2/3;
     grid-column: 1/3;
   }
@@ -50,15 +50,29 @@
     grid-column: 1/2;
   }
 
-  @include media("<bp1Width") {
+  @include media("<bp1Width", ">minWidth") {
     grid-row: 3/4;
     grid-column: 1/3;
+  }
+
+  @include media("<minWidth") {
+    grid-row: 3/4;
+    grid-column: 1/2;
   }
 }
 
 .overviewCard {
   display: flex;
   flex-direction: column;
+  @include media("<minWidth") {
+    grid-row: 1/2;
+  }
+}
+
+.faq {
+  @include media("<minWidth") {
+    grid-row: 4/5;
+  }
 }
 
 .overview {
@@ -184,6 +198,11 @@
   border-radius: 16px;
   margin-left: auto;
   transition: opacity 0.2s;
+
+  @include media("<minWidth") {
+    margin-left: 12px;
+  }
+  
 
   &:hover,
   &:focus-visible {
