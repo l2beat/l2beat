@@ -1,5 +1,6 @@
 from tools.storage import create_storage
 from tools.pull_data import pull_l2_data
+from tools.optimism_batches import pull_optimism_data
 import sys
 import os
 import json
@@ -28,6 +29,7 @@ if sys.argv and len(sys.argv) == 2:
     output_file_path = os.path.join(parent_dir, config['output'])
 
     output = run_l2beat(config=config, output_file_path=output_file_path)
+    output = pull_optimism_data(output=output)
 
     with open(output_file_path, 'w') as output_file:
         json.dump(output, output_file)

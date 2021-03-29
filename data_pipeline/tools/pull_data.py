@@ -1,6 +1,7 @@
 from .prices import get_prices_for_token
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from utils import eod_balance_of
+from tools.optimism import process_batches
 
 
 def dates_array(data, key):
