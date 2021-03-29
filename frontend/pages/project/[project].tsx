@@ -38,7 +38,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </Graph>
         </div>
 
-        <div className={cx(styles.card, styles.cardBg, styles.overviewCard, styles.projectOverview)}>
+        <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
           <div className={styles.title}>
             <MonetizationOnIcon />
             <h3>Overview</h3>
@@ -82,6 +82,10 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             </Graph>
           </div>
         )}
+
+        <div className={cx(styles.card, styles.cardBg, styles.projectDescription)}>
+          Project description
+        </div>
       </PageGrid>
     </AppContainer>
   )

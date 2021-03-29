@@ -7,7 +7,7 @@
   grid-gap: 24px;
   width: 100%;
 
-  @include media("<bp1Width") {
+  @include media("<maxWidth", ">minWidth") {
     grid-template-columns: 1fr 1fr;
   }
 
