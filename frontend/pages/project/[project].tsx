@@ -11,16 +11,19 @@ import Link from 'next/link'
 import React from 'react'
 
 import { AppContainer } from '../../components/AppContainer'
-import { Graph } from '../../components/Graph'
+import { Graph } from '../../components/graphs/Graph'
+import { NoOfTxs } from '../../components/graphs/NoOfTxs'
+import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
 import { l2Data, projectsMetaData } from '../../data'
 import styles from '../../styles/Home.module.scss'
-import { tvlSorter } from '../../utils/tvlSorter'
+import { dateSorter } from '../../utils/dateSorter'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
-  console.log(props)
-
-  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
+  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
+  const noOfTxs =
+    props.noOfTxsData &&
+    React.useMemo(() => props.noOfTxsData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
 
   const badgeText =
     Math.abs(props.tvl) < 0.01 ? `${props.tvlDelta > 0 ? '>' : '<-'}0.01%` : `${props.tvlDelta.toFixed(2)}%`
@@ -30,8 +33,11 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
       <h2 className={styles.overview}>{props.name} overview</h2>
       <PageGrid>
         <div className={styles.card}>
-          <Graph title={`${props.name} total value locked in USD`} data={tvlHistory} />
+          <Graph title={`Total value locked in USD`} data={tvlHistory}>
+            {(data) => <TVLHistory data={data} />}
+          </Graph>
         </div>
+
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
           <div className={styles.title}>
             <MonetizationOnIcon />
@@ -66,6 +72,14 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <div className={styles.description}>Project website</div>
           </div>
         </div>
+
+        {noOfTxs && (
+          <div className={styles.card}>
+            <Graph title={`# of txs`} data={noOfTxs}>
+              {(data) => <NoOfTxs data={data} />}
+            </Graph>
+          </div>
+        )}
       </PageGrid>
     </AppContainer>
   )
@@ -91,7 +105,11 @@ export function getStaticProps(params: { params: { project: string } }) {
     ([projectName]) => projectName.toLowerCase() === params.params.project,
   )!
 
-  const tvlData = projectData.data.sort(tvlSorter).map((point: any) => ({ x: point.date, y: point.usd }))
+  const tvlData = projectData.data.sort(dateSorter).map((point: any) => ({ x: point.date, y: point.usd }))
+  const noOfTxsData =
+    projectData.data[0].number_of_transactions !== undefined
+      ? projectData.data.sort(dateSorter).map((point: any) => ({ x: point.date, y: point.number_of_transactions || 0 }))
+      : null
 
   const tvlDelta =
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
@@ -101,6 +119,6 @@ export function getStaticProps(params: { params: { project: string } }) {
   )!
 
   return {
-    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta },
+    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta, noOfTxsData },
   }
 }

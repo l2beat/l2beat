@@ -12,11 +12,12 @@ import Link from 'next/link'
 import React from 'react'
 
 import { AppContainer } from '../components/AppContainer'
-import { Graph } from '../components/Graph'
+import { Graph } from '../components/graphs/Graph'
+import { TVLHistory } from '../components/graphs/TVLHistory'
 import { PageGrid } from '../components/PageGrid'
 import { l2Data } from '../data'
 import styles from '../styles/Home.module.scss'
-import { tvlSorter } from '../utils/tvlSorter'
+import { dateSorter } from '../utils/dateSorter'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
@@ -37,7 +38,9 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
       <h2 className={styles.overview}>Projects overview</h2>
       <PageGrid>
         <div className={styles.card}>
-          <Graph title="Total value locked in USD" data={tvlHistory} />
+          <Graph title="Total value locked in USD" data={tvlHistory}>
+            {(data) => <TVLHistory data={data} />}
+          </Graph>
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
           <div className={styles.title}>
@@ -124,7 +127,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
   )
 }
 export async function getStaticProps() {
-  const TVLDataSorted = l2Data.data.sort(tvlSorter)
+  const TVLDataSorted = l2Data.data.sort(dateSorter)
   const tvlHistory = TVLDataSorted.map((point: any) => ({
     x: point.date,
     y: point.usd,
@@ -136,7 +139,7 @@ export async function getStaticProps() {
     (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
 
   const l2sTable = Object.entries(l2Data.l2s).map(([name, data]: any) => {
-    const tvlData = data.data.sort(tvlSorter).reverse()
+    const tvlData = data.data.sort(dateSorter).reverse()
 
     return {
       name,

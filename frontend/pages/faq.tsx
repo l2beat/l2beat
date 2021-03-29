@@ -38,7 +38,8 @@ export default function Faq() {
             <p>
               <a href="https://twitter.com/krzKaczor">@krzkaczor</a> (coordination),{' '}
               <a href="https://twitter.com/DamianPaszkowsk">@DamianPaszkowsk</a> (frontend),{' '}
-              <a href="https://twitter.com/piotrklis_">@piotr.klis</a> (data)
+              <a href="https://twitter.com/piotrklis_">@piotr.klis</a> (data),{' '}
+              <a href="https://twitter.com/bkiepuszewski">@bkiepuszewski</a> (idea/data)
             </p>
           </div>
         </div>
