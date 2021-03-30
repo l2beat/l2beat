@@ -3,6 +3,7 @@ import cx from 'classnames'
 import React, { ReactElement } from 'react'
 
 import styles from '../../styles/Home.module.scss'
+import { useScreenElementWith } from '../../utils/useScreenElementWith'
 export enum Filter {
   ALL,
   NINETY_DAYS,
@@ -45,12 +46,14 @@ interface DataPoint {
 interface GraphProps {
   data: DataPoint[]
   title: string
-  children: (data: any[]) => ReactElement
+  children: (data: any[], container: DOMRect | null) => ReactElement
   icon?: ReactElement
 }
 
 export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => {
   const [filtersState, setFilters] = React.useState(Filter.ALL)
+  const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null)
+  const rect = useScreenElementWith(wrapper)
 
   const filteredData = React.useMemo(
     () =>
@@ -71,7 +74,7 @@ export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => 
 
   return (
     <>
-      <div className={styles.title}>
+      <div ref={(node) => setWrapper(node)} className={styles.title}>
         {icon}
         <h3>{title}</h3>
         <div className={styles.filterWrapper}>
@@ -80,7 +83,7 @@ export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => 
           <FilterButton filterBy={Filter.THIRTY_DAYS} label="30 days" setFilters={setFilters} selected={filtersState} />
         </div>
       </div>
-      {children(filteredData)}
+      {children(filteredData, rect)}
     </>
   )
 }

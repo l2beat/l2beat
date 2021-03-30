@@ -1,7 +1,17 @@
+@import '../styles/media.scss';
+
 .grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   flex-wrap: wrap;
   grid-gap: 24px;
   width: 100%;
+
+  @include media('<maxWidth', '>minWidth') {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include media('<minWidth') {
+    grid-template-columns: 1fr;
+  }
 }

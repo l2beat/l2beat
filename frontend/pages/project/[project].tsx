@@ -32,21 +32,27 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
     <AppContainer>
       <h2 className={styles.overview}>{props.name} overview</h2>
       <PageGrid>
-        <div className={styles.card}>
+        <div className={cx(styles.card, styles.projectTvl)}>
           <Graph title={`Total value locked in USD`} data={tvlHistory}>
-            {(data) => <TVLHistory data={data} />}
+            {(data, container) => <TVLHistory container={container} data={data} />}
           </Graph>
         </div>
 
-        <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
+        <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
           <div className={styles.title}>
             <MonetizationOnIcon />
             <h3>Overview</h3>
             <div
-              className={cx(styles.badge, {
-                [styles.badgeUp]: props.tvlDelta > 0,
-                [styles.badgeDown]: props.tvlDelta < 0,
-              })}
+              className={cx(
+                styles.badge,
+                {
+                  [styles.badgeUp]: props.tvlDelta > 0,
+                  [styles.badgeDown]: props.tvlDelta < 0,
+                },
+                'tooltip',
+              )}
+              tabIndex={0}
+              data-content="24h change"
             >
               {badgeText}
               {props.tvlDelta === 0 ? (
@@ -74,12 +80,14 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
         </div>
 
         {noOfTxs && (
-          <div className={styles.card}>
+          <div className={cx(styles.card, styles.noOfTx)}>
             <Graph title={`# of txs`} data={noOfTxs}>
-              {(data) => <NoOfTxs data={data} />}
+              {(data, container) => <NoOfTxs container={container} data={data} />}
             </Graph>
           </div>
         )}
+
+        <div className={cx(styles.card, styles.cardBg, styles.projectDescription)}>Project description</div>
       </PageGrid>
     </AppContainer>
   )

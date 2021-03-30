@@ -1,3 +1,5 @@
+@import './media.scss';
+
 .container {
   padding: 0 0.5rem;
   display: flex;
@@ -5,6 +7,10 @@
   align-items: center;
   max-width: 1124px;
   margin: 0 auto;
+
+  @include media('<bp1Width') {
+    margin: 0 20px;
+  }
 }
 
 .main {
@@ -35,9 +41,80 @@
   height: 1em;
 }
 
+.graph {
+  @include media('<maxWidth', '>minWidth') {
+    grid-row: 2/3;
+    grid-column: 1/3;
+  }
+}
+
+.projectsList {
+  @include media('<maxWidth') {
+    grid-row: 1/2;
+    grid-column: 1/2;
+  }
+
+  @include media('<bp1Width', '>minWidth') {
+    grid-row: 3/4;
+    grid-column: 1/3;
+  }
+
+  @include media('<minWidth') {
+    grid-row: 3/4;
+    grid-column: 1/2;
+  }
+}
+
 .overviewCard {
   display: flex;
   flex-direction: column;
+  @include media('<minWidth') {
+    grid-row: 1/2;
+  }
+}
+
+.projectOverview {
+  display: flex;
+  flex-direction: column;
+
+  @include media('<maxWidth', '>minWidth') {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  @include media('<minWidth') {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+}
+
+.projectDescription {
+  @include media('<maxWidth', '>minWidth') {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+
+  @include media('<minWidth') {
+    grid-column: 1/2;
+  }
+}
+
+.projectTvl {
+  @include media('<maxWidth', '>minWidth') {
+    grid-column: 1/3;
+  }
+}
+
+.noOfTx {
+  @include media('<maxWidth', '>minWidth') {
+    grid-column: 1/3;
+  }
+}
+
+.faq {
+  @include media('<minWidth') {
+    grid-row: 4/5;
+  }
 }
 
 .overview {
@@ -163,6 +240,10 @@
   border-radius: 16px;
   margin-left: auto;
   transition: opacity 0.2s;
+
+  @include media('<minWidth') {
+    margin-left: 12px;
+  }
 
   &:hover,
   &:focus-visible {

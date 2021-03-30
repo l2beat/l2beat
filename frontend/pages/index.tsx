@@ -37,16 +37,27 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
     <AppContainer>
       <h2 className={styles.overview}>Projects overview</h2>
       <PageGrid>
-        <div className={styles.card}>
+        <div className={cx(styles.card, styles.graph)}>
           <Graph title="Total value locked in USD" data={tvlHistory}>
-            {(data) => <TVLHistory data={data} />}
+            {(data, container) => <TVLHistory container={container} data={data} />}
           </Graph>
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.overviewCard)}>
           <div className={styles.title}>
             <MonetizationOnIcon />
             <h3>Overview</h3>
-            <div className={cx(styles.badge, { [styles.badgeUp]: tvlDelta > 0, [styles.badgeDown]: tvlDelta < 0 })}>
+            <div
+              className={cx(
+                styles.badge,
+                {
+                  [styles.badgeUp]: tvlDelta > 0,
+                  [styles.badgeDown]: tvlDelta < 0,
+                },
+                'tooltip',
+              )}
+              tabIndex={0}
+              data-content="24h change"
+            >
               {badgeText}
               {tvlDelta === 0 ? <TrendingFlatIcon /> : tvlDelta > 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
             </div>
@@ -58,7 +69,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <div className={styles.description}>{dominant.name} dominance</div>
           </div>
         </div>
-        <div className={cx(styles.card, styles.cardBg)}>
+        <div className={cx(styles.card, styles.cardBg, styles.projectsList)}>
           <div className={styles.title}>
             <ListIcon />
             <h3>Projects list</h3>
@@ -79,7 +90,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </thead>
             <tbody>
               {l2sTable.map((rowData) => (
-                <tr className={styles.dataRow}>
+                <tr key={rowData.name} className={styles.dataRow}>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'baseline' }}>
                       <div
@@ -101,12 +112,11 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </tbody>
           </table>
         </div>
-        <div className={cx(styles.card, styles.cardBg)}>
+        <div className={cx(styles.card, styles.cardBg, styles.faq)}>
           <div className={styles.title}>
             <MenuBookIcon />
             <h3>Learn about layer 2</h3>
           </div>
-
           <ul>
             <li>
               <a href="https://ethereum.org/en/developers/docs/layer-2-scaling/">Confused? Layer 2 primer</a>
