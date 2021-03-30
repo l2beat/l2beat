@@ -32,7 +32,7 @@ if sys.argv and len(sys.argv) == 2:
     output = pull_optimism_data(output=output)
 
     with open(output_file_path, 'w') as output_file:
-        json.dump(output, output_file)
+        json.dump(output, output_file, indent=2, sort_keys=True)
 
 else:
     print('Please pass one and only one argument (a .json config file)')
