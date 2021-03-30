@@ -43,6 +43,24 @@
          "stablecoin":false,
          "decimals":18,
          "coinpaprika_id": "snx-synthetix-network-token"
+      },
+      "LRC":{
+         "address":"0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "lrc-loopring"
+      },
+      "MKR": {
+         "address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "mkr-maker"
+      },
+      "LINK": {
+         "address":"0x514910771AF9Ca656af840dff83E8264EcF986CA",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "link-chainlink"
       }
    },
    "l2s":{
@@ -82,6 +100,24 @@
                "deployed_at_block":11967192,
                "tokens":[
                   "ETH"
+               ]
+            }
+         ]
+      },
+      "Loopring":{
+         "bridges":[
+            {
+               "address":"0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+               "deployed_at_date":"2020-10-29 05:34:02",
+               "deployed_at_block":11149779,
+               "tokens":[
+                  "LRC",
+                  "USDT",
+                  "USDC",
+                  "WBTC",
+                  "DAI",
+                  "LINK",
+                  "MKR"
                ]
             }
          ]

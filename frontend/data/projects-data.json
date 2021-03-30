@@ -10,5 +10,9 @@
   "Aztec": {
     "website": "https://zk.money",
     "description": "Affordable, private crypto payments"
+  },
+  "Loopring": {
+    "website": "https://loopring.org",
+    "description": "zkRollup Exchange and Payment Protocol"
   }
 }

@@ -26,7 +26,8 @@ type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
 const projectColors: Record<string, string> = {
   optimism: '#EE6C72',
   zksync: '#8B90F5',
-  default: '#A9A9A9',
+  loopring: '#1c42ff',
+  default: '#111010',
 }
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
