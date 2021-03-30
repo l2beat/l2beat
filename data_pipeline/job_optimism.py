@@ -229,7 +229,7 @@ def pull_l2_data():
 
         # print(final_output)
         with open(config['output'], 'w') as output_file:
-            json.dump(final_output, output_file)
+            json.dump(final_output, output_file, indent=2, sort_keys=True)
         
         job_end = datetime.now()
         print("Job ended at {}".format(datetime.strftime(job_end, '%Y-%m-%d %H:%M:%S')))

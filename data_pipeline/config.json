@@ -1,6 +1,6 @@
 {
    "_comment": "coinpaprika ids @ https://api.coinpaprika.com/v1/coins",
-   "output":"data/output.json",
+   "output":"data/data.json",
    "tokens":{
       "DAI":{
          "address":"0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -8,6 +8,12 @@
          "decimals":18,
          "coinpaprika_id": "dai-dai"
       },
+      "ETH":{
+        "address":"0x0",
+        "stablecoin": false,
+        "decimals":18,
+        "coinpaprika_id": "eth-ethereum"
+     },
       "USDC":{
          "address":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
          "stablecoin":true,
@@ -37,6 +43,24 @@
          "stablecoin":false,
          "decimals":18,
          "coinpaprika_id": "snx-synthetix-network-token"
+      },
+      "LRC":{
+         "address":"0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "lrc-loopring"
+      },
+      "MKR": {
+         "address":"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "mkr-maker"
+      },
+      "LINK": {
+         "address":"0x514910771AF9Ca656af840dff83E8264EcF986CA",
+         "stablecoin":false,
+         "decimals":18,
+         "coinpaprika_id": "link-chainlink"
       }
    },
    "l2s":{
@@ -64,6 +88,36 @@
                   "USDT",
                   "GLM",
                   "WBTC"
+               ]
+            }
+         ]
+      },
+      "Aztec":{
+         "bridges":[
+            {
+               "address":"0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+               "deployed_at_date":"2021-03-03 07:27:16",
+               "deployed_at_block":11967192,
+               "tokens":[
+                  "ETH"
+               ]
+            }
+         ]
+      },
+      "Loopring":{
+         "bridges":[
+            {
+               "address":"0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+               "deployed_at_date":"2020-10-29 05:34:02",
+               "deployed_at_block":11149779,
+               "tokens":[
+                  "LRC",
+                  "USDT",
+                  "USDC",
+                  "WBTC",
+                  "DAI",
+                  "LINK",
+                  "MKR"
                ]
             }
          ]

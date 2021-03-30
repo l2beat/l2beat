@@ -7,6 +7,7 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown'
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
+import { sortBy } from 'lodash'
 import millify from 'millify'
 import Link from 'next/link'
 import React from 'react'
@@ -25,7 +26,8 @@ type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
 const projectColors: Record<string, string> = {
   optimism: '#EE6C72',
   zksync: '#8B90F5',
-  default: '#A9A9A9',
+  loopring: '#1c42ff',
+  default: '#111010',
 }
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
@@ -160,6 +162,8 @@ export async function getStaticProps() {
     }
   })
 
+  const l2sTableSorted = sortBy(l2sTable, (v) => -v.share)
+
   return {
     props: {
       l2Data,
@@ -169,7 +173,7 @@ export async function getStaticProps() {
         share: ((dominant as any)[0][1].TVL / l2Data.TVL) * 100,
       },
       tvlDelta,
-      l2sTable,
+      l2sTable: l2sTableSorted,
     },
   }
 }

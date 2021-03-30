@@ -9,6 +9,7 @@ import cx from 'classnames'
 import millify from 'millify'
 import Link from 'next/link'
 import React from 'react'
+import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../../components/AppContainer'
 import { Graph } from '../../components/graphs/Graph'
@@ -122,9 +123,12 @@ export function getStaticProps(params: { params: { project: string } }) {
   const tvlDelta =
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
 
-  const [, projectMeta] = Object.entries(projectsMetaData).find(
+  const projectMetadataFull = Object.entries(projectsMetaData).find(
     ([projectName]) => projectName.toLowerCase() === params.params.project,
-  )!
+  )
+  assert(projectMetadataFull, `Couldn't find ${params.params.project} in projects config`)
+
+  const [, projectMeta] = projectMetadataFull
 
   return {
     props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta, noOfTxsData },

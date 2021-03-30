@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "yarn dev",
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
-    "start": "next start",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@types/lodash": "^4.14.168",
     "classnames": "^2.2.6",
     "eslint": "^6.8.0",
     "eslint-config-typestrict": "^1.0.0",
@@ -23,12 +24,14 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-unused-imports": "^1.0.1",
     "human-readable-numbers": "^0.9.5",
+    "lodash": "^4.17.21",
     "millify": "^3.5.0",
     "next": "^10.1.1",
     "node-sass": "^5.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-vis": "^1.11.7",
+    "ts-essentials": "^7.0.1",
     "typescript": "^4.2.3"
   },
   "devDependencies": {
