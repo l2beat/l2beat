@@ -8,6 +8,12 @@
          "decimals":18,
          "coinpaprika_id": "dai-dai"
       },
+      "ETH":{
+        "address":"0x0",
+        "stablecoin": false,
+        "decimals":18,
+        "coinpaprika_id": "eth-ethereum"
+     },
       "USDC":{
          "address":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
          "stablecoin":true,
@@ -64,6 +70,18 @@
                   "USDT",
                   "GLM",
                   "WBTC"
+               ]
+            }
+         ]
+      },
+      "aztec":{
+         "bridges":[
+            {
+               "address":"0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+               "deployed_at_date":"2021-03-03 07:27:16",
+               "deployed_at_block":11967192,
+               "tokens":[
+                  "ETH"
                ]
             }
          ]

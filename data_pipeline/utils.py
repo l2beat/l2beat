@@ -34,6 +34,13 @@ def get_max_block_for_date(date):
 
 
 def eod_balance_of(token, address, day=None):
+    if token == '0x0': # means native eth
+        block = None
+        if day:
+            block = get_max_block_for_date(day)
+
+        eth_balance = chain.eth.get_balance(Web3.toChecksumAddress(address), block_identifier=block)
+        return eth_balance
 
     ABI = """[{"constant":true,
             "inputs":[{"name":"src","type":"address"}],
