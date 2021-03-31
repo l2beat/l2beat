@@ -7447,14 +7447,35 @@
       "data": [
         {
           "date": "2021-01-15",
+          "end_time": "2021-01-15 22:24:22",
+          "gas_per_tx_in_batch": 33.96072911436205,
+          "number_of_transactions": 58,
+          "sum_of_batches": 1762,
+          "total_batches": 1762,
+          "total_gas_cost_usd": 1969.722288632999,
+          "tps": 0.0007190498623887333,
           "usd": 8239618.645487926
         },
         {
           "date": "2021-01-16",
+          "end_time": "2021-01-16 14:54:50",
+          "gas_per_tx_in_batch": 32.32635598800092,
+          "number_of_transactions": 123,
+          "sum_of_batches": 2507,
+          "total_batches": 4269,
+          "total_gas_cost_usd": 3976.1417865241133,
+          "tps": 0.002069731439725382,
           "usd": 29736530.300363347
         },
         {
           "date": "2021-01-17",
+          "end_time": "2021-01-17 09:50:01",
+          "gas_per_tx_in_batch": 130.76098691571787,
+          "number_of_transactions": 10,
+          "sum_of_batches": 1010,
+          "total_batches": 5279,
+          "total_gas_cost_usd": 1307.6098691571785,
+          "tps": 0.0001468191628371335,
           "usd": 34026251.40008664
         },
         {
@@ -7463,22 +7484,57 @@
         },
         {
           "date": "2021-01-19",
+          "end_time": "2021-01-19 23:31:01",
+          "gas_per_tx_in_batch": 201.63089712575575,
+          "number_of_transactions": 53,
+          "sum_of_batches": 5164,
+          "total_batches": 10443,
+          "total_gas_cost_usd": 10686.437547665055,
+          "tps": 0.00023867423218949834,
           "usd": 39608691.1766704
         },
         {
           "date": "2021-01-20",
+          "end_time": "2021-01-20 08:07:03",
+          "gas_per_tx_in_batch": 38.0326329692356,
+          "number_of_transactions": 45,
+          "sum_of_batches": 851,
+          "total_batches": 11294,
+          "total_gas_cost_usd": 1711.468483615602,
+          "tps": 0.0014533944835604935,
           "usd": 41111523.995304234
         },
         {
           "date": "2021-01-21",
+          "end_time": "2021-01-21 23:48:33",
+          "gas_per_tx_in_batch": 193.37165764563915,
+          "number_of_transactions": 42,
+          "sum_of_batches": 3762,
+          "total_batches": 15056,
+          "total_gas_cost_usd": 8121.609621116844,
+          "tps": 0.0002939323955490237,
           "usd": 44227715.20983304
         },
         {
           "date": "2021-01-22",
+          "end_time": "2021-01-22 23:54:06",
+          "gas_per_tx_in_batch": 37.64610768433564,
+          "number_of_transactions": 131,
+          "sum_of_batches": 1417,
+          "total_batches": 16473,
+          "total_gas_cost_usd": 4931.640106647968,
+          "tps": 0.0015103824380570255,
           "usd": 43863792.19795738
         },
         {
           "date": "2021-01-23",
+          "end_time": "2021-01-23 22:31:49",
+          "gas_per_tx_in_batch": 222.83542943145565,
+          "number_of_transactions": 11,
+          "sum_of_batches": 1069,
+          "total_batches": 17542,
+          "total_gas_cost_usd": 2451.189723746012,
+          "tps": 0.00013503062740139696,
           "usd": 49327309.49820657
         },
         {
@@ -7487,10 +7543,24 @@
         },
         {
           "date": "2021-01-25",
+          "end_time": "2021-01-25 10:43:37",
+          "gas_per_tx_in_batch": 1231.2011788974885,
+          "number_of_transactions": 7,
+          "sum_of_batches": 2457,
+          "total_batches": 19999,
+          "total_gas_cost_usd": 8618.40825228242,
+          "tps": 5.371888141940633e-05,
           "usd": 58529557.02276914
         },
         {
           "date": "2021-01-26",
+          "end_time": "2021-01-26 03:00:54",
+          "gas_per_tx_in_batch": 815.69730666982,
+          "number_of_transactions": 4,
+          "sum_of_batches": 1404,
+          "total_batches": 21403,
+          "total_gas_cost_usd": 3262.78922667928,
+          "tps": 6.82163139314767e-05,
           "usd": 98979503.81023623
         },
         {
@@ -7499,6 +7569,13 @@
         },
         {
           "date": "2021-01-28",
+          "end_time": "2021-01-28 20:20:03",
+          "gas_per_tx_in_batch": 814.2898125666854,
+          "number_of_transactions": 5,
+          "sum_of_batches": 1755,
+          "total_batches": 23158,
+          "total_gas_cost_usd": 4071.4490628334274,
+          "tps": 2.1263114025575274e-05,
           "usd": 102988433.11304331
         },
         {
@@ -7527,14 +7604,35 @@
         },
         {
           "date": "2021-02-04",
+          "end_time": "2021-02-04 04:43:58",
+          "gas_per_tx_in_batch": 2327.7294884670596,
+          "number_of_transactions": 11,
+          "sum_of_batches": 3861,
+          "total_batches": 27019,
+          "total_gas_cost_usd": 25605.024373137658,
+          "tps": 2.0049759858558057e-05,
           "usd": 118687294.91547672
         },
         {
           "date": "2021-02-05",
+          "end_time": "2021-02-05 22:50:25",
+          "gas_per_tx_in_batch": 1415.0432642133799,
+          "number_of_transactions": 2,
+          "sum_of_batches": 402,
+          "total_batches": 27421,
+          "total_gas_cost_usd": 2830.0865284267597,
+          "tps": 1.3193743526819582e-05,
           "usd": 130414442.43422495
         },
         {
           "date": "2021-02-06",
+          "end_time": "2021-02-06 06:40:24",
+          "gas_per_tx_in_batch": 1342.9884906670052,
+          "number_of_transactions": 34,
+          "sum_of_batches": 6034,
+          "total_batches": 33455,
+          "total_gas_cost_usd": 45661.608682678176,
+          "tps": 0.0012057165147700273,
           "usd": 128174116.78535037
         },
         {
@@ -7547,6 +7645,13 @@
         },
         {
           "date": "2021-02-09",
+          "end_time": "2021-02-09 19:57:33",
+          "gas_per_tx_in_batch": 1231.7166626034725,
+          "number_of_transactions": 18,
+          "sum_of_batches": 3428,
+          "total_batches": 36883,
+          "total_gas_cost_usd": 22170.899926862505,
+          "tps": 5.8626383826934914e-05,
           "usd": 140142715.70077017
         },
         {
@@ -7555,6 +7660,13 @@
         },
         {
           "date": "2021-02-11",
+          "end_time": "2021-02-11 07:30:33",
+          "gas_per_tx_in_batch": 1091.1676012339221,
+          "number_of_transactions": 29,
+          "sum_of_batches": 7039,
+          "total_batches": 43922,
+          "total_gas_cost_usd": 31643.860435783743,
+          "tps": 0.00022659790592280044,
           "usd": 164580191.89566508
         },
         {
@@ -7571,10 +7683,24 @@
         },
         {
           "date": "2021-02-15",
+          "end_time": "2021-02-15 11:26:09",
+          "gas_per_tx_in_batch": 1108.0832693187951,
+          "number_of_transactions": 22,
+          "sum_of_batches": 5522,
+          "total_batches": 49444,
+          "total_gas_cost_usd": 24377.831925013495,
+          "tps": 6.115595881424155e-05,
           "usd": 162138363.16003564
         },
         {
           "date": "2021-02-16",
+          "end_time": "2021-02-16 04:33:27",
+          "gas_per_tx_in_batch": 1369.99573746441,
+          "number_of_transactions": 10,
+          "sum_of_batches": 2309,
+          "total_batches": 51753,
+          "total_gas_cost_usd": 13699.9573746441,
+          "tps": 0.00016223758071319641,
           "usd": 162442463.65117824
         },
         {
@@ -7591,10 +7717,24 @@
         },
         {
           "date": "2021-02-20",
+          "end_time": "2021-02-20 07:58:00",
+          "gas_per_tx_in_batch": 1920.9647820534003,
+          "number_of_transactions": 7,
+          "sum_of_batches": 1757,
+          "total_batches": 53510,
+          "total_gas_cost_usd": 13446.753474373802,
+          "tps": 1.9560011512463918e-05,
           "usd": 158632227.73380473
         },
         {
           "date": "2021-02-21",
+          "end_time": "2021-02-21 04:15:22",
+          "gas_per_tx_in_batch": 1815.1523957136476,
+          "number_of_transactions": 9,
+          "sum_of_batches": 2243,
+          "total_batches": 55753,
+          "total_gas_cost_usd": 16336.371561422828,
+          "tps": 0.00012321677938720188,
           "usd": 151890605.0793912
         },
         {
@@ -7603,14 +7743,35 @@
         },
         {
           "date": "2021-02-23",
+          "end_time": "2021-02-23 23:32:24",
+          "gas_per_tx_in_batch": 1431.5741641936302,
+          "number_of_transactions": 10,
+          "sum_of_batches": 2510,
+          "total_batches": 58263,
+          "total_gas_cost_usd": 14315.741641936302,
+          "tps": 4.1284441545359215e-05,
           "usd": 72470214.01905978
         },
         {
           "date": "2021-02-24",
+          "end_time": "2021-02-24 21:54:29",
+          "gas_per_tx_in_batch": 1592.1531761784,
+          "number_of_transactions": 22,
+          "sum_of_batches": 5500,
+          "total_batches": 63763,
+          "total_gas_cost_usd": 35027.3698759248,
+          "tps": 0.00027320707854703506,
           "usd": 81075084.0474367
         },
         {
           "date": "2021-02-25",
+          "end_time": "2021-02-25 19:43:16",
+          "gas_per_tx_in_batch": 1735.169759671751,
+          "number_of_transactions": 26,
+          "sum_of_batches": 6316,
+          "total_batches": 70079,
+          "total_gas_cost_usd": 45114.41375146553,
+          "tps": 0.000331096310823029,
           "usd": 84463772.69757418
         },
         {
@@ -7627,6 +7788,13 @@
         },
         {
           "date": "2021-03-01",
+          "end_time": "2021-03-01 05:11:16",
+          "gas_per_tx_in_batch": 44.62546200188198,
+          "number_of_transactions": 34,
+          "sum_of_batches": 1578,
+          "total_batches": 71657,
+          "total_gas_cost_usd": 1517.2657080639872,
+          "tps": 0.00011593016912165849,
           "usd": 81634046.51781711
         },
         {
@@ -7639,6 +7807,13 @@
         },
         {
           "date": "2021-03-04",
+          "end_time": "2021-03-04 04:52:55",
+          "gas_per_tx_in_batch": 133.846892654,
+          "number_of_transactions": 21,
+          "sum_of_batches": 2121,
+          "total_batches": 73778,
+          "total_gas_cost_usd": 2810.784745734,
+          "tps": 8.136412771843362e-05,
           "usd": 98935244.6439528
         },
         {
@@ -7667,6 +7842,13 @@
         },
         {
           "date": "2021-03-11",
+          "end_time": "2021-03-11 08:58:32",
+          "gas_per_tx_in_batch": 258.7455580396917,
+          "number_of_transactions": 30,
+          "sum_of_batches": 7222,
+          "total_batches": 81000,
+          "total_gas_cost_usd": 7762.36674119075,
+          "tps": 4.842325801364567e-05,
           "usd": 96089043.01692879
         },
         {
@@ -7691,6 +7873,13 @@
         },
         {
           "date": "2021-03-17",
+          "end_time": "2021-03-17 03:37:44",
+          "gas_per_tx_in_batch": 634.5755328670875,
+          "number_of_transactions": 8,
+          "sum_of_batches": 2000,
+          "total_batches": 83000,
+          "total_gas_cost_usd": 5076.6042629367,
+          "tps": 1.602718210084303e-05,
           "usd": 84766507.29891892
         },
         {
@@ -7707,6 +7896,13 @@
         },
         {
           "date": "2021-03-21",
+          "end_time": "2021-03-21 22:05:52",
+          "gas_per_tx_in_batch": 441.30687319163,
+          "number_of_transactions": 32,
+          "sum_of_batches": 8000,
+          "total_batches": 91000,
+          "total_gas_cost_usd": 14121.81994213216,
+          "tps": 7.765331676729242e-05,
           "usd": 91576643.92587584
         },
         {
@@ -7715,6 +7911,13 @@
         },
         {
           "date": "2021-03-23",
+          "end_time": "2021-03-23 07:21:45",
+          "gas_per_tx_in_batch": 286.3490738347909,
+          "number_of_transactions": 22,
+          "sum_of_batches": 5522,
+          "total_batches": 96522,
+          "total_gas_cost_usd": 6299.6796243654,
+          "tps": 0.00018371147278147521,
           "usd": 82520759.42852402
         },
         {
@@ -7739,10 +7942,24 @@
         },
         {
           "date": "2021-03-29",
+          "end_time": "2021-03-29 21:27:48",
+          "gas_per_tx_in_batch": 586.0966909405649,
+          "number_of_transactions": 8,
+          "sum_of_batches": 2008,
+          "total_batches": 98530,
+          "total_gas_cost_usd": 4688.7735275245195,
+          "tps": 1.4055727445389106e-05,
           "usd": 80386208.76679535
         },
         {
           "date": "2021-03-30",
+          "end_time": "2021-03-30 08:51:49",
+          "gas_per_tx_in_batch": 307.37415012222624,
+          "number_of_transactions": 32,
+          "sum_of_batches": 8032,
+          "total_batches": 106562,
+          "total_gas_cost_usd": 9835.97280391124,
+          "tps": 0.0007797080967812675,
           "usd": 83431605.74283779
         }
       ]
