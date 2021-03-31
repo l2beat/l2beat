@@ -32,8 +32,13 @@ def get_max_block_for_date(date):
     else:
         return None
 
+def get_date_for_block(block):
+    block = chain.eth.get_block(block_identifier=block)
+    block.timestamp
 
-def eod_balance_of(token, address, day=None):
+    return datetime.fromtimestamp(block.timestamp)
+
+def eod_balance_of(token, address, day=None, deployed_at_block=None):
     if token == '0x0': # means native eth
         block = None
         if day:
@@ -51,18 +56,14 @@ def eod_balance_of(token, address, day=None):
             "type":"function"}]"""
     block = None
 
-    try:
-        token_contract = chain.eth.contract(address=Web3.toChecksumAddress(token), abi=ABI)
-        if day:
-            block = get_max_block_for_date(day)
-        balance = token_contract.functions.balanceOf(Web3.toChecksumAddress(address)).call(block_identifier=block)
+    token_contract = chain.eth.contract(address=Web3.toChecksumAddress(token), abi=ABI)
+    if day:
+        block = get_max_block_for_date(day)
 
-    except Exception as e:
-        print(e)
-        print('token: {}'.format(token))
-        print('address: {}'.format(address))
-        print('date: {}'.format(day))
-        balance = None
+    # if token was not yet deployed just return 0
+    if block and deployed_at_block and deployed_at_block > block:
+        return 0
+    balance = token_contract.functions.balanceOf(Web3.toChecksumAddress(address)).call(block_identifier=block)
 
     return balance
 
