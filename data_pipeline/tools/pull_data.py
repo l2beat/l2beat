@@ -1,7 +1,8 @@
 from .prices import get_prices_for_token
 from datetime import datetime, timedelta, timezone
-from utils import eod_balance_of
+from utils import eod_balance_of, get_date_for_block
 from tools.optimism import process_batches
+import json
 
 
 def dates_array(data, key):
@@ -13,7 +14,8 @@ def dates_array(data, key):
 
 def pull_l2_data(output=None,
                 config_l2s=None,
-                config=None):
+                config=None,
+                output_file_path=None):
 
     if output['data']:
         total_dates = dates_array(output['data'], 'date')
@@ -64,7 +66,7 @@ def pull_l2_data(output=None,
                     starting_point = datetime.strptime(token_dates[-1], '%Y-%m-%d') + timedelta(days=1)
                 else:
                     # get bridge deployment date
-                    starting_point = datetime.strptime(bridge['deployed_at_date'][:10], '%Y-%m-%d')
+                    starting_point = get_date_for_block(bridge['deployed_at_block']).replace(hour=0, minute=0, second=0, microsecond=0)
                 
                 if starting_point.date() - timedelta(days=1) < datetime.utcnow().date() - timedelta(days=1):
                     days_to_process = [starting_point]
@@ -77,7 +79,8 @@ def pull_l2_data(output=None,
                     for day in days_to_process:
                         
                         day = datetime.strftime(day, '%Y-%m-%d')
-                        balance = eod_balance_of(config['tokens'][token]['address'], bridge_address, day)
+                        print(day, "for", token)
+                        balance = eod_balance_of(config['tokens'][token]['address'], bridge_address, day, config['tokens'][token].get('deployed_at_block', None))
                         if balance:
                         
                             human_readable_balance = balance / 10 ** config['tokens'][token]['decimals']
@@ -97,6 +100,7 @@ def pull_l2_data(output=None,
                                             i['usd'] += value
                             else:
                                 output['l2s'][l2]['bridges'][bridge_address]['data'].append({'date': day, 'usd': value})
+                                bridge_dates.append(day)
 
                             # l2 data
                             if output['l2s'][l2]['data']:
@@ -109,6 +113,8 @@ def pull_l2_data(output=None,
                                             i['usd'] += value
                             else:
                                 output['l2s'][l2]['data'].append({'date': day, 'usd': value})
+                                l2_dates.append(day)
+
 
                             # total data
                             if output['data']:
@@ -121,6 +127,7 @@ def pull_l2_data(output=None,
                                             i['usd'] += value
                             else:
                                 output['data'].append({'date': day, 'usd': value})
+                                total_dates.append(day)
                             
                             # TVLs
                             if datetime.strptime(day, '%Y-%m-%d') == days_to_process[-1]:
@@ -138,5 +145,8 @@ def pull_l2_data(output=None,
                                 output['l2s'][l2]['bridges'][bridge_address]['TVL'] += value
                                 output['l2s'][l2]['TVL'] += value
                                 output['TVL'] += value
-                        
+
+                    print("Saving partial results to: ", output_file_path)
+                    with open(output_file_path, 'w+') as output_file:
+                        json.dump(output, output_file, indent=2, sort_keys=True)    
     return output

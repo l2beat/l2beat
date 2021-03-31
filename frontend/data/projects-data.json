@@ -1,18 +1,29 @@
 {
   "Optimism": {
     "website": "https://optimism.io/",
-    "description": "Optimistic Rollup is a layer 2 scaling solution that scales both transaction throughput and computation on Ethereum. The backbone of our implementation is the Optimistic Virtual Machine (OVM), which is fully compatible with the EVM."
+    "description": "Optimism is a general purpose optimistic rollup. ",
+    "color": "#f01b37",
+    "technology": "optimistic-rollup",
+    "status": "centralized-deployment"
   },
-  "zksync": {
+  "zkSync": {
     "website": "https://optimism.io/",
-    "description": "Optimistic Rollup is a layer 2 scaling solution that scales both transaction throughput and computation on Ethereum. The backbone of our implementation is the Optimistic Virtual Machine (OVM), which is fully compatible with the EVM."
+    "description": "Optimistic Rollup is a layer 2 scaling solution that scales both transaction throughput and computation on Ethereum. The backbone of our implementation is the Optimistic Virtual Machine (OVM), which is fully compatible with the EVM.",
+    "color": "#8c8dfc",
+    "technology": "zk-rollup",
+    "status": "centralized-deployment"
   },
   "Aztec": {
     "website": "https://zk.money",
-    "description": "Affordable, private crypto payments"
+    "description": "Affordable, private crypto payments",
+    "color": "#8953f3",
+    "technology": "zk-rollup",
+    "status": "centralized-deployment"
   },
   "Loopring": {
     "website": "https://loopring.org",
-    "description": "zkRollup Exchange and Payment Protocol"
+    "description": "zkRollup Exchange and Payment Protocol",
+    "color": "#1c42ff",
+    "technology": "zk-rollup"
   }
 }

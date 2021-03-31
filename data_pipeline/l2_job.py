@@ -16,7 +16,8 @@ def run_l2beat(config=None, output_file_path=None):
 
     output = pull_l2_data(output=output_object,
                             config_l2s=config_l2s,
-                            config=config)
+                            config=config, 
+                            output_file_path=output_file_path)
 
     return output
 

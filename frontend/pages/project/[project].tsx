@@ -1,7 +1,8 @@
 import 'react-vis/dist/style.css'
 
+import ImportContactsIcon from '@material-ui/icons/ImportContacts'
+import InfoIcon from '@material-ui/icons/Info'
 import LinkIcon from '@material-ui/icons/Link'
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import TrendingDownIcon from '@material-ui/icons/TrendingDown'
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
@@ -41,7 +42,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
 
         <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
           <div className={styles.title}>
-            <MonetizationOnIcon />
+            <InfoIcon />
             <h3>Overview</h3>
             <div
               className={cx(
@@ -88,7 +89,13 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </div>
         )}
 
-        <div className={cx(styles.card, styles.cardBg, styles.projectDescription)}>Project description</div>
+        <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
+          <div className={styles.title}>
+            <ImportContactsIcon />
+            <h3>Project description</h3>
+          </div>
+          <div className={styles.overview}>{props.projectMeta.description}</div>
+        </div>
       </PageGrid>
     </AppContainer>
   )
@@ -128,7 +135,7 @@ export function getStaticProps(params: { params: { project: string } }) {
   )
   assert(projectMetadataFull, `Couldn't find ${params.params.project} in projects config`)
 
-  const [, projectMeta] = projectMetadataFull
+  const [, projectMeta] = projectMetadataFull as any
 
   return {
     props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta, noOfTxsData },
