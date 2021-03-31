@@ -11,24 +11,18 @@ import { sortBy } from 'lodash'
 import millify from 'millify'
 import Link from 'next/link'
 import React from 'react'
+import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../components/AppContainer'
 import { Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'
-import { PageGrid } from '../components/PageGrid'
-import { l2Data } from '../data'
+import { FullPageGrid, PageGrid } from '../components/PageGrid'
+import { l2Data, projectsMetaData } from '../data'
 import styles from '../styles/Home.module.scss'
 import { dateSorter } from '../utils/dateSorter'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
-
-const projectColors: Record<string, string> = {
-  optimism: '#EE6C72',
-  zksync: '#8B90F5',
-  loopring: '#1c42ff',
-  default: '#111010',
-}
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
   const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
@@ -71,6 +65,9 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <div className={styles.description}>{dominant.name} dominance</div>
           </div>
         </div>
+      </PageGrid>
+
+      <FullPageGrid>
         <div className={cx(styles.card, styles.cardBg, styles.projectsList)}>
           <div className={styles.title}>
             <ListIcon />
@@ -88,25 +85,26 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                 <th>name</th>
                 <th className={styles.alignRight}>Value locked</th>
                 <th className={styles.alignRight}>Market share</th>
+                <th className={styles.alignRight}>Tech</th>
               </tr>
             </thead>
             <tbody>
-              {l2sTable.map((rowData) => (
+              {l2sTable.map((rowData, index) => (
                 <tr key={rowData.name} className={styles.dataRow}>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                      <div
-                        className={styles.projectBadge}
-                        style={{ background: projectColors[rowData.name.toLowerCase()] || projectColors.default }}
-                      ></div>
-                      <div>{rowData.name}</div>
+                      <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
+                      <div>
+                        {index + 1}. {rowData.name}
+                      </div>
                     </div>
                   </td>
                   <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
                   <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
+                  <td className={cx(styles.alignRight, styles.mono)}>{rowData.meta.technology}</td>
                   <td className={cx(styles.alignRight)}>
                     <Link href={`/project/${rowData.name.toLowerCase()}`}>
-                      <div className={styles.projectLink}>View project</div>
+                      <div className={styles.projectLink}>More</div>
                     </Link>
                   </td>
                 </tr>
@@ -114,6 +112,9 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </tbody>
           </table>
         </div>
+      </FullPageGrid>
+
+      <PageGrid>
         <div className={cx(styles.card, styles.cardBg, styles.faq)}>
           <div className={styles.title}>
             <MenuBookIcon />
@@ -152,6 +153,8 @@ export async function getStaticProps() {
 
   const l2sTable = Object.entries(l2Data.l2s).map(([name, data]: any) => {
     const tvlData = data.data.sort(dateSorter).reverse()
+    const meta = projectsMetaData[name]
+    assert(meta, `Can't find project data for ${name}`)
 
     return {
       name,
@@ -159,6 +162,7 @@ export async function getStaticProps() {
       share: (data.TVL / l2Data.TVL) * 100,
       change: (tvlData[0].usd / tvlData[1].usd) * 100 - 100,
       tvlData,
+      meta,
     }
   })
 
