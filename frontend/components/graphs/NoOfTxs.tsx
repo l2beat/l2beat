@@ -4,8 +4,9 @@ import {
   Highlight,
   HighlightArea,
   HorizontalGridLines,
-  LineSeries,
   LineSeriesPoint,
+  RVTickFormat,
+  VerticalBarSeriesCanvas,
   VerticalGridLines,
   XAxis,
   XYPlot,
@@ -36,14 +37,20 @@ export const NoOfTxs = React.memo(({ data, container }: Props) => {
       margin={{ left: 50, right: 10, top: 10, bottom: 40 }}
       height={300}
       width={container.width}
+      xType="ordinal"
     >
       <HorizontalGridLines />
       <VerticalGridLines />
       <XAxis
         tickTotal={5}
-        tickFormat={function tickFormat(d) {
-          return new Date(d).toLocaleDateString()
-        }}
+        tickFormat={
+          function tickFormat(d: string, index: number) {
+            if (index % 10 === 0) {
+              return new Date(d).toLocaleDateString()
+            }
+            return ''
+          } as RVTickFormat
+        } // INDEX IS THERE!!
       />
       <YAxis
         title=""
@@ -52,8 +59,7 @@ export const NoOfTxs = React.memo(({ data, container }: Props) => {
           return HM.toHumanString(d)
         }}
       />
-
-      <LineSeries color={primaryColor} data={data} />
+      <VerticalBarSeriesCanvas barWidth={0.1} data={data} fill={primaryColor} stroke={primaryColor} />
       <Highlight
         onBrushEnd={(area) => setDrawLocation(area)}
         onDrag={(area) => {
