@@ -1,5 +1,4 @@
 import HM from 'human-readable-numbers'
-import millify from 'millify'
 import React from 'react'
 import {
   Crosshair,
@@ -64,17 +63,20 @@ export const NoOfTxs = React.memo(({ data, container }: Props) => {
           return HM.toHumanString(d)
         }}
       />
-      <VerticalBarSeriesCanvas barWidth={0.1} data={data} fill={primaryColor} stroke={primaryColor} onNearestX={data => setCrosshair([data])} />
-      {
-        crosshair.map(() => (
-          <Crosshair
-            values={crosshair}
-            titleFormat={(points) => ({ title: "Date", value: points[0].x.toLocaleDateString() })}
-            itemsFormat={(points) => points.map((pt: LineSeriesPoint) => ({ title: "#tx", value: pt.y }))}
-          >
-          </Crosshair>
-        ))
-      }
+      <VerticalBarSeriesCanvas
+        barWidth={0.1}
+        data={data}
+        fill={primaryColor}
+        stroke={primaryColor}
+        onNearestX={(data) => setCrosshair([data])}
+      />
+      {crosshair.map(() => (
+        <Crosshair
+          values={crosshair}
+          titleFormat={(points) => ({ title: 'Date', value: points[0].x.toLocaleDateString() })}
+          itemsFormat={(points) => points.map((pt: LineSeriesPoint) => ({ title: '#tx', value: pt.y }))}
+        ></Crosshair>
+      ))}
       <Highlight
         onBrushEnd={(area) => setDrawLocation(area)}
         onDrag={(area) => {

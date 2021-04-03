@@ -1,6 +1,8 @@
 import HM from 'human-readable-numbers'
+import millify from 'millify'
 import React from 'react'
 import {
+  Crosshair,
   Highlight,
   HighlightArea,
   HorizontalGridLines,
@@ -10,9 +12,7 @@ import {
   XAxis,
   XYPlot,
   YAxis,
-  Crosshair
 } from 'react-vis'
-import millify from 'millify'
 
 interface Props {
   data: LineSeriesPoint[]
@@ -58,17 +58,14 @@ export const TVLHistory = React.memo(({ data, container }: Props) => {
           return HM.toHumanString(d)
         }}
       />
-      <LineSeries color={primaryColor} data={data} onNearestX={data => setCrosshair([data])} />
-      {
-        crosshair.map(() => (
-          <Crosshair
-            values={crosshair}
-            titleFormat={(points) => ({ title: "Date", value: points[0].x.toLocaleDateString() })}
-            itemsFormat={(points) => points.map((pt: LineSeriesPoint) => ({ title: "USD", value: millify(pt.y) }))}
-          >
-          </Crosshair>
-        ))
-      }
+      <LineSeries color={primaryColor} data={data} onNearestX={(data) => setCrosshair([data])} />
+      {crosshair.map(() => (
+        <Crosshair
+          values={crosshair}
+          titleFormat={(points) => ({ title: 'Date', value: points[0].x.toLocaleDateString() })}
+          itemsFormat={(points) => points.map((pt: LineSeriesPoint) => ({ title: 'USD', value: millify(pt.y) }))}
+        ></Crosshair>
+      ))}
       <Highlight
         onBrushEnd={(area) => setDrawLocation(area)}
         onDrag={(area) => {
