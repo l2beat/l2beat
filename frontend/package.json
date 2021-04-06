@@ -10,7 +10,8 @@
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
-    "test:fix": "yarn lint:fix && yarn format:fix"
+    "test:fix": "yarn lint:fix && yarn format:fix && yarn typecheck",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
