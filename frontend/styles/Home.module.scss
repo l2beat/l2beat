@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1124px;
+  max-width: var(--size-max);
   margin: 0 auto;
 
   @include media('<bp1Width') {
@@ -127,11 +127,13 @@
 .tvl {
   font-weight: bold;
   font-size: var(--font-big);
+  color: var(--text);
 }
 
 .dominance {
   font-weight: bold;
   font-size: var(--font-medium);
+  color: var(--text);
 }
 
 .description {
@@ -141,6 +143,7 @@
 }
 
 .title {
+  color: var(--text);
   display: flex;
   align-items: center;
 }
@@ -273,7 +276,7 @@
 .projectWebsite {
   cursor: pointer;
   transition: color 0.2s;
-  color: black;
+  color: var(--text);
 
   svg {
     transform: rotate(-45deg);
@@ -283,4 +286,28 @@
   &:focus-visible {
     color: var(--primary-dark);
   }
+}
+
+.invertedTitle {
+  --text: white;
+  --text-contrast: black;
+  --text-muted: white;
+  --primary-dark: black;
+}
+
+.footer {
+  background: var(--primary);
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  margin-top: 20px;
+}
+
+.logoWrapper {
+  position: relative;
+  font-size: var(--font-secondary);
+  font-weight: bold;
+  color: var(--text-contrast);
+  text-transform: uppercase;
 }
