@@ -48,7 +48,7 @@ interface GraphProps {
   title: string
   children: (data: any[], container: DOMRect | null) => ReactElement
   icon?: ReactElement
-  defaultFilter?: Filter
+  defaultFilter: Filter
 }
 
 export const Graph: React.FC<GraphProps> = ({ data, title, children, icon, defaultFilter }) => {

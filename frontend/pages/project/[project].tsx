@@ -8,7 +8,6 @@ import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
 import millify from 'millify'
-import Link from 'next/link'
 import React from 'react'
 import { assert } from 'ts-essentials'
 
