@@ -92,9 +92,35 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
         <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
           <div className={styles.title}>
             <ImportContactsIcon />
-            <h3>Project description</h3>
+            <h3>Project in a nutshell</h3>
           </div>
-          <div className={styles.overview}>{props.projectMeta.description}</div>
+          <div className={styles.overview}>
+            <table>
+              <tr>
+                <td>Technology</td>
+                <td>{props.projectMeta.technology}</td>
+              </tr>
+              {Object.keys(props.projectMeta['more-info']).map((key) => (
+                <tr>
+                  <td>{key}</td>
+                  <td>{props.projectMeta['more-info'][key]}</td>
+                </tr>
+              ))}
+            </table>
+
+            {props.projectMeta.news && (
+              <>
+                News:
+                <ul>
+                  {props.projectMeta.news.map((news: any) => (
+                    <li>
+                      <a href={news.link}>{news.name}</a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
         </div>
       </PageGrid>
     </AppContainer>
