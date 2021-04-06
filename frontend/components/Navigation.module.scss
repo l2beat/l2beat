@@ -10,6 +10,17 @@
   font-size: var(--font-secondary);
   flex: 2;
   cursor: pointer;
+  position: relative;
+}
+
+$big: 30px;
+$small: 26px;
+
+.logoEmoji {
+  position: absolute;
+  top: -7px;
+  left: -34px;
+  font-size: $small;
 }
 
 .logoIcon {
@@ -30,4 +41,38 @@
 
 .link {
   justify-self: flex-end;
+}
+
+@mixin big-beat() {
+  font-size: $big;
+}
+
+@mixin small-beat() {
+  font-size: $small;
+}
+
+.heart {
+  @include big-beat();
+}
+
+.animate-beat {
+  animation: beat 1s 2;
+}
+
+@keyframes beat {
+  0% {
+    @include small-beat();
+  }
+  40% {
+    @include big-beat();
+  }
+  60% {
+    @include small-beat();
+  }
+  80% {
+    @include big-beat();
+  }
+  100% {
+    @include small-beat();
+  }
 }
