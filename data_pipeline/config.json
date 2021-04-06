@@ -100,6 +100,15 @@
           "tokens": ["ETH", "LRC", "USDT", "USDC", "WBTC", "DAI", "LINK", "MKR"]
         }
       ]
+    },
+    "dydx": {
+      "bridges": [
+        {
+          "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
+          "deployed_at_block": 11834295,
+          "tokens": ["USDC"]
+        }
+      ]
     }
   }
 }

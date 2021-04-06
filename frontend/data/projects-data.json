@@ -60,5 +60,22 @@
       "Privacy": "NO",
       "Smart contracts": "NO"
     }
+  },
+  "dydx": {
+    "website": "https://dydx.exchange/",
+    "color": "#6966ff",
+    "technology": "zk-rollup",
+    "more-info": {
+      "Hypothetical level of decentralization": "HIGH",
+      "Current level of decentralization": "LOW (contracts are upgradable)",
+      "Privacy": "NO",
+      "Smart contracts": "NO"
+    },
+    "news": [
+      {
+        "name": "Trade now on Layer 2",
+        "link": "https://dydx.exchange/blog/public"
+      }
+    ]
   }
 }
