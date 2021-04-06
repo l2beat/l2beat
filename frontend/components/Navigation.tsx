@@ -13,7 +13,8 @@ export const Navigation = () => {
     <header className={styles.container}>
       <Link href={HomePath}>
         <h1 className={styles.logo}>
-          L2Beat<div className={cx(styles.logoEmoji, router.asPath === '/' && styles['animate-beat'])}>💓</div>
+          <div className={cx(styles.logoEmoji, router.asPath === '/' && styles['animate-beat'])}>💓</div>
+          <span className={styles.logoText}>L2Beat</span>
         </h1>
       </Link>
       <nav title="Main navigation" className={styles.linksWrapper}>

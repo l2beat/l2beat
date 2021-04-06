@@ -18,9 +18,13 @@ $small: 26px;
 
 .logoEmoji {
   position: absolute;
+  transform-origin: 50% 50%;
   top: -7px;
-  left: -34px;
   font-size: $small;
+}
+
+.logoText {
+  margin-left: 34px;
 }
 
 .logoIcon {
@@ -44,11 +48,11 @@ $small: 26px;
 }
 
 @mixin big-beat() {
-  font-size: $big;
+  transform: scale(1.2);
 }
 
 @mixin small-beat() {
-  font-size: $small;
+  transform: scale(1);
 }
 
 .heart {
