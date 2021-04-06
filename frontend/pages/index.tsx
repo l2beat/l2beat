@@ -118,7 +118,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
         <div className={cx(styles.card, styles.cardBg, styles.faq)}>
           <div className={styles.title}>
             <MenuBookIcon />
-            <h3>Learn about layer 2</h3>
+            <h3>Learn about Layer 2</h3>
           </div>
           <ul>
             <li>
@@ -134,6 +134,21 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
               <a href="https://research.paradigm.xyz/optimism">How does Optimism's Rollup really work?</a>
             </li>
           </ul>
+        </div>
+        <div className={cx(styles.card, styles.cardBg, styles.faq)}>
+          <div className={styles.title}>
+            <MenuBookIcon />
+            <h3>How do we calculate TVL?</h3>
+          </div>
+          <p>
+            We track assets (tokens and ether) parked on various token bridges on layer 1. A single L2 can have multiple
+            token bridges (for example Optimism).
+          </p>
+
+          <p>
+            For details, see{' '}
+            <a href="https://github.com/krzkaczor/l2beat/blob/master/data_pipeline/config.json">config</a>.
+          </p>
         </div>
       </PageGrid>
     </AppContainer>
