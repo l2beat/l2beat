@@ -70,12 +70,12 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <div className={styles.tvl}>${millify(props.tvl)}</div>
             <div className={styles.description}>Total value locked</div>
             <div className={styles.dominance}>
-              <Link href={(props as any).projectMeta.website}>
+              <a href={(props as any).projectMeta.website} target="blank">
                 <div className={styles.projectWebsite}>
                   {props.name}
                   <LinkIcon fontSize="large" />
                 </div>
-              </Link>
+              </a>
             </div>
             <div className={styles.description}>Project website</div>
           </div>

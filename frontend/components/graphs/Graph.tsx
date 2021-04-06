@@ -48,10 +48,11 @@ interface GraphProps {
   title: string
   children: (data: any[], container: DOMRect | null) => ReactElement
   icon?: ReactElement
+  defaultFilter?: Filter
 }
 
-export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => {
-  const [filtersState, setFilters] = React.useState(Filter.ALL)
+export const Graph: React.FC<GraphProps> = ({ data, title, children, icon, defaultFilter }) => {
+  const [filtersState, setFilters] = React.useState(defaultFilter)
   const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null)
   const rect = useScreenElementWith(wrapper)
 
@@ -90,4 +91,5 @@ export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => 
 
 Graph.defaultProps = {
   icon: <TimelineIcon />,
+  defaultFilter: Filter.ALL,
 }
