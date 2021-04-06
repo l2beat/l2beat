@@ -1,7 +1,7 @@
 import GitHubIcon from '@material-ui/icons/GitHub'
+import cx from 'classnames'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import cx from 'classnames'
 
 import styles from './Navigation.module.scss'
 
