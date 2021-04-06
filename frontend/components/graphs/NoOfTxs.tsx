@@ -1,12 +1,14 @@
 import HM from 'human-readable-numbers'
 import React from 'react'
 import {
+  Crosshair,
   Highlight,
   HighlightArea,
   HorizontalGridLines,
   LineSeriesPoint,
   RVTickFormat,
   VerticalBarSeriesCanvas,
+  VerticalBarSeriesPoint,
   VerticalGridLines,
   XAxis,
   XYPlot,
@@ -21,6 +23,7 @@ interface Props {
 export const NoOfTxs = React.memo(({ data, container }: Props) => {
   const [lastDrawLocation, setDrawLocation] = React.useState<HighlightArea | null>(null)
   const primaryColor = '#5CBAB0'
+  const [crosshair, setCrosshair] = React.useState<VerticalBarSeriesPoint[]>([])
 
   React.useEffect(() => {
     setDrawLocation(null)
@@ -38,6 +41,7 @@ export const NoOfTxs = React.memo(({ data, container }: Props) => {
       height={300}
       width={container.width}
       xType="ordinal"
+      onMouseLeave={() => setCrosshair([])}
     >
       <HorizontalGridLines />
       <VerticalGridLines />
@@ -59,7 +63,20 @@ export const NoOfTxs = React.memo(({ data, container }: Props) => {
           return HM.toHumanString(d)
         }}
       />
-      <VerticalBarSeriesCanvas barWidth={0.1} data={data} fill={primaryColor} stroke={primaryColor} />
+      <VerticalBarSeriesCanvas
+        barWidth={0.1}
+        data={data}
+        fill={primaryColor}
+        stroke={primaryColor}
+        onNearestX={(data) => setCrosshair([data])}
+      />
+      {crosshair.map(() => (
+        <Crosshair
+          values={crosshair}
+          titleFormat={(points) => ({ title: 'Date', value: points[0].x.toLocaleDateString() })}
+          itemsFormat={(points) => points.map((pt: LineSeriesPoint) => ({ title: '#tx', value: pt.y }))}
+        ></Crosshair>
+      ))}
       <Highlight
         onBrushEnd={(area) => setDrawLocation(area)}
         onDrag={(area) => {
