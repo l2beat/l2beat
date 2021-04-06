@@ -1,6 +1,7 @@
 import TimelineIcon from '@material-ui/icons/Timeline'
 import cx from 'classnames'
 import React, { ReactElement } from 'react'
+import { MarkRequired } from 'ts-essentials'
 
 import styles from '../../styles/Home.module.scss'
 import { useScreenElementWith } from '../../utils/useScreenElementWith'
@@ -43,15 +44,19 @@ interface DataPoint {
   y: number
 }
 
-interface GraphProps {
+interface PublicGraphProps {
   data: DataPoint[]
   title: string
   children: (data: any[], container: DOMRect | null) => ReactElement
   icon?: ReactElement
+  defaultFilter?: Filter
 }
 
-export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => {
-  const [filtersState, setFilters] = React.useState(Filter.ALL)
+type InternalGraphProps = MarkRequired<PublicGraphProps, 'defaultFilter'>
+
+export const Graph: React.FC<PublicGraphProps> = (props) => {
+  const { data, title, children, icon, defaultFilter } = (props as any) as InternalGraphProps
+  const [filtersState, setFilters] = React.useState(defaultFilter)
   const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null)
   const rect = useScreenElementWith(wrapper)
 
@@ -90,4 +95,5 @@ export const Graph: React.FC<GraphProps> = ({ data, title, children, icon }) => 
 
 Graph.defaultProps = {
   icon: <TimelineIcon />,
+  defaultFilter: Filter.ALL,
 }

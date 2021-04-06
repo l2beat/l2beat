@@ -14,7 +14,7 @@ import React from 'react'
 import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../components/AppContainer'
-import { Graph } from '../components/graphs/Graph'
+import { Filter, Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'
 import { FullPageGrid, PageGrid } from '../components/PageGrid'
 import { l2Data, projectsMetaData } from '../data'
@@ -34,7 +34,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
       <h2 className={styles.overview}>Projects overview</h2>
       <PageGrid>
         <div className={cx(styles.card, styles.graph)}>
-          <Graph title="Total value locked in USD" data={tvlHistory}>
+          <Graph title="Total value locked in USD" data={tvlHistory} defaultFilter={Filter.NINETY_DAYS}>
             {(data, container) => <TVLHistory container={container} data={data} />}
           </Graph>
         </div>
