@@ -18,7 +18,6 @@ export function Logo() {
   )
 }
 export const Navigation = () => {
-
   return (
     <header className={styles.wrapper}>
       <div className={styles.container}>
