@@ -12,7 +12,7 @@ import React from 'react'
 import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../../components/AppContainer'
-import { Item, List } from '../../components/DescriptionList'
+import { ContentWithTooltip, Item, List } from '../../components/DescriptionList'
 import { Graph } from '../../components/graphs/Graph'
 import { NoOfTxs } from '../../components/graphs/NoOfTxs'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
@@ -100,7 +100,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           <List>
             <Item title="Technology" content={props.projectMeta.technology} />
             {Object.keys(props.projectMeta['more-info']).map((key) => (
-              <Item title={key} content={props.projectMeta['more-info'][key]} />
+              <Item title={key} content={<ContentWithTooltip {...props.projectMeta['more-info'][key]} />} />
             ))}
             {props.projectMeta.news && (
               <Item
@@ -114,40 +114,6 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             )}
           </List>
         </div>
-
-        {/* <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
-          <div className={styles.title}>
-            <ImportContactsIcon />
-            <h3>Project in a nutshell</h3>
-          </div>
-          <div className={styles.overview}>
-            <table>
-              <tr>
-                <td>Technology</td>
-                <td>{props.projectMeta.technology}</td>
-              </tr>
-              {Object.keys(props.projectMeta['more-info']).map((key) => (
-                <tr>
-                  <td>{key}</td>
-                  <td>{props.projectMeta['more-info'][key]}</td>
-                </tr>
-              ))}
-            </table>
-
-            {props.projectMeta.news && (
-              <>
-                News:
-                <ul>
-                  {props.projectMeta.news.map((news: any) => (
-                    <li>
-                      <a href={news.link}>{news.name}</a>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
-        </div> */}
       </PageGrid>
     </AppContainer>
   )
