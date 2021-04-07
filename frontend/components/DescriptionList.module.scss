@@ -1,0 +1,24 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.wrapper {
+  min-width: 40%;
+}
+
+.title {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  white-space: nowrap;
+}
+
+.content {
+  margin-left: 0;
+  color: var(--text);
+  text-transform: capitalize;
+  font-size: var(--font-secondary);
+  margin-top: 4px;
+  font-weight: bold;
+}

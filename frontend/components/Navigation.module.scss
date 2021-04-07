@@ -1,8 +1,16 @@
-.container {
+.wrapper {
+  display: flex;
   width: 100%;
+  background: var(--primary);
+}
+
+.container {
+  margin: 0 auto;
+  width: var(--size-max);
   display: flex;
   align-items: center;
   padding: 16px 0;
+  color: var(--text-contrast);
 }
 
 .logo {
@@ -39,7 +47,7 @@ $small: 26px;
   align-items: center;
 
   a {
-    color: var(--text);
+    color: var(--text-contrast);
   }
 }
 

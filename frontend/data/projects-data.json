@@ -4,7 +4,7 @@
     "color": "#f01b37",
     "technology": "optimistic-rollup",
     "more-info": {
-      "Hypothetical level of decentralization": "HIGH",
+      "Hypothetical level of decentralization": "High",
       "Current level of decentralization": "LOW (contracts are upgradable)",
       "Privacy": "NO",
       "Smart contracts": "YES - custom Solidity compiler. Currently, no new smart contracts can be deployed."
@@ -21,7 +21,7 @@
     "color": "#8c8dfc",
     "technology": "zk-rollup",
     "more-info": {
-      "Hypothetical level of decentralization": "HIGH",
+      "Hypothetical level of decentralization": "High",
       "Current level of decentralization": "LOW (contracts are upgradable)",
       "Privacy": "NO - but possible in the future",
       "Smart contracts": "NO -  but possible in the near future (zinc - custom language or compiling from Solidity)"
@@ -38,8 +38,8 @@
     "color": "#8953f3",
     "technology": "zk-rollup",
     "more-info": {
-      "Hypothetical level of decentralization": "HIGH",
-      "Current level of decentralization": "HIGH",
+      "Hypothetical level of decentralization": "High",
+      "Current level of decentralization": "High",
       "Privacy": "YES",
       "Smart contracts": "NO -  but possible in the future (Noir - custom language) "
     },
@@ -55,7 +55,7 @@
     "color": "#1c42ff",
     "technology": "zk-rollup",
     "more-info": {
-      "Hypothetical level of decentralization": "HIGH",
+      "Hypothetical level of decentralization": "High",
       "Current level of decentralization": "High",
       "Privacy": "NO",
       "Smart contracts": "NO"
@@ -66,7 +66,7 @@
     "color": "#6966ff",
     "technology": "zk-rollup",
     "more-info": {
-      "Hypothetical level of decentralization": "HIGH",
+      "Hypothetical level of decentralization": "High",
       "Current level of decentralization": "LOW (contracts are upgradable)",
       "Privacy": "NO",
       "Smart contracts": "NO"
@@ -83,7 +83,7 @@
     "color": "#05c399",
     "technology": "optimistic-rollup",
     "more-info": {
-      "Hypothetical level of decentralization": "HIGH",
+      "Hypothetical level of decentralization": "High",
       "Current level of decentralization": "LOW (test deployment on mainnet? no verified source on etherscan)",
       "Privacy": "NO",
       "Smart contracts": "NO"

@@ -12,6 +12,7 @@ import React from 'react'
 import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../../components/AppContainer'
+import { Item, List } from '../../components/DescriptionList'
 import { Graph } from '../../components/graphs/Graph'
 import { NoOfTxs } from '../../components/graphs/NoOfTxs'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
@@ -39,8 +40,11 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </Graph>
         </div>
 
-        <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
-          <div className={styles.title}>
+        <div
+          style={{ background: props.projectMeta['color'] }}
+          className={cx(styles.card, styles.cardBg, styles.projectOverview, styles.invertedTitle)}
+        >
+          <div className={cx(styles.title)}>
             <InfoIcon />
             <h3>Overview</h3>
             <div
@@ -93,6 +97,29 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <ImportContactsIcon />
             <h3>Project in a nutshell</h3>
           </div>
+          <List>
+            <Item title="Technology" content={props.projectMeta.technology} />
+            {Object.keys(props.projectMeta['more-info']).map((key) => (
+              <Item title={key} content={props.projectMeta['more-info'][key]} />
+            ))}
+            {props.projectMeta.news && (
+              <Item
+                title="News"
+                content={props.projectMeta.news.map((news: any) => (
+                  <li>
+                    <a href={news.link}>{news.name}</a>
+                  </li>
+                ))}
+              />
+            )}
+          </List>
+        </div>
+
+        {/* <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
+          <div className={styles.title}>
+            <ImportContactsIcon />
+            <h3>Project in a nutshell</h3>
+          </div>
           <div className={styles.overview}>
             <table>
               <tr>
@@ -120,7 +147,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
               </>
             )}
           </div>
-        </div>
+        </div> */}
       </PageGrid>
     </AppContainer>
   )
