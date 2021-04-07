@@ -64,6 +64,12 @@ svg.MuiSvgIcon-root {
   cursor: pointer;
   z-index: 2;
 
+  &.tooltip-inline {
+    display: inline;
+    top: 4px;
+    margin-left: 3px;
+  }
+
   &:focus {
     outline: none;
     opacity: 0.7;
