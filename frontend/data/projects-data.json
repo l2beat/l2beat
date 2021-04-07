@@ -5,11 +5,11 @@
     "technology": "optimistic-rollup",
     "more-info": {
       "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "LOW", "tooltip": "contracts are upgradable" },
-      "Privacy": { "text": "NO" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Privacy": { "text": "No" },
       "Smart contracts": {
-        "text": "YES",
-        "tooltip": "custom Solidity compiler. Currently, no new smart contracts can be deployed."
+        "text": "Yes",
+        "tooltip": "Custom Solidity compiler. Currently, no new smart contracts can be deployed."
       }
     },
     "news": [
@@ -25,10 +25,10 @@
     "technology": "zk-rollup",
     "more-info": {
       "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "LOW", "tooltip": "contracts are upgradable" },
-      "Privacy": { "text": "NO", "tooltip": "Theoretically possible in the future" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Privacy": { "text": "No", "tooltip": "Theoretically possible in the future" },
       "Smart contracts": {
-        "text": "NO",
+        "text": "No",
         "tooltip": "Possible in the near future (zinc - custom language or compiling from Solidity)"
       }
     },
@@ -46,8 +46,8 @@
     "more-info": {
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "High" },
-      "Privacy": { "text": "YES" },
-      "Smart contracts": { "text": "NO", "tooltip": "possible in the future (Noir - custom language) " }
+      "Privacy": { "text": "Yes" },
+      "Smart contracts": { "text": "No", "tooltip": "Possible in the future (Noir - custom language) " }
     },
     "news": [
       {
@@ -63,8 +63,8 @@
     "more-info": {
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "High" },
-      "Privacy": { "text": "NO" },
-      "Smart contracts": { "text": "NO" }
+      "Privacy": { "text": "No" },
+      "Smart contracts": { "text": "No" }
     }
   },
   "dydx": {
@@ -73,9 +73,9 @@
     "technology": "zk-rollup",
     "more-info": {
       "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "LOW", "tooltip": "contracts are upgradable" },
-      "Privacy": { "text": "NO" },
-      "Smart contracts": { "text": "NO" }
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Privacy": { "text": "No" },
+      "Smart contracts": { "text": "No" }
     },
     "news": [
       {
@@ -91,11 +91,11 @@
     "more-info": {
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": {
-        "text": "LOW",
-        "tooltip": "test deployment on mainnet? no verified source on etherscan"
+        "text": "Low",
+        "tooltip": "Test deployment on mainnet? no verified source on etherscan"
       },
-      "Privacy": { "text": "NO" },
-      "Smart contracts": { "text": "NO" }
+      "Privacy": { "text": "No" },
+      "Smart contracts": { "text": "No" }
     }
   }
 }

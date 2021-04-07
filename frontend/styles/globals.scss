@@ -76,6 +76,7 @@ svg.MuiSvgIcon-root {
   }
 
   &::before {
+    pointer-events: none;
     content: attr(data-content);
     position: absolute;
     color: var(--text-contrast);
