@@ -1,0 +1,50 @@
+name: Refresh data
+
+on:
+  # everyday at 2 am
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        working-directory: ./data_pipeline
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install -r requirements.txt
+
+      - name: Create bq credential files
+        working-directory: ./data_pipeline
+        env:
+          BQ_CRED_JSON: ${{ secrets.BQ_CRED_JSON }}
+        shell: bash
+        run: |
+          echo "$BQ_CRED_JSON" | base64 -d > bq_creds.json
+
+      - name: Run job
+        working-directory: ./data_pipeline
+        env:
+          BQ_CREDENTIALS: "bq_creds.json"
+          BC_NODE: ${{ secrets.BC_NODE }}
+        run: |
+          python l2_job.py config.json
+
+      - name: Commit updated data file to master
+        uses: ActionwareIO/branch-push-action@action
+        with:
+          branch: master
+          files: |
+            data/data.json
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
