@@ -57,6 +57,7 @@
 
 .projectsList {
   white-space: nowrap;
+  grid-column: span 2;
 
   @include media('<maxWidth', '>bp1Width') {
     grid-column: span 2;
