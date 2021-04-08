@@ -31,6 +31,9 @@
   border: 2px solid var(--gray-02);
   border-radius: var(--radius-sd);
   transition: color 0.15s ease, border-color 0.15s ease;
+
+  overflow-y: auto;
+  max-width: 100wh;
 }
 
 .cardBg {

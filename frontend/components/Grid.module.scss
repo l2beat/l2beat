@@ -23,8 +23,6 @@
   width: 100%;
   padding-bottom: 24px;
   grid-template-columns: 2fr 1fr;
-  overflow-y: auto;
-  max-width: 100wh;
 
   @include media('<maxWidth', '>bp1Width') {
     grid-template-columns: 1fr 1fr;
