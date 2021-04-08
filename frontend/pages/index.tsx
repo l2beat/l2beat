@@ -185,6 +185,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      title: 'L2Beat 💓',
       l2Data,
       tvlHistory,
       dominant: {

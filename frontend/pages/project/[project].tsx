@@ -156,6 +156,15 @@ export function getStaticProps(params: { params: { project: string } }) {
   const [, projectMeta] = projectMetadataFull as any
 
   return {
-    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta, noOfTxsData },
+    props: {
+      title: `L2Beat 💓 ${name} overview`,
+      description: `${name} total value locked increased ${tvlDelta}% in last 24h!`,
+      tvlData,
+      name,
+      tvl: projectData.TVL,
+      tvlDelta,
+      projectMeta,
+      noOfTxsData,
+    },
   }
 }
