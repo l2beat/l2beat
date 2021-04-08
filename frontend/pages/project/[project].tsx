@@ -13,11 +13,12 @@ import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../../components/AppContainer'
 import { ContentWithTooltip, Item, List } from '../../components/DescriptionList'
+import { EtherscanLink } from '../../components/EtherscanLink'
 import { Graph } from '../../components/graphs/Graph'
 import { NoOfTxs } from '../../components/graphs/NoOfTxs'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
-import { l2Data, projectsMetaData } from '../../data'
+import { dataPipelineConfig, l2Data, projectsMetaData } from '../../data'
 import styles from '../../styles/Home.module.scss'
 import { dateSorter } from '../../utils/dateSorter'
 
@@ -41,7 +42,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
         </div>
 
         <div
-          style={{ background: props.projectMeta['color'] }}
+          style={{ background: props.projectMetadata['color'] }}
           className={cx(styles.card, styles.cardBg, styles.projectOverview, styles.invertedTitle)}
         >
           <div className={cx(styles.title)}>
@@ -73,7 +74,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <div className={styles.tvl}>${millify(props.tvl)}</div>
             <div className={styles.description}>Total value locked</div>
             <div className={styles.dominance}>
-              <a href={(props as any).projectMeta.website} target="blank">
+              <a href={props.projectMetadata.website} target="blank">
                 <div className={styles.projectWebsite}>
                   {props.name}
                   <LinkIcon fontSize="large" />
@@ -98,14 +99,24 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <h3>Project in a nutshell</h3>
           </div>
           <List>
-            <Item title="Technology" content={props.projectMeta.technology} />
-            {Object.keys(props.projectMeta['more-info']).map((key) => (
-              <Item title={key} content={<ContentWithTooltip {...props.projectMeta['more-info'][key]} />} />
+            <Item title="Technology" content={props.projectMetadata.technology} />
+            {Object.keys(props.projectMetadata['more-info']).map((key) => (
+              <Item title={key} content={<ContentWithTooltip {...props.projectMetadata['more-info'][key]} />} />
             ))}
-            {props.projectMeta.news && (
+
+            <Item
+              title="Tracked bridges"
+              content={props.projectConfig.bridges.map((bridge: any) => (
+                <li>
+                  <EtherscanLink address={bridge.address} />
+                </li>
+              ))}
+            />
+
+            {props.projectMetadata.news && (
               <Item
                 title="News"
-                content={props.projectMeta.news.map((news: any) => (
+                content={props.projectMetadata.news.map((news: any) => (
                   <li>
                     <a href={news.link}>{news.name}</a>
                   </li>
@@ -148,14 +159,30 @@ export function getStaticProps(params: { params: { project: string } }) {
   const tvlDelta =
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
 
-  const projectMetadataFull = Object.entries(projectsMetaData).find(
-    ([projectName]) => projectName.toLowerCase() === params.params.project,
-  )
-  assert(projectMetadataFull, `Couldn't find ${params.params.project} in projects config`)
-
-  const [, projectMeta] = projectMetadataFull as any
+  const projectMetadata = findProjectMetadata(params.params.project)
+  const projectConfig = findProjectConfig(params.params.project)
 
   return {
-    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMeta, noOfTxsData },
+    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMetadata, noOfTxsData, projectConfig },
   }
+}
+
+function findProjectMetadata(name: string): any {
+  const projectMetadataFull = Object.entries(projectsMetaData).find(
+    ([projectName]) => projectName.toLowerCase() === name.toLowerCase(),
+  )
+  assert(projectMetadataFull, `Couldn't find ${name} in projects metadata config`)
+
+  const [, projectMeta] = projectMetadataFull as any
+  return projectMeta
+}
+
+function findProjectConfig(name: string): any {
+  const projectConfigFull = Object.entries(dataPipelineConfig.l2s).find(
+    ([projectName]) => projectName.toLowerCase() === name.toLowerCase(),
+  )
+  assert(projectConfigFull, `Couldn't find ${name} in projects config`)
+
+  const [, projectConfig] = projectConfigFull as any
+  return projectConfig
 }
