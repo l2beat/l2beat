@@ -4,7 +4,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 const TITLE = 'L2Beat - Analytics about Layer 2 scaling solutions'
-const DESCRIPTION = 'L2Beat is a website containing always up-to-date analytics about Layer 2 scaling solutions for Ethereum.'
+const DESCRIPTION =
+  'L2Beat is a website containing always up-to-date analytics about Layer 2 scaling solutions for Ethereum.'
 const ALT = 'Your insights into L2'
 const THUMBNAIL = 'https://l2beat.com/thumbnail.png'
 function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>; pageProps: any }) {
@@ -14,10 +15,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>;
     <>
       <Head>
         <title>{TITLE}</title>
-        <meta
-          name="description"
-          content={DESCRIPTION}
-        />
+        <meta name="description" content={DESCRIPTION} />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
 
