@@ -22,12 +22,13 @@
   grid-gap: 24px;
   width: 100%;
   padding-bottom: 24px;
+  grid-template-columns: 2fr 1fr;
 
-  @include media('<maxWidth', '>minWidth') {
+  @include media('<maxWidth', '>bp1Width') {
     grid-template-columns: 1fr 1fr;
   }
 
-  @include media('<minWidth') {
+  @include media('<bp1Width') {
     grid-template-columns: 1fr;
   }
 }
