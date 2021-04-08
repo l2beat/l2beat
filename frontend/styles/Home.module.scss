@@ -122,7 +122,7 @@
 
 .faq {
   @include media('<maxWidth', '>bp1Width') {
-    order: -1
+    order: -1;
   }
 
   @include media('<bp1Width') {

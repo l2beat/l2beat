@@ -40,7 +40,8 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </Graph>
         </div>
 
-        <div className={cx(styles.card, styles.cardBg, styles.projectOverview, styles.invertedTitle)}
+        <div
+          className={cx(styles.card, styles.cardBg, styles.projectOverview, styles.invertedTitle)}
           style={{ background: props.projectMeta['color'] }}
         >
           <div className={cx(styles.title)}>
