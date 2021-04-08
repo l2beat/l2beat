@@ -1,10 +1,9 @@
 name: Refresh data
 
 on:
-  pull_request:
-  push:
-    branches:
-      - master
+  # everyday at 2 am
+  schedule:
+    - cron: "0 2 * * *"
 
 jobs:
   refresh:
