@@ -42,6 +42,7 @@
     "@types/react-vis": "^1.11.6",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "capture-website-cli": "^1.1.0",
     "prettier": "^2.2.1"
   }
 }

@@ -163,7 +163,17 @@ export function getStaticProps(params: { params: { project: string } }) {
   const projectConfig = findProjectConfig(params.params.project)
 
   return {
-    props: { tvlData, name, tvl: projectData.TVL, tvlDelta, projectMetadata, noOfTxsData, projectConfig },
+    props: {
+      title: `L2Beat 💓 ${name} overview`,
+      description: `${name} total value locked increased ${tvlDelta}% in last 24h!`,
+      tvlData,
+      name,
+      tvl: projectData.TVL,
+      tvlDelta,
+      projectMetadata,
+      noOfTxsData,
+      projectConfig,
+    },
   }
 }
 
@@ -176,7 +186,6 @@ function findProjectMetadata(name: string): any {
   const [, projectMeta] = projectMetadataFull as any
   return projectMeta
 }
-
 function findProjectConfig(name: string): any {
   const projectConfigFull = Object.entries(dataPipelineConfig.l2s).find(
     ([projectName]) => projectName.toLowerCase() === name.toLowerCase(),
