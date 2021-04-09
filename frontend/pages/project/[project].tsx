@@ -93,7 +93,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </div>
         )}
 
-        <div className={cx(styles.card, styles.cardBg, styles.projectOverview)}>
+        <div className={cx(styles.card, styles.cardBg, styles.projectDetails)}>
           <div className={styles.title}>
             <ImportContactsIcon />
             <h3>Project in a nutshell</h3>

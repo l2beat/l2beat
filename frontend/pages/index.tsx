@@ -16,7 +16,7 @@ import { assert } from 'ts-essentials'
 import { AppContainer } from '../components/AppContainer'
 import { Filter, Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'
-import { FullPageGrid, PageGrid } from '../components/PageGrid'
+import { FullPageGrid } from '../components/PageGrid'
 import { l2Data, projectsMetaData } from '../data'
 import styles from '../styles/Home.module.scss'
 import { dateSorter } from '../utils/dateSorter'
@@ -32,7 +32,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
   return (
     <AppContainer>
       <h2 className={styles.overview}>Projects overview</h2>
-      <PageGrid>
+      <FullPageGrid>
         <div className={cx(styles.card, styles.graph)}>
           <Graph title="Total value locked in USD" data={tvlHistory} defaultFilter={Filter.NINETY_DAYS}>
             {(data, container) => <TVLHistory container={container} data={data} />}
@@ -65,9 +65,6 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <div className={styles.description}>{dominant.name} dominance</div>
           </div>
         </div>
-      </PageGrid>
-
-      <FullPageGrid>
         <div className={cx(styles.card, styles.cardBg, styles.projectsList)}>
           <div className={styles.title}>
             <ListIcon />
@@ -101,8 +98,8 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                   </td>
                   <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
                   <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
-                  <td className={cx(styles.alignRight, styles.mono)}>{rowData.meta.technology}</td>
-                  <td className={cx(styles.alignRight)}>
+                  <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
+                  <td className={cx(styles.alignRight, styles.more)}>
                     <Link href={`/project/${rowData.name.toLowerCase()}`}>
                       <div className={styles.projectLink}>More</div>
                     </Link>
@@ -112,10 +109,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </tbody>
           </table>
         </div>
-      </FullPageGrid>
-
-      <PageGrid>
-        <div className={cx(styles.card, styles.cardBg, styles.faq)}>
+        <div className={cx(styles.card, styles.cardBg, styles.links)}>
           <div className={styles.title}>
             <MenuBookIcon />
             <h3>Learn about Layer 2</h3>
@@ -150,7 +144,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <a href="https://github.com/krzkaczor/l2beat/blob/master/data_pipeline/config.json">config</a>.
           </p>
         </div>
-      </PageGrid>
+      </FullPageGrid>
     </AppContainer>
   )
 }

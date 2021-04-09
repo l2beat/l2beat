@@ -1,7 +1,13 @@
+@import '../styles/media.scss';
+
 .wrapper {
   display: flex;
   width: 100%;
   background: var(--primary);
+
+  @include media('<maxWidth') {
+    padding: 0 28px;
+  }
 }
 
 .container {
