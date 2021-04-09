@@ -49,16 +49,11 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <InfoIcon />
             <h3>Overview</h3>
             <div
-              className={cx(
-                styles.badge,
-                {
-                  [styles.badgeUp]: props.tvlDelta > 0,
-                  [styles.badgeDown]: props.tvlDelta < 0,
-                },
-                'tooltip',
-              )}
+              className={cx(styles.badge, {
+                [styles.badgeUp]: props.tvlDelta > 0,
+                [styles.badgeDown]: props.tvlDelta < 0,
+              })}
               tabIndex={0}
-              data-content="24h change"
             >
               {badgeText}
               {props.tvlDelta === 0 ? (

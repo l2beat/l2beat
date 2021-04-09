@@ -92,6 +92,8 @@
 }
 
 .projectDetails {
+  overflow: visible;
+
   @include media('<maxWidth', '>bp1Width') {
     order: -1;
   }

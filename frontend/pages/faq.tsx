@@ -33,6 +33,34 @@ export default function Faq() {
 
           <div>
             <div className={styles.title}>
+              <h3>I want to add a new project or improve some info?</h3>
+            </div>
+            <p>
+              Everything is <a href="https://github.com/krzkaczor/l2beat">open source</a> - just create a PR. If you
+              want to add a new project you should:
+              <ol>
+                <li>
+                  Add info about token bridges to a{' '}
+                  <a href="https://github.com/krzkaczor/l2beat/blob/master/data_pipeline/config.json#L67">
+                    data pipeline config
+                  </a>
+                </li>
+                <li>Rerun data pipeline</li>
+                <li>
+                  Add more info to a{' '}
+                  <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/projects-data.json">
+                    frontend config
+                  </a>
+                </li>
+              </ol>
+              <p>
+                Alternatively, you can post a GH issue with a required info and we will rerun data pipeline for you.
+              </p>
+            </p>
+          </div>
+
+          <div>
+            <div className={styles.title}>
               <h3>Who is behind this project?</h3>
             </div>
             <p>

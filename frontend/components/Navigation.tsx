@@ -1,4 +1,5 @@
 import GitHubIcon from '@material-ui/icons/GitHub'
+import TwitterIcon from '@material-ui/icons/Twitter'
 import cx from 'classnames'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -29,6 +30,11 @@ export const Navigation = () => {
         <nav title="Main navigation" className={styles.linksWrapper}>
           <div className={styles.link}>
             <Link href="/faq">FAQ</Link>
+          </div>
+          <div className={styles.link}>
+            <a href="https://twitter.com/krzkaczor">
+              <TwitterIcon />
+            </a>
           </div>
           <div className={styles.link}>
             <a href="https://github.com/krzkaczor/l2beat">
