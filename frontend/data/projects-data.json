@@ -4,6 +4,7 @@
     "color": "#f01b37",
     "technology": "optimistic-rollup",
     "more-info": {
+      "Primary use case": { "text": "Universal" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
       "Privacy": { "text": "No" },
@@ -24,6 +25,7 @@
     "color": "#8c8dfc",
     "technology": "zk-rollup",
     "more-info": {
+      "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
       "Privacy": { "text": "No", "tooltip": "Theoretically possible in the future" },
@@ -44,6 +46,7 @@
     "color": "#8953f3",
     "technology": "zk-rollup",
     "more-info": {
+      "Primary use case": { "text": "Private payments" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "High" },
       "Privacy": { "text": "Yes" },
@@ -61,6 +64,7 @@
     "color": "#1c42ff",
     "technology": "zk-rollup",
     "more-info": {
+      "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "High" },
       "Privacy": { "text": "No" },
@@ -72,6 +76,7 @@
     "color": "#6966ff",
     "technology": "zk-rollup",
     "more-info": {
+      "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
       "Privacy": { "text": "No" },
@@ -89,6 +94,7 @@
     "color": "#05c399",
     "technology": "optimistic-rollup",
     "more-info": {
+      "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": {
         "text": "Low",
