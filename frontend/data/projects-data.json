@@ -7,7 +7,7 @@
       "Primary use case": { "text": "Universal" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
       "Current level of decentralization": { "text": "Low", "sentiment": "bad" },
-      "Can all funds be stolen?": {
+      "Can funds be stolen by the operator?": {
         "text": "Yes",
         "tooltip": "Contracts are upgradable",
         "sentiment": "bad",
@@ -90,8 +90,29 @@
     "technology": "zk-rollup",
     "more-info": {
       "Primary use case": { "text": "DEX" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "High" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "High", "sentiment": "good" },
+      "Can funds be stolen by the operator?": {
+        "text": "No",
+        "sentiment": "good"
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only operator can produce new blocks",
+        "pointers": [
+          "https://github.com/Loopring/protocols/blob/bbcebc4848b4a1c5ba8264a2d601de5f8183b5aa/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L340"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good",
+        "tooltip": "If operator goes dark users can still force exit rollup.",
+        "pointers": [
+          "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#forced-request-handling",
+          "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#withdrawal-mode"
+        ]
+      },
       "Privacy": { "text": "No" },
       "Smart contracts": { "text": "No" }
     }
