@@ -67,6 +67,8 @@ svg.MuiSvgIcon-root {
   &.tooltip-inline {
     display: inline;
     top: 4px;
+    left: 2px;
+    color: var(--gray-03);
     margin-left: 3px;
   }
 

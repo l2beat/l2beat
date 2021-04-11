@@ -21,3 +21,15 @@
   margin-top: 4px;
   font-weight: bold;
 }
+
+.pointers {
+  display: inline-block;
+  top: 3px;
+  left: 4px;
+  position: relative;
+
+  svg {
+    color: var(--gray-03);
+    transform: rotate(-45deg);
+  }
+}

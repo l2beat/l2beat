@@ -5,8 +5,33 @@
     "technology": "optimistic-rollup",
     "more-info": {
       "Primary use case": { "text": "Universal" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "bad",
+        "pointers": [
+          "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol#L47",
+          "https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138"
+        ]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only sequencer can produce new blocks",
+        "pointers": [
+          "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L411"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes",
+        "sentiment": "good",
+        "tooltip": "Sequencer can be forced to append particular TX into the rollup",
+        "pointers": [
+          "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L256"
+        ]
+      },
       "Privacy": { "text": "No" },
       "Smart contracts": {
         "text": "Yes",
@@ -21,13 +46,36 @@
     ]
   },
   "zkSync": {
-    "website": "https://optimism.io/",
+    "website": "https://zksync.io/",
     "color": "#8c8dfc",
     "technology": "zk-rollup",
     "more-info": {
       "Primary use case": { "text": "Payments" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes",
+        "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
+        "sentiment": "bad",
+        "pointers": ["https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code"]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only whitelisted actors can produce new blocks",
+        "pointers": [
+          "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L268"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good",
+        "tooltip": "Tx can be forced into a rollup state or rollup goes into \"exodus\" mode and everyone can exit.",
+        "pointers": [
+          "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L223",
+          "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L352"
+        ]
+      },
       "Privacy": { "text": "No", "tooltip": "Theoretically possible in the future" },
       "Smart contracts": {
         "text": "No",
@@ -47,8 +95,17 @@
     "technology": "zk-rollup",
     "more-info": {
       "Primary use case": { "text": "Private payments" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "High" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "?" },
+      "Can funds be stolen by the operator?": {
+        "text": "?"
+      },
+      "Permisonless?": {
+        "text": "?"
+      },
+      "Force TX mechanism?": {
+        "text": "?"
+      },
       "Privacy": { "text": "Yes" },
       "Smart contracts": { "text": "No", "tooltip": "Possible in the future (Noir - custom language) " }
     },
@@ -65,8 +122,29 @@
     "technology": "zk-rollup",
     "more-info": {
       "Primary use case": { "text": "DEX" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "High" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "High", "sentiment": "good" },
+      "Can funds be stolen by the operator?": {
+        "text": "No",
+        "sentiment": "good"
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only operator can produce new blocks",
+        "pointers": [
+          "https://github.com/Loopring/protocols/blob/bbcebc4848b4a1c5ba8264a2d601de5f8183b5aa/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L340"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good",
+        "tooltip": "If operator goes dark users can still exit the rollup",
+        "pointers": [
+          "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#forced-request-handling",
+          "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#withdrawal-mode"
+        ]
+      },
       "Privacy": { "text": "No" },
       "Smart contracts": { "text": "No" }
     }
@@ -78,7 +156,22 @@
     "more-info": {
       "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes",
+        "tooltip": "Contracts are upgradable BUT on the upside there is a 28 days timelock",
+        "sentiment": "bad",
+        "pointers": ["https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code"]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only dydx can produce new blocks"
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good"
+      },
       "Privacy": { "text": "No" },
       "Smart contracts": { "text": "No" }
     },
@@ -95,10 +188,23 @@
     "technology": "optimistic-rollup",
     "more-info": {
       "Primary use case": { "text": "Payments" },
-      "Hypothetical level of decentralization": { "text": "High" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
       "Current level of decentralization": {
-        "text": "Low",
-        "tooltip": "Test deployment on mainnet? no verified source on etherscan"
+        "text": "Medium",
+        "sentiment": "neutral",
+        "tooltip": "Optimistic rollups require 3rd party validators to submit fraud proofs. B/c of current lack of the adoption users can't trust that such validators are running."
+      },
+      "Can funds be stolen by the operator?": {
+        "text": "No",
+        "sentiment": "good"
+      },
+      "Permisonless?": {
+        "text": "Yes",
+        "sentiment": "good",
+        "tooltip": "Anyone can submit a new root that can become part of the rollup after a delay",
+        "pointers": [
+          "https://github.com/FuelLabs/fuel/blob/49c35e8de752200175174a08b6a8eae42796790d/src/Block.yulp#L95-L101"
+        ]
       },
       "Privacy": { "text": "No" },
       "Smart contracts": { "text": "No" }

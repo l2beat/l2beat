@@ -1,5 +1,7 @@
-import HelpIcon from '@material-ui/icons/Help'
+import HelpIcon from '@material-ui/icons/HelpOutline'
+import LinkIcon from '@material-ui/icons/Link'
 import * as React from 'react'
+import { assert } from 'ts-essentials'
 
 import styles from './DescriptionList.module.scss'
 
@@ -21,20 +23,52 @@ export function Item({ title, content }: DesorptionItemProps) {
   )
 }
 
+type Sentiment = 'bad' | 'good' | 'neutral'
+
 interface ContentWithTooltipProps {
   text: string
   tooltip?: string
+  sentiment?: Sentiment
+  pointers?: string[]
 }
 
-export function ContentWithTooltip({ text, tooltip }: ContentWithTooltipProps) {
+export function ContentWithTooltip({ text, tooltip, sentiment, pointers }: ContentWithTooltipProps) {
   return (
     <>
-      {text}
+      <span style={getStyleForSentiment(sentiment)}>{text}</span>
       {tooltip && (
         <div className="tooltip tooltip-inline" tabIndex={0} data-content={tooltip}>
           <HelpIcon fontSize="small" />
         </div>
       )}
+      {pointers && (
+        <div className={styles.pointers}>
+          {pointers.map((p) => (
+            <a href={p} target="blank">
+              <LinkIcon fontSize="small" />
+            </a>
+          ))}
+        </div>
+      )}
     </>
   )
+}
+
+function getStyleForSentiment(sentiment?: Sentiment): object {
+  if (!sentiment) {
+    return {}
+  }
+  if (sentiment === 'good') {
+    return { color: 'green' }
+  }
+  if (sentiment === 'bad') {
+    return { color: 'red' }
+  }
+  // eslint-disable-next-line
+  if (sentiment === 'neutral') {
+    return { color: 'blue' }
+  }
+
+  // eslint-disable-next-line
+  assert(false, `Unknown sentiment ${sentiment}. Should be good, bad, neutral or null`)
 }
