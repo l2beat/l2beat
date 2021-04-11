@@ -26,7 +26,7 @@ export function Item({ title, content }: DesorptionItemProps) {
 interface ContentWithTooltipProps {
   text: string
   tooltip?: string
-  sentiment?: 'bad' | 'good'
+  sentiment?: 'bad' | 'good' | 'neutral'
   pointers?: string[]
 }
 
@@ -62,6 +62,9 @@ function getStyleForSentiment(sentiment?: 'bad' | 'good'): object {
   if (sentiment === 'bad') {
     return { color: 'red' }
   }
+  if (sentiment === 'neutral') {
+    return { color: 'blue' }
+  }
 
-  assert(false, `Unknown sentiment ${sentiment}. Should be good, bad or null`)
+  assert(false, `Unknown sentiment ${sentiment}. Should be good, bad, neutral or null`)
 }
