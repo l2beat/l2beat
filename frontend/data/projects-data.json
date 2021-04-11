@@ -5,8 +5,33 @@
     "technology": "optimistic-rollup",
     "more-info": {
       "Primary use case": { "text": "Universal" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "Low", "sentiment": "bad" },
+      "Can all funds be stolen?": {
+        "text": "Yes",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "bad",
+        "pointers": [
+          "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol#L47",
+          "https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138"
+        ]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only sequencer can produce new blocks",
+        "pointers": [
+          "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L411"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes",
+        "sentiment": "good",
+        "tooltip": "Sequencer can be forced to append particular TX into the rollup",
+        "pointers": [
+          "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L256"
+        ]
+      },
       "Privacy": { "text": "No" },
       "Smart contracts": {
         "text": "Yes",
