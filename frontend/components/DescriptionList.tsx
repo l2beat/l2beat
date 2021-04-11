@@ -66,5 +66,6 @@ function getStyleForSentiment(sentiment?: 'bad' | 'good'): object {
     return { color: 'blue' }
   }
 
+  // eslint-disable-next-line
   assert(false, `Unknown sentiment ${sentiment}. Should be good, bad, neutral or null`)
 }
