@@ -23,10 +23,12 @@ export function Item({ title, content }: DesorptionItemProps) {
   )
 }
 
+type Sentiment = 'bad' | 'good' | 'neutral'
+
 interface ContentWithTooltipProps {
   text: string
   tooltip?: string
-  sentiment?: 'bad' | 'good' | 'neutral'
+  sentiment?: Sentiment
   pointers?: string[]
 }
 
@@ -52,7 +54,7 @@ export function ContentWithTooltip({ text, tooltip, sentiment, pointers }: Conte
   )
 }
 
-function getStyleForSentiment(sentiment?: 'bad' | 'good'): object {
+function getStyleForSentiment(sentiment?: Sentiment): object {
   if (!sentiment) {
     return {}
   }
@@ -62,6 +64,7 @@ function getStyleForSentiment(sentiment?: 'bad' | 'good'): object {
   if (sentiment === 'bad') {
     return { color: 'red' }
   }
+  // eslint-disable-next-line
   if (sentiment === 'neutral') {
     return { color: 'blue' }
   }
