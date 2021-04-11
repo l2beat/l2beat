@@ -46,13 +46,36 @@
     ]
   },
   "zkSync": {
-    "website": "https://optimism.io/",
+    "website": "https://zksync.io/",
     "color": "#8c8dfc",
     "technology": "zk-rollup",
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable" },
+      "Current level of decentralization": { "text": "Low", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes",
+        "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
+        "sentiment": "bad",
+        "pointers": ["https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code"]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only whitelisted actors can produce new blocks",
+        "pointers": [
+          "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L268"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good",
+        "tooltip": "Tx can be forced into a rollup state or rollup goes into \"exodus\" mode and everyone can exit.",
+        "pointers": [
+          "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L223",
+          "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L352"
+        ]
+      },
       "Privacy": { "text": "No", "tooltip": "Theoretically possible in the future" },
       "Smart contracts": {
         "text": "No",
