@@ -52,7 +52,7 @@
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
-      "Current level of decentralization": { "text": "Low", "sentiment": "bad" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
       "Can funds be stolen by the operator?": {
         "text": "Yes",
         "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
@@ -139,7 +139,7 @@
       "Force TX mechanism?": {
         "text": "Yes but only for withdrawals",
         "sentiment": "good",
-        "tooltip": "If operator goes dark users can still force exit rollup.",
+        "tooltip": "If operator goes dark users can still exit the rollup",
         "pointers": [
           "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#forced-request-handling",
           "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#withdrawal-mode"
