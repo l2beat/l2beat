@@ -215,7 +215,7 @@
     "color": "#05c399",
     "technology": "zk-rollup",
     "more-info": {
-      "Primary use case": { "text": "Payments" },
+      "Primary use case": { "text": "NFT Exchange" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
       "Current level of decentralization": {
         "text": "Medium",
