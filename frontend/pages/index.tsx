@@ -9,7 +9,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
 import { sortBy } from 'lodash'
 import millify from 'millify'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { assert } from 'ts-essentials'
 
@@ -20,7 +20,6 @@ import { FullPageGrid } from '../components/PageGrid'
 import { l2Data, projectsMetaData } from '../data'
 import styles from '../styles/Home.module.scss'
 import { dateSorter } from '../utils/dateSorter'
-import { useRouter } from 'next/router'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
@@ -90,7 +89,12 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <tbody>
               {l2sTable.map((rowData, index) => {
                 return (
-                  <tr title={`${rowData.name} overview`} onClick={() => push(`/project/${rowData.name.toLowerCase()}`)} key={rowData.name} className={styles.dataRow}>
+                  <tr
+                    title={`${rowData.name} overview`}
+                    onClick={() => push(`/project/${rowData.name.toLowerCase()}`)}
+                    key={rowData.name}
+                    className={styles.dataRow}
+                  >
                     <td>
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
