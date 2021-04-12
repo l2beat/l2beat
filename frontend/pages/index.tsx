@@ -20,11 +20,13 @@ import { FullPageGrid } from '../components/PageGrid'
 import { l2Data, projectsMetaData } from '../data'
 import styles from '../styles/Home.module.scss'
 import { dateSorter } from '../utils/dateSorter'
+import { useRouter } from 'next/router'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
+  const { push } = useRouter()
   const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
 
   const badgeText = Math.abs(tvlDelta) < 0.01 ? `${tvlDelta > 0 ? '>' : '<-'}0.01%` : `${tvlDelta.toFixed(2)}%`
@@ -86,26 +88,23 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
               </tr>
             </thead>
             <tbody>
-              {l2sTable.map((rowData, index) => (
-                <tr key={rowData.name} className={styles.dataRow}>
-                  <td>
-                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                      <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
-                      <div>
-                        {index + 1}. {rowData.name}
+              {l2sTable.map((rowData, index) => {
+                return (
+                  <tr title={`${rowData.name} overview`} onClick={() => push(`/project/${rowData.name.toLowerCase()}`)} key={rowData.name} className={styles.dataRow}>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
+                        <div>
+                          {index + 1}. {rowData.name}
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
-                  <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
-                  <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
-                  <td className={cx(styles.alignRight, styles.more)}>
-                    <Link href={`/project/${rowData.name.toLowerCase()}`}>
-                      <div className={styles.projectLink}>More</div>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
+                    <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
+                    <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

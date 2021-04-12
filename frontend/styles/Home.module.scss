@@ -230,8 +230,7 @@
 }
 
 .table {
-  border-collapse: separate;
-  border-spacing: 0 12px;
+  border-collapse: collapse;
   overflow-x: scroll;
 }
 
@@ -286,8 +285,18 @@
 }
 
 .dataRow {
-  padding: 0 15px;
+  // padding: 0 15px;
   font-size: var(--font-body);
+  cursor: pointer;
+  transition: 0.2s;
+  
+  & td {
+    padding: 10px 0;
+  }
+
+  &:hover {
+    background: var(--gray-02);
+  }
 }
 
 @media (max-width: 900px) {
