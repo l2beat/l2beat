@@ -62,6 +62,18 @@
       "stablecoin": false,
       "decimals": 18,
       "coinpaprika_id": "link-chainlink"
+    },
+    "WETH": {
+      "address": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "weth-weth"
+    },
+    "MATIC": {
+      "address": "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "matic-matic-network"
     }
   },
   "l2s": {
@@ -118,6 +130,15 @@
           "tokens": ["DAI", "USDT", "USDC"]
         }
       ]
-    }
+    },
+    "Polygon": {
+      "bridges": [
+        {
+          "address": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+          "deployed_at_block": 10167767,
+          "tokens": ["DAI", "MATIC", "WETH"]
+        }
+      ]
+    },
   }
 }
