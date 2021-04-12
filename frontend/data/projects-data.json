@@ -208,6 +208,22 @@
       },
       "Privacy": { "text": "No" },
       "Smart contracts": { "text": "No" }
+  },
+  "Polygon": {
+    "website": "https://polygon.technology",
+    "color": "#8248e5",
+    "technology": "Hybrid (Plasma + PoS)",
+    "more-info": {
+      "Primary use case": { "text": "Universal" },
+      "Hypothetical level of decentralization": {},
+      "Current level of decentralization": {},
+      "Can funds be stolen by the operator?": {},
+      "Permisonless?": {},
+      "Privacy": { "text": "No" },
+      "Smart contracts": {
+        "text": "Yes",
+        "tooltip": "Fully EVM compatible"
+      }
     }
   }
 }
