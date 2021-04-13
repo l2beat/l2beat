@@ -98,7 +98,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     <td>
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
-                        <div>
+                        <div className={styles.projectName}>
                           {index + 1}. {rowData.name}
                         </div>
                       </div>

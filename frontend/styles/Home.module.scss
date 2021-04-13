@@ -230,8 +230,9 @@
 }
 
 .table {
-  border-collapse: collapse;
+  border-collapse: separate;
   overflow-x: scroll;
+  border-spacing: 0 10px;
 }
 
 .tableHeader {
@@ -242,6 +243,11 @@
 
 .projectName {
   display: flex;
+}
+
+.projectName {
+  z-index: 1;
+  margin-left: 15px;
 }
 
 .projectBadge {
@@ -290,12 +296,33 @@
   cursor: pointer;
   transition: 0.2s;
 
+  --border: 1px solid var(--gray-03);
+  
   & td {
+    position: relative;
+    overflow: hidden;
+    background: white;
     padding: 10px 0;
+    border-bottom: var(--border);
+    border-top: var(--border);
+    // border-top: 1px solid none;
+  }
+
+  & td:first-child {
+    padding-left: 10px;
+    border-left: var(--border);
+    border-radius: 8px 0 0 8px;
+  }
+
+  & td:last-child {
+    padding-right: 10px;
+    border-right: var(--border);
+    border-radius: 0 8px 8px 0;
   }
 
   &:hover {
     background: var(--gray-02);
+    transform: scale(1.02);
   }
 }
 
