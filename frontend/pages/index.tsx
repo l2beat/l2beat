@@ -1,5 +1,3 @@
-import 'react-vis/dist/style.css'
-
 import ListIcon from '@material-ui/icons/List'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'

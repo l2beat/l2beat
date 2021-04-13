@@ -1,4 +1,5 @@
 import '../styles/globals.scss'
+import 'react-vis/dist/style.css'
 
 import Head from 'next/head'
 import { useRouter } from 'next/router'

@@ -9,7 +9,6 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
 import millify from 'millify'
 import React from 'react'
-import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../../components/AppContainer'
 import { ContentWithTooltip, Item, List } from '../../components/DescriptionList'
@@ -18,9 +17,12 @@ import { Graph } from '../../components/graphs/Graph'
 import { NoOfTxs } from '../../components/graphs/NoOfTxs'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
-import { dataPipelineConfig, l2Data, projectsMetaData } from '../../data'
+import { l2Data } from '../../data'
 import styles from '../../styles/Home.module.scss'
 import { dateSorter } from '../../utils/dateSorter'
+import { getProjectsPaths } from '../../utils/getProjectsPaths'
+import { findProjectConfig } from '../../utils/findProjectConfig'
+import { findProjectMetadata } from '../../utils/findProjectMetadata'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
   const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
@@ -129,18 +131,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
 }
 
 export function getStaticPaths() {
-  const projects = Object.keys(l2Data.l2s).map((slug) => slug.toLowerCase())
-
-  return {
-    paths: projects.map((project) => {
-      return {
-        params: {
-          project,
-        },
-      }
-    }),
-    fallback: false,
-  }
+  return getProjectsPaths()
 }
 
 export function getStaticProps(params: { params: { project: string } }) {
@@ -175,21 +166,4 @@ export function getStaticProps(params: { params: { project: string } }) {
   }
 }
 
-function findProjectMetadata(name: string): any {
-  const projectMetadataFull = Object.entries(projectsMetaData).find(
-    ([projectName]) => projectName.toLowerCase() === name.toLowerCase(),
-  )
-  assert(projectMetadataFull, `Couldn't find ${name} in projects metadata config`)
 
-  const [, projectMeta] = projectMetadataFull as any
-  return projectMeta
-}
-function findProjectConfig(name: string): any {
-  const projectConfigFull = Object.entries(dataPipelineConfig.l2s).find(
-    ([projectName]) => projectName.toLowerCase() === name.toLowerCase(),
-  )
-  assert(projectConfigFull, `Couldn't find ${name} in projects config`)
-
-  const [, projectConfig] = projectConfigFull as any
-  return projectConfig
-}
