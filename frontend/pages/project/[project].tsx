@@ -101,9 +101,10 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
 
             <Item
               title="Tracked bridges"
+              className={styles.bridges}
               content={props.projectConfig.bridges.map((bridge: any) => (
                 <li>
-                  <EtherscanLink address={bridge.address} />
+                  <EtherscanLink address={bridge.address} /> - {bridge.tokens.map((t: string) => t).join(', ')}
                 </li>
               ))}
             />

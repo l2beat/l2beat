@@ -212,11 +212,11 @@
   },
   "ImmutableX": {
     "website": "https://www.immutable.com/",
-    "color": "#05c399",
+    "color": "#17b5cb",
     "technology": "ZR/zk-STARK/StarkExchange",
     "more-info": {
       "Primary use case": { "text": "NFT Exchange" },
-      "Hypothetical level of decentralization": { "text": "High"},
+      "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
       "Can funds be stolen by the operator?": {
         "text": "Yes, through contract upgrade",

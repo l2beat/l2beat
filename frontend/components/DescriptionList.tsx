@@ -1,5 +1,6 @@
 import HelpIcon from '@material-ui/icons/HelpOutline'
 import LinkIcon from '@material-ui/icons/Link'
+import cx from 'classnames'
 import * as React from 'react'
 import { assert } from 'ts-essentials'
 
@@ -12,11 +13,12 @@ export function List({ children }: React.PropsWithChildren<{}>) {
 interface DesorptionItemProps {
   title: string
   content: React.ReactNode
+  className?: string
 }
 
-export function Item({ title, content }: DesorptionItemProps) {
+export function Item({ title, content, ...common }: DesorptionItemProps) {
   return (
-    <div className={styles.wrapper}>
+    <div className={cx(styles.wrapper, common.className)}>
       <dt className={styles.title}>{title}</dt>
       <dl className={styles.content}>{content}</dl>
     </div>
