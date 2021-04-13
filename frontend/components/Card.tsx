@@ -1,25 +1,20 @@
-import styles from '../styles/og.module.scss';
-import {
-  LineSeries,
-  AreaSeries,
-  GradientDefs,
-  XYPlot,
-  LineSeriesPoint
-} from 'react-vis';
+import React from 'react'
+import { AreaSeries, GradientDefs, LineSeries, LineSeriesPoint, XYPlot } from 'react-vis'
 
+import styles from '../styles/og.module.scss'
 import { Icon } from './Icons'
 
 interface Stat {
-  name: string;
-  value: string;
-  icon?: keyof typeof Icon,
+  name: string
+  value: string
+  icon?: keyof typeof Icon
 }
 export interface Props {
-  bg: string;
-  title: string;
-  head: string;
-  stats: Stat[];
-  graphData: LineSeriesPoint[];
+  bg: string
+  title: string
+  head: string
+  stats: Stat[]
+  graphData: LineSeriesPoint[]
 }
 export function Card({ title, head, stats, bg, graphData }: Props) {
   return (
@@ -34,16 +29,8 @@ export function Card({ title, head, stats, bg, graphData }: Props) {
               <stop offset="100%" stopColor="white" stopOpacity={0} />
             </linearGradient>
           </GradientDefs>
-          <AreaSeries
-            stroke="none"
-            fill="url(#CoolGradient)"
-            data={graphData.map(point => ({ ...point, y0: 0 }))}
-          />
-          <LineSeries
-            stroke="white"
-            strokeWidth={3}
-            data={graphData.map(point => ({ ...point, y0: 0 }))}
-          />
+          <AreaSeries stroke="none" fill="url(#CoolGradient)" data={graphData.map((point) => ({ ...point, y0: 0 }))} />
+          <LineSeries className={styles.stroke} stroke="white" data={graphData.map((point) => ({ ...point, y0: 0 }))} />
         </XYPlot>
       </div>
       {stats.map(({ name, value, icon }) => {
@@ -55,8 +42,9 @@ export function Card({ title, head, stats, bg, graphData }: Props) {
               {value}
               {IconComp && <IconComp className={styles.icon} />}
             </div>
-          </div>)
+          </div>
+        )
       })}
     </div>
-  );
+  )
 }

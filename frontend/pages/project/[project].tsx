@@ -20,9 +20,9 @@ import { PageGrid } from '../../components/PageGrid'
 import { l2Data } from '../../data'
 import styles from '../../styles/Home.module.scss'
 import { dateSorter } from '../../utils/dateSorter'
-import { getProjectsPaths } from '../../utils/getProjectsPaths'
 import { findProjectConfig } from '../../utils/findProjectConfig'
 import { findProjectMetadata } from '../../utils/findProjectMetadata'
+import { getProjectsPaths } from '../../utils/getProjectsPaths'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
   const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
@@ -165,5 +165,3 @@ export function getStaticProps(params: { params: { project: string } }) {
     },
   }
 }
-
-
