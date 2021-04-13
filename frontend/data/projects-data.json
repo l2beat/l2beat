@@ -2,7 +2,8 @@
   "Optimism": {
     "website": "https://optimism.io/",
     "color": "#f01b37",
-    "technology": "OR/Optimistic Virtual Machine",
+    "technology": "optimistic-rollup",
+    "technology-details": "Optimistic Virtual Machine",
     "more-info": {
       "Primary use case": { "text": "Universal" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -48,7 +49,8 @@
   "zkSync": {
     "website": "https://zksync.io/",
     "color": "#8c8dfc",
-    "technology": "ZR/zk-SNARK",
+    "technology": "zk-rollup",
+    "technology-details": "zk-SNARK",
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -92,7 +94,8 @@
   "Aztec": {
     "website": "https://zk.money",
     "color": "#8953f3",
-    "technology": "ZR/zk-SNARK/PLONK",
+    "technology": "zk-rollup",
+    "technology-details": "zk-SNARK/PLONK",
     "more-info": {
       "Primary use case": { "text": "Private payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -119,7 +122,8 @@
   "Loopring": {
     "website": "https://loopring.org",
     "color": "#1c42ff",
-    "technology": "ZR/zk-SNARK",
+    "technology": "zk-rollup",
+    "technology-details": "zk-SNARK",
     "more-info": {
       "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -152,7 +156,8 @@
   "dydx": {
     "website": "https://dydx.exchange/",
     "color": "#6966ff",
-    "technology": "ZR/zk-STARK/StarkPerpetual",
+    "technology": "zk-rollup",
+    "technology-details": "zk-SNARK/PLONK",
     "more-info": {
       "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High" },
@@ -185,7 +190,8 @@
   "Fuel": {
     "website": "https://fuel.sh/",
     "color": "#05c399",
-    "technology": "OR/UXTO",
+    "technology": "optimistic-rollup",
+    "technology-details": "UXTO",
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -213,7 +219,8 @@
   "ImmutableX": {
     "website": "https://www.immutable.com/",
     "color": "#17b5cb",
-    "technology": "ZR/zk-STARK/StarkExchange",
+    "technology": "zk-rollup",
+    "technology-details": "zk-STARK/StarkExchange",
     "more-info": {
       "Primary use case": { "text": "NFT Exchange" },
       "Hypothetical level of decentralization": { "text": "High" },

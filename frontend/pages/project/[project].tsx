@@ -95,13 +95,15 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </div>
           <List>
             <Item title="Technology" content={props.projectMetadata.technology} />
+
+            <Item title="Technology details" content={props.projectMetadata['technology-details']} />
+
             {Object.keys(props.projectMetadata['more-info']).map((key) => (
               <Item title={key} content={<ContentWithTooltip {...props.projectMetadata['more-info'][key]} />} />
             ))}
 
             <Item
               title="Tracked bridges"
-              className={styles.bridges}
               content={props.projectConfig.bridges.map((bridge: any) => (
                 <li>
                   <EtherscanLink address={bridge.address} /> - {bridge.tokens.map((t: string) => t).join(', ')}
