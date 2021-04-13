@@ -191,7 +191,7 @@
     "website": "https://fuel.sh/",
     "color": "#05c399",
     "technology": "optimistic-rollup",
-    "technology-details": "UXTO",
+    "technology-details": "UTXO",
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -241,13 +241,13 @@
         "sentiment": "good"
       },
       "Privacy": { "text": "No" },
-      "Smart contracts": { "text": "No" },
-      "news": [
-        {
-          "name": "Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption",
-          "link": "https://www.immutable.com/blog/immutable-x-alpha-trading-launch"
-        }
-      ]
-    }
+      "Smart contracts": { "text": "No" }
+    },
+    "news": [
+      {
+        "name": "Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption",
+        "link": "https://www.immutable.com/blog/immutable-x-alpha-trading-launch"
+      }
+    ]
   }
 }
