@@ -9,7 +9,6 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
 import { sortBy } from 'lodash'
 import millify from 'millify'
-import { useRouter } from 'next/router'
 import React from 'react'
 import { assert } from 'ts-essentials'
 
@@ -25,7 +24,6 @@ type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
 
 export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
-  const { push } = useRouter()
   const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
 
   const badgeText = Math.abs(tvlDelta) < 0.01 ? `${tvlDelta > 0 ? '>' : '<-'}0.01%` : `${tvlDelta.toFixed(2)}%`

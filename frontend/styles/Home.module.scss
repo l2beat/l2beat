@@ -300,7 +300,7 @@
   transition: 0.2s;
 
   --border: 1px solid var(--gray-03);
-  
+
   & td {
     color: var(--text);
     position: relative;
@@ -326,7 +326,8 @@
     padding-right: 10px;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     outline: none;
     background: var(--gray-02);
     transform: scale(1.02);
