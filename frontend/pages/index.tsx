@@ -84,6 +84,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                 <th className={styles.alignRight}>Value locked</th>
                 <th className={styles.alignRight}>Market share</th>
                 <th className={styles.alignRight}>Tech</th>
+                <th className={styles.alignRight}>Details</th>
               </tr>
             </thead>
             <tbody>
@@ -106,6 +107,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
                     <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
                     <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
+                    <td className={cx(styles.alignRight)}>{rowData.meta['technology-details']}</td>
                   </tr>
                 )
               })}
