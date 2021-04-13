@@ -378,3 +378,11 @@
   color: var(--text-contrast);
   text-transform: uppercase;
 }
+
+.notes {
+  font-size: 14px;
+
+  span {
+    font-weight: normal;
+  }
+}

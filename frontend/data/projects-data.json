@@ -39,6 +39,13 @@
         "tooltip": "Custom Solidity compiler. Currently, no new smart contracts can be deployed."
       }
     },
+    "notes": {
+      "text": "Currently, fraud proof mechanism seems to be disabled. Optimism resolver resolved \"OVM_FraudVerifier\" to externally owned account and only this account can submit proofs.",
+      "pointers": [
+        "https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550",
+        "https://github.com/krzkaczor/l2beat/issues/35"
+      ]
+    },
     "news": [
       {
         "name": "Postponing mainnet launch",
