@@ -90,9 +90,13 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             <tbody>
               {l2sTable.map((rowData, index) => {
                 return (
-                  <tr
+                  <a
+                    role="table-row"
+                    style={{ display: 'table-row' }}
+                    tabIndex={0}
                     title={`${rowData.name} overview`}
-                    onClick={() => push(`/project/${rowData.name.toLowerCase()}`)}
+                    href={`/project/${rowData.name.toLowerCase()}`}
+                    // onClick={() => push(`/project/${rowData.name.toLowerCase()}`)}
                     key={rowData.name}
                     className={styles.dataRow}
                   >
@@ -108,7 +112,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
                     <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
                     <td className={cx(styles.alignRight)}>{rowData.meta['technology-details']}</td>
-                  </tr>
+                  </a>
                 )
               })}
             </tbody>

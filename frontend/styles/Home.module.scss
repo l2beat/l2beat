@@ -74,6 +74,7 @@
 .overviewCard {
   display: flex;
   flex-direction: column;
+  overflow: visible;
 
   @include media('<maxWidth') {
     order: -2;
@@ -162,6 +163,8 @@
 }
 
 .title {
+  position: sticky;
+  left: 0;
   color: var(--text);
   display: flex;
   align-items: center;
@@ -299,10 +302,11 @@
   --border: 1px solid var(--gray-03);
   
   & td {
+    color: var(--text);
     position: relative;
     overflow: hidden;
     background: white;
-    padding: 10px 0;
+    padding: 10px 20px;
     border-bottom: var(--border);
     border-top: var(--border);
     // border-top: 1px solid none;
@@ -312,15 +316,18 @@
     padding-left: 10px;
     border-left: var(--border);
     border-radius: 8px 0 0 8px;
+    padding-left: 10px;
   }
 
   & td:last-child {
     padding-right: 10px;
     border-right: var(--border);
     border-radius: 0 8px 8px 0;
+    padding-right: 10px;
   }
 
-  &:hover {
+  &:hover, &:focus {
+    outline: none;
     background: var(--gray-02);
     transform: scale(1.02);
   }
