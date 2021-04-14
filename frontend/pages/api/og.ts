@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
+import { NextApiRequest, NextApiResponse } from 'next'
 import path from 'path'
 
 const filePath = path.resolve(process.cwd(), 'public/optimism-og.png')
