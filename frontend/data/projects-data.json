@@ -278,9 +278,7 @@
         "text": "Yes",
         "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
         "sentiment": "good",
-        "pointers": [
-          "https://etherscan.io/address/0x8eca806aecc86ce90da803b080ca4e3a9b8097ad#code"
-        ]
+        "pointers": ["https://etherscan.io/address/0x8eca806aecc86ce90da803b080ca4e3a9b8097ad#code"]
       },
       "Permisonless?": {
         "text": "No",
@@ -309,10 +307,6 @@
       }
     },
     "news": [
-      {
-        "name": "ZKSwap Add Another 6 Million ZKS Airdrop to Encourage Liquidity Providers",
-        "link": "https://zkswapofficial.medium.com/zkswap-add-another-6-million-zks-airdrop-to-encourage-liquidity-providers-2f10d4f0b7c"
-      },
       {
         "name": "ZKSwap Sets Out Roadmap for 2021",
         "link": "https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3"
