@@ -18,6 +18,7 @@
     "@material-ui/icons": "^4.11.2",
     "@types/lodash": "^4.14.168",
     "capture-website": "^1.4.0",
+    "capture-website-cli": "^1.1.0",
     "classnames": "^2.2.6",
     "eslint": "^6.8.0",
     "eslint-config-typestrict": "^1.0.0",
