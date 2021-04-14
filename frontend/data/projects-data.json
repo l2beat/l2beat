@@ -3,14 +3,15 @@
     "website": "https://optimism.io/",
     "color": "#f01b37",
     "technology": "optimistic-rollup",
+    "technology-details": "Optimistic Virtual Machine",
     "more-info": {
       "Primary use case": { "text": "Universal" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
       "Can funds be stolen by the operator?": {
-        "text": "Yes",
+        "text": "Yes, through contract upgrade",
         "tooltip": "Contracts are upgradable",
-        "sentiment": "bad",
+        "sentiment": "neutral",
         "pointers": [
           "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol#L47",
           "https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138"
@@ -38,6 +39,13 @@
         "tooltip": "Custom Solidity compiler. Currently, no new smart contracts can be deployed."
       }
     },
+    "notes": {
+      "text": "Currently, fraud proof mechanism seems to be disabled. Optimism resolver resolved \"OVM_FraudVerifier\" to externally owned account and only this account can submit proofs.",
+      "pointers": [
+        "https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550",
+        "https://github.com/krzkaczor/l2beat/issues/35"
+      ]
+    },
     "news": [
       {
         "name": "Postponing mainnet launch",
@@ -49,14 +57,15 @@
     "website": "https://zksync.io/",
     "color": "#8c8dfc",
     "technology": "zk-rollup",
+    "technology-details": "zk-SNARK",
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
       "Can funds be stolen by the operator?": {
-        "text": "Yes",
+        "text": "Yes, through contract upgrade",
         "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
-        "sentiment": "bad",
+        "sentiment": "neutral",
         "pointers": ["https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code"]
       },
       "Permisonless?": {
@@ -93,6 +102,7 @@
     "website": "https://zk.money",
     "color": "#8953f3",
     "technology": "zk-rollup",
+    "technology-details": "zk-SNARK/PLONK",
     "more-info": {
       "Primary use case": { "text": "Private payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -120,6 +130,7 @@
     "website": "https://loopring.org",
     "color": "#1c42ff",
     "technology": "zk-rollup",
+    "technology-details": "zk-SNARK",
     "more-info": {
       "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -153,14 +164,15 @@
     "website": "https://dydx.exchange/",
     "color": "#6966ff",
     "technology": "zk-rollup",
+    "technology-details": "zk-SNARK/PLONK",
     "more-info": {
       "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High" },
       "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
       "Can funds be stolen by the operator?": {
-        "text": "Yes",
-        "tooltip": "Contracts are upgradable BUT on the upside there is a 28 days timelock",
-        "sentiment": "bad",
+        "text": "Yes, through contract upgrade",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "neutral",
         "pointers": ["https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code"]
       },
       "Permisonless?": {
@@ -186,6 +198,7 @@
     "website": "https://fuel.sh/",
     "color": "#05c399",
     "technology": "optimistic-rollup",
+    "technology-details": "UTXO",
     "more-info": {
       "Primary use case": { "text": "Payments" },
       "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
@@ -209,5 +222,39 @@
       "Privacy": { "text": "No" },
       "Smart contracts": { "text": "No" }
     }
+  },
+  "ImmutableX": {
+    "website": "https://www.immutable.com/",
+    "color": "#17b5cb",
+    "technology": "zk-rollup",
+    "technology-details": "zk-STARK/StarkExchange",
+    "more-info": {
+      "Primary use case": { "text": "NFT Exchange" },
+      "Hypothetical level of decentralization": { "text": "High" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes, through contract upgrade",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "neutral",
+        "pointers": ["https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code"]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only ImmutableX can produce new blocks"
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good"
+      },
+      "Privacy": { "text": "No" },
+      "Smart contracts": { "text": "No" }
+    },
+    "news": [
+      {
+        "name": "Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption",
+        "link": "https://www.immutable.com/blog/immutable-x-alpha-trading-launch"
+      }
+    ]
   }
 }
