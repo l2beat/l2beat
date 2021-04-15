@@ -12,7 +12,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return
   }
 
-  const buffer = await getOgImage(project)
-  res.setHeader('Content-Type', 'image/png')
-  res.send(buffer)
+  try {
+    const buffer = await getOgImage(project)
+    res.setHeader('Content-Type', 'image/png')
+    res.send(buffer)
+  } catch (e) {
+    res.send(e.toString())
+  }
 }

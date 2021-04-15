@@ -3,13 +3,13 @@ import 'react-vis/dist/style.css'
 
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { APP_URL } from '../utils/constants'
 
 const TITLE = 'L2Beat - Analytics about Layer 2 scaling solutions'
 const DESCRIPTION =
   'L2Beat is a website containing always up-to-date analytics about Layer 2 scaling solutions for Ethereum.'
 const ALT = 'Your insights into L2'
 
-const appUrl = process.env.VERCEL_URL || 'http://localhost:3000'
 function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>; pageProps: any }) {
   const router = useRouter()
 
@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>;
 
         <meta property="og:title" content={pageProps.title || TITLE} />
         <meta property="og:description" content={pageProps.description || DESCRIPTION} />
-        <meta property="og:image" content={`${appUrl}/api/og?project=${pageProps.project || ''}`} />
+        <meta property="og:image" content={`${APP_URL}/api/og?project=${pageProps.project || ''}`} />
         <meta property="og:url" content={`https://l2beat.com${router.asPath}`} />
         <meta name="twitter:card" content="summary_large_image" />
 
