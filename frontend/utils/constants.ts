@@ -1,0 +1,1 @@
+export const APP_URL = 'https://l2beat-3y05jtj2h-krzkaczor.vercel.app' //process.env.VERCEL_URL || 'http://localhost:3000'
