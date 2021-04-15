@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentProps<any>;
 
         <meta property="og:title" content={pageProps.title || TITLE} />
         <meta property="og:description" content={pageProps.description || DESCRIPTION} />
-        <meta property="og:image" content={`${APP_URL}/api/og?project=${pageProps.project || ''}`} />
+        <meta property="og:image" content={`${APP_URL}/og/${pageProps.project || 'overview'}.png`} />
         <meta property="og:url" content={`https://l2beat.com${router.asPath}`} />
         <meta name="twitter:card" content="summary_large_image" />
 
