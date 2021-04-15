@@ -83,12 +83,30 @@
         }
       ]
     },
+    "DeversiFi": {
+      "bridges": [
+        {
+          "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+          "deployed_at_block": 10141009,
+          "tokens": ["DAI", "ETH", "GLM", "LINK", "LRC", "MKR", "SNX", "UNI", "USDT", "USDC", "WBTC"]
+        }
+      ]
+    },
     "Fuel": {
       "bridges": [
         {
           "address": "0x6880f6Fd960D1581C2730a451A22EED1081cfD72",
           "deployed_at_block": 11787727,
           "tokens": ["DAI", "USDT", "USDC"]
+        }
+      ]
+    },
+    "ImmutableX": {
+      "bridges": [
+        {
+          "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "deployed_at_block": 12011518,
+          "tokens": ["ETH"]
         }
       ]
     },
@@ -116,15 +134,6 @@
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "deployed_at_block": 10269890,
           "tokens": ["ETH", "DAI", "USDC", "USDT", "GLM", "WBTC"]
-        }
-      ]
-    },
-    "ImmutableX": {
-      "bridges": [
-        {
-          "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "deployed_at_block": 12011518,
-          "tokens": ["ETH"]
         }
       ]
     }
