@@ -161,8 +161,9 @@ export function getStaticProps(params: { params: { project: string } }) {
 
   return {
     props: {
+      project: name,
       title: `L2Beat 💓 ${name} overview`,
-      description: `${name} total value locked increased ${tvlDelta}% in last 24h!`,
+      description: `${name} total value locked increased ${millify(tvlDelta)}% in last 24h!`,
       tvlData,
       name,
       tvl: projectData.TVL,

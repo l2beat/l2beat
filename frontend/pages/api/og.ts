@@ -1,13 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import fs from 'fs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
+import { getOgImage } from '../../utils/getOgImage'
 
-const filePath = path.resolve(process.cwd(), 'public/optimism-og.png')
-const imageBuffer = fs.readFileSync(filePath)
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const project = req.query.project;
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+  if (Array.isArray(project)) {
+    res.status(400).send({ error: 'Invalid parameters' })
+    return;
+  }
+
+  const buffer = await getOgImage(project)
   res.setHeader('Content-Type', 'image/png')
-  res.send(imageBuffer)
+  res.send(buffer)
 }
