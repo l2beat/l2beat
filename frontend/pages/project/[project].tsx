@@ -104,6 +104,14 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
               <Item title={key} content={<ContentWithTooltip {...props.projectMetadata['more-info'][key]} />} />
             ))}
 
+            {props.projectMetadata.notes && (
+              <Item
+                title="Notes"
+                className={styles.notes}
+                content={<ContentWithTooltip {...props.projectMetadata.notes} />}
+              />
+            )}
+
             <Item
               title="Tracked bridges"
               content={props.projectConfig.bridges.map((bridge: any) => (

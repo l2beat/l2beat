@@ -7,7 +7,6 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
 import { sortBy } from 'lodash'
 import millify from 'millify'
-import { useRouter } from 'next/router'
 import React from 'react'
 import { assert } from 'ts-essentials'
 
@@ -75,6 +74,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
               <col width="30%"></col>
               <col width="25%"></col>
               <col width="25%"></col>
+              <col width="15%"></col>
             </colgroup>
             <thead>
               <tr className={styles.tableHeader}>
@@ -82,22 +82,25 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                 <th className={styles.alignRight}>Value locked</th>
                 <th className={styles.alignRight}>Market share</th>
                 <th className={styles.alignRight}>Tech</th>
-                <th className={styles.alignRight}>Details</th>
+                <th className={styles.alignRight}>1 day %</th>
               </tr>
             </thead>
             <tbody>
               {l2sTable.map((rowData, index) => {
                 return (
-                  <tr
+                  <a
+                    role="table-row"
+                    style={{ display: 'table-row' }}
+                    tabIndex={0}
                     title={`${rowData.name} overview`}
-                    onClick={() => push(`/project/${rowData.name.toLowerCase()}`)}
+                    href={`/project/${rowData.name.toLowerCase()}`}
                     key={rowData.name}
                     className={styles.dataRow}
                   >
                     <td>
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
-                        <div>
+                        <div className={styles.projectName}>
                           {index + 1}. {rowData.name}
                         </div>
                       </div>
@@ -105,8 +108,10 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
                     <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
                     <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
-                    <td className={cx(styles.alignRight)}>{rowData.meta['technology-details']}</td>
-                  </tr>
+                    <td className={cx(styles.alignRight)}>
+                      <Percentage value={rowData.change} />
+                    </td>
+                  </a>
                 )
               })}
             </tbody>
@@ -193,4 +198,10 @@ export async function getStaticProps() {
       l2sTable: l2sTableSorted,
     },
   }
+}
+
+function Percentage({ value }: { value: number }) {
+  const valueAsString = value >= 0 ? `+${value.toFixed(2)}` : value.toFixed(2)
+  const color = value >= 0 ? 'rgb(49 150 39)' : '#b31020'
+  return <span style={{ color }}>{valueAsString}%</span>
 }
