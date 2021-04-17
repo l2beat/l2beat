@@ -1,11 +1,30 @@
 import { generateImage } from '../utils/getOgImage'
 import { getProjectsNames } from '../utils/getProjectsPaths'
-import { exec, execSync } from 'child_process'
+import { exec, execSync, spawn } from 'child_process'
 import { mkdirSync, existsSync } from 'fs'
 import { join } from 'path'
+import request from 'request'
 
 async function sleep(time: number) {
     return new Promise((resolve) => setTimeout(() => resolve(undefined), time))
+}
+
+async function wait(attempts = 10) {
+    let attempt = 0
+    while (attempt < attempts) {
+        console.log(`Checking server: attempt ${attempt + 1}`)
+        try {
+            const response = await request.get('http://localhost:3000')
+            if (response.response?.statusCode === 200) {
+                console.log('Server responded')
+                break;
+            }
+        } catch {
+
+        }
+        attempt = attempt + 1
+        await sleep(3000)
+    }
 }
 
 function createDirectory() {
@@ -19,21 +38,22 @@ function createDirectory() {
 
 }
 (async () => {
-    const serverProcess = exec('yarn dev')
+    const serverProcess = spawn(`${process.cwd()} yarn dev`)
     console.log('Starting server')
-    serverProcess.addListener('', console.log)
     createDirectory()
 
-    await sleep(20000)
+    // await wait()
+    // await sleep(60000)
 
-    console.log('Generating: overview')
-    await generateImage()
-    await Promise.all(getProjectsNames().map(async (project) => {
-        console.log(`Generating: ${project}`)
-        generateImage(project)
-    }))
+    // console.log('Generating: overview')
+    // await generateImage()
+    // getProjectsNames().map(async (project) => {
+    //     console.log(`Generating: ${project}`)
+    //     await generateImage(project)
+    // })
 
 
-    serverProcess.kill()
-    await sleep(20000)
+    // console.log('Killing server')
+    // serverProcess.kill()
+    // await sleep(20000)
 })()
