@@ -5,20 +5,21 @@
   "scripts": {
     "start": "yarn dev",
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "node node_modules/puppeteer/install.js && next build",
+    "build": "yarn gen:og-img && next build",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
     "test:fix": "yarn lint:fix && yarn format:fix && yarn typecheck",
     "typecheck": "tsc --noEmit",
-    "gen:og-img": "ts-node ./scripts/generateOgImages.ts"
+    "gen:og-img": "yarn dev & ts-node ./scripts/generateOgImages.ts"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@types/lodash": "^4.14.168",
     "@types/request": "^2.48.5",
+    "axios": "^0.21.1",
     "capture-website": "^1.4.0",
     "capture-website-cli": "^1.1.0",
     "chrome-aws-lambda": "^8.0.2",
