@@ -28,4 +28,5 @@ function clearAndCreateDirectory() {
     const _ = await Promise.all(getProjectsNames().map(async (project) => generateImage(project)))
     yarnProcess.kill()
     console.log("FINISHED")
+    process.exit(0)
 })()
