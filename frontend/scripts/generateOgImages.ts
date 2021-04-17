@@ -1,6 +1,7 @@
 import { exec, execSync } from 'child_process'
-import { existsSync,mkdirSync } from 'fs'
+import { existsSync, mkdirSync } from 'fs'
 import { join } from 'path'
+import { promisify } from 'util'
 
 import { generateImage } from '../utils/getOgImage'
 import { getProjectsNames } from '../utils/getProjectsPaths'
@@ -40,6 +41,7 @@ function clearAndCreateDirectory() {
 
 }
 (async () => {
+    const process = exec('yarn dev')
     clearAndCreateDirectory()
     console.log('Waiting for server')
     // await wait(20)
@@ -51,6 +53,7 @@ function clearAndCreateDirectory() {
         console.log(`Generating: ${project}`)
         return generateImage(project)
     }))
-    exec('killall node')
+
+    process.kill()
     console.log("FINISHED")
 })()
