@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import playwright from 'playwright';
+import chromium from 'chrome-aws-lambda'
 import memoize from 'lodash/memoize'
 
 import { join } from 'path'
@@ -13,10 +13,15 @@ const projects = getProjectsNames()
 
 async function generateImage_(project: string = '') {
     const imagePath = join(process.cwd(), 'public', 'og', `${project}.png`)
-    const browser = await playwright['webkit'].launch()
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    await page.setViewportSize({
+    const browser = await chromium.puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+    });
+    const page = await browser.newPage();
+    await page.setViewport({
         width: 1200,
         height: 630,
     });
@@ -42,7 +47,7 @@ const getOgImage = memoize(getOgImage_)
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const project = req.query.project
 
-    if (Array.isArray(project) || !projects.includes(project)) {
+    if (Array.isArray(project) || !projects.includes(project) || project === undefined) {
         res.status(400).send({ error: 'Invalid parameters' })
         return
     }
