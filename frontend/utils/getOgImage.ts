@@ -13,7 +13,7 @@ export async function generateImage(project: string = '') {
     join(process.cwd(), 'public', 'og', `${project || 'overview'}.png`),
     {
       width: 1200,
-      height: 620,
+      height: 630,
       launchOptions: {
         args: [
           '--no-sandbox',

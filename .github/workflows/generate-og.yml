@@ -1,0 +1,40 @@
+name: generate og images
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+jobs:
+  generate:
+    strategy:
+      matrix:
+        node: ["15.x"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Cache YARN dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            frontend/node_modules
+            frontend/*/*/node_modules
+          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
+
+      - run: yarn --no-progress --non-interactive --frozen-lockfile
+        working-directory: ./frontend
+
+      - run: yarn gen:og-img
+        working-directory: ./frontend
+
+      - name: Commit og images to master
+        uses: ActionwareIO/branch-push-action@action
+        with:
+          branch: master
+          files: |
+            frontend/public
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
