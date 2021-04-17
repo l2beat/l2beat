@@ -3,9 +3,7 @@ import { getProjectsNames } from '../utils/getProjectsPaths'
 import { exec, execSync, spawn } from 'child_process'
 import { mkdirSync, existsSync } from 'fs'
 import { join } from 'path'
-import request from 'request'
 import axios from 'axios'
-import { APP_URL } from '../utils/constants'
 
 async function sleep(time: number) {
     return new Promise((resolve) => setTimeout(() => resolve(undefined), time))
@@ -19,7 +17,7 @@ async function wait(attempts = 10) {
             const response = await axios.get("http://localhost:3000")
             if (response.status === 200) {
                 console.log('Server responded with 200')
-                break;
+                return;
             }
             console.log(`Server responded with ${response.status}`)
         } catch {
@@ -28,6 +26,7 @@ async function wait(attempts = 10) {
         attempt = attempt + 1
         await sleep(3000)
     }
+    throw new Error(`Couldn't connect to server!`)
 }
 
 function clearAndCreateDirectory() {

@@ -12,7 +12,7 @@
     "lint:fix": "yarn lint --fix",
     "test:fix": "yarn lint:fix && yarn format:fix && yarn typecheck",
     "typecheck": "tsc --noEmit",
-    "gen:og-img": "yarn dev & ts-node ./scripts/generateOgImages.ts"
+    "gen:og-img": "yarn dev & ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
