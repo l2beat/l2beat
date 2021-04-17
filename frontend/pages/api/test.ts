@@ -1,8 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import puppeteer from 'puppeteer'
+import chromium from 'chrome-aws-lambda';
+
 import { join } from 'path'
+import { getProjectsNames } from '../../utils/getProjectsPaths'
+
 
 const APP_URL = process.env.VERCEL_URL || 'http://localhost:3000'
+const projects = getProjectsNames()
 
 function generateImage(project: string = '') {
 
@@ -10,14 +15,19 @@ function generateImage(project: string = '') {
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const project = req.query.project
 
-    if (Array.isArray(project)) {
+    if (Array.isArray(project) || !projects.includes(project)) {
         res.status(400).send({ error: 'Invalid parameters' })
         return
     }
 
     try {
-
-        const browser = await puppeteer.launch();
+        const browser = chromium.puppeteer().launch({
+            args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath,
+            headless: true,
+            ignoreHTTPSErrors: true,
+        })
         const page = await browser.newPage();
         await page.setViewport({
             width: 1200,

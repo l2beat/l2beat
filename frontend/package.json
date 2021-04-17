@@ -21,6 +21,7 @@
     "@types/request": "^2.48.5",
     "capture-website": "^1.4.0",
     "capture-website-cli": "^1.1.0",
+    "chrome-aws-lambda": "^8.0.2",
     "classnames": "^2.2.6",
     "eslint": "^6.8.0",
     "eslint-config-typestrict": "^1.0.0",
