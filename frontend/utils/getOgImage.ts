@@ -8,6 +8,19 @@ export function getImage_(project?: string) {
 }
 
 export async function generateImage(project: string = '') {
-  return captureWebsite.file(`http://localhost:3000/og/${project}`, join(process.cwd(), 'public', 'og', `${project || 'overview'}.png`), { width: 1200, height: 620 })
+  return captureWebsite.file(
+    `http://localhost:3000/og/${project}`,
+    join(process.cwd(), 'public', 'og', `${project || 'overview'}.png`),
+    {
+      width: 1200,
+      height: 620,
+      launchOptions: {
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox'
+        ]
+      }
+    })
 }
 export const getOgImage = memoize(getImage_)
+

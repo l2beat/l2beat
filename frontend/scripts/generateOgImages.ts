@@ -1,9 +1,9 @@
+import { exec, execSync } from 'child_process'
+import { existsSync,mkdirSync } from 'fs'
+import { join } from 'path'
+
 import { generateImage } from '../utils/getOgImage'
 import { getProjectsNames } from '../utils/getProjectsPaths'
-import { exec, execSync, spawn } from 'child_process'
-import { mkdirSync, existsSync } from 'fs'
-import { join } from 'path'
-import axios from 'axios'
 
 async function sleep(time: number) {
     return new Promise((resolve) => setTimeout(() => resolve(undefined), time))

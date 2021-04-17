@@ -3,6 +3,7 @@ import 'react-vis/dist/style.css'
 
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+
 import { APP_URL } from '../utils/constants'
 
 const TITLE = 'L2Beat - Analytics about Layer 2 scaling solutions'
