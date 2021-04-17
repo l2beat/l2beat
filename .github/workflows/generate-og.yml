@@ -1,8 +1,10 @@
-name: generate og images
+name: Generate og images
+
 on:
+  pull_request:
   push:
-    branches: [ master ]
-  workflow_dispatch:
+    branches:
+      - master
 jobs:
   generate:
     strategy:
