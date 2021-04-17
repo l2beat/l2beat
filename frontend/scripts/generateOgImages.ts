@@ -1,34 +1,14 @@
 import { exec, execSync } from 'child_process'
 import { existsSync, mkdirSync } from 'fs'
 import { join } from 'path'
-import { promisify } from 'util'
 
 import { generateImage } from '../utils/getOgImage'
 import { getProjectsNames } from '../utils/getProjectsPaths'
 
 async function sleep(time: number) {
+    console.log('Waiting for server')
     return new Promise((resolve) => setTimeout(() => resolve(undefined), time))
 }
-
-// async function wait(attempts = 10) {
-//     let attempt = 0
-//     while (attempt < attempts) {
-//         try {
-//             console.log(`Checking server: attempt ${attempt + 1}`)
-//             const response = await axios.get("http://localhost:3000")
-//             if (response.status === 200) {
-//                 console.log('Server responded with 200')
-//                 return;
-//             }
-//             console.log(`Server responded with ${response.status}`)
-//         } catch {
-
-//         }
-//         attempt = attempt + 1
-//         await sleep(3000)
-//     }
-//     throw new Error(`Couldn't connect to server!`)
-// }
 
 function clearAndCreateDirectory() {
     const ogPath = join(process.cwd(), 'public', 'og')
@@ -41,19 +21,11 @@ function clearAndCreateDirectory() {
 
 }
 (async () => {
-    const process = exec('yarn dev')
+    const yarnProcess = exec('yarn dev')
     clearAndCreateDirectory()
-    console.log('Waiting for server')
-    // await wait(20)
     await sleep(30000)
-
-    console.log('Generating: overview')
     await generateImage()
-    await Promise.all(getProjectsNames().map(async (project) => {
-        console.log(`Generating: ${project}`)
-        return generateImage(project)
-    }))
-
-    process.kill()
+    const _ = await Promise.all(getProjectsNames().map(async (project) => generateImage(project)))
+    yarnProcess.kill()
     console.log("FINISHED")
 })()

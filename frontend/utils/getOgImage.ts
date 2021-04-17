@@ -8,6 +8,8 @@ export function getImage_(project?: string) {
 }
 
 export async function generateImage(project: string = '') {
+  console.log(`Generating: ${project || 'overview'}`)
+
   return captureWebsite.file(
     `http://localhost:3000/og/${project}`,
     join(process.cwd(), 'public', 'og', `${project || 'overview'}.png`),
