@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import chromium from 'chrome-aws-lambda'
-// import memoize from 'lodash/memoize'
+// import chromium from 'chrome-aws-lambda'
+import { webkit } from 'playwright'
+import memoize from 'lodash/memoize'
 
 import { join } from 'path'
 import { readFile } from 'fs'
@@ -10,17 +11,12 @@ import { APP_URL } from '../../utils/constants'
 
 const PROJECTS = getProjectsNames()
 
-async function generateImage(project: string = '') {
+async function generateImage_(project: string = '') {
     const imagePath = join(process.cwd(), 'public', 'og', `${project}.png`)
-    const browser = await chromium.puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
-        headless: true,
-        ignoreHTTPSErrors: true,
-    });
-    const page = await browser.newPage();
-    await page.setViewport({
+    const browser = await webkit.launch();
+    const context = await browser.newContext()
+    const page = await context.newPage();
+    await page.setViewportSize({
         width: 1200,
         height: 630,
     });
@@ -30,12 +26,12 @@ async function generateImage(project: string = '') {
     return imagePath
 }
 
-async function getImageBuffer(path: string) {
+async function getImageBuffer_(path: string) {
     return promisify(readFile)(path)
 }
 
-// const generateImage = memoize(generateImage_)
-// const getImageBuffer = memoize(getImageBuffer_)
+const generateImage = memoize(generateImage_)
+const getImageBuffer = memoize(getImageBuffer_)
 
 async function getOgImage_(project: string = '') {
     const imagePath = await generateImage(project);
