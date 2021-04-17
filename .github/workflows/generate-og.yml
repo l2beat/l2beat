@@ -30,7 +30,7 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
         working-directory: ./frontend
 
-      - run: yarn gen:og-img
+      - run: ./node_modules/.bin/ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts
         working-directory: ./frontend
 
       - name: Commit og images to master
