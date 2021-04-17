@@ -1,17 +1,44 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import puppeteer from 'puppeteer'
-import chromium from 'chrome-aws-lambda';
+import playwright from 'playwright';
+import memoize from 'lodash/memoize'
 
 import { join } from 'path'
+import { readFile } from 'fs'
+import { promisify } from 'util'
 import { getProjectsNames } from '../../utils/getProjectsPaths'
 
 
 const APP_URL = process.env.VERCEL_URL || 'http://localhost:3000'
 const projects = getProjectsNames()
 
-function generateImage(project: string = '') {
-
+async function generateImage_(project: string = '') {
+    const imagePath = join(process.cwd(), 'public', 'og', `${project}.png`)
+    const browser = await playwright['webkit'].launch()
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.setViewportSize({
+        width: 1200,
+        height: 630,
+    });
+    await page.goto(`${APP_URL}/og/${project}`);
+    await page.screenshot({ path: imagePath });
+    await browser.close()
+    return imagePath
 }
+
+async function getImageBuffer_(path: string) {
+    return promisify(readFile)(path)
+}
+
+const generateImage = memoize(generateImage_)
+const getImageBuffer = memoize(getImageBuffer_)
+
+async function getOgImage_(project: string = '') {
+    const imagePath = await generateImage(project);
+    return getImageBuffer(imagePath)
+}
+
+const getOgImage = memoize(getOgImage_)
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const project = req.query.project
 
@@ -21,23 +48,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     try {
-        const browser = chromium.puppeteer().launch({
-            args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath,
-            headless: true,
-            ignoreHTTPSErrors: true,
-        })
-        const page = await browser.newPage();
-        await page.setViewport({
-            width: 1200,
-            height: 630,
-            deviceScaleFactor: 1,
-        });
-        await page.goto(`${APP_URL}/og/${project}`);
-        await page.screenshot({ path: join(process.cwd(), 'public', 'og', `${project}.png`) });
-        await browser.close()
-        res.send("WORKS")
+        const buffer = await getOgImage(project)
+        res.setHeader('Content-Type', 'image/png')
+        res.send(buffer)
     } catch (e) {
         res.send(e.toString())
     }
