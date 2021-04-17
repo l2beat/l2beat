@@ -3,6 +3,10 @@ import puppeteer from 'puppeteer'
 import { join } from 'path'
 
 const APP_URL = process.env.VERCEL_URL || 'http://localhost:3000'
+
+function generateImage(project: string = '') {
+
+}
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const project = req.query.project
 
@@ -13,15 +17,16 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
     try {
 
-        const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setViewport({
             width: 1200,
-            height: 620,
+            height: 630,
             deviceScaleFactor: 1,
         });
         await page.goto(`${APP_URL}/og/${project}`);
         await page.screenshot({ path: join(process.cwd(), 'public', 'og', `${project}.png`) });
+        await browser.close()
         res.send("WORKS")
     } catch (e) {
         res.send(e.toString())

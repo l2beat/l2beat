@@ -5,7 +5,7 @@
   "scripts": {
     "start": "yarn dev",
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "node node_modules/puppeteer/install.js && next build",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
