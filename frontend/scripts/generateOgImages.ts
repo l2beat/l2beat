@@ -42,7 +42,8 @@ function clearAndCreateDirectory() {
 (async () => {
     clearAndCreateDirectory()
     console.log('Waiting for server')
-    await wait(20)
+    // await wait(20)
+    await sleep(30000)
 
     console.log('Generating: overview')
     await generateImage()
