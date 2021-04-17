@@ -1,23 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import chromium from 'chrome-aws-lambda'
-import memoize from 'lodash/memoize'
+// import memoize from 'lodash/memoize'
 
 import { join } from 'path'
 import { readFile } from 'fs'
 import { promisify } from 'util'
 import { getProjectsNames } from '../../utils/getProjectsPaths'
+import { APP_URL } from '../../utils/constants'
 
+const PROJECTS = getProjectsNames()
 
-const APP_URL = process.env.VERCEL_URL || 'http://localhost:3000'
-const projects = getProjectsNames()
-
-async function generateImage_(project: string = '') {
+async function generateImage(project: string = '') {
     const imagePath = join(process.cwd(), 'public', 'og', `${project}.png`)
     const browser = await chromium.puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath,
-        headless: chromium.headless,
+        headless: true,
         ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
@@ -31,12 +30,12 @@ async function generateImage_(project: string = '') {
     return imagePath
 }
 
-async function getImageBuffer_(path: string) {
+async function getImageBuffer(path: string) {
     return promisify(readFile)(path)
 }
 
-const generateImage = memoize(generateImage_)
-const getImageBuffer = memoize(getImageBuffer_)
+// const generateImage = memoize(generateImage_)
+// const getImageBuffer = memoize(getImageBuffer_)
 
 async function getOgImage_(project: string = '') {
     const imagePath = await generateImage(project);
@@ -47,7 +46,7 @@ const getOgImage = memoize(getOgImage_)
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const project = req.query.project
 
-    if (Array.isArray(project) || !projects.includes(project) || project === undefined) {
+    if (Array.isArray(project) || !PROJECTS.includes(project) || project === undefined) {
         res.status(400).send({ error: 'Invalid parameters' })
         return
     }
