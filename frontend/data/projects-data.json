@@ -5,13 +5,22 @@
     "technology": "optimistic-rollup",
     "technology-details": "Optimistic Virtual Machine",
     "more-info": {
-      "Primary use case": { "text": "Universal" },
-      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
-      "Can funds be stolen by the operator?": {
-        "text": "Yes",
+      "Primary use case": {
+        "text": "Universal"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
+      "Current level of decentralization": {
+        "text": "Low",
         "tooltip": "Contracts are upgradable",
-        "sentiment": "bad",
+        "sentiment": "bad"
+      },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes, through contract upgrade",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "neutral",
         "pointers": [
           "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol#L47",
           "https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138"
@@ -33,11 +42,20 @@
           "https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L256"
         ]
       },
-      "Privacy": { "text": "No" },
+      "Privacy": {
+        "text": "No"
+      },
       "Smart contracts": {
         "text": "Yes",
         "tooltip": "Custom Solidity compiler. Currently, no new smart contracts can be deployed."
       }
+    },
+    "notes": {
+      "text": "Currently, fraud proof mechanism seems to be disabled. Optimism resolver resolved \"OVM_FraudVerifier\" to externally owned account and only this account can submit proofs.",
+      "pointers": [
+        "https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550",
+        "https://github.com/krzkaczor/l2beat/issues/35"
+      ]
     },
     "news": [
       {
@@ -52,14 +70,25 @@
     "technology": "zk-rollup",
     "technology-details": "zk-SNARK",
     "more-info": {
-      "Primary use case": { "text": "Payments" },
-      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Primary use case": {
+        "text": "Payments"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
+      "Current level of decentralization": {
+        "text": "Low",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "bad"
+      },
       "Can funds be stolen by the operator?": {
-        "text": "Yes",
+        "text": "Yes, through contract upgrade",
         "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
-        "sentiment": "bad",
-        "pointers": ["https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code"]
+        "sentiment": "neutral",
+        "pointers": [
+          "https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code"
+        ]
       },
       "Permisonless?": {
         "text": "No",
@@ -78,7 +107,10 @@
           "https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L352"
         ]
       },
-      "Privacy": { "text": "No", "tooltip": "Theoretically possible in the future" },
+      "Privacy": {
+        "text": "No",
+        "tooltip": "Theoretically possible in the future"
+      },
       "Smart contracts": {
         "text": "No",
         "tooltip": "Possible in the near future (zinc - custom language or compiling from Solidity)"
@@ -97,9 +129,16 @@
     "technology": "zk-rollup",
     "technology-details": "zk-SNARK/PLONK",
     "more-info": {
-      "Primary use case": { "text": "Private payments" },
-      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
-      "Current level of decentralization": { "text": "?" },
+      "Primary use case": {
+        "text": "Private payments"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
+      "Current level of decentralization": {
+        "text": "?"
+      },
       "Can funds be stolen by the operator?": {
         "text": "?"
       },
@@ -109,8 +148,13 @@
       "Force TX mechanism?": {
         "text": "?"
       },
-      "Privacy": { "text": "Yes" },
-      "Smart contracts": { "text": "No", "tooltip": "Possible in the future (Noir - custom language) " }
+      "Privacy": {
+        "text": "Yes"
+      },
+      "Smart contracts": {
+        "text": "No",
+        "tooltip": "Possible in the future (Noir - custom language) "
+      }
     },
     "news": [
       {
@@ -125,9 +169,17 @@
     "technology": "zk-rollup",
     "technology-details": "zk-SNARK",
     "more-info": {
-      "Primary use case": { "text": "DEX" },
-      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
-      "Current level of decentralization": { "text": "High", "sentiment": "good" },
+      "Primary use case": {
+        "text": "DEX"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
+      "Current level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
       "Can funds be stolen by the operator?": {
         "text": "No",
         "sentiment": "good"
@@ -149,8 +201,12 @@
           "https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#withdrawal-mode"
         ]
       },
-      "Privacy": { "text": "No" },
-      "Smart contracts": { "text": "No" }
+      "Privacy": {
+        "text": "No"
+      },
+      "Smart contracts": {
+        "text": "No"
+      }
     }
   },
   "dydx": {
@@ -159,14 +215,24 @@
     "technology": "zk-rollup",
     "technology-details": "zk-SNARK/PLONK",
     "more-info": {
-      "Primary use case": { "text": "DEX" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Primary use case": {
+        "text": "DEX"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High"
+      },
+      "Current level of decentralization": {
+        "text": "Low",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "bad"
+      },
       "Can funds be stolen by the operator?": {
         "text": "Yes, through contract upgrade",
         "tooltip": "Contracts are upgradable",
         "sentiment": "neutral",
-        "pointers": ["https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code"]
+        "pointers": [
+          "https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code"
+        ]
       },
       "Permisonless?": {
         "text": "No",
@@ -177,8 +243,12 @@
         "text": "Yes but only for withdrawals",
         "sentiment": "good"
       },
-      "Privacy": { "text": "No" },
-      "Smart contracts": { "text": "No" }
+      "Privacy": {
+        "text": "No"
+      },
+      "Smart contracts": {
+        "text": "No"
+      }
     },
     "news": [
       {
@@ -191,10 +261,15 @@
     "website": "https://fuel.sh/",
     "color": "#05c399",
     "technology": "optimistic-rollup",
-    "technology-details": "UXTO",
+    "technology-details": "UTXO",
     "more-info": {
-      "Primary use case": { "text": "Payments" },
-      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Primary use case": {
+        "text": "Payments"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
       "Current level of decentralization": {
         "text": "Medium",
         "sentiment": "neutral",
@@ -212,8 +287,12 @@
           "https://github.com/FuelLabs/fuel/blob/49c35e8de752200175174a08b6a8eae42796790d/src/Block.yulp#L95-L101"
         ]
       },
-      "Privacy": { "text": "No" },
-      "Smart contracts": { "text": "No" }
+      "Privacy": {
+        "text": "No"
+      },
+      "Smart contracts": {
+        "text": "No"
+      }
     }
   },
   "ImmutableX": {
@@ -222,14 +301,24 @@
     "technology": "zk-rollup",
     "technology-details": "zk-STARK/StarkExchange",
     "more-info": {
-      "Primary use case": { "text": "NFT Exchange" },
-      "Hypothetical level of decentralization": { "text": "High" },
-      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Primary use case": {
+        "text": "NFT Exchange"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High"
+      },
+      "Current level of decentralization": {
+        "text": "Low",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "bad"
+      },
       "Can funds be stolen by the operator?": {
         "text": "Yes, through contract upgrade",
         "tooltip": "Contracts are upgradable",
         "sentiment": "neutral",
-        "pointers": ["https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code"]
+        "pointers": [
+          "https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code"
+        ]
       },
       "Permisonless?": {
         "text": "No",
@@ -240,14 +329,18 @@
         "text": "Yes but only for withdrawals",
         "sentiment": "good"
       },
-      "Privacy": { "text": "No" },
-      "Smart contracts": { "text": "No" },
-      "news": [
-        {
-          "name": "Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption",
-          "link": "https://www.immutable.com/blog/immutable-x-alpha-trading-launch"
-        }
-      ]
-    }
+      "Privacy": {
+        "text": "No"
+      },
+      "Smart contracts": {
+        "text": "No"
+      }
+    },
+    "news": [
+      {
+        "name": "Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption",
+        "link": "https://www.immutable.com/blog/immutable-x-alpha-trading-launch"
+      }
+    ]
   }
 }

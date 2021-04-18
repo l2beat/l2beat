@@ -74,6 +74,7 @@
 .overviewCard {
   display: flex;
   flex-direction: column;
+  overflow: visible;
 
   @include media('<maxWidth') {
     order: -2;
@@ -162,6 +163,8 @@
 }
 
 .title {
+  position: sticky;
+  left: 0;
   color: var(--text);
   display: flex;
   align-items: center;
@@ -230,8 +233,9 @@
 }
 
 .table {
-  border-collapse: collapse;
+  border-collapse: separate;
   overflow-x: scroll;
+  border-spacing: 0 10px;
 }
 
 .tableHeader {
@@ -242,6 +246,11 @@
 
 .projectName {
   display: flex;
+}
+
+.projectName {
+  z-index: 1;
+  margin-left: 15px;
 }
 
 .projectBadge {
@@ -290,12 +299,38 @@
   cursor: pointer;
   transition: 0.2s;
 
+  --border: 1px solid var(--gray-03);
+
   & td {
-    padding: 10px 0;
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+    background: white;
+    padding: 10px 0px;
+    border-bottom: var(--border);
+    border-top: var(--border);
+    // border-top: 1px solid none;
   }
 
-  &:hover {
+  & td:first-child {
+    padding-left: 10px;
+    border-left: var(--border);
+    border-radius: 8px 0 0 8px;
+    padding-left: 10px;
+  }
+
+  & td:last-child {
+    padding-right: 10px;
+    border-right: var(--border);
+    border-radius: 0 8px 8px 0;
+    padding-right: 10px;
+  }
+
+  &:hover,
+  &:focus {
+    outline: none;
     background: var(--gray-02);
+    transform: scale(1.02);
   }
 }
 
@@ -342,4 +377,12 @@
   font-weight: bold;
   color: var(--text-contrast);
   text-transform: uppercase;
+}
+
+.notes {
+  font-size: 14px;
+
+  span {
+    font-weight: normal;
+  }
 }
