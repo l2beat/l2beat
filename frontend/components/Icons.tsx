@@ -3,7 +3,7 @@ import TrendingFlatIcon from '@material-ui/icons/TrendingFlat'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 
 export const Icon = {
-    down: TrendingDownIcon,
-    flat: TrendingFlatIcon,
-    up: TrendingUpIcon,
+  down: TrendingDownIcon,
+  flat: TrendingFlatIcon,
+  up: TrendingUpIcon,
 }
