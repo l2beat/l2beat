@@ -32,16 +32,23 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
         working-directory: ./frontend
 
-      - run: ./node_modules/.bin/ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts
-        working-directory: ./frontend
-
-      - name: Push changes
+      - name: Create temp branch
         run: |
           git config --global user.name 'Og Bot 🤖'
           git config --global user.email 'og-bot@noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git fetch
-          git checkout origin/main
-          git add -A
+          git checkout -b ${{github.GITHUB_JOB}}
+
+      - name: Generate images
+        run: ./node_modules/.bin/ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts
+        working-directory: ./frontend
+
+      - name: Push changes
+        run: |
+          git add frontend/public/og --force
           git commit -m "Generate images 🎨"
+          git checkout origin/main
+          git merge ${{github.GITHUB_JOB}}
+          git branch -D ${{github.GITHUB_JOB}}
           git push
