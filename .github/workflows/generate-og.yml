@@ -44,7 +44,7 @@ jobs:
         run: ./node_modules/.bin/ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts
         working-directory: ./frontend
 
-      uses: tukasz/direct-merge-action@master
+      - uses: tukasz/direct-merge-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           owner: tukasz
