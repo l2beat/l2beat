@@ -24,7 +24,7 @@ export const Navigation = () => {
       <div className={styles.container}>
         <Link href={HomePath}>
           <h1 className={styles.logo}>
-            <Logo />
+            <Logo /> TEST
           </h1>
         </Link>
         <nav title="Main navigation" className={styles.linksWrapper}>
