@@ -1,18 +1,14 @@
 import captureWebsite from 'capture-website'
-import memoize from 'lodash/memoize'
 import { join } from 'path'
 
-import { APP_URL } from './constants'
-export function getImage_(project?: string) {
-  return captureWebsite.buffer(`${APP_URL}/og/${project || ''}`, { width: 1200, height: 620 })
-}
+import { OG_FILES_DIR } from './constants'
 
 export async function generateImage(project: string = '') {
   console.log(`Generating: ${project || 'overview'}`)
 
   return captureWebsite.file(
     `http://localhost:3000/og/${project}`,
-    join(process.cwd(), 'public', 'og', `${project || 'overview'}.png`),
+    join(OG_FILES_DIR, `${project || 'overview'}.png`),
     {
       width: 1200,
       height: 630,
@@ -24,5 +20,4 @@ export async function generateImage(project: string = '') {
       }
     })
 }
-export const getOgImage = memoize(getImage_)
 

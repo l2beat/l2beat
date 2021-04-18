@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /public/og/**
+/artifacts
 
 # testing
 /coverage
