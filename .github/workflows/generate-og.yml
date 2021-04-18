@@ -39,7 +39,7 @@ jobs:
       - name: Commit updated data file to master
         uses: ActionwareIO/branch-push-action@action
         with:
-          branch: master
+          branch: main
           files: |
             frontend/artifacts/og.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
