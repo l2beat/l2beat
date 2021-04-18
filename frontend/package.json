@@ -11,7 +11,8 @@
     "lint": "eslint '**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
     "test:fix": "yarn lint:fix && yarn format:fix && yarn typecheck",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gen:og-img": "ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
