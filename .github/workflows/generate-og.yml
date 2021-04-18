@@ -40,7 +40,7 @@ jobs:
           git config --global user.name 'Og Bot 🤖'
           git config --global user.email 'og-bot@noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git checkout master
+          git checkout origin master
           git add -A
           git commit -m "Generate images 🎨"
           git push
