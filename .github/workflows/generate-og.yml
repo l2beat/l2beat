@@ -1,7 +1,6 @@
 name: Generate og images
 
 on:
-  pull_request:
   push:
     branches:
       - master
