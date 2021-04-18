@@ -38,7 +38,7 @@ jobs:
           git config --global user.email 'og-bot@noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git fetch
-          git checkout -b ${{github.GITHUB_JOB}}
+          git checkout -b generate-images-branch
 
       - name: Generate images
         run: ./node_modules/.bin/ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts
@@ -49,6 +49,6 @@ jobs:
           git add frontend/public/og --force
           git commit -m "Generate images 🎨"
           git checkout origin/main
-          git merge ${{github.GITHUB_JOB}}
-          git branch -D ${{github.GITHUB_JOB}}
+          git merge generate-images-branch
+          git branch -D generate-images-branch
           git push
