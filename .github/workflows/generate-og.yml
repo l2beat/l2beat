@@ -1,6 +1,7 @@
 name: Generate og images
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -38,8 +39,8 @@ jobs:
         run: |
           git config --global user.name 'Og Bot 🤖'
           git config --global user.email 'og-bot@noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git checkout "$GITHUB_SHA"
           git add -A
-          git commit -m "Generate images"
+          git commit -m "Generate images 🎨"
           git push
