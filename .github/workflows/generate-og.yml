@@ -32,23 +32,15 @@ jobs:
       - run: yarn --no-progress --non-interactive --frozen-lockfile
         working-directory: ./frontend
 
-      - name: Create temp branch
-        run: |
-          git config --global user.name 'Og Bot 🤖'
-          git config --global user.email 'og-bot@noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git fetch
-          git switch -c $GITHUB_RUN_NUMBER-generate
-
       - name: Generate images
-        run: ./node_modules/.bin/ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts
+        run: yarn gen:og-img
         working-directory: ./frontend
 
-      - uses: tukasz/direct-merge-action@master
+      - name: Commit updated data file to master
+        uses: ActionwareIO/branch-push-action@action
         with:
+          branch: master
+          files: |
+            frontend/artifacts/og.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          owner: tukasz
-          repo: direct-merge-action
-          source-branch: $GITHUB_RUN_NUMBER-generate
-          target-branch: main
-          commit-message: "Generate images"
+
