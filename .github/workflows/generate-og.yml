@@ -7,7 +7,12 @@ on:
       - master
 jobs:
   generate:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["15.x"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
