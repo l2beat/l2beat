@@ -38,7 +38,7 @@ export async function getStaticProps(params: { params: { project: string } }): P
     props: {
       bg: projectMetadata.color,
       title: params.params.project,
-      head: 'L2BEAT 💓',
+      head: 'L2BEAT',
       stats: [
         { name: 'TVL', value: `$${millify(projectData.TVL)}` },
         { name: '24h change', value: change, icon: trendIcon },

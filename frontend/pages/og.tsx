@@ -25,7 +25,7 @@ export async function getStaticProps(): Promise<{ props: Props }> {
   return {
     props: {
       bg: '#13BEB4',
-      title: 'L2BEAT 💓',
+      title: 'L2BEAT',
       head: 'Overview',
       stats: [
         { name: 'TVL', value: `$${millify(l2Data.TVL)}` },
