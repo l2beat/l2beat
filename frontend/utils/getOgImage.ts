@@ -7,7 +7,7 @@ export async function generateImage(project: string = '') {
   console.log(`Generating: ${project || 'overview'}`)
 
   return captureWebsite.file(
-    `http://localhost:3000/og/${project}`,
+    `http://localhost:8080/og/${project}`,
     join(OG_FILES_DIR, `${project || 'overview'}.png`),
     {
       width: 1200,

@@ -20,7 +20,7 @@ function clearOrCreateDirectory() {
 }
 
 void (async (): Promise<void> => {
-  const serverProcess = spawn(`./node_modules/.bin/next`, ['dev'], { cwd: process.cwd() })
+  const serverProcess = spawn(`./node_modules/.bin/http-server`, ['./out'], { cwd: process.cwd() })
 
   serverProcess.stdout.on('data', function (data) {
     console.log(`stdout: ${data.toString()}`)
@@ -33,7 +33,7 @@ void (async (): Promise<void> => {
   })
 
   clearOrCreateDirectory()
-  await sleep(30000)
+  await sleep(2000)
   await generateImage()
   await Promise.all(getProjects().map(async (project) => generateImage(project)))
 
