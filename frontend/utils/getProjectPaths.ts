@@ -1,10 +1,10 @@
 import { getProjects } from './getProjects'
 
-export function getProjectsPaths() {
+export function getProjectsPaths(extraPaths: string[] = []) {
   const projects = getProjects()
 
   return {
-    paths: projects.map((project) => {
+    paths: [...projects, ...extraPaths].map((project) => {
       return {
         params: {
           project,

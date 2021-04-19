@@ -34,7 +34,7 @@ void (async (): Promise<void> => {
 
   clearOrCreateDirectory()
   await sleep(2000)
-  await generateImage()
+  await generateImage('overview')
   await Promise.all(getProjects().map(async (project) => generateImage(project)))
 
   serverProcess.kill()
