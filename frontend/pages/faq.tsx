@@ -1,5 +1,3 @@
-import 'react-vis/dist/style.css'
-
 import cx from 'classnames'
 import React from 'react'
 
