@@ -256,5 +256,67 @@
         "link": "https://www.immutable.com/blog/immutable-x-alpha-trading-launch"
       }
     ]
+  },
+  "ZKSwap": {
+    "website": "https://zks.org/",
+    "color": "#5a11a8",
+    "technology": "zk-rollup",
+    "more-info": {
+      "Primary use case": {
+        "text": "DEX, Payments"
+      },
+      "Hypothetical level of decentralization": {
+        "text": "High",
+        "sentiment": "good"
+      },
+      "Current level of decentralization": {
+        "text": "Low",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "bad"
+      },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes",
+        "tooltip": "Contracts are upgradable BUT on the upside there is a 14 days timelock",
+        "sentiment": "good",
+        "pointers": ["https://etherscan.io/address/0x8eca806aecc86ce90da803b080ca4e3a9b8097ad#code"]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only whitelisted actors can produce new blocks",
+        "pointers": [
+          "https://github.com/l2labs/zkswap-contracts/blob/e0686dfd40d92ab56425cb760fe342921f228d9f/contracts/ZkSyncCommitBlock.sol#L46"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes but only for withdrawals",
+        "sentiment": "good",
+        "tooltip": "Tx can be forced into a rollup state or rollup goes into \"exodus\" mode and everyone can exit.",
+        "pointers": [
+          "https://github.com/l2labs/zkswap-contracts/blob/main/contracts/ZkSyncExit.sol",
+          "https://github.com/l2labs/zkswap-contracts/blob/e0686dfd40d92ab56425cb760fe342921f228d9f/contracts/ZkSyncCommitBlock.sol#L224"
+        ]
+      },
+      "Privacy": {
+        "text": "No",
+        "tooltip": "Theoretically possible in the future"
+      },
+      "Smart contracts": {
+        "text": "No",
+        "tooltip": "Possible in the future"
+      }
+    },
+    "news": [
+      {
+        "name": "ZKSwap Sets Out Roadmap for 2021",
+        "link": "https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3"
+      }
+    ],
+    "notes": {
+      "text": "Spikes in TVL are caused by liquidity mining events",
+      "pointers": [
+        "https://zkswapofficial.medium.com/proof-of-liquidity-mining-upcoming-with-9-million-zks-rewards-218eaa1843a2"
+      ]
+    }
   }
 }

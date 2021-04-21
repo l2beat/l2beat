@@ -62,6 +62,108 @@
       "stablecoin": false,
       "decimals": 18,
       "coinpaprika_id": "link-chainlink"
+    },
+    "ZKS": {
+      "address": "0xe4815ae53b124e7263f08dcdbbb757d41ed658c6",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "zks-zkswap"
+    },
+    "HBTC": {
+      "address": "0x0316eb71485b0ab14103307bf65a021042c6d380",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "hbtc-huobi-btc"
+    },
+    "SUSHI": {
+      "address": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "sushi-sushi"
+    },
+    "UNI": {
+      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "uni-uniswap"
+    },
+    "1INCH": {
+      "address": "0x111111111117dc0aa78b770fa6a738034120c302",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "1inch-1inch"
+    },
+    "AAVE": {
+      "address": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "aave-new"
+    },
+    "ALPHA": {
+      "address": "0xa1faa113cbe53436df28ff0aee54275c13b40975",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "alpha-alpha-finance"
+    },
+    "YFI": {
+      "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "yfi-yearnfinance"
+    },
+    "GT": {
+      "address": "0xe66747a101bff2dba3697199dcce5b743b454759",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "gt-gatechain-token"
+    },
+    "MX": {
+      "address": "0x11eef04c884e24d9b7b4760e7476d06ddf797f36",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "mx-mx-token"
+    },
+    "RUNE": {
+      "address": "0x3155ba85d5f96b2d030a4966af206230e46849cb",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "rune-thorchain"
+    },
+    "BNB": {
+      "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "bnb-binance-coin"
+    },
+    "HT": {
+      "address": "0x6f259637dcd74c767781e37bc6133cd6a68aa161",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "ht-huobi-token"
+    },
+    "OKB": {
+      "address": "0x75231f58b43240c9718dd58b4967c5114342a86c",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "okb-okb"
+    },
+    "REN": {
+      "address": "0x408e41876cccdc0f92210600ef50372656052a38",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "ren-republic-protocol"
+    },
+    "YFII": {
+      "address": "0xa1d0e215a23d7030842fc67ce582a6afa3ccab83",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "yfii-dfimoney"
+    },
+    "BUSD": {
+      "address": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+      "stablecoin": true,
+      "decimals": 18,
+      "coinpaprika_id": "busd-binance-usd"
     }
   },
   "l2s": {
@@ -125,6 +227,33 @@
           "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "deployed_at_block": 12011518,
           "tokens": ["ETH"]
+        }
+      ]
+    },
+    "ZKSwap": {
+      "bridges": [
+        {
+          "address": "0x8eca806aecc86ce90da803b080ca4e3a9b8097ad",
+          "deployed_at_block": 11841962,
+          "tokens": [
+            "ETH",
+            "USDC",
+            "WBTC",
+            "SUSHI",
+            "UNI",
+            "1INCH",
+            "AAVE",
+            "LRC",
+            "YFI",
+            "SNX",
+            "RUNE",
+            "MKR",
+            "LINK",
+            "REN",
+            "DAI",
+            "USDT",
+            "BUSD"
+          ]
         }
       ]
     }
