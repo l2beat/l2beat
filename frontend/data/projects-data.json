@@ -311,6 +311,12 @@
         "name": "ZKSwap Sets Out Roadmap for 2021",
         "link": "https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3"
       }
-    ]
+    ],
+    "notes": {
+      "text": "Spikes in TVL are caused by liquidity mining events",
+      "pointers": [
+        "https://zkswapofficial.medium.com/proof-of-liquidity-mining-upcoming-with-9-million-zks-rewards-218eaa1843a2"
+      ]
+    }
   }
 }
