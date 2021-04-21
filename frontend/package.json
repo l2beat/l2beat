@@ -5,13 +5,14 @@
   "scripts": {
     "start": "yarn dev",
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "next build && yarn gen:og-img && next build",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
     "test:fix": "yarn lint:fix && yarn format:fix && yarn typecheck",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gen:og-img": "next export && ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -24,6 +25,7 @@
     "eslint-plugin-simple-import-sort": "^6.0.1",
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-unused-imports": "^1.0.1",
+    "http-server": "^0.12.3",
     "human-readable-numbers": "^0.9.5",
     "lodash": "^4.17.21",
     "millify": "^3.5.0",
@@ -33,6 +35,7 @@
     "react-dom": "17.0.1",
     "react-vis": "^1.11.7",
     "ts-essentials": "^7.0.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   },
   "devDependencies": {
