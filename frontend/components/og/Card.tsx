@@ -18,7 +18,7 @@ export interface Props {
 }
 export function Card({ title, head, stats, bg, graphData }: Props) {
   return (
-    <div className={styles.wrapper} style={{ width: 1200, height: 630, background: bg }}>
+    <div className={styles.wrapper} style={{ width: 1200, height: 627, background: bg }}>
       <div className={styles.head}>{head}</div>
       <div className={styles.title}>{title}</div>
       <div className={styles.graph}>
