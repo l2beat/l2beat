@@ -34,7 +34,7 @@ export async function getStaticProps(params: { params: { project: string } }): P
     .filter((point: { date: string }) => new Date(point.date).getTime() > millis30DaysAgo)
     .map((point: { date: string; usd: number }) => ({ x: new Date(point.date).getTime(), y: point.usd }))
 
-  const change = ((projectTvlData[0].usd / projectTvlData[1].usd) * 100 - 100).toFixed(2) + '%'
+  const change = ((projectTvlData[0].usd / projectTvlData[1].usd) * 100 - 100).toFixed(2)
 
   const trendIcon = Number(change) === 0 ? 'flat' : Number(change) > 0 ? 'up' : 'down'
 
@@ -61,7 +61,7 @@ function getStaticPropsForOverviewPage() {
   const ThirtyDaysData = tvlData
     .filter((point: { date: string }) => new Date(point.date).getTime() > millis30DaysAgo)
     .map((point: { date: string; usd: number }) => ({ x: new Date(point.date).getTime(), y: point.usd }))
-  const change = ((tvlData[0].usd / tvlData[1].usd) * 100 - 100).toFixed(2) + '%'
+  const change = ((tvlData[0].usd / tvlData[1].usd) * 100 - 100).toFixed(2)
 
   const trendIcon = Number(change) === 0 ? 'flat' : Number(change) > 0 ? 'up' : 'down'
 
