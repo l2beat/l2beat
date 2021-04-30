@@ -364,5 +364,50 @@
         "link": "https://blog.hermez.io/hermez-network-mainnet-launch/"
       }
     ]
+  },
+  "Layer2.Finance": {
+    "website": "https://layer2.finance/",
+    "color": "#ca9979",
+    "technology": "optimistic-rollup",
+    "technology-details": "Specialized Optimistic Rollup",
+    "more-info": {
+      "Primary use case": { "text": "Let Layer2 users interact with DeFi protocols on Layer1" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Has owner", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes",
+        "tooltip": "Owner can pause contract and drain funds. Owner will be transferred to governance",
+        "sentiment": "bad",
+        "pointers": [
+          "https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L483"
+        ]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only operator can produce new blocks",
+        "pointers": [
+          "https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes",
+        "sentiment": "good",
+        "tooltip": "Operator is required to include user deposit and balance sync TXs into the rollup",
+        "pointers": [
+          "https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L441"
+        ]
+      },
+      "Privacy": { "text": "No" },
+      "Smart contracts": {
+        "text": "No"
+      }
+    },
+    "news": [
+      {
+        "name": "The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees",
+        "link": "https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees"
+      }
+    ]
   }
 }
