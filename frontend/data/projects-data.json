@@ -318,5 +318,51 @@
         "https://zkswapofficial.medium.com/proof-of-liquidity-mining-upcoming-with-9-million-zks-rewards-218eaa1843a2"
       ]
     }
+  },
+  "Hermez": {
+    "website": "https://hermez.io/",
+    "color": "#ff9933",
+    "technology": "zk-rollup",
+    "technology-details": "zk-SNARK",
+    "more-info": {
+      "Primary use case": { "text": "Payments" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes, through contract upgrade",
+        "tooltip": "Contracts are upgradable BUT on the upside there is a 7 days timelock",
+        "sentiment": "neutral",
+        "pointers": ["https://etherscan.io/address/0xA68D85dF56E733A06443306A095646317B5Fa633#code"]
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "After initial bootstraping period anyone could bid for a slot time to forge new batches and update the state root",
+        "pointers": [
+          "https://github.com/hermeznetwork/contracts/blob/master/contracts/auction/HermezAuctionProtocol.sol#L515",
+          "https://github.com/hermeznetwork/contracts/blob/master/contracts/auction/HermezAuctionProtocol.sol#L571",
+          "https://docs.hermez.io/#/developers/protocol/consensus/consensus"
+        ]
+      },
+      "Force TX mechanism?": {
+        "text": "Yes",
+        "sentiment": "good",
+        "tooltip": "Transaction can be forced via smart contract. Coordinators must process them",
+        "pointers": [
+          "https://github.com/hermeznetwork/contracts/blob/master/contracts/hermez/Hermez.sol#L361",
+          "https://docs.hermez.io/#/developers/protocol/hermez-protocol/protocol?id=l1-user-transactions"
+        ]
+      },
+      "Privacy": { "text": "No" },
+      "Smart contracts": {
+        "text": "No"
+      }
+    },
+    "news": [
+      {
+        "name": "Hermez Network Mainnet Launch on 4th of March 2021",
+        "link": "https://blog.hermez.io/hermez-network-mainnet-launch/"
+      }
+    ]
   }
 }
