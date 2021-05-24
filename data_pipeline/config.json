@@ -170,6 +170,126 @@
       "stablecoin": true,
       "decimals": 18,
       "coinpaprika_id": "busd-binance-usd"
+    },
+    "OMG": {
+      "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "omg-omg-network"
+    },
+    "BAT": {
+      "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "bat-basic-attention-token"
+    },
+    "CAT": {
+      "address": "0x1234567461d3f8Db7496581774Bd869C83D51c93",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "cat-bitclave"
+    },
+    "renBTC": {
+      "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+      "stablecoin": false,
+      "decimals": 8,
+      "coinpaprika_id": "renbtc-renbtc"
+    },
+    "GNO": {
+      "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "gno-gnosis"
+    },
+    "ELEC": {
+      "address": "0xD49ff13661451313cA1553fd6954BD1d9b6E02b9",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "elec-electrifyasia"
+    },
+    "PAX": {
+      "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "pax-paxos-standard-token"
+    },
+    "SPANK": {
+      "address": "0x42d6622deCe394b54999Fbd73D108123806f6a18",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "spank-spankchain"
+    },
+    "LION": {
+      "address": "0x2167FB82309CF76513E83B25123f8b0559d6b48f",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "lion-coin-lion"
+    },
+    "ZRX": {
+      "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "zrx-0x"
+    },
+    "MATIC": {
+      "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "matic-matic-network"
+    },
+    "TUSD": {
+      "address": "0x0000000000085d4780B73119b644AE5ecd22b376",
+      "stablecoin": true,
+      "decimals": 18,
+      "coinpaprika_id": "tusd-trueusd"
+    },
+    "BNT": {
+      "address": "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "bnt-bancor"
+    },
+    "KICK": {
+      "address": "0xC12D1c73eE7DC3615BA4e37E4ABFdbDDFA38907E",
+      "stablecoin": false,
+      "decimals": 8,
+      "coinpaprika_id": "kick-kickcoin"
+    },
+    "BAL": {
+      "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "bal-balancer"
+    },
+    "CEL": {
+      "address": "0xaaAEBE6Fe48E54f431b0C390CfaF0b017d09D42d",
+      "stablecoin": false,
+      "decimals": 4,
+      "coinpaprika_id": "cel-celsius"
+    },
+    "CRO": {
+      "address": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b",
+      "stablecoin": false,
+      "decimals": 8,
+      "coinpaprika_id": "cro-cryptocom-chain"
+    },
+    "AST": {
+      "address": "0x27054b13b1B798B345b591a4d22e6562d47eA75a",
+      "stablecoin": false,
+      "decimals": 4,
+      "coinpaprika_id": "ast-airswap"
+    },
+    "PASS": {
+      "address": "0xeE4458e052B533b1aABD493B5f8c4d85D7B263Dc",
+      "stablecoin": false,
+      "decimals": 6,
+      "coinpaprika_id": "pass-blockpass"
+    },
+    "KNC": {
+      "address": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+      "stablecoin": false,
+      "decimals": 18,
+      "coinpaprika_id": "knc-kyber-network"
     }
   },
   "l2s": {
@@ -278,6 +398,49 @@
           "address": "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
           "deployed_at_block": 12283778,
           "tokens": ["WETH", "DAI", "USDC", "USDT", "BUSD"]
+        }
+      ]
+    },
+    "OMG Network": {
+      "bridges": [
+        {
+          "address": "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
+          "deployed_at_block": 9687270,
+          "tokens": ["ETH"]
+        },
+        {
+          "address": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
+          "deployed_at_block": 9687286,
+          "tokens": [
+            "USDT",
+            "OMG",
+            "BAT",
+            "WBTC",
+            "DAI",
+            "CAT",
+            "renBTC",
+            "GNO",
+            "BUSD",
+            "ELEC",
+            "PAX",
+            "HOBO",
+            "SPANK",
+            "LION",
+            "ZRX",
+            "MATIC",
+            "TUSD",
+            "BNT",
+            "KICK",
+            "LINK",
+            "BAL",
+            "CEL",
+            "CRO",
+            "LRC",
+            "USDC",
+            "AST",
+            "PASS",
+            "KNC"
+          ]
         }
       ]
     }
