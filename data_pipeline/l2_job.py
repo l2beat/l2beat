@@ -30,10 +30,12 @@ if sys.argv and len(sys.argv) == 2:
     output_file_path = os.path.join(parent_dir, config['output'])
 
     output = run_l2beat(config=config, output_file_path=output_file_path)
-    output = pull_optimism_data(output=output)
+    # output = pull_optimism_data(output=output)
 
     with open(output_file_path, 'w') as output_file:
         json.dump(output, output_file, indent=2, sort_keys=True)
+    
+    print('Done')
 
 else:
     print('Please pass one and only one argument (a .json config file)')

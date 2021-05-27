@@ -12,7 +12,6 @@ import { AppContainer } from '../../components/AppContainer'
 import { ContentWithTooltip, Item, List } from '../../components/DescriptionList'
 import { EtherscanLink } from '../../components/EtherscanLink'
 import { Graph } from '../../components/graphs/Graph'
-import { NoOfTxs } from '../../components/graphs/NoOfTxs'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
 import { l2Data } from '../../data'
@@ -24,9 +23,6 @@ import { getProjectsPaths } from '../../utils/getProjectPaths'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
   const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
-  const noOfTxs =
-    props.noOfTxsData &&
-    React.useMemo(() => props.noOfTxsData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
 
   const badgeText =
     Math.abs(props.tvl) < 0.01 ? `${props.tvlDelta > 0 ? '>' : '<-'}0.01%` : `${props.tvlDelta.toFixed(2)}%`
@@ -79,14 +75,6 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <div className={styles.description}>Project website</div>
           </div>
         </div>
-
-        {noOfTxs && (
-          <div className={cx(styles.card, styles.noOfTx)}>
-            <Graph title={`# of txs`} data={noOfTxs}>
-              {(data, container) => <NoOfTxs container={container} data={data} />}
-            </Graph>
-          </div>
-        )}
 
         <div className={cx(styles.card, styles.cardBg, styles.projectDetails)}>
           <div className={styles.title}>
