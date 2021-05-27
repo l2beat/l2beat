@@ -80,14 +80,6 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
           </div>
         </div>
 
-        {noOfTxs && (
-          <div className={cx(styles.card, styles.noOfTx)}>
-            <Graph title={`# of txs`} data={noOfTxs}>
-              {(data, container) => <NoOfTxs container={container} data={data} />}
-            </Graph>
-          </div>
-        )}
-
         <div className={cx(styles.card, styles.cardBg, styles.projectDetails)}>
           <div className={styles.title}>
             <ImportContactsIcon />
