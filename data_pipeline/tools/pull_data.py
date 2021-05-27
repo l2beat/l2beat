@@ -39,7 +39,10 @@ def pull_l2_data(output=None,
             bridge_address = bridge['address']
 
             if output['l2s'][l2]['bridges']:
-                bridge_dates = dates_array(output['l2s'][l2]['bridges'][bridge_address]['data'], 'date')
+                try:
+                    bridge_dates = dates_array(output['l2s'][l2]['bridges'][bridge_address]['data'], 'date')
+                except KeyError:
+                    bridge_dates = []
             else:
                 bridge_dates = []
 
@@ -81,70 +84,69 @@ def pull_l2_data(output=None,
                         day = datetime.strftime(day, '%Y-%m-%d')
                         print(day, "for", token)
                         balance = eod_balance_of(config['tokens'][token]['address'], bridge_address, day, config['tokens'][token].get('deployed_at_block', None))
-                        if balance:
                         
-                            human_readable_balance = balance / 10 ** config['tokens'][token]['decimals']
-                            value = (balance / 10 ** config['tokens'][token]['decimals']) * prices_dict[day][token]
+                        human_readable_balance = balance / 10 ** config['tokens'][token]['decimals']
+                        value = (balance / 10 ** config['tokens'][token]['decimals']) * prices_dict[day][token]
 
-                            output['l2s'][l2]['bridges'][bridge_address]['tokens'][token]['data'].append({'date': day, 'usd': value, 'token': human_readable_balance})
-                            output['l2s'][l2]['bridges'][bridge_address]['tokens'][token]['TVL'] = value
-                            
-                            # bridge data
-                            if output['l2s'][l2]['bridges'][bridge_address]['data']:
-                                if day not in bridge_dates:
-                                    output['l2s'][l2]['bridges'][bridge_address]['data'].append({'date': day, 'usd': value})
-                                    bridge_dates.append(day)
-                                else:
-                                    for i in output['l2s'][l2]['bridges'][bridge_address]['data']:
-                                        if i['date'] == day:
-                                            i['usd'] += value
-                            else:
+                        output['l2s'][l2]['bridges'][bridge_address]['tokens'][token]['data'].append({'date': day, 'usd': value, 'token': human_readable_balance})
+                        output['l2s'][l2]['bridges'][bridge_address]['tokens'][token]['TVL'] = value
+                        
+                        # bridge data
+                        if output['l2s'][l2]['bridges'][bridge_address]['data']:
+                            if day not in bridge_dates:
                                 output['l2s'][l2]['bridges'][bridge_address]['data'].append({'date': day, 'usd': value})
                                 bridge_dates.append(day)
-
-                            # l2 data
-                            if output['l2s'][l2]['data']:
-                                if day not in l2_dates:
-                                    output['l2s'][l2]['data'].append({'date': day, 'usd': value})
-                                    l2_dates.append(day)
-                                else:
-                                    for i in output['l2s'][l2]['data']:
-                                        if i['date'] == day:
-                                            i['usd'] += value
                             else:
+                                for i in output['l2s'][l2]['bridges'][bridge_address]['data']:
+                                    if i['date'] == day:
+                                        i['usd'] += value
+                        else:
+                            output['l2s'][l2]['bridges'][bridge_address]['data'].append({'date': day, 'usd': value})
+                            bridge_dates.append(day)
+
+                        # l2 data
+                        if output['l2s'][l2]['data']:
+                            if day not in l2_dates:
                                 output['l2s'][l2]['data'].append({'date': day, 'usd': value})
                                 l2_dates.append(day)
-
-
-                            # total data
-                            if output['data']:
-                                if day not in total_dates:
-                                    output['data'].append({'date': day, 'usd': value})
-                                    total_dates.append(day)
-                                else:
-                                    for i in output['data']:
-                                        if i['date'] == day:
-                                            i['usd'] += value
                             else:
+                                for i in output['l2s'][l2]['data']:
+                                    if i['date'] == day:
+                                        i['usd'] += value
+                        else:
+                            output['l2s'][l2]['data'].append({'date': day, 'usd': value})
+                            l2_dates.append(day)
+
+
+                        # total data
+                        if output['data']:
+                            if day not in total_dates:
                                 output['data'].append({'date': day, 'usd': value})
                                 total_dates.append(day)
+                            else:
+                                for i in output['data']:
+                                    if i['date'] == day:
+                                        i['usd'] += value
+                        else:
+                            output['data'].append({'date': day, 'usd': value})
+                            total_dates.append(day)
+                        
+                        # TVLs
+                        if datetime.strptime(day, '%Y-%m-%d') == days_to_process[-1]:
                             
-                            # TVLs
-                            if datetime.strptime(day, '%Y-%m-%d') == days_to_process[-1]:
-                                
-                                if output['TVL'] != 0:
-                                    if token in output['l2s'][l2]['bridges'][bridge_address]['tokens']:
-                                        for i in output['l2s'][l2]['bridges'][bridge_address]['tokens'][token]['data']:
-                                            if datetime.strptime(i['date'], '%Y-%m-%d') == days_to_process[0] - timedelta(days=1):
-                                                TVL_to_substract = i['usd']
+                            if output['TVL'] != 0:
+                                if token in output['l2s'][l2]['bridges'][bridge_address]['tokens']:
+                                    for i in output['l2s'][l2]['bridges'][bridge_address]['tokens'][token]['data']:
+                                        if datetime.strptime(i['date'], '%Y-%m-%d') == days_to_process[0] - timedelta(days=1):
+                                            TVL_to_substract = i['usd']
 
-                                                output['l2s'][l2]['bridges'][bridge_address]['TVL'] -= TVL_to_substract
-                                                output['l2s'][l2]['TVL'] -= TVL_to_substract
-                                                output['TVL'] -= TVL_to_substract
+                                            output['l2s'][l2]['bridges'][bridge_address]['TVL'] -= TVL_to_substract
+                                            output['l2s'][l2]['TVL'] -= TVL_to_substract
+                                            output['TVL'] -= TVL_to_substract
 
-                                output['l2s'][l2]['bridges'][bridge_address]['TVL'] += value
-                                output['l2s'][l2]['TVL'] += value
-                                output['TVL'] += value
+                            output['l2s'][l2]['bridges'][bridge_address]['TVL'] += value
+                            output['l2s'][l2]['TVL'] += value
+                            output['TVL'] += value
 
                     print("Saving partial results to: ", output_file_path)
                     with open(output_file_path, 'w+') as output_file:
