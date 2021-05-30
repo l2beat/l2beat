@@ -187,6 +187,15 @@
         }
       ]
     },
+    "Arbitrum": {
+      "bridges": [
+        {
+          "address": "0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515",
+          "deployed_at_block": 12525700,
+          "tokens": ["ETH"]
+        }
+      ]
+    },
     "zkSync": {
       "bridges": [
         {

@@ -139,7 +139,11 @@ export function getStaticProps(params: { params: { project: string } }) {
       : null
 
   const tvlDelta =
-    (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
+    // if there is not enough data don't throw
+    projectData.data[projectData.data.length - 2] !== undefined
+      ? (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 -
+        100
+      : 0
 
   const projectMetadata = findProjectMetadata(params.params.project)
   const projectConfig = findProjectConfig(params.params.project)

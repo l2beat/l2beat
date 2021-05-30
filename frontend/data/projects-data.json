@@ -53,6 +53,40 @@
       }
     ]
   },
+  "Arbitrum": {
+    "website": "https://offchainlabs.com/",
+    "color": "#4c9ce5",
+    "technology": "optimistic-rollup",
+    "technology-details": "Arbitrum Virtual Machine",
+    "more-info": {
+      "Primary use case": { "text": "Universal" },
+      "Hypothetical level of decentralization": { "text": "High", "sentiment": "good" },
+      "Current level of decentralization": { "text": "Low", "tooltip": "Contracts are upgradable", "sentiment": "bad" },
+      "Can funds be stolen by the operator?": {
+        "text": "Yes, through contract upgrade",
+        "tooltip": "Contracts are upgradable",
+        "sentiment": "neutral",
+        "pointers": []
+      },
+      "Permisonless?": {
+        "text": "No",
+        "sentiment": "bad",
+        "tooltip": "Only sequencer can produce new blocks",
+        "pointers": []
+      },
+      "Force TX mechanism?": {
+        "text": "Yes",
+        "sentiment": "good",
+        "tooltip": "Sequencer can be forced to append particular TX into the rollup. For now it's only for whitelisted accounts.",
+        "pointers": ["https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f#code"]
+      },
+      "Privacy": { "text": "No" },
+      "Smart contracts": {
+        "text": "Yes",
+        "tooltip": "Automatic EVM -> AVM translation happens under the hood."
+      }
+    }
+  },
   "zkSync": {
     "website": "https://zksync.io/",
     "color": "#8c8dfc",

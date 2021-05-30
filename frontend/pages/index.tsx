@@ -178,7 +178,7 @@ export async function getStaticProps() {
       name,
       tvl: data.TVL,
       share: (data.TVL / l2Data.TVL) * 100,
-      change: (tvlData[0].usd / tvlData[1].usd) * 100 - 100,
+      change: tvlData[1] !== undefined ? (tvlData[0].usd / tvlData[1].usd) * 100 - 100 : 0,
       tvlData,
       meta,
     }
