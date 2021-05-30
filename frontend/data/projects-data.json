@@ -164,7 +164,7 @@
     "website": "https://dydx.exchange/",
     "color": "#6966ff",
     "technology": "zk-rollup",
-    "technology-details": "zk-SNARK/PLONK",
+    "technology-details": "zk-STARK/StarkExchange",
     "more-info": {
       "Primary use case": { "text": "DEX" },
       "Hypothetical level of decentralization": { "text": "High" },
@@ -226,7 +226,7 @@
   "ImmutableX": {
     "website": "https://www.immutable.com/",
     "color": "#17b5cb",
-    "technology": "zk-rollup",
+    "technology": "validium",
     "technology-details": "zk-STARK/StarkExchange",
     "more-info": {
       "Primary use case": { "text": "NFT Exchange" },
