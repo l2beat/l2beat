@@ -17,7 +17,7 @@
           "https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138"
         ]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only sequencer can produce new blocks",
@@ -68,7 +68,7 @@
         "sentiment": "neutral",
         "pointers": ["https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code"]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only whitelisted actors can produce new blocks",
@@ -110,7 +110,7 @@
       "Can funds be stolen by the operator?": {
         "text": "?"
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "?"
       },
       "Force TX mechanism?": {
@@ -139,7 +139,7 @@
         "text": "No",
         "sentiment": "good"
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only operator can produce new blocks",
@@ -175,7 +175,7 @@
         "sentiment": "neutral",
         "pointers": ["https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code"]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only dydx can produce new blocks"
@@ -211,7 +211,7 @@
         "text": "No",
         "sentiment": "good"
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "Yes",
         "sentiment": "good",
         "tooltip": "Anyone can submit a new root that can become part of the rollup after a delay",
@@ -238,7 +238,7 @@
         "sentiment": "neutral",
         "pointers": ["https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code"]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only ImmutableX can produce new blocks"
@@ -280,7 +280,7 @@
         "sentiment": "good",
         "pointers": ["https://etherscan.io/address/0x8eca806aecc86ce90da803b080ca4e3a9b8097ad#code"]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only whitelisted actors can produce new blocks",
@@ -334,7 +334,7 @@
         "sentiment": "neutral",
         "pointers": ["https://etherscan.io/address/0xA68D85dF56E733A06443306A095646317B5Fa633#code"]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "After initial bootstraping period anyone could bid for a slot time to forge new batches and update the state root",
@@ -382,7 +382,7 @@
           "https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L483"
         ]
       },
-      "Permisonless?": {
+      "Permissionless?": {
         "text": "No",
         "sentiment": "bad",
         "tooltip": "Only operator can produce new blocks",
