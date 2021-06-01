@@ -36,3 +36,19 @@ jobs:
         working-directory: ./frontend
       - run: yarn format
         working-directory: ./frontend
+
+  backend:
+    strategy:
+      matrix:
+        node: ["14.x"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: yarn --frozen-lockfile
+        working-directory: ./backend
+      - run: yarn lint
+        working-directory: ./backend
