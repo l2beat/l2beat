@@ -1,6 +1,6 @@
 import { Config, queryTVL } from '../tools'
 
-const BRIDGE_ADDRESS = '0x8eca806aecc86ce90da803b080ca4e3a9b8097ad'
+const BRIDGE_ADDRESS = '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad'
 
 export async function zkswap(config: Config) {
   return {

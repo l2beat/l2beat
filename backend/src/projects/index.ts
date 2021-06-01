@@ -1,3 +1,4 @@
+import { Config, TVLResult } from '../tools'
 import { aztec } from './aztec'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
@@ -9,7 +10,18 @@ import { optimism } from './optimism'
 import { zkswap } from './zkswap'
 import { zksync } from './zksync'
 
-export const projects = [
+interface Project {
+  (config: Config): Promise<ProjectData>
+}
+
+interface ProjectData {
+  name: string
+  bridges: {
+    [address: string]: TVLResult
+  }
+}
+
+export const projects: Project[] = [
   aztec,
   dydx,
   fuel,
