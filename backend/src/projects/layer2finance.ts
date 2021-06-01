@@ -1,4 +1,4 @@
-import { Config, queryTVL } from '../tools'
+import { Config, queryTVL } from '../services'
 
 const BRIDGE_ADDRESS = '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'
 

@@ -1,5 +1,5 @@
 import { projects } from './projects'
-import { setup } from './tools'
+import { setup } from './services'
 
 main().catch((e) => {
   console.error(e)

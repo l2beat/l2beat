@@ -1,4 +1,4 @@
-import { Config, TVLResult } from '../tools'
+import { Config, TVLResult } from '../services'
 import { aztec } from './aztec'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
