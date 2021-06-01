@@ -1,5 +1,5 @@
 import { projects } from './projects'
-import { setup } from './services'
+import { setup, SimpleDate } from './services'
 
 main().catch((e) => {
   console.error(e)
@@ -9,8 +9,8 @@ main().catch((e) => {
 async function main() {
   const { config, blockInfo } = setup()
 
-  const latestBlock = await blockInfo.getMaxBlockForDate(new Date())
-  console.log(latestBlock)
+  const block = await blockInfo.getMaxBlock(SimpleDate.today())
+  console.log(block)
 
   const promised = projects.map((project) => project(config))
   const results = await Promise.all(promised)
