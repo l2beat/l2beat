@@ -1,9 +1,17 @@
 import { projects } from './projects'
-import { getConfig } from './tools'
+import { setup } from './tools'
 
-main()
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
+
 async function main() {
-  const config = getConfig()
+  const { config, blockInfo } = setup()
+
+  const latestBlock = await blockInfo.getMaxBlockForDate(new Date())
+  console.log(latestBlock)
+
   const promised = projects.map((project) => project(config))
   const results = await Promise.all(promised)
   console.log(results)
