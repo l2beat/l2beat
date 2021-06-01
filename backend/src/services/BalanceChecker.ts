@@ -5,7 +5,7 @@ const abi = new utils.Interface([
 ])
 
 export class BalanceChecker {
-  constructor(private provider: providers.JsonRpcProvider) {}
+  constructor(private provider: providers.Provider) {}
 
   async getEthBalance(address: string, block: number) {
     return this.provider.getBalance(address, block)

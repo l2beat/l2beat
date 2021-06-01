@@ -10,7 +10,8 @@ async function main() {
   const { config, blockInfo } = setup()
 
   const block = await blockInfo.getMaxBlock(SimpleDate.today())
-  console.log(block)
+  const date = await blockInfo.getBlockDate(block)
+  console.log(date.toString())
 
   const promised = projects.map((project) => project(config))
   const results = await Promise.all(promised)

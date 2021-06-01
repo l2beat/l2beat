@@ -8,9 +8,9 @@ export function setup() {
   const config = getConfig()
 
   const bigQuery = new BigQuery()
-  const blockInfo = new BlockInfo(bigQuery)
-
   const provider = new providers.JsonRpcProvider(config.rpcUrl)
+
+  const blockInfo = new BlockInfo(bigQuery, provider)
   const balanceChecker = new BalanceChecker(provider)
 
   return {
