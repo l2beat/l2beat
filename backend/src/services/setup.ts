@@ -13,7 +13,7 @@ export type Services = ReturnType<typeof setup>
 
 export function setup() {
   const config = getConfig()
-  const logger =  new Logger()
+  const logger = new Logger()
 
   const bigQuery = new BigQuery()
   const queryQueue = new QueryQueue(bigQuery)
@@ -23,7 +23,11 @@ export function setup() {
   const blockInfo = new BlockInfo(queryQueue, provider, cache)
   const balanceChecker = new BalanceChecker(provider, cache)
 
-  const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo, logger)
+  const tokenBalanceChecker = new TokenBalanceChecker(
+    balanceChecker,
+    blockInfo,
+    logger
+  )
   const valueLockedChecker = new ValueLockedChecker(
     blockInfo,
     tokenBalanceChecker,
