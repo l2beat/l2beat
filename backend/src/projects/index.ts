@@ -1,4 +1,4 @@
-import { Config, TVLResult } from '../services'
+import { Services, TVLResult } from '../services'
 import { aztec } from './aztec'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
@@ -11,7 +11,7 @@ import { zkswap } from './zkswap'
 import { zksync } from './zksync'
 
 interface Project {
-  (config: Config): Promise<ProjectData>
+  (services: Services): Promise<ProjectData>
 }
 
 interface ProjectData {

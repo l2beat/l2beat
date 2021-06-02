@@ -3,6 +3,10 @@ import { providers } from 'ethers'
 import { BalanceChecker } from './BalanceChecker'
 import { BlockInfo } from './BlockInfo'
 import { getConfig } from './Config'
+import { TokenBalanceChecker } from './TokenBalanceChecker'
+import { ValueLockedChecker } from './ValueLockedChecker'
+
+export type Services = ReturnType<typeof setup>
 
 export function setup() {
   const config = getConfig()
@@ -13,9 +17,13 @@ export function setup() {
   const blockInfo = new BlockInfo(bigQuery, provider)
   const balanceChecker = new BalanceChecker(provider)
 
-  return {
-    config,
+  const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo)
+  const valueLockedChecker = new ValueLockedChecker(
     blockInfo,
-    balanceChecker,
+    tokenBalanceChecker
+  )
+
+  return {
+    valueLockedChecker,
   }
 }
