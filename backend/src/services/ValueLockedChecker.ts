@@ -1,14 +1,28 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { BlockInfo } from './BlockInfo'
+import { Logger } from './Logger'
 import { SimpleDate } from './SimpleDate'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
+
+export interface TVLResult {
+  [token: string]: {
+    date: SimpleDate
+    balance: BigNumber
+  }[]
+}
 
 export class ValueLockedChecker {
   constructor(
     private blockInfo: BlockInfo,
-    private tokenBalanceChecker: TokenBalanceChecker
+    private tokenBalanceChecker: TokenBalanceChecker,
+    private logger: Logger
   ) {}
 
-  async getTVL(account: string, sinceBlock: number, tokens: string[]) {
+  async getTVL(
+    account: string,
+    sinceBlock: number,
+    tokens: string[]
+  ): Promise<TVLResult> {
     const startDate = await this.blockInfo.getBlockDate(sinceBlock)
     const dates = dateRange(startDate, SimpleDate.today())
     const promises = tokens.map(async (token) => {
@@ -17,6 +31,7 @@ export class ValueLockedChecker {
         token,
         dates
       )
+      this.logger.log(`${token} Balances fetched for ${account}`)
       return { [token]: balances }
     })
     const results = await Promise.all(promises)

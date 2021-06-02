@@ -4,6 +4,7 @@ import { AsyncCache } from './AsyncCache'
 import { BalanceChecker } from './BalanceChecker'
 import { BlockInfo } from './BlockInfo'
 import { getConfig } from './Config'
+import { Logger } from './Logger'
 import { QueryQueue } from './QueryQueue'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 import { ValueLockedChecker } from './ValueLockedChecker'
@@ -12,6 +13,7 @@ export type Services = ReturnType<typeof setup>
 
 export function setup() {
   const config = getConfig()
+  const logger =  new Logger()
 
   const bigQuery = new BigQuery()
   const queryQueue = new QueryQueue(bigQuery)
@@ -21,10 +23,11 @@ export function setup() {
   const blockInfo = new BlockInfo(queryQueue, provider, cache)
   const balanceChecker = new BalanceChecker(provider, cache)
 
-  const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo)
+  const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo, logger)
   const valueLockedChecker = new ValueLockedChecker(
     blockInfo,
-    tokenBalanceChecker
+    tokenBalanceChecker,
+    logger
   )
 
   return {

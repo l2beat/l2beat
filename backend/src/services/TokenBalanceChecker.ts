@@ -2,12 +2,14 @@ import { BigNumber } from 'ethers'
 import { getTokenBySymbol } from '../tokens'
 import { BalanceChecker } from './BalanceChecker'
 import { BlockInfo } from './BlockInfo'
+import { Logger } from './Logger'
 import { SimpleDate } from './SimpleDate'
 
 export class TokenBalanceChecker {
   constructor(
     private balanceChecker: BalanceChecker,
-    private blockInfo: BlockInfo
+    private blockInfo: BlockInfo,
+    private logger: Logger
   ) {}
 
   async getBalance(account: string, tokenSymbol: string, date: SimpleDate) {
@@ -25,6 +27,7 @@ export class TokenBalanceChecker {
     return Promise.all(
       dates.map(async (date) => {
         const balance = await this.getBalance(account, tokenSymbol, date)
+        this.logger.log(`${tokenSymbol}.balanceOf(${account}, ${date})`)
         return { date, balance }
       })
     )
