@@ -19,14 +19,10 @@ export function setup() {
   const provider = new providers.JsonRpcProvider(config.rpcUrl, 'mainnet')
   const asyncCache = new AsyncCache()
 
-  const blockInfo = new BlockInfo(bigQuery, provider, asyncCache)
-  const balanceChecker = new BalanceChecker(provider, asyncCache)
+  const blockInfo = new BlockInfo(bigQuery, provider, asyncCache, logger)
+  const balanceChecker = new BalanceChecker(provider, asyncCache, logger)
 
-  const tokenBalanceChecker = new TokenBalanceChecker(
-    balanceChecker,
-    blockInfo,
-    logger
-  )
+  const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo)
   const valueLockedChecker = new ValueLockedChecker(
     blockInfo,
     tokenBalanceChecker,

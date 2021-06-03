@@ -40,7 +40,6 @@ export class ValueLockedChecker {
         token,
         dates
       )
-      this.logger.log(`${token} Balances fetched for ${account}`)
       return { [token]: balances }
     })
     const results = await Promise.all(promises)

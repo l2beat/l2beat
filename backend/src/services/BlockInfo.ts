@@ -2,6 +2,7 @@ import { BigQuery } from '@google-cloud/bigquery'
 import { providers } from 'ethers'
 import { AsyncCache } from './AsyncCache'
 import { AsyncQueue } from './AsyncQueue'
+import { Logger } from './Logger'
 import { SimpleDate } from './SimpleDate'
 
 export class BlockInfo {
@@ -11,7 +12,8 @@ export class BlockInfo {
   constructor(
     private bigQuery: BigQuery,
     private provider: providers.Provider,
-    private asyncCache: AsyncCache
+    private asyncCache: AsyncCache,
+    private logger: Logger
   ) {}
 
   async getMaxBlock(date: SimpleDate) {
@@ -31,6 +33,7 @@ export class BlockInfo {
         params: { date: date.toString() },
       })
     )
+    this.logger.log(`fetched max block for ${date}`)
     return rows[0].block as number
   }
 
@@ -47,6 +50,7 @@ export class BlockInfo {
     const { timestamp } = await this.ethersQueue.enqueue(() =>
       this.provider.getBlock(block)
     )
+    this.logger.log(`fetched block date for ${block}`)
     return SimpleDate.fromUnixTimestamp(timestamp)
   }
 }

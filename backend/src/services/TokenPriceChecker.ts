@@ -24,18 +24,14 @@ export class TokenPriceChecker {
   async getPrice(tokenSymbol: string, date: SimpleDate) {
     return this.asyncCache.getOrFetch(
       ['getPrice', tokenSymbol, date],
-      async () => {
-        const price = await this._getPrice(tokenSymbol, date)
-        this.logger.log(`${tokenSymbol} price fetched for ${date}`)
-        return price
-      }
+      async () => this._getPrice(tokenSymbol, date)
     )
   }
 
   private async _getPrice(tokenSymbol: string, date: SimpleDate) {
     const id = getTokenBySymbol(tokenSymbol).coingeckoId
     const url = `${API_URL}/coins/${id}/history?date=${date.toDDMMYYYYString()}&localization=false`
-    return this.asyncQueue.enqueue(() =>
+    const price = await this.asyncQueue.enqueue(() =>
       fetch(url)
         .then((res) => res.json())
         .then((data: ApiResponse) => {
@@ -45,5 +41,7 @@ export class TokenPriceChecker {
           }
         })
     )
+    this.logger.log(`fetched ${tokenSymbol} price @ ${date}`)
+    return price
   }
 }
