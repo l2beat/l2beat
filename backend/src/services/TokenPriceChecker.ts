@@ -17,7 +17,7 @@ interface ApiResponse {
 }
 
 export class TokenPriceChecker {
-  private asyncQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 60 })
+  private asyncQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 50 })
 
   constructor(private asyncCache: AsyncCache, private logger: Logger) {}
 
@@ -33,7 +33,12 @@ export class TokenPriceChecker {
     const url = `${API_URL}/coins/${id}/history?date=${date.toDDMMYYYYString()}&localization=false`
     const price = await this.asyncQueue.enqueue(() =>
       fetch(url)
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw res.statusText
+          }
+          return res.json()
+        })
         .then((data: ApiResponse) => {
           return {
             usd: data.market_data?.current_price.usd ?? 0,

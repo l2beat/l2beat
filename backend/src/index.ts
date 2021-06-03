@@ -1,5 +1,6 @@
 import { projects } from './projects'
 import { setup } from './services'
+import { SimpleDate } from './services/SimpleDate'
 import { getProjectTVLs, getTokenPrices } from './tools'
 
 main().catch((e) => {
@@ -11,5 +12,6 @@ async function main() {
   const { valueLockedChecker, tokenPriceChecker } = setup()
 
   const results = await getProjectTVLs(projects, valueLockedChecker)
-  await getTokenPrices(results, tokenPriceChecker)
+  const getPrice = await getTokenPrices(results, tokenPriceChecker)
+  console.log(getPrice('ETH', SimpleDate.today().addDays(-1)))
 }
