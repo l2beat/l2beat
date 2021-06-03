@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Project } from '../projects/Project'
 import { BlockInfo } from './BlockInfo'
 import { Logger } from './Logger'
 import { SimpleDate } from './SimpleDate'
@@ -18,7 +19,15 @@ export class ValueLockedChecker {
     private logger: Logger
   ) {}
 
-  async getTVL(
+  async getProjectTVL(project: Project) {
+    return Promise.all(
+      project.bridges.map((bridge) =>
+        this.getAccountTVL(bridge.address, bridge.sinceBlock, bridge.tokens)
+      )
+    )
+  }
+
+  async getAccountTVL(
     account: string,
     sinceBlock: number,
     tokens: string[]

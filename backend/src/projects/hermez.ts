@@ -1,16 +1,12 @@
-import { Services } from '../services'
+import { Project } from './Project'
 
-const BRIDGE_ADDRESS = '0xA68D85dF56E733A06443306A095646317B5Fa633'
-
-export async function hermez({ valueLockedChecker }: Services) {
-  return {
-    name: 'Hermez',
-    bridges: {
-      [BRIDGE_ADDRESS]: await valueLockedChecker.getTVL(
-        BRIDGE_ADDRESS,
-        12093596,
-        ['ETH', 'USDT', 'USDC', 'DAI', 'WBTC', 'UNI', 'YFI', 'LINK']
-      ),
+export const hermez: Project = {
+  name: 'Hermez',
+  bridges: [
+    {
+      address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
+      sinceBlock: 12093596,
+      tokens: ['ETH', 'USDT', 'USDC', 'DAI', 'WBTC', 'UNI', 'YFI', 'LINK'],
     },
-  }
+  ],
 }
