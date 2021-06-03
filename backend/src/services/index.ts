@@ -5,7 +5,6 @@ import { BalanceChecker } from './BalanceChecker'
 import { BlockInfo } from './BlockInfo'
 import { getConfig } from './Config'
 import { Logger } from './Logger'
-import { QueryQueue } from './QueryQueue'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 import { TokenPriceChecker } from './TokenPriceChecker'
 import { ValueLockedChecker } from './ValueLockedChecker'
@@ -17,11 +16,10 @@ export function setup() {
   const logger = new Logger()
 
   const bigQuery = new BigQuery()
-  const queryQueue = new QueryQueue(bigQuery)
   const provider = new providers.JsonRpcProvider(config.rpcUrl, 'mainnet')
   const asyncCache = new AsyncCache()
 
-  const blockInfo = new BlockInfo(queryQueue, provider, asyncCache)
+  const blockInfo = new BlockInfo(bigQuery, provider, asyncCache)
   const balanceChecker = new BalanceChecker(provider, asyncCache)
 
   const tokenBalanceChecker = new TokenBalanceChecker(

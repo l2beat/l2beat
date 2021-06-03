@@ -1,11 +1,15 @@
+import { BigQuery } from '@google-cloud/bigquery'
 import { providers } from 'ethers'
 import { AsyncCache } from './AsyncCache'
-import { QueryQueue } from './QueryQueue'
+import { AsyncQueue } from './AsyncQueue'
 import { SimpleDate } from './SimpleDate'
 
 export class BlockInfo {
+  private bigQueryQueue = new AsyncQueue({ length: 1 })
+  private ethersQueue = new AsyncQueue({ length: 1 })
+
   constructor(
-    private queryQueue: QueryQueue,
+    private bigQuery: BigQuery,
     private provider: providers.Provider,
     private asyncCache: AsyncCache
   ) {}
@@ -17,14 +21,16 @@ export class BlockInfo {
   }
 
   private async _getMaxBlock(date: SimpleDate) {
-    const [rows] = await this.queryQueue.query({
-      query: `
+    const [rows] = await this.bigQueryQueue.enqueue(() =>
+      this.bigQuery.query({
+        query: `
         SELECT MAX(number) as block
         FROM bigquery-public-data.crypto_ethereum.blocks
         WHERE date(timestamp) = @date;
       `,
-      params: { date: date.toString() },
-    })
+        params: { date: date.toString() },
+      })
+    )
     return rows[0].block as number
   }
 
@@ -38,7 +44,9 @@ export class BlockInfo {
   }
 
   private async _getBlockDate(block: number) {
-    const { timestamp } = await this.provider.getBlock(block)
+    const { timestamp } = await this.ethersQueue.enqueue(() =>
+      this.provider.getBlock(block)
+    )
     return SimpleDate.fromUnixTimestamp(timestamp)
   }
 }
