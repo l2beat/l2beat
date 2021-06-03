@@ -4,7 +4,8 @@
   "scripts": {
     "start": "ts-node src",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^5.6.0",

@@ -52,3 +52,5 @@ jobs:
         working-directory: ./backend
       - run: yarn lint
         working-directory: ./backend
+      - run: yarn typecheck
+        working-directory: ./backend
