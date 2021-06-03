@@ -43,10 +43,23 @@ export class SimpleDate {
   }
 
   toString() {
-    const year = this.date.getUTCFullYear().toString().padStart(4, '0')
-    const month = (this.date.getUTCMonth() + 1).toString().padStart(2, '0')
-    const day = this.date.getUTCDate().toString().padStart(2, '0')
-    return `${year}-${month}-${day}`
+    return `${this.year}-${this.month}-${this.day}`
+  }
+
+  toDDMMYYYYString() {
+    return `${this.day}-${this.month}-${this.year}`
+  }
+
+  private get year() {
+    return this.date.getUTCFullYear().toString().padStart(4, '0')
+  }
+
+  private get month() {
+    return (this.date.getUTCMonth() + 1).toString().padStart(2, '0')
+  }
+
+  private get day() {
+    return this.date.getUTCDate().toString().padStart(2, '0')
   }
 }
 

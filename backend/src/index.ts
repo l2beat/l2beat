@@ -7,7 +7,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const { blockInfo, valueLockedChecker } = setup()
+  const { blockInfo, valueLockedChecker, tokenPriceChecker } = setup()
 
   const promised = projects.map(async (project) => {
     return {
@@ -23,4 +23,6 @@ async function main() {
     .reduce((min, bridge) => Math.min(min, bridge.sinceBlock), Infinity)
   const earliestDate = await blockInfo.getBlockDate(earliestBlock)
   console.log(earliestDate)
+  const price = await tokenPriceChecker.getPrice('ETH', earliestDate)
+  console.log(price)
 }
