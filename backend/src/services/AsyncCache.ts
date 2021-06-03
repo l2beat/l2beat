@@ -29,7 +29,7 @@ export class AsyncCache {
     fetch: () => Promise<T>,
     toJSON: (t: T) => any = id,
     fromJSON: (v: any) => T = id
-  ) {
+  ): Promise<T> {
     const keyString = key.toString()
     const cached = this.cache.get(keyString)
     if (cached) {

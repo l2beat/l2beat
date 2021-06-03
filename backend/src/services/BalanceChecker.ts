@@ -7,7 +7,7 @@ const abi = new utils.Interface([
 ])
 
 export class BalanceChecker {
-  private asyncQueue = new AsyncQueue(1)
+  private asyncQueue = new AsyncQueue({ length: 1 })
 
   constructor(
     private provider: providers.Provider,

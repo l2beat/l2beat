@@ -4,11 +4,26 @@ interface QueuedFunction {
   reject: (reason?: any) => void
 }
 
+export interface QueueOptions {
+  length: number
+  rateLimitPerMinute?: number
+}
+
+const MS_PER_MINUTE = 60 * 1000
+
 export class AsyncQueue {
   private queue: QueuedFunction[] = []
   private processing = 0
+  private lastCalled = 0
+  private length: number
+  private minTimeElapsed = 0
 
-  constructor(private length: number = 1) {}
+  constructor(options: QueueOptions) {
+    this.length = options.length
+    if (options.rateLimitPerMinute) {
+      this.minTimeElapsed = MS_PER_MINUTE / options.rateLimitPerMinute
+    }
+  }
 
   enqueue<T>(fn: () => Promise<T>): Promise<T> {
     const wrapped = (() => fn()) as QueuedFunction
@@ -25,6 +40,14 @@ export class AsyncQueue {
     if (this.processing > this.length) {
       return
     }
+
+    const now = Date.now()
+    const elapsedTime = now - this.lastCalled
+    if (elapsedTime < this.minTimeElapsed) {
+      setTimeout(() => this.dequeue(), this.minTimeElapsed - elapsedTime)
+      return
+    }
+    this.lastCalled = now
 
     const item = this.queue.shift()
     if (!item) {

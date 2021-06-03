@@ -10,6 +10,8 @@ import { Project } from './Project'
 import { zkswap } from './zkswap'
 import { zksync } from './zksync'
 
+export { Project }
+
 export const projects: Project[] = [
   aztec,
   dydx,

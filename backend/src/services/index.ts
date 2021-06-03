@@ -34,7 +34,7 @@ export function setup() {
     tokenBalanceChecker,
     logger
   )
-  const tokenPriceChecker = new TokenPriceChecker(asyncCache)
+  const tokenPriceChecker = new TokenPriceChecker(asyncCache, logger)
 
   return {
     blockInfo,

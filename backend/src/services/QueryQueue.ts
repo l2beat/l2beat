@@ -2,7 +2,7 @@ import { BigQuery, Query } from '@google-cloud/bigquery'
 import { AsyncQueue } from './AsyncQueue'
 
 export class QueryQueue {
-  private asyncQueue = new AsyncQueue(1)
+  private asyncQueue = new AsyncQueue({ length: 1 })
 
   constructor(private bigQuery: BigQuery) {}
 
