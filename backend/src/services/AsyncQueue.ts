@@ -37,7 +37,7 @@ export class AsyncQueue {
   }
 
   private dequeue() {
-    if (this.processing > this.length) {
+    if (this.processing > this.length || this.queue.length === 0) {
       return
     }
 
