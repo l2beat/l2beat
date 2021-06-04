@@ -6,7 +6,7 @@ export const fuel: Project = {
     {
       address: '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
       sinceBlock: 11787727,
-      tokens: ['DAI', 'USDT', 'USDC'],
+      tokens: ['DAI', 'USDC', 'USDT'],
     },
   ],
 }

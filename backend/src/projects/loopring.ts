@@ -6,7 +6,7 @@ export const loopring: Project = {
     {
       address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
       sinceBlock: 11149779,
-      tokens: ['ETH', 'LRC', 'USDT', 'USDC', 'WBTC', 'DAI', 'LINK', 'MKR'],
+      tokens: ['DAI', 'ETH', 'LINK', 'LRC', 'MKR', 'USDC', 'USDT', 'WBTC'],
     },
   ],
 }

@@ -6,7 +6,7 @@ export const layer2finance: Project = {
     {
       address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
       sinceBlock: 12283778,
-      tokens: ['WETH', 'DAI', 'USDC', 'USDT', 'BUSD'],
+      tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
     },
   ],
 }

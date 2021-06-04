@@ -6,7 +6,7 @@ export const zksync: Project = {
     {
       address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
       sinceBlock: 10269890,
-      tokens: ['ETH', 'DAI', 'USDC', 'USDT', 'GLM', 'WBTC'],
+      tokens: ['DAI', 'ETH', 'GLM', 'USDC', 'USDT', 'WBTC'],
     },
   ],
 }
