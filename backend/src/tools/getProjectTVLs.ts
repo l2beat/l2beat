@@ -1,15 +1,15 @@
 import { Project } from '../projects'
-import { TVLResult, ValueLockedChecker } from '../services/ValueLockedChecker'
+import { BridgeTVL, ValueLockedChecker } from '../services/ValueLockedChecker'
 
 export interface ProjectTVL {
   name: string
-  bridges: TVLResult[]
+  bridges: BridgeTVL[]
 }
 
 export async function getProjectTVLs(
   projects: Project[],
   valueLockedChecker: ValueLockedChecker
-) {
+): Promise<ProjectTVL[]> {
   const promised = projects.map(async (project) => {
     return {
       name: project.name,

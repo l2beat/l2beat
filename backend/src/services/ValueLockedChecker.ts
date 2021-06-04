@@ -1,9 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Project } from '../projects/Project'
 import { BlockInfo } from './BlockInfo'
-import { Logger } from './Logger'
 import { SimpleDate } from './SimpleDate'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
+
+export interface BridgeTVL {
+  address: string,
+  balances: TVLResult
+}
 
 export interface TVLResult {
   [token: string]: {
@@ -15,15 +19,19 @@ export interface TVLResult {
 export class ValueLockedChecker {
   constructor(
     private blockInfo: BlockInfo,
-    private tokenBalanceChecker: TokenBalanceChecker,
-    private logger: Logger
+    private tokenBalanceChecker: TokenBalanceChecker
   ) {}
 
-  async getProjectTVL(project: Project) {
+  async getProjectTVL(project: Project): Promise<BridgeTVL[]> {
     return Promise.all(
-      project.bridges.map((bridge) =>
-        this.getAccountTVL(bridge.address, bridge.sinceBlock, bridge.tokens)
-      )
+      project.bridges.map(async (bridge) => ({
+        address: bridge.address,
+        balances: await this.getAccountTVL(
+          bridge.address,
+          bridge.sinceBlock,
+          bridge.tokens
+        ),
+      }))
     )
   }
 

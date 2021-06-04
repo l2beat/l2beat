@@ -14,7 +14,7 @@ export async function getTokenPrices(
   const prices = new Map<string, Map<string, number>>()
   for (const project of results) {
     for (const bridge of project.bridges) {
-      for (const [symbol, entries] of Object.entries(bridge)) {
+      for (const [symbol, entries] of Object.entries(bridge.balances)) {
         if (!prices.has(symbol)) {
           prices.set(symbol, new Map())
         }

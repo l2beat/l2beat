@@ -25,8 +25,7 @@ export function setup() {
   const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo)
   const valueLockedChecker = new ValueLockedChecker(
     blockInfo,
-    tokenBalanceChecker,
-    logger
+    tokenBalanceChecker
   )
   const tokenPriceChecker = new TokenPriceChecker(asyncCache, logger)
 
