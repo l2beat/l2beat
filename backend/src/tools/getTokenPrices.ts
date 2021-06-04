@@ -2,10 +2,14 @@ import { SimpleDate } from '../services/SimpleDate'
 import { TokenPriceChecker } from '../services/TokenPriceChecker'
 import { ProjectTVL } from './getProjectTVLs'
 
+export interface PriceFunction {
+  (symbol: string, date: SimpleDate): number
+}
+
 export async function getTokenPrices(
   results: ProjectTVL[],
   tokenPriceChecker: TokenPriceChecker
-) {
+): Promise<PriceFunction> {
   const promises: Promise<any>[] = []
   const prices = new Map<string, Map<string, number>>()
   for (const project of results) {
