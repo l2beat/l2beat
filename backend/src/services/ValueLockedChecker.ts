@@ -5,7 +5,7 @@ import { SimpleDate } from './SimpleDate'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 
 export interface BridgeTVL {
-  address: string,
+  address: string
   balances: TVLResult
 }
 

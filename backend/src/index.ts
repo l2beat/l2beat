@@ -1,7 +1,8 @@
+import fs from 'fs'
 import { projects } from './projects'
 import { setup } from './services'
-import { SimpleDate } from './services/SimpleDate'
 import { getProjectTVLs, getTokenPrices } from './tools'
+import { makeLegacyData } from './tools/makeLegacyData'
 
 main().catch((e) => {
   console.error(e)
@@ -13,5 +14,11 @@ async function main() {
 
   const results = await getProjectTVLs(projects, valueLockedChecker)
   const getPrice = await getTokenPrices(results, tokenPriceChecker)
-  console.log(getPrice('ETH', SimpleDate.today().addDays(-1)))
+  const legacyData = makeLegacyData(results, getPrice)
+
+  await fs.promises.writeFile(
+    '../data/data.json',
+    JSON.stringify(legacyData, null, 2),
+    'utf-8'
+  )
 }
