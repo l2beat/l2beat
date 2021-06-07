@@ -1,7 +1,5 @@
-import fs from 'fs'
+import { CacheFile } from './CacheFile'
 
-const PRECOMPUTED_FILE_PATH = 'cache/precomputed.json'
-const FILE_PATH = 'cache/cache.json'
 const id = <T>(x: T) => x
 
 interface CacheEntry {
@@ -13,15 +11,9 @@ interface CacheEntry {
 export class AsyncCache {
   private cache = new Map<string, CacheEntry | Promise<CacheEntry>>()
 
-  constructor() {
-    let contents
-    if (fs.existsSync(FILE_PATH)) {
-      contents = fs.readFileSync(FILE_PATH, 'utf-8')
-    } else {
-      contents = fs.readFileSync(PRECOMPUTED_FILE_PATH, 'utf-8')
-    }
-    const parsed = JSON.parse(contents)
-    for (const [k, v] of Object.entries(parsed)) {
+  constructor(private cacheFile: CacheFile, private debounceTimeout = 200) {
+    const contents = this.cacheFile.read()
+    for (const [k, v] of Object.entries(contents)) {
       this.cache.set(k, {
         serialized: v,
         isDeserialized: false,
@@ -61,7 +53,7 @@ export class AsyncCache {
     return promise.then((x) => x.value)
   }
 
-  private flush = debounce(this.flushDebounced.bind(this), 200)
+  private flush = debounce(this.flushDebounced.bind(this), this.debounceTimeout)
 
   private flushDebounced() {
     const data: Record<string, any> = {}
@@ -71,7 +63,7 @@ export class AsyncCache {
       }
       data[k] = v.serialized
     }
-    fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2), 'utf-8')
+    this.cacheFile.write(data)
   }
 }
 

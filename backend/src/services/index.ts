@@ -2,6 +2,7 @@ import { providers } from 'ethers'
 import { AsyncCache } from './AsyncCache'
 import { BalanceChecker } from './BalanceChecker'
 import { BlockInfo } from './BlockInfo'
+import { CacheFile } from './CacheFile'
 import { getConfig } from './Config'
 import { Logger } from './Logger'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
@@ -15,7 +16,9 @@ export function setup() {
   const logger = new Logger()
 
   const provider = new providers.JsonRpcProvider(config.rpcUrl, 'mainnet')
-  const asyncCache = new AsyncCache()
+
+  const cacheFile = new CacheFile()
+  const asyncCache = new AsyncCache(cacheFile)
 
   const blockInfo = new BlockInfo(
     config.etherscanApiKey,
