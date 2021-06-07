@@ -61,6 +61,10 @@ export class SimpleDate {
   private get day() {
     return this.date.getUTCDate().toString().padStart(2, '0')
   }
+
+  toUnixTimestamp() {
+    return Math.floor(this.date.getTime() / 1000)
+  }
 }
 
 function clearUTCTime(date: Date) {

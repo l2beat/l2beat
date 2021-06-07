@@ -1,16 +1,16 @@
-import { BigQuery } from '@google-cloud/bigquery'
 import { providers } from 'ethers'
 import { AsyncCache } from './AsyncCache'
 import { AsyncQueue } from './AsyncQueue'
 import { Logger } from './Logger'
 import { SimpleDate } from './SimpleDate'
+import fetch from 'node-fetch'
 
 export class BlockInfo {
-  private bigQueryQueue = new AsyncQueue({ length: 1 })
+  private dateQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 200 })
   private ethersQueue = new AsyncQueue({ length: 1 })
 
   constructor(
-    private bigQuery: BigQuery,
+    private etherscanApiKey: string,
     private provider: providers.Provider,
     private asyncCache: AsyncCache,
     private logger: Logger
@@ -23,18 +23,21 @@ export class BlockInfo {
   }
 
   private async _getMaxBlock(date: SimpleDate) {
-    const [rows] = await this.bigQueryQueue.enqueue(() =>
-      this.bigQuery.query({
-        query: `
-        SELECT MAX(number) as block
-        FROM bigquery-public-data.crypto_ethereum.blocks
-        WHERE date(timestamp) = @date;
-      `,
-        params: { date: date.toString() },
-      })
+    const url =
+      'https://api.etherscan.io/api?module=block&action=getblocknobytime&closest=before'
+    const timestamp = date.addDays(1).toUnixTimestamp()
+    const block = await this.dateQueue.enqueue(() =>
+      fetch(`${url}&timestamp=${timestamp}&apikey=${this.etherscanApiKey}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText)
+          }
+          return res.json()
+        })
+        .then((data) => parseInt(data.result))
     )
     this.logger.log(`fetched max block for ${date}`)
-    return rows[0].block as number
+    return block
   }
 
   async getBlockDate(block: number) {

@@ -1,4 +1,3 @@
-import { BigQuery } from '@google-cloud/bigquery'
 import { providers } from 'ethers'
 import { AsyncCache } from './AsyncCache'
 import { BalanceChecker } from './BalanceChecker'
@@ -15,11 +14,15 @@ export function setup() {
   const config = getConfig()
   const logger = new Logger()
 
-  const bigQuery = new BigQuery()
   const provider = new providers.JsonRpcProvider(config.rpcUrl, 'mainnet')
   const asyncCache = new AsyncCache()
 
-  const blockInfo = new BlockInfo(bigQuery, provider, asyncCache, logger)
+  const blockInfo = new BlockInfo(
+    config.etherscanApiKey,
+    provider,
+    asyncCache,
+    logger
+  )
   const balanceChecker = new BalanceChecker(provider, asyncCache, logger)
 
   const tokenBalanceChecker = new TokenBalanceChecker(balanceChecker, blockInfo)

@@ -2,13 +2,14 @@ import { config } from 'dotenv'
 
 export interface Config {
   rpcUrl: string
+  etherscanApiKey: string
 }
 
 export function getConfig(): Config {
   config()
-  getEnv('GOOGLE_APPLICATION_CREDENTIALS')
   return {
     rpcUrl: getEnv('RPC_URL'),
+    etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
   }
 }
 
