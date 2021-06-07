@@ -1,6 +1,7 @@
 import fs from 'fs'
 
-const FILE_PATH = 'cache.json'
+const PRECOMPUTED_FILE_PATH = 'cache/precomputed.json'
+const FILE_PATH = 'cache/cache.json'
 const id = <T>(x: T) => x
 
 interface CacheEntry {
@@ -13,8 +14,13 @@ export class AsyncCache {
   private cache = new Map<string, CacheEntry | Promise<CacheEntry>>()
 
   constructor() {
-    const file = fs.readFileSync(FILE_PATH, 'utf-8')
-    const parsed = JSON.parse(file)
+    let contents
+    if (fs.existsSync(FILE_PATH)) {
+      contents = fs.readFileSync(FILE_PATH, 'utf-8')
+    } else {
+      contents = fs.readFileSync(PRECOMPUTED_FILE_PATH, 'utf-8')
+    }
+    const parsed = JSON.parse(contents)
     for (const [k, v] of Object.entries(parsed)) {
       this.cache.set(k, {
         serialized: v,
