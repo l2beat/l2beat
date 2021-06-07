@@ -10,7 +10,7 @@ export async function getTokenPrices(
   results: ProjectTVL[],
   tokenPriceChecker: TokenPriceChecker
 ): Promise<PriceFunction> {
-  const promises: Promise<any>[] = []
+  const promises: Promise<unknown>[] = []
   const prices = new Map<string, Map<string, number>>()
   for (const project of results) {
     for (const bridge of project.bridges) {
@@ -21,7 +21,7 @@ export async function getTokenPrices(
         for (const entry of entries) {
           const promise = tokenPriceChecker
             .getPrice(symbol, entry.date)
-            .then((x) => prices.get(symbol)!.set(entry.date.toString(), x.usd))
+            .then((x) => prices.get(symbol)?.set(entry.date.toString(), x.usd))
           promises.push(promise)
         }
       }

@@ -11,7 +11,7 @@ export class CacheFile {
     return JSON.parse(contents)
   }
 
-  write(data: any) {
+  write(data: unknown) {
     fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(data, null, 2), 'utf-8')
   }
 }

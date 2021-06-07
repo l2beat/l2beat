@@ -61,6 +61,7 @@ export function makeLegacyData(
 }
 
 function reorderProjects(input: ProjectTVL[]): ProjectTVL[] {
+  /* eslint-disable @typescript-eslint/no-non-null-assertion */
   return [
     input.find((x) => x.name === 'Aztec')!,
     input.find((x) => x.name === 'Fuel')!,
@@ -73,6 +74,7 @@ function reorderProjects(input: ProjectTVL[]): ProjectTVL[] {
     { ...input.find((x) => x.name === 'dYdX')!, name: 'dydx' },
     input.find((x) => x.name === 'zkSync')!,
   ]
+  /* eslint-enable @typescript-eslint/no-non-null-assertion */
 }
 
 function getL2Entry(bridgeData: BridgeTVL[], getPrice: PriceFunction): L2Entry {

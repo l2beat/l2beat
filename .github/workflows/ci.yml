@@ -59,6 +59,8 @@ jobs:
             cache-json-v-1-
       - run: yarn --frozen-lockfile
         working-directory: ./backend
+      - run: yarn format
+        working-directory: ./backend
       - run: yarn lint
         working-directory: ./backend
       - run: yarn typecheck

@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import { utils } from 'ethers'
 import { tokenList } from '../src/tokens'
-import { getTokenBySymbol } from '../src/tokens'
 
 describe('tokens', () => {
   const addresses = tokenList

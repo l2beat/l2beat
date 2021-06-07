@@ -3,9 +3,13 @@ import { CacheFile } from './CacheFile'
 const id = <T>(x: T) => x
 
 interface CacheEntry {
-  serialized: any
+  serialized: unknown
   isDeserialized: boolean
-  value: any
+  value: unknown
+}
+
+interface Key {
+  toString(): string
 }
 
 export class AsyncCache {
@@ -22,12 +26,19 @@ export class AsyncCache {
     }
   }
 
-  async getOrFetch<T>(
-    key: any[],
+  async getOrFetch<T>(key: Key[], fetch: () => Promise<T>): Promise<T>
+  async getOrFetch<T, U>(
+    key: Key[],
     fetch: () => Promise<T>,
-    toJSON: (t: T) => any = id,
-    fromJSON: (v: any) => T = id
-  ): Promise<T> {
+    toJSON: (t: T) => U,
+    fromJSON: (v: U) => T
+  ): Promise<T>
+  async getOrFetch(
+    key: Key[],
+    fetch: () => Promise<unknown>,
+    toJSON = id,
+    fromJSON = id
+  ) {
     const keyString = key.toString()
     const cached = this.cache.get(keyString)
     if (cached) {
@@ -56,7 +67,7 @@ export class AsyncCache {
   private flush = debounce(this.flushDebounced.bind(this), this.debounceTimeout)
 
   private flushDebounced() {
-    const data: Record<string, any> = {}
+    const data: Record<string, unknown> = {}
     for (const [k, v] of this.cache.entries()) {
       if (v instanceof Promise) {
         continue
@@ -68,7 +79,7 @@ export class AsyncCache {
 }
 
 function debounce(func: () => void, timeout = 300) {
-  let timer: NodeJS.Timeout
+  let timer: ReturnType<typeof setTimeout>
   return () => {
     clearTimeout(timer)
     timer = setTimeout(() => func(), timeout)

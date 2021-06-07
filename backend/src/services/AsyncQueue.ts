@@ -1,7 +1,7 @@
-interface QueuedFunction {
-  (): Promise<any>
-  resolve: (value: any) => void
-  reject: (reason?: any) => void
+interface QueuedFunction<T> {
+  (): Promise<T>
+  resolve: (value: T) => void
+  reject: (reason?: unknown) => void
 }
 
 export interface QueueOptions {
@@ -12,7 +12,8 @@ export interface QueueOptions {
 const MS_PER_MINUTE = 60 * 1000
 
 export class AsyncQueue {
-  private queue: QueuedFunction[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private queue: QueuedFunction<any>[] = []
   private processing = 0
   private lastCalled = 0
   private length: number
@@ -26,7 +27,7 @@ export class AsyncQueue {
   }
 
   enqueue<T>(fn: () => Promise<T>): Promise<T> {
-    const wrapped = (() => fn()) as QueuedFunction
+    const wrapped = (() => fn()) as QueuedFunction<T>
     this.queue.push(wrapped)
 
     return new Promise((resolve, reject) => {
