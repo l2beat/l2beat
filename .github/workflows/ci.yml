@@ -36,3 +36,30 @@ jobs:
         working-directory: ./frontend
       - run: yarn format
         working-directory: ./frontend
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Cache
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./backend/cache/cache.json
+          # Update the version if cache format changes
+          key: cache-json-v-1-${{ github.run_id }}
+          restore-keys: |
+            cache-json-v-1-
+      - run: yarn --frozen-lockfile
+        working-directory: ./backend
+      - run: yarn format
+        working-directory: ./backend
+      - run: yarn lint
+        working-directory: ./backend
+      - run: yarn typecheck
+        working-directory: ./backend
+      - run: yarn test
+        working-directory: ./backend

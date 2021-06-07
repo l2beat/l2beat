@@ -22,7 +22,7 @@ export default function Faq() {
             </p>
             <p>
               For details see out{' '}
-              <a href="https://github.com/krzkaczor/l2beat/blob/master/data_pipeline/config.json">
+              <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/data-pipeline.json">
                 data pipeline definition
               </a>
               .
@@ -39,7 +39,7 @@ export default function Faq() {
               <ol>
                 <li>
                   Add info about token bridges to a{' '}
-                  <a href="https://github.com/krzkaczor/l2beat/blob/master/data_pipeline/config.json#L67">
+                  <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/data-pipeline.json#L67">
                     data pipeline config
                   </a>
                 </li>
