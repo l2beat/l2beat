@@ -1,11 +1,12 @@
 import { providers } from 'ethers'
-import { AsyncCache } from './AsyncCache'
-import { AsyncQueue } from './AsyncQueue'
-import { Logger } from './Logger'
-import { SimpleDate } from './SimpleDate'
+import { AsyncCache } from '../AsyncCache'
+import { AsyncQueue } from '../AsyncQueue'
+import { Logger } from '../Logger'
+import { SimpleDate } from '../SimpleDate'
 import fetch from 'node-fetch'
+import { IBlockInfo } from './IBlockInfo'
 
-export class BlockInfo {
+export class BlockInfo implements IBlockInfo {
   private dateQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 200 })
   private ethersQueue = new AsyncQueue({ length: 1 })
 

@@ -1,14 +1,15 @@
 import { BigNumber, Contract, providers, utils } from 'ethers'
-import { shortenAddress } from '../utils'
-import { AsyncCache } from './AsyncCache'
-import { AsyncQueue } from './AsyncQueue'
-import { Logger } from './Logger'
+import { shortenAddress } from '../../utils'
+import { AsyncCache } from '../AsyncCache'
+import { AsyncQueue } from '../AsyncQueue'
+import { Logger } from '../Logger'
+import { IBalanceChecker } from './IBalanceChecker'
 
 const abi = new utils.Interface([
   'function balanceOf(address owner) view returns (uint)',
 ])
 
-export class BalanceChecker {
+export class BalanceChecker implements IBalanceChecker {
   private asyncQueue = new AsyncQueue({ length: 1 })
 
   constructor(

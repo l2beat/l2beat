@@ -1,9 +1,10 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import fetch from 'node-fetch'
-import { AsyncCache } from './AsyncCache'
-import { AsyncQueue } from './AsyncQueue'
-import { Logger } from './Logger'
-import { SimpleDate } from './SimpleDate'
+import { AsyncCache } from '../AsyncCache'
+import { AsyncQueue } from '../AsyncQueue'
+import { Logger } from '../Logger'
+import { SimpleDate } from '../SimpleDate'
+import { ITokenPriceChecker } from './ITokenPriceChecker'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
 
@@ -16,7 +17,7 @@ interface ApiResponse {
   }
 }
 
-export class TokenPriceChecker {
+export class TokenPriceChecker implements ITokenPriceChecker {
   private asyncQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 50 })
 
   constructor(private asyncCache: AsyncCache, private logger: Logger) {}
