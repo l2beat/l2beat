@@ -1,4 +1,6 @@
-# L2Beat Data collection backend
+# @l2beat/backend
+
+L2BEAT Data collection script. Because of the extensive amounts of data fetching it uses a cache to speed up the execution time.
 
 ## Setup
 
