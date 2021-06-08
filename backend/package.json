@@ -2,8 +2,10 @@
   "name": "@l2beat/backend",
   "version": "0.1.0",
   "private": true,
+  "main": "./build/data.json",
   "scripts": {
-    "start": "ts-node src",
+    "build": "ts-node src",
+    "build:mock": "MOCK_DATA=true yarn build",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts src test",
