@@ -21,8 +21,8 @@ export default function Faq() {
               token bridges for a single L2 (Optimism).
             </p>
             <p>
-              For details see out{' '}
-              <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">data pipeline definition</a>.
+              For details see our{' '}
+              <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">project definitions</a>.
             </p>
           </div>
 
@@ -32,21 +32,8 @@ export default function Faq() {
             </div>
             <p>
               Everything is <a href="https://github.com/l2beat/l2beat">open source</a> - just create a PR. If you want
-              to add a new project you should:
-              <ol>
-                <li>
-                  Add info about token bridges to a{' '}
-                  <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">data pipeline config</a>
-                </li>
-                <li>Rerun data pipeline</li>
-                <li>
-                  Add more info to a{' '}
-                  <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">frontend config</a>
-                </li>
-              </ol>
-              <p>
-                Alternatively, you can post a GH issue with a required info and we will rerun data pipeline for you.
-              </p>
+              to add a new project you should read our{' '}
+              <a href="https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md">contributing guidelines</a>.
             </p>
           </div>
 
