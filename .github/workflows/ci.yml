@@ -17,5 +17,8 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn format
       - run: yarn lint
+      - name: Build config
+        run: yarn build
+        working-directory: config
       - run: yarn typecheck
       - run: yarn test

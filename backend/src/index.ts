@@ -1,5 +1,5 @@
+import { projects } from '@l2beat/config'
 import fs from 'fs'
-import { projects } from './projects'
 import { setup } from './services'
 import { getProjectTVLs, getTokenPrices } from './tools'
 import { makeLegacyData } from './tools/makeLegacyData'
