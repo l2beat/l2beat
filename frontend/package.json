@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@l2beat/backend": "0.1.0",
+    "@l2beat/config": "0.1.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "classnames": "^2.2.6",

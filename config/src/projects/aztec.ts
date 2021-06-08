@@ -9,4 +9,54 @@ export const aztec: Project = {
       tokens: ['ETH'],
     },
   ],
+  details: {
+    website: 'https://zk.money',
+    color: '#8953f3',
+    technology: {
+      name: 'zk-rollup',
+      details: 'zk-SNARK/PLONK',
+    },
+    parameters: [
+      {
+        name: 'Primary use case',
+        value: 'Private payments',
+      },
+      {
+        name: 'Hypothetical level of decentralization',
+        sentiment: 'good',
+        value: 'High',
+      },
+      {
+        name: 'Current level of decentralization',
+        value: '?',
+      },
+      {
+        name: 'Can funds be stolen by the operator?',
+        value: '?',
+      },
+      {
+        name: 'Permissionless?',
+        value: '?',
+      },
+      {
+        name: 'Force TX mechanism?',
+        value: '?',
+      },
+      {
+        name: 'Privacy',
+        value: 'Yes',
+      },
+      {
+        name: 'Smart contracts',
+        tooltip: 'Possible in the future (Noir - custom language) ',
+        value: 'No',
+      },
+    ],
+    news: [
+      {
+        name: 'Launching Aztec 2.0 Rollup',
+        link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      },
+    ],
+  },
 }
