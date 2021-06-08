@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - netlify
   # everyday at 2 am
   schedule:
     - cron: "0 2 * * *"
