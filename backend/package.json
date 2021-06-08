@@ -1,5 +1,5 @@
 {
-  "name": "l2beat-backend",
+  "name": "@l2beat/backend",
   "private": true,
   "scripts": {
     "start": "ts-node src",

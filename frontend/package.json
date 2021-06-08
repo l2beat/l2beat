@@ -1,5 +1,5 @@
 {
-  "name": "l2-beat",
+  "name": "@l2beat/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {

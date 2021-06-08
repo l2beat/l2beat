@@ -1,0 +1,22 @@
+{
+  "name": "l2beat",
+  "private": true,
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "backend",
+      "frontend"
+    ]
+  },
+  "scripts": {
+    "format": "wsrun -ecsm format",
+    "format:fix": "wsrun -ecsm format:fix",
+    "lint": "wsrun -ecsm lint",
+    "lint:fix": "wsrun -ecsm lint:fix",
+    "typecheck": "wsrun -ecsm typecheck",
+    "test": "wsrun -ecsm test"
+  },
+  "devDependencies": {
+    "wsrun": "^5.2.4"
+  }
+}

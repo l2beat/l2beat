@@ -55,7 +55,7 @@ interface PublicGraphProps {
 type InternalGraphProps = MarkRequired<PublicGraphProps, 'defaultFilter'>
 
 export const Graph: React.FC<PublicGraphProps> = (props) => {
-  const { data, title, children, icon, defaultFilter } = (props as any) as InternalGraphProps
+  const { data, title, children, icon, defaultFilter } = props as any as InternalGraphProps
   const [filtersState, setFilters] = React.useState(defaultFilter)
   const [wrapper, setWrapper] = React.useState<HTMLElement | null>(null)
   const rect = useScreenElementWith(wrapper)
