@@ -1,5 +1,6 @@
 {
   "name": "@l2beat/backend",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "ts-node src",
@@ -11,7 +12,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@types/node": "^15.6.1",
     "chalk": "^4.1.1",
     "dotenv": "^10.0.0",
     "ethers": "^5.3.0",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",
+    "@types/node": "^15.6.1",
     "@types/node-fetch": "^2.5.10",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
