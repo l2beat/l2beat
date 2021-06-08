@@ -7,59 +7,16 @@ on:
       - master
 
 jobs:
-  lint:
-    strategy:
-      matrix:
-        node: ["15.x"]
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: Cache YARN dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            frontend/node_modules
-            frontend/*/*/node_modules
-          key: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.OS }}-${{ matrix.node }}-yarn-cache-
-
-      - run: yarn --no-progress --non-interactive --frozen-lockfile
-        working-directory: ./frontend
-
-      - run: yarn lint
-        working-directory: ./frontend
-      - run: yarn format
-        working-directory: ./frontend
-
-  backend:
+  lint_build_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Cache
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: ./backend/cache/cache.json
-          # Update the version if cache format changes
-          key: cache-json-v-1-${{ github.run_id }}
-          restore-keys: |
-            cache-json-v-1-
       - run: yarn --frozen-lockfile
-        working-directory: ./backend
       - run: yarn format
-        working-directory: ./backend
       - run: yarn lint
-        working-directory: ./backend
+      - run: yarn build
       - run: yarn typecheck
-        working-directory: ./backend
       - run: yarn test
-        working-directory: ./backend

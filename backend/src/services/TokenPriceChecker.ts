@@ -1,5 +1,5 @@
+import { getTokenBySymbol } from '@l2beat/config'
 import fetch from 'node-fetch'
-import { getTokenBySymbol } from '../tokens'
 import { AsyncCache } from './AsyncCache'
 import { AsyncQueue } from './AsyncQueue'
 import { Logger } from './Logger'

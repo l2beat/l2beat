@@ -37,7 +37,7 @@ export const Navigation = () => {
             </a>
           </div>
           <div className={styles.link}>
-            <a href="https://github.com/krzkaczor/l2beat">
+            <a href="https://github.com/l2beat/l2beat">
               <GitHubIcon />
             </a>
           </div>

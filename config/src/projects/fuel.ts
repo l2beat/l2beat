@@ -1,0 +1,61 @@
+import { Project } from './Project'
+
+export const fuel: Project = {
+  name: 'Fuel',
+  bridges: [
+    {
+      address: '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
+      sinceBlock: 11787727,
+      tokens: ['DAI', 'USDC', 'USDT'],
+    },
+  ],
+  details: {
+    website: 'https://fuel.sh/',
+    color: '#05c399',
+    technology: {
+      name: 'optimistic-rollup',
+      details: 'UTXO',
+    },
+    parameters: [
+      {
+        name: 'Primary use case',
+        value: 'Payments',
+      },
+      {
+        name: 'Hypothetical level of decentralization',
+        sentiment: 'good',
+        value: 'High',
+      },
+      {
+        name: 'Current level of decentralization',
+        sentiment: 'neutral',
+        tooltip:
+          "Optimistic rollups require 3rd party validators to submit fraud proofs. B/c of current lack of the adoption users can't trust that such validators are running.",
+        value: 'Medium',
+      },
+      {
+        name: 'Can funds be stolen by the operator?',
+        sentiment: 'good',
+        value: 'No',
+      },
+      {
+        name: 'Permissionless?',
+        sentiment: 'good',
+        tooltip:
+          'Anyone can submit a new root that can become part of the rollup after a delay',
+        pointers: [
+          'https://github.com/FuelLabs/fuel/blob/49c35e8de752200175174a08b6a8eae42796790d/src/Block.yulp#L95-L101',
+        ],
+        value: 'Yes',
+      },
+      {
+        name: 'Privacy',
+        value: 'No',
+      },
+      {
+        name: 'Smart contracts',
+        value: 'No',
+      },
+    ],
+  },
+}

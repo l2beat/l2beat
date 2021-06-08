@@ -1,28 +1,22 @@
 {
-  "name": "@l2beat/backend",
+  "name": "@l2beat/config",
   "version": "0.1.0",
   "private": true,
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
   "scripts": {
-    "start": "ts-node src",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts src test",
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
+    "build": "tsc",
     "test": "mocha"
-  },
-  "dependencies": {
-    "@l2beat/config": "0.1.0",
-    "chalk": "^4.1.1",
-    "dotenv": "^10.0.0",
-    "ethers": "^5.3.0",
-    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.6.1",
-    "@types/node-fetch": "^2.5.10",
     "chai": "^4.3.4",
     "mocha": "^8.4.0"
   }

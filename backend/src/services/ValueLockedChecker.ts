@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Project } from '../projects/Project'
+import { Project } from '@l2beat/config'
 import { BlockInfo } from './BlockInfo'
 import { SimpleDate } from './SimpleDate'
 import { TokenBalanceChecker } from './TokenBalanceChecker'

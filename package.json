@@ -1,0 +1,30 @@
+{
+  "name": "l2beat",
+  "private": true,
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "backend",
+      "frontend",
+      "config"
+    ]
+  },
+  "scripts": {
+    "format": "wsrun -ecsm format",
+    "format:fix": "wsrun -ecsm format:fix",
+    "lint": "wsrun -ecsm lint",
+    "lint:fix": "wsrun -ecsm lint:fix",
+    "typecheck": "wsrun -ecsm typecheck",
+    "test": "wsrun -ecsm test",
+    "build": "wsrun -ecsm build"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.28.0",
+    "prettier": "^2.3.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2",
+    "wsrun": "^5.2.4"
+  }
+}

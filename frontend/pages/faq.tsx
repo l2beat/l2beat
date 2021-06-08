@@ -22,10 +22,7 @@ export default function Faq() {
             </p>
             <p>
               For details see out{' '}
-              <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/data-pipeline.json">
-                data pipeline definition
-              </a>
-              .
+              <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">data pipeline definition</a>.
             </p>
           </div>
 
@@ -34,21 +31,17 @@ export default function Faq() {
               <h3>I want to add a new project or improve some info?</h3>
             </div>
             <p>
-              Everything is <a href="https://github.com/krzkaczor/l2beat">open source</a> - just create a PR. If you
-              want to add a new project you should:
+              Everything is <a href="https://github.com/l2beat/l2beat">open source</a> - just create a PR. If you want
+              to add a new project you should:
               <ol>
                 <li>
                   Add info about token bridges to a{' '}
-                  <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/data-pipeline.json#L67">
-                    data pipeline config
-                  </a>
+                  <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">data pipeline config</a>
                 </li>
                 <li>Rerun data pipeline</li>
                 <li>
                   Add more info to a{' '}
-                  <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/projects-data.json">
-                    frontend config
-                  </a>
+                  <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">frontend config</a>
                 </li>
               </ol>
               <p>

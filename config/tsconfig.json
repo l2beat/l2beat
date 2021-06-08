@@ -1,7 +1,4 @@
 {
-  "ts-node": {
-    "files": true
-  },
   "compilerOptions": {
     "target": "es2019",
     "lib": ["es2019"],
@@ -10,6 +7,8 @@
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": ["node", "mocha", "chai", "node-fetch"]
+    "declaration": true,
+    "outDir": "build",
+    "types": ["mocha", "chai"]
   }
 }

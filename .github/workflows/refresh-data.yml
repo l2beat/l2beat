@@ -9,11 +9,11 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Cache
+      - name: Backend cache.json
         id: cache
         uses: actions/cache@v2
         with:
@@ -23,7 +23,6 @@ jobs:
           restore-keys: |
             cache-json-v-1-
       - run: yarn --frozen-lockfile
-        working-directory: ./backend
       - name: Generate data.json
         run: yarn start
         env:
@@ -35,5 +34,5 @@ jobs:
         with:
           branch: master
           files: |
-            data/data.json
+            backend/build/data.json
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

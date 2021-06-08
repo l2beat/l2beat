@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { getTokenBySymbol } from '@l2beat/config'
 import { utils } from 'ethers'
 import { SimpleDate } from '../services/SimpleDate'
 import { BridgeTVL } from '../services/ValueLockedChecker'
-import { getTokenBySymbol } from '../tokens'
 import { ProjectTVL } from './getProjectTVLs'
 import { PriceFunction } from './getTokenPrices'
 
@@ -49,7 +49,7 @@ export function makeLegacyData(
   getPrice: PriceFunction
 ): LegacyData {
   const l2s: Record<string, L2Entry> = {}
-  for (const project of reorderProjects(projects)) {
+  for (const project of projects) {
     l2s[project.name] = getL2Entry(project.bridges, getPrice)
   }
   const data = sumData(Object.values(l2s).map((x) => x.data))
@@ -58,23 +58,6 @@ export function makeLegacyData(
     data,
     l2s,
   }
-}
-
-function reorderProjects(input: ProjectTVL[]): ProjectTVL[] {
-  /* eslint-disable @typescript-eslint/no-non-null-assertion */
-  return [
-    input.find((x) => x.name === 'Aztec')!,
-    input.find((x) => x.name === 'Fuel')!,
-    input.find((x) => x.name === 'Hermez')!,
-    input.find((x) => x.name === 'ImmutableX')!,
-    input.find((x) => x.name === 'Layer2.Finance')!,
-    input.find((x) => x.name === 'Loopring')!,
-    input.find((x) => x.name === 'Optimism')!,
-    input.find((x) => x.name === 'ZKSwap')!,
-    { ...input.find((x) => x.name === 'dYdX')!, name: 'dydx' },
-    input.find((x) => x.name === 'zkSync')!,
-  ]
-  /* eslint-enable @typescript-eslint/no-non-null-assertion */
 }
 
 function getL2Entry(bridgeData: BridgeTVL[], getPrice: PriceFunction): L2Entry {

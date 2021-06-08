@@ -1,4 +1,4 @@
-import { Project } from '../projects'
+import { Project } from '@l2beat/config'
 import { BridgeTVL, ValueLockedChecker } from '../services/ValueLockedChecker'
 
 export interface ProjectTVL {
