@@ -13,7 +13,7 @@ export function getConfig(): Config {
     return {
       mock: true,
       rpcUrl: 'https://mock.url',
-      etherscanApiKey: 'm0ckk3y'
+      etherscanApiKey: 'm0ckk3y',
     }
   }
 

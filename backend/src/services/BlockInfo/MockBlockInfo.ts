@@ -1,5 +1,5 @@
-import { SimpleDate } from "../SimpleDate"
-import { IBlockInfo } from "./IBlockInfo"
+import { SimpleDate } from '../SimpleDate'
+import { IBlockInfo } from './IBlockInfo'
 
 const REFERENCE_TIMESTAMP = 1623153999
 const REFERENCE_BLOCK = 12594332
