@@ -9,11 +9,20 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Cache
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Backend cache.json
         id: cache
         uses: actions/cache@v2
         with:
@@ -23,7 +32,6 @@ jobs:
           restore-keys: |
             cache-json-v-1-
       - run: yarn --frozen-lockfile
-        working-directory: ./backend
       - name: Generate data.json
         run: yarn start
         env:
