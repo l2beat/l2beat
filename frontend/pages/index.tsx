@@ -149,8 +149,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
           </p>
 
           <p>
-            For details, see{' '}
-            <a href="https://github.com/krzkaczor/l2beat/blob/master/frontend/data/data-pipeline.json">config</a>.
+            For details, see <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">config</a>.
           </p>
         </div>
       </FullPageGrid>
