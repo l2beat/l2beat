@@ -43,5 +43,5 @@ jobs:
         with:
           branch: master
           files: |
-            data/data.json
+            backend/build/data.json
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

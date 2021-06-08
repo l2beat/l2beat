@@ -17,7 +17,7 @@ async function main() {
   const legacyData = makeLegacyData(results, getPrice)
 
   await fs.promises.writeFile(
-    '../data/data.json',
+    './build/data.json',
     JSON.stringify(legacyData, null, 2),
     'utf-8'
   )
