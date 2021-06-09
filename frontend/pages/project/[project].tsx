@@ -1,3 +1,4 @@
+import l2Data from '@l2beat/backend'
 import ImportContactsIcon from '@material-ui/icons/ImportContacts'
 import InfoIcon from '@material-ui/icons/Info'
 import LinkIcon from '@material-ui/icons/Link'
@@ -14,10 +15,9 @@ import { EtherscanLink } from '../../components/EtherscanLink'
 import { Graph } from '../../components/graphs/Graph'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
-import { l2Data } from '../../data'
 import styles from '../../styles/Home.module.scss'
 import { dateSorter } from '../../utils/dateSorter'
-import { findProjectConfig } from '../../utils/findProjectConfig'
+import { findProjectBridges } from '../../utils/findProjectBridges'
 import { findProjectMetadata } from '../../utils/findProjectMetadata'
 import { getProjectsPaths } from '../../utils/getProjectPaths'
 
@@ -38,7 +38,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
         </div>
 
         <div
-          style={{ background: props.projectMetadata['color'] }}
+          style={{ background: props.projectMetadata.color }}
           className={cx(styles.card, styles.cardBg, styles.projectOverview, styles.invertedTitle)}
         >
           <div className={cx(styles.title)}>
@@ -82,12 +82,12 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <h3>Project in a nutshell</h3>
           </div>
           <List>
-            <Item title="Technology" content={props.projectMetadata.technology} />
+            <Item title="Technology" content={props.projectMetadata.technology.name} />
 
-            <Item title="Technology details" content={props.projectMetadata['technology-details']} />
+            <Item title="Technology details" content={props.projectMetadata.technology.details} />
 
-            {Object.keys(props.projectMetadata['more-info']).map((key) => (
-              <Item title={key} content={<ContentWithTooltip {...props.projectMetadata['more-info'][key]} />} />
+            {props.projectMetadata.parameters.map((param, i) => (
+              <Item key={i} title={param.name} content={<ContentWithTooltip {...param} text={param.value} />} />
             ))}
 
             {props.projectMetadata.notes && (
@@ -100,8 +100,8 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
 
             <Item
               title="Tracked bridges"
-              content={props.projectConfig.bridges.map((bridge: any) => (
-                <li>
+              content={props.projectBridges.map((bridge, i) => (
+                <li key={i}>
                   <EtherscanLink address={bridge.address} /> - {bridge.tokens.map((t: string) => t).join(', ')}
                 </li>
               ))}
@@ -110,8 +110,8 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             {props.projectMetadata.news && (
               <Item
                 title="News"
-                content={props.projectMetadata.news.map((news: any) => (
-                  <li>
+                content={props.projectMetadata.news.map((news, i) => (
+                  <li key={i}>
                     <a href={news.link}>{news.name}</a>
                   </li>
                 ))}
@@ -142,7 +142,7 @@ export function getStaticProps(params: { params: { project: string } }) {
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
 
   const projectMetadata = findProjectMetadata(params.params.project)
-  const projectConfig = findProjectConfig(params.params.project)
+  const projectBridges = findProjectBridges(params.params.project)
 
   return {
     props: {
@@ -154,7 +154,7 @@ export function getStaticProps(params: { params: { project: string } }) {
       tvlDelta,
       projectMetadata,
       noOfTxsData,
-      projectConfig,
+      projectBridges,
     },
   }
 }

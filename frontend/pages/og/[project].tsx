@@ -1,8 +1,8 @@
+import l2Data from '@l2beat/backend'
 import millify from 'millify'
 
 import { THIRTY_DAYS_IN_MILLIS } from '../../components/graphs/Graph'
 import { Card, Props } from '../../components/og/Card'
-import { l2Data } from '../../data'
 import { dateSorter } from '../../utils/dateSorter'
 import { findProjectMetadata } from '../../utils/findProjectMetadata'
 import { getProjectsPaths } from '../../utils/getProjectPaths'

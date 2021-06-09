@@ -1,13 +1,8 @@
+import { projects } from '@l2beat/config'
 import { assert } from 'ts-essentials'
 
-import { projectsMetaData } from '../data'
-
-export function findProjectMetadata(name: string): any {
-  const projectMetadataFull = Object.entries(projectsMetaData).find(
-    ([projectName]) => projectName.toLowerCase() === name.toLowerCase(),
-  )
-  assert(projectMetadataFull, `Couldn't find ${name} in projects metadata config`)
-
-  const [, projectMeta] = projectMetadataFull as any
-  return projectMeta
+export function findProjectMetadata(name: string) {
+  const metadata = projects.find((x) => x.name.toLowerCase() === name.toLowerCase())?.details
+  assert(metadata, `Couldn't find ${name} in projects metadata config`)
+  return metadata
 }

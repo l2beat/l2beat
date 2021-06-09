@@ -1,5 +1,6 @@
 import 'react-vis/dist/style.css'
 
+import l2Data from '@l2beat/backend'
 import ListIcon from '@material-ui/icons/List'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
@@ -16,9 +17,9 @@ import { AppContainer } from '../components/AppContainer'
 import { Filter, Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'
 import { FullPageGrid } from '../components/PageGrid'
-import { l2Data, projectsMetaData } from '../data'
 import styles from '../styles/Home.module.scss'
 import { dateSorter } from '../utils/dateSorter'
+import { findProjectMetadata } from '../utils/findProjectMetadata'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
@@ -108,7 +109,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     </td>
                     <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
                     <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
-                    <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
+                    <td className={cx(styles.alignRight)}>{rowData.meta.technology.name}</td>
                     <td className={cx(styles.alignRight)}>
                       <Percentage value={rowData.change} />
                     </td>
@@ -169,9 +170,9 @@ export async function getStaticProps() {
   const tvlDelta =
     (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
 
-  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]: any) => {
+  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]) => {
     const tvlData = data.data.sort(dateSorter).reverse()
-    const meta = projectsMetaData[name]
+    const meta = findProjectMetadata(name)
     assert(meta, `Can't find project data for ${name}`)
 
     return {

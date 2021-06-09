@@ -8,7 +8,7 @@ export interface Project {
 }
 
 /** A bridge is a contract that allows locking L1 funds to manipulate them on L2. */
-interface BridgeDescription {
+export interface BridgeDescription {
   /** Address of the bridge. Use etherscan to verify its correctness. */
   address: string
   /** Block number of the deployment transaction of the bridge contract. */
@@ -17,7 +17,7 @@ interface BridgeDescription {
   tokens: string[]
 }
 
-interface ProjectDetails {
+export interface ProjectDetails {
   /**
    * Project website. It should be a marketing landing page where users are able
    * to read about the project. Direct links to DApps are also allowed.
@@ -45,7 +45,7 @@ interface ProjectDetails {
   }
 }
 
-interface ProjectParameter {
+export interface ProjectParameter {
   /** Parameter name, e.g. Permissionless */
   name: string
   /** Parameter value, e.g. Yes */
@@ -58,7 +58,7 @@ interface ProjectParameter {
   pointers?: string[]
 }
 
-interface News {
+export interface News {
   /** Article title */
   name: string
   /** Article link, preferably https */
