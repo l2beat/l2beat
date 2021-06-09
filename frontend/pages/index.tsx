@@ -1,3 +1,5 @@
+import 'react-vis/dist/style.css'
+
 import l2Data from '@l2beat/backend'
 import ListIcon from '@material-ui/icons/List'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
@@ -9,8 +11,8 @@ import cx from 'classnames'
 import { sortBy } from 'lodash'
 import millify from 'millify'
 import React from 'react'
-import 'react-vis/dist/style.css'
 import { assert } from 'ts-essentials'
+
 import { AppContainer } from '../components/AppContainer'
 import { Filter, Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'

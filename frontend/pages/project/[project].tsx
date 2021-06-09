@@ -8,6 +8,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import cx from 'classnames'
 import millify from 'millify'
 import React from 'react'
+
 import { AppContainer } from '../../components/AppContainer'
 import { ContentWithTooltip, Item, List } from '../../components/DescriptionList'
 import { EtherscanLink } from '../../components/EtherscanLink'
