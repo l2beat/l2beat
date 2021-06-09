@@ -1,13 +1,13 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import { BigNumber } from 'ethers'
-import { BalanceChecker } from './BalanceChecker'
-import { BlockInfo } from './BlockInfo'
+import { IBalanceChecker } from './BalanceChecker/IBalanceChecker'
+import { IBlockInfo } from './BlockInfo/IBlockInfo'
 import { SimpleDate } from './SimpleDate'
 
 export class TokenBalanceChecker {
   constructor(
-    private balanceChecker: BalanceChecker,
-    private blockInfo: BlockInfo
+    private balanceChecker: IBalanceChecker,
+    private blockInfo: IBlockInfo
   ) {}
 
   async getBalance(account: string, tokenSymbol: string, date: SimpleDate) {

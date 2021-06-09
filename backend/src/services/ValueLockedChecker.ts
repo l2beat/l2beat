@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Project } from '@l2beat/config'
-import { BlockInfo } from './BlockInfo'
+import { IBlockInfo } from './BlockInfo/IBlockInfo'
 import { SimpleDate } from './SimpleDate'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 
@@ -18,7 +18,7 @@ export interface TVLResult {
 
 export class ValueLockedChecker {
   constructor(
-    private blockInfo: BlockInfo,
+    private blockInfo: IBlockInfo,
     private tokenBalanceChecker: TokenBalanceChecker
   ) {}
 

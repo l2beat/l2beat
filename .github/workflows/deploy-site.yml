@@ -1,12 +1,15 @@
-name: Refresh data
+name: Deploy website
 
 on:
+  push:
+    branches:
+      - master
   # everyday at 2 am
   schedule:
     - cron: "0 2 * * *"
 
 jobs:
-  refresh:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,16 +26,13 @@ jobs:
           restore-keys: |
             cache-json-v-1-
       - run: yarn --frozen-lockfile
-      - name: Generate data.json
-        run: yarn start
+      - run: yarn build
         env:
           RPC_URL: ${{ secrets.BC_NODE }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
-        working-directory: ./backend
-      - name: Commit to master
-        uses: ActionwareIO/branch-push-action@action
-        with:
-          branch: master
-          files: |
-            backend/build/data.json
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload frontend 
+        run: yarn netlify deploy --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        working-directory: ./frontend

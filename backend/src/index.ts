@@ -16,6 +16,9 @@ async function main() {
   const getPrice = await getTokenPrices(results, tokenPriceChecker)
   const legacyData = makeLegacyData(results, getPrice)
 
+  if (!fs.existsSync('./build')) {
+    await fs.promises.mkdir('./build')
+  }
   await fs.promises.writeFile(
     './build/data.json',
     JSON.stringify(legacyData, null, 2),
