@@ -10,8 +10,7 @@ import millify from 'millify'
 import React from 'react'
 
 import { AppContainer } from '../../components/AppContainer'
-import { ContentWithTooltip, Item, List } from '../../components/DescriptionList'
-import { EtherscanLink } from '../../components/EtherscanLink'
+import { ProjectDescription } from '../../components/description/ProjectDescription'
 import { Graph } from '../../components/graphs/Graph'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
@@ -81,48 +80,13 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <ImportContactsIcon />
             <h3>Project in a nutshell</h3>
           </div>
-          <List>
-            <Item title="Technology" content={props.projectMetadata.technology.name} />
-
-            <Item title="Technology details" content={props.projectMetadata.technology.details} />
-
-            {props.projectMetadata.parameters.map((param, i) => (
-              <Item key={i} title={param.name} content={<ContentWithTooltip {...param} text={param.value} />} />
-            ))}
-
-            {props.projectMetadata.notes && (
-              <Item
-                title="Notes"
-                className={styles.notes}
-                content={<ContentWithTooltip {...props.projectMetadata.notes} />}
-              />
-            )}
-
-            <Item
-              title="Tracked bridges"
-              content={props.projectBridges.map((bridge, i) => (
-                <li key={i}>
-                  <EtherscanLink address={bridge.address} /> - {bridge.tokens.map((t: string) => t).join(', ')}
-                </li>
-              ))}
-            />
-
-            {props.projectMetadata.news && (
-              <Item
-                title="News"
-                content={props.projectMetadata.news.map((news, i) => (
-                  <li key={i}>
-                    <a href={news.link}>{news.name}</a>
-                  </li>
-                ))}
-              />
-            )}
-          </List>
+          <ProjectDescription metadata={props.projectMetadata} bridges={props.projectBridges} />
         </div>
       </PageGrid>
     </AppContainer>
   )
 }
+
 export function getStaticPaths() {
   return getProjectsPaths()
 }
