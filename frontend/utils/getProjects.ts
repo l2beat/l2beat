@@ -1,4 +1,5 @@
-import { l2Data } from '../data'
+import { projects } from '@l2beat/config'
+
 export function getProjects() {
-  return Object.keys(l2Data.l2s).map((slug) => slug.toLowerCase())
+  return projects.map(({ name }) => name.toLowerCase())
 }

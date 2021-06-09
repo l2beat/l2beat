@@ -1,5 +1,4 @@
-import 'react-vis/dist/style.css'
-
+import l2Data from '@l2beat/backend'
 import ListIcon from '@material-ui/icons/List'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
@@ -10,15 +9,15 @@ import cx from 'classnames'
 import { sortBy } from 'lodash'
 import millify from 'millify'
 import React from 'react'
+import 'react-vis/dist/style.css'
 import { assert } from 'ts-essentials'
-
 import { AppContainer } from '../components/AppContainer'
 import { Filter, Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'
 import { FullPageGrid } from '../components/PageGrid'
-import { l2Data, projectsMetaData } from '../data'
 import styles from '../styles/Home.module.scss'
 import { dateSorter } from '../utils/dateSorter'
+import { findProjectMetadata } from '../utils/findProjectMetadata'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
@@ -169,9 +168,9 @@ export async function getStaticProps() {
   const tvlDelta =
     (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
 
-  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]: any) => {
+  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]) => {
     const tvlData = data.data.sort(dateSorter).reverse()
-    const meta = projectsMetaData[name]
+    const meta = findProjectMetadata(name)
     assert(meta, `Can't find project data for ${name}`)
 
     return {
