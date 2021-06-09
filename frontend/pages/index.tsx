@@ -108,7 +108,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     </td>
                     <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
                     <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
-                    <td className={cx(styles.alignRight)}>{rowData.meta.technology}</td>
+                    <td className={cx(styles.alignRight)}>{rowData.meta.technology.name}</td>
                     <td className={cx(styles.alignRight)}>
                       <Percentage value={rowData.change} />
                     </td>

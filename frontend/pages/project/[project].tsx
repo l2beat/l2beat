@@ -38,7 +38,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
         </div>
 
         <div
-          style={{ background: props.projectMetadata['color'] }}
+          style={{ background: props.projectMetadata.color }}
           className={cx(styles.card, styles.cardBg, styles.projectOverview, styles.invertedTitle)}
         >
           <div className={cx(styles.title)}>
@@ -82,12 +82,12 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             <h3>Project in a nutshell</h3>
           </div>
           <List>
-            <Item title="Technology" content={props.projectMetadata.technology} />
+            <Item title="Technology" content={props.projectMetadata.technology.name} />
 
-            <Item title="Technology details" content={props.projectMetadata['technology-details']} />
+            <Item title="Technology details" content={props.projectMetadata.technology.details} />
 
-            {Object.keys(props.projectMetadata['more-info']).map((key) => (
-              <Item title={key} content={<ContentWithTooltip {...props.projectMetadata['more-info'][key]} />} />
+            {props.projectMetadata.parameters.map((param, i) => (
+              <Item key={i} title={param.name} content={<ContentWithTooltip {...param} text={param.value} />} />
             ))}
 
             {props.projectMetadata.notes && (
@@ -110,7 +110,7 @@ export default function Project(props: ReturnType<typeof getStaticProps>['props'
             {props.projectMetadata.news && (
               <Item
                 title="News"
-                content={props.projectMetadata.news.map((news: any) => (
+                content={props.projectMetadata.news.map((news) => (
                   <li>
                     <a href={news.link}>{news.name}</a>
                   </li>

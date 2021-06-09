@@ -45,8 +45,8 @@ export function ContentWithTooltip({ text, tooltip, sentiment, pointers }: Conte
       )}
       {pointers && (
         <div className={styles.pointers}>
-          {pointers.map((p) => (
-            <a href={p} target="blank">
+          {pointers.map((p, i) => (
+            <a key={i} href={p} target="blank">
               <LinkIcon fontSize="small" />
             </a>
           ))}

@@ -1,5 +1,7 @@
-export const l2Data = require('@l2beat/backend')
-const { dataPipeline, projectsData } = require('@l2beat/config')
+import l2Data from '@l2beat/backend'
+import { projects } from '@l2beat/config'
 
-export const projectsMetaData = projectsData
-export const dataPipelineConfig = dataPipeline
+export { dataPipeline as dataPipelineConfig } from '@l2beat/config'
+export { l2Data }
+
+export const projectsMetaData = Object.fromEntries(projects.map((p) => [p.name, p.details]))
