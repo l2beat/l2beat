@@ -18,7 +18,7 @@ export function setup() {
   const config = getConfig()
   const logger = new Logger()
 
-  const provider = new providers.JsonRpcProvider(config.rpcUrl, 'mainnet')
+  const provider = new providers.StaticJsonRpcProvider(config.rpcUrl, 'mainnet')
 
   const cacheFile = new CacheFile()
   const asyncCache = new AsyncCache(cacheFile)

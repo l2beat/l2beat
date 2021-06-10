@@ -10,7 +10,10 @@ const abi = new utils.Interface([
 ])
 
 export class BalanceChecker implements IBalanceChecker {
-  private asyncQueue = new AsyncQueue({ length: 1 })
+  private asyncQueue = new AsyncQueue({
+    length: 5,
+    rateLimitPerMinute: 300,
+  })
 
   constructor(
     private provider: providers.Provider,

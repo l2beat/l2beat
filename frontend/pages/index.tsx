@@ -97,7 +97,7 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
                     title={`${rowData.name} overview`}
                     href={`/project/${rowData.name.toLowerCase()}`}
                     key={rowData.name}
-                    className={styles.dataRow}
+                    className={cx(styles.dataRow, rowData.meta.showNotL2Warning && styles.notL2)}
                   >
                     <td>
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>

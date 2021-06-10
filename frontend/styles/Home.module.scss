@@ -378,3 +378,10 @@
   color: var(--text-contrast);
   text-transform: uppercase;
 }
+
+.notL2 {
+  --border: 1px solid white;
+  td {
+    color: #666;
+  }
+}
