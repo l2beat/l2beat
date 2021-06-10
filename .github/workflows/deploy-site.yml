@@ -22,9 +22,9 @@ jobs:
         with:
           path: ./backend/cache/cache.json
           # Update the version if cache format changes
-          key: cache-json-v-1-${{ github.run_id }}
+          key: cache-json-v-2-${{ github.run_id }}
           restore-keys: |
-            cache-json-v-1-
+            cache-json-v-2-
       - run: yarn --frozen-lockfile
       - run: yarn build
         env:
