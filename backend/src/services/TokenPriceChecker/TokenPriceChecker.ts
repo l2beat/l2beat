@@ -18,7 +18,7 @@ interface ApiResponse {
 }
 
 export class TokenPriceChecker implements ITokenPriceChecker {
-  private asyncQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 50 })
+  private asyncQueue = new AsyncQueue({ length: 2, rateLimitPerMinute: 50 })
 
   constructor(private asyncCache: AsyncCache, private logger: Logger) {}
 
