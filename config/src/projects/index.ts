@@ -1,3 +1,4 @@
+import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
@@ -14,6 +15,7 @@ import { zksync } from './zksync'
 export * from './Project'
 
 export const projects: Project[] = [
+  arbitrum,
   aztec,
   dydx,
   fuel,
