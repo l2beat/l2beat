@@ -20,7 +20,7 @@ export async function getStaticProps(params: { params: { project: string } }): P
     return getStaticPropsForOverviewPage() as any
   }
 
-  const [_, projectData]: any = Object.entries(l2Data.l2s).find(
+  const [name, projectData] = Object.entries(l2Data.l2s).find(
     ([projectName]) => projectName.toLowerCase() === params.params.project,
   )!
 
@@ -41,7 +41,7 @@ export async function getStaticProps(params: { params: { project: string } }): P
   return {
     props: {
       bg: projectMetadata.color,
-      title: params.params.project,
+      title: name,
       head: 'L2BEAT',
       stats: [
         { name: 'TVL', value: `$${millify(projectData.TVL)}` },

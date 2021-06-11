@@ -5,14 +5,14 @@
   "scripts": {
     "start": "yarn dev",
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build && yarn gen:og-img && next build",
+    "build": "next build && next export && yarn gen:og-img",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
     "test:fix": "yarn lint:fix && yarn format:fix && yarn typecheck",
     "typecheck": "tsc --noEmit",
-    "gen:og-img": "next export && ts-node --project ./tsconfig.json ./scripts/generateOgImages.ts"
+    "gen:og-img": "ts-node ./scripts/generateOgImages.ts"
   },
   "dependencies": {
     "@l2beat/backend": "0.1.0",
