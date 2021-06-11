@@ -1,4 +1,5 @@
 import { spawn } from 'child_process'
+
 import { generateImage } from '../utils/getOgImage'
 import { getProjects } from '../utils/getProjects'
 
