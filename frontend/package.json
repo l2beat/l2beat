@@ -5,7 +5,7 @@
   "scripts": {
     "start": "yarn dev",
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build && yarn gen:og-img && next build",
+    "build": "next build && yarn gen:og-img && next build && next export",
     "format": "prettier --check \"./**/*.{ts,tsx,scss}\"",
     "format:fix": "prettier --write \"./**/*.{ts,tsx,scss}\"",
     "lint": "eslint '**/*.{ts,tsx}'",
