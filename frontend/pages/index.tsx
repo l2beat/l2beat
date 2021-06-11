@@ -11,7 +11,6 @@ import cx from 'classnames'
 import { sortBy } from 'lodash'
 import millify from 'millify'
 import React from 'react'
-import { assert } from 'ts-essentials'
 
 import { AppContainer } from '../components/AppContainer'
 import { Filter, Graph } from '../components/graphs/Graph'
@@ -24,8 +23,8 @@ import { findProjectMetadata } from '../utils/findProjectMetadata'
 type Unpack<T> = T extends Promise<infer U> ? U : never
 type Props = Unpack<ReturnType<typeof getStaticProps>>['props']
 
-export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
-  const tvlHistory = React.useMemo(() => tvlHistory_.map(({ x, y }: any) => ({ x: new Date(x), y })), [l2Data])
+export default function Home({ tvl, tvlHistory: tvlHistory_, tvlDelta, l2sTable }: Props) {
+  const tvlHistory = React.useMemo(() => tvlHistory_.map(([x, y]) => ({ x: new Date(x), y })), [tvlHistory_])
 
   const badgeText = Math.abs(tvlDelta) < 0.01 ? `${tvlDelta > 0 ? '>' : '<-'}0.01%` : `${tvlDelta.toFixed(2)}%`
 
@@ -59,10 +58,10 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
             </div>
           </div>
           <div className={styles.overview}>
-            <div className={styles.tvl}>${millify(l2Data.TVL)}</div>
+            <div className={styles.tvl}>${millify(tvl)}</div>
             <div className={styles.description}>Total value locked</div>
-            <div className={styles.dominance}>{dominant.share.toFixed(2)}%</div>
-            <div className={styles.description}>{dominant.name} dominance</div>
+            <div className={styles.dominance}>{l2sTable[0].share.toFixed(2)}%</div>
+            <div className={styles.description}>{l2sTable[0].name} dominance</div>
           </div>
         </div>
         <div className={cx(styles.card, styles.cardBg, styles.projectsList)}>
@@ -88,30 +87,30 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
               </tr>
             </thead>
             <tbody>
-              {l2sTable.map((rowData, index) => {
+              {l2sTable.map((item, index) => {
                 return (
                   <a
                     role="table-row"
                     style={{ display: 'table-row' }}
                     tabIndex={0}
-                    title={`${rowData.name} overview`}
-                    href={`/project/${rowData.name.toLowerCase()}`}
-                    key={rowData.name}
-                    className={cx(styles.dataRow, rowData.meta.showNotL2Warning && styles.notL2)}
+                    title={`${item.name} overview`}
+                    href={`/project/${item.name.toLowerCase()}`}
+                    key={item.name}
+                    className={cx(styles.dataRow, item.notL2 && styles.notL2)}
                   >
                     <td>
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                        <div className={styles.projectBadge} style={{ background: rowData.meta.color }}></div>
+                        <div className={styles.projectBadge} style={{ background: item.color }}></div>
                         <div className={styles.projectName}>
-                          {index + 1}. {rowData.name}
+                          {index + 1}. {item.name}
                         </div>
                       </div>
                     </td>
-                    <td className={cx(styles.alignRight, styles.mono)}>${millify(rowData.tvl)}</td>
-                    <td className={cx(styles.alignRight, styles.mono)}>{rowData.share.toFixed(2)}%</td>
-                    <td className={cx(styles.alignRight)}>{rowData.meta.technology.name}</td>
+                    <td className={cx(styles.alignRight, styles.mono)}>${millify(item.tvl)}</td>
+                    <td className={cx(styles.alignRight, styles.mono)}>{item.share.toFixed(2)}%</td>
+                    <td className={cx(styles.alignRight)}>{item.technology}</td>
                     <td className={cx(styles.alignRight)}>
-                      <Percentage value={rowData.change} />
+                      <Percentage value={item.change} />
                     </td>
                   </a>
                 )
@@ -159,29 +158,22 @@ export default function Home({ dominant, l2Data, tvlHistory: tvlHistory_, tvlDel
   )
 }
 export async function getStaticProps() {
-  const TVLDataSorted = l2Data.data.sort(dateSorter)
-  const tvlHistory = TVLDataSorted.map((point: any) => ({
-    x: point.date,
-    y: point.usd,
-  }))
+  const sorted = l2Data.data.sort(dateSorter)
+  const tvlHistory = sorted.map((point) => [point.date, point.usd] as const)
 
-  const dominant = Object.entries(l2Data.l2s).sort(([, data1]: any, [, data2]: any) => data2.TVL - data1.TVL)
-
-  const tvlDelta =
-    (TVLDataSorted[TVLDataSorted.length - 1].usd / TVLDataSorted[TVLDataSorted.length - 2].usd) * 100 - 100
+  const tvlDelta = (sorted[sorted.length - 1].usd / sorted[sorted.length - 2].usd) * 100 - 100
 
   const l2sTable = Object.entries(l2Data.l2s).map(([name, data]) => {
     const tvlData = data.data.sort(dateSorter).reverse()
     const meta = findProjectMetadata(name)
-    assert(meta, `Can't find project data for ${name}`)
-
     return {
       name,
       tvl: data.TVL,
       share: (data.TVL / l2Data.TVL) * 100,
       change: (tvlData[0].usd / tvlData[1].usd) * 100 - 100,
-      tvlData,
-      meta,
+      notL2: !!meta.showNotL2Warning,
+      color: meta.color,
+      technology: meta.technology.name,
     }
   })
 
@@ -190,12 +182,8 @@ export async function getStaticProps() {
   return {
     props: {
       title: 'L2Beat 💓',
-      l2Data,
+      tvl: l2Data.TVL,
       tvlHistory,
-      dominant: {
-        name: dominant[0][0],
-        share: ((dominant as any)[0][1].TVL / l2Data.TVL) * 100,
-      },
       tvlDelta,
       l2sTable: l2sTableSorted,
     },

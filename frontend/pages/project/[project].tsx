@@ -21,7 +21,7 @@ import { findProjectMetadata } from '../../utils/findProjectMetadata'
 import { getProjectsPaths } from '../../utils/getProjectPaths'
 
 export default function Project(props: ReturnType<typeof getStaticProps>['props']) {
-  const tvlHistory = React.useMemo(() => props.tvlData.map(({ x, y }: any) => ({ x: new Date(x), y })), undefined)
+  const tvlHistory = React.useMemo(() => props.tvlData.map(([x, y]) => ({ x: new Date(x), y })), [props.tvlData])
 
   const badgeText =
     Math.abs(props.tvl) < 0.01 ? `${props.tvlDelta > 0 ? '>' : '<-'}0.01%` : `${props.tvlDelta.toFixed(2)}%`
@@ -92,15 +92,11 @@ export function getStaticPaths() {
 }
 
 export function getStaticProps(params: { params: { project: string } }) {
-  const [name, projectData]: any = Object.entries(l2Data.l2s).find(
+  const [name, projectData] = Object.entries(l2Data.l2s).find(
     ([projectName]) => projectName.toLowerCase() === params.params.project,
   )!
 
-  const tvlData = projectData.data.sort(dateSorter).map((point: any) => ({ x: point.date, y: point.usd }))
-  const noOfTxsData =
-    projectData.data[0].number_of_transactions !== undefined
-      ? projectData.data.sort(dateSorter).map((point: any) => ({ x: point.date, y: point.number_of_transactions || 0 }))
-      : null
+  const tvlData = projectData.data.sort(dateSorter).map((point) => [point.date, point.usd] as const)
 
   const tvlDelta =
     (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
@@ -117,7 +113,6 @@ export function getStaticProps(params: { params: { project: string } }) {
       tvl: projectData.TVL,
       tvlDelta,
       projectMetadata,
-      noOfTxsData,
       projectBridges,
     },
   }
