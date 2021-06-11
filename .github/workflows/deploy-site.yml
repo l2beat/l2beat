@@ -25,12 +25,23 @@ jobs:
           key: cache-json-v-2-${{ github.run_id }}
           restore-keys: |
             cache-json-v-2-
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Restore yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile
       - run: yarn build
         env:
           RPC_URL: ${{ secrets.BC_NODE }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
-      - name: Upload frontend 
+      - name: Upload frontend
         run: yarn netlify deploy --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
