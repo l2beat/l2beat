@@ -12,6 +12,7 @@ export const immutablex: Project = {
   details: {
     website: 'https://www.immutable.com/',
     color: '#17b5cb',
+    showNotL2Warning: true,
     technology: {
       name: 'validium',
       details: 'zk-STARK/StarkExchange',
