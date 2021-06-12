@@ -403,7 +403,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Lido DAO Token',
     symbol: 'LDO',
-    address: '0x5a98fcbea516cf06857215779fd812ca3bef1b32',
+    address: '0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',
     decimals: 18,
     coingeckoId: 'lido-dao',
     sinceBlock: 12070000,
@@ -411,7 +411,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Compound CUSDT',
     symbol: 'cUSDT',
-    address: '0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9',
+    address: '0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9',
     decimals: 8,
     coingeckoId: 'compound-usdt',
     sinceBlock: 11726460,
@@ -419,7 +419,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Pinakion',
     symbol: 'PNK',
-    address: '0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d',
+    address: '0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d',
     decimals: 18,
     coingeckoId: 'kleros',
     sinceBlock: 10185235,
@@ -435,7 +435,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Dusk Network',
     symbol: 'DUSK',
-    address: '0x940a2db1b7008b6c776d4faaca729d6d4a4aa551',
+    address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
     decimals: 18,
     coingeckoId: 'dusk-network',
     sinceBlock: 6867115,
@@ -443,7 +443,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Melon Token',
     symbol: 'MLN',
-    address: '0xec67005c4e498ec7f55e092bd1d35cbc47c91892',
+    address: '0xec67005c4E498Ec7f55E092bd1d35cbC47C91892',
     decimals: 18,
     coingeckoId: 'enzyme',
     sinceBlock: 7130380,
@@ -451,7 +451,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Ethfinex Nectar Token',
     symbol: 'NEC',
-    address: '0xcc80c051057b774cd75067dc48f8987c4eb97a5e',
+    address: '0xCc80C051057B774cD75067Dc48f8987C4Eb97A5e',
     decimals: 18,
     coingeckoId: 'nectar',
     sinceBlock: 5072026,
@@ -459,7 +459,7 @@ export const tokenList: TokenInfo[] = [
   {
     name: 'Compound',
     symbol: 'COMP',
-    address: '0xc00e94cb662c3520282e6f5717214004a7f26888',
+    address: '0xc00e94Cb662C3520282E6f5717214004A7f26888',
     decimals: 18,
     coingeckoId: 'compound',
     sinceBlock: 9601359,
