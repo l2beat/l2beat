@@ -400,6 +400,14 @@ export const tokenList: TokenInfo[] = [
     coingeckoId: 'zkswap',
     sinceBlock: 11305469,
   },
+  {
+    name: 'Leverj Gluon',
+    symbol: 'L2',
+    address: '0xBbff34E47E559ef680067a6B1c980639EEb64D24',
+    decimals: 18,
+    coingeckoId: 'leverj-gluon',
+    sinceBlock: 11096120,
+  },
 ]
 
 const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))

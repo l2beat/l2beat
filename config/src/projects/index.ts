@@ -4,6 +4,7 @@ import { dydx } from './dydx'
 import { fuel } from './fuel'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
+import { leverj } from './leverj'
 import { layer2finance } from './layer2finance'
 import { loopring } from './loopring'
 import { omgnetwork } from './omgnetwork'
@@ -21,6 +22,7 @@ export const projects: Project[] = [
   fuel,
   hermez,
   immutablex,
+  leverj,
   layer2finance,
   loopring,
   omgnetwork,
