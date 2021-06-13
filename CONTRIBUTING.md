@@ -33,6 +33,11 @@ You are encouraged to provide your feedback on the data presented on L2BEAT by [
 
 ## Contribute code
 
+Make sure that you have the required dependencies installed:
+
+- [node.js](https://nodejs.org/en/) - version 14
+- [Yarn](https://classic.yarnpkg.com/en/docs/install) - version 1.22.0 or later
+
 The L2BEAT website repository is a monorepo consisting of three interdependent projects.
 
 1. `config` - the shared configuration that defines what projects and tokens are tracked by the website
