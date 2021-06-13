@@ -23,24 +23,24 @@ export class TokenPriceChecker implements ITokenPriceChecker {
   constructor(private asyncCache: AsyncCache, private logger: Logger) {}
 
   async getPrice(tokenSymbol: string, date: SimpleDate) {
+    const id = getTokenBySymbol(tokenSymbol).coingeckoId
     return this.asyncCache.getOrFetch(
-      ['getPrice', tokenSymbol, date],
-      async () => this._retryGetPrice(tokenSymbol, date)
+      ['getPrice', id, date],
+      async () => this._retryGetPrice(id, date)
     )
   }
 
-  private async _retryGetPrice(tokenSymbol: string, date: SimpleDate) {
+  private async _retryGetPrice(id: string, date: SimpleDate) {
     while (true) {
       try {
-        return await this._getPrice(tokenSymbol, date)
+        return await this._getPrice(id, date)
       } catch (e) {
-        this.logger.error(`fetching ${tokenSymbol} price @ ${date}`, e)
+        this.logger.error(`fetching ${id} price @ ${date}`, e)
       }
     }
   }
 
-  private async _getPrice(tokenSymbol: string, date: SimpleDate) {
-    const id = getTokenBySymbol(tokenSymbol).coingeckoId
+  private async _getPrice(id: string, date: SimpleDate) {
     const url = `${API_URL}/coins/${id}/history?date=${date.toDDMMYYYYString()}&localization=false`
     const price = await this.asyncQueue.enqueue(() =>
       fetch(url)
@@ -57,7 +57,7 @@ export class TokenPriceChecker implements ITokenPriceChecker {
           }
         })
     )
-    this.logger.log(`fetched ${tokenSymbol} price @ ${date}`)
+    this.logger.log(`fetched ${id} price @ ${date}`)
     return price
   }
 }
