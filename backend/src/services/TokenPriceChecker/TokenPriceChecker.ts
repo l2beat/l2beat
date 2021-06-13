@@ -25,8 +25,18 @@ export class TokenPriceChecker implements ITokenPriceChecker {
   async getPrice(tokenSymbol: string, date: SimpleDate) {
     return this.asyncCache.getOrFetch(
       ['getPrice', tokenSymbol, date],
-      async () => this._getPrice(tokenSymbol, date)
+      async () => this._retryGetPrice(tokenSymbol, date)
     )
+  }
+
+  private async _retryGetPrice(tokenSymbol: string, date: SimpleDate) {
+    while (true) {
+      try {
+        return await this._getPrice(tokenSymbol, date)
+      } catch (e) {
+        this.logger.error(`fetching ${tokenSymbol} price @ ${date}`, e)
+      }
+    }
   }
 
   private async _getPrice(tokenSymbol: string, date: SimpleDate) {
