@@ -10,11 +10,15 @@ main().catch((e) => {
 })
 
 async function main() {
-  const { valueLockedChecker, tokenPriceChecker } = setup()
+  const { valueLockedChecker, tokenPriceChecker, config, asyncCache } = setup()
 
   const results = await getProjectTVLs(projects, valueLockedChecker)
   const getPrice = await getTokenPrices(results, tokenPriceChecker)
   const legacyData = makeLegacyData(results, getPrice)
+
+  if (config.updatePrecomputed) {
+    asyncCache.updatePrecomputed()
+  }
 
   if (!fs.existsSync('./build')) {
     await fs.promises.mkdir('./build')

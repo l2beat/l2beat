@@ -15,6 +15,7 @@ cd config && yarn build
 
 - `yarn build` - [described later](#production-build)
 - `yarn build:mock` - [described later](#mock-build)
+- `yarn build:precomputed` - [described later](#precomputed-build)
 - `yarn format` - check if formatting is correct with prettier
 - `yarn format:fix` - run prettier automatic formatter
 - `yarn lint` - check if the code satisfies the eslint configuration
@@ -42,3 +43,7 @@ RPC_URL=https://eth-mainnet.alchemyapi.io/v2/your-alchemy-key
 The build makes use of a cache stored in the `cache` folder. The `cache/precomputed.json` is used to bootstrap the cache so that not all of the historical data has to be downloaded.
 
 The result of this build is the `build/data.json` file which contains up to date information about the various L2 protocols.
+
+## Precomputed build
+
+A precomputed build has the same requirements as the production build but also updates the precomputed.json file after the build is finished.

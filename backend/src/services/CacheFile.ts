@@ -15,4 +15,12 @@ export class CacheFile {
   write(data: unknown) {
     fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(data, null, 2), 'utf-8')
   }
+
+  writePrecomputed(data: unknown) {
+    fs.writeFileSync(
+      PRECOMPUTED_FILE_PATH,
+      JSON.stringify(data, null, 2),
+      'utf-8'
+    )
+  }
 }
