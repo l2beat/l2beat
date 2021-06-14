@@ -6,6 +6,7 @@
   "scripts": {
     "build": "ts-node src",
     "build:mock": "MOCK_DATA=true yarn build",
+    "build:precomputed": "UPDATE_PRECOMPUTED=true yarn build",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts src test",

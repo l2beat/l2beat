@@ -130,6 +130,22 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 4281611,
   },
   {
+    name: 'Compound',
+    symbol: 'COMP',
+    address: '0xc00e94Cb662C3520282E6f5717214004A7f26888',
+    decimals: 18,
+    coingeckoId: 'compound-governance-token',
+    sinceBlock: 9601359,
+  },
+  {
+    name: 'Compound USDT',
+    symbol: 'cUSDT',
+    address: '0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9',
+    decimals: 8,
+    coingeckoId: 'compound-usdt',
+    sinceBlock: 9879363,
+  },
+  {
     name: 'CRO',
     symbol: 'CRO',
     address: '0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b',
@@ -146,6 +162,14 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 8928158,
   },
   {
+    name: 'Dusk Network',
+    symbol: 'DUSK',
+    address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
+    decimals: 18,
+    coingeckoId: 'dusk-network',
+    sinceBlock: 6867115,
+  },
+  {
     name: 'ElectrifyAsia',
     symbol: 'ELEC',
     address: '0xD49ff13661451313cA1553fd6954BD1d9b6E02b9',
@@ -159,6 +183,14 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     coingeckoId: 'ethereum',
     sinceBlock: 0,
+  },
+  {
+    name: 'Ethfinex Nectar Token',
+    symbol: 'NEC',
+    address: '0xCc80C051057B774cD75067Dc48f8987C4Eb97A5e',
+    decimals: 18,
+    coingeckoId: 'nectar-token',
+    sinceBlock: 5072026,
   },
   {
     name: 'GateChainToken',
@@ -183,6 +215,14 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     coingeckoId: 'golem',
     sinceBlock: 11281056,
+  },
+  {
+    name: 'Hermez Network Token',
+    symbol: 'HEZ',
+    address: '0xEEF9f339514298C6A857EfCfC1A762aF84438dEE',
+    decimals: 18,
+    coingeckoId: 'hermez-network-token',
+    sinceBlock: 11056775,
   },
   {
     name: 'Huobi BTC',
@@ -217,6 +257,14 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 4264898,
   },
   {
+    name: 'Lido DAO Token',
+    symbol: 'LDO',
+    address: '0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',
+    decimals: 18,
+    coingeckoId: 'lido-dao',
+    sinceBlock: 11473216,
+  },
+  {
     name: 'LION',
     symbol: 'LION',
     address: '0x2167FB82309CF76513E83B25123f8b0559d6b48f',
@@ -249,6 +297,14 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 7605604,
   },
   {
+    name: 'Melon Token',
+    symbol: 'MLN',
+    address: '0xec67005c4E498Ec7f55E092bd1d35cbC47C91892',
+    decimals: 18,
+    coingeckoId: 'melon',
+    sinceBlock: 7130380,
+  },
+  {
     name: 'MX Token',
     symbol: 'MX',
     address: '0x11eeF04c884E24d9B7B4760e7476D06ddF797f36',
@@ -279,6 +335,14 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     coingeckoId: 'paxos-standard',
     sinceBlock: 6294931,
+  },
+  {
+    name: 'Pinakion',
+    symbol: 'PNK',
+    address: '0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d',
+    decimals: 18,
+    coingeckoId: 'kleros',
+    sinceBlock: 5257012,
   },
   {
     name: 'renBTC',

@@ -42,7 +42,8 @@ export function setup() {
     : new TokenPriceChecker(asyncCache, logger)
 
   return {
-    blockInfo,
+    config,
+    asyncCache,
     valueLockedChecker,
     tokenPriceChecker,
   }

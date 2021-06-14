@@ -6,7 +6,7 @@ export const aztec: Project = {
     {
       address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
       sinceBlock: 11967192,
-      tokens: ['ETH'],
+      tokens: ['ETH', 'DAI'],
     },
   ],
   details: {
@@ -53,6 +53,10 @@ export const aztec: Project = {
       },
     ],
     news: [
+      {
+        name: 'Introducing zkDAI into the Aztec Private Rollup',
+        link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
+      },
       {
         name: 'Launching Aztec 2.0 Rollup',
         link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
