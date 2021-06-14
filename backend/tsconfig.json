@@ -10,6 +10,6 @@
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": ["node", "mocha", "chai", "node-fetch"]
+    "types": ["node", "mocha", "chai", "node-fetch", "adm-zip"]
   }
 }

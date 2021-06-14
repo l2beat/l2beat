@@ -1,5 +1,5 @@
-import { providers } from 'ethers'
 import fetch from 'node-fetch'
+import { AlchemyApi } from '../../api/AlchemyApi'
 import { RateLimiter } from '../../api/RateLimiter'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
@@ -8,11 +8,10 @@ import { IBlockInfo } from './IBlockInfo'
 
 export class BlockInfo implements IBlockInfo {
   private dateRateLimiter = new RateLimiter({ callsPerMinute: 200 })
-  private ethersRateLimiter = new RateLimiter({ callsPerMinute: 500 })
 
   constructor(
+    private alchemyApi: AlchemyApi,
     private etherscanApiKey: string,
-    private provider: providers.Provider,
     private asyncCache: AsyncCache,
     private logger: Logger
   ) {}
@@ -51,9 +50,7 @@ export class BlockInfo implements IBlockInfo {
   }
 
   private async _getBlockDate(block: number) {
-    const { timestamp } = await this.ethersRateLimiter.call(() =>
-      this.provider.getBlock(block)
-    )
+    const { timestamp } = await this.alchemyApi.getBlock(block)
     this.logger.log(`fetched block date for ${block}`)
     return SimpleDate.fromUnixTimestamp(timestamp)
   }
