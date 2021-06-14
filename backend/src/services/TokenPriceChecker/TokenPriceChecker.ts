@@ -1,7 +1,8 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import fetch from 'node-fetch'
+import { ExponentialRetry } from '../../api/ExponentialRetry'
+import { RateLimiter } from '../../api/RateLimiter'
 import { AsyncCache } from '../AsyncCache'
-import { AsyncQueue } from '../AsyncQueue'
 import { Logger } from '../Logger'
 import { SimpleDate } from '../SimpleDate'
 import { ITokenPriceChecker } from './ITokenPriceChecker'
@@ -18,31 +19,30 @@ interface ApiResponse {
 }
 
 export class TokenPriceChecker implements ITokenPriceChecker {
-  private asyncQueue = new AsyncQueue({ length: 2, rateLimitPerMinute: 50 })
+  private rateLimiter = new RateLimiter({ callsPerMinute: 50 })
+  private exponentialRetry = new ExponentialRetry(
+    {
+      startTimeout: 100,
+      maxRetryCount: Infinity,
+    },
+    this.logger
+  )
 
   constructor(private asyncCache: AsyncCache, private logger: Logger) {}
 
   async getPrice(tokenSymbol: string, date: SimpleDate) {
     const id = getTokenBySymbol(tokenSymbol).coingeckoId
     return this.asyncCache.getOrFetch(['getPrice', id, date], async () =>
-      this._retryGetPrice(id, date)
+      this.exponentialRetry.call(
+        () => this._getPrice(id, date),
+        `fetching ${id} price @ ${date}`
+      )
     )
-  }
-
-  private async _retryGetPrice(id: string, date: SimpleDate) {
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      try {
-        return await this._getPrice(id, date)
-      } catch (e) {
-        this.logger.error(`fetching ${id} price @ ${date}`, e)
-      }
-    }
   }
 
   private async _getPrice(id: string, date: SimpleDate) {
     const url = `${API_URL}/coins/${id}/history?date=${date.toDDMMYYYYString()}&localization=false`
-    const price = await this.asyncQueue.enqueue(() =>
+    const price = await this.rateLimiter.call(() =>
       fetch(url)
         .then((res) => {
           if (!res.ok) {

@@ -1,14 +1,14 @@
 import { providers } from 'ethers'
+import fetch from 'node-fetch'
+import { RateLimiter } from '../../api/RateLimiter'
 import { AsyncCache } from '../AsyncCache'
-import { AsyncQueue } from '../AsyncQueue'
 import { Logger } from '../Logger'
 import { SimpleDate } from '../SimpleDate'
-import fetch from 'node-fetch'
 import { IBlockInfo } from './IBlockInfo'
 
 export class BlockInfo implements IBlockInfo {
-  private dateQueue = new AsyncQueue({ length: 1, rateLimitPerMinute: 200 })
-  private ethersQueue = new AsyncQueue({ length: 1 })
+  private dateRateLimiter = new RateLimiter({ callsPerMinute: 200 })
+  private ethersRateLimiter = new RateLimiter({ callsPerMinute: 500 })
 
   constructor(
     private etherscanApiKey: string,
@@ -27,7 +27,7 @@ export class BlockInfo implements IBlockInfo {
     const url =
       'https://api.etherscan.io/api?module=block&action=getblocknobytime&closest=before'
     const timestamp = date.addDays(1).toUnixTimestamp()
-    const block = await this.dateQueue.enqueue(() =>
+    const block = await this.dateRateLimiter.call(() =>
       fetch(`${url}&timestamp=${timestamp}&apikey=${this.etherscanApiKey}`)
         .then((res) => {
           if (!res.ok) {
@@ -51,7 +51,7 @@ export class BlockInfo implements IBlockInfo {
   }
 
   private async _getBlockDate(block: number) {
-    const { timestamp } = await this.ethersQueue.enqueue(() =>
+    const { timestamp } = await this.ethersRateLimiter.call(() =>
       this.provider.getBlock(block)
     )
     this.logger.log(`fetched block date for ${block}`)

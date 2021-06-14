@@ -24,6 +24,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@sinonjs/fake-timers": "^7.1.2",
     "@types/adm-zip": "^0.4.34",
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",
