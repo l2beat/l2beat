@@ -1,17 +1,14 @@
-import fetch from 'node-fetch'
 import { AlchemyApi } from '../../api/AlchemyApi'
-import { RateLimiter } from '../../api/RateLimiter'
+import { EtherscanApi } from '../../api/EtherscanApi'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
 import { SimpleDate } from '../SimpleDate'
 import { IBlockInfo } from './IBlockInfo'
 
 export class BlockInfo implements IBlockInfo {
-  private dateRateLimiter = new RateLimiter({ callsPerMinute: 200 })
-
   constructor(
     private alchemyApi: AlchemyApi,
-    private etherscanApiKey: string,
+    private etherscanApi: EtherscanApi,
     private asyncCache: AsyncCache,
     private logger: Logger
   ) {}
@@ -23,19 +20,8 @@ export class BlockInfo implements IBlockInfo {
   }
 
   private async _getMaxBlock(date: SimpleDate) {
-    const url =
-      'https://api.etherscan.io/api?module=block&action=getblocknobytime&closest=before'
     const timestamp = date.addDays(1).toUnixTimestamp()
-    const block = await this.dateRateLimiter.call(() =>
-      fetch(`${url}&timestamp=${timestamp}&apikey=${this.etherscanApiKey}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText)
-          }
-          return res.json()
-        })
-        .then((data) => parseInt(data.result))
-    )
+    const block = await this.etherscanApi.getLastBlockBefore(timestamp)
     this.logger.log(`fetched max block for ${date}`)
     return block
   }

@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 import { AlchemyApi } from '../api/AlchemyApi'
+import { EtherscanApi } from '../api/EtherscanApi'
 import { AsyncCache } from './AsyncCache'
 import { BalanceChecker } from './BalanceChecker/BalanceChecker'
 import { MockBalanceChecker } from './BalanceChecker/MockBalanceChecker'
@@ -21,13 +22,14 @@ export function setup() {
 
   const provider = new providers.StaticJsonRpcProvider(config.rpcUrl, 'mainnet')
   const alchemyApi = new AlchemyApi(config.rpcUrl, logger)
+  const etherscanApi = new EtherscanApi(config.etherscanApiKey, logger)
 
   const cacheFile = new CacheFile()
   const asyncCache = new AsyncCache(cacheFile)
 
   const blockInfo = config.mock
     ? new MockBlockInfo()
-    : new BlockInfo(alchemyApi, config.etherscanApiKey, asyncCache, logger)
+    : new BlockInfo(alchemyApi, etherscanApi, asyncCache, logger)
 
   const balanceChecker = config.mock
     ? new MockBalanceChecker()
