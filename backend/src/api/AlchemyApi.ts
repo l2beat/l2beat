@@ -1,15 +1,10 @@
-import { z } from 'zod'
+import { providers } from 'ethers'
 import { Logger } from '../services/Logger'
 import { ExponentialRetry } from './ExponentialRetry'
-import { JsonRpcApi } from './JsonRpcApi'
 import { RateLimiter } from './RateLimiter'
 
-const getBlockResponse = z.object({
-  timestamp: z.string(),
-})
-
 export class AlchemyApi {
-  private api = new JsonRpcApi(this.url)
+  private provider = new providers.StaticJsonRpcProvider(this.url, 'mainnet')
   private rateLimiter = new RateLimiter({
     callsPerMinute: 500,
   })
@@ -25,12 +20,19 @@ export class AlchemyApi {
 
   async getBlock(blockNumber: number) {
     return this.safeCall(`getBlock(${blockNumber})`, async () => {
-      const response = await this.api.call('eth_getBlockByNumber', [
-        `0x${blockNumber.toString(16)}`,
-        false,
-      ])
-      const block = getBlockResponse.parse(response)
-      return { timestamp: parseInt(block.timestamp.substring(2), 16) }
+      return this.provider.getBlock(blockNumber)
+    })
+  }
+
+  async getBalance(address: string, blockNumber: number) {
+    return this.safeCall(`getBalance(${address}, ${blockNumber})`, async () => {
+      return this.provider.getBalance(address, blockNumber)
+    })
+  }
+
+  async call(address: string, data: string, blockNumber: number) {
+    return this.safeCall(`call(${address}, ${blockNumber})`, async () => {
+      return this.provider.call({ to: address, data }, blockNumber)
     })
   }
 

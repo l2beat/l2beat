@@ -2,14 +2,9 @@ import { Logger } from '../services/Logger'
 import { ExponentialRetry } from './ExponentialRetry'
 import { RateLimiter } from './RateLimiter'
 import fetch from 'node-fetch'
-import { z } from 'zod'
 
 const BLOCK_URL =
   'https://api.etherscan.io/api?module=block&action=getblocknobytime&closest=before'
-
-const response = z.object({
-  result: z.string(),
-})
 
 export class EtherscanApi {
   private rateLimiter = new RateLimiter({
@@ -34,7 +29,14 @@ export class EtherscanApi {
         throw new Error(res.statusText)
       }
       const data = await res.json()
-      return parseInt(response.parse(data).result)
+      if (
+        typeof data !== 'object' ||
+        data === null ||
+        typeof data.result !== 'string'
+      ) {
+        throw new Error('Invalid etherscan response')
+      }
+      return parseInt(data.result)
     })
   }
 

@@ -1,5 +1,5 @@
-import { BigNumber, Contract, providers, utils } from 'ethers'
-import { RateLimiter } from '../../api/RateLimiter'
+import { BigNumber, utils } from 'ethers'
+import { AlchemyApi } from '../../api/AlchemyApi'
 import { shortenAddress } from '../../utils'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
@@ -10,12 +10,8 @@ const abi = new utils.Interface([
 ])
 
 export class BalanceChecker implements IBalanceChecker {
-  private rateLimiter = new RateLimiter({
-    callsPerMinute: 500,
-  })
-
   constructor(
-    private provider: providers.Provider,
+    private alchemyApi: AlchemyApi,
     private asyncCache: AsyncCache,
     private logger: Logger
   ) {}
@@ -30,9 +26,7 @@ export class BalanceChecker implements IBalanceChecker {
   }
 
   private async _getEthBalance(account: string, block: number) {
-    const balance = await this.rateLimiter.call(() =>
-      this.provider.getBalance(account, block)
-    )
+    const balance = await this.alchemyApi.getBalance(account, block)
     this.logger.log(
       `fetched eth balance of ${shortenAddress(account)} @ ${block}`
     )
@@ -53,10 +47,9 @@ export class BalanceChecker implements IBalanceChecker {
     account: string,
     block: number
   ): Promise<BigNumber> {
-    const contract = new Contract(tokenAddress, abi, this.provider)
-    const balance: BigNumber = await this.rateLimiter.call(() =>
-      contract.balanceOf(account, { blockTag: block })
-    )
+    const callData = abi.encodeFunctionData('balanceOf', [account])
+    const result = await this.alchemyApi.call(tokenAddress, callData, block)
+    const balance = BigNumber.from(result)
     this.logERC20Balance(tokenAddress, account, block)
     return balance
   }
