@@ -11,6 +11,7 @@ describe('AsyncCache', () => {
     write(data: any) {
       this.data = data
     }
+    writePrecomputed() {}
   }
 
   function makeCache(data: any) {
@@ -76,6 +77,7 @@ describe('AsyncCache', () => {
       write() {
         calls++
       },
+      writePrecomputed() {},
     }
     const cache = new AsyncCache(mock, 10)
     await cache.getOrFetch(['a'], async () => 1)
