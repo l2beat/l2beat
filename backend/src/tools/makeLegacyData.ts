@@ -17,31 +17,11 @@ interface LegacyData {
 interface L2Entry {
   TVL: number
   data: DateEntry[]
-  bridges: {
-    [address: string]: BridgeEntry
-  }
-}
-
-interface BridgeEntry {
-  TVL: number
-  data: DateEntry[]
-  tokens: {
-    [symbol: string]: TokenEntry
-  }
-}
-
-interface TokenEntry {
-  TVL: number
-  data: TokenDateEntry[]
 }
 
 interface DateEntry {
   date: string
   usd: number
-}
-
-interface TokenDateEntry extends DateEntry {
-  token: number
 }
 
 export function makeLegacyData(
@@ -61,9 +41,9 @@ export function makeLegacyData(
 }
 
 function getL2Entry(bridgeData: BridgeTVL[], getPrice: PriceFunction): L2Entry {
-  const bridges: Record<string, BridgeEntry> = {}
+  const bridges: Record<string, L2Entry> = {}
   for (const bridge of bridgeData) {
-    const tokens: Record<string, TokenEntry> = {}
+    const tokens: Record<string, L2Entry> = {}
     for (const [symbol, entries] of Object.entries(bridge.balances)) {
       const data = entries.map((x) => toTokenDateEntry(symbol, x, getPrice))
       tokens[symbol] = {
@@ -75,13 +55,11 @@ function getL2Entry(bridgeData: BridgeTVL[], getPrice: PriceFunction): L2Entry {
     bridges[bridge.address] = {
       TVL: data[data.length - 1].usd,
       data,
-      tokens,
     }
   }
   const data = sumData(Object.values(bridges).map((x) => x.data))
   return {
     TVL: data[data.length - 1].usd,
-    bridges,
     data,
   }
 }
@@ -90,13 +68,12 @@ function toTokenDateEntry(
   symbol: string,
   { date, balance }: { date: SimpleDate; balance: BigNumber },
   getPrice: PriceFunction
-): TokenDateEntry {
+): DateEntry {
   const { decimals } = getTokenBySymbol(symbol)
   const numberBalance = parseFloat(utils.formatUnits(balance, decimals))
   const price = getPrice(symbol, date)
   return {
     date: date.toString(),
-    token: numberBalance,
     usd: numberBalance * price,
   }
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "./build/data.json",
+  "types": "./index.d.ts",
   "scripts": {
     "build": "ts-node src",
     "build:mock": "MOCK_DATA=true yarn build",
