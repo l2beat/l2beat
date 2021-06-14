@@ -10,6 +10,15 @@ export class Logger {
       console.log(`${t} ${l} ${message}`)
     }
   }
+
+  error(action: string, error: unknown) {
+    if (this.enabled) {
+      const t = chalk.gray(`[${time()}]`)
+      const l = chalk.red('ERROR')
+      const message = error instanceof Error ? error.message : '' + error
+      console.error(`${t} ${l} ${action} ${message}`)
+    }
+  }
 }
 
 function time() {

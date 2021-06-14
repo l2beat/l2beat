@@ -2,6 +2,7 @@ import { config } from 'dotenv'
 
 export interface Config {
   mock: boolean
+  updatePrecomputed: boolean
   rpcUrl: string
   etherscanApiKey: string
 }
@@ -12,6 +13,7 @@ export function getConfig(): Config {
   if (process.env.MOCK_DATA === 'true') {
     return {
       mock: true,
+      updatePrecomputed: false,
       rpcUrl: 'https://mock.url',
       etherscanApiKey: 'm0ckk3y',
     }
@@ -19,6 +21,7 @@ export function getConfig(): Config {
 
   return {
     mock: false,
+    updatePrecomputed: process.env.UPDATE_PRECOMPUTED === 'true',
     rpcUrl: getEnv('RPC_URL'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
   }

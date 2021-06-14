@@ -19,4 +19,10 @@ describe('tokens', () => {
     const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
     expect(everyUnique).to.equal(true)
   })
+
+  it('tokens are ordered alphabetically', () => {
+    const names = tokenList.map((x) => x.name)
+    const sorted = [...names].sort((a, b) => a.localeCompare(b))
+    expect(names).to.deep.equal(sorted)
+  })
 })
