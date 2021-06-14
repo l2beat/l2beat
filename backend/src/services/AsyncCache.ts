@@ -75,9 +75,9 @@ export class AsyncCache {
           if (v instanceof Promise || !v.accessed) {
             return []
           }
-          return [[k, v]] as const
+          return [[k, v.serialized]] as const
         })
-        .sort(([a], [b]) => a.localeCompare(b))
+        .sort(([a], [b]) => (a < b ? -1 : a === b ? 0 : 1))
     )
     this.cacheFile.writePrecomputed(data)
   }

@@ -24,13 +24,13 @@ export class TokenPriceChecker implements ITokenPriceChecker {
 
   async getPrice(tokenSymbol: string, date: SimpleDate) {
     const id = getTokenBySymbol(tokenSymbol).coingeckoId
-    return this.asyncCache.getOrFetch(
-      ['getPrice', id, date],
-      async () => this._retryGetPrice(id, date)
+    return this.asyncCache.getOrFetch(['getPrice', id, date], async () =>
+      this._retryGetPrice(id, date)
     )
   }
 
   private async _retryGetPrice(id: string, date: SimpleDate) {
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
         return await this._getPrice(id, date)
