@@ -1,7 +1,7 @@
 import { BigNumber, Contract, providers, utils } from 'ethers'
+import { RateLimiter } from '../../api/RateLimiter'
 import { shortenAddress } from '../../utils'
 import { AsyncCache } from '../AsyncCache'
-import { AsyncQueue } from '../AsyncQueue'
 import { Logger } from '../Logger'
 import { IBalanceChecker } from './IBalanceChecker'
 
@@ -10,9 +10,8 @@ const abi = new utils.Interface([
 ])
 
 export class BalanceChecker implements IBalanceChecker {
-  private asyncQueue = new AsyncQueue({
-    length: 5,
-    rateLimitPerMinute: 300,
+  private rateLimiter = new RateLimiter({
+    callsPerMinute: 500,
   })
 
   constructor(
@@ -31,7 +30,7 @@ export class BalanceChecker implements IBalanceChecker {
   }
 
   private async _getEthBalance(account: string, block: number) {
-    const balance = await this.asyncQueue.enqueue(() =>
+    const balance = await this.rateLimiter.call(() =>
       this.provider.getBalance(account, block)
     )
     this.logger.log(
@@ -55,7 +54,7 @@ export class BalanceChecker implements IBalanceChecker {
     block: number
   ): Promise<BigNumber> {
     const contract = new Contract(tokenAddress, abi, this.provider)
-    const balance: BigNumber = await this.asyncQueue.enqueue(() =>
+    const balance: BigNumber = await this.rateLimiter.call(() =>
       contract.balanceOf(account, { blockTag: block })
     )
     this.logERC20Balance(tokenAddress, account, block)
