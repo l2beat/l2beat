@@ -257,6 +257,14 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 4264898,
   },
   {
+    name: 'Leverj Gluon',
+    symbol: 'L2',
+    address: '0xBbff34E47E559ef680067a6B1c980639EEb64D24',
+    decimals: 18,
+    coingeckoId: 'leverj-gluon',
+    sinceBlock: 11096120,
+  },
+  {
     name: 'Lido DAO Token',
     symbol: 'LDO',
     address: '0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',
