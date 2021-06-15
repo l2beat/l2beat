@@ -3,7 +3,7 @@ import AdmZip from 'adm-zip'
 
 const PRECOMPUTED_FILE_PATH = 'cache/precomputed.zip'
 const CACHE_FILE_PATH = 'cache/cache.json'
-const VERSION = 1
+const VERSION = 2
 
 export class CacheFile {
   read() {
