@@ -49,7 +49,7 @@ export class BalanceChecker implements IBalanceChecker {
   ): Promise<BigNumber> {
     const callData = abi.encodeFunctionData('balanceOf', [account])
     const result = await this.alchemyApi.call(tokenAddress, callData, block)
-    const balance = BigNumber.from(result)
+    const [balance] = abi.decodeFunctionResult('balanceOf', result)
     this.logERC20Balance(tokenAddress, account, block)
     return balance
   }
