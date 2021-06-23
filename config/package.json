@@ -10,6 +10,7 @@
     "lint": "eslint --ext .ts src test",
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
+    "preview": "ts-node scripts/feature-preview.ts",
     "build": "tsc",
     "test": "mocha"
   },

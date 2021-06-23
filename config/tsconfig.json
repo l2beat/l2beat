@@ -9,6 +9,6 @@
     "resolveJsonModule": true,
     "declaration": true,
     "outDir": "build",
-    "types": ["mocha", "chai"]
+    "types": ["node", "mocha", "chai"]
   }
 }

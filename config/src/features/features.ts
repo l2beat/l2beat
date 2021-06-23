@@ -243,3 +243,10 @@ export const Features = {
     ),
   },
 }
+
+export const groups: Record<string, string> = {}
+for (const [feature, options] of Object.entries(Features)) {
+  for (const option of Object.values(options)) {
+    groups[option().name] = feature
+  }
+}

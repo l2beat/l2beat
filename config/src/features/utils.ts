@@ -1,5 +1,5 @@
 import { Feature, Risk } from '../projects'
-import { Features } from './features'
+import { groups } from './features'
 
 export interface FeatureOptions {
   pointers?: string[]
@@ -24,13 +24,6 @@ export function feature(name: string, description: string, ...risks: Risk[]) {
 
 export function risk(type: Risk['type'], description: string): Risk {
   return { type, description }
-}
-
-const groups: Record<string, string> = {}
-for (const [feature, options] of Object.entries(Features)) {
-  for (const option of Object.values(options)) {
-    groups[option().name] = feature
-  }
 }
 
 export function featuresByComparison(
