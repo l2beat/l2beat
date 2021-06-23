@@ -45,6 +45,8 @@ export interface ProjectDetails {
     /** Relevant links */
     pointers?: string[]
   }
+  /** Project research results */
+  features?: Feature[]
 }
 
 export interface ProjectParameter {
@@ -65,4 +67,28 @@ export interface News {
   name: string
   /** Article link, preferably https */
   link: string
+}
+
+export interface Feature {
+  /** Feature name, usually *noun* is *verb*. */
+  name: string
+  /** Project agnostic description of the feature */
+  generalDescription: string
+  /** Project specific description of the feature */
+  specificDescription?: string
+  /** Risks arising because of this feature */
+  risks: Risk[]
+  /** Relevant links */
+  pointers: string[]
+  /** A feature that should be there but is replaced by this one */
+  overrides?: Feature
+}
+
+export interface Risk {
+  type:
+    | 'Funds can be stolen'
+    | 'Funds can be frozen'
+    | 'Funds can be lost'
+    | 'Censorship'
+  description: string
 }

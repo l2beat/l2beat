@@ -1,12 +1,10 @@
-import { feature, needs, risk } from './utils'
+import { feature, risk } from './utils'
 
 export const Features = {
   Withdrawal: {
     Proved: feature(
       'Withdrawal requires proof of funds',
-      'In order to withdraw funds back to the Ethereum blockchain the user needs to submit a merkle proof that they have the funds. The proof is verified against the state root published on chain.',
-      needs('Data'),
-      needs('State')
+      'In order to withdraw funds back to the Ethereum blockchain the user needs to submit a merkle proof that they have the funds. The proof is verified against the state root published on chain.'
     ),
     WithBlock: feature(
       'Withdrawal occurs when block is proved',
@@ -28,14 +26,11 @@ export const Features = {
       risk(
         'Funds can be stolen',
         'If there is no one that checks the published state an invalid state can get finalized. Fraud proofs assume at least one honest and able validator.'
-      ),
-      needs('Settlement')
+      )
     ),
     ValidityProofs: feature(
       'State correctness relies on validity proofs',
-      'The state root published on chain is accompanied by a validity proof. This makes it impossible to publish an invalid state and steal funds in this way.',
-      needs('Settlement'),
-      needs('Cryptography')
+      'The state root published on chain is accompanied by a validity proof. This makes it impossible to publish an invalid state and steal funds in this way.'
     ),
     Unchecked: feature(
       'State correctness is not checked on main chain',
@@ -123,7 +118,15 @@ export const Features = {
     ),
     Remedied: feature(
       'The mass exit problem is remedied.',
-      'In the event of the operators going rogue most users would like to exit to the main chain. However because of the limitations of the Ethereum blockchain congestion can occur and some people may not be able to exit successfully. There are some remedies in place to help in this situation.'
+      'In the event of the operators going rogue most users would like to exit to the main chain. However because of the limitations of the Ethereum blockchain congestion can occur and some people may not be able to exit successfully. There are some remedies in place to help in this situation.',
+      risk(
+        'Funds can be stolen',
+        'If the chain becomes congested and challenging withdrawals becomes impossible anyone can submit a malicious withdrawal that steals funds.'
+      ),
+      risk(
+        'Funds can be stolen',
+        'If the withdrawal does not get processed in time due to chain congestion the operators can steal funds.'
+      )
     ),
   },
   SourceCode: {
@@ -208,8 +211,7 @@ export const Features = {
     Centralized: feature(
       'State publishing is restricted',
       'Only whitelisted addresses can publish new state on chain.',
-      risk('Censorship', 'User activity can be censored by the operators'),
-      needs('ForceTxs')
+      risk('Censorship', 'User activity can be censored by the operators')
     ),
     Decentralized: feature(
       'State publishing is permissionless',
@@ -233,8 +235,7 @@ export const Features = {
   Generality: {
     Any: feature(
       'Arbitrary use cases are supported',
-      'The system can support any user activity without the need to preprogram code that facilitates it. This includes the ability to run user supplied code.',
-      needs('SmartContracts')
+      'The system can support any user activity without the need to preprogram code that facilitates it. This includes the ability to run user supplied code.'
     ),
     Specific: feature(
       'Only specific use cases are supported',
