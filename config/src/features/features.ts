@@ -83,7 +83,7 @@ export const Features = {
       'Data availability is solved with on-chain data',
       'All data required to construct a merkle proof is published on-chain. Some data can still be off-chain, but it cannot be required for merkle proofs.'
     ),
-    External: feature(
+    OffChain: feature(
       'Data availability requires off-chain data',
       'In order to construct a merkle proof the user needs to obtain off-chain data.',
       risk(
