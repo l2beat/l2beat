@@ -1,3 +1,4 @@
+import { Features, featuresByComparison, Technologies } from '../features'
 import { Project } from './Project'
 
 export const immutablex: Project = {
@@ -61,6 +62,60 @@ export const immutablex: Project = {
         value: 'No',
       },
     ],
+    features: featuresByComparison(Technologies.Validium, [
+      Features.Generality.Specific({
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/overview#system-components',
+        ],
+      }),
+      Features.Withdrawal.Proved({
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-perpetual-trading#escape',
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-spot-trading#escape',
+        ],
+      }),
+      Features.State.ValidityProofs({
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/off-chain-state#enforcing-consistency-on-the-on-chain-state',
+        ],
+      }),
+      Features.Settlement.AfterProof({
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/smart-contracts-1/public-interactions#withdrawal',
+        ],
+      }),
+      Features.Cryptography.STARKS({
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/crypto/stark-curve',
+        ],
+      }),
+      Features.Data.OffChain({
+        pointers: [
+          'https://etherscan.io/address/0x16ba0f221664a5189cf2c1a7af0d3abfc70aa295#code#F1#L63',
+        ],
+      }),
+      Features.SourceCode.Public({
+        pointers: ['https://github.com/starkware-libs/starkex-contracts'],
+      }),
+      Features.Upgradeability.Upgradeable({
+        pointers: [
+          'https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+        ],
+      }),
+      // TODO: Features.Ownership
+      Features.Sequencer.Centralized({
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/smart-contracts-1/contract-management#operator',
+        ],
+      }),
+      Features.ForceTxs.WithdrawalsOnly({
+        description: 'Perpetuals also support forced trade',
+        pointers: [
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-perpetual-trading',
+          'https://docs.starkware.co/starkex-docs-v2/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-spot-trading',
+        ],
+      }),
+    ]),
     news: [
       {
         name: 'Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption',
