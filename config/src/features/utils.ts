@@ -10,15 +10,18 @@ export interface FeatureOptions {
 
 export function feature(name: string, description: string, ...risks: Risk[]) {
   return function (options?: FeatureOptions): Feature {
-    return {
+    const result: Feature = {
       name,
       generalDescription: description,
-      specificDescription: options?.description,
       risks: options?.ignoreDefaultRisks
         ? options.risks ?? []
         : risks.concat(options?.risks ?? []),
       pointers: options?.pointers ?? [],
     }
+    if (options?.description) {
+      result.specificDescription = options.description
+    }
+    return result
   }
 }
 
