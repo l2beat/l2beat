@@ -36,6 +36,8 @@ export interface ProjectDetails {
   }
   /** Project research results */
   parameters: ProjectParameter[]
+  /** Project research results */
+  features?: Feature[]
   /** Links to recent developments */
   news?: News[]
   /** Additional notes */
@@ -45,8 +47,6 @@ export interface ProjectDetails {
     /** Relevant links */
     pointers?: string[]
   }
-  /** Project research results */
-  features?: Feature[]
 }
 
 export interface ProjectParameter {

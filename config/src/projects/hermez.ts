@@ -75,12 +75,6 @@ export const hermez: Project = {
         value: 'No',
       },
     ],
-    news: [
-      {
-        name: 'Hermez Network Mainnet Launch on 4th of March 2021',
-        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
-      },
-    ],
     features: featuresByComparison(Technologies.ZkRollup, [
       Features.Generality.Specific({
         pointers: ['https://docs.hermez.io/#/about/scalability?id=background'],
@@ -136,5 +130,11 @@ export const hermez: Project = {
         ],
       }),
     ]),
+    news: [
+      {
+        name: 'Hermez Network Mainnet Launch on 4th of March 2021',
+        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
+      },
+    ],
   },
 }
