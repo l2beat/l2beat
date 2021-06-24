@@ -17,42 +17,6 @@ export const aztec: Project = {
       name: 'zk-rollup',
       details: 'zk-SNARK/PLONK',
     },
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'Private payments',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        sentiment: 'good',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        value: '?',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        value: '?',
-      },
-      {
-        name: 'Permissionless?',
-        value: '?',
-      },
-      {
-        name: 'Force TX mechanism?',
-        value: '?',
-      },
-      {
-        name: 'Privacy',
-        value: 'Yes',
-      },
-      {
-        name: 'Smart contracts',
-        tooltip: 'Possible in the future (Noir - custom language) ',
-        value: 'No',
-      },
-    ],
     features: featuresByComparison(Technologies.ZkRollup, [
       Features.Generality.Specific({
         pointers: [

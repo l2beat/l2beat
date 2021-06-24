@@ -45,50 +45,6 @@ export const deversifi: Project = {
       name: 'validium',
       details: 'zk-STARK/StarkExchange',
     },
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'DEX',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'bad',
-        value: 'Low',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'neutral',
-        pointers: [
-          'https://etherscan.io/address/0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b#code',
-        ],
-        value: 'Yes, through contract upgrade',
-      },
-      {
-        name: 'Permissionless?',
-        sentiment: 'bad',
-        tooltip: 'Only DeversiFi can produce new blocks',
-        value: 'No',
-      },
-      {
-        name: 'Force TX mechanism?',
-        sentiment: 'good',
-        value: 'Yes but only for withdrawals',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
     features: featuresByComparison(Technologies.Validium, [
       Features.Generality.Specific({
         pointers: [

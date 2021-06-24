@@ -35,7 +35,7 @@ export interface ProjectDetails {
     details?: string
   }
   /** Project research results */
-  parameters: ProjectParameter[]
+  parameters?: ProjectParameter[]
   /** Project research results */
   features?: Feature[]
   /** Links to recent developments */
