@@ -2,7 +2,8 @@ import { BridgeDescription, ProjectDetails } from '@l2beat/config'
 import React from 'react'
 
 import { EtherscanLink } from './EtherscanLink'
-import { Parameter } from './Parameter'
+import { Features } from './Features'
+import { Parameters } from './Parameters'
 import { Pointers } from './Pointers'
 import styles from './styles.module.scss'
 
@@ -14,16 +15,8 @@ interface ProjectDescriptionProps {
 export function ProjectDescription({ metadata, bridges }: ProjectDescriptionProps) {
   return (
     <div className={styles.container}>
-      <dl className={styles.parameters}>
-        <dt>Technology</dt>
-        <dd>
-          <div>{metadata.technology.name}</div>
-          {metadata.technology.details && <div className={styles.details}>{metadata.technology.details}</div>}
-        </dd>
-        {metadata.parameters.map((param, i) => (
-          <Parameter key={i} {...param} />
-        ))}
-      </dl>
+      {metadata.parameters && <Parameters metadata={metadata} />}
+      {metadata.features && <Features metadata={metadata} />}
 
       {metadata.notes && (
         <>

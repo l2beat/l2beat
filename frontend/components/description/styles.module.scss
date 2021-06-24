@@ -73,3 +73,77 @@
   font-size: 14px;
   margin: 0;
 }
+
+.features {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feature {
+  padding: 8px 8px;
+  border-top: 1px solid var(--gray-02);
+
+  &:last-child {
+    border-bottom: 1px solid var(--gray-02);
+  }
+}
+
+.featureHeader {
+  cursor: pointer;
+}
+
+.openIcon {
+  width: 1em;
+  height: 1em;
+  margin-right: 12px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}
+
+.warningIcon {
+  color: #b0a21e;
+  width: 1em;
+  height: 1em;
+  margin-right: 4px;
+  display: inline-block;
+  position: relative;
+  top: 1px;
+}
+
+.wrapper {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.2s;
+}
+
+.wrapped {
+  overflow: auto;
+  padding-top: 8px;
+}
+
+.description,
+.risksTitle {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+}
+
+.links {
+  margin: 0 0 8px 0;
+  padding: 0 0 0 24px;
+  font-size: 0.9rem;
+  list-style-type: disc;
+  color: var(--text-link);
+}
+
+.risks {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  padding: 0 0 0 24px;
+  list-style-type: disc;
+}
+
+.risk {
+  color: #c44412;
+}
