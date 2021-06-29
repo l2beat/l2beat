@@ -55,7 +55,14 @@ function watchStatic() {
 }
 
 function buildMarkup(cb) {
-  return exec('../node_modules/.bin/ts-node src/markup', cb)
+  return exec(
+    '../node_modules/.bin/ts-node src/markup',
+    (err, stdout, stderr) => {
+      stdout && console.log(stdout)
+      stderr && console.error(stderr)
+      cb(err)
+    }
+  )
 }
 
 function watchMarkup() {

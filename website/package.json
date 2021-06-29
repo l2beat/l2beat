@@ -14,6 +14,8 @@
     "start": "gulp watch"
   },
   "devDependencies": {
+    "@l2beat/backend": "0.1.0",
+    "@l2beat/config": "0.1.0",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^15.12.5",
     "@types/react": "^17.0.3",
