@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Project } from '@l2beat/config'
+import { dateRange } from '../utils/dateRange'
+import { SimpleDate } from '../utils/SimpleDate'
 import { IBlockInfo } from './BlockInfo/IBlockInfo'
-import { SimpleDate } from './SimpleDate'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 
 export interface BridgeTVL {
@@ -53,14 +54,4 @@ export class ValueLockedChecker {
     const results = await Promise.all(promises)
     return results.reduce((all, x) => ({ ...all, ...x }), {})
   }
-}
-
-function dateRange(start: SimpleDate, end: SimpleDate) {
-  let current = start
-  const result = []
-  while (current.isBefore(end)) {
-    result.push(current)
-    current = current.addDays(1)
-  }
-  return result
 }

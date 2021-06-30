@@ -1,8 +1,8 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import { BigNumber } from 'ethers'
+import { SimpleDate } from '../utils/SimpleDate'
 import { IBalanceChecker } from './BalanceChecker/IBalanceChecker'
 import { IBlockInfo } from './BlockInfo/IBlockInfo'
-import { SimpleDate } from './SimpleDate'
 
 export class TokenBalanceChecker {
   constructor(

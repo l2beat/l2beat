@@ -7,6 +7,7 @@ import { BlockInfo } from './BlockInfo/BlockInfo'
 import { MockBlockInfo } from './BlockInfo/MockBlockInfo'
 import { CacheFile } from './CacheFile'
 import { getConfig } from './Config'
+import { DailyBlocks } from './DailyBlocks'
 import { Logger } from './Logger'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 import { MockTokenPriceChecker } from './TokenPriceChecker/MockTokenPriceChecker'
@@ -43,7 +44,10 @@ export function setup() {
     ? new MockTokenPriceChecker()
     : new TokenPriceChecker(asyncCache, logger)
 
+  const dailyBlocks = new DailyBlocks(blockInfo)
+
   return {
+    dailyBlocks,
     config,
     asyncCache,
     valueLockedChecker,

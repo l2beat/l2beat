@@ -1,8 +1,8 @@
 import { AlchemyApi } from '../../api/AlchemyApi'
 import { EtherscanApi } from '../../api/EtherscanApi'
+import { SimpleDate } from '../../utils/SimpleDate'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
-import { SimpleDate } from '../SimpleDate'
 import { IBlockInfo } from './IBlockInfo'
 
 export class BlockInfo implements IBlockInfo {
