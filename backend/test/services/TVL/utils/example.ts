@@ -1,5 +1,5 @@
+import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { utils } from 'ethers'
-import { getTokenBySymbol, TokenInfo } from '../../../../../config/build/src'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { FetchedBalances, FetchedPrices } from '../../../../src/services/TVL'
 

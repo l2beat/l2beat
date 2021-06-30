@@ -1,7 +1,6 @@
+import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'chai'
 import { BigNumber, utils } from 'ethers'
-import { getTokenBySymbol, TokenInfo } from '../../../../../config/build/src'
-import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { FetchedBalances, FetchedPrices } from '../../../../src/services/TVL'
 import {
   getHolderAddresses,

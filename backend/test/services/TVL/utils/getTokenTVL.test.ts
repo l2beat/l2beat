@@ -1,6 +1,6 @@
+import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'chai'
 import { utils } from 'ethers'
-import { getTokenBySymbol } from '../../../../../config/build/src'
 import { TokenTVL } from '../../../../src/services/TVL'
 import { TokenStats } from '../../../../src/services/TVL/utils/getTokenStats'
 import { getTokenTVL } from '../../../../src/services/TVL/utils/getTokenTVL'

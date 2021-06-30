@@ -1,5 +1,5 @@
+import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { expect } from 'chai'
-import { getTokenBySymbol, TokenInfo } from '../../../../../config/build/src'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { getHolders } from '../../../../src/services/TVL/utils'
 
