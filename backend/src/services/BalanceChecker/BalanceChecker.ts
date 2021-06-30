@@ -1,6 +1,6 @@
 import { BigNumber, utils } from 'ethers'
-import { AlchemyApi } from '../../api/AlchemyApi'
 import { shortenAddress } from '../../utils'
+import { AlchemyApi } from '../api/AlchemyApi'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
 import { IBalanceChecker } from './IBalanceChecker'

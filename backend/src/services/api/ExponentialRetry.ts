@@ -1,4 +1,4 @@
-import { Logger } from '../services/Logger'
+import { Logger } from '../Logger'
 
 export interface RetryOptions {
   startTimeout: number

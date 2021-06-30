@@ -1,4 +1,4 @@
-import { Logger } from '../services/Logger'
+import { Logger } from '../Logger'
 import { ExponentialRetry } from './ExponentialRetry'
 import { RateLimiter } from './RateLimiter'
 import fetch from 'node-fetch'

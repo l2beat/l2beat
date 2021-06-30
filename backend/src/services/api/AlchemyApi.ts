@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Logger } from '../services/Logger'
+import { Logger } from '../Logger'
 import { ExponentialRetry } from './ExponentialRetry'
 import { RateLimiter } from './RateLimiter'
 

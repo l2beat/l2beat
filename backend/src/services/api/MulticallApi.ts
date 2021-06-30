@@ -1,5 +1,5 @@
 import { utils } from 'ethers'
-import { AsyncCache } from '../services/AsyncCache'
+import { AsyncCache } from '../AsyncCache'
 import { AlchemyApi } from './AlchemyApi'
 
 const MULTICALL_ADDRESS = '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
