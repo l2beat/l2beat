@@ -11,6 +11,7 @@ import {
   getTrackedTokens,
   TokenStats,
 } from '../../../../src/services/TVL/utils/getTokenStats'
+import { makeExampleProjects } from './example'
 
 describe('getTokenStats', () => {
   describe('getHolderAddresses', () => {
@@ -136,55 +137,9 @@ describe('getTokenStats', () => {
   })
 
   it('returns stats for tokens', () => {
-    const eth = getTokenBySymbol('ETH')
-    const dai = getTokenBySymbol('DAI')
-    const usdc = getTokenBySymbol('USDC')
-    const usdt = getTokenBySymbol('USDT')
+    const { eth, dai, usdc, projects, balances, prices } = makeExampleProjects()
 
-    const holderA = '0x' + '1234'.repeat(10)
-    const holderB = '0x' + 'abcd'.repeat(10)
-    const holderC = '0x' + '12ab'.repeat(10)
-
-    const bridge = (address: string, tokens: TokenInfo[]) => ({
-      address,
-      sinceBlock: 1,
-      tokens,
-    })
-
-    const project: ProjectInfo = {
-      name: 'foo',
-      bridges: [bridge(holderA, [eth, dai]), bridge(holderB, [dai, usdc])],
-    }
-
-    const balances: FetchedBalances = {
-      token: {
-        [dai.address!]: {
-          [holderA]: utils.parseUnits('123', dai.decimals),
-          [holderB]: utils.parseUnits('45', dai.decimals),
-        },
-        [usdc.address!]: {
-          [holderB]: utils.parseUnits('20', usdc.decimals),
-          [holderC]: utils.parseUnits('5', usdc.decimals),
-        },
-        [usdt.address!]: {
-          [holderC]: utils.parseUnits('10', usdt.decimals),
-        },
-      },
-      eth: {
-        [holderA]: utils.parseUnits('3', eth.decimals),
-        [holderC]: utils.parseUnits('4', eth.decimals),
-      },
-    }
-
-    const prices: FetchedPrices = {
-      token: {
-        [dai.address!]: utils.parseUnits('1', 18),
-        [usdc.address!]: utils.parseUnits('1.01', 18),
-      },
-      eth: utils.parseUnits('4000', 18),
-    }
-
-    const stats = getTokenStats(project, balances, prices)
+    const stats = getTokenStats(projects[0], balances, prices)
     const expected: TokenStats[] = [
       {
         token: eth,
