@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { BigNumber, utils } from 'ethers'
-import { getTokenBySymbol } from '../../../../../config/build/src'
+import { getTokenBySymbol, TokenInfo } from '../../../../../config/build/src'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { FetchedBalances, FetchedPrices } from '../../../../src/services/TVL'
 import {
@@ -145,18 +145,15 @@ describe('getTokenStats', () => {
     const holderB = '0x' + 'abcd'.repeat(10)
     const holderC = '0x' + '12ab'.repeat(10)
 
-    const bridge = (address: string, tokens: string[]) => ({
+    const bridge = (address: string, tokens: TokenInfo[]) => ({
       address,
       sinceBlock: 1,
-      tokens: tokens.map(getTokenBySymbol),
+      tokens,
     })
 
     const project: ProjectInfo = {
       name: 'foo',
-      bridges: [
-        bridge(holderA, ['ETH', 'DAI']),
-        bridge(holderB, ['DAI', 'USDC']),
-      ],
+      bridges: [bridge(holderA, [eth, dai]), bridge(holderB, [dai, usdc])],
     }
 
     const balances: FetchedBalances = {

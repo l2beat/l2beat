@@ -5,11 +5,11 @@ export function getHolders(projects: ProjectInfo[], blockNumber: number) {
   const ethHolders: string[] = []
   for (const project of projects) {
     for (const bridge of project.bridges) {
-      if (bridge.sinceBlock < blockNumber) {
+      if (bridge.sinceBlock > blockNumber) {
         continue
       }
       for (const token of bridge.tokens) {
-        if (token.sinceBlock < blockNumber) {
+        if (token.sinceBlock > blockNumber) {
           continue
         }
         if (token.address) {
