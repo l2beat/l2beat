@@ -1,5 +1,6 @@
 import { AlchemyApi } from '../api/AlchemyApi'
 import { EtherscanApi } from '../api/EtherscanApi'
+import { MulticallApi } from '../api/MulticallApi'
 import { AsyncCache } from './AsyncCache'
 import { BalanceChecker } from './BalanceChecker/BalanceChecker'
 import { MockBalanceChecker } from './BalanceChecker/MockBalanceChecker'
@@ -26,6 +27,8 @@ export function setup() {
   const cacheFile = new CacheFile()
   const asyncCache = new AsyncCache(cacheFile)
 
+  const multicallApi = new MulticallApi(alchemyApi, asyncCache)
+
   const blockInfo = config.mock
     ? new MockBlockInfo()
     : new BlockInfo(alchemyApi, etherscanApi, asyncCache, logger)
@@ -47,6 +50,7 @@ export function setup() {
   const dailyBlocks = new DailyBlocks(blockInfo)
 
   return {
+    multicallApi,
     dailyBlocks,
     config,
     asyncCache,

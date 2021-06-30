@@ -28,6 +28,37 @@ export class AsyncCache {
     }
   }
 
+  has(key: Key[]): boolean {
+    const keyString = key.toString()
+    return this.cache.has(keyString)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async get<T>(key: Key[], fromJSON: (v: any) => T): Promise<T | undefined> {
+    const cached = this.cache.get(key.toString())
+    if (cached) {
+      const resolved = await cached
+      resolved.accessed = true
+      if (!resolved.isDeserialized) {
+        resolved.isDeserialized = true
+        resolved.value = fromJSON(resolved.serialized)
+      }
+      return resolved.value as T
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  set<T>(key: Key[], value: T, toJSON: (t: T) => any) {
+    const entry: CacheEntry = {
+      isDeserialized: true,
+      accessed: true,
+      value,
+      serialized: toJSON(value),
+    }
+    this.cache.set(key.toString(), entry)
+    this.flush()
+  }
+
   async getOrFetch<T>(key: Key[], fetch: () => Promise<T>): Promise<T>
   async getOrFetch<T, U>(
     key: Key[],
