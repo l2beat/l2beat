@@ -1,0 +1,31 @@
+import { expect } from 'chai'
+import { utils } from 'ethers'
+import { getTokenBySymbol } from '../../../../../config/build/src'
+import { TokenTVL } from '../../../../src/services/TVL'
+import { TokenStats } from '../../../../src/services/TVL/utils/getTokenStats'
+import { getTokenTVL } from '../../../../src/services/TVL/utils/getTokenTVL'
+
+describe('getTokenTVL', () => {
+  it('returns the transformed token stats', () => {
+    const eth = getTokenBySymbol('ETH')
+    const usdc = getTokenBySymbol('USDC')
+    const stats: TokenStats[] = [
+      {
+        token: eth,
+        balance: utils.parseUnits('10', eth.decimals),
+        value: utils.parseUnits('40000', 18),
+      },
+      {
+        token: usdc,
+        balance: utils.parseUnits('100', usdc.decimals),
+        value: utils.parseUnits('100', 18),
+      },
+    ]
+    const tvl = getTokenTVL(stats)
+    const expected: Record<string, TokenTVL> = {
+      ETH: { balance: 10, usd: 40_000 },
+      USDC: { balance: 100, usd: 100 },
+    }
+    expect(tvl).to.deep.equal(expected)
+  })
+})
