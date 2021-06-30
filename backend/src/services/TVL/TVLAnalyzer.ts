@@ -1,15 +1,18 @@
-import { Project } from '@l2beat/config'
 import { BigNumber } from 'ethers'
+import { ProjectInfo } from '../../model/ProjectInfo'
+import { FetchedBalances, FetchedPrices, TVLAnalysis } from './model'
 import {
   getAggregateTVL,
   getHolders,
   getProjectStats,
   getProjectTVL,
 } from './utils'
-import { FetchedBalances, FetchedPrices, TVLAnalysis } from './model'
 
 export class TVLAnalyzer {
-  async getTVL(projects: Project[], blockNumber: number): Promise<TVLAnalysis> {
+  async getTVL(
+    projects: ProjectInfo[],
+    blockNumber: number
+  ): Promise<TVLAnalysis> {
     const { tokenHolders, ethHolders } = getHolders(projects, blockNumber)
     const { balances, prices } = await this.fetchBalancesAndPrices(
       tokenHolders,
