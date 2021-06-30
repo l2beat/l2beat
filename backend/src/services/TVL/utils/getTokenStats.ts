@@ -26,15 +26,18 @@ export function getTokenStats(
   })
   return stats
 }
-function getHolderAddresses(project: ProjectInfo) {
+
+export function getHolderAddresses(project: ProjectInfo) {
   return project.bridges.map((bridge) => bridge.address)
 }
-function getTrackedTokens(project: ProjectInfo) {
+
+export function getTrackedTokens(project: ProjectInfo) {
   return project.bridges
     .flatMap((bridge) => bridge.tokens)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
-function getTokenBalance(
+
+export function getTokenBalance(
   holders: string[],
   token: TokenInfo,
   balances: FetchedBalances
@@ -50,7 +53,8 @@ function getTokenBalance(
   }
   return balance
 }
-function getTokenPrice(token: TokenInfo, prices: FetchedPrices) {
+
+export function getTokenPrice(token: TokenInfo, prices: FetchedPrices) {
   return token.address
     ? prices.token[token.address] ?? BigNumber.from(0)
     : prices.eth
