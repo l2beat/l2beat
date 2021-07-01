@@ -1,4 +1,4 @@
-import { SimpleDate } from '../../model/SimpleDate'
+import { SimpleDate } from '../../model'
 import { IBlockInfo } from './IBlockInfo'
 
 const REFERENCE_TIMESTAMP = 1623153999

@@ -1,6 +1,6 @@
 import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { expect } from 'chai'
-import { ProjectInfo } from '../../../../src/model/ProjectInfo'
+import { ProjectInfo } from '../../../../src/model'
 import { getHolders } from '../../../../src/services/TVL/utils'
 
 describe('getHolders', () => {

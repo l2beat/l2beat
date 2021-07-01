@@ -1,6 +1,6 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import { BigNumber } from 'ethers'
-import { SimpleDate } from '../model/SimpleDate'
+import { SimpleDate } from '../model'
 import { IBalanceChecker } from './BalanceChecker/IBalanceChecker'
 import { IBlockInfo } from './BlockInfo/IBlockInfo'
 

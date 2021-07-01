@@ -1,4 +1,4 @@
-import { SimpleDate } from '../../model/SimpleDate'
+import { SimpleDate } from '../../model'
 import { ITokenPriceChecker } from './ITokenPriceChecker'
 
 export class MockTokenPriceChecker implements ITokenPriceChecker {

@@ -1,4 +1,4 @@
-import { SimpleDate } from '../model/SimpleDate'
+import { SimpleDate } from '../model'
 import { ITokenPriceChecker } from '../services/TokenPriceChecker/ITokenPriceChecker'
 import { ProjectTVL } from './getProjectTVLs'
 

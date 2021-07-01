@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { TEN_TO_18 } from '../../../constants'
-import { ProjectInfo } from '../../../model/ProjectInfo'
+import { ProjectInfo } from '../../../model'
 import { divOrZero } from '../../../utils'
 import { FetchedBalances, FetchedPrices, TokenTVL } from '../model'
 import { getTokenStats } from './getTokenStats'

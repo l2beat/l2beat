@@ -1,5 +1,5 @@
 import { projects, tokenList } from '@l2beat/config'
-import { projectToInfo } from './model/ProjectInfo'
+import { projectToInfo } from './model'
 import { setup } from './services'
 
 main().catch((e) => {

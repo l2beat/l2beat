@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { SimpleDate } from '../../src/model/SimpleDate'
+import { SimpleDate } from '../../src/model'
 
 describe('SimpleDate', () => {
   it('can be created from string', () => {

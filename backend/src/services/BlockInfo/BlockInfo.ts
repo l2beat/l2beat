@@ -1,4 +1,4 @@
-import { SimpleDate } from '../../model/SimpleDate'
+import { SimpleDate } from '../../model'
 import { AlchemyApi } from '../api/AlchemyApi'
 import { EtherscanApi } from '../api/EtherscanApi'
 import { AsyncCache } from '../AsyncCache'
