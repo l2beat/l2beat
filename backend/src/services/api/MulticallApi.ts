@@ -12,12 +12,12 @@ const MULTICALL_ABI = new utils.Interface([
   )`,
 ])
 
-interface MulticallRequest {
+export interface MulticallRequest {
   address: string
   data: string
 }
 
-interface MulticallResponse {
+export interface MulticallResponse {
   success: boolean
   data: string
 }
