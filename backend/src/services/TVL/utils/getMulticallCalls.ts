@@ -1,7 +1,12 @@
-import { DAI, MULTICALL, USDC, USDT, WETH } from '../../../constants'
-import { MulticallRequest } from '../../api/MulticallApi'
+import { DAI, USDC, USDT, WETH } from '../../../constants'
+import { MulticallRequest } from '../../multicall/MulticallApi'
 import { ExchangeInfo } from '../../ExchangeAddresses'
-import { coder } from './coder'
+import {
+  EthBalanceCall,
+  TokenBalanceCall,
+  UniV2ReservesCall,
+  UniV3PriceCall,
+} from '../../multicall'
 
 export function getMulticallCalls(
   tokenHolders: Record<string, string[]>,
@@ -22,7 +27,10 @@ function addTokenHolders(
 ) {
   for (const [token, holders] of Object.entries(tokenHolders)) {
     for (const holder of holders) {
-      requests[`token-${token}-${holder}`] = balanceOf(token, holder)
+      requests[`token-${token}-${holder}`] = TokenBalanceCall.encode(
+        token,
+        holder
+      )
     }
   }
 }
@@ -32,7 +40,7 @@ function addEthHolders(
   ethHolders: string[]
 ) {
   for (const holder of ethHolders) {
-    requests[`eth-${holder}`] = ethBalanceOf(holder)
+    requests[`eth-${holder}`] = EthBalanceCall.encode(holder)
   }
 }
 
@@ -43,9 +51,9 @@ function addDaiExchanges(
   if (!exchange || !exchange.uniV1) {
     throw new Error('Missing DAI exchange information')
   }
-  requests[`uniV1-token-${DAI}`] = balanceOf(DAI, exchange.uniV1)
-  requests[`uniV1-eth-${DAI}`] = ethBalanceOf(exchange.uniV1)
-  requests[`uniV2Weth-${DAI}`] = reservesOf(exchange.uniV2Weth)
+  requests[`uniV1-token-${DAI}`] = TokenBalanceCall.encode(DAI, exchange.uniV1)
+  requests[`uniV1-eth-${DAI}`] = EthBalanceCall.encode(exchange.uniV1)
+  requests[`uniV2Weth-${DAI}`] = UniV2ReservesCall.encode(exchange.uniV2Weth)
 }
 
 const IGNORED_TOKENS = [DAI, WETH, USDC, USDT]
@@ -61,48 +69,34 @@ export function addTokenExchanges(
     if (!IGNORED_TOKENS.includes(token)) {
       const exchange = exchanges[token]
       if (exchange.uniV1) {
-        requests[`uniV1-token-${token}`] = balanceOf(token, exchange.uniV1)
-        requests[`uniV1-eth-${token}`] = ethBalanceOf(exchange.uniV1)
+        requests[`uniV1-token-${token}`] = TokenBalanceCall.encode(
+          token,
+          exchange.uniV1
+        )
+        requests[`uniV1-eth-${token}`] = EthBalanceCall.encode(exchange.uniV1)
       }
-      requests[`uniV2Weth-${token}`] = reservesOf(exchange.uniV2Weth)
-      requests[`uniV2Usdc-${token}`] = reservesOf(exchange.uniV2Usdc)
-      requests[`uniV2Usdt-${token}`] = reservesOf(exchange.uniV2Usdt)
+      requests[`uniV2Weth-${token}`] = UniV2ReservesCall.encode(
+        exchange.uniV2Weth
+      )
+      requests[`uniV2Usdc-${token}`] = UniV2ReservesCall.encode(
+        exchange.uniV2Usdc
+      )
+      requests[`uniV2Usdt-${token}`] = UniV2ReservesCall.encode(
+        exchange.uniV2Usdt
+      )
 
       for (const type of V3_EXCHANGES) {
         for (const fee of V3_FEES) {
           const key = `${type}${fee}` as const
-          requests[`${key}-token-${token}`] = balanceOf(token, exchange[key])
-          requests[`${key}-slot0-${token}`] = slot0Of(exchange[key])
+          requests[`${key}-token-${token}`] = TokenBalanceCall.encode(
+            token,
+            exchange[key]
+          )
+          requests[`${key}-slot0-${token}`] = UniV3PriceCall.encode(
+            exchange[key]
+          )
         }
       }
     }
-  }
-}
-
-export function balanceOf(token: string, holder: string): MulticallRequest {
-  return {
-    address: token,
-    data: coder.encodeFunctionData('balanceOf', [holder]),
-  }
-}
-
-export function ethBalanceOf(holder: string): MulticallRequest {
-  return {
-    address: MULTICALL,
-    data: coder.encodeFunctionData('getEthBalance', [holder]),
-  }
-}
-
-export function reservesOf(pair: string): MulticallRequest {
-  return {
-    address: pair,
-    data: coder.encodeFunctionData('getReserves', []),
-  }
-}
-
-export function slot0Of(pool: string): MulticallRequest {
-  return {
-    address: pool,
-    data: coder.encodeFunctionData('slot0', []),
   }
 }

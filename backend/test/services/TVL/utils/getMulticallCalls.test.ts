@@ -2,14 +2,16 @@ import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'chai'
 import { constants } from 'ethers'
 import { DAI } from '../../../../src/constants'
-import { MulticallRequest } from '../../../../src/services/api/MulticallApi'
 import { ExchangeInfo } from '../../../../src/services/ExchangeAddresses'
 import {
+  EthBalanceCall,
+  TokenBalanceCall,
+  UniV2ReservesCall,
+} from '../../../../src/services/multicall'
+import { MulticallRequest } from '../../../../src/services/multicall/MulticallApi'
+import {
   addTokenExchanges,
-  balanceOf,
-  ethBalanceOf,
   getMulticallCalls,
-  reservesOf,
 } from '../../../../src/services/TVL/utils/getMulticallCalls'
 
 describe('getMulticallCalls', () => {
@@ -43,14 +45,26 @@ describe('getMulticallCalls', () => {
 
     const calls = getMulticallCalls(tokenHolders, ethHolders, exchanges)
     const expected: Record<string, MulticallRequest> = {
-      [`token-${usdc.address}-${holderA}`]: balanceOf(usdc.address!, holderA),
-      [`token-${usdc.address}-${holderB}`]: balanceOf(usdc.address!, holderB),
-      [`token-${mkr.address}-${holderC}`]: balanceOf(mkr.address!, holderC),
-      [`eth-${holderA}`]: ethBalanceOf(holderA),
-      [`eth-${holderC}`]: ethBalanceOf(holderC),
-      [`uniV1-token-${DAI}`]: balanceOf(DAI, exchanges[DAI].uniV1!),
-      [`uniV1-eth-${DAI}`]: ethBalanceOf(exchanges[DAI].uniV1!),
-      [`uniV2Weth-${DAI}`]: reservesOf(exchanges[DAI].uniV2Weth),
+      [`token-${usdc.address}-${holderA}`]: TokenBalanceCall.encode(
+        usdc.address!,
+        holderA
+      ),
+      [`token-${usdc.address}-${holderB}`]: TokenBalanceCall.encode(
+        usdc.address!,
+        holderB
+      ),
+      [`token-${mkr.address}-${holderC}`]: TokenBalanceCall.encode(
+        mkr.address!,
+        holderC
+      ),
+      [`eth-${holderA}`]: EthBalanceCall.encode(holderA),
+      [`eth-${holderC}`]: EthBalanceCall.encode(holderC),
+      [`uniV1-token-${DAI}`]: TokenBalanceCall.encode(
+        DAI,
+        exchanges[DAI].uniV1!
+      ),
+      [`uniV1-eth-${DAI}`]: EthBalanceCall.encode(exchanges[DAI].uniV1!),
+      [`uniV2Weth-${DAI}`]: UniV2ReservesCall.encode(exchanges[DAI].uniV2Weth),
     }
     addTokenExchanges(expected, [usdc.address!, mkr.address!], exchanges)
     expect(calls).to.deep.equal(expected)

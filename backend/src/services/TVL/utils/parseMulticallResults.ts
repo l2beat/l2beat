@@ -1,7 +1,12 @@
 import { BigNumber } from 'ethers'
 import { DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
-import { MulticallResponse } from '../../api/MulticallApi'
-import { coder } from './coder'
+import { divOrZero, tokenIsBefore } from '../../../utils'
+import {
+  EthBalanceCall,
+  TokenBalanceCall,
+  UniV2ReservesCall,
+} from '../../multicall'
+import { MulticallResponse } from '../../multicall/MulticallApi'
 
 export function parseMulticallResults(
   results: Record<string, MulticallResponse>
@@ -27,7 +32,7 @@ function parseTokenBalances(results: Record<string, MulticallResponse>) {
   for (const [key, result] of Object.entries(results)) {
     if (key.startsWith('token-')) {
       const [, token, holder] = key.split('-')
-      const balance = coder.decodeFunctionResult('balanceOf', result.data)[0]
+      const balance = TokenBalanceCall.decodeOrZero(result)
       const balances = tokenBalances[token] ?? {}
       tokenBalances[token] = balances
       balances[holder] = balance
@@ -41,10 +46,7 @@ function parseEthBalances(results: Record<string, MulticallResponse>) {
   for (const [key, result] of Object.entries(results)) {
     if (key.startsWith('eth-')) {
       const [, holder] = key.split('-')
-      const balance = coder.decodeFunctionResult(
-        'getEthBalance',
-        result.data
-      )[0]
+      const balance = EthBalanceCall.decodeOrZero(result)
       ethBalances[holder] = balance
     }
   }
@@ -52,23 +54,12 @@ function parseEthBalances(results: Record<string, MulticallResponse>) {
 }
 
 function parseEthPrice(results: Record<string, MulticallResponse>) {
-  const v1Dai: BigNumber = coder.decodeFunctionResult(
-    'balanceOf',
-    results[`uniV1-token-${DAI}`].data
-  )[0]
-  const v1Eth: BigNumber = coder.decodeFunctionResult(
-    'getEthBalance',
-    results[`uniV1-eth-${DAI}`].data
-  )[0]
-  const reserveResult = results[`uniV2Weth-${DAI}`]
-  const reserves = reserveResult.success
-    ? coder.decodeFunctionResult('getReserves', reserveResult.data)
-    : [BigNumber.from(0), BigNumber.from(0)]
-  const v2Dai: BigNumber = reserves[0]
-  const v2Weth: BigNumber = reserves[1]
-
+  const v1Dai = TokenBalanceCall.decodeOrZero(results[`uniV1-token-${DAI}`])
+  const v1Eth = EthBalanceCall.decodeOrZero(results[`uniV1-eth-${DAI}`])
+  const reservesResponse = results[`uniV2Weth-${DAI}`]
+  const [v2Dai, v2Weth] = UniV2ReservesCall.decodeOrZero(reservesResponse)
   const [dai, eth] = v1Eth.gt(v2Weth) ? [v1Dai, v1Eth] : [v2Dai, v2Weth]
-  return eth.eq(0) ? BigNumber.from(0) : dai.mul(TEN_TO_18).div(eth)
+  return divOrZero(dai.mul(TEN_TO_18), eth)
 }
 
 interface ExchangePrice {
@@ -117,15 +108,12 @@ function getV1Price(
   ethPrice: BigNumber,
   token: string
 ): ExchangePrice {
-  const tokenBalance = decodeBalanceOf(results[`uniV1-token-${token}`])
-  const ethBalance = decodeEthBalanceOf(results[`uniV1-token-${token}`])
-  if (tokenBalance && ethBalance) {
-    const price = tokenBalance.eq(0)
-      ? BigNumber.from(0)
-      : ethBalance.mul(ethPrice).div(tokenBalance)
-    return { liquidity: tokenBalance, price }
-  }
-  return { liquidity: BigNumber.from(0), price: BigNumber.from(0) }
+  const tokenBalanceResponse = results[`uniV1-token-${token}`]
+  const tokenBalance = TokenBalanceCall.decodeOrZero(tokenBalanceResponse)
+  const ethBalanceResponse = results[`uniV1-token-${token}`]
+  const ethBalance = EthBalanceCall.decodeOrZero(ethBalanceResponse)
+  const price = divOrZero(ethBalance.mul(ethPrice), tokenBalance)
+  return { liquidity: tokenBalance, price }
 }
 
 function getV2Price(
@@ -135,42 +123,12 @@ function getV2Price(
   otherPrice: BigNumber,
   token: string
 ) {
-  const reserves = decodeReservesOf(results[`uniV2${otherName}-${token}`])
-  if (!reserves) {
-    return { liquidity: BigNumber.from(0), price: BigNumber.from(0) }
-  }
-  // TODO: use common functions
-  if (otherAddress.toLowerCase() > token.toLowerCase()) {
+  const reservesResponse = results[`uniV2${otherName}-${token}`]
+  const reserves = UniV2ReservesCall.decodeOrZero(reservesResponse)
+  if (!tokenIsBefore(token, otherAddress)) {
     reserves?.reverse()
   }
   const [tokenBalance, otherBalance] = reserves
-  const price = tokenBalance.eq(0)
-    ? BigNumber.from(0)
-    : tokenBalance.mul(otherPrice).div(otherBalance)
+  const price = divOrZero(tokenBalance.mul(otherPrice), otherBalance)
   return { liquidity: tokenBalance, price }
-}
-
-function decodeBalanceOf(result: MulticallResponse | undefined) {
-  if (!result || !result.success) {
-    return
-  }
-  return coder.decodeFunctionResult('balanceOf', result.data)[0] as BigNumber
-}
-
-function decodeEthBalanceOf(result: MulticallResponse | undefined) {
-  if (!result || !result.success) {
-    return
-  }
-  return coder.decodeFunctionResult(
-    'getEthBalance',
-    result.data
-  )[0] as BigNumber
-}
-
-function decodeReservesOf(result: MulticallResponse | undefined) {
-  if (!result || !result.success) {
-    return
-  }
-  const decoded = coder.decodeFunctionResult('getReserves', result.data)
-  return [decoded[0], decoded[1]] as [BigNumber, BigNumber]
 }

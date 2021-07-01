@@ -1,6 +1,7 @@
 import { BigNumber } from 'ethers'
 import { TEN_TO_18 } from '../../../constants'
 import { ProjectInfo } from '../../../model/ProjectInfo'
+import { divOrZero } from '../../../utils'
 import { FetchedBalances, FetchedPrices, TokenTVL } from '../model'
 import { getTokenStats } from './getTokenStats'
 import { getTokenTVL } from './getTokenTVL'
@@ -23,9 +24,10 @@ export function getProjectStats(
     const projectUsdBalance = tokenStats
       .map((x) => x.value)
       .reduce((a, b) => a.add(b), BigNumber.from(0))
-    const projectEthBalance = prices.eth.eq(0)
-      ? BigNumber.from(0)
-      : projectUsdBalance.mul(TEN_TO_18).div(prices.eth)
+    const projectEthBalance = divOrZero(
+      projectUsdBalance.mul(TEN_TO_18),
+      prices.eth
+    )
     return {
       project,
       tokenTVL,

@@ -2,7 +2,6 @@ import { constants, utils } from 'ethers'
 import { AbiCoder } from 'ethers/lib/utils'
 import { TokenInfo } from '../../../config/build/src'
 import {
-  UNISWAP_V1_FACTORY,
   UNISWAP_V1_SNAPSHOT_BLOCK,
   UNISWAP_V2_CODE_HASH,
   UNISWAP_V2_FACTORY,
@@ -12,12 +11,11 @@ import {
   USDT,
   WETH,
 } from '../constants'
-import { MulticallApi, MulticallRequest } from './api/MulticallApi'
+import { tokensInOrder } from '../utils'
+import { UniV1ExchangeCall } from './multicall'
+import { MulticallApi, MulticallRequest } from './multicall/MulticallApi'
 
 export interface ExchangeInfo {
-  isBeforeWeth: boolean
-  isBeforeUsdc: boolean
-  isBeforeUsdt: boolean
   uniV1: string | undefined
   uniV2Weth: string
   uniV2Usdc: string
@@ -45,9 +43,6 @@ export class ExchangeAddresses {
         continue
       }
       exchanges[address] = {
-        isBeforeWeth: isBefore(address, WETH),
-        isBeforeUsdc: isBefore(address, USDC),
-        isBeforeUsdt: isBefore(address, USDT),
         uniV1: v1Addresses[address],
         uniV2Weth: getUniswapV2PairAddress(address, WETH),
         uniV2Usdc: getUniswapV2PairAddress(address, USDC),
@@ -70,7 +65,7 @@ export class ExchangeAddresses {
     const requests: Record<string, MulticallRequest> = {}
     for (const token of tokens) {
       if (token.address) {
-        requests[token.address] = getUniswapV1ExchangeAddress(token.address)
+        requests[token.address] = UniV1ExchangeCall.encode(token.address)
       }
     }
     const responses = await this.multicallApi.multicall(
@@ -79,29 +74,12 @@ export class ExchangeAddresses {
     )
     const addresses: Record<string, string> = {}
     for (const [token, result] of Object.entries(responses)) {
-      if (result.success) {
-        const exchange = parseV1ExchangeAddress(result.data)
-        if (exchange !== constants.AddressZero) {
-          addresses[token] = exchange
-        }
+      const exchange = UniV1ExchangeCall.decodeOrZero(result)
+      if (exchange !== constants.AddressZero) {
+        addresses[token] = exchange
       }
     }
     return addresses
-  }
-}
-
-const coder = new utils.Interface([
-  'function getExchange(address token) view returns (address)',
-])
-
-export function parseV1ExchangeAddress(data: string) {
-  return coder.decodeFunctionResult('getExchange', data)[0]
-}
-
-export function getUniswapV1ExchangeAddress(token: string): MulticallRequest {
-  return {
-    address: UNISWAP_V1_FACTORY,
-    data: coder.encodeFunctionData('getExchange', [token]),
   }
 }
 
@@ -109,7 +87,7 @@ export function getUniswapV2PairAddress(
   tokenA: string,
   tokenB: string
 ): string {
-  const [token0, token1] = inOrder(tokenA, tokenB)
+  const [token0, token1] = tokensInOrder(tokenA, tokenB)
   return utils.getCreate2Address(
     UNISWAP_V2_FACTORY,
     utils.solidityKeccak256(
@@ -125,7 +103,7 @@ export function getUniswapV3PoolAddress(
   tokenB: string,
   fee: 500 | 3000 | 10000
 ): string {
-  const [token0, token1] = inOrder(tokenA, tokenB)
+  const [token0, token1] = tokensInOrder(tokenA, tokenB)
   return utils.getCreate2Address(
     UNISWAP_V3_FACTORY,
     utils.solidityKeccak256(
@@ -139,12 +117,4 @@ export function getUniswapV3PoolAddress(
     ),
     UNISWAP_V3_CODE_HASH
   )
-}
-
-function isBefore(tokenA: string, tokenB: string) {
-  return tokenA.toLowerCase() < tokenB.toLowerCase()
-}
-
-function inOrder(tokenA: string, tokenB: string): [string, string] {
-  return isBefore(tokenA, tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
 }

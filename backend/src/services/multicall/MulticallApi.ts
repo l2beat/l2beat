@@ -1,12 +1,8 @@
-import { utils } from 'ethers'
 import { MULTICALL } from '../../constants'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
-import { AlchemyApi } from './AlchemyApi'
-
-const MULTICALL_ABI = new utils.Interface([
-  `function aggregate(tuple(address target, bytes callData)[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData)`,
-])
+import { AlchemyApi } from '../api/AlchemyApi'
+import { AggregateMulticall } from './calls'
 
 export interface MulticallRequest {
   address: string
@@ -70,9 +66,7 @@ export class MulticallApi {
     batchId: string,
     blockNumber: number
   ) {
-    const callData = MULTICALL_ABI.encodeFunctionData('aggregate', [
-      requests.map((request) => [request.address, request.data]),
-    ])
+    const callData = AggregateMulticall.encode(requests)
     const returnData = await this.alchemyApi.call(
       MULTICALL,
       callData,
@@ -81,8 +75,7 @@ export class MulticallApi {
     this.logger.log(
       `fetched batch ${batchId} (${requests.length} calls) @ ${blockNumber}`
     )
-    const decoded = MULTICALL_ABI.decodeFunctionResult('aggregate', returnData)
-    const result: string[] = decoded[1]
+    const result = AggregateMulticall.decode(returnData)
     for (const [i, request] of requests.entries()) {
       this.asyncCache.set(
         ['multicall', blockNumber, request.address, request.data],

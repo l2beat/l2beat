@@ -1,5 +1,5 @@
 import { ProjectInfo } from '../../model/ProjectInfo'
-import { MulticallApi } from '../api/MulticallApi'
+import { MulticallApi } from '../multicall/MulticallApi'
 import { ExchangeInfo } from '../ExchangeAddresses'
 import { FetchedBalances, FetchedPrices, TVLAnalysis } from './model'
 import {
