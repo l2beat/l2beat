@@ -23,7 +23,9 @@ export function getProjectStats(
     const projectUsdBalance = tokenStats
       .map((x) => x.value)
       .reduce((a, b) => a.add(b), BigNumber.from(0))
-    const projectEthBalance = projectUsdBalance.mul(TEN_TO_18).div(prices.eth)
+    const projectEthBalance = prices.eth.eq(0)
+      ? BigNumber.from(0)
+      : projectUsdBalance.mul(TEN_TO_18).div(prices.eth)
     return {
       project,
       tokenTVL,

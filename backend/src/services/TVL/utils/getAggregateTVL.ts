@@ -11,7 +11,9 @@ export function getAggregateTVL(
   const totalUsdBalance = projectStats
     .map((x) => x.usdBalance)
     .reduce((a, b) => a.add(b), BigNumber.from(0))
-  const totalEthBalance = totalUsdBalance.mul(TEN_TO_18).div(prices.eth)
+  const totalEthBalance = prices.eth.eq(0)
+    ? BigNumber.from(0)
+    : totalUsdBalance.mul(TEN_TO_18).div(prices.eth)
   const TVL = {
     usd: asNumber(totalUsdBalance, 18, 2),
     eth: asNumber(totalEthBalance, 18, 6),

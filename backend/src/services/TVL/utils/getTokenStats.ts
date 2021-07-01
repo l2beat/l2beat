@@ -1,5 +1,6 @@
 import { TokenInfo } from '@l2beat/config'
 import { BigNumber } from 'ethers'
+import { TEN_TO_18 } from '../../../constants'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { FetchedBalances, FetchedPrices } from '../model'
 
@@ -20,7 +21,7 @@ export function getTokenStats(
   const stats = tokens.map((token) => {
     const balance = getTokenBalance(holders, token, balances)
     const price = getTokenPrice(token, prices)
-    const value = balance.mul(price).div(BigNumber.from(10).pow(token.decimals))
+    const value = balance.mul(price).div(TEN_TO_18)
     return { token, balance, value }
   })
   return stats
