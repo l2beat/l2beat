@@ -1,9 +1,9 @@
 import { BigNumber } from 'ethers'
+import { TEN_TO_18 } from '../../../constants'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { FetchedBalances, FetchedPrices, TokenTVL } from '../model'
-import { TEN_TO_18 } from './constants'
-import { getTokenTVL } from './getTokenTVL'
 import { getTokenStats } from './getTokenStats'
+import { getTokenTVL } from './getTokenTVL'
 
 export interface ProjectStats {
   project: ProjectInfo

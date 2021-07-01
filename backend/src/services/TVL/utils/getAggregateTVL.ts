@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
+import { TEN_TO_18 } from '../../../constants'
 import { FetchedPrices } from '../model'
 import { asNumber } from './asNumber'
 import { ProjectStats } from './getProjectStats'
-import { TEN_TO_18 } from './constants'
 
 export function getAggregateTVL(
   projectStats: ProjectStats[],

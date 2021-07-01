@@ -1,6 +1,6 @@
+import { MULTICALL } from '../../../constants'
 import { MulticallRequest } from '../../api/MulticallApi'
 import { coder } from './coder'
-import { MULTICALL_ADDRESS } from './constants'
 
 export function getMulticallCalls(
   tokenHolders: Record<string, string[]>,
@@ -27,7 +27,7 @@ export function balanceOf(token: string, holder: string): MulticallRequest {
 
 export function ethBalanceOf(holder: string): MulticallRequest {
   return {
-    address: MULTICALL_ADDRESS,
+    address: MULTICALL,
     data: coder.encodeFunctionData('getEthBalance', [holder]),
   }
 }

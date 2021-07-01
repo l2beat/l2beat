@@ -1,8 +1,8 @@
 import { utils } from 'ethers'
+import { MULTICALL } from '../../constants'
 import { AsyncCache } from '../AsyncCache'
 import { AlchemyApi } from './AlchemyApi'
 
-const MULTICALL_ADDRESS = '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
 const MULTICALL_ABI = new utils.Interface([
   `function tryAggregate(
     bool requireSuccess,
@@ -47,7 +47,7 @@ export class MulticallApi {
       unknown.map(([, request]) => [request.address, request.data]),
     ])
     const returnData = await this.alchemyApi.call(
-      MULTICALL_ADDRESS,
+      MULTICALL,
       callData,
       blockNumber
     )
