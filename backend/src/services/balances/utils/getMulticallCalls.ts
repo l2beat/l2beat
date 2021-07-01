@@ -92,7 +92,7 @@ export function addTokenExchanges(
             token,
             exchange[key]
           )
-          requests[`${key}-slot0-${token}`] = UniV3PriceCall.encode(
+          requests[`${key}-price-${token}`] = UniV3PriceCall.encode(
             exchange[key]
           )
         }

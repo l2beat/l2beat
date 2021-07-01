@@ -6,7 +6,10 @@ import {
   MulticallResponse,
   TokenBalanceCall,
   UniV2ReservesCall,
+  UniV3PriceCall,
 } from '../../multicall'
+
+const STABLECOIN_PRICE = BigNumber.from(10).pow(18 * 2 - 6)
 
 export function parseMulticallResults(
   results: Record<string, MulticallResponse>
@@ -69,38 +72,62 @@ interface ExchangePrice {
 
 type PartialResults = Record<string, MulticallResponse | undefined>
 
-const KNOWN_TOKENS = [WETH, DAI, USDC, USDT]
 function parseTokenPrices(results: PartialResults, ethPrice: BigNumber) {
-  const tokens = Object.keys(results)
+  const tokens = getUniqueNonDefaultTokens(results)
+  const tokenPrices = defaultTokenPrices(ethPrice)
+  for (const token of tokens) {
+    const prices = getPrices(results, ethPrice, token)
+    tokenPrices[token] = getBestPrice(prices)
+  }
+  return tokenPrices
+}
+
+const KNOWN_TOKENS = [WETH, DAI, USDC, USDT]
+function getUniqueNonDefaultTokens(results: PartialResults) {
+  return Object.keys(results)
     .filter((key) => key.startsWith('token-'))
     .map((key) => key.split('-')[1])
     .filter((x, i, a) => a.indexOf(x) === i && !KNOWN_TOKENS.includes(x))
+}
 
+function defaultTokenPrices(ethPrice: BigNumber) {
   const tokenPrices: Record<string, BigNumber> = {}
   tokenPrices[WETH] = ethPrice
   tokenPrices[DAI] = TEN_TO_18
-  const stableCoinPrice = BigNumber.from(10).pow(18 * 2 - 6)
-  tokenPrices[USDC] = stableCoinPrice
-  tokenPrices[USDT] = stableCoinPrice
-
-  const pairs: [string, string, BigNumber][] = [
-    ['Weth', WETH, ethPrice],
-    ['Usdc', USDC, stableCoinPrice],
-    ['Usdt', USDT, stableCoinPrice],
-  ]
-
-  for (const token of tokens) {
-    const prices: ExchangePrice[] = []
-    prices.push(getV1Price(results, ethPrice, token))
-    for (const [name, address, price] of pairs) {
-      prices.push(getV2Price(results, name, address, price, token))
-    }
-    const bestPrice = prices.reduce((a, b) =>
-      a.liquidity.gt(b.liquidity) ? a : b
-    )
-    tokenPrices[token] = bestPrice.price
-  }
+  tokenPrices[USDC] = STABLECOIN_PRICE
+  tokenPrices[USDT] = STABLECOIN_PRICE
   return tokenPrices
+}
+
+interface Pair {
+  name: string
+  other: string
+  otherPrice: BigNumber
+}
+
+function getPrices(
+  results: PartialResults,
+  ethPrice: BigNumber,
+  token: string
+) {
+  const pairs = getSupportedPairs(ethPrice)
+  const prices: ExchangePrice[] = []
+  prices.push(getV1Price(results, ethPrice, token))
+  for (const { name, other, otherPrice } of pairs) {
+    prices.push(getV2Price(results, name, other, otherPrice, token))
+    for (const fee of [500, 3000, 10000]) {
+      prices.push(getV3Price(results, name, fee, other, otherPrice, token))
+    }
+  }
+  return prices
+}
+
+function getSupportedPairs(ethPrice: BigNumber): Pair[] {
+  return [
+    { name: 'Weth', other: WETH, otherPrice: ethPrice },
+    { name: 'Usdc', other: USDC, otherPrice: STABLECOIN_PRICE },
+    { name: 'Usdt', other: USDT, otherPrice: STABLECOIN_PRICE },
+  ]
 }
 
 function getV1Price(
@@ -126,9 +153,36 @@ function getV2Price(
   const reservesResponse = results[`uniV2${otherName}-${token}`]
   const reserves = UniV2ReservesCall.decodeOrZero(reservesResponse)
   if (!tokenIsBefore(token, otherAddress)) {
-    reserves?.reverse()
+    reserves.reverse()
   }
   const [tokenBalance, otherBalance] = reserves
-  const price = divOrZero(tokenBalance.mul(otherPrice), otherBalance)
+  const price = divOrZero(otherBalance.mul(otherPrice), tokenBalance)
   return { liquidity: tokenBalance, price }
+}
+
+function getV3Price(
+  results: PartialResults,
+  otherName: string,
+  fee: number,
+  otherAddress: string,
+  otherPrice: BigNumber,
+  token: string
+) {
+  const balanceResponse = results[`uniV3${otherName}${fee}-token-${token}`]
+  const balance = TokenBalanceCall.decodeOrZero(balanceResponse)
+  const priceResponse = results[`uniV3${otherName}${fee}-price-${token}`]
+  const priceSqrt64x96 = UniV3PriceCall.decodeOrZero(priceResponse)
+  let price18 = priceSqrt64x96
+    .mul(priceSqrt64x96)
+    .mul(TEN_TO_18)
+    .shr(96 * 2)
+  if (!tokenIsBefore(token, otherAddress)) {
+    price18 = divOrZero(TEN_TO_18.mul(TEN_TO_18), price18)
+  }
+  const price = price18.mul(otherPrice).div(TEN_TO_18)
+  return { liquidity: balance, price }
+}
+
+function getBestPrice(prices: ExchangePrice[]) {
+  return prices.reduce((a, b) => (a.liquidity.gt(b.liquidity) ? a : b)).price
 }
