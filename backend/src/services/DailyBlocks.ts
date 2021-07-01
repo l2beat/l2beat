@@ -1,6 +1,6 @@
 import { Project } from '@l2beat/config'
 import { dateRange } from '../utils/dateRange'
-import { SimpleDate } from '../utils/SimpleDate'
+import { SimpleDate } from '../model/SimpleDate'
 import { IBlockInfo } from './BlockInfo/IBlockInfo'
 
 export class DailyBlocks {

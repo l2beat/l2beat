@@ -1,4 +1,4 @@
-import { SimpleDate } from '../../utils/SimpleDate'
+import { SimpleDate } from '../../model/SimpleDate'
 
 export interface ITokenPriceChecker {
   getPrice(

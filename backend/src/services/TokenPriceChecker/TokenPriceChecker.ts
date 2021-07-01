@@ -1,6 +1,6 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import fetch from 'node-fetch'
-import { SimpleDate } from '../../utils/SimpleDate'
+import { SimpleDate } from '../../model/SimpleDate'
 import { ExponentialRetry } from '../api/ExponentialRetry'
 import { RateLimiter } from '../api/RateLimiter'
 import { AsyncCache } from '../AsyncCache'

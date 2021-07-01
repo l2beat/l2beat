@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { AsyncCache } from '../../src/services/AsyncCache'
-import { SimpleDate } from '../../src/utils/SimpleDate'
+import { SimpleDate } from '../../src/model/SimpleDate'
 
 describe('AsyncCache', () => {
   class MockCacheFile {

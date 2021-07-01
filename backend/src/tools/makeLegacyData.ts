@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { getTokenBySymbol } from '@l2beat/config'
 import { utils } from 'ethers'
 import { BridgeTVL } from '../services/ValueLockedChecker'
-import { SimpleDate } from '../utils/SimpleDate'
+import { SimpleDate } from '../model/SimpleDate'
 import { ProjectTVL } from './getProjectTVLs'
 import { PriceFunction } from './getTokenPrices'
 
