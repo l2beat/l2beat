@@ -18,19 +18,19 @@ export interface ExchangeInfo {
   isBeforeWeth: boolean
   isBeforeUsdc: boolean
   isBeforeUsdt: boolean
-  uniswapV1: string | undefined
-  uniswapV2Weth: string
-  uniswapV2Usdc: string
-  uniswapV2Usdt: string
-  uniswapV3Weth500: string
-  uniswapV3Usdc500: string
-  uniswapV3Usdt500: string
-  uniswapV3Weth3000: string
-  uniswapV3Usdc3000: string
-  uniswapV3Usdt3000: string
-  uniswapV3Weth10000: string
-  uniswapV3Usdc10000: string
-  uniswapV3Usdt10000: string
+  uniV1: string | undefined
+  uniV2Weth: string
+  uniV2Usdc: string
+  uniV2Usdt: string
+  uniV3Weth500: string
+  uniV3Usdc500: string
+  uniV3Usdt500: string
+  uniV3Weth3000: string
+  uniV3Usdc3000: string
+  uniV3Usdt3000: string
+  uniV3Weth10000: string
+  uniV3Usdc10000: string
+  uniV3Usdt10000: string
 }
 
 export class ExchangeAddresses {
@@ -48,19 +48,19 @@ export class ExchangeAddresses {
         isBeforeWeth: isBefore(address, WETH),
         isBeforeUsdc: isBefore(address, USDC),
         isBeforeUsdt: isBefore(address, USDT),
-        uniswapV1: v1Addresses[address],
-        uniswapV2Weth: getUniswapV2PairAddress(address, WETH),
-        uniswapV2Usdc: getUniswapV2PairAddress(address, USDC),
-        uniswapV2Usdt: getUniswapV2PairAddress(address, USDT),
-        uniswapV3Weth500: getUniswapV3PoolAddress(address, WETH, 500),
-        uniswapV3Usdc500: getUniswapV3PoolAddress(address, USDC, 500),
-        uniswapV3Usdt500: getUniswapV3PoolAddress(address, USDT, 500),
-        uniswapV3Weth3000: getUniswapV3PoolAddress(address, WETH, 3000),
-        uniswapV3Usdc3000: getUniswapV3PoolAddress(address, USDC, 3000),
-        uniswapV3Usdt3000: getUniswapV3PoolAddress(address, USDT, 3000),
-        uniswapV3Weth10000: getUniswapV3PoolAddress(address, WETH, 10000),
-        uniswapV3Usdc10000: getUniswapV3PoolAddress(address, USDC, 10000),
-        uniswapV3Usdt10000: getUniswapV3PoolAddress(address, USDT, 10000),
+        uniV1: v1Addresses[address],
+        uniV2Weth: getUniswapV2PairAddress(address, WETH),
+        uniV2Usdc: getUniswapV2PairAddress(address, USDC),
+        uniV2Usdt: getUniswapV2PairAddress(address, USDT),
+        uniV3Weth500: getUniswapV3PoolAddress(address, WETH, 500),
+        uniV3Usdc500: getUniswapV3PoolAddress(address, USDC, 500),
+        uniV3Usdt500: getUniswapV3PoolAddress(address, USDT, 500),
+        uniV3Weth3000: getUniswapV3PoolAddress(address, WETH, 3000),
+        uniV3Usdc3000: getUniswapV3PoolAddress(address, USDC, 3000),
+        uniV3Usdt3000: getUniswapV3PoolAddress(address, USDT, 3000),
+        uniV3Weth10000: getUniswapV3PoolAddress(address, WETH, 10000),
+        uniV3Usdc10000: getUniswapV3PoolAddress(address, USDC, 10000),
+        uniV3Usdt10000: getUniswapV3PoolAddress(address, USDT, 10000),
       }
     }
     return exchanges

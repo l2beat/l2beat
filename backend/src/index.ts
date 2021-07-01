@@ -1,4 +1,5 @@
-import { tokenList } from '@l2beat/config'
+import { projects, tokenList } from '@l2beat/config'
+import { projectToInfo } from './model/ProjectInfo'
 import { setup } from './services'
 
 main().catch((e) => {
@@ -7,7 +8,9 @@ main().catch((e) => {
 })
 
 async function main() {
-  const { exchangeAddresses } = setup()
-  const result = await exchangeAddresses.getExchanges(tokenList)
-  console.log(result)
+  const { exchangeAddresses, tvlAnalyzer } = setup()
+  const exchanges = await exchangeAddresses.getExchanges(tokenList)
+  const projectInfos = projects.map(projectToInfo)
+  const tvl = await tvlAnalyzer.getTVL(projectInfos, exchanges, 12_500_000)
+  console.log(JSON.stringify(tvl, null, 2))
 }

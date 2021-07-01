@@ -14,6 +14,7 @@ import { Logger } from './Logger'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 import { MockTokenPriceChecker } from './TokenPriceChecker/MockTokenPriceChecker'
 import { TokenPriceChecker } from './TokenPriceChecker/TokenPriceChecker'
+import { TVLAnalyzer } from './TVL'
 import { ValueLockedChecker } from './ValueLockedChecker'
 
 export type Services = ReturnType<typeof setup>
@@ -28,7 +29,7 @@ export function setup() {
   const cacheFile = new CacheFile()
   const asyncCache = new AsyncCache(cacheFile)
 
-  const multicallApi = new MulticallApi(alchemyApi, asyncCache)
+  const multicallApi = new MulticallApi(alchemyApi, asyncCache, logger)
 
   const blockInfo = config.mock
     ? new MockBlockInfo()
@@ -50,9 +51,11 @@ export function setup() {
 
   const dailyBlocks = new DailyBlocks(blockInfo)
   const exchangeAddresses = new ExchangeAddresses(multicallApi)
+  const tvlAnalyzer = new TVLAnalyzer(multicallApi)
 
   return {
     multicallApi,
+    tvlAnalyzer,
     dailyBlocks,
     exchangeAddresses,
     config,
