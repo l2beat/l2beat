@@ -14,7 +14,7 @@ import { MulticallApi } from './multicall'
 import { TokenBalanceChecker } from './TokenBalanceChecker'
 import { MockTokenPriceChecker } from './TokenPriceChecker/MockTokenPriceChecker'
 import { TokenPriceChecker } from './TokenPriceChecker/TokenPriceChecker'
-import { TVLAnalyzer } from './TVL'
+import { BalanceAnalyzer } from './balances'
 import { ValueLockedChecker } from './ValueLockedChecker'
 
 export type Services = ReturnType<typeof setup>
@@ -51,7 +51,7 @@ export function setup() {
 
   const dailyBlocks = new DailyBlocks(blockInfo)
   const exchangeAddresses = new ExchangeAddresses(multicallApi)
-  const tvlAnalyzer = new TVLAnalyzer(multicallApi)
+  const tvlAnalyzer = new BalanceAnalyzer(multicallApi)
 
   return {
     multicallApi,

@@ -11,7 +11,7 @@ import {
 import { getMulticallCalls } from './utils/getMulticallCalls'
 import { parseMulticallResults } from './utils/parseMulticallResults'
 
-export class TVLAnalyzer {
+export class BalanceAnalyzer {
   constructor(private multicallApi: MulticallApi) {}
 
   async getTVL(
@@ -34,7 +34,7 @@ export class TVLAnalyzer {
     }
   }
 
-  async fetchBalancesAndPrices(
+  private async fetchBalancesAndPrices(
     tokenHolders: Record<string, string[]>,
     ethHolders: string[],
     exchanges: Record<string, ExchangeInfo>,

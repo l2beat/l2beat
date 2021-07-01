@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { utils } from 'ethers'
-import { asNumber } from '../../../../src/services/TVL/utils/asNumber'
+import { asNumber } from '../../../../src/services/balances/utils/asNumber'
 
 describe('asNumber', () => {
   it('correctly formats some ether', () => {

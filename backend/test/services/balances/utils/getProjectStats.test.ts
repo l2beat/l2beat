@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import {
   getProjectStats,
   ProjectStats,
-} from '../../../../src/services/TVL/utils'
+} from '../../../../src/services/balances/utils'
 import { makeExampleProjects } from './example'
 
 describe('getProjectStats', () => {

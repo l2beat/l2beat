@@ -12,7 +12,7 @@ import {
 import {
   addTokenExchanges,
   getMulticallCalls,
-} from '../../../../src/services/TVL/utils/getMulticallCalls'
+} from '../../../../src/services/balances/utils/getMulticallCalls'
 
 describe('getMulticallCalls', () => {
   it('returns all required calls', () => {
