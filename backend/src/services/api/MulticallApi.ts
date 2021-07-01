@@ -4,12 +4,7 @@ import { AsyncCache } from '../AsyncCache'
 import { AlchemyApi } from './AlchemyApi'
 
 const MULTICALL_ABI = new utils.Interface([
-  `function tryAggregate(
-    bool requireSuccess,
-    tuple(address target, bytes calldata)[] calls
-  ) public returns (
-    tuple(bool success, bytes returnData)[] returnData
-  )`,
+  `function aggregate(tuple(address target, bytes callData)[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData)`,
 ])
 
 export interface MulticallRequest {
@@ -34,39 +29,43 @@ export class MulticallApi {
     for (const [key, request] of Object.entries(requests)) {
       const cached = await this.asyncCache.get(
         ['multicall', blockNumber, request.address, request.data],
-        (x): MulticallResponse => x
+        (x): string => x
       )
       if (cached) {
-        known.push([key, cached])
+        known.push([key, dataToResponse(cached)])
       } else {
         unknown.push([key, request])
       }
     }
-    const callData = MULTICALL_ABI.encodeFunctionData('tryAggregate', [
-      false,
-      unknown.map(([, request]) => [request.address, request.data]),
-    ])
-    const returnData = await this.alchemyApi.call(
-      MULTICALL,
-      callData,
-      blockNumber
-    )
-    const [result] = MULTICALL_ABI.decodeFunctionResult(
-      'tryAggregate',
-      returnData
-    )
-    for (const [i, [key, request]] of unknown.entries()) {
-      const value: MulticallResponse = {
-        success: result[i][0],
-        data: result[i][1],
-      }
-      this.asyncCache.set(
-        ['multicall', blockNumber, request.address, request.data],
-        value,
-        (x) => x
+    if (unknown.length > 0) {
+      const callData = MULTICALL_ABI.encodeFunctionData('aggregate', [
+        unknown.map(([, request]) => [request.address, request.data]),
+      ])
+      const returnData = await this.alchemyApi.call(
+        MULTICALL,
+        callData,
+        blockNumber
       )
-      known.push([key, value])
+      const [, result] = MULTICALL_ABI.decodeFunctionResult(
+        'aggregate',
+        returnData
+      )
+      for (const [i, [key, request]] of unknown.entries()) {
+        this.asyncCache.set(
+          ['multicall', blockNumber, request.address, request.data],
+          result[i],
+          (x) => x
+        )
+        known.push([key, dataToResponse(result[i])])
+      }
     }
     return Object.fromEntries(known)
+  }
+}
+
+function dataToResponse(data: string): MulticallResponse {
+  return {
+    success: data !== '0x',
+    data: data,
   }
 }
