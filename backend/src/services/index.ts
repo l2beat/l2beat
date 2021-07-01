@@ -7,7 +7,7 @@ import { BlockInfo } from './BlockInfo/BlockInfo'
 import { MockBlockInfo } from './BlockInfo/MockBlockInfo'
 import { CacheFile } from './CacheFile'
 import { getConfig } from './Config'
-import { DailyBlocks } from './DailyBlocks'
+import { ProjectDates } from './ProjectDates'
 import { ExchangeAddresses } from './ExchangeAddresses'
 import { Logger } from './Logger'
 import { MulticallApi } from './multicall'
@@ -49,14 +49,14 @@ export function setup() {
     ? new MockTokenPriceChecker()
     : new TokenPriceChecker(asyncCache, logger)
 
-  const dailyBlocks = new DailyBlocks(blockInfo)
+  const projectDates = new ProjectDates(blockInfo)
   const exchangeAddresses = new ExchangeAddresses(multicallApi)
   const tvlAnalyzer = new BalanceAnalyzer(multicallApi)
 
   return {
     multicallApi,
     tvlAnalyzer,
-    dailyBlocks,
+    projectDates,
     exchangeAddresses,
     config,
     asyncCache,

@@ -1,25 +1,18 @@
-import { Project } from '@l2beat/config'
-import { SimpleDate } from '../model'
+import { ProjectInfo, SimpleDate } from '../model'
 import { dateRange } from '../utils'
 import { IBlockInfo } from './BlockInfo/IBlockInfo'
 
-export class DailyBlocks {
+export class ProjectDates {
   constructor(private blockInfo: IBlockInfo) {}
 
-  async getDailyBlocks(projects: Project[], endDate: SimpleDate) {
+  async getDateRanges(projects: ProjectInfo[], endDate: SimpleDate) {
     const earliestBlock = getEarliestBlock(projects)
     const earliestDate = await this.blockInfo.getBlockDate(earliestBlock)
-    const dates = dateRange(earliestDate, endDate)
-    return Promise.all(
-      dates.map(async (date) => ({
-        date,
-        block: await this.blockInfo.getMaxBlock(date),
-      }))
-    )
+    return dateRange(earliestDate, endDate)
   }
 }
 
-function getEarliestBlock(projects: Project[]) {
+function getEarliestBlock(projects: ProjectInfo[]) {
   let earliestBlock = Infinity
   for (const project of projects) {
     for (const bridge of project.bridges) {
