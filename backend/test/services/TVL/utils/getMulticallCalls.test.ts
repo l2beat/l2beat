@@ -5,10 +5,10 @@ import { DAI } from '../../../../src/constants'
 import { ExchangeInfo } from '../../../../src/services/ExchangeAddresses'
 import {
   EthBalanceCall,
+  MulticallRequest,
   TokenBalanceCall,
   UniV2ReservesCall,
 } from '../../../../src/services/multicall'
-import { MulticallRequest } from '../../../../src/services/multicall/MulticallApi'
 import {
   addTokenExchanges,
   getMulticallCalls,

@@ -12,8 +12,7 @@ import {
   WETH,
 } from '../constants'
 import { tokensInOrder } from '../utils'
-import { UniV1ExchangeCall } from './multicall'
-import { MulticallApi, MulticallRequest } from './multicall/MulticallApi'
+import { MulticallApi, MulticallRequest, UniV1ExchangeCall } from './multicall'
 
 export interface ExchangeInfo {
   uniV1: string | undefined

@@ -1,8 +1,8 @@
 import { DAI, USDC, USDT, WETH } from '../../../constants'
-import { MulticallRequest } from '../../multicall/MulticallApi'
 import { ExchangeInfo } from '../../ExchangeAddresses'
 import {
   EthBalanceCall,
+  MulticallRequest,
   TokenBalanceCall,
   UniV2ReservesCall,
   UniV3PriceCall,

@@ -3,10 +3,10 @@ import { DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
 import { divOrZero, tokenIsBefore } from '../../../utils'
 import {
   EthBalanceCall,
+  MulticallResponse,
   TokenBalanceCall,
   UniV2ReservesCall,
 } from '../../multicall'
-import { MulticallResponse } from '../../multicall/MulticallApi'
 
 export function parseMulticallResults(
   results: Record<string, MulticallResponse>
