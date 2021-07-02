@@ -44,8 +44,8 @@ function randRange(min: number, max: number) {
   return Math.random() * (max - min) + min
 }
 
-const REFERENCE_TIMESTAMP = 1623153999
-const REFERENCE_BLOCK = 12594332
+const REFERENCE_TIMESTAMP = 1625241107
+const REFERENCE_BLOCK = 12749116
 const SECONDS_PER_BLOCK = 15
 
 function getBlockDate(block: number) {
