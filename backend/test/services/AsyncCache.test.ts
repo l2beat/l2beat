@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import { AsyncCache } from '../../src/services/AsyncCache'
-import { SimpleDate } from '../../src/services/SimpleDate'
 
 describe('AsyncCache', () => {
   class MockCacheFile {
@@ -22,15 +21,14 @@ describe('AsyncCache', () => {
 
   it('reads data from the file', async () => {
     const { cache } = makeCache({ foo: 'bar' })
-    const data = await cache.getOrFetch(['foo'], () => Promise.resolve('baz'))
+    const data = await cache.getOrFetch('foo', () => Promise.resolve('baz'))
     expect(data).to.equal('bar')
   })
 
   it('reads complex keys', async () => {
     const { cache } = makeCache({ '2020-06-07,123': 'bar' })
-    const data = await cache.getOrFetch(
-      [SimpleDate.fromString('2020-06-07'), 123],
-      () => Promise.resolve('baz')
+    const data = await cache.getOrFetch(`2020-06-07,123`, () =>
+      Promise.resolve('baz')
     )
     expect(data).to.equal('bar')
   })
@@ -38,7 +36,7 @@ describe('AsyncCache', () => {
   it('supports data transformation', async () => {
     const { cache } = makeCache({ '2020-06-07,123': 'false' })
     const data = await cache.getOrFetch(
-      [SimpleDate.fromString('2020-06-07'), 123],
+      `2020-06-07,123`,
       () => Promise.resolve(true),
       (bool) => bool.toString(),
       (json) => json === 'true'
@@ -49,7 +47,7 @@ describe('AsyncCache', () => {
   it('fetches and writes to the file', async () => {
     const { cache, mock } = makeCache({ foo: 'bar' })
     const data = await cache.getOrFetch(
-      ['baz'],
+      'baz',
       () => Promise.resolve('XYZ'),
       (data) => data.toLowerCase(),
       (json) => json.toUpperCase()
@@ -64,8 +62,8 @@ describe('AsyncCache', () => {
 
   it('remembers old fetches', async () => {
     const { cache } = makeCache({ foo: 'bar' })
-    const oldData = await cache.getOrFetch(['baz'], async () => 1)
-    const newData = await cache.getOrFetch(['baz'], async () => 2)
+    const oldData = await cache.getOrFetch('baz', async () => 1)
+    const newData = await cache.getOrFetch('baz', async () => 2)
     expect(oldData).to.equal(1)
     expect(newData).to.equal(1)
   })
@@ -80,8 +78,8 @@ describe('AsyncCache', () => {
       writePrecomputed() {},
     }
     const cache = new AsyncCache(mock, 10)
-    await cache.getOrFetch(['a'], async () => 1)
-    await cache.getOrFetch(['b'], async () => 2)
+    await cache.getOrFetch('a', async () => 1)
+    await cache.getOrFetch('b', async () => 2)
     await new Promise((resolve) => setTimeout(resolve, 20))
     expect(calls).to.equal(1)
   })

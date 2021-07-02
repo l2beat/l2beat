@@ -9,10 +9,6 @@ interface CacheEntry {
   value: unknown
 }
 
-interface Key {
-  toString(): string
-}
-
 export class AsyncCache {
   private cache = new Map<string, CacheEntry | Promise<CacheEntry>>()
 
@@ -28,21 +24,50 @@ export class AsyncCache {
     }
   }
 
-  async getOrFetch<T>(key: Key[], fetch: () => Promise<T>): Promise<T>
+  has(key: string): boolean {
+    return this.cache.has(key)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async get<T>(key: string, fromJSON: (v: any) => T): Promise<T | undefined> {
+    const cached = this.cache.get(key)
+    if (cached) {
+      const resolved = await cached
+      resolved.accessed = true
+      if (!resolved.isDeserialized) {
+        resolved.isDeserialized = true
+        resolved.value = fromJSON(resolved.serialized)
+      }
+      return resolved.value as T
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  set<T>(key: string, value: T, toJSON: (t: T) => any) {
+    const entry: CacheEntry = {
+      isDeserialized: true,
+      accessed: true,
+      value,
+      serialized: toJSON(value),
+    }
+    this.cache.set(key, entry)
+    this.flush()
+  }
+
+  async getOrFetch<T>(key: string, fetch: () => Promise<T>): Promise<T>
   async getOrFetch<T, U>(
-    key: Key[],
+    key: string,
     fetch: () => Promise<T>,
     toJSON: (t: T) => U,
     fromJSON: (v: U) => T
   ): Promise<T>
   async getOrFetch(
-    key: Key[],
+    key: string,
     fetch: () => Promise<unknown>,
     toJSON = id,
     fromJSON = id
   ) {
-    const keyString = key.toString()
-    const cached = this.cache.get(keyString)
+    const cached = this.cache.get(key)
     if (cached) {
       const resolved = await cached
       resolved.accessed = true
@@ -60,9 +85,9 @@ export class AsyncCache {
         serialized: toJSON(value),
       })
     )
-    this.cache.set(keyString, promise)
+    this.cache.set(key, promise)
     promise.then((e) => {
-      this.cache.set(keyString, e)
+      this.cache.set(key, e)
       this.flush()
     })
     return promise.then((x) => x.value)
@@ -79,6 +104,7 @@ export class AsyncCache {
         })
         .sort(([a], [b]) => (a < b ? -1 : a === b ? 0 : 1))
     )
+    this.cacheFile.write(data)
     this.cacheFile.writePrecomputed(data)
   }
 
