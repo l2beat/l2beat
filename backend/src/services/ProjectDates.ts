@@ -1,9 +1,9 @@
 import { ProjectInfo, SimpleDate } from '../model'
 import { dateRange } from '../utils'
-import { IBlockInfo } from './BlockInfo/IBlockInfo'
+import { BlockInfo } from './BlockInfo'
 
 export class ProjectDates {
-  constructor(private blockInfo: IBlockInfo) {}
+  constructor(private blockInfo: BlockInfo) {}
 
   async getDateRanges(projects: ProjectInfo[], endDate: SimpleDate) {
     const earliestBlock = getEarliestBlock(projects)

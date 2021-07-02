@@ -1,7 +1,7 @@
 import { SimpleDate } from '../model'
 import { TVLAnalysis } from '../services/balances/model'
 
-interface LegacyData {
+export interface LegacyData {
   TVL: number
   data: DateEntry[]
   l2s: {
@@ -9,12 +9,12 @@ interface LegacyData {
   }
 }
 
-interface L2Entry {
+export interface L2Entry {
   TVL: number
   data: DateEntry[]
 }
 
-interface DateEntry {
+export interface DateEntry {
   date: string
   usd: number
 }

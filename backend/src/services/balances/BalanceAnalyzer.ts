@@ -1,5 +1,5 @@
 import { ProjectInfo, SimpleDate } from '../../model'
-import { IBlockInfo } from '../BlockInfo/IBlockInfo'
+import { BlockInfo } from '../BlockInfo'
 import { ExchangeInfo } from '../ExchangeAddresses'
 import { MulticallApi } from '../multicall'
 import { FetchedBalances, FetchedPrices, TVLAnalysis } from './model'
@@ -15,7 +15,7 @@ import { parseMulticallResults } from './utils/parseMulticallResults'
 export class BalanceAnalyzer {
   constructor(
     private multicallApi: MulticallApi,
-    private blockInfo: IBlockInfo
+    private blockInfo: BlockInfo
   ) {}
 
   async getTVLByDate(

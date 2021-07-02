@@ -1,11 +1,10 @@
-import { SimpleDate } from '../../model'
-import { AlchemyApi } from '../api/AlchemyApi'
-import { EtherscanApi } from '../api/EtherscanApi'
-import { AsyncCache } from '../AsyncCache'
-import { Logger } from '../Logger'
-import { IBlockInfo } from './IBlockInfo'
+import { SimpleDate } from '../model'
+import { AlchemyApi } from './api/AlchemyApi'
+import { EtherscanApi } from './api/EtherscanApi'
+import { AsyncCache } from './AsyncCache'
+import { Logger } from './Logger'
 
-export class BlockInfo implements IBlockInfo {
+export class BlockInfo {
   constructor(
     private alchemyApi: AlchemyApi,
     private etherscanApi: EtherscanApi,
