@@ -14,7 +14,7 @@ const KNOWN_TOKENS = [WETH, DAI, USDC, USDT]
 
 interface ExchangePrice {
   liquidity: BigNumber
-  price: BigNumber
+  getPrice: () => BigNumber
 }
 
 interface Pair {
@@ -83,10 +83,12 @@ function getV1Price(
 ): ExchangePrice {
   const tokenBalanceResponse = results[`uniV1-token-${token}`]
   const tokenBalance = TokenBalanceCall.decodeOrZero(tokenBalanceResponse)
-  const ethBalanceResponse = results[`uniV1-token-${token}`]
-  const ethBalance = EthBalanceCall.decodeOrZero(ethBalanceResponse)
-  const price = divOrZero(ethBalance.mul(ethPrice), tokenBalance)
-  return { liquidity: tokenBalance, price }
+  function getPrice() {
+    const ethBalanceResponse = results[`uniV1-token-${token}`]
+    const ethBalance = EthBalanceCall.decodeOrZero(ethBalanceResponse)
+    return divOrZero(ethBalance.mul(ethPrice), tokenBalance)
+  }
+  return { liquidity: tokenBalance, getPrice }
 }
 
 function getV2Price(
@@ -102,8 +104,10 @@ function getV2Price(
     reserves.reverse()
   }
   const [tokenBalance, otherBalance] = reserves
-  const price = divOrZero(otherBalance.mul(otherPrice), tokenBalance)
-  return { liquidity: tokenBalance, price }
+  function getPrice() {
+    return divOrZero(otherBalance.mul(otherPrice), tokenBalance)
+  }
+  return { liquidity: tokenBalance, getPrice }
 }
 
 function getV3Price(
@@ -116,19 +120,24 @@ function getV3Price(
 ) {
   const balanceResponse = results[`uniV3${otherName}${fee}-token-${token}`]
   const balance = TokenBalanceCall.decodeOrZero(balanceResponse)
-  const priceResponse = results[`uniV3${otherName}${fee}-price-${token}`]
-  const priceSqrt64x96 = UniV3PriceCall.decodeOrZero(priceResponse)
-  let price18 = priceSqrt64x96
-    .mul(priceSqrt64x96)
-    .mul(TEN_TO_18)
-    .shr(96 * 2)
-  if (!tokenIsBefore(token, otherAddress)) {
-    price18 = divOrZero(TEN_TO_18.mul(TEN_TO_18), price18)
+  function getPrice() {
+    const priceResponse = results[`uniV3${otherName}${fee}-price-${token}`]
+    const priceSqrt64x96 = UniV3PriceCall.decodeOrZero(priceResponse)
+    let price18 = priceSqrt64x96
+      .mul(priceSqrt64x96)
+      .mul(TEN_TO_18)
+      .shr(96 * 2)
+    if (!tokenIsBefore(token, otherAddress)) {
+      price18 = divOrZero(TEN_TO_18.mul(TEN_TO_18), price18)
+    }
+    return price18.mul(otherPrice).div(TEN_TO_18)
   }
-  const price = price18.mul(otherPrice).div(TEN_TO_18)
-  return { liquidity: balance, price }
+  return { liquidity: balance, getPrice }
 }
 
 function getBestPrice(prices: ExchangePrice[]) {
-  return prices.reduce((a, b) => (a.liquidity.gt(b.liquidity) ? a : b)).price
+  const { getPrice } = prices.reduce((a, b) =>
+    a.liquidity.gt(b.liquidity) ? a : b
+  )
+  return getPrice()
 }

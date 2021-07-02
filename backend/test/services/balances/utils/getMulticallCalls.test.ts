@@ -43,7 +43,12 @@ describe('getMulticallCalls', () => {
       [mkr.address!]: alwaysZeroAddress as ExchangeInfo,
     }
 
-    const calls = getMulticallCalls(tokenHolders, ethHolders, exchanges)
+    const calls = getMulticallCalls(
+      tokenHolders,
+      ethHolders,
+      exchanges,
+      Infinity
+    )
     const expected: Record<string, MulticallRequest> = {
       [`token-${usdc.address}-${holderA}`]: TokenBalanceCall.encode(
         usdc.address!,
@@ -66,7 +71,12 @@ describe('getMulticallCalls', () => {
       [`uniV1-eth-${DAI}`]: EthBalanceCall.encode(exchanges[DAI].uniV1!),
       [`uniV2Weth-${DAI}`]: UniV2ReservesCall.encode(exchanges[DAI].uniV2Weth),
     }
-    addTokenExchanges(expected, [usdc.address!, mkr.address!], exchanges)
+    addTokenExchanges(
+      expected,
+      [usdc.address!, mkr.address!],
+      exchanges,
+      Infinity
+    )
     expect(calls).to.deep.equal(expected)
   })
 })
