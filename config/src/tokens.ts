@@ -187,6 +187,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 11281056,
   },
   {
+    name: 'Habitat Token',
+    symbol: 'HBT',
+    address: '0x0aCe32f6E87Ac1457A5385f8eb0208F37263B415',
+    decimals: 10,
+    sinceBlock: 12009449,
+  },
+  {
     name: 'Hermez Network Token',
     symbol: 'HEZ',
     address: '0xEEF9f339514298C6A857EfCfC1A762aF84438dEE',
