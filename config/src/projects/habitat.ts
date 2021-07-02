@@ -63,9 +63,10 @@ export const habitat: Project = {
       {
         name: 'Can the funds be freely withdrawn?',
         value: 'Yes, but not instantly.',
-        tooltip: 'Withdraw delays are subject to the inspection period. Currently 1 week.',
+        tooltip:
+          'Withdraw delays are subject to the inspection period. Currently 1 week.',
         sentiment: 'good',
-      }
+      },
       {
         name: 'Rollup Governance',
         value: 'HBT tokens are needed to participate.',
