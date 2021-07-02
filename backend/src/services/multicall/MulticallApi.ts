@@ -1,4 +1,4 @@
-import { MULTICALL } from '../../constants'
+import { MULTICALL, MULTICALL_BATCH_SIZE } from '../../constants'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
 import { AlchemyApi } from '../api/AlchemyApi'
@@ -52,7 +52,7 @@ export class MulticallApi {
     requests: MulticallRequest[],
     blockNumber: number
   ) {
-    const batches = toBatches(requests, 200)
+    const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
     const batchedResults = await Promise.all(
       batches.map((batch, i) =>
         this.executeBatch(batch, `${i + 1}/${batches.length}`, blockNumber)

@@ -1,4 +1,5 @@
 import { BigNumber, constants, utils } from 'ethers'
+import memoizee from 'memoizee'
 import { MulticallRequest, MulticallResponse } from '../MulticallApi'
 
 const coder = new utils.Interface([
@@ -23,3 +24,5 @@ export const TokenBalanceCall = {
     return this.decode(result) ?? constants.Zero
   },
 }
+
+TokenBalanceCall.encode = memoizee(TokenBalanceCall.encode)

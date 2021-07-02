@@ -53,7 +53,12 @@ export class BalanceAnalyzer {
     exchanges: Record<string, ExchangeInfo>,
     blockNumber: number
   ): Promise<{ balances: FetchedBalances; prices: FetchedPrices }> {
-    const calls = getMulticallCalls(tokenHolders, ethHolders, exchanges)
+    const calls = getMulticallCalls(
+      tokenHolders,
+      ethHolders,
+      exchanges,
+      blockNumber
+    )
     const results = await this.multicallApi.multicall(calls, blockNumber)
     return parseMulticallResults(results)
   }

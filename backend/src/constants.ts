@@ -1,5 +1,7 @@
 import { BigNumber } from 'ethers'
 
+export const MULTICALL_BATCH_SIZE = 150
+
 export const MULTICALL = '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
 export const UNISWAP_V1_FACTORY = '0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95'
 export const UNISWAP_V2_FACTORY = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'

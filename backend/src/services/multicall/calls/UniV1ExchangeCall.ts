@@ -1,4 +1,5 @@
 import { constants, utils } from 'ethers'
+import memoizee from 'memoizee'
 import { UNISWAP_V1_FACTORY } from '../../../constants'
 import { MulticallRequest, MulticallResponse } from '../MulticallApi'
 
@@ -24,3 +25,5 @@ export const UniV1ExchangeCall = {
     return this.decode(result) ?? constants.AddressZero
   },
 }
+
+UniV1ExchangeCall.encode = memoizee(UniV1ExchangeCall.encode)

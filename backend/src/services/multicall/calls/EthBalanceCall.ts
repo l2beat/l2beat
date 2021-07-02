@@ -1,4 +1,5 @@
 import { BigNumber, constants, utils } from 'ethers'
+import memoizee from 'memoizee'
 import { MULTICALL } from '../../../constants'
 import { MulticallRequest, MulticallResponse } from '../MulticallApi'
 
@@ -24,3 +25,5 @@ export const EthBalanceCall = {
     return this.decode(result) ?? constants.Zero
   },
 }
+
+EthBalanceCall.encode = memoizee(EthBalanceCall.encode)
