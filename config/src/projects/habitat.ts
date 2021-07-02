@@ -45,7 +45,7 @@ export const habitat: Project = {
       },
       {
         name: 'Protocol upgrade timelock',
-        value: 'no',
+        value: 'No',
         sentiment: 'bad',
       },
       {
@@ -55,7 +55,7 @@ export const habitat: Project = {
       },
       {
         name: 'Force TX mechanism?',
-        value: 'no',
+        value: 'No',
         tooltip:
           'Operators are independent transaction aggregators and are not subject to any enforcements.',
         sentiment: 'neutral',
