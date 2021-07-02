@@ -18,7 +18,7 @@ export class BalanceChecker implements IBalanceChecker {
 
   async getEthBalance(account: string, block: number) {
     return this.asyncCache.getOrFetch(
-      ['getEthBalance', account, block],
+      `getEthBalance,${account},${block}`,
       () => this._getEthBalance(account, block),
       (big) => big.toString(),
       (json) => BigNumber.from(json)
@@ -35,7 +35,7 @@ export class BalanceChecker implements IBalanceChecker {
 
   async getERC20Balance(tokenAddress: string, account: string, block: number) {
     return this.asyncCache.getOrFetch(
-      ['getERC20Balance', tokenAddress, account, block],
+      `getERC20Balance,${tokenAddress},${account},${block}`,
       () => this._getERC20Balance(tokenAddress, account, block),
       (big) => big.toString(),
       (json) => BigNumber.from(json)

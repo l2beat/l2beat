@@ -8,7 +8,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const { balanceCollector } = setup()
+  const { balanceCollector, config, asyncCache } = setup()
   const endDate = SimpleDate.today()
   const projectInfos = projects.map(projectToInfo)
   const balances = await balanceCollector.collectBalanceInfo(
@@ -16,5 +16,9 @@ async function main() {
     tokenList,
     endDate
   )
-  console.log(balances.length)
+  console.log(balances[balances.length - 1].balances.TVL)
+
+  if (config.updatePrecomputed) {
+    asyncCache.updatePrecomputed()
+  }
 }

@@ -32,7 +32,7 @@ export class TokenPriceChecker implements ITokenPriceChecker {
 
   async getPrice(tokenSymbol: string, date: SimpleDate) {
     const id = getTokenBySymbol(tokenSymbol).coingeckoId
-    return this.asyncCache.getOrFetch(['getPrice', id, date], async () =>
+    return this.asyncCache.getOrFetch(`getPrice,${id},${date}`, async () =>
       this.exponentialRetry.call(
         () => this._getPrice(id, date),
         `fetching ${id} price @ ${date}`

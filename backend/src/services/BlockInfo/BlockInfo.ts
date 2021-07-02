@@ -14,7 +14,7 @@ export class BlockInfo implements IBlockInfo {
   ) {}
 
   async getMaxBlock(date: SimpleDate) {
-    return this.asyncCache.getOrFetch(['getMaxBlock', date], () =>
+    return this.asyncCache.getOrFetch(`getMaxBlock,${date}`, () =>
       this._getMaxBlock(date)
     )
   }
@@ -28,7 +28,7 @@ export class BlockInfo implements IBlockInfo {
 
   async getBlockDate(block: number) {
     return this.asyncCache.getOrFetch(
-      ['getBlockDate', block],
+      `getBlockDate,${block}`,
       () => this._getBlockDate(block),
       (date) => date.toString(),
       (json) => SimpleDate.fromString(json)
