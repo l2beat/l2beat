@@ -191,7 +191,6 @@ export const tokenList: TokenInfo[] = [
     symbol: 'HBT',
     address: '0x0aCe32f6E87Ac1457A5385f8eb0208F37263B415',
     decimals: 10,
-    coingeckoId: 'habitat',
     sinceBlock: 12009449,
   },
   {
