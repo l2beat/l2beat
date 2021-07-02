@@ -1,10 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { getTokenBySymbol, projects } from '@l2beat/config'
-import { utils } from 'ethers'
 import { SimpleDate } from '../model'
 import { TVLAnalysis } from '../services/balances/model'
-import { BridgeTVL } from '../services/ValueLockedChecker'
-import { PriceFunction } from './getTokenPrices'
 
 interface LegacyData {
   TVL: number
@@ -30,18 +25,19 @@ interface InputEntry {
 }
 
 export function makeLegacyData(entries: InputEntry[]): LegacyData {
-  const TVL = entries[entries.length - 1].balances.TVL.usd
+  const lastEntry = entries[entries.length - 1].balances
+  const TVL = lastEntry.TVL.usd
   const data = entries.map((entry) => ({
     date: entry.date.toString(),
     usd: entry.balances.TVL.usd,
   }))
   const l2s: Record<string, L2Entry> = {}
-  for (const { name } of projects) {
+  for (const project of Object.keys(lastEntry.projects)) {
     const data = entries.map((entry) => ({
       date: entry.date.toString(),
-      usd: entry.balances.projects[name].TVL.usd,
+      usd: entry.balances.projects[project].TVL.usd,
     }))
-    l2s[name] = {
+    l2s[project] = {
       TVL: data[data.length - 1].usd,
       data: skipBeginningZeroes(data),
     }
@@ -53,7 +49,7 @@ export function makeLegacyData(entries: InputEntry[]): LegacyData {
   }
 }
 
-function skipBeginningZeroes (data: DateEntry[]) {
+function skipBeginningZeroes(data: DateEntry[]) {
   const result = []
   let nonZeroFound = false
   for (const entry of data) {

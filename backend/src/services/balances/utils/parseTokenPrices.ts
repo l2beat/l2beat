@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import { DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
 import { divOrZero, tokenIsBefore } from '../../../utils'
 import {
@@ -8,6 +8,7 @@ import {
   UniV2ReservesCall,
   UniV3PriceCall,
 } from '../../multicall'
+import { HACK_adjustLiquidity } from './HACK_adjustLiquidity'
 
 const STABLECOIN_PRICE = BigNumber.from(10).pow(18 * 2 - 6)
 const KNOWN_TOKENS = [WETH, DAI, USDC, USDT]
@@ -88,7 +89,8 @@ function getV1Price(
     const ethBalance = EthBalanceCall.decodeOrZero(ethBalanceResponse)
     return divOrZero(ethBalance.mul(ethPrice), tokenBalance)
   }
-  return { liquidity: tokenBalance, getPrice }
+  const liquidity = HACK_adjustLiquidity('v1', token, tokenBalance)
+  return { liquidity, getPrice }
 }
 
 function getV2Price(
@@ -107,7 +109,8 @@ function getV2Price(
   function getPrice() {
     return divOrZero(otherBalance.mul(otherPrice), tokenBalance)
   }
-  return { liquidity: tokenBalance, getPrice }
+  const liquidity = HACK_adjustLiquidity('v2', token, tokenBalance)
+  return { liquidity, getPrice }
 }
 
 function getV3Price(
@@ -132,12 +135,13 @@ function getV3Price(
     }
     return price18.mul(otherPrice).div(TEN_TO_18)
   }
-  return { liquidity: balance, getPrice }
+  const liquidity = HACK_adjustLiquidity('v3', token, balance)
+  return { liquidity, getPrice }
 }
 
 function getBestPrice(prices: ExchangePrice[]) {
-  const { getPrice } = prices.reduce((a, b) =>
+  const { liquidity, getPrice } = prices.reduce((a, b) =>
     a.liquidity.gt(b.liquidity) ? a : b
   )
-  return getPrice()
+  return liquidity.eq(0) ? constants.Zero : getPrice()
 }
