@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import { Contract, providers, utils } from 'ethers'
-import fetch from 'node-fetch'
 import { tokenList } from '../src/tokens'
 
 describe('tokens', () => {
@@ -102,38 +101,6 @@ describe('tokens', () => {
         expect(token.name).to.equal(results[token.address].name)
         expect(token.symbol).to.equal(results[token.address].symbol)
         expect(token.decimals).to.equal(results[token.address].decimals)
-      })
-    }
-  })
-
-  describe("coingeckoId's are correct", () => {
-    const API_URL =
-      'https://api.coingecko.com/api/v3/coins/list?include_platform=true'
-    const coingeckoData: Record<string, any> = {}
-    before('fetches coingecko ids', async function () {
-      this.timeout(10_000)
-      const data = await fetch(API_URL).then((res) => res.json())
-      for (const record of data) {
-        coingeckoData[record.id] = record
-      }
-    })
-
-    for (const token of tokenList) {
-      it(token.coingeckoId, () => {
-        const record = coingeckoData[token.coingeckoId]
-        expect(record).not.to.equal(undefined)
-        const address = record.platforms.ethereum
-        if (!address) {
-          if (token.coingeckoId === 'binancecoin') {
-            expect(token.address).to.equal(
-              '0xB8c77482e45F1F44dE1745F52C74426C631bDD52'
-            )
-          } else {
-            expect(token.coingeckoId).to.equal('ethereum')
-          }
-        } else {
-          expect(token.address?.toLowerCase()).to.equal(address)
-        }
       })
     }
   })
