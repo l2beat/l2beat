@@ -3,6 +3,7 @@ import { aztec } from './aztec'
 import { deversifi } from './deversifi'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
+import { habitat } from './habitat'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
@@ -22,6 +23,7 @@ export const projects: Project[] = [
   deversifi,
   dydx,
   fuel,
+  habitat,
   hermez,
   immutablex,
   layer2finance,
