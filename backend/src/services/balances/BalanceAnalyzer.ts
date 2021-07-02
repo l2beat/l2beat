@@ -1,4 +1,5 @@
-import { ProjectInfo } from '../../model'
+import { ProjectInfo, SimpleDate } from '../../model'
+import { IBlockInfo } from '../BlockInfo/IBlockInfo'
 import { ExchangeInfo } from '../ExchangeAddresses'
 import { MulticallApi } from '../multicall'
 import { FetchedBalances, FetchedPrices, TVLAnalysis } from './model'
@@ -12,7 +13,19 @@ import { getMulticallCalls } from './utils/getMulticallCalls'
 import { parseMulticallResults } from './utils/parseMulticallResults'
 
 export class BalanceAnalyzer {
-  constructor(private multicallApi: MulticallApi) {}
+  constructor(
+    private multicallApi: MulticallApi,
+    private blockInfo: IBlockInfo
+  ) {}
+
+  async getTVLByDate(
+    projects: ProjectInfo[],
+    exchanges: Record<string, ExchangeInfo>,
+    date: SimpleDate
+  ) {
+    const block = await this.blockInfo.getMaxBlock(date)
+    return this.getTVL(projects, exchanges, block)
+  }
 
   async getTVL(
     projects: ProjectInfo[],

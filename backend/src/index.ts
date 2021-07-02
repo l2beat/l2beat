@@ -1,5 +1,5 @@
 import { projects, tokenList } from '@l2beat/config'
-import { projectToInfo } from './model'
+import { projectToInfo, SimpleDate } from './model'
 import { setup } from './services'
 
 main().catch((e) => {
@@ -8,9 +8,13 @@ main().catch((e) => {
 })
 
 async function main() {
-  const { exchangeAddresses, tvlAnalyzer } = setup()
-  const exchanges = await exchangeAddresses.getExchanges(tokenList)
+  const { balanceCollector } = setup()
+  const endDate = SimpleDate.today()
   const projectInfos = projects.map(projectToInfo)
-  const tvl = await tvlAnalyzer.getTVL(projectInfos, exchanges, 12_500_000)
-  console.log(JSON.stringify(tvl, null, 2))
+  const balances = await balanceCollector.collectBalanceInfo(
+    projectInfos,
+    tokenList,
+    endDate
+  )
+  console.log(balances.length)
 }

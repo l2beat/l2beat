@@ -16,6 +16,7 @@ import { MockTokenPriceChecker } from './TokenPriceChecker/MockTokenPriceChecker
 import { TokenPriceChecker } from './TokenPriceChecker/TokenPriceChecker'
 import { BalanceAnalyzer } from './balances'
 import { ValueLockedChecker } from './ValueLockedChecker'
+import { BalanceCollector } from './BalanceCollector'
 
 export type Services = ReturnType<typeof setup>
 
@@ -28,8 +29,6 @@ export function setup() {
 
   const cacheFile = new CacheFile()
   const asyncCache = new AsyncCache(cacheFile)
-
-  const multicallApi = new MulticallApi(alchemyApi, asyncCache, logger)
 
   const blockInfo = config.mock
     ? new MockBlockInfo()
@@ -49,15 +48,18 @@ export function setup() {
     ? new MockTokenPriceChecker()
     : new TokenPriceChecker(asyncCache, logger)
 
-  const projectDates = new ProjectDates(blockInfo)
+  const multicallApi = new MulticallApi(alchemyApi, asyncCache, logger)
   const exchangeAddresses = new ExchangeAddresses(multicallApi)
-  const tvlAnalyzer = new BalanceAnalyzer(multicallApi)
+  const projectDates = new ProjectDates(blockInfo)
+  const balanceAnalyzer = new BalanceAnalyzer(multicallApi, blockInfo)
+  const balanceCollector = new BalanceCollector(
+    exchangeAddresses,
+    projectDates,
+    balanceAnalyzer
+  )
 
   return {
-    multicallApi,
-    tvlAnalyzer,
-    projectDates,
-    exchangeAddresses,
+    balanceCollector,
     config,
     asyncCache,
     valueLockedChecker,
