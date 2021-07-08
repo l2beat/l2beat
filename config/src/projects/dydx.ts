@@ -2,6 +2,7 @@ import { Project } from './Project'
 
 export const dydx: Project = {
   name: 'dYdX',
+  slug: 'dydx',
   bridges: [
     {
       address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',

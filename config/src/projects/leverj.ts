@@ -2,6 +2,7 @@ import { Project } from './Project'
 
 export const leverj: Project = {
   name: 'LeverJ',
+  slug: 'leverj',
   bridges: [
     {
       address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',

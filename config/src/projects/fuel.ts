@@ -2,6 +2,7 @@ import { Project } from './Project'
 
 export const fuel: Project = {
   name: 'Fuel',
+  slug: 'fuel',
   bridges: [
     {
       address: '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
