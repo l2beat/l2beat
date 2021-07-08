@@ -2,10 +2,11 @@ import { Project } from '@l2beat/config'
 import { ReactElement } from 'react'
 import { slug } from '../utils/slug'
 import { HomePage } from './Home/HomePage'
+import { outputPages } from './output'
 import { ProjectPage } from './Project/ProjectPage'
 import { TechnologiesPage } from './Technologies/TechnologiesPage'
 
-export function getPages(projects: Project[]) {
+export function renderPages(projects: Project[]) {
   const pages = new Map<string, ReactElement>()
 
   pages.set('/', <HomePage projects={projects} />)
@@ -17,5 +18,5 @@ export function getPages(projects: Project[]) {
     )
   }
 
-  return pages
+  outputPages(pages)
 }
