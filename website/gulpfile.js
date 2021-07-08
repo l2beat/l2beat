@@ -12,7 +12,7 @@ const STYLE_IN_PATH = 'src/styles/**/*.scss'
 const STYLE_OUT_PATH = 'build/styles'
 
 const STATIC_IN_PATH = 'src/static/**/*'
-const STATIC_OUT_PATH = 'build/static'
+const STATIC_OUT_PATH = 'build'
 
 const CONTENT_IN_PATH = 'src/content/**/*'
 
