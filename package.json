@@ -10,7 +10,8 @@
     "packages": [
       "backend",
       "frontend",
-      "config"
+      "config",
+      "website"
     ]
   },
   "scripts": {

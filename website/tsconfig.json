@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "lib": ["es2019"],
+    "module": "commonjs",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": "build",
+    "types": ["node", "react", "react-dom", "fs-extra"],
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
+  }
+}
