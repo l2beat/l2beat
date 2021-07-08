@@ -42,7 +42,7 @@ function fakeProjectData(dates: SimpleDate[], tokens: string[]): ProjectData {
   const aggregate = fakeChart(dates, ['usd', 'eth'], tokens.length * 10)
   const byToken: Record<string, Chart> = {}
   for (const token of tokens) {
-    byToken[token] = fakeChart(dates, [token, 'usd'])
+    byToken[token] = fakeChart(dates, [token.toLowerCase(), 'usd'])
   }
   return { aggregate, byToken }
 }

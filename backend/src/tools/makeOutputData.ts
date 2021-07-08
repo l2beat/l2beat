@@ -83,7 +83,7 @@ function makeTokenChart(
       entry.balances.projects[project].tokens[token].balance,
       entry.balances.projects[project].tokens[token].usd,
     ])
-  return { types: ['date', token, 'usd'], data }
+  return { types: ['date', token.toLowerCase(), 'usd'], data }
 }
 
 function skipBeginningZeroes(chart: Chart): Chart {
