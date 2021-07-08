@@ -16,4 +16,3 @@ export function renderPages(projects: Project[]) {
 
   outputPages(pages)
 }
-  
