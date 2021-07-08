@@ -4,4 +4,4 @@ import { createApi } from './api'
 import { renderPages } from './pages'
 
 createApi(projects, l2Data)
-renderPages(projects)
+renderPages(projects, l2Data)

@@ -26,6 +26,7 @@
     "gulp": "^4.0.2",
     "gulp-sass": "^5.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "millify": "^4.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "sass": "^1.35.1"

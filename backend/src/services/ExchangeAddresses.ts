@@ -1,6 +1,6 @@
+import { TokenInfo } from '@l2beat/config'
 import { constants, utils } from 'ethers'
 import { AbiCoder } from 'ethers/lib/utils'
-import { TokenInfo } from '../../../config/build/src'
 import {
   UNISWAP_V1_SNAPSHOT_BLOCK,
   UNISWAP_V2_CODE_HASH,
@@ -9,7 +9,7 @@ import {
   UNISWAP_V3_FACTORY,
   USDC,
   USDT,
-  WETH,
+  WETH
 } from '../constants'
 import { tokensInOrder } from '../utils'
 import { MulticallApi, MulticallRequest, UniV1ExchangeCall } from './multicall'
