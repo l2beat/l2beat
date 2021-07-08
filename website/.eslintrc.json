@@ -16,6 +16,7 @@
     "no-dupe-class-members": "off",
     "no-extra-semi": "off",
     "no-redeclare": "off",
+    "no-undef": "off",
     "no-unused-vars": "off",
     "prefer-const": [
       "error",
