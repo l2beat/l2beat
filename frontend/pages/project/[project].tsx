@@ -15,7 +15,6 @@ import { Graph } from '../../components/graphs/Graph'
 import { TVLHistory } from '../../components/graphs/TVLHistory'
 import { PageGrid } from '../../components/PageGrid'
 import styles from '../../styles/Home.module.scss'
-import { dateSorter } from '../../utils/dateSorter'
 import { findProjectBridges } from '../../utils/findProjectBridges'
 import { findProjectMetadata } from '../../utils/findProjectMetadata'
 import { getProjectsPaths } from '../../utils/getProjectPaths'
@@ -92,14 +91,13 @@ export function getStaticPaths() {
 }
 
 export function getStaticProps(params: { params: { project: string } }) {
-  const [name, projectData] = Object.entries(l2Data.l2s).find(
+  const [name, projectData] = Object.entries(l2Data.byProject).find(
     ([projectName]) => projectName.toLowerCase() === params.params.project,
   )!
 
-  const tvlData = projectData.data.sort(dateSorter).map((point) => [point.date, point.usd] as const)
+  const tvlData = projectData.aggregate.data.map(([date, usd]) => [date, usd] as const)
 
-  const tvlDelta =
-    (projectData.data[projectData.data.length - 1].usd / projectData.data[projectData.data.length - 2].usd) * 100 - 100
+  const tvlDelta = (tvlData[tvlData.length - 1][1] / tvlData[tvlData.length - 2][1]) * 100 - 100
 
   const projectMetadata = findProjectMetadata(params.params.project)
   const projectBridges = findProjectBridges(params.params.project)
@@ -110,7 +108,7 @@ export function getStaticProps(params: { params: { project: string } }) {
       description: `${name} total value locked increased ${millify(tvlDelta)}% in last 24h!`,
       tvlData,
       name,
-      tvl: projectData.TVL,
+      tvl: tvlData[tvlData.length - 1][1],
       tvlDelta,
       projectMetadata,
       projectBridges,

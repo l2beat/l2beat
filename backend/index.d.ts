@@ -1,20 +1,17 @@
-interface L2Data {
-  TVL: number
-  data: DateEntry[]
-  l2s: {
-    [name: string]: L2Entry
-  }
+interface OutputData {
+  aggregate: Chart
+  byProject: Record<string, ProjectData>
 }
 
-interface L2Entry {
-  TVL: number
-  data: DateEntry[]
+interface ProjectData {
+  aggregate: Chart
+  byToken: Record<string, Chart>
 }
 
-interface DateEntry {
-  date: string
-  usd: number
+interface Chart {
+  types: ['date', string, string]
+  data: [string, number, number][]
 }
 
-declare const l2Data: L2Data
+declare const l2Data: OutputData
 export = l2Data

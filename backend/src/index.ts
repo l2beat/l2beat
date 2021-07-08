@@ -2,7 +2,7 @@ import { projects, tokenList } from '@l2beat/config'
 import fs from 'fs'
 import { projectToInfo, SimpleDate } from './model'
 import { setup } from './services'
-import { LegacyData, makeLegacyData } from './tools/makeLegacyData'
+import { OutputData, makeOutputData } from './tools/makeOutputData'
 import { makeMockData } from './tools/makeMockData'
 
 main().catch((e) => {
@@ -16,32 +16,32 @@ async function main() {
   const endDate = SimpleDate.today()
   const projectInfos = projects.map(projectToInfo)
 
-  let legacyData
+  let outputData
   if (config.mock) {
-    legacyData = makeMockData(projectInfos, endDate)
+    outputData = makeMockData(projectInfos, endDate)
   } else {
     const balances = await balanceCollector.collectBalanceInfo(
       projectInfos,
       tokenList,
       endDate
     )
-    legacyData = makeLegacyData(balances)
+    outputData = makeOutputData(balances)
   }
 
-  await saveData(legacyData)
+  await saveData(outputData)
 
   if (config.updatePrecomputed) {
     asyncCache.updatePrecomputed()
   }
 }
 
-async function saveData(data: LegacyData) {
+async function saveData(data: OutputData) {
   if (!fs.existsSync('./build')) {
     await fs.promises.mkdir('./build')
   }
   await fs.promises.writeFile(
     './build/data.json',
-    JSON.stringify(data, null, 2),
+    JSON.stringify(data),
     'utf-8'
   )
 }

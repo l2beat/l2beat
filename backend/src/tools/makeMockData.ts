@@ -1,39 +1,73 @@
 import { ProjectInfo, SimpleDate } from '../model'
 import { dateRange } from '../utils'
-import { L2Entry, LegacyData } from './makeLegacyData'
+import { ProjectData, OutputData, Chart } from './makeOutputData'
 
 export function makeMockData(
   projects: ProjectInfo[],
   endDate: SimpleDate
-): LegacyData {
-  const l2s: Record<string, L2Entry> = {}
+): OutputData {
+  const byProject: Record<string, ProjectData> = {}
   for (const project of projects) {
-    const block = Math.min(...project.bridges.map((x) => x.sinceBlock))
-    const earliestDate = getBlockDate(block)
-    const dates = dateRange(earliestDate, endDate)
-    l2s[project.name] = fakeData(dates)
+    const dates = getProjectDateRange(project, endDate)
+    const tokens = getProjectTokens(project)
+    byProject[project.name] = fakeProjectData(dates, tokens)
   }
 
-  const blocks = projects.flatMap((x) => x.bridges).map((x) => x.sinceBlock)
-  const earliestDate = getBlockDate(Math.min(...blocks))
-  const dates = dateRange(earliestDate, endDate)
-  const data = fakeData(dates, projects.length * 200)
-  return { ...data, l2s }
+  const dates = getAggregateDateRange(projects, endDate)
+  const aggregate = fakeChart(dates, ['usd', 'eth'], projects.length * 200)
+  return { aggregate, byProject }
 }
 
-function fakeData(dates: SimpleDate[], startBoost = 0): L2Entry {
-  let current = randRange(10, 200) + startBoost
-  const data = dates.map((date) => {
+function getProjectDateRange(project: ProjectInfo, endDate: SimpleDate) {
+  const block = Math.min(...project.bridges.map((x) => x.sinceBlock))
+  const earliestDate = getBlockDate(block)
+  const dates = dateRange(earliestDate, endDate)
+  return dates
+}
+
+function getProjectTokens(project: ProjectInfo) {
+  return project.bridges
+    .flatMap((x) => x.tokens)
+    .map((x) => x.symbol)
+    .filter((x, i, a) => a.indexOf(x) === i)
+}
+
+function getAggregateDateRange(projects: ProjectInfo[], endDate: SimpleDate) {
+  const blocks = projects.flatMap((x) => x.bridges).map((x) => x.sinceBlock)
+  const earliestDate = getBlockDate(Math.min(...blocks))
+  return dateRange(earliestDate, endDate)
+}
+
+function fakeProjectData(dates: SimpleDate[], tokens: string[]): ProjectData {
+  const aggregate = fakeChart(dates, ['usd', 'eth'], tokens.length * 10)
+  const byToken: Record<string, Chart> = {}
+  for (const token of tokens) {
+    byToken[token] = fakeChart(dates, [token, 'usd'])
+  }
+  return { aggregate, byToken }
+}
+
+function fakeChart(
+  dates: SimpleDate[],
+  types: [string, string],
+  boost = 0
+): Chart {
+  let current = randRange(10, 200) + boost
+  let price = randRange(10, 2000)
+  const data: Chart['data'] = dates.map((date) => {
     current *= randRange(0.95, 1.1)
-    return {
-      date: date.toString(),
-      usd: toUsd(current),
+    price *= randRange(0.97, 1.03)
+    if (types[0] === 'usd') {
+      return [date.toString(), toUsd(current), toToken(current / price)]
+    } else {
+      return [date.toString(), toToken(current), toUsd(current * price)]
     }
   })
-  return {
-    TVL: data[data.length - 1].usd,
-    data,
-  }
+  return { types: ['date', ...types], data }
+}
+
+function toToken(n: number) {
+  return parseFloat(n.toFixed(6))
 }
 
 function toUsd(n: number) {
