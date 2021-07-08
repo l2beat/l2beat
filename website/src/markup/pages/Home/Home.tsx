@@ -1,5 +1,7 @@
 import { Project } from '@l2beat/config'
 import { Page } from '../../common/Page'
+import { Footer } from '../../common/Footer'
+import { Navbar } from '../../common/Navbar'
 import { slug } from '../../utils/slug'
 
 interface Props {
@@ -9,6 +11,7 @@ interface Props {
 export function Home({ projects }: Props) {
   return (
     <Page title="L2BEAT – The state of the layer two ecosystem">
+      <Navbar />
       <div>
         <h1>Home</h1>
         <p>Sweet home!</p>
@@ -20,6 +23,7 @@ export function Home({ projects }: Props) {
           ))}
         </ol>
       </div>
+      <Footer />
     </Page>
   )
 }
