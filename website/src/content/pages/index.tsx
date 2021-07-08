@@ -1,6 +1,5 @@
 import { Project } from '@l2beat/config'
 import { ReactElement } from 'react'
-import { slug } from '../utils/slug'
 import { HomePage } from './Home/HomePage'
 import { outputPages } from './output'
 import { ProjectPage } from './Project/ProjectPage'
@@ -12,10 +11,7 @@ export function renderPages(projects: Project[]) {
   pages.set('/', <HomePage projects={projects} />)
   pages.set('/technologies', <TechnologiesPage />)
   for (const project of projects) {
-    pages.set(
-      `project/${slug(project.name)}`,
-      <ProjectPage project={project} />
-    )
+    pages.set(`project/${project.slug}`, <ProjectPage project={project} />)
   }
 
   outputPages(pages)
