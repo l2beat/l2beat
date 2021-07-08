@@ -2,6 +2,7 @@ import { Project } from './Project'
 
 export const habitat: Project = {
   name: 'Habitat',
+  slug: 'habitat',
   bridges: [
     {
       address: '0x96E471B5945373dE238963B4E032D3574be4d195',

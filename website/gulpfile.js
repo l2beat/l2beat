@@ -12,9 +12,9 @@ const STYLE_IN_PATH = 'src/styles/**/*.scss'
 const STYLE_OUT_PATH = 'build/styles'
 
 const STATIC_IN_PATH = 'src/static/**/*'
-const STATIC_OUT_PATH = 'build/static'
+const STATIC_OUT_PATH = 'build'
 
-const MARKUP_IN_PATH = 'src/markup/**/*'
+const CONTENT_IN_PATH = 'src/content/**/*'
 
 const OUT_PATH = 'build'
 
@@ -54,9 +54,9 @@ function watchStatic() {
   return gulp.watch(STATIC_IN_PATH, copyStatic)
 }
 
-function buildMarkup(cb) {
+function buildContent(cb) {
   return exec(
-    '../node_modules/.bin/ts-node src/markup',
+    '../node_modules/.bin/ts-node src/content',
     (err, stdout, stderr) => {
       stdout && console.log(stdout)
       stderr && console.error(stderr)
@@ -65,8 +65,8 @@ function buildMarkup(cb) {
   )
 }
 
-function watchMarkup() {
-  return gulp.watch(MARKUP_IN_PATH, buildMarkup)
+function watchContent() {
+  return gulp.watch(CONTENT_IN_PATH, buildContent)
 }
 
 function serve() {
@@ -79,12 +79,12 @@ function serve() {
 
 const build = gulp.series(
   clean,
-  gulp.parallel(buildScripts, buildStyles, buildMarkup, copyStatic)
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic)
 )
 
 const watch = gulp.series(
   build,
-  gulp.parallel(watchScripts, watchStyles, watchMarkup, watchStatic, serve)
+  gulp.parallel(watchScripts, watchStyles, watchContent, watchStatic, serve)
 )
 
 module.exports = {

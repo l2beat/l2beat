@@ -2,13 +2,12 @@ import { Project } from '@l2beat/config'
 import { Page } from '../../common/Page'
 import { Footer } from '../../common/Footer'
 import { Navbar } from '../../common/Navbar'
-import { slug } from '../../utils/slug'
 
 interface Props {
   projects: Project[]
 }
 
-export function Home({ projects }: Props) {
+export function HomePage({ projects }: Props) {
   return (
     <Page title="L2BEAT – The state of the layer two ecosystem">
       <Navbar />
@@ -18,7 +17,7 @@ export function Home({ projects }: Props) {
         <ol>
           {projects.map((project, i) => (
             <li key={i}>
-              <a href={`/project/${slug(project.name)}`}>{project.name}</a>
+              <a href={`/projects/${project.slug}`}>{project.name}</a>
             </li>
           ))}
         </ol>

@@ -8,6 +8,9 @@ export function Navbar() {
         <li className="navbar__link">
           <a href="/">Overview</a>
         </li>
+        <li className="navbar__link">
+          <a href="/technologies">Technologies</a>
+        </li>
       </ul>
     </nav>
   )

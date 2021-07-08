@@ -5,7 +5,7 @@ interface Props {
   project: Project
 }
 
-export function Project({ project }: Props) {
+export function ProjectPage({ project }: Props) {
   return (
     <Page title={`${project.name} – L2BEAT`}>
       <div>

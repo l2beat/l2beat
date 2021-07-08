@@ -2,6 +2,7 @@ import { Project } from './Project'
 
 export const deversifi: Project = {
   name: 'DeversiFi',
+  slug: 'deversifi',
   bridges: [
     {
       address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',

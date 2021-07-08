@@ -4,19 +4,29 @@ import { projects } from '../src/projects'
 import { getTokenBySymbol } from '../src/tokens'
 
 describe('projects', () => {
-  const addresses = projects.flatMap((x) => x.bridges.map((x) => x.address))
-
-  describe('every addresses is valid and formatted', () => {
-    for (const address of addresses) {
-      it(address, () => {
-        expect(utils.getAddress(address)).to.equal(address)
+  describe('every slug is valid', () => {
+    for (const project of projects) {
+      it(project.slug, () => {
+        expect(project.slug).to.match(/^[a-z\d]+$/)
       })
     }
   })
 
-  it('every bridge has a unique address', () => {
-    const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
-    expect(everyUnique).to.equal(true)
+  describe('addresses', () => {
+    const addresses = projects.flatMap((x) => x.bridges.map((x) => x.address))
+
+    describe('every addresses is valid and formatted', () => {
+      for (const address of addresses) {
+        it(address, () => {
+          expect(utils.getAddress(address)).to.equal(address)
+        })
+      }
+    })
+
+    it('every bridge has a unique address', () => {
+      const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
+      expect(everyUnique).to.equal(true)
+    })
   })
 
   describe('every token is valid', () => {
