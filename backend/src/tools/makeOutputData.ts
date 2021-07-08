@@ -1,7 +1,7 @@
 import { SimpleDate } from '../model'
 import { TVLAnalysis } from '../services/balances/model'
 
-export interface LegacyData {
+export interface OutputData {
   TVL: number
   data: DateEntry[]
   l2s: {
@@ -24,7 +24,7 @@ interface InputEntry {
   balances: TVLAnalysis
 }
 
-export function makeLegacyData(entries: InputEntry[]): LegacyData {
+export function makeOutputData(entries: InputEntry[]): OutputData {
   const lastEntry = entries[entries.length - 1].balances
   const TVL = lastEntry.TVL.usd
   const data = entries.map((entry) => ({

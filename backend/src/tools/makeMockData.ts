@@ -1,11 +1,11 @@
 import { ProjectInfo, SimpleDate } from '../model'
 import { dateRange } from '../utils'
-import { L2Entry, LegacyData } from './makeLegacyData'
+import { L2Entry, OutputData } from './makeOutputData'
 
 export function makeMockData(
   projects: ProjectInfo[],
   endDate: SimpleDate
-): LegacyData {
+): OutputData {
   const l2s: Record<string, L2Entry> = {}
   for (const project of projects) {
     const block = Math.min(...project.bridges.map((x) => x.sinceBlock))
