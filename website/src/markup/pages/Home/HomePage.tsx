@@ -8,7 +8,7 @@ interface Props {
   projects: Project[]
 }
 
-export function Home({ projects }: Props) {
+export function HomePage({ projects }: Props) {
   return (
     <Page title="L2BEAT – The state of the layer two ecosystem">
       <Navbar />
