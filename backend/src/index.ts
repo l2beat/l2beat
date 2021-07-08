@@ -41,7 +41,7 @@ async function saveData(data: OutputData) {
   }
   await fs.promises.writeFile(
     './build/data.json',
-    JSON.stringify(data, null, 2),
+    JSON.stringify(data),
     'utf-8'
   )
 }

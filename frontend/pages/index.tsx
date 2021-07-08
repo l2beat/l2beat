@@ -17,7 +17,6 @@ import { Filter, Graph } from '../components/graphs/Graph'
 import { TVLHistory } from '../components/graphs/TVLHistory'
 import { FullPageGrid } from '../components/PageGrid'
 import styles from '../styles/Home.module.scss'
-import { dateSorter } from '../utils/dateSorter'
 import { findProjectMetadata } from '../utils/findProjectMetadata'
 
 type Unpack<T> = T extends Promise<infer U> ? U : never
@@ -158,19 +157,21 @@ export default function Home({ tvl, tvlHistory: tvlHistory_, tvlDelta, l2sTable 
   )
 }
 export async function getStaticProps() {
-  const sorted = l2Data.data.sort(dateSorter)
-  const tvlHistory = sorted.map((point) => [point.date, point.usd] as const)
+  const sorted = l2Data.aggregate.data
+  const tvlHistory = l2Data.aggregate.data.map(([date, usd]) => [date, usd] as const)
+  const totalTvl = tvlHistory[tvlHistory.length - 1][1]
 
-  const tvlDelta = (sorted[sorted.length - 1].usd / sorted[sorted.length - 2].usd) * 100 - 100
+  const tvlDelta = (sorted[sorted.length - 1][1] / sorted[sorted.length - 2][1]) * 100 - 100
 
-  const l2sTable = Object.entries(l2Data.l2s).map(([name, data]) => {
-    const tvlData = data.data.sort(dateSorter).reverse()
+  const l2sTable = Object.entries(l2Data.byProject).map(([name, data]) => {
+    const tvlData = data.aggregate.data
     const meta = findProjectMetadata(name)
+    const tvl = tvlData[tvlData.length - 1][1]
     return {
       name,
-      tvl: data.TVL,
-      share: (data.TVL / l2Data.TVL) * 100,
-      change: (tvlData[0].usd / tvlData[1].usd) * 100 - 100,
+      tvl,
+      share: (tvl / totalTvl) * 100,
+      change: (tvlData[tvlData.length - 1][1] / tvlData[tvlData.length - 2][1]) * 100 - 100,
       notL2: !!meta.showNotL2Warning,
       color: meta.color,
       technology: meta.technology.name,
@@ -182,7 +183,7 @@ export async function getStaticProps() {
   return {
     props: {
       title: 'L2Beat 💓',
-      tvl: l2Data.TVL,
+      tvl: totalTvl,
       tvlHistory,
       tvlDelta,
       l2sTable: l2sTableSorted,
