@@ -5,6 +5,11 @@ import { AppContainer } from '../components/AppContainer'
 import { PageGrid } from '../components/PageGrid'
 import styles from '../styles/Home.module.scss'
 
+const CHART_CODE = `interface Chart {
+  types: ['date', string, string]
+  data: [string, number, number][]
+}`
+
 export default function Faq() {
   return (
     <AppContainer>
@@ -23,6 +28,34 @@ export default function Faq() {
             <p>
               For details see our{' '}
               <a href="https://github.com/l2beat/l2beat/tree/master/config/src/projects">project definitions</a>.
+            </p>
+          </div>
+
+          <div>
+            <div className={styles.title}>
+              <h3>Is there an API?</h3>
+            </div>
+            <p>Yes, but it is experimental and we offer no guarantees. Use at your own risk.</p>
+            <p>Endpoints</p>
+            <ul>
+              <li>
+                <code>/api/aggregate.json</code> &ndash; Aggregate TVL data from all projects
+              </li>
+              <li>
+                <code>/api/[PROJECT_NAME_LOWERCASE].json</code> &ndash; Aggregate TVL data from a specific project
+              </li>
+              <li>
+                <code>/api/[PROJECT_NAME_LOWERCASE]/[TOKEN_SYMBOL_LOWERCASE].json</code> &ndash; TVL data from a
+                specific project for a specific token
+              </li>
+            </ul>
+            <p>
+              Each endpoint returns a <code>Chart</code> data structure:
+            </p>
+            <p>
+              <pre>
+                <code>{CHART_CODE}</code>
+              </pre>
             </p>
           </div>
 
