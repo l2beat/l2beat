@@ -17,7 +17,7 @@ export function HomePage({ projects }: Props) {
         <ol>
           {projects.map((project, i) => (
             <li key={i}>
-              <a href={`/project/${project.slug}`}>{project.name}</a>
+              <a href={`/projects/${project.slug}`}>{project.name}</a>
             </li>
           ))}
         </ol>

@@ -1,0 +1,3 @@
+/project/layer2.finance     /projects/layer2finance
+/project/omg%20network      /projects/omgnetwork
+/project/*                  /projects/:splat
