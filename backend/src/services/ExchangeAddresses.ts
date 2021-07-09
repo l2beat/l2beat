@@ -9,7 +9,7 @@ import {
   UNISWAP_V3_FACTORY,
   USDC,
   USDT,
-  WETH
+  WETH,
 } from '../constants'
 import { tokensInOrder } from '../utils'
 import { MulticallApi, MulticallRequest, UniV1ExchangeCall } from './multicall'
