@@ -1,0 +1,28 @@
+.footer {
+  margin-top: 80px;
+  margin-bottom: 32px;
+}
+
+.footer__text {
+  margin: 0;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.footer__links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__link {
+  margin: 0 8px;
+
+  a {
+    color: inherit;
+  }
+}
