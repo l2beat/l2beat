@@ -1,0 +1,23 @@
+.header {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__title {
+  font-size: 64px;
+  margin: 0;
+}
+
+.header__tvl,
+.header__change {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.header__tvl-value {
+  font-size: 32px;
+}

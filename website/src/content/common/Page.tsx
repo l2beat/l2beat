@@ -11,7 +11,7 @@ export function Page({ title, children }: Props) {
     <html lang="en">
       <Head title={title} />
       <body>
-        {children}
+        <div className="page">{children}</div>
         <script src="/scripts/main.js" />
       </body>
     </html>

@@ -1,3 +1,12 @@
 @import 'normalize';
+@import 'fonts';
 @import 'properties';
 @import 'global';
+
+@import 'components/page';
+@import 'components/navbar';
+@import 'components/header';
+@import 'components/percent';
+@import 'components/projects';
+@import 'components/financials';
+@import 'components/footer';

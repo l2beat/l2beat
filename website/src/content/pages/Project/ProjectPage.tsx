@@ -1,5 +1,5 @@
 import { Project } from '@l2beat/config'
-import { Page } from '../../common/Page'
+import { Page } from '../../common'
 
 interface Props {
   project: Project

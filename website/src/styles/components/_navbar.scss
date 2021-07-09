@@ -1,0 +1,41 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 80px;
+}
+
+.navbar__logo {
+  display: block;
+  min-width: 88px;
+  margin-right: 24px;
+  position: relative;
+  top: -2px;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-right: 16px;
+}
+
+.navbar__links--left {
+  flex: 1;
+}
+
+.navbar__link {
+  margin-right: 16px;
+
+  .navbar__links--compact > & {
+    margin-right: 8px;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--text);
+  }
+}
