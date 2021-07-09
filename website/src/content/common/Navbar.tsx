@@ -14,9 +14,9 @@ export function Navbar() {
           <a href="/technologies">Technologies</a>
         </li>
       </ul>
-      <ul className="navbar__links navbar__links--right">
+      <ul className="navbar__links navbar__links--compact">
         <li className="navbar__link">
-          <a href="/faq">Faq</a>
+          <a href="/faq">FAQ</a>
         </li>
         <li className="navbar__link">
           <OutLink href="https://twitter.com/l2beatcom" title="Twitter">
