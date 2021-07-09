@@ -1,3 +1,4 @@
+import { GithubIcon, MoonIcon, SunIcon, TwitterIcon } from './icons'
 import { Logo } from './Logo'
 import { OutLink } from './OutLink'
 
@@ -18,12 +19,20 @@ export function Navbar() {
           <a href="/faq">Faq</a>
         </li>
         <li className="navbar__link">
-          <OutLink href="https://twitter.com/l2beatcom">Twitter</OutLink>
+          <OutLink href="https://twitter.com/l2beatcom" title="Twitter">
+            <TwitterIcon aria-label="Twitter" />
+          </OutLink>
         </li>
         <li className="navbar__link">
-          <OutLink href="https://github.com/l2beat/l2beat">Github</OutLink>
+          <OutLink href="https://github.com/l2beat/l2beat" title="Github">
+            <GithubIcon aria-label="Github" />
+          </OutLink>
         </li>
       </ul>
+      <div className="navbar__mode" title="Change color scheme">
+        <SunIcon className="navbar__light-mode" aria-label="Light Mode" />
+        <MoonIcon className="navbar__dark-mode" aria-label="Dark Mode" />
+      </div>
     </nav>
   )
 }
