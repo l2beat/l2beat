@@ -1,4 +1,4 @@
-import { Page } from '../../common/Page'
+import { Page } from '../../common'
 
 export function FaqPage() {
   return (

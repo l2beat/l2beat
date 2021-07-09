@@ -1,6 +1,4 @@
-import { Page } from '../../common/Page'
-import { Footer } from '../../common/Footer'
-import { Navbar } from '../../common/Navbar'
+import { Footer, Navbar, Page } from '../../common'
 import { HomePageProps } from './getHomePageProps'
 import { Header } from './Header'
 

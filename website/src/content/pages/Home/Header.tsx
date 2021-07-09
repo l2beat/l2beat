@@ -1,4 +1,4 @@
-import { PercentChange } from '../../common/PercentChange'
+import { PercentChange } from '../../common'
 
 interface Props {
   tvl: string
