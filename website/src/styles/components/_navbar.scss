@@ -6,7 +6,11 @@
 }
 
 .navbar__logo {
+  display: block;
+  min-width: 88px;
   margin-right: 24px;
+  position: relative;
+  top: -2px;
 }
 
 .navbar__links {
