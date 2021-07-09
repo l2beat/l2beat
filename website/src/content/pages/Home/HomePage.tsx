@@ -2,14 +2,13 @@ import { Page } from '../../common/Page'
 import { Footer } from '../../common/Footer'
 import { Navbar } from '../../common/Navbar'
 import { HomePageProps } from './getHomePageProps'
+import { Header } from './Header'
 
 export function HomePage(props: HomePageProps) {
   return (
     <Page title="L2BEAT – The state of the layer two ecosystem">
       <Navbar />
-      <h1>Overview</h1>
-      <p>TVL: {props.tvl}</p>
-      <p>{props.sevenDayChange} / 7 days</p>
+      <Header tvl={props.tvl} sevenDayChange={props.sevenDayChange} />
       <table>
         <thead>
           <tr>
