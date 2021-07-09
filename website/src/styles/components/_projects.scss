@@ -1,0 +1,29 @@
+.projects {
+  margin-top: 32px;
+}
+
+.projects__title {
+  font-size: 32px;
+  margin: 0;
+}
+
+.projects__disclaimer {
+  margin-top: 16px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--gradient-1),
+    var(--gradient-2),
+    var(--gradient-3)
+  );
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.projects__disclaimer-content {
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+  background-color: var(--background-2);
+  border-radius: 6px;
+}
