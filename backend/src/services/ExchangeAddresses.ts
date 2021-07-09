@@ -1,6 +1,6 @@
+import { TokenInfo } from '@l2beat/config'
 import { constants, utils } from 'ethers'
 import { AbiCoder } from 'ethers/lib/utils'
-import { TokenInfo } from '../../../config/build/src'
 import {
   UNISWAP_V1_SNAPSHOT_BLOCK,
   UNISWAP_V2_CODE_HASH,
