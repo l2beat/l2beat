@@ -12,8 +12,8 @@ export function FinancialView({ items }: Props) {
         <tr>
           <th>No.</th>
           <th>Name</th>
-          <th>1 day change</th>
           <th>Total Value Locked</th>
+          <th>1 day change</th>
           <th>7 day change</th>
           <th>Market share</th>
         </tr>
