@@ -1,4 +1,4 @@
-import { ChartInput } from './ChartInput'
+import { ChartInput } from './state/ChartInput'
 
 export function plot(
   chart: ChartInput,

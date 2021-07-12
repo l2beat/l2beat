@@ -12,7 +12,7 @@ export function HomePage(props: HomePageProps) {
     >
       <Navbar />
       <Header tvl={props.tvl} sevenDayChange={props.sevenDayChange} />
-      <Chart initialData="/api/tvl.json" />
+      <Chart endpoint="/api/tvl.json" />
       <Projects financialView={props.financialView} />
       <Footer />
     </Page>
