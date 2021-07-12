@@ -43,17 +43,20 @@ export const arbitrum: Project = {
         name: 'Permissionless?',
         value: 'No',
         sentiment: 'bad',
-        tooltip: 'Only sequencer can produce new blocks',
-        pointers: [],
+        tooltip:
+          'There currently exists a whitelist for using the rollup. All operations have the onlyWhitelisted modifier.',
+        pointers: [
+          'https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f#code',
+          'https://etherscan.io/address/0xb38634f1192fd4a4864b99a4c9100339815c6450#code#F1#L28',
+        ],
       },
       {
         name: 'Force TX mechanism?',
         value: 'Yes',
         sentiment: 'good',
-        tooltip:
-          "Sequencer can be forced to append particular TX into the rollup. For now it's only for whitelisted accounts.",
+        tooltip: 'Any transaction can be submitted directly on L1.',
         pointers: [
-          'https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f#code',
+          'https://developer.offchainlabs.com/docs/rollup_basics#aggregating-transactions',
         ],
       },
       {
