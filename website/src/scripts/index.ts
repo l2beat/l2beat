@@ -1,4 +1,4 @@
-import { initChart } from './state/chart'
+import { initChart } from './chart'
 
 const chart = document.querySelector('.chart')
 if (chart) {

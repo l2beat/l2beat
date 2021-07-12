@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new Map<string, Promise<any>>()
 
 export function apiGet<T>(url: string): Promise<T> {

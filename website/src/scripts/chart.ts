@@ -1,10 +1,10 @@
-import { getContext } from '../getContext'
-import { getElements } from '../getElements'
-import { makeChartState } from '.'
-import { plot } from '../plot'
+import { getContext } from './getContext'
+import { getElements } from './getElements'
+import { makeChartState } from './state'
+import { plot } from './plot'
 
 export function initChart(chart: HTMLElement) {
-  const { output, canvas } = getElements(chart)
+  const { canvas } = getElements(chart)
   const ctx = getContext(canvas)
 
   const state = makeChartState(chart, () => requestAnimationFrame(draw))

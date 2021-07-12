@@ -1,4 +1,5 @@
 export function getElements(chart: Element) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $ = (selector: string) => chart.querySelector(selector)!
   const $$ = (selector: string) => Array.from(chart.querySelectorAll(selector))
 
