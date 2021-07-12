@@ -2,10 +2,11 @@
   "compilerOptions": {
     "target": "es2019",
     "lib": ["es2019", "DOM"],
-    "module": "commonjs",
+    "module": "CommonJS",
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "outDir": "build",
     "types": ["node", "react", "react-dom", "fs-extra"],

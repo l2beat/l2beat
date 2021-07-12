@@ -1,13 +1,6 @@
-fetch('/api/tvl.json')
-  .then((res) => res.json())
-  .then(plot)
+import { Chart } from './Chart'
 
-interface Chart {
-  types: ['date', string, string]
-  data: [string, number, number][]
-}
-
-function plot(chart: Chart) {
+export function plot(chart: Chart) {
   const canvas: HTMLCanvasElement | null = document.querySelector('#chart')
   const ctx = canvas?.getContext('2d')
   if (!canvas || !ctx) {

@@ -1,12 +1,11 @@
 const gulp = require('gulp')
-const ts = require('gulp-typescript')
 const sass = require('gulp-sass')(require('sass'))
 const del = require('del')
-const { exec } = require('child_process')
+const child_process = require('child_process')
+const path = require('path')
 const express = require('express')
 
 const SCRIPT_IN_PATH = 'src/scripts/**/*.ts'
-const SCRIPT_OUT_PATH = 'build/scripts'
 
 const STYLE_IN_PATH = 'src/styles/**/*.scss'
 const STYLE_OUT_PATH = 'build/styles'
@@ -18,17 +17,29 @@ const CONTENT_IN_PATH = 'src/content/**/*'
 
 const OUT_PATH = 'build'
 
-const tsProject = ts.createProject('tsconfig.json')
+function exec(command) {
+  const nodeModulesHere = path.join(__dirname, './node_modules/.bin')
+  const nodeModulesUp = path.join(__dirname, '../node_modules/.bin')
+  const PATH = `${nodeModulesHere}:${nodeModulesUp}:${process.env.PATH}`
+  return new Promise((resolve, reject) =>
+    child_process.exec(command, { env: { PATH } }, (err, stdout, stderr) => {
+      stdout && console.log(stdout)
+      if (err) {
+        stderr && console.error(stderr)
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  )
+}
 
 function clean() {
   return del(OUT_PATH)
 }
 
 function buildScripts() {
-  return gulp
-    .src(SCRIPT_IN_PATH)
-    .pipe(tsProject())
-    .pipe(gulp.dest(SCRIPT_OUT_PATH))
+  return exec('rollup -c rollup.config.js')
 }
 
 function watchScripts() {
@@ -54,15 +65,8 @@ function watchStatic() {
   return gulp.watch(STATIC_IN_PATH, copyStatic)
 }
 
-function buildContent(cb) {
-  return exec(
-    '../node_modules/.bin/ts-node src/content',
-    (err, stdout, stderr) => {
-      stdout && console.log(stdout)
-      stderr && console.error(stderr)
-      cb(err)
-    }
-  )
+function buildContent() {
+  return exec('ts-node src/content')
 }
 
 function watchContent() {

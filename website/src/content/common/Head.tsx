@@ -11,7 +11,12 @@ export function Head({ title, preloadApi }: Props) {
       <link rel="stylesheet" href="/styles/main.css" />
       <link rel="icon" type="image/png" href="/icon.png" />
       {preloadApi && (
-        <link rel="preload" href={preloadApi} as="fetch" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          href={preloadApi}
+          as="fetch"
+          crossOrigin="anonymous"
+        />
       )}
       <title>{title}</title>
     </head>
