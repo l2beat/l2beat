@@ -1,4 +1,5 @@
 import { Footer, Navbar, Page } from '../../common'
+import { Chart } from './Chart'
 import { HomePageProps } from './getHomePageProps'
 import { Header } from './Header'
 import { Projects } from './Projects'
@@ -11,7 +12,7 @@ export function HomePage(props: HomePageProps) {
     >
       <Navbar />
       <Header tvl={props.tvl} sevenDayChange={props.sevenDayChange} />
-      <canvas className="chart__canvas" data-input="/api/tvl.json" />
+      <Chart initialData="/api/tvl.json" />
       <Projects financialView={props.financialView} />
       <Footer />
     </Page>
