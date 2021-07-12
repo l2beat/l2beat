@@ -1,22 +1,27 @@
-import { getContext } from './getContext'
-import { getElements } from './getElements'
-import { makeChartState } from './state'
+import { getOutputs } from './getOutputs'
 import { plot } from './plot'
+import { ChartStateWithInput, makeChartState } from './state'
+import { toUiState, UiState } from './ui'
 
 export function initChart(chart: HTMLElement) {
-  const { canvas } = getElements(chart)
-  const ctx = getContext(canvas)
+  const outputs = getOutputs(chart)
 
-  const state = makeChartState(chart, () => requestAnimationFrame(draw))
+  let uiState: UiState | undefined
+  const chartState = makeChartState(chart, () => update())
   window.addEventListener('resize', () => requestAnimationFrame(draw))
 
+  function update() {
+    if (chartState.input) {
+      uiState = toUiState(chartState as ChartStateWithInput)
+      requestAnimationFrame(draw)
+    }
+  }
+
   function draw() {
-    if (!state.input) {
+    if (!uiState) {
       return
     }
 
-    console.log(state)
-
-    plot(state.input, state.days, ctx)
+    plot(uiState, outputs)
   }
 }

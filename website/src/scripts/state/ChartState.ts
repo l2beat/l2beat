@@ -7,3 +7,7 @@ export interface ChartState {
   altCurrency: boolean
   logScale: boolean
 }
+
+export interface ChartStateWithInput extends ChartState {
+  input: ChartInput
+}
