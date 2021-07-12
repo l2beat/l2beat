@@ -1,5 +1,7 @@
-import { plot } from './plot'
+import { Chart } from './chart'
 
-fetch('/api/tvl.json')
-  .then((res) => res.json())
-  .then(plot)
+const canvas = document.querySelector('.chart__canvas')
+if (canvas && canvas instanceof HTMLCanvasElement) {
+  const chart = new Chart(canvas)
+  Object.defineProperty(window, 'chart', { value: chart })
+}

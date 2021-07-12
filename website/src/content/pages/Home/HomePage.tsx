@@ -11,7 +11,7 @@ export function HomePage(props: HomePageProps) {
     >
       <Navbar />
       <Header tvl={props.tvl} sevenDayChange={props.sevenDayChange} />
-      <canvas id="chart" style={{ width: '100%', height: '300px' }} />
+      <canvas className="chart__canvas" data-input="/api/tvl.json" />
       <Projects financialView={props.financialView} />
       <Footer />
     </Page>

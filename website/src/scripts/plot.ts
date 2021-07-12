@@ -1,12 +1,11 @@
-import { Chart } from './Chart'
+import { ChartInput } from './ChartInput'
 
-export function plot(chart: Chart) {
-  const canvas: HTMLCanvasElement | null = document.querySelector('#chart')
-  const ctx = canvas?.getContext('2d')
-  if (!canvas || !ctx) {
-    return
-  }
-
+export function plot(
+  chart: ChartInput,
+  period: number,
+  ctx: CanvasRenderingContext2D
+) {
+  const canvas = ctx.canvas
   const box = canvas.getBoundingClientRect()
   canvas.width = box.width
   canvas.height = box.height
@@ -15,7 +14,7 @@ export function plot(chart: Chart) {
     (n: number) =>
     <T>(v: T, i: number, arr: T[]) =>
       i > arr.length - 1 - n
-  const entries = chart.data.map((x) => x[1]).filter(isLastN(90))
+  const entries = chart.data.map((x) => x[1]).filter(isLastN(period))
 
   const min = Math.min(...entries)
   const max = Math.max(...entries)
