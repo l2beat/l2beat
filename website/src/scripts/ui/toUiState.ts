@@ -24,8 +24,15 @@ export function toUiState(state: ChartStateWithInput): UiState {
     ? 'Total Value Locked (ETH equivalent)'
     : 'Total Value Locked (USD equivalent)'
 
-  const values = dataPoints.map((x) => x[state.altCurrency ? 2 : 1])
-  const ticks = calculateTicks(5, Math.min(...values), Math.max(...values))
+  let values = dataPoints.map((x) => x[state.altCurrency ? 2 : 1])
+  let ticks = calculateTicks(5, Math.min(...values), Math.max(...values))
+  const labels = ticks.map((x) => x.toString())
+  if (state.logScale) {
+    // TODO: better log scale support
+    values = values.map((x) => Math.log(x))
+    ticks[0] = Math.min(...values)
+    ticks = ticks.map((x) => Math.log(x))
+  }
   const [min, , , , max] = ticks
 
   const points = values.map((value, i) => ({
@@ -36,7 +43,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
   return {
     dateRange,
     description,
-    labels: ticks.map((x) => x.toString()),
+    labels,
     points,
   }
 }

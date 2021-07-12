@@ -11,20 +11,20 @@ const MONTHS: Record<string, string> = {
   '10': 'Oct',
   '11': 'Nov',
   '12': 'Dec',
-};
+}
 
 export function toDateRange(from: string, to: string) {
-  const [year1, month1, day1] = from.split('-');
-  const [year2, month2, day2] = to.split('-');
+  const [year1, month1, day1] = from.split('-')
+  const [year2, month2, day2] = to.split('-')
 
-  const first = toNiceDate(day1, month1, year1 !== year2 ? year1 : undefined);
-  const second = toNiceDate(day2, month2, year2);
+  const first = toNiceDate(day1, month1, year1 !== year2 ? year1 : undefined)
+  const second = toNiceDate(day2, month2, year2)
 
-  return `${first} &ndash; ${second}`;
+  return `${first} &ndash; ${second}`
 }
 
 function toNiceDate(day: string, month: string, year?: string) {
   return year === undefined
     ? `${parseInt(day)} ${MONTHS[month]}`
-    : `${parseInt(day)} ${MONTHS[month]} ${parseInt(year)}`;
+    : `${parseInt(day)} ${MONTHS[month]} ${parseInt(year)}`
 }

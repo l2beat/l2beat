@@ -1,12 +1,11 @@
-
 export interface UiState {
-  dateRange: string;
-  description: string;
-  labels: string[];
-  points: Point[];
+  dateRange: string
+  description: string
+  labels: string[]
+  points: Point[]
 }
 
 export interface Point {
-  x: number;
-  y: number;
+  x: number
+  y: number
 }
