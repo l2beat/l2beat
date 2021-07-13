@@ -33,6 +33,10 @@
     margin-right: 8px;
   }
 
+  svg {
+    display: block;
+  }
+
   a {
     text-decoration: none;
     font-weight: bold;
@@ -54,6 +58,11 @@
   background: transparent;
   padding: 0;
   cursor: pointer;
+  display: block;
+
+  svg {
+    display: block;
+  }
 }
 
 .navbar__light-mode {

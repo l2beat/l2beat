@@ -1,6 +1,6 @@
 .chart {
   display: grid;
-  grid-template-columns: auto 1fr 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   row-gap: 16px;
   margin-top: 16px;
 }
@@ -80,7 +80,7 @@
 }
 
 .chart__label {
-  font-size: 16px;
+  font-size: var(--font-s);
   opacity: 80%;
   z-index: 1;
   user-select: none;
@@ -132,7 +132,7 @@
   grid-column: 2 / span 2;
   margin: 0;
   text-align: center;
-  font-size: 16px;
+  font-size: var(--font-s);
   display: flex;
   align-items: center;
   justify-content: center;
