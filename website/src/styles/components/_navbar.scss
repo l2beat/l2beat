@@ -36,6 +36,35 @@
   a {
     text-decoration: none;
     font-weight: bold;
-    color: var(--text);
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.navbar__mode {
+  display: none;
+}
+
+.navbar__light-mode,
+.navbar__dark-mode {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.navbar__light-mode {
+  display: none;
+  @include dark-mode {
+    display: block;
+  }
+}
+
+.navbar__dark-mode {
+  @include dark-mode {
+    display: none;
   }
 }
