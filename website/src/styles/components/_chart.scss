@@ -1,0 +1,140 @@
+.chart {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  row-gap: 16px;
+  margin-top: 16px;
+}
+
+.chart__range {
+  grid-column: 1 / span 2;
+  margin: 0;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.chart__range-controls {
+  grid-column: 3 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.chart__currency-controls {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chart__scale-controls {
+  grid-column: 4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.chart__button {
+  display: block;
+  position: relative;
+
+  & + & {
+    margin-left: 8px;
+  }
+
+  & > input {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    width: 53px;
+    height: 27px;
+    opacity: 0;
+  }
+
+  & > span {
+    display: block;
+    width: 53px;
+    height: 27px;
+    border-radius: 6px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    background-color: var(--background-2);
+  }
+
+  input:checked + span {
+    background-color: var(--background-4);
+  }
+}
+
+.chart__view {
+  position: relative;
+  grid-column: 1 / span 4;
+  height: 260px;
+}
+
+.chart__line {
+  border-bottom: 1px solid var(--background-3);
+}
+
+.chart__label {
+  font-size: 16px;
+  opacity: 80%;
+  z-index: 1;
+  user-select: none;
+}
+
+.chart__line,
+.chart__label {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  &:nth-child(1) {
+    bottom: 240px;
+  }
+  &:nth-child(2) {
+    bottom: 180px;
+  }
+  &:nth-child(3) {
+    bottom: 120px;
+  }
+  &:nth-child(4) {
+    bottom: 60px;
+  }
+  &:nth-child(5) {
+    bottom: 0;
+  }
+}
+
+.chart__watermark {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 1;
+  width: 59px;
+  height: 24px;
+  opacity: 0.4;
+}
+
+.chart__canvas {
+  display: block;
+  width: 100%;
+  height: 240px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.chart__description {
+  grid-column: 2 / span 2;
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

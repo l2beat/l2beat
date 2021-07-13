@@ -16,6 +16,7 @@
   "devDependencies": {
     "@l2beat/backend": "0.1.0",
     "@l2beat/config": "0.1.0",
+    "@rollup/plugin-typescript": "^8.2.1",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^15.12.5",
     "@types/react": "^17.0.3",
@@ -25,10 +26,10 @@
     "fs-extra": "^10.0.0",
     "gulp": "^4.0.2",
     "gulp-sass": "^5.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
     "millify": "^4.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "rollup": "^2.53.1",
     "sass": "^1.35.1"
   }
 }
