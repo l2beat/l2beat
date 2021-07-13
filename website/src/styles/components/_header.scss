@@ -6,18 +6,26 @@
 }
 
 .header__title {
-  font-size: 64px;
+  font-size: var(--font-xxl);
   margin: 0;
 }
 
 .header__tvl,
 .header__change {
   margin: 0;
-  font-size: 24px;
+  font-size: var(--font-l);
   font-weight: bold;
   text-align: right;
+
+  @media (max-width: 550px) {
+    font-size: var(--font-m);
+  }
 }
 
 .header__tvl-value {
-  font-size: 32px;
+  font-size: var(--font-xl);
+
+  @media (max-width: 550px) {
+    font-size: var(--font-l);
+  }
 }

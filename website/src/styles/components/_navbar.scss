@@ -20,10 +20,15 @@
   padding: 0;
   list-style-type: none;
   margin-right: 16px;
+  margin-left: auto;
 }
 
 .navbar__links--left {
   flex: 1;
+
+  @media (max-width: 550px) {
+    display: none;
+  }
 }
 
 .navbar__link {
@@ -31,6 +36,10 @@
 
   .navbar__links--compact > & {
     margin-right: 8px;
+  }
+
+  svg {
+    display: block;
   }
 
   a {
@@ -45,11 +54,7 @@
 }
 
 .navbar__mode {
-  display: none;
-}
-
-.navbar__light-mode,
-.navbar__dark-mode {
+  display: block;
   border: none;
   background: transparent;
   padding: 0;
@@ -64,6 +69,7 @@
 }
 
 .navbar__dark-mode {
+  display: block;
   @include dark-mode {
     display: none;
   }

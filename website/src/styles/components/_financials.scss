@@ -1,5 +1,10 @@
 .financials {
   width: 100%;
+  overflow-x: auto;
+}
+
+.financials__table {
+  width: 100%;
   border-collapse: collapse;
   margin-top: 16px;
   text-align: left;
@@ -8,10 +13,29 @@
 .financials__header {
   tr {
     border-bottom: 1px solid var(--background-4);
+    white-space: nowrap;
+
+    [data-narrow] {
+      display: none;
+
+      @media (max-width: 550px) {
+        display: block;
+      }
+    }
+
+    [data-wide] {
+      @media (max-width: 550px) {
+        display: none;
+      }
+    }
   }
 
   th {
-    padding: 8px 0;
+    padding: 8px 8px 8px 0;
+
+    &:last-child {
+      padding-right: 0;
+    }
 
     &:nth-child(n + 3) {
       text-align: right;
@@ -30,7 +54,11 @@
   }
 
   td {
-    padding: 8px 0;
+    padding: 8px 8px 8px 0;
+
+    &:last-child {
+      padding-right: 0;
+    }
 
     &:nth-child(n + 3) {
       text-align: right;

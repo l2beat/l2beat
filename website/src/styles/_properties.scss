@@ -10,6 +10,12 @@
   --gradient-1: #7e41cc;
   --gradient-2: #d83da4;
   --gradient-3: #ee2c01;
+
+  --font-s: 16px;
+  --font-m: 18px;
+  --font-l: 24px;
+  --font-xl: 32px;
+  --font-xxl: 64px;
 }
 
 @mixin dark-mode-colors {
@@ -29,4 +35,15 @@
 
 :root[data-theme='dark'] {
   @include dark-mode-colors();
+}
+
+@media (max-width: 1000px) {
+  html,
+  body {
+    --font-s: 14px;
+    --font-m: 16px;
+    --font-l: 18px;
+    --font-xl: 24px;
+    --font-xxl: 32px;
+  }
 }

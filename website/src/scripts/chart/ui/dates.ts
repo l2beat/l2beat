@@ -20,7 +20,7 @@ export function toDateRange(from: string, to: string) {
   const first = toNiceDate(day1, month1, year1 !== year2 ? year1 : undefined)
   const second = toNiceDate(day2, month2, year2)
 
-  return `${first} &ndash; ${second}`
+  return `${first} &ndash;\n${second}`
 }
 
 function toNiceDate(day: string, month: string, year?: string) {

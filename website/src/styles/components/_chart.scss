@@ -1,6 +1,6 @@
 .chart {
   display: grid;
-  grid-template-columns: auto 1fr 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   row-gap: 16px;
   margin-top: 16px;
 }
@@ -11,6 +11,10 @@
   font-weight: bold;
   display: flex;
   align-items: center;
+
+  @media (max-width: 450px) {
+    white-space: pre;
+  }
 }
 
 .chart__range-controls {
@@ -18,6 +22,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media (max-width: 550px) {
+    .chart__button:nth-child(3),
+    .chart__button:nth-child(4) {
+      display: none;
+    }
+  }
 }
 
 .chart__currency-controls {
@@ -25,6 +36,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 550px) {
+    grid-column: 1 / span 2;
+  }
 }
 
 .chart__scale-controls {
@@ -32,6 +47,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media (max-width: 550px) {
+    grid-column: 3 / span 2;
+    grid-row: 3;
+  }
 }
 
 .chart__button {
@@ -73,6 +93,10 @@
   position: relative;
   grid-column: 1 / span 4;
   height: 260px;
+
+  @media (max-width: 550px) {
+    height: 200px;
+  }
 }
 
 .chart__line {
@@ -80,7 +104,7 @@
 }
 
 .chart__label {
-  font-size: 16px;
+  font-size: var(--font-s);
   opacity: 80%;
   z-index: 1;
   user-select: none;
@@ -107,6 +131,24 @@
   &:nth-child(5) {
     bottom: 0;
   }
+
+  @media (max-width: 550px) {
+    &:nth-child(1) {
+      bottom: 180px;
+    }
+    &:nth-child(2) {
+      bottom: 135px;
+    }
+    &:nth-child(3) {
+      bottom: 90px;
+    }
+    &:nth-child(4) {
+      bottom: 45px;
+    }
+    &:nth-child(5) {
+      bottom: 0;
+    }
+  }
 }
 
 .chart__watermark {
@@ -126,14 +168,22 @@
   position: absolute;
   bottom: 0;
   left: 0;
+
+  @media (max-width: 550px) {
+    height: 180px;
+  }
 }
 
 .chart__description {
   grid-column: 2 / span 2;
   margin: 0;
   text-align: center;
-  font-size: 16px;
+  font-size: var(--font-s);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 550px) {
+    grid-column: 1 / span 4;
+  }
 }
