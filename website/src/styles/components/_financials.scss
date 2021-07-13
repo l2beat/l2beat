@@ -47,3 +47,17 @@
     }
   }
 }
+
+.financials__name {
+  position: relative;
+  padding-left: 30px;
+}
+
+.financials__icon {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: block;
+  width: 18px;
+  height: 18px;
+}

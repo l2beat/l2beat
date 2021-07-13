@@ -23,7 +23,17 @@ export function FinancialView({ items }: Props) {
           <tr key={i}>
             <td>{i + 1}.</td>
             <td>
-              <a href={`/projects/${project.slug}`}>{project.name}</a>
+              <a
+                className="financials__name"
+                href={`/projects/${project.slug}`}
+              >
+                <img
+                  className="financials__icon"
+                  src={`/icons/${project.slug}.png`}
+                  alt={`${project.name} logo`}
+                />
+                {project.name}
+              </a>
             </td>
             <td>{project.tvl}</td>
             <td>
