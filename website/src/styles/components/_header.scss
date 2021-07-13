@@ -16,8 +16,16 @@
   font-size: var(--font-l);
   font-weight: bold;
   text-align: right;
+
+  @media (max-width: 550px) {
+    font-size: var(--font-m);
+  }
 }
 
 .header__tvl-value {
   font-size: var(--font-xl);
+
+  @media (max-width: 550px) {
+    font-size: var(--font-l);
+  }
 }
