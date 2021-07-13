@@ -3,6 +3,8 @@
 @import 'properties';
 @import 'global';
 
+@import 'mixins/dark-mode';
+
 @import 'components/page';
 @import 'components/navbar';
 @import 'components/header';

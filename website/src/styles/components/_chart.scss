@@ -84,6 +84,8 @@
   opacity: 80%;
   z-index: 1;
   user-select: none;
+  text-shadow: 1px 1px 1px var(--background), -1px 1px 1px var(--background),
+    1px -1px 1px var(--background), -1px -1px 1px var(--background);
 }
 
 .chart__line,

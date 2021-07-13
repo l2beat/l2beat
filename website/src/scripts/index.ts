@@ -1,6 +1,9 @@
 import { initChart } from './chart'
+import { darkModeSupport } from './darkModeSupport'
 
-const chart = document.querySelector('.chart')
+darkModeSupport()
+
+const chart = document.querySelector<HTMLElement>('.chart')
 if (chart) {
-  initChart(chart as HTMLElement)
+  initChart(chart)
 }

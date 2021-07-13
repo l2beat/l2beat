@@ -8,6 +8,25 @@
   --positive-green: #88b130;
   --negative-red: #d70000;
   --gradient-1: #7e41cc;
-  --gradient-2: #ff46c0;
+  --gradient-2: #d83da4;
   --gradient-3: #ee2c01;
+}
+
+@mixin dark-mode-colors {
+  --brand-red: #bd114f;
+  --background: #1b1b1b;
+  --background-2: #2f2f2f;
+  --background-3: #424242;
+  --background-4: #565656;
+  --text: #fafafa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-mode-colors();
+  }
+}
+
+:root[data-theme='dark'] {
+  @include dark-mode-colors();
 }
