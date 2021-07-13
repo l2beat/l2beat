@@ -31,14 +31,10 @@ export function Navbar() {
           </OutLink>
         </li>
       </ul>
-      <div className="navbar__mode" title="Change color scheme">
-        <button className="navbar__light-mode">
-          <SunIcon aria-label="Light Mode" />
-        </button>
-        <button className="navbar__dark-mode">
-          <MoonIcon aria-label="Dark Mode" />
-        </button>
-      </div>
+      <button className="navbar__mode" title="Change color scheme">
+        <SunIcon className="navbar__light-mode" aria-label="Light Mode" />
+        <MoonIcon className="navbar__dark-mode" aria-label="Light Mode" />
+      </button>
     </nav>
   )
 }

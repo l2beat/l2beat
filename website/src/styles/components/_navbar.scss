@@ -54,20 +54,11 @@
 }
 
 .navbar__mode {
-  display: none;
-}
-
-.navbar__light-mode,
-.navbar__dark-mode {
+  display: block;
   border: none;
   background: transparent;
   padding: 0;
   cursor: pointer;
-  display: block;
-
-  svg {
-    display: block;
-  }
 }
 
 .navbar__light-mode {
@@ -78,6 +69,7 @@
 }
 
 .navbar__dark-mode {
+  display: block;
   @include dark-mode {
     display: none;
   }
