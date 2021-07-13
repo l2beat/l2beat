@@ -22,7 +22,7 @@ export const optimism: Project = {
       tokens: ['SNX'],
     },
     {
-      address: '0x10E6593CDda8c58a1d0f14C5164B376352a55f2F',
+      address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
       sinceBlock: 12781431,
       tokens: ['DAI'],
     },
