@@ -5,7 +5,9 @@ import { OutLink } from './OutLink'
 export function Navbar() {
   return (
     <nav className="navbar">
-      <Logo className="navbar__logo" />
+      <a href="/">
+        <Logo className="navbar__logo" />
+      </a>
       <ul className="navbar__links navbar__links--left">
         <li className="navbar__link">
           <a href="/">Overview</a>

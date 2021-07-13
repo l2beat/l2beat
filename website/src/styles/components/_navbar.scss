@@ -20,10 +20,15 @@
   padding: 0;
   list-style-type: none;
   margin-right: 16px;
+  margin-left: auto;
 }
 
 .navbar__links--left {
   flex: 1;
+
+  @media (max-width: 550px) {
+    display: none;
+  }
 }
 
 .navbar__link {
