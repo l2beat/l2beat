@@ -12,8 +12,8 @@ export function plot(uiState: UiState, outputs: Outputs) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const ctx = canvas.getContext('2d')!
   const box = canvas.getBoundingClientRect()
-  canvas.width = box.width
-  canvas.height = box.height
+  canvas.width = box.width * window.devicePixelRatio
+  canvas.height = box.height * window.devicePixelRatio
 
   ctx.beginPath()
   for (const [i, { x, y }] of uiState.points.entries()) {
@@ -24,24 +24,26 @@ export function plot(uiState: UiState, outputs: Outputs) {
     }
   }
 
-  const strokeGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
-  const fillGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
   const style = getComputedStyle(canvas)
 
+  const strokeGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
   strokeGradient.addColorStop(0, style.getPropertyValue('--gradient-1'))
-  fillGradient.addColorStop(0, style.getPropertyValue('--gradient-1') + '60')
   strokeGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2'))
-  fillGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2') + '60')
   strokeGradient.addColorStop(1, style.getPropertyValue('--gradient-3'))
+
+  const fillGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
+  fillGradient.addColorStop(0, style.getPropertyValue('--gradient-1') + '60')
+  fillGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2') + '60')
   fillGradient.addColorStop(1, style.getPropertyValue('--gradient-3') + '60')
 
   ctx.strokeStyle = strokeGradient
-  ctx.lineWidth = 2
+  ctx.fillStyle = fillGradient
+  ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
+  ctx.lineJoin = 'round'
   ctx.stroke()
 
   ctx.lineTo(canvas.width, canvas.height)
   ctx.lineTo(0, canvas.height)
   ctx.closePath()
-  ctx.fillStyle = fillGradient
   ctx.fill()
 }
