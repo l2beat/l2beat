@@ -8,4 +8,7 @@ export interface UiState {
 export interface Point {
   x: number
   y: number
+  date: string
+  valueA: string
+  valueB: string
 }

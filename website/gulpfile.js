@@ -76,7 +76,7 @@ function watchContent() {
 function serve() {
   const app = express()
   app.use(express.static(OUT_PATH))
-  const server = app.listen(8080)
+  const server = app.listen(8080, '0.0.0.0')
   console.log('Listening on http://localhost:8080')
   return server
 }

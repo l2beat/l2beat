@@ -1,0 +1,57 @@
+.chart-hover--hidden {
+  display: none;
+}
+
+.chart-hover__line {
+  position: absolute;
+  display: block;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: var(--text);
+  z-index: 3;
+}
+
+.chart-hover__circle {
+  position: absolute;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  border: 2px solid var(--text);
+  background-color: var(--background);
+  z-index: 4;
+}
+
+.chart-hover__contents {
+  position: absolute;
+  z-index: 3;
+  padding: 8px;
+  border-radius: 6px;
+  border: 2px solid var(--text);
+  background-color: var(--background);
+  text-align: right;
+  font-size: var(--font-s);
+  height: 76px;
+  user-select: none;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.chart-hover__date {
+  font-weight: bold;
+  margin-bottom: 4px;
+  @media (max-width: 550px) {
+    margin-bottom: 8px;
+  }
+}
+
+.chart-hover__value-a,
+.chart-hover__value-b {
+  @media (max-width: 350px) {
+    font-size: var(--font-xs);
+  }
+}

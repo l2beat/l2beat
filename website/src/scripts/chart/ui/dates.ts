@@ -23,6 +23,11 @@ export function toDateRange(from: string, to: string) {
   return `${first} &ndash;\n${second}`
 }
 
+export function formatDate(date: string) {
+  const [year, month, day] = date.split('-')
+  return toNiceDate(day, month, year)
+}
+
 function toNiceDate(day: string, month: string, year?: string) {
   return year === undefined
     ? `${parseInt(day)} ${MONTHS[month]}`

@@ -1,10 +1,11 @@
-export function getControls(chart: Element) {
-  const $$ = (selector: string) => Array.from(chart.querySelectorAll(selector))
+import { makeQuery } from '../query'
 
+export function getControls(chart: Element) {
+  const { $$ } = makeQuery(chart)
   return {
-    range: $$('.chart__range-controls input') as HTMLInputElement[],
-    currency: $$('.chart__currency-controls input') as HTMLInputElement[],
-    scale: $$('.chart__scale-controls input') as HTMLInputElement[],
-    token: $$('.chart__token-controls input') as HTMLInputElement[],
+    range: $$<HTMLInputElement>('.chart__range-controls input'),
+    currency: $$<HTMLInputElement>('.chart__currency-controls input'),
+    scale: $$<HTMLInputElement>('.chart__scale-controls input'),
+    token: $$<HTMLInputElement>('.chart__token-controls input'),
   }
 }

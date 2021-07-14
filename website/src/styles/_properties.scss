@@ -11,6 +11,7 @@
   --gradient-2: #d83da4;
   --gradient-3: #ee2c01;
 
+  --font-xs: 14px;
   --font-s: 16px;
   --font-m: 18px;
   --font-l: 24px;
@@ -40,6 +41,7 @@
 @media (max-width: 1000px) {
   html,
   body {
+    --font-xs: 12px;
     --font-s: 14px;
     --font-m: 16px;
     --font-l: 18px;
