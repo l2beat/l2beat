@@ -22,7 +22,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
   }
 
   if (state.endpoint) {
-    updateInput(state.endpoint)
+    setTimeout(() => updateInput(state.endpoint))
   }
 
   onRadioChange(controls.range, (control) => {
@@ -63,6 +63,8 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
 
   function updateInput(url: string) {
     state.endpoint = url
+    state.input = undefined
+    onChange()
     apiGet<ChartInput>(url).then((result) => {
       // prevent race conditions
       if (state.endpoint === url) {

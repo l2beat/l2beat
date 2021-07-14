@@ -1,4 +1,4 @@
-export * from './Chart'
+export * from './chart/Chart'
 export * from './Footer'
 export * from './Head'
 export * from './Header'

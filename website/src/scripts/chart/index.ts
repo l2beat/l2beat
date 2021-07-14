@@ -11,17 +11,11 @@ export function initChart(chart: HTMLElement) {
   window.addEventListener('resize', () => requestAnimationFrame(draw))
 
   function update() {
-    if (chartState.input) {
-      uiState = toUiState(chartState as ChartStateWithInput)
-      requestAnimationFrame(draw)
-    }
+    uiState = chartState.input && toUiState(chartState as ChartStateWithInput)
+    requestAnimationFrame(draw)
   }
 
   function draw() {
-    if (!uiState) {
-      return
-    }
-
     plot(uiState, outputs)
   }
 }

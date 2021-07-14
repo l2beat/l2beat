@@ -1,7 +1,13 @@
 import { Outputs } from './getOutputs'
 import { UiState } from './ui'
 
-export function plot(uiState: UiState, outputs: Outputs) {
+export function plot(uiState: UiState | undefined, outputs: Outputs) {
+  if (!uiState) {
+    outputs.loader.classList.remove('chart__loader--hidden')
+    return
+  }
+  outputs.loader.classList.add('chart__loader--hidden')
+
   outputs.range.innerHTML = uiState.dateRange
   outputs.description.innerHTML = uiState.description
   for (let i = 0; i < 5; i++) {
