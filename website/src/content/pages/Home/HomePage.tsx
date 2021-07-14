@@ -1,5 +1,4 @@
-import { Footer, Header, Navbar, Page } from '../../common'
-import { Chart } from './Chart'
+import { Chart, Footer, Header, Navbar, Page } from '../../common'
 import { HomePageProps } from './getHomePageProps'
 import { Projects } from './Projects'
 

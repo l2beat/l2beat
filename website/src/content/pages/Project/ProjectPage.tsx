@@ -1,5 +1,5 @@
 import { Header, Navbar, Page } from '../../common'
-import { Chart } from '../Home/Chart'
+import { Chart } from '../../common/Chart'
 import { ProjectPageProps } from './getProjectPageProps'
 
 export function ProjectPage(props: ProjectPageProps) {
@@ -13,7 +13,7 @@ export function ProjectPage(props: ProjectPageProps) {
         tvl={props.tvl}
         sevenDayChange={props.sevenDayChange}
       />
-      <Chart endpoint={props.apiEndpoint} />
+      <Chart endpoint={props.apiEndpoint} tokens={props.tokens} />
     </Page>
   )
 }

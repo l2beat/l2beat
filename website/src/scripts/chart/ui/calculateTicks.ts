@@ -1,4 +1,11 @@
 export function calculateTicks(ticks: number, min: number, max: number) {
+  if (min === max) {
+    if (min === 0) {
+      return [0, 0, 0, 0, 0]
+    }
+    return [0, min / 2, min, min * 1.5, min * 2]
+  }
+
   const baseRange = max - min
   const newMin = Math.max(0, min - baseRange * 0.05)
   const newMax = max + baseRange * 0.05

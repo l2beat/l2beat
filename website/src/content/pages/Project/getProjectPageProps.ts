@@ -10,6 +10,7 @@ export interface ProjectPageProps {
   sevenDayChange: string
   icon: string
   apiEndpoint: string
+  tokens: { symbol: string; endpoint: string }[]
 }
 
 export function getProjectPageProps(
@@ -28,6 +29,7 @@ export function getProjectPageProps(
     sevenDayChange,
     icon: `/icons/${project.slug}.png`,
     apiEndpoint: `/api/${project.slug}.json`,
+    tokens: getTokens(project),
   }
 }
 
@@ -41,4 +43,15 @@ function getTitleLength(name: string): ProjectPageProps['titleLength'] {
     case 'Layer2.Finance':
       return 'very-long'
   }
+}
+
+function getTokens(project: Project) {
+  return project.bridges
+    .flatMap((x) => x.tokens)
+    .filter((x, i, a) => a.indexOf(x) === i)
+    .sort()
+    .map((x) => ({
+      symbol: x,
+      endpoint: `/api/${project.slug}/${x.toLowerCase()}.json`,
+    }))
 }
