@@ -1,4 +1,5 @@
 import { getOutputs } from './getOutputs'
+import { initHover } from './hover'
 import { plot } from './plot'
 import { ChartStateWithInput, makeChartState } from './state'
 import { toUiState, UiState } from './ui'
@@ -15,7 +16,10 @@ export function initChart(chart: HTMLElement) {
     requestAnimationFrame(draw)
   }
 
+  const hover = initHover(chart)
+
   function draw() {
+    hover.update(uiState)
     plot(uiState, outputs)
   }
 }

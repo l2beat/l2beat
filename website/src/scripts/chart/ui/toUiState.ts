@@ -1,8 +1,8 @@
 import { ChartStateWithInput } from '../state'
 import { calculateTicks } from './calculateTicks'
-import { toDateRange } from './dates'
+import { formatDate, toDateRange } from './dates'
 import { UiState } from './UiState'
-import { formatCurrency } from './format'
+import { formatCurrency, formatCurrencyExact } from './format'
 
 export function toUiState(state: ChartStateWithInput): UiState {
   const dataPoints = state.input.data.filter(
@@ -33,9 +33,12 @@ export function toUiState(state: ChartStateWithInput): UiState {
   const labels = ticks.map((x) => formatCurrency(x, currency))
   const [min, , , , max] = ticks
 
-  const points = values.map((value, i) => ({
+  const points = dataPoints.map(([date, valueA, valueB], i) => ({
     x: i / (values.length - 1),
-    y: (value - min) / (max - min),
+    y: ((state.altCurrency ? valueB : valueA) - min) / (max - min),
+    date: formatDate(date),
+    valueA: formatCurrencyExact(valueA, state.input.types[1]),
+    valueB: formatCurrencyExact(valueB, state.input.types[2]),
   }))
 
   return {

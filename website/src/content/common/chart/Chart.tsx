@@ -1,5 +1,6 @@
 import { Logo } from '../Logo'
 import { ChartButton } from './ChartButton'
+import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 
 interface Props {
@@ -20,6 +21,7 @@ export function Chart({ endpoint, tokens }: Props) {
       </div>
       <div className="chart__view" role="img" aria-label="chart">
         <ChartLoader />
+        <ChartHover />
         <div className="chart__lines">
           <div className="chart__line" />
           <div className="chart__line" />
