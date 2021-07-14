@@ -18,6 +18,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     days: toDays(controls.range.find((x) => x.checked)?.value ?? '90D'),
     altCurrency: controls.currency.find((x) => x.checked)?.value === 'ETH',
     logScale: controls.scale.find((x) => x.checked)?.value === 'LOG',
+    token: selected?.value,
   }
 
   if (state.endpoint) {
@@ -31,6 +32,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
 
   onRadioChange(controls.currency, (control) => {
     state.altCurrency = control.value === 'ETH'
+    state.token = undefined
     for (const input of controls.token) {
       input.checked = false
     }
@@ -49,6 +51,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
 
   onRadioChange(controls.token, (control) => {
     state.endpoint = getEndpoint(control)
+    state.token = control.value
     state.altCurrency = false
     for (const input of controls.currency) {
       input.checked = false

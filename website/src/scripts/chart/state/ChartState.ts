@@ -6,6 +6,7 @@ export interface ChartState {
   days: number
   altCurrency: boolean
   logScale: boolean
+  token?: string
 }
 
 export interface ChartStateWithInput extends ChartState {
