@@ -1,4 +1,4 @@
-import { PercentChange } from '.'
+import { PercentChange } from './PercentChange'
 
 interface Props {
   title: string

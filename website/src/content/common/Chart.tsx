@@ -1,4 +1,4 @@
-import { Logo } from '.'
+import { Logo } from './Logo'
 import { ChartButton } from './ChartButton'
 
 interface Props {
