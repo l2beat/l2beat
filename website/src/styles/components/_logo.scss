@@ -1,0 +1,29 @@
+.logo {
+  overflow: visible;
+}
+
+.logo-animation {
+  animation: logo-pulse 5s ease-in-out infinite forwards;
+  transform-origin: center;
+}
+
+@keyframes logo-pulse {
+  0% {
+    transform: scale(1, 1);
+  }
+  80% {
+    transform: scale(1, 1);
+  }
+  85% {
+    transform: scale(1.05, 1.05);
+  }
+  90% {
+    transform: scale(1, 1);
+  }
+  95% {
+    transform: scale(1.05, 1.05);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
