@@ -6,12 +6,39 @@
 }
 
 .header__title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   font-size: var(--font-xxl);
   margin: 0;
 }
 
+.header__title--long {
+  @media (max-width: 400px) {
+    font-size: var(--font-xl);
+  }
+}
+
+.header__title--very-long {
+  @media (max-width: 550px) {
+    font-size: var(--font-xl);
+  }
+
+  @media (max-width: 400px) {
+    font-size: var(--font-l);
+  }
+}
+
+.header__icon {
+  display: block;
+  height: var(--font-xxl);
+  margin-right: 8px;
+}
+
 .header__tvl,
 .header__change {
+  white-space: pre;
   margin: 0;
   font-size: var(--font-l);
   font-weight: bold;
