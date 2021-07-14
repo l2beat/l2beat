@@ -45,7 +45,7 @@ export function initHover(chart: HTMLElement) {
     const closest = Math.min(spaces, Math.max(0, Math.round(position * spaces)))
     const point = uiState.points[closest]
     const left = point.x * width
-    const bottom = point.y * (height - 20)
+    const bottom = Math.max(0, point.y * (height - 20))
     elements.line.style.left = left - 1 + 'px'
     elements.circle.style.left = left - 4 + 'px'
     elements.circle.style.bottom = bottom - 4 + 'px'
