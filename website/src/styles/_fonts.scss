@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'Roboto';
   src: url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+  font-display: block;
   font-weight: normal;
   font-style: normal;
 }
@@ -8,6 +9,7 @@
 @font-face {
   font-family: 'Roboto';
   src: url('/fonts/Roboto/Roboto-Italic.ttf') format('truetype');
+  font-display: block;
   font-weight: normal;
   font-style: italic;
 }
@@ -15,6 +17,7 @@
 @font-face {
   font-family: 'Roboto';
   src: url('/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+  font-display: block;
   font-weight: bold;
   font-style: normal;
 }
@@ -22,6 +25,7 @@
 @font-face {
   font-family: 'Roboto';
   src: url('/fonts/Roboto/Roboto-BoldItalic.ttf') format('truetype');
+  font-display: block;
   font-weight: bold;
   font-style: italic;
 }

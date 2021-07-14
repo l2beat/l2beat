@@ -4,6 +4,9 @@ const del = require('del')
 const child_process = require('child_process')
 const path = require('path')
 const express = require('express')
+const postcss = require('gulp-postcss')
+const autoprefixer = require('autoprefixer')
+const cssnano = require('cssnano')
 
 const SCRIPT_IN_PATH = 'src/scripts/**/*.ts'
 
@@ -50,6 +53,7 @@ function buildStyles() {
   return gulp
     .src(STYLE_IN_PATH)
     .pipe(sass.sync().on('error', sass.logError))
+    .pipe(postcss([autoprefixer(), cssnano()]))
     .pipe(gulp.dest(STYLE_OUT_PATH))
 }
 
