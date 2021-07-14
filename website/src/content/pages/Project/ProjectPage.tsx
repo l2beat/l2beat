@@ -1,5 +1,4 @@
-import { Header, Navbar, Page } from '../../common'
-import { Chart } from '../../common/Chart'
+import { Chart, Header, Navbar, Page } from '../../common'
 import { ProjectPageProps } from './getProjectPageProps'
 
 export function ProjectPage(props: ProjectPageProps) {

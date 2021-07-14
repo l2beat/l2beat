@@ -102,6 +102,25 @@
   }
 }
 
+.chart__loader {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: 85px auto 0 auto;
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.2s step-end;
+
+  @media (max-width: 550px) {
+    margin-top: 62px;
+  }
+}
+
+.chart__loader--hidden {
+  opacity: 0;
+  transition: opacity 0.2s step-start;
+}
+
 .chart__line {
   border-bottom: 1px solid var(--background-3);
 }

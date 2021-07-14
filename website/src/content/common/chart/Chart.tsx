@@ -1,5 +1,6 @@
-import { Logo } from './Logo'
+import { Logo } from '../Logo'
 import { ChartButton } from './ChartButton'
+import { ChartLoader } from './ChartLoader'
 
 interface Props {
   endpoint: string
@@ -18,6 +19,7 @@ export function Chart({ endpoint, tokens }: Props) {
         <ChartButton name="range" value="MAX" />
       </div>
       <div className="chart__view" role="img" aria-label="chart">
+        <ChartLoader />
         <div className="chart__lines">
           <div className="chart__line" />
           <div className="chart__line" />
