@@ -66,14 +66,17 @@
     cursor: pointer;
     display: block;
     position: absolute;
-    width: 53px;
-    height: 27px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     opacity: 0;
   }
 
   & > span {
     display: block;
-    width: 53px;
+    min-width: 53px;
+    padding: 0 4px;
     height: 27px;
     border-radius: 6px;
     font-weight: bold;
@@ -186,4 +189,21 @@
   @media (max-width: 550px) {
     grid-column: 1 / span 4;
   }
+}
+
+.chart__token-controls {
+  grid-column: 1 / span 4;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 0 -4px -8px -4px;
+
+  .chart__button {
+    margin: 0 4px 8px 4px;
+  }
+}
+
+.chart__token-title {
+  margin: 0 4px;
 }

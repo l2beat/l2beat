@@ -5,5 +5,6 @@ export function getControls(chart: Element) {
     range: $$('.chart__range-controls input') as HTMLInputElement[],
     currency: $$('.chart__currency-controls input') as HTMLInputElement[],
     scale: $$('.chart__scale-controls input') as HTMLInputElement[],
+    token: $$('.chart__token-controls input') as HTMLInputElement[],
   }
 }

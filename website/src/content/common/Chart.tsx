@@ -1,11 +1,12 @@
-import { Logo } from '../../common'
+import { Logo } from './Logo'
 import { ChartButton } from './ChartButton'
 
 interface Props {
   endpoint: string
+  tokens?: { symbol: string; endpoint: string }[]
 }
 
-export function Chart({ endpoint }: Props) {
+export function Chart({ endpoint, tokens }: Props) {
   return (
     <section className="chart" data-endpoint={endpoint}>
       <p className="chart__range">...</p>
@@ -43,6 +44,19 @@ export function Chart({ endpoint }: Props) {
         <ChartButton name="scale" value="LOG" />
         <ChartButton checked name="scale" value="LIN" />
       </div>
+      {tokens && tokens.length > 0 && (
+        <div className="chart__token-controls">
+          <span className="chart__token-title">Filter by token:</span>
+          {tokens.map((x) => (
+            <ChartButton
+              key={x.symbol}
+              name="token"
+              value={x.symbol}
+              endpoint={x.endpoint}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
