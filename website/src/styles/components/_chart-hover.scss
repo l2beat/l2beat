@@ -35,9 +35,23 @@
   height: 76px;
   user-select: none;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .chart-hover__date {
   font-weight: bold;
   margin-bottom: 4px;
+  @media (max-width: 550px) {
+    margin-bottom: 8px;
+  }
+}
+
+.chart-hover__value-a,
+.chart-hover__value-b {
+  @media (max-width: 350px) {
+    font-size: var(--font-xs);
+  }
 }

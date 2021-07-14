@@ -25,7 +25,7 @@ export function toDateRange(from: string, to: string) {
 
 export function formatDate(date: string) {
   const [year, month, day] = date.split('-')
-  return toNiceDate(year, month, day)
+  return toNiceDate(day, month, year)
 }
 
 function toNiceDate(day: string, month: string, year?: string) {
