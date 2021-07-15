@@ -6,15 +6,16 @@ import { ChartLoader } from './ChartLoader'
 interface Props {
   endpoint: string
   tokens?: { symbol: string; endpoint: string }[]
+  days?: 30 | 90
 }
 
-export function Chart({ endpoint, tokens }: Props) {
+export function Chart({ endpoint, tokens, days = 90 }: Props) {
   return (
     <section className="chart" data-endpoint={endpoint}>
       <p className="chart__range">...</p>
       <div className="chart__range-controls">
-        <ChartButton name="range" value="30D" />
-        <ChartButton checked name="range" value="90D" />
+        <ChartButton checked={days === 30} name="range" value="30D" />
+        <ChartButton checked={days === 90} name="range" value="90D" />
         <ChartButton name="range" value="180D" />
         <ChartButton name="range" value="1Y" />
         <ChartButton name="range" value="MAX" />
