@@ -15,14 +15,16 @@ export function Preload(props: Props) {
       )}
       <link
         rel="preload"
-        href="/fonts/Roboto/Roboto-Regular.ttf"
+        href="/fonts/Roboto/roboto-v27-latin-regular.woff2"
         as="font"
+        type="font/woff2"
         crossOrigin="anonymous"
       />
       <link
         rel="preload"
-        href="/fonts/Roboto/Roboto-Bold.ttf"
+        href="/fonts/Roboto/roboto-v27-latin-700.woff2"
         as="font"
+        type="font/woff2"
         crossOrigin="anonymous"
       />
     </>
