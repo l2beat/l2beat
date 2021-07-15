@@ -1,12 +1,12 @@
 import { Project } from '@l2beat/config'
 import { ReactElement } from 'react'
 import { L2Data } from '../L2Data'
-import { FaqPage } from './Faq/FaqPage'
+import { FaqPage, getFaqPageProps } from './Faq'
 import { getHomePageProps, HomePage } from './Home'
 import { getMetaImageProps, MetaImage } from './MetaImages'
 import { outputPages } from './output'
 import { getProjectPageProps, ProjectPage } from './Project'
-import { TechnologiesPage } from './Technologies/TechnologiesPage'
+import { getTechnologiesPageProps, TechnologiesPage } from './Technologies'
 
 export function renderPages(projects: Project[], l2Data: L2Data) {
   const pages = new Map<string, ReactElement>()
@@ -16,8 +16,11 @@ export function renderPages(projects: Project[], l2Data: L2Data) {
     `meta-images/overview`,
     <MetaImage {...getMetaImageProps(l2Data)} />
   )
-  pages.set('/technologies', <TechnologiesPage />)
-  pages.set('/faq', <FaqPage />)
+  pages.set(
+    '/technologies',
+    <TechnologiesPage {...getTechnologiesPageProps()} />
+  )
+  pages.set('/faq', <FaqPage {...getFaqPageProps()} />)
   for (const project of projects) {
     pages.set(
       `projects/${project.slug}`,

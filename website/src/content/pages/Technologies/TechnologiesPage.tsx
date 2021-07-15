@@ -1,9 +1,10 @@
-import { Page } from '../../common'
+import { Header, Page } from '../../common'
+import { TechnologiesPageProps } from './getTechnologiesPageProps'
 
-export function TechnologiesPage() {
+export function TechnologiesPage(props: TechnologiesPageProps) {
   return (
-    <Page title="Technologies – L2BEAT">
-      <h1>Technologies</h1>
+    <Page metadata={props.metadata}>
+      <Header title={props.title} />
     </Page>
   )
 }

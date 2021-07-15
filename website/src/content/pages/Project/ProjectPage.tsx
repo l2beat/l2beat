@@ -3,7 +3,7 @@ import { ProjectPageProps } from './getProjectPageProps'
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page title={props.title} preloadApi={props.apiEndpoint}>
+    <Page metadata={props.metadata} preloadApi={props.apiEndpoint}>
       <Navbar />
       <Header
         title={props.name}

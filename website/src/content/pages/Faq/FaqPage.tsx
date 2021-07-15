@@ -1,9 +1,10 @@
-import { Page } from '../../common'
+import { Header, Page } from '../../common'
+import { FaqPageProps } from './getFaqPageProps'
 
-export function FaqPage() {
+export function FaqPage(props: FaqPageProps) {
   return (
-    <Page title="FAQ – L2BEAT">
-      <h1>FAQ</h1>
+    <Page metadata={props.metadata}>
+      <Header title={props.title} />
     </Page>
   )
 }

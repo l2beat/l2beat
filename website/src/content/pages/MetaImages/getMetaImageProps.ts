@@ -1,5 +1,6 @@
 import { Project } from '@l2beat/config'
 import { L2Data } from '../../L2Data'
+import { PageMetadata } from '../../PageMetadata'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../utils'
 
 export interface MetaImageProps {
@@ -8,6 +9,7 @@ export interface MetaImageProps {
   name?: string
   icon?: string
   apiEndpoint: string
+  metadata: PageMetadata
 }
 
 export function getMetaImageProps(
@@ -25,5 +27,11 @@ export function getMetaImageProps(
     name: project?.name,
     icon: project && `/icons/${project.slug}.png`,
     apiEndpoint: `/api/${project?.slug ?? 'tvl'}.json`,
+    metadata: {
+      title: 'Meta Image',
+      description: '-',
+      image: '-',
+      url: '-',
+    },
   }
 }

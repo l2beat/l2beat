@@ -4,7 +4,7 @@ import { MetaImageProps } from './getMetaImageProps'
 export function MetaImage(props: MetaImageProps) {
   return (
     <Page
-      title="Meta Image"
+      metadata={props.metadata}
       preloadApi={props.apiEndpoint}
       includeMetaImageStyles
     >
