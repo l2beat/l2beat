@@ -2,11 +2,9 @@ import { Project } from '@l2beat/config'
 import { ReactElement } from 'react'
 import { L2Data } from '../L2Data'
 import { FaqPage } from './Faq/FaqPage'
-import { getHomePageProps } from './Home/getHomePageProps'
-import { HomePage } from './Home/HomePage'
+import { getHomePageProps, HomePage } from './Home'
 import { outputPages } from './output'
-import { getProjectPageProps } from './Project/getProjectPageProps'
-import { ProjectPage } from './Project/ProjectPage'
+import { getProjectPageProps, ProjectPage } from './Project'
 import { TechnologiesPage } from './Technologies/TechnologiesPage'
 
 export function renderPages(projects: Project[], l2Data: L2Data) {
