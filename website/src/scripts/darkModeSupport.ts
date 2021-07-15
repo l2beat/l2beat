@@ -2,7 +2,7 @@ export function darkModeSupport() {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const saved = localStorage.getItem('l2beat-theme')
 
-  let darkModeEnabled = (saved && saved === 'dark') || prefersDark
+  let darkModeEnabled = saved ? saved === 'dark' : prefersDark
   if (saved) {
     updateTheme()
   }

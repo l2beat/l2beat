@@ -1,3 +1,4 @@
+import { Logo } from './Logo'
 import { PercentChange } from './PercentChange'
 
 interface Props {
@@ -17,6 +18,7 @@ export function Header(props: Props) {
       <h1 className={titleClassName}>
         {props.icon && <img className="header__icon" src={props.icon} />}
         {props.title}
+        {!props.title && <Logo />}
       </h1>
       {props.tvl && props.sevenDayChange && (
         <div className="header__right">

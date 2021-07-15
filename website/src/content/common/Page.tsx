@@ -1,18 +1,24 @@
 import { ReactNode } from 'react'
-import { Head } from './Head'
+import { PageMetadata } from '../PageMetadata'
+import { Head } from './head'
 
 interface Props {
-  title: string
   children: ReactNode
   preloadApi?: string
+  includeMetaImageStyles?: boolean
+  metadata: PageMetadata
 }
 
-export function Page({ title, children, preloadApi }: Props) {
+export function Page(props: Props) {
   return (
     <html lang="en">
-      <Head title={title} preloadApi={preloadApi} />
+      <Head
+        {...props.metadata}
+        preloadApi={props.preloadApi}
+        includeMetaImageStyles={props.includeMetaImageStyles}
+      />
       <body>
-        <div className="page">{children}</div>
+        <div className="page">{props.children}</div>
         <script src="/scripts/main.js" />
       </body>
     </html>

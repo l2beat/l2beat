@@ -77,6 +77,10 @@ function watchContent() {
   return gulp.watch(CONTENT_IN_PATH, buildContent)
 }
 
+function generateMetaImages() {
+  return exec('ts-node src/meta-images')
+}
+
 function serve() {
   const app = express()
   app.use(express.static(OUT_PATH))
@@ -87,11 +91,12 @@ function serve() {
 
 const build = gulp.series(
   clean,
-  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic)
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
+  generateMetaImages
 )
 
 const watch = gulp.series(
-  build,
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
   gulp.parallel(watchScripts, watchStyles, watchContent, watchStatic, serve)
 )
 

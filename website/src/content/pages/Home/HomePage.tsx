@@ -4,7 +4,7 @@ import { Projects } from './Projects'
 
 export function HomePage(props: HomePageProps) {
   return (
-    <Page title={props.title} preloadApi={props.apiEndpoint}>
+    <Page metadata={props.metadata} preloadApi={props.apiEndpoint}>
       <Navbar />
       <Header
         title="Overview"

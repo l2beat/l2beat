@@ -1,5 +1,6 @@
 import { Project } from '@l2beat/config'
 import { L2Data, ProjectData } from '../../L2Data'
+import { PageMetadata } from '../../PageMetadata'
 import {
   formatPercent,
   formatUSD,
@@ -8,11 +9,11 @@ import {
 } from '../../utils'
 
 export interface HomePageProps {
-  title: string
   tvl: string
   sevenDayChange: string
   apiEndpoint: string
   financialView: FinancialEntry[]
+  metadata: PageMetadata
 }
 
 export interface FinancialEntry {
@@ -41,11 +42,17 @@ export function getHomePageProps(
   )
 
   return {
-    title: 'L2BEAT – The state of the layer two ecosystem',
     tvl: formatUSD(tvl),
     sevenDayChange,
     apiEndpoint: '/api/tvl.json',
     financialView,
+    metadata: {
+      title: 'L2BEAT – The state of the layer two ecosystem',
+      description:
+        'L2BEAT is a analytics and research website about Ethereum layer 2 scaling.',
+      image: '/meta-images/overview.png',
+      url: 'https://l2beat.com/',
+    },
   }
 }
 

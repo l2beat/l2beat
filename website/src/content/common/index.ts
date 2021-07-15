@@ -1,6 +1,6 @@
 export * from './chart/Chart'
 export * from './Footer'
-export * from './Head'
+export * from './head'
 export * from './Header'
 export * from './Logo'
 export * from './Navbar'
