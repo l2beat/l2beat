@@ -20,6 +20,18 @@ export function Head({ title, preloadApi }: Props) {
           crossOrigin="anonymous"
         />
       )}
+      <link
+        rel="preload"
+        href="/fonts/Roboto/Roboto-Regular.ttf"
+        as="font"
+        crossOrigin="anonymous"
+      />
+      <link
+        rel="preload"
+        href="/fonts/Roboto/Roboto-Bold.ttf"
+        as="font"
+        crossOrigin="anonymous"
+      />
       <title>{title}</title>
     </head>
   )
