@@ -3,6 +3,11 @@
   grid-template-columns: auto auto 1fr auto;
   row-gap: 16px;
   margin-top: 16px;
+
+  @media (max-width: 550px) {
+    row-gap: 8px;
+    margin-top: 8px;
+  }
 }
 
 .chart__range {
@@ -14,6 +19,7 @@
 
   @media (max-width: 450px) {
     white-space: pre;
+    height: 37px;
   }
 }
 
@@ -57,6 +63,7 @@
 .chart__button {
   display: block;
   position: relative;
+  user-select: none;
 
   & + & {
     margin-left: 8px;
@@ -83,7 +90,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    user-select: none;
     background-color: var(--background-2);
   }
 
@@ -100,9 +106,14 @@
   @media (max-width: 550px) {
     height: 200px;
   }
+
+  @media (max-width: 400px) {
+    height: 160px;
+  }
 }
 
 .chart__loader {
+  user-select: none;
   position: relative;
   z-index: 2;
   display: block;
@@ -171,6 +182,24 @@
       bottom: 0;
     }
   }
+
+  @media (max-width: 400px) {
+    &:nth-child(1) {
+      bottom: 140px;
+    }
+    &:nth-child(2) {
+      bottom: 105px;
+    }
+    &:nth-child(3) {
+      bottom: 70px;
+    }
+    &:nth-child(4) {
+      bottom: 35px;
+    }
+    &:nth-child(5) {
+      bottom: 0;
+    }
+  }
 }
 
 .chart__watermark {
@@ -193,6 +222,10 @@
 
   @media (max-width: 550px) {
     height: 180px;
+  }
+
+  @media (max-width: 400px) {
+    height: 140px;
   }
 }
 

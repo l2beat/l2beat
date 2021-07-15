@@ -1,10 +1,18 @@
 .projects {
   margin-top: 32px;
+
+  @media (max-width: 550px) {
+    margin-top: 8px;
+  }
 }
 
 .projects__title {
   font-size: var(--font-xl);
   margin: 0;
+
+  @media (max-width: 550px) {
+    display: none;
+  }
 }
 
 .projects__disclaimer {
@@ -18,6 +26,10 @@
   );
   border-radius: 8px;
   padding: 2px;
+
+  @media (max-width: 550px) {
+    margin-top: 8px;
+  }
 }
 
 .projects__disclaimer-content {
@@ -26,4 +38,9 @@
   text-align: center;
   background-color: var(--background-2);
   border-radius: 6px;
+
+  @media (max-width: 550px) {
+    padding: 8px;
+    font-size: var(--font-s);
+  }
 }
