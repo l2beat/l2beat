@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { BridgeDescription, Project, ProjectDetails } from '@l2beat/config'
 import { L2Data } from '../../L2Data'
 import { PageMetadata } from '../../PageMetadata'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../utils'
@@ -11,6 +11,8 @@ export interface ProjectPageProps {
   icon: string
   apiEndpoint: string
   tokens: { symbol: string; endpoint: string }[]
+  details: ProjectDetails
+  bridges: BridgeDescription[]
   metadata: PageMetadata
 }
 
@@ -31,6 +33,8 @@ export function getProjectPageProps(
     icon: `/icons/${project.slug}.png`,
     apiEndpoint: `/api/${project.slug}.json`,
     tokens: getTokens(project),
+    details: project.details,
+    bridges: project.bridges,
     metadata: {
       title: `${project.name} – L2BEAT`,
       description: `${project.name} project on L2BEAT. Layer 2 scaling analytics and research.`,

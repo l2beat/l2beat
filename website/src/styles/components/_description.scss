@@ -1,0 +1,20 @@
+.description {
+  line-height: 1.5;
+
+  a {
+    color: var(--link);
+  }
+}
+
+.description__title {
+  font-size: var(--font-xl);
+  line-height: 1.15;
+  margin: 32px 0 0 0;
+}
+
+.description__text {
+  margin: 16px 0 0 0;
+  a {
+    display: block;
+  }
+}
