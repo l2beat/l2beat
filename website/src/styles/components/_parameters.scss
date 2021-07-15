@@ -1,6 +1,6 @@
 .parameters {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr 1fr;
 
   a {
     display: block;
@@ -13,11 +13,16 @@
 
 .parameters__name {
   font-weight: bold;
+  padding-right: 16px;
+
+  @media (max-width: 700px) {
+    padding-right: 0;
+  }
 }
 
 .parameters__value {
   position: relative;
-  padding-left: 32px;
+  padding-left: 16px;
   margin: 0;
 
   @media (max-width: 700px) {
