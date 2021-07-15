@@ -1,12 +1,16 @@
 .financials {
   width: 100%;
   overflow-x: auto;
+  margin-top: 16px;
+
+  @media (max-width: 550px) {
+    margin-top: 8px;
+  }
 }
 
 .financials__table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 16px;
   text-align: left;
 }
 
@@ -88,4 +92,5 @@
   display: block;
   width: 18px;
   height: 18px;
+  font-size: 8px;
 }

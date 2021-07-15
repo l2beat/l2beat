@@ -11,8 +11,8 @@ export function Projects(props: Props) {
       <h2 className="projects__title">Projects</h2>
       <div className="projects__disclaimer">
         <p className="projects__disclaimer-content">
-          Layer two systems are new &amp; experimental technology! Visit each
-          project’s overview and learn about the risks today!
+          Layer twos are new &amp; experimental! Visit each project’s overview
+          and learn about the risks today!
         </p>
       </div>
       <FinancialView items={props.financialView} />

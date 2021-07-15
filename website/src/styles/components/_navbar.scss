@@ -3,14 +3,27 @@
   align-items: center;
   justify-content: flex-start;
   height: 80px;
+
+  @media (max-width: 550px) {
+    height: unset;
+    padding-top: 16px;
+    padding-bottom: 8px;
+  }
 }
 
 .navbar__logo {
   display: block;
-  min-width: 90px;
+  min-width: 88px;
   margin-right: 24px;
   position: relative;
   top: -2px;
+
+  @media (max-width: 550px) {
+    top: 0;
+    min-width: 60px;
+    width: 60px;
+    height: 25px;
+  }
 }
 
 .navbar__links {

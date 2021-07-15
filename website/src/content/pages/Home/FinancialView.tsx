@@ -17,8 +17,12 @@ export function FinancialView({ items }: Props) {
               <span data-wide>Total Value Locked</span>
               <span data-narrow>TVL</span>
             </th>
-            <th>1 day change</th>
-            <th>7 day change</th>
+            <th>
+              1 day <span data-wide>change</span>
+            </th>
+            <th>
+              7 days <span data-wide>change</span>
+            </th>
             <th>Market share</th>
           </tr>
         </thead>
