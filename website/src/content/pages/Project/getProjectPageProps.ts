@@ -17,8 +17,9 @@ export function getProjectPageProps(
   project: Project,
   l2Data: L2Data
 ): ProjectPageProps {
-  const tvl = getFromEnd(l2Data.aggregate.data, 0)[1]
-  const tvlSevenDaysAgo = getFromEnd(l2Data.aggregate.data, 7)[1]
+  const aggregate = l2Data.byProject[project.name].aggregate
+  const tvl = getFromEnd(aggregate.data, 0)[1]
+  const tvlSevenDaysAgo = getFromEnd(aggregate.data, 7)[1]
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {
