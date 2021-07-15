@@ -1,7 +1,42 @@
+html,
+body,
+.page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page {
+  padding: 0;
+}
+
+.header {
+  margin-top: 24px;
+  padding: 0 16px;
+  align-items: flex-start;
+}
+
+.meta--project {
+  .header__title {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    font-size: 64px;
+  }
+
+  .header__icon {
+    height: 80px;
+  }
+}
+
+.header__right {
+  margin-left: auto;
+}
+
 .chart {
   margin-top: 8px;
   row-gap: 8px;
-  --text: #666666;
 }
 
 .chart__loader,
@@ -9,59 +44,64 @@
 .chart__range-controls,
 .chart__currency-controls,
 .chart__scale-controls,
+.chart__line,
+.chart__label,
+.chart__description,
 .chart-hover {
   display: none;
 }
 
 .chart__range {
-  grid-row: 2;
-  grid-column: 1;
-  font-weight: normal;
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
   font-size: var(--font-l);
-}
-
-.chart__description {
-  grid-column: 1;
-  grid-column: 2 / span 3;
-  font-size: var(--font-m);
-  justify-content: flex-end;
+  z-index: 1000;
 }
 
 .chart__view {
-  height: 200px;
+  position: relative;
+  height: 262px;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      var(--gradient-1),
+      var(--gradient-2),
+      var(--gradient-3)
+    );
+    opacity: 0.376;
+  }
 }
 
 .chart__canvas {
-  height: 180px;
+  height: 202px;
+  bottom: unset;
+  top: 0;
 }
 
-.chart__line,
-.chart__label {
-  opacity: 1;
-  &:nth-child(1) {
-    bottom: 180px;
-  }
-  &:nth-child(2) {
-    bottom: 135px;
-  }
-  &:nth-child(3) {
-    bottom: 90px;
-  }
-  &:nth-child(4) {
-    bottom: 45px;
-  }
-  &:nth-child(5) {
-    bottom: 0;
+.meta--project {
+  .logo {
+    position: fixed;
+    top: 24px;
+    left: 16px;
   }
 }
 
-.logo {
-  width: 250px;
-  height: auto;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.meta--overview {
+  .logo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: auto;
+  }
 }
 
 .logo-animation {

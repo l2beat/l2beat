@@ -13,14 +13,16 @@ export function MetaImage(props: MetaImageProps) {
           __html: "localStorage.setItem('l2beat-theme', 'light')",
         }}
       />
-      <Header
-        title={props.name ?? 'Overview'}
-        icon={props.icon}
-        tvl={props.tvl}
-        sevenDayChange={props.sevenDayChange}
-      />
-      <Chart endpoint={props.apiEndpoint} days={30} />
-      <Logo />
+      <div className={!props.name ? 'meta--overview' : 'meta--project'}>
+        <Header
+          title={props.name ?? 'Overview'}
+          icon={props.icon}
+          tvl={props.tvl}
+          sevenDayChange={props.sevenDayChange}
+        />
+        <Chart endpoint={props.apiEndpoint} days={30} />
+        <Logo />
+      </div>
     </Page>
   )
 }
