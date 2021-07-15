@@ -1,6 +1,7 @@
 .chart {
   margin-top: 8px;
   row-gap: 8px;
+  --text: #666666;
 }
 
 .chart__loader,
@@ -15,6 +16,7 @@
 .chart__range {
   grid-row: 2;
   grid-column: 1;
+  font-weight: normal;
   font-size: var(--font-l);
 }
 
@@ -35,6 +37,7 @@
 
 .chart__line,
 .chart__label {
+  opacity: 1;
   &:nth-child(1) {
     bottom: 180px;
   }

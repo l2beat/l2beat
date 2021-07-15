@@ -11,6 +11,6 @@ export async function generateImage(project: string) {
     height: 630,
     launchOptions: {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    },
+    } as any,
   })
 }
