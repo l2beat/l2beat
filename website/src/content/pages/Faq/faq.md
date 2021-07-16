@@ -65,4 +65,4 @@ We will continuously monitor different L2 technologies with the primary focus on
 
 ## Is L2BEAT performing a security audit for each L2?
 
-No, L2Beast team **DOES NOT DO SECURITY AUDITS**. All the information that we present on our site should be independently verified by anyone wanting to use given L2. Our goal is to collect as much information as we can about the "state of L2s" and allow the community to better understand what security assumptions are used to build given L2 solutions.
+No, the L2BEAT team **DOES NOT DO SECURITY AUDITS**. All the information that we present on our site should be independently verified by anyone wanting to use given L2. Our goal is to collect as much information as we can about the "state of L2s" and allow the community to better understand what security assumptions are used to build given L2 solutions.
