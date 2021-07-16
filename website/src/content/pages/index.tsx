@@ -1,5 +1,6 @@
 import { Project as ProjectType } from '@l2beat/config'
 import { ReactElement } from 'react'
+import { config } from '../config'
 import { L2Data } from '../L2Data'
 import { Faq } from './Faq'
 import { Home } from './Home'
@@ -13,7 +14,9 @@ export function renderPages(projects: ProjectType[], l2Data: L2Data) {
 
   pages.set('/', <Home projects={projects} l2Data={l2Data} />)
   pages.set(`meta-images/overview`, <Meta l2Data={l2Data} />)
-  pages.set('/technologies', <Technologies />)
+  if (config.__DEV__showTechnologiesPage) {
+    pages.set('/technologies', <Technologies />)
+  }
   pages.set('/faq', <Faq />)
   for (const project of projects) {
     pages.set(

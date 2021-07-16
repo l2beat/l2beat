@@ -1,3 +1,4 @@
+import { config } from '../config'
 import { GithubIcon, MoonIcon, SunIcon, TwitterIcon } from './icons'
 import { Logo } from './Logo'
 import { OutLink } from './OutLink'
@@ -12,9 +13,11 @@ export function Navbar() {
         <li className="navbar__link">
           <a href="/">Overview</a>
         </li>
-        <li className="navbar__link">
-          <a href="/technologies">Technologies</a>
-        </li>
+        {config.__DEV__showTechnologiesPage && (
+          <li className="navbar__link">
+            <a href="/technologies">Technologies</a>
+          </li>
+        )}
       </ul>
       <ul className="navbar__links navbar__links--compact">
         <li className="navbar__link">
