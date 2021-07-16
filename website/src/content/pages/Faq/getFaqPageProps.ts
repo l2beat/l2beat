@@ -2,6 +2,7 @@ import { PageMetadata } from '../../PageMetadata'
 import fsx from 'fs-extra'
 import path from 'path'
 import MarkdownIt from 'markdown-it'
+import cheerio from 'cheerio'
 
 export interface FaqPageProps {
   title: string
@@ -10,10 +11,6 @@ export interface FaqPageProps {
 }
 
 export function getFaqPageProps(): FaqPageProps {
-  const markdown = MarkdownIt()
-  const file = fsx.readFileSync(path.join(__dirname, 'faq.md'), 'utf-8')
-  const content = markdown.render(file)
-
   return {
     title: 'Frequently Asked Questions',
     metadata: {
@@ -23,6 +20,19 @@ export function getFaqPageProps(): FaqPageProps {
       image: '/meta-images/overview.png',
       url: 'https://l2beat.com/faq/',
     },
-    content,
+    content: getHtml(),
   }
+}
+
+function getHtml() {
+  const markdown = MarkdownIt({ html: true })
+  const file = fsx.readFileSync(path.join(__dirname, 'faq.md'), 'utf-8')
+  const rendered = markdown.render(file)
+  const $ = cheerio.load(rendered)
+  $('a').each(function () {
+    const $el = $(this)
+    $el.attr('rel', 'noopener noreferrer')
+    $el.attr('target', '_blank')
+  })
+  return $('body').html() ?? ''
 }
