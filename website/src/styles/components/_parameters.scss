@@ -32,7 +32,7 @@
 
 .parameters__name:not(:last-of-type) {
   border-bottom: 1px solid var(--background-3);
-  padding-bottom: 8px;
+  padding-bottom: 16px;
   margin-bottom: 16px;
 
   @media (max-width: 700px) {
@@ -44,7 +44,7 @@
 
 .parameters__value:not(:last-of-type) {
   border-bottom: 1px solid var(--background-3);
-  padding-bottom: 8px;
+  padding-bottom: 16px;
   margin-bottom: 16px;
 }
 

@@ -1,9 +1,13 @@
 .description {
   line-height: 1.5;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 16px;
+}
 
-  a {
-    color: var(--link);
-  }
+.description__section:first-child {
+  grid-row: 1 / span 3;
 }
 
 .description__title {

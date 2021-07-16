@@ -6,7 +6,6 @@ interface EtherscanLinkProps {
 
 export function EtherscanLink({ address }: EtherscanLinkProps) {
   const visibleAddress = (
-    'https://etherscan.io/address/' +
     address.slice(0, 6) +
     '...' +
     address.slice(address.length - 4)
