@@ -36,6 +36,8 @@ export interface ProjectDetails {
     /** Specific details e.g. ZK-SNARKS */
     details?: string
   }
+  /** A short (<20 characters) description of the use case */
+  purpose: string
   /** Project research results */
   parameters: ProjectParameter[]
   /** Links to recent developments */

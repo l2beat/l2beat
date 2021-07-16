@@ -29,6 +29,15 @@ describe('projects', () => {
     })
   })
 
+  describe('every purpose is short', () => {
+    const purposes = projects.map((x) => x.details.purpose)
+    for (const purpose of purposes) {
+      it(purpose, () => {
+        expect(purpose.length).to.be.lessThanOrEqual(20)
+      })
+    }
+  })
+
   describe('every token is valid', () => {
     const symbols = projects
       .flatMap((x) => x.bridges.flatMap((x) => x.tokens))

@@ -17,6 +17,7 @@ export const hermez: Project = {
       name: 'zk-rollup',
       details: 'zk-SNARK',
     },
+    purpose: 'Payments',
     parameters: [
       {
         name: 'Primary use case',

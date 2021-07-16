@@ -23,6 +23,11 @@ export interface FinancialEntry {
   oneDayChange: string
   sevenDayChange: string
   marketShare: string
+  purpose: string
+  technology: {
+    abbreviation: string
+    name: string
+  }
 }
 
 export function getHomePageProps(
@@ -63,16 +68,30 @@ function getFinancialViewEntry(
 ) {
   const tvl = getFromEnd(projectData.aggregate.data, 0)[1]
   const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)[1]
-  const oneDayChange = getPercentageChange(tvl, tvlOneDayAgo)
   const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)[1]
-  const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
-  const marketShare = formatPercent(tvl / aggregateTvl)
   return {
     name: project.name,
     slug: project.slug,
     tvl: formatUSD(tvl),
-    oneDayChange,
-    sevenDayChange,
-    marketShare,
+    oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
+    sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
+    marketShare: formatPercent(tvl / aggregateTvl),
+    purpose: project.details.purpose,
+    technology: getTechnology(project),
   }
+}
+
+function getTechnology(project: Project) {
+  const tech = project.details.technology.name
+  switch (tech) {
+    case 'optimistic-rollup':
+      return { abbreviation: 'ORU', name: 'Optimistic Rollup' }
+    case 'zk-rollup':
+      return { abbreviation: 'ZKR', name: 'ZK Rollup' }
+    case 'plasma':
+      return { abbreviation: 'PLA', name: 'Plasma' }
+    case 'validium':
+      return { abbreviation: 'VAL', name: 'Validium' }
+  }
+  return { abbreviation: '???', name: tech }
 }

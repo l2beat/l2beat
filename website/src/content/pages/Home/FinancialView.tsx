@@ -14,16 +14,15 @@ export function FinancialView({ items }: Props) {
             <th>No.</th>
             <th>Name</th>
             <th>
-              <span data-wide>Total Value Locked</span>
+              <span data-wide>Value Locked</span>
               <span data-narrow>TVL</span>
             </th>
-            <th>
-              1 day <span data-wide>change</span>
-            </th>
-            <th>
-              7 days <span data-wide>change</span>
-            </th>
+            <th>7 days</th>
             <th>Market share</th>
+            <th>Purpose</th>
+            <th>
+              Tech<span data-wide>nology</span>
+            </th>
           </tr>
         </thead>
         <tbody className="financials__body">
@@ -45,12 +44,23 @@ export function FinancialView({ items }: Props) {
               </td>
               <td>{project.tvl}</td>
               <td>
-                <PercentChange value={project.oneDayChange} />
-              </td>
-              <td>
                 <PercentChange value={project.sevenDayChange} />
               </td>
               <td>{project.marketShare}</td>
+              <td>{project.purpose}</td>
+              <td>
+                <abbr
+                  className="financials__technology"
+                  title={project.technology.name}
+                  data-rollup={
+                    ['ZKR', 'ORU'].includes(project.technology.abbreviation)
+                      ? true
+                      : undefined
+                  }
+                >
+                  {project.technology.abbreviation}
+                </abbr>
+              </td>
             </tr>
           ))}
         </tbody>

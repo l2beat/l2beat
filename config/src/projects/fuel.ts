@@ -17,6 +17,7 @@ export const fuel: Project = {
       name: 'optimistic-rollup',
       details: 'UTXO',
     },
+    purpose: 'Payments',
     parameters: [
       {
         name: 'Primary use case',

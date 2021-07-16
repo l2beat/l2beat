@@ -17,6 +17,7 @@ export const loopring: Project = {
       name: 'zk-rollup',
       details: 'zk-SNARK',
     },
+    purpose: 'Token exchange',
     parameters: [
       {
         name: 'Primary use case',
