@@ -46,14 +46,14 @@ Most L2 constructions are upgradable and until upgradability mechanism is either
 
 To trustlessly withdraw coins from L2, users need to prove ownership of the coins to L1 smart contract that holds all the funds. For that they need to have access to all L2's transactions or its current state. To not introduce any additional trust assumptions, L2 transactions can simply be recorded on L1 (as cheap calldata), or they may be stored with some external providers that will guarantee (cryptoeconomically or through some other mechanisms) data availability.
 
-## Ok, so what are the main categories of L2s?
+<h2 id="categories">Ok, so what are the main categories of L2s?</h2>
 
 Depending on whether Validity Proofs or Fraud Proofs are used and what is the mechanism for data availability we can broadly categories L2s into the following categories:
 
-- **zkRollups** - Validity Proofs with data on L1 Ethereum,
-- **Optimistic Rollups** - Fraud Proofs with data on L1 Ethereum,
-- **Validium** - Validity Proofs with data kept off-chain,
-- **Plasma** - Fraud Proofs with data kept off-chain.
+- **zkRollups** (ZKR) - Validity Proofs with data on L1 Ethereum,
+- **Optimistic Rollups** (ORU) - Fraud Proofs with data on L1 Ethereum,
+- **Validium** (VAL) - Validity Proofs with data kept off-chain,
+- **Plasma** (PLA) - Fraud Proofs with data kept off-chain.
 
 In the future we expect to see hybrid solution using a mix of the above techniques.
 

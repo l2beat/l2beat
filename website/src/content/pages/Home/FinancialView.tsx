@@ -17,7 +17,7 @@ export function FinancialView({ items }: Props) {
               <span data-wide>Value Locked</span>
               <span data-narrow>TVL</span>
             </th>
-            <th>7 days</th>
+            <th>% / 7 days</th>
             <th>Market share</th>
             <th>Purpose</th>
             <th>
@@ -49,17 +49,17 @@ export function FinancialView({ items }: Props) {
               <td>{project.marketShare}</td>
               <td>{project.purpose}</td>
               <td>
-                <abbr
+                <a
                   className="financials__technology"
-                  title={project.technology.name}
+                  href="/faq/#categories"
                   data-rollup={
                     ['ZKR', 'ORU'].includes(project.technology.abbreviation)
                       ? true
                       : undefined
                   }
                 >
-                  {project.technology.abbreviation}
-                </abbr>
+                  <span>{project.technology.abbreviation}</span>
+                </a>
               </td>
             </tr>
           ))}
