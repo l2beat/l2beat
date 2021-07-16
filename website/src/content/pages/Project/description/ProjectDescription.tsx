@@ -1,4 +1,5 @@
 import { BridgeDescription, ProjectDetails } from '@l2beat/config'
+import { OutLink } from '../../../common'
 
 import { EtherscanLink } from './EtherscanLink'
 import { Parameter } from './Parameter'
@@ -17,7 +18,11 @@ export function ProjectDescription({
     <main className="description">
       <section className="description__section">
         <h2 className="description__title">Project overview</h2>
-        <dl className="parameters">
+        <ul className="parameters">
+          <Parameter
+            name="Website:"
+            value={<OutLink href={details.website}>{details.website}</OutLink>}
+          />
           <Parameter
             name="Technology:"
             value={details.technology.name}
@@ -26,21 +31,23 @@ export function ProjectDescription({
           {details.parameters.map((param, i) => (
             <Parameter key={i} {...param} />
           ))}
-        </dl>
+        </ul>
       </section>
 
       {details.notes && (
         <section className="description__section">
           <h2 className="description__title">Notes</h2>
-          <p className="description__text">
-            {details.notes.text} <Pointers pointers={details.notes.pointers} />
-          </p>
+          <p className="description__text">{details.notes.text}</p>
+          <Pointers
+            className="description__links"
+            pointers={details.notes.pointers}
+          />
         </section>
       )}
 
       <section className="description__section">
         <h2 className="description__title">Tracked bridges</h2>
-        <ul>
+        <ul className="description__links">
           {bridges.map((bridge, i) => (
             <li key={i}>
               <EtherscanLink address={bridge.address} /> -{' '}
@@ -53,10 +60,10 @@ export function ProjectDescription({
       {details.news && (
         <section className="description__section">
           <h2 className="description__title">News</h2>
-          <ul>
+          <ul className="description__links">
             {details.news.map((news, i) => (
               <li key={i}>
-                <a href={news.link}>{news.name}</a>
+                <OutLink href={news.link}>{news.name}</OutLink>
               </li>
             ))}
           </ul>

@@ -1,31 +1,31 @@
-import { ProjectParameter } from '@l2beat/config'
+import { ReactChild } from 'react'
 
 import { Pointers } from './Pointers'
 import { SentimentIcon } from './SentimentIcon'
 
-export function Parameter({
-  name,
-  value,
-  sentiment,
-  tooltip,
-  pointers,
-}: ProjectParameter) {
+interface Props {
+  name: string
+  value: ReactChild
+  sentiment?: 'good' | 'neutral' | 'bad'
+  tooltip?: string
+  pointers?: string[]
+}
+
+export function Parameter(props: Props) {
   return (
-    <>
-      <dt className="parameters__name">{addTerminator(name, ':')}</dt>
-      <dd className="parameters__value">
-        <div className="parameters__value-main" data-sentiment={sentiment}>
-          {sentiment && <SentimentIcon sentiment={sentiment} />}
-          {value}
+    <li className="parameters__parameter">
+      <span className="parameters__name">{addTerminator(props.name, ':')}</span>
+      <div className="parameters__value" data-sentiment={props.sentiment}>
+        {props.sentiment && <SentimentIcon sentiment={props.sentiment} />}
+        <span>{props.value}</span>
+      </div>
+      {props.tooltip && (
+        <div className="parameters__details">
+          {addTerminator(props.tooltip, '.')}
         </div>
-        {tooltip && (
-          <div className="parameters__details">
-            {addTerminator(tooltip, '.')}
-          </div>
-        )}
-        <Pointers pointers={pointers} />
-      </dd>
-    </>
+      )}
+      <Pointers pointers={props.pointers} />
+    </li>
   )
 }
 
