@@ -17,7 +17,7 @@ export function FinancialView({ items }: Props) {
               <span data-wide>Value Locked</span>
               <span data-narrow>TVL</span>
             </th>
-            <th>7 days</th>
+            <th>% / 7 days</th>
             <th>Market share</th>
             <th>Purpose</th>
             <th>

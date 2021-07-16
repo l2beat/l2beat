@@ -37,7 +37,11 @@ function getHtml() {
   $('h1, h2, h3, h4, h5, h6').each(function () {
     const $el = $(this)
     if (!$el.attr('id')) {
-      $el.attr('id', $el.text().toLowerCase().replace(/[^a-z]/g, '-'))
+      const id = $el
+        .text()
+        .toLowerCase()
+        .replace(/[^a-z]/g, '-')
+      $el.attr('id', id)
     }
   })
   return $('body').html() ?? ''
