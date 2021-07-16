@@ -25,7 +25,7 @@ export function getFaqPageProps(): FaqPageProps {
 }
 
 function getHtml() {
-  const markdown = MarkdownIt()
+  const markdown = MarkdownIt({ html: true })
   const file = fsx.readFileSync(path.join(__dirname, 'faq.md'), 'utf-8')
   const rendered = markdown.render(file)
   const $ = cheerio.load(rendered)

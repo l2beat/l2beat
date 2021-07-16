@@ -1,4 +1,4 @@
-# Welcome to L2BEAT FAQ!
+# Welcome to the L2BEAT FAQ!
 
 Hi! We are glad you've made it here. Below you will find answers to most frequently asked questions about L2BEAT.
 
@@ -34,7 +34,7 @@ One way to do so is by providing a zero-knowledge cryptographic **Validity Proof
 
 The other mechanism is to allow any honest L2 chain observer to raise an alarm if they think that the supplied state root is incorrect and provide a **Fraud Proof**. Such a proof allows the L1 contract to trustlessly verify that the state root was incorrect. In such case it will be automatically removed and the chain will roll back.
 
-## What if L2 validators manage to submit a fraudulent state commit to L1?
+## What if L2 validators submit a fraudulent state commit to L1?
 
 A state root from L2 is typically used to check coin ownership on L2 that user wants to withdraw to L1. If the fraudulent state root is submitted, it may attest that all coins belong to a dishonest L2 validator rather than legitimate users. These coins can be then withdrawn to L1 from L2&mdash;effectively stealing them. This is why it is not enough to simply commit state roots of L2 to L1, we need to be sure that this state root is valid.
 
@@ -57,7 +57,27 @@ Depending on whether Validity Proofs or Fraud Proofs are used and what is the me
 
 In the future we expect to see hybrid solution using a mix of the above techniques.
 
-![Types of layer 2](/images/layer2types.png)
+<table class="faq__table">
+  <thead>
+    <tr>
+      <td></td>
+      <th>Validity Proofs</th>
+      <th>Fraud Proofs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Data on-chain</th>
+      <td>ZK Rollup</td>
+      <td>Optimistic Rollup</td>
+    </tr>
+    <tr>
+      <th>Data off-chain</th>
+      <td>Validium</td>
+      <td>Plasma</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Apart from TVL, what is L2BEAT aiming to track?
 
