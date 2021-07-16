@@ -64,6 +64,7 @@ export const dydx: Project = {
     ],
     news: [
       {
+        date: "2021-04-06",
         name: 'Trade now on Layer 2',
         link: 'https://dydx.exchange/blog/public',
       },

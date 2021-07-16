@@ -56,10 +56,12 @@ export const aztec: Project = {
     ],
     news: [
       {
+        date: "2021-04-30",
         name: 'Introducing zkDAI into the Aztec Private Rollup',
         link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
       },
       {
+        date: "2021-03-15",
         name: 'Launching Aztec 2.0 Rollup',
         link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
       },

@@ -92,6 +92,7 @@ export const deversifi: Project = {
     ],
     news: [
       {
+        date: "2020-07-15",
         name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
         link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
       },

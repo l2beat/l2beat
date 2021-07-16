@@ -75,6 +75,7 @@ export const zksync: Project = {
     ],
     news: [
       {
+        date: "2021-03-27",
         name: 'zkSync 2.0 Roadmap Update: zkEVM Testnet in May, Mainnet in August',
         link: 'https://medium.com/matter-labs/zksync-2-0-roadmap-update-zkevm-testnet-in-may-mainnet-in-august-379c66995021',
       },
