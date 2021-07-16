@@ -14,3 +14,11 @@ body {
   background-color: var(--background);
   color: var(--text);
 }
+
+a {
+  color: var(--link);
+}
+
+ul {
+  padding-left: 32px;
+}
