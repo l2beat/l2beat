@@ -6,7 +6,13 @@ export function apiGet<T>(url: string): Promise<T> {
   if (cached) {
     return cached
   }
-  const result = fetch(url).then((res) => res.json())
+
+  // https://stackoverflow.com/a/63814972
+  const result = fetch(url, {
+    method: 'GET',
+    credentials: 'include',
+    mode: 'no-cors',
+  }).then((res) => res.json())
   cache.set(url, result)
   return result
 }
