@@ -39,6 +39,7 @@ export const optimism: Project = {
       name: 'optimistic-rollup',
       details: 'Optimistic Virtual Machine',
     },
+    purpose: 'Universal',
     parameters: [
       {
         name: 'Primary use case',

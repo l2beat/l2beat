@@ -37,6 +37,7 @@ export const zkswap: Project = {
       name: 'validium',
       details: 'ZKSpeed',
     },
+    purpose: 'Payments, Exchange',
     parameters: [
       {
         name: 'Primary use case',

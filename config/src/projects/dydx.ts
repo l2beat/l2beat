@@ -17,6 +17,7 @@ export const dydx: Project = {
       name: 'zk-rollup',
       details: 'zk-STARK/StarkExchange',
     },
+    purpose: 'Token exchange',
     parameters: [
       {
         name: 'Primary use case',

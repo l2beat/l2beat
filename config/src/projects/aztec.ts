@@ -17,6 +17,7 @@ export const aztec: Project = {
       name: 'zk-rollup',
       details: 'zk-SNARK/PLONK',
     },
+    purpose: 'Private payments',
     parameters: [
       {
         name: 'Primary use case',

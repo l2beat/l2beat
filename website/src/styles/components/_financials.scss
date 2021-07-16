@@ -2,6 +2,7 @@
   width: 100%;
   overflow-x: auto;
   margin-top: 16px;
+  white-space: pre;
 
   @media (max-width: 550px) {
     margin-top: 8px;
@@ -93,4 +94,22 @@
   width: 18px;
   height: 18px;
   font-size: 8px;
+}
+
+.financials__technology {
+  padding: 4px 8px;
+  background-color: var(--background-2);
+  border-radius: 6px;
+  text-decoration: none !important;
+  font-size: var(--font-s);
+  font-weight: bold;
+  cursor: help;
+
+  &[data-rollup] {
+    color: var(--positive-green);
+  }
+
+  tr:hover & {
+    background-color: var(--background-3);
+  }
 }

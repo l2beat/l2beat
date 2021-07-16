@@ -17,6 +17,7 @@ export const layer2finance: Project = {
       name: 'optimistic-rollup',
       details: 'Specialized Optimistic Rollup',
     },
+    purpose: 'DeFi aggregation',
     parameters: [
       {
         name: 'Primary use case',

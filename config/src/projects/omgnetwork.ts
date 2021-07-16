@@ -51,6 +51,7 @@ export const omgnetwork: Project = {
       name: 'plasma',
       details: 'More Viable Plasma',
     },
+    purpose: 'Payments',
     parameters: [
       {
         name: 'Primary use case',
