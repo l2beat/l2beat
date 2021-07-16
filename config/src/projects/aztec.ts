@@ -56,6 +56,11 @@ export const aztec: Project = {
     ],
     news: [
       {
+        date: "2021-07-01",
+        name: 'Introducing private Bitcoin',
+        link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
+      },
+      {
         date: "2021-04-30",
         name: 'Introducing zkDAI into the Aztec Private Rollup',
         link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
