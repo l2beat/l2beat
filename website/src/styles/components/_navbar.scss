@@ -9,6 +9,10 @@
     padding-top: 16px;
     padding-bottom: 8px;
   }
+
+  a {
+    border-bottom: none;
+  }
 }
 
 .navbar__logo {
@@ -56,7 +60,6 @@
   }
 
   a {
-    text-decoration: none;
     font-weight: bold;
     color: inherit;
 

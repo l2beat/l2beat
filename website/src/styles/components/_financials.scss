@@ -70,8 +70,8 @@
     }
 
     a {
-      text-decoration: none;
-      color: inherit;
+      border-bottom: none;
+      color: var(--text);
       font-weight: bold;
 
       &:hover {
@@ -98,12 +98,9 @@
 
 .financials__technology {
   padding: 4px 8px;
-  background-color: var(--background-2);
+  display: inline;
   border-radius: 6px;
-  text-decoration: none !important;
-  font-size: var(--font-s);
-  font-weight: bold;
-  cursor: help;
+  background-color: var(--background-2);
 
   &[data-rollup] {
     color: var(--positive-green);
@@ -111,5 +108,11 @@
 
   tr:hover & {
     background-color: var(--background-3);
+  }
+
+  span {
+    display: inline-block;
+    width: 37px;
+    text-align: center;
   }
 }

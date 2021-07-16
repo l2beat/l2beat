@@ -34,5 +34,11 @@ function getHtml() {
     $el.attr('rel', 'noopener noreferrer')
     $el.attr('target', '_blank')
   })
+  $('h1, h2, h3, h4, h5, h6').each(function () {
+    const $el = $(this)
+    if (!$el.attr('id')) {
+      $el.attr('id', $el.text().toLowerCase().replace(/[^a-z]/g, '-'))
+    }
+  })
   return $('body').html() ?? ''
 }
