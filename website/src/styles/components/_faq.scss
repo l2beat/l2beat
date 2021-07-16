@@ -1,6 +1,17 @@
 .faq {
+  line-height: 1.5;
+
+  h1 {
+    font-size: var(--font-xl);
+    text-align: center;
+  }
+
   h2 {
     font-size: var(--font-l);
+
+    &:first-of-type {
+      margin: 32px 0 0 0;
+    }
   }
 
   h1,
@@ -8,8 +19,18 @@
   h3,
   h4,
   h5,
-  h6,
+  h6 {
+    line-height: 1.15;
+    margin: 16px 0 0 0;
+  }
+
   p {
     margin: 16px 0 0 0;
+  }
+
+  img {
+    display: block;
+    margin: 16px auto 0 auto;
+    max-width: 700px;
   }
 }
