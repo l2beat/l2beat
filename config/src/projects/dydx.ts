@@ -64,8 +64,19 @@ export const dydx: Project = {
     ],
     news: [
       {
+        date: '2021-04-06',
         name: 'Trade now on Layer 2',
         link: 'https://dydx.exchange/blog/public',
+      },
+      {
+        date: '2020-08-18',
+        name: 'Scaling dYdX with StarkWare',
+        link: 'https://dydx.exchange/blog/public',
+      },
+      {
+        date: '2020-04-20',
+        name: 'dYdX Launches BTC Perpetual Contract Market',
+        link: 'https://medium.com/dydxderivatives/dydx-launches-btc-perpetual-contract-market-68f59b193f7e',
       },
     ],
   },

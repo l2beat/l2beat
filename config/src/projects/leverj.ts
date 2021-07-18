@@ -64,8 +64,19 @@ export const leverj: Project = {
     ],
     news: [
       {
-        name: 'Scaling Ethereum with the OMG Network',
-        link: 'https://omg.network/omg-network-scales-ethereum/',
+        date: '2021-04-08',
+        name: 'Shutting Down the Spot Market on Leverj',
+        link: 'https://blog.leverj.io/announcement-shutting-down-the-spot-markets-on-leverj-c20d14fad546',
+      },
+      {
+        date: '2020-09-25',
+        name: 'Launching high frequency derivatives trading on a DEX',
+        link: 'https://blog.leverj.io/launching-high-frequency-derivatives-trading-on-a-dex-fdca839aa51d',
+      },
+      {
+        date: '2019-02-19',
+        name: 'Leverj now on Ethereum Mainnet',
+        link: 'https://blog.leverj.io/leverj-now-on-ethereum-mainnet-bd016af01cb7',
       },
     ],
   },

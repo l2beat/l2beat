@@ -75,8 +75,29 @@ export const zksync: Project = {
     ],
     news: [
       {
+        date: '2021-05-31',
+        name: 'zkSync 2.0: Hello Ethereum!',
+        link: 'https://medium.com/matter-labs/zksync-2-0-hello-ethereum-ca48588de179',
+      },
+      {
+        date: '2021-05-24',
+        name: 'zkSync 1.x: Swaps, NFTs, event system, and permissionless token listing',
+        link: 'https://medium.com/matter-labs/zksync-1-x-swaps-nfts-event-system-and-permissionless-token-listing-e126fcc04d61',
+      },
+      {
+        date: '2021-04-13',
+        name: 'zkPorter: a breakthrough in L2 scaling',
+        link: 'https://medium.com/matter-labs/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf',
+      },
+      {
+        date: '2021-03-27',
         name: 'zkSync 2.0 Roadmap Update: zkEVM Testnet in May, Mainnet in August',
         link: 'https://medium.com/matter-labs/zksync-2-0-roadmap-update-zkevm-testnet-in-may-mainnet-in-august-379c66995021',
+      },
+      {
+        date: '2020-06-18',
+        name: 'zkSync is Live! Bringing Trustless, Scalable Payments to Ethereum',
+        link: 'https://medium.com/matter-labs/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       },
     ],
   },

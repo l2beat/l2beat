@@ -70,5 +70,22 @@ export const arbitrum: Project = {
         tooltip: 'Automatic EVM -> AVM translation happens under the hood.',
       },
     ],
+    news: [
+      {
+        date: '2021-05-12',
+        name: 'Wen Arbitrum?',
+        link: 'https://medium.com/offchainlabs/wen-arbitrum-634969c14713',
+      },
+      {
+        date: '2020-05-01',
+        name: 'Arbitrum Rollup Protocol',
+        link: 'https://developer.offchainlabs.com/docs/rollup_protocol',
+      },
+      {
+        date: '2020-10-14',
+        name: 'Arbitrum Rollup Testnet: full-featured and open to all',
+        link: 'https://medium.com/offchainlabs/arbitrum-rollup-testnet-full-featured-and-open-to-all-da3255b562ea',
+      },
+    ],
   },
 }

@@ -92,6 +92,12 @@ export const deversifi: Project = {
     ],
     news: [
       {
+        date: '2020-03-15',
+        name: 'Fast Withdrawals - A Powerful New Building Block for Scalable DeFi',
+        link: 'https://blog.deversifi.com/l2-composability/',
+      },
+      {
+        date: '2020-07-15',
         name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
         link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
       },

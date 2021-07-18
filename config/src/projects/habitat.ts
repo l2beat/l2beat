@@ -89,6 +89,7 @@ export const habitat: Project = {
     ],
     news: [
       {
+        date: '2021-06-30',
         name: 'Community Update #15 - Habitat is Live on Mainnet',
         link: 'https://0xhabitat.substack.com/p/15',
       },

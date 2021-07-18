@@ -78,7 +78,13 @@ export const hermez: Project = {
     ],
     news: [
       {
-        name: 'Hermez Network Mainnet Launch on 4th of March 2021',
+        date: '2021-07-10',
+        name: 'Hermez Coordinator Is Live On Testnet',
+        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
+      },
+      {
+        date: '2021-03-17',
+        name: 'Hermez Network Mainnet Launch',
         link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
       },
     ],

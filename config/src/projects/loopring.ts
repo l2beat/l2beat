@@ -66,5 +66,27 @@ export const loopring: Project = {
         value: 'No',
       },
     ],
+    news: [
+      {
+        date: '2020-12-15',
+        name: 'Shutdown of Loopring Exchange v1; Transition to v2',
+        link: 'https://medium.com/loopring-protocol/shutdown-of-loopring-exchange-v1-transition-to-v2-d06cdf462548',
+      },
+      {
+        date: '2020-12-03',
+        name: 'Loopring’s zkRollup AMM is Live',
+        link: 'https://medium.com/loopring-protocol/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
+      },
+      {
+        date: '2020-06-06',
+        name: 'Loopring Pay is Live: zkRollup Transfers on Ethereum',
+        link: 'https://medium.com/loopring-protocol/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
+      },
+      {
+        date: '2020-02-27',
+        name: 'Loopring Launches zkRollup Exchange: Loopring.io',
+        link: 'https://medium.com/loopring-protocol/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+      },
+    ],
   },
 }

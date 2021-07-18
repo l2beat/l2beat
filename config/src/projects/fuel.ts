@@ -59,5 +59,12 @@ export const fuel: Project = {
         value: 'No',
       },
     ],
+    news: [
+      {
+        date: '2020-01-19',
+        name: 'Announcing the Fuel v0 Open Beta',
+        link: 'https://fuellabs.medium.com/announcing-the-fuel-v0-open-beta-565a2d340fc3',
+      },
+    ],
   },
 }

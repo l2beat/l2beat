@@ -65,6 +65,7 @@ export const immutablex: Project = {
     ],
     news: [
       {
+        date: '2021-04-09',
         name: 'Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption',
         link: 'https://www.immutable.com/blog/immutable-x-alpha-trading-launch',
       },
