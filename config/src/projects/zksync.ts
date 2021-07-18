@@ -19,7 +19,10 @@ export const zksync: Project = {
     },
     purpose: 'Payments',
     parameters: [
-      { name: 'Primary use case', value: 'Payments' },
+      {
+        name: 'Primary use case',
+        value: 'Payments',
+      },
       {
         name: 'Hypothetical level of decentralization',
         value: 'High',

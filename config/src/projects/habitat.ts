@@ -17,7 +17,7 @@ export const habitat: Project = {
       name: 'optimistic-rollup',
       details: 'NutBerry',
     },
-    purpose: 'DAO governance',
+    purpose: 'DAO, Treasury',
     parameters: [
       {
         name: 'Primary use case',

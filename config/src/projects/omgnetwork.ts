@@ -55,7 +55,7 @@ export const omgnetwork: Project = {
     parameters: [
       {
         name: 'Primary use case',
-        value: 'Payments, Transfers',
+        value: 'Payments',
       },
       {
         name: 'Hypothetical level of decentralization',

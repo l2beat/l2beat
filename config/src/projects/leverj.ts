@@ -18,11 +18,11 @@ export const leverj: Project = {
       name: 'plasma',
       details: 'Gluon Plasma',
     },
-    purpose: 'Derivatives exchange',
+    purpose: 'Exchange',
     parameters: [
       {
         name: 'Primary use case',
-        value: 'Decentralized derivatives exchange',
+        value: 'Exchange',
       },
       {
         name: 'Hypothetical level of decentralization',

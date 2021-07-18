@@ -41,7 +41,7 @@ export const zkswap: Project = {
     parameters: [
       {
         name: 'Primary use case',
-        value: 'DEX, Payments',
+        value: 'Payments, Exchange',
       },
       {
         name: 'Hypothetical level of decentralization',

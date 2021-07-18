@@ -18,11 +18,11 @@ export const immutablex: Project = {
       name: 'validium',
       details: 'zk-STARK/StarkExchange',
     },
-    purpose: 'NFT exchange',
+    purpose: 'NFT, Exchange',
     parameters: [
       {
         name: 'Primary use case',
-        value: 'NFT Exchange',
+        value: 'NFT, Exchange',
       },
       {
         name: 'Hypothetical level of decentralization',
