@@ -97,7 +97,7 @@ export const omgnetwork: Project = {
     ],
     news: [
       {
-        date: "2020-06-01",
+        date: '2020-06-01',
         name: 'Scaling Ethereum with the OMG Network',
         link: 'https://omg.network/omg-network-scales-ethereum/',
       },
