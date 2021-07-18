@@ -79,6 +79,12 @@ In the future we expect to see hybrid solution using a mix of the above techniqu
   </tbody>
 </table>
 
+## How exactly do you calculate metrics like TVL?
+
+It varies from project to project but we generally track the amount of tokens locked in all token bridges for a given L2. Sometimes it's a single token bridge like for zkSync but sometimes these are multiple token bridges for a single L2 (Optimism).
+
+For more details see our [project definitions](https://github.com/l2beat/l2beat/tree/master/config/src/projects).
+
 ## Apart from TVL, what is L2BEAT aiming to track?
 
 We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try highlight main risks related to their implementation that may affect user's funds security.
@@ -86,3 +92,8 @@ We will continuously monitor different L2 technologies with the primary focus on
 ## Is L2BEAT performing a security audit for each L2?
 
 No, the L2BEAT team **DOES NOT DO SECURITY AUDITS**. All the information that we present on our site should be independently verified by anyone wanting to use given L2. Our goal is to collect as much information as we can about the "state of L2s" and allow the community to better understand what security assumptions are used to build given L2 solutions.
+
+## How can I add a new project or improve some info?
+
+Everything is [open source](https://github.com/l2beat/l2beat) &ndash; just create a PR. If you want
+to add a new project you should read our [contributing guidelines](https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md).
