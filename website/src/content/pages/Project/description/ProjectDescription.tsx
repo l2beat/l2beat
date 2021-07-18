@@ -1,4 +1,5 @@
 import { BridgeDescription, ProjectDetails } from '@l2beat/config'
+import { formatDate } from '../../../../scripts/chart/ui/dates'
 import { OutLink } from '../../../common'
 
 import { EtherscanLink } from './EtherscanLink'
@@ -63,6 +64,8 @@ export function ProjectDescription({
           <ul className="description__links">
             {details.news.map((news, i) => (
               <li key={i}>
+                {/* TODO: date formatting should be done already */}
+                {formatDate(news.date)} &ndash;{' '}
                 <OutLink href={news.link}>{news.name}</OutLink>
               </li>
             ))}
