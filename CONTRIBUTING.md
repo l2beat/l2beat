@@ -42,6 +42,6 @@ The L2BEAT website repository is a monorepo consisting of three interdependent p
 
 1. `config` - the shared configuration that defines what projects and tokens are tracked by the website
 2. `backend` - node script that fetches data from the blockchain and calculates metrics like TVL
-3. `frontend` - next.js app which displays data fetched by the backend
+3. `website` - statically generated site which displays data fetched by the backend
 
 To learn more about each of the projects read their respective README's.
