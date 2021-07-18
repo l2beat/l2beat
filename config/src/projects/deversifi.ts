@@ -45,11 +45,11 @@ export const deversifi: Project = {
       name: 'validium',
       details: 'zk-STARK/StarkExchange',
     },
-    purpose: 'Token exchange',
+    purpose: 'Exchange',
     parameters: [
       {
         name: 'Primary use case',
-        value: 'DEX',
+        value: 'Exchange',
       },
       {
         name: 'Hypothetical level of decentralization',

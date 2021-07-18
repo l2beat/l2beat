@@ -17,11 +17,11 @@ export const loopring: Project = {
       name: 'zk-rollup',
       details: 'zk-SNARK',
     },
-    purpose: 'Token exchange',
+    purpose: 'Payments, Exchange',
     parameters: [
       {
         name: 'Primary use case',
-        value: 'DEX',
+        value: 'Payments, Exchange',
       },
       {
         name: 'Hypothetical level of decentralization',
