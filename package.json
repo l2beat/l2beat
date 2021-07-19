@@ -9,7 +9,6 @@
   "workspaces": {
     "packages": [
       "backend",
-      "frontend",
       "config",
       "website"
     ]
