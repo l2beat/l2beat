@@ -38,7 +38,7 @@ export function getProjectPageProps(
     metadata: {
       title: `${project.name} – L2BEAT`,
       description: `${project.name} project on L2BEAT. Layer 2 scaling analytics and research.`,
-      image: `/meta-images/${project.slug}.png`,
+      image: `https://l2beat.com/meta-images/${project.slug}.png`,
       url: `https://l2beat.com/projects/${project.slug}/`,
     },
   }
