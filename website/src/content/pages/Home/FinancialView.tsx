@@ -1,5 +1,5 @@
 import { PercentChange } from '../../common'
-import { ShieldBadIcon, ShieldWarnIcon } from '../../common/icons'
+import { WarningIcon } from '../../common/icons'
 import { FinancialEntry } from './getHomePageProps'
 
 interface Props {
@@ -48,11 +48,13 @@ export function FinancialView({ items }: Props) {
                 {project.tvlWarning && (
                   <div className="financials__tvl-warning">
                     <div className="tooltip" title={project.tvlWarning}>
-                      {project.severeWarning ? (
-                        <ShieldBadIcon outline fill="var(--negative-red)" />
-                      ) : (
-                        <ShieldWarnIcon outline fill="var(--neutral-yellow" />
-                      )}
+                      <WarningIcon
+                        fill={
+                          project.severeWarning
+                            ? 'var(--negative-red)'
+                            : 'var(--neutral-yellow)'
+                        }
+                      />
                     </div>
                   </div>
                 )}
