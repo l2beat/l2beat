@@ -52,7 +52,7 @@ describe('AsyncCache', () => {
       (data) => data.toLowerCase(),
       (json) => json.toUpperCase()
     )
-    await new Promise((resolve) => setTimeout(resolve, 10))
+    await new Promise<void>((resolve) => setTimeout(resolve, 10))
     expect(data).to.equal('XYZ')
     expect(mock.data).to.deep.equal({
       foo: 'bar',
@@ -80,7 +80,7 @@ describe('AsyncCache', () => {
     const cache = new AsyncCache(mock, 10)
     await cache.getOrFetch('a', async () => 1)
     await cache.getOrFetch('b', async () => 2)
-    await new Promise((resolve) => setTimeout(resolve, 20))
+    await new Promise<void>((resolve) => setTimeout(resolve, 20))
     expect(calls).to.equal(1)
   })
 })
