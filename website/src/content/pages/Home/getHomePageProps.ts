@@ -21,7 +21,7 @@ export interface FinancialEntry {
   slug: string
   tvl: string
   tvlWarning?: string
-  disqualified: boolean
+  severeWarning: boolean
   oneDayChange: string
   sevenDayChange: string
   marketShare: string
@@ -88,7 +88,7 @@ function getFinancialViewEntry(
     slug: project.slug,
     tvl: formatUSD(tvl),
     tvlWarning: tvlWarning,
-    disqualified: tokenShare > 0.9,
+    severeWarning: tokenShare > 0.9,
     oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
     sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
     marketShare: formatPercent(tvl / aggregateTvl),

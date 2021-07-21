@@ -48,7 +48,7 @@ export function FinancialView({ items }: Props) {
                 {project.tvlWarning && (
                   <div className="financials__tvl-warning">
                     <div className="tooltip" title={project.tvlWarning}>
-                      {project.disqualified ? (
+                      {project.severeWarning ? (
                         <ShieldBadIcon outline fill="var(--negative-red)" />
                       ) : (
                         <ShieldWarnIcon outline fill="var(--neutral-yellow" />
