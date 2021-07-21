@@ -24,12 +24,12 @@
     "build:mock": "MOCK_DATA=true yarn build"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
-    "eslint": "^7.28.0",
-    "prettier": "^2.3.0",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5",
     "wsrun": "^5.2.4"
   }
 }
