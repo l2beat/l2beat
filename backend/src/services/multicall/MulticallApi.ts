@@ -1,4 +1,8 @@
-import { MULTICALL, MULTICALL_BATCH_SIZE } from '../../constants'
+import {
+  MULTICALL,
+  MULTICALL_BATCH_SIZE,
+  MULTICALL_BLOCK_NUMBER,
+} from '../../constants'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
 import { AlchemyApi } from '../api/AlchemyApi'
@@ -45,7 +49,10 @@ export class MulticallApi {
     }
     if (unknown.length > 0) {
       const requests = unknown.map((x) => x[1])
-      const results = await this.callInBatches(requests, blockNumber)
+      const results =
+        blockNumber >= MULTICALL_BLOCK_NUMBER
+          ? await this.callInBatches(requests, blockNumber)
+          : await this.callIndividually(requests, blockNumber)
       for (const [i, [key]] of unknown.entries()) {
         known.push([key, results[i]])
       }
@@ -85,6 +92,28 @@ export class MulticallApi {
       this.asyncCache.set(request.cacheKey, result[i], (x) => x)
     }
     return result.map(dataToResponse)
+  }
+
+  private async callIndividually(
+    requests: RequestWithCacheKey[],
+    blockNumber: number
+  ) {
+    let completed = 0
+    return Promise.all(
+      requests.map(async (request) => {
+        const data = await this.alchemyApi.call(
+          request.address,
+          request.data,
+          blockNumber
+        )
+        this.asyncCache.set(request.cacheKey, data, (x) => x)
+        completed++
+        this.logger.log(
+          `fetched request ${completed} of ${requests.length} @ ${blockNumber}`
+        )
+        return dataToResponse(data)
+      })
+    )
   }
 }
 
