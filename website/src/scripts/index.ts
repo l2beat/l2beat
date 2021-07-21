@@ -1,7 +1,9 @@
 import { initChart } from './chart'
-import { darkModeSupport } from './darkModeSupport'
+import { configureDarkMode } from './configureDarkMode'
+import { configureTooltips } from './configureTooltips'
 
-darkModeSupport()
+configureDarkMode()
+configureTooltips()
 
 const chart = document.querySelector<HTMLElement>('.chart')
 if (chart) {
