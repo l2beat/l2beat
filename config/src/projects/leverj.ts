@@ -18,6 +18,7 @@ export const leverj: Project = {
       details: 'Gluon Plasma',
     },
     purpose: 'Exchange',
+    associatedToken: 'L2',
     parameters: [
       {
         name: 'Primary use case',
