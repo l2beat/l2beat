@@ -44,12 +44,9 @@ export function getHomePageProps(
     getFromEnd(l2Data.byProject[project.name].aggregate.data, 0)[1]
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
 
-  const financialEntries = ordering.map((x) =>
+  const financialView = ordering.map((x) =>
     getFinancialViewEntry(x, l2Data.byProject[x.name], tvl)
   )
-  const financialView = financialEntries
-    .filter((x) => !x.disqualified)
-    .concat(financialEntries.filter((x) => x.disqualified))
 
   return {
     tvl: formatUSD(tvl),

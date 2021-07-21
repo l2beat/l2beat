@@ -99,12 +99,19 @@
 .financials__tvl-warning {
   position: relative;
   display: inline-block;
+  height: 1em;
+  margin-left: 4px;
+  margin-right: -4px;
   width: 24px;
 
-  svg {
+  .tooltip {
     position: absolute;
-    right: -4px;
+    right: 0;
     top: -3px;
+  }
+
+  svg {
+    display: block;
   }
 }
 
@@ -113,6 +120,7 @@
   display: inline;
   border-radius: 6px;
   background-color: var(--background-2);
+  font-weight: bold;
 
   &[data-rollup] {
     color: var(--positive-green);

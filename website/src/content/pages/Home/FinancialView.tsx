@@ -46,15 +46,14 @@ export function FinancialView({ items }: Props) {
               <td>
                 {project.tvl}
                 {project.tvlWarning && (
-                  <div
-                    className="financials__tvl-warning"
-                    title={project.tvlWarning}
-                  >
-                    {project.disqualified ? (
-                      <ShieldBadIcon fill="var(--negative-red)" />
-                    ) : (
-                      <ShieldWarnIcon fill="var(--neutral-yellow" />
-                    )}
+                  <div className="financials__tvl-warning">
+                    <div className="tooltip" title={project.tvlWarning}>
+                      {project.disqualified ? (
+                        <ShieldBadIcon outline fill="var(--negative-red)" />
+                      ) : (
+                        <ShieldWarnIcon outline fill="var(--neutral-yellow" />
+                      )}
+                    </div>
                   </div>
                 )}
               </td>
@@ -64,9 +63,9 @@ export function FinancialView({ items }: Props) {
               <td>{project.marketShare}</td>
               <td>{project.purpose}</td>
               <td>
-                <a
-                  className="financials__technology"
-                  href="/faq/#categories"
+                <abbr
+                  className="financials__technology tooltip"
+                  title={project.technology.name}
                   data-rollup={
                     ['ZKR', 'ORU'].includes(project.technology.abbreviation)
                       ? true
@@ -74,7 +73,7 @@ export function FinancialView({ items }: Props) {
                   }
                 >
                   <span>{project.technology.abbreviation}</span>
-                </a>
+                </abbr>
               </td>
             </tr>
           ))}
