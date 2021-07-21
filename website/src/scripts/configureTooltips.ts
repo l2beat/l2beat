@@ -27,7 +27,7 @@ export function configureTooltips() {
 
     tooltipTriangle.style.left = rect.left + rect.width / 2 - 8 + 'px'
     tooltipTriangle.style.top = rect.bottom + 4 + 'px'
-    
+
     if (tooltip.getBoundingClientRect().right >= window.innerWidth - 10) {
       tooltip.style.left = 'unset'
       tooltip.style.right = '10px'
