@@ -1,4 +1,7 @@
 export * from './GithubIcon'
 export * from './MoonIcon'
+export * from './ShieldBadIcon'
+export * from './ShieldGoodIcon'
+export * from './ShieldWarnIcon'
 export * from './SunIcon'
 export * from './TwitterIcon'
