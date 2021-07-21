@@ -108,6 +108,8 @@ function getTechnology(project: Project) {
       return { abbreviation: 'PLA', name: 'Plasma' }
     case 'validium':
       return { abbreviation: 'VAL', name: 'Validium' }
+    case 'state-pools':
+      return { abbreviation: 'STP', name: 'State Pools' }
   }
   return { abbreviation: '???', name: tech }
 }
