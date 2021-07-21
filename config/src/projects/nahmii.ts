@@ -1,7 +1,7 @@
 import { Project } from './Project'
 
 export const nahmii: Project = {
-  name: 'Nahmii',
+  name: 'Nahmii 1.0',
   slug: 'nahmii',
   bridges: [
     {
@@ -14,7 +14,7 @@ export const nahmii: Project = {
     website: 'https://nahmii.io/',
     color: '#DC398C',
     technology: {
-      name: 'state pools',
+      name: 'state-pools',
       details: 'User carried state, pooled security model',
     },
     purpose: 'Payments',
@@ -40,6 +40,41 @@ export const nahmii: Project = {
         tooltip:
           'Users can safely exit to L1 even if the operator is malicious.',
         sentiment: 'good',
+      },
+      {
+        name: 'State Correctness',
+        value: 'Fraud Proofs.',
+      },
+      {
+        name: 'Data Availability',
+        value: 'Off Chain. Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
+      },
+      {
+        name: 'Mass Exit',
+        value: 'Solved via checkpoints and lack of time restrictions.',
+      },
+      {
+        name: 'Source Code',
+        value: 'The Nahmii 1.0 smart contracts are publicly available on Github and open source.',
+        pointers: [
+          'https://github.com/hubiinetwork/nahmii-contracts',
+        ],
+      },
+      {
+        name: 'Privacy',
+        value: 'No additional privacy compared to L1.',
+      },
+      {
+        name: 'Sequencer',
+        value: 'Centralized for Nahmii 1.0.',
+      },
+      {
+        name: 'Force Transactions',
+        value: 'Not a design goal for Nahmii 1.0.',
+      },
+      {
+        name: 'Exit Mechanism',
+        value: 'Nahmii 1.0 has a 5 day settlement period.',
       },
     ],
     news: [
