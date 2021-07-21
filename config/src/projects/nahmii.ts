@@ -47,7 +47,8 @@ export const nahmii: Project = {
       },
       {
         name: 'Data Availability',
-        value: 'Off Chain. Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
+        value:
+          'Off Chain. Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
       },
       {
         name: 'Mass Exit',
@@ -55,10 +56,9 @@ export const nahmii: Project = {
       },
       {
         name: 'Source Code',
-        value: 'The Nahmii 1.0 smart contracts are publicly available on Github and open source.',
-        pointers: [
-          'https://github.com/hubiinetwork/nahmii-contracts',
-        ],
+        value:
+          'The Nahmii 1.0 smart contracts are publicly available on Github and open source.',
+        pointers: ['https://github.com/hubiinetwork/nahmii-contracts'],
       },
       {
         name: 'Privacy',
