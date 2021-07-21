@@ -1,4 +1,5 @@
 import { PercentChange } from '../../common'
+import { ShieldBadIcon, ShieldWarnIcon } from '../../common/icons'
 import { FinancialEntry } from './getHomePageProps'
 
 interface Props {
@@ -42,7 +43,21 @@ export function FinancialView({ items }: Props) {
                   {project.name}
                 </a>
               </td>
-              <td>{project.tvl}</td>
+              <td>
+                {project.tvl}
+                {project.tvlWarning && (
+                  <div
+                    className="financials__tvl-warning"
+                    title={project.tvlWarning}
+                  >
+                    {project.disqualified ? (
+                      <ShieldBadIcon fill="var(--negative-red)" />
+                    ) : (
+                      <ShieldWarnIcon fill="var(--neutral-yellow" />
+                    )}
+                  </div>
+                )}
+              </td>
               <td>
                 <PercentChange value={project.sevenDayChange} />
               </td>

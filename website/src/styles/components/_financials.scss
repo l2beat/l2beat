@@ -96,6 +96,18 @@
   font-size: 8px;
 }
 
+.financials__tvl-warning {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+
+  svg {
+    position: absolute;
+    right: -4px;
+    top: -3px;
+  }
+}
+
 .financials__technology {
   padding: 4px 8px;
   display: inline;
