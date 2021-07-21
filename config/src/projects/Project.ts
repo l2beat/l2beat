@@ -20,8 +20,6 @@ export interface BridgeDescription {
 }
 
 export interface ProjectDetails {
-  /** If the project is not an L2, e.g. plasma, sidechain, etc. */
-  showNotL2Warning?: true
   /**
    * Project website. It should be a marketing landing page where users are able
    * to read about the project. Direct links to DApps are also allowed.

@@ -44,7 +44,6 @@ export const omgnetwork: Project = {
     },
   ],
   details: {
-    showNotL2Warning: true,
     website: 'https://omg.network',
     color: '#4967ff',
     technology: {
