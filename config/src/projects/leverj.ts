@@ -11,7 +11,6 @@ export const leverj: Project = {
     },
   ],
   details: {
-    showNotL2Warning: true,
     website: 'https://leverj.io/',
     color: '#4967ff',
     technology: {

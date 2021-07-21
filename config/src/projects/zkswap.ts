@@ -32,7 +32,6 @@ export const zkswap: Project = {
   details: {
     website: 'https://zks.org/',
     color: '#5a11a8',
-    showNotL2Warning: true,
     technology: {
       name: 'validium',
       details: 'ZKSpeed',
