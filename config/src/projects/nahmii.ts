@@ -7,7 +7,7 @@ export const nahmii: Project = {
     {
       address: '0xCc8D82f6ba952966E63001c7B320EEF2Ae729099',
       sinceBlock: 6921581,
-      tokens: ['NII', 'HBT', 'HOT'],
+      tokens: ['NII'],
     },
   ],
   details: {
