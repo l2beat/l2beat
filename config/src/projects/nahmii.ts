@@ -5,9 +5,9 @@ export const nahmii: Project = {
   slug: 'nahmii',
   bridges: [
     {
-      address: '0xcc8d82f6ba952966e63001c7b320eef2ae729099',
+      address: '0xCc8D82f6ba952966E63001c7B320EEF2Ae729099',
       sinceBlock: 6921581,
-      tokens: ['NII', 'WETH', 'USDC', 'USDT'],
+      tokens: ['NII', 'HBT', 'HOT'],
     },
   ],
   details: {
@@ -18,6 +18,7 @@ export const nahmii: Project = {
       details: 'User carried state, pooled security model',
     },
     purpose: 'Payments',
+    associatedToken: 'NII',
     parameters: [
       {
         name: 'Primary use case',
@@ -31,8 +32,9 @@ export const nahmii: Project = {
       {
         name: 'Current level of decentralization',
         value: 'Low',
-        tooltip: 'Single operator.',
-        sentiment: 'neutral',
+        tooltip:
+          'Operated by Nahmii foundation. All transactions require signature from the Operator.',
+        sentiment: 'bad',
       },
       {
         name: 'Can funds be stolen by the operator?',
@@ -47,8 +49,9 @@ export const nahmii: Project = {
       },
       {
         name: 'Data Availability',
-        value:
-          'Off Chain. Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
+        value: 'Off Chain.',
+        tooltip:
+          'Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
       },
       {
         name: 'Mass Exit',
@@ -71,10 +74,14 @@ export const nahmii: Project = {
       {
         name: 'Force Transactions',
         value: 'Not a design goal for Nahmii 1.0.',
+        sentiment: 'neutral',
       },
       {
         name: 'Exit Mechanism',
-        value: 'Nahmii 1.0 has a 5 day settlement period.',
+        value: 'Trustless',
+        tooltip:
+          'Users submit exit requests and wait 5 days for the possibility of someone challenging that request',
+        sentiment: 'good',
       },
     ],
     news: [
@@ -87,6 +94,7 @@ export const nahmii: Project = {
     notes: {
       text: 'Nahmii 1.0 is live on Ethereum mainnet and targets payments. Nahmii 2.0 is a generalized L2 scaling solution with smart contract support that has a public testnet available.',
       pointers: [
+        'https://nahmii.github.io/assets/doc/nahmii-1-whitepaper.pdf',
         'https://www.nahmii.io/public/file/nahmii.White.Paper.v2.0.pdf',
         'https://blog.nahmii.io/nahmii-2-0-testnet-goes-live-integrated-with-metamask-releases-white-paper-94f61d603ed1',
       ],
