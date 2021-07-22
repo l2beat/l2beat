@@ -36,6 +36,8 @@ export interface ProjectDetails {
   }
   /** A short (<20 characters) description of the use case */
   purpose: string
+  /** Symbol of the token associated with this project */
+  associatedToken?: string
   /** Project research results */
   parameters: ProjectParameter[]
   /** Links to recent developments */

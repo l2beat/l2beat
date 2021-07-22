@@ -96,11 +96,31 @@
   font-size: 8px;
 }
 
+.financials__tvl-warning {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  margin-left: 4px;
+  margin-right: -4px;
+  width: 24px;
+
+  .tooltip {
+    position: absolute;
+    right: 0;
+    top: -3px;
+  }
+
+  svg {
+    display: block;
+  }
+}
+
 .financials__technology {
   padding: 4px 8px;
   display: inline;
   border-radius: 6px;
   background-color: var(--background-2);
+  font-weight: bold;
 
   &[data-rollup] {
     color: var(--positive-green);
@@ -114,5 +134,17 @@
     display: inline-block;
     width: 37px;
     text-align: center;
+  }
+}
+
+.financials__symbols {
+  margin-top: 16px;
+  font-size: var(--font-s);
+  p {
+    margin: 0;
+  }
+  svg {
+    position: relative;
+    top: 5px;
   }
 }

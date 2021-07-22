@@ -18,6 +18,7 @@ export const loopring: Project = {
       details: 'zk-SNARK',
     },
     purpose: 'Payments, Exchange',
+    associatedToken: 'LRC',
     parameters: [
       {
         name: 'Primary use case',

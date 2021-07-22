@@ -18,6 +18,7 @@ export const habitat: Project = {
       details: 'NutBerry',
     },
     purpose: 'DAO, Treasury',
+    associatedToken: 'HBT',
     parameters: [
       {
         name: 'Primary use case',

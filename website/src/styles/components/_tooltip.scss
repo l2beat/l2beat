@@ -1,0 +1,30 @@
+.tooltip {
+  cursor: pointer;
+}
+
+.tooltip__popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 300px;
+  padding: 8px;
+  z-index: 1000;
+  color: var(--background);
+  background-color: var(--text);
+  font-weight: bold;
+  white-space: initial;
+  text-align: left;
+  border-radius: 6px;
+}
+
+.tooltip__triangle {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+  background-color: var(--text);
+}

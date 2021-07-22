@@ -1,4 +1,4 @@
-export function darkModeSupport() {
+export function configureDarkMode() {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const saved = localStorage.getItem('l2beat-theme')
 

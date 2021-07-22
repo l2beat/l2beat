@@ -20,6 +20,8 @@ export interface FinancialEntry {
   name: string
   slug: string
   tvl: string
+  tvlWarning?: string
+  severeWarning: boolean
   oneDayChange: string
   sevenDayChange: string
   marketShare: string
@@ -69,10 +71,24 @@ function getFinancialViewEntry(
   const tvl = getFromEnd(projectData.aggregate.data, 0)[1]
   const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)[1]
   const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)[1]
+
+  const token = project.details.associatedToken
+  const tokenTvl = token
+    ? getFromEnd(projectData.byToken[token].data, 0)[2]
+    : undefined
+
+  const tokenShare = tokenTvl ? tokenTvl / tvl : 0
+  const tvlWarning =
+    token && tokenShare > 0.1
+      ? toWarning(project.name, tokenShare, token)
+      : undefined
+
   return {
     name: project.name,
     slug: project.slug,
     tvl: formatUSD(tvl),
+    tvlWarning: tvlWarning,
+    severeWarning: tokenShare > 0.9,
     oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
     sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
     marketShare: formatPercent(tvl / aggregateTvl),
@@ -94,4 +110,9 @@ function getTechnology(project: Project) {
       return { abbreviation: 'VAL', name: 'Validium' }
   }
   return { abbreviation: '???', name: tech }
+}
+
+function toWarning(name: string, share: number, token: string) {
+  const percent = formatPercent(share)
+  return `${name}'s ${token} token accounts for ${percent} of the TVL!`
 }

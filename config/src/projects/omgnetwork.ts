@@ -51,6 +51,7 @@ export const omgnetwork: Project = {
       details: 'More Viable Plasma',
     },
     purpose: 'Payments',
+    associatedToken: 'OMG',
     parameters: [
       {
         name: 'Primary use case',
