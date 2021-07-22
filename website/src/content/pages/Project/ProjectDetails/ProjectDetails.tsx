@@ -19,7 +19,11 @@ export function ProjectDetails({ details, bridges }: Props) {
         <ul className="ProjectDetails-Parameters">
           <ProjectParameter
             name="Website:"
-            value={<OutLink href={details.website}>{details.website}</OutLink>}
+            value={
+              <OutLink href={details.links.websites[0]}>
+                {details.links.websites[0]}
+              </OutLink>
+            }
           />
           <ProjectParameter
             name="Technology:"

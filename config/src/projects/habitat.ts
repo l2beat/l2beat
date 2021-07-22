@@ -11,8 +11,18 @@ export const habitat: Project = {
     },
   ],
   details: {
-    website: 'https://0xhabitat.org/',
-    color: '#29b65f',
+    links: {
+      websites: ['https://0xhabitat.org/'],
+      apps: ['https://0xhabitat.org/app/'],
+      documentation: ['https://docs.0xhabitat.org/'],
+      explorers: ['https://0xhabitat.org/explorer/'],
+      repositories: ['https://github.com/0xHabitat/habitat'],
+      socialMedia: [
+        'https://twitter.com/EnterTheHabitat',
+        'https://discord.gg/4Cu6vBZhDp',
+        'https://0xhabitat.substack.com/',
+      ],
+    },
     technology: {
       name: 'optimistic-rollup',
       details: 'NutBerry',

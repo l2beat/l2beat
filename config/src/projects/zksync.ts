@@ -11,8 +11,20 @@ export const zksync: Project = {
     },
   ],
   details: {
-    website: 'https://zksync.io/',
-    color: '#8c8dfc',
+    links: {
+      websites: ['https://zksync.io/'],
+      apps: ['https://wallet.zksync.io/'],
+      documentation: ['https://zksync.io/dev/'],
+      explorers: ['https://zkscan.io/'],
+      repositories: ['https://github.com/matter-labs/zksync'],
+      socialMedia: [
+        'https://medium.com/matter-labs',
+        'https://gitter.im/matter-labs/zksync',
+        'https://discord.gg/px2aR7w',
+        'https://t.me/zksync',
+        'https://twitter.com/zksync',
+      ],
+    },
     technology: {
       name: 'zk-rollup',
       details: 'zk-SNARK',

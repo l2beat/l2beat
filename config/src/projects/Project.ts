@@ -20,13 +20,21 @@ export interface BridgeDescription {
 }
 
 export interface ProjectDetails {
-  /**
-   * Project website. It should be a marketing landing page where users are able
-   * to read about the project. Direct links to DApps are also allowed.
-   */
-  website: string
-  /** Theme color of your project. Used as a background color for stats */
-  color: string
+  /** List of links */
+  links: {
+    /** Links to marketing landing pages. */
+    websites: string[]
+    /** Links to webapps connected to the project. */
+    apps: string[]
+    /** Links to documentation pages. */
+    documentation: string[]
+    /** Links to transaction explorers. */
+    explorers: string[]
+    /** Links to source code repositories. */
+    repositories: string[]
+    /** Links to social media pages. */
+    socialMedia: string[]
+  }
   /** Description of the technology */
   technology: {
     /** E.g. zk-rollup, payment-channels */

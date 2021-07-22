@@ -30,8 +30,21 @@ export const zkswap: Project = {
     },
   ],
   details: {
-    website: 'https://zks.org/',
-    color: '#5a11a8',
+    links: {
+      websites: ['https://zks.org/'],
+      apps: ['https://zkswap.app'],
+      documentation: ['https://en.wiki.zks.org/'],
+      explorers: ['https://zkswap.info'],
+      repositories: ['https://github.com/l2labs/zkswap-contracts'],
+      socialMedia: [
+        'https://medium.com/@zkswapofficial',
+        'https://twitter.com/ZKSwapOfficial',
+        'https://discord.gg/rpjpeq4Y47',
+        'https://t.me/zkswapofficial',
+        'https://reddit.com/r/ZKSwap_Official/',
+        'https://zks.org/en/blog',
+      ],
+    },
     technology: {
       name: 'validium',
       details: 'ZKSpeed',

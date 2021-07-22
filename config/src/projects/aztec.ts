@@ -11,8 +11,20 @@ export const aztec: Project = {
     },
   ],
   details: {
-    website: 'https://zk.money',
-    color: '#8953f3',
+    links: {
+      websites: ['https://aztec.network/'],
+      apps: ['https://zk.money'],
+      documentation: ['https://developers.aztec.network/'],
+      explorers: ['https://explorer.aztec.network/'],
+      repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
+      socialMedia: [
+        'https://twitter.com/aztecnetwork',
+        'https://medium.com/aztec-protocol',
+        'https://t.me/aztecprotocol',
+        'https://discord.gg/UDtJr9u',
+        'https://plonk.cafe/',
+      ],
+    },
     technology: {
       name: 'zk-rollup',
       details: 'zk-SNARK/PLONK',

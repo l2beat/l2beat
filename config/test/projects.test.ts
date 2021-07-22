@@ -48,4 +48,54 @@ describe('projects', () => {
       })
     }
   })
+
+  describe('links', () => {
+    describe('every project has at least one website link', () => {
+      for (const project of projects) {
+        it(project.name, () => {
+          expect(project.details.links.websites.length).to.be.greaterThan(0)
+        })
+      }
+    })
+
+    describe('every link is https', () => {
+      const links = projects.flatMap((x) =>
+        Object.values(x.details.links).flat()
+      )
+      for (const link of links) {
+        it(link, () => {
+          expect(link).to.match(/^https:\/\//)
+        })
+      }
+    })
+
+    describe('social media links are properly formatted', () => {
+      const links = projects.flatMap((x) => x.details.links.socialMedia)
+      for (const link of links) {
+        it(link, () => {
+          if (link.includes('discord')) {
+            expect(link).to.match(/^https:\/\/discord\.gg\/\w+$/)
+          } else if (link.includes('t.me')) {
+            expect(link).to.match(/^https:\/\/t\.me\/\w+$/)
+          } else if (link.includes('medium')) {
+            expect(link).to.match(/^https:\/\/medium\.com\/[@\w-]+$/)
+          } else if (link.includes('twitter')) {
+            expect(link).to.match(/^https:\/\/twitter\.com\/[\w-]+$/)
+          } else if (link.includes('reddit')) {
+            expect(link).to.match(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
+          } else if (link.includes('youtube')) {
+            if (!link.includes('playlist')) {
+              expect(link).to.match(
+                /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/
+              )
+            }
+          } else if (link.includes('twitch')) {
+            expect(link).to.match(/^https:\/\/twitch\.tv\/[\w-]+$/)
+          } else if (link.includes('gitter')) {
+            expect(link).to.match(/^https:\/\/gitter\.im\/[\w-/]+$/)
+          }
+        })
+      }
+    })
+  })
 })

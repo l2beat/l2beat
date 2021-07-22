@@ -38,8 +38,26 @@ export const deversifi: Project = {
     },
   ],
   details: {
-    website: 'https://www.deversifi.com/',
-    color: '#17b5cb',
+    links: {
+      websites: ['https://www.deversifi.com/'],
+      apps: ['https://app.deversifi.com/'],
+      documentation: [
+        'https://docs.deversifi.com/',
+        'https://support.deversifi.com/en/',
+        'https://docs.starkware.co/starkex-docs-v2/',
+      ],
+      explorers: [],
+      repositories: [
+        'https://github.com/starkware-libs/starkex-contracts',
+        'https://github.com/deversifi',
+      ],
+      socialMedia: [
+        'https://blog.deversifi.com/',
+        'https://twitter.com/deversifi',
+        'https://linkedin.com/company/deversifi/',
+        'https://youtube.com/c/deversifi',
+      ],
+    },
     technology: {
       name: 'validium',
       details: 'zk-STARK/StarkExchange',

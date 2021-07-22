@@ -11,8 +11,21 @@ export const nahmii: Project = {
     },
   ],
   details: {
-    website: 'https://nahmii.io/',
-    color: '#DC398C',
+    links: {
+      websites: ['https://nahmii.io/'],
+      apps: [],
+      documentation: [
+        'https://www.nahmii.io/public/file/nahmii.White.Paper.v2.0.pdf',
+      ],
+      explorers: [],
+      repositories: ['https://github.com/hubiinetwork/nahmii-contracts'],
+      socialMedia: [
+        'https://blog.nahmii.io/',
+        'https://twitter.com/nahmii_io',
+        'https://t.me/nahmii',
+        'https://discord.gg/GKTsUTH',
+      ],
+    },
     technology: {
       name: 'state-pools',
       details: 'User carried state, pooled security model',

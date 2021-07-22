@@ -44,8 +44,19 @@ export const omgnetwork: Project = {
     },
   ],
   details: {
-    website: 'https://omg.network',
-    color: '#4967ff',
+    links: {
+      websites: ['https://omg.network'],
+      apps: [],
+      documentation: ['https://docs.omg.network/'],
+      explorers: ['https://blockexplorer.mainnet.v1.omg.network/'],
+      repositories: ['https://github.com/omgnetwork/plasma-contracts'],
+      socialMedia: [
+        'https://twitter.com/omgnetworkhq',
+        'https://discord.gg/m7NysJjKhm',
+        'https://t.me/omgnetwork',
+        'https://linkedin.com/company/omgnetwork/',
+      ],
+    },
     technology: {
       name: 'plasma',
       details: 'More Viable Plasma',
