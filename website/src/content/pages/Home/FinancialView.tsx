@@ -85,13 +85,13 @@ export function FinancialView({ items }: Props) {
       </div>
       <div className="financials__symbols">
         <p>
-          <WarningIcon fill="var(--neutral-yellow)" /> &ndash; The project's
-          native token accounts for more than 10% of the TVL.
+          <WarningIcon fill="var(--neutral-yellow)" /> &ndash; A token
+          associated with the project accounts for more than 10% of the TVL.
         </p>
         <p>
-          <WarningIcon fill="var(--negative-red)" /> &ndash; The project's
-          native token accounts for more than 90% of the TVL. Such a
-          distribution makes it easy to manipulate this metric.
+          <WarningIcon fill="var(--negative-red)" /> &ndash; A token associated
+          with the project accounts for more than 90% of the TVL. This makes the
+          metric vulnerable to manipulation.
         </p>
       </div>
     </>

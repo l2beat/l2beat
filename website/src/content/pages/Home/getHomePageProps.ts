@@ -116,5 +116,6 @@ function getTechnology(project: Project) {
 
 function toWarning(name: string, share: number, token: string) {
   const percent = formatPercent(share)
-  return `${name}'s ${token} token accounts for ${percent} of the TVL!`
+  const what = `The ${token} token associated with ${name}`
+  return `${what} accounts for ${percent} of the TVL!`
 }
