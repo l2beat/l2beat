@@ -8,7 +8,7 @@ const BLOCK_URL =
 
 export class EtherscanApi {
   private rateLimiter = new RateLimiter({
-    callsPerMinute: 200,
+    callsPerMinute: 150,
   })
   private exponentialRetry = new ExponentialRetry(
     {
@@ -32,7 +32,9 @@ export class EtherscanApi {
       if (
         typeof data !== 'object' ||
         data === null ||
-        typeof data.result !== 'string'
+        data.status !== '1' ||
+        typeof data.result !== 'string' ||
+        !/^\d+$/.test(data.result)
       ) {
         throw new Error('Invalid etherscan response')
       }
