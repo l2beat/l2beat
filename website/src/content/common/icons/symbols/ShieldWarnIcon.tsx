@@ -1,5 +1,5 @@
 import { SVGAttributes } from 'react'
-import { Icon } from './Icon'
+import { Icon } from '../Icon'
 
 export function ShieldWarnIcon(props: SVGAttributes<SVGElement>) {
   return (
