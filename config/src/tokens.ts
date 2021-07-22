@@ -285,6 +285,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 5828860,
   },
   {
+    name: 'Nahmii',
+    symbol: 'NII',
+    address: '0x7c8155909cd385F120A56eF90728dD50F9CcbE52',
+    decimals: 15,
+    sinceBlock: 9405117,
+  },
+  {
     name: 'OKB',
     symbol: 'OKB',
     address: '0x75231F58b43240C9718Dd58B4967c5114342a86c',

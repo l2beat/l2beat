@@ -54,6 +54,7 @@ Depending on whether Validity Proofs or Fraud Proofs are used and what is the me
 - **Optimistic Rollups** (ORU) - Fraud Proofs with data on L1 Ethereum,
 - **Validium** (VAL) - Validity Proofs with data kept off-chain,
 - **Plasma** (PLA) - Fraud Proofs with data kept off-chain.
+- **State Pools** (STP) - Fraud Proofs with data kept off-chain, without the need for regular commitments to L1. State pools use checkpointed state and lack exit time restrictions.
 
 In the future we expect to see hybrid solution using a mix of the above techniques.
 
@@ -74,7 +75,7 @@ In the future we expect to see hybrid solution using a mix of the above techniqu
     <tr>
       <th>Data off-chain</th>
       <td>Validium</td>
-      <td>Plasma</td>
+      <td>Plasma, State Pools</td>
     </tr>
   </tbody>
 </table>
