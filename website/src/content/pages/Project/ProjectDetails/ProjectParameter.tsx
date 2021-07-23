@@ -11,16 +11,18 @@ interface Props {
   pointers?: string[]
 }
 
-export function Parameter(props: Props) {
+export function ProjectParameter(props: Props) {
   return (
-    <li className="parameters__parameter">
-      <span className="parameters__name">{addTerminator(props.name, ':')}</span>
-      <div className="parameters__value" data-sentiment={props.sentiment}>
+    <li className="ProjectParameter">
+      <span className="ProjectParameter-Name">
+        {addTerminator(props.name, ':')}
+      </span>
+      <div className="ProjectParameter-Value" data-sentiment={props.sentiment}>
         {props.sentiment && <SentimentIcon sentiment={props.sentiment} />}
         <span>{props.value}</span>
       </div>
       {props.tooltip && (
-        <div className="parameters__details">
+        <div className="ProjectParameter-Details">
           {addTerminator(props.tooltip, '.')}
         </div>
       )}

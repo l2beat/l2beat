@@ -1,8 +1,10 @@
-.chart-hover--hidden {
-  display: none;
+.ChartHover {
+  &.hidden {
+    display: none;
+  }
 }
 
-.chart-hover__line {
+.ChartHover-Line {
   position: absolute;
   display: block;
   top: 0;
@@ -12,7 +14,7 @@
   z-index: 3;
 }
 
-.chart-hover__circle {
+.ChartHover-Circle {
   position: absolute;
   display: block;
   width: 8px;
@@ -23,7 +25,7 @@
   z-index: 4;
 }
 
-.chart-hover__contents {
+.ChartHover-Contents {
   position: absolute;
   z-index: 3;
   padding: 8px;
@@ -41,7 +43,7 @@
   align-items: flex-end;
 }
 
-.chart-hover__date {
+.ChartHover-Date {
   font-weight: bold;
   margin-bottom: 4px;
   @media (max-width: 550px) {
@@ -49,8 +51,8 @@
   }
 }
 
-.chart-hover__value-a,
-.chart-hover__value-b {
+.ChartHover-ValueA,
+.ChartHover-ValueB {
   @media (max-width: 350px) {
     font-size: var(--font-xs);
   }

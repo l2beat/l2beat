@@ -37,10 +37,10 @@ export function initHover(chart: HTMLElement) {
 
   function render() {
     if (!visible || !uiState) {
-      elements.hover.classList.add('chart-hover--hidden')
+      elements.hover.classList.add('hidden')
       return
     }
-    elements.hover.classList.remove('chart-hover--hidden')
+    elements.hover.classList.remove('hidden')
     const spaces = uiState.points.length - 1
     const closest = Math.min(spaces, Math.max(0, Math.round(position * spaces)))
     const point = uiState.points[closest]
@@ -79,13 +79,13 @@ function analyze(e: MouseEvent | Touch, rect: DOMRect) {
 function getHoverElements(chart: HTMLElement) {
   const { $ } = makeQuery(chart)
   return {
-    view: $('.chart__view'),
-    hover: $('.chart-hover'),
-    line: $('.chart-hover__line'),
-    circle: $('.chart-hover__circle'),
-    contents: $('.chart-hover__contents'),
-    date: $('.chart-hover__date'),
-    valueA: $('.chart-hover__value-a'),
-    valueB: $('.chart-hover__value-b'),
+    view: $('.Chart-View'),
+    hover: $('.ChartHover'),
+    line: $('.ChartHover-Line'),
+    circle: $('.ChartHover-Circle'),
+    contents: $('.ChartHover-Contents'),
+    date: $('.ChartHover-Date'),
+    valueA: $('.ChartHover-ValueA'),
+    valueB: $('.ChartHover-ValueB'),
   }
 }

@@ -1,14 +1,14 @@
 export function configureTooltips() {
   const elements = Array.from(
-    document.querySelectorAll<HTMLElement>('.tooltip[title]')
+    document.querySelectorAll<HTMLElement>('.Tooltip[title]')
   )
 
   const tooltip = document.createElement('div')
-  tooltip.className = 'tooltip__popup'
+  tooltip.className = 'Tooltip-Popup'
   const tooltipText = document.createElement('span')
   tooltip.appendChild(tooltipText)
   const tooltipTriangle = document.createElement('div')
-  tooltipTriangle.className = 'tooltip__triangle'
+  tooltipTriangle.className = 'Tooltip-Triangle'
   tooltip.appendChild(tooltipTriangle)
   let activeElement: HTMLElement | undefined
   document.body.appendChild(tooltip)
@@ -45,7 +45,7 @@ export function configureTooltips() {
   }
 
   window.addEventListener('resize', hide)
-  document.querySelector('.financials')?.addEventListener('scroll', hide)
+  document.querySelector('.FinancialView')?.addEventListener('scroll', hide)
   document.body.addEventListener('scroll', hide)
   document.body.addEventListener('click', (e) => {
     if (e.currentTarget !== tooltip) {

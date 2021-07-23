@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import { Logo } from './Logo'
 import { PercentChange } from './PercentChange'
 
@@ -10,22 +11,19 @@ interface Props {
 }
 
 export function Header(props: Props) {
-  const titleClassName = props.titleLength
-    ? `header__title header__title--${props.titleLength}`
-    : 'header__title'
   return (
-    <header className="header">
-      <h1 className={titleClassName}>
-        {props.icon && <img className="header__icon" src={props.icon} />}
+    <header className="Header">
+      <h1 className={cx('Header-Title', props.titleLength)}>
+        {props.icon && <img className="Header-Icon" src={props.icon} />}
         {props.title}
         {!props.title && <Logo />}
       </h1>
       {props.tvl && props.sevenDayChange && (
-        <div className="header__right">
-          <p className="header__tvl">
-            TVL: <span className="header__tvl-value">{props.tvl}</span>
+        <div className="Header-Right">
+          <p className="Header-Tvl">
+            TVL: <span className="Header-TvlValue">{props.tvl}</span>
           </p>
-          <p className="header__change">
+          <p className="Header-Change">
             <PercentChange value={props.sevenDayChange} /> / 7 days
           </p>
         </div>

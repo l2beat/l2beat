@@ -1,4 +1,4 @@
-.chart {
+.Chart {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   row-gap: 16px;
@@ -10,7 +10,7 @@
   }
 }
 
-.chart__range {
+.Chart-Range {
   grid-column: 1 / span 2;
   margin: 0;
   font-weight: bold;
@@ -23,21 +23,21 @@
   }
 }
 
-.chart__range-controls {
+.Chart-RangeControls {
   grid-column: 3 / span 2;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
   @media (max-width: 550px) {
-    .chart__button:nth-child(3),
-    .chart__button:nth-child(4) {
+    .Chart-Button:nth-child(3),
+    .Chart-Button:nth-child(4) {
       display: none;
     }
   }
 }
 
-.chart__currency-controls {
+.Chart-CurrencyControls {
   grid-column: 1;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@
   }
 }
 
-.chart__scale-controls {
+.Chart-ScaleControls {
   grid-column: 4;
   display: flex;
   align-items: center;
@@ -60,7 +60,7 @@
   }
 }
 
-.chart__button {
+.Chart-Button {
   display: block;
   position: relative;
   user-select: none;
@@ -98,7 +98,7 @@
   }
 }
 
-.chart__view {
+.Chart-View {
   position: relative;
   grid-column: 1 / span 4;
   height: 260px;
@@ -112,7 +112,7 @@
   }
 }
 
-.chart__loader {
+.Chart-Loader {
   user-select: none;
   position: relative;
   z-index: 2;
@@ -125,26 +125,26 @@
   @media (max-width: 550px) {
     margin-top: 62px;
   }
+
+  &.hidden {
+    opacity: 0;
+    transition: opacity 0.2s step-start;
+  }
 }
 
-.chart__loader--hidden {
-  opacity: 0;
-  transition: opacity 0.2s step-start;
-}
-
-.chart__line {
+.Chart-Line {
   border-bottom: 1px solid var(--background-3);
 }
 
-.chart__label {
+.Chart-Label {
   font-size: var(--font-s);
   opacity: 80%;
   z-index: 1;
   user-select: none;
 }
 
-.chart__line,
-.chart__label {
+.Chart-Line,
+.Chart-Label {
   position: absolute;
   left: 0;
   height: 20px;
@@ -202,7 +202,7 @@
   }
 }
 
-.chart__watermark {
+.Chart-Watermark {
   position: absolute;
   bottom: 8px;
   right: 8px;
@@ -212,7 +212,7 @@
   opacity: 0.4;
 }
 
-.chart__canvas {
+.Chart-Canvas {
   display: block;
   width: 100%;
   height: 240px;
@@ -229,7 +229,7 @@
   }
 }
 
-.chart__description {
+.Chart-Description {
   grid-column: 2 / span 2;
   margin: 0;
   text-align: center;
@@ -243,7 +243,7 @@
   }
 }
 
-.chart__token-controls {
+.Chart-TokenControls {
   grid-column: 1 / span 4;
   display: flex;
   align-items: baseline;
@@ -251,11 +251,11 @@
   flex-wrap: wrap;
   margin: 0 -4px -8px -4px;
 
-  .chart__button {
+  .Chart-Button {
     margin: 0 4px 8px 4px;
   }
 }
 
-.chart__token-title {
+.Chart-TokenTitle {
   margin: 0 4px;
 }

@@ -5,38 +5,38 @@ import { OutLink } from './OutLink'
 
 export function Navbar() {
   return (
-    <nav className="navbar">
+    <nav className="Navbar">
       <a href="/">
-        <Logo className="navbar__logo" />
+        <Logo className="Navbar-Logo" />
       </a>
-      <ul className="navbar__links navbar__links--left">
-        <li className="navbar__link">
+      <ul className="Navbar-Links left">
+        <li className="Navbar-Link">
           <a href="/">Overview</a>
         </li>
         {config.__DEV__showTechnologiesPage && (
-          <li className="navbar__link">
+          <li className="Navbar-Link">
             <a href="/technologies">Technologies</a>
           </li>
         )}
       </ul>
-      <ul className="navbar__links navbar__links--compact">
-        <li className="navbar__link">
+      <ul className="Navbar-Links">
+        <li className="Navbar-Link compact">
           <a href="/faq">FAQ</a>
         </li>
-        <li className="navbar__link">
+        <li className="Navbar-Link compact">
           <OutLink href="https://twitter.com/l2beatcom" title="Twitter">
             <TwitterIcon aria-label="Twitter" />
           </OutLink>
         </li>
-        <li className="navbar__link">
+        <li className="Navbar-Link compact">
           <OutLink href="https://github.com/l2beat/l2beat" title="Github">
             <GithubIcon aria-label="Github" />
           </OutLink>
         </li>
       </ul>
-      <button className="navbar__mode" title="Change color scheme">
-        <SunIcon className="navbar__light-mode" aria-label="Light Mode" />
-        <MoonIcon className="navbar__dark-mode" aria-label="Light Mode" />
+      <button className="Navbar-Mode" title="Change color scheme">
+        <SunIcon className="Navbar-LightMode" aria-label="Light Mode" />
+        <MoonIcon className="Navbar-DarkMode" aria-label="Light Mode" />
       </button>
     </nav>
   )

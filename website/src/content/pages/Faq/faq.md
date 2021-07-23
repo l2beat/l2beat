@@ -58,7 +58,7 @@ Depending on whether Validity Proofs or Fraud Proofs are used and what is the me
 
 In the future we expect to see hybrid solution using a mix of the above techniques.
 
-<table class="faq__table">
+<table class="Faq-Table">
   <thead>
     <tr>
       <td></td>

@@ -1,3 +1,5 @@
+import cx from 'classnames'
+
 interface Props {
   className?: string
 }
@@ -5,7 +7,7 @@ interface Props {
 export function Logo({ className }: Props) {
   return (
     <svg
-      className={className ? `logo ${className}` : 'logo'}
+      className={cx('Logo', className)}
       width="88"
       height="36"
       viewBox="0 0 88 36"
@@ -14,7 +16,7 @@ export function Logo({ className }: Props) {
       role="img"
       aria-label="L2BEAT logo"
     >
-      <g className="logo-animation">
+      <g className="Logo-Animation">
         <path
           d="M15.75 1.53C17.37 2.48 18.80 3.70 19.60 5.43L26.16 1.53L33.81 5.20L35.55 11.91L19.89 31.42L16.55 34.60L4.07 19.31C3.43 18.58 2.80 17.75 2.19 16.83C1.55 15.92 1.03 14.96 0.64 13.95C0.21 12.94 0 11.95 0 10.97C0 8.74 0.42 6.82 1.28 5.20C2.10 3.58 3.28 2.33 4.80 1.44C6.33 0.56 8.13 0.11 10.21 0.11C12.26 0.11 14.10 0.59 15.75 1.53Z"
           fill="var(--brand-red)"

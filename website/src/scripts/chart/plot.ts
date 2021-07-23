@@ -3,10 +3,10 @@ import { UiState } from './ui'
 
 export function plot(uiState: UiState | undefined, outputs: Outputs) {
   if (!uiState) {
-    outputs.loader.classList.remove('chart__loader--hidden')
+    outputs.loader.classList.remove('hidden')
     return
   }
-  outputs.loader.classList.add('chart__loader--hidden')
+  outputs.loader.classList.add('hidden')
 
   outputs.range.innerHTML = uiState.dateRange
   outputs.description.innerHTML = uiState.description

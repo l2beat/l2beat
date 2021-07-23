@@ -7,10 +7,10 @@ interface Props {
 
 export function Projects(props: Props) {
   return (
-    <section className="projects">
-      <h2 className="projects__title">Projects</h2>
-      <div className="projects__disclaimer">
-        <p className="projects__disclaimer-content">
+    <section className="Projects">
+      <h2 className="Projects-Title">Projects</h2>
+      <div className="Projects-Disclaimer">
+        <p className="Projects-DisclaimerContent">
           Layer twos are new &amp; experimental! Visit each project’s overview
           and learn about the risks today!
         </p>

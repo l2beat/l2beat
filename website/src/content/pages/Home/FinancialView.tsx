@@ -9,9 +9,9 @@ interface Props {
 export function FinancialView({ items }: Props) {
   return (
     <>
-      <div className="financials">
-        <table className="financials__table">
-          <thead className="financials__header">
+      <div className="FinancialView">
+        <table className="FinancialView-Table">
+          <thead className="FinancialView-Header">
             <tr>
               <th>No.</th>
               <th>Name</th>
@@ -27,17 +27,17 @@ export function FinancialView({ items }: Props) {
               </th>
             </tr>
           </thead>
-          <tbody className="financials__body">
+          <tbody className="FinancialView-Body">
             {items.map((project, i) => (
               <tr key={i}>
                 <td>{i + 1}.</td>
                 <td>
                   <a
-                    className="financials__name"
+                    className="FinancialView-Name"
                     href={`/projects/${project.slug}`}
                   >
                     <img
-                      className="financials__icon"
+                      className="FinancialView-Icon"
                       src={`/icons/${project.slug}.png`}
                       alt={`${project.name} logo`}
                     />
@@ -47,8 +47,8 @@ export function FinancialView({ items }: Props) {
                 <td>
                   {project.tvl}
                   {project.tvlWarning && (
-                    <div className="financials__tvl-warning">
-                      <div className="tooltip" title={project.tvlWarning}>
+                    <div className="FinancialView-TvlWarning">
+                      <div className="Tooltip" title={project.tvlWarning}>
                         <WarningIcon
                           fill={
                             project.severeWarning
@@ -67,7 +67,7 @@ export function FinancialView({ items }: Props) {
                 <td>{project.purpose}</td>
                 <td>
                   <abbr
-                    className="financials__technology tooltip"
+                    className="FinancialView-Technology Tooltip"
                     title={project.technology.name}
                     data-rollup={
                       ['ZKR', 'ORU'].includes(project.technology.abbreviation)
@@ -83,7 +83,7 @@ export function FinancialView({ items }: Props) {
           </tbody>
         </table>
       </div>
-      <div className="financials__symbols">
+      <div className="FinancialView-Symbols">
         <p>
           <WarningIcon fill="var(--neutral-yellow)" /> &ndash; A token
           associated with the project accounts for more than 10% of the TVL.

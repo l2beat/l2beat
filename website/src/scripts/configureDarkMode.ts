@@ -19,6 +19,6 @@ export function configureDarkMode() {
   }
 
   document
-    .querySelector('.navbar__mode')
+    .querySelector('.Navbar-Mode')
     ?.addEventListener('click', toggleDarkMode)
 }

@@ -1,4 +1,4 @@
-.financials {
+.FinancialView {
   width: 100%;
   overflow-x: auto;
   margin-top: 16px;
@@ -9,13 +9,13 @@
   }
 }
 
-.financials__table {
+.FinancialView-Table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
 }
 
-.financials__header {
+.FinancialView-Header {
   tr {
     border-bottom: 1px solid var(--background-4);
     white-space: nowrap;
@@ -48,7 +48,7 @@
   }
 }
 
-.financials__body {
+.FinancialView-Body {
   tr {
     border-bottom: 1px solid var(--background-3);
 
@@ -81,12 +81,12 @@
   }
 }
 
-.financials__name {
+.FinancialView-Name {
   position: relative;
   padding-left: 30px;
 }
 
-.financials__icon {
+.FinancialView-Icon {
   position: absolute;
   top: 2px;
   left: 0;
@@ -96,7 +96,7 @@
   font-size: 8px;
 }
 
-.financials__tvl-warning {
+.FinancialView-TvlWarning {
   position: relative;
   display: inline-block;
   height: 1em;
@@ -115,7 +115,7 @@
   }
 }
 
-.financials__technology {
+.FinancialView-Technology {
   padding: 4px 8px;
   display: inline;
   border-radius: 6px;
@@ -137,7 +137,7 @@
   }
 }
 
-.financials__symbols {
+.FinancialView-Symbols {
   margin-top: 16px;
   font-size: var(--font-s);
   p {

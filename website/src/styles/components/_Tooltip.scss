@@ -1,8 +1,8 @@
-.tooltip {
+.Tooltip {
   cursor: pointer;
 }
 
-.tooltip__popup {
+.Tooltip-Popup {
   display: none;
   position: fixed;
   top: 0;
@@ -18,7 +18,7 @@
   border-radius: 6px;
 }
 
-.tooltip__triangle {
+.Tooltip-Triangle {
   position: fixed;
   z-index: -1;
   top: 0;
