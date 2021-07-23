@@ -48,7 +48,7 @@ export function FinancialView({ items }: Props) {
                   {project.tvl}
                   {project.tvlWarning && (
                     <div className="FinancialView-TvlWarning">
-                      <div className="tooltip" title={project.tvlWarning}>
+                      <div className="Tooltip" title={project.tvlWarning}>
                         <WarningIcon
                           fill={
                             project.severeWarning
@@ -67,7 +67,7 @@ export function FinancialView({ items }: Props) {
                 <td>{project.purpose}</td>
                 <td>
                   <abbr
-                    className="FinancialView-Technology tooltip"
+                    className="FinancialView-Technology Tooltip"
                     title={project.technology.name}
                     data-rollup={
                       ['ZKR', 'ORU'].includes(project.technology.abbreviation)
