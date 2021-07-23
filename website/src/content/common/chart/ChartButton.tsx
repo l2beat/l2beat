@@ -7,7 +7,7 @@ interface Props {
 
 export function ChartButton({ checked, name, value, endpoint }: Props) {
   return (
-    <label className="chart__button">
+    <label className="Chart-Button">
       <input
         checked={checked}
         type="radio"

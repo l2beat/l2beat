@@ -11,47 +11,47 @@ interface Props {
 
 export function Chart({ endpoint, tokens, days = 90 }: Props) {
   return (
-    <section className="chart" data-endpoint={endpoint}>
-      <p className="chart__range">...</p>
-      <div className="chart__range-controls">
+    <section className="Chart" data-endpoint={endpoint}>
+      <p className="Chart-Range">...</p>
+      <div className="Chart-RangeControls">
         <ChartButton checked={days === 30} name="range" value="30D" />
         <ChartButton checked={days === 90} name="range" value="90D" />
         <ChartButton name="range" value="180D" />
         <ChartButton name="range" value="1Y" />
         <ChartButton name="range" value="MAX" />
       </div>
-      <div className="chart__view" role="img" aria-label="chart">
+      <div className="Chart-View" role="img" aria-label="chart">
         <ChartLoader />
         <ChartHover />
-        <div className="chart__lines">
-          <div className="chart__line" />
-          <div className="chart__line" />
-          <div className="chart__line" />
-          <div className="chart__line" />
-          <div className="chart__line" />
+        <div className="Chart-Lines">
+          <div className="Chart-Line" />
+          <div className="Chart-Line" />
+          <div className="Chart-Line" />
+          <div className="Chart-Line" />
+          <div className="Chart-Line" />
         </div>
-        <div className="chart__labels">
-          <div className="chart__label">...</div>
-          <div className="chart__label">...</div>
-          <div className="chart__label">...</div>
-          <div className="chart__label">...</div>
-          <div className="chart__label">...</div>
+        <div className="Chart-Labels">
+          <div className="Chart-Label">...</div>
+          <div className="Chart-Label">...</div>
+          <div className="Chart-Label">...</div>
+          <div className="Chart-Label">...</div>
+          <div className="Chart-Label">...</div>
         </div>
-        <Logo className="chart__watermark" />
-        <canvas className="chart__canvas" />
+        <Logo className="Chart-Watermark" />
+        <canvas className="Chart-Canvas" />
       </div>
-      <div className="chart__currency-controls">
+      <div className="Chart-CurrencyControls">
         <ChartButton checked name="currency" value="USD" />
         <ChartButton name="currency" value="ETH" />
       </div>
-      <p className="chart__description">...</p>
-      <div className="chart__scale-controls">
+      <p className="Chart-Description">...</p>
+      <div className="Chart-ScaleControls">
         <ChartButton name="scale" value="LOG" />
         <ChartButton checked name="scale" value="LIN" />
       </div>
       {tokens && tokens.length > 0 && (
-        <div className="chart__token-controls">
-          <span className="chart__token-title">Filter by token:</span>
+        <div className="Chart-TokenControls">
+          <span className="Chart-TokenTitle">Filter by token:</span>
           {tokens.map((x) => (
             <ChartButton
               key={x.symbol}

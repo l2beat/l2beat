@@ -5,7 +5,7 @@ import { configureTooltips } from './configureTooltips'
 configureDarkMode()
 configureTooltips()
 
-const chart = document.querySelector<HTMLElement>('.chart')
+const chart = document.querySelector<HTMLElement>('.Chart')
 if (chart) {
   initChart(chart)
 }

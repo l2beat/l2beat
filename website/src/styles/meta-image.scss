@@ -34,24 +34,24 @@ body,
   margin-left: auto;
 }
 
-.chart {
+.Chart {
   margin-top: 8px;
   row-gap: 8px;
 }
 
-.chart__loader,
-.chart__watermark,
-.chart__range-controls,
-.chart__currency-controls,
-.chart__scale-controls,
-.chart__line,
-.chart__label,
-.chart__description,
-.chart-hover {
+.Chart-Loader,
+.Chart-Watermark,
+.Chart-RangeControls,
+.Chart-CurrencyControls,
+.Chart-ScaleControls,
+.Chart-Line,
+.Chart-Label,
+.Chart-Description,
+.ChartHover {
   display: none;
 }
 
-.chart__range {
+.Chart-Range {
   position: fixed;
   bottom: 16px;
   left: 16px;
@@ -59,7 +59,7 @@ body,
   z-index: 1000;
 }
 
-.chart__view {
+.Chart-View {
   position: relative;
   height: 262px;
   &::after {
@@ -79,7 +79,7 @@ body,
   }
 }
 
-.chart__canvas {
+.Chart-Canvas {
   height: 202px;
   bottom: unset;
   top: 0;

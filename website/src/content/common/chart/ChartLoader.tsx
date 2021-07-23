@@ -1,7 +1,7 @@
 export function ChartLoader() {
   return (
     <svg
-      className="chart__loader chart__loader--hidden"
+      className="Chart-Loader hidden"
       width="50px"
       height="50px"
       viewBox="0 0 100 100"
