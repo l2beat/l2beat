@@ -15,7 +15,7 @@ body,
   align-items: flex-start;
 }
 
-.meta--project {
+.Meta.project {
   .Header-Title {
     position: fixed;
     left: 50%;
@@ -85,7 +85,7 @@ body,
   top: 0;
 }
 
-.meta--project {
+.Meta.project {
   .Logo {
     position: fixed;
     top: 24px;
@@ -93,7 +93,7 @@ body,
   }
 }
 
-.meta--overview {
+.Meta.overview {
   .Logo {
     position: fixed;
     top: 50%;
