@@ -4,7 +4,12 @@ import { plot } from './plot'
 import { ChartStateWithInput, makeChartState } from './state'
 import { toUiState, UiState } from './ui'
 
-export function initChart(chart: HTMLElement) {
+export function configureChart() {
+  const chart = document.querySelector<HTMLElement>('.Chart')
+  if (!chart) {
+    return
+  }
+
   const outputs = getOutputs(chart)
 
   let uiState: UiState | undefined
