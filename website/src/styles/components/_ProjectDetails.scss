@@ -1,4 +1,4 @@
-.description {
+.ProjectDetails {
   line-height: 1.5;
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -11,7 +11,7 @@
   }
 }
 
-.description__section:first-child {
+.ProjectDetails-Section:first-child {
   grid-row: 1 / span 3;
 
   @media (max-width: 750px) {
@@ -19,7 +19,7 @@
   }
 }
 
-.description__title {
+.ProjectDetails-Title {
   font-size: var(--font-xl);
   line-height: 1.15;
   margin: 32px 0 0 0;
@@ -29,13 +29,19 @@
   }
 }
 
-.description__text {
+.ProjectDetails-Text {
   margin: 16px 0 0 0;
 }
 
-.description__links {
+.ProjectDetails-Links {
   margin: 16px 0 0 0;
   @media (max-width: 550px) {
     margin: 8px 0 0 0;
   }
+}
+
+.ProjectDetails-Parameters {
+  margin: 16px 0 0 0;
+  padding: 0;
+  list-style-type: none;
 }

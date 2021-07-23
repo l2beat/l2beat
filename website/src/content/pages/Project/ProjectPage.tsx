@@ -1,5 +1,5 @@
 import { Chart, Footer, Header, Navbar, Page } from '../../common'
-import { ProjectDescription } from './description/ProjectDescription'
+import { ProjectDetails } from './ProjectDetails/ProjectDetails'
 import { ProjectPageProps } from './getProjectPageProps'
 
 export function ProjectPage(props: ProjectPageProps) {
@@ -14,7 +14,7 @@ export function ProjectPage(props: ProjectPageProps) {
         sevenDayChange={props.sevenDayChange}
       />
       <Chart endpoint={props.apiEndpoint} tokens={props.tokens} />
-      <ProjectDescription details={props.details} bridges={props.bridges} />
+      <ProjectDetails details={props.details} bridges={props.bridges} />
       <Footer />
     </Page>
   )

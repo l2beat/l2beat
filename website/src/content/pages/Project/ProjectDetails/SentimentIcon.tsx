@@ -13,7 +13,7 @@ export function SentimentIcon({ sentiment }: SentimentIconProps) {
     return (
       <ShieldGoodIcon
         viewBox="4 2 16 20"
-        className="parameters__sentiment"
+        className="ProjectParameter-Sentiment"
         fill="currentcolor"
       />
     )
@@ -21,7 +21,7 @@ export function SentimentIcon({ sentiment }: SentimentIconProps) {
     return (
       <ShieldWarnIcon
         viewBox="4 2 16 20"
-        className="parameters__sentiment"
+        className="ProjectParameter-Sentiment"
         fill="currentcolor"
       />
     )
@@ -29,7 +29,7 @@ export function SentimentIcon({ sentiment }: SentimentIconProps) {
     return (
       <ShieldBadIcon
         viewBox="4 2 16 20"
-        className="parameters__sentiment"
+        className="ProjectParameter-Sentiment"
         fill="currentcolor"
       />
     )
