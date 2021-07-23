@@ -5,17 +5,17 @@
 
 @import 'mixins/dark-mode';
 
-@import 'components/Page';
-@import 'components/Navbar';
-@import 'components/Logo';
-@import 'components/Header';
 @import 'components/Chart';
 @import 'components/ChartHover';
-@import 'components/PercentChange';
-@import 'components/Projects';
+@import 'components/Faq';
 @import 'components/FinancialView';
 @import 'components/Footer';
+@import 'components/Header';
+@import 'components/Logo';
+@import 'components/Navbar';
+@import 'components/Page';
+@import 'components/PercentChange';
 @import 'components/ProjectDetails';
 @import 'components/ProjectParameter';
-@import 'components/Faq';
-@import 'components/tooltip';
+@import 'components/Projects';
+@import 'components/Tooltip';
