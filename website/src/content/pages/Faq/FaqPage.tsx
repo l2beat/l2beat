@@ -6,7 +6,7 @@ export function FaqPage(props: FaqPageProps) {
     <Page metadata={props.metadata}>
       <Navbar />
       <article
-        className="faq"
+        className="Faq"
         dangerouslySetInnerHTML={{ __html: props.content }}
       />
       <Footer />
