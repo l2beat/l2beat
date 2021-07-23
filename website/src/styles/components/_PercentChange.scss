@@ -1,0 +1,9 @@
+.PercentChange {
+  &.up {
+    color: var(--positive-green);
+  }
+
+  &.down {
+    color: var(--negative-red);
+  }
+}

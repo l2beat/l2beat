@@ -1,10 +1,10 @@
+import cx from 'classnames'
+
 interface Props {
   value: string
 }
 
 export function PercentChange({ value }: Props) {
-  const className = value.startsWith('+')
-    ? 'percent percent--up'
-    : 'percent percent--down'
+  const className = cx('PercentChange', value.startsWith('+') ? 'up' : 'down')
   return <span className={className}>{value}</span>
 }
