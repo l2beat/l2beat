@@ -1,11 +1,11 @@
 html,
 body,
-.page {
+.Page {
   height: 100vh;
   overflow: hidden;
 }
 
-.page {
+.Page {
   padding: 0;
 }
 
@@ -86,7 +86,7 @@ body,
 }
 
 .meta--project {
-  .logo {
+  .Logo {
     position: fixed;
     top: 24px;
     left: 16px;
@@ -94,7 +94,7 @@ body,
 }
 
 .meta--overview {
-  .logo {
+  .Logo {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -104,6 +104,6 @@ body,
   }
 }
 
-.logo-animation {
+.Logo-Animation {
   animation: none;
 }
