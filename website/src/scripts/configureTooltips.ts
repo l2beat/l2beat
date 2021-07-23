@@ -45,7 +45,7 @@ export function configureTooltips() {
   }
 
   window.addEventListener('resize', hide)
-  document.querySelector('.financials')?.addEventListener('scroll', hide)
+  document.querySelector('.FinancialView')?.addEventListener('scroll', hide)
   document.body.addEventListener('scroll', hide)
   document.body.addEventListener('click', (e) => {
     if (e.currentTarget !== tooltip) {
