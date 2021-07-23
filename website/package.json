@@ -35,7 +35,6 @@
     "gulp-sass": "^5.0.0",
     "markdown-it": "^12.1.0",
     "millify": "^4.0.0",
-    "netlify-cli": "^5.0.0",
     "postcss": "^8.3.5",
     "puppeteer": "^10.1.0",
     "react": "^17.0.2",
