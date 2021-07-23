@@ -9,14 +9,14 @@ body,
   padding: 0;
 }
 
-.header {
+.Header {
   margin-top: 24px;
   padding: 0 16px;
   align-items: flex-start;
 }
 
 .meta--project {
-  .header__title {
+  .Header-Title {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -25,12 +25,12 @@ body,
     font-size: 64px;
   }
 
-  .header__icon {
+  .Header-Icon {
     height: 80px;
   }
 }
 
-.header__right {
+.Header-Right {
   margin-left: auto;
 }
 

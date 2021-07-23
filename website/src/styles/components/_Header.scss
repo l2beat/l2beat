@@ -1,4 +1,4 @@
-.header {
+.Header {
   margin-top: 16px;
   display: flex;
   align-items: center;
@@ -9,7 +9,7 @@
   }
 }
 
-.header__title {
+.Header-Title {
   position: relative;
   display: flex;
   align-items: center;
@@ -17,32 +17,32 @@
   font-size: var(--font-xxl);
   margin: 0;
   white-space: pre;
-}
 
-.header__title--long {
-  @media (max-width: 400px) {
-    font-size: var(--font-xl);
+  &.long {
+    @media (max-width: 400px) {
+      font-size: var(--font-xl);
+    }
+  }
+
+  &.very-long {
+    @media (max-width: 550px) {
+      font-size: var(--font-xl);
+    }
+
+    @media (max-width: 400px) {
+      font-size: var(--font-l);
+    }
   }
 }
 
-.header__title--very-long {
-  @media (max-width: 550px) {
-    font-size: var(--font-xl);
-  }
-
-  @media (max-width: 400px) {
-    font-size: var(--font-l);
-  }
-}
-
-.header__icon {
+.Header-Icon {
   display: block;
   height: var(--font-xxl);
   margin-right: 8px;
 }
 
-.header__tvl,
-.header__change {
+.Header-Tvl,
+.Header-Change {
   white-space: pre;
   margin: 0;
   font-size: var(--font-l);
@@ -54,7 +54,7 @@
   }
 }
 
-.header__tvl-value {
+.Header-TvlValue {
   font-size: var(--font-xl);
 
   @media (max-width: 550px) {
