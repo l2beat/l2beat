@@ -18,7 +18,7 @@ export function Page(props: Props) {
         includeMetaImageStyles={props.includeMetaImageStyles}
       />
       <body>
-        <div className="page">{props.children}</div>
+        <div className="Page">{props.children}</div>
         <script src="/scripts/main.js" />
       </body>
     </html>
