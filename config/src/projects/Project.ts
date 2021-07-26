@@ -55,7 +55,7 @@ export interface ProjectDetails {
     /** Note text */
     text: string
     /** Relevant links */
-    pointers?: string[]
+    pointers?: Pointer[]
   }
 }
 

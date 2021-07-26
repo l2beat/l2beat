@@ -149,7 +149,10 @@ export const zkswap: Project = {
     notes: {
       text: 'Spikes in TVL are caused by liquidity mining events',
       pointers: [
-        'https://zkswapofficial.medium.com/proof-of-liquidity-mining-upcoming-with-9-million-zks-rewards-218eaa1843a2',
+        {
+          name: 'Liquidity Mining - ZKSwap Medium blog',
+          href: 'https://zkswapofficial.medium.com/proof-of-liquidity-mining-upcoming-with-9-million-zks-rewards-218eaa1843a2',
+        },
       ],
     },
   },

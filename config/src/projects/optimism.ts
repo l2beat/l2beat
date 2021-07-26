@@ -140,8 +140,14 @@ export const optimism: Project = {
     notes: {
       text: 'Currently, fraud proof mechanism seems to be disabled. Optimism resolver resolved "OVM_FraudVerifier" to externally owned account and only this account can submit proofs.',
       pointers: [
-        'https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550',
-        'https://github.com/l2beat/l2beat/issues/35',
+        {
+          name: 'EOA on Etherscan',
+          href: 'https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550',
+        },
+        {
+          name: 'Github issue with more details',
+          href: 'https://github.com/l2beat/l2beat/issues/35',
+        },
       ],
     },
   },

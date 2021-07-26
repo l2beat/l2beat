@@ -1,7 +1,8 @@
+import { Pointer } from '@l2beat/config'
 import { OutLink } from '../../../common'
 
 interface PointersProps {
-  pointers?: string[]
+  pointers?: Pointer[]
   className?: string
 }
 
@@ -11,9 +12,9 @@ export function Pointers({ pointers, className }: PointersProps) {
   }
   return (
     <ul className={className}>
-      {pointers.map((url, i) => (
+      {pointers.map((pointer, i) => (
         <li key={i}>
-          <OutLink href={url}>{new URL(url).origin + '/'}</OutLink>
+          <OutLink href={pointer.href}>{pointer.name}</OutLink>
         </li>
       ))}
     </ul>

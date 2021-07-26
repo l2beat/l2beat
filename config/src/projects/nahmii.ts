@@ -106,9 +106,18 @@ export const nahmii: Project = {
     notes: {
       text: 'Nahmii 1.0 is live on Ethereum mainnet and targets payments. Nahmii 2.0 is a generalized L2 scaling solution with smart contract support that has a public testnet available.',
       pointers: [
-        'https://nahmii.github.io/assets/doc/nahmii-1-whitepaper.pdf',
-        'https://www.nahmii.io/public/file/nahmii.White.Paper.v2.0.pdf',
-        'https://blog.nahmii.io/nahmii-2-0-testnet-goes-live-integrated-with-metamask-releases-white-paper-94f61d603ed1',
+        {
+          name: 'Nahmii 1.0 Whitepaper',
+          href: 'https://nahmii.github.io/assets/doc/nahmii-1-whitepaper.pdf',
+        },
+        {
+          name: 'Nahmii 2.0 Whitepaper',
+          href: 'https://www.nahmii.io/public/file/nahmii.White.Paper.v2.0.pdf',
+        },
+        {
+          name: 'Nahmii 2.0 Testnet - Nahmii blog',
+          href: 'https://blog.nahmii.io/nahmii-2-0-testnet-goes-live-integrated-with-metamask-releases-white-paper-94f61d603ed1',
+        },
       ],
     },
   },
