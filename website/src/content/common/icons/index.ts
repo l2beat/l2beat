@@ -1,3 +1,4 @@
+export * from './ProductIcon'
 export * from './products/DiscordIcon'
 export * from './products/GithubIcon'
 export * from './products/LinkedInIcon'
