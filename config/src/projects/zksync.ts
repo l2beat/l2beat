@@ -53,7 +53,10 @@ export const zksync: Project = {
           'Contracts are upgradable BUT on the upside there is a 14 days timelock',
         sentiment: 'neutral',
         pointers: [
-          'https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF#code',
+          },
         ],
       },
       {
@@ -62,7 +65,10 @@ export const zksync: Project = {
         sentiment: 'bad',
         tooltip: 'Only whitelisted actors can produce new blocks',
         pointers: [
-          'https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L268',
+          {
+            name: 'ZkSync.sol#L268 - ZkSync source code',
+            href: 'https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L268',
+          },
         ],
       },
       {
@@ -72,8 +78,14 @@ export const zksync: Project = {
         tooltip:
           'Tx can be forced into a rollup state or rollup goes into "exodus" mode and everyone can exit.',
         pointers: [
-          'https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L223',
-          'https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L352',
+          {
+            name: 'ZkSync.sol#L223 - ZkSync source code',
+            href: 'https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L223',
+          },
+          {
+            name: 'ZkSync.sol#L352 - ZkSync source code',
+            href: 'https://github.com/matter-labs/zksync/blob/1cda8c7c1a9bfbec6491a1e4634b0fc33b206834/contracts/contracts/ZkSync.sol#L352',
+          },
         ],
       },
       {

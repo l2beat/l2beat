@@ -73,8 +73,14 @@ export const optimism: Project = {
         tooltip: 'Contracts are upgradable',
         sentiment: 'neutral',
         pointers: [
-          'https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol#L47',
-          'https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138',
+          {
+            name: 'Lib_AddressManager.sol#L47 - Optimism source code',
+            href: 'https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol#L47',
+          },
+          {
+            name: 'SynthetixBridgeToOptimism.sol#L138 - Synthetix source code',
+            href: 'https://github.com/Synthetixio/synthetix/blob/develop/contracts/SynthetixBridgeToOptimism.sol#L138',
+          },
         ],
         value: 'Yes, through contract upgrade',
       },
@@ -83,7 +89,10 @@ export const optimism: Project = {
         sentiment: 'bad',
         tooltip: 'Only sequencer can produce new blocks',
         pointers: [
-          'https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L411',
+          {
+            name: 'OVM_CanonicalTransactionChain.sol#L411 - Optimism source code',
+            href: 'https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L411',
+          },
         ],
         value: 'No',
       },
@@ -93,7 +102,10 @@ export const optimism: Project = {
         tooltip:
           'Sequencer can be forced to append particular TX into the rollup',
         pointers: [
-          'https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L256',
+          {
+            name: 'OVM_CanonicalTransactionChain.sol#L256 - Optimism source code',
+            href: 'https://github.com/ethereum-optimism/contracts/blob/master/contracts/optimistic-ethereum/OVM/chain/OVM_CanonicalTransactionChain.sol#L256',
+          },
         ],
         value: 'Yes',
       },
@@ -128,8 +140,14 @@ export const optimism: Project = {
     notes: {
       text: 'Currently, fraud proof mechanism seems to be disabled. Optimism resolver resolved "OVM_FraudVerifier" to externally owned account and only this account can submit proofs.',
       pointers: [
-        'https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550',
-        'https://github.com/l2beat/l2beat/issues/35',
+        {
+          name: 'EOA on Etherscan',
+          href: 'https://etherscan.io/address/0xDDB4ae08438057FCfA323b20910f79912723a550',
+        },
+        {
+          name: 'Github issue with more details',
+          href: 'https://github.com/l2beat/l2beat/issues/35',
+        },
       ],
     },
   },

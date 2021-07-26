@@ -53,7 +53,10 @@ export const habitat: Project = {
           'The multisig will be replaced by on-chain governance once the Habitat community is sufficiently decentralized.',
         sentiment: 'neutral',
         pointers: [
-          'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatV1.sol#L52',
+          {
+            name: 'HabitatV1.sol#L52 - Habitat source code',
+            href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatV1.sol#L52',
+          },
         ],
       },
       {
@@ -94,7 +97,10 @@ export const habitat: Project = {
         value:
           'Limited. Only static contracts that comply to the Habitat Module interface.',
         pointers: [
-          'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
+          {
+            name: 'HabitatModule.sol - Habitat source code',
+            href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
+          },
         ],
       },
     ],

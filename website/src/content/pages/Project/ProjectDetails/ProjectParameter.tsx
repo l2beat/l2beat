@@ -1,5 +1,5 @@
+import { Pointer } from '@l2beat/config'
 import { ReactChild } from 'react'
-
 import { Pointers } from './Pointers'
 import { SentimentIcon } from './SentimentIcon'
 
@@ -8,7 +8,7 @@ interface Props {
   value: ReactChild
   sentiment?: 'good' | 'neutral' | 'bad'
   tooltip?: string
-  pointers?: string[]
+  pointers?: Pointer[]
 }
 
 export function ProjectParameter(props: Props) {

@@ -83,7 +83,10 @@ export const deversifi: Project = {
         tooltip: 'Contracts are upgradable',
         sentiment: 'neutral',
         pointers: [
-          'https://etherscan.io/address/0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b#code',
+          },
         ],
         value: 'Yes, through contract upgrade',
       },

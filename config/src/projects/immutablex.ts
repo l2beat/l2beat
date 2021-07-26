@@ -47,7 +47,10 @@ export const immutablex: Project = {
         tooltip: 'Contracts are upgradable',
         sentiment: 'neutral',
         pointers: [
-          'https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code',
+          },
         ],
         value: 'Yes, through contract upgrade',
       },

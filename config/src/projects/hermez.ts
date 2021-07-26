@@ -57,7 +57,10 @@ export const hermez: Project = {
           'Contracts are upgradable BUT on the upside there is a 7 days timelock',
         sentiment: 'neutral',
         pointers: [
-          'https://etherscan.io/address/0xA68D85dF56E733A06443306A095646317B5Fa633#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0xA68D85dF56E733A06443306A095646317B5Fa633#code',
+          },
         ],
         value: 'Yes, through contract upgrade',
       },
@@ -67,9 +70,18 @@ export const hermez: Project = {
         tooltip:
           'After initial bootstraping period anyone could bid for a slot time to forge new batches and update the state root',
         pointers: [
-          'https://github.com/hermeznetwork/contracts/blob/master/contracts/auction/HermezAuctionProtocol.sol#L515',
-          'https://github.com/hermeznetwork/contracts/blob/master/contracts/auction/HermezAuctionProtocol.sol#L571',
-          'https://docs.hermez.io/#/developers/protocol/consensus/consensus',
+          {
+            name: 'HermezAuctionProtocol.sol#L515 - Hermez source code',
+            href: 'https://github.com/hermeznetwork/contracts/blob/master/contracts/auction/HermezAuctionProtocol.sol#L515',
+          },
+          {
+            name: 'HermezAuctionProtocol.sol#L571 - Hermez source code',
+            href: 'https://github.com/hermeznetwork/contracts/blob/master/contracts/auction/HermezAuctionProtocol.sol#L571',
+          },
+          {
+            name: 'Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/protocol/consensus/consensus',
+          },
         ],
         value: 'No',
       },
@@ -79,8 +91,14 @@ export const hermez: Project = {
         tooltip:
           'Transaction can be forced via smart contract. Coordinators must process them',
         pointers: [
-          'https://github.com/hermeznetwork/contracts/blob/master/contracts/hermez/Hermez.sol#L361',
-          'https://docs.hermez.io/#/developers/protocol/hermez-protocol/protocol?id=l1-user-transactions',
+          {
+            name: 'Hermez.sol#L361 - Hermez source code',
+            href: 'https://github.com/hermeznetwork/contracts/blob/master/contracts/hermez/Hermez.sol#L361',
+          },
+          {
+            name: 'L1 user transactions - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/protocol/hermez-protocol/protocol?id=l1-user-transactions',
+          },
         ],
         value: 'Yes',
       },
