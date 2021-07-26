@@ -25,15 +25,19 @@ function exec(command) {
   const nodeModulesUp = path.join(__dirname, '../node_modules/.bin')
   const PATH = `${nodeModulesHere}:${nodeModulesUp}:${process.env.PATH}`
   return new Promise((resolve, reject) =>
-    child_process.exec(command, { env: { PATH } }, (err, stdout, stderr) => {
-      stdout && console.log(stdout)
-      if (err) {
-        stderr && console.error(stderr)
-        reject(err)
-      } else {
-        resolve()
+    child_process.exec(
+      command,
+      { env: { ...process.env, PATH } },
+      (err, stdout, stderr) => {
+        stdout && console.log(stdout)
+        if (err) {
+          stderr && console.error(stderr)
+          reject(err)
+        } else {
+          resolve()
+        }
       }
-    })
+    )
   )
 }
 
