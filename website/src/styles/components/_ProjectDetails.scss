@@ -11,14 +11,6 @@
   }
 }
 
-.ProjectDetails-Section:first-child {
-  grid-row: 1 / span 3;
-
-  @media (max-width: 750px) {
-    grid-row: unset;
-  }
-}
-
 .ProjectDetails-Title {
   font-size: var(--font-xl);
   line-height: 1.15;
