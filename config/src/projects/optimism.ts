@@ -33,8 +33,20 @@ export const optimism: Project = {
     },
   ],
   details: {
-    website: 'https://optimism.io/',
-    color: '#f01b37',
+    links: {
+      websites: ['https://optimism.io/'],
+      apps: [],
+      documentation: ['https://community.optimism.io/docs/'],
+      explorers: ['https://optimistic.etherscan.io/'],
+      repositories: ['https://github.com/ethereum-optimism/optimism'],
+      socialMedia: [
+        'https://medium.com/ethereum-optimism',
+        'https://twitter.com/optimismPBC',
+        'https://discord.gg/jrnFEvq',
+        'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
+        'https://twitch.tv/optimismpbc',
+      ],
+    },
     technology: {
       name: 'optimistic-rollup',
       details: 'Optimistic Virtual Machine',

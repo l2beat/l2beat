@@ -11,8 +11,25 @@ export const loopring: Project = {
     },
   ],
   details: {
-    website: 'https://loopring.org',
-    color: '#1c42ff',
+    links: {
+      websites: ['https://loopring.org'],
+      apps: ['https://exchange.loopring.io/'],
+      documentation: [
+        'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md',
+      ],
+      explorers: [],
+      repositories: ['https://github.com/Loopring/protocols'],
+      socialMedia: [
+        'https://loopring.org/#/blog',
+        'https://medium.com/loopring-protocol',
+        'https://twitter.com/loopringorg',
+        'https://discord.gg/KkYccYp',
+        'https://youtube.com/c/loopring',
+        'https://weibo.com/loopringfoundation',
+        'https://reddit.com/r/loopringorg/',
+        'https://loopring.substack.com/',
+      ],
+    },
     technology: {
       name: 'zk-rollup',
       details: 'zk-SNARK',

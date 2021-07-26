@@ -11,8 +11,22 @@ export const arbitrum: Project = {
     },
   ],
   details: {
-    website: 'https://offchainlabs.com/',
-    color: '#4c9ce5',
+    links: {
+      websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
+      apps: [],
+      documentation: ['https://developer.offchainlabs.com/'],
+      explorers: ['https://explorer.arbitrum.io/'],
+      repositories: [
+        'https://github.com/OffchainLabs/arbitrum',
+        'https://github.com/OffchainLabs/arb-os',
+      ],
+      socialMedia: [
+        'https://twitter.com/OffchainLabs',
+        'https://twitter.com/arbitrum',
+        'https://medium.com/offchainlabs',
+        'https://discord.gg/5KE54JwyTs',
+      ],
+    },
     technology: {
       name: 'optimistic-rollup',
       details: 'Arbitrum Virtual Machine',

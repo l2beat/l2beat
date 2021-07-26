@@ -11,8 +11,25 @@ export const hermez: Project = {
     },
   ],
   details: {
-    website: 'https://hermez.io/',
-    color: '#ff9933',
+    links: {
+      websites: ['https://hermez.io/'],
+      apps: ['https://wallet.hermez.io/'],
+      documentation: [
+        'https://docs.hermez.io/',
+        'https://hermez.io/hermez-whitepaper.pdf',
+      ],
+      explorers: ['https://explorer.hermez.io/'],
+      repositories: [
+        'https://github.com/hermeznetwork/contracts',
+        'https://github.com/hermeznetwork/hermez-node',
+      ],
+      socialMedia: [
+        'https://blog.hermez.io/',
+        'https://t.me/hermez_network',
+        'https://discord.gg/AczuUXDA2N',
+        'https://twitter.com/hermez_network',
+      ],
+    },
     technology: {
       name: 'zk-rollup',
       details: 'zk-SNARK',

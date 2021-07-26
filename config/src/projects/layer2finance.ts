@@ -11,8 +11,20 @@ export const layer2finance: Project = {
     },
   ],
   details: {
-    website: 'https://layer2.finance/',
-    color: '#ca9979',
+    links: {
+      websites: ['https://layer2.finance/'],
+      apps: ['https://app.l2.finance/'],
+      documentation: ['https://docs.l2.finance/'],
+      explorers: [],
+      repositories: [
+        'https://github.com/celer-network/layer2-finance-contracts',
+      ],
+      socialMedia: [
+        'https://discord.gg/uGx4fjQ',
+        'https://t.me/celernetwork',
+        'https://twitter.com/CelerNetwork',
+      ],
+    },
     technology: {
       name: 'optimistic-rollup',
       details: 'Specialized Optimistic Rollup',

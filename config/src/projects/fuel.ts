@@ -11,8 +11,17 @@ export const fuel: Project = {
     },
   ],
   details: {
-    website: 'https://fuel.sh/',
-    color: '#05c399',
+    links: {
+      websites: ['https://fuel.sh/'],
+      apps: [],
+      documentation: ['https://docs.fuel.sh/'],
+      explorers: ['https://mainnet.fuel.sh/network/'],
+      repositories: ['https://github.com/FuelLabs/fuel-v1-contracts'],
+      socialMedia: [
+        'https://discord.gg/xfpK4Pe',
+        'https://twitter.com/fuellabs_',
+      ],
+    },
     technology: {
       name: 'optimistic-rollup',
       details: 'UTXO',

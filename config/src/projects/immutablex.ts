@@ -11,8 +11,17 @@ export const immutablex: Project = {
     },
   ],
   details: {
-    website: 'https://www.immutable.com/',
-    color: '#17b5cb',
+    links: {
+      websites: ['https://www.immutable.com/'],
+      apps: ['https://market.x.immutable.com/'],
+      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      explorers: [],
+      repositories: ['https://github.com/starkware-libs/starkex-contracts'],
+      socialMedia: [
+        'https://medium.com/@immutablex',
+        'https://twitter.com/Immutable',
+      ],
+    },
     technology: {
       name: 'validium',
       details: 'zk-STARK/StarkExchange',

@@ -11,8 +11,21 @@ export const leverj: Project = {
     },
   ],
   details: {
-    website: 'https://leverj.io/',
-    color: '#4967ff',
+    links: {
+      websites: ['https://leverj.io/'],
+      apps: ['https://live.leverj.io/'],
+      documentation: ['https://leverj.io/assets/documents/Gluon-Layer2.pdf'],
+      explorers: ['https://gluon.leverj.io/'],
+      repositories: [],
+      socialMedia: [
+        'https://twitter.com/Leverj_io',
+        'https://t.me/leverj',
+        'https://discord.gg/xpsjfwn',
+        'https://blog.leverj.io/',
+        'https://linkedin.com/company/leverj/',
+        'https://youtube.com/channel/UCGor-eEpq0ObqN9u3jutq2w',
+      ],
+    },
     technology: {
       name: 'plasma',
       details: 'Gluon Plasma',

@@ -11,8 +11,27 @@ export const dydx: Project = {
     },
   ],
   details: {
-    website: 'https://dydx.exchange/',
-    color: '#6966ff',
+    links: {
+      websites: ['https://dydx.exchange/'],
+      apps: ['https://trade.dydx.exchange/', 'https://margin.dydx.exchange/'],
+      documentation: [
+        'https://docs.starkware.co/starkex-docs-v2/',
+        'https://docs.dydx.exchange/',
+      ],
+      explorers: [],
+      repositories: [
+        'https://github.com/starkware-libs/starkex-contracts',
+        'https://github.com/dydxprotocol/',
+      ],
+      socialMedia: [
+        'https://dydx.exchange/blog',
+        'https://twitter.com/dydxprotocol',
+        'https://discord.gg/Tuze6tY',
+        'https://youtube.com/c/dydxprotocol',
+        'https://reddit.com/r/dydxprotocol/',
+        'https://linkedin.com/company/dydx',
+      ],
+    },
     technology: {
       name: 'zk-rollup',
       details: 'zk-STARK/StarkExchange',
