@@ -13,6 +13,7 @@ import { nahmii } from './nahmii'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { Project } from './Project'
+import { sorare } from './sorare'
 import { zkswap } from './zkswap'
 import { zksync } from './zksync'
 
@@ -33,6 +34,7 @@ export const projects: Project[] = [
   nahmii,
   omgnetwork,
   optimism,
+  sorare,
   zkswap,
   zksync,
 ]
