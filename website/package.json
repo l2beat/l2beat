@@ -10,7 +10,7 @@
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
-    "build": "gulp build",
+    "build": "NODE_ENV=production gulp build",
     "start": "gulp watch"
   },
   "devDependencies": {

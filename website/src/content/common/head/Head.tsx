@@ -1,3 +1,4 @@
+import { Analytics } from './Analytics'
 import { Favicons } from './Favicons'
 import { MetaTags } from './MetaTags'
 import { Preload } from './Preload'
@@ -28,6 +29,7 @@ export function Head(props: Props) {
         image={props.image}
         url={props.url}
       />
+      <Analytics />
     </head>
   )
 }
