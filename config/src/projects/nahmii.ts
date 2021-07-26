@@ -74,7 +74,6 @@ export const nahmii: Project = {
         name: 'Source Code',
         value:
           'The Nahmii 1.0 smart contracts are publicly available on Github and open source.',
-        pointers: ['https://github.com/hubiinetwork/nahmii-contracts'],
       },
       {
         name: 'Privacy',

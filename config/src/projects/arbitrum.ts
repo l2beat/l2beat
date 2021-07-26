@@ -61,8 +61,14 @@ export const arbitrum: Project = {
         tooltip:
           'There currently exists a whitelist for using the rollup. All operations have the onlyWhitelisted modifier.',
         pointers: [
-          'https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f#code',
-          'https://etherscan.io/address/0xb38634f1192fd4a4864b99a4c9100339815c6450#code#F1#L28',
+          {
+            name: 'Inbox proxy - source on Etherscan',
+            href: 'https://etherscan.io/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f#code',
+          },
+          {
+            name: 'Inbox implementation - source on Etherscan',
+            href: 'https://etherscan.io/address/0xb38634f1192fd4a4864b99a4c9100339815c6450#code#F1#L28',
+          },
         ],
       },
       {
@@ -71,7 +77,10 @@ export const arbitrum: Project = {
         sentiment: 'good',
         tooltip: 'Any transaction can be submitted directly on L1.',
         pointers: [
-          'https://developer.offchainlabs.com/docs/rollup_basics#aggregating-transactions',
+          {
+            name: 'Aggregating Transactions - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/rollup_basics#aggregating-transactions',
+          },
         ],
       },
       {

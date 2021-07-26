@@ -72,7 +72,10 @@ export const zkswap: Project = {
           'Contracts are upgradable BUT on the upside there is a 14 days timelock',
         sentiment: 'good',
         pointers: [
-          'https://etherscan.io/address/0x8eca806aecc86ce90da803b080ca4e3a9b8097ad#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0x8eca806aecc86ce90da803b080ca4e3a9b8097ad#code',
+          },
         ],
         value: 'Yes',
       },
@@ -81,7 +84,10 @@ export const zkswap: Project = {
         sentiment: 'bad',
         tooltip: 'Only whitelisted actors can produce new blocks',
         pointers: [
-          'https://github.com/l2labs/zkswap-contracts/blob/e0686dfd40d92ab56425cb760fe342921f228d9f/contracts/ZkSyncCommitBlock.sol#L46',
+          {
+            name: 'ZkSyncCommitBlock.sol#L46 - ZKSwap source code',
+            href: 'https://github.com/l2labs/zkswap-contracts/blob/e0686dfd40d92ab56425cb760fe342921f228d9f/contracts/ZkSyncCommitBlock.sol#L46',
+          },
         ],
         value: 'No',
       },
@@ -91,8 +97,14 @@ export const zkswap: Project = {
         tooltip:
           'Tx can be forced into a rollup state or rollup goes into "exodus" mode and everyone can exit.',
         pointers: [
-          'https://github.com/l2labs/zkswap-contracts/blob/main/contracts/ZkSyncExit.sol',
-          'https://github.com/l2labs/zkswap-contracts/blob/e0686dfd40d92ab56425cb760fe342921f228d9f/contracts/ZkSyncCommitBlock.sol#L224',
+          {
+            name: 'ZkSyncExit.sol - ZKSwap source code',
+            href: 'https://github.com/l2labs/zkswap-contracts/blob/main/contracts/ZkSyncExit.sol',
+          },
+          {
+            name: 'ZkSyncCommitBlock.sol#L224 - ZKSwap source code',
+            href: 'https://github.com/l2labs/zkswap-contracts/blob/e0686dfd40d92ab56425cb760fe342921f228d9f/contracts/ZkSyncCommitBlock.sol#L224',
+          },
         ],
         value: 'Yes but only for withdrawals',
       },

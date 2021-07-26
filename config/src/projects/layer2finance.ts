@@ -52,7 +52,10 @@ export const layer2finance: Project = {
           'Owner can pause contract and drain funds. Owner will be transferred to governance',
         sentiment: 'bad',
         pointers: [
-          'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L483',
+          {
+            name: 'RollupChain.sol#L483 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L483',
+          },
         ],
         value: 'Yes',
       },
@@ -61,7 +64,10 @@ export const layer2finance: Project = {
         sentiment: 'bad',
         tooltip: 'Only operator can produce new blocks',
         pointers: [
-          'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191',
+          {
+            name: 'RollupChain.sol#L191 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191',
+          },
         ],
         value: 'No',
       },
@@ -71,7 +77,10 @@ export const layer2finance: Project = {
         tooltip:
           'Operator is required to include user deposit and balance sync TXs into the rollup',
         pointers: [
-          'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L441',
+          {
+            name: 'RollupChain.sol#L441 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L441',
+          },
         ],
         value: 'Yes',
       },

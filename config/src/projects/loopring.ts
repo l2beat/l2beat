@@ -61,7 +61,10 @@ export const loopring: Project = {
         sentiment: 'bad',
         tooltip: 'Only operator can produce new blocks',
         pointers: [
-          'https://github.com/Loopring/protocols/blob/bbcebc4848b4a1c5ba8264a2d601de5f8183b5aa/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L340',
+          {
+            name: 'ExchangeV3.sol#L340 - Loopring source code',
+            href: 'https://github.com/Loopring/protocols/blob/bbcebc4848b4a1c5ba8264a2d601de5f8183b5aa/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L340',
+          },
         ],
         value: 'No',
       },
@@ -70,8 +73,14 @@ export const loopring: Project = {
         sentiment: 'good',
         tooltip: 'If operator goes dark users can still exit the rollup',
         pointers: [
-          'https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#forced-request-handling',
-          'https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#withdrawal-mode',
+          {
+            name: 'Forced request handling - Loopring documentation',
+            href: 'https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#forced-request-handling',
+          },
+          {
+            name: 'Withdrawal mode - Loopring documentation',
+            href: 'https://github.com/Loopring/protocols/blob/adc95a13ab4d84ff50a99f601ba1c6b5add7e411/packages/loopring_v3/DESIGN.md#withdrawal-mode',
+          },
         ],
         value: 'Yes but only for withdrawals',
       },

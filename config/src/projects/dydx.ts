@@ -57,7 +57,10 @@ export const dydx: Project = {
         tooltip: 'Contracts are upgradable',
         sentiment: 'neutral',
         pointers: [
-          'https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code',
+          },
         ],
         value: 'Yes, through contract upgrade',
       },

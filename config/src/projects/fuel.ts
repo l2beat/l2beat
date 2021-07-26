@@ -55,7 +55,10 @@ export const fuel: Project = {
         tooltip:
           'Anyone can submit a new root that can become part of the rollup after a delay',
         pointers: [
-          'https://github.com/FuelLabs/fuel/blob/49c35e8de752200175174a08b6a8eae42796790d/src/Block.yulp#L95-L101',
+          {
+            name: 'Block.yulp#L95-L101 - Fuel source code',
+            href: 'https://github.com/FuelLabs/fuel/blob/49c35e8de752200175174a08b6a8eae42796790d/src/Block.yulp#L95-L101',
+          },
         ],
         value: 'Yes',
       },
