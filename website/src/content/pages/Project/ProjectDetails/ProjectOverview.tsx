@@ -7,11 +7,11 @@ export function ProjectOverview(props: Project['details']['links']) {
       <table>
         <tbody>
           <OverviewLinks name="Website" links={props.websites} />
+          <OverviewLinks name="Social media" links={props.socialMedia} social />
           <OverviewLinks name="App" links={props.apps} />
           <OverviewLinks name="Documentation" links={props.documentation} />
           <OverviewLinks name="Explorer" links={props.explorers} />
           <OverviewLinks name="Source code" links={props.repositories} />
-          <OverviewLinks name="Social media" links={props.socialMedia} social />
         </tbody>
       </table>
     </div>
