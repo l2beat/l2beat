@@ -61,6 +61,8 @@ export interface ProjectDetails {
     massExit?: ProjectTechnologyChoice
     /** What is the additional privacy offered */
     additionalPrivacy?: ProjectTechnologyChoice
+    /** What are the smart contract capabilities */
+    smartContracts?: ProjectTechnologyChoice
     /** What are the details about project operator(s) */
     operator: ProjectTechnologyChoice
     /** What are the details about force transactions (censorship resistance) */
@@ -98,6 +100,8 @@ export type ProjectCategory =
 export interface ProjectTechnologyChoice {
   /** Name of the specific technology choice */
   name: string
+  /** A short (<20 characters) name of the technology choice */
+  shortName: string
   /** Description of the specific technology choice */
   description: string
   /** List of references backing up the claim */
@@ -112,7 +116,7 @@ export interface ProjectRisk {
   /** Description of te risk. Should form a sentence with the category */
   text: string
   /** List of references backing up the claim */
-  references: ProjectReference[]
+  references?: ProjectReference[]
 }
 
 export type ProjectRiskCategory =
