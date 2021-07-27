@@ -27,7 +27,7 @@ export const nahmii: Project = {
       ],
     },
     technology: {
-      name: 'state-pools',
+      name: 'State Pools',
       details: 'User carried state, pooled security model',
     },
     purpose: 'Payments',

@@ -23,7 +23,7 @@ export const immutablex: Project = {
       ],
     },
     technology: {
-      name: 'validium',
+      name: 'Validium',
       details: "Powered by StarkWare's StarkEx",
     },
     purpose: 'NFT, Exchange',

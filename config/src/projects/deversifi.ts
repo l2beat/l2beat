@@ -59,7 +59,7 @@ export const deversifi: Project = {
       ],
     },
     technology: {
-      name: 'validium',
+      name: 'Validium',
       details: "Powered by StarkWare's StarkEx",
     },
     purpose: 'Exchange',

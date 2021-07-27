@@ -26,7 +26,7 @@ export const layer2finance: Project = {
       ],
     },
     technology: {
-      name: 'optimistic-rollup',
+      name: 'Optimistic Rollup',
       details: 'Specialized Optimistic Rollup',
     },
     purpose: 'DeFi aggregation',

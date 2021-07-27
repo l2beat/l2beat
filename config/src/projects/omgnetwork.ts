@@ -58,7 +58,7 @@ export const omgnetwork: Project = {
       ],
     },
     technology: {
-      name: 'plasma',
+      name: 'Plasma',
       details: 'More Viable Plasma',
     },
     purpose: 'Payments',

@@ -19,13 +19,13 @@ export const sorare: Project = {
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://discord.gg/TSjtHaM',
-        'https://www.reddit.com/r/Sorare/',
+        'https://reddit.com/r/Sorare/',
         'https://twitter.com/sorarehq',
-        'https://www.instagram.com/sorare_official/',
+        'https://instagram.com/sorare_official/',
       ],
     },
     technology: {
-      name: 'validium',
+      name: 'Validium',
       details: "Powered by StarkWare's StarkEx",
     },
     purpose: 'NFT, Exchange',

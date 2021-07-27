@@ -33,7 +33,7 @@ export const dydx: Project = {
       ],
     },
     technology: {
-      name: 'zk-rollup',
+      name: 'ZK Rollup',
       details: "Powered by StarkWare's StarkEx",
     },
     purpose: 'Exchange',
