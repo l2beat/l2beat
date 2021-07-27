@@ -105,9 +105,9 @@ function getTechnology(project: Project) {
     case 'ZK Rollup':
       return { abbreviation: 'ZKR', name }
     case 'Plasma':
-      return { abbreviation: 'PLA', name}
+      return { abbreviation: 'PLA', name }
     case 'Validium':
-      return { abbreviation: 'VAL', name}
+      return { abbreviation: 'VAL', name }
     case 'State Pools':
       return { abbreviation: 'STP', name }
   }

@@ -1,6 +1,7 @@
 import { SVGAttributes } from 'react'
 import { DiscordIcon } from './products/DiscordIcon'
 import { GithubIcon } from './products/GithubIcon'
+import { InstagramIcon } from './products/InstagramIcon'
 import { LinkedInIcon } from './products/LinkedInIcon'
 import { MediumIcon } from './products/MediumIcon'
 import { RedditIcon } from './products/RedditIcon'
@@ -11,6 +12,7 @@ import { YouTubeIcon } from './products/YouTubeIcon'
 export type ProductIconType =
   | 'discord'
   | 'github'
+  | 'instagram'
   | 'linkedin'
   | 'medium'
   | 'reddit'
@@ -28,6 +30,8 @@ export function ProductIcon({ product, ...props }: Props): JSX.Element {
       return <DiscordIcon {...props} />
     case 'github':
       return <GithubIcon {...props} />
+    case 'instagram':
+      return <InstagramIcon {...props} />
     case 'linkedin':
       return <LinkedInIcon {...props} />
     case 'medium':
