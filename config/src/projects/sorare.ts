@@ -11,11 +11,22 @@ export const sorare: Project = {
     },
   ],
   details: {
-    website: 'https://sorare.com/',
-    color: '#000000', // this is unused
+    links: {
+      websites: ['https://sorare.com/'],
+      apps: [],
+      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      explorers: [],
+      repositories: ['https://github.com/starkware-libs/starkex-contracts'],
+      socialMedia: [
+        'https://discord.gg/TSjtHaM',
+        'https://www.reddit.com/r/Sorare/',
+        'https://twitter.com/sorarehq',
+        'https://www.instagram.com/sorare_official/',
+      ],
+    },
     technology: {
       name: 'validium',
-      details: 'zk-STARK/StarkExchange',
+      details: "Powered by StarkWare's StarkEx",
     },
     purpose: 'NFT, Exchange',
     parameters: [
@@ -38,7 +49,10 @@ export const sorare: Project = {
         tooltip: 'Contracts are upgradable',
         sentiment: 'neutral',
         pointers: [
-          'https://etherscan.io/address/0xF5C9F957705bea56a7e806943f98F7777B995826#code',
+          {
+            name: 'Bridge contract - source on Etherscan',
+            href: 'https://etherscan.io/address/0xF5C9F957705bea56a7e806943f98F7777B995826#code',
+          },
         ],
         value: 'Yes, through contract upgrade',
       },
@@ -64,9 +78,9 @@ export const sorare: Project = {
     ],
     news: [
       {
-        date: '2021-07-19',
-        name: 'Scaling Solution Incoming',
-        link: 'https://www.reddit.com/r/Sorare/comments/onjrn9/scaling_solution_incoming_wednesday/',
+        date: '2021-07-26',
+        name: 'We’re live on our Scaling Solution: Starkware',
+        link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       },
     ],
   },
