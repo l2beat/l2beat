@@ -23,7 +23,7 @@ export const fuel: Project = {
       ],
     },
     technology: {
-      name: 'optimistic-rollup',
+      name: 'Optimistic Rollup',
       details: 'UTXO',
     },
     purpose: 'Payments',

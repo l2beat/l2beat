@@ -67,6 +67,11 @@ function parseSocial(href: string): SocialDetails {
       platform: 'linkedin',
       text: link.slice('linkedin.com/company/'.length),
     }
+  } else if (link.startsWith('instagram.com')) {
+    return {
+      platform: 'instagram',
+      text: link.slice('instagram.com/'.length),
+    }
   }
   return { text: link }
 }

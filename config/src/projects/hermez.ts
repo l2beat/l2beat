@@ -31,7 +31,7 @@ export const hermez: Project = {
       ],
     },
     technology: {
-      name: 'zk-rollup',
+      name: 'ZK Rollup',
       details: 'zk-SNARK',
     },
     purpose: 'Payments',

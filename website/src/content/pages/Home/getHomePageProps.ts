@@ -98,20 +98,20 @@ function getFinancialViewEntry(
 }
 
 function getTechnology(project: Project) {
-  const tech = project.details.technology.name
-  switch (tech) {
-    case 'optimistic-rollup':
-      return { abbreviation: 'ORU', name: 'Optimistic Rollup' }
-    case 'zk-rollup':
-      return { abbreviation: 'ZKR', name: 'ZK Rollup' }
-    case 'plasma':
-      return { abbreviation: 'PLA', name: 'Plasma' }
-    case 'validium':
-      return { abbreviation: 'VAL', name: 'Validium' }
-    case 'state-pools':
-      return { abbreviation: 'STP', name: 'State Pools' }
+  const name = project.details.technology.name
+  switch (name) {
+    case 'Optimistic Rollup':
+      return { abbreviation: 'ORU', name }
+    case 'ZK Rollup':
+      return { abbreviation: 'ZKR', name }
+    case 'Plasma':
+      return { abbreviation: 'PLA', name }
+    case 'Validium':
+      return { abbreviation: 'VAL', name }
+    case 'State Pools':
+      return { abbreviation: 'STP', name }
   }
-  return { abbreviation: '???', name: tech }
+  return { abbreviation: '???', name }
 }
 
 function toWarning(name: string, share: number, token: string) {

@@ -27,7 +27,7 @@ export const leverj: Project = {
       ],
     },
     technology: {
-      name: 'plasma',
+      name: 'Plasma',
       details: 'Gluon Plasma',
     },
     purpose: 'Exchange',

@@ -28,7 +28,7 @@ export const arbitrum: Project = {
       ],
     },
     technology: {
-      name: 'optimistic-rollup',
+      name: 'Optimistic Rollup',
       details: 'Arbitrum Virtual Machine',
     },
     purpose: 'Universal',

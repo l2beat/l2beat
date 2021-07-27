@@ -93,6 +93,8 @@ describe('projects', () => {
             expect(link).to.match(/^https:\/\/twitch\.tv\/[\w-]+$/)
           } else if (link.includes('gitter')) {
             expect(link).to.match(/^https:\/\/gitter\.im\/[\w-/]+$/)
+          } else if (link.includes('instagram')) {
+            expect(link).to.match(/^https:\/\/instagram\.com\/[\w-/]+$/)
           }
         })
       }

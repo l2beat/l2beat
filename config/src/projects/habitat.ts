@@ -24,7 +24,7 @@ export const habitat: Project = {
       ],
     },
     technology: {
-      name: 'optimistic-rollup',
+      name: 'Optimistic Rollup',
       details: 'NutBerry',
     },
     purpose: 'DAO, Treasury',

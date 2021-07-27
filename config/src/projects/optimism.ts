@@ -48,7 +48,7 @@ export const optimism: Project = {
       ],
     },
     technology: {
-      name: 'optimistic-rollup',
+      name: 'Optimistic Rollup',
       details: 'Optimistic Virtual Machine',
     },
     purpose: 'Universal',

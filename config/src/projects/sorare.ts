@@ -1,25 +1,27 @@
 import { Project } from './Project'
 
-export const immutablex: Project = {
-  name: 'ImmutableX',
-  slug: 'immutablex',
+export const sorare: Project = {
+  name: 'Sorare',
+  slug: 'sorare',
   bridges: [
     {
-      address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
-      sinceBlock: 12011518,
+      address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
+      sinceBlock: 12831579,
       tokens: ['ETH'],
     },
   ],
   details: {
     links: {
-      websites: ['https://www.immutable.com/'],
-      apps: ['https://market.x.immutable.com/'],
+      websites: ['https://sorare.com/'],
+      apps: [],
       documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
       explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
-        'https://medium.com/@immutablex',
-        'https://twitter.com/Immutable',
+        'https://discord.gg/TSjtHaM',
+        'https://reddit.com/r/Sorare/',
+        'https://twitter.com/sorarehq',
+        'https://instagram.com/sorare_official/',
       ],
     },
     technology: {
@@ -49,7 +51,7 @@ export const immutablex: Project = {
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',
-            href: 'https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code',
+            href: 'https://etherscan.io/address/0xF5C9F957705bea56a7e806943f98F7777B995826#code',
           },
         ],
         value: 'Yes, through contract upgrade',
@@ -57,7 +59,7 @@ export const immutablex: Project = {
       {
         name: 'Permissionless?',
         sentiment: 'bad',
-        tooltip: 'Only ImmutableX can produce new blocks',
+        tooltip: 'Only Sorare can produce new blocks',
         value: 'No',
       },
       {
@@ -76,9 +78,9 @@ export const immutablex: Project = {
     ],
     news: [
       {
-        date: '2021-04-09',
-        name: 'Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption',
-        link: 'https://www.immutable.com/blog/immutable-x-alpha-trading-launch',
+        date: '2021-07-26',
+        name: 'We’re live on our Scaling Solution: Starkware',
+        link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       },
     ],
   },
