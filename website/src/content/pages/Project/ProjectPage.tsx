@@ -8,7 +8,11 @@ export function ProjectPage(props: ProjectPageProps) {
       <Navbar />
       <Header {...props.header} />
       <Chart {...props.chart} />
-      <ProjectDetails details={props.details} bridges={props.bridges} />
+      <ProjectDetails
+        details={props.details}
+        bridges={props.bridges}
+        risks={props.risks}
+      />
       <Footer />
     </Page>
   )

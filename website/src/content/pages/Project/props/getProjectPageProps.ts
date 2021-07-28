@@ -12,7 +12,7 @@ export interface ProjectPageProps {
   details: ProjectDetails
   bridges: ProjectBridge[]
   metadata: PageMetadata
-  risks: RisksProps
+  risks?: RisksProps
 }
 
 export function getProjectPageProps(

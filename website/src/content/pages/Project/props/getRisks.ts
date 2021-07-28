@@ -5,6 +5,7 @@ export interface RisksProps {
 }
 
 export interface RiskGroup {
+  start: number
   name: ProjectRiskCategory
   items: RiskItem[]
 }
@@ -14,7 +15,7 @@ export interface RiskItem {
   referencedId: string
 }
 
-export function getRisks(project: Project) {
+export function getRisks(project: Project): RisksProps | undefined {
   const technology = project.details.technology
   const exits =
     technology?.exitMechanisms.map((x, i) => ({
@@ -40,29 +41,28 @@ export function getRisks(project: Project) {
     }
   }
 
-  const riskGroups: RiskGroup[] = [
-    {
-      name: 'Funds can be stolen if',
-      items: [],
-    },
-    {
-      name: 'Funds can be lost if',
-      items: [],
-    },
-    {
-      name: 'Funds can be frozen if',
-      items: [],
-    },
-    {
-      name: 'Users can be censored if',
-      items: [],
-    },
-  ]
-  for (const group of riskGroups) {
-    group.items = risks
-      .filter((x) => x.category === group.name)
-      .map((x) => ({ text: x.text, referencedId: x.referencedId }))
+  if (risks.length === 0) {
+    return undefined
   }
+
+  const categories: ProjectRiskCategory[] = [
+    'Funds can be stolen if',
+    'Funds can be lost if',
+    'Funds can be frozen if',
+    'Users can be censored if',
+  ]
+
+  let nextStart = 1
+  const riskGroups = categories
+    .map((name) => {
+      const start = nextStart
+      const items = risks
+        .filter((x) => x.category === name)
+        .map((x) => ({ text: x.text, referencedId: x.referencedId }))
+      nextStart += items.length
+      return { start, name, items }
+    })
+    .filter((x) => x.items.length > 0)
 
   return { riskGroups }
 }
