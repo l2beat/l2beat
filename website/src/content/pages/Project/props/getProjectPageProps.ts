@@ -3,6 +3,7 @@ import { L2Data } from '../../../L2Data'
 import { PageMetadata } from '../../../PageMetadata'
 import { ChartProps, getChartProps } from './getChartProps'
 import { getHeaderProps, HeaderProps } from './getHeaderProps'
+import { getNewsProps, NewsItem } from './getNewsProps'
 import { getPageMetadata } from './getPageMetadata'
 import { getRiskProps, RiskProps } from './getRiskProps'
 import { getTechnologyProps, TechnologyProps } from './getTechnologyProps'
@@ -15,6 +16,7 @@ export interface ProjectPageProps {
   metadata: PageMetadata
   risks?: RiskProps
   technology?: TechnologyProps
+  news?: NewsItem[]
 }
 
 export function getProjectPageProps(
@@ -29,5 +31,6 @@ export function getProjectPageProps(
     metadata: getPageMetadata(project),
     risks: getRiskProps(project),
     technology: getTechnologyProps(project),
+    news: getNewsProps(project),
   }
 }
