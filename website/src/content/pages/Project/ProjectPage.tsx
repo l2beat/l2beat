@@ -11,6 +11,7 @@ export function ProjectPage(props: ProjectPageProps) {
       <ProjectDetails
         details={props.details}
         bridges={props.bridges}
+        technology={props.technology}
         risks={props.risks}
       />
       <Footer />

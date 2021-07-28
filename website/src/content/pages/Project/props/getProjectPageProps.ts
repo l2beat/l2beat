@@ -4,7 +4,8 @@ import { PageMetadata } from '../../../PageMetadata'
 import { ChartProps, getChartProps } from './getChartProps'
 import { getHeaderProps, HeaderProps } from './getHeaderProps'
 import { getPageMetadata } from './getPageMetadata'
-import { getRisks, RisksProps } from './getRisks'
+import { getRiskProps, RiskProps } from './getRiskProps'
+import { getTechnologyProps, TechnologyProps } from './getTechnologyProps'
 
 export interface ProjectPageProps {
   header: HeaderProps
@@ -12,7 +13,8 @@ export interface ProjectPageProps {
   details: ProjectDetails
   bridges: ProjectBridge[]
   metadata: PageMetadata
-  risks?: RisksProps
+  risks?: RiskProps
+  technology?: TechnologyProps
 }
 
 export function getProjectPageProps(
@@ -25,6 +27,7 @@ export function getProjectPageProps(
     details: project.details,
     bridges: project.bridges,
     metadata: getPageMetadata(project),
-    risks: getRisks(project),
+    risks: getRiskProps(project),
+    technology: getTechnologyProps(project),
   }
 }

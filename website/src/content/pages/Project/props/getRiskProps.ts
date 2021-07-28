@@ -1,6 +1,6 @@
 import { Project, ProjectRisk, ProjectRiskCategory } from '@l2beat/config'
 
-export interface RisksProps {
+export interface RiskProps {
   riskGroups: RiskGroup[]
 }
 
@@ -15,7 +15,7 @@ export interface RiskItem {
   referencedId: string
 }
 
-export function getRisks(project: Project): RisksProps | undefined {
+export function getRiskProps(project: Project): RiskProps | undefined {
   const technology = project.details.technology
   const exits =
     technology?.exitMechanisms.map((x, i) => ({

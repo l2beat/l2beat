@@ -1,8 +1,8 @@
 import { ShieldBadIcon } from '../../../common/icons'
-import { RisksProps } from '../props/getRisks'
+import { RiskProps } from '../props'
 import { Section } from './Section'
 
-export function RiskSection({ riskGroups }: RisksProps) {
+export function RiskSection({ riskGroups }: RiskProps) {
   return (
     <Section title="Risks">
       {riskGroups.map((group, i) => (
