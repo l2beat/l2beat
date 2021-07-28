@@ -72,7 +72,7 @@ function getFinancialViewEntry(
   const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)[1]
   const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)[1]
 
-  const token = project.details.associatedToken
+  const token = project.associatedToken
   const tokenTvl = token
     ? getFromEnd(projectData.byToken[token].data, 0)[2]
     : undefined
@@ -98,7 +98,7 @@ function getFinancialViewEntry(
 }
 
 function getTechnology(project: Project) {
-  const name = project.details.technology.name
+  const name = project.details.technologyName
   switch (name) {
     case 'Optimistic Rollup':
       return { abbreviation: 'ORU', name }

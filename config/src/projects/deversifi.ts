@@ -58,10 +58,8 @@ export const deversifi: Project = {
         'https://youtube.com/c/deversifi',
       ],
     },
-    technology: {
-      name: 'Validium',
-      details: "Powered by StarkWare's StarkEx",
-    },
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'Exchange',
     parameters: [
       {

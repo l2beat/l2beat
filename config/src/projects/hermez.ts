@@ -30,10 +30,8 @@ export const hermez: Project = {
         'https://twitter.com/hermez_network',
       ],
     },
-    technology: {
-      name: 'ZK Rollup',
-      details: 'zk-SNARK',
-    },
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK',
     purpose: 'Payments',
     parameters: [
       {

@@ -26,8 +26,8 @@ export function ProjectDetails({ details, bridges }: Props) {
           <ul className="ProjectDetails-Parameters">
             <ProjectParameter
               name="Technology:"
-              value={details.technology.name}
-              tooltip={details.technology.details}
+              value={details.technologyName}
+              tooltip={details.technologyDetails}
             />
             {details.parameters.map((param, i) => (
               <ProjectParameter key={i} {...param} />

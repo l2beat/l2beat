@@ -25,10 +25,8 @@ export const layer2finance: Project = {
         'https://twitter.com/CelerNetwork',
       ],
     },
-    technology: {
-      name: 'Optimistic Rollup',
-      details: 'Specialized Optimistic Rollup',
-    },
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
     parameters: [
       {

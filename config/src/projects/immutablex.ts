@@ -22,10 +22,8 @@ export const immutablex: Project = {
         'https://twitter.com/Immutable',
       ],
     },
-    technology: {
-      name: 'Validium',
-      details: "Powered by StarkWare's StarkEx",
-    },
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'NFT, Exchange',
     parameters: [
       {

@@ -39,10 +39,12 @@ export interface ProjectDetails {
   }
   /** A short (<20 characters) description of the use case */
   purpose: string
+  // TODO: Not optional
   /** A few sentences describing the project the project */
-  description: string
+  description?: string
+  // TODO: Not optional
   /** Deep dive into project technology */
-  technology: {
+  technology?: {
     category: {
       /** Name of the category the project belongs to */
       name: ProjectCategory
@@ -68,7 +70,7 @@ export interface ProjectDetails {
     /** What are the details about force transactions (censorship resistance) */
     forceTransactions: ProjectTechnologyChoice
     /** A description of the available exit mechanisms */
-    exitMechanisms: ProjectTechnologyChoice[]
+    exitMechanisms: ProjectExitMechanism[]
   }
   /** Links to recent developments */
   news?: News[]
@@ -109,6 +111,8 @@ export interface ProjectTechnologyChoice {
   /** List of risks associated with the technology choice */
   risks: ProjectRisk[]
 }
+
+export type ProjectExitMechanism = Omit<ProjectTechnologyChoice, 'shortName'>
 
 export interface ProjectRisk {
   /** Category of this risk */

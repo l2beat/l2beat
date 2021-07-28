@@ -24,10 +24,8 @@ export const sorare: Project = {
         'https://instagram.com/sorare_official/',
       ],
     },
-    technology: {
-      name: 'Validium',
-      details: "Powered by StarkWare's StarkEx",
-    },
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'NFT, Exchange',
     parameters: [
       {

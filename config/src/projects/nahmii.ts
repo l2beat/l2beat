@@ -10,6 +10,7 @@ export const nahmii: Project = {
       tokens: ['NII'],
     },
   ],
+  associatedToken: 'NII',
   details: {
     links: {
       websites: ['https://nahmii.io/'],
@@ -26,12 +27,9 @@ export const nahmii: Project = {
         'https://discord.gg/GKTsUTH',
       ],
     },
-    technology: {
-      name: 'State Pools',
-      details: 'User carried state, pooled security model',
-    },
+    technologyName: 'State Pools',
+    technologyDetails: 'User carried state, pooled security model',
     purpose: 'Payments',
-    associatedToken: 'NII',
     parameters: [
       {
         name: 'Primary use case',
