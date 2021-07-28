@@ -1,7 +1,7 @@
-import { ProjectPage } from './ProjectPage'
-import { getProjectPageProps } from './getProjectPageProps'
 import { Project } from '@l2beat/config'
 import { L2Data } from '../../L2Data'
+import { ProjectPage } from './ProjectPage'
+import { getProjectPageProps } from './props'
 
 interface Props {
   project: Project

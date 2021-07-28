@@ -25,10 +25,8 @@ export const aztec: Project = {
         'https://plonk.cafe/',
       ],
     },
-    technology: {
-      name: 'ZK Rollup',
-      details: 'zk-SNARK/PLONK',
-    },
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK/PLONK',
     purpose: 'Private payments',
     parameters: [
       {

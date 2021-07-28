@@ -47,10 +47,8 @@ export const optimism: Project = {
         'https://twitch.tv/optimismpbc',
       ],
     },
-    technology: {
-      name: 'Optimistic Rollup',
-      details: 'Optimistic Virtual Machine',
-    },
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'Optimistic Virtual Machine',
     purpose: 'Universal',
     parameters: [
       {

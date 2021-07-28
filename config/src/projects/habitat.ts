@@ -10,6 +10,7 @@ export const habitat: Project = {
       tokens: ['HBT', 'WETH', 'USDC', 'GNO'],
     },
   ],
+  associatedToken: 'HBT',
   details: {
     links: {
       websites: ['https://0xhabitat.org/'],
@@ -23,12 +24,9 @@ export const habitat: Project = {
         'https://0xhabitat.substack.com/',
       ],
     },
-    technology: {
-      name: 'Optimistic Rollup',
-      details: 'NutBerry',
-    },
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'NutBerry',
     purpose: 'DAO, Treasury',
-    associatedToken: 'HBT',
     parameters: [
       {
         name: 'Primary use case',

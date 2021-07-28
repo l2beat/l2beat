@@ -10,6 +10,7 @@ export const leverj: Project = {
       tokens: ['ETH', 'DAI', 'L2'],
     },
   ],
+  associatedToken: 'L2',
   details: {
     links: {
       websites: ['https://leverj.io/'],
@@ -26,12 +27,9 @@ export const leverj: Project = {
         'https://youtube.com/channel/UCGor-eEpq0ObqN9u3jutq2w',
       ],
     },
-    technology: {
-      name: 'Plasma',
-      details: 'Gluon Plasma',
-    },
+    technologyName: 'Plasma',
+    technologyDetails: 'Gluon Plasma',
     purpose: 'Exchange',
-    associatedToken: 'L2',
     parameters: [
       {
         name: 'Primary use case',

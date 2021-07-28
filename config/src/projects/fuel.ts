@@ -22,10 +22,8 @@ export const fuel: Project = {
         'https://twitter.com/fuellabs_',
       ],
     },
-    technology: {
-      name: 'Optimistic Rollup',
-      details: 'UTXO',
-    },
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'UTXO',
     purpose: 'Payments',
     parameters: [
       {

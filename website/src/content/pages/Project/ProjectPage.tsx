@@ -1,20 +1,19 @@
 import { Chart, Footer, Header, Navbar, Page } from '../../common'
 import { ProjectDetails } from './ProjectDetails/ProjectDetails'
-import { ProjectPageProps } from './getProjectPageProps'
+import { ProjectPageProps } from './props/getProjectPageProps'
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page metadata={props.metadata} preloadApi={props.apiEndpoint}>
+    <Page metadata={props.metadata} preloadApi={props.chart.endpoint}>
       <Navbar />
-      <Header
-        title={props.name}
-        titleLength={props.titleLength}
-        icon={props.icon}
-        tvl={props.tvl}
-        sevenDayChange={props.sevenDayChange}
+      <Header {...props.header} />
+      <Chart {...props.chart} />
+      <ProjectDetails
+        details={props.details}
+        bridges={props.bridges}
+        technology={props.technology}
+        risks={props.risks}
       />
-      <Chart endpoint={props.apiEndpoint} tokens={props.tokens} />
-      <ProjectDetails details={props.details} bridges={props.bridges} />
       <Footer />
     </Page>
   )

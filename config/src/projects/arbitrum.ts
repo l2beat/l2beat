@@ -27,11 +27,154 @@ export const arbitrum: Project = {
         'https://discord.gg/5KE54JwyTs',
       ],
     },
-    technology: {
-      name: 'Optimistic Rollup',
-      details: 'Arbitrum Virtual Machine',
-    },
     purpose: 'Universal',
+    technology: {
+      category: {
+        name: 'Optimistic Rollup',
+        references: [
+          {
+            text: 'Arbitrum Rollup Basics - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/rollup_basics',
+          },
+        ],
+      },
+      stateCorrectness: {
+        name: 'Fraud proofs ensure state correctness',
+        shortName: 'Fraud proofs',
+        description:
+          'The published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'there is noone that checks the published state. Fraud proofs assume at least one honest and able validator.',
+          },
+        ],
+        references: [
+          {
+            text: 'Executing and Securing the Chain - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/rollup_basics#executing-and-securing-the-chain',
+          },
+        ],
+      },
+      dataAvailability: {
+        name: 'All transaction data is recorded on chain',
+        shortName: 'On chain',
+        description:
+          'All transactions executed on the Arbitrum Rollup chain are submitted to an Inbox smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Arbitrum chain.',
+        risks: [],
+        references: [
+          {
+            text: 'Submitting Transactions - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/rollup_basics#submitting-transactions',
+          },
+        ],
+      },
+      smartContracts: {
+        name: 'EVM compatible smart contracts are supported',
+        shortName: 'AVM',
+        description:
+          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex AVM implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'AVM - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
+          },
+        ],
+      },
+      operator: {
+        name: 'The sequencer is centralized.',
+        shortName: 'Centralized',
+        description:
+          'In the beginning Arbitrum is asking users to trust its centralized sequencer. Later it plans to switch to decentralized fair sequencing',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the sequencer refuses to include user transactions and they have to submit them on L1',
+          },
+          {
+            category: 'Funds can be lost if',
+            text: 'the sequencer exploits their centralized position and frontruns user transactions',
+          },
+        ],
+        references: [
+          {
+            text: 'Validators - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#validators',
+          },
+          {
+            text: 'If the sequencer is malicious - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#if-the-sequencer-is-malicious',
+          },
+        ],
+      },
+      forceTransactions: {
+        name: 'Users can force submit any transaction',
+        shortName: 'Any',
+        description:
+          'Because the state of Arbitrum is based on transactions submitted to the Inbox smart contract and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
+        risks: [],
+        references: [
+          {
+            text: 'Submitting Transactions - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/rollup_basics#submitting-transactions',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular Exit',
+          description:
+            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Arbitrum is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
+          risks: [],
+          references: [
+            {
+              text: 'Rules for Confirming or Rejecting Rollup Blocks - Arbitrum documentation',
+              href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
+            },
+          ],
+        },
+        {
+          name: 'Tradeable Bridge Exit',
+          description:
+            "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. This is implemented as a first party functionality inside Arbitrum's token bridge.",
+          risks: [],
+          references: [
+            {
+              text: 'Tradeable Bridge Exits - Arbitrum documentation',
+              href: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
+            },
+          ],
+        },
+      ],
+    },
+    news: [
+      {
+        date: '2021-05-12',
+        name: 'Wen Arbitrum?',
+        link: 'https://medium.com/offchainlabs/wen-arbitrum-634969c14713',
+      },
+      {
+        date: '2020-05-01',
+        name: 'Arbitrum Rollup Protocol',
+        link: 'https://developer.offchainlabs.com/docs/rollup_protocol',
+      },
+      {
+        date: '2020-10-14',
+        name: 'Arbitrum Rollup Testnet: full-featured and open to all',
+        link: 'https://medium.com/offchainlabs/arbitrum-rollup-testnet-full-featured-and-open-to-all-da3255b562ea',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'Arbitrum Virtual Machine',
     parameters: [
       {
         name: 'Primary use case',
@@ -91,23 +234,6 @@ export const arbitrum: Project = {
         name: 'Smart contracts',
         value: 'Yes',
         tooltip: 'Automatic EVM -> AVM translation happens under the hood.',
-      },
-    ],
-    news: [
-      {
-        date: '2021-05-12',
-        name: 'Wen Arbitrum?',
-        link: 'https://medium.com/offchainlabs/wen-arbitrum-634969c14713',
-      },
-      {
-        date: '2020-05-01',
-        name: 'Arbitrum Rollup Protocol',
-        link: 'https://developer.offchainlabs.com/docs/rollup_protocol',
-      },
-      {
-        date: '2020-10-14',
-        name: 'Arbitrum Rollup Testnet: full-featured and open to all',
-        link: 'https://medium.com/offchainlabs/arbitrum-rollup-testnet-full-featured-and-open-to-all-da3255b562ea',
       },
     ],
   },

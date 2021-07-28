@@ -10,6 +10,7 @@ export const loopring: Project = {
       tokens: ['DAI', 'ETH', 'LINK', 'LRC', 'MKR', 'USDC', 'USDT', 'WBTC'],
     },
   ],
+  associatedToken: 'LRC',
   details: {
     links: {
       websites: ['https://loopring.org'],
@@ -30,12 +31,9 @@ export const loopring: Project = {
         'https://loopring.substack.com/',
       ],
     },
-    technology: {
-      name: 'ZK Rollup',
-      details: 'zk-SNARK',
-    },
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK',
     purpose: 'Payments, Exchange',
-    associatedToken: 'LRC',
     parameters: [
       {
         name: 'Primary use case',

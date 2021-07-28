@@ -1,0 +1,29 @@
+.RiskSection-Group {
+  margin-top: 16px;
+}
+
+.RiskSection-Title {
+  position: relative;
+  margin: 0;
+  color: var(--negative-red);
+  padding-left: 28px;
+  font-weight: bold;
+
+  svg {
+    fill: var(--negative-red);
+    position: absolute;
+    top: 1px;
+    left: 0;
+  }
+}
+
+.RiskSection-Risks {
+  margin: 16px 0 0 0;
+}
+
+.RiskSection-Risk {
+  a {
+    color: var(--text);
+    text-decoration: underline dotted;
+  }
+}

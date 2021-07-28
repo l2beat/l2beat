@@ -45,10 +45,8 @@ export const zkswap: Project = {
         'https://zks.org/en/blog',
       ],
     },
-    technology: {
-      name: 'Validium',
-      details: 'ZKSpeed',
-    },
+    technologyName: 'Validium',
+    technologyDetails: 'ZKSpeed',
     purpose: 'Payments, Exchange',
     parameters: [
       {

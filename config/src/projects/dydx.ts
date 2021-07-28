@@ -32,10 +32,8 @@ export const dydx: Project = {
         'https://linkedin.com/company/dydx',
       ],
     },
-    technology: {
-      name: 'ZK Rollup',
-      details: "Powered by StarkWare's StarkEx",
-    },
+    technologyName: 'ZK Rollup',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'Exchange',
     parameters: [
       {

@@ -43,6 +43,7 @@ export const omgnetwork: Project = {
       ],
     },
   ],
+  associatedToken: 'OMG',
   details: {
     links: {
       websites: ['https://omg.network'],
@@ -57,12 +58,9 @@ export const omgnetwork: Project = {
         'https://linkedin.com/company/omgnetwork/',
       ],
     },
-    technology: {
-      name: 'Plasma',
-      details: 'More Viable Plasma',
-    },
+    technologyName: 'Plasma',
+    technologyDetails: 'More Viable Plasma',
     purpose: 'Payments',
-    associatedToken: 'OMG',
     parameters: [
       {
         name: 'Primary use case',
