@@ -12,7 +12,7 @@ export function OverviewLinks({ name, links, social }: Props) {
     return null
   }
   return (
-    <tr className={cx(social && 'ProjectOverview-SocialLinks')}>
+    <tr className={cx(social && 'OverviewSection-SocialLinks')}>
       <th>{name}</th>
       <td>
         {links.map((x) => (

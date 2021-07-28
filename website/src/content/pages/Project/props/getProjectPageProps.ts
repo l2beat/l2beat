@@ -25,6 +25,6 @@ export function getProjectPageProps(
     details: project.details,
     bridges: project.bridges,
     metadata: getPageMetadata(project),
-    risks: getRisks(project)
+    risks: getRisks(project),
   }
 }

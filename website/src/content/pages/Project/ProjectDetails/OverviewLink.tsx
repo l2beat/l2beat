@@ -10,7 +10,7 @@ export function OverviewLink({ href, social }: Props) {
   if (social) {
     const parsed = parseSocial(href)
     return (
-      <OutLink className="ProjectOverview-SocialLink" href={href}>
+      <OutLink className="OverviewSection-SocialLink" href={href}>
         {parsed.platform ? (
           <ProductIcon product={parsed.platform} />
         ) : (

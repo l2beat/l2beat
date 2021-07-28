@@ -53,7 +53,7 @@ export interface ProjectDetails {
 }
 
 /** List of links relevant to the project */
-interface ProjectLinks {
+export interface ProjectLinks {
   /** Links to marketing landing pages. */
   websites: string[]
   /** Links to webapps connected to the project. */
@@ -69,7 +69,7 @@ interface ProjectLinks {
 }
 
 /** A detailed overview of the technology used in the project */
-interface ProjectTechnology {
+export interface ProjectTechnology {
   category: {
     /** Name of the category the project belongs to */
     name: ProjectCategory

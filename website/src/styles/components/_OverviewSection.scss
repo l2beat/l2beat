@@ -1,4 +1,4 @@
-.ProjectOverview {
+.OverviewSection {
   margin-top: 16px;
 
   table {
@@ -36,7 +36,7 @@
   }
 }
 
-.ProjectOverview-SocialLinks {
+.OverviewSection-SocialLinks {
   td {
     display: flex;
     flex-direction: row;
@@ -46,7 +46,7 @@
   }
 }
 
-.ProjectOverview-SocialLink {
+.OverviewSection-SocialLink {
   position: relative;
   background-color: var(--background-2);
   padding: 0 4px 1px 24px;
