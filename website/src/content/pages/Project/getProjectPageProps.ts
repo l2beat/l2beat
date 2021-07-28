@@ -1,4 +1,4 @@
-import { BridgeDescription, Project, ProjectDetails } from '@l2beat/config'
+import { ProjectBridge, Project, ProjectDetails } from '@l2beat/config'
 import { L2Data } from '../../L2Data'
 import { PageMetadata } from '../../PageMetadata'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../utils'
@@ -12,7 +12,7 @@ export interface ProjectPageProps {
   apiEndpoint: string
   tokens: { symbol: string; endpoint: string }[]
   details: ProjectDetails
-  bridges: BridgeDescription[]
+  bridges: ProjectBridge[]
   metadata: PageMetadata
 }
 

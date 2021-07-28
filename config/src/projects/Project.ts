@@ -6,13 +6,13 @@ export interface Project {
   /** Symbol of the token associated with this project */
   associatedToken?: string
   /** List of the contract in which L1 funds are locked */
-  bridges: BridgeDescription[]
+  bridges: ProjectBridge[]
   /** Information displayed about the project on the frontend */
   details: ProjectDetails
 }
 
 /** A bridge is a contract that allows locking L1 funds to manipulate them on L2. */
-export interface BridgeDescription {
+export interface ProjectBridge {
   /** Address of the bridge. Use etherscan to verify its correctness. */
   address: string
   /** Block number of the deployment transaction of the bridge contract. */
@@ -23,20 +23,7 @@ export interface BridgeDescription {
 
 export interface ProjectDetails {
   /** List of links */
-  links: {
-    /** Links to marketing landing pages. */
-    websites: string[]
-    /** Links to webapps connected to the project. */
-    apps: string[]
-    /** Links to documentation pages. */
-    documentation: string[]
-    /** Links to transaction explorers. */
-    explorers: string[]
-    /** Links to source code repositories. */
-    repositories: string[]
-    /** Links to social media pages. */
-    socialMedia: string[]
-  }
+  links: ProjectLinks
   /** A short (<20 characters) description of the use case */
   purpose: string
   // TODO: Not optional
@@ -44,34 +31,7 @@ export interface ProjectDetails {
   description?: string
   // TODO: Not optional
   /** Deep dive into project technology */
-  technology?: {
-    category: {
-      /** Name of the category the project belongs to */
-      name: ProjectCategory
-      /** Additional details about the technology */
-      description?: string
-      /** List of references backing up the claim */
-      references: ProjectReference[]
-    }
-    /** What state correctness mechanism is used in the project */
-    stateCorrectness: ProjectTechnologyChoice
-    /** What is the data availability choice for the project */
-    dataAvailability: ProjectTechnologyChoice
-    /** What is the new cryptography used in the project */
-    newCryptography?: ProjectTechnologyChoice
-    /** What is solution to the mass exit problem */
-    massExit?: ProjectTechnologyChoice
-    /** What is the additional privacy offered */
-    additionalPrivacy?: ProjectTechnologyChoice
-    /** What are the smart contract capabilities */
-    smartContracts?: ProjectTechnologyChoice
-    /** What are the details about project operator(s) */
-    operator: ProjectTechnologyChoice
-    /** What are the details about force transactions (censorship resistance) */
-    forceTransactions: ProjectTechnologyChoice
-    /** A description of the available exit mechanisms */
-    exitMechanisms: ProjectExitMechanism[]
-  }
+  technology?: ProjectTechnology
   /** Links to recent developments */
   news?: News[]
 
@@ -90,6 +50,52 @@ export interface ProjectDetails {
     /** Relevant links */
     pointers?: Pointer[]
   }
+}
+
+/** List of links relevant to the project */
+interface ProjectLinks {
+  /** Links to marketing landing pages. */
+  websites: string[]
+  /** Links to webapps connected to the project. */
+  apps: string[]
+  /** Links to documentation pages. */
+  documentation: string[]
+  /** Links to transaction explorers. */
+  explorers: string[]
+  /** Links to source code repositories. */
+  repositories: string[]
+  /** Links to social media pages. */
+  socialMedia: string[]
+}
+
+/** A detailed overview of the technology used in the project */
+interface ProjectTechnology {
+  category: {
+    /** Name of the category the project belongs to */
+    name: ProjectCategory
+    /** Additional details about the technology */
+    description?: string
+    /** List of references backing up the claim */
+    references: ProjectReference[]
+  }
+  /** What state correctness mechanism is used in the project */
+  stateCorrectness: ProjectTechnologyChoice
+  /** What is the data availability choice for the project */
+  dataAvailability: ProjectTechnologyChoice
+  /** What is the new cryptography used in the project */
+  newCryptography?: ProjectTechnologyChoice
+  /** What is solution to the mass exit problem */
+  massExit?: ProjectTechnologyChoice
+  /** What is the additional privacy offered */
+  additionalPrivacy?: ProjectTechnologyChoice
+  /** What are the smart contract capabilities */
+  smartContracts?: ProjectTechnologyChoice
+  /** What are the details about project operator(s) */
+  operator: ProjectTechnologyChoice
+  /** What are the details about force transactions (censorship resistance) */
+  forceTransactions: ProjectTechnologyChoice
+  /** A description of the available exit mechanisms */
+  exitMechanisms: ProjectExitMechanism[]
 }
 
 export type ProjectCategory =

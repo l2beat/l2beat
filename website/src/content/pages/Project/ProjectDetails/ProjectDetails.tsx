@@ -1,4 +1,4 @@
-import { BridgeDescription, ProjectDetails } from '@l2beat/config'
+import { ProjectBridge, ProjectDetails } from '@l2beat/config'
 import { formatDate } from '../../../../scripts/chart/ui/dates'
 import { OutLink } from '../../../common'
 
@@ -9,7 +9,7 @@ import { ProjectOverview } from './ProjectOverview'
 
 interface Props {
   details: ProjectDetails
-  bridges: BridgeDescription[]
+  bridges: ProjectBridge[]
 }
 
 export function ProjectDetails({ details, bridges }: Props) {
