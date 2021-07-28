@@ -1,6 +1,6 @@
 import { ProjectBridge, ProjectDetails } from '@l2beat/config'
 import { config } from '../../../config'
-import { TechnologyProps } from '../props'
+import { NewsItem, TechnologyProps } from '../props'
 import { RiskProps } from '../props/getRiskProps'
 import { BridgesSection } from './BridgesSection'
 import { NewsSection } from './NewsSection'
@@ -16,35 +16,38 @@ interface Props {
   risks?: RiskProps
   technology?: TechnologyProps
   bridges: ProjectBridge[]
+  news?: NewsItem[]
 }
 
-export function ProjectDetails({ details, risks, technology, bridges }: Props) {
+export function ProjectDetails(props: Props) {
   return (
     <main className="ProjectDetails">
       <div className="ProjectDetails-LeftColumn">
-        <OverviewSection links={details.links} />
-        {risks && config.__DEV__showNewDetails && <RiskSection {...risks} />}
-        {technology && config.__DEV__showNewDetails ? (
+        <OverviewSection links={props.details.links} />
+        {props.risks && config.__DEV__showNewDetails && (
+          <RiskSection {...props.risks} />
+        )}
+        {props.technology && config.__DEV__showNewDetails ? (
           <>
             <TechnologySection
               title="Technology"
-              items={technology.technologies}
+              items={props.technology.technologies}
             />
             <TechnologySection
               title="Withdrawals"
-              items={technology.withdrawals}
+              items={props.technology.withdrawals}
             />
-            <ReferencesSection items={technology.references} />
+            <ReferencesSection items={props.technology.references} />
           </>
         ) : (
-          <ParametersSection details={details} />
+          <ParametersSection details={props.details} />
         )}
       </div>
 
       <div className="ProjectDetails-RightColumn">
-        {details.notes && <NotesSection notes={details.notes} />}
-        <BridgesSection bridges={bridges} />
-        {details.news && <NewsSection news={details.news} />}
+        {props.details.notes && <NotesSection notes={props.details.notes} />}
+        <BridgesSection bridges={props.bridges} />
+        {props.news && <NewsSection news={props.news} />}
       </div>
     </main>
   )

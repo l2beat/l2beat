@@ -13,6 +13,7 @@ export function ProjectPage(props: ProjectPageProps) {
         bridges={props.bridges}
         technology={props.technology}
         risks={props.risks}
+        news={props.news}
       />
       <Footer />
     </Page>

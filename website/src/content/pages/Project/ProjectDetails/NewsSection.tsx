@@ -1,21 +1,25 @@
-import { News } from '@l2beat/config'
-import { formatDate } from '../../../../scripts/chart/ui/dates'
 import { OutLink } from '../../../common'
+import { LinkIcon } from '../../../common/icons'
+import { NewsItem } from '../props'
 import { Section } from './Section'
 
 interface Props {
-  news: News[]
+  news: NewsItem[]
 }
 
 export function NewsSection({ news }: Props) {
   return (
     <Section title="News">
-      <ul className="ProjectDetails-Links">
+      <ul className="NewsSection">
         {news.map((news, i) => (
           <li key={i}>
-            {/* TODO: date formatting should be done already */}
-            {formatDate(news.date)} &ndash;{' '}
-            <OutLink href={news.link}>{news.name}</OutLink>
+            <OutLink className="NewsSection-News" href={news.href}>
+              <div className="NewsSection-Source">
+                <span>{news.date}</span> &middot; <span>{news.domain}</span>
+              </div>
+              <div className="NewsSection-Title">{news.title}</div>
+              <LinkIcon className="NewsSection-Icon" />
+            </OutLink>
           </li>
         ))}
       </ul>
