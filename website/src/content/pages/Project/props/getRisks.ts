@@ -58,11 +58,19 @@ export function getRisks(project: Project): RisksProps | undefined {
       const start = nextStart
       const items = risks
         .filter((x) => x.category === name)
-        .map((x) => ({ text: x.text, referencedId: x.referencedId }))
+        .map((x) => ({
+          text: normalizeText(x.text),
+          referencedId: x.referencedId,
+        }))
       nextStart += items.length
       return { start, name, items }
     })
     .filter((x) => x.items.length > 0)
 
   return { riskGroups }
+}
+
+function normalizeText(text: string) {
+  const capitalized = text[0].toUpperCase() + text.slice(1)
+  return capitalized.endsWith('.') ? capitalized.slice(0, -1) : capitalized
 }
