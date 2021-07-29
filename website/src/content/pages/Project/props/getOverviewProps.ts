@@ -5,6 +5,7 @@ export interface OverviewProps {
   links: ProjectLinks
   issueLink: string
   editLink: string
+  warning?: string
 }
 
 export function getOverviewProps(project: Project) {
@@ -12,5 +13,6 @@ export function getOverviewProps(project: Project) {
     links: project.details.links,
     issueLink: getIssueLink(`Problem: ${project.name} - Project overview`),
     editLink: getEditLink(project),
+    warning: project.details.warning,
   }
 }
