@@ -22,6 +22,8 @@ export interface ProjectBridge {
 }
 
 export interface ProjectDetails {
+  /** A warning displayed at the top of the project page */
+  warning?: string
   /** List of links */
   links: ProjectLinks
   /** A short (<20 characters) description of the use case */

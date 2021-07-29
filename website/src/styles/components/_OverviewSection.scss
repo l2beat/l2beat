@@ -1,7 +1,6 @@
 .OverviewSection {
-  margin-top: 16px;
-
   table {
+    margin-top: 16px;
     border-collapse: collapse;
     text-align: left;
     width: 100%;
@@ -33,6 +32,22 @@
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+.OverviewSection-Warning {
+  position: relative;
+  margin-top: 16px;
+  border-radius: 6px;
+  padding: 8px 8px 8px 36px;
+  background-color: var(--background-yellow);
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
+
+  svg {
+    position: absolute;
+    fill: var(--neutral-yellow);
+    top: 9px;
+    left: 8px;
   }
 }
 

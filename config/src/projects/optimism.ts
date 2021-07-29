@@ -33,6 +33,8 @@ export const optimism: Project = {
     },
   ],
   details: {
+    warning:
+      'Currently only whitelisted contracts can be deployed on Optimism.',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],

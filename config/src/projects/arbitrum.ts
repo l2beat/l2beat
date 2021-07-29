@@ -11,6 +11,7 @@ export const arbitrum: Project = {
     },
   ],
   details: {
+    warning: 'Arbitrum is currently only open to whitelisted developers.',
     links: {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
       apps: [],
