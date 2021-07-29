@@ -4,6 +4,7 @@ import {
   ProjectReference,
   ProjectTechnologyChoice,
 } from '@l2beat/config'
+import { getEditLink, getIssueLink } from './links'
 
 export interface TechnologyProps {
   technologies: TechnologyChoice[]
@@ -14,6 +15,8 @@ export interface TechnologyProps {
 export interface TechnologyChoice {
   id: string
   name: string
+  editLink: string
+  issueLink: string
   description: string
   referenceIds: number[]
   risks: TechnologyRisk[]
@@ -58,9 +61,14 @@ export function getTechnologyProps(
         referenceIds: (risk.references ?? []).map(addReference),
         text: `${risk.category} ${risk.text}`,
       }))
+
+      const issueTitle = `Problem: ${project.name} - ${item.name}`
+
       into.push({
         id,
         name: item.name,
+        editLink: getEditLink(project),
+        issueLink: getIssueLink(issueTitle),
         description: item.description,
         referenceIds: item.references.map(addReference),
         risks,
