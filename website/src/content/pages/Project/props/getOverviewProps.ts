@@ -13,6 +13,6 @@ export function getOverviewProps(project: Project) {
     links: project.details.links,
     issueLink: getIssueLink(`Problem: ${project.name} - Project overview`),
     editLink: getEditLink(project),
-    warning: project.details.warning
+    warning: project.details.warning,
   }
 }
