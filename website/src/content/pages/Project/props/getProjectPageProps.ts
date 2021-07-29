@@ -4,6 +4,7 @@ import { PageMetadata } from '../../../PageMetadata'
 import { ChartProps, getChartProps } from './getChartProps'
 import { getHeaderProps, HeaderProps } from './getHeaderProps'
 import { getNewsProps, NewsItem } from './getNewsProps'
+import { getOverviewProps, OverviewProps } from './getOverviewProps'
 import { getPageMetadata } from './getPageMetadata'
 import { getRiskProps, RiskProps } from './getRiskProps'
 import { getTechnologyProps, TechnologyProps } from './getTechnologyProps'
@@ -17,6 +18,7 @@ export interface ProjectPageProps {
   risks?: RiskProps
   technology?: TechnologyProps
   news?: NewsItem[]
+  overview: OverviewProps
 }
 
 export function getProjectPageProps(
@@ -32,5 +34,6 @@ export function getProjectPageProps(
     risks: getRiskProps(project),
     technology: getTechnologyProps(project),
     news: getNewsProps(project),
+    overview: getOverviewProps(project),
   }
 }

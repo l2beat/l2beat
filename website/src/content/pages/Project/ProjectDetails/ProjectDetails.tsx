@@ -1,6 +1,7 @@
 import { ProjectBridge, ProjectDetails } from '@l2beat/config'
 import { config } from '../../../config'
 import { NewsItem, TechnologyProps } from '../props'
+import { OverviewProps } from '../props/getOverviewProps'
 import { RiskProps } from '../props/getRiskProps'
 import { BridgesSection } from './BridgesSection'
 import { NewsSection } from './NewsSection'
@@ -17,13 +18,14 @@ interface Props {
   technology?: TechnologyProps
   bridges: ProjectBridge[]
   news?: NewsItem[]
+  overview: OverviewProps
 }
 
 export function ProjectDetails(props: Props) {
   return (
     <main className="ProjectDetails">
       <div className="ProjectDetails-LeftColumn">
-        <OverviewSection links={props.details.links} />
+        <OverviewSection {...props.overview} />
         {props.risks && config.__DEV__showNewDetails && (
           <RiskSection {...props.risks} />
         )}
