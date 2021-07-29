@@ -1,14 +1,10 @@
-import { ProjectLinks } from '@l2beat/config'
+import { OverviewProps } from '../props/getOverviewProps'
 import { OverviewLinks } from './OverviewLinks'
 import { Section } from './Section'
 
-interface Props {
-  links: ProjectLinks
-}
-
-export function OverviewSection({ links }: Props) {
+export function OverviewSection({ links, editLink, issueLink }: OverviewProps) {
   return (
-    <Section title="Project overview">
+    <Section title="Project overview" editLink={editLink} issueLink={issueLink}>
       <div className="OverviewSection">
         <table>
           <tbody>

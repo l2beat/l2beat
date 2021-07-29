@@ -1,0 +1,11 @@
+.EditLinks {
+  display: flex;
+  font-weight: normal;
+}
+
+.EditLinks-Link {
+  position: relative;
+  margin-left: 4px;
+  font-size: var(--font-xs);
+  line-height: 1.15;
+}

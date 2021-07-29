@@ -1,5 +1,6 @@
 import { ShieldBadIcon } from '../../../common/icons'
 import { TechnologyChoice } from '../props'
+import { EditLinks } from './EditLinks'
 import { References } from './References'
 import { Section } from './Section'
 
@@ -15,6 +16,7 @@ export function TechnologySection({ title, items }: Props) {
         <div className="TechnologySection-Item" key={i}>
           <h3 id={item.id} className="TechnologySection-Title">
             {item.name}
+            <EditLinks editLink={item.editLink} issueLink={item.issueLink} />
           </h3>
           <p>
             {item.description}

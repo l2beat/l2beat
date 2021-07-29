@@ -5,6 +5,9 @@
 .TechnologySection-Title {
   font-size: var(--font-l);
   margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .TechnologySection-Item p {
