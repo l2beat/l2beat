@@ -34,6 +34,9 @@ export interface ProjectDetails {
   // TODO: Not optional
   /** Deep dive into project technology */
   technology?: ProjectTechnology
+  // TODO: Not optional
+  /** List of smart contracts used in the project */
+  contracts?: ProjectContract[]
   /** Links to recent developments */
   news?: News[]
 
@@ -136,6 +139,26 @@ export type ProjectRiskCategory =
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
   | 'Users can be censored if'
+
+export interface ProjectContract {
+  /** Address of the contract */
+  address: string
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
+  /** True if there is an upgrade mechanism or the contract can be replaced */
+  upgradable: boolean
+  /** Delay of the upgrade */
+  upgradeDelay?: string
+  /** Owner of the contract */
+  owner?: {
+    /** Address of the owner */
+    address: string
+    /** Type of the owner */
+    type: 'eoa' | 'multisig' | 'governance' | 'other'
+  }
+}
 
 export interface ProjectParameter {
   /** Parameter name, e.g. Permissionless */
