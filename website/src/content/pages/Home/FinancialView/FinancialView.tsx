@@ -13,10 +13,6 @@ interface Props {
 export function FinancialView({ items }: Props) {
   const columns: Column<FinancialEntry>[] = [
     {
-      name: 'No.',
-      getValue: (_, index) => index + 1,
-    },
-    {
       name: 'Name',
       getValue: (project) => <ProjectLink project={project} />,
     },

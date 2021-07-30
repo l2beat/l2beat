@@ -1,6 +1,7 @@
 import { ProjectLink } from '../ProjectLink'
 import { RiskViewEntry } from '../props/getRiskViewEntry'
 import { Column, TableView } from '../TableView'
+import { RiskCell } from './RiskCell'
 
 interface Props {
   items: RiskViewEntry[]
@@ -9,14 +10,23 @@ interface Props {
 export function RiskView({ items }: Props) {
   const columns: Column<RiskViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (_, index) => index + 1,
-    },
-    {
       name: 'Name',
       getValue: (project) => <ProjectLink project={project} />,
     },
+    {
+      name: 'State correctness',
+      getValue: (project) => <RiskCell item={project.stateCorrectness} />,
+    },
+    {
+      name: 'Data availability',
+      getValue: (project) => <RiskCell item={project.dataAvailability} />,
+    },
+    {
+      name: 'Upgradeability',
+      getValue: (project) => <RiskCell item={project.upgradeability} />,
+    },
   ]
+
   return (
     <div className="RiskView">
       <TableView items={items} columns={columns} />

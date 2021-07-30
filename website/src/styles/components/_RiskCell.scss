@@ -1,0 +1,13 @@
+.RiskCell {
+  &.good {
+    color: var(--positive-green);
+  }
+
+  &.neutral {
+    color: var(--neutral-yellow);
+  }
+
+  &.bad {
+    color: var(--negative-red);
+  }
+}

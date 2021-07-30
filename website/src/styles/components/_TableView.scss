@@ -8,6 +8,23 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+
+  th,
+  td {
+    padding: 8px 8px 8px 0;
+
+    &:first-child {
+      width: 37px;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+
+    &.right {
+      text-align: right;
+    }
+  }
 }
 
 .TableView-Header {
@@ -29,18 +46,6 @@
       }
     }
   }
-
-  th {
-    padding: 8px 8px 8px 0;
-
-    &:last-child {
-      padding-right: 0;
-    }
-
-    &.right {
-      text-align: right;
-    }
-  }
 }
 
 .TableView-Body {
@@ -50,18 +55,6 @@
     &:hover {
       background-color: var(--background-2);
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  td {
-    padding: 8px 8px 8px 0;
-
-    &:last-child {
-      padding-right: 0;
-    }
-
-    &.right {
-      text-align: right;
     }
   }
 }
