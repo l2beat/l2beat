@@ -1,7 +1,7 @@
 import { FinanceIcon, ShieldWarnIcon } from '../../common/icons'
 import { config } from '../../config'
 import { FinancialView } from './FinancialView'
-import { FinancialEntry } from './getHomePageProps'
+import { FinancialEntry } from './props'
 
 interface Props {
   financialView: FinancialEntry[]

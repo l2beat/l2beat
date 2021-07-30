@@ -1,6 +1,6 @@
 import { PercentChange } from '../../common'
 import { WarningIcon } from '../../common/icons'
-import { FinancialEntry } from './getHomePageProps'
+import { FinancialEntry } from './props'
 
 interface Props {
   items: FinancialEntry[]
