@@ -1,0 +1,21 @@
+.ProjectLink {
+  position: relative;
+  padding-left: 30px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.ProjectLink-Icon {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: block;
+  width: 18px;
+  height: 18px;
+  font-size: 8px;
+}
