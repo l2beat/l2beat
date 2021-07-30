@@ -1,9 +1,10 @@
 import { ProjectBridge, ProjectDetails } from '@l2beat/config'
 import { config } from '../../../config'
-import { NewsItem, TechnologyProps } from '../props'
+import { ContractDescription, NewsItem, TechnologyProps } from '../props'
 import { OverviewProps } from '../props/getOverviewProps'
 import { RiskProps } from '../props/getRiskProps'
 import { BridgesSection } from './BridgesSection'
+import { ContractsSection } from './ContractsSection'
 import { NewsSection } from './NewsSection'
 import { NotesSection } from './NotesSection'
 import { OverviewSection } from './OverviewSection'
@@ -19,6 +20,7 @@ interface Props {
   bridges: ProjectBridge[]
   news?: NewsItem[]
   overview: OverviewProps
+  contracts?: ContractDescription[]
 }
 
 export function ProjectDetails(props: Props) {
@@ -43,6 +45,9 @@ export function ProjectDetails(props: Props) {
           </>
         ) : (
           <ParametersSection details={props.details} />
+        )}
+        {props.contracts && config.__DEV__showNewDetails && (
+          <ContractsSection contracts={props.contracts} />
         )}
       </div>
 

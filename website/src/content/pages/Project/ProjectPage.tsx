@@ -15,6 +15,7 @@ export function ProjectPage(props: ProjectPageProps) {
         risks={props.risks}
         news={props.news}
         overview={props.overview}
+        contracts={props.contracts}
       />
       <Footer />
     </Page>
