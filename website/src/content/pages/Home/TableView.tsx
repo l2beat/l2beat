@@ -36,7 +36,7 @@ export function TableView<T>({ className, items, columns }: Props<T>) {
         <tbody className="TableView-Body">
           {items.map((item, i) => (
             <tr key={i}>
-              <td>{i + 1}</td>
+              <td>{i + 1}.</td>
               {columns.map((column, j) => (
                 <td key={j} className={column.alignRight ? 'right' : undefined}>
                   {column.getValue(item)}
