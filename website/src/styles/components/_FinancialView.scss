@@ -1,4 +1,10 @@
 .FinancialView {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
   width: 100%;
   overflow-x: auto;
   margin-top: 16px;
@@ -140,6 +146,11 @@
 .FinancialView-Symbols {
   margin-top: 16px;
   font-size: var(--font-s);
+
+  .FinancialView:not(.active) + & {
+    display: none;
+  }
+
   p {
     margin: 0;
   }

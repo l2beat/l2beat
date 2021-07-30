@@ -9,7 +9,7 @@ interface Props {
 export function FinancialView({ items }: Props) {
   return (
     <>
-      <div className="FinancialView">
+      <div className="FinancialView active">
         <table className="FinancialView-Table">
           <thead className="FinancialView-Header">
             <tr>
