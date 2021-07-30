@@ -23,7 +23,9 @@ export function TableView<T>({ className, items, columns }: Props<T>) {
             <th>No.</th>
             {columns.map((column, i) => (
               <th key={i} className={column.alignRight ? 'right' : undefined}>
-                <span data-wide={!!column.shortName}>{column.name}</span>
+                <span data-wide={column.shortName ? true : undefined}>
+                  {column.name}
+                </span>
                 {column.shortName && (
                   <span data-narrow>{column.shortName}</span>
                 )}

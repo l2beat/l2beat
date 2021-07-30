@@ -25,6 +25,14 @@ export function RiskView({ items }: Props) {
       name: 'Upgradeability',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
+    {
+      name: 'Owner',
+      getValue: (project) => <RiskCell item={project.owner} />,
+    },
+    {
+      name: 'Escape hatch',
+      getValue: (project) => <RiskCell item={project.escapeHatch} />,
+    },
   ]
 
   return (
