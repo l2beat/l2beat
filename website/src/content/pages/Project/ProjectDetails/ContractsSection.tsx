@@ -14,7 +14,10 @@ export function ContractsSection({ contracts, risks }: Props) {
       <ul className="ContractsSection-Contracts">
         {contracts.map((contract, i) => (
           <li key={i}>
-            {contract.name} (<EtherscanLink address={contract.address} />)
+            <div>
+              <span className="ContractsSection-Name">{contract.name}</span>
+            </div>
+            (<EtherscanLink address={contract.address} />)
           </li>
         ))}
       </ul>
