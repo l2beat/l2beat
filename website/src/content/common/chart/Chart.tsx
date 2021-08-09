@@ -51,7 +51,7 @@ export function Chart({ endpoint, tokens, days = 90 }: Props) {
       </div>
       {tokens && tokens.length > 0 && (
         <div className="Chart-TokenControls">
-          <span className="Chart-TokenTitle">Filter by token:</span>
+          <span className="Chart-TokenTitle">Tokens:</span>
           {tokens.map((x) => (
             <ChartButton
               key={x.symbol}
@@ -60,6 +60,7 @@ export function Chart({ endpoint, tokens, days = 90 }: Props) {
               endpoint={x.endpoint}
             />
           ))}
+          <button className="Chart-MoreTokens">More…</button>
         </div>
       )}
     </section>
