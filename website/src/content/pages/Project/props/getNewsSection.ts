@@ -1,18 +1,13 @@
 import { Project } from '@l2beat/config'
 import { formatDate } from '../../../../scripts/chart/ui/dates'
+import { NewsSectionProps } from '../view/NewsSection'
 
-export interface NewsItem {
-  title: string
-  date: string
-  href: string
-  domain: string
-}
-
-export function getNewsProps(project: Project): NewsItem[] | undefined {
-  return project.details.news?.map((x) => ({
+export function getNewsSection(project: Project): NewsSectionProps | undefined {
+  const news = project.details.news?.map((x) => ({
     title: x.name,
     href: x.link,
     date: formatDate(x.date),
     domain: new URL(x.link).host,
   }))
+  return news && { news }
 }

@@ -23,10 +23,7 @@ export function HomePage(props: HomePageProps) {
         sevenDayChange={props.sevenDayChange}
       />
       <Chart endpoint={props.apiEndpoint} />
-      <Projects
-        financialView={props.financialView}
-        riskView={props.riskView}
-      />
+      <Projects financialView={props.financialView} riskView={props.riskView} />
       <Footer />
     </Page>
   )

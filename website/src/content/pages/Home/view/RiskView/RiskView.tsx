@@ -21,7 +21,6 @@ export interface RiskViewItem {
   sentiment?: 'good' | 'bad' | 'neutral' | 'unknown'
 }
 
-
 export function RiskView({ items }: RiskViewProps) {
   const columns: Column<RiskViewEntry>[] = [
     {

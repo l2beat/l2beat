@@ -1,13 +1,19 @@
 import { OutLink } from '../../../common'
 import { LinkIcon } from '../../../common/icons'
-import { NewsItem } from '../props'
 import { Section } from './Section'
 
-interface Props {
+export interface NewsSectionProps {
   news: NewsItem[]
 }
 
-export function NewsSection({ news }: Props) {
+export interface NewsItem {
+  title: string
+  date: string
+  href: string
+  domain: string
+}
+
+export function NewsSection({ news }: NewsSectionProps) {
   return (
     <Section title="News">
       <ul className="NewsSection">

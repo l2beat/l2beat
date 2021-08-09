@@ -1,19 +1,23 @@
-import { ProjectBridge } from '@l2beat/config'
 import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
-interface Props {
-  bridges: ProjectBridge[]
+export interface BridgesSectionProps {
+  bridges: BridgeDetails[]
 }
 
-export function BridgesSection({ bridges }: Props) {
+export interface BridgeDetails {
+  address: string
+  tokens: string[]
+}
+
+export function BridgesSection({ bridges }: BridgesSectionProps) {
   return (
     <Section title="Tracked bridges">
       <ul className="ProjectDetails-Links">
         {bridges.map((bridge, i) => (
           <li key={i}>
             <EtherscanLink address={bridge.address} /> -{' '}
-            {bridge.tokens.map((t: string) => t).join(', ')}
+            {bridge.tokens.join(', ')}
           </li>
         ))}
       </ul>
