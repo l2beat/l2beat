@@ -1,0 +1,60 @@
+.TableView {
+  width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.TableView-Table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  th,
+  td {
+    padding: 8px 8px 8px 0;
+
+    &:first-child {
+      width: 37px;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+
+    &.right {
+      text-align: right;
+    }
+  }
+}
+
+.TableView-Header {
+  tr {
+    border-bottom: 1px solid var(--background-4);
+    white-space: nowrap;
+
+    [data-narrow] {
+      display: none;
+
+      @media (max-width: 550px) {
+        display: block;
+      }
+    }
+
+    [data-wide] {
+      @media (max-width: 550px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.TableView-Body {
+  tr {
+    border-bottom: 1px solid var(--background-3);
+
+    &:hover {
+      background-color: var(--background-2);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+}

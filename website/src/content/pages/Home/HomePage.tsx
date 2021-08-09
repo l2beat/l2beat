@@ -1,5 +1,5 @@
 import { Chart, Footer, Header, Navbar, Page } from '../../common'
-import { HomePageProps } from './getHomePageProps'
+import { HomePageProps } from './props/getHomePageProps'
 import { Projects } from './Projects'
 
 export function HomePage(props: HomePageProps) {
@@ -12,7 +12,7 @@ export function HomePage(props: HomePageProps) {
         sevenDayChange={props.sevenDayChange}
       />
       <Chart endpoint={props.apiEndpoint} />
-      <Projects financialView={props.financialView} />
+      <Projects financialView={props.financialView} riskView={props.riskView} />
       <Footer />
     </Page>
   )

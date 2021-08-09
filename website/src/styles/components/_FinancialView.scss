@@ -1,99 +1,13 @@
 .FinancialView {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 16px;
-  white-space: pre;
+  display: none;
+  &.active {
+    display: block;
+  }
 
+  margin-top: 16px;
   @media (max-width: 550px) {
     margin-top: 8px;
   }
-}
-
-.FinancialView-Table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.FinancialView-Header {
-  tr {
-    border-bottom: 1px solid var(--background-4);
-    white-space: nowrap;
-
-    [data-narrow] {
-      display: none;
-
-      @media (max-width: 550px) {
-        display: block;
-      }
-    }
-
-    [data-wide] {
-      @media (max-width: 550px) {
-        display: none;
-      }
-    }
-  }
-
-  th {
-    padding: 8px 8px 8px 0;
-
-    &:last-child {
-      padding-right: 0;
-    }
-
-    &:nth-child(n + 3) {
-      text-align: right;
-    }
-  }
-}
-
-.FinancialView-Body {
-  tr {
-    border-bottom: 1px solid var(--background-3);
-
-    &:hover {
-      background-color: var(--background-2);
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  td {
-    padding: 8px 8px 8px 0;
-
-    &:last-child {
-      padding-right: 0;
-    }
-
-    &:nth-child(n + 3) {
-      text-align: right;
-    }
-
-    a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: bold;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.FinancialView-Name {
-  position: relative;
-  padding-left: 30px;
-}
-
-.FinancialView-Icon {
-  position: absolute;
-  top: 2px;
-  left: 0;
-  display: block;
-  width: 18px;
-  height: 18px;
-  font-size: 8px;
 }
 
 .FinancialView-TvlWarning {
@@ -104,7 +18,7 @@
   margin-right: -4px;
   width: 24px;
 
-  .tooltip {
+  .Tooltip {
     position: absolute;
     right: 0;
     top: -3px;
@@ -140,6 +54,11 @@
 .FinancialView-Symbols {
   margin-top: 16px;
   font-size: var(--font-s);
+
+  .FinancialView:not(.active) + & {
+    display: none;
+  }
+
   p {
     margin: 0;
   }

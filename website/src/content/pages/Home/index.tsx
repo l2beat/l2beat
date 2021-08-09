@@ -1,5 +1,5 @@
 import { HomePage } from './HomePage'
-import { getHomePageProps } from './getHomePageProps'
+import { getHomePageProps } from './props'
 import { Project } from '@l2beat/config'
 import { L2Data } from '../../L2Data'
 

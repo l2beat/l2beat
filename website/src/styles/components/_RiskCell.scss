@@ -1,0 +1,20 @@
+.RiskCell {
+  &.good {
+    color: var(--positive-green);
+    font-weight: bold;
+  }
+
+  &.neutral {
+    color: var(--neutral-yellow);
+    font-weight: bold;
+  }
+
+  &.bad {
+    color: var(--negative-red);
+    font-weight: bold;
+  }
+
+  &.unknown {
+    color: var(--text-muted);
+  }
+}
