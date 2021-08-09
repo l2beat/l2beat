@@ -40,10 +40,7 @@ export function ProjectDetails(props: Props) {
               title="Withdrawals"
               items={props.technology.withdrawals}
             />
-            <ContractsSection
-              contracts={props.technology.contracts}
-              risks={props.technology.contractRisks}
-            />
+            <ContractsSection {...props.technology.contracts} />
             <ReferencesSection items={props.technology.references} />
           </>
         ) : (

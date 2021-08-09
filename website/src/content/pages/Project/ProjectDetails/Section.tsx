@@ -5,7 +5,7 @@ import { EditLinks } from './EditLinks'
 interface Props {
   title: string
   id?: string
-  className: string
+  className?: string
   editLink?: string
   issueLink?: string
   children: ReactNode

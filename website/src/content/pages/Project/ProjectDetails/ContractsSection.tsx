@@ -5,18 +5,27 @@ import { RiskList } from './RiskList'
 import { Section } from './Section'
 
 interface Props {
+  editLink: string
+  issueLink: string
   contracts: TechnologyContract[]
   risks: TechnologyRisk[]
 }
 
-export function ContractsSection({ contracts, risks }: Props) {
+export function ContractsSection({
+  contracts,
+  risks,
+  editLink,
+  issueLink,
+}: Props) {
   return (
     <Section
       title="Smart Contracts"
       id="contracts"
       className="ContractsSection"
+      editLink={editLink}
+      issueLink={issueLink}
     >
-      <p>The Arbitrum system consists of the following smart contracts:</p>
+      <p>The system consists of the following smart contracts:</p>
       <ul className="ContractsSection-Contracts">
         {contracts.map((contract, i) => (
           <li key={i}>

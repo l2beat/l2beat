@@ -11,8 +11,7 @@ export interface TechnologyProps {
   technologies: TechnologyChoice[]
   withdrawals: TechnologyChoice[]
   references: TechnologyReference[]
-  contracts: TechnologyContract[]
-  contractRisks: TechnologyRisk[]
+  contracts: TechnologyContracts
 }
 
 export interface TechnologyChoice {
@@ -34,6 +33,13 @@ export interface TechnologyReference {
   id: number
   text: string
   href: string
+}
+
+export interface TechnologyContracts {
+  editLink: string
+  issueLink: string
+  contracts: TechnologyContract[]
+  risks: TechnologyRisk[]
 }
 
 export interface TechnologyContract {
@@ -150,7 +156,11 @@ export function getTechnologyProps(
     references,
     technologies,
     withdrawals,
-    contracts,
-    contractRisks,
+    contracts: {
+      editLink: getEditLink(project),
+      issueLink: getIssueLink(`Problem: ${project.name} - Contracts`),
+      contracts,
+      risks: contractRisks,
+    },
   }
 }
