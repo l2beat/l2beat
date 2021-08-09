@@ -1,4 +1,4 @@
-import { WarningIcon } from '../../../common/icons'
+import { WarningIcon } from '../../../../common/icons'
 import { FinancialViewEntry } from './FinancialView'
 
 interface Props {

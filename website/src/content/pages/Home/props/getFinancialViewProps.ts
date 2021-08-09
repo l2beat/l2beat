@@ -9,7 +9,7 @@ import {
 import {
   FinancialViewEntry,
   FinancialViewProps,
-} from '../FinancialView/FinancialView'
+} from '../view/FinancialView/FinancialView'
 import { getTechnology } from './getTechnology'
 
 export function getFinancialViewProps(

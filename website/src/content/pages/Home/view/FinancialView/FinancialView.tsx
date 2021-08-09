@@ -1,5 +1,5 @@
-import { PercentChange } from '../../../common'
-import { WarningIcon } from '../../../common/icons'
+import { PercentChange } from '../../../../common'
+import { WarningIcon } from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { TechnologyCell } from './TechnologyCell'

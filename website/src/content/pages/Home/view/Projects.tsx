@@ -1,5 +1,5 @@
-import { FinanceIcon, ShieldWarnIcon } from '../../common/icons'
-import { config } from '../../config'
+import { FinanceIcon, ShieldWarnIcon } from '../../../common/icons'
+import { config } from '../../../config'
 import {
   FinancialView,
   FinancialViewProps,

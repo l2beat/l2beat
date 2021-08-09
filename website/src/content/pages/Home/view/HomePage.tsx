@@ -1,5 +1,5 @@
-import { Chart, Footer, Header, Navbar, Page } from '../../common'
-import { PageMetadata } from '../../PageMetadata'
+import { Chart, Footer, Header, Navbar, Page } from '../../../common'
+import { PageMetadata } from '../../../PageMetadata'
 import { FinancialViewProps } from './FinancialView/FinancialView'
 import { Projects } from './Projects'
 import { RiskViewProps } from './RiskView/RiskView'
