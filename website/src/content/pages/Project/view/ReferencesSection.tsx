@@ -13,7 +13,7 @@ export interface TechnologyReference {
 
 export function ReferencesSection({ items }: ReferencesSectionProps) {
   return (
-    <Section title="References">
+    <Section title="References" id="references">
       <ol className="ReferencesSection">
         {items.map((item) => (
           <li id={`reference-${item.id}`}>

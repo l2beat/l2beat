@@ -1,0 +1,34 @@
+.Heading {
+  position: relative;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.15;
+
+  &.level-1 {
+    font-size: var(--font-xxl);
+  }
+
+  &.level-2 {
+    font-size: var(--font-xl);
+  }
+
+  &.level-3 {
+    font-size: var(--font-l);
+  }
+}
+
+.Heading-Title {
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.Heading-Link {
+  position: relative;
+  margin-left: 4px;
+  font-size: var(--font-xs);
+  line-height: 1.15;
+  font-weight: normal;
+}

@@ -1,10 +1,10 @@
 import cx from 'classnames'
 import { ReactNode } from 'react'
-import { EditLinks } from './EditLinks'
+import { Heading } from '../../../common'
 
 interface Props {
   title: string
-  id?: string
+  id: string
   className?: string
   editLink?: string
   issueLink?: string
@@ -12,14 +12,22 @@ interface Props {
 }
 
 export function Section(props: Props) {
+  const links = []
+  if (props.editLink) {
+    links.push({ name: 'Edit', href: props.editLink })
+  }
+  if (props.issueLink) {
+    links.push({ name: 'Issue', href: props.issueLink })
+  }
   return (
     <section className={cx('ProjectDetails-Section', props.className)}>
-      <h2 className="ProjectDetails-Title" id={props.id}>
-        {props.title}
-        {props.editLink && (
-          <EditLinks editLink={props.editLink} issueLink={props.issueLink} />
-        )}
-      </h2>
+      <Heading
+        id={props.id}
+        level={2}
+        title={props.title}
+        links={links}
+        className="ProjectDetails-Title"
+      />
       {props.children}
     </section>
   )
