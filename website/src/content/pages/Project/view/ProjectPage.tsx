@@ -1,6 +1,6 @@
-import { Chart, Footer, Header, Navbar, Page } from '../../common'
-import { ProjectDetails } from './ProjectDetails/ProjectDetails'
-import { ProjectPageProps } from './props/getProjectPageProps'
+import { Chart, Footer, Header, Navbar, Page } from '../../../common'
+import { ProjectDetails } from './ProjectDetails'
+import { ProjectPageProps } from '../props/getProjectPageProps'
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
