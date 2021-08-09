@@ -154,7 +154,8 @@ export const arbitrum: Project = {
           {
             address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
             name: 'ProxyAdmin',
-            description: 'Through this contract all other contracts can change their code.',
+            description:
+              'Through this contract all other contracts can change their code.',
             upgradable: false,
             owner: {
               address: '0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E',
