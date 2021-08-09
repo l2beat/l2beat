@@ -1,18 +1,15 @@
+import { makeQuery } from './query'
+
 export function configureTooltips() {
-  const elements = Array.from(
-    document.querySelectorAll<HTMLElement>('.Tooltip[title]')
-  )
+  const { $, $$ } = makeQuery(document.body)
 
-  const tooltip = document.createElement('div')
-  tooltip.className = 'Tooltip-Popup'
-  const tooltipText = document.createElement('span')
-  tooltip.appendChild(tooltipText)
-  const tooltipTriangle = document.createElement('div')
-  tooltipTriangle.className = 'Tooltip-Triangle'
-  tooltip.appendChild(tooltipTriangle)
+  const elements = $$('.Tooltip[title]')
+
+  const tooltip = $('.Tooltip-Popup')
+  const tooltipText = $('.Tooltip-Popup span')
+  const tooltipTriangle = $('.Tooltip-Triangle')
+
   let activeElement: HTMLElement | undefined
-  document.body.appendChild(tooltip)
-
   let visible = false
 
   function show(element: HTMLElement, title: string) {
@@ -24,11 +21,11 @@ export function configureTooltips() {
     const tooltipWidth = tooltip.getBoundingClientRect().width
     const left = Math.max(rect.left + rect.width / 2 - tooltipWidth / 2, 10)
     tooltip.style.left = left + 'px'
-    tooltip.style.top = rect.bottom + 12 + 'px'
+    tooltip.style.top = rect.bottom + 7 + 'px'
     tooltip.style.right = 'unset'
 
     tooltipTriangle.style.left = rect.left + rect.width / 2 - 8 + 'px'
-    tooltipTriangle.style.top = rect.bottom + 4 + 'px'
+    tooltipTriangle.style.top = rect.bottom + 'px'
 
     if (left + tooltipWidth >= window.innerWidth - 10) {
       tooltip.style.left = 'unset'

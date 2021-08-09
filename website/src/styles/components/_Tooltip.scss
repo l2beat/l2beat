@@ -8,14 +8,14 @@
   top: 0;
   left: 0;
   max-width: 300px;
-  padding: 8px;
+  padding: 8px 10px;
+  font-size: var(--font-s);
   z-index: 1000;
-  color: var(--background);
-  background-color: var(--text);
-  font-weight: bold;
+  background-color: var(--tooltip-background);
   white-space: initial;
   text-align: left;
-  border-radius: 6px;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--tooltip-border);
 }
 
 .Tooltip-Triangle {
@@ -24,7 +24,8 @@
   top: 0;
   left: 0;
   width: 16px;
-  height: 16px;
-  transform: rotate(45deg);
-  background-color: var(--text);
+  height: 8px;
+  stroke: var(--tooltip-border);
+  stroke-width: 1.1px;
+  fill: var(--tooltip-background);
 }

@@ -20,8 +20,8 @@
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  border: 2px solid var(--text);
-  background-color: var(--background);
+  border: 2px solid var(--tooltip-border);
+  background-color: var(--tooltip-background);
   z-index: 4;
 }
 
@@ -29,9 +29,9 @@
   position: absolute;
   z-index: 3;
   padding: 8px;
-  border-radius: 6px;
-  border: 2px solid var(--text);
-  background-color: var(--background);
+  border: 1px solid var(--tooltip-border);
+  background-color: var(--tooltip-background);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   text-align: right;
   font-size: var(--font-s);
   height: 76px;

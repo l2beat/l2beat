@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { PageMetadata } from '../PageMetadata'
 import { Head } from './head'
+import { Tooltip } from './Tooltip'
 
 interface Props {
   children: ReactNode
@@ -19,6 +20,7 @@ export function Page(props: Props) {
       />
       <body>
         <div className="Page">{props.children}</div>
+        <Tooltip />
         <script src="/scripts/main.js" />
       </body>
     </html>

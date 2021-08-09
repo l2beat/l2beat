@@ -14,6 +14,8 @@
   --gradient-2: #d83da4;
   --gradient-3: #ee2c01;
   --link: #3000b5;
+  --tooltip-border: var(--text);
+  --tooltip-background: #ffffff;
 
   --font-xs: 14px;
   --font-s: 16px;
@@ -24,11 +26,12 @@
 }
 
 @mixin dark-mode-colors {
-  --brand-red: #bd114f;
   --background: #1b1b1b;
   --background-2: #2f2f2f;
   --background-3: #424242;
   --background-4: #565656;
+  // --tooltip-border: #000000;
+  --tooltip-background: #000000;
   --text: #fafafa;
   --link: #7bc1ff;
 }
