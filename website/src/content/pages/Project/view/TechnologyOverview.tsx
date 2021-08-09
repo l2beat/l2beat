@@ -20,8 +20,16 @@ export interface WithdrawalSectionProps {
 export function TechnologyOverview(props: TechnologyOverviewProps) {
   return (
     <>
-      <TechnologySection title="Technology" {...props.technologySection} />
-      <TechnologySection title="Withdrawals" {...props.withdrawalsSection} />
+      <TechnologySection
+        title="Technology"
+        id="technology"
+        {...props.technologySection}
+      />
+      <TechnologySection
+        title="Withdrawals"
+        id="withdrawals"
+        {...props.withdrawalsSection}
+      />
       <ContractsSection {...props.contractsSection} />
       <ReferencesSection {...props.referencesSection} />
     </>

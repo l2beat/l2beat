@@ -1,9 +1,10 @@
-import { EditLinks } from './EditLinks'
+import { Heading } from '../../../common'
 import { References } from './References'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
 export interface TechnologySectionProps {
+  id: string
   title: string
   items: TechnologyChoice[]
 }
@@ -18,15 +19,24 @@ export interface TechnologyChoice {
   risks: TechnologyRisk[]
 }
 
-export function TechnologySection({ title, items }: TechnologySectionProps) {
+export function TechnologySection({
+  id,
+  title,
+  items,
+}: TechnologySectionProps) {
   return (
-    <Section title={title}>
+    <Section title={title} id={id}>
       {items.map((item, i) => (
         <div className="TechnologySection-Item" key={i}>
-          <h3 id={item.id} className="TechnologySection-Title">
-            {item.name}
-            <EditLinks editLink={item.editLink} issueLink={item.issueLink} />
-          </h3>
+          <Heading
+            level={3}
+            id={item.id}
+            title={item.name}
+            links={[
+              { name: 'Edit', href: item.editLink },
+              { name: 'Issue', href: item.issueLink },
+            ]}
+          />
           <p>
             {item.description}
             <References ids={item.referenceIds} />

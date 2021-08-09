@@ -15,7 +15,7 @@ export interface NewsItem {
 
 export function NewsSection({ news }: NewsSectionProps) {
   return (
-    <Section title="News">
+    <Section title="News" id="news">
       <ul className="NewsSection">
         {news.map((news, i) => (
           <li key={i}>

@@ -12,7 +12,7 @@ export interface BridgeDetails {
 
 export function BridgesSection({ bridges }: BridgesSectionProps) {
   return (
-    <Section title="Tracked bridges">
+    <Section title="Tracked bridges" id="bridges">
       <ul className="ProjectDetails-Links">
         {bridges.map((bridge, i) => (
           <li key={i}>

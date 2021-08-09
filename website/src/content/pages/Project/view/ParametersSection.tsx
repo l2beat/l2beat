@@ -8,7 +8,7 @@ interface Props {
 
 export function ParametersSection({ details }: Props) {
   return (
-    <Section title="Technology">
+    <Section title="Technology" id="parameters">
       <ul className="ProjectDetails-Parameters">
         <ProjectParameter
           name="Technology:"

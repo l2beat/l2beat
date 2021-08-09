@@ -19,7 +19,7 @@ export interface RiskItem {
 
 export function RiskSection({ riskGroups }: RiskSectionProps) {
   return (
-    <Section title="Risks">
+    <Section title="Risks" id="risks">
       {riskGroups.map((group, i) => (
         <div className="RiskSection-Group" key={i}>
           <p className="RiskSection-Title">

@@ -14,6 +14,7 @@ export function OverviewSection(props: OverviewSectionProps) {
   return (
     <Section
       title="Project overview"
+      id="overview"
       editLink={props.editLink}
       issueLink={props.issueLink}
     >
