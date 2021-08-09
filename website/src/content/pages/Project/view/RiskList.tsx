@@ -1,12 +1,16 @@
 import { ShieldBadIcon } from '../../../common/icons'
-import { TechnologyRisk } from '../props'
 import { References } from './References'
 
-interface Props {
+export interface RiskList {
   risks: TechnologyRisk[]
 }
 
-export function RiskList({ risks }: Props) {
+export interface TechnologyRisk {
+  text: string
+  referenceIds: number[]
+}
+
+export function RiskList({ risks }: RiskList) {
   return (
     <ul className="RiskList">
       {risks.map((risk, i) => (

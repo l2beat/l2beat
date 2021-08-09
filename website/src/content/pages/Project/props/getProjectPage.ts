@@ -6,7 +6,7 @@ import { getHeader } from './getHeader'
 import { getPageMetadata } from './getPageMetadata'
 import { getProjectDetails } from './getProjectDetails'
 
-export function getProjectPageProps(
+export function getProjectPage(
   project: Project,
   l2Data: L2Data
 ): ProjectPageProps {

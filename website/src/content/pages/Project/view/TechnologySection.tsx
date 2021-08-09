@@ -1,15 +1,24 @@
-import { TechnologyChoice } from '../props'
 import { EditLinks } from './EditLinks'
 import { References } from './References'
-import { RiskList } from './RiskList'
+import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
-interface Props {
+export interface TechnologySectionProps {
   title: string
   items: TechnologyChoice[]
 }
 
-export function TechnologySection({ title, items }: Props) {
+export interface TechnologyChoice {
+  id: string
+  name: string
+  editLink: string
+  issueLink: string
+  description: string
+  referenceIds: number[]
+  risks: TechnologyRisk[]
+}
+
+export function TechnologySection({ title, items }: TechnologySectionProps) {
   return (
     <Section title={title}>
       {items.map((item, i) => (

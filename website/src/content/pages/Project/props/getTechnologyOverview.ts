@@ -5,56 +5,15 @@ import {
   ProjectReference,
   ProjectTechnologyChoice,
 } from '@l2beat/config'
+import { TechnologyContract } from '../view/ContractsSection'
+import { TechnologyReference } from '../view/ReferencesSection'
+import { TechnologyOverviewProps } from '../view/TechnologyOverview'
+import { TechnologyChoice } from '../view/TechnologySection'
 import { getEditLink, getIssueLink } from './links'
 
-export interface TechnologyProps {
-  technologies: TechnologyChoice[]
-  withdrawals: TechnologyChoice[]
-  references: TechnologyReference[]
-  contracts: TechnologyContracts
-}
-
-export interface TechnologyChoice {
-  id: string
-  name: string
-  editLink: string
-  issueLink: string
-  description: string
-  referenceIds: number[]
-  risks: TechnologyRisk[]
-}
-
-export interface TechnologyRisk {
-  text: string
-  referenceIds: number[]
-}
-
-export interface TechnologyReference {
-  id: number
-  text: string
-  href: string
-}
-
-export interface TechnologyContracts {
-  editLink: string
-  issueLink: string
-  contracts: TechnologyContract[]
-  risks: TechnologyRisk[]
-}
-
-export interface TechnologyContract {
-  name: string
-  address: string
-  description?: string
-  links: {
-    name: string
-    href: string
-  }[]
-}
-
-export function getTechnologyProps(
+export function getTechnologyOverview(
   project: Project
-): TechnologyProps | undefined {
+): TechnologyOverviewProps | undefined {
   const tech = project.details.technology
   if (!tech) {
     return undefined
@@ -153,10 +112,10 @@ export function getTechnologyProps(
   }))
 
   return {
-    references,
-    technologies,
-    withdrawals,
-    contracts: {
+    technologySection: { items: technologies },
+    referencesSection: { items: references },
+    withdrawalsSection: { items: withdrawals },
+    contractsSection: {
       editLink: getEditLink(project),
       issueLink: getIssueLink(`Problem: ${project.name} - Contracts`),
       contracts,

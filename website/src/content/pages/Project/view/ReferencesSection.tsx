@@ -1,12 +1,17 @@
 import { OutLink } from '../../../common'
-import { TechnologyReference } from '../props'
 import { Section } from './Section'
 
-interface Props {
+export interface ReferencesSectionProps {
   items: TechnologyReference[]
 }
 
-export function ReferencesSection({ items }: Props) {
+export interface TechnologyReference {
+  id: number
+  text: string
+  href: string
+}
+
+export function ReferencesSection({ items }: ReferencesSectionProps) {
   return (
     <Section title="References">
       <ol className="ReferencesSection">
