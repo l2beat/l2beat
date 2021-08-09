@@ -98,6 +98,8 @@ export interface ProjectTechnology {
   forceTransactions: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
   exitMechanisms: ProjectExitMechanism[]
+  /** List of smart contracts used in the project */
+  contracts: ProjectContracts
 }
 
 export type ProjectCategory =
@@ -136,6 +138,33 @@ export type ProjectRiskCategory =
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
   | 'Users can be censored if'
+
+export interface ProjectContracts {
+  /** List of the contracts */
+  addresses: ProjectContract[]
+  /** List of risks associated with the contracts */
+  risks: ProjectRisk[]
+}
+
+export interface ProjectContract {
+  /** Address of the contract */
+  address: string
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
+  /** True if there is an upgrade mechanism or the contract can be replaced */
+  upgradable: boolean
+  /** Delay of the upgrade */
+  upgradeDelay?: string
+  /** Owner of the contract */
+  owner?: {
+    /** Address of the owner */
+    address: string
+    /** Type of the owner */
+    type: 'eoa' | 'multisig' | 'governance' | 'other'
+  }
+}
 
 export interface ProjectParameter {
   /** Parameter name, e.g. Permissionless */

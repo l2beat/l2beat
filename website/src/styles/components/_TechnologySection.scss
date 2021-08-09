@@ -13,16 +13,3 @@
 .TechnologySection-Item p {
   margin: 16px 0 0 0;
 }
-
-.TechnologySection-Risk {
-  position: relative;
-  padding-left: 28px;
-  color: var(--negative-red);
-
-  svg {
-    position: absolute;
-    fill: var(--negative-red);
-    left: 0;
-    top: 1px;
-  }
-}

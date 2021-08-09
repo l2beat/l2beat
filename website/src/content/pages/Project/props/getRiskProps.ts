@@ -40,6 +40,9 @@ export function getRiskProps(project: Project): RiskProps | undefined {
       risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
     }
   }
+  for (const risk of technology?.contracts.risks ?? []) {
+    risks.push({ ...risk, referencedId: 'contracts' })
+  }
 
   if (risks.length === 0) {
     return undefined

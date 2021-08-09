@@ -1,0 +1,22 @@
+.RiskList {
+  margin: 16px 0 0 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+.RiskList-Item {
+  position: relative;
+  color: var(--negative-red);
+  padding-left: 32px;
+
+  & + & {
+    margin-top: 8px;
+  }
+
+  svg {
+    position: absolute;
+    fill: var(--negative-red);
+    left: 4px;
+    top: 1px;
+  }
+}

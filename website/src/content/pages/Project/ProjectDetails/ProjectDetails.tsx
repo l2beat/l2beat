@@ -4,6 +4,7 @@ import { NewsItem, TechnologyProps } from '../props'
 import { OverviewProps } from '../props/getOverviewProps'
 import { RiskProps } from '../props/getRiskProps'
 import { BridgesSection } from './BridgesSection'
+import { ContractsSection } from './ContractsSection'
 import { NewsSection } from './NewsSection'
 import { NotesSection } from './NotesSection'
 import { OverviewSection } from './OverviewSection'
@@ -39,6 +40,7 @@ export function ProjectDetails(props: Props) {
               title="Withdrawals"
               items={props.technology.withdrawals}
             />
+            <ContractsSection {...props.technology.contracts} />
             <ReferencesSection items={props.technology.references} />
           </>
         ) : (

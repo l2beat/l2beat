@@ -92,12 +92,8 @@ export const arbitrum: Project = {
         name: 'The sequencer is centralized.',
         shortName: 'Centralized',
         description:
-          'In the beginning Arbitrum is asking users to trust its centralized sequencer. Later it plans to switch to decentralized fair sequencing',
+          'In the beginning Arbitrum is asking users to trust its centralized sequencer. Later it plans to switch to decentralized fair sequencing. If the sequencer refuses to include user transactions they will have to submit them on L1 incurring additional fees.',
         risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer refuses to include user transactions and they have to submit them on L1',
-          },
           {
             category: 'Funds can be lost if',
             text: 'the sequencer exploits their centralized position and frontruns user transactions',
@@ -153,6 +149,76 @@ export const arbitrum: Project = {
           ],
         },
       ],
+      contracts: {
+        addresses: [
+          {
+            address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+            name: 'ProxyAdmin',
+            description:
+              'Through this contract all other contracts can change their code.',
+            upgradable: false,
+            owner: {
+              address: '0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E',
+              type: 'eoa',
+            },
+          },
+          {
+            address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+            name: 'Bridge',
+            upgradable: true,
+            owner: {
+              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              type: 'other',
+            },
+          },
+          {
+            address: '0xc8C3194eD3BE7B2393fEfE811a2Cc39297442c0B',
+            name: 'RollupEventBridge',
+            upgradable: true,
+            owner: {
+              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              type: 'other',
+            },
+          },
+          {
+            address: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+            name: 'Inbox',
+            upgradable: true,
+            owner: {
+              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              type: 'other',
+            },
+          },
+          {
+            address: '0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a',
+            name: 'Outbox',
+            upgradable: true,
+            owner: {
+              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              type: 'other',
+            },
+          },
+          {
+            address: '0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A',
+            name: 'Rollup',
+            upgradable: true,
+            owner: {
+              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              type: 'other',
+            },
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'the contract owner pushes a malicious code upgrade. There is no delay on code upgrades',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the single private key controlling the system is compromised',
+          },
+        ],
+      },
     },
     news: [
       {
