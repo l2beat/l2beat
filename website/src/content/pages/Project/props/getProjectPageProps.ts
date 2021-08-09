@@ -27,7 +27,7 @@ export function getProjectPageProps(
 ): ProjectPageProps {
   return {
     header: getHeaderProps(project, l2Data),
-    chart: getChartProps(project),
+    chart: getChartProps(project, l2Data),
     details: project.details,
     bridges: project.bridges,
     metadata: getPageMetadata(project),

@@ -61,6 +61,10 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     }
   })
 
+  controls.moreTokens?.addEventListener('click', () => {
+    controls.moreTokens?.parentElement?.classList.add('more')
+  })
+
   function updateInput(url: string) {
     state.endpoint = url
     state.input = undefined

@@ -253,6 +253,33 @@
 
   .Chart-Button {
     margin: 0 4px 8px 4px;
+
+    &:nth-of-type(n + 4) {
+      display: none;
+    }
+  }
+
+  &.more {
+    .Chart-Button {
+      display: block;
+    }
+  }
+}
+
+.Chart-MoreTokens {
+  display: none;
+  border: none;
+  background: none;
+  color: var(--text);
+  text-decoration: underline dotted;
+  cursor: pointer;
+
+  .Chart-Button:nth-of-type(4) ~ & {
+    display: block;
+  }
+
+  .Chart-TokenControls.more & {
+    display: none;
   }
 }
 
