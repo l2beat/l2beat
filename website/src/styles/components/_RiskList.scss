@@ -7,7 +7,7 @@
 .RiskList-Item {
   position: relative;
   color: var(--negative-red);
-  padding-left: 28px;
+  padding-left: 32px;
 
   & + & {
     margin-top: 8px;
@@ -16,7 +16,7 @@
   svg {
     position: absolute;
     fill: var(--negative-red);
-    left: 0;
+    left: 4px;
     top: 1px;
   }
 }

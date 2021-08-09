@@ -11,7 +11,12 @@ interface Props {
 
 export function ContractsSection({ contracts, risks }: Props) {
   return (
-    <Section title="Smart Contracts" id="contracts">
+    <Section
+      title="Smart Contracts"
+      id="contracts"
+      className="ContractsSection"
+    >
+      <p>The Arbitrum system consists of the following smart contracts:</p>
       <ul className="ContractsSection-Contracts">
         {contracts.map((contract, i) => (
           <li key={i}>
@@ -36,7 +41,12 @@ export function ContractsSection({ contracts, risks }: Props) {
           </li>
         ))}
       </ul>
-      <RiskList risks={risks} />
+      {risks.length > 0 && (
+        <>
+          <p>The current deployment carries some associated risks:</p>
+          <RiskList risks={risks} />
+        </>
+      )}
     </Section>
   )
 }
