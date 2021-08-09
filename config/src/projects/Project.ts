@@ -34,9 +34,6 @@ export interface ProjectDetails {
   // TODO: Not optional
   /** Deep dive into project technology */
   technology?: ProjectTechnology
-  // TODO: Not optional
-  /** List of smart contracts used in the project */
-  contracts?: ProjectContract[]
   /** Links to recent developments */
   news?: News[]
 
@@ -101,6 +98,8 @@ export interface ProjectTechnology {
   forceTransactions: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
   exitMechanisms: ProjectExitMechanism[]
+  /** List of smart contracts used in the project */
+  contracts: ProjectContracts
 }
 
 export type ProjectCategory =
@@ -139,6 +138,13 @@ export type ProjectRiskCategory =
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
   | 'Users can be censored if'
+
+export interface ProjectContracts {
+  /** List of the contracts */
+  addresses: ProjectContract[]
+  /** List of risks associated with the contracts */
+  risks: ProjectRisk[]
+}
 
 export interface ProjectContract {
   /** Address of the contract */

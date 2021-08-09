@@ -2,7 +2,6 @@ import { Project, ProjectBridge, ProjectDetails } from '@l2beat/config'
 import { L2Data } from '../../../L2Data'
 import { PageMetadata } from '../../../PageMetadata'
 import { ChartProps, getChartProps } from './getChartProps'
-import { ContractDescription, getContractProps } from './getContractProps'
 import { getHeaderProps, HeaderProps } from './getHeaderProps'
 import { getNewsProps, NewsItem } from './getNewsProps'
 import { getOverviewProps, OverviewProps } from './getOverviewProps'
@@ -20,7 +19,6 @@ export interface ProjectPageProps {
   technology?: TechnologyProps
   news?: NewsItem[]
   overview: OverviewProps
-  contracts?: ContractDescription[]
 }
 
 export function getProjectPageProps(
@@ -37,6 +35,5 @@ export function getProjectPageProps(
     technology: getTechnologyProps(project),
     news: getNewsProps(project),
     overview: getOverviewProps(project),
-    contracts: getContractProps(project),
   }
 }

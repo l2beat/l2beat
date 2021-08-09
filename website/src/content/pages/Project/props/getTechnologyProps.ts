@@ -1,5 +1,6 @@
 import {
   Project,
+  ProjectContract,
   ProjectExitMechanism,
   ProjectReference,
   ProjectTechnologyChoice,
@@ -10,6 +11,8 @@ export interface TechnologyProps {
   technologies: TechnologyChoice[]
   withdrawals: TechnologyChoice[]
   references: TechnologyReference[]
+  contracts: TechnologyContract[]
+  contractRisks: TechnologyRisk[]
 }
 
 export interface TechnologyChoice {
@@ -33,6 +36,16 @@ export interface TechnologyReference {
   href: string
 }
 
+export interface TechnologyContract {
+  name: string
+  address: string
+  description?: string
+  links: {
+    name: string
+    href: string
+  }[]
+}
+
 export function getTechnologyProps(
   project: Project
 ): TechnologyProps | undefined {
@@ -44,6 +57,7 @@ export function getTechnologyProps(
   const references: TechnologyReference[] = []
   const technologies: TechnologyChoice[] = []
   const withdrawals: TechnologyChoice[] = []
+  const contracts: TechnologyContract[] = []
 
   function addReference(reference: ProjectReference) {
     const id = references.length + 1
@@ -76,6 +90,33 @@ export function getTechnologyProps(
     }
   }
 
+  function addContract(item: ProjectContract) {
+    const links = []
+    let codeLinkName = 'Code'
+    if (item.upgradeDelay) {
+      codeLinkName = `Code (Upgradable, ${item.upgradeDelay} delay)`
+    } else if (item.upgradable) {
+      codeLinkName = 'Code (Upgradable)'
+    }
+    links.push({
+      name: codeLinkName,
+      href: `https://etherscan.io/address/${item.address}#code`,
+    })
+    if (item.owner) {
+      links.push({
+        name:
+          item.owner.type !== 'other' ? `Owner (${item.owner.type})` : 'Owner',
+        href: `https://etherscan.io/address/${item.owner.address}`,
+      })
+    }
+
+    contracts.push({
+      name: item.name,
+      address: item.address,
+      links,
+    })
+  }
+
   const addTechnology = (id: string, item?: ProjectTechnologyChoice) =>
     addTechnologyChoice(technologies, id, item)
 
@@ -95,9 +136,20 @@ export function getTechnologyProps(
     addWithdrawal(`exit-mechanisms-${i + 1}`, item)
   }
 
+  for (const item of tech.contracts.addresses) {
+    addContract(item)
+  }
+
+  const contractRisks = tech.contracts.risks.map((risk) => ({
+    referenceIds: (risk.references ?? []).map(addReference),
+    text: `${risk.category} ${risk.text}`,
+  }))
+
   return {
     references,
     technologies,
     withdrawals,
+    contracts,
+    contractRisks,
   }
 }

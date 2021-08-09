@@ -1,13 +1,14 @@
-import { ProjectBridge } from '@l2beat/config'
-import { ContractDescription } from '../props'
+import { TechnologyContract, TechnologyRisk } from '../props'
 import { EtherscanLink } from './EtherscanLink'
+import { RiskList } from './RiskList'
 import { Section } from './Section'
 
 interface Props {
-  contracts: ContractDescription[]
+  contracts: TechnologyContract[]
+  risks: TechnologyRisk[]
 }
 
-export function ContractsSection({ contracts }: Props) {
+export function ContractsSection({ contracts, risks }: Props) {
   return (
     <Section title="Smart Contracts">
       <ul className="ContractsSection-Contracts">
@@ -17,6 +18,7 @@ export function ContractsSection({ contracts }: Props) {
           </li>
         ))}
       </ul>
+      <RiskList risks={risks} />
     </Section>
   )
 }

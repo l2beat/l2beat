@@ -1,7 +1,7 @@
-import { ShieldBadIcon } from '../../../common/icons'
 import { TechnologyChoice } from '../props'
 import { EditLinks } from './EditLinks'
 import { References } from './References'
+import { RiskList } from './RiskList'
 import { Section } from './Section'
 
 interface Props {
@@ -22,13 +22,7 @@ export function TechnologySection({ title, items }: Props) {
             {item.description}
             <References ids={item.referenceIds} />
           </p>
-          {item.risks.map((risk, i) => (
-            <p className="TechnologySection-Risk" key={i}>
-              <ShieldBadIcon />
-              {risk.text}
-              <References ids={risk.referenceIds} />
-            </p>
-          ))}
+          <RiskList risks={item.risks} />
         </div>
       ))}
     </Section>
