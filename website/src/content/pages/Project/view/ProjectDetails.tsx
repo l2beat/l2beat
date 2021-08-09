@@ -1,32 +1,31 @@
 import { ProjectBridge, ProjectDetails } from '@l2beat/config'
 import { config } from '../../../config'
 import { NewsItem, TechnologyProps } from '../props'
-import { OverviewProps } from '../props/getOverviewProps'
 import { RiskProps } from '../props/getRiskProps'
 import { BridgesSection } from './BridgesSection'
 import { ContractsSection } from './ContractsSection'
 import { NewsSection } from './NewsSection'
 import { NotesSection } from './NotesSection'
-import { OverviewSection } from './OverviewSection'
+import { OverviewSection, OverviewSectionProps } from './OverviewSection'
 import { ParametersSection } from './ParametersSection'
 import { ReferencesSection } from './ReferencesSection'
 import { RiskSection } from './RiskSection'
 import { TechnologySection } from './TechnologySection'
 
-interface Props {
+export interface ProjectDetailsProps {
   details: ProjectDetails
   risks?: RiskProps
   technology?: TechnologyProps
   bridges: ProjectBridge[]
   news?: NewsItem[]
-  overview: OverviewProps
+  overviewSectionProps: OverviewSectionProps
 }
 
-export function ProjectDetails(props: Props) {
+export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <main className="ProjectDetails">
       <div className="ProjectDetails-LeftColumn">
-        <OverviewSection {...props.overview} />
+        <OverviewSection {...props.overviewSectionProps} />
         {props.risks && config.__DEV__showNewDetails && (
           <RiskSection {...props.risks} />
         )}

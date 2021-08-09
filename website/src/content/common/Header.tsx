@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { Logo } from './Logo'
 import { PercentChange } from './PercentChange'
 
-interface Props {
+export interface HeaderProps {
   title: string
   titleLength?: 'long' | 'very-long'
   icon?: string
@@ -10,7 +10,7 @@ interface Props {
   sevenDayChange?: string
 }
 
-export function Header(props: Props) {
+export function Header(props: HeaderProps) {
   return (
     <header className="Header">
       <h1 className={cx('Header-Title', props.titleLength)}>

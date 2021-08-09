@@ -1,39 +1,29 @@
-import { Project, ProjectBridge, ProjectDetails } from '@l2beat/config'
+import { Project } from '@l2beat/config'
 import { L2Data } from '../../../L2Data'
-import { PageMetadata } from '../../../PageMetadata'
-import { ChartProps, getChartProps } from './getChartProps'
-import { getHeaderProps, HeaderProps } from './getHeaderProps'
-import { getNewsProps, NewsItem } from './getNewsProps'
-import { getOverviewProps, OverviewProps } from './getOverviewProps'
+import { ProjectPageProps } from '../view/ProjectPage'
+import { getChartProps } from './getChartProps'
+import { getHeaderProps } from './getHeaderProps'
+import { getNewsProps } from './getNewsProps'
+import { getOverviewSectionPropsProps } from './getOverviewSectionProps'
 import { getPageMetadata } from './getPageMetadata'
-import { getRiskProps, RiskProps } from './getRiskProps'
-import { getTechnologyProps, TechnologyProps } from './getTechnologyProps'
-
-export interface ProjectPageProps {
-  header: HeaderProps
-  chart: ChartProps
-  details: ProjectDetails
-  bridges: ProjectBridge[]
-  metadata: PageMetadata
-  risks?: RiskProps
-  technology?: TechnologyProps
-  news?: NewsItem[]
-  overview: OverviewProps
-}
+import { getRiskProps } from './getRiskProps'
+import { getTechnologyProps } from './getTechnologyProps'
 
 export function getProjectPageProps(
   project: Project,
   l2Data: L2Data
 ): ProjectPageProps {
   return {
-    header: getHeaderProps(project, l2Data),
-    chart: getChartProps(project, l2Data),
-    details: project.details,
-    bridges: project.bridges,
     metadata: getPageMetadata(project),
-    risks: getRiskProps(project),
-    technology: getTechnologyProps(project),
-    news: getNewsProps(project),
-    overview: getOverviewProps(project),
+    headerProps: getHeaderProps(project, l2Data),
+    chartProps: getChartProps(project, l2Data),
+    projectDetailsProps: {
+      details: project.details,
+      bridges: project.bridges,
+      risks: getRiskProps(project),
+      technology: getTechnologyProps(project),
+      news: getNewsProps(project),
+      overviewSectionProps: getOverviewSectionPropsProps(project),
+    },
   }
 }

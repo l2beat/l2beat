@@ -1,9 +1,16 @@
+import { ProjectLinks } from '@l2beat/config'
 import { ShieldWarnIcon } from '../../../common/icons'
-import { OverviewProps } from '../props/getOverviewProps'
 import { OverviewLinks } from './OverviewLinks'
 import { Section } from './Section'
 
-export function OverviewSection(props: OverviewProps) {
+export interface OverviewSectionProps {
+  links: ProjectLinks
+  issueLink: string
+  editLink: string
+  warning?: string
+}
+
+export function OverviewSection(props: OverviewSectionProps) {
   return (
     <Section
       title="Project overview"

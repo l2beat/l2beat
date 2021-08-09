@@ -1,14 +1,10 @@
-import { Project, ProjectLinks } from '@l2beat/config'
+import { Project } from '@l2beat/config'
+import { OverviewSectionProps } from '../view/OverviewSection'
 import { getEditLink, getIssueLink } from './links'
 
-export interface OverviewProps {
-  links: ProjectLinks
-  issueLink: string
-  editLink: string
-  warning?: string
-}
-
-export function getOverviewProps(project: Project) {
+export function getOverviewSectionPropsProps(
+  project: Project
+): OverviewSectionProps {
   return {
     links: project.details.links,
     issueLink: getIssueLink(`Problem: ${project.name} - Project overview`),
