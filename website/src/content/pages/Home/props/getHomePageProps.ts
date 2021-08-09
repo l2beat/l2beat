@@ -1,19 +1,10 @@
 import { Project } from '@l2beat/config'
 import { L2Data } from '../../../L2Data'
-import { PageMetadata } from '../../../PageMetadata'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
-import { FinancialViewProps } from '../FinancialView/FinancialView'
+import { HomePageProps } from '../HomePage'
 import { getFinancialViewProps } from './getFinancialViewProps'
-import { getRiskViewEntry, RiskViewEntry } from './getRiskViewEntry'
-
-export interface HomePageProps {
-  tvl: string
-  sevenDayChange: string
-  apiEndpoint: string
-  financialViewProps: FinancialViewProps
-  riskView: RiskViewEntry[]
-  metadata: PageMetadata
-}
+import { getPageMetadata } from './getPageMetadata'
+import { getRiskViewProps } from './getRiskViewProps'
 
 export function getHomePageProps(
   projects: Project[],
@@ -27,20 +18,12 @@ export function getHomePageProps(
     getFromEnd(l2Data.byProject[project.name].aggregate.data, 0)[1]
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
 
-  const riskView = ordering.map((x) => getRiskViewEntry(x))
-
   return {
     tvl: formatUSD(tvl),
     sevenDayChange,
     apiEndpoint: '/api/tvl.json',
     financialViewProps: getFinancialViewProps(ordering, l2Data, tvl),
-    riskView,
-    metadata: {
-      title: 'L2BEAT – The state of the layer two ecosystem',
-      description:
-        'L2BEAT is a analytics and research website about Ethereum layer 2 scaling.',
-      image: 'https://l2beat.com/meta-images/overview.png',
-      url: 'https://l2beat.com/',
-    },
+    riskViewProps: getRiskViewProps(ordering),
+    metadata: getPageMetadata(),
   }
 }

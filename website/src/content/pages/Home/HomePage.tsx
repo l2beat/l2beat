@@ -1,6 +1,17 @@
 import { Chart, Footer, Header, Navbar, Page } from '../../common'
-import { HomePageProps } from './props/getHomePageProps'
+import { PageMetadata } from '../../PageMetadata'
+import { FinancialViewProps } from './FinancialView/FinancialView'
 import { Projects } from './Projects'
+import { RiskViewProps } from './RiskView/RiskView'
+
+export interface HomePageProps {
+  tvl: string
+  sevenDayChange: string
+  apiEndpoint: string
+  financialViewProps: FinancialViewProps
+  riskViewProps: RiskViewProps
+  metadata: PageMetadata
+}
 
 export function HomePage(props: HomePageProps) {
   return (
@@ -12,7 +23,10 @@ export function HomePage(props: HomePageProps) {
         sevenDayChange={props.sevenDayChange}
       />
       <Chart endpoint={props.apiEndpoint} />
-      <Projects financialViewProps={props.financialViewProps} riskView={props.riskView} />
+      <Projects
+        financialViewProps={props.financialViewProps}
+        riskViewProps={props.riskViewProps}
+      />
       <Footer />
     </Page>
   )

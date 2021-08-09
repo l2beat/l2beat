@@ -1,13 +1,28 @@
 import { ProjectLink } from '../ProjectLink'
-import { RiskViewEntry } from '../props/getRiskViewEntry'
 import { Column, TableView } from '../TableView'
 import { RiskCell } from './RiskCell'
 
-interface Props {
+export interface RiskViewProps {
   items: RiskViewEntry[]
 }
 
-export function RiskView({ items }: Props) {
+export interface RiskViewEntry {
+  name: string
+  slug: string
+  stateCorrectness: RiskViewItem
+  dataAvailability: RiskViewItem
+  upgradeability: RiskViewItem
+  owner: RiskViewItem
+  escapeHatch: RiskViewItem
+}
+
+export interface RiskViewItem {
+  value: string
+  sentiment?: 'good' | 'bad' | 'neutral' | 'unknown'
+}
+
+
+export function RiskView({ items }: RiskViewProps) {
   const columns: Column<RiskViewEntry>[] = [
     {
       name: 'Name',

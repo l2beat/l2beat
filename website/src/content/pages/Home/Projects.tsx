@@ -1,12 +1,14 @@
 import { FinanceIcon, ShieldWarnIcon } from '../../common/icons'
 import { config } from '../../config'
-import { FinancialView, FinancialViewProps } from './FinancialView/FinancialView'
-import { RiskViewEntry } from './props/getRiskViewEntry'
-import { RiskView } from './RiskView/RiskView'
+import {
+  FinancialView,
+  FinancialViewProps,
+} from './FinancialView/FinancialView'
+import { RiskView, RiskViewProps } from './RiskView/RiskView'
 
 interface Props {
   financialViewProps: FinancialViewProps
-  riskView: RiskViewEntry[]
+  riskViewProps: RiskViewProps
 }
 
 export function Projects(props: Props) {
@@ -38,7 +40,7 @@ export function Projects(props: Props) {
         </div>
       )}
       <FinancialView {...props.financialViewProps} />
-      {config.__DEV__showRiskView && <RiskView items={props.riskView} />}
+      {config.__DEV__showRiskView && <RiskView {...props.riskViewProps} />}
     </section>
   )
 }

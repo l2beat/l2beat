@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { RiskViewItem } from '../props/getRiskViewEntry'
+import { RiskViewItem } from './RiskView'
 
 interface Props {
   item: RiskViewItem

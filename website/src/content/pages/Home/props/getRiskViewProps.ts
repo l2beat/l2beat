@@ -1,18 +1,12 @@
 import { Project } from '@l2beat/config'
+import {
+  RiskViewEntry,
+  RiskViewItem,
+  RiskViewProps,
+} from '../RiskView/RiskView'
 
-export interface RiskViewEntry {
-  name: string
-  slug: string
-  stateCorrectness: RiskViewItem
-  dataAvailability: RiskViewItem
-  upgradeability: RiskViewItem
-  owner: RiskViewItem
-  escapeHatch: RiskViewItem
-}
-
-export interface RiskViewItem {
-  value: string
-  sentiment?: 'good' | 'bad' | 'neutral' | 'unknown'
+export function getRiskViewProps(projects: Project[]): RiskViewProps {
+  return { items: projects.map(getRiskViewEntry) }
 }
 
 export function getRiskViewEntry(project: Project): RiskViewEntry {
