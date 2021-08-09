@@ -3,7 +3,7 @@ import cx from 'classnames'
 import { OutLink } from './OutLink'
 
 export interface HeadingProps {
-  level: 1 | 2 | 3 | 3 | 4 | 5 | 6
+  level: number
   id: string
   title: string
   links?: HeadingLink[]
