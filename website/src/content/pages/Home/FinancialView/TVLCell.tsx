@@ -1,8 +1,8 @@
 import { WarningIcon } from '../../../common/icons'
-import { FinancialEntry } from '../props'
+import { FinancialViewEntry } from './FinancialView'
 
 interface Props {
-  project: FinancialEntry
+  project: FinancialViewEntry
 }
 
 export function TVLCell({ project }: Props) {

@@ -1,2 +1,2 @@
-export * from './getFinancialViewEntry'
+export * from './getFinancialViewProps'
 export * from './getHomePageProps'

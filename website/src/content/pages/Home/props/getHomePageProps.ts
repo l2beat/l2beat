@@ -2,14 +2,15 @@ import { Project } from '@l2beat/config'
 import { L2Data } from '../../../L2Data'
 import { PageMetadata } from '../../../PageMetadata'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
-import { FinancialEntry, getFinancialViewEntry } from './getFinancialViewEntry'
+import { FinancialViewProps } from '../FinancialView/FinancialView'
+import { getFinancialViewProps } from './getFinancialViewProps'
 import { getRiskViewEntry, RiskViewEntry } from './getRiskViewEntry'
 
 export interface HomePageProps {
   tvl: string
   sevenDayChange: string
   apiEndpoint: string
-  financialView: FinancialEntry[]
+  financialViewProps: FinancialViewProps
   riskView: RiskViewEntry[]
   metadata: PageMetadata
 }
@@ -26,17 +27,13 @@ export function getHomePageProps(
     getFromEnd(l2Data.byProject[project.name].aggregate.data, 0)[1]
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
 
-  const financialView = ordering.map((x) =>
-    getFinancialViewEntry(x, l2Data.byProject[x.name], tvl)
-  )
-
   const riskView = ordering.map((x) => getRiskViewEntry(x))
 
   return {
     tvl: formatUSD(tvl),
     sevenDayChange,
     apiEndpoint: '/api/tvl.json',
-    financialView,
+    financialViewProps: getFinancialViewProps(ordering, l2Data, tvl),
     riskView,
     metadata: {
       title: 'L2BEAT – The state of the layer two ecosystem',

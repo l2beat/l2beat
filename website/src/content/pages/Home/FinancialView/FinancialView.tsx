@@ -1,17 +1,32 @@
 import { PercentChange } from '../../../common'
 import { WarningIcon } from '../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
-import { FinancialEntry } from '../props'
 import { Column, TableView } from '../TableView'
 import { TechnologyCell } from './TechnologyCell'
 import { TVLCell } from './TVLCell'
 
-interface Props {
-  items: FinancialEntry[]
+export interface FinancialViewProps {
+  items: FinancialViewEntry[]
 }
 
-export function FinancialView({ items }: Props) {
-  const columns: Column<FinancialEntry>[] = [
+export interface FinancialViewEntry {
+  name: string
+  slug: string
+  tvl: string
+  tvlWarning?: string
+  severeWarning: boolean
+  oneDayChange: string
+  sevenDayChange: string
+  marketShare: string
+  purpose: string
+  technology: {
+    abbreviation: string
+    name: string
+  }
+}
+
+export function FinancialView({ items }: FinancialViewProps) {
+  const columns: Column<FinancialViewEntry>[] = [
     {
       name: 'Name',
       getValue: (project) => <ProjectLink project={project} />,

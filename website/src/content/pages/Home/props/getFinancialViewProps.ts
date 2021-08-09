@@ -1,34 +1,34 @@
 import { Project } from '@l2beat/config'
-import { ProjectData } from '../../../L2Data'
+import { L2Data, ProjectData } from '../../../L2Data'
 import {
   formatPercent,
   formatUSD,
   getFromEnd,
   getPercentageChange,
 } from '../../../utils'
+import {
+  FinancialViewEntry,
+  FinancialViewProps,
+} from '../FinancialView/FinancialView'
 import { getTechnology } from './getTechnology'
 
-export interface FinancialEntry {
-  name: string
-  slug: string
-  tvl: string
-  tvlWarning?: string
-  severeWarning: boolean
-  oneDayChange: string
-  sevenDayChange: string
-  marketShare: string
-  purpose: string
-  technology: {
-    abbreviation: string
-    name: string
+export function getFinancialViewProps(
+  projects: Project[],
+  l2Data: L2Data,
+  tvl: number
+): FinancialViewProps {
+  return {
+    items: projects.map((x) =>
+      getFinancialViewEntry(x, l2Data.byProject[x.name], tvl)
+    ),
   }
 }
 
-export function getFinancialViewEntry(
+function getFinancialViewEntry(
   project: Project,
   projectData: ProjectData,
   aggregateTvl: number
-) {
+): FinancialViewEntry {
   const tvl = getFromEnd(projectData.aggregate.data, 0)[1]
   const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)[1]
   const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)[1]

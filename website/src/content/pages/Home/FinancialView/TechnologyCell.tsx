@@ -1,7 +1,7 @@
-import { FinancialEntry } from '../props'
+import { FinancialViewEntry } from './FinancialView'
 
 interface Props {
-  project: FinancialEntry
+  project: FinancialViewEntry
 }
 
 export function TechnologyCell({ project }: Props) {
