@@ -8,8 +8,8 @@ export interface HomePageProps {
   tvl: string
   sevenDayChange: string
   apiEndpoint: string
-  financialViewProps: FinancialViewProps
-  riskViewProps: RiskViewProps
+  financialView: FinancialViewProps
+  riskView: RiskViewProps
   metadata: PageMetadata
 }
 
@@ -24,8 +24,8 @@ export function HomePage(props: HomePageProps) {
       />
       <Chart endpoint={props.apiEndpoint} />
       <Projects
-        financialViewProps={props.financialViewProps}
-        riskViewProps={props.riskViewProps}
+        financialView={props.financialView}
+        riskView={props.riskView}
       />
       <Footer />
     </Page>

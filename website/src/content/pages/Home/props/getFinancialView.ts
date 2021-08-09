@@ -12,7 +12,7 @@ import {
 } from '../view/FinancialView/FinancialView'
 import { getTechnology } from './getTechnology'
 
-export function getFinancialViewProps(
+export function getFinancialView(
   projects: Project[],
   l2Data: L2Data,
   tvl: number

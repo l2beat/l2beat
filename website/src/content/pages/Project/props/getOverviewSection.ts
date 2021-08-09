@@ -2,7 +2,7 @@ import { Project } from '@l2beat/config'
 import { OverviewSectionProps } from '../view/OverviewSection'
 import { getEditLink, getIssueLink } from './links'
 
-export function getOverviewSectionPropsProps(
+export function getOverviewSection(
   project: Project
 ): OverviewSectionProps {
   return {

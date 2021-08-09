@@ -18,14 +18,14 @@ export interface ProjectDetailsProps {
   technology?: TechnologyProps
   bridges: ProjectBridge[]
   news?: NewsItem[]
-  overviewSectionProps: OverviewSectionProps
+  overviewSection: OverviewSectionProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <main className="ProjectDetails">
       <div className="ProjectDetails-LeftColumn">
-        <OverviewSection {...props.overviewSectionProps} />
+        <OverviewSection {...props.overviewSection} />
         {props.risks && config.__DEV__showNewDetails && (
           <RiskSection {...props.risks} />
         )}

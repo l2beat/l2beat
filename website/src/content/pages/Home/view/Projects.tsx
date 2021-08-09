@@ -7,8 +7,8 @@ import {
 import { RiskView, RiskViewProps } from './RiskView/RiskView'
 
 interface Props {
-  financialViewProps: FinancialViewProps
-  riskViewProps: RiskViewProps
+  financialView: FinancialViewProps
+  riskView: RiskViewProps
 }
 
 export function Projects(props: Props) {
@@ -39,8 +39,8 @@ export function Projects(props: Props) {
           </button>
         </div>
       )}
-      <FinancialView {...props.financialViewProps} />
-      {config.__DEV__showRiskView && <RiskView {...props.riskViewProps} />}
+      <FinancialView {...props.financialView} />
+      {config.__DEV__showRiskView && <RiskView {...props.riskView} />}
     </section>
   )
 }

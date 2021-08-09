@@ -12,18 +12,18 @@ import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
 export interface ProjectPageProps {
   metadata: PageMetadata
-  headerProps: HeaderProps
-  chartProps: ChartProps
-  projectDetailsProps: ProjectDetailsProps
+  header: HeaderProps
+  chart: ChartProps
+  projectDetails: ProjectDetailsProps
 }
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page metadata={props.metadata} preloadApi={props.chartProps.endpoint}>
+    <Page metadata={props.metadata} preloadApi={props.chart.endpoint}>
       <Navbar />
-      <Header {...props.headerProps} />
-      <Chart {...props.chartProps} />
-      <ProjectDetails {...props.projectDetailsProps} />
+      <Header {...props.header} />
+      <Chart {...props.chart} />
+      <ProjectDetails {...props.projectDetails} />
       <Footer />
     </Page>
   )

@@ -1,1 +1,1 @@
-export * from './getHomePageProps'
+export * from './getHomePage'

@@ -1,13 +1,10 @@
 import { Project } from '@l2beat/config'
 import { L2Data } from '../../../L2Data'
 import { ProjectPageProps } from '../view/ProjectPage'
-import { getChartProps } from './getChartProps'
-import { getHeaderProps } from './getHeaderProps'
-import { getNewsProps } from './getNewsProps'
-import { getOverviewSectionPropsProps } from './getOverviewSectionProps'
+import { getChart } from './getChart'
+import { getHeader } from './getHeader'
 import { getPageMetadata } from './getPageMetadata'
-import { getRiskProps } from './getRiskProps'
-import { getTechnologyProps } from './getTechnologyProps'
+import { getProjectDetails } from './getProjectDetails'
 
 export function getProjectPageProps(
   project: Project,
@@ -15,15 +12,8 @@ export function getProjectPageProps(
 ): ProjectPageProps {
   return {
     metadata: getPageMetadata(project),
-    headerProps: getHeaderProps(project, l2Data),
-    chartProps: getChartProps(project, l2Data),
-    projectDetailsProps: {
-      details: project.details,
-      bridges: project.bridges,
-      risks: getRiskProps(project),
-      technology: getTechnologyProps(project),
-      news: getNewsProps(project),
-      overviewSectionProps: getOverviewSectionPropsProps(project),
-    },
+    header: getHeader(project, l2Data),
+    chart: getChart(project, l2Data),
+    projectDetails: getProjectDetails(project),
   }
 }

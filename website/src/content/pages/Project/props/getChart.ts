@@ -1,12 +1,8 @@
 import { Project } from '@l2beat/config'
+import { ChartProps } from '../../../common'
 import { L2Data } from '../../../L2Data'
 
-export interface ChartProps {
-  endpoint: string
-  tokens: { symbol: string; endpoint: string }[]
-}
-
-export function getChartProps(project: Project, l2Data: L2Data): ChartProps {
+export function getChart(project: Project, l2Data: L2Data): ChartProps {
   return {
     endpoint: `/api/${project.slug}.json`,
     tokens: getTokens(project, l2Data),

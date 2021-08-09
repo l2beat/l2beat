@@ -2,11 +2,11 @@ import { Project } from '@l2beat/config'
 import { L2Data } from '../../../L2Data'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
 import { HomePageProps } from '../view/HomePage'
-import { getFinancialViewProps } from './getFinancialViewProps'
+import { getFinancialView } from './getFinancialView'
 import { getPageMetadata } from './getPageMetadata'
-import { getRiskViewProps } from './getRiskViewProps'
+import { getRiskView } from './getRiskView'
 
-export function getHomePageProps(
+export function getHomePage(
   projects: Project[],
   l2Data: L2Data
 ): HomePageProps {
@@ -22,8 +22,8 @@ export function getHomePageProps(
     tvl: formatUSD(tvl),
     sevenDayChange,
     apiEndpoint: '/api/tvl.json',
-    financialViewProps: getFinancialViewProps(ordering, l2Data, tvl),
-    riskViewProps: getRiskViewProps(ordering),
+    financialView: getFinancialView(ordering, l2Data, tvl),
+    riskView: getRiskView(ordering),
     metadata: getPageMetadata(),
   }
 }

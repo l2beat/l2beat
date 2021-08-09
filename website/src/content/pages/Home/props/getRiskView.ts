@@ -5,7 +5,7 @@ import {
   RiskViewProps,
 } from '../view/RiskView/RiskView'
 
-export function getRiskViewProps(projects: Project[]): RiskViewProps {
+export function getRiskView(projects: Project[]): RiskViewProps {
   return { items: projects.map(getRiskViewEntry) }
 }
 
