@@ -1,4 +1,4 @@
-import { makeQuery } from './query'
+import { makeQuery } from '../query'
 import { UiState } from './ui'
 
 export function initHover(chart: HTMLElement) {

@@ -1,4 +1,4 @@
-import { makeQuery } from '../query'
+import { makeQuery } from '../../query'
 
 export function getControls(chart: Element) {
   const { $$ } = makeQuery(chart)
