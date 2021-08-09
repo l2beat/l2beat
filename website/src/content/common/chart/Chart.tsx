@@ -3,13 +3,13 @@ import { ChartButton } from './ChartButton'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 
-interface Props {
+export interface ChartProps {
   endpoint: string
   tokens?: { symbol: string; endpoint: string }[]
   days?: 30 | 90
 }
 
-export function Chart({ endpoint, tokens, days = 90 }: Props) {
+export function Chart({ endpoint, tokens, days = 90 }: ChartProps) {
   return (
     <section className="Chart" data-endpoint={endpoint}>
       <p className="Chart-Range">...</p>

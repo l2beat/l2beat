@@ -1,5 +1,5 @@
-import { HomePage } from './HomePage'
-import { getHomePageProps } from './props'
+import { HomePage } from './view/HomePage'
+import { getHomePage } from './props'
 import { Project } from '@l2beat/config'
 import { L2Data } from '../../L2Data'
 
@@ -9,5 +9,5 @@ interface Props {
 }
 
 export function Home(props: Props) {
-  return <HomePage {...getHomePageProps(props.projects, props.l2Data)} />
+  return <HomePage {...getHomePage(props.projects, props.l2Data)} />
 }
