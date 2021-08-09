@@ -1,0 +1,25 @@
+.ContractsSection-Contracts {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  & > li {
+    margin-top: 16px;
+  }
+}
+
+.ContractsSection-Name {
+  font-size: var(--font-l);
+  font-weight: bold;
+}
+
+.ContractsSection-Links {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  list-style-type: none;
+  font-size: var(--font-s);
+  li + li {
+    margin-left: 8px;
+  }
+}

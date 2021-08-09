@@ -113,6 +113,7 @@ export function getTechnologyProps(
     contracts.push({
       name: item.name,
       address: item.address,
+      description: item.description,
       links,
     })
   }
