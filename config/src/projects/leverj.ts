@@ -1,4 +1,4 @@
-import { Project } from './Project'
+import { Project } from './types'
 
 export const leverj: Project = {
   name: 'LeverJ',

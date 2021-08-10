@@ -11,7 +11,7 @@ If you find something wrong with the website or the data feel free to [open an i
 If you want to add a new L2 project you can do that by opening a PR. To do this you need to:
 
 1. Fork the repository
-2. Read the specification in `config/src/projects/Project.ts`. It contains an annotated data format for the project definition.
+2. Read the specification in `config/src/projects/types/Project.ts`. It contains an annotated data format for the project definition.
 3. Modify `config/src/projects` by adding a new file describing your project. You can use the existing projects as reference.
 4. Add your project into `config/src/projects/index.ts`. The order of the projects should be kept alphabetical.
 5. Open a PR :D

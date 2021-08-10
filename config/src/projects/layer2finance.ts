@@ -1,4 +1,4 @@
-import { Project } from './Project'
+import { Project } from './types'
 
 export const layer2finance: Project = {
   name: 'Layer2.Finance',

@@ -12,12 +12,12 @@ import { loopring } from './loopring'
 import { nahmii } from './nahmii'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
-import { Project } from './Project'
 import { sorare } from './sorare'
+import { Project } from './types'
 import { zkswap } from './zkswap'
 import { zksync } from './zksync'
 
-export * from './Project'
+export * from './types'
 
 export const projects: Project[] = [
   arbitrum,

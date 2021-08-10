@@ -1,4 +1,4 @@
-import { Project } from './Project'
+import { Project } from './types'
 
 export const nahmii: Project = {
   name: 'Nahmii 1.0',
