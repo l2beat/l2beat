@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const deversifi: Project = {
@@ -64,9 +64,9 @@ export const deversifi: Project = {
     purpose: 'Exchange',
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_EXTERNAL,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADE_DELAY('4 weeks'),
       owner: RISK.UNKNOWN,
     },
     parameters: [

@@ -66,12 +66,12 @@ export function FinancialView({ items }: FinancialViewProps) {
       <TableView items={items} columns={columns} />
       <div className="FinancialView-Symbols">
         <p>
-          <WarningIcon fill="var(--warning-yellow)" /> &ndash; A token
-          associated with the project accounts for more than 10% of the TVL.
+          <WarningIcon fill="var(--text-warning)" /> &ndash; A token associated
+          with the project accounts for more than 10% of the TVL.
         </p>
         <p>
-          <WarningIcon fill="var(--negative-red)" /> &ndash; A token associated
-          with the project accounts for more than 90% of the TVL. This makes the
+          <WarningIcon fill="var(--text-bad)" /> &ndash; A token associated with
+          the project accounts for more than 90% of the TVL. This makes the
           metric vulnerable to manipulation.
         </p>
       </div>

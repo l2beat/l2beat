@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -55,10 +55,10 @@ export const optimism: Project = {
     purpose: 'Universal',
     riskView: {
       stateCorrectness: RISK.FRAUD_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE,
+      owner: RISK.MULTISIG_OWNER,
     },
     parameters: [
       {

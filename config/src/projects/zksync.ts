@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const zksync: Project = {
@@ -31,10 +31,10 @@ export const zksync: Project = {
     purpose: 'Payments',
     riskView: {
       stateCorrectness: RISK.SNARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADE_DELAY('2 weeks'),
+      owner: RISK.MULTISIG_OWNER,
     },
     parameters: [
       {

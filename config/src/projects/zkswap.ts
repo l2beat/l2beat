@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const zkswap: Project = {
@@ -51,10 +51,10 @@ export const zkswap: Project = {
     purpose: 'Payments, Exchange',
     riskView: {
       stateCorrectness: RISK.SNARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_MIXED,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADE_DELAY('2 weeks'),
+      owner: RISK.MULTISIG_OWNER,
     },
     parameters: [
       {

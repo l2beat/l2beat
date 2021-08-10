@@ -9,5 +9,5 @@ export interface ProjectRiskView {
 export interface ProjectRiskViewEntry {
   value: string
   description: string
-  sentiment: 'good' | 'bad' | 'warning' | 'none' | 'unknown'
+  sentiment?: 'warning' | 'bad' | 'unknown'
 }

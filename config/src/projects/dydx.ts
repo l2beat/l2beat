@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const dydx: Project = {
@@ -38,10 +38,10 @@ export const dydx: Project = {
     purpose: 'Exchange',
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE,
+      owner: RISK.GOVERNANCE_OWNER,
     },
     parameters: [
       {

@@ -30,15 +30,15 @@
   position: relative;
 
   &[data-sentiment='good'] {
-    color: var(--positive-green);
+    color: var(--text-good);
   }
 
   &[data-sentiment='warning'] {
-    color: var(--warning-yellow);
+    color: var(--text-warning);
   }
 
   &[data-sentiment='bad'] {
-    color: var(--negative-red);
+    color: var(--text-bad);
   }
 }
 

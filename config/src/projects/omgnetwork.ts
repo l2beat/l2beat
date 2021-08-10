@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const omgnetwork: Project = {
@@ -64,9 +64,9 @@ export const omgnetwork: Project = {
     purpose: 'Payments',
     riskView: {
       stateCorrectness: RISK.FRAUD_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_EXTERNAL,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE,
       owner: RISK.UNKNOWN,
     },
     parameters: [

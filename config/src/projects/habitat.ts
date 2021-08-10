@@ -1,4 +1,4 @@
-import { RISK } from './common/risk'
+import { RISK } from './common'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -30,7 +30,7 @@ export const habitat: Project = {
     purpose: 'DAO, Treasury',
     riskView: {
       stateCorrectness: RISK.FRAUD_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UNKNOWN,
       owner: RISK.UNKNOWN,
