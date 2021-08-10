@@ -16,7 +16,7 @@ export function TVLCell({ project }: Props) {
               fill={
                 project.severeWarning
                   ? 'var(--negative-red)'
-                  : 'var(--neutral-yellow)'
+                  : 'var(--warning-yellow)'
               }
             />
           </div>

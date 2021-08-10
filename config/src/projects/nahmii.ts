@@ -84,7 +84,7 @@ export const nahmii: Project = {
       {
         name: 'Force Transactions',
         value: 'Not a design goal for Nahmii 1.0.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Exit Mechanism',

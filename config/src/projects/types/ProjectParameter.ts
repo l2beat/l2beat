@@ -8,7 +8,7 @@ export interface ProjectParameter {
   /** Additional information available on demand but hidden initially */
   tooltip?: string
   /** Researchers opinion about the parameter */
-  sentiment?: 'bad' | 'good' | 'neutral'
+  sentiment?: 'bad' | 'good' | 'warning'
   /** Relevant links */
   pointers?: Pointer[]
 }

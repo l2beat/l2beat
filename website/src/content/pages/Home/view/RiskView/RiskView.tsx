@@ -18,7 +18,7 @@ export interface RiskViewEntry {
 
 export interface RiskViewItem {
   value: string
-  sentiment?: 'good' | 'bad' | 'neutral' | 'unknown'
+  sentiment?: 'good' | 'bad' | 'warning' | 'unknown'
 }
 
 export function RiskView({ items }: RiskViewProps) {

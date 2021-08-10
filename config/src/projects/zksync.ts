@@ -49,7 +49,7 @@ export const zksync: Project = {
         value: 'Yes, through contract upgrade',
         tooltip:
           'Contracts are upgradable BUT on the upside there is a 14 days timelock',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',

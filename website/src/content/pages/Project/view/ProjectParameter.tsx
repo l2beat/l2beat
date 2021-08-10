@@ -6,7 +6,7 @@ import { SentimentIcon } from './SentimentIcon'
 interface Props {
   name: string
   value: ReactChild
-  sentiment?: 'good' | 'neutral' | 'bad'
+  sentiment?: 'good' | 'warning' | 'bad'
   tooltip?: string
   pointers?: Pointer[]
 }

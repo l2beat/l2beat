@@ -99,7 +99,7 @@ export const hermez: Project = {
         name: 'Can funds be stolen by the operator?',
         tooltip:
           'Contracts are upgradable BUT on the upside there is a 7 days timelock',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',

@@ -37,7 +37,7 @@ export const fuel: Project = {
       },
       {
         name: 'Current level of decentralization',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         tooltip:
           "Optimistic rollups require 3rd party validators to submit fraud proofs. B/c of current lack of the adoption users can't trust that such validators are running.",
         value: 'Medium',

@@ -262,7 +262,7 @@ export const arbitrum: Project = {
         name: 'Can funds be stolen by the operator?',
         value: 'Yes, through contract upgrade',
         tooltip: 'Contracts are upgradable',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Permissionless?',

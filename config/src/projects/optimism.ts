@@ -71,7 +71,7 @@ export const optimism: Project = {
       {
         name: 'Can funds be stolen by the operator?',
         tooltip: 'Contracts are upgradable',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Lib_AddressManager.sol#L47 - Optimism source code',

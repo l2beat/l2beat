@@ -43,7 +43,7 @@ export const immutablex: Project = {
       {
         name: 'Can funds be stolen by the operator?',
         tooltip: 'Contracts are upgradable',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',

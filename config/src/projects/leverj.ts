@@ -44,7 +44,7 @@ export const leverj: Project = {
         name: 'Current level of decentralization',
         value: 'Low',
         tooltip: 'Single operator. Supports decentralized watchers.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Can funds be stolen by the operator?',
