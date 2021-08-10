@@ -1,10 +1,19 @@
 interface Props {
   ids: number[]
+  editLink?: string
 }
 
-export function References({ ids }: Props) {
+export function References({ ids, editLink }: Props) {
   if (ids.length === 0) {
-    return null
+    if (editLink) {
+      return (
+        <sup>
+          <a href={editLink}>[Citation needed]</a>
+        </sup>
+      )
+    } else {
+      return null
+    }
   }
   return (
     <sup>

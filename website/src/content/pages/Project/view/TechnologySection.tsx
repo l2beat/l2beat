@@ -39,14 +39,17 @@ export function TechnologySection({
             ]}
           />
           <p>
-            {item.description}
-            {item.missingInfo && (
+            {item.missingInfo ? (
               <div className="TechnologySection-Missing">
                 <span>This section needs more information</span>
                 <OutLink href={item.editLink}>Contribute on Github</OutLink>
               </div>
+            ) : (
+              <>
+                {item.description}
+                <References ids={item.referenceIds} editLink={item.editLink} />
+              </>
             )}
-            <References ids={item.referenceIds} />
           </p>
           <RiskList risks={item.risks} />
         </div>
