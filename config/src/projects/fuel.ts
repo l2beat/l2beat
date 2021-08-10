@@ -30,7 +30,7 @@ export const fuel: Project = {
       stateCorrectness: RISK.FRAUD_PROOFS,
       dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.IMMUTABLE,
       owner: RISK.UNKNOWN,
     },
     parameters: [

@@ -66,7 +66,7 @@ export const omgnetwork: Project = {
       stateCorrectness: RISK.FRAUD_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE,
       owner: RISK.UNKNOWN,
     },
     parameters: [

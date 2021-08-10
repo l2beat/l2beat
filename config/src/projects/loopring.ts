@@ -39,7 +39,7 @@ export const loopring: Project = {
       stateCorrectness: RISK.SNARK_PROOFS,
       dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE,
       owner: RISK.UNKNOWN,
     },
     parameters: [

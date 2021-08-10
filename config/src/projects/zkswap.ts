@@ -53,7 +53,7 @@ export const zkswap: Project = {
       stateCorrectness: RISK.SNARK_PROOFS,
       dataAvailability: RISK.DATA_MIXED,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADE_DELAY('2 weeks'),
       owner: RISK.UNKNOWN,
     },
     parameters: [

@@ -25,19 +25,43 @@ export const STARK_PROOFS: ProjectRiskViewEntry = {
 
 export const DATA_ON_CHAIN: ProjectRiskViewEntry = {
   value: 'On chain',
-  description: 'All of the data needed for proof construction is published on chain',
+  description:
+    'All of the data needed for proof construction is published on chain',
 }
 
 export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   value: 'External',
-  description: 'Proof construction relies fully on data that is NOT published on chain',
-  sentiment: 'bad'
+  description:
+    'Proof construction relies fully on data that is NOT published on chain',
+  sentiment: 'bad',
 }
 
 export const DATA_MIXED: ProjectRiskViewEntry = {
   value: 'Mixed',
-  description: 'Some of the data needed for proof construction is not published on chain',
-  sentiment: 'warning'
+  description:
+    'Some of the data needed for proof construction is not published on chain',
+  sentiment: 'warning',
+}
+
+export const UPGRADABLE: ProjectRiskViewEntry = {
+  value: 'Upgradable',
+  description:
+    'The code that secures the system can be changed arbitrarily and without notice',
+  sentiment: 'bad',
+}
+
+export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
+  return {
+    value: `${delay} delay`,
+    description:
+      'The code that secures the system can be changed arbitrarily but users have some time to react',
+    sentiment: 'warning',
+  }
+}
+
+export const IMMUTABLE: ProjectRiskViewEntry = {
+  value: 'Immutable',
+  description: 'The code that secures the system can never change',
 }
 
 export const RISK = {
@@ -48,4 +72,7 @@ export const RISK = {
   DATA_ON_CHAIN,
   DATA_MIXED,
   DATA_EXTERNAL,
+  UPGRADABLE,
+  UPGRADE_DELAY,
+  IMMUTABLE,
 }

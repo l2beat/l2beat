@@ -66,7 +66,7 @@ export const deversifi: Project = {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADE_DELAY('4 weeks'),
       owner: RISK.UNKNOWN,
     },
     parameters: [

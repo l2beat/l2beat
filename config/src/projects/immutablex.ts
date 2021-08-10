@@ -30,7 +30,7 @@ export const immutablex: Project = {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,
       censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE,
       owner: RISK.UNKNOWN,
     },
     parameters: [
