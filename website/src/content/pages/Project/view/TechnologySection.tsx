@@ -1,4 +1,4 @@
-import { Heading } from '../../../common'
+import { Heading, OutLink } from '../../../common'
 import { References } from './References'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
@@ -15,6 +15,7 @@ export interface TechnologyChoice {
   editLink: string
   issueLink: string
   description: string
+  missingInfo: boolean
   referenceIds: number[]
   risks: TechnologyRisk[]
 }
@@ -38,8 +39,17 @@ export function TechnologySection({
             ]}
           />
           <p>
-            {item.description}
-            <References ids={item.referenceIds} />
+            {item.missingInfo ? (
+              <div className="TechnologySection-Missing">
+                <span>This section needs more information</span>
+                <OutLink href={item.editLink}>Contribute on Github</OutLink>
+              </div>
+            ) : (
+              <>
+                {item.description}
+                <References ids={item.referenceIds} editLink={item.editLink} />
+              </>
+            )}
           </p>
           <RiskList risks={item.risks} />
         </div>
