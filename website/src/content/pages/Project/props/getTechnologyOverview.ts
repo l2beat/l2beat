@@ -48,7 +48,8 @@ export function getTechnologyOverview(
         name: item.name,
         editLink: getEditLink(project),
         issueLink: getIssueLink(issueTitle),
-        description: item.description,
+        description: item.description ?? '',
+        missingInfo: item.description === null,
         referenceIds: item.references.map(addReference),
         risks,
       })

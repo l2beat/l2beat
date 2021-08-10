@@ -14,7 +14,7 @@
   background-color: var(--tooltip-background);
   white-space: initial;
   text-align: left;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px -1px var(--shadow);
   border: 1px solid var(--tooltip-border);
 }
 

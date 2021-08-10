@@ -12,6 +12,9 @@ export interface TechnologyReference {
 }
 
 export function ReferencesSection({ items }: ReferencesSectionProps) {
+  if (items.length === 0) {
+    return null
+  }
   return (
     <Section title="References" id="references">
       <ol className="ReferencesSection">
