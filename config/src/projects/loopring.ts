@@ -37,7 +37,7 @@ export const loopring: Project = {
     purpose: 'Payments, Exchange',
     riskView: {
       stateCorrectness: RISK.SNARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UNKNOWN,
       owner: RISK.UNKNOWN,

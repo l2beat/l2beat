@@ -28,7 +28,7 @@ export const immutablex: Project = {
     purpose: 'NFT, Exchange',
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_EXTERNAL,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UNKNOWN,
       owner: RISK.UNKNOWN,

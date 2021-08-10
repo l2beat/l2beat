@@ -31,7 +31,7 @@ export const zksync: Project = {
     purpose: 'Payments',
     riskView: {
       stateCorrectness: RISK.SNARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UNKNOWN,
       owner: RISK.UNKNOWN,

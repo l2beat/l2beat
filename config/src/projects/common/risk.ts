@@ -26,9 +26,30 @@ export const STARK_PROOFS: ProjectRiskViewEntry = {
   sentiment: 'none',
 }
 
+export const DATA_ON_CHAIN: ProjectRiskViewEntry = {
+  value: 'On chain',
+  description: 'All of the data needed for proof construction is published on chain',
+  sentiment: 'good'
+}
+
+export const DATA_EXTERNAL: ProjectRiskViewEntry = {
+  value: 'External',
+  description: 'Proof construction relies fully on data that is NOT published on chain',
+  sentiment: 'bad'
+}
+
+export const DATA_MIXED: ProjectRiskViewEntry = {
+  value: 'Mixed',
+  description: 'Some of the data needed for proof construction is not published on chain',
+  sentiment: 'warning'
+}
+
 export const RISK = {
   UNKNOWN,
   FRAUD_PROOFS,
   SNARK_PROOFS,
   STARK_PROOFS,
+  DATA_ON_CHAIN,
+  DATA_MIXED,
+  DATA_EXTERNAL,
 }

@@ -51,7 +51,7 @@ export const zkswap: Project = {
     purpose: 'Payments, Exchange',
     riskView: {
       stateCorrectness: RISK.SNARK_PROOFS,
-      dataAvailability: RISK.UNKNOWN,
+      dataAvailability: RISK.DATA_MIXED,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UNKNOWN,
       owner: RISK.UNKNOWN,
