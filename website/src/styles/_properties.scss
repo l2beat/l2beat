@@ -4,16 +4,17 @@
   --background-2: #ededed;
   --background-3: #dfdfdf;
   --background-4: #d3d3d3;
-  --text: #222222;
+  --light-text: #fafafa;
   --dark-text: #222222;
+  --text: var(--dark-text);
   --text-muted: #999999;
 
   --text-good: #1fae2e;
   --text-bad: #d70000;
   --text-warning: #cb9800;
-  
+
   --highlight-good: #86e1a5;
-  --highlight-bad: #fb2424;
+  --highlight-bad: #b10000;
   --highlight-warning: #ffd455;
 
   --background-warning: rgba(203, 152, 0, 0.2);
@@ -40,15 +41,16 @@
   --background-3: #424242;
   --background-4: #565656;
   --tooltip-background: #000000;
-  --text: #fafafa;
+  --text: var(--light-text);
   --link: #7bc1ff;
 
   --text-good: #4eab58;
-  --text-bad: #f21a1a;
+  --text-bad: #f51919;
+  --text-warning: #fdcf44;
 
   --highlight-good: #4eab58;
-  --highlight-bad: #f21a1a;
-  --highlight-warning: #cb9800;
+  --highlight-bad: #ae2121;
+  --highlight-warning: #fdcf44;
 }
 
 @media (prefers-color-scheme: dark) {
