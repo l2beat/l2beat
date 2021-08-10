@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const zkswap: Project = {
@@ -48,6 +49,13 @@ export const zkswap: Project = {
     technologyName: 'Validium',
     technologyDetails: 'ZKSpeed',
     purpose: 'Payments, Exchange',
+    riskView: {
+      stateCorrectness: RISK.SNARK_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',

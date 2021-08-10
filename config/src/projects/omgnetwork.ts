@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const omgnetwork: Project = {
@@ -61,6 +62,13 @@ export const omgnetwork: Project = {
     technologyName: 'Plasma',
     technologyDetails: 'More Viable Plasma',
     purpose: 'Payments',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -75,7 +83,7 @@ export const omgnetwork: Project = {
         name: 'Current level of decentralization',
         value: 'Low',
         tooltip: 'Single operator. Supports decentralized watchers.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Can funds be stolen by the operator?',

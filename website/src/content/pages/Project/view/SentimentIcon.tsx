@@ -5,7 +5,7 @@ import {
 } from '../../../common/icons'
 
 interface SentimentIconProps {
-  sentiment: 'good' | 'bad' | 'neutral'
+  sentiment: 'good' | 'bad' | 'warning'
 }
 
 export function SentimentIcon({ sentiment }: SentimentIconProps) {
@@ -17,7 +17,7 @@ export function SentimentIcon({ sentiment }: SentimentIconProps) {
         fill="currentcolor"
       />
     )
-  } else if (sentiment === 'neutral') {
+  } else if (sentiment === 'warning') {
     return (
       <ShieldWarnIcon
         viewBox="4 2 16 20"

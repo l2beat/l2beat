@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -27,6 +28,13 @@ export const habitat: Project = {
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'NutBerry',
     purpose: 'DAO, Treasury',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -42,14 +50,14 @@ export const habitat: Project = {
         value: 'Low',
         tooltip:
           'Contract Ownership will be transferred to community governance in the future',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Can funds be stolen by the operator?',
         value: 'Yes, through a contract upgrade via the multisig.',
         tooltip:
           'The multisig will be replaced by on-chain governance once the Habitat community is sufficiently decentralized.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'HabitatV1.sol#L52 - Habitat source code',
@@ -72,7 +80,7 @@ export const habitat: Project = {
         value: 'No',
         tooltip:
           'Operators are independent transaction aggregators and are not subject to any enforcements.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Can the funds be freely withdrawn?',
@@ -84,7 +92,7 @@ export const habitat: Project = {
       {
         name: 'Rollup Governance',
         value: 'HBT tokens are needed to participate.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Privacy',

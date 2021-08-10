@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const leverj: Project = {
@@ -30,6 +31,13 @@ export const leverj: Project = {
     technologyName: 'Plasma',
     technologyDetails: 'Gluon Plasma',
     purpose: 'Exchange',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -44,7 +52,7 @@ export const leverj: Project = {
         name: 'Current level of decentralization',
         value: 'Low',
         tooltip: 'Single operator. Supports decentralized watchers.',
-        sentiment: 'neutral',
+        sentiment: 'warning',
       },
       {
         name: 'Can funds be stolen by the operator?',

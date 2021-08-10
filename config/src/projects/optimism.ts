@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -52,6 +53,13 @@ export const optimism: Project = {
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'Optimistic Virtual Machine',
     purpose: 'Universal',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -71,7 +79,7 @@ export const optimism: Project = {
       {
         name: 'Can funds be stolen by the operator?',
         tooltip: 'Contracts are upgradable',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Lib_AddressManager.sol#L47 - Optimism source code',

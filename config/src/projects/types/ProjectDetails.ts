@@ -3,6 +3,7 @@ import { Pointer } from './Pointer'
 import { ProjectLinks } from './ProjectLinks'
 import { ProjectTechnology } from './ProjectTechnology'
 import { ProjectParameter } from './ProjectParameter'
+import { ProjectRiskView } from './ProjectRiskView'
 
 export interface ProjectDetails {
   /** A warning displayed at the top of the project page */
@@ -17,6 +18,8 @@ export interface ProjectDetails {
   // TODO: Not optional
   /** Deep dive into project technology */
   technology?: ProjectTechnology
+  /** Risk view values for this project */
+  riskView: ProjectRiskView
   /** Links to recent developments */
   news?: News[]
 

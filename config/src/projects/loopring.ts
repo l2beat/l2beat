@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const loopring: Project = {
@@ -34,6 +35,13 @@ export const loopring: Project = {
     technologyName: 'ZK Rollup',
     technologyDetails: 'zk-SNARK',
     purpose: 'Payments, Exchange',
+    riskView: {
+      stateCorrectness: RISK.SNARK_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',

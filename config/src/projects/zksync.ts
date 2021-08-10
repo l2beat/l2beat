@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const zksync: Project = {
@@ -28,6 +29,13 @@ export const zksync: Project = {
     technologyName: 'ZK Rollup',
     technologyDetails: 'zk-SNARK',
     purpose: 'Payments',
+    riskView: {
+      stateCorrectness: RISK.SNARK_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -49,7 +57,7 @@ export const zksync: Project = {
         value: 'Yes, through contract upgrade',
         tooltip:
           'Contracts are upgradable BUT on the upside there is a 14 days timelock',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',

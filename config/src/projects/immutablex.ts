@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const immutablex: Project = {
@@ -25,6 +26,13 @@ export const immutablex: Project = {
     technologyName: 'Validium',
     technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'NFT, Exchange',
+    riskView: {
+      stateCorrectness: RISK.STARK_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -43,7 +51,7 @@ export const immutablex: Project = {
       {
         name: 'Can funds be stolen by the operator?',
         tooltip: 'Contracts are upgradable',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',

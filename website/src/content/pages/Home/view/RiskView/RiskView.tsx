@@ -1,3 +1,4 @@
+import { ProjectRiskView } from '@l2beat/config'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { RiskCell } from './RiskCell'
@@ -6,19 +7,9 @@ export interface RiskViewProps {
   items: RiskViewEntry[]
 }
 
-export interface RiskViewEntry {
+export interface RiskViewEntry extends ProjectRiskView {
   name: string
   slug: string
-  stateCorrectness: RiskViewItem
-  dataAvailability: RiskViewItem
-  upgradeability: RiskViewItem
-  owner: RiskViewItem
-  escapeHatch: RiskViewItem
-}
-
-export interface RiskViewItem {
-  value: string
-  sentiment?: 'good' | 'bad' | 'neutral' | 'unknown'
 }
 
 export function RiskView({ items }: RiskViewProps) {
@@ -36,16 +27,16 @@ export function RiskView({ items }: RiskViewProps) {
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
     },
     {
+      name: 'Censorship resistance',
+      getValue: (project) => <RiskCell item={project.censorshipResistance} />,
+    },
+    {
       name: 'Upgradeability',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
       name: 'Owner',
       getValue: (project) => <RiskCell item={project.owner} />,
-    },
-    {
-      name: 'Escape hatch',
-      getValue: (project) => <RiskCell item={project.escapeHatch} />,
     },
   ]
 

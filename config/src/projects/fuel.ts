@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const fuel: Project = {
@@ -25,6 +26,13 @@ export const fuel: Project = {
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'UTXO',
     purpose: 'Payments',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -37,7 +45,7 @@ export const fuel: Project = {
       },
       {
         name: 'Current level of decentralization',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         tooltip:
           "Optimistic rollups require 3rd party validators to submit fraud proofs. B/c of current lack of the adoption users can't trust that such validators are running.",
         value: 'Medium',

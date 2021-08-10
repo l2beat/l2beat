@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const hermez: Project = {
@@ -37,35 +38,30 @@ export const hermez: Project = {
       },
       stateCorrectness: {
         name: 'Unknown state correctness',
-        shortName: 'Unknown',
         description: null,
         references: [],
         risks: [],
       },
       dataAvailability: {
         name: 'Unknown data availability',
-        shortName: 'Unknown',
         description: null,
         references: [],
         risks: [],
       },
       newCryptography: {
         name: 'Unknown new cryptography',
-        shortName: 'Unknown',
         description: null,
         references: [],
         risks: [],
       },
       operator: {
         name: 'Unknown operator',
-        shortName: 'Unknown',
         description: null,
         references: [],
         risks: [],
       },
       forceTransactions: {
         name: 'Unknown force transactions',
-        shortName: 'Unknown',
         description: null,
         references: [],
         risks: [],
@@ -79,6 +75,13 @@ export const hermez: Project = {
     technologyName: 'ZK Rollup',
     technologyDetails: 'zk-SNARK',
     purpose: 'Payments',
+    riskView: {
+      stateCorrectness: RISK.SNARK_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
@@ -99,7 +102,7 @@ export const hermez: Project = {
         name: 'Can funds be stolen by the operator?',
         tooltip:
           'Contracts are upgradable BUT on the upside there is a 7 days timelock',
-        sentiment: 'neutral',
+        sentiment: 'warning',
         pointers: [
           {
             name: 'Bridge contract - source on Etherscan',
