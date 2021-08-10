@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -52,6 +53,13 @@ export const optimism: Project = {
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'Optimistic Virtual Machine',
     purpose: 'Universal',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',

@@ -1,10 +1,17 @@
 import cx from 'classnames'
-import { RiskViewItem } from './RiskView'
+import { ProjectRiskViewEntry } from '@l2beat/config'
 
 interface Props {
-  item: RiskViewItem
+  item: ProjectRiskViewEntry
 }
 
 export function RiskCell({ item }: Props) {
-  return <span className={cx('RiskCell', item.sentiment)}>{item.value}</span>
+  return (
+    <span
+      className={cx('RiskCell', item.sentiment, 'Tooltip')}
+      title={item.description}
+    >
+      {item.value}
+    </span>
+  )
 }

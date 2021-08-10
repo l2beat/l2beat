@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -28,6 +29,13 @@ export const layer2finance: Project = {
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',

@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const nahmii: Project = {
@@ -30,6 +31,13 @@ export const nahmii: Project = {
     technologyName: 'State Pools',
     technologyDetails: 'User carried state, pooled security model',
     purpose: 'Payments',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',

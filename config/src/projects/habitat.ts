@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -27,6 +28,13 @@ export const habitat: Project = {
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'NutBerry',
     purpose: 'DAO, Treasury',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',

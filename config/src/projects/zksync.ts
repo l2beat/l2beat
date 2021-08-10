@@ -1,3 +1,4 @@
+import { RISK } from './common/risk'
 import { Project } from './types'
 
 export const zksync: Project = {
@@ -28,6 +29,13 @@ export const zksync: Project = {
     technologyName: 'ZK Rollup',
     technologyDetails: 'zk-SNARK',
     purpose: 'Payments',
+    riskView: {
+      stateCorrectness: RISK.SNARK_PROOFS,
+      dataAvailability: RISK.UNKNOWN,
+      censorshipResistance: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN,
+      owner: RISK.UNKNOWN,
+    },
     parameters: [
       {
         name: 'Primary use case',
