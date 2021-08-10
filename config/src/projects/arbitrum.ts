@@ -42,7 +42,6 @@ export const arbitrum: Project = {
       },
       stateCorrectness: {
         name: 'Fraud proofs ensure state correctness',
-        shortName: 'Fraud proofs',
         description:
           'The published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
         risks: [
@@ -60,7 +59,6 @@ export const arbitrum: Project = {
       },
       dataAvailability: {
         name: 'All transaction data is recorded on chain',
-        shortName: 'On chain',
         description:
           'All transactions executed on the Arbitrum Rollup chain are submitted to an Inbox smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Arbitrum chain.',
         risks: [],
@@ -73,7 +71,6 @@ export const arbitrum: Project = {
       },
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
-        shortName: 'AVM',
         description:
           'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
         risks: [
@@ -91,7 +88,6 @@ export const arbitrum: Project = {
       },
       operator: {
         name: 'The sequencer is centralized.',
-        shortName: 'Centralized',
         description:
           'In the beginning Arbitrum is asking users to trust its centralized sequencer. Later it plans to switch to decentralized fair sequencing. If the sequencer refuses to include user transactions they will have to submit them on L1 incurring additional fees.',
         risks: [
@@ -113,7 +109,6 @@ export const arbitrum: Project = {
       },
       forceTransactions: {
         name: 'Users can force submit any transaction',
-        shortName: 'Any',
         description:
           'Because the state of Arbitrum is based on transactions submitted to the Inbox smart contract and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
         risks: [],
