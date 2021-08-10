@@ -5,11 +5,19 @@
   --background-3: #dfdfdf;
   --background-4: #d3d3d3;
   --text: #222222;
+  --dark-text: #222222;
   --text-muted: #999999;
-  --positive-green: #1fae2e;
-  --negative-red: #d70000;
-  --warning-yellow: #cb9800;
-  --background-yellow: rgba(203, 152, 0, 0.2);
+
+  --text-good: #1fae2e;
+  --text-bad: #d70000;
+  --text-warning: #cb9800;
+  
+  --highlight-good: #86e1a5;
+  --highlight-bad: #fb2424;
+  --highlight-warning: #ffd455;
+
+  --background-warning: rgba(203, 152, 0, 0.2);
+
   --gradient-1: #7e41cc;
   --gradient-2: #d83da4;
   --gradient-3: #ee2c01;
@@ -34,8 +42,13 @@
   --tooltip-background: #000000;
   --text: #fafafa;
   --link: #7bc1ff;
-  --positive-green: #4eab58;
-  --negative-red: #f21a1a;
+
+  --text-good: #4eab58;
+  --text-bad: #f21a1a;
+
+  --highlight-good: #4eab58;
+  --highlight-bad: #f21a1a;
+  --highlight-warning: #cb9800;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -15,8 +15,8 @@ export function TVLCell({ project }: Props) {
             <WarningIcon
               fill={
                 project.severeWarning
-                  ? 'var(--negative-red)'
-                  : 'var(--warning-yellow)'
+                  ? 'var(--text-bad)'
+                  : 'var(--text-warning)'
               }
             />
           </div>
