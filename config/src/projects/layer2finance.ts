@@ -34,7 +34,7 @@ export const layer2finance: Project = {
       dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      owner: RISK.MULTISIG_OWNER,
     },
     parameters: [
       {

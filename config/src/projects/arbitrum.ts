@@ -221,7 +221,7 @@ export const arbitrum: Project = {
       dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UPGRADABLE,
-      owner: RISK.UNKNOWN,
+      owner: RISK.EOA_OWNER,
     },
     news: [
       {

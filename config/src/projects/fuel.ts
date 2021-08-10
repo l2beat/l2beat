@@ -31,7 +31,7 @@ export const fuel: Project = {
       dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.IMMUTABLE,
-      owner: RISK.UNKNOWN,
+      owner: RISK.NO_OWNER,
     },
     parameters: [
       {

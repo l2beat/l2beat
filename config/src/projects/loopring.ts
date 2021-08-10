@@ -40,7 +40,7 @@ export const loopring: Project = {
       dataAvailability: RISK.DATA_ON_CHAIN,
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UPGRADABLE,
-      owner: RISK.UNKNOWN,
+      owner: RISK.MULTISIG_OWNER,
     },
     parameters: [
       {

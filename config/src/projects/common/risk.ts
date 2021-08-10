@@ -64,6 +64,30 @@ export const IMMUTABLE: ProjectRiskViewEntry = {
   description: 'The code that secures the system can never change',
 }
 
+export const NO_OWNER: ProjectRiskViewEntry = {
+  value: 'No owner',
+  description: 'The contracts are autonomous and do not require management',
+}
+
+export const GOVERNANCE_OWNER: ProjectRiskViewEntry = {
+  value: 'Governance',
+  description: 'The contracts are managed by a token governance contract',
+}
+
+export const MULTISIG_OWNER: ProjectRiskViewEntry = {
+  value: 'Multisig',
+  description:
+    'The contracts are managed by a multisig contract. The owners of the multisig have a lot of power in the system',
+  sentiment: 'warning',
+}
+
+export const EOA_OWNER: ProjectRiskViewEntry = {
+  value: 'Single key',
+  description:
+    'The contracts are managed by a single private key. This is a huge single point of failure',
+  sentiment: 'bad',
+}
+
 export const RISK = {
   UNKNOWN,
   FRAUD_PROOFS,
@@ -75,4 +99,8 @@ export const RISK = {
   UPGRADABLE,
   UPGRADE_DELAY,
   IMMUTABLE,
+  NO_OWNER,
+  GOVERNANCE_OWNER,
+  MULTISIG_OWNER,
+  EOA_OWNER,
 }
