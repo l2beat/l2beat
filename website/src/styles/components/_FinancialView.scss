@@ -6,7 +6,7 @@
 
   margin-top: 16px;
   @media (max-width: 550px) {
-    margin-top: 8px;
+    margin-top: 0px;
   }
 }
 
@@ -22,6 +22,10 @@
     position: absolute;
     right: 0;
     top: -3px;
+
+    @media (max-width: 1000px) {
+      top: -3.5px;
+    }
   }
 
   svg {

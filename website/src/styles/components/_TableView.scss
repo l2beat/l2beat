@@ -12,6 +12,12 @@
   th,
   td {
     padding: 8px 8px 8px 0;
+    height: 38px;
+    overflow-y: hidden;
+
+    @media (max-width: 1000px) {
+      height: 36px;
+    }
 
     &:first-child {
       width: 37px;
