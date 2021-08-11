@@ -12,6 +12,7 @@ export interface ProjectDetails {
   links: ProjectLinks
   /** A short (<20 characters) description of the use case */
   purpose: string
+  provider?: 'StarkEx'
   // TODO: Not optional
   /** A few sentences describing the project the project */
   description?: string

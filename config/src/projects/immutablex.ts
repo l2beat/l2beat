@@ -26,6 +26,7 @@ export const immutablex: Project = {
     technologyName: 'Validium',
     technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'NFT, Exchange',
+    provider: 'StarkEx',
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,
