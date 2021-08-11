@@ -47,6 +47,7 @@ function getFinancialViewEntry(
   return {
     name: project.name,
     slug: project.slug,
+    isStarkEx: project.details.provider === 'StarkEx',
     tvl: formatUSD(tvl),
     tvlWarning: tvlWarning,
     severeWarning: tokenShare > 0.9,
