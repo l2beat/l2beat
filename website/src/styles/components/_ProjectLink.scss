@@ -18,6 +18,10 @@
   width: 18px;
   height: 18px;
   font-size: 8px;
+
+  @media (max-width: 1000px) {
+    top: 0px;
+  }
 }
 
 .ProjectLink-StarkEx {
