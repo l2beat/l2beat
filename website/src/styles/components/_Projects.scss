@@ -52,6 +52,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 
+  @media (max-width: 550px) {
+    margin-top: 8px;
+  }
+
   &::after {
     content: '';
     position: absolute;
