@@ -19,18 +19,18 @@ export function configureTooltips() {
     tooltipText.innerText = title
     tooltip.style.display = 'block'
     const tooltipWidth = tooltip.getBoundingClientRect().width
-    const left = Math.max(rect.left + rect.width / 2 - tooltipWidth / 2, 10)
+    const left = clamp(
+      rect.left + rect.width / 2 - tooltipWidth / 2,
+      10,
+      window.innerWidth - 10 - tooltipWidth
+    )
     tooltip.style.left = left + 'px'
     tooltip.style.top = rect.bottom + 7 + 'px'
-    tooltip.style.right = 'unset'
 
-    tooltipTriangle.style.left = rect.left + rect.width / 2 - 8 + 'px'
+    tooltipTriangle.style.left =
+      clamp(rect.left + rect.width / 2 - 8, 10, window.innerWidth - 10 - 16) +
+      'px'
     tooltipTriangle.style.top = rect.bottom + 'px'
-
-    if (left + tooltipWidth >= window.innerWidth - 10) {
-      tooltip.style.left = 'unset'
-      tooltip.style.right = '10px'
-    }
   }
 
   function hide() {
@@ -42,7 +42,9 @@ export function configureTooltips() {
   }
 
   window.addEventListener('resize', hide)
-  document.querySelector('.FinancialView')?.addEventListener('scroll', hide)
+  document
+    .querySelectorAll('.TableView')
+    .forEach((x) => x.addEventListener('scroll', hide))
   document.body.addEventListener('scroll', hide)
   document.body.addEventListener('click', (e) => {
     if (e.currentTarget !== tooltip) {
@@ -74,4 +76,8 @@ export function configureTooltips() {
       }
     })
   }
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value))
 }
