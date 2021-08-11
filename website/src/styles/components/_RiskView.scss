@@ -9,3 +9,17 @@
     margin-top: 8px;
   }
 }
+
+.RiskView-Symbols {
+  margin-top: 16px;
+  font-size: var(--font-s);
+
+  p {
+    margin: 0;
+  }
+
+  svg {
+    position: relative;
+    top: 5px;
+  }
+}

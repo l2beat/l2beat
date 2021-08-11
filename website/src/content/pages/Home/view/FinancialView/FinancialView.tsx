@@ -1,5 +1,5 @@
 import { PercentChange } from '../../../../common'
-import { WarningIcon } from '../../../../common/icons'
+import { StarkWareIcon, WarningIcon } from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { TechnologyCell } from './TechnologyCell'
@@ -12,6 +12,7 @@ export interface FinancialViewProps {
 export interface FinancialViewEntry {
   name: string
   slug: string
+  isStarkEx: boolean
   tvl: string
   tvlWarning?: string
   severeWarning: boolean
@@ -73,6 +74,9 @@ export function FinancialView({ items }: FinancialViewProps) {
           <WarningIcon fill="var(--text-bad)" /> &ndash; A token associated with
           the project accounts for more than 90% of the TVL. This makes the
           metric vulnerable to manipulation.
+        </p>
+        <p>
+          <StarkWareIcon /> &ndash; This project is built using StarkEx.
         </p>
       </div>
     </div>

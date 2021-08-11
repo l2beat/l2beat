@@ -62,6 +62,7 @@ export const deversifi: Project = {
     technologyName: 'Validium',
     technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'Exchange',
+    provider: 'StarkEx',
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,

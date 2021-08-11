@@ -36,6 +36,7 @@ export const dydx: Project = {
     technologyName: 'ZK Rollup',
     technologyDetails: "Powered by StarkWare's StarkEx",
     purpose: 'Exchange',
+    provider: 'StarkEx',
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_ON_CHAIN,
