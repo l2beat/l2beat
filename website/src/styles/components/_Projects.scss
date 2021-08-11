@@ -67,12 +67,16 @@
 .Projects-Button {
   border-radius: 8px;
   border: none;
-  height: 70px;
+  height: 60px;
   padding: 2px;
   font-size: var(--font-l);
   font-weight: bold;
   cursor: pointer;
   z-index: 1;
+
+  @media (max-width: 1000px) {
+    height: 53px;
+  }
 
   background: transparent;
 
@@ -98,6 +102,12 @@
   svg {
     fill: var(--text-muted);
     margin-right: 4px;
+
+    @media (max-width: 1000px) {
+      width: 18px;
+      height: 18px;
+      margin-top: -2px;
+    }
   }
 
   .Projects-Button.active & {

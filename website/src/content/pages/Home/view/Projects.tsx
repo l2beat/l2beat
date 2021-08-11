@@ -28,13 +28,13 @@ export function Projects(props: Props) {
           <button className="Projects-Button left active">
             <div className="Projects-ButtonInside">
               <FinanceIcon />
-              Finance View
+              Finances
             </div>
           </button>
           <button className="Projects-Button right">
             <div className="Projects-ButtonInside">
               <ShieldWarnIcon />
-              Risk View
+              Risks
             </div>
           </button>
         </div>
