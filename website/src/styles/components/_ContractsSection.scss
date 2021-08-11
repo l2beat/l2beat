@@ -12,17 +12,12 @@
   }
 }
 
-.ContractsSection-Name {
-  font-weight: bold;
+.ContractsSection-Contract {
+  a {
+    font-size: var(--font-s);
+  }
 }
 
-.ContractsSection-Links {
-  margin: 0;
-  padding: 0;
-  display: inline-flex;
-  list-style-type: none;
-  font-size: var(--font-s);
-  li + li {
-    margin-left: 1ch;
-  }
+.ContractsSection-Name {
+  font-weight: bold;
 }

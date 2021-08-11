@@ -1,3 +1,4 @@
+import React from 'react'
 import { OutLink } from '../../../common'
 import { EtherscanLink } from './EtherscanLink'
 import { RiskList, TechnologyRisk } from './RiskList'
@@ -33,18 +34,15 @@ export function ContractsSection(props: ContractsSectionProps) {
       <ul className="ContractsSection-Contracts">
         {props.contracts.map((contract, i) => (
           <li key={i}>
-            <div>
+            <div className="ContractsSection-Contract">
               <span className="ContractsSection-Name">{contract.name}</span>{' '}
-              <ul className="ContractsSection-Links">
-                <li>
-                  <EtherscanLink address={contract.address} />
-                </li>
-                {contract.links.map((x, i) => (
-                  <li key={i}>
-                    <OutLink href={x.href}>{x.name}</OutLink>
-                  </li>
-                ))}
-              </ul>
+              <EtherscanLink address={contract.address} />
+              {contract.links.map((x, i) => (
+                <React.Fragment key={i}>
+                  {' '}
+                  <OutLink href={x.href}>{x.name}</OutLink>
+                </React.Fragment>
+              ))}
             </div>
             {contract.description && (
               <div className="ContractsSection-Description">
