@@ -59,7 +59,7 @@ export const dydx: Project = {
       dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
       operator: STARKEX.OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS,
+      forceTransactions: STARKEX.FORCE_OPERATIONS('perpetual'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [
