@@ -6,7 +6,6 @@
   position: relative;
   margin: 0;
   color: var(--text-bad);
-  padding-left: 32px;
   font-weight: bold;
 
   svg {
@@ -22,7 +21,9 @@
 }
 
 .RiskSection-Risk {
+  font-weight: bold;
   a {
+    font-weight: normal;
     color: var(--text);
     text-decoration: underline dotted;
   }

@@ -1,5 +1,4 @@
 import { ProjectRiskCategory } from '@l2beat/config'
-import { ShieldBadIcon } from '../../../common/icons'
 import { Section } from './Section'
 
 export interface RiskSectionProps {
@@ -19,12 +18,10 @@ export interface RiskItem {
 
 export function RiskSection({ riskGroups }: RiskSectionProps) {
   return (
-    <Section title="Risks" id="risks">
+    <Section title="Risk summary" id="risks">
       {riskGroups.map((group, i) => (
         <div className="RiskSection-Group" key={i}>
-          <p className="RiskSection-Title">
-            <ShieldBadIcon /> {group.name}&hellip;
-          </p>
+          <p className="RiskSection-Title">{group.name}&hellip;</p>
           <ol className="RiskSection-Risks" start={group.start}>
             {group.items.map((item, i) => (
               <li className="RiskSection-Risk" key={i}>
