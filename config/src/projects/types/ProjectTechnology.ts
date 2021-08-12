@@ -1,9 +1,6 @@
 import { ProjectContracts } from './ProjectContracts'
 import { ProjectReference } from './ProjectReference'
-import {
-  ProjectTechnologyChoice,
-  ProjectExitMechanism,
-} from './ProjectTechnologyChoice'
+import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
 export interface ProjectTechnology {
   category: {
@@ -31,7 +28,7 @@ export interface ProjectTechnology {
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
-  exitMechanisms: ProjectExitMechanism[]
+  exitMechanisms: ProjectTechnologyChoice[]
   /** List of smart contracts used in the project */
   contracts: ProjectContracts
 }
