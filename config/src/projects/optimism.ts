@@ -34,6 +34,8 @@ export const optimism: Project = {
     },
   ],
   details: {
+    description:
+      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure.',
     warning:
       'Currently only whitelisted contracts can be deployed on Optimism.',
     links: {
@@ -50,16 +52,135 @@ export const optimism: Project = {
         'https://twitch.tv/optimismpbc',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'Optimistic Virtual Machine',
     purpose: 'Universal',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateCorrectness: {
+        value: 'Disabled',
+        description:
+          'Currently the system permits invalid state roots. More details in project overview.',
+        sentiment: 'bad',
+      },
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
+      censorshipResistance: RISK.CLOSED_SYSTEM,
       upgradeability: RISK.UPGRADABLE,
       owner: RISK.MULTISIG_OWNER,
     },
+    technology: {
+      category: {
+        name: 'Optimistic Rollup',
+        references: [
+          {
+            text: 'TLDR - Optimism FAQ',
+            href: 'https://community.optimism.io/faqs/#tl-dr',
+          },
+        ],
+      },
+      stateCorrectness: {
+        name: 'Fraud proofs are disabled',
+        description:
+          'Ultimately Optimism will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid state root is submitted to the system.',
+          },
+        ],
+        references: [
+          {
+            text: 'The incentive contract for verification proofs is disabled - Optimism FAQ',
+            href: 'https://community.optimism.io/faqs/#the-incentive-contract-for-verification-proofs-is-disabled',
+          },
+        ],
+      },
+      dataAvailability: {
+        name: 'All transaction data is recorded on chain',
+        description:
+          'All transactions executed on the Optimism Rollup chain are submitted to the Canonical Transaction Chain smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Optimism chain.',
+        risks: [],
+        references: [
+          {
+            text: 'Data Availability Batches - Paradigm Research',
+            href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          },
+        ],
+      },
+      smartContracts: {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Optimism uses the Optimistic Virtual Machine (OVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed. Currently there is a whitelist that limits who can deploy smart contracts.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex OVM implementation.',
+          },
+          {
+            category: 'Users can be censored if',
+            text: 'they are denied the permission to deploy smart contracts.',
+          },
+        ],
+        references: [
+          {
+            text: 'Execution Contracts - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/protocol.html#execution-contracts',
+          },
+          {
+            text: 'Deployer Whitelist - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/protocol.html#ovm-deployerwhitelist',
+          },
+        ],
+      },
+      operator: {
+        name: 'Optimism runs the only sequencer',
+        description:
+          'A Sequencer node is a special node in an Optimistic Ethereum network that can order transactions on short timescales (on the order of minutes). Eventually, the operator of the Sequencer node on a network will be determined by some governing mechanism. However, for now, Optimism PBC operates the only such node.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
+          },
+        ],
+        references: [
+          {
+            text: 'Optimism operates the only "Sequencer" node - Optimism FAQ',
+            href: 'https://community.optimism.io/faqs/#optimism-operates-the-only-sequencer-node',
+          },
+        ],
+      },
+      forceTransactions: {
+        name: 'Users can force submit any transaction',
+        description:
+          'Because the state of Optimism is based on transactions submitted to the Canonical Transaction Chain smart contract and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
+        risks: [],
+        references: [
+          {
+            text: ' Chain Contracts - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/protocol.html#chain-contracts',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Optimism is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
+          risks: [],
+          references: [
+            {
+              text: ' Withdrawing back to L1 - Optimism documentation',
+              href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
+            },
+          ],
+        },
+      ],
+      contracts: {
+        addresses: [
+          // TODO: Optimism smart contracts!
+        ],
+        risks: [],
+      },
+    },
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'Optimistic Virtual Machine',
     parameters: [
       {
         name: 'Primary use case',
