@@ -11,5 +11,3 @@ export interface ProjectTechnologyChoice {
   /** List of risks associated with the technology choice */
   risks: ProjectRisk[]
 }
-
-export type ProjectExitMechanism = Omit<ProjectTechnologyChoice, 'shortName'>

@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, STARKEX } from './common'
 import { Project } from './types'
 
 export const sorare: Project = {
@@ -32,9 +32,52 @@ export const sorare: Project = {
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.UNKNOWN,
+      censorshipResistance: RISK.FORCE_EXIT,
       upgradeability: RISK.UNKNOWN,
       owner: RISK.UNKNOWN,
+    },
+    technology: {
+      category: {
+        name: 'Validium',
+        description: "Powered by StarkWare's StarkEx",
+        references: [
+          {
+            text: 'Sorare Contracts - StarkEx documentation',
+            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#sorare-contracts',
+          },
+        ],
+      },
+      stateCorrectness: STARKEX.VALIDITY_PROOFS,
+      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
+      newCryptography: STARKEX.CRYPTOGRAPHY,
+      operator: STARKEX.OPERATOR,
+      forceTransactions: STARKEX.FORCE_OPERATIONS,
+      exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
+      contracts: {
+        addresses: [
+          {
+            name: 'Bridge',
+            address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'Committee',
+            address: '0x90CEb3bD97284df8c3240f3a8C4Aab29c1ee9542',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'SHARP Verifier',
+            address: '0x2cAbD63F6f28b493f33D13E34060f0959F3570aE',
+            upgradable: true,
+            // TODO: more information
+          },
+        ],
+        risks: [
+          // TODO: Risks
+        ],
+      },
     },
     parameters: [
       {

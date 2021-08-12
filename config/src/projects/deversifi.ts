@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, STARKEX } from './common'
 import { Project } from './types'
 
 export const deversifi: Project = {
@@ -66,9 +66,70 @@ export const deversifi: Project = {
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.UNKNOWN,
+      censorshipResistance: RISK.FORCE_EXIT,
       upgradeability: RISK.UPGRADE_DELAY('4 weeks'),
       owner: RISK.UNKNOWN,
+    },
+    technology: {
+      category: {
+        name: 'Validium',
+        description: "Powered by StarkWare's StarkEx",
+        references: [
+          {
+            text: 'DeversiFi Contracts - StarkEx documentation',
+            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#deversifi-contracts',
+          },
+        ],
+      },
+      stateCorrectness: STARKEX.VALIDITY_PROOFS,
+      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
+      newCryptography: STARKEX.CRYPTOGRAPHY,
+      operator: STARKEX.OPERATOR,
+      forceTransactions: STARKEX.FORCE_OPERATIONS,
+      exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
+      contracts: {
+        addresses: [
+          {
+            name: 'Bridge',
+            address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'Committee',
+            address: '0x28780349A33eEE56bb92241bAAB8095449e24306',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'GpsStatementVerifier',
+            address: '0xd4CF925B9d0f4d1cCf82aB97C25130657474Ee19',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'MemoryPageFactRegistry',
+            address: '0xc8e4EE91E7C14D625B829D2C2E87cF7348Eca449',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'FriStatementContract',
+            address: '0x2742A152Be5032DafBC885Ba1801ffbc2345de7B',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'MerkleStatementContract',
+            address: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0',
+            upgradable: true,
+            // TODO: more information
+          },
+        ],
+        risks: [
+          // TODO: Risks
+        ],
+      },
     },
     parameters: [
       {
