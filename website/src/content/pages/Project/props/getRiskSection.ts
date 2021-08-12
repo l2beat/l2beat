@@ -47,8 +47,8 @@ export function getRiskSection(project: Project): RiskSectionProps | undefined {
       const start = nextStart
       const items = risks
         .filter((x) => x.category === name)
-        .map((x) => ({
-          text: normalizeText(x.text),
+        .map((x, i, a) => ({
+          text: i !== a.length - 1 ? x.text.slice(0, -1) + ',' : x.text,
           referencedId: x.referencedId,
         }))
       nextStart += items.length
@@ -57,9 +57,4 @@ export function getRiskSection(project: Project): RiskSectionProps | undefined {
     .filter((x) => x.items.length > 0)
 
   return { riskGroups }
-}
-
-function normalizeText(text: string) {
-  const capitalized = text[0].toUpperCase() + text.slice(1)
-  return capitalized.endsWith('.') ? capitalized.slice(0, -1) : capitalized
 }

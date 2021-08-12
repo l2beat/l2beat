@@ -12,6 +12,8 @@ export const arbitrum: Project = {
     },
   ],
   details: {
+    description:
+      'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
     warning: 'Arbitrum is currently only open to whitelisted developers.',
     links: {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
@@ -30,6 +32,13 @@ export const arbitrum: Project = {
       ],
     },
     purpose: 'Universal',
+    riskView: {
+      stateCorrectness: RISK.FRAUD_PROOFS,
+      dataAvailability: RISK.DATA_ON_CHAIN,
+      censorshipResistance: RISK.CLOSED_SYSTEM,
+      upgradeability: RISK.UPGRADABLE,
+      owner: RISK.EOA_OWNER,
+    },
     technology: {
       category: {
         name: 'Optimistic Rollup',
@@ -60,7 +69,7 @@ export const arbitrum: Project = {
       dataAvailability: {
         name: 'All transaction data is recorded on chain',
         description:
-          'All transactions executed on the Arbitrum Rollup chain are submitted to an Inbox smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Arbitrum chain.',
+          'All transactions executed on the Arbitrum Rollup chain are submitted to the Inbox smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Arbitrum chain.',
         risks: [],
         references: [
           {
@@ -93,7 +102,7 @@ export const arbitrum: Project = {
         risks: [
           {
             category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions',
+            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
           },
         ],
         references: [
@@ -207,21 +216,14 @@ export const arbitrum: Project = {
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'the contract owner pushes a malicious code upgrade. There is no delay on code upgrades',
+            text: 'the contract owner pushes a malicious code upgrade. There is no delay on code upgrades.',
           },
           {
             category: 'Funds can be stolen if',
-            text: 'the single private key controlling the system is compromised',
+            text: 'the single private key controlling the system is compromised.',
           },
         ],
       },
-    },
-    riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.EOA_OWNER,
     },
     news: [
       {
