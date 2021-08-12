@@ -1,7 +1,6 @@
 import {
   Project,
   ProjectContract,
-  ProjectExitMechanism,
   ProjectReference,
   ProjectTechnologyChoice,
 } from '@l2beat/config'
@@ -33,7 +32,7 @@ export function getTechnologyOverview(
   function addTechnologyChoice(
     into: TechnologyChoice[],
     id: string,
-    item?: ProjectTechnologyChoice | ProjectExitMechanism
+    item?: ProjectTechnologyChoice
   ) {
     if (item) {
       const risks = item.risks.map((risk) => ({
@@ -96,7 +95,7 @@ export function getTechnologyOverview(
   addTechnology('operator', tech.operator)
   addTechnology('force-transactions', tech.forceTransactions)
 
-  const addWithdrawal = (id: string, item?: ProjectExitMechanism) =>
+  const addWithdrawal = (id: string, item?: ProjectTechnologyChoice) =>
     addTechnologyChoice(withdrawals, id, item)
 
   for (const [i, item] of tech.exitMechanisms.entries()) {

@@ -95,6 +95,13 @@ export const CLOSED_SYSTEM: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const FORCE_EXIT: ProjectRiskViewEntry = {
+  value: 'Only force exit',
+  description:
+    'If users experience censorship they can trustlessly exit, but this is the only anti-censorship mechanism.',
+  sentiment: 'warning',
+}
+
 export const RISK = {
   UNKNOWN,
   FRAUD_PROOFS,
@@ -111,4 +118,5 @@ export const RISK = {
   MULTISIG_OWNER,
   EOA_OWNER,
   CLOSED_SYSTEM,
+  FORCE_EXIT,
 }

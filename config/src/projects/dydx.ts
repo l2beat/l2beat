@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, STARKEX } from './common'
 import { Project } from './types'
 
 export const dydx: Project = {
@@ -40,9 +40,62 @@ export const dydx: Project = {
     riskView: {
       stateCorrectness: RISK.STARK_PROOFS,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
+      censorshipResistance: RISK.FORCE_EXIT,
       upgradeability: RISK.UPGRADABLE,
       owner: RISK.GOVERNANCE_OWNER,
+    },
+    technology: {
+      category: {
+        name: 'ZK Rollup',
+        description: "Powered by StarkWare's StarkEx",
+        references: [
+          {
+            text: 'dYdX Contracts - StarkEx documentation',
+            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#dydx-contracts',
+          },
+        ],
+      },
+      stateCorrectness: STARKEX.VALIDITY_PROOFS,
+      dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,
+      newCryptography: STARKEX.CRYPTOGRAPHY,
+      operator: STARKEX.OPERATOR,
+      forceTransactions: STARKEX.FORCE_OPERATIONS,
+      exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
+      contracts: {
+        addresses: [
+          {
+            name: 'Bridge',
+            address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'GpsStatementVerifier',
+            address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'MemoryPageFactRegistry',
+            address: '0xEfbCcE4659db72eC6897F46783303708cf9ACef8',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'FriStatementContract',
+            address: '0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1',
+            upgradable: true,
+            // TODO: more information
+          },
+          {
+            name: 'MerkleStatementContract',
+            address: '0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830',
+            upgradable: true,
+            // TODO: more information
+          },
+        ],
+        risks: [],
+      },
     },
     parameters: [
       {
