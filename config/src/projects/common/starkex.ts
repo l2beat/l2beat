@@ -55,7 +55,7 @@ const ROLLUP_DATA_AVAILABILITY: ProjectTechnologyChoice = {
 const CRYPTOGRAPHY: ProjectTechnologyChoice = {
   name: 'Zero knowledge STARK cryptography is used',
   description:
-    'Despite their production use STARKs are still new and experimental cryptography. Cryptography has made a lot of advancements in the recent years but all cryptographic solutions rely on time to prove their security.',
+    'Despite their production use ZK-STARKs are still new and experimental cryptography. Cryptography has made a lot of advancements in the recent years but all cryptographic solutions rely on time to prove their security.',
   risks: [
     {
       category: 'Funds can be stolen if',
@@ -88,17 +88,22 @@ const OPERATOR: ProjectTechnologyChoice = {
   ],
 }
 
-const FORCE_OPERATIONS: ProjectTechnologyChoice = {
-  name: 'Users can avoid censorship by exiting',
-  description:
-    'StarkEx allows users to force the execution of certain operations by submitting them directly to the StarkEx contract on-chain. The system must serve it in a timely fashion (within a defined time period). If this does not happen, the user may apply a penalty to the StarkEx contract, e.g., freeze the contract and prevent any new state updates. In case of perpetual trading, forcing a trade before exiting is also possible.',
-  risks: [],
-  references: [
-    {
-      text: 'Censorship Prevention - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
-    },
-  ],
+function FORCE_OPERATIONS(type: 'spot' | 'perpetual'): ProjectTechnologyChoice {
+  return {
+    name: 'Users can avoid censorship by exiting',
+    description:
+      'StarkEx allows users to force the execution of certain operations by submitting them directly to the StarkEx contract on-chain. The system must serve it within a defined time period. If this does not happen, the user may apply a penalty to the StarkEx contract, e.g., freeze the contract and prevent any new state updates.' +
+      (type === 'perpetual'
+        ? ' In case of perpetual trading, forcing a trade before exiting is also possible.'
+        : ''),
+    risks: [],
+    references: [
+      {
+        text: 'Censorship Prevention - StarkEx documentation',
+        href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
+      },
+    ],
+  }
 }
 
 const OFF_CHAIN_WITHDRAWAL: ProjectTechnologyChoice = {

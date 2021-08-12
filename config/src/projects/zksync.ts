@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const zksync: Project = {
@@ -35,6 +35,128 @@ export const zksync: Project = {
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UPGRADE_DELAY('2 weeks'),
       owner: RISK.MULTISIG_OWNER,
+    },
+    technology: {
+      category: {
+        name: 'ZK Rollup',
+        references: [
+          {
+            text: 'Introduction - zkSync FAQ',
+            href: 'https://zksync.io/faq/intro.html#introduction',
+          },
+        ],
+      },
+      stateCorrectness: {
+        ...TECHNOLOGY.VALIDITY_PROOFS,
+        references: [
+          {
+            text: 'Validity proofs - zkSync FAQ',
+            href: 'https://zksync.io/faq/security.html#validity-proofs',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Overview - zkSync documentation',
+            href: 'https://zksync.io/dev/#overview',
+          },
+        ],
+      },
+      newCryptography: {
+        ...TECHNOLOGY.ZK_SNARKS,
+        references: [
+          {
+            text: 'Cryptography used - zkSync FAQ',
+            href: 'https://zksync.io/faq/security.html#cryptography-used',
+          },
+        ],
+      },
+      operator: {
+        name: 'The operator is centralized',
+        description:
+          'At the moment, the daily operation of the zkSync network depends on the health of the computational service provider who generates zero-knowledge proofs for the blocks.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
+          },
+        ],
+        references: [
+          {
+            text: 'How decentralized is zkSync - zkSync FAQ',
+            href: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
+          },
+        ],
+      },
+      forceTransactions: {
+        name: 'Users can avoid censorship by exiting',
+        description:
+          'zkSync allows users to force the execution of certain operations by submitting them directly to the zkSync contract on-chain. The system must serve it within a defined time period (~1 week). If this does not happen, the system will enter exodus mode and every user can immediately exit all of their assets by making a direct transaction on the Ethereum mainnet.',
+        risks: [],
+        references: [
+          {
+            text: 'Priority queue - zkSync FAQ',
+            href: 'https://zksync.io/faq/security.html#priority-queue',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular withdraw',
+          description:
+            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawing funds - zkSync documentation',
+              href: 'https://zksync.io/dev/payments/basic.html#flow',
+            },
+          ],
+        },
+        {
+          name: 'Force exit',
+          description:
+            'Anyone can initiate a withdrawal from an account without a signing key. This is an L2 transaction and requests a withdrawal of all available funds of a certain token from the target L2 address to the target L1 address.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawing funds - zkSync documentation',
+              href: 'https://zksync.io/dev/payments/basic.html#flow',
+            },
+          ],
+        },
+        {
+          name: 'Full exit',
+          description:
+            'Full exit is a priority operation. This means that it needs to be submitted on L1 and comes with a guarantee of execution or the system will enter exodus mode and everyone will be able to trustlessly exit by providing a proof of funds.',
+          risks: [
+            {
+              category: 'Funds can be lost if',
+              text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
+            },
+          ],
+          references: [
+            {
+              text: 'Withdrawing funds - zkSync documentation',
+              href: 'https://zksync.io/dev/payments/basic.html#flow',
+            },
+            {
+              text: 'README.md - zkSync Exit Tool',
+              href: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
+            },
+          ],
+        },
+      ],
+      contracts: {
+        addresses: [
+          // TODO: addresses
+        ],
+        risks: [
+          // TODO: risks
+        ],
+      },
     },
     parameters: [
       {

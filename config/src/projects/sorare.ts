@@ -51,7 +51,7 @@ export const sorare: Project = {
       dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
       operator: STARKEX.OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS,
+      forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [
