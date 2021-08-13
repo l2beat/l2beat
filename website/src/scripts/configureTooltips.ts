@@ -55,6 +55,7 @@ export function configureTooltips() {
   for (const element of elements) {
     const title = element.getAttribute('title') ?? ''
     element.removeAttribute('title')
+    element.setAttribute('tabindex', '0')
 
     let mouseEnteredAt = Date.now()
 
@@ -63,6 +64,8 @@ export function configureTooltips() {
       show(element, title)
     })
     element.addEventListener('mouseleave', hide)
+    element.addEventListener('focus', () => show(element, title))
+    element.addEventListener('blur', hide)
 
     element.addEventListener('click', (e) => {
       e.stopPropagation()

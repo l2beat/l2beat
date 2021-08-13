@@ -96,6 +96,10 @@
   input:checked + span {
     background-color: var(--background-4);
   }
+
+  input:focus-visible + span {
+    outline: 2px solid currentColor;
+  }
 }
 
 .Chart-View {
