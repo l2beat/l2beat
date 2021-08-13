@@ -1,5 +1,6 @@
 import { Chart, Footer, Header, Navbar, Page } from '../../../common'
 import { PageMetadata } from '../../../PageMetadata'
+import { About } from './About'
 import { FinancialViewProps } from './FinancialView/FinancialView'
 import { Projects } from './Projects'
 import { RiskViewProps } from './RiskView/RiskView'
@@ -22,8 +23,14 @@ export function HomePage(props: HomePageProps) {
         tvl={props.tvl}
         sevenDayChange={props.sevenDayChange}
       />
-      <Chart endpoint={props.apiEndpoint} />
-      <Projects financialView={props.financialView} riskView={props.riskView} />
+      <main>
+        <Chart endpoint={props.apiEndpoint} />
+        <Projects
+          financialView={props.financialView}
+          riskView={props.riskView}
+        />
+        <About />
+      </main>
       <Footer />
     </Page>
   )
