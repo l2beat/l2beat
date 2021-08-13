@@ -7,8 +7,7 @@
 }
 
 .Projects-Title {
-  font-size: var(--font-xl);
-  margin: 0;
+  line-height: 1.15;
 
   @media (max-width: 550px) {
     display: none;

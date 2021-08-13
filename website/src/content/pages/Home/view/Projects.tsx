@@ -1,3 +1,4 @@
+import { Heading } from '../../../common'
 import { FinanceIcon, ShieldWarnIcon } from '../../../common/icons'
 import { config } from '../../../config'
 import {
@@ -14,7 +15,12 @@ interface Props {
 export function Projects(props: Props) {
   return (
     <section className="Projects">
-      <h2 className="Projects-Title">Projects</h2>
+      <Heading
+        level={2}
+        id="projects"
+        title="Projects"
+        className="Projects-Title"
+      />
       {!config.__DEV__showRiskView && (
         <div className="Projects-Disclaimer">
           <p className="Projects-DisclaimerContent">
