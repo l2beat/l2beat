@@ -88,7 +88,7 @@ export const fuel: Project = {
         {
           name: 'Regular withdrawal',
           description:
-            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because the system is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1 by submitting a Merkle proof of inclusion.',
+            'The user initiates a withdrawal by submitting a L2 transaction. Because the system is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1 by submitting a Merkle proof of inclusion.',
           risks: [],
           references: [
             {

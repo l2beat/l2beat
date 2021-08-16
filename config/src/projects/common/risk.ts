@@ -108,6 +108,12 @@ export const FORCE_ANY_TRANSACTION: ProjectRiskViewEntry = {
     'If users experience censorship they can force the rollup to execute any valid operation.',
 }
 
+export const NO_CENSORSHIP_PROTECTION: ProjectRiskViewEntry = {
+  value: 'No protection',
+  description: 'The users cannot escape from censorship.',
+  sentiment: 'bad',
+}
+
 export const RISK = {
   UNKNOWN,
   FRAUD_PROOFS,
@@ -126,4 +132,5 @@ export const RISK = {
   CLOSED_SYSTEM,
   FORCE_EXIT,
   FORCE_ANY_TRANSACTION,
+  NO_CENSORSHIP_PROTECTION,
 }

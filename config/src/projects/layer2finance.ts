@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -30,11 +30,131 @@ export const layer2finance: Project = {
     technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateCorrectness: {
+        value: 'Problematic',
+        description:
+          'Fraud proofs require owner involvement and some violations do not revert blocks.',
+        sentiment: 'bad',
+      },
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
+      censorshipResistance: RISK.NO_CENSORSHIP_PROTECTION,
       upgradeability: RISK.UNKNOWN,
-      owner: RISK.MULTISIG_OWNER,
+      owner: RISK.UNKNOWN,
+    },
+    technology: {
+      category: {
+        name: 'Optimistic Rollup',
+        references: [],
+      },
+      stateCorrectness: {
+        ...TECHNOLOGY.FRAUD_PROOFS,
+        description:
+          TECHNOLOGY.FRAUD_PROOFS.description +
+          ' Unfortunately in case of Layer2.Finance only some fraud proofs revert blocks and every successful fraud proof pauses the contract requiring the owner to unpause.',
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'the problematic fraud proof mechanism is exploited.',
+          },
+        ],
+        references: [
+          {
+            text: 'Which L2 scaling paradigm is Layer2.Finance using - Layer2.Finance FAQ',
+            href: 'https://docs.l2.finance/#/faq?id=which-l2-scaling-paradigm-is-layer2finance-using',
+          },
+          {
+            text: 'RollupChain.sol#L441 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L441',
+          },
+          {
+            text: 'RollupChain.sol#L605 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L605',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'RollupChain.sol#L191 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191',
+          },
+        ],
+      },
+      operator: {
+        name: 'The sequencer is centralized',
+        description:
+          'Currently only a single block producer is allowed to submit blocks.',
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'the sequencer halts its operations.',
+          },
+        ],
+        references: [
+          {
+            text: 'RollupChain.sol#L191 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191',
+          },
+          {
+            text: 'Layer2.finance - Celer Network blog',
+            href: 'https://blog.celer.network/2021/02/18/layer2-finance-get-defi-mass-adoption-today-scaling-layer-1-defi-in-place-with-zero-migration/',
+          },
+        ],
+      },
+      forceTransactions: {
+        name: 'There is no force transaction mechanism',
+        description:
+          'If the users find themselves censored they can do nothing to force the inclusion of their transactions.',
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'the sequencer refuses to include their transactions.',
+          },
+        ],
+        references: [
+          {
+            text: 'RollupChain.sol#L191 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular Exit',
+          description:
+            'The user initiates a withdrawal by submitting a L2 transaction. Because the system is an optimistic rollup this transaction has to be included in a block and finalized which can take several hours. There is no emergency exit mechanism so users have to rely on the honesty of the operators to let them leave.',
+          risks: [
+            {
+              category: 'Funds can be stolen if',
+              text: 'the users are prevented from leaving the system.',
+            },
+          ],
+          references: [
+            {
+              text: 'RollupChain.sol#L191 - Layer2.Finance source code',
+              href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L191',
+            },
+          ],
+        },
+      ],
+      contracts: {
+        addresses: [
+          // what are the contract addresses?
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'the owner calls owner-only functions that pause the contract and drain funds.',
+            references: [
+              {
+                text: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
+                href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
+              },
+            ],
+          },
+        ],
+      },
     },
     parameters: [
       {
