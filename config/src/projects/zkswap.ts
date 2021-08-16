@@ -4,6 +4,7 @@ import { Project } from './types'
 export const zkswap: Project = {
   name: 'ZKSwap',
   slug: 'zkswap',
+  associatedToken: 'ZKS',
   bridges: [
     {
       address: '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad',
@@ -27,13 +28,14 @@ export const zkswap: Project = {
         'USDT',
         'WBTC',
         'YFI',
+        'ZKS',
       ],
     },
   ],
   details: {
     links: {
       websites: ['https://zks.org/'],
-      apps: ['https://zkswap.app'],
+      apps: ['https://zks.app'],
       documentation: ['https://en.wiki.zks.org/'],
       explorers: ['https://zkswap.info'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],
