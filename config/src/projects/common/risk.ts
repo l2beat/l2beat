@@ -102,6 +102,12 @@ export const FORCE_EXIT: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const FORCE_ANY_TRANSACTION: ProjectRiskViewEntry = {
+  value: 'Any operation',
+  description:
+    'If users experience censorship they can force the rollup to execute any valid operation.',
+}
+
 export const RISK = {
   UNKNOWN,
   FRAUD_PROOFS,
@@ -119,4 +125,5 @@ export const RISK = {
   EOA_OWNER,
   CLOSED_SYSTEM,
   FORCE_EXIT,
+  FORCE_ANY_TRANSACTION,
 }
