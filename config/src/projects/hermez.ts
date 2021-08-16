@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const hermez: Project = {
@@ -37,38 +37,87 @@ export const hermez: Project = {
         references: [],
       },
       stateCorrectness: {
-        name: 'Unknown state correctness',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.VALIDITY_PROOFS,
+        references: [
+          {
+            text: 'ZK-Proofs - Hermez documentation',
+            href: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
+          },
+        ],
       },
       dataAvailability: {
-        name: 'Unknown data availability',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Data Availability - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/glossary?id=data-availability',
+          },
+        ],
       },
       newCryptography: {
-        name: 'Unknown new cryptography',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.ZK_SNARKS,
+        references: [
+          {
+            text: 'ZK-Proofs - Hermez documentation',
+            href: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
+          },
+          {
+            text: 'Multi-party Computation for the Trusted Setup - Hermez documentation',
+            href: 'https://docs.hermez.io/#/about/security?id=multi-party-computation-for-the-trusted-setup',
+          },
+        ],
       },
       operator: {
-        name: 'Unknown operator',
-        description: null,
-        references: [],
+        name: 'Anyone can become an operator',
+        description:
+          'The system runs an auction in which anyone can bid to become the operator for a set number of blocks. The operator will be able to propose blocks and collect fees during this window. Hermez will also run a operator known as boot coordinator that will propose blocks in case no one bids in the auction. This operator can be removed by the governance.',
         risks: [],
+        references: [
+          {
+            text: 'Forging Consensus Protocol - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/protocol/consensus/consensus?id=forging-consensus-protocol',
+          },
+          {
+            text: 'Boot Coordinator - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/protocol/consensus/consensus?id=boot-coordinator',
+          },
+        ],
       },
       forceTransactions: {
-        name: 'Unknown force transactions',
-        description: null,
-        references: [],
+        name: 'Users can force submit any transaction',
+        // extract - same as fuel
+        description: 'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
         risks: [],
+        references: [
+          {
+            text: '',
+            href: 'https://docs.hermez.io/#/faq/end-users?id=can-coordinators-censor-transactions'
+          }
+        ],
       },
-      exitMechanisms: [],
+      exitMechanisms: [
+        /*
+        Normal exit		"1. User submits a withdrawal request on L2
+2. The block is proven
+3. IF THE FUNDS ARE BELOW A CERTAIN AMOUNT. The user submits a merkle proof of the withdrawals and gets the funds"
+Forced exit		"1. User submits a withdrawal request on L1
+2. The coordinators pick up L1 transactions before L2 transactions
+3. Same as normal exit"
+Delayed exit		"1. User tries normal of forced exit
+2. IF THE FUNDS ARE ABOVE A CERTAIN AMOUNT. The funds are transfered to the WithdrawalDelayer
+3. After a specified delay has passed and THE EMERGENCY MODE HAS NOT BEEN ACTIVATED the funds can be withdrawn by the user"
+Emergency mode		"1. User tries normal of forced exit
+2. IF THE FUNDS ARE ABOVE A CERTAIN AMOUNT. The funds are transfered to the WithdrawalDelayer
+3. IF THE EMERGENCY MODE HAS BEEN ACTIVATED. The funds are transferred to the governance"
+*/
+      ],
       contracts: {
-        addresses: [],
+        addresses: [
+          // HermezAuctionProtocol: 0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2
+          // HermezAddress: 0xa68d85df56e733a06443306a095646317b5fa633
+          // HermezWithdrawalDelayerAddress: 0x392361427ef5e17b69cfdd1294f31ab555c86124
+          // HEZTokenAddress: 0xeef9f339514298c6a857efcfc1a762af84438dee
+        ],
         risks: [],
       },
     },
