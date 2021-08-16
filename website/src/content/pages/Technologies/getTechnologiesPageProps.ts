@@ -10,8 +10,7 @@ export function getTechnologiesPageProps(): TechnologiesPageProps {
     title: 'Technologies',
     metadata: {
       title: 'L2BEAT – Technologies',
-      description:
-        'L2BEAT is a analytics and research website about Ethereum layer 2 scaling.',
+      description: '',
       image: 'https://l2beat.com/meta-images/overview.png',
       url: 'https://l2beat.com/technologies/',
     },

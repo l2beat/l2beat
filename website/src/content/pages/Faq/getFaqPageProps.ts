@@ -17,7 +17,7 @@ export function getFaqPageProps(): FaqPageProps {
     metadata: {
       title: 'L2BEAT – Frequently Asked Questions',
       description:
-        'L2BEAT is a analytics and research website about Ethereum layer 2 scaling.',
+        'Frequently Asked Questions about L2BEAT – an analytics and research website about Ethereum layer 2 scaling.',
       image: 'https://l2beat.com/meta-images/overview.png',
       url: 'https://l2beat.com/faq/',
     },
