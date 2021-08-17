@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { ReactChild } from 'react'
+import { ReactChild, ReactNode } from 'react'
 
 interface Props<T> {
   className?: string
@@ -8,8 +8,8 @@ interface Props<T> {
 }
 
 export interface Column<T> {
-  name: string
-  shortName?: string
+  name: ReactNode
+  shortName?: ReactNode
   alignRight?: true
   getValue: (value: T) => ReactChild
 }
