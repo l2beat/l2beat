@@ -21,6 +21,7 @@ export interface ProjectContract {
 export type ProjectUpgradeability =
   | EIP1967Upgradeability
   | StarkWareUpgradeability
+  | ZeppelinOsUpgradeability
 
 export interface EIP1967Upgradeability {
   type: 'EIP1967'
@@ -42,4 +43,12 @@ export interface StarkWareUpgradeability {
   upgradeDelay: number
   /** Are no more updates accepted? */
   isFinal: boolean
+}
+
+export interface ZeppelinOsUpgradeability {
+  type: 'ZeppelinOs'
+  /** Address of the admin */
+  admin: string
+  /** Address of the implementation */
+  implementation: string
 }

@@ -10,6 +10,10 @@ import {
   checkStarkWareIsFinal,
   checkStarkWareUpgradeDelay,
 } from './starkware'
+import {
+  checkZeppelinOsAdmin,
+  checkZeppelinOsImplementation,
+} from './zeppelinos'
 
 dotenv()
 
@@ -21,6 +25,9 @@ async function main() {
   )
 
   for (const project of projects) {
+    if (project.name !== 'Loopring') {
+      continue
+    }
     console.log(chalk.blue(`--- Project: ${project.name} ---`))
     const contracts = project.details.technology?.contracts.addresses ?? []
     for (const contract of contracts) {
@@ -71,6 +78,19 @@ async function main() {
         )
       }
 
+      if (upgradeability?.type === 'ZeppelinOs') {
+        await checkZeppelinOsImplementation(
+          provider,
+          contract.address,
+          upgradeability.implementation
+        )
+        await checkZeppelinOsAdmin(
+          provider,
+          contract.address,
+          upgradeability.admin
+        )
+      }
+
       if (upgradeability === undefined) {
         await checkEip1967Implementation(
           provider,
@@ -78,6 +98,11 @@ async function main() {
           constants.AddressZero
         )
         await checkStarkWareImplementation(
+          provider,
+          contract.address,
+          constants.AddressZero
+        )
+        await checkZeppelinOsImplementation(
           provider,
           contract.address,
           constants.AddressZero

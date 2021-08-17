@@ -146,8 +146,19 @@ export const loopring: Project = {
       ],
       contracts: {
         addresses: [
-          // Exchange 0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4
-          // Owner 0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512
+          {
+            name: 'Exchange',
+            address: '0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4',
+            upgradeability: {
+              type: 'ZeppelinOs',
+              admin: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
+              implementation: '0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC',
+            },
+          },
+          {
+            name: 'Owner',
+            address: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+          },
         ],
         risks: [],
       },
