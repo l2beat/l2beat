@@ -73,10 +73,7 @@ export const fuel: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any transaction',
-        description:
-          'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
-        risks: [],
+        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
         references: [
           {
             text: 'Architecture: A High-Level View - Fuel documentation',

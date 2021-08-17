@@ -84,11 +84,7 @@ export const hermez: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any transaction',
-        // extract - same as fuel
-        description:
-          'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
-        risks: [],
+        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
         references: [
           {
             text: 'Can coordinators censor transactions? - Hermez documentation',

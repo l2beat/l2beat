@@ -42,9 +42,18 @@ const ON_CHAIN_DATA: ProjectTechnologyChoice = {
   references: [],
 }
 
+const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
+  name: 'Users can force submit any transaction',
+  description:
+    'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
+  risks: [],
+  references: [],
+}
+
 export const TECHNOLOGY = {
   VALIDITY_PROOFS,
   FRAUD_PROOFS,
   ZK_SNARKS,
   ON_CHAIN_DATA,
+  PROPOSE_OWN_BLOCKS,
 }
