@@ -189,11 +189,11 @@ export const zkswapv2: Project = {
     },
     purpose: 'Payments, Exchange',
     riskView: {
-      stateCorrectness: RISK.SNARK_PROOFS,
+      stateValidation: RISK.STATE_ZKP_SN,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.FORCE_EXIT,
       upgradeability: RISK.UPGRADE_DELAY('8 days'),
-      owner: RISK.EOA_OWNER,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_ZKP,
     },
     parameters: [
       {

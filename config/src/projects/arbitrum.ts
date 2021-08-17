@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const arbitrum: Project = {
@@ -33,11 +33,11 @@ export const arbitrum: Project = {
     },
     purpose: 'Universal',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP_INT,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.CLOSED_SYSTEM,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.EOA_OWNER,
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_TRANSACT_L1,
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {
@@ -50,15 +50,7 @@ export const arbitrum: Project = {
         ],
       },
       stateCorrectness: {
-        name: 'Fraud proofs ensure state correctness',
-        description:
-          'The published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'there is noone that checks the published state. Fraud proofs assume at least one honest and able validator.',
-          },
-        ],
+        ...TECHNOLOGY.FRAUD_PROOFS,
         references: [
           {
             text: 'Executing and Securing the Chain - Arbitrum documentation',

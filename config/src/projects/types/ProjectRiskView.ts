@@ -1,9 +1,9 @@
 export interface ProjectRiskView {
-  stateCorrectness: ProjectRiskViewEntry
+  stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
-  censorshipResistance: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
-  owner: ProjectRiskViewEntry
+  operatorCensoring: ProjectRiskViewEntry
+  operatorDown: ProjectRiskViewEntry
 }
 
 export interface ProjectRiskViewEntry {

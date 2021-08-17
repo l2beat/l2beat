@@ -28,11 +28,11 @@ export const immutablex: Project = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateCorrectness: RISK.STARK_PROOFS,
+      stateValidation: RISK.STATE_ZKP_ST,
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.FORCE_EXIT,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {

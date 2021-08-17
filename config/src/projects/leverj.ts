@@ -32,11 +32,11 @@ export const leverj: Project = {
     technologyDetails: 'Gluon Plasma',
     purpose: 'Exchange',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP, // TODO: verify
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN, // TODO: find out
+      operatorCensoring: RISK.UNKNOWN, // TODO: find out
+      operatorDown: RISK.UNKNOWN, // TODO: find out
     },
     parameters: [
       {
