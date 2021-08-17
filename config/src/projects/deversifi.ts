@@ -64,11 +64,11 @@ export const deversifi: Project = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateCorrectness: RISK.STARK_PROOFS,
+      stateValidation: RISK.STATE_ZKP_ST,
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.FORCE_EXIT,
       upgradeability: RISK.UPGRADE_DELAY('4 weeks'),
-      owner: RISK.UNKNOWN,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {

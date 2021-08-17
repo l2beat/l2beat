@@ -30,11 +30,11 @@ export const aztec: Project = {
     technologyDetails: 'zk-SNARK/PLONK',
     purpose: 'Private payments',
     riskView: {
-      stateCorrectness: RISK.SNARK_PROOFS,
+      stateValidation: RISK.STATE_ZKP_SN,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.FORCE_ANY_TRANSACTION,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.MULTISIG_OWNER,
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {

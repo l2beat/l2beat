@@ -27,11 +27,11 @@ export const fuel: Project = {
     technologyDetails: 'UTXO',
     purpose: 'Payments',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP, // TODO: 1R? Not really sure
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.FORCE_ANY_TRANSACTION,
-      upgradeability: RISK.IMMUTABLE,
-      owner: RISK.NO_OWNER,
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {

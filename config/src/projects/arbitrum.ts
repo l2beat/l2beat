@@ -33,11 +33,11 @@ export const arbitrum: Project = {
     },
     purpose: 'Universal',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP_INT,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.CLOSED_SYSTEM,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.EOA_OWNER,
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_TRANSACT_L1,
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {

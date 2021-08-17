@@ -32,11 +32,11 @@ export const nahmii: Project = {
     technologyDetails: 'User carried state, pooled security model',
     purpose: 'Payments',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP, // TODO: 1R?
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN, // TODO: check
+      operatorCensoring: RISK.UNKNOWN, // TODO: escape with fraud proofs
+      operatorDown: RISK.UNKNOWN, // TODO: escape with fraud proofs
     },
     parameters: [
       {
