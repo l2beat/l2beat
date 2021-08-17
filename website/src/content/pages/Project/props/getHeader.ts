@@ -26,6 +26,8 @@ function getTitleLength(name: string): 'long' | 'very-long' | undefined {
       return 'long'
     case 'OMG Network':
     case 'Layer2.Finance':
+    case 'Nahmii 1.0':
+    case 'ZKSwap (v2)':
       return 'very-long'
   }
 }
