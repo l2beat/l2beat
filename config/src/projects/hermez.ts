@@ -86,30 +86,65 @@ export const hermez: Project = {
       forceTransactions: {
         name: 'Users can force submit any transaction',
         // extract - same as fuel
-        description: 'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
+        description:
+          'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
         risks: [],
         references: [
           {
-            text: '',
-            href: 'https://docs.hermez.io/#/faq/end-users?id=can-coordinators-censor-transactions'
-          }
+            text: 'Can coordinators censor transactions? - Hermez documentation',
+            href: 'https://docs.hermez.io/#/faq/end-users?id=can-coordinators-censor-transactions',
+          },
         ],
       },
       exitMechanisms: [
-        /*
-        Normal exit		"1. User submits a withdrawal request on L2
-2. The block is proven
-3. IF THE FUNDS ARE BELOW A CERTAIN AMOUNT. The user submits a merkle proof of the withdrawals and gets the funds"
-Forced exit		"1. User submits a withdrawal request on L1
-2. The coordinators pick up L1 transactions before L2 transactions
-3. Same as normal exit"
-Delayed exit		"1. User tries normal of forced exit
-2. IF THE FUNDS ARE ABOVE A CERTAIN AMOUNT. The funds are transfered to the WithdrawalDelayer
-3. After a specified delay has passed and THE EMERGENCY MODE HAS NOT BEEN ACTIVATED the funds can be withdrawn by the user"
-Emergency mode		"1. User tries normal of forced exit
-2. IF THE FUNDS ARE ABOVE A CERTAIN AMOUNT. The funds are transfered to the WithdrawalDelayer
-3. IF THE EMERGENCY MODE HAS BEEN ACTIVATED. The funds are transferred to the governance"
-*/
+        {
+          name: 'Regular withdraw',
+          description:
+            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction. This operation requires the user to submit a merkle proof of their funds. This operation cannot be performed if the withdrawal exceeds certain threshold.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawing Funds from Hermez - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/sdk?id=withdrawing-funds-from-hermez',
+            },
+          ],
+        },
+        {
+          name: 'Forced withdraw',
+          description:
+            'The user submits the withdrawal request on L1. This forces the operators to pick up the request before other L2 transactions. A block still needs to be proved, the user still submits a merkle proof, and the funds threshold still cannot be exceeded.',
+          risks: [],
+          references: [
+            {
+              text: 'Force Exit - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/sdk?id=force-exit',
+            },
+          ],
+        },
+        {
+          name: 'Delayed withdraw',
+          description:
+            'When the user does a regular or forced withdraw and their funds exceed a certain threshold a timer activates. After a specified time has passed and the emergency mode has not been activated the funds can be withdrawn.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawal Delayer Mechanism - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/protocol/withdrawal-delayer/withdrawal-delayer?id=mechanism',
+            },
+          ],
+        },
+        {
+          name: 'Emergency mode',
+          description:
+            "When the user does a regular or forced withdraw and their funds exceed a certain threshold a timer activates. The operators can now trigger emergency mode and transfer the user's funds to the governance.",
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawal Delayer Mechanism - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/protocol/withdrawal-delayer/withdrawal-delayer?id=mechanism',
+            },
+          ],
+        },
       ],
       contracts: {
         addresses: [
