@@ -66,32 +66,34 @@ export const dydx: Project = {
           {
             name: 'Bridge',
             address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
-            upgradable: true,
-            // TODO: more information
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x2C0df87E073755139101b35c0A51e065291cc2d3',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
           {
             name: 'GpsStatementVerifier',
             address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
-            upgradable: true,
-            // TODO: more information
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0xcc5b2c75cbbd281b2fc4b58c7d5b080d023c92f2',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
           {
             name: 'MemoryPageFactRegistry',
             address: '0xEfbCcE4659db72eC6897F46783303708cf9ACef8',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'FriStatementContract',
             address: '0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'MerkleStatementContract',
             address: '0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830',
-            upgradable: true,
-            // TODO: more information
           },
         ],
         risks: [],

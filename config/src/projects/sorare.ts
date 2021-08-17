@@ -58,20 +58,20 @@ export const sorare: Project = {
           {
             name: 'Bridge',
             address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
-            upgradable: true,
-            // TODO: more information
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0xb8563ad5af1f79dd04937be8b572318c8e6f43ac',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
           {
             name: 'Committee',
             address: '0x90CEb3bD97284df8c3240f3a8C4Aab29c1ee9542',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'SHARP Verifier',
             address: '0x2cAbD63F6f28b493f33D13E34060f0959F3570aE',
-            upgradable: true,
-            // TODO: more information
           },
         ],
         risks: [
