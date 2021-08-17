@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const loopring: Project = {
@@ -41,6 +41,116 @@ export const loopring: Project = {
       censorshipResistance: RISK.UNKNOWN,
       upgradeability: RISK.UPGRADABLE,
       owner: RISK.MULTISIG_OWNER,
+    },
+    technology: {
+      category: {
+        name: 'ZK Rollup',
+        references: [],
+      },
+      stateCorrectness: {
+        ...TECHNOLOGY.VALIDITY_PROOFS,
+        references: [
+          {
+            text: 'Operators - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Introduction - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#introduction',
+          },
+        ],
+      },
+      newCryptography: {
+        ...TECHNOLOGY.ZK_SNARKS,
+        references: [
+          {
+            text: 'Operators - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
+          },
+        ],
+      },
+      operator: {
+        name: 'The operator is centralized.',
+        description:
+          'Only the owner of the exchange contract can submit new blocks. The owner itself is a specialized contract which currently only permits its owner to perform this operation.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
+          },
+        ],
+        references: [
+          {
+            text: 'ExchangeV3.sol#L315-L322 - Loopring source code',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L315-L322',
+          },
+          {
+            text: 'LoopringIOExchangeOwner.sol#L123-L126 - Loopring source code',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/aux/access/LoopringIOExchangeOwner.sol#L123-L126',
+          },
+        ],
+      },
+      forceTransactions: {
+        name: 'Users can avoid censorship by exiting',
+        description:
+          'Loopring allows users to force withdraw by submitting an L1 transaction. The system must serve it within a defined time period. If this does not happen, the system will enter withdrawal mode and every user can exit all of their assets by making a direct transaction on the Ethereum mainnet.',
+        risks: [],
+        references: [
+          {
+            text: 'Forced Withdrawals - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-withdrawals',
+          },
+          {
+            text: 'Forced Request Handling - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular withdrawal',
+          description:
+            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction.',
+          risks: [],
+          references: [],
+        },
+        {
+          name: 'Forced withdrawal',
+          description:
+            'The user initiates a withdrawal request on L1. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction.',
+          risks: [],
+          references: [
+            {
+              text: 'Forced Request Handling - Loopring design doc',
+              href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+            },
+          ],
+        },
+        {
+          name: 'Withdrawal mode',
+          description:
+            'The user initiates a withdrawal request on L1. If it is not served within a predefined time period the system enters withdrawal mode in which users can withdraw by submitting merkle proofs of their funds.',
+          risks: [],
+          references: [
+            {
+              text: 'Forced Request Handling - Loopring design doc',
+              href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+            },
+          ],
+        },
+      ],
+      contracts: {
+        addresses: [
+          // Exchange 0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4
+          // Owner 0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512
+        ],
+        risks: [],
+      },
     },
     parameters: [
       {

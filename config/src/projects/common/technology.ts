@@ -8,6 +8,19 @@ const VALIDITY_PROOFS: ProjectTechnologyChoice = {
   references: [],
 }
 
+const FRAUD_PROOFS: ProjectTechnologyChoice = {
+  name: 'Fraud proofs ensure state correctness',
+  description:
+    'The published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
+  risks: [
+    {
+      category: 'Funds can be stolen if',
+      text: 'there is no one that checks the published state. Fraud proofs assume at least one honest and able validator.',
+    },
+  ],
+  references: [],
+}
+
 const ZK_SNARKS: ProjectTechnologyChoice = {
   name: 'Zero knowledge SNARK cryptography is used',
   description:
@@ -29,8 +42,18 @@ const ON_CHAIN_DATA: ProjectTechnologyChoice = {
   references: [],
 }
 
+const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
+  name: 'Users can force submit any transaction',
+  description:
+    'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
+  risks: [],
+  references: [],
+}
+
 export const TECHNOLOGY = {
   VALIDITY_PROOFS,
+  FRAUD_PROOFS,
   ZK_SNARKS,
   ON_CHAIN_DATA,
+  PROPOSE_OWN_BLOCKS,
 }

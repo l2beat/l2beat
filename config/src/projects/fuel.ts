@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const fuel: Project = {
@@ -29,9 +29,78 @@ export const fuel: Project = {
     riskView: {
       stateCorrectness: RISK.FRAUD_PROOFS,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
+      censorshipResistance: RISK.FORCE_ANY_TRANSACTION,
       upgradeability: RISK.IMMUTABLE,
       owner: RISK.NO_OWNER,
+    },
+    technology: {
+      category: {
+        name: 'Optimistic Rollup',
+        references: [],
+      },
+      stateCorrectness: {
+        ...TECHNOLOGY.FRAUD_PROOFS,
+        references: [
+          {
+            text: 'Background - Fuel documentation',
+            href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Background - Fuel documentation',
+            href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          },
+        ],
+      },
+      operator: {
+        name: 'Block production is partially centralized.',
+        description:
+          'While anyone can propose new blocks the Fuel operator has a short period of time (5 minutes) where they are the only one that can propose a block that includes a given transaction bundle. This allows the operator to reliably provide a soft confirmation to a recipient that a transaction will be included in the next Fuel block.',
+        risks: [],
+        references: [
+          {
+            text: 'Architecture: A High-Level View - Fuel documentation',
+            href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
+          },
+          {
+            text: 'Mainnet deployment parameters - Fuel documentation',
+            href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Deployment%20Parameters.html#mainnet',
+          },
+        ],
+      },
+      forceTransactions: {
+        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
+        references: [
+          {
+            text: 'Architecture: A High-Level View - Fuel documentation',
+            href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular withdrawal',
+          description:
+            'The user initiates a withdrawal by submitting a L2 transaction. Because the system is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1 by submitting a Merkle proof of inclusion.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdraw.yulp#L40 - Fuel documentation',
+              href: 'https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Withdraw.yulp#L40',
+            },
+          ],
+        },
+      ],
+      contracts: {
+        addresses: [
+          // https://etherscan.io/address/0x6880f6Fd960D1581C2730a451A22EED1081cfD72
+        ],
+        risks: [],
+      },
     },
     parameters: [
       {

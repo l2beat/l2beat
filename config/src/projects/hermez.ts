@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const hermez: Project = {
@@ -37,38 +37,118 @@ export const hermez: Project = {
         references: [],
       },
       stateCorrectness: {
-        name: 'Unknown state correctness',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.VALIDITY_PROOFS,
+        references: [
+          {
+            text: 'ZK-Proofs - Hermez documentation',
+            href: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
+          },
+        ],
       },
       dataAvailability: {
-        name: 'Unknown data availability',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Data Availability - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/glossary?id=data-availability',
+          },
+        ],
       },
       newCryptography: {
-        name: 'Unknown new cryptography',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.ZK_SNARKS,
+        references: [
+          {
+            text: 'ZK-Proofs - Hermez documentation',
+            href: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
+          },
+          {
+            text: 'Multi-party Computation for the Trusted Setup - Hermez documentation',
+            href: 'https://docs.hermez.io/#/about/security?id=multi-party-computation-for-the-trusted-setup',
+          },
+        ],
       },
       operator: {
-        name: 'Unknown operator',
-        description: null,
-        references: [],
+        name: 'Anyone can become an operator',
+        description:
+          'The system runs an auction in which anyone can bid to become the operator for a set number of blocks. The operator will be able to propose blocks and collect fees during this window. Hermez will also run a operator known as boot coordinator that will propose blocks in case no one bids in the auction. This operator can be removed by the governance.',
         risks: [],
+        references: [
+          {
+            text: 'Forging Consensus Protocol - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/protocol/consensus/consensus?id=forging-consensus-protocol',
+          },
+          {
+            text: 'Boot Coordinator - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/protocol/consensus/consensus?id=boot-coordinator',
+          },
+        ],
       },
       forceTransactions: {
-        name: 'Unknown force transactions',
-        description: null,
-        references: [],
-        risks: [],
+        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
+        references: [
+          {
+            text: 'Can coordinators censor transactions? - Hermez documentation',
+            href: 'https://docs.hermez.io/#/faq/end-users?id=can-coordinators-censor-transactions',
+          },
+        ],
       },
-      exitMechanisms: [],
+      exitMechanisms: [
+        {
+          name: 'Regular withdraw',
+          description:
+            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction. This operation requires the user to submit a merkle proof of their funds. This operation cannot be performed if the withdrawal exceeds certain threshold.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawing Funds from Hermez - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/sdk?id=withdrawing-funds-from-hermez',
+            },
+          ],
+        },
+        {
+          name: 'Forced withdraw',
+          description:
+            'The user submits the withdrawal request on L1. This forces the operators to pick up the request before other L2 transactions. A block still needs to be proved, the user still submits a merkle proof, and the funds threshold still cannot be exceeded.',
+          risks: [],
+          references: [
+            {
+              text: 'Force Exit - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/sdk?id=force-exit',
+            },
+          ],
+        },
+        {
+          name: 'Delayed withdraw',
+          description:
+            'When the user does a regular or forced withdraw and their funds exceed a certain threshold a timer activates. After a specified time has passed and the emergency mode has not been activated the funds can be withdrawn.',
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawal Delayer Mechanism - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/protocol/withdrawal-delayer/withdrawal-delayer?id=mechanism',
+            },
+          ],
+        },
+        {
+          name: 'Emergency mode',
+          description:
+            "When the user does a regular or forced withdraw and their funds exceed a certain threshold a timer activates. The operators can now trigger emergency mode and transfer the user's funds to the governance.",
+          risks: [],
+          references: [
+            {
+              text: 'Withdrawal Delayer Mechanism - Hermez documentation',
+              href: 'https://docs.hermez.io/#/developers/protocol/withdrawal-delayer/withdrawal-delayer?id=mechanism',
+            },
+          ],
+        },
+      ],
       contracts: {
-        addresses: [],
+        addresses: [
+          // HermezAuctionProtocol: 0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2
+          // HermezAddress: 0xa68d85df56e733a06443306a095646317b5fa633
+          // HermezWithdrawalDelayerAddress: 0x392361427ef5e17b69cfdd1294f31ab555c86124
+          // HEZTokenAddress: 0xeef9f339514298c6a857efcfc1a762af84438dee
+        ],
         risks: [],
       },
     },
