@@ -156,11 +156,11 @@ export const hermez: Project = {
     technologyDetails: 'zk-SNARK',
     purpose: 'Payments',
     riskView: {
-      stateCorrectness: RISK.SNARK_PROOFS,
+      stateValidation: RISK.STATE_ZKP_SN,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE_YES, // TODO: verify
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS, // TODO: verify
     },
     parameters: [
       {

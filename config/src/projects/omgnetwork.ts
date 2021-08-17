@@ -63,11 +63,11 @@ export const omgnetwork: Project = {
     technologyDetails: 'More Viable Plasma',
     purpose: 'Payments',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP, // TODO: 1R?
       dataAvailability: RISK.DATA_EXTERNAL,
-      censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE_YES, // TODO: verify
+      operatorCensoring: RISK.UNKNOWN, // TODO: escape with fraud proofs
+      operatorDown: RISK.UNKNOWN, // TODO: escape with fraud proofs
     },
     parameters: [
       {

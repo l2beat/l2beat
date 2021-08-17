@@ -50,11 +50,11 @@ export const zkswap: Project = {
     technologyDetails: 'ZKSpeed',
     purpose: 'Payments, Exchange',
     riskView: {
-      stateCorrectness: RISK.SNARK_PROOFS,
-      dataAvailability: RISK.DATA_MIXED,
-      censorshipResistance: RISK.UNKNOWN,
+      stateValidation: RISK.STATE_ZKP_SN,
+      dataAvailability: RISK.DATA_ON_CHAIN,
       upgradeability: RISK.UPGRADE_DELAY('2 weeks'),
-      owner: RISK.MULTISIG_OWNER,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_ZKP,
     },
     parameters: [
       {

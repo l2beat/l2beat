@@ -21,24 +21,24 @@ export function RiskView({ items }: RiskViewProps) {
       getValue: (project) => <ProjectLink project={project} />,
     },
     {
-      name: 'State correctness',
-      getValue: (project) => <RiskCell item={project.stateCorrectness} />,
+      name: 'State validation',
+      getValue: (project) => <RiskCell item={project.stateValidation} />,
     },
     {
       name: 'Data availability',
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
     },
     {
-      name: 'Censorship resistance',
-      getValue: (project) => <RiskCell item={project.censorshipResistance} />,
-    },
-    {
       name: 'Upgradeability',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
-      name: 'Owner',
-      getValue: (project) => <RiskCell item={project.owner} />,
+      name: 'Operator censoring',
+      getValue: (project) => <RiskCell item={project.operatorCensoring} />,
+    },
+    {
+      name: 'Operator down',
+      getValue: (project) => <RiskCell item={project.operatorDown} />,
     },
   ]
 

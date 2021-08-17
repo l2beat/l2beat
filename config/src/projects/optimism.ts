@@ -54,16 +54,16 @@ export const optimism: Project = {
     },
     purpose: 'Universal',
     riskView: {
-      stateCorrectness: {
-        value: 'Disabled',
+      stateValidation: {
+        value: 'Proofs disabled',
         description:
           'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
       },
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.CLOSED_SYSTEM,
-      upgradeability: RISK.UPGRADABLE,
-      owner: RISK.MULTISIG_OWNER,
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_TRANSACT_L1,
+      operatorDown: RISK.DOWN_NO_MECHANISM, // TODO: verify
     },
     technology: {
       category: {

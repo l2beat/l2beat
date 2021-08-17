@@ -29,11 +29,11 @@ export const habitat: Project = {
     technologyDetails: 'NutBerry',
     purpose: 'DAO, Treasury',
     riskView: {
-      stateCorrectness: RISK.FRAUD_PROOFS,
+      stateValidation: RISK.STATE_FP,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.UNKNOWN,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UPGRADABLE_YES, // TODO: verify
+      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS, // TODO: verify
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS, // TODO: verify
     },
     parameters: [
       {

@@ -30,16 +30,11 @@ export const layer2finance: Project = {
     technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
     riskView: {
-      stateCorrectness: {
-        value: 'Problematic',
-        description:
-          'Fraud proofs require owner involvement and some violations do not revert blocks.',
-        sentiment: 'bad',
-      },
+      stateValidation: RISK.STATE_FP_1R, // TODO: verify that it actually is 1R
       dataAvailability: RISK.DATA_ON_CHAIN,
-      censorshipResistance: RISK.NO_CENSORSHIP_PROTECTION,
-      upgradeability: RISK.UNKNOWN,
-      owner: RISK.UNKNOWN,
+      upgradeability: RISK.UNKNOWN, // TODO: find out
+      operatorCensoring: RISK.CENSORING_NO_MECHANISM,
+      operatorDown: RISK.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {
