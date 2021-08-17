@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
-import { createCompare } from './compare'
 import { toAddress } from './cast'
+import { createCompare } from './compare'
 
 async function getEip1967Implementation(
   provider: providers.Provider,

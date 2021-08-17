@@ -60,7 +60,7 @@ export const sorare: Project = {
             address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0xb8563ad5af1f79dd04937be8b572318c8e6f43ac',
+              implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
               upgradeDelay: 0,
               isFinal: false,
             },
@@ -72,6 +72,13 @@ export const sorare: Project = {
           {
             name: 'SHARP Verifier',
             address: '0x2cAbD63F6f28b493f33D13E34060f0959F3570aE',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x0f58e286eDeaC10a197bA1906eA348beD3eE41a0',
+              callImplementation: '0x9bca5C55137057208ee5b14F3e269133bDCaC1f8',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
         ],
         risks: [

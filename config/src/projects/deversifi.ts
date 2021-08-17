@@ -93,8 +93,9 @@ export const deversifi: Project = {
             name: 'Bridge',
             address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
             upgradeability: {
-              type: 'StarkWare2019',
+              type: 'StarkWare',
               implementation: '0x7D2375a873CF858f02F97F40CbBBc03293f9A055',
+              useConstantDelay: true,
               upgradeDelay: 2419200,
               isFinal: false,
             },

@@ -78,7 +78,8 @@ export const dydx: Project = {
             address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0xcc5b2c75cbbd281b2fc4b58c7d5b080d023c92f2',
+              implementation: '0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2',
+              callImplementation: '0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
               upgradeDelay: 0,
               isFinal: false,
             },

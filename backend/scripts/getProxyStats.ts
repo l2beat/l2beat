@@ -4,8 +4,9 @@ import { config as dotenv } from 'dotenv'
 import { constants, providers } from 'ethers'
 import { checkEip1967Admin, checkEip1967Implementation } from './eip1967'
 import {
-  checkStarkWareImplementation,
   checkStarkWareCallImplementation,
+  checkStarkWareConstantUpgradeDelay,
+  checkStarkWareImplementation,
   checkStarkWareIsFinal,
   checkStarkWareUpgradeDelay,
 } from './starkware'
@@ -48,13 +49,21 @@ async function main() {
         await checkStarkWareCallImplementation(
           provider,
           contract.address,
-          upgradeability.callProxyImplementation ?? constants.AddressZero
+          upgradeability.callImplementation ?? constants.AddressZero
         )
-        await checkStarkWareUpgradeDelay(
-          provider,
-          contract.address,
-          upgradeability.upgradeDelay
-        )
+        if (upgradeability.useConstantDelay) {
+          await checkStarkWareConstantUpgradeDelay(
+            provider,
+            contract.address,
+            upgradeability.upgradeDelay
+          )
+        } else {
+          await checkStarkWareUpgradeDelay(
+            provider,
+            contract.address,
+            upgradeability.upgradeDelay
+          )
+        }
         await checkStarkWareIsFinal(
           provider,
           contract.address,

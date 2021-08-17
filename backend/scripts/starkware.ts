@@ -1,6 +1,6 @@
 import { BigNumber, Contract, providers } from 'ethers'
-import { createCompare } from './compare'
 import { toAddress, toBoolean } from './cast'
+import { createCompare } from './compare'
 
 async function getStarkWareImplementation(
   provider: providers.Provider,

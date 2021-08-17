@@ -35,7 +35,7 @@ export interface StarkWareUpgradeability {
   /** Address of the implementation */
   implementation: string
   /** Address of the nested call proxy implementation */
-  callProxyImplementation?: string
+  callImplementation?: string
   /** Call UPGRADE_ACTIVATION_DELAY() instead of getUpgradeActivationDelay() */
   useConstantDelay?: boolean
   /** Upgrade delay in seconds */
