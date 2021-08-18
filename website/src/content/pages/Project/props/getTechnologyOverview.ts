@@ -57,21 +57,40 @@ export function getTechnologyOverview(
 
   function addContract(item: ProjectContract) {
     const links = []
-    let codeLinkName = 'Code'
-    if (item.upgradeDelay) {
-      codeLinkName = `Code (Upgradable, ${item.upgradeDelay} delay)`
-    } else if (item.upgradable) {
-      codeLinkName = 'Code (Upgradable)'
+
+    const upgradable = !!item.upgradeability
+    let delay: string | undefined
+    if (
+      item.upgradeability?.type === 'StarkWare' &&
+      item.upgradeability.upgradeDelay !== 0
+    ) {
+      const SECONDS_PER_DAY = 86_400
+      const days = item.upgradeability.upgradeDelay / SECONDS_PER_DAY
+      delay = Math.floor(days) + ' days'
     }
+
+    let owner: string | undefined
+    if (
+      item.upgradeability?.type === 'EIP1967' ||
+      item.upgradeability?.type === 'ZeppelinOs'
+    ) {
+      owner = item.upgradeability.admin
+    }
+
+    const codeLinkName = upgradable
+      ? delay
+        ? `Code (Upgradable, ${delay} delay)`
+        : 'Code (Upgradable)'
+      : 'Code'
+
     links.push({
       name: codeLinkName,
       href: `https://etherscan.io/address/${item.address}#code`,
     })
-    if (item.owner) {
+    if (owner) {
       links.push({
-        name:
-          item.owner.type !== 'other' ? `Owner (${item.owner.type})` : 'Owner',
-        href: `https://etherscan.io/address/${item.owner.address}`,
+        name: 'Owner',
+        href: `https://etherscan.io/address/${owner}`,
       })
     }
 
