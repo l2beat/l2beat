@@ -22,6 +22,7 @@ export type ProjectUpgradeability =
   | EIP1967Upgradeability
   | StarkWareUpgradeability
   | ZeppelinOsUpgradeability
+  | NutBerryUpgradeability
 
 export interface EIP1967Upgradeability {
   type: 'EIP1967'
@@ -47,6 +48,14 @@ export interface StarkWareUpgradeability {
 
 export interface ZeppelinOsUpgradeability {
   type: 'ZeppelinOs'
+  /** Address of the admin */
+  admin: string
+  /** Address of the implementation */
+  implementation: string
+}
+
+export interface NutBerryUpgradeability {
+  type: 'NutBerry'
   /** Address of the admin */
   admin: string
   /** Address of the implementation */

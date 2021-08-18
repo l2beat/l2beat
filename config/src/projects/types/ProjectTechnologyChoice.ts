@@ -10,4 +10,6 @@ export interface ProjectTechnologyChoice {
   references: ProjectReference[]
   /** List of risks associated with the technology choice */
   risks: ProjectRisk[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
 }
