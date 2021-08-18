@@ -56,38 +56,32 @@ export const immutablex: Project = {
           {
             name: 'Bridge',
             address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
-            upgradable: true,
-            // TODO: more information
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
           {
             name: 'Committee',
             address: '0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'GpsStatementVerifier',
             address: '0x45769d52d47E9CBfac9A2dF68c2051ADB0630F17',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'MemoryPageFactRegistry',
             address: '0x076CF2113b6EEd19883a92454C473998FC8479E5',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'FriStatementContract',
             address: '0xe74999fBc71455462C8143b56797D3Bb84C1064b',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'MerkleStatementContract',
             address: '0x26ec188F555F0C491083D280cF8162E9D5E0d386',
-            upgradable: true,
-            // TODO: more information
           },
         ],
         risks: [

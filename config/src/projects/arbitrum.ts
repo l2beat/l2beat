@@ -152,56 +152,51 @@ export const arbitrum: Project = {
             address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
             name: 'ProxyAdmin',
             description:
-              'Through this contract all other contracts can change their code.',
-            upgradable: false,
-            owner: {
-              address: '0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E',
-              type: 'eoa',
-            },
+              'Through this contract all other contracts can change their code. It is owned by a single private key',
           },
           {
             address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
             name: 'Bridge',
-            upgradable: true,
-            owner: {
-              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              type: 'other',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0xCB0DA32914A683286Ed2D4890E8157fFecc9bd06',
             },
           },
           {
             address: '0xc8C3194eD3BE7B2393fEfE811a2Cc39297442c0B',
             name: 'RollupEventBridge',
-            upgradable: true,
-            owner: {
-              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              type: 'other',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0x5c7355e46D5486583a1CC211701e25004231D9dd',
             },
           },
           {
             address: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
             name: 'Inbox',
-            upgradable: true,
-            owner: {
-              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              type: 'other',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0xB38634F1192fd4A4864b99a4C9100339815c6450',
             },
           },
           {
             address: '0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a',
             name: 'Outbox',
-            upgradable: true,
-            owner: {
-              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              type: 'other',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0x19D6ddDC21503F4C8cD62Ce2A9FF94Bd590b49B0',
             },
           },
           {
             address: '0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A',
             name: 'Rollup',
-            upgradable: true,
-            owner: {
-              address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              type: 'other',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0xAE71755B42D1EF5Fb365Aeb4A74CB73992dd9fBE',
             },
           },
         ],

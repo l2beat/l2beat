@@ -92,38 +92,33 @@ export const deversifi: Project = {
           {
             name: 'Bridge',
             address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
-            upgradable: true,
-            // TODO: more information
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x7D2375a873CF858f02F97F40CbBBc03293f9A055',
+              useConstantDelay: true,
+              upgradeDelay: 2419200,
+              isFinal: false,
+            },
           },
           {
             name: 'Committee',
             address: '0x28780349A33eEE56bb92241bAAB8095449e24306',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'GpsStatementVerifier',
             address: '0xd4CF925B9d0f4d1cCf82aB97C25130657474Ee19',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'MemoryPageFactRegistry',
             address: '0xc8e4EE91E7C14D625B829D2C2E87cF7348Eca449',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'FriStatementContract',
             address: '0x2742A152Be5032DafBC885Ba1801ffbc2345de7B',
-            upgradable: true,
-            // TODO: more information
           },
           {
             name: 'MerkleStatementContract',
             address: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0',
-            upgradable: true,
-            // TODO: more information
           },
         ],
         risks: [

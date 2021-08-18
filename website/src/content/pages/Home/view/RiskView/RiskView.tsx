@@ -33,11 +33,22 @@ export function RiskView({ items }: RiskViewProps) {
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
-      name: 'Operator censoring',
+      name: (
+        <span
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+          }}
+        >
+          <span>If operator:</span>
+          <span>censors</span>
+        </span>
+      ),
       getValue: (project) => <RiskCell item={project.operatorCensoring} />,
     },
     {
-      name: 'Operator down',
+      name: '/ goes down',
       getValue: (project) => <RiskCell item={project.operatorDown} />,
     },
   ]

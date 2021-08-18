@@ -144,10 +144,32 @@ export const hermez: Project = {
       ],
       contracts: {
         addresses: [
-          // HermezAuctionProtocol: 0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2
-          // HermezAddress: 0xa68d85df56e733a06443306a095646317b5fa633
-          // HermezWithdrawalDelayerAddress: 0x392361427ef5e17b69cfdd1294f31ab555c86124
-          // HEZTokenAddress: 0xeef9f339514298c6a857efcfc1a762af84438dee
+          {
+            name: 'HermezAuctionProtocol',
+            address: '0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6',
+              admin: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+            },
+          },
+          {
+            name: 'Hermez',
+            address: '0xa68d85df56e733a06443306a095646317b5fa633',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0x6D85D79D69b7e190E671C16e8611997152bD3e95',
+              admin: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+            },
+          },
+          {
+            name: 'WithdrawalDelayer',
+            address: '0x392361427ef5e17b69cfdd1294f31ab555c86124',
+          },
+          {
+            name: 'HEZ',
+            address: '0xeef9f339514298c6a857efcfc1a762af84438dee',
+          },
         ],
         risks: [],
       },

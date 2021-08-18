@@ -97,7 +97,10 @@ export const fuel: Project = {
       ],
       contracts: {
         addresses: [
-          // https://etherscan.io/address/0x6880f6Fd960D1581C2730a451A22EED1081cfD72
+          {
+            address: '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
+            name: 'Fuel',
+          },
         ],
         risks: [],
       },

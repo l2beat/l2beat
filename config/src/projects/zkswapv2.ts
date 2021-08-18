@@ -108,56 +108,36 @@ export const zkswapv2: Project = {
           {
             address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
             name: 'Bridge',
-            upgradable: true,
-            owner: {
-              address: '0x0dcce462ddea102d3ecf84a991d3ecfc251e02c7 ',
-              type: 'governance',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0xf2c351f22b148A9fF583a0F81701471a74E7338e',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
             },
           },
           {
             address: '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
             name: 'Governance Bridge',
-            upgradable: true,
-            owner: {
-              address: '0x0dcce462ddea102d3ecf84a991d3ecfc251e02c7',
-              type: 'governance',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0x95269f9E76540459c797089034dc74b48dF780a2',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
             },
           },
           {
             address: '0xf2c351f22b148A9fF583a0F81701471a74E7338e',
             name: 'ZkSync',
-            upgradable: false,
-            owner: {
-              address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
-              type: 'other',
-            },
           },
           {
             address: '0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4',
             name: 'ZkSyncCommitBlock',
-            upgradable: false,
-            owner: {
-              address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
-              type: 'other',
-            },
           },
           {
             address: '0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829',
             name: 'Verifier',
-            upgradable: false,
-            owner: {
-              address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
-              type: 'other',
-            },
           },
           {
             address: '0x95269f9E76540459c797089034dc74b48dF780a2',
             name: 'Governance',
-            upgradable: false,
-            owner: {
-              address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
-              type: 'other',
-            },
           },
         ],
         risks: [],

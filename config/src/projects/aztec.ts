@@ -124,9 +124,18 @@ export const aztec: Project = {
       ],
       contracts: {
         addresses: [
-          // 0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba
-          // 0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734
-          // 0xDCC80dB987bf63f01b7bafCED6230DE5002eF874
+          {
+            address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+            name: 'RollupProcessor',
+          },
+          {
+            address: '0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734',
+            name: 'AztecFeeDistributor',
+          },
+          {
+            address: '0xDCC80dB987bf63f01b7bafCED6230DE5002eF874',
+            name: 'TurboVerifier',
+          },
         ],
         risks: [
           // TurboVerifier uses unverified libraries https://etherscan.io/address/0x8eefd2d44952ddcb94bb383d4c0aa670f941c784
