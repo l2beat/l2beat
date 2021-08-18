@@ -135,7 +135,18 @@ export const layer2finance: Project = {
       ],
       contracts: {
         addresses: [
-          // what are the contract addresses?
+          {
+            name: 'RollupChain',
+            address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
+          },
+          {
+            name: 'TransitionDisputer',
+            address: '0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f',
+          },
+          {
+            name: 'Registry',
+            address: '0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8',
+          },
         ],
         risks: [
           {

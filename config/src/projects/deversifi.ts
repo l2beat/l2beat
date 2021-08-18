@@ -94,7 +94,7 @@ export const deversifi: Project = {
             address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0x7D2375a873CF858f02F97F40CbBBc03293f9A055',
+              implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
               useConstantDelay: true,
               upgradeDelay: 2419200,
               isFinal: false,

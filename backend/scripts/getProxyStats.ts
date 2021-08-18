@@ -2,8 +2,10 @@ import { projects } from '@l2beat/config'
 import chalk from 'chalk'
 import { config as dotenv } from 'dotenv'
 import { constants, providers } from 'ethers'
+import { compare } from './compare'
 import { checkEip1967Admin, checkEip1967Implementation } from './eip1967'
 import { checkNutBerryAdmin, checkNutBerryImplementation } from './nutberry'
+import { checkReferenceImplementation } from './reference'
 import {
   checkStarkWareCallImplementation,
   checkStarkWareConstantUpgradeDelay,
@@ -100,6 +102,19 @@ async function main() {
           contract.address,
           upgradeability.admin
         )
+      }
+
+      if (upgradeability?.type === 'Reference') {
+        const base = contracts.find((x) => x.name === upgradeability.base)
+        if (base) {
+          await checkReferenceImplementation(
+            provider,
+            base.address,
+            upgradeability.method,
+            upgradeability.args ?? [],
+            contract.address
+          )
+        }
       }
 
       if (upgradeability === undefined) {
