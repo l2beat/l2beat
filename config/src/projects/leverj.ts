@@ -46,6 +46,7 @@ export const leverj: Project = {
     technology: {
       category: {
         name: 'Plasma',
+        description: 'Gluon',
         references: [],
       },
       stateCorrectness: {
@@ -59,9 +60,19 @@ export const leverj: Project = {
         risks: [],
         isIncomplete: true,
       },
-      // massExit: {
-      //   name: '????'
-      // }
+      massExit: {
+        name: 'The mass exit problem is unsolved',
+        description:
+          'In case the operator is malicious all users need to exit within a predetermined time frame. Users that do not manage to do this will lose their funds.',
+        references: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'users are unable to withdraw in a mass exit event.',
+          },
+        ],
+        isIncomplete: true,
+      },
       operator: {
         name: 'There is a single operator',
         description: '',

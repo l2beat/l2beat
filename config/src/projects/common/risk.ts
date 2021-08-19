@@ -133,6 +133,12 @@ export const DOWN_ESCAPE_ZKP: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const DOWN_ESCAPE_U: ProjectRiskViewEntry = {
+  value: 'Escape hatch (?)',
+  description: 'Users are able to exit the system. The details are unknown.',
+  sentiment: 'warning',
+}
+
 export const DOWN_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
   value: 'Propose blocks',
   description:
@@ -166,6 +172,7 @@ export const RISK = {
   CENSORING_NO_MECHANISM,
   DOWN_ESCAPE_MP,
   DOWN_ESCAPE_ZKP,
+  DOWN_ESCAPE_U,
   DOWN_PROPOSE_BLOCKS,
   DOWN_NO_MECHANISM,
 }
