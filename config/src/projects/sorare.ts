@@ -32,7 +32,7 @@ export const sorare: Project = {
     riskView: {
       stateValidation: RISK.STATE_ZKP_ST,
       dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UNKNOWN, // TODO: check
+      upgradeability: RISK.UPGRADABLE_YES,
       operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
       operatorDown: RISK.DOWN_ESCAPE_MP,
     },

@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const omgnetwork: Project = {
@@ -63,11 +63,89 @@ export const omgnetwork: Project = {
     technologyDetails: 'More Viable Plasma',
     purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP, // TODO: 1R?
+      stateValidation: RISK.STATE_FP,
       dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADABLE_YES, // TODO: verify
-      operatorCensoring: RISK.UNKNOWN, // TODO: escape with fraud proofs
-      operatorDown: RISK.UNKNOWN, // TODO: escape with fraud proofs
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_U,
+    },
+    technology: {
+      category: {
+        name: 'Plasma',
+        references: [],
+      },
+      stateCorrectness: {
+        ...TECHNOLOGY.FRAUD_PROOFS,
+        isIncomplete: true,
+      },
+      dataAvailability: {
+        name: 'Data is not stored on chain',
+        description: '',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      massExit: {
+        name: 'The mass exit problem is unsolved',
+        description:
+          'In case the operator is malicious all users need to exit within a predetermined time frame. Users that do not manage to do this will lose their funds.',
+        references: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'users are unable to withdraw in a mass exit event.',
+          },
+        ],
+        isIncomplete: true,
+      },
+      operator: {
+        name: 'There is a single operator',
+        description: '',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      forceTransactions: {
+        name: 'Users can avoid censorship by exiting',
+        description:
+          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
+          risks: [],
+          references: [],
+          isIncomplete: true,
+        },
+      ],
+      contracts: {
+        addresses: [
+          {
+            name: 'EthVault',
+            address: '0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0',
+          },
+          {
+            name: 'Erc20Vault',
+            address: '0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B',
+          },
+          {
+            name: 'ETHDepositVerifier',
+            // UNVERIFIED ON ETHERSCAN!
+            address: '0x649f37203c365DE759c8fc8CA35beBF5448F70Be',
+          },
+          {
+            name: 'ERC20DepositVerifier',
+            // UNVERIFIED ON ETHERSCAN!
+            address: '0xD876aeb3a443FBC03B7349AAc115E9054563CD82',
+          },
+        ],
+        risks: [],
+      },
     },
     parameters: [
       {

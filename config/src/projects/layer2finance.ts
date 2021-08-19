@@ -30,9 +30,9 @@ export const layer2finance: Project = {
     technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
     riskView: {
-      stateValidation: RISK.STATE_FP_1R, // TODO: verify that it actually is 1R
+      stateValidation: RISK.STATE_FP_1R,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UNKNOWN, // TODO: find out
+      upgradeability: RISK.UPGRADABLE_NO,
       operatorCensoring: RISK.CENSORING_NO_MECHANISM,
       operatorDown: RISK.DOWN_NO_MECHANISM,
     },
@@ -135,7 +135,18 @@ export const layer2finance: Project = {
       ],
       contracts: {
         addresses: [
-          // what are the contract addresses?
+          {
+            name: 'RollupChain',
+            address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
+          },
+          {
+            name: 'TransitionDisputer',
+            address: '0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f',
+          },
+          {
+            name: 'Registry',
+            address: '0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8',
+          },
         ],
         risks: [
           {

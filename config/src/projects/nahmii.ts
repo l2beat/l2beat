@@ -32,11 +32,80 @@ export const nahmii: Project = {
     technologyDetails: 'User carried state, pooled security model',
     purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP, // TODO: 1R?
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UNKNOWN, // TODO: check
-      operatorCensoring: RISK.UNKNOWN, // TODO: escape with fraud proofs
-      operatorDown: RISK.UNKNOWN, // TODO: escape with fraud proofs
+      stateValidation: RISK.STATE_FP,
+      dataAvailability: RISK.DATA_EXTERNAL_DAC,
+      upgradeability: RISK.UPGRADABLE_NO,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_U,
+    },
+    technology: {
+      category: {
+        name: 'State Pools',
+        references: [],
+      },
+      stateCorrectness: {
+        name: 'Fraud proofs ensure state correctness',
+        description:
+          'Because Nahmii is more similar to state channels than to any other technology fraud proofs are used to detect fraudulent as there is no state published on chain.',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      dataAvailability: {
+        name: 'Data is provided by a data availability oracle',
+        description:
+          'Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      massExit: {
+        name: 'Mass exit problem does not occur',
+        description:
+          'Nahmii claims that the mass exit problem is solved via checkpoints and lack of time restrictions.',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      operator: {
+        name: 'Nahmii runs the operator',
+        description:
+          'The system is operated by Nahmii foundation. All transactions require signature from the operator.',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      forceTransactions: {
+        name: 'Users can avoid censorship by exiting',
+        description:
+          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'Users submit exit requests and wait 5 days for the possibility of someone challenging that request',
+          references: [],
+          risks: [],
+          isIncomplete: true,
+        },
+      ],
+      contracts: {
+        addresses: [
+          {
+            name: 'ClientFund',
+            address: '0xCc8D82f6ba952966E63001c7B320EEF2Ae729099',
+          },
+          {
+            name: 'BalanceTracker',
+            address: '0xBC1bCC29Edf605095BF4fE7A953b7C115Ecc8Cad',
+          },
+        ],
+        risks: [],
+      },
     },
     parameters: [
       {

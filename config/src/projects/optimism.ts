@@ -6,13 +6,13 @@ export const optimism: Project = {
   slug: 'optimism',
   bridges: [
     {
-      // TODO: this one seems unused but there are tokens locked
+      // old snx bridge
       address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',
       sinceBlock: 11656238,
       tokens: ['SNX'],
     },
     {
-      // TODO: this one seems unused but there are tokens locked
+      // old snx bridge
       address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
       sinceBlock: 12409015,
       tokens: ['SNX'],
@@ -63,7 +63,7 @@ export const optimism: Project = {
       dataAvailability: RISK.DATA_ON_CHAIN,
       upgradeability: RISK.UPGRADABLE_YES,
       operatorCensoring: RISK.CENSORING_TRANSACT_L1,
-      operatorDown: RISK.DOWN_NO_MECHANISM, // TODO: verify
+      operatorDown: RISK.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {
@@ -174,7 +174,32 @@ export const optimism: Project = {
       ],
       contracts: {
         addresses: [
-          // TODO: Optimism smart contracts!
+          {
+            name: 'SynthetixBridgeToOptimism',
+            address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',
+          },
+          {
+            name: 'SynthetixBridgeEscrow',
+            address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+          },
+          {
+            name: 'SynthetixBridgeToOptimism',
+            address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
+          },
+          {
+            name: 'L1Escrow',
+            address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+          },
+          {
+            name: 'L1ChugSplashProxy',
+            address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
+              // UNVERIFIED ON ETHERSCAN!
+              implementation: '0x9091dda480B232133A7D2E4cb23336B4F0293196',
+            },
+          },
         ],
         risks: [],
       },

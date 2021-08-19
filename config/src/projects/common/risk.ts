@@ -1,11 +1,5 @@
 import { ProjectRiskViewEntry } from '../types'
 
-const UNKNOWN: ProjectRiskViewEntry = {
-  value: 'Unknown',
-  description: 'This information is currently missing on L2BEAT.',
-  sentiment: 'unknown',
-}
-
 // State validation
 
 export const STATE_FP: ProjectRiskViewEntry = {
@@ -133,6 +127,12 @@ export const DOWN_ESCAPE_ZKP: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const DOWN_ESCAPE_U: ProjectRiskViewEntry = {
+  value: 'Escape hatch (?)',
+  description: 'Users are able to exit the system. The details are unknown.',
+  sentiment: 'warning',
+}
+
 export const DOWN_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
   value: 'Propose blocks',
   description:
@@ -147,7 +147,6 @@ export const DOWN_NO_MECHANISM: ProjectRiskViewEntry = {
 }
 
 export const RISK = {
-  UNKNOWN,
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,
@@ -166,6 +165,7 @@ export const RISK = {
   CENSORING_NO_MECHANISM,
   DOWN_ESCAPE_MP,
   DOWN_ESCAPE_ZKP,
+  DOWN_ESCAPE_U,
   DOWN_PROPOSE_BLOCKS,
   DOWN_NO_MECHANISM,
 }

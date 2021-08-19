@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const leverj: Project = {
@@ -9,6 +9,11 @@ export const leverj: Project = {
       address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
       sinceBlock: 8929632,
       tokens: ['ETH', 'DAI', 'L2'],
+    },
+    {
+      address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
+      sinceBlock: 11783715,
+      tokens: ['DAI', 'USDT'],
     },
   ],
   associatedToken: 'L2',
@@ -32,11 +37,158 @@ export const leverj: Project = {
     technologyDetails: 'Gluon Plasma',
     purpose: 'Exchange',
     riskView: {
-      stateValidation: RISK.STATE_FP, // TODO: verify
+      stateValidation: RISK.STATE_FP,
       dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UNKNOWN, // TODO: find out
-      operatorCensoring: RISK.UNKNOWN, // TODO: find out
-      operatorDown: RISK.UNKNOWN, // TODO: find out
+      upgradeability: RISK.UPGRADABLE_YES,
+      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK.DOWN_ESCAPE_MP,
+    },
+    technology: {
+      category: {
+        name: 'Plasma',
+        description: 'Gluon',
+        references: [],
+      },
+      stateCorrectness: {
+        ...TECHNOLOGY.FRAUD_PROOFS,
+        isIncomplete: true,
+      },
+      dataAvailability: {
+        name: 'Data is not stored on chain',
+        description: '',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      massExit: {
+        name: 'The mass exit problem is unsolved',
+        description:
+          'In case the operator is malicious all users need to exit within a predetermined time frame. Users that do not manage to do this will lose their funds.',
+        references: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'users are unable to withdraw in a mass exit event.',
+          },
+        ],
+        isIncomplete: true,
+      },
+      operator: {
+        name: 'There is a single operator',
+        description: '',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      forceTransactions: {
+        name: 'Users can avoid censorship by exiting',
+        description:
+          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
+          risks: [],
+          references: [],
+          isIncomplete: true,
+        },
+      ],
+      contracts: {
+        addresses: [
+          {
+            name: 'Gluon',
+            address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
+          },
+          {
+            name: 'RegistryLogic',
+            address: '0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Gluon',
+              method: 'function current(uint32 id) view returns(address)',
+              args: [0],
+            },
+          },
+          {
+            name: 'RegistryData',
+            address: '0x0fC25C7931679B838209c484d49Df0Cb9E633C41',
+            upgradeability: {
+              type: 'Reference',
+              base: 'RegistryLogic',
+              method: 'function data() view returns(address)',
+            },
+          },
+          {
+            name: 'StakeLogic',
+            address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Gluon',
+              method: 'function current(uint32 id) view returns(address)',
+              args: [1],
+            },
+          },
+          {
+            name: 'StakeData',
+            address: '0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77',
+            upgradeability: {
+              type: 'Reference',
+              base: 'StakeLogic',
+              method: 'function data() view returns(address)',
+            },
+          },
+          {
+            name: 'SpotLogic',
+            address: '0x2D627FF93d32f5FEBb04d68409A889895B4aef2D',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Gluon',
+              method: 'function current(uint32 id) view returns(address)',
+              args: [2],
+            },
+          },
+          {
+            name: 'SpotData',
+            address: '0x0d283D685F0A741C463846176e4c8EFF90D3F9EC',
+            upgradeability: {
+              type: 'Reference',
+              base: 'SpotLogic',
+              method: 'function data() view returns(address)',
+            },
+          },
+          {
+            name: 'DerivativesLogic',
+            address: '0xDfBFe895e07e5115773Cb9631CB2148114589caC',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Gluon',
+              method: 'function current(uint32 id) view returns(address)',
+              args: [3],
+            },
+          },
+          {
+            name: 'DerivativesData',
+            address: '0x563052914Fd973a2305763269A106a7B0B6D50Cc',
+            upgradeability: {
+              type: 'Reference',
+              base: 'DerivativesLogic',
+              method: 'function data() view returns(address)',
+            },
+          },
+          {
+            name: 'LegacyTokensExtension',
+            address: '0xda88efa53c85afa30564bb651a2e76b99a232082',
+          },
+        ],
+        risks: [
+          // TODO: risks
+        ],
+      },
     },
     parameters: [
       {

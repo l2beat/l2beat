@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const zkswapv2: Project = {
@@ -54,26 +54,44 @@ export const zkswapv2: Project = {
         ],
       },
       stateCorrectness: {
-        name: 'ZK proofs ensure state correctness',
-        description:
-          'The published state root is correct ensured by zk_snark proofs',
-        risks: [],
+        ...TECHNOLOGY.VALIDITY_PROOFS,
         references: [
           {
-            text: 'ZKSwap Introduces Practical ZK-Rollups',
+            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
             href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
           },
         ],
       },
       dataAvailability: {
-        name: 'All transaction data is recorded on chain',
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
+            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
+          },
+        ],
+      },
+      operator: {
+        name: 'The validator is centralized.',
         description:
-          'All transactions executed on the ZK-Rollups chain are submitted to the layer1 smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the layer1 contracts can know the correct state of the zkrollup chain.',
+          'In the beginning ZKSwap is asking users to trust its centralized sequencer. Will be decentralized at later stage.',
         risks: [],
         references: [
           {
-            text: 'ZKSwap Introduces Practical ZK-Rollups',
-            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
+            text: 'ZKSwap Validator - ZKSwap wiki',
+            href: 'https://en.wiki.zks.org/techonology#3-validator',
+          },
+        ],
+      },
+      forceTransactions: {
+        name: 'Users can force submit any withdraw transaction',
+        description:
+          'Because the state of ZKSwap is based on transactions submitted to the layer1 smart contract and anyone can submit their withdraw transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
+        risks: [],
+        references: [
+          {
+            text: 'ZkSync.sol - ZKSwap source code',
+            href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
           },
         ],
       },
@@ -141,30 +159,6 @@ export const zkswapv2: Project = {
           },
         ],
         risks: [],
-      },
-      operator: {
-        name: 'The validator is centralized.',
-        description:
-          'In the beginning ZKSwap is asking users to trust its centralized sequencer. Will be decentraliazed at later stage.',
-        risks: [],
-        references: [
-          {
-            text: 'ZKSwap Validator',
-            href: 'https://en.wiki.zks.org/techonology#3-validator',
-          },
-        ],
-      },
-      forceTransactions: {
-        name: 'Users can force submit any withdraw transaction',
-        description:
-          'Because the state of ZKSwap is based on transactions submitted to the layer1 smart contract and anyone can submit their withdraw transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
-        references: [
-          {
-            text: 'ZkSync.sol - ZKSwap source code',
-            href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
-          },
-        ],
       },
     },
     purpose: 'Payments, Exchange',
