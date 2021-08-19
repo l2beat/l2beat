@@ -198,7 +198,7 @@ export const optimism: Project = {
               admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
               // UNVERIFIED ON ETHERSCAN!
               implementation: '0x9091dda480B232133A7D2E4cb23336B4F0293196',
-            }
+            },
           },
         ],
         risks: [],
