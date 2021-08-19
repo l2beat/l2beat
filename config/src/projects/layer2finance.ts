@@ -30,9 +30,9 @@ export const layer2finance: Project = {
     technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
     riskView: {
-      stateValidation: RISK.STATE_FP_1R, // TODO: verify that it actually is 1R
+      stateValidation: RISK.STATE_FP_1R,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UNKNOWN, // TODO: find out
+      upgradeability: RISK.UPGRADABLE_NO,
       operatorCensoring: RISK.CENSORING_NO_MECHANISM,
       operatorDown: RISK.DOWN_NO_MECHANISM,
     },

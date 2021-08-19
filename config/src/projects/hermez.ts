@@ -180,9 +180,9 @@ export const hermez: Project = {
     riskView: {
       stateValidation: RISK.STATE_ZKP_SN,
       dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES, // TODO: verify
+      upgradeability: RISK.UPGRADABLE_YES,
       operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS, // TODO: verify
+      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
     },
     parameters: [
       {

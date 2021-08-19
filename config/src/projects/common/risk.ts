@@ -1,11 +1,5 @@
 import { ProjectRiskViewEntry } from '../types'
 
-const UNKNOWN: ProjectRiskViewEntry = {
-  value: 'Unknown',
-  description: 'This information is currently missing on L2BEAT.',
-  sentiment: 'unknown',
-}
-
 // State validation
 
 export const STATE_FP: ProjectRiskViewEntry = {
@@ -153,7 +147,6 @@ export const DOWN_NO_MECHANISM: ProjectRiskViewEntry = {
 }
 
 export const RISK = {
-  UNKNOWN,
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,

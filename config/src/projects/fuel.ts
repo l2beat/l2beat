@@ -27,7 +27,7 @@ export const fuel: Project = {
     technologyDetails: 'UTXO',
     purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP, // TODO: 1R? Not really sure
+      stateValidation: RISK.STATE_FP_1R,
       dataAvailability: RISK.DATA_ON_CHAIN,
       upgradeability: RISK.UPGRADABLE_YES,
       operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
