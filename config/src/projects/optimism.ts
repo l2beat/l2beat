@@ -34,10 +34,11 @@ export const optimism: Project = {
     },
   ],
   details: {
-    description:
-      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure.',
     warning:
       'Currently only whitelisted contracts can be deployed on Optimism.',
+    description:
+      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure.',
+    purpose: 'Universal',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -52,7 +53,6 @@ export const optimism: Project = {
         'https://twitch.tv/optimismpbc',
       ],
     },
-    purpose: 'Universal',
     riskView: {
       stateValidation: {
         value: 'Proofs disabled',
@@ -95,31 +95,6 @@ export const optimism: Project = {
           {
             text: 'Data Availability Batches - Paradigm Research',
             href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
-          },
-        ],
-      },
-      smartContracts: {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'Optimism uses the Optimistic Virtual Machine (OVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed. Currently there is a whitelist that limits who can deploy smart contracts.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex OVM implementation.',
-          },
-          {
-            category: 'Users can be censored if',
-            text: 'they are denied the permission to deploy smart contracts.',
-          },
-        ],
-        references: [
-          {
-            text: 'Execution Contracts - Optimism documentation',
-            href: 'https://community.optimism.io/docs/protocol/protocol.html#execution-contracts',
-          },
-          {
-            text: 'Deployer Whitelist - Optimism documentation',
-            href: 'https://community.optimism.io/docs/protocol/protocol.html#ovm-deployerwhitelist',
           },
         ],
       },
@@ -166,6 +141,31 @@ export const optimism: Project = {
           ],
         },
       ],
+      smartContracts: {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Optimism uses the Optimistic Virtual Machine (OVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed. Currently there is a whitelist that limits who can deploy smart contracts.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex OVM implementation.',
+          },
+          {
+            category: 'Users can be censored if',
+            text: 'they are denied the permission to deploy smart contracts.',
+          },
+        ],
+        references: [
+          {
+            text: 'Execution Contracts - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/protocol.html#execution-contracts',
+          },
+          {
+            text: 'Deployer Whitelist - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/protocol.html#ovm-deployerwhitelist',
+          },
+        ],
+      },
       contracts: {
         addresses: [
           {
@@ -198,6 +198,26 @@ export const optimism: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-07-14',
+        name: 'Announcing Uniswap V3 on Optimism',
+        link: 'https://optimismpbc.medium.com/announcing-uniswap-v3-on-optimism-6fb033398a11',
+      },
+      {
+        date: '2021-03-26',
+        name: 'Postponing mainnet launch',
+        link: 'https://optimismpbc.medium.com/optimistically-cautious-767a898f90c8',
+      },
+      {
+        date: '2021-01-16',
+        name: 'Mainnet Soft Launch!',
+        link: 'https://optimismpbc.medium.com/mainnet-soft-launch-7cacc0143cd5',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'Optimistic Virtual Machine',
     parameters: [
@@ -266,23 +286,6 @@ export const optimism: Project = {
         tooltip:
           'Custom Solidity compiler. Currently, no new smart contracts can be deployed.',
         value: 'Yes',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-14',
-        name: 'Announcing Uniswap V3 on Optimism',
-        link: 'https://optimismpbc.medium.com/announcing-uniswap-v3-on-optimism-6fb033398a11',
-      },
-      {
-        date: '2021-03-26',
-        name: 'Postponing mainnet launch',
-        link: 'https://optimismpbc.medium.com/optimistically-cautious-767a898f90c8',
-      },
-      {
-        date: '2021-01-16',
-        name: 'Mainnet Soft Launch!',
-        link: 'https://optimismpbc.medium.com/mainnet-soft-launch-7cacc0143cd5',
       },
     ],
     notes: {

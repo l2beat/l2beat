@@ -3,7 +3,7 @@ import { Project } from './types'
 import { zkswap } from './zkswap'
 
 export const zkswapv2: Project = {
-  name: 'ZKSwap (v2)',
+  name: 'ZKSwap V2',
   slug: 'zkswapv2',
   associatedToken: 'ZKS',
   bridges: [
@@ -28,6 +28,7 @@ export const zkswapv2: Project = {
     },
   ],
   details: {
+    purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -43,12 +44,18 @@ export const zkswapv2: Project = {
         'https://zks.org/en/blog',
       ],
     },
-    technologyName: 'ZK Rollup',
+    riskView: {
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
+    },
     technology: {
       category: zkswap.details.technology.category,
       stateCorrectness: zkswap.details.technology.stateCorrectness,
-      dataAvailability: zkswap.details.technology.dataAvailability,
       newCryptography: zkswap.details.technology.newCryptography,
+      dataAvailability: zkswap.details.technology.dataAvailability,
       operator: zkswap.details.technology.operator,
       forceTransactions: zkswap.details.technology.forceTransactions,
       exitMechanisms: zkswap.details.technology.exitMechanisms,
@@ -92,14 +99,27 @@ export const zkswapv2: Project = {
         risks: [],
       },
     },
-    purpose: 'Payments, Exchange',
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
-    },
+    news: [
+      {
+        date: '2021-08-10',
+        name: 'ZKSwap To Launch 1,993 NFT Artworks Soon Amid NFT Boom, Says Lead Developer Alex Lee',
+        link: 'https://zkswapofficial.medium.com/zkswap-to-launch-1-993-nft-artworks-soon-amid-nft-boom-says-lead-developer-alex-lee-4f2b09ffbc2d',
+      },
+      {
+        date: '2021-08-06',
+        name: 'ZKSwap Reveals 28311 Burnt ZKS Token in July',
+        link: 'https://medium.com/zkswap/zkswap-reveals-28311-burnt-zks-token-in-july-a78b4aa92c5f',
+      },
+      {
+        date: '2021-06-23',
+        name: 'ZKSwap Launches V2 Testnet, Enabling Unlimited Token Listing',
+        link: 'https://zkswapofficial.medium.com/zkswap-launches-v2-testnet-enabling-unlimited-token-listing-bf0c03a718e6',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
     parameters: [
       {
         name: 'Primary use case',
@@ -167,23 +187,6 @@ export const zkswapv2: Project = {
         name: 'Smart contracts',
         tooltip: 'Possible in the future',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-08-10',
-        name: 'ZKSwap To Launch 1,993 NFT Artworks Soon Amid NFT Boom, Says Lead Developer Alex Lee',
-        link: 'https://zkswapofficial.medium.com/zkswap-to-launch-1-993-nft-artworks-soon-amid-nft-boom-says-lead-developer-alex-lee-4f2b09ffbc2d',
-      },
-      {
-        date: '2021-08-06',
-        name: 'ZKSwap Reveals 28311 Burnt ZKS Token in July',
-        link: 'https://medium.com/zkswap/zkswap-reveals-28311-burnt-zks-token-in-july-a78b4aa92c5f',
-      },
-      {
-        date: '2021-06-23',
-        name: 'ZKSwap Launches V2 Testnet, Enabling Unlimited Token Listing',
-        link: 'https://zkswapofficial.medium.com/zkswap-launches-v2-testnet-enabling-unlimited-token-listing-bf0c03a718e6',
       },
     ],
   },

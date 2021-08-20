@@ -12,6 +12,7 @@ export const immutablex: Project = {
     },
   ],
   details: {
+    purpose: 'NFT, Exchange',
     links: {
       websites: ['https://www.immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -23,9 +24,6 @@ export const immutablex: Project = {
         'https://twitter.com/Immutable',
       ],
     },
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -40,8 +38,8 @@ export const immutablex: Project = {
         details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
+      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
@@ -83,6 +81,18 @@ export const immutablex: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-04-09',
+        name: 'Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption',
+        link: 'https://www.immutable.com/blog/immutable-x-alpha-trading-launch',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -128,13 +138,6 @@ export const immutablex: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-04-09',
-        name: 'Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption',
-        link: 'https://www.immutable.com/blog/immutable-x-alpha-trading-launch',
       },
     ],
   },

@@ -13,6 +13,7 @@ export const nahmii: Project = {
   ],
   associatedToken: 'NII',
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://nahmii.io/'],
       apps: [],
@@ -28,9 +29,6 @@ export const nahmii: Project = {
         'https://discord.gg/GKTsUTH',
       ],
     },
-    technologyName: 'State Pools',
-    technologyDetails: 'User carried state, pooled security model',
-    purpose: 'Payments',
     riskView: {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
@@ -62,14 +60,6 @@ export const nahmii: Project = {
         risks: [],
         isIncomplete: true,
       },
-      massExit: {
-        name: 'Mass exit problem does not occur',
-        description:
-          'Nahmii claims that the mass exit problem is solved via checkpoints and lack of time restrictions.',
-        references: [],
-        risks: [],
-        isIncomplete: true,
-      },
       operator: {
         name: 'Nahmii runs the operator',
         description:
@@ -96,6 +86,14 @@ export const nahmii: Project = {
           isIncomplete: true,
         },
       ],
+      massExit: {
+        name: 'Mass exit problem does not occur',
+        description:
+          'Nahmii claims that the mass exit problem is solved via checkpoints and lack of time restrictions.',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
       contracts: {
         addresses: [
           {
@@ -110,6 +108,18 @@ export const nahmii: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-05-11',
+        name: 'DARMA Capital Bets $3M on Scalable DeFi Exchange With Settlement Finality',
+        link: 'https://www.coindesk.com/darma-capital-bets-3m-on-scalable-defi-exchange-with-settlement-finality/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'State Pools',
+    technologyDetails: 'User carried state, pooled security model',
     parameters: [
       {
         name: 'Primary use case',
@@ -172,13 +182,6 @@ export const nahmii: Project = {
         tooltip:
           'Users submit exit requests and wait 5 days for the possibility of someone challenging that request',
         sentiment: 'good',
-      },
-    ],
-    news: [
-      {
-        date: '2021-05-11',
-        name: 'DARMA Capital Bets $3M on Scalable DeFi Exchange With Settlement Finality',
-        link: 'https://www.coindesk.com/darma-capital-bets-3m-on-scalable-defi-exchange-with-settlement-finality/',
       },
     ],
     notes: {

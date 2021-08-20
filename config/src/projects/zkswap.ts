@@ -33,6 +33,7 @@ export const zkswap: Project = {
     },
   ],
   details: {
+    purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -48,9 +49,6 @@ export const zkswap: Project = {
         'https://zks.org/en/blog',
       ],
     },
-    technologyName: 'Validium',
-    technologyDetails: 'ZKSpeed',
-    purpose: 'Payments, Exchange',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -71,21 +69,21 @@ export const zkswap: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
-            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
-          },
-        ],
-      },
       newCryptography: {
         ...TECHNOLOGY.ZK_SNARKS,
         references: [
           {
             text: 'ZKSwap Whitepaper - Medium blog',
             href: 'https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
+            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
           },
         ],
       },
@@ -148,6 +146,38 @@ export const zkswap: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-03-22',
+        name: 'ZKSwap 100% ZK-Rollup Update Completed ',
+        link: 'https://zkswapofficial.medium.com/zkswap-100-zk-rollup-update-completed-and-announces-gzks-governance-tokens-to-further-support-3e4b113f4f49',
+      },
+      {
+        date: '2021-03-02',
+        name: 'ZKSwap Sets Out Roadmap for 2021',
+        link: 'https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3',
+      },
+      {
+        date: '2021-03-02',
+        name: 'Defying the stigma, ZKSwap’s Clarification on Bad Rumours',
+        link: 'https://zkswapofficial.medium.com/defying-the-stigma-zkswaps-clarification-on-bad-rumours-b9cc29ba87b4',
+      },
+      {
+        date: '2021-02-25',
+        name: 'Few Thoughts about Keeping L2 Data Off-Chain: A Trade-Off between L2 Efficiency and Data Availability',
+        link: 'https://zkswapofficial.medium.com/few-thoughts-about-keeping-l2-data-off-chain-a-trade-off-between-l2-efficiency-and-data-95800e960e1b',
+      },
+      {
+        date: '2021-02-14',
+        name: 'ZKSwap Live on Ethereum, Layer2 Assets Exceeding $40 Million, and Liquidity over $27 Million 1 Hour after Launch',
+        link: 'https://medium.com/zkswap/zkswap-live-on-ethereum-layer2-assets-exceeding-40-million-and-liquidity-over-27-million-1-3af96eb42768',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Validium',
+    technologyDetails: 'ZKSpeed',
     parameters: [
       {
         name: 'Primary use case',
@@ -215,33 +245,6 @@ export const zkswap: Project = {
         name: 'Smart contracts',
         tooltip: 'Possible in the future',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-03-22',
-        name: 'ZKSwap 100% ZK-Rollup Update Completed ',
-        link: 'https://zkswapofficial.medium.com/zkswap-100-zk-rollup-update-completed-and-announces-gzks-governance-tokens-to-further-support-3e4b113f4f49',
-      },
-      {
-        date: '2021-03-02',
-        name: 'ZKSwap Sets Out Roadmap for 2021',
-        link: 'https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3',
-      },
-      {
-        date: '2021-03-02',
-        name: 'Defying the stigma, ZKSwap’s Clarification on Bad Rumours',
-        link: 'https://zkswapofficial.medium.com/defying-the-stigma-zkswaps-clarification-on-bad-rumours-b9cc29ba87b4',
-      },
-      {
-        date: '2021-02-25',
-        name: 'Few Thoughts about Keeping L2 Data Off-Chain: A Trade-Off between L2 Efficiency and Data Availability',
-        link: 'https://zkswapofficial.medium.com/few-thoughts-about-keeping-l2-data-off-chain-a-trade-off-between-l2-efficiency-and-data-95800e960e1b',
-      },
-      {
-        date: '2021-02-14',
-        name: 'ZKSwap Live on Ethereum, Layer2 Assets Exceeding $40 Million, and Liquidity over $27 Million 1 Hour after Launch',
-        link: 'https://medium.com/zkswap/zkswap-live-on-ethereum-layer2-assets-exceeding-40-million-and-liquidity-over-27-million-1-3af96eb42768',
       },
     ],
     notes: {

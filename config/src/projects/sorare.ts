@@ -12,6 +12,7 @@ export const sorare: Project = {
     },
   ],
   details: {
+    purpose: 'NFT, Exchange',
     links: {
       websites: ['https://sorare.com/'],
       apps: [],
@@ -25,9 +26,6 @@ export const sorare: Project = {
         'https://instagram.com/sorare_official/',
       ],
     },
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -42,8 +40,8 @@ export const sorare: Project = {
         details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
+      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
@@ -80,6 +78,18 @@ export const sorare: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-07-26',
+        name: 'We’re live on our Scaling Solution: Starkware',
+        link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -125,13 +135,6 @@ export const sorare: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-26',
-        name: 'We’re live on our Scaling Solution: Starkware',
-        link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       },
     ],
   },

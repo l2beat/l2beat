@@ -12,6 +12,7 @@ export const fuel: Project = {
     },
   ],
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://fuel.sh/'],
       apps: [],
@@ -23,9 +24,6 @@ export const fuel: Project = {
         'https://twitter.com/fuellabs_',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'UTXO',
-    purpose: 'Payments',
     riskView: {
       stateValidation: RISK_VIEW.STATE_FP_1R,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -105,6 +103,18 @@ export const fuel: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2020-01-19',
+        name: 'Announcing the Fuel v0 Open Beta',
+        link: 'https://fuellabs.medium.com/announcing-the-fuel-v0-open-beta-565a2d340fc3',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'UTXO',
     parameters: [
       {
         name: 'Primary use case',
@@ -147,13 +157,6 @@ export const fuel: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-01-19',
-        name: 'Announcing the Fuel v0 Open Beta',
-        link: 'https://fuellabs.medium.com/announcing-the-fuel-v0-open-beta-565a2d340fc3',
       },
     ],
   },

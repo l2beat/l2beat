@@ -12,6 +12,7 @@ export const layer2finance: Project = {
     },
   ],
   details: {
+    purpose: 'DeFi aggregation',
     links: {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],
@@ -26,9 +27,6 @@ export const layer2finance: Project = {
         'https://twitter.com/CelerNetwork',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'Specialized Optimistic Rollup',
-    purpose: 'DeFi aggregation',
     riskView: {
       stateValidation: RISK_VIEW.STATE_FP_1R,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -162,6 +160,18 @@ export const layer2finance: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-04-22',
+        name: 'The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees',
+        link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'Specialized Optimistic Rollup',
     parameters: [
       {
         name: 'Primary use case',
@@ -223,13 +233,6 @@ export const layer2finance: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-04-22',
-        name: 'The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees',
-        link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees',
       },
     ],
   },

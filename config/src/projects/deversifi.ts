@@ -39,6 +39,7 @@ export const deversifi: Project = {
     },
   ],
   details: {
+    purpose: 'Exchange',
     links: {
       websites: ['https://www.deversifi.com/'],
       apps: ['https://app.deversifi.com/'],
@@ -59,9 +60,6 @@ export const deversifi: Project = {
         'https://youtube.com/c/deversifi',
       ],
     },
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'Exchange',
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -76,8 +74,8 @@ export const deversifi: Project = {
         details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
+      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
@@ -120,6 +118,23 @@ export const deversifi: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2020-03-15',
+        name: 'Fast Withdrawals - A Powerful New Building Block for Scalable DeFi',
+        link: 'https://blog.deversifi.com/l2-composability/',
+      },
+      {
+        date: '2020-07-15',
+        name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
+        link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -165,18 +180,6 @@ export const deversifi: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-03-15',
-        name: 'Fast Withdrawals - A Powerful New Building Block for Scalable DeFi',
-        link: 'https://blog.deversifi.com/l2-composability/',
-      },
-      {
-        date: '2020-07-15',
-        name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
-        link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
       },
     ],
   },

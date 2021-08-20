@@ -46,6 +46,7 @@ export const omgnetwork: Project = {
   ],
   associatedToken: 'OMG',
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://omg.network'],
       apps: [],
@@ -59,9 +60,6 @@ export const omgnetwork: Project = {
         'https://linkedin.com/company/omgnetwork/',
       ],
     },
-    technologyName: 'Plasma',
-    technologyDetails: 'More Viable Plasma',
-    purpose: 'Payments',
     riskView: {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
@@ -82,19 +80,6 @@ export const omgnetwork: Project = {
         description: '',
         references: [],
         risks: [],
-        isIncomplete: true,
-      },
-      massExit: {
-        name: 'The mass exit problem is unsolved',
-        description:
-          'In case the operator is malicious all users need to exit within a predetermined time frame. Users that do not manage to do this will lose their funds.',
-        references: [],
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'users are unable to withdraw in a mass exit event.',
-          },
-        ],
         isIncomplete: true,
       },
       operator: {
@@ -122,6 +107,19 @@ export const omgnetwork: Project = {
           isIncomplete: true,
         },
       ],
+      massExit: {
+        name: 'The mass exit problem is unsolved',
+        description:
+          'In case the operator is malicious all users need to exit within a predetermined time frame. Users that do not manage to do this will lose their funds.',
+        references: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'users are unable to withdraw in a mass exit event.',
+          },
+        ],
+        isIncomplete: true,
+      },
       contracts: {
         addresses: [
           {
@@ -146,6 +144,18 @@ export const omgnetwork: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2020-06-01',
+        name: 'Scaling Ethereum with the OMG Network',
+        link: 'https://omg.network/omg-network-scales-ethereum/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Plasma',
+    technologyDetails: 'More Viable Plasma',
     parameters: [
       {
         name: 'Primary use case',
@@ -187,13 +197,6 @@ export const omgnetwork: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-06-01',
-        name: 'Scaling Ethereum with the OMG Network',
-        link: 'https://omg.network/omg-network-scales-ethereum/',
       },
     ],
   },

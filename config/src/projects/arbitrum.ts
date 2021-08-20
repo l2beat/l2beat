@@ -12,9 +12,10 @@ export const arbitrum: Project = {
     },
   ],
   details: {
+    warning: 'Arbitrum is currently only open to whitelisted developers.',
     description:
       'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
-    warning: 'Arbitrum is currently only open to whitelisted developers.',
+    purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
       apps: [],
@@ -31,7 +32,6 @@ export const arbitrum: Project = {
         'https://discord.gg/5KE54JwyTs',
       ],
     },
-    purpose: 'Universal',
     riskView: {
       stateValidation: RISK_VIEW.STATE_FP_INT,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -61,23 +61,6 @@ export const arbitrum: Project = {
           {
             text: 'Submitting Transactions - Arbitrum documentation',
             href: 'https://developer.offchainlabs.com/docs/rollup_basics#submitting-transactions',
-          },
-        ],
-      },
-      smartContracts: {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex AVM implementation.',
-          },
-        ],
-        references: [
-          {
-            text: 'AVM - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
           },
         ],
       },
@@ -140,6 +123,23 @@ export const arbitrum: Project = {
           ],
         },
       ],
+      smartContracts: {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex AVM implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'AVM - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
+          },
+        ],
+      },
       contracts: {
         addresses: [
           {

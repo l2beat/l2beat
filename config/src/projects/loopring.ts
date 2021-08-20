@@ -13,6 +13,7 @@ export const loopring: Project = {
   ],
   associatedToken: 'LRC',
   details: {
+    purpose: 'Payments, Exchange',
     links: {
       websites: ['https://loopring.org'],
       apps: ['https://exchange.loopring.io/'],
@@ -32,9 +33,6 @@ export const loopring: Project = {
         'https://loopring.substack.com/',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: 'zk-SNARK',
-    purpose: 'Payments, Exchange',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -55,21 +53,21 @@ export const loopring: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'Introduction - Loopring design doc',
-            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#introduction',
-          },
-        ],
-      },
       newCryptography: {
         ...TECHNOLOGY.ZK_SNARKS,
         references: [
           {
             text: 'Operators - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Introduction - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#introduction',
           },
         ],
       },
@@ -162,6 +160,33 @@ export const loopring: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2020-12-15',
+        name: 'Shutdown of Loopring Exchange v1; Transition to v2',
+        link: 'https://medium.com/loopring-protocol/shutdown-of-loopring-exchange-v1-transition-to-v2-d06cdf462548',
+      },
+      {
+        date: '2020-12-03',
+        name: 'Loopring’s zkRollup AMM is Live',
+        link: 'https://medium.com/loopring-protocol/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
+      },
+      {
+        date: '2020-06-06',
+        name: 'Loopring Pay is Live: zkRollup Transfers on Ethereum',
+        link: 'https://medium.com/loopring-protocol/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
+      },
+      {
+        date: '2020-02-27',
+        name: 'Loopring Launches zkRollup Exchange: Loopring.io',
+        link: 'https://medium.com/loopring-protocol/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK',
     parameters: [
       {
         name: 'Primary use case',
@@ -217,28 +242,6 @@ export const loopring: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-12-15',
-        name: 'Shutdown of Loopring Exchange v1; Transition to v2',
-        link: 'https://medium.com/loopring-protocol/shutdown-of-loopring-exchange-v1-transition-to-v2-d06cdf462548',
-      },
-      {
-        date: '2020-12-03',
-        name: 'Loopring’s zkRollup AMM is Live',
-        link: 'https://medium.com/loopring-protocol/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
-      },
-      {
-        date: '2020-06-06',
-        name: 'Loopring Pay is Live: zkRollup Transfers on Ethereum',
-        link: 'https://medium.com/loopring-protocol/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
-      },
-      {
-        date: '2020-02-27',
-        name: 'Loopring Launches zkRollup Exchange: Loopring.io',
-        link: 'https://medium.com/loopring-protocol/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
       },
     ],
   },

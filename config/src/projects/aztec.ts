@@ -12,6 +12,7 @@ export const aztec: Project = {
     },
   ],
   details: {
+    purpose: 'Private payments',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -26,9 +27,6 @@ export const aztec: Project = {
         'https://plonk.cafe/',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: 'zk-SNARK/PLONK',
-    purpose: 'Private payments',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -49,15 +47,6 @@ export const aztec: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'RollupProcessor.sol#L359 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
-          },
-        ],
-      },
       newCryptography: {
         ...TECHNOLOGY.ZK_SNARKS,
         references: [
@@ -67,15 +56,12 @@ export const aztec: Project = {
           },
         ],
       },
-      additionalPrivacy: {
-        name: 'Payments are private',
-        description:
-          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
-        risks: [],
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
         references: [
           {
-            text: 'Fast Privacy, Now - Aztec Medium Blog',
-            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+            text: 'RollupProcessor.sol#L359 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
           },
         ],
       },
@@ -121,6 +107,18 @@ export const aztec: Project = {
           ],
         },
       ],
+      additionalPrivacy: {
+        name: 'Payments are private',
+        description:
+          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
+        risks: [],
+        references: [
+          {
+            text: 'Fast Privacy, Now - Aztec Medium Blog',
+            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+          },
+        ],
+      },
       contracts: {
         addresses: [
           {
@@ -141,6 +139,28 @@ export const aztec: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-07-01',
+        name: 'Introducing private Bitcoin',
+        link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
+      },
+      {
+        date: '2021-04-30',
+        name: 'Introducing zkDAI into the Aztec Private Rollup',
+        link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
+      },
+      {
+        date: '2021-03-15',
+        name: 'Launching Aztec 2.0 Rollup',
+        link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK/PLONK',
     parameters: [
       {
         name: 'Primary use case',
@@ -175,23 +195,6 @@ export const aztec: Project = {
         name: 'Smart contracts',
         tooltip: 'Possible in the future (Noir - custom language) ',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-01',
-        name: 'Introducing private Bitcoin',
-        link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
-      },
-      {
-        date: '2021-04-30',
-        name: 'Introducing zkDAI into the Aztec Private Rollup',
-        link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
-      },
-      {
-        date: '2021-03-15',
-        name: 'Launching Aztec 2.0 Rollup',
-        link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
       },
     ],
   },

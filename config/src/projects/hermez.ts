@@ -12,6 +12,7 @@ export const hermez: Project = {
     },
   ],
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://hermez.io/'],
       apps: ['https://wallet.hermez.io/'],
@@ -31,6 +32,13 @@ export const hermez: Project = {
         'https://twitter.com/hermez_network',
       ],
     },
+    riskView: {
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
+    },
     technology: {
       category: {
         name: 'ZK Rollup',
@@ -44,15 +52,6 @@ export const hermez: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'Data Availability - Hermez documentation',
-            href: 'https://docs.hermez.io/#/developers/glossary?id=data-availability',
-          },
-        ],
-      },
       newCryptography: {
         ...TECHNOLOGY.ZK_SNARKS,
         references: [
@@ -63,6 +62,15 @@ export const hermez: Project = {
           {
             text: 'Multi-party Computation for the Trusted Setup - Hermez documentation',
             href: 'https://docs.hermez.io/#/about/security?id=multi-party-computation-for-the-trusted-setup',
+          },
+        ],
+      },
+      dataAvailability: {
+        ...TECHNOLOGY.ON_CHAIN_DATA,
+        references: [
+          {
+            text: 'Data Availability - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/glossary?id=data-availability',
           },
         ],
       },
@@ -173,16 +181,23 @@ export const hermez: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-07-10',
+        name: 'Hermez Coordinator Is Live On Testnet',
+        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
+      },
+      {
+        date: '2021-03-17',
+        name: 'Hermez Network Mainnet Launch',
+        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
     technologyName: 'ZK Rollup',
     technologyDetails: 'zk-SNARK',
-    purpose: 'Payments',
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
-    },
     parameters: [
       {
         name: 'Primary use case',
@@ -257,18 +272,6 @@ export const hermez: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-10',
-        name: 'Hermez Coordinator Is Live On Testnet',
-        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
-      },
-      {
-        date: '2021-03-17',
-        name: 'Hermez Network Mainnet Launch',
-        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
       },
     ],
   },

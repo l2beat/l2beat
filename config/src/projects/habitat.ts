@@ -13,6 +13,7 @@ export const habitat: Project = {
   ],
   associatedToken: 'HBT',
   details: {
+    purpose: 'DAO, Treasury',
     links: {
       websites: ['https://0xhabitat.org/'],
       apps: ['https://0xhabitat.org/app/'],
@@ -25,9 +26,6 @@ export const habitat: Project = {
         'https://0xhabitat.substack.com/',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'NutBerry',
-    purpose: 'DAO, Treasury',
     riskView: {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -38,6 +36,7 @@ export const habitat: Project = {
     technology: {
       category: {
         name: 'Optimistic Rollup',
+        details: 'NutBerry',
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,
@@ -46,18 +45,6 @@ export const habitat: Project = {
       dataAvailability: {
         ...TECHNOLOGY.ON_CHAIN_DATA,
         isIncomplete: true,
-      },
-      smartContracts: {
-        name: 'Limited smart contract support exists.',
-        description:
-          'Only static contracts that comply to the Habitat Module interface can be deployed and used.',
-        references: [
-          {
-            text: 'HabitatModule.sol - Habitat source code',
-            href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
-          },
-        ],
-        risks: [],
       },
       operator: {
         name: 'Anyone can propose and finalize blocks',
@@ -84,6 +71,18 @@ export const habitat: Project = {
           isIncomplete: true,
         },
       ],
+      smartContracts: {
+        name: 'Limited smart contract support exists.',
+        description:
+          'Only static contracts that comply to the Habitat Module interface can be deployed and used.',
+        references: [
+          {
+            text: 'HabitatModule.sol - Habitat source code',
+            href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
+          },
+        ],
+        risks: [],
+      },
       contracts: {
         addresses: [
           {
@@ -101,6 +100,18 @@ export const habitat: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-06-30',
+        name: 'Community Update #15 - Habitat is Live on Mainnet',
+        link: 'https://0xhabitat.substack.com/p/15',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'NutBerry',
     parameters: [
       {
         name: 'Primary use case',
@@ -174,13 +185,6 @@ export const habitat: Project = {
             href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
           },
         ],
-      },
-    ],
-    news: [
-      {
-        date: '2021-06-30',
-        name: 'Community Update #15 - Habitat is Live on Mainnet',
-        link: 'https://0xhabitat.substack.com/p/15',
       },
     ],
   },

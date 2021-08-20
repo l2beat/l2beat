@@ -12,6 +12,7 @@ export const dydx: Project = {
     },
   ],
   details: {
+    purpose: 'Exchange',
     links: {
       websites: ['https://dydx.exchange/'],
       apps: ['https://trade.dydx.exchange/', 'https://margin.dydx.exchange/'],
@@ -33,9 +34,6 @@ export const dydx: Project = {
         'https://linkedin.com/company/dydx',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'Exchange',
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -50,8 +48,8 @@ export const dydx: Project = {
         details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
+      dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('perpetual'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
@@ -94,6 +92,28 @@ export const dydx: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-04-06',
+        name: 'Trade now on Layer 2',
+        link: 'https://dydx.exchange/blog/public',
+      },
+      {
+        date: '2020-08-18',
+        name: 'Scaling dYdX with StarkWare',
+        link: 'https://dydx.exchange/blog/public',
+      },
+      {
+        date: '2020-04-20',
+        name: 'dYdX Launches BTC Perpetual Contract Market',
+        link: 'https://medium.com/dydxderivatives/dydx-launches-btc-perpetual-contract-market-68f59b193f7e',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -139,23 +159,6 @@ export const dydx: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-04-06',
-        name: 'Trade now on Layer 2',
-        link: 'https://dydx.exchange/blog/public',
-      },
-      {
-        date: '2020-08-18',
-        name: 'Scaling dYdX with StarkWare',
-        link: 'https://dydx.exchange/blog/public',
-      },
-      {
-        date: '2020-04-20',
-        name: 'dYdX Launches BTC Perpetual Contract Market',
-        link: 'https://medium.com/dydxderivatives/dydx-launches-btc-perpetual-contract-market-68f59b193f7e',
       },
     ],
   },
