@@ -38,7 +38,6 @@ export const habitat: Project = {
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [],
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,

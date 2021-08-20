@@ -45,7 +45,6 @@ export const loopring: Project = {
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [],
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,

@@ -47,13 +47,7 @@ export const dydx: Project = {
     technology: {
       category: {
         name: 'ZK Rollup',
-        description: "Powered by StarkWare's StarkEx",
-        references: [
-          {
-            text: 'dYdX Contracts - StarkEx documentation',
-            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#dydx-contracts',
-          },
-        ],
+        details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,

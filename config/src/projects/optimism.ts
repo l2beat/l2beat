@@ -68,12 +68,6 @@ export const optimism: Project = {
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [
-          {
-            text: 'TLDR - Optimism FAQ',
-            href: 'https://community.optimism.io/faqs/#tl-dr',
-          },
-        ],
       },
       stateCorrectness: {
         name: 'Fraud proofs are disabled',

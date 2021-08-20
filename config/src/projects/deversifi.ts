@@ -73,13 +73,7 @@ export const deversifi: Project = {
     technology: {
       category: {
         name: 'Validium',
-        description: "Powered by StarkWare's StarkEx",
-        references: [
-          {
-            text: 'DeversiFi Contracts - StarkEx documentation',
-            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#deversifi-contracts',
-          },
-        ],
+        details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,

@@ -72,7 +72,6 @@ export const omgnetwork: Project = {
     technology: {
       category: {
         name: 'Plasma',
-        references: [],
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,

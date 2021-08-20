@@ -41,7 +41,6 @@ export const nahmii: Project = {
     technology: {
       category: {
         name: 'State Pools',
-        references: [],
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,

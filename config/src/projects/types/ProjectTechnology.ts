@@ -1,5 +1,4 @@
 import { ProjectContracts } from './ProjectContracts'
-import { ProjectReference } from './ProjectReference'
 import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
 export interface ProjectTechnology {
@@ -7,9 +6,7 @@ export interface ProjectTechnology {
     /** Name of the category the project belongs to */
     name: ProjectCategory
     /** Additional details about the technology */
-    description?: string
-    /** List of references backing up the claim */
-    references: ProjectReference[]
+    details?: string
   }
   /** What state correctness mechanism is used in the project */
   stateCorrectness: ProjectTechnologyChoice

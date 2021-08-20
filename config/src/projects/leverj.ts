@@ -46,8 +46,7 @@ export const leverj: Project = {
     technology: {
       category: {
         name: 'Plasma',
-        description: 'Gluon',
-        references: [],
+        details: 'Gluon',
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,

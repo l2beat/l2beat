@@ -36,7 +36,7 @@ export const fuel: Project = {
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [],
+        details: 'UTXO based',
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,

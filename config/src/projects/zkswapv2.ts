@@ -46,12 +46,7 @@ export const zkswapv2: Project = {
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [
-          {
-            text: 'a Layer-2 Token Swap Protocol based on ZK-Rollups Technology',
-            href: 'https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d',
-          },
-        ],
+        // https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,

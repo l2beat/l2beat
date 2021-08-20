@@ -42,12 +42,6 @@ export const arbitrum: Project = {
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [
-          {
-            text: 'Arbitrum Rollup Basics - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/rollup_basics',
-          },
-        ],
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.FRAUD_PROOFS,

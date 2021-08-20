@@ -39,12 +39,6 @@ export const zksync: Project = {
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [
-          {
-            text: 'Introduction - zkSync FAQ',
-            href: 'https://zksync.io/faq/intro.html#introduction',
-          },
-        ],
       },
       stateCorrectness: {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,
