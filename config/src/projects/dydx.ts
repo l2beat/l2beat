@@ -1,4 +1,5 @@
 import {
+  DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STARKEX,
@@ -54,7 +55,7 @@ export const dydx: Project = {
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-      dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,
+      dataAvailability: DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('perpetual'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],

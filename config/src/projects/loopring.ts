@@ -1,8 +1,8 @@
 import {
+  DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  TECHNOLOGY,
 } from './common'
 import { Project } from './types'
 
@@ -68,7 +68,7 @@ export const loopring: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'Introduction - Loopring design doc',

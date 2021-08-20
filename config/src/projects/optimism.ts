@@ -1,4 +1,4 @@
-import { RISK_VIEW } from './common'
+import { DATA_AVAILABILITY, RISK_VIEW } from './common'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -87,10 +87,7 @@ export const optimism: Project = {
         ],
       },
       dataAvailability: {
-        name: 'All transaction data is recorded on chain',
-        description:
-          'All transactions executed on the Optimism Rollup chain are submitted to the Canonical Transaction Chain smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Optimism chain.',
-        risks: [],
+        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
             text: 'Data Availability Batches - Paradigm Research',

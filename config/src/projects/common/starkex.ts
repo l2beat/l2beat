@@ -1,43 +1,5 @@
 import { ProjectTechnologyChoice } from '../types'
 
-const VALIDIUM_DATA_AVAILABILITY: ProjectTechnologyChoice = {
-  name: 'Data is not stored on chain',
-  description:
-    'The balances of the users are not published on-chain, but rather sent to several well known and trusted parties, also known as committee members. A state update is valid and accepted on-chain only if at least a quorum of the committee members sign a state update.',
-  risks: [
-    {
-      category: 'Funds can be lost if',
-      text: 'the external data becomes unavailable.',
-    },
-    {
-      category: 'Users can be censored if',
-      text: 'the committee restricts their access to the external data.',
-    },
-  ],
-  references: [
-    {
-      text: 'Validium - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/data-availability-modes#validium',
-    },
-    {
-      text: 'Availability Verifiers - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/contract-management#availability-verifiers',
-    },
-  ],
-}
-
-const ROLLUP_DATA_AVAILABILITY: ProjectTechnologyChoice = {
-  name: 'All data required for proofs is published on chain',
-  description:
-    "All the relevant data that is used to recover the L2 balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
-  risks: [],
-  references: [
-    {
-      text: 'ZK-Rollup - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/data-availability-modes#zk-rollup',
-    },
-  ],
-}
 const OPERATOR: ProjectTechnologyChoice = {
   name: 'The operator is a single entity',
   description:
@@ -109,8 +71,6 @@ const FORCED_WITHDRAWAL: ProjectTechnologyChoice = {
 }
 
 export const STARKEX = {
-  VALIDIUM_DATA_AVAILABILITY,
-  ROLLUP_DATA_AVAILABILITY,
   OPERATOR,
   FORCE_OPERATIONS,
   OFF_CHAIN_WITHDRAWAL,

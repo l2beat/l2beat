@@ -1,13 +1,5 @@
 import { ProjectTechnologyChoice } from '../types'
 
-const ON_CHAIN_DATA: ProjectTechnologyChoice = {
-  name: 'All data required for proofs is published on chain',
-  description:
-    'All the data that is used to construct the system state is published on chain in the form of cheap calldata. This ensures that it will always be available when needed.',
-  risks: [],
-  references: [],
-}
-
 const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
   name: 'Users can force submit any transaction',
   description:
@@ -17,6 +9,5 @@ const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
 }
 
 export const TECHNOLOGY = {
-  ON_CHAIN_DATA,
   PROPOSE_OWN_BLOCKS,
 }

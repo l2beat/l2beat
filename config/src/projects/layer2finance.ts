@@ -1,4 +1,4 @@
-import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
+import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -66,7 +66,7 @@ export const layer2finance: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'RollupChain.sol#L191 - Layer2.Finance source code',

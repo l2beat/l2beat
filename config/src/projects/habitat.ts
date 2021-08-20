@@ -1,4 +1,4 @@
-import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
+import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -43,7 +43,7 @@ export const habitat: Project = {
         isIncomplete: true,
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         isIncomplete: true,
       },
       operator: {

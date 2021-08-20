@@ -1,4 +1,4 @@
-import { RISK_VIEW, STATE_CORRECTNESS } from './common'
+import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const arbitrum: Project = {
@@ -53,10 +53,7 @@ export const arbitrum: Project = {
         ],
       },
       dataAvailability: {
-        name: 'All transaction data is recorded on chain',
-        description:
-          'All transactions executed on the Arbitrum Rollup chain are submitted to the Inbox smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Arbitrum chain.',
-        risks: [],
+        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
             text: 'Submitting Transactions - Arbitrum documentation',

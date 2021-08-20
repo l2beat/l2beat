@@ -1,4 +1,5 @@
 import {
+  DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -71,7 +72,7 @@ export const hermez: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'Data Availability - Hermez documentation',

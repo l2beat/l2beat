@@ -1,8 +1,8 @@
 import {
+  DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  TECHNOLOGY,
 } from './common'
 import { Project } from './types'
 
@@ -84,7 +84,7 @@ export const zkswap: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',

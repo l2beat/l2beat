@@ -1,4 +1,5 @@
 import {
+  DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STARKEX,
@@ -44,7 +45,7 @@ export const immutablex: Project = {
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
+      dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],

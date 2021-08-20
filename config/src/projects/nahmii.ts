@@ -53,7 +53,7 @@ export const nahmii: Project = {
         isIncomplete: true,
       },
       dataAvailability: {
-        name: 'Data is provided by a data availability oracle',
+        name: 'Data is not stored on chain',
         description:
           'Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
         references: [],

@@ -1,4 +1,4 @@
-import { RISK_VIEW, STATE_CORRECTNESS } from './common'
+import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const leverj: Project = {
@@ -51,10 +51,7 @@ export const leverj: Project = {
         isIncomplete: true,
       },
       dataAvailability: {
-        name: 'Data is not stored on chain',
-        description: '',
-        references: [],
-        risks: [],
+        ...DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
         isIncomplete: true,
       },
       operator: {
