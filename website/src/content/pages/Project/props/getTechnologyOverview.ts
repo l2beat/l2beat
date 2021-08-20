@@ -51,8 +51,8 @@ export function getTechnologyOverview(
       name: item.name,
       editLink: getEditLink(project),
       issueLink: getIssueLink(issueTitle),
-      description: item.description ?? '',
-      missingInfo: item.description === null,
+      description: item.description,
+      isIncomplete: !!item.isIncomplete,
       referenceIds: item.references.map(addReference),
       risks,
     }
@@ -169,11 +169,43 @@ export function getTechnologyOverview(
     }
   }
 
+  const sections = makeSections(tech)
+  const isIncomplete = sections.some((x) =>
+    x.items.some((x) => x.isIncomplete === true || x.referenceIds.length === 0)
+  )
+
   return {
-    sections: makeSections(tech),
+    editLink: getEditLink(project),
+    twitterLink: getTwitterLink(project),
+    isIncomplete,
+    sections,
     contractsSection: makeContractSection(tech),
     referencesSection: { items: references },
   }
+}
+
+function getTwitterLink(project: Project) {
+  const twitterSocialMedia = project.details.links.socialMedia.find((x) =>
+    x.includes('twitter')
+  )
+  if (!twitterSocialMedia) {
+    return
+  }
+  const twitterAccount = twitterSocialMedia.substring(
+    'https://twitter.com/'.length
+  )
+
+  const message = `Hey @${twitterAccount}. Your project overview on @l2beatcom would benefit from your help.`
+  const url = `https://l2beat.com/projects/${project.slug}`
+
+  const options = [
+    ['text', encodeURIComponent(message)],
+    ['url', encodeURIComponent(url)],
+  ]
+    .map((x) => `${x[0]}=${x[1]}`)
+    .join('&')
+
+  return `https://twitter.com/intent/tweet?${options}`
 }
 
 function noUndefined<T>(x: T | undefined): x is T {
