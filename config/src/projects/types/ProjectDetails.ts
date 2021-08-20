@@ -16,9 +16,8 @@ export interface ProjectDetails {
   // TODO: Not optional
   /** A few sentences describing the project the project */
   description?: string
-  // TODO: Not optional
   /** Deep dive into project technology */
-  technology?: ProjectTechnology
+  technology: ProjectTechnology
   /** Risk view values for this project */
   riskView: ProjectRiskView
   /** Links to recent developments */

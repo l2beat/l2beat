@@ -1,5 +1,6 @@
-import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
+import { RISK_VIEW } from './common'
 import { Project } from './types'
+import { zkswap } from './zkswap'
 
 export const zkswapv2: Project = {
   name: 'ZKSwap (v2)',
@@ -44,78 +45,13 @@ export const zkswapv2: Project = {
     },
     technologyName: 'ZK Rollup',
     technology: {
-      category: {
-        name: 'ZK Rollup',
-        // https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d
-      },
-      stateCorrectness: {
-        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-        references: [
-          {
-            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
-            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
-          },
-        ],
-      },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
-            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
-          },
-        ],
-      },
-      operator: {
-        name: 'The validator is centralized.',
-        description:
-          'In the beginning ZKSwap is asking users to trust its centralized sequencer. Will be decentralized at later stage.',
-        risks: [],
-        references: [
-          {
-            text: 'ZKSwap Validator - ZKSwap wiki',
-            href: 'https://en.wiki.zks.org/techonology#3-validator',
-          },
-        ],
-      },
-      forceTransactions: {
-        name: 'Users can force submit any withdraw transaction',
-        description:
-          'Because the state of ZKSwap is based on transactions submitted to the layer1 smart contract and anyone can submit their withdraw transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
-        references: [
-          {
-            text: 'ZkSync.sol - ZKSwap source code',
-            href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
-          },
-        ],
-      },
-      exitMechanisms: [
-        {
-          name: 'Full Exit',
-          description:
-            'When a user initiates a full exit to layer1 contract, ZKSwap will include this transaction in a block and process. Then all the funds will be withdrawn to L1.',
-          risks: [],
-          references: [
-            {
-              text: 'ZkSync.sol - ZKSwap source code',
-              href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
-            },
-          ],
-        },
-        {
-          name: 'Partial Exit (Withdraw)',
-          description:
-            'When a user makes a withdraw transaction on layer2, ZKSwap will include this transaction in a block and process. Then the requested funds will be withdrawn to L1.',
-          risks: [],
-          references: [
-            {
-              text: 'Make Transaction',
-              href: 'https://en.wiki.zks.org/interact-with-zkswap/make-transaction#withdraw',
-            },
-          ],
-        },
-      ],
+      category: zkswap.details.technology.category,
+      stateCorrectness: zkswap.details.technology.stateCorrectness,
+      dataAvailability: zkswap.details.technology.dataAvailability,
+      newCryptography: zkswap.details.technology.newCryptography,
+      operator: zkswap.details.technology.operator,
+      forceTransactions: zkswap.details.technology.forceTransactions,
+      exitMechanisms: zkswap.details.technology.exitMechanisms,
       contracts: {
         addresses: [
           {
