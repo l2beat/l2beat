@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK_VIEW } from './common'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -60,10 +60,10 @@ export const optimism: Project = {
           'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
       },
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_TRANSACT_L1,
-      operatorDown: RISK.DOWN_NO_MECHANISM,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
+      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {

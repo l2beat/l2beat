@@ -1,4 +1,4 @@
-import { RISK, STARKEX } from './common'
+import { RISK_VIEW, STARKEX } from './common'
 import { Project } from './types'
 
 export const sorare: Project = {
@@ -30,11 +30,11 @@ export const sorare: Project = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_ST,
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_ZKP_ST,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {

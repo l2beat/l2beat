@@ -1,4 +1,4 @@
-import { RISK, TECHNOLOGY } from './common'
+import { RISK_VIEW, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -30,11 +30,11 @@ export const layer2finance: Project = {
     technologyDetails: 'Specialized Optimistic Rollup',
     purpose: 'DeFi aggregation',
     riskView: {
-      stateValidation: RISK.STATE_FP_1R,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_NO,
-      operatorCensoring: RISK.CENSORING_NO_MECHANISM,
-      operatorDown: RISK.DOWN_NO_MECHANISM,
+      stateValidation: RISK_VIEW.STATE_FP_1R,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_NO,
+      operatorCensoring: RISK_VIEW.CENSORING_NO_MECHANISM,
+      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {

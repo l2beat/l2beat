@@ -1,4 +1,4 @@
-import { RISK, TECHNOLOGY } from './common'
+import { RISK_VIEW, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const hermez: Project = {
@@ -178,11 +178,11 @@ export const hermez: Project = {
     technologyDetails: 'zk-SNARK',
     purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     parameters: [
       {

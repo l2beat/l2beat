@@ -1,4 +1,4 @@
-import { RISK } from './common'
+import { RISK_VIEW } from './common'
 import { Project } from './types'
 
 export const nahmii: Project = {
@@ -32,11 +32,11 @@ export const nahmii: Project = {
     technologyDetails: 'User carried state, pooled security model',
     purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP,
-      dataAvailability: RISK.DATA_EXTERNAL_DAC,
-      upgradeability: RISK.UPGRADABLE_NO,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_U,
+      stateValidation: RISK_VIEW.STATE_FP,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+      upgradeability: RISK_VIEW.UPGRADABLE_NO,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
     },
     technology: {
       category: {

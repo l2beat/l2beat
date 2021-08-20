@@ -1,4 +1,4 @@
-import { RISK, STARKEX } from './common'
+import { RISK_VIEW, STARKEX } from './common'
 import { Project } from './types'
 
 export const deversifi: Project = {
@@ -64,11 +64,11 @@ export const deversifi: Project = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_ST,
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADE_DELAY('4 weeks'),
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_ZKP_ST,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('4 weeks'),
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {

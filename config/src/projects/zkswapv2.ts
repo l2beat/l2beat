@@ -1,4 +1,4 @@
-import { RISK, TECHNOLOGY } from './common'
+import { RISK_VIEW, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const zkswapv2: Project = {
@@ -163,11 +163,11 @@ export const zkswapv2: Project = {
     },
     purpose: 'Payments, Exchange',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADE_DELAY('8 days'),
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_ZKP,
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     parameters: [
       {

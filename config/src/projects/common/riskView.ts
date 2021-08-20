@@ -146,7 +146,7 @@ export const DOWN_NO_MECHANISM: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-export const RISK = {
+export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,

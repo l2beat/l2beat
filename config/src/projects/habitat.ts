@@ -1,4 +1,4 @@
-import { RISK, TECHNOLOGY } from './common'
+import { RISK_VIEW, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -29,11 +29,11 @@ export const habitat: Project = {
     technologyDetails: 'NutBerry',
     purpose: 'DAO, Treasury',
     riskView: {
-      stateValidation: RISK.STATE_FP,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
+      stateValidation: RISK_VIEW.STATE_FP,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_PROPOSE_BLOCKS,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {
