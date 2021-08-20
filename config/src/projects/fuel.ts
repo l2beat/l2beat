@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY,
@@ -60,10 +61,7 @@ export const fuel: Project = {
         ],
       },
       operator: {
-        name: 'Block production is partially centralized.',
-        description:
-          'While anyone can propose new blocks the Fuel operator has a short period of time (5 minutes) where they are the only one that can propose a block that includes a given transaction bundle. This allows the operator to reliably provide a soft confirmation to a recipient that a transaction will be included in the next Fuel block.',
-        risks: [],
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
             text: 'Architecture: A High-Level View - Fuel documentation',

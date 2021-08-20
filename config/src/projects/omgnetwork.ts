@@ -1,4 +1,9 @@
-import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
+import {
+  DATA_AVAILABILITY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const omgnetwork: Project = {
@@ -80,10 +85,7 @@ export const omgnetwork: Project = {
         isIncomplete: true,
       },
       operator: {
-        name: 'There is a single operator',
-        description: '',
-        references: [],
-        risks: [],
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         isIncomplete: true,
       },
       forceTransactions: {

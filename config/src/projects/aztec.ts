@@ -1,6 +1,7 @@
 import {
   DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
+  OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
@@ -71,10 +72,9 @@ export const aztec: Project = {
         ],
       },
       operator: {
-        name: 'The sequencer is centralized.',
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         description:
-          'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation.',
-        risks: [],
+          'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
         references: [
           {
             text: 'RollupProcessor.sol#L97 - Etherscan source code',

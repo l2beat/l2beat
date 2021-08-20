@@ -1,6 +1,7 @@
 import {
   DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
+  OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
@@ -71,15 +72,7 @@ export const zksync: Project = {
         ],
       },
       operator: {
-        name: 'The operator is centralized',
-        description:
-          'At the moment, the daily operation of the zkSync network depends on the health of the computational service provider who generates zero-knowledge proofs for the blocks.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
             text: 'How decentralized is zkSync - zkSync FAQ',

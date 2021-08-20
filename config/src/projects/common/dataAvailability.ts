@@ -29,15 +29,25 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKEX_OFF_CHAIN: ProjectTechnologyChoice = {
+const GENERIC_OFF_CHAIN: ProjectTechnologyChoice = {
   name: 'Data is not stored on chain',
   description:
-    'The balances of the users are not published on-chain, but rather sent to several well known and trusted parties, also known as committee members. A state update is valid and accepted on-chain only if at least a quorum of the committee members sign a state update.',
+    'The transaction data is not recorded on the Ethereum main chain.',
   risks: [
     {
       category: 'Funds can be lost if',
       text: 'the external data becomes unavailable.',
     },
+  ],
+  references: [],
+}
+
+const STARKEX_OFF_CHAIN: ProjectTechnologyChoice = {
+  ...GENERIC_OFF_CHAIN,
+  description:
+    'The balances of the users are not published on-chain, but rather sent to several well known and trusted parties, also known as committee members. A state update is valid and accepted on-chain only if at least a quorum of the committee members sign a state update.',
+  risks: [
+    ...GENERIC_OFF_CHAIN.risks,
     {
       category: 'Users can be censored if',
       text: 'the committee restricts their access to the external data.',
@@ -56,22 +66,16 @@ const STARKEX_OFF_CHAIN: ProjectTechnologyChoice = {
 }
 
 const PLASMA_OFF_CHAIN: ProjectTechnologyChoice = {
-  name: 'Data is not stored on chain',
+  ...GENERIC_OFF_CHAIN,
   description:
     'The transaction data is stored on a plasma chain and is not recorded on the Ethereum main chain.',
-  risks: [
-    {
-      category: 'Funds can be lost if',
-      text: 'the external data becomes unavailable.',
-    },
-  ],
-  references: [],
 }
 
 export const DATA_AVAILABILITY = {
   ON_CHAIN,
   ON_CHAIN_CANONICAL,
   STARKEX_ON_CHAIN,
+  GENERIC_OFF_CHAIN,
   STARKEX_OFF_CHAIN,
   PLASMA_OFF_CHAIN,
 }

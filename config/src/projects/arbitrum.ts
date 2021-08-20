@@ -1,4 +1,9 @@
-import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
+import {
+  DATA_AVAILABILITY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const arbitrum: Project = {
@@ -62,15 +67,7 @@ export const arbitrum: Project = {
         ],
       },
       operator: {
-        name: 'The sequencer is centralized.',
-        description:
-          'In the beginning Arbitrum is asking users to trust its centralized sequencer. Later it plans to switch to decentralized fair sequencing. If the sequencer refuses to include user transactions they will have to submit them on L1 incurring additional fees.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
             text: 'Validators - Arbitrum documentation',

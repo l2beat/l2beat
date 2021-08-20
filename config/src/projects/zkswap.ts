@@ -1,6 +1,7 @@
 import {
   DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
+  OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
@@ -93,10 +94,7 @@ export const zkswap: Project = {
         ],
       },
       operator: {
-        name: 'The validator is centralized.',
-        description:
-          'In the beginning ZKSwap is asking users to trust its centralized sequencer. Will be decentralized at later stage.',
-        risks: [],
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
             text: 'ZKSwap Validator - ZKSwap wiki',

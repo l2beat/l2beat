@@ -1,4 +1,9 @@
-import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
+import {
+  DATA_AVAILABILITY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -47,10 +52,7 @@ export const habitat: Project = {
         isIncomplete: true,
       },
       operator: {
-        name: 'Anyone can propose and finalize blocks',
-        description: '',
-        risks: [],
-        references: [],
+        ...OPERATOR.DECENTRALIZED_OPERATOR,
         isIncomplete: true,
       },
       forceTransactions: {

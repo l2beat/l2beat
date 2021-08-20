@@ -1,4 +1,4 @@
-import { DATA_AVAILABILITY, RISK_VIEW } from './common'
+import { DATA_AVAILABILITY, OPERATOR, RISK_VIEW } from './common'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -96,15 +96,7 @@ export const optimism: Project = {
         ],
       },
       operator: {
-        name: 'Optimism runs the only sequencer',
-        description:
-          'A Sequencer node is a special node in an Optimistic Ethereum network that can order transactions on short timescales (on the order of minutes). Eventually, the operator of the Sequencer node on a network will be determined by some governing mechanism. However, for now, Optimism PBC operates the only such node.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
             text: 'Optimism operates the only "Sequencer" node - Optimism FAQ',

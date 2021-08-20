@@ -1,6 +1,7 @@
 import {
   DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
+  OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY,
@@ -81,10 +82,9 @@ export const hermez: Project = {
         ],
       },
       operator: {
-        name: 'Anyone can become an operator',
+        ...OPERATOR.DECENTRALIZED_OPERATOR,
         description:
           'The system runs an auction in which anyone can bid to become the operator for a set number of blocks. The operator will be able to propose blocks and collect fees during this window. Hermez will also run a operator known as boot coordinator that will propose blocks in case no one bids in the auction. This operator can be removed by the governance.',
-        risks: [],
         references: [
           {
             text: 'Forging Consensus Protocol - Hermez documentation',

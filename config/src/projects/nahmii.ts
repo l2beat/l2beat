@@ -1,4 +1,4 @@
-import { RISK_VIEW, STATE_CORRECTNESS } from './common'
+import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const nahmii: Project = {
@@ -53,19 +53,30 @@ export const nahmii: Project = {
         isIncomplete: true,
       },
       dataAvailability: {
-        name: 'Data is not stored on chain',
+        ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
         description:
-          'Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
-        references: [],
-        risks: [],
+          DATA_AVAILABILITY.GENERIC_OFF_CHAIN.description +
+          ' Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
+        risks: [
+          ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN.risks,
+          {
+            category: 'Users can be censored if',
+            text: 'the committee restricts their access to the external data.',
+          },
+        ],
         isIncomplete: true,
       },
       operator: {
-        name: 'Nahmii runs the operator',
+        name: 'The system has a centralized operator',
         description:
-          'The system is operated by Nahmii foundation. All transactions require signature from the operator.',
+          'All transactions require signature from the operator which is run by the Nahmii foundation.',
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'the operator refuses to service their requests.',
+          },
+        ],
         references: [],
-        risks: [],
         isIncomplete: true,
       },
       forceTransactions: {

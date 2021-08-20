@@ -1,23 +1,5 @@
 import { ProjectTechnologyChoice } from '../types'
 
-const OPERATOR: ProjectTechnologyChoice = {
-  name: 'The operator is a single entity',
-  description:
-    'The Operator of the contract is the entity entitled to submit state update requests. Typically, the Operator is the hot wallet of the StarkEx service submitting proofs for state updates.',
-  risks: [
-    {
-      category: 'Users can be censored if',
-      text: 'the operator refuses to include their activity in proposed state updates.',
-    },
-  ],
-  references: [
-    {
-      text: 'Operator - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/contract-management#operator',
-    },
-  ],
-}
-
 function FORCE_OPERATIONS(type: 'spot' | 'perpetual'): ProjectTechnologyChoice {
   return {
     name: 'Users can avoid censorship by exiting',
@@ -71,7 +53,6 @@ const FORCED_WITHDRAWAL: ProjectTechnologyChoice = {
 }
 
 export const STARKEX = {
-  OPERATOR,
   FORCE_OPERATIONS,
   OFF_CHAIN_WITHDRAWAL,
   FORCED_WITHDRAWAL,

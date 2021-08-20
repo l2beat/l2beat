@@ -1,6 +1,7 @@
 import {
   DATA_AVAILABILITY,
   NEW_CRYPTOGRAPHY,
+  OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
@@ -77,15 +78,7 @@ export const loopring: Project = {
         ],
       },
       operator: {
-        name: 'The operator is centralized.',
-        description:
-          'Only the owner of the exchange contract can submit new blocks. The owner itself is a specialized contract which currently only permits its owner to perform this operation.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
             text: 'ExchangeV3.sol#L315-L322 - Loopring source code',

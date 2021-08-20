@@ -1,4 +1,9 @@
-import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
+import {
+  DATA_AVAILABILITY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -75,10 +80,9 @@ export const layer2finance: Project = {
         ],
       },
       operator: {
-        name: 'The sequencer is centralized',
-        description:
-          'Currently only a single block producer is allowed to submit blocks.',
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         risks: [
+          ...OPERATOR.CENTRALIZED_OPERATOR.risks,
           {
             category: 'Funds can be frozen if',
             text: 'the sequencer halts its operations.',
