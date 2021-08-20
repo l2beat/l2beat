@@ -1,4 +1,9 @@
-import { DATA_AVAILABILITY, OPERATOR, RISK_VIEW } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+} from './common'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -105,10 +110,7 @@ export const optimism: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any transaction',
-        description:
-          'Because the state of Optimism is based on transactions submitted to the Canonical Transaction Chain smart contract and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
             text: ' Chain Contracts - Optimism documentation',

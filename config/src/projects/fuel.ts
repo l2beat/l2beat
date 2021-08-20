@@ -1,9 +1,9 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  TECHNOLOGY,
 } from './common'
 import { Project } from './types'
 
@@ -74,7 +74,7 @@ export const fuel: Project = {
         ],
       },
       forceTransactions: {
-        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         references: [
           {
             text: 'Architecture: A High-Level View - Fuel documentation',

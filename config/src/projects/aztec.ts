@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -87,10 +88,10 @@ export const aztec: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any transaction',
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         description:
-          'Periodically the rollup opens an escape hatch which is a period during which anyone can propose new blocks. In order for a user to circumvent censorship with their own transaction they need to provide a ZK proof for a block which contains that transaction.',
-        risks: [],
+          FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
+          ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
         references: [
           {
             text: 'RollupProcessor.sol#L347 - Etherscan source code',

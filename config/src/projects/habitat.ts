@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -56,11 +57,7 @@ export const habitat: Project = {
         isIncomplete: true,
       },
       forceTransactions: {
-        name: 'There is no mechanism for force transactions',
-        description:
-          'Operators are independent transaction aggregators and are not subject to any enforcements.',
-        risks: [],
-        references: [],
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         isIncomplete: true,
       },
       exitMechanisms: [

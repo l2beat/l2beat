@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -103,10 +104,7 @@ export const zkswap: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any withdraw transaction',
-        description:
-          'Because the state of ZKSwap is based on transactions submitted to the layer1 smart contract and anyone can submit their withdraw transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
             text: 'ZkSync.sol - ZKSwap source code',

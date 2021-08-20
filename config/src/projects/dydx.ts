@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -58,7 +59,7 @@ export const dydx: Project = {
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
       dataAvailability: DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       operator: OPERATOR.STARKEX_OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS('perpetual'),
+      forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [

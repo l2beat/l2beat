@@ -1,4 +1,9 @@
-import { DATA_AVAILABILITY, RISK_VIEW, STATE_CORRECTNESS } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const nahmii: Project = {
@@ -80,11 +85,7 @@ export const nahmii: Project = {
         isIncomplete: true,
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
-        references: [],
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW,
         isIncomplete: true,
       },
       exitMechanisms: [

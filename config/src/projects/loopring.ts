@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -91,10 +92,7 @@ export const loopring: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'Loopring allows users to force withdraw by submitting an L1 transaction. The system must serve it within a defined time period. If this does not happen, the system will enter withdrawal mode and every user can exit all of their assets by making a direct transaction on the Ethereum mainnet.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
             text: 'Forced Withdrawals - Loopring design doc',

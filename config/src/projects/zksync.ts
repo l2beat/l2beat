@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -81,10 +82,7 @@ export const zksync: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'zkSync allows users to force the execution of certain operations by submitting them directly to the zkSync contract on-chain. The system must serve it within a defined time period (~1 week). If this does not happen, the system will enter exodus mode and every user can immediately exit all of their assets by making a direct transaction on the Ethereum mainnet.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
             text: 'Priority queue - zkSync FAQ',

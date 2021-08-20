@@ -1,10 +1,10 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  TECHNOLOGY,
 } from './common'
 import { Project } from './types'
 
@@ -97,7 +97,7 @@ export const hermez: Project = {
         ],
       },
       forceTransactions: {
-        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         references: [
           {
             text: 'Can coordinators censor transactions? - Hermez documentation',

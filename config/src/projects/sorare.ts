@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -50,7 +51,7 @@ export const sorare: Project = {
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
       dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
       operator: OPERATOR.STARKEX_OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
+      forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [

@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -89,11 +90,7 @@ export const omgnetwork: Project = {
         isIncomplete: true,
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
-        references: [],
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW,
         isIncomplete: true,
       },
       exitMechanisms: [

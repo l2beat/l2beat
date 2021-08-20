@@ -1,23 +1,5 @@
 import { ProjectTechnologyChoice } from '../types'
 
-function FORCE_OPERATIONS(type: 'spot' | 'perpetual'): ProjectTechnologyChoice {
-  return {
-    name: 'Users can avoid censorship by exiting',
-    description:
-      'StarkEx allows users to force the execution of certain operations by submitting them directly to the StarkEx contract on-chain. The system must serve it within a defined time period. If this does not happen, the user may apply a penalty to the StarkEx contract, e.g., freeze the contract and prevent any new state updates.' +
-      (type === 'perpetual'
-        ? ' In case of perpetual trading, forcing a trade before exiting is also possible.'
-        : ''),
-    risks: [],
-    references: [
-      {
-        text: 'Censorship Prevention - StarkEx documentation',
-        href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
-      },
-    ],
-  }
-}
-
 const OFF_CHAIN_WITHDRAWAL: ProjectTechnologyChoice = {
   name: 'Regular withdrawal',
   description:
@@ -53,7 +35,6 @@ const FORCED_WITHDRAWAL: ProjectTechnologyChoice = {
 }
 
 export const STARKEX = {
-  FORCE_OPERATIONS,
   OFF_CHAIN_WITHDRAWAL,
   FORCED_WITHDRAWAL,
 }
