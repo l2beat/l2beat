@@ -51,8 +51,8 @@ export function getTechnologyOverview(
       name: item.name,
       editLink: getEditLink(project),
       issueLink: getIssueLink(issueTitle),
-      description: item.description ?? '',
-      missingInfo: item.description === null,
+      description: item.description,
+      isIncomplete: !!item.isIncomplete,
       referenceIds: item.references.map(addReference),
       risks,
     }
@@ -169,8 +169,20 @@ export function getTechnologyOverview(
     }
   }
 
+  const sections = makeSections(tech)
+  const isIncomplete = sections.some((x) =>
+    x.items.some((x) => x.isIncomplete === true || x.referenceIds.length === 0)
+  )
+
+  const twitterLink = project.details.links.socialMedia.find((x) =>
+    x.includes('twitter')
+  )
+
   return {
-    sections: makeSections(tech),
+    isIncomplete,
+    editLink: getEditLink(project),
+    twitterLink,
+    sections,
     contractsSection: makeContractSection(tech),
     referencesSection: { items: references },
   }

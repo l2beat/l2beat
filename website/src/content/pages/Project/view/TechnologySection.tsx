@@ -15,7 +15,7 @@ export interface TechnologyChoice {
   editLink: string
   issueLink: string
   description: string
-  missingInfo: boolean
+  isIncomplete: boolean
   referenceIds: number[]
   risks: TechnologyRisk[]
 }
@@ -38,18 +38,18 @@ export function TechnologySection({
               { name: 'Issue', href: item.issueLink },
             ]}
           />
+          {item.isIncomplete && (
+            <div className="TechnologySection-Incomplete">
+              <strong>Note:</strong> This section requires more research and
+              might not present accurate information.
+            </div>
+          )}
           <p>
-            {item.missingInfo ? (
-              <div className="TechnologySection-Missing">
-                <span>This section needs more information</span>
-                <OutLink href={item.editLink}>Contribute on Github</OutLink>
-              </div>
-            ) : (
-              <>
-                {item.description}
-                <References ids={item.referenceIds} editLink={item.editLink} />
-              </>
-            )}
+            {item.description}
+            <References
+              ids={item.referenceIds}
+              citationNeededLink={'#incomplete'}
+            />
           </p>
           <RiskList risks={item.risks} />
         </div>

@@ -6,17 +6,16 @@
   margin: 16px 0 0 0;
 }
 
-.TechnologySection-Missing {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
+.TechnologySection-Incomplete {
+  position: relative;
+  padding: 4px 8px;
   border-radius: 6px;
-  background-color: var(--background-2);
-  box-shadow: inset 0 2px 4px -2px var(--shadow);
+  background-color: var(--background-info);
+  font-size: var(--font-s);
+  margin-top: 8px;
+  color: var(--text-info);
 
-  a {
-    font-size: var(--font-s);
+  & + p {
+    margin-top: 8px;
   }
 }
