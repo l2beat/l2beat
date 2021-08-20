@@ -8,21 +8,21 @@ import { ProjectRiskView } from './ProjectRiskView'
 export interface ProjectDetails {
   /** A warning displayed at the top of the project page */
   warning?: string
-  /** List of links */
-  links: ProjectLinks
-  /** A short (<20 characters) description of the use case */
-  purpose: string
-  provider?: 'StarkEx'
   // TODO: Not optional
   /** A few sentences describing the project the project */
   description?: string
-  // TODO: Not optional
+  /** A short (<20 characters) description of the use case */
+  purpose: string
+  /** List of links */
+  links: ProjectLinks
+  /** Technology provider */
+  provider?: 'StarkEx'
   /** Deep dive into project technology */
-  technology?: ProjectTechnology
+  technology: ProjectTechnology
   /** Risk view values for this project */
   riskView: ProjectRiskView
   /** Links to recent developments */
-  news?: News[]
+  news: News[]
 
   // DEPRECATED ITEMS BELOW
   /** @deprecated E.g. "ZK Rollup", "Payment Channels" */

@@ -1,4 +1,11 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const loopring: Project = {
@@ -13,6 +20,7 @@ export const loopring: Project = {
   ],
   associatedToken: 'LRC',
   details: {
+    purpose: 'Payments, Exchange',
     links: {
       websites: ['https://loopring.org'],
       apps: ['https://exchange.loopring.io/'],
@@ -32,23 +40,28 @@ export const loopring: Project = {
         'https://loopring.substack.com/',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: 'zk-SNARK',
-    purpose: 'Payments, Exchange',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+        references: [
+          {
+            text: 'Operators - Loopring design doc',
+            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
+          },
+        ],
+      },
+      newCryptography: {
+        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
         references: [
           {
             text: 'Operators - Loopring design doc',
@@ -57,7 +70,7 @@ export const loopring: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'Introduction - Loopring design doc',
@@ -65,25 +78,8 @@ export const loopring: Project = {
           },
         ],
       },
-      newCryptography: {
-        ...TECHNOLOGY.ZK_SNARKS,
-        references: [
-          {
-            text: 'Operators - Loopring design doc',
-            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
-          },
-        ],
-      },
       operator: {
-        name: 'The operator is centralized.',
-        description:
-          'Only the owner of the exchange contract can submit new blocks. The owner itself is a specialized contract which currently only permits its owner to perform this operation.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
             text: 'ExchangeV3.sol#L315-L322 - Loopring source code',
@@ -96,10 +92,7 @@ export const loopring: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'Loopring allows users to force withdraw by submitting an L1 transaction. The system must serve it within a defined time period. If this does not happen, the system will enter withdrawal mode and every user can exit all of their assets by making a direct transaction on the Ethereum mainnet.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
             text: 'Forced Withdrawals - Loopring design doc',
@@ -163,6 +156,33 @@ export const loopring: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2020-12-15',
+        name: 'Shutdown of Loopring Exchange v1; Transition to v2',
+        link: 'https://medium.com/loopring-protocol/shutdown-of-loopring-exchange-v1-transition-to-v2-d06cdf462548',
+      },
+      {
+        date: '2020-12-03',
+        name: 'Loopring’s zkRollup AMM is Live',
+        link: 'https://medium.com/loopring-protocol/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
+      },
+      {
+        date: '2020-06-06',
+        name: 'Loopring Pay is Live: zkRollup Transfers on Ethereum',
+        link: 'https://medium.com/loopring-protocol/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
+      },
+      {
+        date: '2020-02-27',
+        name: 'Loopring Launches zkRollup Exchange: Loopring.io',
+        link: 'https://medium.com/loopring-protocol/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK',
     parameters: [
       {
         name: 'Primary use case',
@@ -218,28 +238,6 @@ export const loopring: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-12-15',
-        name: 'Shutdown of Loopring Exchange v1; Transition to v2',
-        link: 'https://medium.com/loopring-protocol/shutdown-of-loopring-exchange-v1-transition-to-v2-d06cdf462548',
-      },
-      {
-        date: '2020-12-03',
-        name: 'Loopring’s zkRollup AMM is Live',
-        link: 'https://medium.com/loopring-protocol/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
-      },
-      {
-        date: '2020-06-06',
-        name: 'Loopring Pay is Live: zkRollup Transfers on Ethereum',
-        link: 'https://medium.com/loopring-protocol/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
-      },
-      {
-        date: '2020-02-27',
-        name: 'Loopring Launches zkRollup Exchange: Loopring.io',
-        link: 'https://medium.com/loopring-protocol/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
       },
     ],
   },

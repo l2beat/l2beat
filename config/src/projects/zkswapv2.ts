@@ -1,8 +1,9 @@
-import { RISK, TECHNOLOGY } from './common'
+import { RISK_VIEW } from './common'
 import { Project } from './types'
+import { zkswap } from './zkswap'
 
 export const zkswapv2: Project = {
-  name: 'ZKSwap (v2)',
+  name: 'ZKSwap V2',
   slug: 'zkswapv2',
   associatedToken: 'ZKS',
   bridges: [
@@ -27,6 +28,7 @@ export const zkswapv2: Project = {
     },
   ],
   details: {
+    purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -42,85 +44,21 @@ export const zkswapv2: Project = {
         'https://zks.org/en/blog',
       ],
     },
-    technologyName: 'ZK Rollup',
+    riskView: {
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
+    },
     technology: {
-      category: {
-        name: 'ZK Rollup',
-        references: [
-          {
-            text: 'a Layer-2 Token Swap Protocol based on ZK-Rollups Technology',
-            href: 'https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d',
-          },
-        ],
-      },
-      stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
-        references: [
-          {
-            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
-            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
-          },
-        ],
-      },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',
-            href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
-          },
-        ],
-      },
-      operator: {
-        name: 'The validator is centralized.',
-        description:
-          'In the beginning ZKSwap is asking users to trust its centralized sequencer. Will be decentralized at later stage.',
-        risks: [],
-        references: [
-          {
-            text: 'ZKSwap Validator - ZKSwap wiki',
-            href: 'https://en.wiki.zks.org/techonology#3-validator',
-          },
-        ],
-      },
-      forceTransactions: {
-        name: 'Users can force submit any withdraw transaction',
-        description:
-          'Because the state of ZKSwap is based on transactions submitted to the layer1 smart contract and anyone can submit their withdraw transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
-        references: [
-          {
-            text: 'ZkSync.sol - ZKSwap source code',
-            href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
-          },
-        ],
-      },
-      exitMechanisms: [
-        {
-          name: 'Full Exit',
-          description:
-            'When a user initiates a full exit to layer1 contract, ZKSwap will include this transaction in a block and process. Then all the funds will be withdrawn to L1.',
-          risks: [],
-          references: [
-            {
-              text: 'ZkSync.sol - ZKSwap source code',
-              href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
-            },
-          ],
-        },
-        {
-          name: 'Partial Exit (Withdraw)',
-          description:
-            'When a user makes a withdraw transaction on layer2, ZKSwap will include this transaction in a block and process. Then the requested funds will be withdrawn to L1.',
-          risks: [],
-          references: [
-            {
-              text: 'Make Transaction',
-              href: 'https://en.wiki.zks.org/interact-with-zkswap/make-transaction#withdraw',
-            },
-          ],
-        },
-      ],
+      category: zkswap.details.technology.category,
+      stateCorrectness: zkswap.details.technology.stateCorrectness,
+      newCryptography: zkswap.details.technology.newCryptography,
+      dataAvailability: zkswap.details.technology.dataAvailability,
+      operator: zkswap.details.technology.operator,
+      forceTransactions: zkswap.details.technology.forceTransactions,
+      exitMechanisms: zkswap.details.technology.exitMechanisms,
       contracts: {
         addresses: [
           {
@@ -161,14 +99,27 @@ export const zkswapv2: Project = {
         risks: [],
       },
     },
-    purpose: 'Payments, Exchange',
-    riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADE_DELAY('8 days'),
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_ZKP,
-    },
+    news: [
+      {
+        date: '2021-08-10',
+        name: 'ZKSwap To Launch 1,993 NFT Artworks Soon Amid NFT Boom, Says Lead Developer Alex Lee',
+        link: 'https://zkswapofficial.medium.com/zkswap-to-launch-1-993-nft-artworks-soon-amid-nft-boom-says-lead-developer-alex-lee-4f2b09ffbc2d',
+      },
+      {
+        date: '2021-08-06',
+        name: 'ZKSwap Reveals 28311 Burnt ZKS Token in July',
+        link: 'https://medium.com/zkswap/zkswap-reveals-28311-burnt-zks-token-in-july-a78b4aa92c5f',
+      },
+      {
+        date: '2021-06-23',
+        name: 'ZKSwap Launches V2 Testnet, Enabling Unlimited Token Listing',
+        link: 'https://zkswapofficial.medium.com/zkswap-launches-v2-testnet-enabling-unlimited-token-listing-bf0c03a718e6',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
     parameters: [
       {
         name: 'Primary use case',
@@ -236,23 +187,6 @@ export const zkswapv2: Project = {
         name: 'Smart contracts',
         tooltip: 'Possible in the future',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-08-10',
-        name: 'ZKSwap To Launch 1,993 NFT Artworks Soon Amid NFT Boom, Says Lead Developer Alex Lee',
-        link: 'https://zkswapofficial.medium.com/zkswap-to-launch-1-993-nft-artworks-soon-amid-nft-boom-says-lead-developer-alex-lee-4f2b09ffbc2d',
-      },
-      {
-        date: '2021-08-06',
-        name: 'ZKSwap Reveals 28311 Burnt ZKS Token in July',
-        link: 'https://medium.com/zkswap/zkswap-reveals-28311-burnt-zks-token-in-july-a78b4aa92c5f',
-      },
-      {
-        date: '2021-06-23',
-        name: 'ZKSwap Launches V2 Testnet, Enabling Unlimited Token Listing',
-        link: 'https://zkswapofficial.medium.com/zkswap-launches-v2-testnet-enabling-unlimited-token-listing-bf0c03a718e6',
       },
     ],
   },

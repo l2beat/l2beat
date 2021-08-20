@@ -1,4 +1,9 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -12,6 +17,7 @@ export const layer2finance: Project = {
     },
   ],
   details: {
+    purpose: 'DeFi aggregation',
     links: {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],
@@ -26,27 +32,24 @@ export const layer2finance: Project = {
         'https://twitter.com/CelerNetwork',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'Specialized Optimistic Rollup',
-    purpose: 'DeFi aggregation',
     riskView: {
-      stateValidation: RISK.STATE_FP_1R,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_NO,
-      operatorCensoring: RISK.CENSORING_NO_MECHANISM,
-      operatorDown: RISK.DOWN_NO_MECHANISM,
+      stateValidation: RISK_VIEW.STATE_FP_1R,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_NO,
+      operatorCensoring: RISK_VIEW.CENSORING_NO_MECHANISM,
+      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         description:
-          TECHNOLOGY.FRAUD_PROOFS.description +
+          STATE_CORRECTNESS.FRAUD_PROOFS.description +
           ' Unfortunately in case of Layer2.Finance only some fraud proofs revert blocks and every successful fraud proof pauses the contract requiring the owner to unpause.',
         risks: [
+          ...STATE_CORRECTNESS.FRAUD_PROOFS.risks,
           {
             category: 'Funds can be frozen if',
             text: 'the problematic fraud proof mechanism is exploited.',
@@ -68,7 +71,7 @@ export const layer2finance: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'RollupChain.sol#L191 - Layer2.Finance source code',
@@ -77,10 +80,9 @@ export const layer2finance: Project = {
         ],
       },
       operator: {
-        name: 'The sequencer is centralized',
-        description:
-          'Currently only a single block producer is allowed to submit blocks.',
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         risks: [
+          ...OPERATOR.CENTRALIZED_OPERATOR.risks,
           {
             category: 'Funds can be frozen if',
             text: 'the sequencer halts its operations.',
@@ -162,6 +164,18 @@ export const layer2finance: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-04-22',
+        name: 'The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees',
+        link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'Specialized Optimistic Rollup',
     parameters: [
       {
         name: 'Primary use case',
@@ -223,13 +237,6 @@ export const layer2finance: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-04-22',
-        name: 'The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees',
-        link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees',
       },
     ],
   },

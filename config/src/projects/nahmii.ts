@@ -1,4 +1,9 @@
-import { RISK } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const nahmii: Project = {
@@ -13,6 +18,7 @@ export const nahmii: Project = {
   ],
   associatedToken: 'NII',
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://nahmii.io/'],
       apps: [],
@@ -28,59 +34,58 @@ export const nahmii: Project = {
         'https://discord.gg/GKTsUTH',
       ],
     },
-    technologyName: 'State Pools',
-    technologyDetails: 'User carried state, pooled security model',
-    purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP,
-      dataAvailability: RISK.DATA_EXTERNAL_DAC,
-      upgradeability: RISK.UPGRADABLE_NO,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_U,
+      stateValidation: RISK_VIEW.STATE_FP,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+      upgradeability: RISK_VIEW.UPGRADABLE_NO,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
     },
     technology: {
       category: {
         name: 'State Pools',
-        references: [],
       },
       stateCorrectness: {
-        name: 'Fraud proofs ensure state correctness',
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         description:
-          'Because Nahmii is more similar to state channels than to any other technology fraud proofs are used to detect fraudulent as there is no state published on chain.',
-        references: [],
-        risks: [],
+          'Because Nahmii is more similar to state channels than to any other technology fraud proofs are used to detect fraudulent exists as there is no state published on chain.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'there is no one that checks the published exists. Fraud proofs assume at least one honest and able validator.',
+          },
+        ],
         isIncomplete: true,
       },
       dataAvailability: {
-        name: 'Data is provided by a data availability oracle',
+        ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
         description:
-          'Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
-        references: [],
-        risks: [],
-        isIncomplete: true,
-      },
-      massExit: {
-        name: 'Mass exit problem does not occur',
-        description:
-          'Nahmii claims that the mass exit problem is solved via checkpoints and lack of time restrictions.',
-        references: [],
-        risks: [],
+          DATA_AVAILABILITY.GENERIC_OFF_CHAIN.description +
+          ' Nahmii uses a Data Availability Oracle. The Oracle is a game theory-based distributed intelligence tool that continually tests statements related to data availability.',
+        risks: [
+          ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN.risks,
+          {
+            category: 'Users can be censored if',
+            text: 'the committee restricts their access to the external data.',
+          },
+        ],
         isIncomplete: true,
       },
       operator: {
-        name: 'Nahmii runs the operator',
+        name: 'The system has a centralized operator',
         description:
-          'The system is operated by Nahmii foundation. All transactions require signature from the operator.',
+          'All transactions require signature from the operator which is run by the Nahmii foundation.',
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'the operator refuses to service their requests.',
+          },
+        ],
         references: [],
-        risks: [],
         isIncomplete: true,
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
-        references: [],
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW,
         isIncomplete: true,
       },
       exitMechanisms: [
@@ -93,6 +98,14 @@ export const nahmii: Project = {
           isIncomplete: true,
         },
       ],
+      massExit: {
+        name: 'Mass exit problem does not occur',
+        description:
+          'Nahmii claims that the mass exit problem is solved via checkpoints and lack of time restrictions.',
+        references: [],
+        risks: [],
+        isIncomplete: true,
+      },
       contracts: {
         addresses: [
           {
@@ -107,6 +120,18 @@ export const nahmii: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-05-11',
+        name: 'DARMA Capital Bets $3M on Scalable DeFi Exchange With Settlement Finality',
+        link: 'https://www.coindesk.com/darma-capital-bets-3m-on-scalable-defi-exchange-with-settlement-finality/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'State Pools',
+    technologyDetails: 'User carried state, pooled security model',
     parameters: [
       {
         name: 'Primary use case',
@@ -169,13 +194,6 @@ export const nahmii: Project = {
         tooltip:
           'Users submit exit requests and wait 5 days for the possibility of someone challenging that request',
         sentiment: 'good',
-      },
-    ],
-    news: [
-      {
-        date: '2021-05-11',
-        name: 'DARMA Capital Bets $3M on Scalable DeFi Exchange With Settlement Finality',
-        link: 'https://www.coindesk.com/darma-capital-bets-3m-on-scalable-defi-exchange-with-settlement-finality/',
       },
     ],
     notes: {

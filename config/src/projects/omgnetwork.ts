@@ -1,4 +1,10 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const omgnetwork: Project = {
@@ -46,6 +52,7 @@ export const omgnetwork: Project = {
   ],
   associatedToken: 'OMG',
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://omg.network'],
       apps: [],
@@ -59,32 +66,43 @@ export const omgnetwork: Project = {
         'https://linkedin.com/company/omgnetwork/',
       ],
     },
-    technologyName: 'Plasma',
-    technologyDetails: 'More Viable Plasma',
-    purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP,
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_U,
+      stateValidation: RISK_VIEW.STATE_FP,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
     },
     technology: {
       category: {
         name: 'Plasma',
-        references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {
-        name: 'Data is not stored on chain',
-        description: '',
-        references: [],
-        risks: [],
+        ...DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
         isIncomplete: true,
       },
+      operator: {
+        ...OPERATOR.CENTRALIZED_OPERATOR,
+        isIncomplete: true,
+      },
+      forceTransactions: {
+        ...FORCE_TRANSACTIONS.WITHDRAW,
+        isIncomplete: true,
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
+          risks: [],
+          references: [],
+          isIncomplete: true,
+        },
+      ],
       massExit: {
         name: 'The mass exit problem is unsolved',
         description:
@@ -98,31 +116,6 @@ export const omgnetwork: Project = {
         ],
         isIncomplete: true,
       },
-      operator: {
-        name: 'There is a single operator',
-        description: '',
-        references: [],
-        risks: [],
-        isIncomplete: true,
-      },
-      forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
-        references: [],
-        risks: [],
-        isIncomplete: true,
-      },
-      exitMechanisms: [
-        {
-          name: 'Regular exit',
-          description:
-            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
-          risks: [],
-          references: [],
-          isIncomplete: true,
-        },
-      ],
       contracts: {
         addresses: [
           {
@@ -147,6 +140,18 @@ export const omgnetwork: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2020-06-01',
+        name: 'Scaling Ethereum with the OMG Network',
+        link: 'https://omg.network/omg-network-scales-ethereum/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Plasma',
+    technologyDetails: 'More Viable Plasma',
     parameters: [
       {
         name: 'Primary use case',
@@ -188,13 +193,6 @@ export const omgnetwork: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-06-01',
-        name: 'Scaling Ethereum with the OMG Network',
-        link: 'https://omg.network/omg-network-scales-ethereum/',
       },
     ],
   },

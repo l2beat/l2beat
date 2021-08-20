@@ -1,4 +1,12 @@
-import { RISK, STARKEX } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STARKEX,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const dydx: Project = {
@@ -12,6 +20,7 @@ export const dydx: Project = {
     },
   ],
   details: {
+    purpose: 'Exchange',
     links: {
       websites: ['https://dydx.exchange/'],
       apps: ['https://trade.dydx.exchange/', 'https://margin.dydx.exchange/'],
@@ -33,33 +42,24 @@ export const dydx: Project = {
         'https://linkedin.com/company/dydx',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_ST,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_ZKP_ST,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {
         name: 'ZK Rollup',
-        description: "Powered by StarkWare's StarkEx",
-        references: [
-          {
-            text: 'dYdX Contracts - StarkEx documentation',
-            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#dydx-contracts',
-          },
-        ],
+        details: "Powered by StarkWare's StarkEx",
       },
-      stateCorrectness: STARKEX.VALIDITY_PROOFS,
-      dataAvailability: STARKEX.ROLLUP_DATA_AVAILABILITY,
-      newCryptography: STARKEX.CRYPTOGRAPHY,
-      operator: STARKEX.OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS('perpetual'),
+      stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+      newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
+      dataAvailability: DATA_AVAILABILITY.STARKEX_ON_CHAIN,
+      operator: OPERATOR.STARKEX_OPERATOR,
+      forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [
@@ -100,6 +100,28 @@ export const dydx: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-04-06',
+        name: 'Trade now on Layer 2',
+        link: 'https://dydx.exchange/blog/public',
+      },
+      {
+        date: '2020-08-18',
+        name: 'Scaling dYdX with StarkWare',
+        link: 'https://dydx.exchange/blog/public',
+      },
+      {
+        date: '2020-04-20',
+        name: 'dYdX Launches BTC Perpetual Contract Market',
+        link: 'https://medium.com/dydxderivatives/dydx-launches-btc-perpetual-contract-market-68f59b193f7e',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -145,23 +167,6 @@ export const dydx: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-04-06',
-        name: 'Trade now on Layer 2',
-        link: 'https://dydx.exchange/blog/public',
-      },
-      {
-        date: '2020-08-18',
-        name: 'Scaling dYdX with StarkWare',
-        link: 'https://dydx.exchange/blog/public',
-      },
-      {
-        date: '2020-04-20',
-        name: 'dYdX Launches BTC Perpetual Contract Market',
-        link: 'https://medium.com/dydxderivatives/dydx-launches-btc-perpetual-contract-market-68f59b193f7e',
       },
     ],
   },

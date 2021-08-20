@@ -1,4 +1,10 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const fuel: Project = {
@@ -12,6 +18,7 @@ export const fuel: Project = {
     },
   ],
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://fuel.sh/'],
       apps: [],
@@ -23,23 +30,20 @@ export const fuel: Project = {
         'https://twitter.com/fuellabs_',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'UTXO',
-    purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_FP_1R,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
+      stateValidation: RISK_VIEW.STATE_FP_1R,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_PROPOSE_BLOCKS,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [],
+        details: 'UTXO based',
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         references: [
           {
             text: 'Background - Fuel documentation',
@@ -48,7 +52,7 @@ export const fuel: Project = {
         ],
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
             text: 'Background - Fuel documentation',
@@ -57,10 +61,7 @@ export const fuel: Project = {
         ],
       },
       operator: {
-        name: 'Block production is partially centralized.',
-        description:
-          'While anyone can propose new blocks the Fuel operator has a short period of time (5 minutes) where they are the only one that can propose a block that includes a given transaction bundle. This allows the operator to reliably provide a soft confirmation to a recipient that a transaction will be included in the next Fuel block.',
-        risks: [],
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
             text: 'Architecture: A High-Level View - Fuel documentation',
@@ -73,7 +74,7 @@ export const fuel: Project = {
         ],
       },
       forceTransactions: {
-        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         references: [
           {
             text: 'Architecture: A High-Level View - Fuel documentation',
@@ -105,6 +106,18 @@ export const fuel: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2020-01-19',
+        name: 'Announcing the Fuel v0 Open Beta',
+        link: 'https://fuellabs.medium.com/announcing-the-fuel-v0-open-beta-565a2d340fc3',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'UTXO',
     parameters: [
       {
         name: 'Primary use case',
@@ -147,13 +160,6 @@ export const fuel: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-01-19',
-        name: 'Announcing the Fuel v0 Open Beta',
-        link: 'https://fuellabs.medium.com/announcing-the-fuel-v0-open-beta-565a2d340fc3',
       },
     ],
   },

@@ -1,4 +1,10 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const arbitrum: Project = {
@@ -12,9 +18,10 @@ export const arbitrum: Project = {
     },
   ],
   details: {
+    warning: 'Arbitrum is currently only open to whitelisted developers.',
     description:
       'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
-    warning: 'Arbitrum is currently only open to whitelisted developers.',
+    purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
       apps: [],
@@ -31,26 +38,19 @@ export const arbitrum: Project = {
         'https://discord.gg/5KE54JwyTs',
       ],
     },
-    purpose: 'Universal',
     riskView: {
-      stateValidation: RISK.STATE_FP_INT,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_TRANSACT_L1,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
+      stateValidation: RISK_VIEW.STATE_FP_INT,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [
-          {
-            text: 'Arbitrum Rollup Basics - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/rollup_basics',
-          },
-        ],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         references: [
           {
             text: 'Executing and Securing the Chain - Arbitrum documentation',
@@ -59,10 +59,7 @@ export const arbitrum: Project = {
         ],
       },
       dataAvailability: {
-        name: 'All transaction data is recorded on chain',
-        description:
-          'All transactions executed on the Arbitrum Rollup chain are submitted to the Inbox smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Arbitrum chain.',
-        risks: [],
+        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
             text: 'Submitting Transactions - Arbitrum documentation',
@@ -70,33 +67,8 @@ export const arbitrum: Project = {
           },
         ],
       },
-      smartContracts: {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex AVM implementation.',
-          },
-        ],
-        references: [
-          {
-            text: 'AVM - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
-          },
-        ],
-      },
       operator: {
-        name: 'The sequencer is centralized.',
-        description:
-          'In the beginning Arbitrum is asking users to trust its centralized sequencer. Later it plans to switch to decentralized fair sequencing. If the sequencer refuses to include user transactions they will have to submit them on L1 incurring additional fees.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
             text: 'Validators - Arbitrum documentation',
@@ -109,10 +81,7 @@ export const arbitrum: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any transaction',
-        description:
-          'Because the state of Arbitrum is based on transactions submitted to the Inbox smart contract and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
             text: 'Submitting Transactions - Arbitrum documentation',
@@ -146,6 +115,23 @@ export const arbitrum: Project = {
           ],
         },
       ],
+      smartContracts: {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex AVM implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'AVM - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
+          },
+        ],
+      },
       contracts: {
         addresses: [
           {

@@ -1,4 +1,9 @@
-import { RISK } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+} from './common'
 import { Project } from './types'
 
 export const optimism: Project = {
@@ -34,10 +39,11 @@ export const optimism: Project = {
     },
   ],
   details: {
-    description:
-      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure.',
     warning:
       'Currently only whitelisted contracts can be deployed on Optimism.',
+    description:
+      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure.',
+    purpose: 'Universal',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -52,7 +58,6 @@ export const optimism: Project = {
         'https://twitch.tv/optimismpbc',
       ],
     },
-    purpose: 'Universal',
     riskView: {
       stateValidation: {
         value: 'Proofs disabled',
@@ -60,20 +65,14 @@ export const optimism: Project = {
           'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
       },
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_TRANSACT_L1,
-      operatorDown: RISK.DOWN_NO_MECHANISM,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
+      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [
-          {
-            text: 'TLDR - Optimism FAQ',
-            href: 'https://community.optimism.io/faqs/#tl-dr',
-          },
-        ],
       },
       stateCorrectness: {
         name: 'Fraud proofs are disabled',
@@ -93,10 +92,7 @@ export const optimism: Project = {
         ],
       },
       dataAvailability: {
-        name: 'All transaction data is recorded on chain',
-        description:
-          'All transactions executed on the Optimism Rollup chain are submitted to the Canonical Transaction Chain smart contract. The execution of the chain is based entirely on the submitted transactions, so anyone monitoring the inbox can know the correct state of the Optimism chain.',
-        risks: [],
+        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
             text: 'Data Availability Batches - Paradigm Research',
@@ -104,6 +100,38 @@ export const optimism: Project = {
           },
         ],
       },
+      operator: {
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
+        references: [
+          {
+            text: 'Optimism operates the only "Sequencer" node - Optimism FAQ',
+            href: 'https://community.optimism.io/faqs/#optimism-operates-the-only-sequencer-node',
+          },
+        ],
+      },
+      forceTransactions: {
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        references: [
+          {
+            text: ' Chain Contracts - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/protocol.html#chain-contracts',
+          },
+        ],
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Optimism is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
+          risks: [],
+          references: [
+            {
+              text: ' Withdrawing back to L1 - Optimism documentation',
+              href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
+            },
+          ],
+        },
+      ],
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
         description:
@@ -129,49 +157,6 @@ export const optimism: Project = {
           },
         ],
       },
-      operator: {
-        name: 'Optimism runs the only sequencer',
-        description:
-          'A Sequencer node is a special node in an Optimistic Ethereum network that can order transactions on short timescales (on the order of minutes). Eventually, the operator of the Sequencer node on a network will be determined by some governing mechanism. However, for now, Optimism PBC operates the only such node.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
-          },
-        ],
-        references: [
-          {
-            text: 'Optimism operates the only "Sequencer" node - Optimism FAQ',
-            href: 'https://community.optimism.io/faqs/#optimism-operates-the-only-sequencer-node',
-          },
-        ],
-      },
-      forceTransactions: {
-        name: 'Users can force submit any transaction',
-        description:
-          'Because the state of Optimism is based on transactions submitted to the Canonical Transaction Chain smart contract and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
-        risks: [],
-        references: [
-          {
-            text: ' Chain Contracts - Optimism documentation',
-            href: 'https://community.optimism.io/docs/protocol/protocol.html#chain-contracts',
-          },
-        ],
-      },
-      exitMechanisms: [
-        {
-          name: 'Regular exit',
-          description:
-            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Optimism is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
-          risks: [],
-          references: [
-            {
-              text: ' Withdrawing back to L1 - Optimism documentation',
-              href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
-            },
-          ],
-        },
-      ],
       contracts: {
         addresses: [
           {
@@ -204,6 +189,26 @@ export const optimism: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-07-14',
+        name: 'Announcing Uniswap V3 on Optimism',
+        link: 'https://optimismpbc.medium.com/announcing-uniswap-v3-on-optimism-6fb033398a11',
+      },
+      {
+        date: '2021-03-26',
+        name: 'Postponing mainnet launch',
+        link: 'https://optimismpbc.medium.com/optimistically-cautious-767a898f90c8',
+      },
+      {
+        date: '2021-01-16',
+        name: 'Mainnet Soft Launch!',
+        link: 'https://optimismpbc.medium.com/mainnet-soft-launch-7cacc0143cd5',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
     technologyName: 'Optimistic Rollup',
     technologyDetails: 'Optimistic Virtual Machine',
     parameters: [
@@ -272,23 +277,6 @@ export const optimism: Project = {
         tooltip:
           'Custom Solidity compiler. Currently, no new smart contracts can be deployed.',
         value: 'Yes',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-14',
-        name: 'Announcing Uniswap V3 on Optimism',
-        link: 'https://optimismpbc.medium.com/announcing-uniswap-v3-on-optimism-6fb033398a11',
-      },
-      {
-        date: '2021-03-26',
-        name: 'Postponing mainnet launch',
-        link: 'https://optimismpbc.medium.com/optimistically-cautious-767a898f90c8',
-      },
-      {
-        date: '2021-01-16',
-        name: 'Mainnet Soft Launch!',
-        link: 'https://optimismpbc.medium.com/mainnet-soft-launch-7cacc0143cd5',
       },
     ],
     notes: {

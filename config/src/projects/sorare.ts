@@ -1,4 +1,12 @@
-import { RISK, STARKEX } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STARKEX,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const sorare: Project = {
@@ -12,6 +20,7 @@ export const sorare: Project = {
     },
   ],
   details: {
+    purpose: 'NFT, Exchange',
     links: {
       websites: ['https://sorare.com/'],
       apps: [],
@@ -25,33 +34,24 @@ export const sorare: Project = {
         'https://instagram.com/sorare_official/',
       ],
     },
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_ST,
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_ZKP_ST,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {
         name: 'Validium',
-        description: "Powered by StarkWare's StarkEx",
-        references: [
-          {
-            text: 'Sorare Contracts - StarkEx documentation',
-            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#sorare-contracts',
-          },
-        ],
+        details: "Powered by StarkWare's StarkEx",
       },
-      stateCorrectness: STARKEX.VALIDITY_PROOFS,
-      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
-      newCryptography: STARKEX.CRYPTOGRAPHY,
-      operator: STARKEX.OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
+      stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+      newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
+      dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+      operator: OPERATOR.STARKEX_OPERATOR,
+      forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [
@@ -86,6 +86,18 @@ export const sorare: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-07-26',
+        name: 'We’re live on our Scaling Solution: Starkware',
+        link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -131,13 +143,6 @@ export const sorare: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-26',
-        name: 'We’re live on our Scaling Solution: Starkware',
-        link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       },
     ],
   },

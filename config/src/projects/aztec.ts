@@ -1,4 +1,11 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const aztec: Project = {
@@ -12,6 +19,7 @@ export const aztec: Project = {
     },
   ],
   details: {
+    purpose: 'Private payments',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -26,23 +34,19 @@ export const aztec: Project = {
         'https://plonk.cafe/',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: 'zk-SNARK/PLONK',
-    purpose: 'Private payments',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_PROPOSE_BLOCKS,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: [
           {
             text: 'RollupProcessor.sol#L395 - Etherscan source code',
@@ -50,17 +54,8 @@ export const aztec: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'RollupProcessor.sol#L359 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
-          },
-        ],
-      },
       newCryptography: {
-        ...TECHNOLOGY.ZK_SNARKS,
+        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
         references: [
           {
             text: 'TurboVerifier.sol#L37 - Etherscan source code',
@@ -68,23 +63,19 @@ export const aztec: Project = {
           },
         ],
       },
-      additionalPrivacy: {
-        name: 'Payments are private',
-        description:
-          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
-        risks: [],
+      dataAvailability: {
+        ...DATA_AVAILABILITY.ON_CHAIN,
         references: [
           {
-            text: 'Fast Privacy, Now - Aztec Medium Blog',
-            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+            text: 'RollupProcessor.sol#L359 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
           },
         ],
       },
       operator: {
-        name: 'The sequencer is centralized.',
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         description:
-          'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation.',
-        risks: [],
+          'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
         references: [
           {
             text: 'RollupProcessor.sol#L97 - Etherscan source code',
@@ -97,10 +88,10 @@ export const aztec: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can force submit any transaction',
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         description:
-          'Periodically the rollup opens an escape hatch which is a period during which anyone can propose new blocks. In order for a user to circumvent censorship with their own transaction they need to provide a ZK proof for a block which contains that transaction.',
-        risks: [],
+          FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
+          ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
         references: [
           {
             text: 'RollupProcessor.sol#L347 - Etherscan source code',
@@ -122,6 +113,18 @@ export const aztec: Project = {
           ],
         },
       ],
+      additionalPrivacy: {
+        name: 'Payments are private',
+        description:
+          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
+        risks: [],
+        references: [
+          {
+            text: 'Fast Privacy, Now - Aztec Medium Blog',
+            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+          },
+        ],
+      },
       contracts: {
         addresses: [
           {
@@ -142,6 +145,28 @@ export const aztec: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-07-01',
+        name: 'Introducing private Bitcoin',
+        link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
+      },
+      {
+        date: '2021-04-30',
+        name: 'Introducing zkDAI into the Aztec Private Rollup',
+        link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
+      },
+      {
+        date: '2021-03-15',
+        name: 'Launching Aztec 2.0 Rollup',
+        link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK/PLONK',
     parameters: [
       {
         name: 'Primary use case',
@@ -176,23 +201,6 @@ export const aztec: Project = {
         name: 'Smart contracts',
         tooltip: 'Possible in the future (Noir - custom language) ',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-01',
-        name: 'Introducing private Bitcoin',
-        link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
-      },
-      {
-        date: '2021-04-30',
-        name: 'Introducing zkDAI into the Aztec Private Rollup',
-        link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
-      },
-      {
-        date: '2021-03-15',
-        name: 'Launching Aztec 2.0 Rollup',
-        link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
       },
     ],
   },

@@ -1,4 +1,11 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const zksync: Project = {
@@ -12,6 +19,7 @@ export const zksync: Project = {
     },
   ],
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://wallet.zksync.io/'],
@@ -26,28 +34,19 @@ export const zksync: Project = {
         'https://twitter.com/zksync',
       ],
     },
-    technologyName: 'ZK Rollup',
-    technologyDetails: 'zk-SNARK',
-    purpose: 'Payments',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADE_DELAY('2 weeks'),
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_ZKP,
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('2 weeks'),
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [
-          {
-            text: 'Introduction - zkSync FAQ',
-            href: 'https://zksync.io/faq/intro.html#introduction',
-          },
-        ],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: [
           {
             text: 'Validity proofs - zkSync FAQ',
@@ -55,17 +54,8 @@ export const zksync: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'Overview - zkSync documentation',
-            href: 'https://zksync.io/dev/#overview',
-          },
-        ],
-      },
       newCryptography: {
-        ...TECHNOLOGY.ZK_SNARKS,
+        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
         references: [
           {
             text: 'Cryptography used - zkSync FAQ',
@@ -73,16 +63,17 @@ export const zksync: Project = {
           },
         ],
       },
-      operator: {
-        name: 'The operator is centralized',
-        description:
-          'At the moment, the daily operation of the zkSync network depends on the health of the computational service provider who generates zero-knowledge proofs for the blocks.',
-        risks: [
+      dataAvailability: {
+        ...DATA_AVAILABILITY.ON_CHAIN,
+        references: [
           {
-            category: 'Funds can be lost if',
-            text: 'the sequencer exploits their centralized position and frontruns user transactions.',
+            text: 'Overview - zkSync documentation',
+            href: 'https://zksync.io/dev/#overview',
           },
         ],
+      },
+      operator: {
+        ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
             text: 'How decentralized is zkSync - zkSync FAQ',
@@ -91,10 +82,7 @@ export const zksync: Project = {
         ],
       },
       forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'zkSync allows users to force the execution of certain operations by submitting them directly to the zkSync contract on-chain. The system must serve it within a defined time period (~1 week). If this does not happen, the system will enter exodus mode and every user can immediately exit all of their assets by making a direct transaction on the Ethereum mainnet.',
-        risks: [],
+        ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
             text: 'Priority queue - zkSync FAQ',
@@ -158,6 +146,38 @@ export const zksync: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-05-31',
+        name: 'zkSync 2.0: Hello Ethereum!',
+        link: 'https://medium.com/matter-labs/zksync-2-0-hello-ethereum-ca48588de179',
+      },
+      {
+        date: '2021-05-24',
+        name: 'zkSync 1.x: Swaps, NFTs, event system, and permissionless token listing',
+        link: 'https://medium.com/matter-labs/zksync-1-x-swaps-nfts-event-system-and-permissionless-token-listing-e126fcc04d61',
+      },
+      {
+        date: '2021-04-13',
+        name: 'zkPorter: a breakthrough in L2 scaling',
+        link: 'https://medium.com/matter-labs/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf',
+      },
+      {
+        date: '2021-03-27',
+        name: 'zkSync 2.0 Roadmap Update: zkEVM Testnet in May, Mainnet in August',
+        link: 'https://medium.com/matter-labs/zksync-2-0-roadmap-update-zkevm-testnet-in-may-mainnet-in-august-379c66995021',
+      },
+      {
+        date: '2020-06-18',
+        name: 'zkSync is Live! Bringing Trustless, Scalable Payments to Ethereum',
+        link: 'https://medium.com/matter-labs/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'ZK Rollup',
+    technologyDetails: 'zk-SNARK',
     parameters: [
       {
         name: 'Primary use case',
@@ -226,33 +246,6 @@ export const zksync: Project = {
         value: 'No',
         tooltip:
           'Possible in the near future (zinc - custom language or compiling from Solidity)',
-      },
-    ],
-    news: [
-      {
-        date: '2021-05-31',
-        name: 'zkSync 2.0: Hello Ethereum!',
-        link: 'https://medium.com/matter-labs/zksync-2-0-hello-ethereum-ca48588de179',
-      },
-      {
-        date: '2021-05-24',
-        name: 'zkSync 1.x: Swaps, NFTs, event system, and permissionless token listing',
-        link: 'https://medium.com/matter-labs/zksync-1-x-swaps-nfts-event-system-and-permissionless-token-listing-e126fcc04d61',
-      },
-      {
-        date: '2021-04-13',
-        name: 'zkPorter: a breakthrough in L2 scaling',
-        link: 'https://medium.com/matter-labs/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf',
-      },
-      {
-        date: '2021-03-27',
-        name: 'zkSync 2.0 Roadmap Update: zkEVM Testnet in May, Mainnet in August',
-        link: 'https://medium.com/matter-labs/zksync-2-0-roadmap-update-zkevm-testnet-in-may-mainnet-in-august-379c66995021',
-      },
-      {
-        date: '2020-06-18',
-        name: 'zkSync is Live! Bringing Trustless, Scalable Payments to Ethereum',
-        link: 'https://medium.com/matter-labs/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       },
     ],
   },

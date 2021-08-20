@@ -1,4 +1,10 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const leverj: Project = {
@@ -18,6 +24,7 @@ export const leverj: Project = {
   ],
   associatedToken: 'L2',
   details: {
+    purpose: 'Exchange',
     links: {
       websites: ['https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
@@ -33,33 +40,44 @@ export const leverj: Project = {
         'https://youtube.com/channel/UCGor-eEpq0ObqN9u3jutq2w',
       ],
     },
-    technologyName: 'Plasma',
-    technologyDetails: 'Gluon Plasma',
-    purpose: 'Exchange',
     riskView: {
-      stateValidation: RISK.STATE_FP,
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_FP,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {
         name: 'Plasma',
-        description: 'Gluon',
-        references: [],
+        details: 'Gluon',
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {
-        name: 'Data is not stored on chain',
-        description: '',
-        references: [],
-        risks: [],
+        ...DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
         isIncomplete: true,
       },
+      operator: {
+        ...OPERATOR.CENTRALIZED_OPERATOR,
+        isIncomplete: true,
+      },
+      forceTransactions: {
+        ...FORCE_TRANSACTIONS.WITHDRAW,
+        isIncomplete: true,
+      },
+      exitMechanisms: [
+        {
+          name: 'Regular exit',
+          description:
+            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
+          risks: [],
+          references: [],
+          isIncomplete: true,
+        },
+      ],
       massExit: {
         name: 'The mass exit problem is unsolved',
         description:
@@ -73,31 +91,6 @@ export const leverj: Project = {
         ],
         isIncomplete: true,
       },
-      operator: {
-        name: 'There is a single operator',
-        description: '',
-        references: [],
-        risks: [],
-        isIncomplete: true,
-      },
-      forceTransactions: {
-        name: 'Users can avoid censorship by exiting',
-        description:
-          'There is no mechanism that allows users to force any transactions. If users find themselves censored they need to exit',
-        references: [],
-        risks: [],
-        isIncomplete: true,
-      },
-      exitMechanisms: [
-        {
-          name: 'Regular exit',
-          description:
-            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
-          risks: [],
-          references: [],
-          isIncomplete: true,
-        },
-      ],
       contracts: {
         addresses: [
           {
@@ -190,6 +183,27 @@ export const leverj: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-04-08',
+        name: 'Shutting Down the Spot Market on Leverj',
+        link: 'https://blog.leverj.io/announcement-shutting-down-the-spot-markets-on-leverj-c20d14fad546',
+      },
+      {
+        date: '2020-09-25',
+        name: 'Launching high frequency derivatives trading on a DEX',
+        link: 'https://blog.leverj.io/launching-high-frequency-derivatives-trading-on-a-dex-fdca839aa51d',
+      },
+      {
+        date: '2019-02-19',
+        name: 'Leverj now on Ethereum Mainnet',
+        link: 'https://blog.leverj.io/leverj-now-on-ethereum-mainnet-bd016af01cb7',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+    technologyName: 'Plasma',
+    technologyDetails: 'Gluon Plasma',
     parameters: [
       {
         name: 'Primary use case',
@@ -231,23 +245,6 @@ export const leverj: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-04-08',
-        name: 'Shutting Down the Spot Market on Leverj',
-        link: 'https://blog.leverj.io/announcement-shutting-down-the-spot-markets-on-leverj-c20d14fad546',
-      },
-      {
-        date: '2020-09-25',
-        name: 'Launching high frequency derivatives trading on a DEX',
-        link: 'https://blog.leverj.io/launching-high-frequency-derivatives-trading-on-a-dex-fdca839aa51d',
-      },
-      {
-        date: '2019-02-19',
-        name: 'Leverj now on Ethereum Mainnet',
-        link: 'https://blog.leverj.io/leverj-now-on-ethereum-mainnet-bd016af01cb7',
       },
     ],
   },

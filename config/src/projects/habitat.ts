@@ -1,4 +1,10 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const habitat: Project = {
@@ -13,6 +19,7 @@ export const habitat: Project = {
   ],
   associatedToken: 'HBT',
   details: {
+    purpose: 'DAO, Treasury',
     links: {
       websites: ['https://0xhabitat.org/'],
       apps: ['https://0xhabitat.org/app/'],
@@ -25,54 +32,32 @@ export const habitat: Project = {
         'https://0xhabitat.substack.com/',
       ],
     },
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'NutBerry',
-    purpose: 'DAO, Treasury',
     riskView: {
-      stateValidation: RISK.STATE_FP,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_PROPOSE_BLOCKS,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
+      stateValidation: RISK_VIEW.STATE_FP,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_PROPOSE_BLOCKS,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
       category: {
         name: 'Optimistic Rollup',
-        references: [],
+        details: 'NutBerry',
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
+        ...DATA_AVAILABILITY.ON_CHAIN,
         isIncomplete: true,
       },
-      smartContracts: {
-        name: 'Limited smart contract support exists.',
-        description:
-          'Only static contracts that comply to the Habitat Module interface can be deployed and used.',
-        references: [
-          {
-            text: 'HabitatModule.sol - Habitat source code',
-            href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
-          },
-        ],
-        risks: [],
-      },
       operator: {
-        name: 'Anyone can propose and finalize blocks',
-        description: '',
-        risks: [],
-        references: [],
+        ...OPERATOR.DECENTRALIZED_OPERATOR,
         isIncomplete: true,
       },
       forceTransactions: {
-        name: 'There is no mechanism for force transactions',
-        description:
-          'Operators are independent transaction aggregators and are not subject to any enforcements.',
-        risks: [],
-        references: [],
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         isIncomplete: true,
       },
       exitMechanisms: [
@@ -85,6 +70,18 @@ export const habitat: Project = {
           isIncomplete: true,
         },
       ],
+      smartContracts: {
+        name: 'Limited smart contract support exists.',
+        description:
+          'Only static contracts that comply to the Habitat Module interface can be deployed and used.',
+        references: [
+          {
+            text: 'HabitatModule.sol - Habitat source code',
+            href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
+          },
+        ],
+        risks: [],
+      },
       contracts: {
         addresses: [
           {
@@ -102,6 +99,18 @@ export const habitat: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2021-06-30',
+        name: 'Community Update #15 - Habitat is Live on Mainnet',
+        link: 'https://0xhabitat.substack.com/p/15',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Optimistic Rollup',
+    technologyDetails: 'NutBerry',
     parameters: [
       {
         name: 'Primary use case',
@@ -175,13 +184,6 @@ export const habitat: Project = {
             href: 'https://github.com/0xHabitat/habitat/blob/master/src/rollup/contracts/HabitatModule.sol',
           },
         ],
-      },
-    ],
-    news: [
-      {
-        date: '2021-06-30',
-        name: 'Community Update #15 - Habitat is Live on Mainnet',
-        link: 'https://0xhabitat.substack.com/p/15',
       },
     ],
   },

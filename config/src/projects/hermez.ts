@@ -1,4 +1,11 @@
-import { RISK, TECHNOLOGY } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const hermez: Project = {
@@ -12,6 +19,7 @@ export const hermez: Project = {
     },
   ],
   details: {
+    purpose: 'Payments',
     links: {
       websites: ['https://hermez.io/'],
       apps: ['https://wallet.hermez.io/'],
@@ -31,13 +39,19 @@ export const hermez: Project = {
         'https://twitter.com/hermez_network',
       ],
     },
+    riskView: {
+      stateValidation: RISK_VIEW.STATE_ZKP_SN,
+      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
+    },
     technology: {
       category: {
         name: 'ZK Rollup',
-        references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: [
           {
             text: 'ZK-Proofs - Hermez documentation',
@@ -45,17 +59,8 @@ export const hermez: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...TECHNOLOGY.ON_CHAIN_DATA,
-        references: [
-          {
-            text: 'Data Availability - Hermez documentation',
-            href: 'https://docs.hermez.io/#/developers/glossary?id=data-availability',
-          },
-        ],
-      },
       newCryptography: {
-        ...TECHNOLOGY.ZK_SNARKS,
+        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
         references: [
           {
             text: 'ZK-Proofs - Hermez documentation',
@@ -67,11 +72,19 @@ export const hermez: Project = {
           },
         ],
       },
+      dataAvailability: {
+        ...DATA_AVAILABILITY.ON_CHAIN,
+        references: [
+          {
+            text: 'Data Availability - Hermez documentation',
+            href: 'https://docs.hermez.io/#/developers/glossary?id=data-availability',
+          },
+        ],
+      },
       operator: {
-        name: 'Anyone can become an operator',
+        ...OPERATOR.DECENTRALIZED_OPERATOR,
         description:
           'The system runs an auction in which anyone can bid to become the operator for a set number of blocks. The operator will be able to propose blocks and collect fees during this window. Hermez will also run a operator known as boot coordinator that will propose blocks in case no one bids in the auction. This operator can be removed by the governance.',
-        risks: [],
         references: [
           {
             text: 'Forging Consensus Protocol - Hermez documentation',
@@ -84,7 +97,7 @@ export const hermez: Project = {
         ],
       },
       forceTransactions: {
-        ...TECHNOLOGY.PROPOSE_OWN_BLOCKS,
+        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
         references: [
           {
             text: 'Can coordinators censor transactions? - Hermez documentation',
@@ -174,16 +187,23 @@ export const hermez: Project = {
         risks: [],
       },
     },
+    news: [
+      {
+        date: '2021-07-10',
+        name: 'Hermez Coordinator Is Live On Testnet',
+        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
+      },
+      {
+        date: '2021-03-17',
+        name: 'Hermez Network Mainnet Launch',
+        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
     technologyName: 'ZK Rollup',
     technologyDetails: 'zk-SNARK',
-    purpose: 'Payments',
-    riskView: {
-      stateValidation: RISK.STATE_ZKP_SN,
-      dataAvailability: RISK.DATA_ON_CHAIN,
-      upgradeability: RISK.UPGRADABLE_YES,
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_PROPOSE_BLOCKS,
-    },
     parameters: [
       {
         name: 'Primary use case',
@@ -258,18 +278,6 @@ export const hermez: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2021-07-10',
-        name: 'Hermez Coordinator Is Live On Testnet',
-        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
-      },
-      {
-        date: '2021-03-17',
-        name: 'Hermez Network Mainnet Launch',
-        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
       },
     ],
   },

@@ -1,4 +1,12 @@
-import { RISK, STARKEX } from './common'
+import {
+  DATA_AVAILABILITY,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STARKEX,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const deversifi: Project = {
@@ -39,6 +47,7 @@ export const deversifi: Project = {
     },
   ],
   details: {
+    purpose: 'Exchange',
     links: {
       websites: ['https://www.deversifi.com/'],
       apps: ['https://app.deversifi.com/'],
@@ -59,33 +68,24 @@ export const deversifi: Project = {
         'https://youtube.com/c/deversifi',
       ],
     },
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    purpose: 'Exchange',
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK.STATE_ZKP_ST,
-      dataAvailability: RISK.DATA_EXTERNAL,
-      upgradeability: RISK.UPGRADE_DELAY('4 weeks'),
-      operatorCensoring: RISK.CENSORING_WITHDRAW_L1,
-      operatorDown: RISK.DOWN_ESCAPE_MP,
+      stateValidation: RISK_VIEW.STATE_ZKP_ST,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('4 weeks'),
+      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {
         name: 'Validium',
-        description: "Powered by StarkWare's StarkEx",
-        references: [
-          {
-            text: 'DeversiFi Contracts - StarkEx documentation',
-            href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/deployments-addresses#deversifi-contracts',
-          },
-        ],
+        details: "Powered by StarkWare's StarkEx",
       },
-      stateCorrectness: STARKEX.VALIDITY_PROOFS,
-      dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
-      newCryptography: STARKEX.CRYPTOGRAPHY,
-      operator: STARKEX.OPERATOR,
-      forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),
+      stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+      newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
+      dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+      operator: OPERATOR.STARKEX_OPERATOR,
+      forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
       exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
       contracts: {
         addresses: [
@@ -126,6 +126,23 @@ export const deversifi: Project = {
         ],
       },
     },
+    news: [
+      {
+        date: '2020-03-15',
+        name: 'Fast Withdrawals - A Powerful New Building Block for Scalable DeFi',
+        link: 'https://blog.deversifi.com/l2-composability/',
+      },
+      {
+        date: '2020-07-15',
+        name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
+        link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
+      },
+    ],
+
+    // DEPRECATED ITEMS BELOW
+
+    technologyName: 'Validium',
+    technologyDetails: "Powered by StarkWare's StarkEx",
     parameters: [
       {
         name: 'Primary use case',
@@ -171,18 +188,6 @@ export const deversifi: Project = {
       {
         name: 'Smart contracts',
         value: 'No',
-      },
-    ],
-    news: [
-      {
-        date: '2020-03-15',
-        name: 'Fast Withdrawals - A Powerful New Building Block for Scalable DeFi',
-        link: 'https://blog.deversifi.com/l2-composability/',
-      },
-      {
-        date: '2020-07-15',
-        name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
-        link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
       },
     ],
   },
