@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const loopring: Project = {
@@ -48,7 +48,7 @@ export const loopring: Project = {
         references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: [
           {
             text: 'Operators - Loopring design doc',

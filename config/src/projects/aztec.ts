@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const aztec: Project = {
@@ -42,7 +42,7 @@ export const aztec: Project = {
         references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: [
           {
             text: 'RollupProcessor.sol#L395 - Etherscan source code',

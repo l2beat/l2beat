@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const leverj: Project = {
@@ -50,7 +50,7 @@ export const leverj: Project = {
         references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {

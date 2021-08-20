@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const layer2finance: Project = {
@@ -42,11 +42,12 @@ export const layer2finance: Project = {
         references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         description:
-          TECHNOLOGY.FRAUD_PROOFS.description +
+          STATE_CORRECTNESS.FRAUD_PROOFS.description +
           ' Unfortunately in case of Layer2.Finance only some fraud proofs revert blocks and every successful fraud proof pauses the contract requiring the owner to unpause.',
         risks: [
+          ...STATE_CORRECTNESS.FRAUD_PROOFS.risks,
           {
             category: 'Funds can be frozen if',
             text: 'the problematic fraud proof mechanism is exploited.',

@@ -1,18 +1,5 @@
 import { ProjectTechnologyChoice } from '../types'
 
-const VALIDITY_PROOFS: ProjectTechnologyChoice = {
-  name: 'Validity proofs ensure state correctness',
-  description:
-    'The state stored in the contract is updated when the contract receives a new proof that there exists a valid sequence of transactions that when executed, moves the current state to a new state. State is represented using Merkle roots.',
-  risks: [],
-  references: [
-    {
-      text: 'Enforcing Consistency on the On-Chain State - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/off-chain-state#enforcing-consistency-on-the-on-chain-state',
-    },
-  ],
-}
-
 const VALIDIUM_DATA_AVAILABILITY: ProjectTechnologyChoice = {
   name: 'Data is not stored on chain',
   description:
@@ -141,7 +128,6 @@ const FORCED_WITHDRAWAL: ProjectTechnologyChoice = {
 }
 
 export const STARKEX = {
-  VALIDITY_PROOFS,
   VALIDIUM_DATA_AVAILABILITY,
   ROLLUP_DATA_AVAILABILITY,
   CRYPTOGRAPHY,

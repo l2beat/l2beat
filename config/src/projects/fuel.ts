@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const fuel: Project = {
@@ -39,7 +39,7 @@ export const fuel: Project = {
         references: [],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         references: [
           {
             text: 'Background - Fuel documentation',

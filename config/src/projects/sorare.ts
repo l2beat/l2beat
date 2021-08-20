@@ -1,4 +1,4 @@
-import { RISK_VIEW, STARKEX } from './common'
+import { RISK_VIEW, STARKEX, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const sorare: Project = {
@@ -47,7 +47,7 @@ export const sorare: Project = {
           },
         ],
       },
-      stateCorrectness: STARKEX.VALIDITY_PROOFS,
+      stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       newCryptography: STARKEX.CRYPTOGRAPHY,
       operator: STARKEX.OPERATOR,

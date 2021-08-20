@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const arbitrum: Project = {
@@ -50,7 +50,7 @@ export const arbitrum: Project = {
         ],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         references: [
           {
             text: 'Executing and Securing the Chain - Arbitrum documentation',

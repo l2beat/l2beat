@@ -1,4 +1,4 @@
-import { RISK_VIEW, TECHNOLOGY } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
 import { Project } from './types'
 
 export const zkswapv2: Project = {
@@ -54,7 +54,7 @@ export const zkswapv2: Project = {
         ],
       },
       stateCorrectness: {
-        ...TECHNOLOGY.VALIDITY_PROOFS,
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: [
           {
             text: 'ZKSwap Introduces Practical ZK-Rollups - Medium blog',

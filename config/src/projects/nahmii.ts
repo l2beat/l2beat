@@ -1,4 +1,4 @@
-import { RISK_VIEW } from './common'
+import { RISK_VIEW, STATE_CORRECTNESS } from './common'
 import { Project } from './types'
 
 export const nahmii: Project = {
@@ -44,11 +44,15 @@ export const nahmii: Project = {
         references: [],
       },
       stateCorrectness: {
-        name: 'Fraud proofs ensure state correctness',
+        ...STATE_CORRECTNESS.FRAUD_PROOFS,
         description:
-          'Because Nahmii is more similar to state channels than to any other technology fraud proofs are used to detect fraudulent as there is no state published on chain.',
-        references: [],
-        risks: [],
+          'Because Nahmii is more similar to state channels than to any other technology fraud proofs are used to detect fraudulent exists as there is no state published on chain.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'there is no one that checks the published exists. Fraud proofs assume at least one honest and able validator.',
+          },
+        ],
         isIncomplete: true,
       },
       dataAvailability: {
