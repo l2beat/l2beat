@@ -1,4 +1,9 @@
-import { RISK_VIEW, STARKEX, STATE_CORRECTNESS } from './common'
+import {
+  NEW_CRYPTOGRAPHY,
+  RISK_VIEW,
+  STARKEX,
+  STATE_CORRECTNESS,
+} from './common'
 import { Project } from './types'
 
 export const deversifi: Project = {
@@ -74,7 +79,7 @@ export const deversifi: Project = {
         details: "Powered by StarkWare's StarkEx",
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      newCryptography: STARKEX.CRYPTOGRAPHY,
+      newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
       dataAvailability: STARKEX.VALIDIUM_DATA_AVAILABILITY,
       operator: STARKEX.OPERATOR,
       forceTransactions: STARKEX.FORCE_OPERATIONS('spot'),

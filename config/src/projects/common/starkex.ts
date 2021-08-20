@@ -38,25 +38,6 @@ const ROLLUP_DATA_AVAILABILITY: ProjectTechnologyChoice = {
     },
   ],
 }
-
-const CRYPTOGRAPHY: ProjectTechnologyChoice = {
-  name: 'Zero knowledge STARK cryptography is used',
-  description:
-    'Despite their production use ZK-STARKs are still new and experimental cryptography. Cryptography has made a lot of advancements in the recent years but all cryptographic solutions rely on time to prove their security.',
-  risks: [
-    {
-      category: 'Funds can be stolen if',
-      text: 'the cryptography is broken or implemented incorrectly.',
-    },
-  ],
-  references: [
-    {
-      text: 'Stark Curve - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/crypto/stark-curve',
-    },
-  ],
-}
-
 const OPERATOR: ProjectTechnologyChoice = {
   name: 'The operator is a single entity',
   description:
@@ -130,7 +111,6 @@ const FORCED_WITHDRAWAL: ProjectTechnologyChoice = {
 export const STARKEX = {
   VALIDIUM_DATA_AVAILABILITY,
   ROLLUP_DATA_AVAILABILITY,
-  CRYPTOGRAPHY,
   OPERATOR,
   FORCE_OPERATIONS,
   OFF_CHAIN_WITHDRAWAL,

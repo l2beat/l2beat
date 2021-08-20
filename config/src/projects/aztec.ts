@@ -1,4 +1,9 @@
-import { RISK_VIEW, STATE_CORRECTNESS, TECHNOLOGY } from './common'
+import {
+  NEW_CRYPTOGRAPHY,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+  TECHNOLOGY,
+} from './common'
 import { Project } from './types'
 
 export const aztec: Project = {
@@ -48,7 +53,7 @@ export const aztec: Project = {
         ],
       },
       newCryptography: {
-        ...TECHNOLOGY.ZK_SNARKS,
+        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
         references: [
           {
             text: 'TurboVerifier.sol#L37 - Etherscan source code',
