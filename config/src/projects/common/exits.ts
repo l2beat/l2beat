@@ -18,6 +18,26 @@ function REGULAR(
   }
 }
 
+const FORCED: ProjectTechnologyChoice = {
+  name: 'Forced exit',
+  description:
+    'If the user experiences censorship with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation follows the flow of a regular exit.',
+  risks: [],
+  references: [],
+}
+
+function EMERGENCY(
+  state: string,
+  proof: 'zero knowledge proof' | 'merkle proof'
+): ProjectTechnologyChoice {
+  return {
+    name: 'Emergency exit',
+    description: `If enough time passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
+    risks: [],
+    references: [],
+  }
+}
+
 const STARKEX_REGULAR: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   references: [
@@ -29,10 +49,7 @@ const STARKEX_REGULAR: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED: ProjectTechnologyChoice = {
-  name: 'Forced exit',
-  description:
-    'If the user experiences censorship with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation follows the flow of a regular exit.',
-  risks: [],
+  ...FORCED,
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
@@ -50,10 +67,7 @@ const STARKEX_FORCED: ProjectTechnologyChoice = {
 }
 
 const STARKEX_EMERGENCY: ProjectTechnologyChoice = {
-  name: 'Emergency exit',
-  description:
-    'If enough time passes and the forced exit is still ignored the user can freeze the entire system, disallowing further state updates. In that case everybody can withdraw by submitting a Merkle proof of their funds with their L1 transaction.',
-  risks: [],
+  ...EMERGENCY('a frozen state', 'merkle proof'),
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
@@ -80,6 +94,8 @@ const PLASMA: ProjectTechnologyChoice = {
 
 export const EXITS = {
   REGULAR,
+  FORCED,
+  EMERGENCY,
   STARKEX: [STARKEX_REGULAR, STARKEX_FORCED, STARKEX_EMERGENCY],
   PLASMA,
 }

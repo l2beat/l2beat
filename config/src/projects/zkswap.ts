@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
@@ -114,10 +115,16 @@ export const zkswap: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Full Exit',
-          description:
-            'When a user initiates a full exit to layer1 contract, ZKSwap will include this transaction in a block and process. Then all the funds will be withdrawn to L1.',
-          risks: [],
+          ...EXITS.REGULAR('zk', 'no proof'),
+          references: [
+            {
+              text: 'Make Transaction',
+              href: 'https://en.wiki.zks.org/interact-with-zkswap/make-transaction#withdraw',
+            },
+          ],
+        },
+        {
+          ...EXITS.FORCED,
           references: [
             {
               text: 'ZkSync.sol - ZKSwap source code',
@@ -126,14 +133,11 @@ export const zkswap: Project = {
           ],
         },
         {
-          name: 'Partial Exit (Withdraw)',
-          description:
-            'When a user makes a withdraw transaction on layer2, ZKSwap will include this transaction in a block and process. Then the requested funds will be withdrawn to L1.',
-          risks: [],
-          references: [
+          ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
+          risks: [
             {
-              text: 'Make Transaction',
-              href: 'https://en.wiki.zks.org/interact-with-zkswap/make-transaction#withdraw',
+              category: 'Funds can be lost if',
+              text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
             },
           ],
         },
