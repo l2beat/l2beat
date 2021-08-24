@@ -17,6 +17,16 @@ export const arbitrum: Project = {
       sinceBlock: 12525700,
       tokens: ['ETH'],
     },
+    {
+      address: '0xcEe284F754E854890e311e3280b767F80797180d',
+      sinceBlock: 12647126,
+      tokens: ['USDC'],
+    },
+    {
+      address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+      sinceBlock: 12640867,
+      tokens: ['LINK', 'WBTC'],
+    },
   ],
   details: {
     warning: 'Arbitrum is currently only open to whitelisted developers.',
@@ -185,6 +195,40 @@ export const arbitrum: Project = {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
               implementation: '0xAE71755B42D1EF5Fb365Aeb4A74CB73992dd9fBE',
+            },
+          },
+          {
+            address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
+            name: 'ProxyAdmin',
+            description:
+              'This is a different proxy admin for the three contracts below',
+          },
+          {
+            address: '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef',
+            name: 'L1GatewayRouter',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
+              implementation: '0x4b2Cf3BE8677096310b32a648b0Bdb8c5A8dDC94',
+            },
+          },
+          {
+            address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+            name: 'L1ERC20Gateway',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
+              // The source code is unverified on Etherscan!
+              implementation: '0x41AC92014C66C38bBBDEF8cCF5A060CCa5634fd5',
+            },
+          },
+          {
+            address: '0xcEe284F754E854890e311e3280b767F80797180d',
+            name: 'L1CustomGateway',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
+              implementation: '0xc5199b28d5267F80A7FA7a3313357D50Cf4Dba6C',
             },
           },
         ],
