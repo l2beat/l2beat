@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
@@ -106,17 +107,16 @@ export const loopring: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular withdrawal',
-          description:
-            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction.',
-          risks: [],
-          references: [],
+          ...EXITS.REGULAR('zk', 'no proof'),
+          references: [
+            {
+              text: 'Withdraw - Loopring design doc',
+              href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#withdraw',
+            },
+          ],
         },
         {
-          name: 'Forced withdrawal',
-          description:
-            'The user initiates a withdrawal request on L1. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction.',
-          risks: [],
+          ...EXITS.FORCED,
           references: [
             {
               text: 'Forced Request Handling - Loopring design doc',
@@ -125,10 +125,7 @@ export const loopring: Project = {
           ],
         },
         {
-          name: 'Withdrawal mode',
-          description:
-            'The user initiates a withdrawal request on L1. If it is not served within a predefined time period the system enters withdrawal mode in which users can withdraw by submitting merkle proofs of their funds.',
-          risks: [],
+          ...EXITS.EMERGENCY('Withdrawal Mode', 'merkle proof'),
           references: [
             {
               text: 'Forced Request Handling - Loopring design doc',

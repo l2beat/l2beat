@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -91,11 +92,12 @@ export const arbitrum: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular Exit',
-          description:
-            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Arbitrum is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
-          risks: [],
+          ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
+            {
+              text: 'L2 to L1 Messages Lifecycle - Arbitrum documentation',
+              href: 'https://developer.offchainlabs.com/docs/l1_l2_messages#l2-to-l1-messages-lifecycle',
+            },
             {
               text: 'Rules for Confirming or Rejecting Rollup Blocks - Arbitrum documentation',
               href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
@@ -105,7 +107,7 @@ export const arbitrum: Project = {
         {
           name: 'Tradeable Bridge Exit',
           description:
-            "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. This is implemented as a first party functionality inside Arbitrum's token bridge.",
+            "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. The user will get the funds immediately, however the third party has to wait for the block to be finalized. This is implemented as a first party functionality inside Arbitrum's token bridge.",
           risks: [],
           references: [
             {

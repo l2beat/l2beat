@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
@@ -92,10 +93,7 @@ export const zksync: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular withdraw',
-          description:
-            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction.',
-          risks: [],
+          ...EXITS.REGULAR('zk', 'no proof'),
           references: [
             {
               text: 'Withdrawing funds - zkSync documentation',
@@ -104,10 +102,7 @@ export const zksync: Project = {
           ],
         },
         {
-          name: 'Force exit',
-          description:
-            'Anyone can initiate a withdrawal from an account without a signing key. This is an L2 transaction and requests a withdrawal of all available funds of a certain token from the target L2 address to the target L1 address.',
-          risks: [],
+          ...EXITS.FORCED,
           references: [
             {
               text: 'Withdrawing funds - zkSync documentation',
@@ -116,9 +111,7 @@ export const zksync: Project = {
           ],
         },
         {
-          name: 'Full exit',
-          description:
-            'Full exit is a priority operation. This means that it needs to be submitted on L1 and comes with a guarantee of execution or the system will enter exodus mode and everyone will be able to trustlessly exit by providing a proof of funds.',
+          ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
           risks: [
             {
               category: 'Funds can be lost if',

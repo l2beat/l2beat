@@ -92,7 +92,7 @@ export const nahmii: Project = {
         {
           name: 'Regular exit',
           description:
-            'Users submit exit requests and wait 5 days for the possibility of someone challenging that request',
+            'The user initiates the withdrawal by submitting a transaction on L1 that contains a receipt signed by the operator. Then the user has to wait 5 days for the possibility of someone challenging the withdrawal. Afterwards the funds can be withdrawn.',
           references: [],
           risks: [],
           isIncomplete: true,

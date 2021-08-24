@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
@@ -107,9 +108,10 @@ export const hermez: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular withdraw',
+          ...EXITS.REGULAR('zk', 'merkle proof'),
           description:
-            'The user initiates a withdrawal request on L2. When the block containing the request is proved on L1, the user can withdraw the funds with an L1 transaction. This operation requires the user to submit a merkle proof of their funds. This operation cannot be performed if the withdrawal exceeds certain threshold.',
+            EXITS.REGULAR('zk', 'merkle proof').description +
+            ' This operation cannot be performed if the withdrawal exceeds certain threshold.',
           risks: [],
           references: [
             {
