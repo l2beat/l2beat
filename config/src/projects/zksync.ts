@@ -132,7 +132,59 @@ export const zksync: Project = {
       ],
       contracts: {
         addresses: [
-          // TODO: addresses
+          {
+            address: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+            name: 'UpgradeGatekeeper',
+            description:
+              'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+          },
+          {
+            address: '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
+            name: 'Governance',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0x9a97008ccCbDEc3413F9304602427e66895996A0',
+            },
+          },
+          {
+            address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
+            name: 'Verifier',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0x1E2865ee982a15529AF73cb7394d7bDAD4C4e105',
+            },
+          },
+          {
+            address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+            name: 'ZkSync',
+            description:
+              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 1209600 seconds which equals 14 days. Every time the contract upgrades this information has to be verified again.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0xd61dFf4b146e8e6bDCDad5C48e72D0bA85D94DbC',
+            },
+          },
+          {
+            address: '0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D',
+            name: 'ZkSyncNFTFactory',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Governance',
+              method: 'function defaultFactory() view returns(address)',
+            },
+          },
+          {
+            address: '0x5140Cc54Bb876aBE1ba67d15AC66Ad2D42FDf46A',
+            name: 'TokenGovernance',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Governance',
+              method: 'function tokenGovernance() view returns(address)',
+            },
+          },
         ],
         risks: [
           // TODO: risks
