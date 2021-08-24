@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -120,10 +121,7 @@ export const optimism: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular exit',
-          description:
-            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Optimism is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
-          risks: [],
+          ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
               text: ' Withdrawing back to L1 - Optimism documentation',

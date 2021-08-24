@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -95,11 +96,7 @@ export const omgnetwork: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular exit',
-          description:
-            'Users need to send an L1 transaction and provide a merkle proof of funds to exit.',
-          risks: [],
-          references: [],
+          ...EXITS.PLASMA,
           isIncomplete: true,
         },
       ],

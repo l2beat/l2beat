@@ -1,10 +1,10 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STARKEX,
   STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
@@ -50,7 +50,7 @@ export const immutablex: Project = {
       dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
       operator: OPERATOR.STARKEX_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
-      exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
+      exitMechanisms: EXITS.STARKEX,
       contracts: {
         addresses: [
           {

@@ -1,10 +1,10 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STARKEX,
   STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
@@ -60,7 +60,7 @@ export const dydx: Project = {
       dataAvailability: DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       operator: OPERATOR.STARKEX_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
-      exitMechanisms: [STARKEX.OFF_CHAIN_WITHDRAWAL, STARKEX.FORCED_WITHDRAWAL],
+      exitMechanisms: EXITS.STARKEX,
       contracts: {
         addresses: [
           {

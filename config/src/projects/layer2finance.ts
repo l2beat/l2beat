@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -118,13 +119,11 @@ export const layer2finance: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular Exit',
-          description:
-            'The user initiates a withdrawal by submitting a L2 transaction. Because the system is an optimistic rollup this transaction has to be included in a block and finalized which can take several hours. There is no emergency exit mechanism so users have to rely on the honesty of the operators to let them leave.',
+          ...EXITS.REGULAR('optimistic', 'no proof'),
           risks: [
             {
               category: 'Funds can be stolen if',
-              text: 'the users are prevented from leaving the system.',
+              text: "the operator does not include user's L2 withdrawal transactions.",
             },
           ],
           references: [

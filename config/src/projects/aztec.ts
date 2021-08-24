@@ -103,7 +103,7 @@ export const aztec: Project = {
         {
           name: 'Regular withdraw',
           description:
-            'The user initiates a withdrawal request on L2. When the block with this request on L1 is proved on L1 the assets are automatically withdrawn to the user in the same transaction. Users can use the escape hatch to force withdraw, but they need to prove the block themselves.',
+            'The user initiates the withdrawal by submitting a transaction on L2. When the block containing that transaction is proven on L1 the assets are automatically withdrawn to the user.',
           risks: [],
           references: [
             {

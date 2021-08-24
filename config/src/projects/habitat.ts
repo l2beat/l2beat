@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -62,11 +63,7 @@ export const habitat: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular withdraw',
-          description:
-            'Withdraw delays are subject to the inspection period. Currently 1 week.',
-          risks: [],
-          references: [],
+          ...EXITS.REGULAR('optimistic', 'merkle proof'),
           isIncomplete: true,
         },
       ],

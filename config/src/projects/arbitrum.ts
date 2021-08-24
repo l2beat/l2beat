@@ -1,5 +1,6 @@
 import {
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -91,11 +92,12 @@ export const arbitrum: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular Exit',
-          description:
-            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Arbitrum is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
-          risks: [],
+          ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
+            {
+              text: 'L2 to L1 Messages Lifecycle - Arbitrum documentation',
+              href: 'https://developer.offchainlabs.com/docs/l1_l2_messages#l2-to-l1-messages-lifecycle',
+            },
             {
               text: 'Rules for Confirming or Rejecting Rollup Blocks - Arbitrum documentation',
               href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
