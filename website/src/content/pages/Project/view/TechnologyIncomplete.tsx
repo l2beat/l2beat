@@ -1,11 +1,11 @@
 import { OutLink } from '../../../common'
 
-interface Props {
+export interface TechnologyIncompleteProps {
   editLink: string
   twitterLink: string | undefined
 }
 
-export function TechnologyIncomplete(props: Props) {
+export function TechnologyIncomplete(props: TechnologyIncompleteProps) {
   return (
     <div className="TechnologyIncomplete" id="incomplete">
       <strong>Note:</strong> This project's overview requires more research and

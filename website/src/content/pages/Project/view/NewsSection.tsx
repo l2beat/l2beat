@@ -15,8 +15,8 @@ export interface NewsItem {
 
 export function NewsSection({ news }: NewsSectionProps) {
   return (
-    <Section title="News" id="news">
-      <ul className="NewsSection">
+    <Section title="News" id="news" className="NewsSection">
+      <ul className="NewsSection-List">
         {news.map((news, i) => (
           <li key={i}>
             <OutLink className="NewsSection-News" href={news.href}>

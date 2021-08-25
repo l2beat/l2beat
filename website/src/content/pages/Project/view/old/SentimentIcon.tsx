@@ -2,7 +2,7 @@ import {
   ShieldBadIcon,
   ShieldGoodIcon,
   ShieldWarnIcon,
-} from '../../../common/icons'
+} from '../../../../common/icons'
 
 interface SentimentIconProps {
   sentiment: 'good' | 'bad' | 'warning'

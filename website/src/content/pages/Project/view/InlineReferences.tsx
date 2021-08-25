@@ -3,7 +3,7 @@ interface Props {
   citationNeededLink?: string
 }
 
-export function References({ ids, citationNeededLink }: Props) {
+export function InlineReferences({ ids, citationNeededLink }: Props) {
   if (ids.length === 0) {
     if (citationNeededLink) {
       return (

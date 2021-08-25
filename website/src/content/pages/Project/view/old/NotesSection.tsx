@@ -1,6 +1,6 @@
 import { Pointer } from '@l2beat/config'
 import { Pointers } from './Pointers'
-import { Section } from './Section'
+import { Section } from '../Section'
 
 interface Props {
   notes: {
@@ -14,8 +14,8 @@ interface Props {
 export function NotesSection({ notes }: Props) {
   return (
     <Section title="Notes" id="notes">
-      <p className="ProjectDetails-Text">{notes.text}</p>
-      <Pointers className="ProjectDetails-Links" pointers={notes.pointers} />
+      <p className="Notes-Text">{notes.text}</p>
+      <Pointers className="Notes-Links" pointers={notes.pointers} />
     </Section>
   )
 }

@@ -1,5 +1,5 @@
-import { EtherscanLink } from './EtherscanLink'
-import { Section } from './Section'
+import { EtherscanLink } from '../EtherscanLink'
+import { Section } from '../Section'
 
 export interface BridgesSectionProps {
   bridges: BridgeDetails[]
@@ -13,7 +13,7 @@ export interface BridgeDetails {
 export function BridgesSection({ bridges }: BridgesSectionProps) {
   return (
     <Section title="Tracked bridges" id="bridges">
-      <ul className="ProjectDetails-Links">
+      <ul className="OldProjectDetails-Links">
         {bridges.map((bridge, i) => (
           <li key={i}>
             <EtherscanLink address={bridge.address} /> -{' '}

@@ -1,5 +1,5 @@
 import { Heading, OutLink } from '../../../common'
-import { References } from './References'
+import { InlineReferences } from './InlineReferences'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
@@ -26,7 +26,7 @@ export function TechnologySection({
   items,
 }: TechnologySectionProps) {
   return (
-    <Section title={title} id={id}>
+    <Section title={title} id={id} className="TechnologySection">
       {items.map((item, i) => (
         <div className="TechnologySection-Item" key={i}>
           <Heading
@@ -46,7 +46,7 @@ export function TechnologySection({
           )}
           <p>
             {item.description}
-            <References
+            <InlineReferences
               ids={item.referenceIds}
               citationNeededLink={'#incomplete'}
             />

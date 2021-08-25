@@ -2,35 +2,27 @@
   line-height: 1.5;
   display: grid;
   grid-template-columns: 1fr 320px;
-  grid-template-rows: auto auto 1fr;
+  grid-template-areas: 'tech overview' 'tech news' 'references news';
   column-gap: 16px;
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
-    grid-template-rows: unset;
+    grid-template-areas: 'overview' 'tech' 'news' 'references';
   }
-}
 
-.ProjectDetails-Title {
-  margin: 32px 0 0 0;
-  @media (max-width: 550px) {
-    margin: 16px 0 0 0;
+  .OverviewSection {
+    grid-area: overview;
   }
-}
 
-.ProjectDetails-Text {
-  margin: 16px 0 0 0;
-}
-
-.ProjectDetails-Links {
-  margin: 16px 0 0 0;
-  @media (max-width: 550px) {
-    margin: 8px 0 0 0;
+  .ProjectDetails-Content {
+    grid-area: tech;
   }
-}
 
-.ProjectDetails-Parameters {
-  margin: 16px 0 0 0;
-  padding: 0;
-  list-style-type: none;
+  .NewsSection {
+    grid-area: news;
+  }
+
+  .ReferencesSection {
+    grid-area: references;
+  }
 }
