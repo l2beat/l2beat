@@ -116,46 +116,60 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
   function makeTechnologyContract(item: ProjectContract): TechnologyContract {
     const links = []
 
-    const upgradable = !!item.upgradeability
-    let delay: string | undefined
-    if (
-      item.upgradeability?.type === 'StarkWare' &&
-      item.upgradeability.upgradeDelay !== 0
-    ) {
-      const SECONDS_PER_DAY = 86_400
-      const days = item.upgradeability.upgradeDelay / SECONDS_PER_DAY
-      delay = Math.floor(days) + ' days'
-    }
-
-    let owner: string | undefined
     if (
       item.upgradeability?.type === 'EIP1967' ||
+      item.upgradeability?.type === 'NutBerry' ||
       item.upgradeability?.type === 'ZeppelinOs'
     ) {
-      owner = item.upgradeability.admin
+      links.push({
+        name: 'Implementation (Upgradable)',
+        href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+      })
+      links.push({
+        name: 'Admin',
+        href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+      })
     }
 
-    const codeLinkName = upgradable
-      ? delay
-        ? `Code (Upgradable, ${delay} delay)`
-        : 'Code (Upgradable)'
-      : 'Code'
-
-    links.push({
-      name: codeLinkName,
-      href: `https://etherscan.io/address/${item.address}#code`,
-    })
-    if (owner) {
+    if (item.upgradeability?.type === 'StarkWare') {
+      const delay = item.upgradeability.upgradeDelay !== 0
+      const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
+      const implementation =
+        item.upgradeability.callImplementation ??
+        item.upgradeability.implementation
       links.push({
-        name: 'Owner',
-        href: `https://etherscan.io/address/${owner}`,
+        name: `Implementation (Upgradable${
+          delay ? ` ${days} days delay` : ''
+        })`,
+        href: `https://etherscan.io/address/${implementation}#code`,
       })
+    }
+
+    if (item.upgradeability?.type === 'Reference') {
+      links.push({
+        name: 'Code (Upgradable)',
+        href: `https://etherscan.io/address/${item.address}#code`,
+      })
+    }
+
+    const tokens = project.bridges.find(
+      (x) => x.address === item.address
+    )?.tokens
+    let description = item.description
+    if (tokens) {
+      const joined = tokens.join(', ')
+      const tokenText = `This contract stores the following tokens: ${joined}.`
+      if (!description) {
+        description = tokenText
+      } else {
+        description += ' ' + tokenText
+      }
     }
 
     return {
       name: item.name,
       address: item.address,
-      description: item.description,
+      description,
       links,
     }
   }
