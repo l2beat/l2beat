@@ -1,6 +1,11 @@
 import { expect } from 'chai'
 import { utils } from 'ethers'
-import { projects } from '../src/projects'
+import {
+  ProjectRisk,
+  projects,
+  ProjectTechnology,
+  ProjectTechnologyChoice,
+} from '../src/projects'
 import { getTokenBySymbol } from '../src/tokens'
 
 describe('projects', () => {
@@ -68,6 +73,82 @@ describe('projects', () => {
         }
       })
     }
+  })
+
+  describe('sentences', () => {
+    describe('every description ends with a dot', () => {
+      for (const project of projects) {
+        it(project.name, () => {
+          expect(project.details.description.endsWith('.')).to.equal(true)
+        })
+      }
+    })
+
+    describe('technology', () => {
+      for (const project of projects) {
+        describe(project.name, () => {
+          const tech = project.details.technology
+
+          type Key = Exclude<keyof ProjectTechnology, 'category' | 'contracts'>
+
+          function check(key: Key) {
+            const item = tech[key]
+            if (Array.isArray(item)) {
+              for (const [i, x] of item.entries()) {
+                checkChoice(x, `${key}[i]`)
+              }
+            } else if (item) {
+              checkChoice(item, key)
+            }
+          }
+
+          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
+            it(`${name}.name doesn't end with a dot`, () => {
+              expect(choice.name.endsWith('.')).to.equal(false)
+            })
+
+            it(`${name}.description ends with a dot`, () => {
+              expect(choice.description.endsWith('.')).to.equal(true)
+            })
+
+            describe('risks', () => {
+              for (const [i, risk] of choice.risks.entries()) {
+                checkRisk(risk, `${name}.risks[${i}]`)
+              }
+            })
+          }
+
+          function checkRisk(risk: ProjectRisk, name: string) {
+            it(`${name} is correctly formatted`, () => {
+              expect(risk.text).to.match(/^[a-z].*\.$/)
+            })
+          }
+
+          check('stateCorrectness')
+          check('newCryptography')
+          check('dataAvailability')
+          check('operator')
+          check('forceTransactions')
+          check('exitMechanisms')
+          check('massExit')
+          check('additionalPrivacy')
+          check('smartContracts')
+
+          for (const [i, contract] of tech.contracts.addresses.entries()) {
+            const description = contract.description
+            if (description) {
+              it(`contracts[${i}].description ends with a dot`, () => {
+                expect(description.endsWith('.')).to.equal(true)
+              })
+            }
+          }
+
+          for (const [i, risk] of tech.contracts.risks.entries()) {
+            checkRisk(risk, `contracts.risks[${i}]`)
+          }
+        })
+      }
+    })
   })
 
   describe('every purpose is short', () => {

@@ -71,7 +71,7 @@ export const habitat: Project = {
         },
       ],
       smartContracts: {
-        name: 'Limited smart contract support exists.',
+        name: 'Limited smart contract support exists',
         description:
           'Only static contracts that comply to the Habitat Module interface can be deployed and used.',
         references: [
