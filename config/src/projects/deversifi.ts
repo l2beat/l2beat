@@ -48,6 +48,8 @@ export const deversifi: Project = {
     },
   ],
   details: {
+    description:
+      'DeversiFi claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',
     links: {
       websites: ['https://www.deversifi.com/'],
@@ -127,14 +129,19 @@ export const deversifi: Project = {
     },
     news: [
       {
-        date: '2020-03-15',
-        name: 'Fast Withdrawals - A Powerful New Building Block for Scalable DeFi',
-        link: 'https://blog.deversifi.com/l2-composability/',
+        date: '2021-08-11',
+        name: "It's here. The launch of DVF Governance.",
+        link: 'https://blog.deversifi.com/its-here-the-launch-of-dvf-governance/',
       },
       {
-        date: '2020-07-15',
-        name: 'Say Hello to the New DeversiFi - powered by StarkWare!',
-        link: 'https://blog.deversifi.com/introducing-deversifi2-0/',
+        date: '2021-08-03',
+        name: 'DeversiFi launches first Layer 2 bridge between Polygon for instant transfers',
+        link: 'https://blog.deversifi.com/deversifi-launches-first-layer-2-bridge-between-polygon-for-instant-transfers',
+      },
+      {
+        date: '2021-07-20',
+        name: 'Introducing the DVF DAO Treasury',
+        link: 'https://blog.deversifi.com/dvf-dao-treasury/',
       },
     ],
 

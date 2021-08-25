@@ -22,6 +22,8 @@ export const loopring: Project = {
   ],
   associatedToken: 'LRC',
   details: {
+    description:
+      "Loopring's zkRollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
     purpose: 'Payments, Exchange',
     links: {
       websites: ['https://loopring.org'],
@@ -156,24 +158,19 @@ export const loopring: Project = {
     },
     news: [
       {
-        date: '2020-12-15',
-        name: 'Shutdown of Loopring Exchange v1; Transition to v2',
-        link: 'https://medium.com/loopring-protocol/shutdown-of-loopring-exchange-v1-transition-to-v2-d06cdf462548',
+        date: '2020-08-24',
+        name: 'Loopring Now Supports NFTs on L2',
+        link: 'https://medium.com/loopring-protocol/loopring-now-supports-nfts-on-l2-29174a343d0d',
       },
       {
-        date: '2020-12-03',
-        name: 'Loopring’s zkRollup AMM is Live',
-        link: 'https://medium.com/loopring-protocol/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
+        date: '2020-08-24',
+        name: 'dAMM (distributed AMM)',
+        link: 'https://medium.com/loopring-protocol/damm-distributed-amm-98dcfa2b26dd',
       },
       {
-        date: '2020-06-06',
-        name: 'Loopring Pay is Live: zkRollup Transfers on Ethereum',
-        link: 'https://medium.com/loopring-protocol/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
-      },
-      {
-        date: '2020-02-27',
-        name: 'Loopring Launches zkRollup Exchange: Loopring.io',
-        link: 'https://medium.com/loopring-protocol/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+        date: '2020-08-18',
+        name: 'Loopring L2 Liquidity Mining: Round 13',
+        link: 'https://medium.com/loopring-protocol/loopring-l2-liquidity-mining-round-13-9957aac9a21b',
       },
     ],
 

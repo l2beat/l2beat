@@ -26,6 +26,8 @@ export const leverj: Project = {
   ],
   associatedToken: 'L2',
   details: {
+    description:
+      'Leverj is the first exchange built on customized Gluon technology. Gluon aims to be a Layer 2 scalable trading engine built on top of Ethereum, unlocking low fees and high frequency trading.',
     purpose: 'Exchange',
     links: {
       websites: ['https://leverj.io/'],
@@ -181,19 +183,19 @@ export const leverj: Project = {
     },
     news: [
       {
-        date: '2021-04-08',
-        name: 'Shutting Down the Spot Market on Leverj',
-        link: 'https://blog.leverj.io/announcement-shutting-down-the-spot-markets-on-leverj-c20d14fad546',
+        date: '2021-08-02',
+        name: 'Funding Rates: July 16–31, 2021',
+        link: 'https://blog.leverj.io/funding-rates-july-16-31-2021-610f3506b4d8',
       },
       {
-        date: '2020-09-25',
-        name: 'Launching high frequency derivatives trading on a DEX',
-        link: 'https://blog.leverj.io/launching-high-frequency-derivatives-trading-on-a-dex-fdca839aa51d',
+        date: '2020-07-26',
+        name: 'Funding Rates: July 1–15, 2021',
+        link: 'https://blog.leverj.io/funding-rates-july-1-15-2021-5595b7e5ffcd',
       },
       {
-        date: '2019-02-19',
-        name: 'Leverj now on Ethereum Mainnet',
-        link: 'https://blog.leverj.io/leverj-now-on-ethereum-mainnet-bd016af01cb7',
+        date: '2021-07-22',
+        name: 'Where to see the referral reward I earned?',
+        link: 'https://blog.leverj.io/where-to-see-the-referral-reward-i-earned-246758dc7d0a',
       },
     ],
 

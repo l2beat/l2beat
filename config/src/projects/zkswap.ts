@@ -42,6 +42,8 @@ export const zkswap: Project = {
     },
   ],
   details: {
+    description:
+      'ZKSwap claims to be a Layer 2 AMM decentralized transaction protocol. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees',
     purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
@@ -204,29 +206,19 @@ export const zkswap: Project = {
     },
     news: [
       {
-        date: '2021-03-22',
-        name: 'ZKSwap 100% ZK-Rollup Update Completed ',
-        link: 'https://zkswapofficial.medium.com/zkswap-100-zk-rollup-update-completed-and-announces-gzks-governance-tokens-to-further-support-3e4b113f4f49',
+        date: '2021-08-25',
+        name: 'ZKSwap Announces Deployment of V2 on BSC Mainnet',
+        link: 'https://medium.com/zkswap/zkswap-announces-deployment-of-v2-on-bsc-mainnet-53395c15a856',
       },
       {
-        date: '2021-03-02',
-        name: 'ZKSwap Sets Out Roadmap for 2021',
-        link: 'https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3',
+        date: '2021-08-23',
+        name: 'PoS Mining is Back',
+        link: 'https://medium.com/zkswap/pos-mining-is-back-5732c3975f5c',
       },
       {
-        date: '2021-03-02',
-        name: 'Defying the stigma, ZKSwap’s Clarification on Bad Rumours',
-        link: 'https://zkswapofficial.medium.com/defying-the-stigma-zkswaps-clarification-on-bad-rumours-b9cc29ba87b4',
-      },
-      {
-        date: '2021-02-25',
-        name: 'Few Thoughts about Keeping L2 Data Off-Chain: A Trade-Off between L2 Efficiency and Data Availability',
-        link: 'https://zkswapofficial.medium.com/few-thoughts-about-keeping-l2-data-off-chain-a-trade-off-between-l2-efficiency-and-data-95800e960e1b',
-      },
-      {
-        date: '2021-02-14',
-        name: 'ZKSwap Live on Ethereum, Layer2 Assets Exceeding $40 Million, and Liquidity over $27 Million 1 Hour after Launch',
-        link: 'https://medium.com/zkswap/zkswap-live-on-ethereum-layer2-assets-exceeding-40-million-and-liquidity-over-27-million-1-3af96eb42768',
+        date: '2021-08-23',
+        name: 'ZKSwap Tech Review: SKALE — An Elastic, Decentralized Sidechain Network',
+        link: 'https://medium.com/zkswap/zkswap-tech-review-skale-an-elastic-decentralized-sidechain-network-978a6e7167e3',
       },
     ],
 

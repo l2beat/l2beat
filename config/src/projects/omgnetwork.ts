@@ -54,6 +54,8 @@ export const omgnetwork: Project = {
   ],
   associatedToken: 'OMG',
   details: {
+    description:
+      'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. Using the OMG Network, individuals and businesses can transact on a financial infrastructure that is claimed to be several times faster, 1/3rd the cost, and as secure as the Ethereum Network — while retaining full autonomy over their funds and keys. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
     purpose: 'Payments',
     links: {
       websites: ['https://omg.network'],
@@ -140,9 +142,19 @@ export const omgnetwork: Project = {
     },
     news: [
       {
-        date: '2020-06-01',
-        name: 'Scaling Ethereum with the OMG Network',
-        link: 'https://omg.network/omg-network-scales-ethereum/',
+        date: '2021-02-22',
+        name: 'Enya x OMG Community Response ft. Hashcast Demo',
+        link: 'https://omg.network/enya-hashcast-demo/',
+      },
+      {
+        date: '2021-02-03',
+        name: 'Enya Joins OMG Network As Strategic Partner',
+        link: 'https://omg.network/enya-omg-network-partner/',
+      },
+      {
+        date: '2020-10-01',
+        name: 'OMG Network 2020: Plasma Blockchain & Loyalty Points',
+        link: 'https://omg.network/omg-network-update-plasma-blockchain-loyalty-points/',
       },
     ],
 
