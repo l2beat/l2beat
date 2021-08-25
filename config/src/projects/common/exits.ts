@@ -1,4 +1,4 @@
-import { ProjectTechnologyChoice } from '../types'
+import { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
@@ -30,10 +30,19 @@ function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof'
 ): ProjectTechnologyChoice {
+  const risks: ProjectRisk[] =
+    proof === 'zero knowledge proof'
+      ? [
+          {
+            category: 'Funds can be lost if',
+            text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
+          },
+        ]
+      : []
   return {
     name: 'Emergency exit',
     description: `If enough time passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
-    risks: [],
+    risks,
     references: [],
   }
 }

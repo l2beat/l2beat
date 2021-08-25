@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -45,7 +46,7 @@ export const leverj: Project = {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
@@ -175,9 +176,7 @@ export const leverj: Project = {
             address: '0xda88efa53c85afa30564bb651a2e76b99a232082',
           },
         ],
-        risks: [
-          // TODO: risks
-        ],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [

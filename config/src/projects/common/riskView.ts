@@ -87,15 +87,22 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
 // Operator is censoring
 
 export const CENSORING_TRANSACT_L1: ProjectRiskViewEntry = {
-  value: 'Transact through L1',
+  value: 'Transact using L1',
   description:
     'The user is able to submit an L1 transaction and force the operator to include it on L2.',
 }
 
-export const CENSORING_WITHDRAW_L1: ProjectRiskViewEntry = {
-  value: 'Withdraw through L1',
+export const CENSORING_FORCE_EXIT_L1: ProjectRiskViewEntry = {
+  value: 'Force exit to L1',
   description:
     'The user is only able to submit an L1 withdrawal request and force the operator to include it on L2. After that the user exits the system with their funds.',
+  sentiment: 'warning',
+}
+
+export const CENSORING_EXIT_L1: ProjectRiskViewEntry = {
+  value: 'Exit to L1',
+  description:
+    'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
   sentiment: 'warning',
 }
 
@@ -160,7 +167,8 @@ export const RISK_VIEW = {
   UPGRADE_DELAY,
   UPGRADABLE_NO,
   CENSORING_TRANSACT_L1,
-  CENSORING_WITHDRAW_L1,
+  CENSORING_FORCE_EXIT_L1,
+  CENSORING_EXIT_L1,
   CENSORING_PROPOSE_BLOCKS,
   CENSORING_NO_MECHANISM,
   DOWN_ESCAPE_MP,

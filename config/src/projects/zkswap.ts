@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -60,8 +61,8 @@ export const zkswap: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('2 weeks'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     technology: {
@@ -134,12 +135,6 @@ export const zkswap: Project = {
         },
         {
           ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
-          risks: [
-            {
-              category: 'Funds can be lost if',
-              text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
-            },
-          ],
         },
       ],
       contracts: {
@@ -153,6 +148,8 @@ export const zkswap: Project = {
           {
             address: '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad',
             name: 'ZkSync',
+            description:
+              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 691200 seconds which equals 8 days. Every time the contract upgrades this information has to be verified again.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
@@ -171,8 +168,7 @@ export const zkswap: Project = {
           {
             address: '0x661121AE41edE3f6FECDed922c59acC19A3ea9B3',
             name: 'Unknown1',
-            description:
-              'The source code of this contract is not verified on Etherscan.',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
@@ -182,8 +178,7 @@ export const zkswap: Project = {
           {
             address: '0x27C229937745d697d28FC7853d1bFEA7331Edf56',
             name: 'Unknown2',
-            description:
-              'The source code of this contract is not verified on Etherscan.',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
@@ -193,8 +188,7 @@ export const zkswap: Project = {
           {
             address: '0x961369d347EF7A6896BDD39cBE2B89e3911f521f',
             name: 'Unknown3',
-            description:
-              'The source code of this contract is not verified on Etherscan.',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
@@ -203,7 +197,8 @@ export const zkswap: Project = {
           },
         ],
         risks: [
-          // TODO: risks
+          CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
+          CONTRACTS.UNVERIFIED_RISK,
         ],
       },
     },

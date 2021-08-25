@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -39,7 +40,7 @@ export const zksync: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('2 weeks'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     technology: {
@@ -112,12 +113,6 @@ export const zksync: Project = {
         },
         {
           ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
-          risks: [
-            {
-              category: 'Funds can be lost if',
-              text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
-            },
-          ],
           references: [
             {
               text: 'Withdrawing funds - zkSync documentation',
@@ -186,9 +181,7 @@ export const zksync: Project = {
             },
           },
         ],
-        risks: [
-          // TODO: risks
-        ],
+        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('2 weeks')],
       },
     },
     news: [

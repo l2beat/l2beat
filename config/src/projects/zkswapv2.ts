@@ -1,4 +1,4 @@
-import { RISK_VIEW } from './common'
+import { CONTRACTS, RISK_VIEW } from './common'
 import { Project } from './types'
 import { zkswap } from './zkswap'
 
@@ -48,7 +48,7 @@ export const zkswapv2: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     technology: {
@@ -94,8 +94,7 @@ export const zkswapv2: Project = {
           {
             address: '0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0',
             name: 'ZkSyncExit',
-            description:
-              'The source code of this contract is not verified on Etherscan.',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'Reference',
               base: 'ZkSync',
@@ -113,7 +112,10 @@ export const zkswapv2: Project = {
             },
           },
         ],
-        risks: [],
+        risks: [
+          CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
+          CONTRACTS.UNVERIFIED_RISK,
+        ],
       },
     },
     news: [
