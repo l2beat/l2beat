@@ -75,12 +75,7 @@ export const nahmii: Project = {
         name: 'The system has a centralized operator',
         description:
           'All transactions require signature from the operator which is run by the Nahmii foundation.',
-        risks: [
-          {
-            category: 'Users can be censored if',
-            text: 'the operator refuses to service their requests.',
-          },
-        ],
+        risks: [],
         references: [],
         isIncomplete: true,
       },

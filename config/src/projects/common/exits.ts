@@ -35,7 +35,7 @@ function EMERGENCY(
       ? [
           {
             category: 'Funds can be lost if',
-            text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
+            text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw.',
           },
         ]
       : []

@@ -149,7 +149,12 @@ export const hermez: Project = {
           name: 'Emergency mode',
           description:
             "When the user does a regular or forced withdraw and their funds exceed a certain threshold a timer activates. The operators can now trigger emergency mode and transfer the user's funds to the governance.",
-          risks: [],
+          risks: [
+            {
+              category: 'Funds can be stolen if',
+              text: 'the operators trigger a false alarm during withdrawal.',
+            },
+          ],
           references: [
             {
               text: 'Withdrawal Delayer Mechanism - Hermez documentation',
