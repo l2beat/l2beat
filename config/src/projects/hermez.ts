@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -44,7 +45,7 @@ export const hermez: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
@@ -186,7 +187,7 @@ export const hermez: Project = {
             address: '0xeef9f339514298c6a857efcfc1a762af84438dee',
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [

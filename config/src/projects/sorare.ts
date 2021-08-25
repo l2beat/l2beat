@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -37,9 +38,9 @@ export const sorare: Project = {
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
@@ -74,16 +75,14 @@ export const sorare: Project = {
             address: '0x2cAbD63F6f28b493f33D13E34060f0959F3570aE',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0x0f58e286eDeaC10a197bA1906eA348beD3eE41a0',
+              implementation: '0x1fEE2090492d824D71ee20e4035084d39d39Aa43',
               callImplementation: '0x9bca5C55137057208ee5b14F3e269133bDCaC1f8',
-              upgradeDelay: 0,
+              upgradeDelay: 2419200,
               isFinal: false,
             },
           },
         ],
-        risks: [
-          // TODO: Risks
-        ],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [

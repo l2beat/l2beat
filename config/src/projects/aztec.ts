@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -138,11 +139,12 @@ export const aztec: Project = {
           {
             address: '0xDCC80dB987bf63f01b7bafCED6230DE5002eF874',
             name: 'TurboVerifier',
+            // TurboVerifier uses unverified libraries https://etherscan.io/address/0x8eefd2d44952ddcb94bb383d4c0aa670f941c784
+            description:
+              'The source code of the VerificationKeys library used by this contract is not verified on Etherscan.',
           },
         ],
-        risks: [
-          // TurboVerifier uses unverified libraries https://etherscan.io/address/0x8eefd2d44952ddcb94bb383d4c0aa670f941c784
-        ],
+        risks: [CONTRACTS.UNVERIFIED_RISK],
       },
     },
     news: [

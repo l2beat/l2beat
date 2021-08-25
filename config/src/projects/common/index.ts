@@ -1,3 +1,4 @@
+export * from './contracts'
 export * from './dataAvailability'
 export * from './exits'
 export * from './forceTransactions'

@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -91,9 +92,7 @@ export const habitat: Project = {
             },
           },
         ],
-        risks: [
-          // TODO: risks?
-        ],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [

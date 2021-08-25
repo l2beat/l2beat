@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -176,15 +177,15 @@ export const optimism: Project = {
           {
             name: 'L1ChugSplashProxy',
             address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
-              // UNVERIFIED ON ETHERSCAN!
               implementation: '0x9091dda480B232133A7D2E4cb23336B4F0293196',
             },
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
       },
     },
     news: [

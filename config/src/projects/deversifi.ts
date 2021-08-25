@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -71,9 +72,9 @@ export const deversifi: Project = {
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('4 weeks'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
@@ -121,9 +122,7 @@ export const deversifi: Project = {
             address: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0',
           },
         ],
-        risks: [
-          // TODO: Risks
-        ],
+        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('4 weeks')],
       },
     },
     news: [

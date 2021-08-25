@@ -38,7 +38,7 @@ export const nahmii: Project = {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADABLE_NO,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
     },
     technology: {
