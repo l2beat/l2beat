@@ -1,24 +1,32 @@
 import { ProjectDetails } from '@l2beat/config'
 import { config } from '../../../config'
+import { ContractsSection, ContractsSectionProps } from './ContractsSection'
 import { NewsSection, NewsSectionProps } from './NewsSection'
-import { BridgesSection, BridgesSectionProps } from './old/BridgesSection'
-import { NotesSection } from './old/NotesSection'
+import { BridgesSectionProps } from './old/BridgesSection'
 import { OldProjectDetails } from './old/OldProjectDetails'
 import { OverviewSection, OverviewSectionProps } from './old/OverviewSection'
-import { ParametersSection } from './old/ParametersSection'
+import { ReferencesSection, ReferencesSectionProps } from './ReferencesSection'
 import { RiskSection, RiskSectionProps } from './RiskSection'
 import {
-  TechnologyOverview,
-  TechnologyOverviewProps,
-} from './TechnologyOverview'
+  TechnologyIncomplete,
+  TechnologyIncompleteProps,
+} from './TechnologyIncomplete'
+import { TechnologySection, TechnologySectionProps } from './TechnologySection'
 
 export interface ProjectDetailsProps {
   details: ProjectDetails
   riskSection: RiskSectionProps
   technologyOverview: TechnologyOverviewProps
   bridgesSection: BridgesSectionProps
-  newsSection?: NewsSectionProps
+  newsSection: NewsSectionProps
   overviewSection: OverviewSectionProps
+}
+
+export interface TechnologyOverviewProps {
+  incomplete?: TechnologyIncompleteProps
+  sections: TechnologySectionProps[]
+  contractsSection: ContractsSectionProps
+  referencesSection: ReferencesSectionProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -26,16 +34,20 @@ export function ProjectDetails(props: ProjectDetailsProps) {
     return <OldProjectDetails {...props} />
   }
   return (
-    <main className="OldProjectDetails">
-      <div className="OldProjectDetails-LeftColumn">
-        <OverviewSection {...props.overviewSection} />
+    <main className="ProjectDetails">
+      <OverviewSection {...props.overviewSection} />
+      <NewsSection {...props.newsSection} />
+      <div className="ProjectDetails-Content">
         <RiskSection {...props.riskSection} />
-        <TechnologyOverview {...props.technologyOverview} />
+        {props.technologyOverview.incomplete && (
+          <TechnologyIncomplete {...props.technologyOverview.incomplete} />
+        )}
+        {props.technologyOverview.sections.map((section) => (
+          <TechnologySection key={section.id} {...section} />
+        ))}
+        <ContractsSection {...props.technologyOverview.contractsSection} />
       </div>
-
-      <div className="OldProjectDetails-RightColumn">
-        {props.newsSection && <NewsSection {...props.newsSection} />}
-      </div>
+      <ReferencesSection {...props.technologyOverview.referencesSection} />
     </main>
   )
 }

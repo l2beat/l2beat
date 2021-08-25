@@ -26,7 +26,7 @@ export function TechnologySection({
   items,
 }: TechnologySectionProps) {
   return (
-    <Section title={title} id={id}>
+    <Section title={title} id={id} className="TechnologySection">
       {items.map((item, i) => (
         <div className="TechnologySection-Item" key={i}>
           <Heading

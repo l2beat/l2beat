@@ -6,8 +6,8 @@ import {
   ProjectTechnologyChoice,
 } from '@l2beat/config'
 import { TechnologyContract } from '../view/ContractsSection'
+import { TechnologyOverviewProps } from '../view/ProjectDetails'
 import { TechnologyReference } from '../view/ReferencesSection'
-import { TechnologyOverviewProps } from '../view/TechnologyOverview'
 import {
   TechnologyChoice,
   TechnologySectionProps,
@@ -170,10 +170,15 @@ export function getTechnologyOverview(
     x.items.some((x) => x.isIncomplete === true || x.referenceIds.length === 0)
   )
 
+  const incomplete = isIncomplete
+    ? {
+        editLink: getEditLink(project),
+        twitterLink: getTwitterLink(project),
+      }
+    : undefined
+
   return {
-    editLink: getEditLink(project),
-    twitterLink: getTwitterLink(project),
-    isIncomplete,
+    incomplete,
     sections,
     contractsSection: makeContractSection(tech),
     referencesSection: { items: references },

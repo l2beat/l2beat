@@ -21,7 +21,7 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
     return null
   }
   return (
-    <Section title="Risk summary" id="risks">
+    <Section title="Risk summary" id="risks" className="RiskSection">
       {riskGroups.map((group, i) => (
         <div className="RiskSection-Group" key={i}>
           <p className="RiskSection-Title">{group.name}&hellip;</p>
