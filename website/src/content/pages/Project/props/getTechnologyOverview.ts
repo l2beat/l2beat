@@ -5,18 +5,29 @@ import {
   ProjectTechnology,
   ProjectTechnologyChoice,
 } from '@l2beat/config'
-import { TechnologyContract } from '../view/ContractsSection'
-import { TechnologyOverviewProps } from '../view/ProjectDetails'
-import { TechnologyReference } from '../view/ReferencesSection'
+import {
+  ContractsSectionProps,
+  TechnologyContract,
+} from '../view/ContractsSection'
+import {
+  ReferencesSectionProps,
+  TechnologyReference,
+} from '../view/ReferencesSection'
+import { TechnologyIncompleteProps } from '../view/TechnologyIncomplete'
 import {
   TechnologyChoice,
   TechnologySectionProps,
 } from '../view/TechnologySection'
 import { getEditLink, getIssueLink } from './links'
 
-export function getTechnologyOverview(
-  project: Project
-): TechnologyOverviewProps {
+interface TechnologyOverview {
+  incomplete?: TechnologyIncompleteProps
+  sections: TechnologySectionProps[]
+  contractsSection: ContractsSectionProps
+  referencesSection: ReferencesSectionProps
+}
+
+export function getTechnologyOverview(project: Project): TechnologyOverview {
   const tech = project.details.technology
   const references: TechnologyReference[] = []
 
