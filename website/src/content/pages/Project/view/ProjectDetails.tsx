@@ -4,12 +4,12 @@ import {
   DescriptionSection,
   DescriptionSectionProps,
 } from './DescriptionSection'
+import { LinkSection, LinkSectionProps } from './links/LinkSection'
 import { NewsSection, NewsSectionProps } from './NewsSection'
 import {
   OldProjectDetails,
   OldProjectDetailsProps,
 } from './old/OldProjectDetails'
-import { OverviewSection, OverviewSectionProps } from './old/OverviewSection'
 import { ReferencesSection, ReferencesSectionProps } from './ReferencesSection'
 import { RiskSection, RiskSectionProps } from './RiskSection'
 import {
@@ -20,7 +20,7 @@ import { TechnologySection, TechnologySectionProps } from './TechnologySection'
 
 export interface ProjectDetailsProps {
   old: OldProjectDetailsProps
-  overviewSection: OverviewSectionProps
+  linkSection: LinkSectionProps
   newsSection: NewsSectionProps
   descriptionSection: DescriptionSectionProps
   riskSection: RiskSectionProps
@@ -36,7 +36,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
   }
   return (
     <main className="ProjectDetails">
-      <OverviewSection {...props.overviewSection} />
+      <LinkSection {...props.linkSection} />
       <NewsSection {...props.newsSection} />
       <div className="ProjectDetails-Content">
         <DescriptionSection {...props.descriptionSection} />
