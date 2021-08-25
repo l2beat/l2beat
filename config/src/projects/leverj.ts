@@ -175,7 +175,7 @@ export const leverj: Project = {
           },
           {
             name: 'LegacyTokensExtension',
-            address: '0xda88efa53c85afa30564bb651a2e76b99a232082',
+            address: '0xDA88EfA53c85Afa30564bb651A2E76b99a232082',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

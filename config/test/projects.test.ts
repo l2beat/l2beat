@@ -13,18 +13,46 @@ describe('projects', () => {
   })
 
   describe('addresses', () => {
-    const addresses = projects.flatMap((x) => x.bridges.map((x) => x.address))
-
     describe('every addresses is valid and formatted', () => {
-      for (const address of addresses) {
+      const testAddress = (address: string) =>
         it(address, () => {
           expect(utils.getAddress(address)).to.equal(address)
         })
-      }
+
+      describe('bridges', () => {
+        const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
+        for (const address of bridges) {
+          testAddress(address)
+        }
+      })
+
+      describe('contracts', () => {
+        for (const project of projects) {
+          const contracts = project.details.technology.contracts.addresses
+          for (const contract of contracts) {
+            testAddress(contract.address)
+            if (
+              contract.upgradeability?.type === 'EIP1967' ||
+              contract.upgradeability?.type === 'NutBerry' ||
+              contract.upgradeability?.type === 'ZeppelinOs'
+            ) {
+              testAddress(contract.upgradeability.admin)
+              testAddress(contract.upgradeability.implementation)
+            }
+            if (contract.upgradeability?.type === 'StarkWare') {
+              testAddress(contract.upgradeability.implementation)
+              if (contract.upgradeability.callImplementation) {
+                testAddress(contract.upgradeability.callImplementation)
+              }
+            }
+          }
+        }
+      })
     })
 
     it('every bridge has a unique address', () => {
-      const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
+      const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
+      const everyUnique = bridges.every((x, i, a) => a.indexOf(x) === i)
       expect(everyUnique).to.equal(true)
     })
   })
