@@ -1,5 +1,5 @@
 import { ShieldBadIcon } from '../../../common/icons'
-import { References } from './References'
+import { InlineReferences } from './InlineReferences'
 
 export interface RiskList {
   risks: TechnologyRisk[]
@@ -17,7 +17,7 @@ export function RiskList({ risks }: RiskList) {
         <li className="RiskList-Item" key={i}>
           <ShieldBadIcon />
           {risk.text}
-          <References ids={risk.referenceIds} />
+          <InlineReferences ids={risk.referenceIds} />
         </li>
       ))}
     </ul>

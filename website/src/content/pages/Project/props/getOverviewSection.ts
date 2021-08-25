@@ -1,5 +1,5 @@
 import { Project } from '@l2beat/config'
-import { OverviewSectionProps } from '../view/OverviewSection'
+import { OverviewSectionProps } from '../view/old/OverviewSection'
 import { getEditLink, getIssueLink } from './links'
 
 export function getOverviewSection(project: Project): OverviewSectionProps {

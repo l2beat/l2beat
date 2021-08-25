@@ -1,4 +1,4 @@
-.ProjectDetails {
+.OldProjectDetails {
   line-height: 1.5;
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -11,25 +11,18 @@
   }
 }
 
-.ProjectDetails-Title {
-  margin: 32px 0 0 0;
-  @media (max-width: 550px) {
-    margin: 16px 0 0 0;
-  }
-}
-
-.ProjectDetails-Text {
+.OldProjectDetails-Text {
   margin: 16px 0 0 0;
 }
 
-.ProjectDetails-Links {
+.OldProjectDetails-Links {
   margin: 16px 0 0 0;
   @media (max-width: 550px) {
     margin: 8px 0 0 0;
   }
 }
 
-.ProjectDetails-Parameters {
+.OldProjectDetails-Parameters {
   margin: 16px 0 0 0;
   padding: 0;
   list-style-type: none;

@@ -1,5 +1,5 @@
 import { Heading, OutLink } from '../../../common'
-import { References } from './References'
+import { InlineReferences } from './InlineReferences'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
@@ -46,7 +46,7 @@ export function TechnologySection({
           )}
           <p>
             {item.description}
-            <References
+            <InlineReferences
               ids={item.referenceIds}
               citationNeededLink={'#incomplete'}
             />

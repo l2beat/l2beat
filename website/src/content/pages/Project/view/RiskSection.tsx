@@ -17,6 +17,9 @@ export interface RiskItem {
 }
 
 export function RiskSection({ riskGroups }: RiskSectionProps) {
+  if (riskGroups.length === 0) {
+    return null
+  }
   return (
     <Section title="Risk summary" id="risks">
       {riskGroups.map((group, i) => (

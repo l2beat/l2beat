@@ -16,12 +16,8 @@ import { getEditLink, getIssueLink } from './links'
 
 export function getTechnologyOverview(
   project: Project
-): TechnologyOverviewProps | undefined {
+): TechnologyOverviewProps {
   const tech = project.details.technology
-  if (!tech) {
-    return undefined
-  }
-
   const references: TechnologyReference[] = []
 
   function addReference(reference: ProjectReference) {

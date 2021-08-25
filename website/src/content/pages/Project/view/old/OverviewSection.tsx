@@ -1,7 +1,7 @@
 import { ProjectLinks } from '@l2beat/config'
-import { ShieldWarnIcon } from '../../../common/icons'
+import { ShieldWarnIcon } from '../../../../common/icons'
 import { OverviewLinks } from './OverviewLinks'
-import { Section } from './Section'
+import { Section } from '../Section'
 
 export interface OverviewSectionProps {
   links: ProjectLinks
