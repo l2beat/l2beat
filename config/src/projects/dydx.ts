@@ -22,7 +22,7 @@ export const dydx: Project = {
   ],
   details: {
     description:
-      'DeversiFi aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
+      'dYdX aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purpose: 'Exchange',
     links: {
       websites: ['https://dydx.exchange/'],
