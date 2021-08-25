@@ -140,9 +140,9 @@ export const zkswap: Project = {
           references: [
             {
               text: 'ZkSyncCommitBlock.sol#L230-L246 - ZKSwap source code',
-              href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/3f650d28a266a56d49a3b3d2049cde34112efb14/contracts/ZkSyncCommitBlock.sol#L230-L246'
-            }
-          ]
+              href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/3f650d28a266a56d49a3b3d2049cde34112efb14/contracts/ZkSyncCommitBlock.sol#L230-L246',
+            },
+          ],
         },
       ],
       contracts: {
