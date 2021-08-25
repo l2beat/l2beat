@@ -149,6 +149,10 @@ export const loopring: Project = {
             },
           },
           {
+            name: 'DefaultDepositContract',
+            address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
+          },
+          {
             name: 'Owner',
             address: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
           },

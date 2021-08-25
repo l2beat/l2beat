@@ -57,6 +57,19 @@ describe('projects', () => {
     })
   })
 
+  describe('contracts', () => {
+    for (const project of projects) {
+      describe(project.name, () => {
+        for (const { address } of project.bridges) {
+          it(`${address} is present in contracts`, () => {
+            const contracts = project.details.technology.contracts.addresses
+            expect(contracts.some((x) => x.address === address)).to.equal(true)
+          })
+        }
+      })
+    }
+  })
+
   describe('every purpose is short', () => {
     const purposes = projects.map((x) => x.details.purpose)
     for (const purpose of purposes) {
