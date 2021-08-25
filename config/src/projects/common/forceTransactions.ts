@@ -1,10 +1,15 @@
-import { ProjectTechnologyChoice } from '../types'
+import { ProjectRisk, ProjectTechnologyChoice } from '../types'
+
+const EXIT_CENSORSHIP: ProjectRisk = {
+  category: 'Users can be censored if',
+  text: 'the operator refuses to include their transactions. They can still exit the system.',
+}
 
 const WITHDRAW: ProjectTechnologyChoice = {
   name: 'Users can independently exit the system',
   description:
     'Independent exit allows the users to escape censorship by withdrawing their funds. The system allows users to  withdraw their funds by submitting a transaction directly to the contract on-chain.',
-  risks: [],
+  risks: [EXIT_CENSORSHIP],
   references: [],
 }
 
@@ -12,7 +17,7 @@ const WITHDRAW_OR_HALT: ProjectTechnologyChoice = {
   name: 'Users can force exit the system',
   description:
     'Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract on-chain.  The request must be served within a defined time period. If this does not happen, the system will halt regular operation and permit trustless withdrawal of funds.',
-  risks: [],
+  risks: [EXIT_CENSORSHIP],
   references: [],
 }
 
@@ -51,7 +56,12 @@ const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
   name: 'Users can force any transaction',
   description:
     'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
-  risks: [],
+  risks: [
+    {
+      category: 'Users can be censored if',
+      text: 'the operator refuses to include their transactions and users lack resources to propose blocks themselves.',
+    },
+  ],
   references: [],
 }
 
