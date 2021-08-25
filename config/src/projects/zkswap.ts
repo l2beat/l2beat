@@ -43,7 +43,7 @@ export const zkswap: Project = {
   ],
   details: {
     description:
-      'ZKSwap claims to be a Layer 2 AMM decentralized transaction protocol. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees',
+      'ZKSwap claims to be a Layer 2 AMM decentralized transaction protocol. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
     purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
@@ -111,7 +111,7 @@ export const zkswap: Project = {
         ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
-            text: 'ZkSync.sol - ZKSwap source code',
+            text: 'ZkSync.sol#L404 - ZKSwap source code',
             href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
           },
         ],
@@ -130,13 +130,19 @@ export const zkswap: Project = {
           ...EXITS.FORCED,
           references: [
             {
-              text: 'ZkSync.sol - ZKSwap source code',
+              text: 'ZkSync.sol#L404 - ZKSwap source code',
               href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
             },
           ],
         },
         {
           ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
+          references: [
+            {
+              text: 'ZkSyncCommitBlock.sol#L230-L246 - ZKSwap source code',
+              href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/3f650d28a266a56d49a3b3d2049cde34112efb14/contracts/ZkSyncCommitBlock.sol#L230-L246',
+            },
+          ],
         },
       ],
       contracts: {

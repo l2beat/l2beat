@@ -1,6 +1,11 @@
 import { expect } from 'chai'
 import { utils } from 'ethers'
-import { projects } from '../src/projects'
+import {
+  ProjectRisk,
+  projects,
+  ProjectTechnology,
+  ProjectTechnologyChoice,
+} from '../src/projects'
 import { getTokenBySymbol } from '../src/tokens'
 
 describe('projects', () => {
@@ -13,19 +18,136 @@ describe('projects', () => {
   })
 
   describe('addresses', () => {
-    const addresses = projects.flatMap((x) => x.bridges.map((x) => x.address))
-
     describe('every addresses is valid and formatted', () => {
-      for (const address of addresses) {
+      const testAddress = (address: string) =>
         it(address, () => {
           expect(utils.getAddress(address)).to.equal(address)
+        })
+
+      describe('bridges', () => {
+        const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
+        for (const address of bridges) {
+          testAddress(address)
+        }
+      })
+
+      describe('contracts', () => {
+        for (const project of projects) {
+          const contracts = project.details.technology.contracts.addresses
+          for (const contract of contracts) {
+            testAddress(contract.address)
+            if (
+              contract.upgradeability?.type === 'EIP1967' ||
+              contract.upgradeability?.type === 'NutBerry' ||
+              contract.upgradeability?.type === 'ZeppelinOs'
+            ) {
+              testAddress(contract.upgradeability.admin)
+              testAddress(contract.upgradeability.implementation)
+            }
+            if (contract.upgradeability?.type === 'StarkWare') {
+              testAddress(contract.upgradeability.implementation)
+              if (contract.upgradeability.callImplementation) {
+                testAddress(contract.upgradeability.callImplementation)
+              }
+            }
+          }
+        }
+      })
+    })
+
+    it('every bridge has a unique address', () => {
+      const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
+      const everyUnique = bridges.every((x, i, a) => a.indexOf(x) === i)
+      expect(everyUnique).to.equal(true)
+    })
+  })
+
+  describe('contracts', () => {
+    for (const project of projects) {
+      describe(project.name, () => {
+        for (const { address } of project.bridges) {
+          it(`${address} is present in contracts`, () => {
+            const contracts = project.details.technology.contracts.addresses
+            expect(contracts.some((x) => x.address === address)).to.equal(true)
+          })
+        }
+      })
+    }
+  })
+
+  describe('sentences', () => {
+    describe('every description ends with a dot', () => {
+      for (const project of projects) {
+        it(project.name, () => {
+          expect(project.details.description.endsWith('.')).to.equal(true)
         })
       }
     })
 
-    it('every bridge has a unique address', () => {
-      const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
-      expect(everyUnique).to.equal(true)
+    describe('technology', () => {
+      for (const project of projects) {
+        describe(project.name, () => {
+          const tech = project.details.technology
+
+          type Key = Exclude<keyof ProjectTechnology, 'category' | 'contracts'>
+
+          function check(key: Key) {
+            const item = tech[key]
+            if (Array.isArray(item)) {
+              for (const [i, x] of item.entries()) {
+                checkChoice(x, `${key}[i]`)
+              }
+            } else if (item) {
+              checkChoice(item, key)
+            }
+          }
+
+          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
+            it(`${name}.name doesn't end with a dot`, () => {
+              expect(choice.name.endsWith('.')).to.equal(false)
+            })
+
+            it(`${name}.description ends with a dot`, () => {
+              expect(choice.description.endsWith('.')).to.equal(true)
+            })
+
+            describe('risks', () => {
+              for (const [i, risk] of choice.risks.entries()) {
+                checkRisk(risk, `${name}.risks[${i}]`)
+              }
+            })
+          }
+
+          function checkRisk(risk: ProjectRisk, name: string) {
+            it(`${name} is correctly formatted`, () => {
+              expect(risk.text).to.match(/^[a-z].*\.$/)
+            })
+          }
+
+          check('stateCorrectness')
+          check('newCryptography')
+          check('dataAvailability')
+          check('operator')
+          check('forceTransactions')
+          check('exitMechanisms')
+          check('massExit')
+          check('additionalPrivacy')
+          check('smartContracts')
+
+          for (const [i, contract] of tech.contracts.addresses.entries()) {
+            const description = contract.description
+            if (description) {
+              it(`contracts[${i}].description ends with a dot`, () => {
+                expect(description.endsWith('.')).to.equal(true)
+              })
+            }
+          }
+
+          for (const [i, risk] of tech.contracts.risks.entries()) {
+            checkRisk(risk, `contracts.risks[${i}]`)
+          }
+        })
+      }
     })
   })
 

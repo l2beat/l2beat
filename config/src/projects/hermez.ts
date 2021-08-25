@@ -171,7 +171,7 @@ export const hermez: Project = {
         addresses: [
           {
             name: 'HermezAuctionProtocol',
-            address: '0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2',
+            address: '0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2',
             upgradeability: {
               type: 'EIP1967',
               implementation: '0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6',
@@ -180,7 +180,7 @@ export const hermez: Project = {
           },
           {
             name: 'Hermez',
-            address: '0xa68d85df56e733a06443306a095646317b5fa633',
+            address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
             upgradeability: {
               type: 'EIP1967',
               implementation: '0x6D85D79D69b7e190E671C16e8611997152bD3e95',
@@ -189,11 +189,7 @@ export const hermez: Project = {
           },
           {
             name: 'WithdrawalDelayer',
-            address: '0x392361427ef5e17b69cfdd1294f31ab555c86124',
-          },
-          {
-            name: 'HEZ',
-            address: '0xeef9f339514298c6a857efcfc1a762af84438dee',
+            address: '0x392361427Ef5e17b69cFDd1294F31ab555c86124',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
