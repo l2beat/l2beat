@@ -20,6 +20,8 @@ export const aztec: Project = {
     },
   ],
   details: {
+    description:
+      'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
     purpose: 'Private payments',
     links: {
       websites: ['https://aztec.network/'],

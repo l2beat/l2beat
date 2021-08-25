@@ -21,6 +21,10 @@ export const hermez: Project = {
     },
   ],
   details: {
+    warning:
+      'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
+    description:
+      'Hermez is an open-source ZK-Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purpose: 'Payments',
     links: {
       websites: ['https://hermez.io/'],
@@ -197,14 +201,19 @@ export const hermez: Project = {
     },
     news: [
       {
-        date: '2021-07-10',
-        name: 'Hermez Coordinator Is Live On Testnet',
-        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
+        date: '2021-08-13',
+        name: 'Polygon and Hermez Merge',
+        link: 'https://blog.hermez.io/polygon-hermez-merge/',
       },
       {
-        date: '2021-03-17',
-        name: 'Hermez Network Mainnet Launch',
-        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
+        date: '2021-08-10',
+        name: 'Introducing Hermez zkEVM',
+        link: 'https://blog.hermez.io/introducing-hermez-zkevm/',
+      },
+      {
+        date: '2021-08-03',
+        name: 'Hermez Atomic Transactions Are Here!',
+        link: 'https://blog.hermez.io/hermez-atomic-transactions/',
       },
     ],
 

@@ -21,6 +21,8 @@ export const sorare: Project = {
     },
   ],
   details: {
+    description:
+      'Sorare is a global fantasy football game where you can play with officially licensed digital cards and earn prizes every week.',
     purpose: 'NFT, Exchange',
     links: {
       websites: ['https://sorare.com/'],
@@ -87,9 +89,19 @@ export const sorare: Project = {
     },
     news: [
       {
+        date: '2021-08-12',
+        name: 'Introducing Limited Cards: A new era for Sorare',
+        link: 'https://medium.com/sorare/introducing-limited-cards-a-new-era-for-sorare-722657a51c3e',
+      },
+      {
         date: '2021-07-26',
         name: 'We’re live on our Scaling Solution: Starkware',
         link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      },
+      {
+        date: '2021-07-22',
+        name: 'When to expect New Season Sorare cards?',
+        link: 'https://medium.com/sorare/when-to-expect-new-season-cards-8275dc63d724',
       },
     ],
 

@@ -18,6 +18,8 @@ export const nahmii: Project = {
   ],
   associatedToken: 'NII',
   details: {
+    description:
+      'Nahmii claims to be a revolutionary Layer-2 scaling protocol for the Ethereum blockchain, which provides unrivalled throughput, low latency, instant finality and predictable fees.',
     purpose: 'Payments',
     links: {
       websites: ['https://nahmii.io/'],
@@ -117,9 +119,19 @@ export const nahmii: Project = {
     },
     news: [
       {
-        date: '2021-05-11',
-        name: 'DARMA Capital Bets $3M on Scalable DeFi Exchange With Settlement Finality',
-        link: 'https://www.coindesk.com/darma-capital-bets-3m-on-scalable-defi-exchange-with-settlement-finality/',
+        date: '2021-08-24',
+        name: 'Nahmii is Launching the First Layer 2 for Institutional-Scale Apps',
+        link: 'https://blog.nahmii.io/nahmii-is-launching-the-first-layer-2-for-institutional-scale-apps-a11ca25577f9',
+      },
+      {
+        date: '2021-08-04',
+        name: 'Nahmii 2.0 deployed to Ropsten',
+        link: 'https://blog.nahmii.io/nahmii-2-0-deployed-to-ropsten-ba3e5653e69e',
+      },
+      {
+        date: '2021-07-30',
+        name: 'NII Liquidity Mining Moving to Uniswap v3',
+        link: 'https://blog.nahmii.io/nii-liquidity-mining-moving-to-uniswap-v3-5ee214671327',
       },
     ],
 

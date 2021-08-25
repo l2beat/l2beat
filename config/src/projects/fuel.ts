@@ -19,6 +19,8 @@ export const fuel: Project = {
     },
   ],
   details: {
+    description:
+      'Fuel aims to be a complete optimistic rollup with low transaction costs, high speed and high throughput.',
     purpose: 'Payments',
     links: {
       websites: ['https://fuel.sh/'],
@@ -106,9 +108,19 @@ export const fuel: Project = {
     },
     news: [
       {
-        date: '2020-01-19',
-        name: 'Announcing the Fuel v0 Open Beta',
-        link: 'https://fuellabs.medium.com/announcing-the-fuel-v0-open-beta-565a2d340fc3',
+        date: '2020-11-09',
+        name: 'The Future of L1 Ethereum',
+        link: 'https://fuellabs.medium.com/the-future-of-l1-ethereum-5ec5d9a01c10',
+      },
+      {
+        date: '2020-03-30',
+        name: 'Burner Wallet + Fuel = 🔥',
+        link: 'https://fuellabs.medium.com/burner-wallet-fuel-7b8ce8e54aff',
+      },
+      {
+        date: '2020-03-24',
+        name: 'Introducing: Yul+ — A new low-level language for Ethereum',
+        link: 'https://fuellabs.medium.com/introducing-yul-a-new-low-level-language-for-ethereum-aa64ce89512f',
       },
     ],
 

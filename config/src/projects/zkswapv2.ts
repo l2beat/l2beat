@@ -28,6 +28,7 @@ export const zkswapv2: Project = {
     },
   ],
   details: {
+    description: zkswap.details.description,
     purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
@@ -118,23 +119,7 @@ export const zkswapv2: Project = {
         ],
       },
     },
-    news: [
-      {
-        date: '2021-08-10',
-        name: 'ZKSwap To Launch 1,993 NFT Artworks Soon Amid NFT Boom, Says Lead Developer Alex Lee',
-        link: 'https://zkswapofficial.medium.com/zkswap-to-launch-1-993-nft-artworks-soon-amid-nft-boom-says-lead-developer-alex-lee-4f2b09ffbc2d',
-      },
-      {
-        date: '2021-08-06',
-        name: 'ZKSwap Reveals 28311 Burnt ZKS Token in July',
-        link: 'https://medium.com/zkswap/zkswap-reveals-28311-burnt-zks-token-in-july-a78b4aa92c5f',
-      },
-      {
-        date: '2021-06-23',
-        name: 'ZKSwap Launches V2 Testnet, Enabling Unlimited Token Listing',
-        link: 'https://zkswapofficial.medium.com/zkswap-launches-v2-testnet-enabling-unlimited-token-listing-bf0c03a718e6',
-      },
-    ],
+    news: zkswap.details.news,
 
     // DEPRECATED ITEMS BELOW
 

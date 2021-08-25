@@ -21,6 +21,8 @@ export const zksync: Project = {
     },
   ],
   details: {
+    description:
+      'zkSync is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet.',
     purpose: 'Payments',
     links: {
       websites: ['https://zksync.io/'],
@@ -196,19 +198,9 @@ export const zksync: Project = {
         link: 'https://medium.com/matter-labs/zksync-1-x-swaps-nfts-event-system-and-permissionless-token-listing-e126fcc04d61',
       },
       {
-        date: '2021-04-13',
-        name: 'zkPorter: a breakthrough in L2 scaling',
-        link: 'https://medium.com/matter-labs/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf',
-      },
-      {
-        date: '2021-03-27',
-        name: 'zkSync 2.0 Roadmap Update: zkEVM Testnet in May, Mainnet in August',
-        link: 'https://medium.com/matter-labs/zksync-2-0-roadmap-update-zkevm-testnet-in-may-mainnet-in-august-379c66995021',
-      },
-      {
-        date: '2020-06-18',
-        name: 'zkSync is Live! Bringing Trustless, Scalable Payments to Ethereum',
-        link: 'https://medium.com/matter-labs/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+        date: '2021-05-21',
+        name: 'Keeping Funds Safe: a 3-Factor Approach to Security in zkSync 2.0',
+        link: 'https://medium.com/matter-labs/keeping-funds-safe-a-3-factor-approach-to-security-in-zksync-2-0-a70b0f53f360',
       },
     ],
 

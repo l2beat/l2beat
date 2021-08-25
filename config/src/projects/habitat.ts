@@ -21,6 +21,8 @@ export const habitat: Project = {
   ],
   associatedToken: 'HBT',
   details: {
+    description:
+      'Habitat is an optimistic rollup designed to allow community governance and treasury management.',
     purpose: 'DAO, Treasury',
     links: {
       websites: ['https://0xhabitat.org/'],
@@ -97,9 +99,19 @@ export const habitat: Project = {
     },
     news: [
       {
-        date: '2021-06-30',
-        name: 'Community Update #15 - Habitat is Live on Mainnet',
-        link: 'https://0xhabitat.substack.com/p/15',
+        date: '2021-08-18',
+        name: 'Community Update #20 - Weekly Calls',
+        link: 'https://0xhabitat.substack.com/p/20',
+      },
+      {
+        date: '2021-08-11',
+        name: 'Community Update #19 - Governance Awakening/ Next AMA',
+        link: 'https://0xhabitat.substack.com/p/19',
+      },
+      {
+        date: '2021-07-21',
+        name: 'From Paris with Love',
+        link: 'https://0xhabitat.substack.com/p/frompariswithlove',
       },
     ],
 
