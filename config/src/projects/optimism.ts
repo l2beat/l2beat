@@ -129,6 +129,12 @@ export const optimism: Project = {
               href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
             },
           ],
+          risks: [
+            {
+              category: 'Funds can be lost if',
+              text: 'the centralized sequencer goes down and nobody can exit.',
+            },
+          ],
         },
       ],
       smartContracts: {
@@ -139,10 +145,6 @@ export const optimism: Project = {
           {
             category: 'Funds can be lost if',
             text: 'there are mistakes in the highly complex OVM implementation.',
-          },
-          {
-            category: 'Users can be censored if',
-            text: 'they are denied the permission to deploy smart contracts.',
           },
         ],
         references: [
