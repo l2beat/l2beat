@@ -1,3 +1,4 @@
+import React from 'react'
 import { config } from '../config'
 import { GithubIcon, MoonIcon, SunIcon, TwitterIcon } from './icons'
 import { Logo } from './Logo'

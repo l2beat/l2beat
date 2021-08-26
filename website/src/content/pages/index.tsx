@@ -1,5 +1,5 @@
 import { Project as ProjectType } from '@l2beat/config'
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { config } from '../config'
 import { L2Data } from '../L2Data'
 import { Faq } from './Faq'

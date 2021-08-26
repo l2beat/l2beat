@@ -1,4 +1,4 @@
-import { OutLink } from '../../../common'
+import React from 'react'
 import { ShieldWarnIcon } from '../../../common/icons'
 import { Section } from './Section'
 

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Logo } from '../Logo'
 import { ChartButton } from './ChartButton'
 import { ChartHover } from './ChartHover'

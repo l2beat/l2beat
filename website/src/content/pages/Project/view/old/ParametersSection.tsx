@@ -1,6 +1,7 @@
 import { ProjectDetails } from '@l2beat/config'
-import { ProjectParameter } from './ProjectParameter'
+import React from 'react'
 import { Section } from '../Section'
+import { ProjectParameter } from './ProjectParameter'
 
 interface Props {
   details: ProjectDetails

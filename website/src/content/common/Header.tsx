@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import React from 'react'
 import { Logo } from './Logo'
 import { PercentChange } from './PercentChange'
 

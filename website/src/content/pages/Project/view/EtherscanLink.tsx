@@ -1,3 +1,4 @@
+import React from 'react'
 import { OutLink } from '../../../common'
 
 interface EtherscanLinkProps {

@@ -1,4 +1,4 @@
-import { SVGAttributes } from 'react'
+import React, { SVGAttributes } from 'react'
 import { Icon } from '../Icon'
 
 export function YouTubeIcon(props: SVGAttributes<SVGElement>) {

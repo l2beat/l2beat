@@ -1,4 +1,5 @@
 import { ProjectLinks } from '@l2beat/config'
+import React from 'react'
 import { LinkSectionLinks } from './LinkSectionLinks'
 
 export interface LinkSectionProps {

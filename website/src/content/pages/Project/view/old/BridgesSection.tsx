@@ -1,3 +1,4 @@
+import React from 'react'
 import { EtherscanLink } from '../EtherscanLink'
 import { Section } from '../Section'
 

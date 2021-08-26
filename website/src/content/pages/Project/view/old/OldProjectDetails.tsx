@@ -1,4 +1,5 @@
 import { ProjectDetails } from '@l2beat/config'
+import React from 'react'
 import { NewsSection, NewsSectionProps } from '../NewsSection'
 import { BridgesSection, BridgesSectionProps } from './BridgesSection'
 import { NotesSection } from './NotesSection'

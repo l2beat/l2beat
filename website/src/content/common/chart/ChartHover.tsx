@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function ChartHover() {
   return (
     <div className="ChartHover hidden">

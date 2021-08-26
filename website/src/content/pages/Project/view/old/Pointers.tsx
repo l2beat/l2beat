@@ -1,4 +1,5 @@
 import { Pointer } from '@l2beat/config'
+import React from 'react'
 import { OutLink } from '../../../../common'
 
 interface PointersProps {
