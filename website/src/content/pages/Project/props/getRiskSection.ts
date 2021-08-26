@@ -35,6 +35,7 @@ export function getRiskSection(project: Project): RiskSectionProps {
     'Funds can be lost if',
     'Funds can be frozen if',
     'Users can be censored if',
+    'MEV can be extracted if',
   ]
 
   let nextStart = 1

@@ -14,3 +14,4 @@ export type ProjectRiskCategory =
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
   | 'Users can be censored if'
+  | 'MEV can be extracted if'
