@@ -157,6 +157,7 @@ export const hermez: Project = {
             {
               category: 'Funds can be stolen if',
               text: 'the operators trigger a false alarm during withdrawal.',
+              isCritical: true,
             },
           ],
           references: [

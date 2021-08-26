@@ -47,6 +47,7 @@ export function getRiskSection(project: Project): RiskSectionProps {
         .map((x, i, a) => ({
           text: i !== a.length - 1 ? x.text.slice(0, -1) + ',' : x.text,
           referencedId: x.referencedId,
+          isCritical: !!x.isCritical,
         }))
       nextStart += items.length
       return { start, name, items }

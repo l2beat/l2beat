@@ -42,6 +42,7 @@ const EXIT_FRAUD_PROOFS: ProjectTechnologyChoice = {
     {
       category: 'Funds can be stolen if',
       text: 'there are fraudulent exits which nobody reported. Fraud proofs assume that every exit is checked by at least one honest and able party.',
+      isCritical: true,
     },
   ],
   references: [],

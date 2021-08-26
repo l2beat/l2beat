@@ -49,6 +49,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     const risks = item.risks.map((risk) => ({
       referenceIds: (risk.references ?? []).map(addReference),
       text: `${risk.category} ${risk.text}`,
+      isCritical: !!risk.isCritical,
     }))
 
     const issueTitle = `Problem: ${project.name} - ${item.name}`
@@ -180,6 +181,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     const risks = tech.contracts.risks.map((risk) => ({
       referenceIds: (risk.references ?? []).map(addReference),
       text: `${risk.category} ${risk.text}`,
+      isCritical: !!risk.isCritical,
     }))
 
     return {

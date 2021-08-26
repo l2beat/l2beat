@@ -84,6 +84,7 @@ export const optimism: Project = {
           {
             category: 'Funds can be stolen if',
             text: 'an invalid state root is submitted to the system.',
+            isCritical: true,
           },
         ],
         references: [
@@ -133,6 +134,7 @@ export const optimism: Project = {
             {
               category: 'Funds can be lost if',
               text: 'the centralized sequencer goes down and nobody can exit.',
+              isCritical: true,
             },
           ],
         },

@@ -9,6 +9,7 @@ export interface RiskList {
 export interface TechnologyRisk {
   text: string
   referenceIds: number[]
+  isCritical: boolean
 }
 
 export function RiskList({ risks }: RiskList) {
@@ -17,7 +18,14 @@ export function RiskList({ risks }: RiskList) {
       {risks.map((risk, i) => (
         <li className="RiskList-Item" key={i}>
           <ShieldBadIcon />
-          {risk.text}
+          {risk.isCritical ? (
+            <>
+              {risk.text.slice(0, -1)} <strong>(CRITICAL)</strong>
+              {risk.text.slice(-1)}
+            </>
+          ) : (
+            risk.text
+          )}
           <InlineReferences ids={risk.referenceIds} />
         </li>
       ))}

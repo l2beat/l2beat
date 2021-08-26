@@ -22,9 +22,15 @@
 
 .RiskSection-Risk {
   font-weight: bold;
+
   a {
     font-weight: normal;
     color: var(--text);
+    text-decoration: underline dotted;
+  }
+
+  strong {
+    color: var(--text-bad);
     text-decoration: underline dotted;
   }
 }
