@@ -37,7 +37,7 @@ export const nahmii: Project = {
       ],
     },
     riskView: {
-      stateValidation: RISK_VIEW.STATE_FP,
+      stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADABLE_NO,
       operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
@@ -48,15 +48,7 @@ export const nahmii: Project = {
         name: 'State Pools',
       },
       stateCorrectness: {
-        ...STATE_CORRECTNESS.FRAUD_PROOFS,
-        description:
-          'Because Nahmii is more similar to state channels than to any other technology fraud proofs are used to detect fraudulent exists as there is no state published on chain.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'there is no one that checks the published exists. Fraud proofs assume at least one honest and able validator.',
-          },
-        ],
+        ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {

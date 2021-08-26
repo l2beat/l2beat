@@ -32,6 +32,13 @@ export const STATE_ZKP_ST: ProjectRiskViewEntry = {
     'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
 }
 
+export const STATE_EXITS_ONLY: ProjectRiskViewEntry = {
+  value: 'Exits only',
+  description:
+    'Exits from the network are subject to a period when they can be challenged. The internat network state is left unchecked.',
+  sentiment: 'bad',
+}
+
 // Data availability
 
 export const DATA_ON_CHAIN: ProjectRiskViewEntry = {
@@ -96,20 +103,24 @@ export const CENSORING_FORCE_EXIT_L1: ProjectRiskViewEntry = {
   value: 'Force exit to L1',
   description:
     'The user is only able to submit an L1 withdrawal request and force the operator to include it on L2. After that the user exits the system with their funds.',
-  sentiment: 'warning',
 }
 
 export const CENSORING_EXIT_L1: ProjectRiskViewEntry = {
   value: 'Exit to L1',
   description:
     'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
-  sentiment: 'warning',
 }
 
 export const CENSORING_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
   value: 'Propose blocks',
   description:
     'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions.',
+}
+
+export const CENSORING_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
+  value: 'Propose blocks (ZK)',
+  description:
+    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
   sentiment: 'warning',
 }
 
@@ -128,7 +139,7 @@ export const DOWN_ESCAPE_MP: ProjectRiskViewEntry = {
 }
 
 export const DOWN_ESCAPE_ZKP: ProjectRiskViewEntry = {
-  value: 'Escape hatch (ZKP)',
+  value: 'Escape hatch (ZK)',
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
   sentiment: 'warning',
@@ -144,6 +155,12 @@ export const DOWN_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
   value: 'Propose blocks',
   description:
     'The user needs to run their own node and use it to propose new blocks to replace the operator.',
+}
+
+export const DOWN_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
+  value: 'Propose blocks (ZK)',
+  description:
+    'The user needs to run their own node and use it to propose new blocks to replace the operator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
   sentiment: 'warning',
 }
 
@@ -159,6 +176,7 @@ export const RISK_VIEW = {
   STATE_FP_INT,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
+  STATE_EXITS_ONLY,
   DATA_ON_CHAIN,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
@@ -170,10 +188,12 @@ export const RISK_VIEW = {
   CENSORING_FORCE_EXIT_L1,
   CENSORING_EXIT_L1,
   CENSORING_PROPOSE_BLOCKS,
+  CENSORING_PROPOSE_BLOCKS_ZKP,
   CENSORING_NO_MECHANISM,
   DOWN_ESCAPE_MP,
   DOWN_ESCAPE_ZKP,
   DOWN_ESCAPE_U,
   DOWN_PROPOSE_BLOCKS,
+  DOWN_PROPOSE_BLOCKS_ZKP,
   DOWN_NO_MECHANISM,
 }

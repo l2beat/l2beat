@@ -21,7 +21,7 @@ function REGULAR(
 const FORCED: ProjectTechnologyChoice = {
   name: 'Forced exit',
   description:
-    'If the user experiences censorship with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation follows the flow of a regular exit.',
+    'If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation follows the flow of a regular exit.',
   risks: [],
   references: [],
 }

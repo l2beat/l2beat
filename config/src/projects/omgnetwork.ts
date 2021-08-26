@@ -71,7 +71,7 @@ export const omgnetwork: Project = {
       ],
     },
     riskView: {
-      stateValidation: RISK_VIEW.STATE_FP,
+      stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
@@ -82,7 +82,7 @@ export const omgnetwork: Project = {
         name: 'Plasma',
       },
       stateCorrectness: {
-        ...STATE_CORRECTNESS.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {
