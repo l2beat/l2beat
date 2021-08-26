@@ -71,7 +71,7 @@ export const omgnetwork: Project = {
       ],
     },
     riskView: {
-      stateValidation: RISK_VIEW.STATE_FP,
+      stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
@@ -82,7 +82,7 @@ export const omgnetwork: Project = {
         name: 'Plasma',
       },
       stateCorrectness: {
-        ...STATE_CORRECTNESS.FRAUD_PROOFS,
+        ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,
         isIncomplete: true,
       },
       dataAvailability: {
@@ -135,6 +135,17 @@ export const omgnetwork: Project = {
             name: 'ERC20DepositVerifier',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             address: '0xD876aeb3a443FBC03B7349AAc115E9054563CD82',
+          },
+          {
+            name: 'PlasmaFramework',
+            address: '0x0D4C1222f5e839a911e2053860e45F18921D72ac',
+          },
+          {
+            name: 'PaymentExitGame',
+            // PaymentExitGame uses unverified libraries https://etherscan.io/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3
+            description:
+              'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
+            address: '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
           },
         ],
         risks: [CONTRACTS.UNVERIFIED_RISK],

@@ -15,6 +15,7 @@ export interface RiskGroup {
 export interface RiskItem {
   text: string
   referencedId: string
+  isCritical: boolean
 }
 
 export function RiskSection({ riskGroups }: RiskSectionProps) {
@@ -29,7 +30,16 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
           <ol className="RiskSection-Risks" start={group.start}>
             {group.items.map((item, i) => (
               <li className="RiskSection-Risk" key={i}>
-                <a href={`#${item.referencedId}`}>{item.text}</a>
+                <a href={`#${item.referencedId}`}>
+                  {item.isCritical ? (
+                    <>
+                      {item.text.slice(0, -1)} <strong>(CRITICAL)</strong>
+                      {item.text.slice(-1)}
+                    </>
+                  ) : (
+                    item.text
+                  )}
+                </a>
               </li>
             ))}
           </ol>

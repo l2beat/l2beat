@@ -45,7 +45,12 @@ export const leverj: Project = {
       ],
     },
     riskView: {
-      stateValidation: RISK_VIEW.STATE_FP,
+      stateValidation: {
+        value: 'Fraud proofs (!)',
+        description:
+          'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Because the data is not present on chain the security of fraud proofs is severely weakened.',
+        sentiment: 'warning',
+      },
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,

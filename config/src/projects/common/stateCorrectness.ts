@@ -34,8 +34,23 @@ const STARKEX_VALIDITY_PROOFS: ProjectTechnologyChoice = {
   ],
 }
 
+const EXIT_FRAUD_PROOFS: ProjectTechnologyChoice = {
+  name: 'Fraud proofs apply to exits only',
+  description:
+    'The internal system state is not subject to any checks. Only exits from the system can be challenged. This places a much higher burden on potential validators, as they have to monitor all user activity and not only the single state.',
+  risks: [
+    {
+      category: 'Funds can be stolen if',
+      text: 'there are fraudulent exits which nobody reported. Fraud proofs assume that every exit is checked by at least one honest and able party.',
+      isCritical: true,
+    },
+  ],
+  references: [],
+}
+
 export const STATE_CORRECTNESS = {
   FRAUD_PROOFS,
   VALIDITY_PROOFS,
   STARKEX_VALIDITY_PROOFS,
+  EXIT_FRAUD_PROOFS,
 }

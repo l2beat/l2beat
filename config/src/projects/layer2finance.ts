@@ -18,6 +18,8 @@ export const layer2finance: Project = {
     },
   ],
   details: {
+    warning:
+      'Currently the TVL is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purpose: 'DeFi aggregation',
@@ -56,6 +58,7 @@ export const layer2finance: Project = {
           {
             category: 'Funds can be frozen if',
             text: 'the problematic fraud proof mechanism is exploited.',
+            isCritical: true,
           },
         ],
         references: [
@@ -89,6 +92,7 @@ export const layer2finance: Project = {
           {
             category: 'Funds can be frozen if',
             text: 'the sequencer halts its operations.',
+            isCritical: true,
           },
         ],
         references: [
@@ -110,6 +114,7 @@ export const layer2finance: Project = {
           {
             category: 'Users can be censored if',
             text: 'the sequencer refuses to include their transactions.',
+            isCritical: true,
           },
         ],
         references: [
@@ -126,6 +131,7 @@ export const layer2finance: Project = {
             {
               category: 'Funds can be stolen if',
               text: "the operator does not include user's L2 withdrawal transactions.",
+              isCritical: true,
             },
           ],
           references: [
@@ -161,6 +167,7 @@ export const layer2finance: Project = {
                 href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
               },
             ],
+            isCritical: true,
           },
         ],
       },

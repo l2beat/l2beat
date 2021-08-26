@@ -1,7 +1,7 @@
 import { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 const FRONTRUNNING_RISK: ProjectRisk = {
-  category: 'Funds can be stolen if',
+  category: 'MEV can be extracted if',
   text: 'the operator exploits their centralized position and frontruns user transactions.',
 }
 

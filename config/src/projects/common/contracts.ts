@@ -6,11 +6,13 @@ const UNVERIFIED_DESCRIPTION =
 const UNVERIFIED_RISK: ProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'the source code of unverified contracts contains malicious code.',
+  isCritical: true,
 }
 
 const UPGRADE_NO_DELAY_RISK: ProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'a contract receives a malicious code upgrade. There is no delay on code upgrades.',
+  isCritical: true,
 }
 
 function UPGRADE_WITH_DELAY_RISK(delay: string): ProjectRisk {

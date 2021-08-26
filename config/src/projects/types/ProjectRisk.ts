@@ -7,6 +7,8 @@ export interface ProjectRisk {
   text: string
   /** List of references backing up the claim */
   references?: ProjectReference[]
+  /** If the risk is particularly bad */
+  isCritical?: boolean
 }
 
 export type ProjectRiskCategory =
@@ -14,3 +16,4 @@ export type ProjectRiskCategory =
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
   | 'Users can be censored if'
+  | 'MEV can be extracted if'
