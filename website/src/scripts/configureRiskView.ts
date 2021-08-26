@@ -1,20 +1,30 @@
+import { UrlState } from './urlState'
+
 export function configureRiskView() {
   const buttons = Array.from(document.querySelectorAll('.Projects-Button'))
-  const financialView = document.querySelector('.FinancialView')
-  const riskView = document.querySelector('.RiskView')
-  const views = [financialView, riskView]
+  const views = [
+    document.querySelector('.FinancialView'),
+    document.querySelector('.RiskView'),
+  ]
 
-  for (const button of buttons) {
-    button.addEventListener('click', () => {
-      buttons.forEach((x) => x.classList.remove('active'))
-      button.classList.add('active')
+  buttons[0]?.addEventListener('click', () => {
+    UrlState.set('view', undefined)
+    toggleRiskView(false)
+  })
+  buttons[1]?.addEventListener('click', () => {
+    UrlState.set('view', 'risk')
+    toggleRiskView(true)
+  })
 
-      views.forEach((x) => x?.classList.remove('active'))
-      if (button.classList.contains('left')) {
-        financialView?.classList.add('active')
-      } else if (button.classList.contains('right')) {
-        riskView?.classList.add('active')
-      }
-    })
+  UrlState.onInit(() => {
+    toggleRiskView(UrlState.get('view') === 'risk')
+  })
+
+  function toggleRiskView(show: boolean) {
+    buttons[show ? 0 : 1].classList.remove('active')
+    buttons[show ? 1 : 0].classList.add('active')
+
+    views[show ? 0 : 1]?.classList.remove('active')
+    views[show ? 1 : 0]?.classList.add('active')
   }
 }
