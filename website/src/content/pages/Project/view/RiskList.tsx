@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShieldBadIcon } from '../../../common/icons'
+import { ShieldBadIcon, ShieldWarnIcon } from '../../../common/icons'
 import { InlineReferences } from './InlineReferences'
 
 export interface RiskList {
@@ -17,14 +17,17 @@ export function RiskList({ risks }: RiskList) {
     <ul className="RiskList">
       {risks.map((risk, i) => (
         <li className="RiskList-Item" key={i}>
-          <ShieldBadIcon />
           {risk.isCritical ? (
             <>
+              <ShieldBadIcon />
               {risk.text.slice(0, -1)} <strong>(CRITICAL)</strong>
               {risk.text.slice(-1)}
             </>
           ) : (
-            risk.text
+            <>
+              <ShieldWarnIcon />
+              {risk.text}
+            </>
           )}
           <InlineReferences ids={risk.referenceIds} />
         </li>
