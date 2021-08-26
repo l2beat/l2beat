@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function Analytics() {
   if (process.env.NODE_ENV !== 'production') {
     return null

@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function ChartLoader() {
   return (
     <svg

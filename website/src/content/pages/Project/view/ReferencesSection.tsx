@@ -1,3 +1,4 @@
+import React from 'react'
 import { OutLink } from '../../../common'
 import { Section } from './Section'
 
@@ -18,8 +19,8 @@ export function ReferencesSection({ items }: ReferencesSectionProps) {
   return (
     <Section title="References" id="references" className="ReferencesSection">
       <ol className="ReferencesSection-List">
-        {items.map((item) => (
-          <li id={`reference-${item.id}`}>
+        {items.map((item, i) => (
+          <li key={i} id={`reference-${item.id}`}>
             <OutLink href={item.href}>{item.text}</OutLink>
           </li>
         ))}

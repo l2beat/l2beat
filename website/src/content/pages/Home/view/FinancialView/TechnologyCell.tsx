@@ -1,3 +1,4 @@
+import React from 'react'
 import { FinancialViewEntry } from './FinancialView'
 
 interface Props {

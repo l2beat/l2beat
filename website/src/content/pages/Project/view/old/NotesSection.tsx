@@ -1,6 +1,7 @@
 import { Pointer } from '@l2beat/config'
-import { Pointers } from './Pointers'
+import React from 'react'
 import { Section } from '../Section'
+import { Pointers } from './Pointers'
 
 interface Props {
   notes: {

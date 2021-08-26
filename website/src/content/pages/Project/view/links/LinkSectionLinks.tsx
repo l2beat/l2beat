@@ -1,3 +1,4 @@
+import React from 'react'
 import { LinkSectionLink } from './LinkSectionLink'
 
 interface Props {
@@ -14,8 +15,8 @@ export function LinkSectionLinks({ name, links, social }: Props) {
     <tr>
       <th>{name}</th>
       <td>
-        {links.map((x) => (
-          <LinkSectionLink href={x} social={social} />
+        {links.map((x, i) => (
+          <LinkSectionLink key={i} href={x} social={social} />
         ))}
       </td>
     </tr>

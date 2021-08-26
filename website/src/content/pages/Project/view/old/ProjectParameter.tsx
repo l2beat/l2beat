@@ -1,5 +1,5 @@
 import { Pointer } from '@l2beat/config'
-import { ReactChild } from 'react'
+import React, { ReactChild } from 'react'
 import { Pointers } from './Pointers'
 import { SentimentIcon } from './SentimentIcon'
 

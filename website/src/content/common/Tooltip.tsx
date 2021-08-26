@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function Tooltip() {
   return (
     <div className="Tooltip-Popup">

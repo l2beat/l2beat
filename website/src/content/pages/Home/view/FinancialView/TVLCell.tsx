@@ -1,3 +1,4 @@
+import React from 'react'
 import { WarningIcon } from '../../../../common/icons'
 import { FinancialViewEntry } from './FinancialView'
 

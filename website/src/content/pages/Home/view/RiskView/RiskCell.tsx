@@ -1,5 +1,6 @@
-import cx from 'classnames'
 import { ProjectRiskViewEntry } from '@l2beat/config'
+import cx from 'classnames'
+import React from 'react'
 
 interface Props {
   item: ProjectRiskViewEntry

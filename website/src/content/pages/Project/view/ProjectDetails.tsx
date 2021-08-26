@@ -1,3 +1,4 @@
+import React from 'react'
 import { config } from '../../../config'
 import { ContractsSection, ContractsSectionProps } from './ContractsSection'
 import {

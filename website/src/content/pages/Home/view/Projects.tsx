@@ -1,3 +1,4 @@
+import React from 'react'
 import { Heading } from '../../../common'
 import { FinanceIcon, ShieldWarnIcon } from '../../../common/icons'
 import { config } from '../../../config'

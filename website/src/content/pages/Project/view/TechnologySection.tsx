@@ -1,4 +1,5 @@
-import { Heading, OutLink } from '../../../common'
+import React from 'react'
+import { Heading } from '../../../common'
 import { InlineReferences } from './InlineReferences'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'

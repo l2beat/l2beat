@@ -1,4 +1,4 @@
-import { SVGAttributes } from 'react'
+import React, { SVGAttributes } from 'react'
 import { DiscordIcon } from './products/DiscordIcon'
 import { GithubIcon } from './products/GithubIcon'
 import { InstagramIcon } from './products/InstagramIcon'

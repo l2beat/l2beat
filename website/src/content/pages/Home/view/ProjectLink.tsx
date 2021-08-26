@@ -1,3 +1,4 @@
+import React from 'react'
 import { StarkWareIcon } from '../../../common/icons'
 
 interface Props {

@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { ReactChild, ReactNode } from 'react'
+import React, { ReactChild, ReactNode } from 'react'
 
 interface Props<T> {
   className?: string

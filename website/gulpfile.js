@@ -9,14 +9,16 @@ const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 
 const SCRIPT_IN_PATH = 'src/scripts/**/*.ts'
+const SCRIPT_IN_FILE = 'src/scripts/index.ts'
+const SCRIPT_OUT_FILE = 'build/scripts/main.js'
 
 const STYLE_IN_PATH = 'src/styles/**/*.scss'
 const STYLE_OUT_PATH = 'build/styles'
 
 const STATIC_IN_PATH = 'src/static/**/*'
-const STATIC_OUT_PATH = 'build'
 
 const CONTENT_IN_PATH = 'src/content/**/*'
+const CONTENT_IN_FILE = 'src/content/index.ts'
 
 const OUT_PATH = 'build'
 
@@ -46,7 +48,9 @@ function clean() {
 }
 
 function buildScripts() {
-  return exec('rollup -c rollup.config.js')
+  return exec(
+    `esbuild --bundle ${SCRIPT_IN_FILE} --outfile=${SCRIPT_OUT_FILE} --minify`
+  )
 }
 
 function watchScripts() {
@@ -66,7 +70,7 @@ function watchStyles() {
 }
 
 function copyStatic() {
-  return gulp.src(STATIC_IN_PATH).pipe(gulp.dest(STATIC_OUT_PATH))
+  return gulp.src(STATIC_IN_PATH).pipe(gulp.dest(OUT_PATH))
 }
 
 function watchStatic() {
@@ -74,7 +78,7 @@ function watchStatic() {
 }
 
 function buildContent() {
-  return exec('ts-node src/content')
+  return exec(`node -r esbuild-register ${CONTENT_IN_FILE}`)
 }
 
 function watchContent() {

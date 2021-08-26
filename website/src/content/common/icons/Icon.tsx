@@ -1,4 +1,4 @@
-import { SVGAttributes } from 'react'
+import React, { SVGAttributes } from 'react'
 
 export function Icon(props: SVGAttributes<SVGElement>) {
   return (

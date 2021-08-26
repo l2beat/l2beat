@@ -1,3 +1,5 @@
+import React from 'react'
+
 interface Props {
   ids: number[]
   citationNeededLink?: string

@@ -1,3 +1,5 @@
+import React from 'react'
+
 interface Props {
   checked?: boolean
   name: string
@@ -9,7 +11,7 @@ export function ChartButton({ checked, name, value, endpoint }: Props) {
   return (
     <label className="Chart-Button">
       <input
-        checked={checked}
+        defaultChecked={checked}
         type="radio"
         name={name}
         value={value}

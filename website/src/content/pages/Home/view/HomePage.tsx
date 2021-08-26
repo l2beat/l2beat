@@ -1,3 +1,4 @@
+import React from 'react'
 import { Chart, Footer, Header, Navbar, Page } from '../../../common'
 import { PageMetadata } from '../../../PageMetadata'
 import { About } from './About'

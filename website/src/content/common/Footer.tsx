@@ -1,3 +1,4 @@
+import React from 'react'
 import { OutLink } from './OutLink'
 
 export function Footer() {
