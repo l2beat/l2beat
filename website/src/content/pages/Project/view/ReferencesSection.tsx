@@ -16,8 +16,8 @@ export function ReferencesSection({ items }: ReferencesSectionProps) {
     return null
   }
   return (
-    <Section title="References" id="references">
-      <ol className="ReferencesSection">
+    <Section title="References" id="references" className="ReferencesSection">
+      <ol className="ReferencesSection-List">
         {items.map((item) => (
           <li id={`reference-${item.id}`}>
             <OutLink href={item.href}>{item.text}</OutLink>

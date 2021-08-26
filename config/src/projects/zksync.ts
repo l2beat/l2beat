@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -20,6 +21,8 @@ export const zksync: Project = {
     },
   ],
   details: {
+    description:
+      'zkSync is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet.',
     purpose: 'Payments',
     links: {
       websites: ['https://zksync.io/'],
@@ -39,7 +42,7 @@ export const zksync: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('2 weeks'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     technology: {
@@ -112,12 +115,6 @@ export const zksync: Project = {
         },
         {
           ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
-          risks: [
-            {
-              category: 'Funds can be lost if',
-              text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
-            },
-          ],
           references: [
             {
               text: 'Withdrawing funds - zkSync documentation',
@@ -132,11 +129,61 @@ export const zksync: Project = {
       ],
       contracts: {
         addresses: [
-          // TODO: addresses
+          {
+            address: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+            name: 'UpgradeGatekeeper',
+            description:
+              'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+          },
+          {
+            address: '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
+            name: 'Governance',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0x9a97008ccCbDEc3413F9304602427e66895996A0',
+            },
+          },
+          {
+            address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
+            name: 'Verifier',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0xEF974376054490C8d87b8438b4cEC00391ac05b9',
+            },
+          },
+          {
+            address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+            name: 'ZkSync',
+            description:
+              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 1209600 seconds which equals 14 days. Every time the contract upgrades this information has to be verified again.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0xd61dFf4b146e8e6bDCDad5C48e72D0bA85D94DbC',
+            },
+          },
+          {
+            address: '0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D',
+            name: 'ZkSyncNFTFactory',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Governance',
+              method: 'function defaultFactory() view returns(address)',
+            },
+          },
+          {
+            address: '0x5140Cc54Bb876aBE1ba67d15AC66Ad2D42FDf46A',
+            name: 'TokenGovernance',
+            upgradeability: {
+              type: 'Reference',
+              base: 'Governance',
+              method: 'function tokenGovernance() view returns(address)',
+            },
+          },
         ],
-        risks: [
-          // TODO: risks
-        ],
+        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('2 weeks')],
       },
     },
     news: [
@@ -151,19 +198,9 @@ export const zksync: Project = {
         link: 'https://medium.com/matter-labs/zksync-1-x-swaps-nfts-event-system-and-permissionless-token-listing-e126fcc04d61',
       },
       {
-        date: '2021-04-13',
-        name: 'zkPorter: a breakthrough in L2 scaling',
-        link: 'https://medium.com/matter-labs/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf',
-      },
-      {
-        date: '2021-03-27',
-        name: 'zkSync 2.0 Roadmap Update: zkEVM Testnet in May, Mainnet in August',
-        link: 'https://medium.com/matter-labs/zksync-2-0-roadmap-update-zkevm-testnet-in-may-mainnet-in-august-379c66995021',
-      },
-      {
-        date: '2020-06-18',
-        name: 'zkSync is Live! Bringing Trustless, Scalable Payments to Ethereum',
-        link: 'https://medium.com/matter-labs/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+        date: '2021-05-21',
+        name: 'Keeping Funds Safe: a 3-Factor Approach to Security in zkSync 2.0',
+        link: 'https://medium.com/matter-labs/keeping-funds-safe-a-3-factor-approach-to-security-in-zksync-2-0-a70b0f53f360',
       },
     ],
 

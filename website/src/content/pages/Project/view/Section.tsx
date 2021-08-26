@@ -20,13 +20,13 @@ export function Section(props: Props) {
     links.push({ name: 'Issue', href: props.issueLink })
   }
   return (
-    <section className={cx('ProjectDetails-Section', props.className)}>
+    <section className={cx('Section', props.className)}>
       <Heading
         id={props.id}
         level={2}
         title={props.title}
         links={links}
-        className="ProjectDetails-Title"
+        className="Section-Title"
       />
       {props.children}
     </section>

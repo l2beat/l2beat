@@ -18,6 +18,8 @@ export const layer2finance: Project = {
     },
   ],
   details: {
+    description:
+      'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purpose: 'DeFi aggregation',
     links: {
       websites: ['https://layer2.finance/'],
@@ -165,9 +167,19 @@ export const layer2finance: Project = {
     },
     news: [
       {
+        date: '2021-07-06',
+        name: 'layer2.finance v1.0 Testnet Launches with $20,000 Reward',
+        link: 'https://blog.celer.network/2021/07/06/layer2-finance-v1-0-testnet-launches-with-20000-reward/',
+      },
+      {
         date: '2021-04-22',
         name: 'The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees',
-        link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees',
+        link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees/',
+      },
+      {
+        date: '2021-04-02',
+        name: 'ELI5 Layer2.Finance: The Modern Subway of the DeFi City',
+        link: 'https://blog.celer.network/2021/04/02/eli5-layer2-finance-the-modern-subway-of-the-defi-city/',
       },
     ],
 

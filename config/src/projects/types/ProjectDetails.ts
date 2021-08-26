@@ -8,9 +8,8 @@ import { ProjectRiskView } from './ProjectRiskView'
 export interface ProjectDetails {
   /** A warning displayed at the top of the project page */
   warning?: string
-  // TODO: Not optional
   /** A few sentences describing the project the project */
-  description?: string
+  description: string
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** List of links */

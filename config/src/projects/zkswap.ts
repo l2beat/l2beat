@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -41,6 +42,8 @@ export const zkswap: Project = {
     },
   ],
   details: {
+    description:
+      'ZKSwap claims to be a Layer 2 AMM decentralized transaction protocol. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
     purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
@@ -60,8 +63,8 @@ export const zkswap: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('2 weeks'),
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
     technology: {
@@ -108,7 +111,7 @@ export const zkswap: Project = {
         ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
         references: [
           {
-            text: 'ZkSync.sol - ZKSwap source code',
+            text: 'ZkSync.sol#L404 - ZKSwap source code',
             href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
           },
         ],
@@ -127,55 +130,101 @@ export const zkswap: Project = {
           ...EXITS.FORCED,
           references: [
             {
-              text: 'ZkSync.sol - ZKSwap source code',
+              text: 'ZkSync.sol#L404 - ZKSwap source code',
               href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
             },
           ],
         },
         {
           ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
-          risks: [
+          references: [
             {
-              category: 'Funds can be lost if',
-              text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw',
+              text: 'ZkSyncCommitBlock.sol#L230-L246 - ZKSwap source code',
+              href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/3f650d28a266a56d49a3b3d2049cde34112efb14/contracts/ZkSyncCommitBlock.sol#L230-L246',
             },
           ],
         },
       ],
       contracts: {
         addresses: [
-          // TODO: addresses
+          {
+            address: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+            name: 'UpgradeGatekeeper',
+            description:
+              'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+          },
+          {
+            address: '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad',
+            name: 'ZkSync',
+            description:
+              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 691200 seconds which equals 8 days. Every time the contract upgrades this information has to be verified again.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+              implementation: '0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f',
+            },
+          },
+          {
+            address: '0x02ecef526f806f06357659fFD14834fe82Ef4B04',
+            name: 'Governance',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+              implementation: '0x9d3fdf9b4782753d12f6262bf22B6322608962b8',
+            },
+          },
+          {
+            address: '0x661121AE41edE3f6FECDed922c59acC19A3ea9B3',
+            name: 'Unknown1',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+              implementation: '0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8',
+            },
+          },
+          {
+            address: '0x27C229937745d697d28FC7853d1bFEA7331Edf56',
+            name: 'Unknown2',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+              implementation: '0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F',
+            },
+          },
+          {
+            address: '0x961369d347EF7A6896BDD39cBE2B89e3911f521f',
+            name: 'Unknown3',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+              implementation: '0xd12F4D8329584F36aEd67f807F42D9a02bEb9534',
+            },
+          },
         ],
         risks: [
-          // TODO: risks
+          CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
+          CONTRACTS.UNVERIFIED_RISK,
         ],
       },
     },
     news: [
       {
-        date: '2021-03-22',
-        name: 'ZKSwap 100% ZK-Rollup Update Completed ',
-        link: 'https://zkswapofficial.medium.com/zkswap-100-zk-rollup-update-completed-and-announces-gzks-governance-tokens-to-further-support-3e4b113f4f49',
+        date: '2021-08-25',
+        name: 'ZKSwap Announces Deployment of V2 on BSC Mainnet',
+        link: 'https://medium.com/zkswap/zkswap-announces-deployment-of-v2-on-bsc-mainnet-53395c15a856',
       },
       {
-        date: '2021-03-02',
-        name: 'ZKSwap Sets Out Roadmap for 2021',
-        link: 'https://zkswapofficial.medium.com/zkswap-sets-out-roadmap-for-2021-1fb39be999b3',
+        date: '2021-08-23',
+        name: 'PoS Mining is Back',
+        link: 'https://medium.com/zkswap/pos-mining-is-back-5732c3975f5c',
       },
       {
-        date: '2021-03-02',
-        name: 'Defying the stigma, ZKSwap’s Clarification on Bad Rumours',
-        link: 'https://zkswapofficial.medium.com/defying-the-stigma-zkswaps-clarification-on-bad-rumours-b9cc29ba87b4',
-      },
-      {
-        date: '2021-02-25',
-        name: 'Few Thoughts about Keeping L2 Data Off-Chain: A Trade-Off between L2 Efficiency and Data Availability',
-        link: 'https://zkswapofficial.medium.com/few-thoughts-about-keeping-l2-data-off-chain-a-trade-off-between-l2-efficiency-and-data-95800e960e1b',
-      },
-      {
-        date: '2021-02-14',
-        name: 'ZKSwap Live on Ethereum, Layer2 Assets Exceeding $40 Million, and Liquidity over $27 Million 1 Hour after Launch',
-        link: 'https://medium.com/zkswap/zkswap-live-on-ethereum-layer2-assets-exceeding-40-million-and-liquidity-over-27-million-1-3af96eb42768',
+        date: '2021-08-23',
+        name: 'ZKSwap Tech Review: SKALE — An Elastic, Decentralized Sidechain Network',
+        link: 'https://medium.com/zkswap/zkswap-tech-review-skale-an-elastic-decentralized-sidechain-network-978a6e7167e3',
       },
     ],
 

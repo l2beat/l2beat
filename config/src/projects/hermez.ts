@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -20,6 +21,10 @@ export const hermez: Project = {
     },
   ],
   details: {
+    warning:
+      'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
+    description:
+      'Hermez is an open-source ZK-Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purpose: 'Payments',
     links: {
       websites: ['https://hermez.io/'],
@@ -44,7 +49,7 @@ export const hermez: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
     },
     technology: {
@@ -148,7 +153,12 @@ export const hermez: Project = {
           name: 'Emergency mode',
           description:
             "When the user does a regular or forced withdraw and their funds exceed a certain threshold a timer activates. The operators can now trigger emergency mode and transfer the user's funds to the governance.",
-          risks: [],
+          risks: [
+            {
+              category: 'Funds can be stolen if',
+              text: 'the operators trigger a false alarm during withdrawal.',
+            },
+          ],
           references: [
             {
               text: 'Withdrawal Delayer Mechanism - Hermez documentation',
@@ -161,7 +171,7 @@ export const hermez: Project = {
         addresses: [
           {
             name: 'HermezAuctionProtocol',
-            address: '0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2',
+            address: '0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2',
             upgradeability: {
               type: 'EIP1967',
               implementation: '0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6',
@@ -170,7 +180,7 @@ export const hermez: Project = {
           },
           {
             name: 'Hermez',
-            address: '0xa68d85df56e733a06443306a095646317b5fa633',
+            address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
             upgradeability: {
               type: 'EIP1967',
               implementation: '0x6D85D79D69b7e190E671C16e8611997152bD3e95',
@@ -179,26 +189,27 @@ export const hermez: Project = {
           },
           {
             name: 'WithdrawalDelayer',
-            address: '0x392361427ef5e17b69cfdd1294f31ab555c86124',
-          },
-          {
-            name: 'HEZ',
-            address: '0xeef9f339514298c6a857efcfc1a762af84438dee',
+            address: '0x392361427Ef5e17b69cFDd1294F31ab555c86124',
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
       {
-        date: '2021-07-10',
-        name: 'Hermez Coordinator Is Live On Testnet',
-        link: 'https://blog.hermez.io/hermez-coordinator-live-on-testnet/',
+        date: '2021-08-13',
+        name: 'Polygon and Hermez Merge',
+        link: 'https://blog.hermez.io/polygon-hermez-merge/',
       },
       {
-        date: '2021-03-17',
-        name: 'Hermez Network Mainnet Launch',
-        link: 'https://blog.hermez.io/hermez-network-mainnet-launch/',
+        date: '2021-08-10',
+        name: 'Introducing Hermez zkEVM',
+        link: 'https://blog.hermez.io/introducing-hermez-zkevm/',
+      },
+      {
+        date: '2021-08-03',
+        name: 'Hermez Atomic Transactions Are Here!',
+        link: 'https://blog.hermez.io/hermez-atomic-transactions/',
       },
     ],
 

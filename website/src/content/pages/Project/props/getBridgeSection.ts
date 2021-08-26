@@ -1,5 +1,5 @@
 import { Project } from '@l2beat/config'
-import { BridgesSectionProps } from '../view/BridgesSection'
+import { BridgesSectionProps } from '../view/old/BridgesSection'
 
 export function getBridgeSection(project: Project): BridgesSectionProps {
   return {

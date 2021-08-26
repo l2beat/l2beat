@@ -1,45 +1,53 @@
-import { ProjectDetails } from '@l2beat/config'
 import { config } from '../../../config'
-import { BridgesSection, BridgesSectionProps } from './BridgesSection'
+import { ContractsSection, ContractsSectionProps } from './ContractsSection'
+import {
+  DescriptionSection,
+  DescriptionSectionProps,
+} from './DescriptionSection'
+import { LinkSection, LinkSectionProps } from './links/LinkSection'
 import { NewsSection, NewsSectionProps } from './NewsSection'
-import { NotesSection } from './NotesSection'
-import { OverviewSection, OverviewSectionProps } from './OverviewSection'
-import { ParametersSection } from './ParametersSection'
+import {
+  OldProjectDetails,
+  OldProjectDetailsProps,
+} from './old/OldProjectDetails'
+import { ReferencesSection, ReferencesSectionProps } from './ReferencesSection'
 import { RiskSection, RiskSectionProps } from './RiskSection'
 import {
-  TechnologyOverview,
-  TechnologyOverviewProps,
-} from './TechnologyOverview'
+  TechnologyIncomplete,
+  TechnologyIncompleteProps,
+} from './TechnologyIncomplete'
+import { TechnologySection, TechnologySectionProps } from './TechnologySection'
 
 export interface ProjectDetailsProps {
-  details: ProjectDetails
-  riskSection?: RiskSectionProps
-  technologyOverview?: TechnologyOverviewProps
-  bridgesSection: BridgesSectionProps
-  newsSection?: NewsSectionProps
-  overviewSection: OverviewSectionProps
+  old: OldProjectDetailsProps
+  linkSection: LinkSectionProps
+  newsSection: NewsSectionProps
+  descriptionSection: DescriptionSectionProps
+  riskSection: RiskSectionProps
+  incomplete?: TechnologyIncompleteProps
+  sections: TechnologySectionProps[]
+  contractsSection: ContractsSectionProps
+  referencesSection: ReferencesSectionProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
+  if (!config.__DEV__showNewDetails) {
+    return <OldProjectDetails {...props.old} />
+  }
   return (
     <main className="ProjectDetails">
-      <div className="ProjectDetails-LeftColumn">
-        <OverviewSection {...props.overviewSection} />
-        {props.riskSection && config.__DEV__showNewDetails && (
-          <RiskSection {...props.riskSection} />
-        )}
-        {props.technologyOverview && config.__DEV__showNewDetails ? (
-          <TechnologyOverview {...props.technologyOverview} />
-        ) : (
-          <ParametersSection details={props.details} />
-        )}
+      <LinkSection {...props.linkSection} />
+      <NewsSection {...props.newsSection} />
+      <div className="ProjectDetails-Content">
+        <DescriptionSection {...props.descriptionSection} />
+        <RiskSection {...props.riskSection} />
+        {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
+        {props.sections.map((section) => (
+          <TechnologySection key={section.id} {...section} />
+        ))}
+        <ContractsSection {...props.contractsSection} />
       </div>
-
-      <div className="ProjectDetails-RightColumn">
-        {props.details.notes && <NotesSection notes={props.details.notes} />}
-        <BridgesSection {...props.bridgesSection} />
-        {props.newsSection && <NewsSection {...props.newsSection} />}
-      </div>
+      <ReferencesSection {...props.referencesSection} />
     </main>
   )
 }

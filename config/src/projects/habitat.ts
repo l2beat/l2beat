@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -20,6 +21,8 @@ export const habitat: Project = {
   ],
   associatedToken: 'HBT',
   details: {
+    description:
+      'Habitat is an optimistic rollup designed to allow community governance and treasury management.',
     purpose: 'DAO, Treasury',
     links: {
       websites: ['https://0xhabitat.org/'],
@@ -68,7 +71,7 @@ export const habitat: Project = {
         },
       ],
       smartContracts: {
-        name: 'Limited smart contract support exists.',
+        name: 'Limited smart contract support exists',
         description:
           'Only static contracts that comply to the Habitat Module interface can be deployed and used.',
         references: [
@@ -91,16 +94,24 @@ export const habitat: Project = {
             },
           },
         ],
-        risks: [
-          // TODO: risks?
-        ],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
       {
-        date: '2021-06-30',
-        name: 'Community Update #15 - Habitat is Live on Mainnet',
-        link: 'https://0xhabitat.substack.com/p/15',
+        date: '2021-08-18',
+        name: 'Community Update #20 - Weekly Calls',
+        link: 'https://0xhabitat.substack.com/p/20',
+      },
+      {
+        date: '2021-08-11',
+        name: 'Community Update #19 - Governance Awakening/ Next AMA',
+        link: 'https://0xhabitat.substack.com/p/19',
+      },
+      {
+        date: '2021-07-21',
+        name: 'From Paris with Love',
+        link: 'https://0xhabitat.substack.com/p/frompariswithlove',
       },
     ],
 

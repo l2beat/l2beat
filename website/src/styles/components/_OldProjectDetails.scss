@@ -1,0 +1,29 @@
+.OldProjectDetails {
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 16px;
+
+  @media (max-width: 750px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: unset;
+  }
+}
+
+.OldProjectDetails-Text {
+  margin: 16px 0 0 0;
+}
+
+.OldProjectDetails-Links {
+  margin: 16px 0 0 0;
+  @media (max-width: 550px) {
+    margin: 8px 0 0 0;
+  }
+}
+
+.OldProjectDetails-Parameters {
+  margin: 16px 0 0 0;
+  padding: 0;
+  list-style-type: none;
+}

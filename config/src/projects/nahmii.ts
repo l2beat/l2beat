@@ -18,6 +18,8 @@ export const nahmii: Project = {
   ],
   associatedToken: 'NII',
   details: {
+    description:
+      'Nahmii claims to be a revolutionary Layer-2 scaling protocol for the Ethereum blockchain, which provides unrivalled throughput, low latency, instant finality and predictable fees.',
     purpose: 'Payments',
     links: {
       websites: ['https://nahmii.io/'],
@@ -38,7 +40,7 @@ export const nahmii: Project = {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADABLE_NO,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
     },
     technology: {
@@ -75,12 +77,7 @@ export const nahmii: Project = {
         name: 'The system has a centralized operator',
         description:
           'All transactions require signature from the operator which is run by the Nahmii foundation.',
-        risks: [
-          {
-            category: 'Users can be censored if',
-            text: 'the operator refuses to service their requests.',
-          },
-        ],
+        risks: [],
         references: [],
         isIncomplete: true,
       },
@@ -122,9 +119,19 @@ export const nahmii: Project = {
     },
     news: [
       {
-        date: '2021-05-11',
-        name: 'DARMA Capital Bets $3M on Scalable DeFi Exchange With Settlement Finality',
-        link: 'https://www.coindesk.com/darma-capital-bets-3m-on-scalable-defi-exchange-with-settlement-finality/',
+        date: '2021-08-24',
+        name: 'Nahmii is Launching the First Layer 2 for Institutional-Scale Apps',
+        link: 'https://blog.nahmii.io/nahmii-is-launching-the-first-layer-2-for-institutional-scale-apps-a11ca25577f9',
+      },
+      {
+        date: '2021-08-04',
+        name: 'Nahmii 2.0 deployed to Ropsten',
+        link: 'https://blog.nahmii.io/nahmii-2-0-deployed-to-ropsten-ba3e5653e69e',
+      },
+      {
+        date: '2021-07-30',
+        name: 'NII Liquidity Mining Moving to Uniswap v3',
+        link: 'https://blog.nahmii.io/nii-liquidity-mining-moving-to-uniswap-v3-5ee214671327',
       },
     ],
 

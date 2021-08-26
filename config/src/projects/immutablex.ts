@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -20,6 +21,8 @@ export const immutablex: Project = {
     },
   ],
   details: {
+    description:
+      'ImmutableX claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
     purpose: 'NFT, Exchange',
     links: {
       websites: ['https://www.immutable.com/'],
@@ -35,9 +38,9 @@ export const immutablex: Project = {
     provider: 'StarkEx',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
@@ -84,16 +87,24 @@ export const immutablex: Project = {
             address: '0x26ec188F555F0C491083D280cF8162E9D5E0d386',
           },
         ],
-        risks: [
-          // TODO: Risks
-        ],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
       {
-        date: '2021-04-09',
-        name: 'Immutable X Launches Gas-Free Layer-2 Solution Paving the Way to Mainstream NFT Adoption',
-        link: 'https://www.immutable.com/blog/immutable-x-alpha-trading-launch',
+        date: '2021-08-19',
+        name: 'Immutable X is Making NFTs Carbon Neutral on Ethereum',
+        link: 'https://immutablex.medium.com/immutable-x-is-making-nfts-carbon-neutral-on-ethereum-620dd0be08ae',
+      },
+      {
+        date: '2021-08-17',
+        name: 'Immutable X Community AMA with James Ferguson — August 2021',
+        link: 'https://immutablex.medium.com/immutable-x-community-ama-with-james-ferguson-august-2021-4e61b4e1c4d5',
+      },
+      {
+        date: '2021-08-16',
+        name: 'Important Announcement: IMX Alpha Rewards Update',
+        link: 'https://immutablex.medium.com/important-announcement-imx-alpha-rewards-update-929f7bc89513',
       },
     ],
 

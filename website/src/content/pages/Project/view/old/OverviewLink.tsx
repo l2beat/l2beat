@@ -1,5 +1,9 @@
-import { OutLink } from '../../../common'
-import { GlobeIcon, ProductIcon, ProductIconType } from '../../../common/icons'
+import { OutLink } from '../../../../common'
+import {
+  GlobeIcon,
+  ProductIcon,
+  ProductIconType,
+} from '../../../../common/icons'
 
 interface Props {
   href: string

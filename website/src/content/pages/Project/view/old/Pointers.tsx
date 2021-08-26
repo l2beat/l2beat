@@ -1,5 +1,5 @@
 import { Pointer } from '@l2beat/config'
-import { OutLink } from '../../../common'
+import { OutLink } from '../../../../common'
 
 interface PointersProps {
   pointers?: Pointer[]

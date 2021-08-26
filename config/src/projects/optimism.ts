@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -176,32 +177,32 @@ export const optimism: Project = {
           {
             name: 'L1ChugSplashProxy',
             address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
-              // UNVERIFIED ON ETHERSCAN!
               implementation: '0x9091dda480B232133A7D2E4cb23336B4F0293196',
             },
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
       },
     },
     news: [
       {
-        date: '2021-07-14',
-        name: 'Announcing Uniswap V3 on Optimism',
-        link: 'https://optimismpbc.medium.com/announcing-uniswap-v3-on-optimism-6fb033398a11',
+        date: '2021-08-19',
+        name: 'Community Launch',
+        link: 'https://medium.com/ethereum-optimism/community-launch-7c9a2a9d3e84',
       },
       {
-        date: '2021-03-26',
-        name: 'Postponing mainnet launch',
-        link: 'https://optimismpbc.medium.com/optimistically-cautious-767a898f90c8',
+        date: '2021-07-20',
+        name: 'Retroactive Public Goods Funding',
+        link: 'https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c',
       },
       {
-        date: '2021-01-16',
-        name: 'Mainnet Soft Launch!',
-        link: 'https://optimismpbc.medium.com/mainnet-soft-launch-7cacc0143cd5',
+        date: '2021-02-24',
+        name: 'Dope Hires & Moar Mainnet in March',
+        link: 'https://medium.com/ethereum-optimism/dope-hires-moar-mainnet-in-march-174fa8966361',
       },
     ],
 

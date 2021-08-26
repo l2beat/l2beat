@@ -1,6 +1,6 @@
 import { ProjectDetails } from '@l2beat/config'
 import { ProjectParameter } from './ProjectParameter'
-import { Section } from './Section'
+import { Section } from '../Section'
 
 interface Props {
   details: ProjectDetails
@@ -9,7 +9,7 @@ interface Props {
 export function ParametersSection({ details }: Props) {
   return (
     <Section title="Technology" id="parameters">
-      <ul className="ProjectDetails-Parameters">
+      <ul className="OldProjectDetails-Parameters">
         <ProjectParameter
           name="Technology:"
           value={details.technologyName}

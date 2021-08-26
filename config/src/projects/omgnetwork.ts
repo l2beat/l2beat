@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -53,6 +54,8 @@ export const omgnetwork: Project = {
   ],
   associatedToken: 'OMG',
   details: {
+    description:
+      'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. Using the OMG Network, individuals and businesses can transact on a financial infrastructure that is claimed to be several times faster, 1/3rd the cost, and as secure as the Ethereum Network — while retaining full autonomy over their funds and keys. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
     purpose: 'Payments',
     links: {
       websites: ['https://omg.network'],
@@ -71,7 +74,7 @@ export const omgnetwork: Project = {
       stateValidation: RISK_VIEW.STATE_FP,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
     },
     technology: {
@@ -125,23 +128,33 @@ export const omgnetwork: Project = {
           },
           {
             name: 'ETHDepositVerifier',
-            // UNVERIFIED ON ETHERSCAN!
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             address: '0x649f37203c365DE759c8fc8CA35beBF5448F70Be',
           },
           {
             name: 'ERC20DepositVerifier',
-            // UNVERIFIED ON ETHERSCAN!
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             address: '0xD876aeb3a443FBC03B7349AAc115E9054563CD82',
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UNVERIFIED_RISK],
       },
     },
     news: [
       {
-        date: '2020-06-01',
-        name: 'Scaling Ethereum with the OMG Network',
-        link: 'https://omg.network/omg-network-scales-ethereum/',
+        date: '2021-02-22',
+        name: 'Enya x OMG Community Response ft. Hashcast Demo',
+        link: 'https://omg.network/enya-hashcast-demo/',
+      },
+      {
+        date: '2021-02-03',
+        name: 'Enya Joins OMG Network As Strategic Partner',
+        link: 'https://omg.network/enya-omg-network-partner/',
+      },
+      {
+        date: '2020-10-01',
+        name: 'OMG Network 2020: Plasma Blockchain & Loyalty Points',
+        link: 'https://omg.network/omg-network-update-plasma-blockchain-loyalty-points/',
       },
     ],
 

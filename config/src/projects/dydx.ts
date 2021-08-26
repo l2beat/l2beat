@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -20,6 +21,8 @@ export const dydx: Project = {
     },
   ],
   details: {
+    description:
+      'dYdX aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purpose: 'Exchange',
     links: {
       websites: ['https://dydx.exchange/'],
@@ -47,7 +50,7 @@ export const dydx: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_WITHDRAW_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
@@ -97,24 +100,24 @@ export const dydx: Project = {
             address: '0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830',
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
       {
-        date: '2021-04-06',
-        name: 'Trade now on Layer 2',
-        link: 'https://dydx.exchange/blog/public',
+        date: '2021-08-24',
+        name: 'EOS is now live',
+        link: 'https://dydx.exchange/blog/markets-17',
       },
       {
-        date: '2020-08-18',
-        name: 'Scaling dYdX with StarkWare',
-        link: 'https://dydx.exchange/blog/public',
+        date: '2021-08-12',
+        name: 'dYdX Market Maker Debate',
+        link: 'https://dydx.exchange/blog/debate-recap-cms-mgnr-wintermute',
       },
       {
-        date: '2020-04-20',
-        name: 'dYdX Launches BTC Perpetual Contract Market',
-        link: 'https://medium.com/dydxderivatives/dydx-launches-btc-perpetual-contract-market-68f59b193f7e',
+        date: '2021-08-03',
+        name: 'Introducing the dYdX Foundation',
+        link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       },
     ],
 
