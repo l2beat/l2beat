@@ -39,10 +39,17 @@ function getFinancialViewEntry(
     : undefined
 
   const tokenShare = tokenTvl ? tokenTvl / tvl : 0
-  const tvlWarning =
+  let tvlWarning =
     token && tokenShare > 0.1
       ? toWarning(project.name, tokenShare, token)
       : undefined
+  let warningSeverity: 'bad' | 'warning' | 'info' =
+    tokenShare > 0.9 ? 'bad' : 'warning'
+  if (project.name === 'Layer2.Finance') {
+    tvlWarning =
+      'The TVL is calculated incorrectly because it does not account for the assets locked in DeFi.'
+    warningSeverity = 'info'
+  }
 
   return {
     name: project.name,
@@ -50,7 +57,7 @@ function getFinancialViewEntry(
     isStarkEx: project.details.provider === 'StarkEx',
     tvl: formatUSD(tvl),
     tvlWarning: tvlWarning,
-    severeWarning: tokenShare > 0.9,
+    warningSeverity,
     oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
     sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
     marketShare: formatPercent(tvl / aggregateTvl),
@@ -58,6 +65,7 @@ function getFinancialViewEntry(
     technology: getTechnology(project),
   }
 }
+
 function toWarning(name: string, share: number, token: string) {
   const percent = formatPercent(share)
   const what = `The ${token} token associated with ${name}`
