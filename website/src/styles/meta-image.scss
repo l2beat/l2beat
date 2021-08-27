@@ -9,6 +9,22 @@ body,
   padding: 0;
 }
 
+.Meta-Update {
+  position: absolute;
+  left: 0;
+  top: 67px;
+  background-color: var(--highlight-warning);
+  padding: 8px 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: var(--font-xl);
+  z-index: 1;
+
+  .Meta.overview & ~ .Logo {
+    top: 57%;
+  }
+}
+
 .Header {
   margin-top: 24px;
   padding: 0 16px;
