@@ -16,7 +16,7 @@ export interface FinancialViewEntry {
   isStarkEx: boolean
   tvl: string
   tvlWarning?: string
-  severeWarning: boolean
+  warningSeverity: 'info' | 'warning' | 'bad'
   oneDayChange: string
   sevenDayChange: string
   marketShare: string

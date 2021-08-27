@@ -1,5 +1,5 @@
 import React from 'react'
-import { WarningIcon } from '../../../../common/icons'
+import { InfoIcon, WarningIcon } from '../../../../common/icons'
 import { FinancialViewEntry } from './FinancialView'
 
 interface Props {
@@ -13,13 +13,15 @@ export function TVLCell({ project }: Props) {
       {project.tvlWarning && (
         <div className="FinancialView-TvlWarning">
           <div className="Tooltip" title={project.tvlWarning}>
-            <WarningIcon
-              fill={
-                project.severeWarning
-                  ? 'var(--text-bad)'
-                  : 'var(--text-warning)'
-              }
-            />
+            {project.warningSeverity === 'info' && (
+              <InfoIcon fill="var(--text-info)" />
+            )}
+            {project.warningSeverity === 'warning' && (
+              <WarningIcon fill="var(--text-warning)" />
+            )}
+            {project.warningSeverity === 'bad' && (
+              <WarningIcon fill="var(--text-bad)" />
+            )}
           </div>
         </div>
       )}
