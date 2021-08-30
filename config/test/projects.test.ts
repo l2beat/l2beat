@@ -95,7 +95,7 @@ describe('projects', () => {
             const item = tech[key]
             if (Array.isArray(item)) {
               for (const [i, x] of item.entries()) {
-                checkChoice(x, `${key}[i]`)
+                checkChoice(x, `${key}[${i}]`)
               }
             } else if (item) {
               checkChoice(item, key)

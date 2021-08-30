@@ -144,57 +144,5 @@ export const deversifi: Project = {
         link: 'https://blog.deversifi.com/dvf-dao-treasury/',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'Exchange',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'bad',
-        value: 'Low',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'warning',
-        pointers: [
-          {
-            name: 'Bridge contract - source on Etherscan',
-            href: 'https://etherscan.io/address/0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b#code',
-          },
-        ],
-        value: 'Yes, through contract upgrade',
-      },
-      {
-        name: 'Permissionless?',
-        sentiment: 'bad',
-        tooltip: 'Only DeversiFi can produce new blocks',
-        value: 'No',
-      },
-      {
-        name: 'Force TX mechanism?',
-        sentiment: 'good',
-        value: 'Yes but only for withdrawals',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }

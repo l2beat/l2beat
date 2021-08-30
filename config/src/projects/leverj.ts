@@ -203,52 +203,5 @@ export const leverj: Project = {
         link: 'https://blog.leverj.io/where-to-see-the-referral-reward-i-earned-246758dc7d0a',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-    technologyName: 'Plasma',
-    technologyDetails: 'Gluon Plasma',
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'Exchange',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-        sentiment: 'good',
-      },
-      {
-        name: 'Current level of decentralization',
-        value: 'Low',
-        tooltip: 'Single operator. Supports decentralized watchers.',
-        sentiment: 'warning',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        value: 'No',
-        tooltip:
-          'Users can safely exit to L1 even if the operator is malicious.',
-        sentiment: 'good',
-      },
-      {
-        name: 'Permisonless?',
-        value: 'No',
-        sentiment: 'bad',
-        tooltip: 'Only operator can produce new blocks',
-      },
-      {
-        name: 'Force TX mechanism?',
-        value: 'Yes but only for withdrawals',
-        sentiment: 'good',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }

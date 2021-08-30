@@ -168,53 +168,5 @@ export const omgnetwork: Project = {
         link: 'https://omg.network/omg-network-update-plasma-blockchain-loyalty-points/',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-
-    technologyName: 'Plasma',
-    technologyDetails: 'More Viable Plasma',
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'Payments',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-        sentiment: 'good',
-      },
-      {
-        name: 'Current level of decentralization',
-        value: 'Low',
-        tooltip: 'Single operator. Supports decentralized watchers.',
-        sentiment: 'warning',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        value: 'No',
-        tooltip:
-          'Users can safely exit to L1 even if the operator is malicious.',
-        sentiment: 'good',
-      },
-      {
-        name: 'Permisonless?',
-        value: 'No',
-        sentiment: 'bad',
-        tooltip: 'Only operator can produce new blocks',
-      },
-      {
-        name: 'Force TX mechanism?',
-        value: 'Yes but only for withdrawals',
-        sentiment: 'good',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }

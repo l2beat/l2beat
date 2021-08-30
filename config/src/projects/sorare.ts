@@ -104,57 +104,5 @@ export const sorare: Project = {
         link: 'https://medium.com/sorare/when-to-expect-new-season-cards-8275dc63d724',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'NFT, Exchange',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'bad',
-        value: 'Low',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'warning',
-        pointers: [
-          {
-            name: 'Bridge contract - source on Etherscan',
-            href: 'https://etherscan.io/address/0xF5C9F957705bea56a7e806943f98F7777B995826#code',
-          },
-        ],
-        value: 'Yes, through contract upgrade',
-      },
-      {
-        name: 'Permissionless?',
-        sentiment: 'bad',
-        tooltip: 'Only Sorare can produce new blocks',
-        value: 'No',
-      },
-      {
-        name: 'Force TX mechanism?',
-        sentiment: 'good',
-        value: 'Yes but only for withdrawals',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }
