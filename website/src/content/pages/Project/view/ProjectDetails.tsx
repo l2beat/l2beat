@@ -1,5 +1,4 @@
 import React from 'react'
-import { config } from '../../../config'
 import { ContractsSection, ContractsSectionProps } from './ContractsSection'
 import {
   DescriptionSection,
@@ -7,10 +6,6 @@ import {
 } from './DescriptionSection'
 import { LinkSection, LinkSectionProps } from './links/LinkSection'
 import { NewsSection, NewsSectionProps } from './NewsSection'
-import {
-  OldProjectDetails,
-  OldProjectDetailsProps,
-} from './old/OldProjectDetails'
 import { ReferencesSection, ReferencesSectionProps } from './ReferencesSection'
 import { RiskSection, RiskSectionProps } from './RiskSection'
 import {
@@ -20,7 +15,6 @@ import {
 import { TechnologySection, TechnologySectionProps } from './TechnologySection'
 
 export interface ProjectDetailsProps {
-  old: OldProjectDetailsProps
   linkSection: LinkSectionProps
   newsSection: NewsSectionProps
   descriptionSection: DescriptionSectionProps
@@ -32,9 +26,6 @@ export interface ProjectDetailsProps {
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
-  if (!config.__DEV__showNewDetails) {
-    return <OldProjectDetails {...props.old} />
-  }
   return (
     <main className="ProjectDetails">
       <LinkSection {...props.linkSection} />
