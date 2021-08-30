@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { L2Data, ProjectData } from '../../../L2Data'
 import {
   formatPercent,

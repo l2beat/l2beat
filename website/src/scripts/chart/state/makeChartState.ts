@@ -1,10 +1,10 @@
+import { toDays } from '../toDays'
 import { apiGet } from './api'
 import { ChartInput } from './ChartInput'
-import { onRadioChange } from './onRadioChange'
-import { getEndpoint } from './getEndpoint'
-import { toDays } from '../toDays'
 import { ChartState } from './ChartState'
 import { getControls } from './getControls'
+import { getEndpoint } from './getEndpoint'
+import { onRadioChange } from './onRadioChange'
 
 export function makeChartState(chart: HTMLElement, onChange: () => void) {
   const controls = getControls(chart)

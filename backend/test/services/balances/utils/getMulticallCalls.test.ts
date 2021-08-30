@@ -1,7 +1,12 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'chai'
 import { constants } from 'ethers'
+
 import { DAI } from '../../../../src/constants'
+import {
+  addTokenExchanges,
+  getMulticallCalls,
+} from '../../../../src/services/balances/utils/getMulticallCalls'
 import { ExchangeInfo } from '../../../../src/services/ExchangeAddresses'
 import {
   EthBalanceCall,
@@ -9,10 +14,6 @@ import {
   TokenBalanceCall,
   UniV2ReservesCall,
 } from '../../../../src/services/multicall'
-import {
-  addTokenExchanges,
-  getMulticallCalls,
-} from '../../../../src/services/balances/utils/getMulticallCalls'
 
 describe('getMulticallCalls', () => {
   it('returns all required calls', () => {

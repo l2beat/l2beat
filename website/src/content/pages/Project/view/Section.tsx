@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
+
 import { Heading } from '../../../common'
 
 interface Props {

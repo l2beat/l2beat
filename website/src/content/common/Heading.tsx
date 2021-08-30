@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { createElement, HTMLAttributes } from 'react'
+
 import { OutLink } from './OutLink'
 
 export interface HeadingProps {

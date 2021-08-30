@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ShieldBadIcon, ShieldWarnIcon } from '../../../common/icons'
 import { InlineReferences } from './InlineReferences'
 

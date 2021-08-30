@@ -1,5 +1,6 @@
 import { ProjectRiskView } from '@l2beat/config'
 import React from 'react'
+
 import { StarkWareIcon } from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'

@@ -1,4 +1,5 @@
 import { Project, ProjectRisk, ProjectRiskCategory } from '@l2beat/config'
+
 import { RiskSectionProps } from '../view/RiskSection'
 
 export function getRiskSection(project: Project): RiskSectionProps {

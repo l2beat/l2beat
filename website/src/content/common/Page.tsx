@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+
 import { PageMetadata } from '../PageMetadata'
 import { Head } from './head'
 import { Tooltip } from './Tooltip'

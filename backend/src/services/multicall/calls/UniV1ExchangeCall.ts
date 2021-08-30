@@ -1,5 +1,6 @@
 import { constants, utils } from 'ethers'
 import memoizee from 'memoizee'
+
 import { UNISWAP_V1_FACTORY } from '../../../constants'
 import { MulticallRequest, MulticallResponse } from '../MulticallApi'
 

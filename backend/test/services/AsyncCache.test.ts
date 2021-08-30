@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+
 import { AsyncCache } from '../../src/services/AsyncCache'
 
 describe('AsyncCache', () => {

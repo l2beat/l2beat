@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { LinkSectionLink } from './LinkSectionLink'
 
 interface Props {

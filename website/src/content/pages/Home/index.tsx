@@ -1,5 +1,6 @@
 import { Project } from '@l2beat/config'
 import React from 'react'
+
 import { L2Data } from '../../L2Data'
 import { getHomePage } from './props'
 import { HomePage } from './view/HomePage'

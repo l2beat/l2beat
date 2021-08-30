@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
+
 import { Icon } from '../Icon'
 
 export function StarkWareIcon(props: SVGAttributes<SVGElement>) {

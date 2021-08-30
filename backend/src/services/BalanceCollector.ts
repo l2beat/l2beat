@@ -1,4 +1,5 @@
 import { TokenInfo } from '@l2beat/config'
+
 import { ProjectInfo, SimpleDate } from '../model'
 import { BalanceAnalyzer } from './balances'
 import { ExchangeAddresses } from './ExchangeAddresses'

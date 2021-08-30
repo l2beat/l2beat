@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { ChartData, L2Data } from '../L2Data'
 import { outputCharts } from './output'
 

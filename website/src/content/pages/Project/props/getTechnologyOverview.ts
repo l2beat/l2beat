@@ -5,6 +5,7 @@ import {
   ProjectTechnology,
   ProjectTechnologyChoice,
 } from '@l2beat/config'
+
 import {
   ContractsSectionProps,
   TechnologyContract,

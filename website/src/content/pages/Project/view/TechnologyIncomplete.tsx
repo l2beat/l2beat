@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { OutLink } from '../../../common'
 
 export interface TechnologyIncompleteProps {

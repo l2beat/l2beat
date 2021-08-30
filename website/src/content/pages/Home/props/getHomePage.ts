@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { L2Data } from '../../../L2Data'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
 import { HomePageProps } from '../view/HomePage'
