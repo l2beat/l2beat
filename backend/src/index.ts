@@ -12,7 +12,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const { balanceCollector, config, asyncCache } = setup()
+  const { statCollector, config, asyncCache } = setup()
 
   const endDate = SimpleDate.today()
   const projectInfos = projects.map(projectToInfo)
@@ -21,12 +21,12 @@ async function main() {
   if (config.mock) {
     outputData = makeMockData(projectInfos, endDate)
   } else {
-    const balances = await balanceCollector.collectBalanceInfo(
+    const stats = await statCollector.collectStats(
       projectInfos,
       tokenList,
       endDate
     )
-    outputData = makeOutputData(balances)
+    outputData = makeOutputData(stats)
   }
 
   await saveData(outputData)

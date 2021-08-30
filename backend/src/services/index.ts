@@ -1,8 +1,7 @@
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { AsyncCache } from './AsyncCache'
-import { BalanceCollector } from './BalanceCollector'
-import { BalanceAnalyzer } from './balances'
+import { BalanceChecker } from './balances'
 import { BlockInfo } from './BlockInfo'
 import { CacheFile } from './CacheFile'
 import { getConfig } from './Config'
@@ -10,6 +9,7 @@ import { ExchangeAddresses } from './ExchangeAddresses'
 import { Logger } from './Logger'
 import { MulticallApi } from './multicall'
 import { ProjectDates } from './ProjectDates'
+import { StatCollector } from './StatCollector'
 
 export type Services = ReturnType<typeof setup>
 
@@ -30,16 +30,16 @@ export function setup() {
   const blockInfo = new BlockInfo(alchemyApi, etherscanApi, asyncCache, logger)
   const projectDates = new ProjectDates(blockInfo)
 
-  const balanceAnalyzer = new BalanceAnalyzer(multicallApi, blockInfo)
+  const balanceChecker = new BalanceChecker(multicallApi, blockInfo)
 
-  const balanceCollector = new BalanceCollector(
+  const statCollector = new StatCollector(
     exchangeAddresses,
     projectDates,
-    balanceAnalyzer
+    balanceChecker
   )
 
   return {
-    balanceCollector,
+    statCollector,
     config,
     asyncCache,
   }
