@@ -14,36 +14,6 @@
   }
 }
 
-.Projects-Disclaimer {
-  margin-top: 16px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    var(--gradient-1),
-    var(--gradient-2),
-    var(--gradient-3)
-  );
-  border-radius: 8px;
-  padding: 2px;
-
-  @media (max-width: 550px) {
-    margin-top: 8px;
-  }
-}
-
-.Projects-DisclaimerContent {
-  margin: 0;
-  padding: 16px;
-  text-align: center;
-  background-color: var(--background-2);
-  border-radius: 6px;
-
-  @media (max-width: 550px) {
-    padding: 8px;
-    font-size: var(--font-s);
-  }
-}
-
 .Projects-Buttons {
   position: relative;
   margin-top: 16px;
