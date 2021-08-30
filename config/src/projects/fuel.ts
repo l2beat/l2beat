@@ -123,54 +123,5 @@ export const fuel: Project = {
         link: 'https://fuellabs.medium.com/introducing-yul-a-new-low-level-language-for-ethereum-aa64ce89512f',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-
-    technologyName: 'Optimistic Rollup',
-    technologyDetails: 'UTXO',
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'Payments',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        sentiment: 'good',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        sentiment: 'warning',
-        tooltip:
-          "Optimistic rollups require 3rd party validators to submit fraud proofs. B/c of current lack of the adoption users can't trust that such validators are running.",
-        value: 'Medium',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        sentiment: 'good',
-        value: 'No',
-      },
-      {
-        name: 'Permissionless?',
-        sentiment: 'good',
-        tooltip:
-          'Anyone can submit a new root that can become part of the rollup after a delay',
-        pointers: [
-          {
-            name: 'Block.yulp#L95-L101 - Fuel source code',
-            href: 'https://github.com/FuelLabs/fuel/blob/49c35e8de752200175174a08b6a8eae42796790d/src/Block.yulp#L95-L101',
-          },
-        ],
-        value: 'Yes',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }

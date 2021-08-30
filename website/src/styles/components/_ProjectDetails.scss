@@ -2,16 +2,16 @@
   line-height: 1.5;
   display: grid;
   grid-template-columns: 1fr 320px;
-  grid-template-areas: 'tech overview' 'tech news' 'references news';
+  grid-template-areas: 'tech links' 'tech news' 'references news';
   column-gap: 16px;
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
-    grid-template-areas: 'overview' 'tech' 'news' 'references';
+    grid-template-areas: 'links' 'tech' 'news' 'references';
   }
 
-  .OverviewSection {
-    grid-area: overview;
+  .LinkSection {
+    grid-area: links;
   }
 
   .ProjectDetails-Content {

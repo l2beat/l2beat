@@ -1,9 +1,7 @@
 import { News } from './News'
-import { Pointer } from './Pointer'
 import { ProjectLinks } from './ProjectLinks'
-import { ProjectTechnology } from './ProjectTechnology'
-import { ProjectParameter } from './ProjectParameter'
 import { ProjectRiskView } from './ProjectRiskView'
+import { ProjectTechnology } from './ProjectTechnology'
 
 export interface ProjectDetails {
   /** A warning displayed at the top of the project page */
@@ -22,19 +20,4 @@ export interface ProjectDetails {
   riskView: ProjectRiskView
   /** Links to recent developments */
   news: News[]
-
-  // DEPRECATED ITEMS BELOW
-  /** @deprecated E.g. "ZK Rollup", "Payment Channels" */
-  technologyName: string
-  /** @deprecated Specific details e.g. ZK-SNARKS */
-  technologyDetails?: string
-  /** @deprecated Project research results */
-  parameters: ProjectParameter[]
-  /** @deprecated Additional notes */
-  notes?: {
-    /** Note text */
-    text: string
-    /** Relevant links */
-    pointers?: Pointer[]
-  }
 }

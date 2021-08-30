@@ -107,57 +107,5 @@ export const immutablex: Project = {
         link: 'https://immutablex.medium.com/important-announcement-imx-alpha-rewards-update-929f7bc89513',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-
-    technologyName: 'Validium',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'NFT, Exchange',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'bad',
-        value: 'Low',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'warning',
-        pointers: [
-          {
-            name: 'Bridge contract - source on Etherscan',
-            href: 'https://etherscan.io/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9#code',
-          },
-        ],
-        value: 'Yes, through contract upgrade',
-      },
-      {
-        name: 'Permissionless?',
-        sentiment: 'bad',
-        tooltip: 'Only ImmutableX can produce new blocks',
-        value: 'No',
-      },
-      {
-        name: 'Force TX mechanism?',
-        sentiment: 'good',
-        value: 'Yes but only for withdrawals',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }

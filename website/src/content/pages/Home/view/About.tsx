@@ -1,11 +1,7 @@
 import React from 'react'
 import { Heading } from '../../../common'
-import { config } from '../../../config'
 
 export function About() {
-  if (!config.__DEV__showRiskView) {
-    return null
-  }
   return (
     <section className="About">
       <Heading level={2} id="about" title="About L2BEAT" />

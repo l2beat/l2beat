@@ -120,57 +120,5 @@ export const dydx: Project = {
         link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       },
     ],
-
-    // DEPRECATED ITEMS BELOW
-
-    technologyName: 'ZK Rollup',
-    technologyDetails: "Powered by StarkWare's StarkEx",
-    parameters: [
-      {
-        name: 'Primary use case',
-        value: 'Exchange',
-      },
-      {
-        name: 'Hypothetical level of decentralization',
-        value: 'High',
-      },
-      {
-        name: 'Current level of decentralization',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'bad',
-        value: 'Low',
-      },
-      {
-        name: 'Can funds be stolen by the operator?',
-        tooltip: 'Contracts are upgradable',
-        sentiment: 'warning',
-        pointers: [
-          {
-            name: 'Bridge contract - source on Etherscan',
-            href: 'https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8#code',
-          },
-        ],
-        value: 'Yes, through contract upgrade',
-      },
-      {
-        name: 'Permissionless?',
-        sentiment: 'bad',
-        tooltip: 'Only dydx can produce new blocks',
-        value: 'No',
-      },
-      {
-        name: 'Force TX mechanism?',
-        sentiment: 'good',
-        value: 'Yes but only for withdrawals',
-      },
-      {
-        name: 'Privacy',
-        value: 'No',
-      },
-      {
-        name: 'Smart contracts',
-        value: 'No',
-      },
-    ],
   },
 }
