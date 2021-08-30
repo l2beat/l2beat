@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ContractsSection, ContractsSectionProps } from './ContractsSection'
 import {
   DescriptionSection,

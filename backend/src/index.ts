@@ -1,9 +1,10 @@
 import { projects, tokenList } from '@l2beat/config'
 import fs from 'fs'
+
 import { projectToInfo, SimpleDate } from './model'
 import { setup } from './services'
-import { OutputData, makeOutputData } from './tools/makeOutputData'
 import { makeMockData } from './tools/makeMockData'
+import { makeOutputData, OutputData } from './tools/makeOutputData'
 
 main().catch((e) => {
   console.error(e)

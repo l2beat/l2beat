@@ -1,5 +1,6 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+
 import { Heading } from '../../common'
 
 export function renderHeading(level: number, title: string, id: string) {

@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
+
 import { Chart, Header, Logo, Page } from '../../common'
 import { config } from '../../config'
 import { MetaImageProps } from './getMetaImageProps'

@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { PageMetadata } from '../../../PageMetadata'
 
 export function getPageMetadata(project: Project): PageMetadata {

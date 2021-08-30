@@ -21,6 +21,7 @@
     "adm-zip": "^0.5.5",
     "chalk": "^4.1.1",
     "dotenv": "^10.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "ethers": "^5.4.1",
     "memoizee": "^0.4.15",
     "node-fetch": "^2.6.1"

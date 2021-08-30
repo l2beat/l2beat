@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Header, Page } from '../../common'
 import { TechnologiesPageProps } from './getTechnologiesPageProps'
 

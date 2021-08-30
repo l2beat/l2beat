@@ -1,6 +1,6 @@
 import { ProjectInfo, SimpleDate } from '../model'
 import { dateRange } from '../utils'
-import { ProjectData, OutputData, Chart } from './makeOutputData'
+import { Chart, OutputData, ProjectData } from './makeOutputData'
 
 export function makeMockData(
   projects: ProjectInfo[],

@@ -1,4 +1,5 @@
 import React, { SVGAttributes } from 'react'
+
 import { Icon } from '../Icon'
 
 export function FinanceIcon(props: SVGAttributes<SVGElement>) {

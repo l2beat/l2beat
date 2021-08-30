@@ -1,7 +1,7 @@
-import express from 'express'
-import puppeteer from 'puppeteer'
 import { projects } from '@l2beat/config'
+import express from 'express'
 import { Server } from 'http'
+import puppeteer from 'puppeteer'
 
 main()
 async function main() {

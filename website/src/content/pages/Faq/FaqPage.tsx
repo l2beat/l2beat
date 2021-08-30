@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Footer, Navbar, Page } from '../../common'
 import { FaqPageProps } from './getFaqPageProps'
 

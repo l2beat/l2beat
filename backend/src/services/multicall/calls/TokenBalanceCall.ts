@@ -1,5 +1,6 @@
 import { BigNumber, constants, utils } from 'ethers'
 import memoizee from 'memoizee'
+
 import { MulticallRequest, MulticallResponse } from '../MulticallApi'
 
 const coder = new utils.Interface([

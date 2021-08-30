@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { ChartProps } from '../../../common'
 import { L2Data } from '../../../L2Data'
 

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { InfoIcon, WarningIcon } from '../../../../common/icons'
 import { FinancialViewEntry } from './FinancialView'
 

@@ -1,5 +1,6 @@
 import { BigNumber, constants, utils } from 'ethers'
 import memoizee from 'memoizee'
+
 import { MULTICALL } from '../../../constants'
 import { MulticallRequest, MulticallResponse } from '../MulticallApi'
 

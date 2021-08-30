@@ -1,5 +1,6 @@
 import { ProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
+
 import { Section } from './Section'
 
 export interface RiskSectionProps {

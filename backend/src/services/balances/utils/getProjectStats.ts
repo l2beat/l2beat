@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+
 import { TEN_TO_18 } from '../../../constants'
 import { ProjectInfo } from '../../../model'
 import { divOrZero } from '../../../utils'

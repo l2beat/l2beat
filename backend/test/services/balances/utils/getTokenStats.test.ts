@@ -1,6 +1,7 @@
 import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'chai'
 import { BigNumber, utils } from 'ethers'
+
 import {
   FetchedBalances,
   FetchedPrices,

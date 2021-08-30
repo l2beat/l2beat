@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getLinkSection } from './getLinkSection'

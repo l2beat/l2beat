@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+
 import { SimpleDate } from '../../src/model'
 
 describe('SimpleDate', () => {

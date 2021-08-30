@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+
 import { AggregateTVL } from '../../../../src/services/balances/model'
 import { getProjectStats } from '../../../../src/services/balances/utils'
 import { getAggregateTVL } from '../../../../src/services/balances/utils/getAggregateTVL'

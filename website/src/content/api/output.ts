@@ -1,5 +1,6 @@
 import fsx from 'fs-extra'
 import path from 'path'
+
 import { ChartData } from '../L2Data'
 
 export function outputCharts(charts: Map<string, ChartData>) {

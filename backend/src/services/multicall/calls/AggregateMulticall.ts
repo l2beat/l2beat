@@ -1,4 +1,5 @@
 import { utils } from 'ethers'
+
 import { MulticallRequest } from '../MulticallApi'
 
 const coder = new utils.Interface([

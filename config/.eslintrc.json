@@ -10,6 +10,7 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
+  "plugins": ["simple-import-sort"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
@@ -21,7 +22,9 @@
       {
         "destructuring": "all"
       }
-    ]
+    ],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   },
   "overrides": [
     {

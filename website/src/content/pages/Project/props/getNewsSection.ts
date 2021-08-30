@@ -1,4 +1,5 @@
 import { Project } from '@l2beat/config'
+
 import { formatDate } from '../../../../scripts/chart/ui/dates'
 import { NewsSectionProps } from '../view/NewsSection'
 

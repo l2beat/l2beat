@@ -1,15 +1,15 @@
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { AsyncCache } from './AsyncCache'
+import { BalanceCollector } from './BalanceCollector'
+import { BalanceAnalyzer } from './balances'
 import { BlockInfo } from './BlockInfo'
 import { CacheFile } from './CacheFile'
 import { getConfig } from './Config'
-import { ProjectDates } from './ProjectDates'
 import { ExchangeAddresses } from './ExchangeAddresses'
 import { Logger } from './Logger'
 import { MulticallApi } from './multicall'
-import { BalanceAnalyzer } from './balances'
-import { BalanceCollector } from './BalanceCollector'
+import { ProjectDates } from './ProjectDates'
 
 export type Services = ReturnType<typeof setup>
 

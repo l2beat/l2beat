@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { getTechnologiesPageProps } from './getTechnologiesPageProps'
 import { TechnologiesPage } from './TechnologiesPage'
 

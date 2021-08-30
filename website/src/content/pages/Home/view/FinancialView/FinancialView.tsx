@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { PercentChange } from '../../../../common'
 import { StarkWareIcon, WarningIcon } from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'

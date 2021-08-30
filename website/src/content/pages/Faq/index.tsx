@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { FaqPage } from './FaqPage'
 import { getFaqPageProps } from './getFaqPageProps'
 

@@ -3,11 +3,11 @@ import {
   MULTICALL_BATCH_SIZE,
   MULTICALL_BLOCK_NUMBER,
 } from '../../constants'
+import { fastHash } from '../../utils'
+import { AlchemyApi } from '../api/AlchemyApi'
 import { AsyncCache } from '../AsyncCache'
 import { Logger } from '../Logger'
-import { AlchemyApi } from '../api/AlchemyApi'
 import { AggregateMulticall } from './calls'
-import { fastHash } from '../../utils'
 
 export interface MulticallRequest {
   address: string

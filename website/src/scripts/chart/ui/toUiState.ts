@@ -1,8 +1,8 @@
 import { ChartStateWithInput } from '../state'
 import { calculateTicks } from './calculateTicks'
 import { formatDate, toDateRange } from './dates'
-import { UiState } from './UiState'
 import { formatCurrency, formatCurrencyExact } from './format'
+import { UiState } from './UiState'
 
 export function toUiState(state: ChartStateWithInput): UiState {
   const dataPoints = state.input.data.filter(
