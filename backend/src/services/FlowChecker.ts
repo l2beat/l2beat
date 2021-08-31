@@ -80,6 +80,7 @@ export class FlowChecker {
               day.prices.token[event.tokenAddress] ?? BigNumber.from(0)
             const value = event.value.mul(price).div(TEN_TO_18)
             total = total.add(value)
+            break
           }
         }
       }
