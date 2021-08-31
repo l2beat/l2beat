@@ -5,6 +5,7 @@ import { Stats } from '../services/StatCollector'
 export interface OutputData {
   aggregate: Chart
   byProject: Record<string, ProjectData>
+  experimental: Record<string, ExperimentalData>
 }
 
 export interface ProjectData {
@@ -15,6 +16,11 @@ export interface ProjectData {
 export interface Chart {
   types: ['date', string, string]
   data: [string, number, number][]
+}
+
+export interface ExperimentalData {
+  usdIn7DayNoEth: number
+  usdOut7DayNoEth: number
 }
 
 export function makeOutputData(stats: Stats): OutputData {
@@ -29,7 +35,7 @@ export function makeOutputData(stats: Stats): OutputData {
     ])
   )
 
-  return { aggregate, byProject }
+  return { aggregate, byProject, experimental: stats.flows }
 }
 
 function makeAggregateChart(entries: TVLAnalysis[]): Chart {

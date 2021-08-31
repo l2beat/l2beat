@@ -5,6 +5,7 @@ export class CustomProvider extends providers.StaticJsonRpcProvider {
     super(url, network)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prepareRequest(method: string, params: any): [string, Array<any>] {
     if (method === 'getLogs') {
       if (params.filter && params.filter.address != null) {
@@ -23,13 +24,14 @@ export class CustomProvider extends providers.StaticJsonRpcProvider {
   }
 
   async _getFilter(filter: providers.Filter): Promise<providers.Filter> {
-    const processed: any = await super._getFilter({
+    const processed = await super._getFilter({
       ...filter,
       address: undefined,
     })
     if (filter.address) {
       if (Array.isArray(filter.address)) {
-        processed.address = await Promise.all(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ;(processed as any).address = await Promise.all(
           filter.address.map((x) => this._getAddress(x))
         )
       } else {

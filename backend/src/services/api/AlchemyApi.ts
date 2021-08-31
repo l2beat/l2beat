@@ -49,6 +49,7 @@ export class AlchemyApi {
       async () => {
         // This is actually safe, because the provider has been specifically
         // modified to support this
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return this.provider.getLogs(filter as any)
       }
     )
