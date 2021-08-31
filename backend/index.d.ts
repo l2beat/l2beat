@@ -1,6 +1,7 @@
 interface OutputData {
   aggregate: Chart
   byProject: Record<string, ProjectData>
+  experimental: Record<string, ExperimentalData>
 }
 
 interface ProjectData {
@@ -11,6 +12,11 @@ interface ProjectData {
 interface Chart {
   types: ['date', string, string]
   data: [string, number, number][]
+}
+
+interface ExperimentalData {
+  usdIn7DayNoEth: number
+  usdOut7DayNoEth: number
 }
 
 declare const l2Data: OutputData

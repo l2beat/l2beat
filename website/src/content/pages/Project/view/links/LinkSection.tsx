@@ -1,12 +1,17 @@
 import { ProjectLinks } from '@l2beat/config'
 import React from 'react'
 
+import { config } from '../../../../config'
 import { LinkSectionLinks } from './LinkSectionLinks'
 
 export interface LinkSectionProps {
-  links: ProjectLinks
   icon: string
   name: string
+  links: ProjectLinks
+  experimentalStats7d: {
+    inflowsNoEth: string
+    outflowsNoEth: string
+  }
 }
 
 export function LinkSection(props: LinkSectionProps) {
@@ -40,6 +45,31 @@ export function LinkSection(props: LinkSectionProps) {
           />
         </tbody>
       </table>
+      {config.__DEV__showExperimentalStats && (
+        <>
+          <p className="LinkSection-Title">Experimental Stats (7 days)</p>
+          <table className="LinkSection-Table">
+            <tbody>
+              <tr>
+                <th>
+                  Inflows
+                  <br />
+                  (excluding ETH)
+                </th>
+                <td>{props.experimentalStats7d.inflowsNoEth}</td>
+              </tr>
+              <tr>
+                <th>
+                  Outflows
+                  <br />
+                  (excluding ETH)
+                </th>
+                <td>{props.experimentalStats7d.outflowsNoEth}</td>
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
     </section>
   )
 }

@@ -12,26 +12,27 @@ import {
 import { getMulticallCalls } from './utils/getMulticallCalls'
 import { parseMulticallResults } from './utils/parseMulticallResults'
 
-export class BalanceAnalyzer {
+export class BalanceChecker {
   constructor(
     private multicallApi: MulticallApi,
     private blockInfo: BlockInfo
   ) {}
 
-  async getTVLByDate(
+  async getStatsForDate(
     projects: ProjectInfo[],
     exchanges: Record<string, ExchangeInfo>,
     date: SimpleDate
-  ) {
-    const block = await this.blockInfo.getMaxBlock(date)
-    return this.getTVL(projects, exchanges, block)
+  ): Promise<TVLAnalysis> {
+    const blockNumber = await this.blockInfo.getMaxBlock(date)
+    const stats = await this.getTVL(projects, exchanges, blockNumber)
+    return { date, blockNumber, ...stats }
   }
 
   async getTVL(
     projects: ProjectInfo[],
     exchanges: Record<string, ExchangeInfo>,
     blockNumber: number
-  ): Promise<TVLAnalysis> {
+  ) {
     const { tokenHolders, ethHolders } = getHolders(projects, blockNumber)
     const { balances, prices } = await this.fetchBalancesAndPrices(
       tokenHolders,
@@ -44,6 +45,7 @@ export class BalanceAnalyzer {
     return {
       TVL: getAggregateTVL(projectStats, prices),
       projects: projectTVL,
+      prices,
     }
   }
 

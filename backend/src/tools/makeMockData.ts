@@ -1,6 +1,11 @@
 import { ProjectInfo, SimpleDate } from '../model'
 import { dateRange } from '../utils'
-import { Chart, OutputData, ProjectData } from './makeOutputData'
+import {
+  Chart,
+  ExperimentalData,
+  OutputData,
+  ProjectData,
+} from './makeOutputData'
 
 export function makeMockData(
   projects: ProjectInfo[],
@@ -15,7 +20,16 @@ export function makeMockData(
 
   const dates = getAggregateDateRange(projects, endDate)
   const aggregate = fakeChart(dates, ['usd', 'eth'], projects.length * 200)
-  return { aggregate, byProject }
+
+  const experimental: Record<string, ExperimentalData> = {}
+  for (const project of projects) {
+    experimental[project.name] = {
+      usdIn7DayNoEth: randRange(0, 500_000),
+      usdOut7DayNoEth: randRange(0, 500_000),
+    }
+  }
+
+  return { aggregate, byProject, experimental }
 }
 
 function getProjectDateRange(project: ProjectInfo, endDate: SimpleDate) {
