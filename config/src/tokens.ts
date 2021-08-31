@@ -139,6 +139,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 8928158,
   },
   {
+    name: 'DeversiFi Token',
+    symbol: 'DVF',
+    address: '0xDDdddd4301A082e62E84e43F474f044423921918',
+    decimals: 18,
+    sinceBlock: 12008914,
+  },
+  {
     name: 'Dusk Network',
     symbol: 'DUSK',
     address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
@@ -423,13 +430,6 @@ export const tokenList: TokenInfo[] = [
     address: '0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6',
     decimals: 18,
     sinceBlock: 11305469,
-  },
-  {
-    name: 'DVF',
-    symbol: 'DVF',
-    address: '0xDDdddd4301A082e62E84e43F474f044423921918',
-    decimals: 18,
-    sinceBlock: 12008914,
   },
 ]
 
