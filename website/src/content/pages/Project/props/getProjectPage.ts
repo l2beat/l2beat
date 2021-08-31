@@ -15,6 +15,6 @@ export function getProjectPage(
     metadata: getPageMetadata(project),
     header: getHeader(project, l2Data),
     chart: getChart(project, l2Data),
-    projectDetails: getProjectDetails(project),
+    projectDetails: getProjectDetails(project, l2Data),
   }
 }
