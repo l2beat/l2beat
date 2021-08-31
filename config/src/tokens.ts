@@ -424,6 +424,13 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     sinceBlock: 11305469,
   },
+  {
+    name: 'DVF',
+    symbol: 'DVF',
+    address: '0xDDdddd4301A082e62E84e43F474f044423921918',
+    decimals: 18,
+    sinceBlock: 12008914,
+  },
 ]
 
 const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))

@@ -44,6 +44,7 @@ export const deversifi: Project = {
         'LRC',
         'OMG',
         'BAT',
+        'DVF',
       ],
     },
   ],
