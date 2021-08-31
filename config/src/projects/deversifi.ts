@@ -44,9 +44,11 @@ export const deversifi: Project = {
         'LRC',
         'OMG',
         'BAT',
+        'DVF',
       ],
     },
   ],
+  associatedToken: 'DVF',
   details: {
     description:
       'DeversiFi claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
