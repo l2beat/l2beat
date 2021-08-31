@@ -1,9 +1,11 @@
 import { SimpleDate } from '../model'
 import { TVLAnalysis } from '../services/balances/model'
+import { Stats } from '../services/StatCollector'
 
 export interface OutputData {
   aggregate: Chart
   byProject: Record<string, ProjectData>
+  experimental: Record<string, ExperimentalData>
 }
 
 export interface ProjectData {
@@ -16,13 +18,14 @@ export interface Chart {
   data: [string, number, number][]
 }
 
-interface InputEntry {
-  date: SimpleDate
-  balances: TVLAnalysis
+export interface ExperimentalData {
+  usdIn7DayNoEth: number
+  usdOut7DayNoEth: number
 }
 
-export function makeOutputData(entries: InputEntry[]): OutputData {
-  const lastEntry = entries[entries.length - 1].balances
+export function makeOutputData(stats: Stats): OutputData {
+  const entries = stats.tvlEntries
+  const lastEntry = entries[entries.length - 1]
 
   const aggregate = makeAggregateChart(entries)
   const byProject = Object.fromEntries(
@@ -32,23 +35,23 @@ export function makeOutputData(entries: InputEntry[]): OutputData {
     ])
   )
 
-  return { aggregate, byProject }
+  return { aggregate, byProject, experimental: stats.flows }
 }
 
-function makeAggregateChart(entries: InputEntry[]): Chart {
+function makeAggregateChart(entries: TVLAnalysis[]): Chart {
   const data: Chart['data'] = entries.map((entry) => [
     entry.date.toString(),
-    entry.balances.TVL.usd,
-    entry.balances.TVL.eth,
+    entry.TVL.usd,
+    entry.TVL.eth,
   ])
   return skipBeginningZeroes({ types: ['date', 'usd', 'eth'], data })
 }
 
-function makeProjectData(entries: InputEntry[], project: string): ProjectData {
+function makeProjectData(entries: TVLAnalysis[], project: string): ProjectData {
   const aggregate = makeAggregateProjectChart(entries, project)
   const minDate = SimpleDate.fromString(aggregate.data[0][0])
   const lastEntry = entries[entries.length - 1]
-  const tokens = Object.keys(lastEntry.balances.projects[project].tokens)
+  const tokens = Object.keys(lastEntry.projects[project].tokens)
   const byToken = Object.fromEntries(
     tokens.map((token) => [
       token,
@@ -59,19 +62,19 @@ function makeProjectData(entries: InputEntry[], project: string): ProjectData {
 }
 
 function makeAggregateProjectChart(
-  entries: InputEntry[],
+  entries: TVLAnalysis[],
   project: string
 ): Chart {
   const data: Chart['data'] = entries.map((entry) => [
     entry.date.toString(),
-    entry.balances.projects[project].TVL.usd,
-    entry.balances.projects[project].TVL.eth,
+    entry.projects[project].TVL.usd,
+    entry.projects[project].TVL.eth,
   ])
   return skipBeginningZeroes({ types: ['date', 'usd', 'eth'], data })
 }
 
 function makeTokenChart(
-  entries: InputEntry[],
+  entries: TVLAnalysis[],
   project: string,
   token: string,
   minDate: SimpleDate
@@ -80,8 +83,8 @@ function makeTokenChart(
     .filter((x) => !x.date.isBefore(minDate))
     .map((entry) => [
       entry.date.toString(),
-      entry.balances.projects[project].tokens[token].balance,
-      entry.balances.projects[project].tokens[token].usd,
+      entry.projects[project].tokens[token].balance,
+      entry.projects[project].tokens[token].usd,
     ])
   return { types: ['date', token.toLowerCase(), 'usd'], data }
 }

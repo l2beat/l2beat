@@ -1,1 +1,1 @@
-export * from './BalanceAnalyzer'
+export * from './BalancheChecker'

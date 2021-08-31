@@ -1,6 +1,11 @@
 import { BigNumber } from 'ethers'
 
+import { SimpleDate } from '../../model'
+
 export interface TVLAnalysis {
+  date: SimpleDate
+  blockNumber: number
+  prices: FetchedPrices
   TVL: AggregateTVL
   projects: Record<string, ProjectTVL>
 }

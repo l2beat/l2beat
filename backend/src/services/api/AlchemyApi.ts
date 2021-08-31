@@ -1,11 +1,17 @@
-import { providers } from 'ethers'
-
 import { Logger } from '../Logger'
+import { CustomProvider } from './CustomProvider'
 import { ExponentialRetry } from './ExponentialRetry'
 import { RateLimiter } from './RateLimiter'
 
+export interface LogFilter {
+  address: string | string[]
+  topics: (string | string[] | null)[]
+  fromBlock: number
+  toBlock: number
+}
+
 export class AlchemyApi {
-  private provider = new providers.StaticJsonRpcProvider(this.url, 'mainnet')
+  private provider = new CustomProvider(this.url, 'mainnet')
   private rateLimiter = new RateLimiter({
     callsPerMinute: 500,
   })
@@ -35,6 +41,18 @@ export class AlchemyApi {
     return this.safeCall(`call(${address}, ${blockNumber})`, async () => {
       return this.provider.call({ to: address, data }, blockNumber)
     })
+  }
+
+  async getLogs(filter: LogFilter) {
+    return this.safeCall(
+      `getLogs: ${filter.fromBlock} - ${filter.toBlock}`,
+      async () => {
+        // This is actually safe, because the provider has been specifically
+        // modified to support this
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return this.provider.getLogs(filter as any)
+      }
+    )
   }
 
   private async safeCall<T>(message: string, fn: () => Promise<T>): Promise<T> {
