@@ -105,16 +105,17 @@ export class FlowChecker {
       address: tokens.map((x) => x.address),
       fromBlock,
       toBlock,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      topics: coder.encodeFilterTopics('Transfer' as any, [null, bridges]),
+      topics: coder.encodeFilterTopics(coder.getEvent('Transfer'), [
+        null,
+        bridges,
+      ]),
     }
 
     const filterOut: LogFilter = {
       address: tokens.map((x) => x.address),
       fromBlock,
       toBlock,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      topics: coder.encodeFilterTopics('Transfer' as any, [bridges]),
+      topics: coder.encodeFilterTopics(coder.getEvent('Transfer'), [bridges]),
     }
 
     const [logsIn, logsOut] = await Promise.all([

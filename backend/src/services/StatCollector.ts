@@ -1,6 +1,7 @@
 import { TokenInfo } from '@l2beat/config'
 
 import { ProjectInfo, SimpleDate } from '../model'
+import { ArbitrumStatChecker, ArbitrumStats } from './ArbitrumStatChecker'
 import { BalanceChecker } from './balances'
 import { TVLAnalysis } from './balances/model'
 import { ExchangeAddresses } from './ExchangeAddresses'
@@ -10,6 +11,7 @@ import { ProjectDates } from './ProjectDates'
 export interface Stats {
   tvlEntries: TVLAnalysis[]
   flows: Flows
+  arbitrum: ArbitrumStats
 }
 
 export class StatCollector {
@@ -17,7 +19,8 @@ export class StatCollector {
     private exchangeAddresses: ExchangeAddresses,
     private projectDates: ProjectDates,
     private balanceChecker: BalanceChecker,
-    private flowChecker: FlowChecker
+    private flowChecker: FlowChecker,
+    private arbitrumStatChecker: ArbitrumStatChecker
   ) {}
 
   async collectStats(
@@ -33,6 +36,10 @@ export class StatCollector {
       )
     )
     const flows = await this.flowChecker.getFlows(projects, tvlEntries)
-    return { tvlEntries, flows }
+    const arbitrum = await this.arbitrumStatChecker.getStats(
+      tvlEntries[tvlEntries.length - 8].blockNumber + 1,
+      tvlEntries[tvlEntries.length - 1].blockNumber
+    )
+    return { tvlEntries, flows, arbitrum }
   }
 }

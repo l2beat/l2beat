@@ -16,6 +16,8 @@ export function getLinkSection(
     experimentalStats7d: {
       inflowsNoEth: formatUSD(experimental.usdIn7DayNoEth),
       outflowsNoEth: formatUSD(experimental.usdOut7DayNoEth),
+      batchCount: experimental.batchCount7d,
+      transactionCount: experimental.messageCount7d,
     },
   }
 }

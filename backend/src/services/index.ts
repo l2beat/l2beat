@@ -1,6 +1,7 @@
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { LogApi } from './api/LogApi'
+import { ArbitrumStatChecker } from './ArbitrumStatChecker'
 import { AsyncCache } from './AsyncCache'
 import { BalanceChecker } from './balances'
 import { BlockInfo } from './BlockInfo'
@@ -35,12 +36,14 @@ export function setup() {
 
   const balanceChecker = new BalanceChecker(multicallApi, blockInfo)
   const flowChecker = new FlowChecker(logApi)
+  const arbitrumStatChecker = new ArbitrumStatChecker(logApi)
 
   const statCollector = new StatCollector(
     exchangeAddresses,
     projectDates,
     balanceChecker,
-    flowChecker
+    flowChecker,
+    arbitrumStatChecker
   )
 
   return {

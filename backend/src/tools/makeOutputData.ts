@@ -21,6 +21,8 @@ export interface Chart {
 export interface ExperimentalData {
   usdIn7DayNoEth: number
   usdOut7DayNoEth: number
+  batchCount7d?: number
+  messageCount7d?: number
 }
 
 export function makeOutputData(stats: Stats): OutputData {
@@ -35,7 +37,16 @@ export function makeOutputData(stats: Stats): OutputData {
     ])
   )
 
-  return { aggregate, byProject, experimental: stats.flows }
+  const experimental: OutputData['experimental'] = {}
+  for (const project of Object.keys(stats.flows)) {
+    experimental[project] = { ...stats.flows[project] }
+    if (project === 'Arbitrum') {
+      experimental[project].batchCount7d = stats.arbitrum.sequencerBatches7d
+      experimental[project].messageCount7d = stats.arbitrum.messageCount7d
+    }
+  }
+
+  return { aggregate, byProject, experimental }
 }
 
 function makeAggregateChart(entries: TVLAnalysis[]): Chart {
