@@ -1,19 +1,14 @@
 import { ProjectLinks } from '@l2beat/config'
 import React from 'react'
 
-import { config } from '../../../../config'
+import { ExperimentalStats, ExperimentalStatsProps } from './ExperimentalStats'
 import { LinkSectionLinks } from './LinkSectionLinks'
 
 export interface LinkSectionProps {
   icon: string
   name: string
   links: ProjectLinks
-  experimentalStats7d: {
-    inflowsNoEth: string
-    outflowsNoEth: string
-    batchCount?: number
-    transactionCount?: number
-  }
+  experimentalStats7d: ExperimentalStatsProps
 }
 
 export function LinkSection(props: LinkSectionProps) {
@@ -47,41 +42,7 @@ export function LinkSection(props: LinkSectionProps) {
           />
         </tbody>
       </table>
-      {config.__DEV__showExperimentalStats && (
-        <>
-          <p className="LinkSection-Title">Experimental Stats (7 days)</p>
-          <table className="LinkSection-Table">
-            <tbody>
-              <tr>
-                <th>Inflows</th>
-                <td style={{ display: 'block' }}>
-                  {props.experimentalStats7d.inflowsNoEth}{' '}
-                  <span style={{ fontSize: 'var(--font-s)' }}>(excl. ETH)</span>
-                </td>
-              </tr>
-              <tr>
-                <th>Outflows</th>
-                <td style={{ display: 'block' }}>
-                  {props.experimentalStats7d.outflowsNoEth}{' '}
-                  <span style={{ fontSize: 'var(--font-s)' }}>(excl. ETH)</span>
-                </td>
-              </tr>
-              {props.experimentalStats7d.batchCount !== undefined && (
-                <tr>
-                  <th>Batches</th>
-                  <td>{props.experimentalStats7d.batchCount}</td>
-                </tr>
-              )}
-              {props.experimentalStats7d.transactionCount !== undefined && (
-                <tr>
-                  <th>Transactions</th>
-                  <td>{props.experimentalStats7d.transactionCount}</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </>
-      )}
+      <ExperimentalStats {...props.experimentalStats7d} />
     </section>
   )
 }
