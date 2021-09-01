@@ -313,8 +313,8 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 3978297,
   },
   {
-    name: 'Paxos Standard',
-    symbol: 'PAX',
+    name: 'Pax Dollar',
+    symbol: 'USDP',
     address: '0x8E870D67F660D95d5be530380D0eC0bd388289E1',
     decimals: 18,
     sinceBlock: 6294931,
