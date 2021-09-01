@@ -37,7 +37,7 @@ export const arbitrum: Project = {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
       apps: [],
       documentation: ['https://developer.offchainlabs.com/'],
-      explorers: ['https://explorer.arbitrum.io/'],
+      explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
       repositories: [
         'https://github.com/OffchainLabs/arbitrum',
         'https://github.com/OffchainLabs/arb-os',
