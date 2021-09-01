@@ -46,7 +46,7 @@ export function makeOutputData(stats: Stats): OutputData {
     }
   }
 
-  return { aggregate, byProject, experimental: stats.flows }
+  return { aggregate, byProject, experimental }
 }
 
 function makeAggregateChart(entries: TVLAnalysis[]): Chart {

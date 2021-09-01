@@ -17,6 +17,8 @@ interface Chart {
 interface ExperimentalData {
   usdIn7DayNoEth: number
   usdOut7DayNoEth: number
+  batchCount7d?: number
+  messageCount7d?: number
 }
 
 declare const l2Data: OutputData
