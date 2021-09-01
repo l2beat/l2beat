@@ -56,18 +56,14 @@ export function LinkSection(props: LinkSectionProps) {
                 <th>Inflows</th>
                 <td style={{ display: 'block' }}>
                   {props.experimentalStats7d.inflowsNoEth}{' '}
-                  <span style={{ fontSize: 'var(--font-s)' }}>
-                    (excl. ETH)
-                  </span>
+                  <span style={{ fontSize: 'var(--font-s)' }}>(excl. ETH)</span>
                 </td>
               </tr>
               <tr>
                 <th>Outflows</th>
                 <td style={{ display: 'block' }}>
                   {props.experimentalStats7d.outflowsNoEth}{' '}
-                  <span style={{ fontSize: 'var(--font-s)' }}>
-                    (excl. ETH)
-                  </span>
+                  <span style={{ fontSize: 'var(--font-s)' }}>(excl. ETH)</span>
                 </td>
               </tr>
               {props.experimentalStats7d.batchCount !== undefined && (
