@@ -27,6 +27,12 @@ export function makeMockData(
       usdIn7DayNoEth: randRange(0, 500_000),
       usdOut7DayNoEth: randRange(0, 500_000),
     }
+    if (project.name === 'Arbitrum') {
+      experimental[project.name].batchCount7d = Math.floor(randRange(10, 1_000))
+      experimental[project.name].messageCount7d = Math.floor(
+        randRange(2_000, 20_000)
+      )
+    }
   }
 
   return { aggregate, byProject, experimental }
