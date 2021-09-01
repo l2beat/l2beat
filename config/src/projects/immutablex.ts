@@ -61,7 +61,7 @@ export const immutablex: Project = {
             address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378',
+              implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
               upgradeDelay: 0,
               isFinal: false,
             },

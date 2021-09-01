@@ -145,7 +145,7 @@ export const loopring: Project = {
             upgradeability: {
               type: 'ZeppelinOs',
               admin: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
-              implementation: '0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC',
+              implementation: '0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA',
             },
           },
           {
