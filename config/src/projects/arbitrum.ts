@@ -30,7 +30,6 @@ export const arbitrum: Project = {
     },
   ],
   details: {
-    warning: 'Arbitrum is currently only open to whitelisted developers.',
     description:
       'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
     purpose: 'Universal',
