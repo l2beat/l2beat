@@ -32,7 +32,7 @@ export const omgnetwork: Project = {
         'GNO',
         'BUSD',
         'ELEC',
-        'PAX',
+        'USDP',
         'SPANK',
         'LION',
         'ZRX',
