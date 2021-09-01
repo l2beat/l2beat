@@ -158,7 +158,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0xCB0DA32914A683286Ed2D4890E8157fFecc9bd06',
+              implementation: '0x2f06e43D850Ac75926FA2866e40139475b58Cb16',
             },
           },
           {
@@ -167,7 +167,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x5c7355e46D5486583a1CC211701e25004231D9dd',
+              implementation: '0xb872Ea300eDba3872873fa1Aa33DB897c4D2cB66',
             },
           },
           {
@@ -176,7 +176,16 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0xB38634F1192fd4A4864b99a4C9100339815c6450',
+              implementation: '0x048cc108763de75E080Ad717bD284003aa49eA15',
+            },
+          },
+          {
+            address: '0x4c6f947Ae67F572afa4ae0730947DE7C874F95Ef',
+            name: 'SequencerInbox',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0x9685e7281Fb1507B6f141758d80B08752faF0c43',
             },
           },
           {
@@ -185,7 +194,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x19D6ddDC21503F4C8cD62Ce2A9FF94Bd590b49B0',
+              implementation: '0xb91f4bE773F5a1b9b0dC1085663b3535A6EBeEE2',
             },
           },
           {
@@ -194,7 +203,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0xAE71755B42D1EF5Fb365Aeb4A74CB73992dd9fBE',
+              implementation: '0x637E1CD58Ad3f0071ceCb281395e1823A96a553F',
             },
           },
           {
@@ -209,7 +218,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-              implementation: '0x4b2Cf3BE8677096310b32a648b0Bdb8c5A8dDC94',
+              implementation: '0x62285266B5ec3d5B8867c84B807b79B2c13892EC',
             },
           },
           {
@@ -219,7 +228,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-              implementation: '0x41AC92014C66C38bBBDEF8cCF5A060CCa5634fd5',
+              implementation: '0x0aCb04878B3675EF40b2e9392622CE3C1E9CC99E',
             },
           },
           {
@@ -228,8 +237,20 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-              implementation: '0xc5199b28d5267F80A7FA7a3313357D50Cf4Dba6C',
+              implementation: '0x98659BDffa4fEF82cD37771CDBFF3ddDa21EE8e9',
             },
+          },
+          {
+            address: '0x2B36F23ce0bAbD57553b26Da4C7a0585bac65DC1',
+            name: 'ValidatorUtils',
+          },
+          {
+            address: '0xe17d8Fa6BC62590f840C5Dd35f300F77D55CC178',
+            name: 'ValidatorWalletCreator',
+          },
+          {
+            address: '0x84eFa170dC6d521495D7942e372b8e4B2Fb918Ec',
+            name: 'BridgeUtils',
           },
         ],
         risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
