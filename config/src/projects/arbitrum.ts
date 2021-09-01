@@ -258,6 +258,11 @@ export const arbitrum: Project = {
     },
     news: [
       {
+        date: '2021-08-31',
+        name: 'Mainnet For Everyone',
+        link: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
+      },
+      {
         date: '2021-05-12',
         name: 'Wen Arbitrum?',
         link: 'https://medium.com/offchainlabs/wen-arbitrum-634969c14713',
