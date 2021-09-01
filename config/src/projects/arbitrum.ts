@@ -224,7 +224,6 @@ export const arbitrum: Project = {
           {
             address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             name: 'L1ERC20Gateway',
-            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
@@ -253,7 +252,7 @@ export const arbitrum: Project = {
             name: 'BridgeUtils',
           },
         ],
-        risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
