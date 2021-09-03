@@ -6,9 +6,9 @@ function makeUrlState() {
     return makeRealUrlState()
   } catch {
     return {
-      onInit: () => undefined,
-      get: () => undefined,
-      set: () => undefined,
+      onInit() {},
+      get() {},
+      set() {},
     }
   }
 }
