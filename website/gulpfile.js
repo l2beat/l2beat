@@ -86,7 +86,7 @@ function watchContent() {
 }
 
 function generateMetaImages() {
-  return exec('ts-node src/meta-images')
+  return exec('node -r esbuild-register src/meta-images')
 }
 
 function serve() {
