@@ -14,13 +14,15 @@ async function main() {
   const slugs = projects.map((x) => x.slug).concat('overview')
 
   const browser = await puppeteer.launch()
-  const page = await browser.newPage()
-  await page.setViewport({
-    width: 600,
-    height: 314,
-    deviceScaleFactor: 2,
-  })
-  for (const slug of slugs) {
+  await Promise.all(slugs.map(screenshot))
+
+  async function screenshot(slug: string) {
+    const page = await browser.newPage()
+    await page.setViewport({
+      width: 600,
+      height: 314,
+      deviceScaleFactor: 2,
+    })
     const path = `build/meta-images/${slug}.png`
     const url = `http://localhost:1234/meta-images/${slug}`
     await page.goto(url, { waitUntil: 'networkidle0' })

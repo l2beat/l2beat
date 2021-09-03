@@ -5,7 +5,7 @@
   "main": "./build/data.json",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "ts-node src",
+    "build": "node -r esbuild-register src",
     "build:mock": "MOCK_DATA=true yarn build",
     "build:precomputed": "UPDATE_PRECOMPUTED=true yarn build",
     "format": "prettier --check .",
@@ -30,6 +30,7 @@
     "@types/adm-zip": "^0.4.34",
     "@types/chai": "^4.2.21",
     "@types/mocha": "^8.2.3",
+    "@types/node": "^16.4.0",
     "@types/node-fetch": "^2.5.11",
     "chai": "^4.3.4",
     "mocha": "^9.0.2"
