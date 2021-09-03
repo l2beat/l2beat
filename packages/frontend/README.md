@@ -13,7 +13,7 @@ yarn build:mock
 ```
 
 To learn why we use `build:mock` instead of `build` please refer to the backend&apos;s
-[README](https://github.com/l2beat/l2beat/blob/master/backend/README.md).
+[README](https://github.com/l2beat/l2beat/blob/master/packages/backend/README.md).
 
 ## Scripts
 
