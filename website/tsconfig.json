@@ -1,18 +1,8 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "es2019",
     "lib": ["es2019", "DOM"],
-    "module": "CommonJS",
-    "sourceMap": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "outDir": "build",
-    "types": ["node", "react", "react-dom", "fs-extra"],
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "jsx": "react"
+    "declaration": false,
+    "outDir": "build"
   }
 }
