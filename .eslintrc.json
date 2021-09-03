@@ -4,27 +4,26 @@
     "mocha": true,
     "node": true
   },
-  "extends": ["plugin:@typescript-eslint/recommended", "eslint:recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
   "plugins": ["simple-import-sort"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
-    "no-dupe-class-members": "off",
-    "no-extra-semi": "off",
-    "no-redeclare": "off",
-    "no-undef": "off",
-    "no-unused-vars": "off",
-    "prefer-const": [
-      "error",
-      {
-        "destructuring": "all"
-      }
-    ],
+    "@typescript-eslint/no-empty-function": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
   },
