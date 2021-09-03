@@ -5,8 +5,8 @@
     "node": true
   },
   "extends": [
-    "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -15,7 +15,6 @@
     "sourceType": "module"
   },
   "plugins": ["simple-import-sort"],
-
   "settings": {
     "react": {
       "version": "detect"
@@ -25,17 +24,6 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "no-dupe-class-members": "off",
-    "no-extra-semi": "off",
-    "no-redeclare": "off",
-    "no-undef": "off",
-    "no-unused-vars": "off",
-    "prefer-const": [
-      "error",
-      {
-        "destructuring": "all"
-      }
-    ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
   },
