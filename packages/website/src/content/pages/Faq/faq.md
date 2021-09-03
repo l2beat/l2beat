@@ -84,7 +84,7 @@ In the future we expect to see hybrid solution using a mix of the above techniqu
 
 It varies from project to project but we generally track the amount of tokens locked in all token bridges for a given L2. Sometimes it's a single token bridge like for zkSync but sometimes these are multiple token bridges for a single L2 (Optimism).
 
-For more details see our [project definitions](https://github.com/l2beat/l2beat/tree/master/config/src/projects).
+For more details see our [project definitions](https://github.com/l2beat/l2beat/tree/master/packages/config/src/projects).
 
 ## Apart from TVL, what is L2BEAT aiming to track?
 
