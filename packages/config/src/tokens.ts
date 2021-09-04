@@ -75,6 +75,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 10943736,
   },
   {
+    name: 'Badger',
+    symbol: 'BADGER',
+    address: '0x3472A5A71965499acd81997a54BBA8D852C6E53d',
+    decimals: 18,
+    sinceBlock: 11348423,
+  },
+  {
     name: 'Balancer',
     symbol: 'BAL',
     address: '0xba100000625a3754423978a60c9317c58a424e3D',
@@ -124,6 +131,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 3978343,
   },
   {
+    name: 'CelerToken',
+    symbol: 'CELR',
+    address: '0x4F9254C83EB525f9FCf346490bbb3ed28a81C667',
+    decimals: 18,
+    sinceBlock: 7107317,
+  },
+  {
     name: 'Celsius',
     symbol: 'CEL',
     address: '0xaaAEBE6Fe48E54f431b0C390CfaF0b017d09D42d',
@@ -157,6 +171,13 @@ export const tokenList: TokenInfo[] = [
     address: '0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b',
     decimals: 8,
     sinceBlock: 6702068,
+  },
+  {
+    name: 'Curve DAO Token',
+    symbol: 'CRV',
+    address: '0xD533a949740bb3306d119CC777fa900bA034cd52',
+    decimals: 18,
+    sinceBlock: 10647806,
   },
   {
     name: 'Dai Stablecoin',
@@ -226,6 +247,13 @@ export const tokenList: TokenInfo[] = [
     address: '0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429',
     decimals: 18,
     sinceBlock: 11281056,
+  },
+  {
+    name: 'Graph Token',
+    symbol: 'GRT',
+    address: '0xc944E90C64B2c07662A292be6244BDf05Cda44a7',
+    decimals: 18,
+    sinceBlock: 11446769,
   },
   {
     name: 'Habitat Token',
@@ -310,6 +338,13 @@ export const tokenList: TokenInfo[] = [
     address: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
     decimals: 18,
     sinceBlock: 4620855,
+  },
+  {
+    name: 'MATH Token',
+    symbol: 'MATH',
+    address: '0x08d967bb0134F2d07f7cfb6E246680c53927DD30',
+    decimals: 18,
+    sinceBlock: 8630154,
   },
   {
     name: 'Matic Token',
@@ -403,6 +438,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 10736094,
   },
   {
+    name: 'Synth sUSD',
+    symbol: 'sUSD',
+    address: '0x57Ab1ec28D129707052df4dF418D58a2D46d5f51',
+    decimals: 18,
+    sinceBlock: 8621971,
+  },
+  {
     name: 'Synthetix Network Token',
     symbol: 'SNX',
     address: '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F',
@@ -443,6 +485,13 @@ export const tokenList: TokenInfo[] = [
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     decimals: 6,
     sinceBlock: 6082465,
+  },
+  {
+    name: 'Wootrade Network',
+    symbol: 'WOO',
+    address: '0x4691937a7508860F876c9c0a2a617E7d9E945D4B',
+    decimals: 18,
+    sinceBlock: 11067236,
   },
   {
     name: 'Wrapped BTC',
