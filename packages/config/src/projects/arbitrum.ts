@@ -21,12 +21,12 @@ export const arbitrum: Project = {
     {
       address: '0xcEe284F754E854890e311e3280b767F80797180d',
       sinceBlock: 12647126,
-      tokens: ['USDC'],
+      tokens: ['LAND', 'USDC', 'USDT', 'MCB'],
     },
     {
       address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
       sinceBlock: 12640867,
-      tokens: ['LINK', 'WBTC'],
+      tokens: ['BAL', 'DODO', 'LINK', 'MKR', 'SUSHI', 'UNI', 'WBTC'],
     },
   ],
   details: {

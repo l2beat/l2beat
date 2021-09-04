@@ -146,6 +146,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 12008914,
   },
   {
+    name: 'DODO bird',
+    symbol: 'DODO',
+    address: '0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd',
+    decimals: 18,
+    sinceBlock: 10956992,
+  },
+  {
     name: 'Dusk Network',
     symbol: 'DUSK',
     address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
@@ -236,6 +243,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 4264898,
   },
   {
+    name: 'Land',
+    symbol: 'LAND',
+    address: '0x3258cd8134b6b28e814772dD91D5EcceEa512818',
+    decimals: 18,
+    sinceBlock: 11567575,
+  },
+  {
     name: 'Leverj Gluon',
     symbol: 'L2',
     address: '0xBbff34E47E559ef680067a6B1c980639EEb64D24',
@@ -276,6 +290,13 @@ export const tokenList: TokenInfo[] = [
     address: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
     decimals: 18,
     sinceBlock: 7605604,
+  },
+  {
+    name: 'MCDEX Token',
+    symbol: 'MCB',
+    address: '0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42',
+    decimals: 18,
+    sinceBlock: 10391739,
   },
   {
     name: 'Melon Token',
