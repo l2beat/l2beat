@@ -24,7 +24,8 @@ Adding a new project in this way will automatically update both the data fetchin
 If while adding your L2 you find that some of the tokens locked in it are missing from our token list do not worry.
 
 1. Read the token definition in `packages/config/src/tokens.ts`
-2. Add your token to the list. The order of the tokens should be kept alphabetical.
+2. Check if the token matches the requirements.
+3. Add your token to the list. The order of the tokens should be kept alphabetical.
 
 ## Contribute research
 
