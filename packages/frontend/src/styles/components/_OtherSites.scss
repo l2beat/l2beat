@@ -1,0 +1,21 @@
+.OtherSites-L2Fees {
+  margin-top: 32px;
+  padding: 16px;
+  background: linear-gradient(
+    to right,
+    var(--gradient-1-light),
+    var(--gradient-2-light),
+    var(--gradient-3-light)
+  );
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    margin-left: 16px;
+    color: var(--text);
+    font-weight: bold;
+    text-align: center;
+    min-width: 80px;
+    align-self: center;
+  }
+}

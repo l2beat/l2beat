@@ -38,9 +38,9 @@ export function plot(uiState: UiState | undefined, outputs: Outputs) {
   strokeGradient.addColorStop(1, style.getPropertyValue('--gradient-3'))
 
   const fillGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
-  fillGradient.addColorStop(0, style.getPropertyValue('--gradient-1') + '60')
-  fillGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2') + '60')
-  fillGradient.addColorStop(1, style.getPropertyValue('--gradient-3') + '60')
+  fillGradient.addColorStop(0, style.getPropertyValue('--gradient-1-light'))
+  fillGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2-light'))
+  fillGradient.addColorStop(1, style.getPropertyValue('--gradient-3-light'))
 
   ctx.strokeStyle = strokeGradient
   ctx.fillStyle = fillGradient
