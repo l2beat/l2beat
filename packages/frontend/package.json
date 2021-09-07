@@ -1,5 +1,5 @@
 {
-  "name": "@l2beat/website",
+  "name": "@l2beat/frontend",
   "version": "0.1.0",
   "private": true,
   "main": "build/src/index.js",
