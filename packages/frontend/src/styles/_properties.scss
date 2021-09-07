@@ -1,5 +1,5 @@
 :root {
-  --brand-red: #bd114f;
+  --brand-red: #f9347b;
   --background: #fafafa;
   --background-2: #ededed;
   --background-3: #dfdfdf;
@@ -38,6 +38,7 @@
 }
 
 @mixin dark-mode-colors {
+  --brand-red: #bd114f;
   --background: #1b1b1b;
   --background-2: #2f2f2f;
   --background-3: #424242;
