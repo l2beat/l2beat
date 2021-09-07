@@ -41,7 +41,7 @@ export const sorare: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
       operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
@@ -64,7 +64,7 @@ export const sorare: Project = {
             upgradeability: {
               type: 'StarkWare',
               implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
-              upgradeDelay: 0,
+              upgradeDelay: 1209600,
               isFinal: false,
             },
           },
@@ -84,7 +84,7 @@ export const sorare: Project = {
             },
           },
         ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },
     },
     news: [

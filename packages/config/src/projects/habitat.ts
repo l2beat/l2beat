@@ -90,7 +90,7 @@ export const habitat: Project = {
             upgradeability: {
               type: 'NutBerry',
               admin: '0xc97f82c80DF57c34E84491C0EDa050BA924D7429',
-              implementation: '0x1EE6fDa8cE6c4e32E48005e98D9cCdC2F2b4f346',
+              implementation: '0xa0542eb5672572cf5E95BC06caff92B333eb6b43',
             },
           },
         ],
