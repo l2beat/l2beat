@@ -4,6 +4,7 @@ import { Chart, Footer, Header, Navbar, Page } from '../../../common'
 import { PageMetadata } from '../../../PageMetadata'
 import { About } from './About'
 import { FinancialViewProps } from './FinancialView/FinancialView'
+import { OtherSites } from './OtherSites'
 import { Projects } from './Projects'
 import { RiskViewProps } from './RiskView/RiskView'
 
@@ -31,6 +32,7 @@ export function HomePage(props: HomePageProps) {
           financialView={props.financialView}
           riskView={props.riskView}
         />
+        <OtherSites />
         <About />
       </main>
       <Footer />

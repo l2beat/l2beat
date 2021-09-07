@@ -1,5 +1,10 @@
 import React, { AnchorHTMLAttributes } from 'react'
 
-export function OutLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  return <a rel="noopener noreferrer" target="_blank" {...props} />
+interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  allowReferrer?: boolean
+}
+
+export function OutLink({ allowReferrer, ...props }: Props) {
+  const rel = allowReferrer ? 'noopener' : 'noopener noreferrer'
+  return <a rel={rel} target="_blank" {...props} />
 }
