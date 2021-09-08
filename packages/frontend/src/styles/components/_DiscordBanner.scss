@@ -1,25 +1,27 @@
 .DiscordBanner {
-  display: block;
-  background: linear-gradient(
-    to right,
-    rgb(88, 101, 242, 0),
-    rgb(88, 101, 242, 1) 1.5%,
-    rgb(88, 101, 242, 1) 98.5%,
-    rgb(88, 101, 242, 0)
-  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(88, 101, 242, 1);
   color: white;
   text-decoration: none;
-  padding: 4px 48px;
-  margin: 0 -48px;
+  padding: 4px 16px;
   font-weight: bold;
+  text-align: center;
+
+  @media (max-width: 1000px) {
+    margin: 0 -16px;
+  }
+
+  svg {
+    fill: currentColor;
+    height: 1em;
+    margin: 0 4px;
+  }
 
   span {
     text-decoration: underline;
     font-weight: normal;
-  }
-
-  @media (max-width: 550px) {
-    position: relative;
-    top: -2px;
   }
 }

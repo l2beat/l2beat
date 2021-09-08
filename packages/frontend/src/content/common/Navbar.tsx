@@ -2,7 +2,13 @@ import React from 'react'
 
 import { config } from '../config'
 import { DiscordBanner } from './DiscordBanner'
-import { GithubIcon, MoonIcon, SunIcon, TwitterIcon } from './icons'
+import {
+  DiscordIcon,
+  GithubIcon,
+  MoonIcon,
+  SunIcon,
+  TwitterIcon,
+} from './icons'
 import { Logo } from './Logo'
 import { OutLink } from './OutLink'
 
@@ -28,12 +34,17 @@ export function Navbar() {
             <a href="/faq">FAQ</a>
           </li>
           <li className="Navbar-Link compact">
-            <OutLink href="https://twitter.com/l2beatcom" title="Twitter">
+            <OutLink href={config.twitterLink} title="Twitter">
               <TwitterIcon />
             </OutLink>
           </li>
           <li className="Navbar-Link compact">
-            <OutLink href="https://github.com/l2beat/l2beat" title="Github">
+            <OutLink href={config.discordLink} title="Discord">
+              <DiscordIcon />
+            </OutLink>
+          </li>
+          <li className="Navbar-Link compact">
+            <OutLink href={config.githubLink} title="Github">
               <GithubIcon />
             </OutLink>
           </li>

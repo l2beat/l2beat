@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { config } from '../config'
 import { OutLink } from './OutLink'
 
 export function Footer() {
@@ -11,10 +12,13 @@ export function Footer() {
       </p>
       <ul className="Footer-Links">
         <li className="Footer-Link">
-          <OutLink href="https://twitter.com/l2beatcom">Twitter</OutLink>
+          <OutLink href={config.twitterLink}>Twitter</OutLink>
         </li>
         <li className="Footer-Link">
-          <OutLink href="https://github.com/l2beat/l2beat">Github</OutLink>
+          <OutLink href={config.discordLink}>Discord</OutLink>
+        </li>
+        <li className="Footer-Link">
+          <OutLink href={config.githubLink}>Github</OutLink>
         </li>
       </ul>
     </footer>
