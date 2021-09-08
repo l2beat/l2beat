@@ -1,0 +1,11 @@
+.FinancialCell {
+  font-size: var(--font-s);
+
+  @media (max-width: 1000px) {
+    font-size: var(--font-m);
+  }
+
+  &.rollup {
+    color: var(--text-good);
+  }
+}

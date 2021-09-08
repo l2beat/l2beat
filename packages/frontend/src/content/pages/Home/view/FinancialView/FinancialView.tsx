@@ -4,7 +4,7 @@ import { PercentChange } from '../../../../common'
 import { StarkWareIcon, WarningIcon } from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
-import { TechnologyCell } from './TechnologyCell'
+import { FinancialCell } from './FinancialCell'
 import { TVLCell } from './TVLCell'
 
 export interface FinancialViewProps {
@@ -54,13 +54,24 @@ export function FinancialView({ items }: FinancialViewProps) {
     {
       name: 'Purpose',
       alignRight: true,
-      getValue: (project) => project.purpose,
+      getValue: (project) => <FinancialCell>{project.purpose}</FinancialCell>,
     },
     {
       name: 'Technology',
       shortName: 'Tech',
       alignRight: true,
-      getValue: (project) => <TechnologyCell project={project} />,
+      getValue: (project) => (
+        <FinancialCell
+          className={
+            project.technology.name === 'ZK Rollup' ||
+            project.technology.name === 'Optimistic Rollup'
+              ? 'rollup'
+              : undefined
+          }
+        >
+          {project.technology.name}
+        </FinancialCell>
+      ),
     },
   ]
 
