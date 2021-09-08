@@ -1,4 +1,10 @@
 .RiskCell {
+  font-size: var(--font-s);
+
+  @media (max-width: 1000px) {
+    font-size: var(--font-m);
+  }
+
   &.warning {
     background-color: var(--highlight-warning);
     color: var(--dark-text);
