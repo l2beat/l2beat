@@ -33,28 +33,6 @@
   }
 }
 
-.FinancialView-Technology {
-  padding: 4px 8px;
-  display: inline;
-  border-radius: 6px;
-  background-color: var(--background-2);
-  font-weight: bold;
-
-  &[data-rollup] {
-    color: var(--text-good);
-  }
-
-  tr:hover & {
-    background-color: var(--background-3);
-  }
-
-  span {
-    display: inline-block;
-    width: 37px;
-    text-align: center;
-  }
-}
-
 .FinancialView-Symbols {
   margin-top: 16px;
   font-size: var(--font-s);
