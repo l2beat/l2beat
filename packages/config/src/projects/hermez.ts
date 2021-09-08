@@ -11,7 +11,7 @@ import {
 import { Project } from './types'
 
 export const hermez: Project = {
-  name: 'Hermez',
+  name: 'Polygon Hermez',
   slug: 'hermez',
   bridges: [
     {
