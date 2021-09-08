@@ -1,0 +1,25 @@
+.DiscordBanner {
+  display: block;
+  background: linear-gradient(
+    to right,
+    rgb(88, 101, 242, 0),
+    rgb(88, 101, 242, 1) 1.5%,
+    rgb(88, 101, 242, 1) 98.5%,
+    rgb(88, 101, 242, 0)
+  );
+  color: white;
+  text-decoration: none;
+  padding: 4px 48px;
+  margin: 0 -48px;
+  font-weight: bold;
+
+  span {
+    text-decoration: underline;
+    font-weight: normal;
+  }
+
+  @media (max-width: 550px) {
+    position: relative;
+    top: -2px;
+  }
+}
