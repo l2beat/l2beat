@@ -50,11 +50,10 @@ To trustlessly withdraw coins from L2, users need to prove ownership of the coin
 
 Depending on whether Validity Proofs or Fraud Proofs are used and what is the mechanism for data availability we can broadly categories L2s into the following categories:
 
-- **zkRollups** (ZKR) - Validity Proofs with data on L1 Ethereum,
-- **Optimistic Rollups** (ORU) - Fraud Proofs with data on L1 Ethereum,
-- **Validium** (VAL) - Validity Proofs with data kept off-chain,
-- **Plasma** (PLA) - Fraud Proofs with data kept off-chain.
-- **State Pools** (STP) - Fraud Proofs with data kept off-chain, without the need for regular commitments to L1. State pools use checkpointed state and lack exit time restrictions.
+- **zkRollups** - Validity Proofs with data on L1 Ethereum,
+- **Optimistic Rollups** - Fraud Proofs with data on L1 Ethereum,
+- **Validium** - Validity Proofs with data kept off-chain,
+- **Plasma** - Fraud Proofs with data kept off-chain.
 
 In the future we expect to see hybrid solution using a mix of the above techniques.
 
@@ -75,7 +74,7 @@ In the future we expect to see hybrid solution using a mix of the above techniqu
     <tr>
       <th>Data off-chain</th>
       <td>Validium</td>
-      <td>Plasma, State Pools</td>
+      <td>Plasma</td>
     </tr>
   </tbody>
 </table>
@@ -93,6 +92,13 @@ We will continuously monitor different L2 technologies with the primary focus on
 ## Is L2BEAT performing a security audit for each L2?
 
 No, the L2BEAT team **DOES NOT DO SECURITY AUDITS**. All the information that we present on our site should be independently verified by anyone wanting to use given L2. Our goal is to collect as much information as we can about the "state of L2s" and allow the community to better understand what security assumptions are used to build given L2 solutions.
+
+## Why aren't state channel based solutions like Raiden or Nahmii included?
+
+We are currently focused mainly on rollups, but would love to expand our research to state channels in the future. For the time being we lack resources to properly evaluate those systems.
+
+Nahmii was actually listed on L2BEAT for a time, but was removed for the reason stated above.
+If you want to check TVL for Nahmii you can do that [on etherscan](https://etherscan.io/address/0xCc8D82f6ba952966E63001c7B320EEF2Ae729099).
 
 ## How can I add a new project or improve some info?
 
