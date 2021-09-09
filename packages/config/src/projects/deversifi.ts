@@ -77,7 +77,7 @@ export const deversifi: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('4 weeks'),
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
       operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
@@ -101,7 +101,9 @@ export const deversifi: Project = {
               type: 'StarkWare',
               implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
               useConstantDelay: true,
-              upgradeDelay: 2419200,
+              // TODO: figure out the double proxy
+              upgradeDelay: 1209600,
+              // upgradeDelay: 2419200,
               isFinal: false,
             },
           },
@@ -126,7 +128,7 @@ export const deversifi: Project = {
             address: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0',
           },
         ],
-        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('4 weeks')],
+        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },
     },
     news: [
