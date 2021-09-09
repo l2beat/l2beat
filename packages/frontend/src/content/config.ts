@@ -3,5 +3,5 @@ export const config = {
   discordLink: 'https://discord.gg/eaVKXPmtWk',
   githubLink: 'https://github.com/l2beat/l2beat',
   __DEV__showTechnologiesPage: false,
-  __DEV__showNewUpdateBanner: true,
+  __DEV__showNewUpdateBanner: false,
 }
