@@ -41,7 +41,7 @@ export const zksync: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('2 weeks'),
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
       operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
     },
@@ -183,7 +183,7 @@ export const zksync: Project = {
             },
           },
         ],
-        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('2 weeks')],
+        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },
     },
     news: [
