@@ -105,7 +105,6 @@ export const deversifi: Project = {
               upgradeDelay: 1209600,
               // upgradeDelay: 2419200,
               isFinal: false,
-              
             },
           },
           {
