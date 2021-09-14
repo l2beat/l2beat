@@ -12,7 +12,7 @@ While the above-mentioned sites are great, they focus primarily at tracking TVL 
 
 ## What exactly are L2s and why Polygon is not included?
 
-We had to draw the line somewhere and&mdash;in the current version&mdash;we define L2 as a chain that fully or partially derives its security from L1 Ethereum so that users do not have to rely on the honesty of L2 validators for the security of their funds. This is in line with the current view of the [ethereum.org](https://ethereum.org) on what [layer 2 scaling](https://ethereum.org/en/developers/docs/scaling/) is.
+We had to draw the line somewhere and&mdash;in the current version&mdash;we define L2 as a chain that fully or partially derives its security from L1 Ethereum so that users do not have to rely on the honesty of L2 validators for the security of their funds. This is in line with the current view of [ethereum.org](https://ethereum.org) on what [layer 2 scaling](https://ethereum.org/en/developers/docs/scaling/) is.
 
 ## But isn't Polygon a Plasma, Rollup and Sidechain all in one?
 
