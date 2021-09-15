@@ -13,7 +13,7 @@ export function Logo({ className }: Props) {
       height="36"
       viewBox="0 0 88 36"
       fill="none"
-      xmlns="http://www.w3.org/2/svg"
+      xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="L2BEAT logo"
     >
