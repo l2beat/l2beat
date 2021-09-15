@@ -165,7 +165,7 @@ export const arbitrum: Project = {
       contracts: {
         addresses: [
           {
-            address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+            address: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
             name: 'ProxyAdmin',
             description:
               'Through this contract that controls upgrades for most other contracts. It is owned by a single private key.',
