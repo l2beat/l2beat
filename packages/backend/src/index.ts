@@ -1,14 +1,6 @@
-import Router from '@koa/router'
-import Koa from 'koa'
+import { Application } from './Application'
+import { getConfig } from './config'
 
-const app = new Koa()
-const router = new Router()
-
-router.get('/', (ctx) => {
-  ctx.body = 'Hello World'
-})
-
-app.use(router.routes())
-app.use(router.allowedMethods())
-
-app.listen(3000)
+const config = getConfig('local')
+const app = new Application(config)
+app.start()
