@@ -23,7 +23,7 @@
     "@types/koa__router": "^8.0.8",
     "@types/memoizee": "^0.4.6",
     "adm-zip": "^0.5.5",
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.2",
     "dotenv": "^10.0.0",
     "ethers": "^5.4.1",
     "koa": "^2.13.1",
