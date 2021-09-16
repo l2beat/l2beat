@@ -1,6 +1,7 @@
 import { boolean } from './boolean'
 import { integer } from './integer'
 import { number } from './number'
+import { object } from './object'
 import { string } from './string'
 
 export const as = {
@@ -8,4 +9,5 @@ export const as = {
   number,
   integer,
   boolean,
+  object,
 }
