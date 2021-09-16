@@ -12,6 +12,7 @@ export class Application {
   }
 
   start() {
+    this.services.logger.withName('Application').info('Starting')
     this.httpEndpoint.listen()
   }
 }

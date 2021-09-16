@@ -14,9 +14,9 @@ export class Logger {
     return new Logger(this.logLevel, name)
   }
 
-  error(error: string | Error) {
+  error(error: unknown) {
     if (this.logLevel >= LogLevel.ERROR) {
-      const message = typeof error === 'string' ? error : error.message
+      const message = getErrorMessage(error)
       console.error(
         getTime(),
         chalk.hex('#000000').bgRed(' ERROR '),
@@ -47,6 +47,16 @@ export class Logger {
     } else {
       return message
     }
+  }
+}
+
+function getErrorMessage(error: unknown) {
+  if (typeof error === 'string') {
+    return error
+  } else if (error instanceof Error) {
+    return error.message
+  } else {
+    return '' + error
   }
 }
 
