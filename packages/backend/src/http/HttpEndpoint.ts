@@ -15,6 +15,8 @@ export class HttpEndpoint {
   }
 
   listen() {
-    return this.app.listen(this.config.port)
+    return this.app.listen(this.config.port, () => {
+      this.services.logger.info(`Listening on port ${this.config.port}`)
+    })
   }
 }
