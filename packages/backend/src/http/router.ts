@@ -1,10 +1,10 @@
 import Router from '@koa/router'
 
-import { Config } from '../../config'
-import { Services } from '../../services'
-import { helloRouter } from './helloRouter'
+import { Config } from '../config'
+import { Services } from '../services'
+import { helloRouter } from './routes/helloRouter'
 
-export function makeRouter(config: Config, services: Services) {
+export function createRouter(config: Config, services: Services) {
   const router = new Router()
 
   function use(nested: Router) {
