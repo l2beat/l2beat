@@ -8,7 +8,11 @@ export enum LogLevel {
 }
 
 export class Logger {
-  constructor(private logLevel: LogLevel) {}
+  constructor(private logLevel: LogLevel, private name = '') {}
+
+  withName(name: string) {
+    return new Logger(this.logLevel, name)
+  }
 
   error(error: string | Error) {
     if (this.logLevel >= LogLevel.ERROR) {
@@ -16,20 +20,32 @@ export class Logger {
       console.error(
         getTime(),
         chalk.hex('#000000').bgRed(' ERROR '),
-        chalk.red(message)
+        this.formatMessage(chalk.red(message))
       )
     }
   }
 
   info(message: string) {
     if (this.logLevel >= LogLevel.INFO) {
-      console.log(getTime(), chalk.blue('INFO'), message)
+      console.log(getTime(), chalk.blue('INFO'), this.formatMessage(message))
     }
   }
 
   debug(message: string) {
     if (this.logLevel >= LogLevel.DEBUG) {
-      console.debug(getTime(), chalk.yellow('DEBUG'), message)
+      console.debug(
+        getTime(),
+        chalk.yellow('DEBUG'),
+        this.formatMessage(message)
+      )
+    }
+  }
+
+  private formatMessage(message: string) {
+    if (this.name) {
+      return `[${chalk.yellow(this.name)}] ${message}`
+    } else {
+      return message
     }
   }
 }
