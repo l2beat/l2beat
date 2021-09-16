@@ -5,7 +5,7 @@ import { BigNumber, utils } from 'ethers'
 import {
   FetchedBalances,
   FetchedPrices,
-} from '../../../../src/services/balances/model'
+} from '../../../../../src/old/services/balances/model'
 import {
   getHolderAddresses,
   getTokenBalance,
@@ -13,7 +13,7 @@ import {
   getTokenStats,
   getTrackedTokens,
   TokenStats,
-} from '../../../../src/services/balances/utils/getTokenStats'
+} from '../../../../../src/old/services/balances/utils/getTokenStats'
 import { makeExampleProjects } from './example'
 
 describe('getTokenStats', () => {

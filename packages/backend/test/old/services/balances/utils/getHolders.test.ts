@@ -1,8 +1,8 @@
 import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { expect } from 'chai'
 
-import { ProjectInfo } from '../../../../src/model'
-import { getHolders } from '../../../../src/services/balances/utils'
+import { ProjectInfo } from '../../../../../src/old/model'
+import { getHolders } from '../../../../../src/old/services/balances/utils'
 
 describe('getHolders', () => {
   it('returns the various holders', () => {

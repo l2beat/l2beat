@@ -2,9 +2,9 @@ import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'chai'
 import { utils } from 'ethers'
 
-import { TokenTVL } from '../../../../src/services/balances/model'
-import { TokenStats } from '../../../../src/services/balances/utils/getTokenStats'
-import { getTokenTVL } from '../../../../src/services/balances/utils/getTokenTVL'
+import { TokenTVL } from '../../../../../src/old/services/balances/model'
+import { TokenStats } from '../../../../../src/old/services/balances/utils/getTokenStats'
+import { getTokenTVL } from '../../../../../src/old/services/balances/utils/getTokenTVL'
 
 describe('getTokenTVL', () => {
   it('returns the transformed token stats', () => {

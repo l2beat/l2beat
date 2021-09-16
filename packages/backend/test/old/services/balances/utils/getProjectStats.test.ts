@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import {
   getProjectStats,
   ProjectStats,
-} from '../../../../src/services/balances/utils'
+} from '../../../../../src/old/services/balances/utils'
 import { makeExampleProjects } from './example'
 
 describe('getProjectStats', () => {

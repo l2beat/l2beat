@@ -1,11 +1,11 @@
 import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { utils } from 'ethers'
 
-import { ProjectInfo } from '../../../../src/model'
+import { ProjectInfo } from '../../../../../src/old/model'
 import {
   FetchedBalances,
   FetchedPrices,
-} from '../../../../src/services/balances/model'
+} from '../../../../../src/old/services/balances/model'
 
 export function makeExampleProjects() {
   const eth = getTokenBySymbol('ETH')

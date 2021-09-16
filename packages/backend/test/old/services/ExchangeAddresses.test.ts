@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 
-import { DAI, WETH } from '../../src/constants'
+import { DAI, WETH } from '../../../src/old/constants'
 import {
   getUniswapV2PairAddress,
   getUniswapV3PoolAddress,
-} from '../../src/services/ExchangeAddresses'
+} from '../../../src/old/services/ExchangeAddresses'
 
 describe('ExchangeAddresses', () => {
   describe('getUniswapV2PairAddress', () => {

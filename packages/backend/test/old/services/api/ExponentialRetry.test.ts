@@ -1,7 +1,7 @@
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'chai'
 
-import { ExponentialRetry } from '../../../src/services/api/ExponentialRetry'
+import { ExponentialRetry } from '../../../../src/old/services/api/ExponentialRetry'
 
 describe('ExponentialRetry', () => {
   it('is transparent if call succeeds', async () => {
