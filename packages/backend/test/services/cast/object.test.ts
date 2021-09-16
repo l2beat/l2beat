@@ -27,6 +27,21 @@ describe('as.object', () => {
     })
   })
 
+  it('throws when more properties are passed in strict mode', () => {
+    const asUser = as.object('strict', {
+      name: as.string,
+      age: as.integer,
+    })
+
+    expect(() =>
+      asUser({
+        name: 'John',
+        age: 31,
+        foo: 'bar',
+      })
+    ).to.throw(CastError)
+  })
+
   it('throws when nested casts throw', () => {
     const asUser = as.object({
       name: as.string,
@@ -64,5 +79,14 @@ describe('as.object', () => {
     })
     const result = asUser({ name: 'John', age: null })
     expect(result).to.deep.equal({ name: 'John', age: undefined })
+  })
+
+  it('allows optional properties in strict mode', () => {
+    const asUser = as.object('strict', {
+      name: as.string,
+      age: as.optional(as.integer),
+    })
+
+    expect(() => asUser({ name: 'John' })).not.to.throw()
   })
 })
