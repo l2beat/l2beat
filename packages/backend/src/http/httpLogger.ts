@@ -15,7 +15,7 @@ export function httpLogger(logger: Logger) {
     try {
       await next()
     } catch (error) {
-      logger.error(getErrorMessage(error))
+      logger.error(error)
       throw error
     }
 
@@ -31,16 +31,6 @@ export function httpLogger(logger: Logger) {
 
     res.once('finish', done)
     res.once('close', done)
-  }
-}
-
-function getErrorMessage(error: unknown) {
-  if (typeof error === 'string') {
-    return error
-  } else if (error instanceof Error) {
-    return error.message
-  } else {
-    return '' + error
   }
 }
 
