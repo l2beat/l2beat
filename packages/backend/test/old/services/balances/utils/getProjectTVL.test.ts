@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 
-import { ProjectTVL } from '../../../../src/services/balances/model'
-import { getProjectStats } from '../../../../src/services/balances/utils'
-import { getProjectTVL } from '../../../../src/services/balances/utils/getProjectTVL'
+import { ProjectTVL } from '../../../../../src/old/services/balances/model'
+import { getProjectStats } from '../../../../../src/old/services/balances/utils'
+import { getProjectTVL } from '../../../../../src/old/services/balances/utils/getProjectTVL'
 import { makeExampleProjects } from './example'
 
 describe('getProjectTVL', () => {

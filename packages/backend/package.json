@@ -5,9 +5,10 @@
   "main": "./build/data.json",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "node -r esbuild-register src",
+    "build": "node -r esbuild-register src/old",
     "build:mock": "MOCK_DATA=true yarn build",
     "build:precomputed": "UPDATE_PRECOMPUTED=true yarn build",
+    "start": "node -r esbuild-register src",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts src test",
@@ -16,12 +17,16 @@
     "test": "mocha"
   },
   "dependencies": {
+    "@koa/router": "^10.1.1",
     "@l2beat/config": "0.1.0",
+    "@types/koa": "^2.13.4",
+    "@types/koa__router": "^8.0.8",
     "@types/memoizee": "^0.4.6",
     "adm-zip": "^0.5.5",
     "chalk": "^4.1.1",
     "dotenv": "^10.0.0",
     "ethers": "^5.4.1",
+    "koa": "^2.13.1",
     "memoizee": "^0.4.15",
     "node-fetch": "^2.6.1"
   },
@@ -32,7 +37,9 @@
     "@types/mocha": "^8.2.3",
     "@types/node": "^16.4.0",
     "@types/node-fetch": "^2.5.11",
+    "@types/supertest": "^2.0.11",
     "chai": "^4.3.4",
-    "mocha": "^9.0.2"
+    "mocha": "^9.0.2",
+    "supertest": "^6.1.6"
   }
 }
