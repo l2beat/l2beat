@@ -7,6 +7,7 @@ import { number } from './number'
 import { object } from './object'
 import { optional } from './optional'
 import { string } from './string'
+import { unknown } from './unknown'
 
 export const as = {
   array,
@@ -18,4 +19,5 @@ export const as = {
   object,
   optional,
   string,
+  unknown,
 }
