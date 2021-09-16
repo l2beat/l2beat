@@ -47,4 +47,22 @@ describe('as.object', () => {
   it('throws for arrays', () => {
     expect(() => as.object({})([])).to.throw(CastError)
   })
+
+  it('preserves nested optional casts when missing', () => {
+    const asUser = as.object({
+      name: as.string,
+      age: as.optional(as.integer),
+    })
+    const result = asUser({ name: 'John' })
+    expect(result).to.deep.equal({ name: 'John' })
+  })
+
+  it('preserves nested optional casts when present', () => {
+    const asUser = as.object({
+      name: as.string,
+      age: as.optional(as.integer),
+    })
+    const result = asUser({ name: 'John', age: null })
+    expect(result).to.deep.equal({ name: 'John', age: undefined })
+  })
 })
