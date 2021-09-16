@@ -1,5 +1,5 @@
 export class CastError extends TypeError {
   constructor(type: string) {
-    super(`Value mismatch. Expected ${type}.`)
+    super(`Value mismatch: ${type}.`)
   }
 }
