@@ -1,3 +1,4 @@
+import { array } from './array'
 import { boolean } from './boolean'
 import { integer } from './integer'
 import { number } from './number'
@@ -6,10 +7,11 @@ import { optional } from './optional'
 import { string } from './string'
 
 export const as = {
-  string,
-  number,
-  integer,
+  array,
   boolean,
+  integer,
+  number,
   object,
   optional,
+  string,
 }
