@@ -19,13 +19,21 @@ const ON_CHAIN_CANONICAL: ProjectTechnologyChoice = {
 const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   name: 'All data required for proofs is published on chain',
   description:
-    "All the relevant data that is used to recover the L2 balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
+    "All the relevant data that is used to recover the L2 balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state. The on chain data is stored in StarkPerpetual.sol contract.",
   risks: [],
   references: [
     {
       text: 'ZK-Rollup - StarkEx documentation',
       href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/data-availability-modes#zk-rollup',
     },
+    {
+      text: 'State Update - StarkEx documentation',
+      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/contract-management#state-update'
+    },
+    { 
+      text: 'On Chain Data - StarkPerpetual.sol on Etherscan',
+      href: 'https://etherscan.io/address/0x2c0df87e073755139101b35c0a51e065291cc2d3#code#F9#L22'
+    }
   ],
 }
 
