@@ -9,6 +9,8 @@ import { optional } from './optional'
 import { string } from './string'
 import { unknown } from './unknown'
 
+export { CastError } from './CastError'
+
 export const as = {
   array,
   boolean,
