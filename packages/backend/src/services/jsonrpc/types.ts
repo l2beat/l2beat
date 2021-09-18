@@ -1,16 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type JsonRpcParams = Record<string, any> | any[]
+
 export interface JsonRpcRequest {
   jsonrpc: '2.0'
-  id: string | number | null
+  id?: string | number | null
   method: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params?: Record<string, any> | any[]
-}
-
-export interface JsonRpcNotification {
-  jsonrpc: '2.0'
-  method: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params?: Record<string, any> | any[]
+  params?: JsonRpcParams
 }
 
 export interface JsonRpcSuccessResponse {
@@ -30,3 +25,9 @@ export interface JsonRpcErrorResponse {
 }
 
 export type JsonRpcResponse = JsonRpcSuccessResponse | JsonRpcErrorResponse
+
+export function isSuccessResponse(
+  response: JsonRpcResponse
+): response is JsonRpcSuccessResponse {
+  return 'result' in response
+}

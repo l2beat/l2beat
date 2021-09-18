@@ -34,11 +34,13 @@
     "@sinonjs/fake-timers": "^7.1.2",
     "@types/adm-zip": "^0.4.34",
     "@types/chai": "^4.2.21",
+    "@types/chai-as-promised": "^7.1.4",
     "@types/mocha": "^8.2.3",
     "@types/node": "^16.4.0",
     "@types/node-fetch": "^2.5.11",
     "@types/supertest": "^2.0.11",
     "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "mocha": "^9.0.2",
     "supertest": "^6.1.6"
   }
