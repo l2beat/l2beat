@@ -105,4 +105,89 @@ describe('JsonRpcClient', () => {
       )
     })
   })
+
+  describe('batch', () => {
+    it('returns results', async () => {
+      const client = new JsonRpcClient(async () => {
+        return [
+          { jsonrpc: '2.0', id: 1337, result: 'foo' },
+          { jsonrpc: '2.0', id: 1338, result: 'bar' },
+        ]
+      })
+      const result = await client.callBatch([
+        { method: 'makeBed' },
+        { method: 'bakeCake' },
+      ])
+      expect(result).to.deep.equal([{ result: 'foo' }, { result: 'bar' }])
+    })
+
+    it('skips execute when given an empty array', async () => {
+      const client = new JsonRpcClient(async () => {
+        throw new Error('Oops')
+      })
+      const result = await client.callBatch([])
+      expect(result).to.deep.equal([])
+    })
+
+    it('ignores superfluous items results', async () => {
+      const client = new JsonRpcClient(async () => {
+        return [
+          { jsonrpc: '2.0', id: 1337, result: 'foo' },
+          { jsonrpc: '2.0', id: 1338, result: 'bar' },
+          { jsonrpc: '2.0', id: 2000, result: 'baz' },
+        ]
+      })
+      const result = await client.callBatch([
+        { method: 'makeBed' },
+        { method: 'bakeCake' },
+      ])
+      expect(result).to.deep.equal([{ result: 'foo' }, { result: 'bar' }])
+    })
+
+    it('throws for malformed response', async () => {
+      const client = new JsonRpcClient(async () => {
+        return { foo: 'bar ' }
+      })
+      await expect(
+        client.callBatch([{ method: 'makeBed' }, { method: 'bakeCake' }])
+      ).to.be.rejectedWith(TypeError, 'Invalid JSON-RPC response')
+    })
+
+    it('throws for object response', async () => {
+      const client = new JsonRpcClient(async () => {
+        return { jsonrpc: '2.0', id: 1337, result: 'foo' }
+      })
+      await expect(
+        client.callBatch([{ method: 'makeBed' }, { method: 'bakeCake' }])
+      ).to.be.rejectedWith(TypeError, 'Unexpected object JSON-RPC response')
+    })
+
+    it('handles individual request errors', async () => {
+      const client = new JsonRpcClient(async () => {
+        return [
+          // 1337 missing
+          {
+            jsonrpc: '2.0',
+            id: 1338,
+            error: { code: 1234, message: 'Oops', data: { x: 1 } },
+          },
+          { jsonrpc: '2.0', id: 1339, result: 'baz' },
+        ]
+      })
+      const result = await client.callBatch([
+        { method: 'makeBed' },
+        { method: 'bakeCake' },
+        { method: 'goTo' },
+      ])
+
+      // We do it this way because chai cannot deep equal errors
+      expect(result.length).to.equal(3)
+      expect(result[0].result).to.equal(undefined)
+      expect(result[0].error).to.be.instanceOf(Error)
+      expect(result[1].result).to.equal(undefined)
+      expect(result[1].error).to.be.instanceOf(JsonRpcError)
+      expect(result[2].result).to.equal('baz')
+      expect(result[2].error).to.equal(undefined)
+    })
+  })
 })

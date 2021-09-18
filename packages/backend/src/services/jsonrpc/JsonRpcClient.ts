@@ -11,6 +11,11 @@ export class JsonRpcError extends Error {
   }
 }
 
+export interface BatchResult {
+  result?: unknown
+  error?: Error
+}
+
 export class JsonRpcClient {
   constructor(private execute: ExecuteJsonRpc, private requestId = 1337) {}
 
@@ -37,26 +42,28 @@ export class JsonRpcClient {
     if (requests.length === 0) {
       return []
     }
-    const jsonRpcRequests = requests.map(({ method, params }) =>
-      this.toRequest(method, params)
+    const jsonRpcRequests = requests.map((x) =>
+      this.toRequest(x.method, x.params)
     )
     const result = await this.execute(jsonRpcRequests)
     const parsed = parseJsonRpcResponse(result)
-    if (!Array.isArray(parsed) || parsed.length !== jsonRpcRequests.length) {
-      throw new TypeError('Invalid JSON-RPC response')
+    if (!Array.isArray(parsed)) {
+      throw new TypeError('Unexpected object JSON-RPC response')
     } else {
-      return jsonRpcRequests.map((request) => {
+      return jsonRpcRequests.map((request): BatchResult => {
         const response = parsed.find((x) => x.id === request.id)
         if (!response) {
-          throw new TypeError('Invalid JSON-RPC response')
+          return { error: new Error('Missing JSON-RPC response') }
         } else if (isSuccessResponse(response)) {
-          return response.result
+          return { result: response.result }
         } else {
-          throw new JsonRpcError(
-            response.error.code,
-            response.error.message,
-            response.error.data
-          )
+          return {
+            error: new JsonRpcError(
+              response.error.code,
+              response.error.message,
+              response.error.data
+            ),
+          }
         }
       })
     }
