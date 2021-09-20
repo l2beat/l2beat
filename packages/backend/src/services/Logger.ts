@@ -10,6 +10,8 @@ export enum LogLevel {
 export class Logger {
   constructor(private logLevel: LogLevel, private name = '') {}
 
+  static SILENT = new Logger(LogLevel.NONE)
+
   withName(name: string) {
     return new Logger(this.logLevel, name)
   }
