@@ -1,7 +1,13 @@
-export class HelloService {
-  constructor(private name: string) {}
+import { JsonRpcHttpClient } from './jsonrpc/JsonRpcHttpClient'
 
-  getMessage() {
-    return `Hello from ${this.name}!`
+export class HelloService {
+  constructor(
+    private name: string,
+    private jsonRpcHttpClient: JsonRpcHttpClient
+  ) {}
+
+  async getMessage() {
+    const blockNumber = await this.jsonRpcHttpClient.call('eth_blockNumber')
+    return `Hello from ${this.name} at ${blockNumber}!`
   }
 }
