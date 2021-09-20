@@ -16,8 +16,12 @@ export interface BatchResult {
   error?: Error
 }
 
-export class JsonRpcClient {
-  constructor(private execute: ExecuteJsonRpc, private requestId = 1337) {}
+export abstract class JsonRpcClient {
+  private requestId = 1337
+
+  protected abstract execute(
+    request: JsonRpcRequest | JsonRpcRequest[]
+  ): Promise<unknown>
 
   async call(method: string, params?: JsonRpcParams) {
     const request = this.toRequest(method, params)

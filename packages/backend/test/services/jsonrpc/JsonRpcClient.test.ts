@@ -20,15 +20,17 @@ describe('JsonRpcClient', () => {
 
   it('constructs correct requests', async () => {
     const requests: (JsonRpcRequest | JsonRpcRequest[])[] = []
-    async function execute(request: JsonRpcRequest | JsonRpcRequest[]) {
-      requests.push(request)
-      if (Array.isArray(request)) {
-        return request.map(toSuccess)
-      } else {
-        return toSuccess(request)
+    class TestClient extends JsonRpcClient {
+      async execute(request: JsonRpcRequest | JsonRpcRequest[]) {
+        requests.push(request)
+        if (Array.isArray(request)) {
+          return request.map(toSuccess)
+        } else {
+          return toSuccess(request)
+        }
       }
     }
-    const client = new JsonRpcClient(execute)
+    const client = new TestClient()
 
     await client.call('makeBed')
     await client.call('bakeCake', [5, 'big'])
@@ -54,17 +56,23 @@ describe('JsonRpcClient', () => {
 
   describe('call', () => {
     it('returns result', async () => {
-      const client = new JsonRpcClient(async () => {
-        return { jsonrpc: '2.0', id: 1337, result: 'foo' }
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return { jsonrpc: '2.0', id: 1337, result: 'foo' }
+        }
+      }
+      const client = new TestClient()
       const result = await client.call('doStuff')
       expect(result).to.equal('foo')
     })
 
     it('throws for malformed response', async () => {
-      const client = new JsonRpcClient(async () => {
-        return { foo: 'bar' }
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return { foo: 'bar' }
+        }
+      }
+      const client = new TestClient()
       await expect(client.call('doStuff')).to.be.rejectedWith(
         TypeError,
         'Invalid JSON-RPC response'
@@ -72,9 +80,12 @@ describe('JsonRpcClient', () => {
     })
 
     it('throws for mismatched id', async () => {
-      const client = new JsonRpcClient(async () => {
-        return { jsonrpc: '2.0', id: -2, result: 'foo' }
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return { jsonrpc: '2.0', id: -2, result: 'foo' }
+        }
+      }
+      const client = new TestClient()
       await expect(client.call('doStuff')).to.be.rejectedWith(
         TypeError,
         'Id mismatched in JSON-RPC response'
@@ -82,9 +93,12 @@ describe('JsonRpcClient', () => {
     })
 
     it('throws for array response', async () => {
-      const client = new JsonRpcClient(async () => {
-        return [{ jsonrpc: '2.0', id: 1337, result: 'foo' }]
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return [{ jsonrpc: '2.0', id: 1337, result: 'foo' }]
+        }
+      }
+      const client = new TestClient()
       await expect(client.call('doStuff')).to.be.rejectedWith(
         TypeError,
         'Unexpected array JSON-RPC response'
@@ -92,13 +106,16 @@ describe('JsonRpcClient', () => {
     })
 
     it('throws JsonRpcError for rpc errors', async () => {
-      const client = new JsonRpcClient(async () => {
-        return {
-          jsonrpc: '2.0',
-          id: 1337,
-          error: { code: 1234, message: 'oops', data: { x: 1, y: 2 } },
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return {
+            jsonrpc: '2.0',
+            id: 1337,
+            error: { code: 1234, message: 'oops', data: { x: 1, y: 2 } },
+          }
         }
-      })
+      }
+      const client = new TestClient()
       await expect(client.call('doStuff')).to.be.rejectedWith(
         JsonRpcError,
         'oops'
@@ -108,12 +125,15 @@ describe('JsonRpcClient', () => {
 
   describe('batch', () => {
     it('returns results', async () => {
-      const client = new JsonRpcClient(async () => {
-        return [
-          { jsonrpc: '2.0', id: 1337, result: 'foo' },
-          { jsonrpc: '2.0', id: 1338, result: 'bar' },
-        ]
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return [
+            { jsonrpc: '2.0', id: 1337, result: 'foo' },
+            { jsonrpc: '2.0', id: 1338, result: 'bar' },
+          ]
+        }
+      }
+      const client = new TestClient()
       const result = await client.callBatch([
         { method: 'makeBed' },
         { method: 'bakeCake' },
@@ -122,21 +142,27 @@ describe('JsonRpcClient', () => {
     })
 
     it('skips execute when given an empty array', async () => {
-      const client = new JsonRpcClient(async () => {
-        throw new Error('Oops')
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          throw new Error('Oops')
+        }
+      }
+      const client = new TestClient()
       const result = await client.callBatch([])
       expect(result).to.deep.equal([])
     })
 
     it('ignores superfluous items results', async () => {
-      const client = new JsonRpcClient(async () => {
-        return [
-          { jsonrpc: '2.0', id: 1337, result: 'foo' },
-          { jsonrpc: '2.0', id: 1338, result: 'bar' },
-          { jsonrpc: '2.0', id: 2000, result: 'baz' },
-        ]
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return [
+            { jsonrpc: '2.0', id: 1337, result: 'foo' },
+            { jsonrpc: '2.0', id: 1338, result: 'bar' },
+            { jsonrpc: '2.0', id: 2000, result: 'baz' },
+          ]
+        }
+      }
+      const client = new TestClient()
       const result = await client.callBatch([
         { method: 'makeBed' },
         { method: 'bakeCake' },
@@ -145,35 +171,44 @@ describe('JsonRpcClient', () => {
     })
 
     it('throws for malformed response', async () => {
-      const client = new JsonRpcClient(async () => {
-        return { foo: 'bar ' }
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return { foo: 'bar ' }
+        }
+      }
+      const client = new TestClient()
       await expect(
         client.callBatch([{ method: 'makeBed' }, { method: 'bakeCake' }])
       ).to.be.rejectedWith(TypeError, 'Invalid JSON-RPC response')
     })
 
     it('throws for object response', async () => {
-      const client = new JsonRpcClient(async () => {
-        return { jsonrpc: '2.0', id: 1337, result: 'foo' }
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return { jsonrpc: '2.0', id: 1337, result: 'foo' }
+        }
+      }
+      const client = new TestClient()
       await expect(
         client.callBatch([{ method: 'makeBed' }, { method: 'bakeCake' }])
       ).to.be.rejectedWith(TypeError, 'Unexpected object JSON-RPC response')
     })
 
     it('handles individual request errors', async () => {
-      const client = new JsonRpcClient(async () => {
-        return [
-          // 1337 missing
-          {
-            jsonrpc: '2.0',
-            id: 1338,
-            error: { code: 1234, message: 'Oops', data: { x: 1 } },
-          },
-          { jsonrpc: '2.0', id: 1339, result: 'baz' },
-        ]
-      })
+      class TestClient extends JsonRpcClient {
+        async execute() {
+          return [
+            // 1337 missing
+            {
+              jsonrpc: '2.0',
+              id: 1338,
+              error: { code: 1234, message: 'Oops', data: { x: 1 } },
+            },
+            { jsonrpc: '2.0', id: 1339, result: 'baz' },
+          ]
+        }
+      }
+      const client = new TestClient()
       const result = await client.callBatch([
         { method: 'makeBed' },
         { method: 'bakeCake' },
