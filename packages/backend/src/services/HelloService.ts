@@ -6,8 +6,12 @@ export class HelloService {
     private jsonRpcHttpClient: JsonRpcHttpClient
   ) {}
 
-  async getMessage() {
-    const blockNumber = await this.jsonRpcHttpClient.call('eth_blockNumber')
-    return `Hello from ${this.name} at ${blockNumber}!`
+  getMessage() {
+    return `Hello from ${this.name}!`
+  }
+
+  async getBlockNumber() {
+    const hex = await this.jsonRpcHttpClient.call('eth_blockNumber')
+    return parseInt(('' + hex).substring(2), 16)
   }
 }
