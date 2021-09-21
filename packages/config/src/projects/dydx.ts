@@ -60,7 +60,16 @@ export const dydx: Project = {
       },
       stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-      dataAvailability: DATA_AVAILABILITY.STARKEX_ON_CHAIN,
+      dataAvailability: {
+        ...DATA_AVAILABILITY.STARKEX_ON_CHAIN,
+        references: [
+          ...DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
+          {
+            text: 'UpdatePerpetualState.sol#L82 - Etherscan source code',
+            href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
+          },
+        ],
+      },
       operator: OPERATOR.STARKEX_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
       exitMechanisms: EXITS.STARKEX,
