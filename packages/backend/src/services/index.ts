@@ -7,7 +7,7 @@ import { Logger } from './Logger'
 export type Services = ReturnType<typeof createServices>
 
 export function createServices(config: Config) {
-  const logger = new Logger(config.logLevel)
+  const logger = new Logger(config.logger)
 
   // This key was provided to ethers.js by Alchemy. Remove it ASAP
   const apiKey = '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC'

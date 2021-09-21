@@ -5,7 +5,10 @@ import { getEnv } from './getEnv'
 export function getProductionConfig(): Config {
   return {
     name: 'Backend/Production',
-    logLevel: LogLevel.INFO,
+    logger: {
+      logLevel: LogLevel.INFO,
+      format: 'plain',
+    },
     port: getEnv.integer('PORT'),
   }
 }

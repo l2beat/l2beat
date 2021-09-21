@@ -2,6 +2,9 @@ import { LogLevel } from '../services/Logger'
 
 export interface Config {
   name: string
-  logLevel: LogLevel
+  logger: {
+    logLevel: LogLevel
+    format: 'pretty' | 'plain'
+  }
   port: number
 }
