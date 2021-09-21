@@ -1,0 +1,115 @@
+const gulp = require('gulp')
+const sass = require('gulp-sass')(require('sass'))
+const del = require('del')
+const child_process = require('child_process')
+const path = require('path')
+const express = require('express')
+const postcss = require('gulp-postcss')
+const autoprefixer = require('autoprefixer')
+const cssnano = require('cssnano')
+
+const SCRIPT_IN_PATH = 'src/scripts/**/*.ts'
+const SCRIPT_IN_FILE = 'src/scripts/index.ts'
+const SCRIPT_OUT_FILE = 'build/scripts/main.js'
+
+const STYLE_IN_PATH = 'src/styles/**/*.scss'
+const STYLE_OUT_PATH = 'build/styles'
+
+const STATIC_IN_PATH = 'src/static/**/*'
+
+const CONTENT_IN_PATH = 'src/content/**/*'
+const CONTENT_IN_FILE = 'src/content/index.ts'
+
+const OUT_PATH = 'build'
+
+function exec(command) {
+  const nodeModulesHere = path.join(__dirname, './node_modules/.bin')
+  const nodeModulesUp = path.join(__dirname, '../node_modules/.bin')
+  const PATH = `${nodeModulesHere}:${nodeModulesUp}:${process.env.PATH}`
+  return new Promise((resolve, reject) =>
+    child_process.exec(
+      command,
+      { env: { ...process.env, PATH } },
+      (err, stdout, stderr) => {
+        stdout && console.log(stdout)
+        if (err) {
+          stderr && console.error(stderr)
+          reject(err)
+        } else {
+          resolve()
+        }
+      }
+    )
+  )
+}
+
+function clean() {
+  return del(OUT_PATH)
+}
+
+function buildScripts() {
+  return exec(
+    `esbuild --bundle ${SCRIPT_IN_FILE} --outfile=${SCRIPT_OUT_FILE} --minify`
+  )
+}
+
+function watchScripts() {
+  return gulp.watch(SCRIPT_IN_PATH, buildScripts)
+}
+
+function buildStyles() {
+  return gulp
+    .src(STYLE_IN_PATH)
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(gulp.dest(STYLE_OUT_PATH))
+}
+
+function watchStyles() {
+  return gulp.watch(STYLE_IN_PATH, buildStyles)
+}
+
+function copyStatic() {
+  return gulp.src(STATIC_IN_PATH).pipe(gulp.dest(OUT_PATH))
+}
+
+function watchStatic() {
+  return gulp.watch(STATIC_IN_PATH, copyStatic)
+}
+
+function buildContent() {
+  return exec(`node -r esbuild-register ${CONTENT_IN_FILE}`)
+}
+
+function watchContent() {
+  return gulp.watch(CONTENT_IN_PATH, buildContent)
+}
+
+function generateMetaImages() {
+  return exec('node -r esbuild-register src/meta-images')
+}
+
+function serve() {
+  const app = express()
+  app.use(express.static(OUT_PATH))
+  const server = app.listen(8080, '0.0.0.0')
+  console.log('Listening on http://localhost:8080')
+  return server
+}
+
+const build = gulp.series(
+  clean,
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
+  generateMetaImages
+)
+
+const watch = gulp.series(
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
+  gulp.parallel(watchScripts, watchStyles, watchContent, watchStatic, serve)
+)
+
+module.exports = {
+  clean,
+  watch,
+  build,
+}

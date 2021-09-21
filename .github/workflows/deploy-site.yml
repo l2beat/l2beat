@@ -20,7 +20,7 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./backend/cache/cache.json
+          path: ./packages/backend/cache/cache.json
           # Update the version if cache format changes
           key: cache-json-v-2-${{ github.run_id }}
           restore-keys: |
@@ -33,7 +33,7 @@ jobs:
       - name: Upload frontend
         uses: netlify/actions/cli@master
         with:
-          args: deploy -d website/build --prod
+          args: deploy -d packages/frontend/build --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
