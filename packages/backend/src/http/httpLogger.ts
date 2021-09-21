@@ -3,7 +3,7 @@ import { Context, Next } from 'koa'
 import { Logger } from '../services/Logger'
 
 export function httpLogger(logger: Logger) {
-  logger = logger.withName('Koa')
+  logger = logger.configure({ name: 'Koa' })
 
   return async function (ctx: Context, next: Next) {
     const key = Symbol.for('request-received.startTime')

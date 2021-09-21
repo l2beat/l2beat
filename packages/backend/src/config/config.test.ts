@@ -4,7 +4,10 @@ import { Config } from './Config'
 export function getTestConfig(): Config {
   return {
     name: 'Backend/Test',
-    logLevel: LogLevel.NONE,
+    logger: {
+      logLevel: LogLevel.NONE,
+      format: 'plain',
+    },
     port: 1337,
   }
 }

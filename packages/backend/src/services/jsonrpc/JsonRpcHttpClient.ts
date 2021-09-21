@@ -10,7 +10,7 @@ export class JsonRpcHttpClient extends JsonRpcClient {
     private logger: Logger
   ) {
     super()
-    this.logger = this.logger.withName('JsonRpcHttpClient')
+    this.logger = this.logger.for(this)
   }
 
   async execute(request: JsonRpcRequest | JsonRpcRequest[]): Promise<unknown> {
