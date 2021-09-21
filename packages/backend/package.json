@@ -30,7 +30,7 @@
     "ethers": "^5.4.7",
     "koa": "^2.13.1",
     "memoizee": "^0.4.15",
-    "node-fetch": "^2.6.3"
+    "node-fetch": "2.6.1"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^7.1.2",
