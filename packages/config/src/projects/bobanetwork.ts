@@ -50,7 +50,7 @@ export const optimism: Project = {
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
-      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
+      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {
       category: {
@@ -65,16 +65,40 @@ export const optimism: Project = {
             category: 'Funds can be stolen if',
             text: 'an invalid state root is submitted to the system.',
           },
-        ]
+        ],
+        references: [
+          {
+            text: 'Boba_Docs_Title',
+            href: 'Boba_Docs_Link',
+          },
+        ],
       },
       dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL
+        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+        references: [
+          {
+            text: 'Boba_Docs_Title',
+            href: 'Boba_Docs_Link',
+          },
+        ],
       },
       operator: {
-        ...OPERATOR.CENTRALIZED_SEQUENCER
+        ...OPERATOR.CENTRALIZED_SEQUENCER,
+        references: [
+          {
+            text: 'Boba_Docs_Title',
+            href: 'Boba_Docs_Link',
+          },
+        ],
       },
       forceTransactions: {
-        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        references: [
+          {
+            text: 'Boba_Docs_Title',
+            href: 'Boba_Docs_Link',
+          },
+        ],
       },
       exitMechanisms: [
         {
