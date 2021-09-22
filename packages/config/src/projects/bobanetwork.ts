@@ -121,7 +121,13 @@ export const optimism: Project = {
             category: 'Funds can be lost if',
             text: 'there are mistakes in the highly complex OVM implementation.',
           }
-        ]
+        ],
+        references: [
+          {
+            text: 'ADD_REFERENCE_TITLE_HERE',
+            href: 'ADD_REFERENCE_URL_HERE',
+          },
+        ],
       },
       contracts: {
         addresses: [
@@ -134,7 +140,7 @@ export const optimism: Project = {
             address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087'
           }
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
