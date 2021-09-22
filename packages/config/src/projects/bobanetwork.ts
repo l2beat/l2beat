@@ -37,7 +37,7 @@ export const optimism: Project = {
         'https://blog.omgx.network',
         'https://twitter.com/bobanetwork',
         'https://t.me/omgnetwork',
-        'https://discord.com/invite/m7NysJjKhm'
+        'https://discord.gg/m7NysJjKhm'
       ],
     },
     riskView: {
