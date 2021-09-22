@@ -95,8 +95,8 @@ export const optimism: Project = {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
-            text: 'Chain Contracts - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/chain-contracts',
+            text: 'Canonical Transaction Chain - Boba documentation',
+            href: 'https://docs.boba.network/developer-docs/chain-contracts#ovm-canonicaltransactionchain-ctc',
           },
         ],
       },
