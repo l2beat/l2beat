@@ -14,7 +14,7 @@ export const optimism: Project = {
       // Proxy__OVM_L1StandardBridge
       address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
       sinceBlock: 13012048,
-      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'WBTC', 'SUSHI', 'UNI', 'LINK', 'DODO', 'REP', 'BAT', 'ZRX'],
+      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'SUSHI', 'UNI', 'USDT'],
     },
     {
       // Proxy__L1LiquidityPool
