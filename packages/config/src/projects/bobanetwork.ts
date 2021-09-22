@@ -20,7 +20,7 @@ export const optimism: Project = {
       // Proxy__L1LiquidityPool
       address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087',
       sinceBlock: 13013879,
-      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'WBTC', 'SUSHI', 'UNI', 'LINK', 'DODO', 'REP', 'BAT', 'ZRX'],
+      tokens: ['ETH'],
     }
   ],
   details: {
