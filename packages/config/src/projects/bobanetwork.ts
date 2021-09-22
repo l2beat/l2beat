@@ -124,8 +124,8 @@ export const optimism: Project = {
         ],
         references: [
           {
-            text: 'ADD_REFERENCE_TITLE_HERE',
-            href: 'ADD_REFERENCE_URL_HERE',
+            text: 'Execution Contracts - Learn more about the Boba Network execution contracts',
+            href: 'https://docs.boba.network/developer-docs/chain-contracts/execution-contracts',
           },
         ],
       },
