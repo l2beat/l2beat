@@ -14,18 +14,18 @@ export const optimism: Project = {
       // Proxy__OVM_L1StandardBridge
       address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
       sinceBlock: 13012048,
-      tokens: ['ETH', 'USDC'],
+      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'WBTC', 'SUSHI', 'UNI', 'LINK', 'DODO', 'REP', 'BAT', 'ZRX'],
     },
     {
       // Proxy__L1LiquidityPool
       address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087',
       sinceBlock: 13013879,
-      tokens: ['ETH'],
+      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'WBTC', 'SUSHI', 'UNI', 'LINK', 'DODO', 'REP', 'BAT', 'ZRX'],
     }
   ],
   details: {
     description:
-      'The Ethereum Layer 2: Boba Network. Lower gas, faster, secured in Ethereum.',
+      'The Ethereum Layer 2: Boba Network. Lower gas, faster, secured by Ethereum.',
     purpose: 'Universal',
     links: {
       websites: ['https://boba.network'],
@@ -68,8 +68,8 @@ export const optimism: Project = {
         ],
         references: [
           {
-            text: 'Boba_Docs_Title',
-            href: 'Boba_Docs_Link',
+            text: 'The incentive contract for verification proofs is disabled - Boba FAQ',
+            href: 'https://docs.boba.network/faq#the-incentive-contract-for-verification-proofs-is-disabled',
           },
         ],
       },
@@ -77,8 +77,8 @@ export const optimism: Project = {
         ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
-            text: 'Boba_Docs_Title',
-            href: 'Boba_Docs_Link',
+            text: 'Data Availability Batches - Paradigm Research',
+            href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
           },
         ],
       },
@@ -86,8 +86,8 @@ export const optimism: Project = {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: 'Boba_Docs_Title',
-            href: 'Boba_Docs_Link',
+            text: 'Boba operates the only "Sequencer" node - Boba FAQ',
+            href: 'https://docs.boba.network/faq#boba-operates-the-only-sequencer-node',
           },
         ],
       },
@@ -95,8 +95,8 @@ export const optimism: Project = {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
-            text: 'Boba_Docs_Title',
-            href: 'Boba_Docs_Link',
+            text: 'Chain Contracts - Boba documentation',
+            href: 'https://docs.boba.network/developer-docs/chain-contracts',
           },
         ],
       },
@@ -138,6 +138,51 @@ export const optimism: Project = {
       },
     },
     news: [
+      {
+        date: '2021-09-20',
+        name: 'Boba Network Announces Public Mainnet Launch',
+        link: 'https://www.enya.ai/press/public-mainnet',
+      },
+      {
+        date: '2021-09-14',
+        name: 'Boba Network Partners with Witnet',
+        link: 'https://www.enya.ai/press/witnet',
+      },
+      {
+        date: '2021-09-13',
+        name: 'Boba Network Integrates with MyEtherWallet',
+        link: 'https://www.enya.ai/press/mew',
+      },
+      {
+        date: '2021-09-10',
+        name: 'Boba Network Partners with Band Protocol',
+        link: 'https://www.enya.ai/press/band-protocol',
+      },
+      {
+        date: '2021-09-08',
+        name: 'Boba Network Partners with API3',
+        link: 'https://www.enya.ai/press/api3',
+      },
+      {
+        date: '2021-09-07',
+        name: 'Boba Network Partners with Frax Finance',
+        link: 'https://www.enya.ai/press/frax',
+      },
+      {
+        date: '2021-09-02',
+        name: 'Boba Network Partners with SAKE',
+        link: 'https://www.enya.ai/press/sake',
+      },
+      {
+        date: '2021-08-31',
+        name: 'Boba Network Partners with Anyswap',
+        link: 'https://www.enya.ai/press/anyswap',
+      },
+      {
+        date: '2021-08-26',
+        name: 'Boba Network Partners with Coin98',
+        link: 'https://www.enya.ai/press/coin98',
+      },
       {
         date: '2021-08-24',
         name: 'Boba Network Partners with DODO',
