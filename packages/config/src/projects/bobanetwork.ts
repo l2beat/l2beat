@@ -32,7 +32,7 @@ export const optimism: Project = {
       apps: [],
       documentation: ['https://docs.boba.network/'],
       explorers: ['https://blockexplorer.boba.network/'],
-      repositories: ['https://github.com/omgnetwork'],
+      repositories: ['https://github.com/omgnetwork/optimism'],
       socialMedia: [
         'https://blog.omgx.network',
         'https://twitter.com/bobanetwork',
