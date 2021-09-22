@@ -8,7 +8,10 @@ export function getLocalConfig(): Config {
   dotenv()
   return {
     name: 'Backend/Local',
-    logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
+    logger: {
+      logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
+      format: 'pretty',
+    },
     port: getEnv.integer('PORT', 3000),
   }
 }
