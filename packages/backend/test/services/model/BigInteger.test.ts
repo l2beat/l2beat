@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { BigInteger } from '../../../src/services/model/BigInteger'
+import { BigInteger } from '../../../src/services/model'
 
 describe('BigInteger', () => {
   it('can be constructed from a string', () => {
