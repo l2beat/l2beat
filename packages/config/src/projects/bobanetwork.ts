@@ -48,7 +48,7 @@ export const optimism: Project = {
         sentiment: 'bad',
       },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      upgradeability: RISK_VIEW.UPGRADABLE_NO,
       operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
