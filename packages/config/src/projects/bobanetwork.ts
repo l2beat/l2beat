@@ -36,7 +36,7 @@ export const optimism: Project = {
       socialMedia: [
         'https://blog.omgx.network',
         'https://twitter.com/bobanetwork',
-        'https://t.me/omgnetwork',
+        'https://t.me/bobanetwork',
         'https://discord.gg/m7NysJjKhm'
       ],
     },
