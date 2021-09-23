@@ -144,13 +144,75 @@ export const optimism: Project = {
       contracts: {
         addresses: [
           {
+            // Proxy__OVM_L1StandardBridge
             name: 'L1 Standard Bridge',
             address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00'
           },
           {
+            // Proxy__L1LiquidityPool
             name: 'L1 Liquidity Pool',
             address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087'
-          }
+          },
+          {
+            name: 'Proxy__OVM_L1CrossDomainMessenger',
+            address: '0x6D4528d192dB72E282265D6092F4B872f9Dff69e'
+          },
+          {
+            name: 'AddressManager',
+            address: '0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089'
+          },
+          {
+            name: 'OVM_CanonicalTransactionChain',
+            address: '0x4B5D9E5A6B1a514eba15A2f949531DcCd7c272F2'
+          },
+          {
+            name: 'OVM_ChainStorageContainer:CTC:batches',
+            address: '0xA7557b676EA0D9406459409B5ad01c14b5522c46'
+          },
+          {
+            name: 'OVM_ChainStorageContainer:CTC:queue',
+            address: '0x33938f8E5F2c36e3Ca2B01E878b3322E280d4c50'
+          },
+          {
+            name: 'OVM_ChainStorageContainer:SCC:batches',
+            address: '0x318d4dAb7D3793E40139b496c3B89422Ae5372D1'
+          },
+          {
+            name: 'OVM_ExecutionManager',
+            address: '0xa230D4b11F66A3DEEE0bEAf8D04551F236C8B646'
+          },
+          {
+            name: 'OVM_FraudVerifier',
+            address: '0x872c65c835deB2CFB3493f2C3dD353633Ae4f4B8'
+          },
+          {
+            name: 'OVM_L1CrossDomainMessenger',
+            address: '0x25109139f8C4F9f7b4E4d5452A067feaE3a537F3'
+          },
+          {
+            name: 'OVM_L1MultiMessageRelayer',
+            address: '0xAb2AF3A98D229b7dAeD7305Bb88aD0BA2c42f9cA'
+          },
+          {
+            name: 'OVM_SafetyChecker',
+            address: '0x85c0Cebfe3b81d64D256b38fDf65DD05887e5884'
+          },
+          {
+            name: 'OVM_StateCommitmentChain',
+            address: '0x17834b754e2f09946CE48D7B5beB4D7D94D98aB6'
+          },
+          {
+            name: 'OVM_StateManagerFactory',
+            address: '0x0c4935b421Af8F86698Fb77233e90AbC5f146846'
+          },
+          {
+            name: 'OVM_StateTransitionerFactory',
+            address: '0xc6dd73D427Bf784dd1e2f9F64029a79533ffAb40'
+          },
+          {
+            name: 'OVM_Sequencer',
+            address: '0xE48E5b731FAAb955d147FA954cba19d93Dc03529'
+          },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
