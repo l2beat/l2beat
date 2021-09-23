@@ -78,6 +78,10 @@ export const bobanetwork: Project = {
         ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
+            text: 'Data Availability Batches - Paradigm Research',
+            href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          },
+          {
             text: 'Canonical Transaction Chain - Boba documentation',
             href: 'https://docs.boba.network/developer-docs/chain-contracts#ovm-canonicaltransactionchain-ctc',
           },
