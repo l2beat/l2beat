@@ -2,7 +2,7 @@ import { expect } from 'chai'
 
 import { EthAddress } from '../../../src/services/ethereum/EthAddress'
 
-describe('Address', () => {
+describe('EthAddress', () => {
   it('accepts lowercase addresses', () => {
     const address = new EthAddress('0xabcdabcd12345678abcdabcd12345678abcdabcd')
     expect(address).to.be.instanceOf(EthAddress)
