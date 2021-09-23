@@ -151,16 +151,22 @@ export const bobanetwork: Project = {
       contracts: {
         addresses: [
           {
-            // Proxy__OVM_L1StandardBridge
             name: 'L1 Standard Bridge',
             address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+              implementation: '0x4828900EB9dB5346dfe33cCf884984D8014C7B4B',
+            },
           },
           {
-            // Proxy__L1LiquidityPool
             name: 'L1 Liquidity Pool',
             address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
           },
           {
+            // TODO: Support this type of proxy
             name: 'Proxy__OVM_L1CrossDomainMessenger',
             address: '0x6D4528d192dB72E282265D6092F4B872f9Dff69e',
           },
@@ -221,7 +227,7 @@ export const bobanetwork: Project = {
             address: '0xE48E5b731FAAb955d147FA954cba19d93Dc03529',
           },
         ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
       },
     },
     news: [
