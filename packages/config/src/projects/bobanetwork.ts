@@ -105,11 +105,23 @@ export const optimism: Project = {
           name: 'Regular exit',
           description:
             'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Boba Network is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
+          references: [
+            {
+              text: 'The Standard Bridge - Boba documentation',
+              href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
+            },
+          ],
         },
         {
           name: 'Fast exit',
           description:
             'Users can initiate a fast exit which makes use of liquidity pools, and charges a small fee for the convenience. Users funds can then be withdrawn on L1 after only minutes.',
+          references: [
+            {
+              text: 'The LP Bridge - Boba documentation',
+              href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge-1',
+            },
+          ],
         }
       ],
       smartContracts: {
