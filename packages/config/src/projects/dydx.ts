@@ -50,8 +50,15 @@ export const dydx: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
+      operatorCensoring: {
+        value: 'Force trade / exit to L1',
+        description: 'The user can force operator to include trade or withdrawal tx by pushing it through L1. The user is required to find a counterparty for the trade by out of system means.',
+        sentiment: 'warning'
+      },
+      operatorDown: {
+        ...RISK_VIEW.DOWN_ESCAPE_MP,
+        description: 'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.'
+      }
     },
     technology: {
       category: {
