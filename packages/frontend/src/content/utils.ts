@@ -1,4 +1,4 @@
-import millify from 'millify'
+import { formatLargeNumber } from '../shared'
 
 export function getFromEnd<T>(array: T[], n: number) {
   if (n >= array.length) {
@@ -20,5 +20,5 @@ export function formatPercent(value: number, addPlus = false) {
 }
 
 export function formatUSD(value: number) {
-  return `$${millify(value)}`
+  return `$${formatLargeNumber(value)}`
 }

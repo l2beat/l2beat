@@ -1,5 +1,7 @@
+import { formatLargeNumber } from '../../../shared'
+
 export function formatCurrency(value: number, currency: string) {
-  const num = formatNumber(value)
+  const num = formatLargeNumber(value)
   if (currency === 'usd') {
     return `$${num}`
   } else if (currency === 'eth') {
@@ -7,18 +9,6 @@ export function formatCurrency(value: number, currency: string) {
   } else {
     return `${num} ${currency.toUpperCase()}`
   }
-}
-
-const units = ['', 'K', 'M', 'B', 'T']
-
-export function formatNumber(value: number) {
-  let iter = 0
-  while (value > 1e3 && iter < units.length) {
-    value /= 1e3
-    iter++
-  }
-  const unit = units[iter]
-  return parseFloat(value.toFixed(2)) + unit
 }
 
 export function formatCurrencyExact(value: number, currency: string) {

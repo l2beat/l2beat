@@ -20,6 +20,8 @@ const STATIC_IN_PATH = 'src/static/**/*'
 const CONTENT_IN_PATH = 'src/content/**/*'
 const CONTENT_IN_FILE = 'src/content/index.ts'
 
+const SHARED_IN_PATH = 'src/shared/**/*'
+
 const OUT_PATH = 'build'
 
 function exec(command) {
@@ -54,7 +56,7 @@ function buildScripts() {
 }
 
 function watchScripts() {
-  return gulp.watch(SCRIPT_IN_PATH, buildScripts)
+  return gulp.watch([SCRIPT_IN_PATH, SHARED_IN_PATH], buildScripts)
 }
 
 function buildStyles() {
@@ -82,7 +84,7 @@ function buildContent() {
 }
 
 function watchContent() {
-  return gulp.watch(CONTENT_IN_PATH, buildContent)
+  return gulp.watch([CONTENT_IN_PATH, SHARED_IN_PATH], buildContent)
 }
 
 function generateMetaImages() {
