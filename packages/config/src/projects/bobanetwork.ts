@@ -224,7 +224,7 @@ export const bobanetwork: Project = {
           },
           {
             name: 'OVM_Sequencer',
-            address: '0xE48E5b731FAAb955d147FA954cba19d93Dc03529',
+            address: '0x702ad5c5fb87aace54978143a707d565853d6fd5',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
