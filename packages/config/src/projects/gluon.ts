@@ -9,9 +9,9 @@ import {
 } from './common'
 import { Project } from './types'
 
-export const leverj: Project = {
-  name: 'LeverJ',
-  slug: 'leverj',
+export const gluon: Project = {
+  name: 'Gluon',
+  slug: 'gluon',
   bridges: [
     {
       address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
@@ -27,10 +27,10 @@ export const leverj: Project = {
   associatedToken: 'L2',
   details: {
     description:
-      'Leverj is the first exchange built on customized Gluon technology. Gluon aims to be a Layer 2 scalable trading engine built on top of Ethereum, unlocking low fees and high frequency trading.',
+      'Gluon aims to be a Layer 2 scalable trading engine built on top of Ethereum, unlocking low fees and high frequency trading.',
     purpose: 'Exchange',
     links: {
-      websites: ['https://leverj.io/'],
+      websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
       documentation: ['https://leverj.io/assets/documents/Gluon-Layer2.pdf'],
       explorers: ['https://gluon.leverj.io/'],
