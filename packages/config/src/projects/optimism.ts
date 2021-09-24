@@ -70,12 +70,7 @@ export const optimism: Project = {
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
-      operatorDown: {
-        // probably RISK_VIEW.DOWN_NO_MECHANISM
-        value: 'Unknown',
-        description: 'We are currently investigating this topic',
-        sentiment: 'unknown',
-      },
+      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
     },
     technology: {
       category: {
@@ -135,14 +130,7 @@ export const optimism: Project = {
               href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
             },
           ],
-          risks: [
-            // TODO: Uncomment after findings
-            // {
-            //   category: 'Funds can be lost if',
-            //   text: 'the centralized sequencer goes down and nobody can exit.',
-            //   isCritical: true,
-            // },
-          ],
+          risks: [EXITS.RISK_CENTRALIZED_BLOCK_PRODUCER],
         },
       ],
       smartContracts: {

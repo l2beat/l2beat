@@ -72,7 +72,7 @@ export const arbitrum: Project = {
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
-      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
+      operatorDown: RISK_VIEW.DOWN_WHITELISTED_BLOCKS,
     },
     technology: {
       category: {
@@ -131,6 +131,7 @@ export const arbitrum: Project = {
               href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
             },
           ],
+          risks: [EXITS.RISK_CENTRALIZED_BLOCK_PRODUCER],
         },
         {
           name: 'Tradeable Bridge Exit',

@@ -114,6 +114,12 @@ const PLASMA: ProjectTechnologyChoice = {
   references: [],
 }
 
+export const RISK_CENTRALIZED_BLOCK_PRODUCER: ProjectRisk = {
+  category: 'Funds can be frozen if',
+  text: 'the centralized block producer goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
+  isCritical: true,
+}
+
 export const EXITS = {
   REGULAR,
   FORCED,
@@ -121,4 +127,5 @@ export const EXITS = {
   STARKEX: [STARKEX_REGULAR, STARKEX_FORCED, STARKEX_EMERGENCY],
   STARKEX_NFT: [STARKEX_REGULAR_NFT, STARKEX_FORCED, STARKEX_EMERGENCY],
   PLASMA,
+  RISK_CENTRALIZED_BLOCK_PRODUCER,
 }

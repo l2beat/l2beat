@@ -196,6 +196,13 @@ export const DOWN_NO_MECHANISM: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const DOWN_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
+  value: 'No mechanism',
+  description:
+    'If the blocks stop being produced there is no mechanism for the users to exit or produce new blocks.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -226,4 +233,5 @@ export const RISK_VIEW = {
   DOWN_PROPOSE_BLOCKS,
   DOWN_PROPOSE_BLOCKS_ZKP,
   DOWN_NO_MECHANISM,
+  DOWN_WHITELISTED_BLOCKS,
 }
