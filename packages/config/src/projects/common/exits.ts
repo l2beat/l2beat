@@ -57,6 +57,19 @@ const STARKEX_REGULAR: ProjectTechnologyChoice = {
   ],
 }
 
+const STARKEX_REGULAR_NFT: ProjectTechnologyChoice = {
+  ...REGULAR('zk', 'no proof'),
+  description:
+    REGULAR('zk', 'no proof').description +
+    ' When withdrawing NFTs they are minted on L1.',
+  references: [
+    {
+      text: 'Withdrawal - StarkEx documentation',
+      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/withdrawal',
+    },
+  ],
+}
+
 const STARKEX_FORCED: ProjectTechnologyChoice = {
   ...FORCED,
   references: [
@@ -106,5 +119,6 @@ export const EXITS = {
   FORCED,
   EMERGENCY,
   STARKEX: [STARKEX_REGULAR, STARKEX_FORCED, STARKEX_EMERGENCY],
+  STARKEX_NFT: [STARKEX_REGULAR_NFT, STARKEX_FORCED, STARKEX_EMERGENCY],
   PLASMA,
 }

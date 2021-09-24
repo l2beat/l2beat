@@ -78,7 +78,7 @@ export const deversifi: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
-      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
+      operatorCensoring: RISK_VIEW.CENSORING_STARKEX_SPOT,
       operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
     },
     technology: {

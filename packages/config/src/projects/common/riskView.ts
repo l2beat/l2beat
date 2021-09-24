@@ -99,6 +99,19 @@ export const CENSORING_TRANSACT_L1: ProjectRiskViewEntry = {
     'The user is able to submit an L1 transaction and force the operator to include it on L2.',
 }
 
+export const CENSORING_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
+  value: 'Force trade / exit to L1',
+  description:
+    'The user can force operator to include trade or withdrawal tx by pushing it through L1. The user is required to find a counterparty for the trade by out of system means.',
+  sentiment: 'warning',
+}
+
+export const CENSORING_STARKEX_SPOT: ProjectRiskViewEntry = {
+  value: 'Force exit to L1',
+  description:
+    'The user can force the operator to include their withdrawal transaction by submitting a request through L1.',
+}
+
 export const CENSORING_FORCE_EXIT_L1: ProjectRiskViewEntry = {
   value: 'Force exit to L1',
   description:
@@ -145,6 +158,19 @@ export const DOWN_ESCAPE_ZKP: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const DOWN_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
+  ...DOWN_ESCAPE_MP,
+  description:
+    DOWN_ESCAPE_MP.description +
+    ' Positions will be closed using average price from the last state update.',
+}
+
+export const DOWN_ESCAPE_STARKEX_NFT: ProjectRiskViewEntry = {
+  value: 'Escape hatch (MP)',
+  description:
+    'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
+}
+
 export const DOWN_ESCAPE_U: ProjectRiskViewEntry = {
   value: 'Escape hatch (?)',
   description: 'Users are able to exit the system. The details are unknown.',
@@ -185,6 +211,8 @@ export const RISK_VIEW = {
   UPGRADE_DELAY,
   UPGRADABLE_NO,
   CENSORING_TRANSACT_L1,
+  CENSORING_STARKEX_PERPETUAL,
+  CENSORING_STARKEX_SPOT,
   CENSORING_FORCE_EXIT_L1,
   CENSORING_EXIT_L1,
   CENSORING_PROPOSE_BLOCKS,
@@ -192,6 +220,8 @@ export const RISK_VIEW = {
   CENSORING_NO_MECHANISM,
   DOWN_ESCAPE_MP,
   DOWN_ESCAPE_ZKP,
+  DOWN_ESCAPE_STARKEX_PERPETUAL,
+  DOWN_ESCAPE_STARKEX_NFT,
   DOWN_ESCAPE_U,
   DOWN_PROPOSE_BLOCKS,
   DOWN_PROPOSE_BLOCKS_ZKP,

@@ -35,11 +35,18 @@ const STARKEX_PERPETUAL_WITHDRAW: ProjectTechnologyChoice = {
   ...WITHDRAW_OR_HALT,
   description:
     WITHDRAW_OR_HALT.description +
-    ' Perpetual positions can also be force closed before withdrawing.',
+    ' Perpetual positions can also be force closed before withdrawing, however this requires the user to find the counterparty for the trade themselves.',
   references: [
     {
       text: 'Censorship Prevention - StarkEx documentation',
       href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
+    },
+  ],
+  risks: [
+    EXIT_CENSORSHIP,
+    {
+      category: 'Funds can be lost if',
+      text: 'the user is unable to find the counterparty for the force trade.',
     },
   ],
 }
