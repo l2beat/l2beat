@@ -2,3 +2,4 @@
 /project/omg%20network      /projects/omgnetwork
 /project/leverj             /projects/gluon
 /project/*                  /projects/:splat
+/projects/leverj            /projects/gluon
