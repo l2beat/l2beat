@@ -1,6 +1,6 @@
 import { Project } from '@l2beat/config'
 
-import { formatDate } from '../../../../scripts/chart/ui/dates'
+import { formatDate } from '../../../../shared'
 import { NewsSectionProps } from '../view/NewsSection'
 
 export function getNewsSection(project: Project): NewsSectionProps {
