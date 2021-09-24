@@ -35,7 +35,8 @@ export const bobanetwork: Project = {
       explorers: ['https://blockexplorer.boba.network/'],
       repositories: ['https://github.com/omgnetwork/optimism'],
       socialMedia: [
-        'https://blog.omgx.network',
+        'https://boba.network/#news',
+        'https://www.enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
         'https://discord.gg/m7NysJjKhm',
