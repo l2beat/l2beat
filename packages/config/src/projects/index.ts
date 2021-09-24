@@ -4,11 +4,11 @@ import { bobanetwork } from './bobanetwork'
 import { deversifi } from './deversifi'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
+import { gluon } from './gluon'
 import { habitat } from './habitat'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
-import { leverj } from './leverj'
 import { loopring } from './loopring'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
@@ -27,11 +27,11 @@ export const projects: Project[] = [
   deversifi,
   dydx,
   fuel,
+  gluon,
   habitat,
   hermez,
   immutablex,
   layer2finance,
-  leverj,
   loopring,
   omgnetwork,
   optimism,
