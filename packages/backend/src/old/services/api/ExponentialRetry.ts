@@ -1,4 +1,4 @@
-import { Logger } from '../Logger'
+import { Logger } from '../../../services/Logger'
 
 export interface RetryOptions {
   startTimeout: number
@@ -14,7 +14,8 @@ export class ExponentialRetry {
       const call = () => fn().then(resolve, onError)
       const onError = (e: unknown) => {
         if (this.logger && name) {
-          this.logger.error(name, e)
+          const msg = e instanceof Error ? e.message : '' + e
+          this.logger.error(`${name} ${msg}`)
         }
         callCount++
         if (callCount > this.options.maxRetryCount) {
