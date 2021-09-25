@@ -1,3 +1,4 @@
+import { Logger } from '../../../services/Logger'
 import {
   MULTICALL,
   MULTICALL_BATCH_SIZE,
@@ -6,7 +7,6 @@ import {
 import { fastHash } from '../../utils'
 import { AlchemyApi } from '../api/AlchemyApi'
 import { AsyncCache } from '../AsyncCache'
-import { Logger } from '../Logger'
 import { AggregateMulticall } from './calls'
 
 export interface MulticallRequest {
@@ -84,7 +84,7 @@ export class MulticallApi {
       callData,
       blockNumber
     )
-    this.logger.log(
+    this.logger.info(
       `fetched batch ${batchId} (${requests.length} calls) @ ${blockNumber}`
     )
     const result = AggregateMulticall.decode(returnData)
@@ -108,7 +108,7 @@ export class MulticallApi {
         )
         this.asyncCache.set(request.cacheKey, data, (x) => x)
         completed++
-        this.logger.log(
+        this.logger.info(
           `fetched request ${completed} of ${requests.length} @ ${blockNumber}`
         )
         return dataToResponse(data)

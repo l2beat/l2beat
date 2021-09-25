@@ -1,4 +1,4 @@
-import { Logger } from '../Logger'
+import { Logger } from '../../../services/Logger'
 import { AlchemyApi, LogFilter } from './AlchemyApi'
 
 export class LogApi {
@@ -22,7 +22,7 @@ export class LogApi {
       ranges.map(async (range) => {
         const result = await this.alchemyApi.getLogs({ ...filter, ...range })
         i++
-        this.logger.log(`Got logs: ${loggerLabel} (${i}/${total})`)
+        this.logger.info(`Got logs: ${loggerLabel} (${i}/${total})`)
         return result
       })
     )
