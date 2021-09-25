@@ -15,8 +15,8 @@ export class JsonRpcHttpClient extends JsonRpcClient {
 
   async execute(request: JsonRpcRequest | JsonRpcRequest[]): Promise<unknown> {
     const name = Array.isArray(request)
-      ? `batch(${request.length})#${request[0].id}`
-      : `${request.method}#${request.id}`
+      ? `batch(${request.length}) id:${request[0].id}`
+      : `${request.method} id:${request.id}`
     this.logger.debug(`> ${name}`)
     const res = await this.httpClient.fetch(this.url, {
       method: 'POST',
