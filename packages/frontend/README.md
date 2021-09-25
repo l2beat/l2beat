@@ -1,4 +1,4 @@
-# @l2beat/website
+# @l2beat/frontend
 
 The statically generated frontend that is the face of L2BEAT.
 
