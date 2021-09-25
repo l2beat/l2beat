@@ -199,7 +199,7 @@ export const DOWN_NO_MECHANISM: ProjectRiskViewEntry = {
 export const DOWN_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'If the blocks stop being produced there is no mechanism for the users to exit or produce new blocks.',
+    'If the whitelisted validator goes down, no activity including withdrawals can happen.',
   sentiment: 'bad',
 }
 
