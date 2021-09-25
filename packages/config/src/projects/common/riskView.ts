@@ -96,26 +96,26 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
 export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
   value: 'Transact using L1',
   description:
-    'The user is able to submit an L1 transaction and force the operator to include it on L2.',
+    'The user is able to submit a transaction through L1 and force its inclusion on L2.',
 }
 
 export const SEQUENCER_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
   value: 'Force trade / exit to L1',
   description:
-    'The user can force operator to include trade or withdrawal tx by pushing it through L1. The user is required to find a counterparty for the trade by out of system means.',
+    'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means.',
   sentiment: 'warning',
 }
 
 export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
   value: 'Force exit to L1',
   description:
-    'The user can force the operator to include their withdrawal transaction by submitting a request through L1.',
+    'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1.',
 }
 
 export const SEQUENCER_FORCE_EXIT_L1: ProjectRiskViewEntry = {
   value: 'Force exit to L1',
   description:
-    'The user is only able to submit an L1 withdrawal request and force the operator to include it on L2. After that the user exits the system with their funds.',
+    'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
 }
 
 export const SEQUENCER_EXIT_L1: ProjectRiskViewEntry = {
@@ -139,7 +139,7 @@ export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
 
 export const SEQUENCER_NO_MECHANISM: ProjectRiskViewEntry = {
   value: 'No mechanism',
-  description: 'There is no mechanism to avoid censorship.',
+  description: 'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
   sentiment: 'bad',
 }
 
@@ -180,19 +180,19 @@ export const VALIDATOR_ESCAPE_U: ProjectRiskViewEntry = {
 export const VALIDATOR_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
   value: 'Propose blocks',
   description:
-    'The user needs to run their own node and use it to propose new blocks to replace the operator.',
+    'The user needs to run their own node and use it to propose new blocks to replace the validator.',
 }
 
 export const VALIDATOR_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
   value: 'Propose blocks (ZK)',
   description:
-    'The user needs to run their own node and use it to propose new blocks to replace the operator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
+    'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
   sentiment: 'warning',
 }
 
 export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
   value: 'No mechanism',
-  description: 'There is no mechanism to handle the operator going down.',
+  description: 'There is no mechanism to handle the validator going down.',
   sentiment: 'bad',
 }
 
