@@ -130,7 +130,17 @@ export const optimism: Project = {
               href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
             },
           ],
-          risks: [EXITS.RISK_CENTRALIZED_BLOCK_PRODUCER],
+          risks: [
+            {
+              ...EXITS.RISK_CENTRALIZED_VALIDATOR,
+              references: [
+                {
+                  text: 'mockOVM_BondManager.sol#L71 - Etherscan source code',
+                  href: 'https://etherscan.io/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057#code#F6#L71',
+                },
+              ],
+            },
+          ],
         },
       ],
       smartContracts: {

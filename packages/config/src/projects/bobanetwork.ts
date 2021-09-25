@@ -115,7 +115,7 @@ export const bobanetwork: Project = {
               href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
             },
           ],
-          risks: [EXITS.RISK_CENTRALIZED_BLOCK_PRODUCER],
+          risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
         {
           name: 'Fast exit',

@@ -131,7 +131,17 @@ export const arbitrum: Project = {
               href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
             },
           ],
-          risks: [EXITS.RISK_CENTRALIZED_BLOCK_PRODUCER],
+          risks: [
+            {
+              ...EXITS.RISK_CENTRALIZED_VALIDATOR,
+              references: [
+                {
+                  text: 'Mainnet for everyone - Arbitrum Blog',
+                  href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
+                },
+              ],
+            },
+          ],
         },
         {
           name: 'Tradeable Bridge Exit',
