@@ -2,8 +2,8 @@ export interface ProjectRiskView {
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
-  operatorCensoring: ProjectRiskViewEntry
-  operatorDown: ProjectRiskViewEntry
+  sequencerFailure: ProjectRiskViewEntry
+  validatorFailure: ProjectRiskViewEntry
 }
 
 export interface ProjectRiskViewEntry {

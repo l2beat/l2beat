@@ -50,8 +50,8 @@ export const dydx: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_STARKEX_PERPETUAL,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_STARKEX_PERPETUAL,
+      sequencerFailure: RISK_VIEW.CENSORING_STARKEX_PERPETUAL,
+      validatorFailure: RISK_VIEW.DOWN_ESCAPE_STARKEX_PERPETUAL,
     },
     technology: {
       category: {

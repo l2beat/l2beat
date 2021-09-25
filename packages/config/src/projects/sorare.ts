@@ -42,8 +42,8 @@ export const sorare: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_ST,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
-      operatorCensoring: RISK_VIEW.CENSORING_STARKEX_SPOT,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_STARKEX_NFT,
+      sequencerFailure: RISK_VIEW.CENSORING_STARKEX_SPOT,
+      validatorFailure: RISK_VIEW.DOWN_ESCAPE_STARKEX_NFT,
     },
     technology: {
       category: {

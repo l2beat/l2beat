@@ -51,8 +51,8 @@ export const bobanetwork: Project = {
       },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
-      operatorDown: RISK_VIEW.DOWN_WHITELISTED_BLOCKS,
+      sequencerFailure: RISK_VIEW.CENSORING_TRANSACT_L1,
+      validatorFailure: RISK_VIEW.DOWN_WHITELISTED_BLOCKS,
     },
     technology: {
       category: {
