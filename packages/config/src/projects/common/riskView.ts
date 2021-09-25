@@ -139,7 +139,8 @@ export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
 
 export const SEQUENCER_NO_MECHANISM: ProjectRiskViewEntry = {
   value: 'No mechanism',
-  description: 'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
+  description:
+    'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
   sentiment: 'bad',
 }
 
