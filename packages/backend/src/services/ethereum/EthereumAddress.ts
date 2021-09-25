@@ -1,6 +1,6 @@
 import { constants, utils } from 'ethers'
 
-export class EthAddress {
+export class EthereumAddress {
   private address: string
 
   constructor(address: string) {
@@ -11,9 +11,9 @@ export class EthAddress {
     }
   }
 
-  static ZERO = new EthAddress(constants.AddressZero)
+  static ZERO = new EthereumAddress(constants.AddressZero)
 
-  equals(other: EthAddress) {
+  equals(other: EthereumAddress) {
     return this.address === other.address
   }
 
