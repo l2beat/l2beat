@@ -1,17 +1,14 @@
-import { JsonRpcHttpClient } from './jsonrpc/JsonRpcHttpClient'
+import { EthereumClient } from './ethereum'
 
 export class HelloService {
-  constructor(
-    private name: string,
-    private jsonRpcHttpClient: JsonRpcHttpClient
-  ) {}
+  constructor(private name: string, private ethereumClient: EthereumClient) {}
 
   getMessage() {
     return `Hello from ${this.name}!`
   }
 
   async getBlockNumber() {
-    const hex = await this.jsonRpcHttpClient.call('eth_blockNumber')
-    return parseInt(('' + hex).substring(2), 16)
+    const blockNumber = await this.ethereumClient.getBlockNumber()
+    return blockNumber.toString()
   }
 }

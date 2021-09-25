@@ -3,6 +3,7 @@ import { boolean } from './boolean'
 import { either } from './either'
 import { exactly } from './exactly'
 import { integer } from './integer'
+import { mapped } from './mapped'
 import { number } from './number'
 import { object } from './object'
 import { optional } from './optional'
@@ -18,6 +19,7 @@ export const as = {
   exactly,
   integer,
   number,
+  mapped,
   object,
   optional,
   string,
