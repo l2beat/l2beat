@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { Response } from 'node-fetch'
 
 import { HttpClient } from '../../../src/services/HttpClient'
-import { JsonRpcHttpClient } from '../../../src/services/jsonrpc/JsonRpcHttpClient'
+import { JsonRpcHttpClient } from '../../../src/services/jsonrpc'
 import { Logger } from '../../../src/services/Logger'
 
 describe('JsonRpcHttpClient', () => {

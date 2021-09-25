@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { EthereumAddress } from '../../../src/services/ethereum/EthereumAddress'
+import { EthereumAddress } from '../../../src/services/ethereum'
 
 describe('EthereumAddress', () => {
   it('accepts lowercase addresses', () => {

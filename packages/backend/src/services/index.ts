@@ -1,7 +1,7 @@
 import { Config } from '../config'
 import { HelloService } from './HelloService'
 import { HttpClient } from './HttpClient'
-import { JsonRpcHttpClient } from './jsonrpc/JsonRpcHttpClient'
+import { JsonRpcHttpClient } from './jsonrpc'
 import { Logger } from './Logger'
 
 export type Services = ReturnType<typeof createServices>
