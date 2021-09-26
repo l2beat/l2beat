@@ -1,5 +1,5 @@
 import { Config } from '../config'
-import { EthereumClient } from './ethereum'
+import { AlchemyEthereumClient } from './ethereum'
 import { HelloService } from './HelloService'
 import { HttpClient } from './HttpClient'
 import { JsonRpcHttpClient } from './jsonrpc'
@@ -10,15 +10,18 @@ export type Services = ReturnType<typeof createServices>
 export function createServices(config: Config) {
   const logger = new Logger(config.logger)
 
-  // This key was provided to ethers.js by Alchemy. Remove it ASAP
-  const apiKey = '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC'
-  const url = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}`
-
   const httpClient = new HttpClient()
-  const jsonRpcHttpClient = new JsonRpcHttpClient(url, httpClient, logger)
-  const ethereumClient = new EthereumClient(jsonRpcHttpClient)
+  const jsonRpcHttpClient = new JsonRpcHttpClient(
+    config.ethereumJsonRpcUrl,
+    httpClient,
+    logger
+  )
+  const alchemyEthereumClient = new AlchemyEthereumClient(
+    jsonRpcHttpClient,
+    logger
+  )
 
-  const helloService = new HelloService(config.name, ethereumClient)
+  const helloService = new HelloService(config.name, alchemyEthereumClient)
 
   return {
     logger,

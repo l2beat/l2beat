@@ -10,5 +10,6 @@ export function getProductionConfig(): Config {
       format: 'plain',
     },
     port: getEnv.integer('PORT'),
+    ethereumJsonRpcUrl: getEnv('RPC_URL'),
   }
 }

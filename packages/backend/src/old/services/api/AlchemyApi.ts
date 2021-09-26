@@ -1,7 +1,7 @@
 import { Logger } from '../../../services/Logger'
+import { RateLimiter } from '../../../services/utils/RateLimiter'
 import { CustomProvider } from './CustomProvider'
 import { ExponentialRetry } from './ExponentialRetry'
-import { RateLimiter } from './RateLimiter'
 
 export interface LogFilter {
   address: string | string[]

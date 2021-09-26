@@ -1,7 +1,7 @@
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'chai'
 
-import { RateLimiter } from '../../../../src/old/services/api/RateLimiter'
+import { RateLimiter } from '../../../src/services/utils/RateLimiter'
 
 describe('RateLimiter', () => {
   const cases = [
@@ -44,4 +44,15 @@ describe('RateLimiter', () => {
       expect(count).to.equal(expectedCount)
     })
   }
+
+  it('handles code that throws', async () => {
+    const rateLimiter = new RateLimiter({ callsPerMinute: 10000 })
+    const fn = () => {
+      throw new Error('oops')
+    }
+    const promiseA = rateLimiter.call(fn)
+    const promiseB = rateLimiter.call(fn)
+    await expect(promiseA).to.be.rejectedWith('oops')
+    await expect(promiseB).to.be.rejectedWith('oops')
+  })
 })
