@@ -11,7 +11,8 @@ export async function retry<T>(
 ): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     let callCount = 0
-    const call = () => fn().then(resolve, onError)
+    const asyncFn = async () => fn()
+    const call = () => asyncFn().then(resolve, onError)
     const onError = (e: unknown) => {
       options.onError?.(e)
       callCount++

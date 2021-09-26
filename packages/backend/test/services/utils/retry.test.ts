@@ -112,4 +112,19 @@ describe('retry', () => {
 
     expect(errorCount).to.equal(4)
   })
+
+  it('handles code that throws in a sync way', async () => {
+    let tries = 0
+    const fn = () => {
+      tries++
+      throw new Error('oops')
+    }
+    const promise = retry(fn, {
+      maxRetryCount: 4,
+      minTimeout: 0,
+      maxTimeout: 0,
+    })
+    await expect(promise).to.be.rejectedWith('oops')
+    expect(tries).to.equal(5)
+  })
 })
