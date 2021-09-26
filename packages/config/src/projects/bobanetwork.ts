@@ -21,7 +21,7 @@ export const bobanetwork: Project = {
       // Proxy__L1LiquidityPool
       address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
       sinceBlock: 13013879,
-      tokens: ['ETH'],
+      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'SUSHI', 'USDT'],
     },
   ],
   details: {
