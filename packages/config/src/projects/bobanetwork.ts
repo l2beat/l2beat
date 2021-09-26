@@ -19,9 +19,9 @@ export const bobanetwork: Project = {
     },
     {
       // Proxy__L1LiquidityPool
-      address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087',
+      address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
       sinceBlock: 13013879,
-      tokens: ['ETH'],
+      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'SUSHI', 'USDT'],
     },
   ],
   details: {
@@ -35,7 +35,8 @@ export const bobanetwork: Project = {
       explorers: ['https://blockexplorer.boba.network/'],
       repositories: ['https://github.com/omgnetwork/optimism'],
       socialMedia: [
-        'https://blog.omgx.network',
+        'https://boba.network/#news',
+        'https://www.enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
         'https://discord.gg/m7NysJjKhm',
@@ -162,8 +163,7 @@ export const bobanetwork: Project = {
           },
           {
             name: 'L1 Liquidity Pool',
-            address: '0x6b4eab8D55A4f701C3FE58bDb8b3e1f181eA7087',
-            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
           },
           {
             // TODO: Support this type of proxy
