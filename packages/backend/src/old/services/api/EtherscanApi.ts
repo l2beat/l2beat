@@ -1,8 +1,8 @@
 import fetch from 'node-fetch'
 
 import { Logger } from '../../../services/Logger'
+import { RateLimiter } from '../../../services/utils/RateLimiter'
 import { ExponentialRetry } from './ExponentialRetry'
-import { RateLimiter } from './RateLimiter'
 
 const BLOCK_URL =
   'https://api.etherscan.io/api?module=block&action=getblocknobytime&closest=before'
