@@ -1,4 +1,4 @@
-import { Logger } from '../Logger'
+import { Logger } from '../../../services/Logger'
 import { CustomProvider } from './CustomProvider'
 import { ExponentialRetry } from './ExponentialRetry'
 import { RateLimiter } from './RateLimiter'
