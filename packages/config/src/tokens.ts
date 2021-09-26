@@ -382,6 +382,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 7641712,
   },
   {
+    name: 'Olympus',
+    symbol: 'OHM',
+    address: '0x383518188C0C6d7730D91b2c03a03C837814a899',
+    decimals: 9,
+    sinceBlock: 12084967,
+  },
+  {
     name: 'OMGToken',
     symbol: 'OMG',
     address: '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07',
@@ -422,6 +429,13 @@ export const tokenList: TokenInfo[] = [
     address: '0x42d6622deCe394b54999Fbd73D108123806f6a18',
     decimals: 18,
     sinceBlock: 4590304,
+  },
+  {
+    name: 'Spell Token',
+    symbol: 'SPELL',
+    address: '0x090185f2135308BaD17527004364eBcC2D37e5F6',
+    decimals: 18,
+    sinceBlock: 12454535,
   },
   {
     name: 'SushiToken',

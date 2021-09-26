@@ -1,7 +1,8 @@
 import { Config } from '../config'
+import { EthereumClient } from './ethereum'
 import { HelloService } from './HelloService'
 import { HttpClient } from './HttpClient'
-import { JsonRpcHttpClient } from './jsonrpc/JsonRpcHttpClient'
+import { JsonRpcHttpClient } from './jsonrpc'
 import { Logger } from './Logger'
 
 export type Services = ReturnType<typeof createServices>
@@ -15,8 +16,9 @@ export function createServices(config: Config) {
 
   const httpClient = new HttpClient()
   const jsonRpcHttpClient = new JsonRpcHttpClient(url, httpClient, logger)
+  const ethereumClient = new EthereumClient(jsonRpcHttpClient)
 
-  const helloService = new HelloService(config.name, jsonRpcHttpClient)
+  const helloService = new HelloService(config.name, ethereumClient)
 
   return {
     logger,

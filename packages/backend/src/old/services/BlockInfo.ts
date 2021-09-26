@@ -1,8 +1,8 @@
 import { SimpleDate } from '../model'
+import { Logger } from './../../services/Logger'
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { AsyncCache } from './AsyncCache'
-import { Logger } from './Logger'
 
 export class BlockInfo {
   constructor(
@@ -21,7 +21,7 @@ export class BlockInfo {
   private async _getMaxBlock(date: SimpleDate) {
     const timestamp = date.addDays(1).toUnixTimestamp()
     const block = await this.etherscanApi.getLastBlockBefore(timestamp)
-    this.logger.log(`fetched max block for ${date}`)
+    this.logger.info(`fetched max block for ${date}`)
     return block
   }
 
@@ -36,7 +36,7 @@ export class BlockInfo {
 
   private async _getBlockDate(block: number) {
     const { timestamp } = await this.alchemyApi.getBlock(block)
-    this.logger.log(`fetched block date for ${block}`)
+    this.logger.info(`fetched block date for ${block}`)
     return SimpleDate.fromUnixTimestamp(timestamp)
   }
 }

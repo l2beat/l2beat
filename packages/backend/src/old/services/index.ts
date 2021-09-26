@@ -1,3 +1,4 @@
+import { Logger, LogLevel } from '../../services/Logger'
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { LogApi } from './api/LogApi'
@@ -9,7 +10,6 @@ import { CacheFile } from './CacheFile'
 import { getConfig } from './Config'
 import { ExchangeAddresses } from './ExchangeAddresses'
 import { FlowChecker } from './FlowChecker'
-import { Logger } from './Logger'
 import { MulticallApi } from './multicall'
 import { ProjectDates } from './ProjectDates'
 import { StatCollector } from './StatCollector'
@@ -18,7 +18,10 @@ export type Services = ReturnType<typeof setup>
 
 export function setup() {
   const config = getConfig()
-  const logger = new Logger()
+  const logger = new Logger({
+    logLevel: LogLevel.INFO,
+    format: 'pretty',
+  })
 
   const alchemyApi = new AlchemyApi(config.rpcUrl, logger)
   const etherscanApi = new EtherscanApi(config.etherscanApiKey, logger)

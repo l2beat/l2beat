@@ -3,11 +3,9 @@ import { expect } from 'chai'
 import {
   JsonRpcClient,
   JsonRpcError,
-} from '../../../src/services/jsonrpc/JsonRpcClient'
-import {
   JsonRpcRequest,
   JsonRpcSuccessResponse,
-} from '../../../src/services/jsonrpc/types'
+} from '../../../src/services/jsonrpc'
 
 describe('JsonRpcClient', () => {
   function toSuccess(request: JsonRpcRequest): JsonRpcSuccessResponse {
