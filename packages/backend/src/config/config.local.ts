@@ -13,5 +13,6 @@ export function getLocalConfig(): Config {
       format: 'pretty',
     },
     port: getEnv.integer('PORT', 3000),
+    ethereumJsonRpcUrl: getEnv('RPC_URL'),
   }
 }

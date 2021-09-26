@@ -7,4 +7,5 @@ export interface Config {
     format: 'pretty' | 'plain'
   }
   port: number
+  ethereumJsonRpcUrl: string
 }
