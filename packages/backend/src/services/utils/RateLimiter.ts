@@ -1,5 +1,5 @@
 interface QueuedFunction<T> {
-  (): T | Promise<T>
+  (): Promise<T>
   resolve: (value: T) => void
   reject: (reason?: unknown) => void
 }
@@ -25,7 +25,7 @@ export class RateLimiter {
   }
 
   call<T>(fn: () => T | Promise<T>): Promise<T> {
-    const wrapped = (() => fn()) as QueuedFunction<T>
+    const wrapped = (async () => fn()) as QueuedFunction<T>
     this.queue.push(wrapped)
 
     return new Promise((resolve, reject) => {
