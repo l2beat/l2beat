@@ -6,7 +6,7 @@ import {
   toData,
   toQuantity,
 } from '../../../src/services/ethereum/primitives'
-import { BigInteger, Bytes } from '../../../src/services/model'
+import { Bytes } from '../../../src/services/model'
 
 describe('asData', () => {
   const cases = [
@@ -54,9 +54,9 @@ describe('toData', () => {
 
 describe('asQuantity', () => {
   const cases = [
-    { value: '0x41', expected: 65 },
-    { value: '0x400', expected: 1024 },
-    { value: '0x0', expected: 0 },
+    { value: '0x41', expected: 65n },
+    { value: '0x400', expected: 1024n },
+    { value: '0x0', expected: 0n },
     { value: '0x0400', error: 'Quantity cannot have leading zeroes' },
     { value: 'ff', error: 'Quantity must start with 0x' },
     { value: '0xNotValid', error: 'Quantity must be a hex string' },
@@ -69,7 +69,7 @@ describe('asQuantity', () => {
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
         const result = asQuantity(value)
-        expect(result).to.deep.equal(BigInteger.from(expected))
+        expect(result).to.equal(expected)
       })
     }
   }
@@ -77,22 +77,19 @@ describe('asQuantity', () => {
 
 describe('toQuantity', () => {
   const cases = [
-    { value: 65, expected: '0x41' },
-    { value: 1024, expected: '0x400' },
-    { value: 0, expected: '0x0' },
-    { value: -1, error: 'Quantity cannot be a negative integer' },
+    { value: 65n, expected: '0x41' },
+    { value: 1024n, expected: '0x400' },
+    { value: 0n, expected: '0x0' },
+    { value: -1n, error: 'Quantity cannot be a negative integer' },
   ]
   for (const { value, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => toQuantity(BigInteger.from(value))).to.throw(
-          TypeError,
-          error
-        )
+        expect(() => toQuantity(value)).to.throw(TypeError, error)
       })
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
-        const result = toQuantity(BigInteger.from(value))
+        const result = toQuantity(value)
         expect(result).to.equal(expected)
       })
     }

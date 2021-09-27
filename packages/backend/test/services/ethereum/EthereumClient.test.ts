@@ -2,7 +2,6 @@ import { expect } from 'chai'
 
 import { EthereumClient } from '../../../src/services/ethereum'
 import { JsonRpcClient, JsonRpcParams } from '../../../src/services/jsonrpc'
-import { BigInteger } from '../../../src/services/model'
 
 describe('EthereumClient', () => {
   describe('getBlockNumber', () => {
@@ -19,7 +18,7 @@ describe('EthereumClient', () => {
       }
       const client = new EthereumClient(new TestJsonRpc())
       const result = await client.getBlockNumber()
-      expect(result).to.deep.equal(BigInteger.from(42069))
+      expect(result).to.equal(42069n)
     })
   })
 })
