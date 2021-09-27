@@ -1,6 +1,6 @@
 import { Context, Next } from 'koa'
 
-import { Logger } from '../services/Logger'
+import { Logger } from '../Logger'
 
 export function httpLogger(logger: Logger) {
   logger = logger.configure({ name: 'Koa' })
