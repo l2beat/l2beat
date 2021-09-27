@@ -29,10 +29,11 @@ function xor(a: boolean, b: boolean) {
 const asResponseOrMany = as.either(asResponse, as.array(asResponse))
 
 export function parseJsonRpcResponse(
-  value: unknown
+  value: string
 ): JsonRpcResponse | JsonRpcResponse[] {
   try {
-    const parsed = asResponseOrMany(value)
+    const json = JSON.parse(value)
+    const parsed = asResponseOrMany(json)
     if (Array.isArray(parsed) && parsed.length === 0) {
       throw new Error()
     }

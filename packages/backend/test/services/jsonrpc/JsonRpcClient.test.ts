@@ -56,7 +56,7 @@ describe('JsonRpcClient', () => {
     it('returns result', async () => {
       class TestClient extends JsonRpcClient {
         async execute() {
-          return { jsonrpc: '2.0', id: 1337, result: 'foo' }
+          return { jsonrpc: '2.0' as const, id: 1337, result: 'foo' }
         }
       }
       const client = new TestClient()
@@ -64,23 +64,10 @@ describe('JsonRpcClient', () => {
       expect(result).to.equal('foo')
     })
 
-    it('throws for malformed response', async () => {
-      class TestClient extends JsonRpcClient {
-        async execute() {
-          return { foo: 'bar' }
-        }
-      }
-      const client = new TestClient()
-      await expect(client.call('doStuff')).to.be.rejectedWith(
-        TypeError,
-        'Invalid JSON-RPC response'
-      )
-    })
-
     it('throws for mismatched id', async () => {
       class TestClient extends JsonRpcClient {
         async execute() {
-          return { jsonrpc: '2.0', id: -2, result: 'foo' }
+          return { jsonrpc: '2.0' as const, id: -2, result: 'foo' }
         }
       }
       const client = new TestClient()
@@ -93,7 +80,7 @@ describe('JsonRpcClient', () => {
     it('throws for array response', async () => {
       class TestClient extends JsonRpcClient {
         async execute() {
-          return [{ jsonrpc: '2.0', id: 1337, result: 'foo' }]
+          return [{ jsonrpc: '2.0' as const, id: 1337, result: 'foo' }]
         }
       }
       const client = new TestClient()
@@ -107,7 +94,7 @@ describe('JsonRpcClient', () => {
       class TestClient extends JsonRpcClient {
         async execute() {
           return {
-            jsonrpc: '2.0',
+            jsonrpc: '2.0' as const,
             id: 1337,
             error: { code: 1234, message: 'oops', data: { x: 1, y: 2 } },
           }
@@ -126,8 +113,8 @@ describe('JsonRpcClient', () => {
       class TestClient extends JsonRpcClient {
         async execute() {
           return [
-            { jsonrpc: '2.0', id: 1337, result: 'foo' },
-            { jsonrpc: '2.0', id: 1338, result: 'bar' },
+            { jsonrpc: '2.0' as const, id: 1337, result: 'foo' },
+            { jsonrpc: '2.0' as const, id: 1338, result: 'bar' },
           ]
         }
       }
@@ -141,7 +128,7 @@ describe('JsonRpcClient', () => {
 
     it('skips execute when given an empty array', async () => {
       class TestClient extends JsonRpcClient {
-        async execute() {
+        async execute(): Promise<never> {
           throw new Error('Oops')
         }
       }
@@ -154,9 +141,9 @@ describe('JsonRpcClient', () => {
       class TestClient extends JsonRpcClient {
         async execute() {
           return [
-            { jsonrpc: '2.0', id: 1337, result: 'foo' },
-            { jsonrpc: '2.0', id: 1338, result: 'bar' },
-            { jsonrpc: '2.0', id: 2000, result: 'baz' },
+            { jsonrpc: '2.0' as const, id: 1337, result: 'foo' },
+            { jsonrpc: '2.0' as const, id: 1338, result: 'bar' },
+            { jsonrpc: '2.0' as const, id: 2000, result: 'baz' },
           ]
         }
       }
@@ -168,22 +155,10 @@ describe('JsonRpcClient', () => {
       expect(result).to.deep.equal([{ result: 'foo' }, { result: 'bar' }])
     })
 
-    it('throws for malformed response', async () => {
-      class TestClient extends JsonRpcClient {
-        async execute() {
-          return { foo: 'bar ' }
-        }
-      }
-      const client = new TestClient()
-      await expect(
-        client.callBatch([{ method: 'makeBed' }, { method: 'bakeCake' }])
-      ).to.be.rejectedWith(TypeError, 'Invalid JSON-RPC response')
-    })
-
     it('throws for object response', async () => {
       class TestClient extends JsonRpcClient {
         async execute() {
-          return { jsonrpc: '2.0', id: 1337, result: 'foo' }
+          return { jsonrpc: '2.0' as const, id: 1337, result: 'foo' }
         }
       }
       const client = new TestClient()
@@ -198,11 +173,11 @@ describe('JsonRpcClient', () => {
           return [
             // 1337 missing
             {
-              jsonrpc: '2.0',
+              jsonrpc: '2.0' as const,
               id: 1338,
               error: { code: 1234, message: 'Oops', data: { x: 1 } },
             },
-            { jsonrpc: '2.0', id: 1339, result: 'baz' },
+            { jsonrpc: '2.0' as const, id: 1339, result: 'baz' },
           ]
         }
       }
