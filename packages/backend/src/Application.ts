@@ -1,18 +1,18 @@
 import { Config } from './config'
-import { HttpEndpoint } from './http'
 import { createServices, Services } from './services'
+import { Logger } from './services/Logger'
 
 export class Application {
   private services: Services
-  private httpEndpoint: HttpEndpoint
+  private logger: Logger
 
   constructor(private config: Config) {
     this.services = createServices(this.config)
-    this.httpEndpoint = new HttpEndpoint(this.config, this.services)
+    this.logger = this.services.logger.for(this)
   }
 
   start() {
-    this.services.logger.for(this).info('Starting')
-    this.httpEndpoint.listen()
+    this.logger.info('Starting')
+    this.services.apiServer.listen()
   }
 }

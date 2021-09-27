@@ -1,10 +1,8 @@
 import { Context, Next } from 'koa'
 
-import { Logger } from '../services/Logger'
+import { Logger } from '../Logger'
 
-export function httpLogger(logger: Logger) {
-  logger = logger.configure({ name: 'Koa' })
-
+export function createApiLogger(logger: Logger) {
   return async function (ctx: Context, next: Next) {
     const key = Symbol.for('request-received.startTime')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

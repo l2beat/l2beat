@@ -1,5 +1,5 @@
 import { as } from '../cast'
-import { BigInteger, Bytes } from '../model'
+import { Bytes } from '../model'
 
 export function asData(value: unknown, length?: number) {
   const parsed = as.string(value)
@@ -31,15 +31,15 @@ export const asQuantity = as.mapped(as.string, (value: string) => {
     throw new TypeError('Quantity cannot have leading zeroes')
   }
   try {
-    return BigInteger.from(value)
+    return BigInt(value)
   } catch {
     throw new TypeError('Quantity must be a hex string')
   }
 })
 
-export function toQuantity(value: BigInteger): string {
-  if (value.isNegative()) {
+export function toQuantity(value: BigInt): string {
+  if (value < 0n) {
     throw new TypeError('Quantity cannot be a negative integer')
   }
-  return value.toHex()
+  return `0x${value.toString(16)}`
 }
