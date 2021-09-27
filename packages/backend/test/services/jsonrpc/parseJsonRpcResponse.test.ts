@@ -187,13 +187,21 @@ describe('parseJsonRpcResponse', () => {
     },
   ]
 
+  it('rejects invalid json strings', () => {
+    expect(() => parseJsonRpcResponse('not json')).to.throw(
+      TypeError,
+      'Invalid JSON-RPC response'
+    )
+  })
+
   for (const testCase of testCases) {
     it(testCase.name, () => {
+      const str = JSON.stringify(testCase.value)
       if (testCase.name.startsWith('valid')) {
-        const parsed = parseJsonRpcResponse(testCase.value)
+        const parsed = parseJsonRpcResponse(str)
         expect(parsed).to.deep.equal(testCase.value)
       } else {
-        expect(() => parseJsonRpcResponse(testCase.value)).to.throw(
+        expect(() => parseJsonRpcResponse(str)).to.throw(
           TypeError,
           'Invalid JSON-RPC response'
         )

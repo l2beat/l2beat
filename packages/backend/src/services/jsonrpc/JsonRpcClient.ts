@@ -1,4 +1,4 @@
-import { parseJsonRpcResponse } from './parseJsonRpcResponse'
+import { JsonRpcResponse } from '.'
 import { isSuccessResponse, JsonRpcParams, JsonRpcRequest } from './types'
 
 export interface ExecuteJsonRpc {
@@ -21,23 +21,22 @@ export abstract class JsonRpcClient {
 
   protected abstract execute(
     request: JsonRpcRequest | JsonRpcRequest[]
-  ): Promise<unknown>
+  ): Promise<JsonRpcResponse | JsonRpcResponse[]>
 
   async call(method: string, params?: JsonRpcParams) {
     const request = this.toRequest(method, params)
-    const result = await this.execute(request)
-    const parsed = parseJsonRpcResponse(result)
-    if (Array.isArray(parsed)) {
+    const response = await this.execute(request)
+    if (Array.isArray(response)) {
       throw new TypeError('Unexpected array JSON-RPC response')
-    } else if (parsed.id !== request.id) {
+    } else if (response.id !== request.id) {
       throw new TypeError('Id mismatched in JSON-RPC response')
-    } else if (isSuccessResponse(parsed)) {
-      return parsed.result
+    } else if (isSuccessResponse(response)) {
+      return response.result
     } else {
       throw new JsonRpcError(
-        parsed.error.code,
-        parsed.error.message,
-        parsed.error.data
+        response.error.code,
+        response.error.message,
+        response.error.data
       )
     }
   }
@@ -49,13 +48,12 @@ export abstract class JsonRpcClient {
     const jsonRpcRequests = requests.map((x) =>
       this.toRequest(x.method, x.params)
     )
-    const result = await this.execute(jsonRpcRequests)
-    const parsed = parseJsonRpcResponse(result)
-    if (!Array.isArray(parsed)) {
+    const responses = await this.execute(jsonRpcRequests)
+    if (!Array.isArray(responses)) {
       throw new TypeError('Unexpected object JSON-RPC response')
     } else {
       return jsonRpcRequests.map((request): BatchResult => {
-        const response = parsed.find((x) => x.id === request.id)
+        const response = responses.find((x) => x.id === request.id)
         if (!response) {
           return { error: new Error('Missing JSON-RPC response') }
         } else if (isSuccessResponse(response)) {
