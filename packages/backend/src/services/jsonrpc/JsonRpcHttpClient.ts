@@ -7,7 +7,7 @@ export class JsonRpcHttpClient extends JsonRpcClient {
   constructor(
     private url: string,
     private httpClient: HttpClient,
-    private logger: Logger
+    protected logger: Logger
   ) {
     super()
     this.logger = this.logger.for(this)
