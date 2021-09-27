@@ -1,18 +1,14 @@
 import { expect } from 'chai'
 
 import { EthereumClient } from '../../../src/services/ethereum'
-import {
-  JsonRpcClient,
-  JsonRpcParams,
-  JsonRpcResponse,
-} from '../../../src/services/jsonrpc'
+import { JsonRpcClient, JsonRpcParams } from '../../../src/services/jsonrpc'
 import { BigInteger } from '../../../src/services/model'
 
 describe('EthereumClient', () => {
   describe('getBlockNumber', () => {
     it('returns a block number', async () => {
       class TestJsonRpc extends JsonRpcClient {
-        execute(): Promise<JsonRpcResponse | JsonRpcResponse[]> {
+        execute(): Promise<never> {
           throw new Error('Not implemented!')
         }
         async call(method: string, params?: JsonRpcParams) {
