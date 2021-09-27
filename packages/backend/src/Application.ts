@@ -13,6 +13,6 @@ export class Application {
 
   start() {
     this.logger.info('Starting')
-    this.services.httpEndpoint.listen()
+    this.services.apiServer.listen()
   }
 }
