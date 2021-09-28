@@ -1,14 +1,14 @@
 import { expect } from 'chai'
 
 import {
-  asData,
-  asQuantity,
-  toData,
-  toQuantity,
+  asBigIntFromQuantity,
+  asBytesFromData,
+  bigIntToQuantity,
+  bytesToData,
 } from '../../../src/services/ethereum/primitives'
 import { Bytes } from '../../../src/services/model'
 
-describe('asData', () => {
+describe('asBytesFromData', () => {
   const cases = [
     { value: '0x41', expected: [0x41] },
     { value: '0x004200', expected: [0x00, 0x42, 0x00] },
@@ -26,19 +26,19 @@ describe('asData', () => {
   for (const { value, length, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => asData(value, length)).to.throw(TypeError, error)
+        expect(() => asBytesFromData(value, length)).to.throw(TypeError, error)
       })
     } else if (expected) {
       const len = length !== undefined ? ` - length ${length}` : ''
       it(`reads ${value} as ${expected}${len}`, () => {
-        const result = asData(value, length)
+        const result = asBytesFromData(value, length)
         expect(result).to.deep.equal(Bytes.fromByteArray(expected))
       })
     }
   }
 })
 
-describe('toData', () => {
+describe('bytesToData', () => {
   const cases = [
     { value: [0x41], expected: '0x41' },
     { value: [0x00, 0x42, 0x00], expected: '0x004200' },
@@ -46,13 +46,13 @@ describe('toData', () => {
   ]
   for (const { value, expected } of cases) {
     it(`converts ${value} to ${expected}`, () => {
-      const result = toData(Bytes.fromByteArray(value))
+      const result = bytesToData(Bytes.fromByteArray(value))
       expect(result).to.equal(expected)
     })
   }
 })
 
-describe('asQuantity', () => {
+describe('asBigIntFromQuantity', () => {
   const cases = [
     { value: '0x41', expected: 65n },
     { value: '0x400', expected: 1024n },
@@ -64,18 +64,18 @@ describe('asQuantity', () => {
   for (const { value, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => asQuantity(value)).to.throw(TypeError, error)
+        expect(() => asBigIntFromQuantity(value)).to.throw(TypeError, error)
       })
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
-        const result = asQuantity(value)
+        const result = asBigIntFromQuantity(value)
         expect(result).to.equal(expected)
       })
     }
   }
 })
 
-describe('toQuantity', () => {
+describe('bigIntToQuantity', () => {
   const cases = [
     { value: 65n, expected: '0x41' },
     { value: 1024n, expected: '0x400' },
@@ -85,11 +85,11 @@ describe('toQuantity', () => {
   for (const { value, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => toQuantity(value)).to.throw(TypeError, error)
+        expect(() => bigIntToQuantity(value)).to.throw(TypeError, error)
       })
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
-        const result = toQuantity(value)
+        const result = bigIntToQuantity(value)
         expect(result).to.equal(expected)
       })
     }

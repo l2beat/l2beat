@@ -9,6 +9,7 @@ export function getTestConfig(): Config {
       format: 'plain',
     },
     port: 1337,
-    ethereumJsonRpcUrl: 'https://example.com',
+    alchemyApiKey: 'xXTestAlchemyKeyXx',
+    etherscanApiKey: 'xXTestEtherscanKeyXx',
   }
 }

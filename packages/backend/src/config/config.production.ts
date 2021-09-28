@@ -10,6 +10,7 @@ export function getProductionConfig(): Config {
       format: 'plain',
     },
     port: getEnv.integer('PORT'),
-    ethereumJsonRpcUrl: getEnv('RPC_URL'),
+    alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+    etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
   }
 }
