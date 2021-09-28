@@ -6,6 +6,7 @@ import {
   EtherscanError,
 } from '../../../src/services/etherscan'
 import { HttpClient } from '../../../src/services/HttpClient'
+import { Logger } from '../../../src/services/Logger'
 
 describe('EtherscanClient', () => {
   describe('getBlockNumberAtOrBefore', () => {
@@ -29,7 +30,11 @@ describe('EtherscanClient', () => {
         )
       }
 
-      const etherscanClient = new EtherscanClient(apiKey, httpClient)
+      const etherscanClient = new EtherscanClient(
+        apiKey,
+        httpClient,
+        Logger.SILENT
+      )
       await etherscanClient.getBlockNumberAtOrBefore(timestamp)
     })
 
@@ -40,7 +45,11 @@ describe('EtherscanClient', () => {
           JSON.stringify({ status: '1', message: 'OK', result: '9251482' })
         )
 
-      const etherscanClient = new EtherscanClient('xXApiKeyXx', httpClient)
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
       const result = await etherscanClient.getBlockNumberAtOrBefore(1578638524)
       expect(result).to.equal(9251482n)
     })
@@ -52,7 +61,11 @@ describe('EtherscanClient', () => {
           JSON.stringify({ status: '0', message: 'NOTOK', result: 'Oops!' })
         )
 
-      const etherscanClient = new EtherscanClient('xXApiKeyXx', httpClient)
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
       await expect(
         etherscanClient.getBlockNumberAtOrBefore(1578638524)
       ).to.be.rejectedWith(EtherscanError, 'Oops!')
@@ -63,7 +76,11 @@ describe('EtherscanClient', () => {
       httpClient.fetch = async () =>
         new Response(JSON.stringify({ status: '2', foo: 'bar' }))
 
-      const etherscanClient = new EtherscanClient('xXApiKeyXx', httpClient)
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
       await expect(
         etherscanClient.getBlockNumberAtOrBefore(1578638524)
       ).to.be.rejectedWith(TypeError, 'Invalid Etherscan response')
@@ -73,7 +90,11 @@ describe('EtherscanClient', () => {
       const httpClient = new HttpClient()
       httpClient.fetch = async () => new Response('foo', { status: 400 })
 
-      const etherscanClient = new EtherscanClient('xXApiKeyXx', httpClient)
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
       await expect(
         etherscanClient.getBlockNumberAtOrBefore(1578638524)
       ).to.be.rejectedWith(Error, 'Http error 400: foo')
