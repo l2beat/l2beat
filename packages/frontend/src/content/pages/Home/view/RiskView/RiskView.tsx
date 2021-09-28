@@ -35,12 +35,12 @@ export function RiskView({ items }: RiskViewProps) {
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
-      name: 'Operator censoring',
-      getValue: (project) => <RiskCell item={project.operatorCensoring} />,
+      name: 'Sequencer failure',
+      getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
-      name: 'Operator down',
-      getValue: (project) => <RiskCell item={project.operatorDown} />,
+      name: 'Validator failure',
+      getValue: (project) => <RiskCell item={project.validatorFailure} />,
     },
   ]
 

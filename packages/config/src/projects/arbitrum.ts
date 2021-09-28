@@ -74,8 +74,8 @@ export const arbitrum: Project = {
       stateValidation: RISK_VIEW.STATE_FP_INT,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
-      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
+      sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+      validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     },
     technology: {
       category: {
@@ -132,6 +132,17 @@ export const arbitrum: Project = {
             {
               text: 'Rules for Confirming or Rejecting Rollup Blocks - Arbitrum documentation',
               href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
+            },
+          ],
+          risks: [
+            {
+              ...EXITS.RISK_CENTRALIZED_VALIDATOR,
+              references: [
+                {
+                  text: 'Mainnet for everyone - Arbitrum Blog',
+                  href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
+                },
+              ],
             },
           ],
         },

@@ -74,8 +74,8 @@ export const omgnetwork: Project = {
       stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
       dataAvailability: RISK_VIEW.DATA_EXTERNAL,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_EXIT_L1,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_U,
+      sequencerFailure: RISK_VIEW.SEQUENCER_EXIT_L1,
+      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,
     },
     technology: {
       category: {

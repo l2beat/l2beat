@@ -8,7 +8,7 @@ To run or develop the backend you need to install and build its dependencies. Yo
 
 ```
 yarn
-cd config && yarn build
+yarn build:mock
 ```
 
 ## Scripts

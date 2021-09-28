@@ -57,6 +57,19 @@ const STARKEX_REGULAR: ProjectTechnologyChoice = {
   ],
 }
 
+const STARKEX_REGULAR_NFT: ProjectTechnologyChoice = {
+  ...REGULAR('zk', 'no proof'),
+  description:
+    REGULAR('zk', 'no proof').description +
+    ' When withdrawing NFTs they are minted on L1.',
+  references: [
+    {
+      text: 'Withdrawal - StarkEx documentation',
+      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/withdrawal',
+    },
+  ],
+}
+
 const STARKEX_FORCED: ProjectTechnologyChoice = {
   ...FORCED,
   references: [
@@ -101,10 +114,18 @@ const PLASMA: ProjectTechnologyChoice = {
   references: [],
 }
 
+export const RISK_CENTRALIZED_VALIDATOR: ProjectRisk = {
+  category: 'Funds can be frozen if',
+  text: 'the centralized validator goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
+  isCritical: true,
+}
+
 export const EXITS = {
   REGULAR,
   FORCED,
   EMERGENCY,
   STARKEX: [STARKEX_REGULAR, STARKEX_FORCED, STARKEX_EMERGENCY],
+  STARKEX_NFT: [STARKEX_REGULAR_NFT, STARKEX_FORCED, STARKEX_EMERGENCY],
   PLASMA,
+  RISK_CENTRALIZED_VALIDATOR,
 }

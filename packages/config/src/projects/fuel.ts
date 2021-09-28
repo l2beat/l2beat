@@ -37,8 +37,8 @@ export const fuel: Project = {
       stateValidation: RISK_VIEW.STATE_FP_1R,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_NO,
-      operatorCensoring: RISK_VIEW.CENSORING_PROPOSE_BLOCKS,
-      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS,
+      sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS,
+      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS,
     },
     technology: {
       category: {

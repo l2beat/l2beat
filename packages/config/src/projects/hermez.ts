@@ -49,8 +49,8 @@ export const hermez: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
-      operatorDown: RISK_VIEW.DOWN_PROPOSE_BLOCKS_ZKP,
+      sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
     },
     technology: {
       category: {

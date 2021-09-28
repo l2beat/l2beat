@@ -49,8 +49,8 @@ export const zkswapv2: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
-      operatorCensoring: RISK_VIEW.CENSORING_FORCE_EXIT_L1,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_ZKP,
+      sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     },
     technology: {
       category: zkswap.details.technology.category,

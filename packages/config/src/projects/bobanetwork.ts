@@ -1,6 +1,7 @@
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
+  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -51,8 +52,8 @@ export const bobanetwork: Project = {
       },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      operatorCensoring: RISK_VIEW.CENSORING_TRANSACT_L1,
-      operatorDown: RISK_VIEW.DOWN_ESCAPE_MP,
+      sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+      validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     },
     technology: {
       category: {
@@ -108,16 +109,14 @@ export const bobanetwork: Project = {
       },
       exitMechanisms: [
         {
-          name: 'Regular exit',
-          description:
-            'When a user initiates a withdrawal it is processed as a L2 to L1 message. Because Boba Network is an optimistic rollup this transaction has to be included in a block and finalized. This takes several days to happen after which the funds can be withdrawn on L1.',
+          ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
               text: 'The Standard Bridge - Boba documentation',
               href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
             },
           ],
-          risks: [],
+          risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
         {
           name: 'Fast exit',

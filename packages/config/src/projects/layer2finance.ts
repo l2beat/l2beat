@@ -41,8 +41,8 @@ export const layer2finance: Project = {
       stateValidation: RISK_VIEW.STATE_FP_1R,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_NO,
-      operatorCensoring: RISK_VIEW.CENSORING_NO_MECHANISM,
-      operatorDown: RISK_VIEW.DOWN_NO_MECHANISM,
+      sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
+      validatorFailure: RISK_VIEW.VALIDATOR_NO_MECHANISM,
     },
     technology: {
       category: {
