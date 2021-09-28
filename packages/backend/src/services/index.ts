@@ -12,7 +12,7 @@ export function createServices(config: Config) {
 
   const httpClient = new HttpClient()
   const alchemyHttpClient = new AlchemyHttpClient(
-    config.ethereumJsonRpcUrl,
+    config.alchemyApiKey,
     httpClient,
     logger
   )

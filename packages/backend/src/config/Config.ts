@@ -7,5 +7,6 @@ export interface Config {
     format: 'pretty' | 'plain'
   }
   port: number
-  ethereumJsonRpcUrl: string
+  alchemyApiKey: string
+  etherscanApiKey: string
 }
