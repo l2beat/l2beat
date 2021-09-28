@@ -1,5 +1,7 @@
 import { HttpClient } from '../HttpClient'
 import { Logger } from '../Logger'
+import { RateLimiter } from '../utils/RateLimiter'
+import { retry } from '../utils/retry'
 import { asBigIntFromString } from './asBigIntFromString'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
 
@@ -14,15 +16,34 @@ export class EtherscanClient {
     this.logger = this.logger.for(this)
   }
 
+  private rateLimiter = new RateLimiter({
+    callsPerMinute: 150,
+  })
+
   async getBlockNumberAtOrBefore(unixTimestamp: number): Promise<BigInt> {
-    const result = await this.execute('block', 'getblocknobytime', {
+    const result = await this.call('block', 'getblocknobytime', {
       timestamp: unixTimestamp.toString(),
       closest: 'before',
     })
     return asBigIntFromString(result)
   }
 
-  private async execute(
+  private async call(
+    module: string,
+    action: string,
+    params: Record<string, string>
+  ) {
+    return retry(
+      () =>
+        this.rateLimiter.call(() => this.callUnsafe(module, action, params)),
+      {
+        maxRetryCount: 5,
+        minTimeout: 100,
+      }
+    )
+  }
+
+  private async callUnsafe(
     module: string,
     action: string,
     params: Record<string, string>

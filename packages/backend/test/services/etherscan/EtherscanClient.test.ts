@@ -9,6 +9,54 @@ import { HttpClient } from '../../../src/services/HttpClient'
 import { Logger } from '../../../src/services/Logger'
 
 describe('EtherscanClient', () => {
+  describe('callUnsafe', () => {
+    it('throws for error responses', async () => {
+      const httpClient = new HttpClient()
+      httpClient.fetch = async () =>
+        new Response(
+          JSON.stringify({ status: '0', message: 'NOTOK', result: 'Oops!' })
+        )
+
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
+      await expect(
+        etherscanClient['callUnsafe']('foo', 'bar', { baz: '1234' })
+      ).to.be.rejectedWith(EtherscanError, 'Oops!')
+    })
+
+    it('throws for malformed responses', async () => {
+      const httpClient = new HttpClient()
+      httpClient.fetch = async () =>
+        new Response(JSON.stringify({ status: '2', foo: 'bar' }))
+
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
+      await expect(
+        etherscanClient['callUnsafe']('foo', 'bar', { baz: '1234' })
+      ).to.be.rejectedWith(TypeError, 'Invalid Etherscan response')
+    })
+
+    it('throws for http errors', async () => {
+      const httpClient = new HttpClient()
+      httpClient.fetch = async () => new Response('foo', { status: 400 })
+
+      const etherscanClient = new EtherscanClient(
+        'xXApiKeyXx',
+        httpClient,
+        Logger.SILENT
+      )
+      await expect(
+        etherscanClient['callUnsafe']('foo', 'bar', { baz: '1234' })
+      ).to.be.rejectedWith(Error, 'Http error 400: foo')
+    })
+  })
+
   describe('getBlockNumberAtOrBefore', () => {
     it('constructs the correct url', async () => {
       const httpClient = new HttpClient()
@@ -52,52 +100,6 @@ describe('EtherscanClient', () => {
       )
       const result = await etherscanClient.getBlockNumberAtOrBefore(1578638524)
       expect(result).to.equal(9251482n)
-    })
-
-    it('throws for error responses', async () => {
-      const httpClient = new HttpClient()
-      httpClient.fetch = async () =>
-        new Response(
-          JSON.stringify({ status: '0', message: 'NOTOK', result: 'Oops!' })
-        )
-
-      const etherscanClient = new EtherscanClient(
-        'xXApiKeyXx',
-        httpClient,
-        Logger.SILENT
-      )
-      await expect(
-        etherscanClient.getBlockNumberAtOrBefore(1578638524)
-      ).to.be.rejectedWith(EtherscanError, 'Oops!')
-    })
-
-    it('throws for malformed responses', async () => {
-      const httpClient = new HttpClient()
-      httpClient.fetch = async () =>
-        new Response(JSON.stringify({ status: '2', foo: 'bar' }))
-
-      const etherscanClient = new EtherscanClient(
-        'xXApiKeyXx',
-        httpClient,
-        Logger.SILENT
-      )
-      await expect(
-        etherscanClient.getBlockNumberAtOrBefore(1578638524)
-      ).to.be.rejectedWith(TypeError, 'Invalid Etherscan response')
-    })
-
-    it('throws for http errors', async () => {
-      const httpClient = new HttpClient()
-      httpClient.fetch = async () => new Response('foo', { status: 400 })
-
-      const etherscanClient = new EtherscanClient(
-        'xXApiKeyXx',
-        httpClient,
-        Logger.SILENT
-      )
-      await expect(
-        etherscanClient.getBlockNumberAtOrBefore(1578638524)
-      ).to.be.rejectedWith(Error, 'Http error 400: foo')
     })
   })
 })
