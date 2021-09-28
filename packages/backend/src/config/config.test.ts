@@ -9,5 +9,7 @@ export function getTestConfig(): Config {
       format: 'plain',
     },
     port: 1337,
+    alchemyApiKey: 'xXTestAlchemyKeyXx',
+    etherscanApiKey: 'xXTestEtherscanKeyXx',
   }
 }

@@ -7,4 +7,6 @@ export interface Config {
     format: 'pretty' | 'plain'
   }
   port: number
+  alchemyApiKey: string
+  etherscanApiKey: string
 }

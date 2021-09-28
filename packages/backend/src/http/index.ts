@@ -1,1 +1,0 @@
-export { HttpEndpoint } from './HttpEndpoint'

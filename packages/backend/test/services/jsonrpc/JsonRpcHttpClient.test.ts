@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { Response } from 'node-fetch'
 
 import { HttpClient } from '../../../src/services/HttpClient'
-import { JsonRpcHttpClient } from '../../../src/services/jsonrpc'
+import { JsonRpcError, JsonRpcHttpClient } from '../../../src/services/jsonrpc'
 import { Logger } from '../../../src/services/Logger'
 
 describe('JsonRpcHttpClient', () => {
@@ -39,7 +39,7 @@ describe('JsonRpcHttpClient', () => {
     expect(result).to.equal('ok')
   })
 
-  it('throws for non-2XX response', async () => {
+  it('throws for non-json response', async () => {
     const httpClient = new HttpClient()
     const client = new JsonRpcHttpClient(
       'https://jsonrpc.test.url',
@@ -49,11 +49,11 @@ describe('JsonRpcHttpClient', () => {
     httpClient.fetch = async () => new Response('blah')
     await expect(client.call('foo')).to.be.rejectedWith(
       TypeError,
-      'Invalid JSON received'
+      'Invalid JSON-RPC response'
     )
   })
 
-  it('throws for non-json response', async () => {
+  it('throws for non-2XX response', async () => {
     const httpClient = new HttpClient()
     const client = new JsonRpcHttpClient(
       'https://jsonrpc.test.url',
@@ -65,5 +65,27 @@ describe('JsonRpcHttpClient', () => {
       Error,
       'Http error 400: foobar'
     )
+  })
+
+  it('throws JsonRpcError for JSON-RPC error response', async () => {
+    const httpClient = new HttpClient()
+    const client = new JsonRpcHttpClient(
+      'https://jsonrpc.test.url',
+      httpClient,
+      Logger.SILENT
+    )
+    httpClient.fetch = async () =>
+      new Response(
+        JSON.stringify({
+          jsonrpc: '2.0',
+          id: 1337,
+          error: {
+            code: 1234,
+            message: 'boo',
+          },
+        }),
+        { status: 400 }
+      )
+    await expect(client.call('foo')).to.be.rejectedWith(JsonRpcError)
   })
 })
