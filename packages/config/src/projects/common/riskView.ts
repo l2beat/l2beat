@@ -102,14 +102,14 @@ export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
 export const SEQUENCER_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
   value: 'Force trade / exit to L1',
   description:
-    'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means.',
+    'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
   sentiment: 'warning',
 }
 
 export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
   value: 'Force exit to L1',
   description:
-    'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1.',
+    'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
 }
 
 export const SEQUENCER_FORCE_EXIT_L1: ProjectRiskViewEntry = {
@@ -162,8 +162,7 @@ export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
 export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
   ...VALIDATOR_ESCAPE_MP,
   description:
-    VALIDATOR_ESCAPE_MP.description +
-    ' Positions will be closed using average price from the last state update.',
+    'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
 }
 
 export const VALIDATOR_ESCAPE_STARKEX_NFT: ProjectRiskViewEntry = {
@@ -200,7 +199,7 @@ export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
 export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'If the whitelisted validator goes down, no activity including withdrawals can happen.',
+    'If the whitelisted validator goes down, no activity including withdrawals can happen. Funds will be frozen.',
   sentiment: 'bad',
 }
 
