@@ -1,7 +1,7 @@
 import { as } from '../cast'
 import { Bytes } from '../model'
 
-export function asData(value: unknown, length?: number) {
+export function asBytesFromData(value: unknown, length?: number) {
   const parsed = as.string(value)
   if (!parsed.startsWith('0x')) {
     throw new TypeError('Data must start with 0x')
@@ -19,11 +19,11 @@ export function asData(value: unknown, length?: number) {
   }
 }
 
-export function toData(value: Bytes): string {
+export function bytesToData(value: Bytes): string {
   return `0x${value.toHex()}`
 }
 
-export const asQuantity = as.mapped(as.string, (value: string) => {
+export const asBigIntFromQuantity = as.mapped(as.string, (value: string) => {
   if (!value.startsWith('0x')) {
     throw new TypeError('Quantity must start with 0x')
   }
@@ -37,7 +37,7 @@ export const asQuantity = as.mapped(as.string, (value: string) => {
   }
 })
 
-export function toQuantity(value: BigInt): string {
+export function bigIntToQuantity(value: BigInt): string {
   if (value < 0n) {
     throw new TypeError('Quantity cannot be a negative integer')
   }

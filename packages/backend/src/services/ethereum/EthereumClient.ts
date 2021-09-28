@@ -1,12 +1,12 @@
 import { JsonRpcClient, JsonRpcParams } from '../jsonrpc'
-import { asQuantity } from './primitives'
+import { asBigIntFromQuantity } from './primitives'
 
 export class EthereumClient {
   constructor(private jsonRpcClient: JsonRpcClient) {}
 
   async getBlockNumber() {
     const result = await this.execute('eth_blockNumber')
-    return asQuantity(result)
+    return asBigIntFromQuantity(result)
   }
 
   protected execute(method: string, params?: JsonRpcParams) {
