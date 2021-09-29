@@ -37,6 +37,8 @@
     "@types/chai-as-promised": "^7.1.4",
     "@types/supertest": "^2.0.11",
     "chai-as-promised": "^7.1.1",
+    "knex": "^0.95.11",
+    "pg": "^8.7.1",
     "supertest": "^6.1.6"
   }
 }
