@@ -8,7 +8,7 @@ export function createApiLogger(logger: Logger) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const start: number = ctx[key as any]?.getTime?.() ?? Date.now()
 
-    logger.info(`> ${ctx.method} ${ctx.originalUrl}`)
+    logger.info({ type: 'request', method: ctx.method, url: ctx.originalUrl })
 
     try {
       await next()
@@ -23,16 +23,18 @@ export function createApiLogger(logger: Logger) {
       res.removeListener('finish', done)
       res.removeListener('close', done)
 
-      const time = getTimeDelta(start)
-      logger.info(`< ${ctx.status} ${time} ${ctx.method} ${ctx.originalUrl}`)
+      const timeMs = Date.now() - start
+
+      logger.info({
+        type: 'response',
+        status: ctx.status,
+        timeMs,
+        method: ctx.method,
+        url: ctx.originalUrl,
+      })
     }
 
     res.once('finish', done)
     res.once('close', done)
   }
-}
-
-function getTimeDelta(start: number) {
-  const delta = Date.now() - start
-  return delta < 10000 ? delta + 'ms' : Math.round(delta / 1000) + 's'
 }
