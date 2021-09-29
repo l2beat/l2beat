@@ -59,4 +59,34 @@ describe('UnixTime', () => {
       expect(start.toDate()).to.deep.equal(new Date('2021-09-07T12:00:00Z'))
     })
   })
+
+  describe('comparison methods', () => {
+    const testCases = [
+      { a: 4, method: 'lt' as const, b: 3, result: false },
+      { a: 4, method: 'lt' as const, b: 4, result: false },
+      { a: 4, method: 'lt' as const, b: 5, result: true },
+
+      { a: 4, method: 'lte' as const, b: 3, result: false },
+      { a: 4, method: 'lte' as const, b: 4, result: true },
+      { a: 4, method: 'lte' as const, b: 5, result: true },
+
+      { a: 4, method: 'gt' as const, b: 3, result: true },
+      { a: 4, method: 'gt' as const, b: 4, result: false },
+      { a: 4, method: 'gt' as const, b: 5, result: false },
+
+      { a: 4, method: 'gte' as const, b: 3, result: true },
+      { a: 4, method: 'gte' as const, b: 4, result: true },
+      { a: 4, method: 'gte' as const, b: 5, result: false },
+
+      { a: 4, method: 'equals' as const, b: 3, result: false },
+      { a: 4, method: 'equals' as const, b: 4, result: true },
+      { a: 4, method: 'equals' as const, b: 5, result: false },
+    ]
+
+    for (const { a, method, b, result } of testCases) {
+      it(`${a}.${method}(${b}) = ${result}`, () => {
+        expect(new UnixTime(a)[method](new UnixTime(b))).to.equal(result)
+      })
+    }
+  })
 })

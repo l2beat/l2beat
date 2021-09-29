@@ -35,6 +35,26 @@ export class UnixTime {
     return new UnixTime(this.timestamp + value * unit)
   }
 
+  equals(other: UnixTime) {
+    return this.timestamp === other.timestamp
+  }
+
+  lt(other: UnixTime) {
+    return this.timestamp < other.timestamp
+  }
+
+  lte(other: UnixTime) {
+    return this.timestamp <= other.timestamp
+  }
+
+  gt(other: UnixTime) {
+    return this.timestamp > other.timestamp
+  }
+
+  gte(other: UnixTime) {
+    return this.timestamp >= other.timestamp
+  }
+
   toNumber() {
     return this.timestamp
   }
