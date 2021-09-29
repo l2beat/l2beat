@@ -9,4 +9,5 @@ export interface Config {
   port: number
   alchemyApiKey: string
   etherscanApiKey: string
+  databaseUrl: string
 }
