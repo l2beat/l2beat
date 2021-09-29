@@ -15,11 +15,12 @@ export class JsonRpcHttpClient extends JsonRpcClient {
   }
 
   async execute(request: JsonRpcRequest | JsonRpcRequest[]) {
-    const name = Array.isArray(request)
-      ? `batch(${request.length}) id:${request[0].id}`
-      : `${request.method} id:${request.id}`
+    const method = Array.isArray(request)
+      ? `batch(${request.length})`
+      : request.method
+    const id = (Array.isArray(request) ? request[0].id : request.id) ?? 'null'
 
-    this.logger.debug(`> ${name}`)
+    this.logger.debug({ type: 'request', method, id })
     const res = await this.httpClient.fetch(this.url, {
       method: 'POST',
       headers: {
@@ -27,7 +28,7 @@ export class JsonRpcHttpClient extends JsonRpcClient {
       },
       body: JSON.stringify(request),
     })
-    this.logger.debug(`< ${res.status} ${name}`)
+    this.logger.debug({ type: 'response', status: res.status, method, id })
 
     const text = await res.text()
     if (!res.ok) {

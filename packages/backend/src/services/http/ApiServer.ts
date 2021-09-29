@@ -25,7 +25,7 @@ export class ApiServer {
 
   listen() {
     return this.app.listen(this.port, () => {
-      this.logger.info(`Listening on port ${this.port}`)
+      this.logger.info({ message: 'Listening', port: this.port })
     })
   }
 }

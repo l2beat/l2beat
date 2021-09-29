@@ -55,11 +55,10 @@ export class EtherscanClient {
       apikey: this.etherscanApiKey,
     })
 
-    const name = `${module}.${action}`
-    this.logger.debug(`> ${name}`)
+    this.logger.debug({ type: 'request', module, action })
     const url = `https://api.etherscan.io/api?${query}`
     const res = await this.httpClient.fetch(url)
-    this.logger.debug(`< ${res.status} ${name}`)
+    this.logger.debug({ type: 'response', status: res.status, module, action })
 
     const text = await res.text()
     if (!res.ok) {
