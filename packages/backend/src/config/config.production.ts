@@ -12,5 +12,6 @@ export function getProductionConfig(): Config {
     port: getEnv.integer('PORT'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+    databaseUrl: getEnv('DATABASE_URL'),
   }
 }

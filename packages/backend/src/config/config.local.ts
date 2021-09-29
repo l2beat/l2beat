@@ -15,5 +15,6 @@ export function getLocalConfig(): Config {
     port: getEnv.integer('PORT', 3000),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+    databaseUrl: getEnv('LOCAL_DB_URL'),
   }
 }
