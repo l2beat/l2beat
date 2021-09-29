@@ -14,5 +14,6 @@ export class Application {
   start() {
     this.logger.info('Starting')
     this.services.apiServer.listen()
+    this.services.reportCreator.startBackgroundWork()
   }
 }

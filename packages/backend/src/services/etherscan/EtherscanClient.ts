@@ -1,5 +1,6 @@
 import { HttpClient } from '../HttpClient'
 import { Logger } from '../Logger'
+import { UnixTime } from '../model/UnixTime'
 import { RateLimiter } from '../utils/RateLimiter'
 import { retry } from '../utils/retry'
 import { asBigIntFromString } from './asBigIntFromString'
@@ -20,9 +21,9 @@ export class EtherscanClient {
     callsPerMinute: 150,
   })
 
-  async getBlockNumberAtOrBefore(unixTimestamp: number): Promise<BigInt> {
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<BigInt> {
     const result = await this.call('block', 'getblocknobytime', {
-      timestamp: unixTimestamp.toString(),
+      timestamp: timestamp.toString(),
       closest: 'before',
     })
     return asBigIntFromString(result)
