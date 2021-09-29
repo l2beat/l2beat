@@ -7,6 +7,7 @@ import {
 } from '../../../src/services/etherscan'
 import { HttpClient } from '../../../src/services/HttpClient'
 import { Logger } from '../../../src/services/Logger'
+import { UnixTime } from '../../../src/services/model/UnixTime'
 
 describe('EtherscanClient', () => {
   describe('callUnsafe', () => {
@@ -61,7 +62,7 @@ describe('EtherscanClient', () => {
     it('constructs the correct url', async () => {
       const httpClient = new HttpClient()
       const apiKey = 'xXApiKeyXx'
-      const timestamp = 1578638524
+      const timestamp = new UnixTime(1578638524)
 
       const params = new URLSearchParams({
         module: 'block',
@@ -98,7 +99,9 @@ describe('EtherscanClient', () => {
         httpClient,
         Logger.SILENT
       )
-      const result = await etherscanClient.getBlockNumberAtOrBefore(1578638524)
+      const result = await etherscanClient.getBlockNumberAtOrBefore(
+        new UnixTime(1578638524)
+      )
       expect(result).to.equal(9251482n)
     })
   })
