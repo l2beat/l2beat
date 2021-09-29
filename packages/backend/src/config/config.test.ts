@@ -15,6 +15,6 @@ export function getTestConfig(): Config {
     port: 1337,
     alchemyApiKey: 'xXTestAlchemyKeyXx',
     etherscanApiKey: 'xXTestEtherscanKeyXx',
-    databaseUrl: getEnv('LOCAL_DB_URL', ''),
+    databaseUrl: getEnv('TEST_DB_URL', 'xXTestDatabaseUrlXx'),
   }
 }
