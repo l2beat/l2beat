@@ -1,4 +1,5 @@
 import { Config } from '../config'
+import { DatabaseService } from './database/DatabaseService'
 import { AlchemyHttpClient, EthereumClient } from './ethereum'
 import { EtherscanClient } from './etherscan'
 import { HelloService } from './HelloService'
@@ -12,6 +13,9 @@ export type Services = ReturnType<typeof createServices>
 
 export function createServices(config: Config) {
   const logger = new Logger(config.logger)
+
+  const knex = DatabaseService.createKnexInstance(config.databaseUrl)
+  const databaseService = new DatabaseService(knex, logger)
 
   const httpClient = new HttpClient()
   const alchemyHttpClient = new AlchemyHttpClient(
@@ -44,6 +48,7 @@ export function createServices(config: Config) {
 
   return {
     logger,
+    databaseService,
     apiServer,
     reportCreator,
   }

@@ -11,8 +11,9 @@ export class Application {
     this.logger = this.services.logger.for(this)
   }
 
-  start() {
+  async start() {
     this.logger.info('Starting')
+    await this.services.databaseService.migrateToLatest()
     this.services.apiServer.listen()
     this.services.reportCreator.startBackgroundWork()
   }
