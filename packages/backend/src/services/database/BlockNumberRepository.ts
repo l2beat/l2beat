@@ -2,7 +2,7 @@ import { Knex } from 'knex'
 
 import { UnixTime } from '../model/UnixTime'
 
-export interface BlockNumberEntry {
+export interface BlockNumberRecord {
   timestamp: UnixTime
   blockNumber: BigInt
 }
@@ -10,14 +10,14 @@ export interface BlockNumberEntry {
 export class BlockNumberRepository {
   constructor(private knex: Knex) {}
 
-  async add(entry: BlockNumberEntry) {
+  async add(entry: BlockNumberRecord) {
     await this.knex('block_numbers').insert({
       unix_timestamp: entry.timestamp.toString(),
       block_number: Number(entry.blockNumber),
     })
   }
 
-  async getAll(): Promise<BlockNumberEntry[]> {
+  async getAll(): Promise<BlockNumberRecord[]> {
     const result = await this.knex('block_numbers').select(
       'unix_timestamp',
       'block_number'
