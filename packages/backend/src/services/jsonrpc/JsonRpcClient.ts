@@ -1,5 +1,9 @@
-import { JsonRpcResponse } from '.'
-import { isSuccessResponse, JsonRpcParams, JsonRpcRequest } from './types'
+import {
+  isSuccessResponse,
+  JsonRpcParams,
+  JsonRpcRequest,
+  JsonRpcResponse,
+} from './types'
 
 export interface ExecuteJsonRpc {
   (data: JsonRpcRequest | JsonRpcRequest[]): Promise<unknown>
