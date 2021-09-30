@@ -3,8 +3,8 @@ import { Bytes } from '../model'
 export class KeccakHash {
   private bytes: Bytes
 
-  constructor(hex: string) {
-    this.bytes = Bytes.fromHex(hex)
+  constructor(bytes: string | Bytes) {
+    this.bytes = bytes instanceof Bytes ? bytes : Bytes.fromHex(bytes)
     if (this.bytes.length !== 32) {
       throw new TypeError('KeccakHash must be exactly 32 bytes')
     }

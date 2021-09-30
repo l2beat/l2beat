@@ -1,8 +1,10 @@
 import { expect } from 'chai'
 
+import { KeccakHash } from '../../../src/services/ethereum'
 import {
   asBigIntFromQuantity,
   asBytesFromData,
+  asKeccakHashFromData,
   bigIntToQuantity,
   blockTagToString,
 } from '../../../src/services/ethereum/primitives'
@@ -36,6 +38,22 @@ describe('asBytesFromData', () => {
       })
     }
   }
+})
+
+describe('asKeccakHashFromData', () => {
+  const hash =
+    '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
+
+  it('correctly reads a 32 byte hash', () => {
+    expect(() => asKeccakHashFromData(hash)).to.deep.equal(new KeccakHash(hash))
+  })
+
+  it('throws for shorter bytes', () => {
+    expect(() => asBytesFromData('0x1234')).to.throw(
+      TypeError,
+      'KeccakHash must be exactly 32 bytes'
+    )
+  })
 })
 
 describe('asBigIntFromQuantity', () => {

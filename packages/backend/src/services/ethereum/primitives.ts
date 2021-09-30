@@ -1,6 +1,7 @@
 import { as } from '../cast'
 import { Bytes } from '../model'
 import { BlockTag } from './EthereumClient'
+import { KeccakHash } from './KeccakHash'
 
 export function asBytesFromData(value: unknown, length?: number) {
   const parsed = as.string(value)
@@ -19,6 +20,11 @@ export function asBytesFromData(value: unknown, length?: number) {
     throw new TypeError('Data must be a hex string')
   }
 }
+
+export const asKeccakHashFromData = as.mapped(
+  asBytesFromData,
+  (bytes) => new KeccakHash(bytes)
+)
 
 export const asBigIntFromQuantity = as.mapped(as.string, (value: string) => {
   if (!value.startsWith('0x')) {

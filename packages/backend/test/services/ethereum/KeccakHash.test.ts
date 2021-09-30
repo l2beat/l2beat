@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 
 import { KeccakHash } from '../../../src/services/ethereum'
+import { Bytes } from '../../../src/services/model'
 
 describe('KeccakHash', () => {
   it('accepts lowercase hashes', () => {
@@ -14,6 +15,14 @@ describe('KeccakHash', () => {
     const hash = new KeccakHash(
       '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
     )
+    expect(hash).to.be.instanceOf(KeccakHash)
+  })
+
+  it('accepts bytes', () => {
+    const bytes = Bytes.fromHex(
+      '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
+    )
+    const hash = new KeccakHash(bytes)
     expect(hash).to.be.instanceOf(KeccakHash)
   })
 
