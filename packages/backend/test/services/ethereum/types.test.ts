@@ -20,7 +20,7 @@ describe('asRpcBlock', () => {
 
   for (const { type, provider, data } of testCases) {
     it(`handles ${type} block from ${provider}`, () => {
-      const result = asRpcBlock(pendingBlockAlchemy)
+      const result = asRpcBlock(data)
       expect(result).not.to.equal(undefined)
     })
   }

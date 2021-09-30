@@ -12,19 +12,19 @@ import {
 
 export interface RpcBlock {
   /** The block number. Missing for pending block. */
-  number?: BigInt
+  number: BigInt | undefined
   /** Hash of the block. Missing for pending block. */
-  hash?: KeccakHash
+  hash: KeccakHash | undefined
   /** Hash of the parent block. */
   parentHash: KeccakHash
   /** Hash of the generated proof-of-work - 8 bytes. Missing for pending block. */
-  nonce?: Bytes
+  nonce: Bytes | undefined
   /** MixHash is the hash that was used as an input to the PoW process. */
   mixHash: KeccakHash
   /** SHA3 of the uncles data in the block. */
   sha3Uncles: KeccakHash
   /** The bloom filter for the logs of the block - 256 bytes. Missing for pending block. */
-  logsBloom?: Bytes
+  logsBloom: Bytes | undefined
   /** The root of the transaction trie of the block. */
   transactionsRoot: KeccakHash
   /** The root of the final state trie of the block. */
@@ -32,11 +32,11 @@ export interface RpcBlock {
   /** The root of the receipts trie of the block. */
   receiptsRoot: KeccakHash
   /** The address of the beneficiary to whom the mining rewards were given. Missing for pending block. */
-  miner?: EthereumAddress
+  miner: EthereumAddress | undefined
   /** Integer of the difficulty for this block. */
   difficulty: BigInt
   /** Integer of the total difficulty of the chain until this block. Missing for pending block. */
-  totalDifficulty?: BigInt
+  totalDifficulty: BigInt | undefined
   /** The “extra data” field of this block. */
   extraData: Bytes
   /** Integer the size of this block in bytes. */
@@ -46,7 +46,7 @@ export interface RpcBlock {
   /** The total used gas by all transactions in this block. */
   gasUsed: BigInt
   /** The fee per unit of gas burned by the protocol in this block. Missing in older blocks. */
-  baseFeePerGas?: BigInt
+  baseFeePerGas: BigInt | undefined
   /** The unix timestamp for when the block was collated. */
   timestamp: UnixTime
   /** Array of transaction hashes. */
@@ -55,7 +55,7 @@ export interface RpcBlock {
   uncles: KeccakHash[]
 }
 
-export const asRpcBlock = as.object({
+export const asRpcBlock = as.object<RpcBlock>({
   number: as.optional(asBigIntFromQuantity),
   hash: as.optional(asKeccakHashFromData),
   parentHash: asKeccakHashFromData,
