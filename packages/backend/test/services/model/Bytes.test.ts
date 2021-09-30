@@ -11,7 +11,7 @@ describe('Bytes', () => {
 
     it('normalizes the input', () => {
       const bytes = Bytes.fromHex('0x123')
-      expect(bytes.toHex()).to.equal('0123')
+      expect(bytes.toString()).to.equal('0x0123')
     })
   })
 
@@ -24,12 +24,12 @@ describe('Bytes', () => {
 
     it('encodes 0 as 00', () => {
       const bytes = Bytes.fromByte(0)
-      expect(bytes.toHex()).to.equal('00')
+      expect(bytes.toString()).to.equal('0x00')
     })
 
     it('encodes the byte', () => {
       const bytes = Bytes.fromByte(0xfa)
-      expect(bytes.toHex()).to.equal('fa')
+      expect(bytes.toString()).to.equal('0xfa')
     })
   })
 
@@ -41,12 +41,12 @@ describe('Bytes', () => {
 
     it('encodes 0 as a empty', () => {
       const bytes = Bytes.fromNumber(0)
-      expect(bytes.toHex()).to.equal('')
+      expect(bytes.toString()).to.equal('0x')
     })
 
     it('encodes a number', () => {
       const bytes = Bytes.fromNumber(123456)
-      expect(bytes.toHex()).to.equal('01e240')
+      expect(bytes.toString()).to.equal('0x01e240')
     })
   })
 
@@ -59,7 +59,7 @@ describe('Bytes', () => {
 
     it('concatenates encoded bytes', () => {
       const bytes = Bytes.fromByteArray([0, 1, 2, 3])
-      expect(bytes.toHex()).to.equal('00010203')
+      expect(bytes.toString()).to.equal('0x00010203')
     })
   })
 
@@ -104,14 +104,14 @@ describe('Bytes', () => {
     })
   })
 
-  describe('toHex', () => {
-    it('encodes empty as ""', () => {
-      expect(Bytes.EMPTY.toHex()).to.equal('')
+  describe('toString', () => {
+    it('encodes empty as "0x"', () => {
+      expect(Bytes.EMPTY.toString()).to.equal('0x')
     })
 
     it('encodes bytes as normalized hex string', () => {
       const bytes = Bytes.fromHex('aBcD123')
-      expect(bytes.toHex()).to.equal('0abcd123')
+      expect(bytes.toString()).to.equal('0x0abcd123')
     })
   })
 

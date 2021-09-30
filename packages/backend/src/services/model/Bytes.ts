@@ -18,7 +18,7 @@ export class Bytes {
     if (!isByte(value)) {
       throw new TypeError('Byte expected')
     }
-    return new Bytes(numberToHex(value))
+    return new Bytes(numberToString(value))
   }
 
   static fromNumber(value: number) {
@@ -28,14 +28,14 @@ export class Bytes {
     if (value === 0) {
       return Bytes.EMPTY
     }
-    return new Bytes(numberToHex(value))
+    return new Bytes(numberToString(value))
   }
 
   static fromByteArray(value: number[]) {
     if (!Array.isArray(value) || !value.every(isByte)) {
       throw new TypeError('Array of bytes expected')
     }
-    return new Bytes(value.map(numberToHex).join(''))
+    return new Bytes(value.map(numberToString).join(''))
   }
 
   equals(other: Bytes) {
@@ -54,8 +54,8 @@ export class Bytes {
     return array
   }
 
-  toHex() {
-    return this.value
+  toString() {
+    return `0x${this.value}`
   }
 
   toBuffer() {
@@ -97,7 +97,7 @@ function normalizeHexLength(hex: string) {
   return hex.length % 2 === 0 ? hex : '0' + hex
 }
 
-function numberToHex(value: number) {
+function numberToString(value: number) {
   return normalizeHexLength(value.toString(16))
 }
 

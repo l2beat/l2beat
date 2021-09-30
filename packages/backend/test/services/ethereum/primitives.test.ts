@@ -5,7 +5,6 @@ import {
   asBytesFromData,
   bigIntToQuantity,
   blockTagToString,
-  bytesToData,
 } from '../../../src/services/ethereum/primitives'
 import { Bytes } from '../../../src/services/model'
 
@@ -36,20 +35,6 @@ describe('asBytesFromData', () => {
         expect(result).to.deep.equal(Bytes.fromByteArray(expected))
       })
     }
-  }
-})
-
-describe('bytesToData', () => {
-  const cases = [
-    { value: [0x41], expected: '0x41' },
-    { value: [0x00, 0x42, 0x00], expected: '0x004200' },
-    { value: [], expected: '0x' },
-  ]
-  for (const { value, expected } of cases) {
-    it(`converts ${value} to ${expected}`, () => {
-      const result = bytesToData(Bytes.fromByteArray(value))
-      expect(result).to.equal(expected)
-    })
   }
 })
 

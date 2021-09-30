@@ -20,10 +20,6 @@ export function asBytesFromData(value: unknown, length?: number) {
   }
 }
 
-export function bytesToData(value: Bytes): string {
-  return `0x${value.toHex()}`
-}
-
 export const asBigIntFromQuantity = as.mapped(as.string, (value: string) => {
   if (!value.startsWith('0x')) {
     throw new TypeError('Quantity must start with 0x')
