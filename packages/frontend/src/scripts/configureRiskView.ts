@@ -21,8 +21,8 @@ export function configureRiskView() {
   })
 
   function toggleRiskView(show: boolean) {
-    buttons[show ? 0 : 1].classList.remove('active')
-    buttons[show ? 1 : 0].classList.add('active')
+    buttons[show ? 0 : 1]?.classList.remove('active')
+    buttons[show ? 1 : 0]?.classList.add('active')
 
     views[show ? 0 : 1]?.classList.remove('active')
     views[show ? 1 : 0]?.classList.add('active')
