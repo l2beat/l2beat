@@ -10,7 +10,7 @@ export function createReportRouter(reportCreator: ReportCreator) {
     ctx.body = {
       report:
         report?.map((x) => ({
-          time: x.time.toDate().toISOString(),
+          time: x.timestamp.toDate().toISOString(),
           blockNumber: x.blockNumber.toString(),
         })) ?? null,
     }

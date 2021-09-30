@@ -1,10 +1,13 @@
 import { expect } from 'chai'
 
+import { EthereumAddress, KeccakHash } from '../../../src/services/ethereum'
 import {
   asBigIntFromQuantity,
   asBytesFromData,
+  asEthereumAddressFromData,
+  asKeccakHashFromData,
   bigIntToQuantity,
-  bytesToData,
+  blockTagToString,
 } from '../../../src/services/ethereum/primitives'
 import { Bytes } from '../../../src/services/model'
 
@@ -38,18 +41,37 @@ describe('asBytesFromData', () => {
   }
 })
 
-describe('bytesToData', () => {
-  const cases = [
-    { value: [0x41], expected: '0x41' },
-    { value: [0x00, 0x42, 0x00], expected: '0x004200' },
-    { value: [], expected: '0x' },
-  ]
-  for (const { value, expected } of cases) {
-    it(`converts ${value} to ${expected}`, () => {
-      const result = bytesToData(Bytes.fromByteArray(value))
-      expect(result).to.equal(expected)
-    })
-  }
+describe('asEthereumAddressFromData', () => {
+  const address = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+
+  it('correctly reads a 20 byte address', () => {
+    expect(asEthereumAddressFromData(address)).to.deep.equal(
+      new EthereumAddress(address)
+    )
+  })
+
+  it('throws for shorter bytes', () => {
+    expect(() => asEthereumAddressFromData('0x1234')).to.throw(
+      TypeError,
+      'Invalid address'
+    )
+  })
+})
+
+describe('asKeccakHashFromData', () => {
+  const hash =
+    '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
+
+  it('correctly reads a 32 byte hash', () => {
+    expect(asKeccakHashFromData(hash)).to.deep.equal(new KeccakHash(hash))
+  })
+
+  it('throws for shorter bytes', () => {
+    expect(() => asKeccakHashFromData('0x1234')).to.throw(
+      TypeError,
+      'KeccakHash must be exactly 32 bytes'
+    )
+  })
 })
 
 describe('asBigIntFromQuantity', () => {
@@ -94,4 +116,14 @@ describe('bigIntToQuantity', () => {
       })
     }
   }
+})
+
+describe('blockTagToString', () => {
+  it('converts numbers to quantities', () => {
+    expect(blockTagToString(2n)).to.equal('0x2')
+  })
+
+  it('leaves strings untouched', () => {
+    expect(blockTagToString('latest')).to.equal('latest')
+  })
 })

@@ -13,7 +13,10 @@ export class Application {
 
   async start() {
     this.logger.info('Starting')
+
     await this.services.databaseService.migrateToLatest()
+    await this.services.reportRangeService.initialize()
+
     this.services.apiServer.listen()
     this.services.reportCreator.startBackgroundWork()
   }

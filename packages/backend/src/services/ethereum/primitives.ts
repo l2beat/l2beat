@@ -1,5 +1,8 @@
 import { as } from '../cast'
 import { Bytes } from '../model'
+import { EthereumAddress } from '.'
+import { BlockTag } from './EthereumClient'
+import { KeccakHash } from './KeccakHash'
 
 export function asBytesFromData(value: unknown, length?: number) {
   const parsed = as.string(value)
@@ -19,9 +22,15 @@ export function asBytesFromData(value: unknown, length?: number) {
   }
 }
 
-export function bytesToData(value: Bytes): string {
-  return `0x${value.toHex()}`
-}
+export const asEthereumAddressFromData = as.mapped(
+  asBytesFromData,
+  (bytes) => new EthereumAddress(bytes.toString())
+)
+
+export const asKeccakHashFromData = as.mapped(
+  asBytesFromData,
+  (bytes) => new KeccakHash(bytes)
+)
 
 export const asBigIntFromQuantity = as.mapped(as.string, (value: string) => {
   if (!value.startsWith('0x')) {
@@ -42,4 +51,12 @@ export function bigIntToQuantity(value: BigInt): string {
     throw new TypeError('Quantity cannot be a negative integer')
   }
   return `0x${value.toString(16)}`
+}
+
+export function blockTagToString(value: BlockTag) {
+  if (typeof value === 'string') {
+    return value
+  } else {
+    return bigIntToQuantity(value)
+  }
 }

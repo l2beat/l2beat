@@ -1,15 +1,14 @@
 import { EthereumClient } from '../ethereum'
-import { EtherscanClient } from '../etherscan'
 import { Logger } from '../Logger'
 import { UnixTime } from '../model/UnixTime'
+import { ReportRangeService } from './ReportRangeService'
 
-export type Report = { time: UnixTime; blockNumber: BigInt }[]
+export type Report = { timestamp: UnixTime; blockNumber: BigInt }[]
 
 export class ReportCreator {
   constructor(
-    private minTimestamp: UnixTime,
     private ethereumClient: EthereumClient,
-    private etherscanClient: EtherscanClient,
+    private reportRangeService: ReportRangeService,
     private logger: Logger
   ) {
     this.logger = this.logger.for(this)
@@ -24,20 +23,19 @@ export class ReportCreator {
   async createReport(time: UnixTime) {
     this.logger.info('Creating report', { time: time.toNumber() })
 
-    const start = time.toStartOf('hour')
-    const lastDay = new Array(24)
-      .fill(0)
-      .map((_, i) => start.add(-i, 'hours'))
-      .filter((time) => time.gte(this.minTimestamp))
-    const maxBlock = (await this.ethereumClient.getBlockNumber()) - 100n
+    const start = await this.getStartTimestamp()
+    const range = await this.reportRangeService.getRange(start)
 
-    const blocks = await Promise.all(
-      lastDay.map(async (time) => ({
-        time: time,
-        blockNumber: await this.etherscanClient.getBlockNumberAtOrBefore(time),
-      }))
-    )
-    this.newestReport = blocks.filter((x) => x.blockNumber <= maxBlock)
+    this.newestReport = range
+    this.logger.info('Report created')
+  }
+
+  private async getStartTimestamp() {
+    const lastBlock = await this.ethereumClient.getBlockNumber()
+    // we use a block in the past to not have to worry about reorgs
+    const maxBlock = lastBlock - 100n
+    const { timestamp } = await this.ethereumClient.getBlock(maxBlock)
+    return timestamp
   }
 
   startBackgroundWork() {
