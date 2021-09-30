@@ -24,20 +24,27 @@ export class ReportCreator {
   async createReport(time: UnixTime) {
     this.logger.info('Creating report', { time: time.toNumber() })
 
-    const start = time.toStartOf('hour')
+    const start = await this.getStartTimestamp()
     const lastDay = new Array(24)
       .fill(0)
       .map((_, i) => start.add(-i, 'hours'))
       .filter((time) => time.gte(this.minTimestamp))
-    const maxBlock = (await this.ethereumClient.getBlockNumber()) - 100n
 
-    const blocks = await Promise.all(
+    this.newestReport = await Promise.all(
       lastDay.map(async (time) => ({
         time: time,
         blockNumber: await this.etherscanClient.getBlockNumberAtOrBefore(time),
       }))
     )
-    this.newestReport = blocks.filter((x) => x.blockNumber <= maxBlock)
+    this.logger.info('Report created')
+  }
+
+  private async getStartTimestamp() {
+    const lastBlock = await this.ethereumClient.getBlockNumber()
+    // we use a block in the past to not have to worry about reorgs
+    const maxBlock = lastBlock - 100n
+    const { timestamp } = await this.ethereumClient.getBlock(maxBlock)
+    return timestamp.toStartOf('hour')
   }
 
   startBackgroundWork() {
