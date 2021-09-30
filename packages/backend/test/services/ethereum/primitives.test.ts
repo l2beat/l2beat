@@ -1,9 +1,10 @@
 import { expect } from 'chai'
 
-import { KeccakHash } from '../../../src/services/ethereum'
+import { EthereumAddress, KeccakHash } from '../../../src/services/ethereum'
 import {
   asBigIntFromQuantity,
   asBytesFromData,
+  asEthereumAddressFromData,
   asKeccakHashFromData,
   bigIntToQuantity,
   blockTagToString,
@@ -40,16 +41,33 @@ describe('asBytesFromData', () => {
   }
 })
 
+describe('asEthereumAddressFromData', () => {
+  const address = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+
+  it('correctly reads a 20 byte address', () => {
+    expect(asEthereumAddressFromData(address)).to.deep.equal(
+      new EthereumAddress(address)
+    )
+  })
+
+  it('throws for shorter bytes', () => {
+    expect(() => asEthereumAddressFromData('0x1234')).to.throw(
+      TypeError,
+      'Invalid address'
+    )
+  })
+})
+
 describe('asKeccakHashFromData', () => {
   const hash =
     '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
 
   it('correctly reads a 32 byte hash', () => {
-    expect(() => asKeccakHashFromData(hash)).to.deep.equal(new KeccakHash(hash))
+    expect(asKeccakHashFromData(hash)).to.deep.equal(new KeccakHash(hash))
   })
 
   it('throws for shorter bytes', () => {
-    expect(() => asBytesFromData('0x1234')).to.throw(
+    expect(() => asKeccakHashFromData('0x1234')).to.throw(
       TypeError,
       'KeccakHash must be exactly 32 bytes'
     )

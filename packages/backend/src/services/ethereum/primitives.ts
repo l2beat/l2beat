@@ -1,5 +1,6 @@
 import { as } from '../cast'
 import { Bytes } from '../model'
+import { EthereumAddress } from '.'
 import { BlockTag } from './EthereumClient'
 import { KeccakHash } from './KeccakHash'
 
@@ -20,6 +21,11 @@ export function asBytesFromData(value: unknown, length?: number) {
     throw new TypeError('Data must be a hex string')
   }
 }
+
+export const asEthereumAddressFromData = as.mapped(
+  asBytesFromData,
+  (bytes) => new EthereumAddress(bytes.toString())
+)
 
 export const asKeccakHashFromData = as.mapped(
   asBytesFromData,
