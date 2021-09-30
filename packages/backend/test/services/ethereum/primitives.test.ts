@@ -4,6 +4,7 @@ import {
   asBigIntFromQuantity,
   asBytesFromData,
   bigIntToQuantity,
+  blockTagToString,
   bytesToData,
 } from '../../../src/services/ethereum/primitives'
 import { Bytes } from '../../../src/services/model'
@@ -94,4 +95,14 @@ describe('bigIntToQuantity', () => {
       })
     }
   }
+})
+
+describe('blockTagToString', () => {
+  it('converts numbers to quantities', () => {
+    expect(blockTagToString(2n)).to.equal('0x2')
+  })
+
+  it('leaves strings untouched', () => {
+    expect(blockTagToString('latest')).to.equal('latest')
+  })
 })

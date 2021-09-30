@@ -1,5 +1,6 @@
 import { as } from '../cast'
 import { Bytes } from '../model'
+import { BlockTag } from './EthereumClient'
 
 export function asBytesFromData(value: unknown, length?: number) {
   const parsed = as.string(value)
@@ -42,4 +43,12 @@ export function bigIntToQuantity(value: BigInt): string {
     throw new TypeError('Quantity cannot be a negative integer')
   }
   return `0x${value.toString(16)}`
+}
+
+export function blockTagToString(value: BlockTag) {
+  if (typeof value === 'string') {
+    return value
+  } else {
+    return bigIntToQuantity(value)
+  }
 }
