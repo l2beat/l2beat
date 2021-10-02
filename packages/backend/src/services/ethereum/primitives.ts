@@ -46,6 +46,10 @@ export const asBigIntFromQuantity = as.mapped(as.string, (value: string) => {
   }
 })
 
+export function addressToData(address: EthereumAddress) {
+  return address.toString().toLowerCase()
+}
+
 export function bigIntToQuantity(value: BigInt): string {
   if (value < 0n) {
     throw new TypeError('Quantity cannot be a negative integer')
