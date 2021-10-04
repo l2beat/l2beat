@@ -16,14 +16,18 @@ export function formatLargeNumber(value: number): string {
         str.slice(0, offset) +
         '.' +
         str.slice(offset, offset + 2) +
-        HAIR_SPACE +
-        unit
+        withSpace(unit)
       )
     } else if (str.length === 5 + i * 3) {
-      return str.slice(0, 3) + HAIR_SPACE + unit
+      return str.slice(0, 3) + withSpace(unit)
     }
   }
-  return (
-    str.slice(0, 1 - units.length * 3) + HAIR_SPACE + units[units.length - 1]
-  )
+  return str.slice(0, 1 - units.length * 3) + withSpace(units[units.length - 1])
+}
+
+function withSpace(unit: string) {
+  if (unit) {
+    return HAIR_SPACE + unit
+  }
+  return unit
 }
