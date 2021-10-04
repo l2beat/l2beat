@@ -10,7 +10,6 @@ interface Props {
 export function TVLCell({ project }: Props) {
   return (
     <>
-      {project.tvl}
       {project.tvlWarning && (
         <div className="FinancialView-TvlWarning">
           <div className="Tooltip" title={project.tvlWarning}>
@@ -26,6 +25,7 @@ export function TVLCell({ project }: Props) {
           </div>
         </div>
       )}
+      {project.tvl}
     </>
   )
 }
