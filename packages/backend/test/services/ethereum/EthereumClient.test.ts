@@ -1,7 +1,12 @@
 import { expect } from 'chai'
 
-import { EthereumClient, KeccakHash } from '../../../src/services/ethereum'
+import {
+  EthereumAddress,
+  EthereumClient,
+  KeccakHash,
+} from '../../../src/services/ethereum'
 import { JsonRpcClient, JsonRpcParams } from '../../../src/services/jsonrpc'
+import { Bytes } from '../../../src/services/model'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
 
 describe('EthereumClient', () => {
@@ -63,6 +68,34 @@ describe('EthereumClient', () => {
       const client = new EthereumClient(testRpc)
       const result = await client.getBlock('latest')
       expect(result.number).to.equal(13326971n)
+    })
+  })
+
+  describe('call', () => {
+    it('can call a contract', async () => {
+      const to = new EthereumAddress('0x' + '34cd'.repeat(10))
+      const data = Bytes.fromHex('0xabcdef123456')
+
+      const testRpc = makeTestRpc(async (method, params) => {
+        expect(method).to.equal('eth_call')
+        expect(params).to.deep.equal([
+          {
+            to: to.toString().toLowerCase(),
+            data: data.toString(),
+          },
+          '0x123',
+        ])
+        return '0x1234'
+      })
+      const client = new EthereumClient(testRpc)
+      const result = await client.call(
+        {
+          to,
+          data,
+        },
+        0x123n
+      )
+      expect(result).to.deep.equal(Bytes.fromHex('0x1234'))
     })
   })
 })

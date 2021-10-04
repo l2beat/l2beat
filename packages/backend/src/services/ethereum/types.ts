@@ -4,10 +4,12 @@ import { UnixTime } from '../model/UnixTime'
 import { EthereumAddress } from './EthereumAddress'
 import { KeccakHash } from './KeccakHash'
 import {
+  addressToData,
   asBigIntFromQuantity,
   asBytesFromData,
   asEthereumAddressFromData,
   asKeccakHashFromData,
+  bigIntToQuantity,
 } from './primitives'
 
 export interface RpcBlock {
@@ -81,3 +83,43 @@ export const asRpcBlock = as.object<RpcBlock>({
   transactions: as.array(asKeccakHashFromData),
   uncles: as.array(asKeccakHashFromData),
 })
+
+export interface RpcCallParameters {
+  from?: EthereumAddress
+  to: EthereumAddress
+  gas?: BigInt
+  gasPrice?: BigInt
+  maxPriorityFeePerGas?: BigInt
+  maxFeePerGas?: BigInt
+  value?: BigInt
+  data?: Bytes
+}
+
+export function encodeRpcCallParameters(parameters: RpcCallParameters) {
+  const encoded: Record<string, string> = {}
+  if (parameters.from) {
+    encoded.from = addressToData(parameters.from)
+  }
+  encoded.to = addressToData(parameters.to)
+  if (parameters.gas) {
+    encoded.gas = bigIntToQuantity(parameters.gas)
+  }
+  if (parameters.gasPrice) {
+    encoded.gasPrice = bigIntToQuantity(parameters.gasPrice)
+  }
+  if (parameters.maxPriorityFeePerGas) {
+    encoded.maxPriorityFeePerGas = bigIntToQuantity(
+      parameters.maxPriorityFeePerGas
+    )
+  }
+  if (parameters.maxFeePerGas) {
+    encoded.maxFeePerGas = bigIntToQuantity(parameters.maxFeePerGas)
+  }
+  if (parameters.value) {
+    encoded.value = bigIntToQuantity(parameters.value)
+  }
+  if (parameters.data) {
+    encoded.data = parameters.data.toString()
+  }
+  return encoded
+}

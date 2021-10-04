@@ -1,7 +1,11 @@
 import { JsonRpcClient, JsonRpcParams } from '../jsonrpc'
 import { KeccakHash } from './KeccakHash'
-import { asBigIntFromQuantity, blockTagToString } from './primitives'
-import { asRpcBlock } from './types'
+import {
+  asBigIntFromQuantity,
+  asBytesFromData,
+  blockTagToString,
+} from './primitives'
+import { asRpcBlock, encodeRpcCallParameters, RpcCallParameters } from './types'
 
 export type BlockTag = BigInt | 'earliest' | 'latest' | 'pending'
 
@@ -13,20 +17,29 @@ export class EthereumClient {
     return asBigIntFromQuantity(result)
   }
 
-  async getBlock(identifier: BlockTag | KeccakHash) {
-    if (identifier instanceof KeccakHash) {
+  async getBlock(blockTagOrHash: BlockTag | KeccakHash) {
+    if (blockTagOrHash instanceof KeccakHash) {
       const result = await this.execute('eth_getBlockByHash', [
-        identifier.toString(),
+        blockTagOrHash.toString(),
         false,
       ])
       return asRpcBlock(result)
     } else {
       const result = await this.execute('eth_getBlockByNumber', [
-        blockTagToString(identifier),
+        blockTagToString(blockTagOrHash),
         false,
       ])
       return asRpcBlock(result)
     }
+  }
+
+  async call(parameters: RpcCallParameters, blockTag: BlockTag) {
+    const encoded = encodeRpcCallParameters(parameters)
+    const result = await this.execute('eth_call', [
+      encoded,
+      blockTagToString(blockTag),
+    ])
+    return asBytesFromData(result)
   }
 
   protected execute(method: string, params?: JsonRpcParams) {
