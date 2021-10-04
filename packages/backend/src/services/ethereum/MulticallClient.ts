@@ -4,13 +4,13 @@ import { Bytes } from '../model'
 import { EthereumAddress } from './EthereumAddress'
 import { EthereumClient } from './EthereumClient'
 
-const MAX_BATCH_SIZE = 150
-const V1_BLOCK_NUMBER = 7929876n
-const V1_ADDRESS = new EthereumAddress(
+export const MULTICALL_BATCH_SIZE = 150
+export const MULTICALL_V1_BLOCK = 7929876n
+export const MULTICALL_V1_ADDRESS = new EthereumAddress(
   '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
 )
-const V2_BLOCK_NUMBER = 12336033n
-const V2_ADDRESS = new EthereumAddress(
+export const MULTICALL_V2_BLOCK = 12336033n
+export const MULTICALL_V2_ADDRESS = new EthereumAddress(
   '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
 )
 
@@ -43,10 +43,10 @@ export class MulticallClient {
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: BigInt) {
-    if (blockNumber < V1_BLOCK_NUMBER) {
+    if (blockNumber < MULTICALL_V1_BLOCK) {
       return this.executeIndividual(requests, blockNumber)
     }
-    const batches = toBatches(requests, MAX_BATCH_SIZE)
+    const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
     const batchedResults = await Promise.all(
       batches.map((batch) => this.executeBatch(batch, blockNumber))
     )
@@ -80,11 +80,11 @@ export class MulticallClient {
     requests: MulticallRequest[],
     blockNumber: BigInt
   ): Promise<MulticallResponse[]> {
-    if (blockNumber < V2_BLOCK_NUMBER) {
+    if (blockNumber < MULTICALL_V2_BLOCK) {
       const encoded = encodeMulticallV1(requests)
       const result = await this.ethereumClient.call(
         {
-          to: V1_ADDRESS,
+          to: MULTICALL_V1_ADDRESS,
           data: encoded,
         },
         blockNumber
@@ -94,7 +94,7 @@ export class MulticallClient {
       const encoded = encodeMulticallV2(requests)
       const result = await this.ethereumClient.call(
         {
-          to: V2_ADDRESS,
+          to: MULTICALL_V2_ADDRESS,
           data: encoded,
         },
         blockNumber
@@ -104,7 +104,7 @@ export class MulticallClient {
   }
 }
 
-function toBatches<T>(items: T[], batchSize: number): T[][] {
+export function toBatches<T>(items: T[], batchSize: number): T[][] {
   const batches: T[][] = []
   for (let i = 0; i < items.length; i += batchSize) {
     batches.push(items.slice(i, i + batchSize))
@@ -112,13 +112,13 @@ function toBatches<T>(items: T[], batchSize: number): T[][] {
   return batches
 }
 
-const coder = new utils.Interface([
-  'function aggregate(tuple(address target, bytes callData)[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData)',
-  'function tryAggregate(bool requireSuccess, tuple(address target, bytes callData)[] memory calls) public returns (tuple(bool success, bytes returnData)[] memory returnData)',
+export const multicallInterface = new utils.Interface([
+  'function aggregate(tuple(address target, bytes callData)[] calls) public returns (uint256 blockNumber, bytes[] returnData)',
+  'function tryAggregate(bool requireSuccess, tuple(address target, bytes callData)[] calls) public returns (tuple(bool success, bytes returnData)[] returnData)',
 ])
 
-function encodeMulticallV1(requests: MulticallRequest[]) {
-  const string = coder.encodeFunctionData('aggregate', [
+export function encodeMulticallV1(requests: MulticallRequest[]) {
+  const string = multicallInterface.encodeFunctionData('aggregate', [
     requests.map((request) => [
       request.address.toString(),
       request.data.toString(),
@@ -127,8 +127,11 @@ function encodeMulticallV1(requests: MulticallRequest[]) {
   return Bytes.fromHex(string)
 }
 
-function decodeMulticallV1(result: Bytes) {
-  const decoded = coder.decodeFunctionResult('aggregate', result.toString())
+export function decodeMulticallV1(result: Bytes) {
+  const decoded = multicallInterface.decodeFunctionResult(
+    'aggregate',
+    result.toString()
+  )
   const values = decoded[1] as string[]
   return values.map(
     (data): MulticallResponse => ({
@@ -138,8 +141,8 @@ function decodeMulticallV1(result: Bytes) {
   )
 }
 
-function encodeMulticallV2(requests: MulticallRequest[]) {
-  const string = coder.encodeFunctionData('tryAggregate', [
+export function encodeMulticallV2(requests: MulticallRequest[]) {
+  const string = multicallInterface.encodeFunctionData('tryAggregate', [
     false,
     requests.map((request) => [
       request.address.toString(),
@@ -149,8 +152,11 @@ function encodeMulticallV2(requests: MulticallRequest[]) {
   return Bytes.fromHex(string)
 }
 
-function decodeMulticallV2(result: Bytes) {
-  const decoded = coder.decodeFunctionResult('tryAggregate', result.toString())
+export function decodeMulticallV2(result: Bytes) {
+  const decoded = multicallInterface.decodeFunctionResult(
+    'tryAggregate',
+    result.toString()
+  )
   const values = decoded[0] as [boolean, string][]
   return values.map(
     ([success, data]): MulticallResponse => ({
