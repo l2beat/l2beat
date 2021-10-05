@@ -80,16 +80,27 @@ export function FinancialView({ items }: FinancialViewProps) {
       <TableView items={items} columns={columns} />
       <div className="FinancialView-Symbols">
         <p>
-          <WarningIcon fill="var(--text-warning)" /> &ndash; A token associated
-          with the project accounts for more than 10% of the TVL.
+          <WarningIcon fill="var(--text-warning)" />
+          <span>&ndash;</span>
+          <span>
+            A token associated with the project accounts for more than 10% of
+            the TVL.
+          </span>
         </p>
         <p>
-          <WarningIcon fill="var(--text-bad)" /> &ndash; A token associated with
-          the project accounts for more than 90% of the TVL. This makes the
-          metric vulnerable to manipulation.
+          <WarningIcon fill="var(--text-bad)" />
+          <span>&ndash;</span>
+          <span>
+            A token associated with the project accounts for more than 90% of
+            the TVL. This may make the metric vulnerable to manipulation if the
+            majority of the supply is concentrated and markets are very
+            illiquid.
+          </span>
         </p>
         <p>
-          <StarkWareIcon /> &ndash; This project is built using StarkEx.
+          <StarkWareIcon />
+          <span>&ndash;</span>
+          <span>This project is built using StarkEx.</span>
         </p>
       </div>
     </div>
