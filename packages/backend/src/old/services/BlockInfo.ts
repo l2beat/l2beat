@@ -1,5 +1,5 @@
+import { Logger } from '../../tools/Logger'
 import { SimpleDate } from '../model'
-import { Logger } from './../../services/Logger'
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { AsyncCache } from './AsyncCache'

@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from '../../services/Logger'
+import { Logger, LogLevel } from '../../tools/Logger'
 import { AlchemyApi } from './api/AlchemyApi'
 import { EtherscanApi } from './api/EtherscanApi'
 import { LogApi } from './api/LogApi'

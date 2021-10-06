@@ -1,6 +1,6 @@
 import { Config } from './config'
 import { createServices, Services } from './services'
-import { Logger } from './services/Logger'
+import { Logger } from './tools/Logger'
 
 export class Application {
   private services: Services

@@ -1,4 +1,4 @@
-import { Logger } from '../../../services/Logger'
+import { Logger } from '../../../tools/Logger'
 import { AlchemyApi, LogFilter } from './AlchemyApi'
 
 export class LogApi {
