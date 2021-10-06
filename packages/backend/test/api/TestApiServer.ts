@@ -1,13 +1,10 @@
+import Router from '@koa/router'
 import { agent } from 'supertest'
 
-import { getConfig } from '../../src/config'
-import { createServices } from '../../src/services'
+import { ApiServer } from '../../src/api'
+import { Logger } from '../../src/tools/Logger'
 
-export function createTestServer() {
-  const config = getConfig('test')
-  const services = createServices(config)
-
-  const callback = services.apiServer['app'].callback()
-
+export function createTestApiServer(routers: Router[]) {
+  const callback = new ApiServer(0, Logger.SILENT, routers).getNodeCallback()
   return agent(callback)
 }
