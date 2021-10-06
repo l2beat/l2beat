@@ -1,4 +1,4 @@
-import { as } from '../cast'
+import { as } from '../../tools/cast'
 
 export const asBigIntFromString = as.mapped(as.string, (value) => {
   if (!/^-?\d+$/.test(value)) {

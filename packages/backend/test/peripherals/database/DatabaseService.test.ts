@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { DatabaseService } from '../../../src/peripherals/database/DatabaseService'
-import { Logger } from '../../../src/peripherals/Logger'
+import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
 describe('DatabaseService', () => {

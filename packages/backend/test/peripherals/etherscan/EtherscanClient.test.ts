@@ -7,7 +7,7 @@ import {
   EtherscanError,
 } from '../../../src/peripherals/etherscan'
 import { HttpClient } from '../../../src/peripherals/HttpClient'
-import { Logger } from '../../../src/peripherals/Logger'
+import { Logger } from '../../../src/tools/Logger'
 
 describe('EtherscanClient', () => {
   describe('callUnsafe', () => {

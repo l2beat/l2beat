@@ -1,5 +1,5 @@
+import { Logger } from '../../tools/Logger'
 import { HttpClient } from '../HttpClient'
-import { Logger } from '../Logger'
 import { JsonRpcClient, JsonRpcError } from './JsonRpcClient'
 import { parseJsonRpcResponse } from './parseJsonRpcResponse'
 import { isSuccessResponse, JsonRpcRequest } from './types'

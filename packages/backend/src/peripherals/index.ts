@@ -1,4 +1,5 @@
 import { Config } from '../config'
+import { Logger } from '../tools/Logger'
 import { BlockNumberRepository } from './database/BlockNumberRepository'
 import { DatabaseService } from './database/DatabaseService'
 import { AlchemyHttpClient, EthereumClient } from './ethereum'
@@ -6,7 +7,6 @@ import { EtherscanClient } from './etherscan'
 import { HelloService } from './HelloService'
 import { ApiServer, createHelloRouter, createReportRouter } from './http'
 import { HttpClient } from './HttpClient'
-import { Logger } from './Logger'
 import { ReportCreator } from './report/ReportCreator'
 import { ReportRangeService } from './report/ReportRangeService'
 

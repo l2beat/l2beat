@@ -1,4 +1,4 @@
-import { LogLevel } from '../peripherals/Logger'
+import { LogLevel } from '../tools/Logger'
 
 export interface Config {
   name: string

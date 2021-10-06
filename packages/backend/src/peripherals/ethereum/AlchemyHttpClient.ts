@@ -1,8 +1,8 @@
+import { Logger } from '../../tools/Logger'
+import { RateLimiter } from '../../tools/RateLimiter'
+import { retry } from '../../tools/retry'
 import { HttpClient } from '../HttpClient'
 import { JsonRpcHttpClient, JsonRpcRequest } from '../jsonrpc'
-import { Logger } from '../Logger'
-import { RateLimiter } from '../utils/RateLimiter'
-import { retry } from '../utils/retry'
 
 export class AlchemyHttpClient extends JsonRpcHttpClient {
   constructor(apiKey: string, httpClient: HttpClient, logger: Logger) {

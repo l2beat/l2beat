@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { as } from '../../../src/peripherals/cast'
+import { as } from '../../../src/tools/cast'
 
 describe('as.unknown', () => {
   it('returns the value passed', () => {

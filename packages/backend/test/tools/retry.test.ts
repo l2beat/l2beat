@@ -1,7 +1,7 @@
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'chai'
 
-import { retry } from '../../../src/peripherals/utils/retry'
+import { retry } from '../../src/tools/retry'
 
 describe('retry', () => {
   it('is transparent if call succeeds', async () => {

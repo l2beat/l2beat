@@ -1,6 +1,6 @@
 import { config as dotenv } from 'dotenv'
 
-import { LogLevel } from '../peripherals/Logger'
+import { LogLevel } from '../tools/Logger'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 

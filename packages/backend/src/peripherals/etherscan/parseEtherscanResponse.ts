@@ -1,4 +1,4 @@
-import { as } from '../cast'
+import { as } from '../../tools/cast'
 
 export interface EtherscanSuccessResponse {
   status: '1'

@@ -1,7 +1,7 @@
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
-import { Logger } from '../Logger'
+import { Logger } from '../../tools/Logger'
 
 export class DatabaseService {
   constructor(private knex: Knex, private logger: Logger) {

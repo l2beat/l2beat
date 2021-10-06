@@ -6,7 +6,7 @@ import {
   JsonRpcError,
   JsonRpcHttpClient,
 } from '../../../src/peripherals/jsonrpc'
-import { Logger } from '../../../src/peripherals/Logger'
+import { Logger } from '../../../src/tools/Logger'
 
 describe('JsonRpcHttpClient', () => {
   it('correctly sets up a request', async () => {

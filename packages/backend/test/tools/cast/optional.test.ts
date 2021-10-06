@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
-import { as } from '../../../src/peripherals/cast'
-import { CastError } from '../../../src/peripherals/cast/CastError'
+import { as } from '../../../src/tools/cast'
+import { CastError } from '../../../src/tools/cast/CastError'
 
 describe('as.optional', () => {
   it('returns the value passed', () => {

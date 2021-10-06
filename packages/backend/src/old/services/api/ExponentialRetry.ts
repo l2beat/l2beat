@@ -1,5 +1,5 @@
-import { Logger } from '../../../peripherals/Logger'
-import { retry } from '../../../peripherals/utils/retry'
+import { Logger } from '../../../tools/Logger'
+import { retry } from '../../../tools/retry'
 
 export interface RetryOptions {
   startTimeout: number

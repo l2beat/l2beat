@@ -1,6 +1,6 @@
 import { Context, Next } from 'koa'
 
-import { Logger } from '../Logger'
+import { Logger } from '../../tools/Logger'
 
 export function createApiLogger(logger: Logger) {
   return async function (ctx: Context, next: Next) {

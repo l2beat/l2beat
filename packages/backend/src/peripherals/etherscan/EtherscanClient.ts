@@ -1,8 +1,8 @@
 import { UnixTime } from '../../model/UnixTime'
+import { Logger } from '../../tools/Logger'
+import { RateLimiter } from '../../tools/RateLimiter'
+import { retry } from '../../tools/retry'
 import { HttpClient } from '../HttpClient'
-import { Logger } from '../Logger'
-import { RateLimiter } from '../utils/RateLimiter'
-import { retry } from '../utils/retry'
 import { asBigIntFromString } from './asBigIntFromString'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
 

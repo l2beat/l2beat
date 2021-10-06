@@ -1,5 +1,5 @@
 import { Bytes } from '../../model'
-import { as } from '../cast'
+import { as } from '../../tools/cast'
 import { EthereumAddress } from '.'
 import { BlockTag } from './EthereumClient'
 import { KeccakHash } from './KeccakHash'

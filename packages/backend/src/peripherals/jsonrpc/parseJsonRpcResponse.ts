@@ -1,4 +1,4 @@
-import { as, CastError } from '../cast'
+import { as, CastError } from '../../tools/cast'
 import { JsonRpcResponse } from './types'
 
 const asUncheckedResponse = as.object('strict', {
