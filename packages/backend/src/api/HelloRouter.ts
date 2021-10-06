@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { HelloService } from '../peripherals/HelloService'
+import { HelloService } from '../core/HelloService'
 
 export function createHelloRouter(helloService: HelloService) {
   const router = new Router()

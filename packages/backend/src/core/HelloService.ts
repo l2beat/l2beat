@@ -1,4 +1,4 @@
-import { EthereumClient } from './ethereum/EthereumClient'
+import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 
 export class HelloService {
   constructor(private name: string, private ethereumClient: EthereumClient) {}

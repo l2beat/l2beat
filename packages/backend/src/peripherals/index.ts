@@ -1,15 +1,15 @@
 import { ApiServer, createHelloRouter, createReportRouter } from '../api'
 import { Config } from '../config'
+import { HelloService } from '../core/HelloService'
+import { ReportCreator } from '../core/report/ReportCreator'
+import { ReportRangeService } from '../core/report/ReportRangeService'
 import { Logger } from '../tools/Logger'
 import { BlockNumberRepository } from './database/BlockNumberRepository'
 import { DatabaseService } from './database/DatabaseService'
 import { AlchemyHttpClient } from './ethereum/AlchemyHttpClient'
 import { EthereumClient } from './ethereum/EthereumClient'
 import { EtherscanClient } from './etherscan'
-import { HelloService } from './HelloService'
 import { HttpClient } from './HttpClient'
-import { ReportCreator } from './report/ReportCreator'
-import { ReportRangeService } from './report/ReportRangeService'
 
 export type Services = ReturnType<typeof createServices>
 
