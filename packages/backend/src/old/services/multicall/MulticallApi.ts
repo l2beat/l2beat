@@ -1,4 +1,4 @@
-import { Logger } from '../../../services/Logger'
+import { Logger } from '../../../peripherals/Logger'
 import {
   MULTICALL,
   MULTICALL_BATCH_SIZE,

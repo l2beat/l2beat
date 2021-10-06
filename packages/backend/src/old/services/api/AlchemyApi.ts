@@ -1,5 +1,5 @@
-import { Logger } from '../../../services/Logger'
-import { RateLimiter } from '../../../services/utils/RateLimiter'
+import { Logger } from '../../../peripherals/Logger'
+import { RateLimiter } from '../../../peripherals/utils/RateLimiter'
 import { CustomProvider } from './CustomProvider'
 import { ExponentialRetry } from './ExponentialRetry'
 

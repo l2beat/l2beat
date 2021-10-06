@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
-import { Logger } from '../../../services/Logger'
-import { RateLimiter } from '../../../services/utils/RateLimiter'
+import { Logger } from '../../../peripherals/Logger'
+import { RateLimiter } from '../../../peripherals/utils/RateLimiter'
 import { ExponentialRetry } from './ExponentialRetry'
 
 const BLOCK_URL =
