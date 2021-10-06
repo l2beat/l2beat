@@ -24,8 +24,11 @@ export class ApiServer {
   }
 
   listen() {
-    return this.app.listen(this.port, () => {
-      this.logger.info({ message: 'Listening', port: this.port })
+    return new Promise<void>((resolve) => {
+      this.app.listen(this.port, () => {
+        this.logger.info({ message: 'Listening', port: this.port })
+        resolve()
+      })
     })
   }
 
