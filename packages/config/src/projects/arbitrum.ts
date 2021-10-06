@@ -49,6 +49,11 @@ export const arbitrum: Project = {
         'YFI',
       ],
     },
+    {
+      address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
+      sinceBlock: 13262081,
+      tokens: ['DAI'],
+    },
   ],
   details: {
     description:
@@ -282,6 +287,10 @@ export const arbitrum: Project = {
           {
             address: '0x84eFa170dC6d521495D7942e372b8e4B2Fb918Ec',
             name: 'BridgeUtils',
+          },
+          {
+            address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
+            name: 'L1Escrow',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
