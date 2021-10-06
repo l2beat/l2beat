@@ -1,5 +1,5 @@
+import { KeccakHash } from '../../model'
 import { JsonRpcClient, JsonRpcParams } from '../jsonrpc'
-import { KeccakHash } from './KeccakHash'
 import {
   asBigIntFromQuantity,
   asBytesFromData,

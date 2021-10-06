@@ -1,11 +1,7 @@
 import { expect } from 'chai'
 
-import { Bytes } from '../../../src/model'
-import {
-  EthereumAddress,
-  EthereumClient,
-  KeccakHash,
-} from '../../../src/peripherals/ethereum'
+import { Bytes, EthereumAddress, KeccakHash } from '../../../src/model'
+import { EthereumClient } from '../../../src/peripherals/ethereum'
 import { JsonRpcClient, JsonRpcParams } from '../../../src/peripherals/jsonrpc'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
 

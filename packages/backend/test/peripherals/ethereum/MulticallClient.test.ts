@@ -1,11 +1,10 @@
 import { expect } from 'chai'
 
-import { Bytes } from '../../../src/model'
+import { Bytes, EthereumAddress } from '../../../src/model'
 import {
   BlockTag,
   encodeMulticallV1,
   encodeMulticallV2,
-  EthereumAddress,
   EthereumClient,
   MULTICALL_BATCH_SIZE,
   MULTICALL_V1_ADDRESS,

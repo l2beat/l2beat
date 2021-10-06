@@ -1,7 +1,6 @@
 import { utils } from 'ethers'
 
-import { Bytes } from '../../model'
-import { EthereumAddress } from './EthereumAddress'
+import { Bytes, EthereumAddress } from '../../model'
 import { EthereumClient } from './EthereumClient'
 
 export const MULTICALL_BATCH_SIZE = 150

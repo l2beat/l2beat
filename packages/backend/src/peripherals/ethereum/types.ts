@@ -1,8 +1,6 @@
-import { Bytes } from '../../model'
+import { Bytes, EthereumAddress, KeccakHash } from '../../model'
 import { UnixTime } from '../../model/UnixTime'
 import { as } from '../../tools/cast'
-import { EthereumAddress } from './EthereumAddress'
-import { KeccakHash } from './KeccakHash'
 import {
   addressToData,
   asBigIntFromQuantity,

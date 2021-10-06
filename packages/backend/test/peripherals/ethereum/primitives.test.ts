@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 
-import { Bytes } from '../../../src/model'
-import { EthereumAddress, KeccakHash } from '../../../src/peripherals/ethereum'
+import { Bytes, EthereumAddress, KeccakHash } from '../../../src/model'
 import {
   asBigIntFromQuantity,
   asBytesFromData,

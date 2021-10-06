@@ -1,9 +1,6 @@
-import { Bytes } from '../../model'
+import { Bytes, EthereumAddress, KeccakHash } from '../../model'
 import { as } from '../../tools/cast'
-import { EthereumAddress } from '.'
 import { BlockTag } from './EthereumClient'
-import { KeccakHash } from './KeccakHash'
-
 export function asBytesFromData(value: unknown, length?: number) {
   const parsed = as.string(value)
   if (!parsed.startsWith('0x')) {
