@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
+import { UnixTime } from '../../../src/model/UnixTime'
 import { BlockNumberRepository } from '../../../src/services/database/BlockNumberRepository'
-import { UnixTime } from '../../../src/services/model/UnixTime'
 import { setupDatabaseTestSuite } from './setup'
 
 describe('BlockNumberRepository', () => {

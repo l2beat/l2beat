@@ -1,4 +1,4 @@
-import { Bytes } from '../model'
+import { Bytes } from '../../model'
 
 export class KeccakHash {
   private bytes: Bytes

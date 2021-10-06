@@ -1,6 +1,6 @@
+import { UnixTime } from '../../model/UnixTime'
 import { HttpClient } from '../HttpClient'
 import { Logger } from '../Logger'
-import { UnixTime } from '../model/UnixTime'
 import { RateLimiter } from '../utils/RateLimiter'
 import { retry } from '../utils/retry'
 import { asBigIntFromString } from './asBigIntFromString'

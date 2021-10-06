@@ -1,6 +1,6 @@
+import { UnixTime } from '../../model/UnixTime'
 import { BlockNumberRepository } from '../database/BlockNumberRepository'
 import { EtherscanClient } from '../etherscan'
-import { UnixTime } from '../model/UnixTime'
 
 export class ReportRangeService {
   private cache = new Map<number, BigInt>()

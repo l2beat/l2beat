@@ -1,6 +1,6 @@
 import { Knex } from 'knex'
 
-import { UnixTime } from '../model/UnixTime'
+import { UnixTime } from '../../model/UnixTime'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime

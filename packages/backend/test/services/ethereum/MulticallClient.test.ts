@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 
+import { Bytes } from '../../../src/model'
 import {
   BlockTag,
   encodeMulticallV1,
@@ -16,7 +17,6 @@ import {
   RpcCallParameters,
 } from '../../../src/services/ethereum'
 import { JsonRpcClient } from '../../../src/services/jsonrpc'
-import { Bytes } from '../../../src/services/model'
 
 describe('MulticallClient', () => {
   function makeEthereumClient(

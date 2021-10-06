@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { Bytes } from '../model'
+import { Bytes } from '../../model'
 import { EthereumAddress } from './EthereumAddress'
 import { EthereumClient } from './EthereumClient'
 

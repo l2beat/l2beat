@@ -1,12 +1,12 @@
 import { expect } from 'chai'
 
+import { Bytes } from '../../../src/model'
 import {
   EthereumAddress,
   EthereumClient,
   KeccakHash,
 } from '../../../src/services/ethereum'
 import { JsonRpcClient, JsonRpcParams } from '../../../src/services/jsonrpc'
-import { Bytes } from '../../../src/services/model'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
 
 describe('EthereumClient', () => {

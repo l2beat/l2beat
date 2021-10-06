@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { Bytes } from '../../../src/services/model'
+import { Bytes } from '../../src/model'
 
 describe('Bytes', () => {
   describe('fromHex', () => {

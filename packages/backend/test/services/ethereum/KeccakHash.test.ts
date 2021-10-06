@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
+import { Bytes } from '../../../src/model'
 import { KeccakHash } from '../../../src/services/ethereum'
-import { Bytes } from '../../../src/services/model'
 
 describe('KeccakHash', () => {
   it('accepts lowercase hashes', () => {

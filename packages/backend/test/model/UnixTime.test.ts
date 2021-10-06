@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { UnixTime } from '../../../src/services/model/UnixTime'
+import { UnixTime } from '../../src/model/UnixTime'
 
 describe('UnixTime', () => {
   it('represents time as seconds since Jan 01 1970', () => {

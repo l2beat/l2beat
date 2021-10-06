@@ -1,6 +1,6 @@
+import { Bytes } from '../../model'
+import { UnixTime } from '../../model/UnixTime'
 import { as } from '../cast'
-import { Bytes } from '../model'
-import { UnixTime } from '../model/UnixTime'
 import { EthereumAddress } from './EthereumAddress'
 import { KeccakHash } from './KeccakHash'
 import {

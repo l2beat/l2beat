@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 
+import { Bytes } from '../../../src/model'
 import { EthereumAddress, KeccakHash } from '../../../src/services/ethereum'
 import {
   asBigIntFromQuantity,
@@ -9,7 +10,6 @@ import {
   bigIntToQuantity,
   blockTagToString,
 } from '../../../src/services/ethereum/primitives'
-import { Bytes } from '../../../src/services/model'
 
 describe('asBytesFromData', () => {
   const cases = [

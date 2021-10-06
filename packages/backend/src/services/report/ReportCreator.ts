@@ -1,6 +1,6 @@
+import { UnixTime } from '../../model/UnixTime'
 import { EthereumClient } from '../ethereum'
 import { Logger } from '../Logger'
-import { UnixTime } from '../model/UnixTime'
 import { ReportRangeService } from './ReportRangeService'
 
 export type Report = { timestamp: UnixTime; blockNumber: BigInt }[]

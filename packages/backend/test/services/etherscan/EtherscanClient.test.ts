@@ -1,13 +1,13 @@
 import { expect } from 'chai'
 import { Response } from 'node-fetch'
 
+import { UnixTime } from '../../../src/model/UnixTime'
 import {
   EtherscanClient,
   EtherscanError,
 } from '../../../src/services/etherscan'
 import { HttpClient } from '../../../src/services/HttpClient'
 import { Logger } from '../../../src/services/Logger'
-import { UnixTime } from '../../../src/services/model/UnixTime'
 
 describe('EtherscanClient', () => {
   describe('callUnsafe', () => {
