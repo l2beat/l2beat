@@ -7,13 +7,12 @@ type EventArgs<
   K extends keyof EventTypes
 > = EventTypes[K] extends undefined
   ? []
-  : EventTypes[K] extends any[]
+  : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  EventTypes[K] extends any[]
   ? EventTypes[K]
   : [EventTypes[K]]
 
 export interface IEventEmitter<EventTypes> {
-  new (): IEventEmitter<EventTypes>
-
   addListener<EventName extends keyof EventTypes>(
     event: EventName,
     listener: (...args: EventArgs<EventTypes, EventName>) => void
