@@ -1,5 +1,5 @@
 import { Config } from './config'
-import { createServices, Services } from './peripherals'
+import { createServices, Services } from './services'
 import { Logger } from './tools/Logger'
 
 export class Application {
