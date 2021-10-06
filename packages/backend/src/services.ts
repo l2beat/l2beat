@@ -33,7 +33,7 @@ export function createServices(config: Config) {
     logger
   )
 
-  const helloService = new HelloService(config.name, ethereumClient)
+  const helloService = new HelloService(config.name)
 
   const reportRangeService = new ReportRangeService(
     etherscanClient,

@@ -9,11 +9,5 @@ export function createHelloRouter(helloService: HelloService) {
     ctx.body = helloService.getMessage()
   })
 
-  router.get('/block-number', async (ctx) => {
-    ctx.body = {
-      block: await helloService.getBlockNumber(),
-    }
-  })
-
   return router
 }

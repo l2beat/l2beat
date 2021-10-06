@@ -28,4 +28,8 @@ export class ApiServer {
       this.logger.info({ message: 'Listening', port: this.port })
     })
   }
+
+  getNodeCallback() {
+    return this.app.callback()
+  }
 }

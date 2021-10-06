@@ -1,14 +1,7 @@
-import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
-
 export class HelloService {
-  constructor(private name: string, private ethereumClient: EthereumClient) {}
+  constructor(private name: string) {}
 
   getMessage() {
     return `Hello from ${this.name}!`
-  }
-
-  async getBlockNumber() {
-    const blockNumber = await this.ethereumClient.getBlockNumber()
-    return blockNumber.toString()
   }
 }
