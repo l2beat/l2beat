@@ -1,11 +1,11 @@
 import { expect } from 'chai'
 
 import { Bytes, EthereumAddress } from '../../../src/model'
+import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
+import { BlockTag } from '../../../src/peripherals/ethereum/EthereumClient'
 import {
-  BlockTag,
   encodeMulticallV1,
   encodeMulticallV2,
-  EthereumClient,
   MULTICALL_BATCH_SIZE,
   MULTICALL_V1_ADDRESS,
   MULTICALL_V1_BLOCK,
@@ -13,8 +13,8 @@ import {
   MULTICALL_V2_BLOCK,
   MulticallClient,
   multicallInterface,
-  RpcCallParameters,
-} from '../../../src/peripherals/ethereum'
+} from '../../../src/peripherals/ethereum/MulticallClient'
+import { RpcCallParameters } from '../../../src/peripherals/ethereum/types'
 import { JsonRpcClient } from '../../../src/peripherals/jsonrpc'
 
 describe('MulticallClient', () => {
