@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { ReportCreator } from '../report/ReportCreator'
+import { ReportCreator } from '../peripherals/report/ReportCreator'
 
 export function createReportRouter(reportCreator: ReportCreator) {
   const router = new Router()

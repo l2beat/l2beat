@@ -1,7 +1,7 @@
 import { agent } from 'supertest'
 
-import { getConfig } from '../../../src/config'
-import { createServices } from '../../../src/peripherals'
+import { getConfig } from '../../src/config'
+import { createServices } from '../../src/peripherals'
 
 export function createTestServer() {
   const config = getConfig('test')
