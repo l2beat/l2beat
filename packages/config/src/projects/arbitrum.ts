@@ -53,7 +53,7 @@ export const arbitrum: Project = {
       address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
       sinceBlock: 13262081,
       tokens: ['DAI'],
-    }
+    },
   ],
   details: {
     description:
@@ -291,7 +291,7 @@ export const arbitrum: Project = {
           {
             address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
             name: 'L1Escrow',
-          }
+          },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
