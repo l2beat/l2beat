@@ -3,7 +3,7 @@ import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Logger } from '../../tools/Logger'
 import { ReportRangeService } from './ReportRangeService'
 
-export type Report = { timestamp: UnixTime; blockNumber: BigInt }[]
+export type Report = { timestamp: UnixTime; blockNumber: bigint }[]
 
 export class ReportCreator {
   constructor(

@@ -12,7 +12,7 @@ import {
 
 export interface RpcBlock {
   /** The block number. Missing for pending block. */
-  number: BigInt | undefined
+  number: bigint | undefined
   /** Hash of the block. Missing for pending block. */
   hash: KeccakHash | undefined
   /** Hash of the parent block. */
@@ -34,19 +34,19 @@ export interface RpcBlock {
   /** The address of the beneficiary to whom the mining rewards were given. Missing for pending block. */
   miner: EthereumAddress | undefined
   /** Integer of the difficulty for this block. */
-  difficulty: BigInt
+  difficulty: bigint
   /** Integer of the total difficulty of the chain until this block. Missing for pending block. */
-  totalDifficulty: BigInt | undefined
+  totalDifficulty: bigint | undefined
   /** The “extra data” field of this block. */
   extraData: Bytes
   /** Integer the size of this block in bytes. */
-  size: BigInt
+  size: bigint
   /** The maximum gas allowed in this block. */
-  gasLimit: BigInt
+  gasLimit: bigint
   /** The total used gas by all transactions in this block. */
-  gasUsed: BigInt
+  gasUsed: bigint
   /** The fee per unit of gas burned by the protocol in this block. Missing in older blocks. */
-  baseFeePerGas: BigInt | undefined
+  baseFeePerGas: bigint | undefined
   /** The unix timestamp for when the block was collated. */
   timestamp: UnixTime
   /** Array of transaction hashes. */
@@ -85,11 +85,11 @@ export const asRpcBlock = as.object<RpcBlock>({
 export interface RpcCallParameters {
   from?: EthereumAddress
   to: EthereumAddress
-  gas?: BigInt
-  gasPrice?: BigInt
-  maxPriorityFeePerGas?: BigInt
-  maxFeePerGas?: BigInt
-  value?: BigInt
+  gas?: bigint
+  gasPrice?: bigint
+  maxPriorityFeePerGas?: bigint
+  maxFeePerGas?: bigint
+  value?: bigint
   data?: Bytes
 }
 

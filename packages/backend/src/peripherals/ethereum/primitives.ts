@@ -47,7 +47,7 @@ export function addressToData(address: EthereumAddress) {
   return address.toString().toLowerCase()
 }
 
-export function bigIntToQuantity(value: BigInt): string {
+export function bigIntToQuantity(value: bigint): string {
   if (value < 0n) {
     throw new TypeError('Quantity cannot be a negative integer')
   }

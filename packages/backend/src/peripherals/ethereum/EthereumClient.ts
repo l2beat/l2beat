@@ -7,7 +7,7 @@ import {
 } from './primitives'
 import { asRpcBlock, encodeRpcCallParameters, RpcCallParameters } from './types'
 
-export type BlockTag = BigInt | 'earliest' | 'latest' | 'pending'
+export type BlockTag = bigint | 'earliest' | 'latest' | 'pending'
 
 export class EthereumClient {
   constructor(private jsonRpcClient: JsonRpcClient) {}
