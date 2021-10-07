@@ -28,7 +28,7 @@ export class MulticallClient {
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,
-    blockNumber: BigInt
+    blockNumber: bigint
   ): Promise<Record<string, MulticallResponse>> {
     const entries = Object.entries(requests)
     const results = await this.multicall(
@@ -41,7 +41,7 @@ export class MulticallClient {
     return Object.fromEntries(resultEntries)
   }
 
-  async multicall(requests: MulticallRequest[], blockNumber: BigInt) {
+  async multicall(requests: MulticallRequest[], blockNumber: bigint) {
     if (blockNumber < MULTICALL_V1_BLOCK) {
       return this.executeIndividual(requests, blockNumber)
     }
@@ -54,7 +54,7 @@ export class MulticallClient {
 
   private async executeIndividual(
     requests: MulticallRequest[],
-    blockNumber: BigInt
+    blockNumber: bigint
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
       requests.map((request) =>
@@ -77,7 +77,7 @@ export class MulticallClient {
 
   private async executeBatch(
     requests: MulticallRequest[],
-    blockNumber: BigInt
+    blockNumber: bigint
   ): Promise<MulticallResponse[]> {
     if (blockNumber < MULTICALL_V2_BLOCK) {
       const encoded = encodeMulticallV1(requests)

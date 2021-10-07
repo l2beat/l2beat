@@ -21,7 +21,7 @@ export class EtherscanClient {
     callsPerMinute: 150,
   })
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<BigInt> {
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<bigint> {
     const result = await this.call('block', 'getblocknobytime', {
       timestamp: timestamp.toString(),
       closest: 'before',

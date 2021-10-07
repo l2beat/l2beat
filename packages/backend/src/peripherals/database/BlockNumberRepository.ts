@@ -4,7 +4,7 @@ import { UnixTime } from '../../model/UnixTime'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime
-  blockNumber: BigInt
+  blockNumber: bigint
 }
 
 export class BlockNumberRepository {

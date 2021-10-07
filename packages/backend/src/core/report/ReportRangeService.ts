@@ -3,7 +3,7 @@ import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRep
 import { EtherscanClient } from '../../peripherals/etherscan'
 
 export class ReportRangeService {
-  private cache = new Map<number, BigInt>()
+  private cache = new Map<number, bigint>()
   constructor(
     private etherscanClient: EtherscanClient,
     private blockNumberRepository: BlockNumberRepository
