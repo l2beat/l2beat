@@ -39,7 +39,6 @@ export const omgnetwork: Project = {
         'MATIC',
         'TUSD',
         'BNT',
-        'KICK',
         'LINK',
         'BAL',
         'CEL',
