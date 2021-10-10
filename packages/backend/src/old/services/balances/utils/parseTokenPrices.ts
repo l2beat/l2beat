@@ -1,6 +1,6 @@
 import { BigNumber, constants } from 'ethers'
 
-import { DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
+import { CUSDT, DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
 import { divOrZero, tokenIsBefore } from '../../../utils'
 import {
   EthBalanceCall,
@@ -12,7 +12,11 @@ import {
 import { HACK_adjustLiquidity } from './HACK_adjustLiquidity'
 
 const STABLECOIN_PRICE = BigNumber.from(10).pow(18 * 2 - 6)
-const KNOWN_TOKENS = [WETH, DAI, USDC, USDT]
+const CUSDT_PRICE = BigNumber.from(10)
+  .pow(18 * 2 - 8)
+  .mul(215)
+  .div(10000) // $0.0215
+const KNOWN_TOKENS = [WETH, DAI, USDC, USDT, CUSDT]
 
 interface ExchangePrice {
   liquidity: BigNumber
@@ -50,6 +54,8 @@ function defaultTokenPrices(ethPrice: BigNumber) {
   tokenPrices[DAI] = TEN_TO_18
   tokenPrices[USDC] = STABLECOIN_PRICE
   tokenPrices[USDT] = STABLECOIN_PRICE
+  // HACK: fix the price of illiquid cUSDT
+  tokenPrices[CUSDT] = CUSDT_PRICE
   return tokenPrices
 }
 

@@ -21,7 +21,6 @@ export const zkswap: Project = {
       tokens: [
         '1INCH',
         'AAVE',
-        'BNB',
         'BUSD',
         'DAI',
         'ETH',

@@ -124,13 +124,6 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 5622827,
   },
   {
-    name: 'BNB',
-    symbol: 'BNB',
-    address: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
-    decimals: 18,
-    sinceBlock: 3978343,
-  },
-  {
     name: 'CelerToken',
     symbol: 'CELR',
     address: '0x4F9254C83EB525f9FCf346490bbb3ed28a81C667',
@@ -270,27 +263,6 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 11056775,
   },
   {
-    name: 'Huobi BTC',
-    symbol: 'HBTC',
-    address: '0x0316EB71485b0Ab14103307bf65a021042c6d380',
-    decimals: 18,
-    sinceBlock: 9076087,
-  },
-  {
-    name: 'HuobiToken',
-    symbol: 'HT',
-    address: '0x6f259637dcD74C767781E37Bc6133cd6A68aa161',
-    decimals: 18,
-    sinceBlock: 5005233,
-  },
-  {
-    name: 'KickToken',
-    symbol: 'KICK',
-    address: '0xC12D1c73eE7DC3615BA4e37E4ABFdbDDFA38907E',
-    decimals: 8,
-    sinceBlock: 8433407,
-  },
-  {
     name: 'Kyber Network Crystal',
     symbol: 'KNC',
     address: '0xdd974D5C2e2928deA5F71b9825b8b646686BD200',
@@ -366,13 +338,6 @@ export const tokenList: TokenInfo[] = [
     address: '0xec67005c4E498Ec7f55E092bd1d35cbC47C91892',
     decimals: 18,
     sinceBlock: 7130380,
-  },
-  {
-    name: 'MX Token',
-    symbol: 'MX',
-    address: '0x11eeF04c884E24d9B7B4760e7476D06ddF797f36',
-    decimals: 18,
-    sinceBlock: 5828860,
   },
   {
     name: 'OKB',
@@ -520,13 +485,6 @@ export const tokenList: TokenInfo[] = [
     address: '0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e',
     decimals: 18,
     sinceBlock: 10475744,
-  },
-  {
-    name: 'YFII.finance',
-    symbol: 'YFII',
-    address: '0xa1d0E215a23d7030842FC67cE582a6aFa3CCaB83',
-    decimals: 18,
-    sinceBlock: 10535249,
   },
   {
     name: 'Zks',
