@@ -67,8 +67,8 @@ After the nodejs dependencies have been installed you should also install a Post
 
 ```
 docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres
-docker exec -it postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
-docker exec -it postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
+docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
+docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
 
 If you restart your system running `docker start postgres` will bring the database back online.
