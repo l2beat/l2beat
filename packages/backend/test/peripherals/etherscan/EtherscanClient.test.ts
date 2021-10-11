@@ -11,7 +11,7 @@ import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe('EtherscanClient', () => {
-  describe('callUnsafe', () => {
+  describe('call', () => {
     it('throws for error responses', async () => {
       const httpClient = mock<IHttpClient>({
         async fetch() {
@@ -26,7 +26,7 @@ describe('EtherscanClient', () => {
         Logger.SILENT
       )
       await expect(
-        etherscanClient['callUnsafe']('foo', 'bar', { baz: '1234' })
+        etherscanClient['call']('foo', 'bar', { baz: '1234' })
       ).to.be.rejectedWith(EtherscanError, 'Oops!')
     })
 
@@ -42,7 +42,7 @@ describe('EtherscanClient', () => {
         Logger.SILENT
       )
       await expect(
-        etherscanClient['callUnsafe']('foo', 'bar', { baz: '1234' })
+        etherscanClient['call']('foo', 'bar', { baz: '1234' })
       ).to.be.rejectedWith(TypeError, 'Invalid Etherscan response')
     })
 
@@ -58,7 +58,7 @@ describe('EtherscanClient', () => {
         Logger.SILENT
       )
       await expect(
-        etherscanClient['callUnsafe']('foo', 'bar', { baz: '1234' })
+        etherscanClient['call']('foo', 'bar', { baz: '1234' })
       ).to.be.rejectedWith(Error, 'Http error 400: foo')
     })
   })

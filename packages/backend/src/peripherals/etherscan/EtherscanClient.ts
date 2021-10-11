@@ -1,7 +1,6 @@
 import { UnixTime } from '../../model/UnixTime'
 import { Logger } from '../../tools/Logger'
 import { RateLimiter } from '../../tools/RateLimiter'
-import { retry } from '../../tools/retry'
 import { IHttpClient } from '../HttpClient'
 import { asBigIntFromString } from './asBigIntFromString'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
@@ -38,17 +37,12 @@ export class EtherscanClient {
     action: string,
     params: Record<string, string>
   ) {
-    return retry(
-      () =>
-        this.rateLimiter.call(() => this.callUnsafe(module, action, params)),
-      {
-        maxRetryCount: 5,
-        minTimeout: 100,
-      }
+    return this.rateLimiter.call(() =>
+      this.callUnlimited(module, action, params)
     )
   }
 
-  private async callUnsafe(
+  private async callUnlimited(
     module: string,
     action: string,
     params: Record<string, string>
