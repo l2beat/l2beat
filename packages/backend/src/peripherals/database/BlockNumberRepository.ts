@@ -7,7 +7,13 @@ export interface BlockNumberRecord {
   blockNumber: bigint
 }
 
-export class BlockNumberRepository {
+export interface IBlockNumberRepository {
+  add(entry: BlockNumberRecord): Promise<void>
+  getAll(): Promise<BlockNumberRecord[]>
+  deleteAll(): Promise<void>
+}
+
+export class BlockNumberRepository implements IBlockNumberRepository {
   constructor(private knex: Knex) {}
 
   async add(entry: BlockNumberRecord) {
