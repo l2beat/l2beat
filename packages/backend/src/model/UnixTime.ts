@@ -4,6 +4,7 @@ const YEAR_3000_TIMESTAMP = Math.floor(
 
 const SECONDS_PER_DAY = 86_400
 const SECONDS_PER_HOUR = 3_600
+const SECONDS_PER_MINUTE = 60
 
 export class UnixTime {
   constructor(private timestamp: number) {
@@ -22,16 +23,28 @@ export class UnixTime {
     return new UnixTime(Math.floor(date.getTime() / 1000))
   }
 
-  toStartOf(period: 'day' | 'hour') {
-    const modulus = period === 'day' ? SECONDS_PER_DAY : SECONDS_PER_HOUR
+  toStartOf(period: 'day' | 'hour' | 'minute') {
+    const modulus =
+      period === 'day'
+        ? SECONDS_PER_DAY
+        : period === 'hour'
+        ? SECONDS_PER_HOUR
+        : SECONDS_PER_MINUTE
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
   }
 
-  add(value: number, period: 'days' | 'hours') {
+  add(value: number, period: 'days' | 'hours' | 'minutes' | 'seconds') {
     if (!Number.isInteger(value)) {
       throw new TypeError('value must be an integer')
     }
-    const unit = period === 'days' ? SECONDS_PER_DAY : SECONDS_PER_HOUR
+    const unit =
+      period === 'days'
+        ? SECONDS_PER_DAY
+        : period === 'hours'
+        ? SECONDS_PER_HOUR
+        : period === 'minutes'
+        ? SECONDS_PER_MINUTE
+        : 1
     return new UnixTime(this.timestamp + value * unit)
   }
 
