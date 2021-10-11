@@ -23,6 +23,17 @@ export interface MulticallResponse {
   data: Bytes
 }
 
+export interface IMulticallClient {
+  multicallNamed(
+    requests: Record<string, MulticallRequest>,
+    blockNumber: bigint
+  ): Promise<Record<string, MulticallResponse>>
+  multicall(
+    requests: MulticallRequest[],
+    blockNumber: bigint
+  ): MulticallResponse[]
+}
+
 export class MulticallClient {
   constructor(private ethereumClient: IEthereumClient) {}
 
