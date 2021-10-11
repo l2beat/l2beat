@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { Bytes, EthereumAddress } from '../../../src/model'
-import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
+import { IEthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 import { BlockTag } from '../../../src/peripherals/ethereum/EthereumClient'
 import {
   encodeMulticallV1,
@@ -14,25 +14,9 @@ import {
   MulticallClient,
   multicallInterface,
 } from '../../../src/peripherals/ethereum/MulticallClient'
-import { RpcCallParameters } from '../../../src/peripherals/ethereum/types'
-import { JsonRpcClient } from '../../../src/peripherals/jsonrpc'
+import { mock } from '../../mock'
 
 describe('MulticallClient', () => {
-  function makeEthereumClient(
-    call: (parameters: RpcCallParameters, blockTag: BlockTag) => Promise<Bytes>
-  ) {
-    class TestJsonRpcClient extends JsonRpcClient {
-      execute(): never {
-        throw new Error('Not implemented')
-      }
-    }
-    const jsonRpcClient = new TestJsonRpcClient()
-    class TestEthereumClient extends EthereumClient {
-      call = call
-    }
-    return new TestEthereumClient(jsonRpcClient)
-  }
-
   const ADDRESS_A = new EthereumAddress('0x' + 'a'.repeat(40))
   const ADDRESS_B = new EthereumAddress('0x' + 'b'.repeat(40))
   const ADDRESS_C = new EthereumAddress('0x' + 'c'.repeat(40))
@@ -45,9 +29,11 @@ describe('MulticallClient', () => {
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const ethereumClient = makeEthereumClient(async (parameters, blockTag) => {
-      calls.push({ to: parameters.to, data: parameters.data, blockTag })
-      return parameters.data ?? Bytes.EMPTY
+    const ethereumClient = mock<IEthereumClient>({
+      async call(parameters, blockTag) {
+        calls.push({ to: parameters.to, data: parameters.data, blockTag })
+        return parameters.data ?? Bytes.EMPTY
+      },
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
@@ -76,14 +62,16 @@ describe('MulticallClient', () => {
 
   it('uses v1 for blocks without v2', async () => {
     const calls: Call[] = []
-    const ethereumClient = makeEthereumClient(async (parameters, blockTag) => {
-      calls.push({ to: parameters.to, data: parameters.data, blockTag })
-      return Bytes.fromHex(
-        multicallInterface.encodeFunctionResult('aggregate', [
-          blockTag.toString(),
-          ['0x12', '0x0f00', '0x'],
-        ])
-      )
+    const ethereumClient = mock<IEthereumClient>({
+      async call(parameters, blockTag) {
+        calls.push({ to: parameters.to, data: parameters.data, blockTag })
+        return Bytes.fromHex(
+          multicallInterface.encodeFunctionResult('aggregate', [
+            blockTag.toString(),
+            ['0x12', '0x0f00', '0x'],
+          ])
+        )
+      },
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
@@ -118,17 +106,19 @@ describe('MulticallClient', () => {
 
   it('uses v2 for new blocks', async () => {
     const calls: Call[] = []
-    const ethereumClient = makeEthereumClient(async (parameters, blockTag) => {
-      calls.push({ to: parameters.to, data: parameters.data, blockTag })
-      return Bytes.fromHex(
-        multicallInterface.encodeFunctionResult('tryAggregate', [
-          [
-            [true, '0x12'],
-            [false, '0x0f00'],
-            [true, '0x'],
-          ],
-        ])
-      )
+    const ethereumClient = mock<IEthereumClient>({
+      async call(parameters, blockTag) {
+        calls.push({ to: parameters.to, data: parameters.data, blockTag })
+        return Bytes.fromHex(
+          multicallInterface.encodeFunctionResult('tryAggregate', [
+            [
+              [true, '0x12'],
+              [false, '0x0f00'],
+              [true, '0x'],
+            ],
+          ])
+        )
+      },
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
@@ -162,17 +152,19 @@ describe('MulticallClient', () => {
 
   it(`batches calls in batches of ${MULTICALL_BATCH_SIZE}`, async () => {
     const calls: number[] = []
-    const ethereumClient = makeEthereumClient(async (parameters) => {
-      const callCount: number = multicallInterface.decodeFunctionData(
-        'tryAggregate',
-        parameters.data?.toString() ?? ''
-      )[1].length
-      calls.push(callCount)
-      return Bytes.fromHex(
-        multicallInterface.encodeFunctionResult('tryAggregate', [
-          new Array(callCount).fill(0).map(() => [true, '0x1234']),
-        ])
-      )
+    const ethereumClient = mock<IEthereumClient>({
+      async call(parameters) {
+        const callCount: number = multicallInterface.decodeFunctionData(
+          'tryAggregate',
+          parameters.data?.toString() ?? ''
+        )[1].length
+        calls.push(callCount)
+        return Bytes.fromHex(
+          multicallInterface.encodeFunctionResult('tryAggregate', [
+            new Array(callCount).fill(0).map(() => [true, '0x1234']),
+          ])
+        )
+      },
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
@@ -190,15 +182,17 @@ describe('MulticallClient', () => {
   })
 
   it('offers a named interface', async () => {
-    const ethereumClient = makeEthereumClient(async () => {
-      return Bytes.fromHex(
-        multicallInterface.encodeFunctionResult('tryAggregate', [
-          [
-            [true, '0x1234'],
-            [false, '0xdead'],
-          ],
-        ])
-      )
+    const ethereumClient = mock<IEthereumClient>({
+      async call() {
+        return Bytes.fromHex(
+          multicallInterface.encodeFunctionResult('tryAggregate', [
+            [
+              [true, '0x1234'],
+              [false, '0xdead'],
+            ],
+          ])
+        )
+      },
     })
 
     const multicallClient = new MulticallClient(ethereumClient)

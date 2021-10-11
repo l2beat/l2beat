@@ -1,31 +1,42 @@
-import { KeccakHash } from '../../model'
-import { JsonRpcClient, JsonRpcParams } from '../jsonrpc'
+import { Bytes, KeccakHash } from '../../model'
+import { IJsonRpcClient } from '../jsonrpc'
 import {
   asBigIntFromQuantity,
   asBytesFromData,
   blockTagToString,
 } from './primitives'
-import { asRpcBlock, encodeRpcCallParameters, RpcCallParameters } from './types'
+import {
+  asRpcBlock,
+  encodeRpcCallParameters,
+  RpcBlock,
+  RpcCallParameters,
+} from './types'
 
 export type BlockTag = bigint | 'earliest' | 'latest' | 'pending'
 
-export class EthereumClient {
-  constructor(private jsonRpcClient: JsonRpcClient) {}
+export interface IEthereumClient {
+  getBlockNumber(): Promise<bigint>
+  getBlock(blockTagOrHash: BlockTag | KeccakHash): Promise<RpcBlock>
+  call(parameters: RpcCallParameters, blockTag: BlockTag): Promise<Bytes>
+}
+
+export class EthereumClient implements IEthereumClient {
+  constructor(private jsonRpcClient: IJsonRpcClient) {}
 
   async getBlockNumber() {
-    const result = await this.execute('eth_blockNumber')
+    const result = await this.jsonRpcClient.call('eth_blockNumber')
     return asBigIntFromQuantity(result)
   }
 
   async getBlock(blockTagOrHash: BlockTag | KeccakHash) {
     if (blockTagOrHash instanceof KeccakHash) {
-      const result = await this.execute('eth_getBlockByHash', [
+      const result = await this.jsonRpcClient.call('eth_getBlockByHash', [
         blockTagOrHash.toString(),
         false,
       ])
       return asRpcBlock(result)
     } else {
-      const result = await this.execute('eth_getBlockByNumber', [
+      const result = await this.jsonRpcClient.call('eth_getBlockByNumber', [
         blockTagToString(blockTagOrHash),
         false,
       ])
@@ -35,14 +46,10 @@ export class EthereumClient {
 
   async call(parameters: RpcCallParameters, blockTag: BlockTag) {
     const encoded = encodeRpcCallParameters(parameters)
-    const result = await this.execute('eth_call', [
+    const result = await this.jsonRpcClient.call('eth_call', [
       encoded,
       blockTagToString(blockTag),
     ])
     return asBytesFromData(result)
-  }
-
-  protected execute(method: string, params?: JsonRpcParams) {
-    return this.jsonRpcClient.call(method, params)
   }
 }

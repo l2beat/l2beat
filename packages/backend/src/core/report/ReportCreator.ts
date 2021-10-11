@@ -1,5 +1,5 @@
 import { UnixTime } from '../../model/UnixTime'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { IEthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Logger } from '../../tools/Logger'
 import { ReportRangeService } from './ReportRangeService'
 
@@ -7,7 +7,7 @@ export type Report = { timestamp: UnixTime; blockNumber: bigint }[]
 
 export class ReportCreator {
   constructor(
-    private ethereumClient: EthereumClient,
+    private ethereumClient: IEthereumClient,
     private reportRangeService: ReportRangeService,
     private logger: Logger
   ) {

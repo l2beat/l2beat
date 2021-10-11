@@ -1,12 +1,12 @@
 import { UnixTime } from '../../model/UnixTime'
-import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
-import { EtherscanClient } from '../../peripherals/etherscan'
+import { IBlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
+import { IEtherscanClient } from '../../peripherals/etherscan'
 
 export class ReportRangeService {
   private cache = new Map<number, bigint>()
   constructor(
-    private etherscanClient: EtherscanClient,
-    private blockNumberRepository: BlockNumberRepository
+    private etherscanClient: IEtherscanClient,
+    private blockNumberRepository: IBlockNumberRepository
   ) {}
 
   async initialize() {
