@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Bytes, EthereumAddress } from '../../model'
-import { EthereumClient } from './EthereumClient'
+import { IEthereumClient } from './EthereumClient'
 
 export const MULTICALL_BATCH_SIZE = 150
 export const MULTICALL_V1_BLOCK = 7929876n
@@ -24,7 +24,7 @@ export interface MulticallResponse {
 }
 
 export class MulticallClient {
-  constructor(private ethereumClient: EthereumClient) {}
+  constructor(private ethereumClient: IEthereumClient) {}
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,
