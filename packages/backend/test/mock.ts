@@ -1,4 +1,4 @@
-export function mock<T>(overrides: Partial<T>): T {
+export function mock<T>(overrides: Partial<T> = {}): T {
   const clone = { ...overrides }
   const proxy = new Proxy(clone, {
     get(target, property, receiver) {

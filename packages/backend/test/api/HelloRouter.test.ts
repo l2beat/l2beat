@@ -1,4 +1,4 @@
-import { createHelloRouter } from '../../src/api'
+import { createHelloRouter } from '../../src/api/HelloRouter'
 import { HelloService } from '../../src/core/HelloService'
 import { createTestApiServer } from './TestApiServer'
 

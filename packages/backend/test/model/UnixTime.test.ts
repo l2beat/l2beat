@@ -44,6 +44,18 @@ describe('UnixTime', () => {
       const later = time.add(5, 'hours')
       expect(later.toDate()).to.deep.equal(new Date('2021-09-07T05:00:00Z'))
     })
+
+    it('can add minutes', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+      const later = time.add(4, 'minutes')
+      expect(later.toDate()).to.deep.equal(new Date('2021-09-07T00:04:00Z'))
+    })
+
+    it('can add seconds', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+      const later = time.add(6, 'seconds')
+      expect(later.toDate()).to.deep.equal(new Date('2021-09-07T00:00:06Z'))
+    })
   })
 
   describe('toStartOf', () => {
@@ -57,6 +69,12 @@ describe('UnixTime', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('hour')
       expect(start.toDate()).to.deep.equal(new Date('2021-09-07T12:00:00Z'))
+    })
+
+    it('can get start of minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
+      const start = time.toStartOf('minute')
+      expect(start.toDate()).to.deep.equal(new Date('2021-09-07T12:34:00Z'))
     })
   })
 
