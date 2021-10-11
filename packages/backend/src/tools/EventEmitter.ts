@@ -1,36 +1,26 @@
-// Taken from: https://github.com/trusktr/events-typed (MIT License)
+// Originally taken from: https://github.com/trusktr/events-typed (MIT License)
 
 import { EventEmitter } from 'events'
 
-type EventArgs<
-  EventTypes,
-  K extends keyof EventTypes
-> = EventTypes[K] extends undefined
-  ? []
-  : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  EventTypes[K] extends any[]
-  ? EventTypes[K]
-  : [EventTypes[K]]
-
 export interface IEventEmitter<EventTypes> {
   addListener<EventName extends keyof EventTypes>(
-    event: EventName,
-    listener: (...args: EventArgs<EventTypes, EventName>) => void
+    type: EventName,
+    listener: (event: EventTypes[EventName]) => void
   ): IEventEmitter<EventTypes>
 
   on<EventName extends keyof EventTypes>(
-    event: EventName,
-    listener: (...args: EventArgs<EventTypes, EventName>) => void
+    type: EventName,
+    listener: (event: EventTypes[EventName]) => void
   ): IEventEmitter<EventTypes>
 
   once<EventName extends keyof EventTypes>(
-    event: EventName,
-    listener: (...args: EventArgs<EventTypes, EventName>) => void
+    type: EventName,
+    listener: (event: EventTypes[EventName]) => void
   ): IEventEmitter<EventTypes>
 
   off<EventName extends keyof EventTypes>(
-    event: EventName,
-    listener: (...args: EventArgs<EventTypes, EventName>) => void
+    type: EventName,
+    listener: (event: EventTypes[EventName]) => void
   ): IEventEmitter<EventTypes>
 
   removeAllListeners<EventName extends keyof EventTypes>(
@@ -38,8 +28,8 @@ export interface IEventEmitter<EventTypes> {
   ): IEventEmitter<EventTypes>
 
   emit<EventName extends keyof EventTypes>(
-    event: EventName,
-    ...args: EventArgs<EventTypes, EventName>
+    type: EventName,
+    event: EventTypes[EventName]
   ): boolean
 
   eventNames<EventName extends keyof EventTypes>(): Array<EventName>
@@ -47,19 +37,19 @@ export interface IEventEmitter<EventTypes> {
   getMaxListeners(): number
 
   listeners<EventName extends keyof EventTypes>(
-    event: EventName
-  ): (...args: EventArgs<EventTypes, EventName>) => void[]
+    type: EventName
+  ): (event: EventTypes[EventName]) => void[]
 
   listenerCount<EventName extends keyof EventTypes>(type: EventName): number
 
   prependListener<EventName extends keyof EventTypes>(
-    event: EventName,
-    listener: (...args: EventArgs<EventTypes, EventName>) => void
+    type: EventName,
+    listener: (event: EventTypes[EventName]) => void
   ): IEventEmitter<EventTypes>
 
   prependOnceListener<EventName extends keyof EventTypes>(
-    event: EventName,
-    listener: (...args: EventArgs<EventTypes, EventName>) => void
+    type: EventName,
+    listener: (event: EventTypes[EventName]) => void
   ): IEventEmitter<EventTypes>
 }
 
