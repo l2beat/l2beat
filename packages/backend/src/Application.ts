@@ -1,8 +1,10 @@
-import { ApiServer, createHelloRouter, createReportRouter } from './api'
+import { ApiServer } from './api/ApiServer'
+import { createBlockNumberRouter } from './api/BlockNumberRouter'
+import { createHelloRouter } from './api/HelloRouter'
 import { Config } from './config'
+import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { HelloService } from './core/HelloService'
-import { ReportCreator } from './core/report/ReportCreator'
-import { ReportRangeService } from './core/report/ReportRangeService'
+import { SafeBlockService } from './core/SafeBlockService'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
 import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
@@ -43,23 +45,25 @@ export class Application {
 
     const helloService = new HelloService(config.name)
 
-    const reportRangeService = new ReportRangeService(
-      etherscanClient,
-      blockNumberRepository
-    )
-    const reportCreator = new ReportCreator(
+    const safeBlockService = new SafeBlockService(
+      config.core.safeBlockRefreshIntervalMs,
+      config.core.safeBlockBlockOffset,
       ethereumClient,
-      reportRangeService,
+      logger
+    )
+    const blockNumberUpdater = new BlockNumberUpdater(
+      config.core.minBlockTimestamp,
+      safeBlockService,
+      etherscanClient,
+      blockNumberRepository,
       logger
     )
 
     /* - - - - - API - - - - - */
 
-    const helloRouter = createHelloRouter(helloService)
-    const reportRouter = createReportRouter(reportCreator)
     const apiServer = new ApiServer(config.port, logger, [
-      helloRouter,
-      reportRouter,
+      createHelloRouter(helloService),
+      createBlockNumberRouter(blockNumberRepository),
     ])
 
     /* - - - - - START - - - - - */
@@ -68,10 +72,11 @@ export class Application {
       logger.for(this).info('Starting')
 
       await databaseService.migrateToLatest()
-      await reportRangeService.initialize()
+
+      await safeBlockService.start()
+      await blockNumberUpdater.start()
 
       await apiServer.listen()
-      reportCreator.startBackgroundWork()
 
       logger.for(this).info('Started')
     }
