@@ -8,6 +8,10 @@ import { parseEtherscanResponse } from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
 
+export interface IEtherscanClient {
+  getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<bigint>
+}
+
 export class EtherscanClient {
   constructor(
     private etherscanApiKey: string,
