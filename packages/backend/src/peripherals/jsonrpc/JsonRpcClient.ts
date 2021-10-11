@@ -20,7 +20,14 @@ export interface BatchResult {
   error?: Error
 }
 
-export abstract class JsonRpcClient {
+export interface IJsonRpcClient {
+  call(method: string, params?: JsonRpcParams): Promise<unknown>
+  callBatch(
+    requests: { method: string; params?: JsonRpcParams }[]
+  ): Promise<BatchResult[]>
+}
+
+export abstract class JsonRpcClient implements IJsonRpcClient {
   private requestId = 1337
 
   protected abstract execute(

@@ -1,5 +1,5 @@
 import { KeccakHash } from '../../model'
-import { JsonRpcClient, JsonRpcParams } from '../jsonrpc'
+import { IJsonRpcClient, JsonRpcParams } from '../jsonrpc'
 import {
   asBigIntFromQuantity,
   asBytesFromData,
@@ -10,7 +10,7 @@ import { asRpcBlock, encodeRpcCallParameters, RpcCallParameters } from './types'
 export type BlockTag = bigint | 'earliest' | 'latest' | 'pending'
 
 export class EthereumClient {
-  constructor(private jsonRpcClient: JsonRpcClient) {}
+  constructor(private jsonRpcClient: IJsonRpcClient) {}
 
   async getBlockNumber() {
     const result = await this.execute('eth_blockNumber')
