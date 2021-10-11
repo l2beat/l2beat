@@ -1,6 +1,6 @@
 export function mock<T>(overrides: Partial<T>): T {
   const clone = { ...overrides }
-  return new Proxy(clone, {
+  const proxy = new Proxy(clone, {
     get(target, property, receiver) {
       const value = Reflect.get(target, property, receiver)
       if (value !== undefined) {
@@ -13,5 +13,6 @@ export function mock<T>(overrides: Partial<T>): T {
         )
       }
     },
-  }) as T
+  })
+  return proxy as T
 }
