@@ -64,6 +64,7 @@ export class Application {
     const statusService = new StatusService({
       alchemyHttpClient,
       databaseService,
+      etherscanClient,
     })
 
     /* - - - - - API - - - - - */

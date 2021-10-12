@@ -6,7 +6,7 @@ import { parseJsonRpcResponse } from './parseJsonRpcResponse'
 import { isSuccessResponse, JsonRpcRequest } from './types'
 
 export class JsonRpcHttpClient extends JsonRpcClient {
-  private requestTracker = new RequestTracker(100)
+  private requestTracker = new RequestTracker(20)
 
   constructor(
     private url: string,
@@ -36,11 +36,11 @@ export class JsonRpcHttpClient extends JsonRpcClient {
         (httpResponse) => ({ httpResponse, error: undefined }),
         (error: unknown) => ({ httpResponse: undefined, error })
       )
-    const responseTimeMs = Date.now() - start
+    const timeMs = Date.now() - start
 
     if (!httpResponse) {
       const message = getErrorMessage(error)
-      this.recordError(request, responseTimeMs, message)
+      this.recordError(request, timeMs, message)
       throw error
     }
 
@@ -53,22 +53,22 @@ export class JsonRpcHttpClient extends JsonRpcClient {
       !isSuccessResponse(rpcResponse)
     ) {
       const message = rpcResponse.error.message
-      this.recordError(request, responseTimeMs, message)
+      this.recordError(request, timeMs, message)
       return rpcResponse
     }
 
     if (!httpResponse.ok) {
-      this.recordError(request, responseTimeMs, text)
+      this.recordError(request, timeMs, text)
       throw new Error(`Http error ${httpResponse.status}: ${text}`)
     }
 
     if (!rpcResponse) {
       const message = 'Invalid JSON-RPC response.'
-      this.recordError(request, responseTimeMs, message)
+      this.recordError(request, timeMs, message)
       throw new TypeError(message)
     }
 
-    this.recordSuccess(request, responseTimeMs)
+    this.recordSuccess(request, timeMs)
     return rpcResponse
   }
 

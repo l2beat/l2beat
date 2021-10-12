@@ -11,11 +11,11 @@ describe('RequestTracker', () => {
 
     expect(requestTracker.getStats()).to.deep.equal({
       lastUpdatedAt: '1970-01-01T00:00:00.000Z',
-      lifetimeAverageResponseTime: 0,
+      lifetimeAverageResponseTimeMs: 0,
       lifetimeErrorRate: '0.00%',
       lifetimeErrors: 0,
       lifetimeRequests: 0,
-      recentAverageResponseTime: 0,
+      recentAverageResponseTimeMs: 0,
       recentErrorRate: '0.00%',
       recentErrors: 0,
       recentRequests: 0,
@@ -39,11 +39,11 @@ describe('RequestTracker', () => {
 
     expect(requestTracker.getStats()).to.deep.equal({
       lastUpdatedAt: '1970-01-01T00:00:12.345Z',
-      lifetimeAverageResponseTime: 20,
+      lifetimeAverageResponseTimeMs: 20,
       lifetimeErrorRate: '33.33%',
       lifetimeErrors: 3,
       lifetimeRequests: 9,
-      recentAverageResponseTime: 25,
+      recentAverageResponseTimeMs: 25,
       recentErrorRate: '50.00%',
       recentErrors: 2,
       recentRequests: 4,
