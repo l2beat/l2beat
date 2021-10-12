@@ -36,5 +36,6 @@ export class DatabaseService implements IDatabaseService {
 
   async closeConnection() {
     await this.knex.destroy()
+    this.logger.debug('Connection closed')
   }
 }

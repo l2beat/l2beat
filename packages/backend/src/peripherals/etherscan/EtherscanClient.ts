@@ -1,5 +1,5 @@
 import { UnixTime } from '../../model/UnixTime'
-import { Logger } from '../../tools/Logger'
+import { getErrorMessage, Logger } from '../../tools/Logger'
 import { RateLimiter } from '../../tools/RateLimiter'
 import { IHttpClient } from '../HttpClient'
 import { asBigIntFromString } from './asBigIntFromString'
@@ -56,17 +56,35 @@ export class EtherscanClient {
 
     this.logger.debug({ type: 'request', module, action })
     const url = `https://api.etherscan.io/api?${query}`
-    const res = await this.httpClient.fetch(url)
-    this.logger.debug({ type: 'response', status: res.status, module, action })
+    let res
+    try {
+      res = await this.httpClient.fetch(url, { timeout: 20_000 })
+    } catch (e) {
+      this.logger.debug({
+        type: 'response',
+        error: getErrorMessage(e),
+        module,
+        action,
+      })
+      throw e
+    }
 
     const text = await res.text()
     if (!res.ok) {
+      this.logger.debug({ type: 'response', error: res.status, module, action })
       throw new Error(`Http error ${res.status}: ${text}`)
     }
     const parsed = parseEtherscanResponse(text)
     if (parsed.message !== 'OK') {
+      this.logger.debug({
+        type: 'response',
+        error: parsed.message,
+        module,
+        action,
+      })
       throw new EtherscanError(parsed.result)
     }
+    this.logger.debug({ type: 'response', success: true, module, action })
     return parsed.result
   }
 }

@@ -1,4 +1,4 @@
-import { Logger } from '../../tools/Logger'
+import { getErrorMessage, Logger } from '../../tools/Logger'
 import { HttpClient } from '../HttpClient'
 import { JsonRpcClient, JsonRpcError } from './JsonRpcClient'
 import { parseJsonRpcResponse } from './parseJsonRpcResponse'
@@ -21,14 +21,26 @@ export class JsonRpcHttpClient extends JsonRpcClient {
     const id = (Array.isArray(request) ? request[0].id : request.id) ?? 'null'
 
     this.logger.debug({ type: 'request', method, id })
-    const res = await this.httpClient.fetch(this.url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
-    })
-    this.logger.debug({ type: 'response', status: res.status, method, id })
+
+    let res
+    try {
+      res = await this.httpClient.fetch(this.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(request),
+        timeout: 20_000,
+      })
+    } catch (e) {
+      this.logger.debug({
+        type: 'response',
+        error: getErrorMessage(e),
+        method,
+        id,
+      })
+      throw e
+    }
 
     const text = await res.text()
     if (!res.ok) {
@@ -41,14 +53,32 @@ export class JsonRpcHttpClient extends JsonRpcClient {
         !Array.isArray(rpcResponse) &&
         !isSuccessResponse(rpcResponse)
       ) {
+        this.logger.debug({
+          type: 'response',
+          error: rpcResponse.error.message,
+          method,
+          id,
+        })
         throw new JsonRpcError(
           rpcResponse.error.code,
           rpcResponse.error.message,
           rpcResponse.error.data
         )
       }
+      this.logger.debug({
+        type: 'response',
+        error: text,
+        method,
+        id,
+      })
       throw new Error(`Http error ${res.status}: ${text}`)
     }
+    this.logger.debug({
+      type: 'response',
+      success: true,
+      method,
+      id,
+    })
     return parseJsonRpcResponse(text)
   }
 }

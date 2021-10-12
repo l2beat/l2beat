@@ -67,6 +67,7 @@ export class SafeBlockService implements ISafeBlockService {
     const blockNumber = lastBlock - this.blockOffset
     const { timestamp } = await this.ethereumClient.getBlock(blockNumber)
     this.safeBlock = { timestamp, blockNumber }
+    this.logger.info('safe block found', { timestamp: timestamp.toNumber() })
     this.events.emit('newBlock', this.safeBlock)
   }
 }
