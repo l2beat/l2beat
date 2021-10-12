@@ -28,7 +28,6 @@ export class JsonRpcHttpClient extends JsonRpcClient {
       },
       body: JSON.stringify(request),
     })
-    this.logger.debug({ type: 'response', status: res.status, method, id })
 
     const text = await res.text()
     if (!res.ok) {
@@ -41,14 +40,32 @@ export class JsonRpcHttpClient extends JsonRpcClient {
         !Array.isArray(rpcResponse) &&
         !isSuccessResponse(rpcResponse)
       ) {
+        this.logger.debug({
+          type: 'response',
+          error: rpcResponse.error.message,
+          method,
+          id,
+        })
         throw new JsonRpcError(
           rpcResponse.error.code,
           rpcResponse.error.message,
           rpcResponse.error.data
         )
       }
+      this.logger.debug({
+        type: 'response',
+        error: text,
+        method,
+        id,
+      })
       throw new Error(`Http error ${res.status}: ${text}`)
     }
+    this.logger.debug({
+      type: 'response',
+      success: true,
+      method,
+      id,
+    })
     return parseJsonRpcResponse(text)
   }
 }

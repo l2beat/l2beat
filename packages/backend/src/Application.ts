@@ -25,7 +25,7 @@ export class Application {
 
     const knex = DatabaseService.createKnexInstance(config.databaseUrl)
     const databaseService = new DatabaseService(knex, logger)
-    const blockNumberRepository = new BlockNumberRepository(knex)
+    const blockNumberRepository = new BlockNumberRepository(knex, logger)
 
     const httpClient = new HttpClient()
 

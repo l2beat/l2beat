@@ -62,9 +62,19 @@ export class BlockNumberUpdater implements IBlockNumberUpdater {
   }
 
   private addBlocks(blocks: BlockNumberRecord[]) {
+    if (blocks.length === 0) {
+      return
+    }
     this.blocks.push(...blocks)
     for (const { timestamp } of blocks) {
       this.timestamps.add(timestamp.toNumber())
+    }
+    if (blocks.length > 1) {
+      this.logger.debug('blocks added', { count: blocks.length })
+    } else {
+      this.logger.debug('block added', {
+        number: blocks[0].blockNumber.toString(),
+      })
     }
     this.events.emit('newBlocks', blocks)
   }
@@ -77,6 +87,7 @@ export class BlockNumberUpdater implements IBlockNumberUpdater {
           name: jobTimestamp.toString(),
           execute: () => this.getBlockNumber(jobTimestamp),
         })
+        this.logger.debug('job queued', { timestamp: jobTimestamp.toNumber() })
       }
       this.nextTimestamp = this.nextTimestamp.add(1, 'hours')
     }
