@@ -1,4 +1,5 @@
 export * from './Bytes'
 export * from './EthereumAddress'
+export * from './json'
 export * from './KeccakHash'
 export * from './UnixTime'

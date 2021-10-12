@@ -1,6 +1,8 @@
 import chalk from 'chalk'
 import { inspect } from 'util'
 
+import { json } from '../model'
+
 export enum LogLevel {
   NONE = 0,
   ERROR = 1,
@@ -14,7 +16,7 @@ export interface LoggerOptions {
   format: 'pretty' | 'json'
 }
 
-export type LoggerParameters = Record<string, string | boolean | number>
+export type LoggerParameters = Record<string, json>
 
 export class Logger {
   constructor(private options: LoggerOptions) {}
@@ -56,13 +58,13 @@ export class Logger {
   private print(level: string, parameters: LoggerParameters) {
     switch (this.options.format) {
       case 'json':
-        return this.printjson(level, parameters)
+        return this.printJson(level, parameters)
       case 'pretty':
         return this.printPretty(level, parameters)
     }
   }
 
-  private printjson(level: string, parameters: LoggerParameters) {
+  private printJson(level: string, parameters: LoggerParameters) {
     const time = new Date().toISOString()
     const data = {
       time,
