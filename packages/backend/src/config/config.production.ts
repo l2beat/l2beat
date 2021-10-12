@@ -8,7 +8,7 @@ export function getProductionConfig(): Config {
     name: 'Backend/Production',
     logger: {
       logLevel: LogLevel.INFO,
-      format: 'plain',
+      format: 'json',
     },
     port: getEnv.integer('PORT'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),

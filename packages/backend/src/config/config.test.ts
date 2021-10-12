@@ -11,7 +11,7 @@ export function getTestConfig(): Config {
     name: 'Backend/Test',
     logger: {
       logLevel: LogLevel.NONE,
-      format: 'plain',
+      format: 'json',
     },
     port: 1337,
     alchemyApiKey: 'xXTestAlchemyKeyXx',

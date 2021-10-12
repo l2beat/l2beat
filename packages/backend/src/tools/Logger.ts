@@ -11,7 +11,7 @@ export enum LogLevel {
 export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
-  format: 'pretty' | 'plain'
+  format: 'pretty' | 'json'
 }
 
 export type LoggerParameters = Record<string, string | boolean | number>
@@ -55,14 +55,14 @@ export class Logger {
 
   private print(level: string, parameters: LoggerParameters) {
     switch (this.options.format) {
-      case 'plain':
-        return this.printPlain(level, parameters)
+      case 'json':
+        return this.printjson(level, parameters)
       case 'pretty':
         return this.printPretty(level, parameters)
     }
   }
 
-  private printPlain(level: string, parameters: LoggerParameters) {
+  private printjson(level: string, parameters: LoggerParameters) {
     const time = new Date().toISOString()
     const data = {
       time,
