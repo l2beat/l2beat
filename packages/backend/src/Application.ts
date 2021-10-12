@@ -63,6 +63,7 @@ export class Application {
 
     const statusService = new StatusService({
       alchemyHttpClient,
+      blockNumberUpdater,
       databaseService,
       etherscanClient,
       safeBlockService,

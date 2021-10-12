@@ -40,6 +40,13 @@ export class BlockNumberUpdater implements IBlockNumberUpdater {
     this.jobQueue = new JobQueue({ maxConcurrentJobs: 20 }, this.logger)
   }
 
+  getStatus() {
+    return {
+      blocks: this.blocks.length,
+      ...this.jobQueue.getStats(),
+    }
+  }
+
   getBlockList() {
     return [...this.blocks]
   }
