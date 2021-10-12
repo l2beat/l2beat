@@ -65,6 +65,7 @@ export class Application {
       alchemyHttpClient,
       databaseService,
       etherscanClient,
+      safeBlockService,
     })
 
     /* - - - - - API - - - - - */
@@ -82,10 +83,10 @@ export class Application {
 
       await databaseService.migrateToLatest()
 
+      await apiServer.listen()
+
       await safeBlockService.start()
       await blockNumberUpdater.start()
-
-      await apiServer.listen()
 
       logger.for(this).info('Started')
     }
