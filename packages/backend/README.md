@@ -71,7 +71,7 @@ docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_loca
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
 
-If you restart your system running `docker start postgres` will bring the database back online.
+If you restart your system running `docker start l2beat_postgres` will bring the database back online.
 
 You should also obtain an api key for the following services:
 
