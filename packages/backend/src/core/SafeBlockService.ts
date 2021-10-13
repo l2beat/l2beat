@@ -20,6 +20,8 @@ export interface ISafeBlockService {
 export class SafeBlockService implements ISafeBlockService {
   private events = createEventEmitter<SafeBlockEvents>()
   private safeBlock: SafeBlock | undefined
+  private started = false
+  private lastUpdatedAt = new Date().toISOString()
 
   constructor(
     private refreshIntervalMs: number,
@@ -31,8 +33,20 @@ export class SafeBlockService implements ISafeBlockService {
   }
 
   async start() {
+    this.started = true
+    this.lastUpdatedAt = new Date().toISOString()
     await this.updateSafeBlock()
     return this.startBackgroundWork()
+  }
+
+  getStatus() {
+    return {
+      lastUpdatedAt: this.lastUpdatedAt,
+      started: this.started,
+      safeBlockNumber: this.safeBlock?.blockNumber.toString() ?? null,
+      safeBlockTime: this.safeBlock?.timestamp.toDate().toISOString() ?? null,
+      safeBlockTimestamp: this.safeBlock?.timestamp.toNumber() ?? null,
+    }
   }
 
   getSafeBlock() {
@@ -67,6 +81,7 @@ export class SafeBlockService implements ISafeBlockService {
     const blockNumber = lastBlock - this.blockOffset
     const { timestamp } = await this.ethereumClient.getBlock(blockNumber)
     this.safeBlock = { timestamp, blockNumber }
+    this.lastUpdatedAt = new Date().toISOString()
     this.logger.info('safe block found', { timestamp: timestamp.toNumber() })
     this.events.emit('newBlock', this.safeBlock)
   }

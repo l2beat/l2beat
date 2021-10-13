@@ -1,10 +1,13 @@
 import { getErrorMessage, Logger } from '../../tools/Logger'
+import { RequestTracker } from '../../tools/RequestTracker'
 import { HttpClient } from '../HttpClient'
-import { JsonRpcClient, JsonRpcError } from './JsonRpcClient'
+import { JsonRpcClient } from './JsonRpcClient'
 import { parseJsonRpcResponse } from './parseJsonRpcResponse'
 import { isSuccessResponse, JsonRpcRequest } from './types'
 
 export class JsonRpcHttpClient extends JsonRpcClient {
+  private requestTracker = new RequestTracker(20)
+
   constructor(
     private url: string,
     private httpClient: HttpClient,
@@ -14,17 +17,14 @@ export class JsonRpcHttpClient extends JsonRpcClient {
     this.logger = this.logger.for(this)
   }
 
+  getStatus() {
+    return this.requestTracker.getStats()
+  }
+
   async execute(request: JsonRpcRequest | JsonRpcRequest[]) {
-    const method = Array.isArray(request)
-      ? `batch(${request.length})`
-      : request.method
-    const id = (Array.isArray(request) ? request[0].id : request.id) ?? 'null'
-
-    this.logger.debug({ type: 'request', method, id })
-
-    let res
-    try {
-      res = await this.httpClient.fetch(this.url, {
+    const start = Date.now()
+    const { httpResponse, error } = await this.httpClient
+      .fetch(this.url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,53 +32,87 @@ export class JsonRpcHttpClient extends JsonRpcClient {
         body: JSON.stringify(request),
         timeout: 20_000,
       })
-    } catch (e) {
-      this.logger.debug({
-        type: 'response',
-        error: getErrorMessage(e),
-        method,
-        id,
-      })
-      throw e
+      .then(
+        (httpResponse) => ({ httpResponse, error: undefined }),
+        (error: unknown) => ({ httpResponse: undefined, error })
+      )
+    const timeMs = Date.now() - start
+
+    if (!httpResponse) {
+      const message = getErrorMessage(error)
+      this.recordError(request, timeMs, message)
+      throw error
     }
 
-    const text = await res.text()
-    if (!res.ok) {
-      let rpcResponse
-      try {
-        rpcResponse = parseJsonRpcResponse(text)
-      } catch {} // eslint-disable-line no-empty
-      if (
-        rpcResponse !== undefined &&
-        !Array.isArray(rpcResponse) &&
-        !isSuccessResponse(rpcResponse)
-      ) {
-        this.logger.debug({
-          type: 'response',
-          error: rpcResponse.error.message,
-          method,
-          id,
-        })
-        throw new JsonRpcError(
-          rpcResponse.error.code,
-          rpcResponse.error.message,
-          rpcResponse.error.data
-        )
-      }
-      this.logger.debug({
-        type: 'response',
-        error: text,
-        method,
-        id,
-      })
-      throw new Error(`Http error ${res.status}: ${text}`)
+    const text = await httpResponse.text()
+    const rpcResponse = tryParseJsonRpcResponse(text)
+
+    if (
+      rpcResponse &&
+      !Array.isArray(rpcResponse) &&
+      !isSuccessResponse(rpcResponse)
+    ) {
+      const message = rpcResponse.error.message
+      this.recordError(request, timeMs, message)
+      return rpcResponse
     }
+
+    if (!httpResponse.ok) {
+      this.recordError(request, timeMs, text)
+      throw new Error(`Http error ${httpResponse.status}: ${text}`)
+    }
+
+    if (!rpcResponse) {
+      const message = 'Invalid JSON-RPC response.'
+      this.recordError(request, timeMs, message)
+      throw new TypeError(message)
+    }
+
+    this.recordSuccess(request, timeMs)
+    return rpcResponse
+  }
+
+  private recordSuccess(
+    request: JsonRpcRequest | JsonRpcRequest[],
+    timeMs: number
+  ) {
+    this.requestTracker.add(timeMs, true)
+    this.logger.debug({ type: 'success', timeMs, ...getRequestInfo(request) })
+  }
+
+  private recordError(
+    request: JsonRpcRequest | JsonRpcRequest[],
+    timeMs: number,
+    message: string
+  ) {
+    this.requestTracker.add(timeMs, false)
     this.logger.debug({
-      type: 'response',
-      success: true,
-      method,
-      id,
+      type: 'error',
+      message,
+      timeMs,
+      ...getRequestInfo(request),
     })
+  }
+}
+
+type RequestInfo =
+  | { batch: number; id: string | number | null }
+  | { method: string; id: string | number | null }
+
+function getRequestInfo(
+  request: JsonRpcRequest | JsonRpcRequest[]
+): RequestInfo {
+  if (Array.isArray(request)) {
+    return { batch: request.length, id: request[0].id ?? null }
+  } else {
+    return { method: request.method, id: request.id ?? null }
+  }
+}
+
+function tryParseJsonRpcResponse(text: string) {
+  try {
     return parseJsonRpcResponse(text)
+  } catch {
+    return undefined
   }
 }

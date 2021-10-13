@@ -9,13 +9,6 @@ interface JobInQueue extends Job {
   failureCount: number
 }
 
-export interface JobQueueStats {
-  jobsInProgress: { name: string; failureCount: number }[]
-  nextInQueue: { name: string; failureCount: number } | undefined
-  lastInQueue: { name: string; failureCount: number } | undefined
-  totalJobs: number
-}
-
 export interface JobQueueOptions {
   maxConcurrentJobs: number
 }
@@ -23,6 +16,7 @@ export interface JobQueueOptions {
 export class JobQueue {
   private queue: JobInQueue[] = []
   private inProgress: JobInQueue[] = []
+  private lastUpdatedAt = new Date().toISOString()
 
   constructor(private options: JobQueueOptions, private logger: Logger) {}
 
@@ -31,20 +25,14 @@ export class JobQueue {
     setTimeout(() => this.execute())
   }
 
-  getStats(): JobQueueStats {
-    const first = this.queue[0]
-    const last = this.queue[this.queue.length - 1]
+  getStats() {
     return {
-      jobsInProgress: this.inProgress.map((x) => ({
-        name: x.name,
-        failureCount: x.failureCount,
-      })),
-      nextInQueue: first && {
-        name: first.name,
-        failureCount: first.failureCount,
-      },
-      lastInQueue: last && { name: last.name, failureCount: last.failureCount },
-      totalJobs: this.inProgress.length + this.queue.length,
+      lastUpdatedAt: this.lastUpdatedAt,
+      jobsInProgress: this.inProgress.length,
+      jobsInQueue: this.queue.length,
+      recentFailureCount:
+        this.inProgress.reduce((count, job) => count + job.failureCount, 0) +
+        (this.queue[0]?.failureCount ?? 0),
     }
   }
 
@@ -53,6 +41,7 @@ export class JobQueue {
   }
 
   private async execute() {
+    this.lastUpdatedAt = new Date().toISOString()
     if (this.inProgress.length >= this.options.maxConcurrentJobs) {
       return
     }

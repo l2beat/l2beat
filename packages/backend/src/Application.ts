@@ -1,10 +1,12 @@
 import { ApiServer } from './api/ApiServer'
 import { createBlockNumberRouter } from './api/BlockNumberRouter'
 import { createHelloRouter } from './api/HelloRouter'
+import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { HelloService } from './core/HelloService'
 import { SafeBlockService } from './core/SafeBlockService'
+import { StatusService } from './core/StatusService'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
 import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
@@ -59,11 +61,20 @@ export class Application {
       logger
     )
 
+    const statusService = new StatusService({
+      alchemyHttpClient,
+      blockNumberUpdater,
+      databaseService,
+      etherscanClient,
+      safeBlockService,
+    })
+
     /* - - - - - API - - - - - */
 
     const apiServer = new ApiServer(config.port, logger, [
-      createHelloRouter(helloService),
       createBlockNumberRouter(blockNumberRepository),
+      createHelloRouter(helloService),
+      createStatusRouter(statusService),
     ])
 
     /* - - - - - START - - - - - */
@@ -73,10 +84,10 @@ export class Application {
 
       await databaseService.migrateToLatest()
 
+      await apiServer.listen()
+
       await safeBlockService.start()
       await blockNumberUpdater.start()
-
-      await apiServer.listen()
 
       logger.for(this).info('Started')
     }

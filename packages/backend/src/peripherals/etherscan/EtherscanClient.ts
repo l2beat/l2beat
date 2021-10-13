@@ -1,6 +1,7 @@
 import { UnixTime } from '../../model/UnixTime'
 import { getErrorMessage, Logger } from '../../tools/Logger'
 import { RateLimiter } from '../../tools/RateLimiter'
+import { RequestTracker } from '../../tools/RequestTracker'
 import { IHttpClient } from '../HttpClient'
 import { asBigIntFromString } from './asBigIntFromString'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
@@ -12,6 +13,11 @@ export interface IEtherscanClient {
 }
 
 export class EtherscanClient {
+  private requestTracker = new RequestTracker(20)
+  private rateLimiter = new RateLimiter({
+    callsPerMinute: 150,
+  })
+
   constructor(
     private etherscanApiKey: string,
     private httpClient: IHttpClient,
@@ -20,9 +26,9 @@ export class EtherscanClient {
     this.logger = this.logger.for(this)
   }
 
-  private rateLimiter = new RateLimiter({
-    callsPerMinute: 150,
-  })
+  getStatus() {
+    return this.requestTracker.getStats()
+  }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<bigint> {
     const result = await this.call('block', 'getblocknobytime', {
@@ -53,38 +59,66 @@ export class EtherscanClient {
       ...params,
       apikey: this.etherscanApiKey,
     })
-
-    this.logger.debug({ type: 'request', module, action })
     const url = `https://api.etherscan.io/api?${query}`
-    let res
-    try {
-      res = await this.httpClient.fetch(url, { timeout: 20_000 })
-    } catch (e) {
-      this.logger.debug({
-        type: 'response',
-        error: getErrorMessage(e),
-        module,
-        action,
-      })
-      throw e
+
+    const start = Date.now()
+    const { httpResponse, error } = await this.httpClient
+      .fetch(url, { timeout: 20_000 })
+      .then(
+        (httpResponse) => ({ httpResponse, error: undefined }),
+        (error: unknown) => ({ httpResponse: undefined, error })
+      )
+    const timeMs = Date.now() - start
+
+    if (!httpResponse) {
+      const message = getErrorMessage(error)
+      this.recordError(module, action, timeMs, message)
+      throw error
     }
 
-    const text = await res.text()
-    if (!res.ok) {
-      this.logger.debug({ type: 'response', error: res.status, module, action })
-      throw new Error(`Http error ${res.status}: ${text}`)
+    const text = await httpResponse.text()
+    const etherscanResponse = tryParseEtherscanResponse(text)
+
+    if (!httpResponse.ok) {
+      this.recordError(module, action, timeMs, text)
+      throw new Error(`Http error ${httpResponse.status}: ${text}`)
     }
-    const parsed = parseEtherscanResponse(text)
-    if (parsed.message !== 'OK') {
-      this.logger.debug({
-        type: 'response',
-        error: parsed.message,
-        module,
-        action,
-      })
-      throw new EtherscanError(parsed.result)
+
+    if (!etherscanResponse) {
+      const message = 'Invalid Etherscan response.'
+      this.recordError(module, action, timeMs, message)
+      throw new TypeError(message)
     }
-    this.logger.debug({ type: 'response', success: true, module, action })
-    return parsed.result
+
+    if (etherscanResponse.message !== 'OK') {
+      this.recordError(module, action, timeMs, etherscanResponse.result)
+      throw new EtherscanError(etherscanResponse.result)
+    }
+
+    this.recordSuccess(module, action, timeMs)
+    return etherscanResponse.result
+  }
+
+  private recordSuccess(module: string, action: string, timeMs: number) {
+    this.requestTracker.add(timeMs, true)
+    this.logger.debug({ type: 'success', timeMs, module, action })
+  }
+
+  private recordError(
+    module: string,
+    action: string,
+    timeMs: number,
+    message: string
+  ) {
+    this.requestTracker.add(timeMs, false)
+    this.logger.debug({ type: 'error', message, timeMs, module, action })
+  }
+}
+
+function tryParseEtherscanResponse(text: string) {
+  try {
+    return parseEtherscanResponse(text)
+  } catch {
+    return undefined
   }
 }

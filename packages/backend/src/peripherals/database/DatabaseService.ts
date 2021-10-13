@@ -10,6 +10,9 @@ export interface IDatabaseService {
 }
 
 export class DatabaseService implements IDatabaseService {
+  private migrated = false
+  private version: string | null = null
+
   constructor(private knex: Knex, private logger: Logger) {
     this.logger = this.logger.for(this)
   }
@@ -24,13 +27,21 @@ export class DatabaseService implements IDatabaseService {
     })
   }
 
+  getStatus() {
+    return { migrated: this.migrated, version: this.version }
+  }
+
   async migrateToLatest() {
     await this.knex.migrate.latest()
     const version = await this.knex.migrate.currentVersion()
+    this.migrated = true
+    this.version = version
     this.logger.info('Migrations completed', { version })
   }
 
   async rollbackAll() {
+    this.migrated = false
+    this.version = null
     await this.knex.migrate.rollback(undefined, true)
   }
 
