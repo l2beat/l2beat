@@ -139,7 +139,7 @@ export const aztec: Project = {
             name: 'AztecFeeDistributor',
           },
           {
-            address: '0x3937f965e824fe4e7885b8662669821966d3f293',
+            address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
             name: 'TurboVerifier',
           },
         ],
