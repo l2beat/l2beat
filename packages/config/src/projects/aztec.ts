@@ -62,7 +62,7 @@ export const aztec: Project = {
         references: [
           {
             text: 'TurboVerifier.sol#L37 - Etherscan source code',
-            href: 'https://etherscan.io/address/0xbc87b0ccdd7e5a064051ae9aeece2ca6617d8675#code#F1#L37',
+            href: 'https://etherscan.io/address/0x3937f965e824fe4e7885b8662669821966d3f293#code#F1#L37',
           },
         ],
       },
@@ -139,14 +139,11 @@ export const aztec: Project = {
             name: 'AztecFeeDistributor',
           },
           {
-            address: '0xDCC80dB987bf63f01b7bafCED6230DE5002eF874',
+            address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
             name: 'TurboVerifier',
-            // TurboVerifier uses unverified libraries https://etherscan.io/address/0x8eefd2d44952ddcb94bb383d4c0aa670f941c784
-            description:
-              'The source code of the VerificationKeys library used by this contract is not verified on Etherscan.',
           },
         ],
-        risks: [CONTRACTS.UNVERIFIED_RISK],
+        risks: [],
       },
     },
     news: [

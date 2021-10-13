@@ -194,6 +194,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 10956992,
   },
   {
+    name: 'Dopex Governance Token',
+    symbol: 'DPX',
+    address: '0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81',
+    decimals: 18,
+    sinceBlock: 12674086,
+  },
+  {
     name: 'Dusk Network',
     symbol: 'DUSK',
     address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
