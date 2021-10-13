@@ -33,6 +33,7 @@ export const arbitrum: Project = {
         'COMP',
         'CRV',
         'DODO',
+        'DPX',
         'GNO',
         'GRT',
         'LINK',
