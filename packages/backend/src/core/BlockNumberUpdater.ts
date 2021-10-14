@@ -1,24 +1,19 @@
 import { UnixTime } from '../model/UnixTime'
 import {
   BlockNumberRecord,
-  IBlockNumberRepository,
+  BlockNumberRepository,
 } from '../peripherals/database/BlockNumberRepository'
-import { IEtherscanClient } from '../peripherals/etherscan'
+import { EtherscanClient } from '../peripherals/etherscan'
 import { createEventEmitter } from '../tools/EventEmitter'
 import { JobQueue } from '../tools/JobQueue'
 import { Logger } from '../tools/Logger'
-import { ISafeBlockService } from './SafeBlockService'
+import { SafeBlockService } from './SafeBlockService'
 
 interface BlockNumberEvents {
   newBlocks: BlockNumberRecord[]
 }
 
-export interface IBlockNumberUpdater {
-  getBlockList(): BlockNumberRecord[]
-  onNewBlocks(fn: (blocks: BlockNumberRecord[]) => void): () => void
-}
-
-export class BlockNumberUpdater implements IBlockNumberUpdater {
+export class BlockNumberUpdater {
   private events = createEventEmitter<BlockNumberEvents>()
   private blocks: BlockNumberRecord[] = []
   private timestamps = new Set<number>()
@@ -27,9 +22,9 @@ export class BlockNumberUpdater implements IBlockNumberUpdater {
 
   constructor(
     private minTimestamp: UnixTime,
-    private safeBlockService: ISafeBlockService,
-    private etherscanClient: IEtherscanClient,
-    private blockNumberRepository: IBlockNumberRepository,
+    private safeBlockService: SafeBlockService,
+    private etherscanClient: EtherscanClient,
+    private blockNumberRepository: BlockNumberRepository,
     private logger: Logger
   ) {
     if (!minTimestamp.toStartOf('hour').equals(minTimestamp)) {

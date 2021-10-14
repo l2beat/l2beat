@@ -3,13 +3,7 @@ import path from 'path'
 
 import { Logger } from '../../tools/Logger'
 
-export interface IDatabaseService {
-  migrateToLatest(): Promise<void>
-  rollbackAll(): Promise<void>
-  closeConnection(): Promise<void>
-}
-
-export class DatabaseService implements IDatabaseService {
+export class DatabaseService {
   private migrated = false
   private version: string | null = null
 

@@ -1,5 +1,5 @@
 import { UnixTime } from '../model/UnixTime'
-import { IEthereumClient } from '../peripherals/ethereum/EthereumClient'
+import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { createEventEmitter } from '../tools/EventEmitter'
 import { Logger } from '../tools/Logger'
 
@@ -12,12 +12,7 @@ interface SafeBlockEvents {
   newBlock: SafeBlock
 }
 
-export interface ISafeBlockService {
-  getSafeBlock(): SafeBlock
-  onNewSafeBlock(fn: (block: SafeBlock) => void): () => void
-}
-
-export class SafeBlockService implements ISafeBlockService {
+export class SafeBlockService {
   private events = createEventEmitter<SafeBlockEvents>()
   private safeBlock: SafeBlock | undefined
   private started = false
@@ -26,7 +21,7 @@ export class SafeBlockService implements ISafeBlockService {
   constructor(
     private refreshIntervalMs: number,
     private blockOffset: bigint,
-    private ethereumClient: IEthereumClient,
+    private ethereumClient: EthereumClient,
     private logger: Logger
   ) {
     this.logger = this.logger.for(this)

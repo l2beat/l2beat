@@ -6,14 +6,14 @@ import {
   EtherscanClient,
   EtherscanError,
 } from '../../../src/peripherals/etherscan'
-import { IHttpClient } from '../../../src/peripherals/HttpClient'
+import { HttpClient } from '../../../src/peripherals/HttpClient'
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe('EtherscanClient', () => {
   describe('call', () => {
     it('throws for error responses', async () => {
-      const httpClient = mock<IHttpClient>({
+      const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(
             JSON.stringify({ status: '0', message: 'NOTOK', result: 'Oops!' })
@@ -31,7 +31,7 @@ describe('EtherscanClient', () => {
     })
 
     it('throws for malformed responses', async () => {
-      const httpClient = mock<IHttpClient>({
+      const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify({ status: '2', foo: 'bar' }))
         },
@@ -47,7 +47,7 @@ describe('EtherscanClient', () => {
     })
 
     it('throws for http errors', async () => {
-      const httpClient = mock<IHttpClient>({
+      const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response('foo', { status: 400 })
         },
@@ -76,7 +76,7 @@ describe('EtherscanClient', () => {
         apikey: apiKey,
       })
 
-      const httpClient = mock<IHttpClient>({
+      const httpClient = mock<HttpClient>({
         async fetch(url) {
           expect(url).to.equal(`https://api.etherscan.io/api?${params}`)
           return new Response(
@@ -94,7 +94,7 @@ describe('EtherscanClient', () => {
     })
 
     it('returns the block number', async () => {
-      const httpClient = mock<IHttpClient>({
+      const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(
             JSON.stringify({ status: '1', message: 'OK', result: '9251482' })

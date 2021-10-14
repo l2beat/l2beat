@@ -2,13 +2,13 @@ import { expect } from 'chai'
 import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
-import { ISafeBlockService, SafeBlock } from '../../src/core/SafeBlockService'
+import { SafeBlock, SafeBlockService } from '../../src/core/SafeBlockService'
 import { UnixTime } from '../../src/model'
 import {
   BlockNumberRecord,
-  IBlockNumberRepository,
+  BlockNumberRepository,
 } from '../../src/peripherals/database/BlockNumberRepository'
-import { IEtherscanClient } from '../../src/peripherals/etherscan'
+import { EtherscanClient } from '../../src/peripherals/etherscan'
 import { Logger } from '../../src/tools/Logger'
 import { mock } from '../mock'
 
@@ -19,9 +19,9 @@ describe('BlockNumberUpdater', () => {
       () =>
         new BlockNumberUpdater(
           time,
-          mock<ISafeBlockService>(),
-          mock<IEtherscanClient>(),
-          mock<IBlockNumberRepository>(),
+          mock<SafeBlockService>(),
+          mock<EtherscanClient>(),
+          mock<BlockNumberRepository>(),
           Logger.SILENT
         )
     ).to.throw(Error, 'minTimestamp must be aligned to full hours')
@@ -29,7 +29,7 @@ describe('BlockNumberUpdater', () => {
 
   it('only considers blocks after minTimestamp', async () => {
     const minTimestamp = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-    const safeBlockService = mock<ISafeBlockService>({
+    const safeBlockService = mock<SafeBlockService>({
       getSafeBlock() {
         return {
           blockNumber: 610n,
@@ -38,7 +38,7 @@ describe('BlockNumberUpdater', () => {
       },
       onNewSafeBlock: () => () => {},
     })
-    const blockNumberRepository = mock<IBlockNumberRepository>({
+    const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {
         return [
           { blockNumber: 300n, timestamp: minTimestamp.add(-1, 'hours') },
@@ -52,7 +52,7 @@ describe('BlockNumberUpdater', () => {
     const blockNumberUpdater = new BlockNumberUpdater(
       minTimestamp,
       safeBlockService,
-      mock<IEtherscanClient>(),
+      mock<EtherscanClient>(),
       blockNumberRepository,
       Logger.SILENT
     )
@@ -68,7 +68,7 @@ describe('BlockNumberUpdater', () => {
 
   it('can fetch all unknown blocks', async () => {
     const minTimestamp = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-    const safeBlockService = mock<ISafeBlockService>({
+    const safeBlockService = mock<SafeBlockService>({
       getSafeBlock() {
         return {
           blockNumber: 610n,
@@ -77,7 +77,7 @@ describe('BlockNumberUpdater', () => {
       },
       onNewSafeBlock: () => () => {},
     })
-    const etherscanClient = mock<IEtherscanClient>({
+    const etherscanClient = mock<EtherscanClient>({
       async getBlockNumberAtOrBefore(timestamp) {
         if (timestamp.equals(minTimestamp)) {
           return 400n
@@ -89,7 +89,7 @@ describe('BlockNumberUpdater', () => {
         return -1n
       },
     })
-    const blockNumberRepository = mock<IBlockNumberRepository>({
+    const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {
         return []
       },
@@ -121,7 +121,7 @@ describe('BlockNumberUpdater', () => {
   it('emits events when new blocks are fetched', async () => {
     const minTimestamp = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
     const events: BlockNumberRecord[][] = []
-    const safeBlockService = mock<ISafeBlockService>({
+    const safeBlockService = mock<SafeBlockService>({
       getSafeBlock() {
         return {
           blockNumber: 610n,
@@ -130,7 +130,7 @@ describe('BlockNumberUpdater', () => {
       },
       onNewSafeBlock: () => () => {},
     })
-    const etherscanClient = mock<IEtherscanClient>({
+    const etherscanClient = mock<EtherscanClient>({
       async getBlockNumberAtOrBefore(timestamp) {
         if (timestamp.equals(minTimestamp)) {
           return 400n
@@ -142,7 +142,7 @@ describe('BlockNumberUpdater', () => {
         return -1n
       },
     })
-    const blockNumberRepository = mock<IBlockNumberRepository>({
+    const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {
         return []
       },
@@ -174,7 +174,7 @@ describe('BlockNumberUpdater', () => {
   it('can fetch new blocks after safe block updates', async () => {
     const minTimestamp = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
     let callback: ((safeBlock: SafeBlock) => void) | undefined
-    const safeBlockService = mock<ISafeBlockService>({
+    const safeBlockService = mock<SafeBlockService>({
       getSafeBlock() {
         return {
           blockNumber: 410n,
@@ -186,7 +186,7 @@ describe('BlockNumberUpdater', () => {
         return () => {}
       },
     })
-    const etherscanClient = mock<IEtherscanClient>({
+    const etherscanClient = mock<EtherscanClient>({
       async getBlockNumberAtOrBefore(timestamp) {
         if (timestamp.equals(minTimestamp.add(1, 'hours'))) {
           return 500n
@@ -194,7 +194,7 @@ describe('BlockNumberUpdater', () => {
         return -1n
       },
     })
-    const blockNumberRepository = mock<IBlockNumberRepository>({
+    const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {
         return [{ blockNumber: 400n, timestamp: minTimestamp }]
       },

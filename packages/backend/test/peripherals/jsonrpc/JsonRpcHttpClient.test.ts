@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { Response } from 'node-fetch'
 
-import { IHttpClient } from '../../../src/peripherals/HttpClient'
+import { HttpClient } from '../../../src/peripherals/HttpClient'
 import {
   JsonRpcError,
   JsonRpcHttpClient,
@@ -11,7 +11,7 @@ import { mock } from '../../mock'
 
 describe('JsonRpcHttpClient', () => {
   it('correctly sets up a request', async () => {
-    const httpClient = mock<IHttpClient>({
+    const httpClient = mock<HttpClient>({
       async fetch(url, init) {
         expect(url).to.equal('https://jsonrpc.test.url')
         expect(init?.method).to.equal('POST')
@@ -32,7 +32,7 @@ describe('JsonRpcHttpClient', () => {
   })
 
   it('correctly handles the response', async () => {
-    const httpClient = mock<IHttpClient>({
+    const httpClient = mock<HttpClient>({
       async fetch() {
         return new Response(
           JSON.stringify({ jsonrpc: '2.0', id: 1337, result: 'ok' })
@@ -49,7 +49,7 @@ describe('JsonRpcHttpClient', () => {
   })
 
   it('throws for non-json response', async () => {
-    const httpClient = mock<IHttpClient>({
+    const httpClient = mock<HttpClient>({
       async fetch() {
         return new Response('blah')
       },
@@ -66,7 +66,7 @@ describe('JsonRpcHttpClient', () => {
   })
 
   it('throws for non-2XX response', async () => {
-    const httpClient = mock<IHttpClient>({
+    const httpClient = mock<HttpClient>({
       async fetch() {
         return new Response('foobar', { status: 400 })
       },
@@ -83,7 +83,7 @@ describe('JsonRpcHttpClient', () => {
   })
 
   it('throws JsonRpcError for JSON-RPC error response', async () => {
-    const httpClient = mock<IHttpClient>({
+    const httpClient = mock<HttpClient>({
       async fetch() {
         return new Response(
           JSON.stringify({
