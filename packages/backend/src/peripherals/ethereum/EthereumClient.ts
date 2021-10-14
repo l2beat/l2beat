@@ -1,27 +1,16 @@
-import { Bytes, KeccakHash } from '../../model'
-import { IJsonRpcClient } from '../jsonrpc'
+import { KeccakHash } from '../../model'
+import { JsonRpcClient } from '../jsonrpc'
 import {
   asBigIntFromQuantity,
   asBytesFromData,
   blockTagToString,
 } from './primitives'
-import {
-  asRpcBlock,
-  encodeRpcCallParameters,
-  RpcBlock,
-  RpcCallParameters,
-} from './types'
+import { asRpcBlock, encodeRpcCallParameters, RpcCallParameters } from './types'
 
 export type BlockTag = bigint | 'earliest' | 'latest' | 'pending'
 
-export interface IEthereumClient {
-  getBlockNumber(): Promise<bigint>
-  getBlock(blockTagOrHash: BlockTag | KeccakHash): Promise<RpcBlock>
-  call(parameters: RpcCallParameters, blockTag: BlockTag): Promise<Bytes>
-}
-
-export class EthereumClient implements IEthereumClient {
-  constructor(private jsonRpcClient: IJsonRpcClient) {}
+export class EthereumClient {
+  constructor(private jsonRpcClient: JsonRpcClient) {}
 
   async getBlockNumber() {
     const result = await this.jsonRpcClient.call('eth_blockNumber')

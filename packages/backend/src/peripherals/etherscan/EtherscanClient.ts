@@ -2,15 +2,11 @@ import { UnixTime } from '../../model/UnixTime'
 import { getErrorMessage, Logger } from '../../tools/Logger'
 import { RateLimiter } from '../../tools/RateLimiter'
 import { RequestTracker } from '../../tools/RequestTracker'
-import { IHttpClient } from '../HttpClient'
+import { HttpClient } from '../HttpClient'
 import { asBigIntFromString } from './asBigIntFromString'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
-
-export interface IEtherscanClient {
-  getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<bigint>
-}
 
 export class EtherscanClient {
   private requestTracker = new RequestTracker(20)
@@ -20,7 +16,7 @@ export class EtherscanClient {
 
   constructor(
     private etherscanApiKey: string,
-    private httpClient: IHttpClient,
+    private httpClient: HttpClient,
     private logger: Logger
   ) {
     this.logger = this.logger.for(this)

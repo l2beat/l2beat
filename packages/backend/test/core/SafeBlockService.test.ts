@@ -3,14 +3,14 @@ import { expect } from 'chai'
 
 import { SafeBlock, SafeBlockService } from '../../src/core/SafeBlockService'
 import { UnixTime } from '../../src/model'
-import { IEthereumClient } from '../../src/peripherals/ethereum/EthereumClient'
+import { EthereumClient } from '../../src/peripherals/ethereum/EthereumClient'
 import { RpcBlock } from '../../src/peripherals/ethereum/types'
 import { Logger } from '../../src/tools/Logger'
 import { mock } from '../mock'
 
 describe('SafeBlockService', () => {
   it('can obtain the safe block', async () => {
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async getBlockNumber() {
         return 556n
       },
@@ -40,7 +40,7 @@ describe('SafeBlockService', () => {
     const service = new SafeBlockService(
       100000,
       100n,
-      mock<IEthereumClient>(),
+      mock<EthereumClient>(),
       Logger.SILENT
     )
     expect(() => service.getSafeBlock()).to.throw(Error, 'Not started')
@@ -48,7 +48,7 @@ describe('SafeBlockService', () => {
 
   it('refreshes the block and emits events', async () => {
     let lastBlock = 556n
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async getBlockNumber() {
         return lastBlock++
       },

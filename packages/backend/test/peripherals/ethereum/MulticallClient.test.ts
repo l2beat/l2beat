@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { Bytes, EthereumAddress } from '../../../src/model'
-import { IEthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
+import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 import { BlockTag } from '../../../src/peripherals/ethereum/EthereumClient'
 import {
   encodeMulticallV1,
@@ -29,7 +29,7 @@ describe('MulticallClient', () => {
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return parameters.data ?? Bytes.EMPTY
@@ -62,7 +62,7 @@ describe('MulticallClient', () => {
 
   it('uses v1 for blocks without v2', async () => {
     const calls: Call[] = []
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return Bytes.fromHex(
@@ -106,7 +106,7 @@ describe('MulticallClient', () => {
 
   it('uses v2 for new blocks', async () => {
     const calls: Call[] = []
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return Bytes.fromHex(
@@ -152,7 +152,7 @@ describe('MulticallClient', () => {
 
   it(`batches calls in batches of ${MULTICALL_BATCH_SIZE}`, async () => {
     const calls: number[] = []
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async call(parameters) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
@@ -182,7 +182,7 @@ describe('MulticallClient', () => {
   })
 
   it('offers a named interface', async () => {
-    const ethereumClient = mock<IEthereumClient>({
+    const ethereumClient = mock<EthereumClient>({
       async call() {
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [

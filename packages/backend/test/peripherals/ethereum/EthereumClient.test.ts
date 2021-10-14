@@ -2,14 +2,14 @@ import { expect } from 'chai'
 
 import { Bytes, EthereumAddress, KeccakHash } from '../../../src/model'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
-import { IJsonRpcClient } from '../../../src/peripherals/jsonrpc'
+import { JsonRpcClient } from '../../../src/peripherals/jsonrpc'
 import { mock } from '../../mock'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
 
 describe('EthereumClient', () => {
   describe('getBlockNumber', () => {
     it('returns a block number', async () => {
-      const testRpc = mock<IJsonRpcClient>({
+      const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
           expect(method).to.equal('eth_blockNumber')
           expect(params).to.equal(undefined)
@@ -25,7 +25,7 @@ describe('EthereumClient', () => {
   describe('getBlock', () => {
     it('can return a block by hash', async () => {
       const hash = new KeccakHash('0x' + '12ab'.repeat(16))
-      const testRpc = mock<IJsonRpcClient>({
+      const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
           expect(method).to.equal('eth_getBlockByHash')
           expect(params).to.deep.equal([hash.toString(), false])
@@ -38,7 +38,7 @@ describe('EthereumClient', () => {
     })
 
     it('can return a block by number', async () => {
-      const testRpc = mock<IJsonRpcClient>({
+      const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
           expect(method).to.equal('eth_getBlockByNumber')
           expect(params).to.deep.equal(['0xcb5a7b', false])
@@ -51,7 +51,7 @@ describe('EthereumClient', () => {
     })
 
     it('can return a block by tag', async () => {
-      const testRpc = mock<IJsonRpcClient>({
+      const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
           expect(method).to.equal('eth_getBlockByNumber')
           expect(params).to.deep.equal(['latest', false])
@@ -69,7 +69,7 @@ describe('EthereumClient', () => {
       const to = new EthereumAddress('0x' + '34cd'.repeat(10))
       const data = Bytes.fromHex('0xabcdef123456')
 
-      const testRpc = mock<IJsonRpcClient>({
+      const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
           expect(method).to.equal('eth_call')
           expect(params).to.deep.equal([
