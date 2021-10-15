@@ -7,13 +7,12 @@ import {
   MulticallRequest,
   MulticallResponse,
 } from '../../ethereum/MulticallClient'
+import { TEN_TO_18 } from './constants'
 
 const coder = new utils.Interface([
   'function balanceOf(address account) returns (uint256)',
   'function getEthBalance(address account) returns (uint256)',
 ])
-
-const TEN_TO_18 = 10n ** 18n
 
 export function encodeUniswapV1Requests(
   token: EthereumAddress,

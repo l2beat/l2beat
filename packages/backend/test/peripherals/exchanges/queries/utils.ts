@@ -22,3 +22,22 @@ function encodeUintResponse(value: bigint | undefined) {
 function encodeUint(value: bigint) {
   return Bytes.fromHex(coder.encode(['uint'], [value.toString()]))
 }
+
+export function encodeUniswapV2Results(
+  first: bigint,
+  second: bigint
+): MulticallResponse[] {
+  return [encodeReservesResponse(first, second)]
+}
+
+function encodeReservesResponse(first: bigint, second: bigint) {
+  return {
+    success: true,
+    data: Bytes.fromHex(
+      coder.encode(
+        ['uint112', 'uint112', 'uint32'],
+        [first.toString(), second.toString(), 1]
+      )
+    ),
+  }
+}

@@ -8,6 +8,10 @@ import {
   decodeUniswapV1Results,
   encodeUniswapV1Requests,
 } from './queries/uniswapV1'
+import {
+  decodeUniswapV2Results,
+  encodeUniswapV2Requests,
+} from './queries/uniswapV2'
 import { UniswapV1Client } from './UniswapV1Client'
 
 interface ExchangePriceQuery {
@@ -43,6 +47,9 @@ export class ExchangePriceChecker {
     blockNumber: bigint
   ) {
     const v1Queries = queries.filter((x) => x.exchange === 'uniswap-v1')
+    if (v1Queries.length === 0) {
+      return new Map<EthereumAddress, EthereumAddress>()
+    }
     const exchanges = await this.uniswapV1Client.getExchangeAddresses(
       v1Queries.map((x) => x.token),
       blockNumber
@@ -73,6 +80,8 @@ export function encodeRequests(
 ): MulticallRequest[] {
   if (query.exchange === 'uniswap-v1') {
     return encodeUniswapV1Requests(query.token, uniswapV1Exchanges)
+  } else if (query.exchange.startsWith('uniswap-v2-')) {
+    return encodeUniswapV2Requests(query.token, query.exchange)
   }
   throw new Error(`Unknown exchange ${query.exchange}`)
 }
@@ -83,6 +92,8 @@ export function decodeResults(
 ): ExchangePriceResult {
   if (query.exchange === 'uniswap-v1') {
     return decodeUniswapV1Results(results)
+  } else if (query.exchange.startsWith('uniswap-v2-')) {
+    return decodeUniswapV2Results(query.token, query.exchange, results)
   }
   throw new Error(`Unknown exchange ${query.exchange}`)
 }
