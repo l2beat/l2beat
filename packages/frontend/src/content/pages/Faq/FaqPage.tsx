@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Footer, Navbar, Page } from '../../common'
-import { FaqPageProps } from './getFaqPageProps'
+import { FaqPageProps } from './getProps'
 
 export function FaqPage(props: FaqPageProps) {
   return (

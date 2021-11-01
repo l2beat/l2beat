@@ -1,8 +1,11 @@
 import React from 'react'
 
 import { FaqPage } from './FaqPage'
-import { getFaqPageProps } from './getFaqPageProps'
+import { getProps } from './getProps'
 
-export function Faq() {
-  return <FaqPage {...getFaqPageProps()} />
+export function getFaqPage() {
+  return {
+    slug: '/faq',
+    page: <FaqPage {...getProps()} />,
+  }
 }
