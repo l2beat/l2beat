@@ -1,1 +1,1 @@
-export * from './getProjectPage'
+export * from './getProps'

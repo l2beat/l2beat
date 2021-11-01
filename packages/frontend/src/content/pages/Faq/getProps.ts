@@ -12,7 +12,7 @@ export interface FaqPageProps {
   content: string
 }
 
-export function getFaqPageProps(): FaqPageProps {
+export function getProps(): FaqPageProps {
   return {
     title: 'Frequently Asked Questions',
     metadata: {

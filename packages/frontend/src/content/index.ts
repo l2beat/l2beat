@@ -4,5 +4,8 @@ import { projects } from '@l2beat/config'
 import { createApi } from './api'
 import { renderPages } from './pages'
 
-createApi(projects, l2Data)
-renderPages(projects, l2Data)
+main()
+async function main() {
+  createApi(projects, l2Data)
+  await renderPages(projects, l2Data)
+}

@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Chart, Header, Logo, Page } from '../../common'
 import { config } from '../../config'
-import { MetaImageProps } from './getMetaImageProps'
+import { MetaImageProps } from './getProps'
 
 export function MetaImage(props: MetaImageProps) {
   return (

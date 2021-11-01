@@ -7,10 +7,7 @@ import { getFinancialView } from './getFinancialView'
 import { getPageMetadata } from './getPageMetadata'
 import { getRiskView } from './getRiskView'
 
-export function getHomePage(
-  projects: Project[],
-  l2Data: L2Data
-): HomePageProps {
+export function getProps(projects: Project[], l2Data: L2Data): HomePageProps {
   const tvl = getFromEnd(l2Data.aggregate.data, 0)[1]
   const tvlSevenDaysAgo = getFromEnd(l2Data.aggregate.data, 7)[1]
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)

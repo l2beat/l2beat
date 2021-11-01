@@ -1,0 +1,50 @@
+.DonateDetails {
+  margin: 32px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 700px) {
+    display: block;
+    text-align: center;
+  }
+}
+
+.DonateDetails-QrCode {
+  *:nth-child(1) {
+    display: inline;
+    @include dark-mode {
+      display: none;
+    }
+  }
+
+  *:nth-child(2) {
+    display: none;
+    @include dark-mode {
+      display: inline;
+    }
+  }
+}
+
+.DonateDetails-Text {
+  margin-left: 32px;
+  @media (max-width: 700px) {
+    margin-left: 0;
+  }
+}
+
+.DonateDetails-Address {
+  font-family: monospace;
+  word-break: break-all;
+  max-width: 21ch;
+  width: 21ch;
+}
+
+.DonateDetails-Networks {
+  list-style-type: none;
+  padding: 0;
+
+  li:not(:first-child) {
+    margin: 8px 0 0 0;
+  }
+}

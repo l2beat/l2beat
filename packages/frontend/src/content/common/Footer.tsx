@@ -6,7 +6,10 @@ import { OutLink } from './OutLink'
 export function Footer() {
   return (
     <footer className="Footer">
-      <p className="Footer-Text">Made with ❤️ by the L2BEAT research team.</p>
+      <p className="Footer-Text">
+        Made with ❤️ by the L2BEAT research team. Support us by{' '}
+        <a href="/donate">donating</a>.
+      </p>
       <p className="Footer-Text">
         Copyright {new Date().getFullYear()} L2BEAT.
       </p>
