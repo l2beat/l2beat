@@ -228,6 +228,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 5072026,
   },
   {
+    name: 'Frax',
+    symbol: 'FRAX',
+    address: '0x853d955aCEf822Db058eb8505911ED77F175b99e',
+    decimals: 18,
+    sinceBlock: 11465581,
+  },
+  {
     name: 'GateChainToken',
     symbol: 'GT',
     address: '0xE66747a101bFF2dBA3697199DCcE5b743b454759',
