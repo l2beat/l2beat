@@ -1,0 +1,33 @@
+{
+  "github": {
+    "silent": true
+  },
+  "public": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/project/layer2.finance",
+      "destination": "/projects/layer2finance"
+    },
+    {
+      "source": "/project/omg network",
+      "destination": "/projects/omgnetwork"
+    },
+    {
+      "source": "/project/leverj",
+      "destination": "/projects/gluon"
+    },
+    {
+      "source": "/project/:path",
+      "destination": "/projects/:path"
+    },
+    {
+      "source": "/project/:path",
+      "destination": "/projects/:path"
+    },
+    {
+      "source": "/projects/leverj",
+      "destination": "/projects/gluon"
+    }
+  ]
+}
