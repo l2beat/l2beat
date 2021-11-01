@@ -23,11 +23,6 @@ export function Navbar() {
           <li className="Navbar-Link">
             <a href="/">Overview</a>
           </li>
-          {config.__DEV__showTechnologiesPage && (
-            <li className="Navbar-Link">
-              <a href="/technologies">Technologies</a>
-            </li>
-          )}
         </ul>
         <ul className="Navbar-Links">
           <li className="Navbar-Link compact">
