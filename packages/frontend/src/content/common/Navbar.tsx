@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { config } from '../config'
-import { DiscordBanner } from './DiscordBanner'
+import { DonateBanner } from './DonateBanner'
 import {
   DiscordIcon,
   GithubIcon,
@@ -52,7 +52,7 @@ export function Navbar() {
           <MoonIcon className="Navbar-DarkMode" aria-label="Toggle dark mode" />
         </button>
       </nav>
-      <DiscordBanner />
+      <DonateBanner />
     </>
   )
 }

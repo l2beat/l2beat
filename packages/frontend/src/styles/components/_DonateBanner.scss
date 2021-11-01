@@ -1,0 +1,13 @@
+.DonateBanner {
+  display: block;
+  text-align: center;
+  background-color: #ffde2f;
+  color: black;
+  text-decoration: none;
+  padding: 4px 16px;
+  font-weight: bold;
+
+  @media (max-width: 1000px) {
+    margin: 0 -16px;
+  }
+}
