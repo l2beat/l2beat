@@ -17,12 +17,12 @@ export function DonateLetter() {
         their technology as well as the associated risks.
       </p>
       <p>
-        In the future we plan to introduce more metrics as well as built special
+        In the future we plan to introduce more metrics as well as build special
         purpose tools for various L2s that empower users to execute operations
         like forced transactions or view L2 state from the perspective of L1.
       </p>
       <p>
-        Wr are a small and independent team. Your support means a lot to us.
+        We are a small and independent team. Your support means a lot to us.
       </p>
       <p>Thank you!</p>
       <p>&mdash; L2BEAT Team</p>
