@@ -34,6 +34,7 @@ export function JobPosting() {
       <h3>Tech stack:</h3>
       <ul>
         <li>Typescript,</li>
+        <li>Ethers.js,</li>
         <li>Yarn workspaces,</li>
         <li>Koa,</li>
         <li>PostgreSQL.</li>
