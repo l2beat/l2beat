@@ -12,11 +12,7 @@ export function MetaImage(props: MetaImageProps) {
       preloadApi={props.apiEndpoint}
       includeMetaImageStyles
     >
-      <script
-        dangerouslySetInnerHTML={{
-          __html: "localStorage.setItem('l2beat-theme', 'light')",
-        }}
-      />
+      <script dangerouslySetInnerHTML={{ __html: '__DARK_MODE__ = false' }} />
       <div className={cx('Meta', !props.name ? 'overview' : 'project')}>
         {config.__DEV__showNewUpdateBanner && (
           <div className="Meta-Update">New Update Out Now!</div>

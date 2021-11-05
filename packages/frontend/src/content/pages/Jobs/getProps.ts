@@ -11,7 +11,7 @@ export function getProps(): JobsPageProps {
     metadata: {
       title: 'Jobs – L2BEAT',
       description: '',
-      image: 'https://l2beat.com/meta-images/overview.png',
+      image: 'https://l2beat.com/meta-images/jobs.png',
       url: 'https://l2beat.com/jobs/',
     },
   }
