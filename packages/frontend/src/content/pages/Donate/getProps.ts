@@ -23,7 +23,7 @@ export async function getProps(): Promise<DonatePageProps> {
   return {
     title: 'Donate',
     metadata: {
-      title: 'L2BEAT – Donate',
+      title: 'Donate – L2BEAT',
       description: '',
       image: 'https://l2beat.com/meta-images/overview.png',
       url: 'https://l2beat.com/donate/',
