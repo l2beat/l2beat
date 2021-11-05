@@ -154,7 +154,6 @@ export const bobanetwork: Project = {
           {
             name: 'L1 Standard Bridge',
             address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
-            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
@@ -223,7 +222,7 @@ export const bobanetwork: Project = {
             address: '0xc6dd73D427Bf784dd1e2f9F64029a79533ffAb40',
           },
         ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
