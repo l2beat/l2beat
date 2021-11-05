@@ -67,6 +67,10 @@
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 550px) {
+    margin-right: 0;
+  }
 }
 
 .Navbar-Badge {
