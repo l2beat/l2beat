@@ -1,8 +1,8 @@
 .DonateBanner {
   display: block;
   text-align: center;
-  background-color: #ffde2f;
-  color: black;
+  background-color: var(--background-action);
+  color: var(--dark-text);
   text-decoration: none;
   padding: 4px 16px;
   font-weight: bold;

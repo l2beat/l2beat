@@ -18,8 +18,10 @@
   --highlight-bad: #b10000;
   --highlight-warning: #ffd455;
 
+  --background-job: #ffffff;
   --background-info: rgba(150, 192, 247, 0.2);
   --background-warning: rgba(203, 152, 0, 0.2);
+  --background-action: #ffde2f;
 
   --gradient-1: rgb(126, 65, 204);
   --gradient-2: rgb(216, 61, 164);
@@ -61,6 +63,8 @@
   --highlight-good: #4eab58;
   --highlight-bad: #ae2121;
   --highlight-warning: #fdcf44;
+
+  --background-job: #000000;
 }
 
 @media (prefers-color-scheme: dark) {

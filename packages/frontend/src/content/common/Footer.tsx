@@ -7,6 +7,11 @@ export function Footer() {
   return (
     <footer className="Footer">
       <p className="Footer-Text">
+        <strong>
+          <a href="/jobs">We are hiring!</a>
+        </strong>
+      </p>
+      <p className="Footer-Text">
         Made with ❤️ by the L2BEAT research team. Support us by{' '}
         <a href="/donate">donating</a>.
       </p>

@@ -23,10 +23,10 @@
   top: -2px;
 
   @media (max-width: 550px) {
-    top: 0;
     min-width: 60px;
     width: 60px;
     height: 25px;
+    margin-right: 8px;
   }
 }
 
@@ -41,10 +41,10 @@
 
   &.left {
     flex: 1;
+  }
 
-    @media (max-width: 550px) {
-      display: none;
-    }
+  @media (max-width: 550px) {
+    margin-right: 0;
   }
 }
 
@@ -67,6 +67,20 @@
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 550px) {
+    margin-right: 0;
+  }
+}
+
+.Navbar-Badge {
+  position: relative;
+  font-size: var(--font-xs);
+  font-weight: bold;
+  padding: 1px 3px;
+  border-radius: 2px;
+  background-color: var(--background-action);
+  color: var(--dark-text);
 }
 
 .Navbar-Mode {
