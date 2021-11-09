@@ -2,9 +2,9 @@ import { expect } from 'chai'
 
 import { EthereumAddress } from '../../../../src/model'
 import { MULTICALL_V1_ADDRESS } from '../../../../src/peripherals/ethereum/MulticallClient'
+import { encodeBalanceOf } from '../../../../src/peripherals/exchanges/queries/balanceOf'
 import {
   decodeUniswapV1Results,
-  encodeBalanceOf,
   encodeGetEthBalance,
   encodeUniswapV1Requests,
 } from '../../../../src/peripherals/exchanges/queries/uniswapV1'

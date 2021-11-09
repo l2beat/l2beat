@@ -7,10 +7,10 @@ import {
   MulticallRequest,
   MulticallResponse,
 } from '../../ethereum/MulticallClient'
+import { decodeBalanceOf, encodeBalanceOf } from './balanceOf'
 import { TEN_TO_18 } from './constants'
 
-const coder = new utils.Interface([
-  'function balanceOf(address account) returns (uint256)',
+export const coder = new utils.Interface([
   'function getEthBalance(address account) returns (uint256)',
 ])
 
@@ -37,20 +37,6 @@ export function decodeUniswapV1Results(results: MulticallResponse[]) {
   const price =
     tokenBalance !== 0n ? (TEN_TO_18 * ethBalance) / tokenBalance : 0n
   return { liquidity: tokenBalance, price }
-}
-
-export const encodeBalanceOf = memoizee(
-  (account: EthereumAddress) => {
-    return Bytes.fromHex(
-      coder.encodeFunctionData('balanceOf', [account.toString()])
-    )
-  },
-  { primitive: true }
-)
-
-export function decodeBalanceOf(data: Bytes) {
-  const decoded = coder.decodeFunctionResult('balanceOf', data.toString())
-  return BigInt(decoded[0])
 }
 
 export const encodeGetEthBalance = memoizee(
