@@ -1,6 +1,7 @@
 export function configureDarkMode() {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const saved = localStorage.getItem('l2beat-theme')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const override: boolean | undefined = (window as any).__DARK_MODE__
 
   let darkModeEnabled = saved ? saved === 'dark' : prefersDark
