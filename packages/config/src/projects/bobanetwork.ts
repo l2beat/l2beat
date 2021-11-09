@@ -63,7 +63,7 @@ export const bobanetwork: Project = {
       stateCorrectness: {
         name: 'Fraud proofs are disabled',
         description:
-          'Ultimately Boba Network will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots.',
+          'Ultimately Boba Network will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots. Users have the ability to run a validator software and compute valid state roots locally, but cannot act on them on chain.',
         risks: [
           {
             category: 'Funds can be stolen if',
@@ -74,6 +74,10 @@ export const bobanetwork: Project = {
           {
             text: 'The incentive contract for verification proofs is disabled - Boba FAQ',
             href: 'https://docs.boba.network/faq#the-incentive-contract-for-verification-proofs-is-disabled',
+          },
+          {
+            text: 'Checking Boba Mainnet for Fraud - Boba Optimism repository',
+            href: 'https://github.com/omgnetwork/optimism-v2/tree/develop/boba_community/fraud-detector',
           },
         ],
       },
