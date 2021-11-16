@@ -228,6 +228,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 5072026,
   },
   {
+    name: 'Fantom Token',
+    symbol: 'FTM',
+    address: '0x4E15361FD6b4BB609Fa63C81A2be19d873717870',
+    decimals: 18,
+    sinceBlock: 5792340,
+  },
+  {
     name: 'Frax',
     symbol: 'FRAX',
     address: '0x853d955aCEf822Db058eb8505911ED77F175b99e',
