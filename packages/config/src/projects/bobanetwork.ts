@@ -16,7 +16,21 @@ export const bobanetwork: Project = {
       // Proxy__OVM_L1StandardBridge
       address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
       sinceBlock: 13012048,
-      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'SUSHI', 'UNI', 'USDT', 'FRAX'],
+      tokens: [
+        'ETH',
+        'USDC',
+        'OMG',
+        'DAI',
+        'SUSHI',
+        'UNI',
+        'USDT',
+        'FRAX',
+        'WBTC',
+        'FTM',
+        'MATIC',
+        'BAT',
+        'ZRX',
+      ],
     },
     {
       // Proxy__L1LiquidityPool
