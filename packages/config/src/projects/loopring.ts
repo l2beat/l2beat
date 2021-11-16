@@ -31,7 +31,7 @@ export const loopring: Project = {
       documentation: [
         'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md',
       ],
-      explorers: [],
+      explorers: ['https://explorer.loopring.io/'],
       repositories: ['https://github.com/Loopring/protocols'],
       socialMedia: [
         'https://loopring.org/#/blog',
