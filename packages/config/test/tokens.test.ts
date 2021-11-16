@@ -11,7 +11,7 @@ describe('tokens', () => {
   describe('every addresses is valid and formatted', () => {
     for (const address of addresses) {
       it(address, () => {
-        expect(utils.getAddress(address)).to.equal(address)
+        expect(address).to.equal(utils.getAddress(address))
       })
     }
   })
