@@ -28,7 +28,7 @@ export const immutablex: Project = {
       websites: ['https://www.immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
-      explorers: [],
+      explorers: ['https://immutascan.io/'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://medium.com/@immutablex',
