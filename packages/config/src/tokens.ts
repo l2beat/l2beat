@@ -221,6 +221,20 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 0,
   },
   {
+    name: 'Fantom Token',
+    symbol: 'FTM',
+    address: '0x4e15361fd6b4bb609fa63c81a2be19d873717870',
+    decimals: 18,
+    sinceBlock: 5792340,
+  },
+  {
+    name: 'Frax Share',
+    symbol: 'FXS',
+    address: '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0',
+    decimals: 18,
+    sinceBlock: 11465584,
+  },
+  {
     name: 'Ethfinex Nectar Token',
     symbol: 'NEC',
     address: '0xCc80C051057B774cD75067Dc48f8987C4Eb97A5e',
@@ -445,6 +459,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 4634748,
   },
   {
+    name: 'Wrapped UST Token',
+    symbol: 'UST',
+    address: '0xa47c8bf37f92abed4a126bda807a7b7498661acd',
+    decimals: 18,
+    sinceBlock: 11540758,
+  },
+  {
     name: 'THORChain ETH.RUNE',
     symbol: 'RUNE',
     address: '0x3155BA85D5F96b2d030a4966AF206230e46849cb',
@@ -506,27 +527,6 @@ export const tokenList: TokenInfo[] = [
     address: '0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6',
     decimals: 18,
     sinceBlock: 11305469,
-  },
-  {
-    name: 'Fantom Token',
-    symbol: 'FTM',
-    address: '0x4e15361fd6b4bb609fa63c81a2be19d873717870',
-    decimals: 18,
-    sinceBlock: 5792340,
-  },
-  {
-    name: 'Wrapped UST Token',
-    symbol: 'UST',
-    address: '0xa47c8bf37f92abed4a126bda807a7b7498661acd',
-    decimals: 18,
-    sinceBlock: 11540758,
-  },
-  {
-    name: 'Frax Share',
-    symbol: 'FXS',
-    address: '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0',
-    decimals: 18,
-    sinceBlock: 11465584,
   },
 ]
 
