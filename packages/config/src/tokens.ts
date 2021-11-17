@@ -256,6 +256,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 3557596,
   },
   {
+    name: 'Gods Unchained Token',
+    symbol: 'GODS',
+    address: '0xccC8cb5229B0ac8069C51fd58367Fd1e622aFD97',
+    decimals: 18,
+    sinceBlock: 12955334,
+  },
+  {
     name: 'Golem Network Token',
     symbol: 'GLM',
     address: '0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429',
