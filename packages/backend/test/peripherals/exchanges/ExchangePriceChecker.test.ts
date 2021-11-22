@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 
-import { EthereumAddress } from '../../../src/model'
-import { Exchange } from '../../../src/model/Exchange'
+import { EthereumAddress, Exchange } from '../../../src/model'
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
 import { ExchangePriceChecker } from '../../../src/peripherals/exchanges/ExchangePriceChecker'
 import { DAI } from '../../../src/peripherals/exchanges/queries/constants'

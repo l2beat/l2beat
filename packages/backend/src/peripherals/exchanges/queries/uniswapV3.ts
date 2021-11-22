@@ -2,8 +2,7 @@ import { AbiCoder } from '@ethersproject/abi'
 import { utils } from 'ethers'
 import memoizee from 'memoizee'
 
-import { Bytes, EthereumAddress, KeccakHash } from '../../../model'
-import { Exchange } from '../../../model/Exchange'
+import { Bytes, EthereumAddress, Exchange, KeccakHash } from '../../../model'
 import {
   MulticallRequest,
   MulticallResponse,
