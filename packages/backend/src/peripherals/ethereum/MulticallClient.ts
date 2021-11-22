@@ -5,11 +5,11 @@ import { EthereumClient } from './EthereumClient'
 
 export const MULTICALL_BATCH_SIZE = 150
 export const MULTICALL_V1_BLOCK = 7929876n
-export const MULTICALL_V1_ADDRESS = new EthereumAddress(
+export const MULTICALL_V1_ADDRESS = EthereumAddress(
   '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
 )
 export const MULTICALL_V2_BLOCK = 12336033n
-export const MULTICALL_V2_ADDRESS = new EthereumAddress(
+export const MULTICALL_V2_ADDRESS = EthereumAddress(
   '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
 )
 

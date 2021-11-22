@@ -11,9 +11,9 @@ import {
 import { encodeUniswapV1Results } from './utils'
 
 describe('encodeUniswapV1Requests', () => {
-  const TOKEN_A = new EthereumAddress('0x' + 'a'.repeat(40))
-  const TOKEN_B = new EthereumAddress('0x' + 'b'.repeat(40))
-  const EXCHANGE = new EthereumAddress('0x' + 'c'.repeat(40))
+  const TOKEN_A = EthereumAddress('0x' + 'a'.repeat(40))
+  const TOKEN_B = EthereumAddress('0x' + 'b'.repeat(40))
+  const EXCHANGE = EthereumAddress('0x' + 'c'.repeat(40))
 
   it('encodes empty array when exchange is missing', () => {
     const result = encodeUniswapV1Requests(

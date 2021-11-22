@@ -16,9 +16,9 @@ import {
 } from './queries/utils'
 
 describe('ExchangePriceChecker', () => {
-  const TOKEN_A = new EthereumAddress('0x' + 'a'.repeat(40))
-  const TOKEN_B = new EthereumAddress('0x' + 'b'.repeat(40))
-  const EXCHANGE = new EthereumAddress('0x' + 'c'.repeat(40))
+  const TOKEN_A = EthereumAddress('0x' + 'a'.repeat(40))
+  const TOKEN_B = EthereumAddress('0x' + 'b'.repeat(40))
+  const EXCHANGE = EthereumAddress('0x' + 'c'.repeat(40))
 
   it('supports Uniswap V1', async () => {
     const uniswapV1Client = mock<UniswapV1Client>({

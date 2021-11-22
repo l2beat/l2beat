@@ -1,31 +1,26 @@
 import { constants, utils } from 'ethers'
 
-export class EthereumAddress {
-  private address: string
+export interface EthereumAddress extends String {
+  _ethereumAddressBrand: string
+}
 
-  constructor(address: string) {
-    try {
-      this.address = utils.getAddress(address)
-    } catch {
-      throw new TypeError('Invalid address')
-    }
+export function EthereumAddress(value: string) {
+  try {
+    return utils.getAddress(value) as unknown as EthereumAddress
+  } catch {
+    throw new TypeError('Invalid EthereumAddress')
   }
+}
 
-  static ZERO = new EthereumAddress(constants.AddressZero)
+EthereumAddress.ZERO = EthereumAddress(constants.AddressZero)
 
-  equals(other: EthereumAddress) {
-    return this.address === other.address
-  }
+EthereumAddress.isBefore = function (a: EthereumAddress, b: EthereumAddress) {
+  return a.toLowerCase() < b.toLowerCase()
+}
 
-  isBefore(other: EthereumAddress) {
-    return this.address.toLowerCase() < other.address.toLowerCase()
-  }
-
-  toString() {
-    return this.address
-  }
-
-  toJSON() {
-    return this.address
-  }
+EthereumAddress.inOrder = function (
+  a: EthereumAddress,
+  b: EthereumAddress
+): [EthereumAddress, EthereumAddress] {
+  return EthereumAddress.isBefore(a, b) ? [a, b] : [b, a]
 }

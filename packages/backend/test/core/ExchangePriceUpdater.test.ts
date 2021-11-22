@@ -22,10 +22,10 @@ describe('ExchangePriceUpdater', () => {
   describe('updateQueries', () => {
     const BLOCK_NUMBER = 1234n
     const TOKENS = [
-      new EthereumAddress('0x' + 'a'.repeat(40)),
-      new EthereumAddress('0x' + 'b'.repeat(40)),
-      new EthereumAddress('0x' + 'c'.repeat(40)),
-      new EthereumAddress('0x' + 'd'.repeat(40)),
+      EthereumAddress('0x' + 'a'.repeat(40)),
+      EthereumAddress('0x' + 'b'.repeat(40)),
+      EthereumAddress('0x' + 'c'.repeat(40)),
+      EthereumAddress('0x' + 'd'.repeat(40)),
     ]
     const QUERIES = [
       { assetId: 'token-a', token: TOKENS[0], exchange: 'uniswap-v2-dai' },
@@ -221,7 +221,7 @@ describe('ExchangePriceUpdater', () => {
     describe('getTokenPriceQueries', () => {
       const token: Token = {
         id: 'mock-token',
-        address: new EthereumAddress('0x' + '1234'.repeat(10)),
+        address: EthereumAddress('0x' + '1234'.repeat(10)),
         symbol: 'MCK',
         decimals: 4,
         priceStrategy: { type: 'market' },
@@ -298,14 +298,14 @@ describe('ExchangePriceUpdater', () => {
     describe('getQueries', () => {
       const tokenA: Token = {
         id: 'mock-token-a',
-        address: new EthereumAddress('0x' + 'aaaa'.repeat(10)),
+        address: EthereumAddress('0x' + 'aaaa'.repeat(10)),
         symbol: 'AAA',
         decimals: 6,
         priceStrategy: { type: 'market' },
       }
       const tokenB: Token = {
         id: 'mock-token-b',
-        address: new EthereumAddress('0x' + 'bbbb'.repeat(10)),
+        address: EthereumAddress('0x' + 'bbbb'.repeat(10)),
         symbol: 'BBB',
         decimals: 9,
         priceStrategy: { type: 'market' },

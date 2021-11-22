@@ -28,7 +28,7 @@ describe('UniswapV1Client', () => {
         expect(requests).to.deep.equal([toRequest(DAI), toRequest(WETH)])
         expect(blockNumber).to.equal(12345n)
         return [
-          toResponse(new EthereumAddress('0x' + 'a'.repeat(40))),
+          toResponse(EthereumAddress('0x' + 'a'.repeat(40))),
           toResponse(EthereumAddress.ZERO),
         ]
       },
@@ -39,7 +39,7 @@ describe('UniswapV1Client', () => {
       12345n
     )
     expect(exchangeAddresses).to.deep.equal([
-      new EthereumAddress('0x' + 'a'.repeat(40)),
+      EthereumAddress('0x' + 'a'.repeat(40)),
       undefined,
     ])
   })
@@ -52,7 +52,7 @@ describe('UniswapV1Client', () => {
       // Nothing in cache
       expect(requests).to.deep.equal([toRequest(DAI), toRequest(WETH)])
       return [
-        toResponse(new EthereumAddress('0x' + 'a'.repeat(40))),
+        toResponse(EthereumAddress('0x' + 'a'.repeat(40))),
         toResponse(EthereumAddress.ZERO),
       ]
     }
@@ -68,7 +68,7 @@ describe('UniswapV1Client', () => {
     multicallClient.multicall = async (requests) => {
       // Higher block number - only DAI cached
       expect(requests).to.deep.equal([toRequest(WETH)])
-      return [toResponse(new EthereumAddress('0x' + 'b'.repeat(40)))]
+      return [toResponse(EthereumAddress('0x' + 'b'.repeat(40)))]
     }
     const result = await uniswapV1Client.getExchangeAddresses(
       [DAI, WETH],
@@ -76,8 +76,8 @@ describe('UniswapV1Client', () => {
     )
 
     expect(result).to.deep.equal([
-      new EthereumAddress('0x' + 'a'.repeat(40)),
-      new EthereumAddress('0x' + 'b'.repeat(40)),
+      EthereumAddress('0x' + 'a'.repeat(40)),
+      EthereumAddress('0x' + 'b'.repeat(40)),
     ])
   })
 })
