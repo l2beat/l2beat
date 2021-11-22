@@ -124,6 +124,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 5622827,
   },
   {
+    name: 'Boba Token',
+    symbol: 'BOBA',
+    address: '0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc',
+    decimals: 18,
+    sinceBlock: 13225262,
+  },
+  {
     name: 'CelerToken',
     symbol: 'CELR',
     address: '0x4F9254C83EB525f9FCf346490bbb3ed28a81C667',

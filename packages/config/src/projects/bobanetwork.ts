@@ -30,16 +30,17 @@ export const bobanetwork: Project = {
         'MATIC',
         'BAT',
         'ZRX',
+        'BOBA',
       ],
     },
     {
       // Proxy__L1LiquidityPool
       address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
       sinceBlock: 13013879,
-      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'SUSHI', 'USDT', 'ZRX'],
+      tokens: ['ETH', 'USDC', 'OMG', 'DAI', 'SUSHI', 'USDT', 'ZRX', 'BOBA'],
     },
   ],
-  associatedToken: 'OMG',
+  associatedToken: 'BOBA',
   details: {
     description:
       'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation. Boba is an Optimistic Rollup scaling solution that claims to reduce gas fees, improve transaction throughput, and extend the capabilities of smart contracts.',
