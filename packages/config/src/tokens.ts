@@ -284,6 +284,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 11056775,
   },
   {
+    name: 'Immutable X',
+    symbol: 'IMX',
+    address: '0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF',
+    decimals: 18,
+    sinceBlock: 13415041,
+  },
+  {
     name: 'Kyber Network Crystal',
     symbol: 'KNC',
     address: '0xdd974D5C2e2928deA5F71b9825b8b646686BD200',
