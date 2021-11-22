@@ -256,13 +256,6 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 3557596,
   },
   {
-    name: 'Gods Unchained Token',
-    symbol: 'GODS',
-    address: '0xccC8cb5229B0ac8069C51fd58367Fd1e622aFD97',
-    decimals: 18,
-    sinceBlock: 12955334,
-  },
-  {
     name: 'Golem Network Token',
     symbol: 'GLM',
     address: '0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429',
@@ -291,7 +284,7 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 11056775,
   },
   {
-    name: 'Immutable X Token',
+    name: 'Immutable X',
     symbol: 'IMX',
     address: '0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF',
     decimals: 18,
