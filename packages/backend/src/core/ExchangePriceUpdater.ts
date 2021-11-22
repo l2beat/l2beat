@@ -1,5 +1,4 @@
-import { EthereumAddress, Token } from '../model'
-import { Exchange } from '../model/Exchange'
+import { EthereumAddress, Exchange, Token } from '../model'
 import {
   ExchangePriceRecord,
   ExchangePriceRepository,

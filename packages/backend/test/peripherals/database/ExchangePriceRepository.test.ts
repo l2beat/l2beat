@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { Exchange } from '../../../src/model/Exchange'
+import { Exchange } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'

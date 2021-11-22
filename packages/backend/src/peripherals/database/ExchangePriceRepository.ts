@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
 import { ExchangePriceRow } from 'knex/types/tables'
 
-import { Exchange } from '../../model/Exchange'
+import { Exchange } from '../../model'
 import { Logger } from '../../tools/Logger'
 
 export interface ExchangePriceRecord {

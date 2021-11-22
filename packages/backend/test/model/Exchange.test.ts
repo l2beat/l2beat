@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { Exchange } from '../../src/model/Exchange'
+import { Exchange } from '../../src/model'
 
 describe('Exchange', () => {
   it('can represent a Uniswap V1 exchange', () => {

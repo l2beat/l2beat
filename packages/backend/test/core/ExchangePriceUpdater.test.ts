@@ -6,8 +6,7 @@ import {
   UNISWAP_V2_RELEASE_BLOCK,
   UNISWAP_V3_RELEASE_BLOCK,
 } from '../../src/core/ExchangePriceUpdater'
-import { EthereumAddress, Token } from '../../src/model'
-import { Exchange } from '../../src/model/Exchange'
+import { EthereumAddress, Exchange, Token } from '../../src/model'
 import { ExchangePriceRepository } from '../../src/peripherals/database/ExchangePriceRepository'
 import { ExchangePriceChecker } from '../../src/peripherals/exchanges/ExchangePriceChecker'
 import {

@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 
-import { Bytes, EthereumAddress } from '../../../../src/model'
-import { Exchange } from '../../../../src/model/Exchange'
+import { Bytes, EthereumAddress, Exchange } from '../../../../src/model'
 import {
   DAI,
   WETH,

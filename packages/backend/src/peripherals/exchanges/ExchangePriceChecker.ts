@@ -1,5 +1,4 @@
-import { EthereumAddress } from '../../model'
-import { Exchange } from '../../model/Exchange'
+import { EthereumAddress, Exchange } from '../../model'
 import {
   MulticallClient,
   MulticallRequest,
