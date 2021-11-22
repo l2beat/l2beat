@@ -1,4 +1,4 @@
-import { UnixTime } from '../model'
+import { Token, UnixTime } from '../model'
 import { LogLevel } from '../tools/Logger'
 
 export interface Config {
@@ -16,4 +16,5 @@ export interface Config {
     safeBlockRefreshIntervalMs: number
     safeBlockBlockOffset: bigint
   }
+  tokens: Token[]
 }

@@ -47,6 +47,14 @@ describe('EthereumAddress', () => {
     expect(a.equals(EthereumAddress.ZERO)).to.equal(false)
   })
 
+  it('checks ordering', () => {
+    const a = new EthereumAddress('0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    const b = new EthereumAddress('0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
+    expect(a.isBefore(b)).to.equal(true)
+    expect(b.isBefore(a)).to.equal(false)
+    expect(a.isBefore(a)).to.equal(false)
+  })
+
   it('correctly stringifies to JSON', () => {
     const address = new EthereumAddress(
       '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'

@@ -92,7 +92,7 @@ function getV1Price(
   const tokenBalanceResponse = results[`uniV1-token-${token}`]
   const tokenBalance = TokenBalanceCall.decodeOrZero(tokenBalanceResponse)
   function getPrice() {
-    const ethBalanceResponse = results[`uniV1-token-${token}`]
+    const ethBalanceResponse = results[`uniV1-eth-${token}`]
     const ethBalance = EthBalanceCall.decodeOrZero(ethBalanceResponse)
     return divOrZero(ethBalance.mul(ethPrice), tokenBalance)
   }

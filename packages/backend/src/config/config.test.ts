@@ -22,5 +22,6 @@ export function getTestConfig(): Config {
       safeBlockRefreshIntervalMs: 0,
       safeBlockBlockOffset: 0n,
     },
+    tokens: [],
   }
 }

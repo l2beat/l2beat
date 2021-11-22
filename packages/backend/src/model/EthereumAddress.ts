@@ -17,6 +17,10 @@ export class EthereumAddress {
     return this.address === other.address
   }
 
+  isBefore(other: EthereumAddress) {
+    return this.address.toLowerCase() < other.address.toLowerCase()
+  }
+
   toString() {
     return this.address
   }

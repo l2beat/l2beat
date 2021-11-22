@@ -48,7 +48,9 @@ export class BlockNumberUpdater {
 
   onNewBlocks(fn: (blocks: BlockNumberRecord[]) => void) {
     this.events.on('newBlocks', fn)
-    return () => this.events.off('newBlocks', fn)
+    return () => {
+      this.events.off('newBlocks', fn)
+    }
   }
 
   async start() {

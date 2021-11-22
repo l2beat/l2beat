@@ -20,5 +20,7 @@ export function getProductionConfig(): Config {
       safeBlockRefreshIntervalMs: 5 * 60 * 1000,
       safeBlockBlockOffset: 100n,
     },
+    // TODO: import from @l2beat/config
+    tokens: [],
   }
 }

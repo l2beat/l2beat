@@ -26,6 +26,6 @@ describe('BlockNumberRepository', () => {
 
     const results = await repository.getAll()
 
-    expect(results).to.deep.equal([itemA, itemB])
+    expect(results).to.have.deep.members([itemA, itemB])
   })
 })
