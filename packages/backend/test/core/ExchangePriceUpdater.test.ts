@@ -7,6 +7,7 @@ import {
   UNISWAP_V3_RELEASE_BLOCK,
 } from '../../src/core/ExchangePriceUpdater'
 import { EthereumAddress, Token } from '../../src/model'
+import { Exchange } from '../../src/model/Exchange'
 import { ExchangePriceRepository } from '../../src/peripherals/database/ExchangePriceRepository'
 import { ExchangePriceChecker } from '../../src/peripherals/exchanges/ExchangePriceChecker'
 import {
@@ -28,37 +29,49 @@ describe('ExchangePriceUpdater', () => {
       EthereumAddress('0x' + 'd'.repeat(40)),
     ]
     const QUERIES = [
-      { assetId: 'token-a', token: TOKENS[0], exchange: 'uniswap-v2-dai' },
-      { assetId: 'token-b', token: TOKENS[1], exchange: 'uniswap-v1' },
-      { assetId: 'token-c', token: TOKENS[2], exchange: 'uniswap-v2-weth' },
-      { assetId: 'token-d', token: TOKENS[3], exchange: 'uniswap-v3-usdc-500' },
+      {
+        assetId: 'token-a',
+        token: TOKENS[0],
+        exchange: Exchange.uniswapV2('dai'),
+      },
+      { assetId: 'token-b', token: TOKENS[1], exchange: Exchange.uniswapV1() },
+      {
+        assetId: 'token-c',
+        token: TOKENS[2],
+        exchange: Exchange.uniswapV2('weth'),
+      },
+      {
+        assetId: 'token-d',
+        token: TOKENS[3],
+        exchange: Exchange.uniswapV3('usdc', 500),
+      },
     ]
     const RECORDS = [
       {
         assetId: 'token-a',
         blockNumber: BLOCK_NUMBER,
-        exchange: 'uniswap-v2-dai',
+        exchange: Exchange.uniswapV2('dai'),
         liquidity: 100n,
         price: 1111n,
       },
       {
         assetId: 'token-b',
         blockNumber: BLOCK_NUMBER,
-        exchange: 'uniswap-v1',
+        exchange: Exchange.uniswapV1(),
         liquidity: 200n,
         price: 2222n,
       },
       {
         assetId: 'token-c',
         blockNumber: BLOCK_NUMBER,
-        exchange: 'uniswap-v2-weth',
+        exchange: Exchange.uniswapV2('weth'),
         liquidity: 300n,
         price: 3333n,
       },
       {
         assetId: 'token-d',
         blockNumber: BLOCK_NUMBER,
-        exchange: 'uniswap-v3-usdc-500',
+        exchange: Exchange.uniswapV3('usdc', 500),
         liquidity: 400n,
         price: 4444n,
       },
@@ -179,9 +192,17 @@ describe('ExchangePriceUpdater', () => {
           UNISWAP_V1_RELEASE_BLOCK + 123n
         )
         expect(queries).to.contain.deep.members([
-          { assetId: 'dai-stablecoin', token: DAI, exchange: 'uniswap-v1' },
-          { assetId: 'usd-coin', token: USDC, exchange: 'uniswap-v1' },
-          { assetId: 'tether-usd', token: USDT, exchange: 'uniswap-v1' },
+          {
+            assetId: 'dai-stablecoin',
+            token: DAI,
+            exchange: Exchange.uniswapV1(),
+          },
+          { assetId: 'usd-coin', token: USDC, exchange: Exchange.uniswapV1() },
+          {
+            assetId: 'tether-usd',
+            token: USDT,
+            exchange: Exchange.uniswapV1(),
+          },
         ])
       })
 
@@ -192,9 +213,9 @@ describe('ExchangePriceUpdater', () => {
         )
         const weth = { assetId: 'wrapped-ether', token: WETH }
         expect(queries).to.contain.deep.members([
-          { ...weth, exchange: 'uniswap-v2-dai' },
-          { ...weth, exchange: 'uniswap-v2-usdc' },
-          { ...weth, exchange: 'uniswap-v2-usdt' },
+          { ...weth, exchange: Exchange.uniswapV2('dai') },
+          { ...weth, exchange: Exchange.uniswapV2('usdc') },
+          { ...weth, exchange: Exchange.uniswapV2('usdt') },
         ])
       })
 
@@ -205,15 +226,15 @@ describe('ExchangePriceUpdater', () => {
         )
         const weth = { assetId: 'wrapped-ether', token: WETH }
         expect(queries).to.contain.deep.members([
-          { ...weth, exchange: 'uniswap-v3-dai-500' },
-          { ...weth, exchange: 'uniswap-v3-usdc-500' },
-          { ...weth, exchange: 'uniswap-v3-usdt-500' },
-          { ...weth, exchange: 'uniswap-v3-dai-3000' },
-          { ...weth, exchange: 'uniswap-v3-usdc-3000' },
-          { ...weth, exchange: 'uniswap-v3-usdt-3000' },
-          { ...weth, exchange: 'uniswap-v3-dai-10000' },
-          { ...weth, exchange: 'uniswap-v3-usdc-10000' },
-          { ...weth, exchange: 'uniswap-v3-usdt-10000' },
+          { ...weth, exchange: Exchange.uniswapV3('dai', 500) },
+          { ...weth, exchange: Exchange.uniswapV3('usdc', 500) },
+          { ...weth, exchange: Exchange.uniswapV3('usdt', 500) },
+          { ...weth, exchange: Exchange.uniswapV3('dai', 3000) },
+          { ...weth, exchange: Exchange.uniswapV3('usdc', 3000) },
+          { ...weth, exchange: Exchange.uniswapV3('usdt', 3000) },
+          { ...weth, exchange: Exchange.uniswapV3('dai', 10000) },
+          { ...weth, exchange: Exchange.uniswapV3('usdc', 10000) },
+          { ...weth, exchange: Exchange.uniswapV3('usdt', 10000) },
         ])
       })
     })
@@ -254,7 +275,7 @@ describe('ExchangePriceUpdater', () => {
           UNISWAP_V1_RELEASE_BLOCK + 123n
         )
         expect(queries).to.contain.deep.members([
-          { ...tokenAsset, exchange: 'uniswap-v1' },
+          { ...tokenAsset, exchange: Exchange.uniswapV1() },
         ])
       })
 
@@ -265,10 +286,10 @@ describe('ExchangePriceUpdater', () => {
           UNISWAP_V2_RELEASE_BLOCK + 123n
         )
         expect(queries).to.contain.deep.members([
-          { ...tokenAsset, exchange: 'uniswap-v2-dai' },
-          { ...tokenAsset, exchange: 'uniswap-v2-usdc' },
-          { ...tokenAsset, exchange: 'uniswap-v2-usdt' },
-          { ...tokenAsset, exchange: 'uniswap-v2-weth' },
+          { ...tokenAsset, exchange: Exchange.uniswapV2('dai') },
+          { ...tokenAsset, exchange: Exchange.uniswapV2('usdc') },
+          { ...tokenAsset, exchange: Exchange.uniswapV2('usdt') },
+          { ...tokenAsset, exchange: Exchange.uniswapV2('weth') },
         ])
       })
 
@@ -279,18 +300,18 @@ describe('ExchangePriceUpdater', () => {
           UNISWAP_V3_RELEASE_BLOCK + 123n
         )
         expect(queries).to.contain.deep.members([
-          { ...tokenAsset, exchange: 'uniswap-v3-dai-500' },
-          { ...tokenAsset, exchange: 'uniswap-v3-usdc-500' },
-          { ...tokenAsset, exchange: 'uniswap-v3-usdt-500' },
-          { ...tokenAsset, exchange: 'uniswap-v3-weth-500' },
-          { ...tokenAsset, exchange: 'uniswap-v3-dai-3000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-usdc-3000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-usdt-3000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-weth-3000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-dai-10000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-usdc-10000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-usdt-10000' },
-          { ...tokenAsset, exchange: 'uniswap-v3-weth-10000' },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('dai', 500) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('usdc', 500) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('usdt', 500) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('weth', 500) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('dai', 3000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('usdc', 3000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('usdt', 3000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('weth', 3000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('dai', 10000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('usdc', 10000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('usdt', 10000) },
+          { ...tokenAsset, exchange: Exchange.uniswapV3('weth', 10000) },
         ])
       })
     })

@@ -1,4 +1,5 @@
 import { EthereumAddress } from '../../model'
+import { Exchange } from '../../model/Exchange'
 import {
   MulticallClient,
   MulticallRequest,
@@ -20,7 +21,7 @@ import { UniswapV1Client } from './UniswapV1Client'
 
 interface ExchangePriceQuery {
   token: EthereumAddress
-  exchange: string
+  exchange: Exchange
 }
 
 interface ExchangePriceResult {
@@ -50,7 +51,7 @@ export class ExchangePriceChecker {
     queries: ExchangePriceQuery[],
     blockNumber: bigint
   ) {
-    const v1Queries = queries.filter((x) => x.exchange === 'uniswap-v1')
+    const v1Queries = queries.filter((x) => x.exchange.family === 'uniswap-v1')
     if (v1Queries.length === 0) {
       return new Map<EthereumAddress, EthereumAddress>()
     }
@@ -82,26 +83,28 @@ export function encodeRequests(
   query: ExchangePriceQuery,
   uniswapV1Exchanges: Map<EthereumAddress, EthereumAddress>
 ): MulticallRequest[] {
-  if (query.exchange === 'uniswap-v1') {
-    return encodeUniswapV1Requests(query.token, uniswapV1Exchanges)
-  } else if (query.exchange.startsWith('uniswap-v2-')) {
-    return encodeUniswapV2Requests(query.token, query.exchange)
-  } else if (query.exchange.startsWith('uniswap-v3-')) {
-    return encodeUniswapV3Requests(query.token, query.exchange)
+  switch (query.exchange.family) {
+    case 'uniswap-v1':
+      return encodeUniswapV1Requests(query.token, uniswapV1Exchanges)
+    case 'uniswap-v2':
+      return encodeUniswapV2Requests(query.token, query.exchange)
+    case 'uniswap-v3':
+      return encodeUniswapV3Requests(query.token, query.exchange)
   }
-  throw new Error(`Unknown exchange ${query.exchange}`)
+  throw new Error(`Unknown exchange ${query.exchange.name}`)
 }
 
 export function decodeResults(
   query: ExchangePriceQuery,
   results: MulticallResponse[]
 ): ExchangePriceResult {
-  if (query.exchange === 'uniswap-v1') {
-    return decodeUniswapV1Results(results)
-  } else if (query.exchange.startsWith('uniswap-v2-')) {
-    return decodeUniswapV2Results(query.token, query.exchange, results)
-  } else if (query.exchange.startsWith('uniswap-v3-')) {
-    return decodeUniswapV3Results(query.token, query.exchange, results)
+  switch (query.exchange.family) {
+    case 'uniswap-v1':
+      return decodeUniswapV1Results(results)
+    case 'uniswap-v2':
+      return decodeUniswapV2Results(query.token, query.exchange, results)
+    case 'uniswap-v3':
+      return decodeUniswapV3Results(query.token, query.exchange, results)
   }
-  throw new Error(`Unknown exchange ${query.exchange}`)
+  throw new Error(`Unknown exchange ${query.exchange.name}`)
 }
