@@ -10,7 +10,7 @@ import {
 import { decodeBalanceOf, encodeBalanceOf } from './balanceOf'
 import { DAI, TEN_TO_18, USDC, USDT, WETH } from './constants'
 
-const UNISWAP_V3_FACTORY = new EthereumAddress(
+const UNISWAP_V3_FACTORY = EthereumAddress(
   '0x1F98431c8aD98523631AE4a59f267346ea31F984'
 )
 
@@ -46,7 +46,7 @@ export function decodeUniswapV3Results(
   const balance = decodeBalanceOf(results[0].data)
   const priceSqrt64x96 = decodeSlotZero(results[1].data)
   let price = (priceSqrt64x96 ** 2n * TEN_TO_18) >> (96n * 2n)
-  if (!token.isBefore(otherToken) && price !== 0n) {
+  if (!EthereumAddress.isBefore(token, otherToken) && price !== 0n) {
     price = (TEN_TO_18 * TEN_TO_18) / price
   }
   return { liquidity: balance, price }
@@ -73,9 +73,7 @@ export function getUniswapV3PoolAddress(
   tokenB: EthereumAddress,
   feeLevel: number
 ) {
-  const [token0, token1] = tokenA.isBefore(tokenB)
-    ? [tokenA, tokenB]
-    : [tokenB, tokenA]
+  const [token0, token1] = EthereumAddress.inOrder(tokenA, tokenB)
   const address = utils.getCreate2Address(
     UNISWAP_V3_FACTORY.toString(),
     utils.solidityKeccak256(
@@ -90,7 +88,7 @@ export function getUniswapV3PoolAddress(
     UNISWAP_V3_CODE_HASH.toString()
   )
 
-  return new EthereumAddress(address)
+  return EthereumAddress(address)
 }
 
 export function encodeSlotZero() {

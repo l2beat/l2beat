@@ -17,9 +17,9 @@ import {
 import { mock } from '../../mock'
 
 describe('MulticallClient', () => {
-  const ADDRESS_A = new EthereumAddress('0x' + 'a'.repeat(40))
-  const ADDRESS_B = new EthereumAddress('0x' + 'b'.repeat(40))
-  const ADDRESS_C = new EthereumAddress('0x' + 'c'.repeat(40))
+  const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))
+  const ADDRESS_B = EthereumAddress('0x' + 'b'.repeat(40))
+  const ADDRESS_C = EthereumAddress('0x' + 'c'.repeat(40))
 
   interface Call {
     to?: EthereumAddress

@@ -20,9 +20,8 @@ export function asBytesFromData(value: unknown, length?: number) {
   }
 }
 
-export const asEthereumAddressFromData = as.mapped(
-  asBytesFromData,
-  (bytes) => new EthereumAddress(bytes.toString())
+export const asEthereumAddressFromData = as.mapped(asBytesFromData, (bytes) =>
+  EthereumAddress(bytes.toString())
 )
 
 export const asKeccakHashFromData = as.mapped(

@@ -45,14 +45,14 @@ describe('asEthereumAddressFromData', () => {
 
   it('correctly reads a 20 byte address', () => {
     expect(asEthereumAddressFromData(address)).to.deep.equal(
-      new EthereumAddress(address)
+      EthereumAddress(address)
     )
   })
 
   it('throws for shorter bytes', () => {
     expect(() => asEthereumAddressFromData('0x1234')).to.throw(
       TypeError,
-      'Invalid address'
+      'Invalid EthereumAddress'
     )
   })
 })

@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import { Bytes, EthereumAddress } from '../../model'
 import { MulticallClient, MulticallRequest } from '../ethereum/MulticallClient'
 
-export const UNISWAP_V1_FACTORY = new EthereumAddress(
+export const UNISWAP_V1_FACTORY = EthereumAddress(
   '0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95'
 )
 
@@ -42,8 +42,8 @@ export class UniswapV1Client {
           'getExchange',
           response.data.toString()
         )
-        const exchange = new EthereumAddress(decoded[0])
-        if (exchange.equals(EthereumAddress.ZERO)) {
+        const exchange = EthereumAddress(decoded[0])
+        if (exchange === EthereumAddress.ZERO) {
           this.setCached(token, undefined, blockNumber)
         } else {
           this.setCached(token, exchange, blockNumber)
@@ -64,7 +64,7 @@ export class UniswapV1Client {
 
   private getCached(token: EthereumAddress) {
     const cached = this.cache.get(token.toString())
-    if (cached instanceof EthereumAddress) {
+    if (cached !== undefined && typeof cached !== 'bigint') {
       return cached
     }
   }

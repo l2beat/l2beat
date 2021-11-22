@@ -66,7 +66,7 @@ describe('EthereumClient', () => {
 
   describe('call', () => {
     it('can call a contract', async () => {
-      const to = new EthereumAddress('0x' + '34cd'.repeat(10))
+      const to = EthereumAddress('0x' + '34cd'.repeat(10))
       const data = Bytes.fromHex('0xabcdef123456')
 
       const testRpc = mock<JsonRpcClient>({

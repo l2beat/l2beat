@@ -20,7 +20,7 @@ describe('getUniswapV2PairAddress', () => {
     const pairDW = getUniswapV2PairAddress(DAI, WETH)
     const pairWD = getUniswapV2PairAddress(WETH, DAI)
 
-    const expected = new EthereumAddress(
+    const expected = EthereumAddress(
       '0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11'
     )
 

@@ -21,7 +21,7 @@ describe('getUniswapV3PoolAddress', () => {
     const poolDW = getUniswapV3PoolAddress(DAI, WETH, 3000)
     const poolWD = getUniswapV3PoolAddress(WETH, DAI, 3000)
 
-    const expected = new EthereumAddress(
+    const expected = EthereumAddress(
       '0xC2e9F25Be6257c210d7Adf0D4Cd6E3E881ba25f8'
     )
 

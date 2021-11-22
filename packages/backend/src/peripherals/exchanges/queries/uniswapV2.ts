@@ -8,7 +8,7 @@ import {
 } from '../../ethereum/MulticallClient'
 import { DAI, TEN_TO_18, USDC, USDT, WETH } from './constants'
 
-const UNISWAP_V2_FACTORY = new EthereumAddress(
+const UNISWAP_V2_FACTORY = EthereumAddress(
   '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
 )
 
@@ -39,7 +39,10 @@ export function decodeUniswapV2Results(
   }
   const otherToken = getOtherToken(exchange)
   const [reserve0, reserve1] = decodeGetReserves(results[0].data)
-  const [tokenReserve, otherReserve] = token.isBefore(otherToken)
+  const [tokenReserve, otherReserve] = EthereumAddress.isBefore(
+    token,
+    otherToken
+  )
     ? [reserve0, reserve1]
     : [reserve1, reserve0]
   const price =
@@ -67,9 +70,7 @@ export function getUniswapV2PairAddress(
   tokenA: EthereumAddress,
   tokenB: EthereumAddress
 ) {
-  const [token0, token1] = tokenA.isBefore(tokenB)
-    ? [tokenA, tokenB]
-    : [tokenB, tokenA]
+  const [token0, token1] = EthereumAddress.inOrder(tokenA, tokenB)
   const address = utils.getCreate2Address(
     UNISWAP_V2_FACTORY.toString(),
     utils.solidityKeccak256(
@@ -83,7 +84,7 @@ export function getUniswapV2PairAddress(
     ),
     UNISWAP_V2_CODE_HASH.toString()
   )
-  return new EthereumAddress(address)
+  return EthereumAddress(address)
 }
 
 export function encodeGetReserves() {
