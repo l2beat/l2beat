@@ -1,12 +1,13 @@
 import { Knex } from 'knex'
 import { ExchangePriceRow } from 'knex/types/tables'
 
+import { Exchange } from '../../model/Exchange'
 import { Logger } from '../../tools/Logger'
 
 export interface ExchangePriceRecord {
   blockNumber: bigint
   assetId: string
-  exchange: string
+  exchange: Exchange
   liquidity: bigint
   price: bigint
 }
@@ -52,7 +53,7 @@ function toRow(record: ExchangePriceRecord): ExchangePriceRow {
   return {
     block_number: Number(record.blockNumber),
     asset_id: record.assetId,
-    exchange: record.exchange,
+    exchange: record.exchange.name,
     liquidity: record.liquidity.toString(),
     price: record.price.toString(),
   }
@@ -62,7 +63,7 @@ function toRecord(row: ExchangePriceRow): ExchangePriceRecord {
   return {
     blockNumber: BigInt(row.block_number),
     assetId: row.asset_id,
-    exchange: row.exchange,
+    exchange: Exchange.fromName(row.exchange),
     liquidity: BigInt(row.liquidity),
     price: BigInt(row.price),
   }

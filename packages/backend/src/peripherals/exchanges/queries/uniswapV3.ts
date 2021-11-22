@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 import memoizee from 'memoizee'
 
 import { Bytes, EthereumAddress, KeccakHash } from '../../../model'
+import { Exchange } from '../../../model/Exchange'
 import {
   MulticallRequest,
   MulticallResponse,
@@ -23,7 +24,7 @@ const coder = new utils.Interface([
 ])
 
 export const encodeUniswapV3Requests = memoizee(
-  (token: EthereumAddress, exchange: string): MulticallRequest[] => {
+  (token: EthereumAddress, exchange: Exchange): MulticallRequest[] => {
     const [otherToken, feeLevel] = getExchangeDetails(exchange)
     const pool = getUniswapV3PoolAddress(token, otherToken, feeLevel)
     return [
@@ -36,7 +37,7 @@ export const encodeUniswapV3Requests = memoizee(
 
 export function decodeUniswapV3Results(
   token: EthereumAddress,
-  exchange: string,
+  exchange: Exchange,
   results: MulticallResponse[]
 ) {
   if (results.length !== 2 || !results.every((x) => x.success)) {
@@ -53,19 +54,23 @@ export function decodeUniswapV3Results(
 }
 
 const tokens: Record<string, EthereumAddress> = {
-  weth: WETH,
-  dai: DAI,
-  usdc: USDC,
-  usdt: USDT,
+  'wrapped-ether': WETH,
+  'dai-stablecoin': DAI,
+  'usd-coin': USDC,
+  'tether-usd': USDT,
 }
 
-function getExchangeDetails(exchange: string) {
-  const [symbol, feeLevel] = exchange.substring('uniswap-v3-'.length).split('-')
-  const token = tokens[symbol]
-  if (!token || !/^\d+$/.test(feeLevel)) {
-    throw new Error(`Invalid exchange ${exchange}`)
+function getExchangeDetails(exchange: Exchange) {
+  const token = tokens[exchange.quoteAssetId]
+  const feeLevel = exchange.details.fee
+  if (
+    !token ||
+    typeof feeLevel !== 'number' ||
+    exchange.family !== 'uniswap-v3'
+  ) {
+    throw new Error(`Invalid exchange ${exchange.name}`)
   }
-  return [token, parseInt(feeLevel)] as const
+  return [token, feeLevel] as const
 }
 
 export function getUniswapV3PoolAddress(

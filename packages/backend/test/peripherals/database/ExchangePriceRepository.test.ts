@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 
+import { Exchange } from '../../../src/model/Exchange'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
@@ -19,22 +20,22 @@ describe('ExchangePriceRepository', () => {
 
     const itemA = {
       blockNumber: 1234n,
-      assetId: 'eth',
-      exchange: 'uniswap',
+      assetId: 'foo',
+      exchange: Exchange.uniswapV1(),
       liquidity: 10_000n,
       price: 2137n,
     }
     const itemB = {
       blockNumber: 1234n,
-      assetId: 'dai',
-      exchange: 'uniswap',
+      assetId: 'bar',
+      exchange: Exchange.uniswapV2('dai'),
       liquidity: 20_000n,
       price: 1n,
     }
     const itemC = {
       blockNumber: 4567n,
-      assetId: 'dai',
-      exchange: 'uniswap',
+      assetId: 'baz',
+      exchange: Exchange.uniswapV3('usdc', 3000),
       liquidity: 25_000n,
       price: 2n,
     }

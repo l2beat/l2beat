@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 
 import { EthereumAddress } from '../../../src/model'
+import { Exchange } from '../../../src/model/Exchange'
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
 import { ExchangePriceChecker } from '../../../src/peripherals/exchanges/ExchangePriceChecker'
 import { DAI } from '../../../src/peripherals/exchanges/queries/constants'
@@ -43,8 +44,8 @@ describe('ExchangePriceChecker', () => {
 
     const results = await exchangePriceChecker.getPrices(
       [
-        { token: TOKEN_A, exchange: 'uniswap-v1' },
-        { token: TOKEN_B, exchange: 'uniswap-v1' },
+        { token: TOKEN_A, exchange: Exchange.uniswapV1() },
+        { token: TOKEN_B, exchange: Exchange.uniswapV1() },
       ],
       12345n
     )
@@ -59,7 +60,7 @@ describe('ExchangePriceChecker', () => {
     const multicallClient = mock<MulticallClient>({
       async multicall(requests, blockNumber) {
         expect(requests).to.deep.equal([
-          ...encodeUniswapV2Requests(DAI, 'uniswap-v2-weth'),
+          ...encodeUniswapV2Requests(DAI, Exchange.uniswapV2('weth')),
         ])
         expect(blockNumber).to.deep.equal(12345n)
         return [...encodeUniswapV2Results(4_000_000n, 1_000n)]
@@ -71,7 +72,7 @@ describe('ExchangePriceChecker', () => {
     )
 
     const results = await exchangePriceChecker.getPrices(
-      [{ token: DAI, exchange: 'uniswap-v2-weth' }],
+      [{ token: DAI, exchange: Exchange.uniswapV2('weth') }],
       12345n
     )
     expect(results).to.deep.equal([
@@ -84,7 +85,7 @@ describe('ExchangePriceChecker', () => {
     const multicallClient = mock<MulticallClient>({
       async multicall(requests, blockNumber) {
         expect(requests).to.deep.equal([
-          ...encodeUniswapV3Requests(DAI, 'uniswap-v3-weth-3000'),
+          ...encodeUniswapV3Requests(DAI, Exchange.uniswapV3('weth', 3000)),
         ])
         expect(blockNumber).to.deep.equal(12345n)
         return [
@@ -98,7 +99,7 @@ describe('ExchangePriceChecker', () => {
     )
 
     const results = await exchangePriceChecker.getPrices(
-      [{ token: DAI, exchange: 'uniswap-v3-weth-3000' }],
+      [{ token: DAI, exchange: Exchange.uniswapV3('weth', 3000) }],
       12345n
     )
     expect(results).to.deep.equal([

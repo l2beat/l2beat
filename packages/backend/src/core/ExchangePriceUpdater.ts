@@ -1,4 +1,5 @@
 import { EthereumAddress, Token } from '../model'
+import { Exchange } from '../model/Exchange'
 import {
   ExchangePriceRecord,
   ExchangePriceRepository,
@@ -19,7 +20,7 @@ export const UNISWAP_V3_RELEASE_BLOCK = 12369621n
 export interface ExchangeAssetPriceQuery {
   assetId: string
   token: EthereumAddress
-  exchange: string
+  exchange: Exchange
 }
 
 export class ExchangePriceUpdater {
@@ -41,10 +42,10 @@ export class ExchangePriceUpdater {
     )
     const known = new Map<string, ExchangePriceRecord>()
     for (const record of knownPrices) {
-      known.set(`${record.assetId}:${record.exchange}`, record)
+      known.set(`${record.assetId}:${record.exchange.name}`, record)
     }
     const unknownQueries = queries.filter(
-      (q) => !known.has(`${q.assetId}:${q.exchange}`)
+      (q) => !known.has(`${q.assetId}:${q.exchange.name}`)
     )
     if (unknownQueries.length > 0) {
       const unknownPrices = await this.exchangePriceChecker.getPrices(
@@ -63,12 +64,12 @@ export class ExchangePriceUpdater {
       })
       await this.exchangePriceRepository.add(records)
       for (const record of records) {
-        known.set(`${record.assetId}:${record.exchange}`, record)
+        known.set(`${record.assetId}:${record.exchange.name}`, record)
       }
     }
     return queries.map(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      (query) => known.get(`${query.assetId}:${query.exchange}`)!
+      (query) => known.get(`${query.assetId}:${query.exchange.name}`)!
     )
   }
 
@@ -85,20 +86,24 @@ export class ExchangePriceUpdater {
     const queries: ExchangeAssetPriceQuery[] = []
     if (blockNumber >= UNISWAP_V1_RELEASE_BLOCK) {
       queries.push(
-        { assetId: 'dai-stablecoin', token: DAI, exchange: 'uniswap-v1' },
-        { assetId: 'usd-coin', token: USDC, exchange: 'uniswap-v1' },
-        { assetId: 'tether-usd', token: USDT, exchange: 'uniswap-v1' }
+        {
+          assetId: 'dai-stablecoin',
+          token: DAI,
+          exchange: Exchange.uniswapV1(),
+        },
+        { assetId: 'usd-coin', token: USDC, exchange: Exchange.uniswapV1() },
+        { assetId: 'tether-usd', token: USDT, exchange: Exchange.uniswapV1() }
       )
     }
     if (blockNumber >= UNISWAP_V2_RELEASE_BLOCK) {
-      for (const market of ['dai', 'usdc', 'usdt']) {
-        queries.push({ ...weth, exchange: `uniswap-v2-${market}` })
+      for (const market of ['dai', 'usdc', 'usdt'] as const) {
+        queries.push({ ...weth, exchange: Exchange.uniswapV2(market) })
       }
     }
     if (blockNumber >= UNISWAP_V3_RELEASE_BLOCK) {
-      for (const market of ['dai', 'usdc', 'usdt']) {
-        for (const fee of [500, 3000, 10000]) {
-          queries.push({ ...weth, exchange: `uniswap-v3-${market}-${fee}` })
+      for (const market of ['dai', 'usdc', 'usdt'] as const) {
+        for (const fee of [500, 3000, 10000] as const) {
+          queries.push({ ...weth, exchange: Exchange.uniswapV3(market, fee) })
         }
       }
     }
@@ -112,17 +117,17 @@ export class ExchangePriceUpdater {
     const asset = { assetId: token.id, token: token.address }
     const queries: ExchangeAssetPriceQuery[] = []
     if (blockNumber >= UNISWAP_V1_RELEASE_BLOCK) {
-      queries.push({ ...asset, exchange: 'uniswap-v1' })
+      queries.push({ ...asset, exchange: Exchange.uniswapV1() })
     }
     if (blockNumber >= UNISWAP_V2_RELEASE_BLOCK) {
-      for (const market of ['dai', 'usdc', 'usdt', 'weth']) {
-        queries.push({ ...asset, exchange: `uniswap-v2-${market}` })
+      for (const market of ['dai', 'usdc', 'usdt', 'weth'] as const) {
+        queries.push({ ...asset, exchange: Exchange.uniswapV2(market) })
       }
     }
     if (blockNumber >= UNISWAP_V3_RELEASE_BLOCK) {
-      for (const market of ['dai', 'usdc', 'usdt', 'weth']) {
-        for (const fee of [500, 3000, 10000]) {
-          queries.push({ ...asset, exchange: `uniswap-v3-${market}-${fee}` })
+      for (const market of ['dai', 'usdc', 'usdt', 'weth'] as const) {
+        for (const fee of [500, 3000, 10000] as const) {
+          queries.push({ ...asset, exchange: Exchange.uniswapV3(market, fee) })
         }
       }
     }
