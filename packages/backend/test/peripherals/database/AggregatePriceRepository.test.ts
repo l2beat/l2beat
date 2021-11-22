@@ -16,6 +16,7 @@ describe('AggregatePriceRepository', () => {
 
   it('can add new records and query them by block number', async () => {
     const repository = new AggregatePriceRepository(knex, Logger.SILENT)
+    await repository.deleteAll()
 
     const itemA = {
       blockNumber: 1234n,
@@ -33,12 +34,39 @@ describe('AggregatePriceRepository', () => {
       priceUsd: 2n,
     }
 
-    await repository.add([itemA, itemB, itemC])
+    await repository.addOrUpdate([itemA, itemB, itemC])
 
     const resultsA = await repository.getAllByBlockNumber(1234n)
     expect(resultsA).to.have.deep.members([itemA, itemB])
 
     const resultsB = await repository.getAllByBlockNumber(4567n)
     expect(resultsB).to.have.deep.members([itemC])
+  })
+
+  it('can add new records and update existing ones', async () => {
+    const repository = new AggregatePriceRepository(knex, Logger.SILENT)
+    await repository.deleteAll()
+
+    const itemA = {
+      blockNumber: 1234n,
+      assetId: 'eth',
+      priceUsd: 2137n,
+    }
+    const itemB = {
+      blockNumber: 1234n,
+      assetId: 'dai',
+      priceUsd: 1n,
+    }
+
+    await repository.addOrUpdate([itemA])
+
+    const resultsBefore = await repository.getAllByBlockNumber(1234n)
+    expect(resultsBefore).to.have.deep.members([itemA])
+
+    const itemC = { ...itemA, priceUsd: 420n }
+    await repository.addOrUpdate([itemC, itemB])
+
+    const resultsAfter = await repository.getAllByBlockNumber(1234n)
+    expect(resultsAfter).to.have.deep.members([itemC, itemB])
   })
 })
