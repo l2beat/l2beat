@@ -1,16 +1,16 @@
-import { EthereumAddress, Exchange, Token } from '../model'
+import { EthereumAddress, Exchange, Token } from '../../model'
 import {
   ExchangePriceRecord,
   ExchangePriceRepository,
-} from '../peripherals/database/ExchangePriceRepository'
-import { ExchangePriceChecker } from '../peripherals/exchanges/ExchangePriceChecker'
+} from '../../peripherals/database/ExchangePriceRepository'
+import { ExchangePriceChecker } from '../../peripherals/exchanges/ExchangePriceChecker'
 import {
   DAI,
   USDC,
   USDT,
   WETH,
-} from '../peripherals/exchanges/queries/constants'
-import { Logger } from '../tools/Logger'
+} from '../../peripherals/exchanges/queries/constants'
+import { Logger } from '../../tools/Logger'
 
 export const UNISWAP_V1_RELEASE_BLOCK = 6627917n
 export const UNISWAP_V2_RELEASE_BLOCK = 10000835n

@@ -5,18 +5,18 @@ import {
   UNISWAP_V1_RELEASE_BLOCK,
   UNISWAP_V2_RELEASE_BLOCK,
   UNISWAP_V3_RELEASE_BLOCK,
-} from '../../src/core/ExchangePriceUpdater'
-import { EthereumAddress, Exchange, Token } from '../../src/model'
-import { ExchangePriceRepository } from '../../src/peripherals/database/ExchangePriceRepository'
-import { ExchangePriceChecker } from '../../src/peripherals/exchanges/ExchangePriceChecker'
+} from '../../../src/core/prices/ExchangePriceUpdater'
+import { EthereumAddress, Exchange, Token } from '../../../src/model'
+import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
+import { ExchangePriceChecker } from '../../../src/peripherals/exchanges/ExchangePriceChecker'
 import {
   DAI,
   USDC,
   USDT,
   WETH,
-} from '../../src/peripherals/exchanges/queries/constants'
-import { Logger } from '../../src/tools/Logger'
-import { mock } from '../mock'
+} from '../../../src/peripherals/exchanges/queries/constants'
+import { Logger } from '../../../src/tools/Logger'
+import { mock } from '../../mock'
 
 describe('ExchangePriceUpdater', () => {
   describe('updateQueries', () => {

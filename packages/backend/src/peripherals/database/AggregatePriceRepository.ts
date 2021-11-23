@@ -14,9 +14,12 @@ export class AggregatePriceRepository {
     this.logger = this.logger.for(this)
   }
 
-  async add(records: AggregatePriceRecord[]) {
+  async addOrUpdate(records: AggregatePriceRecord[]) {
     const rows: AggregatePriceRow[] = records.map(toRow)
-    await this.knex('aggregate_prices').insert(rows)
+    await this.knex('aggregate_prices')
+      .insert(rows)
+      .onConflict(['block_number', 'asset_id'])
+      .merge()
     this.logger.debug({ method: 'add', rows: rows.length })
   }
 
