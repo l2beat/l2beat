@@ -44,7 +44,7 @@ export const metis: Project = {
         sentiment: 'bad',
       },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_NO,
+      upgradeability: RISK_VIEW.UPGRADABLE_YES,
       sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
       validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     },
@@ -200,7 +200,7 @@ export const metis: Project = {
           },
           
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [],
