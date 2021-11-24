@@ -15,7 +15,7 @@ export const metis: Project = {
     {
       address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
       sinceBlock: 13627429,
-      tokens: ['METIS'],
+      tokens: ['Metis'],
     },
   ],
   details: {
@@ -29,10 +29,9 @@ export const metis: Project = {
       explorers: ['https://andromeda-explorer.metis.io'],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
-        'https://metisdao.medium.com',
         'https://twitter.com/MetisDAO',
         'https://discord.gg/RqfEJZXnxd',
-        'https://youtube.com/MetisDAO',
+        'https://youtube.com/c/MetisDAO',
         'https://t.me/MetisDAO',
       ],
     },
@@ -133,7 +132,7 @@ export const metis: Project = {
           {
             text: '',
             href: '',
-          }
+          },
         ],
       },
       contracts: {
@@ -198,7 +197,6 @@ export const metis: Project = {
             name: 'OVM_StateCommitmentChain',
             address: '0xf209815E595Cdf3ed0aAF9665b1772e608AB9380',
           },
-          
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
