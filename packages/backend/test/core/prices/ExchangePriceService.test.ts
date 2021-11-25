@@ -1,14 +1,14 @@
 import { expect } from 'chai'
 
 import {
-  ExchangePriceUpdater,
+  ExchangePriceService,
   UNISWAP_V1_RELEASE_BLOCK,
   UNISWAP_V2_RELEASE_BLOCK,
   UNISWAP_V3_RELEASE_BLOCK,
-} from '../../../src/core/prices/ExchangePriceUpdater'
-import { EthereumAddress, Exchange, Token } from '../../../src/model'
+} from '../../../src/core/prices/ExchangePriceService'
+import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
-import { ExchangePriceChecker } from '../../../src/peripherals/exchanges/ExchangePriceChecker'
+import { ExchangeQueryService } from '../../../src/peripherals/exchanges/ExchangeQueryService'
 import {
   DAI,
   USDC,
@@ -18,7 +18,7 @@ import {
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
-describe('ExchangePriceUpdater', () => {
+describe('ExchangePriceService', () => {
   describe('updateQueries', () => {
     const BLOCK_NUMBER = 1234n
     const TOKENS = [
@@ -29,46 +29,50 @@ describe('ExchangePriceUpdater', () => {
     ]
     const QUERIES = [
       {
-        assetId: 'token-a',
+        assetId: AssetId('token-a'),
         token: TOKENS[0],
         exchange: Exchange.uniswapV2('dai'),
       },
-      { assetId: 'token-b', token: TOKENS[1], exchange: Exchange.uniswapV1() },
       {
-        assetId: 'token-c',
+        assetId: AssetId('token-b'),
+        token: TOKENS[1],
+        exchange: Exchange.uniswapV1(),
+      },
+      {
+        assetId: AssetId('token-c'),
         token: TOKENS[2],
         exchange: Exchange.uniswapV2('weth'),
       },
       {
-        assetId: 'token-d',
+        assetId: AssetId('token-d'),
         token: TOKENS[3],
         exchange: Exchange.uniswapV3('usdc', 500),
       },
     ]
     const RECORDS = [
       {
-        assetId: 'token-a',
+        assetId: AssetId('token-a'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV2('dai'),
         liquidity: 100n,
         price: 1111n,
       },
       {
-        assetId: 'token-b',
+        assetId: AssetId('token-b'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV1(),
         liquidity: 200n,
         price: 2222n,
       },
       {
-        assetId: 'token-c',
+        assetId: AssetId('token-c'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV2('weth'),
         liquidity: 300n,
         price: 3333n,
       },
       {
-        assetId: 'token-d',
+        assetId: AssetId('token-d'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV3('usdc', 500),
         liquidity: 400n,
@@ -86,7 +90,7 @@ describe('ExchangePriceUpdater', () => {
           expect(records).to.deep.equal([RECORDS[0], RECORDS[1]])
         },
       })
-      const exchangePriceChecker = mock<ExchangePriceChecker>({
+      const exchangeQueryService = mock<ExchangeQueryService>({
         async getPrices(queries, blockNumber) {
           expect(queries).to.deep.equal([QUERIES[0], QUERIES[1]])
           expect(blockNumber).to.equal(BLOCK_NUMBER)
@@ -97,13 +101,13 @@ describe('ExchangePriceUpdater', () => {
         },
       })
 
-      const exchangePriceUpdater = new ExchangePriceUpdater(
+      const exchangePriceService = new ExchangePriceService(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangeQueryService,
         Logger.SILENT
       )
 
-      const result = await exchangePriceUpdater.updateQueries(
+      const result = await exchangePriceService.updateQueries(
         [QUERIES[0], QUERIES[1]],
         BLOCK_NUMBER
       )
@@ -120,7 +124,7 @@ describe('ExchangePriceUpdater', () => {
           expect(records).to.deep.equal([RECORDS[1], RECORDS[3]])
         },
       })
-      const exchangePriceChecker = mock<ExchangePriceChecker>({
+      const exchangeQueryService = mock<ExchangeQueryService>({
         async getPrices(queries, blockNumber) {
           expect(queries).to.deep.equal([QUERIES[1], QUERIES[3]])
           expect(blockNumber).to.equal(BLOCK_NUMBER)
@@ -131,13 +135,13 @@ describe('ExchangePriceUpdater', () => {
         },
       })
 
-      const exchangePriceUpdater = new ExchangePriceUpdater(
+      const exchangePriceService = new ExchangePriceService(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangeQueryService,
         Logger.SILENT
       )
 
-      const result = await exchangePriceUpdater.updateQueries(
+      const result = await exchangePriceService.updateQueries(
         QUERIES,
         BLOCK_NUMBER
       )
@@ -151,14 +155,14 @@ describe('ExchangePriceUpdater', () => {
           return RECORDS
         },
       })
-      const exchangePriceChecker = mock<ExchangePriceChecker>()
-      const exchangePriceUpdater = new ExchangePriceUpdater(
+      const exchangeQueryService = mock<ExchangeQueryService>()
+      const exchangePriceService = new ExchangePriceService(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangeQueryService,
         Logger.SILENT
       )
 
-      const result = await exchangePriceUpdater.updateQueries(
+      const result = await exchangePriceService.updateQueries(
         QUERIES,
         BLOCK_NUMBER
       )
@@ -169,36 +173,40 @@ describe('ExchangePriceUpdater', () => {
   describe('queries', () => {
     function createTestUpdater() {
       const exchangePriceRepository = mock<ExchangePriceRepository>()
-      const exchangePriceChecker = mock<ExchangePriceChecker>()
-      const exchangePriceUpdater = new ExchangePriceUpdater(
+      const exchangeQueryService = mock<ExchangeQueryService>()
+      const exchangePriceService = new ExchangePriceService(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangeQueryService,
         Logger.SILENT
       )
-      return exchangePriceUpdater
+      return exchangePriceService
     }
 
     describe('getEtherPriceQueries', () => {
       it('returns no queries before uniswap V1', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getEtherPriceQueries(123n)
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getEtherPriceQueries(123n)
         expect(queries).to.deep.equal([])
       })
 
       it('returns uniswap V1 queries', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getEtherPriceQueries(
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getEtherPriceQueries(
           UNISWAP_V1_RELEASE_BLOCK + 123n
         )
         expect(queries).to.contain.deep.members([
           {
-            assetId: 'dai-stablecoin',
+            assetId: AssetId.DAI,
             token: DAI,
             exchange: Exchange.uniswapV1(),
           },
-          { assetId: 'usd-coin', token: USDC, exchange: Exchange.uniswapV1() },
           {
-            assetId: 'tether-usd',
+            assetId: AssetId.USDC,
+            token: USDC,
+            exchange: Exchange.uniswapV1(),
+          },
+          {
+            assetId: AssetId.USDT,
             token: USDT,
             exchange: Exchange.uniswapV1(),
           },
@@ -206,11 +214,11 @@ describe('ExchangePriceUpdater', () => {
       })
 
       it('returns uniswap V2 queries', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getEtherPriceQueries(
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getEtherPriceQueries(
           UNISWAP_V2_RELEASE_BLOCK + 123n
         )
-        const weth = { assetId: 'wrapped-ether', token: WETH }
+        const weth = { assetId: AssetId.WETH, token: WETH }
         expect(queries).to.contain.deep.members([
           { ...weth, exchange: Exchange.uniswapV2('dai') },
           { ...weth, exchange: Exchange.uniswapV2('usdc') },
@@ -219,11 +227,11 @@ describe('ExchangePriceUpdater', () => {
       })
 
       it('returns uniswap V3 queries', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getEtherPriceQueries(
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getEtherPriceQueries(
           UNISWAP_V3_RELEASE_BLOCK + 123n
         )
-        const weth = { assetId: 'wrapped-ether', token: WETH }
+        const weth = { assetId: AssetId.WETH, token: WETH }
         expect(queries).to.contain.deep.members([
           { ...weth, exchange: Exchange.uniswapV3('dai', 500) },
           { ...weth, exchange: Exchange.uniswapV3('usdc', 500) },
@@ -240,7 +248,7 @@ describe('ExchangePriceUpdater', () => {
 
     describe('getTokenPriceQueries', () => {
       const token: Token = {
-        id: 'mock-token',
+        id: AssetId('mock-token'),
         address: EthereumAddress('0x' + '1234'.repeat(10)),
         symbol: 'MCK',
         decimals: 4,
@@ -249,18 +257,18 @@ describe('ExchangePriceUpdater', () => {
       const tokenAsset = { assetId: token.id, token: token.address }
 
       it('returns no queries before uniswap V1', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getTokenPriceQueries(token, 123n)
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getTokenPriceQueries(token, 123n)
         expect(queries).to.deep.equal([])
       })
 
       it('returns no queries for non-market tokens', () => {
-        const exchangePriceUpdater = createTestUpdater()
+        const exchangePriceService = createTestUpdater()
         const other: Token = {
           ...token,
           priceStrategy: { type: 'constant', value: 123n },
         }
-        const queries = exchangePriceUpdater.getTokenPriceQueries(
+        const queries = exchangePriceService.getTokenPriceQueries(
           other,
           UNISWAP_V3_RELEASE_BLOCK + 123n
         )
@@ -268,8 +276,8 @@ describe('ExchangePriceUpdater', () => {
       })
 
       it('returns uniswap V1 queries', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getTokenPriceQueries(
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getTokenPriceQueries(
           token,
           UNISWAP_V1_RELEASE_BLOCK + 123n
         )
@@ -279,8 +287,8 @@ describe('ExchangePriceUpdater', () => {
       })
 
       it('returns uniswap V2 queries', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getTokenPriceQueries(
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getTokenPriceQueries(
           token,
           UNISWAP_V2_RELEASE_BLOCK + 123n
         )
@@ -293,8 +301,8 @@ describe('ExchangePriceUpdater', () => {
       })
 
       it('returns uniswap V3 queries', () => {
-        const exchangePriceUpdater = createTestUpdater()
-        const queries = exchangePriceUpdater.getTokenPriceQueries(
+        const exchangePriceService = createTestUpdater()
+        const queries = exchangePriceService.getTokenPriceQueries(
           token,
           UNISWAP_V3_RELEASE_BLOCK + 123n
         )
@@ -317,14 +325,14 @@ describe('ExchangePriceUpdater', () => {
 
     describe('getQueries', () => {
       const tokenA: Token = {
-        id: 'mock-token-a',
+        id: AssetId('mock-token-a'),
         address: EthereumAddress('0x' + 'aaaa'.repeat(10)),
         symbol: 'AAA',
         decimals: 6,
         priceStrategy: { type: 'market' },
       }
       const tokenB: Token = {
-        id: 'mock-token-b',
+        id: AssetId('mock-token-b'),
         address: EthereumAddress('0x' + 'bbbb'.repeat(10)),
         symbol: 'BBB',
         decimals: 9,
@@ -332,13 +340,13 @@ describe('ExchangePriceUpdater', () => {
       }
 
       it('returns all the queries for tokens and ether', () => {
-        const exchangePriceUpdater = createTestUpdater()
+        const exchangePriceService = createTestUpdater()
         const block = UNISWAP_V3_RELEASE_BLOCK + 123n
-        const queries = exchangePriceUpdater.getQueries([tokenA, tokenB], block)
+        const queries = exchangePriceService.getQueries([tokenA, tokenB], block)
         expect(queries).to.deep.equal([
-          ...exchangePriceUpdater.getEtherPriceQueries(block),
-          ...exchangePriceUpdater.getTokenPriceQueries(tokenA, block),
-          ...exchangePriceUpdater.getTokenPriceQueries(tokenB, block),
+          ...exchangePriceService.getEtherPriceQueries(block),
+          ...exchangePriceService.getTokenPriceQueries(tokenA, block),
+          ...exchangePriceService.getTokenPriceQueries(tokenB, block),
         ])
       })
     })

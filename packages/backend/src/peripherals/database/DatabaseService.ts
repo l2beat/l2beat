@@ -16,7 +16,7 @@ export class DatabaseService {
       client: 'pg',
       connection: databaseUrl,
       migrations: {
-        directory: path.join(__dirname, '../../migrations'),
+        directory: path.join(__dirname, 'migrations'),
       },
     })
   }

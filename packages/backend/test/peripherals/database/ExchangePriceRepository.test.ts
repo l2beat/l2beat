@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { Exchange } from '../../../src/model'
+import { AssetId, Exchange } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
@@ -20,21 +20,21 @@ describe('ExchangePriceRepository', () => {
 
     const itemA = {
       blockNumber: 1234n,
-      assetId: 'foo',
+      assetId: AssetId('foo'),
       exchange: Exchange.uniswapV1(),
       liquidity: 10_000n,
       price: 2137n,
     }
     const itemB = {
       blockNumber: 1234n,
-      assetId: 'bar',
+      assetId: AssetId('bar'),
       exchange: Exchange.uniswapV2('dai'),
       liquidity: 20_000n,
       price: 1n,
     }
     const itemC = {
       blockNumber: 4567n,
-      assetId: 'baz',
+      assetId: AssetId('baz'),
       exchange: Exchange.uniswapV3('usdc', 3000),
       liquidity: 25_000n,
       price: 2n,
@@ -47,5 +47,58 @@ describe('ExchangePriceRepository', () => {
 
     const resultsB = await repository.getAllByBlockNumber(4567n)
     expect(resultsB).to.have.deep.members([itemC])
+  })
+
+  it('getAllByAssetIdAndExchange', async () => {
+    const repository = new ExchangePriceRepository(knex, Logger.SILENT)
+    await repository.deleteAll()
+
+    await repository.add([
+      {
+        blockNumber: 1234n,
+        assetId: AssetId.WETH,
+        exchange: Exchange.uniswapV2('dai'),
+        liquidity: 1000n,
+        price: 2137n,
+      },
+      {
+        blockNumber: 1235n,
+        assetId: AssetId.DAI,
+        exchange: Exchange.uniswapV2('usdt'),
+        liquidity: 2000n,
+        price: 420n,
+      },
+      {
+        blockNumber: 1233n,
+        assetId: AssetId.DAI,
+        exchange: Exchange.uniswapV2('usdt'),
+        liquidity: 3000n,
+        price: 69n,
+      },
+      {
+        blockNumber: 1232n,
+        assetId: AssetId.DAI,
+        exchange: Exchange.uniswapV2('weth'),
+        liquidity: 3000n,
+        price: 1337n,
+      },
+    ])
+
+    const results = await repository.getAllByAssetIdAndExchange(
+      AssetId.DAI,
+      Exchange.uniswapV2('usdt')
+    )
+    expect(results).to.deep.equal([
+      {
+        blockNumber: 1233n,
+        liquidity: 3000n,
+        price: 69n,
+      },
+      {
+        blockNumber: 1235n,
+        liquidity: 2000n,
+        price: 420n,
+      },
+    ])
   })
 })

@@ -13,7 +13,7 @@ const abi = new utils.Interface([
 
 export class UniswapV1Client {
   // maps token addresses to exchange addresses or latest checked block
-  private cache = new Map<string, EthereumAddress | bigint>()
+  private cache = new Map<EthereumAddress, EthereumAddress | bigint>()
 
   constructor(private multicallClient: MulticallClient) {}
 
@@ -55,7 +55,7 @@ export class UniswapV1Client {
   }
 
   private isCached(token: EthereumAddress, blockNumber: bigint) {
-    const cached = this.cache.get(token.toString())
+    const cached = this.cache.get(token)
     return (
       cached !== undefined &&
       (typeof cached !== 'bigint' || cached >= blockNumber)
@@ -63,7 +63,7 @@ export class UniswapV1Client {
   }
 
   private getCached(token: EthereumAddress) {
-    const cached = this.cache.get(token.toString())
+    const cached = this.cache.get(token)
     if (cached !== undefined && typeof cached !== 'bigint') {
       return cached
     }
@@ -75,14 +75,14 @@ export class UniswapV1Client {
     blockNumber: bigint
   ) {
     if (exchange) {
-      this.cache.set(token.toString(), exchange)
+      this.cache.set(token, exchange)
     } else {
-      const cached = this.cache.get(token.toString())
+      const cached = this.cache.get(token)
       if (cached === undefined) {
-        this.cache.set(token.toString(), blockNumber)
+        this.cache.set(token, blockNumber)
       } else if (typeof cached === 'bigint') {
         if (cached < blockNumber) {
-          this.cache.set(token.toString(), blockNumber)
+          this.cache.set(token, blockNumber)
         }
       }
     }

@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 
+import { AssetId } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
@@ -20,17 +21,17 @@ describe('AggregatePriceRepository', () => {
 
     const itemA = {
       blockNumber: 1234n,
-      assetId: 'eth',
+      assetId: AssetId.WETH,
       priceUsd: 2137n,
     }
     const itemB = {
       blockNumber: 1234n,
-      assetId: 'dai',
+      assetId: AssetId.DAI,
       priceUsd: 1n,
     }
     const itemC = {
       blockNumber: 4567n,
-      assetId: 'dai',
+      assetId: AssetId.DAI,
       priceUsd: 2n,
     }
 
@@ -49,12 +50,12 @@ describe('AggregatePriceRepository', () => {
 
     const itemA = {
       blockNumber: 1234n,
-      assetId: 'eth',
+      assetId: AssetId.WETH,
       priceUsd: 2137n,
     }
     const itemB = {
       blockNumber: 1234n,
-      assetId: 'dai',
+      assetId: AssetId.DAI,
       priceUsd: 1n,
     }
 
@@ -68,5 +69,34 @@ describe('AggregatePriceRepository', () => {
 
     const resultsAfter = await repository.getAllByBlockNumber(1234n)
     expect(resultsAfter).to.have.deep.members([itemC, itemB])
+  })
+
+  it('getAllByAssetId', async () => {
+    const repository = new AggregatePriceRepository(knex, Logger.SILENT)
+    await repository.deleteAll()
+
+    await repository.addOrUpdate([
+      {
+        blockNumber: 1234n,
+        assetId: AssetId.WETH,
+        priceUsd: 2137n,
+      },
+      {
+        blockNumber: 1235n,
+        assetId: AssetId.DAI,
+        priceUsd: 420n,
+      },
+      {
+        blockNumber: 1233n,
+        assetId: AssetId.DAI,
+        priceUsd: 69n,
+      },
+    ])
+
+    const results = await repository.getAllByAssetId(AssetId.DAI)
+    expect(results).to.deep.equal([
+      { blockNumber: 1233n, priceUsd: 69n },
+      { blockNumber: 1235n, priceUsd: 420n },
+    ])
   })
 })
