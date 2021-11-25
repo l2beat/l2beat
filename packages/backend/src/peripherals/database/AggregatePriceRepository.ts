@@ -34,6 +34,15 @@ export class AggregatePriceRepository {
     return rows.map(toRecord)
   }
 
+  async getAllByAssetId(assetId: AssetId) {
+    const rows = await this.knex('aggregate_prices')
+      .select('block_number', 'asset_id', 'price_usd')
+      .where({ asset_id: assetId.toString() })
+      .orderBy('block_number', 'asc')
+    this.logger.debug({ method: 'getAllByAssetId', rows: rows.length })
+    return rows.map(toRecord)
+  }
+
   async getAllByBlockNumber(blockNumber: bigint) {
     const rows = await this.knex('aggregate_prices')
       .select('block_number', 'asset_id', 'price_usd')

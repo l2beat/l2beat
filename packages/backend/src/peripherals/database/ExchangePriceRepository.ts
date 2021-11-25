@@ -35,6 +35,18 @@ export class ExchangePriceRepository {
     return rows.map(toRecord)
   }
 
+  async getAllByAssetIdAndExchange(assetId: AssetId, exchange: Exchange) {
+    const rows = await this.knex('exchange_prices')
+      .select('block_number', 'asset_id', 'exchange', 'liquidity', 'price')
+      .where({ asset_id: assetId.toString(), exchange: exchange.name })
+      .orderBy('block_number', 'asc')
+    this.logger.debug({
+      method: 'getAllByAssetIdAndExchange',
+      rows: rows.length,
+    })
+    return rows.map(toRecord)
+  }
+
   async getAllByBlockNumber(blockNumber: bigint) {
     const rows = await this.knex('exchange_prices')
       .select('block_number', 'asset_id', 'exchange', 'liquidity', 'price')

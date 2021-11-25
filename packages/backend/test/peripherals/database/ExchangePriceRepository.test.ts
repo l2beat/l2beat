@@ -48,4 +48,46 @@ describe('ExchangePriceRepository', () => {
     const resultsB = await repository.getAllByBlockNumber(4567n)
     expect(resultsB).to.have.deep.members([itemC])
   })
+
+  it('getAllByAssetIdAndExchange', async () => {
+    const repository = new ExchangePriceRepository(knex, Logger.SILENT)
+    await repository.deleteAll()
+
+    const itemA = {
+      blockNumber: 1234n,
+      assetId: AssetId.WETH,
+      exchange: Exchange.uniswapV2('dai'),
+      liquidity: 1000n,
+      price: 2137n,
+    }
+    const itemB = {
+      blockNumber: 1235n,
+      assetId: AssetId.DAI,
+      exchange: Exchange.uniswapV2('usdt'),
+      liquidity: 2000n,
+      price: 420n,
+    }
+    const itemC = {
+      blockNumber: 1233n,
+      assetId: AssetId.DAI,
+      exchange: Exchange.uniswapV2('usdt'),
+      liquidity: 3000n,
+      price: 69n,
+    }
+    const itemD = {
+      blockNumber: 1232n,
+      assetId: AssetId.DAI,
+      exchange: Exchange.uniswapV2('weth'),
+      liquidity: 3000n,
+      price: 1337n,
+    }
+
+    await repository.add([itemA, itemB, itemC, itemD])
+
+    const results = await repository.getAllByAssetIdAndExchange(
+      AssetId.DAI,
+      Exchange.uniswapV2('usdt')
+    )
+    expect(results).to.deep.equal([itemC, itemB])
+  })
 })
