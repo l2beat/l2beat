@@ -75,25 +75,28 @@ describe('AggregatePriceRepository', () => {
     const repository = new AggregatePriceRepository(knex, Logger.SILENT)
     await repository.deleteAll()
 
-    const itemA = {
-      blockNumber: 1234n,
-      assetId: AssetId.WETH,
-      priceUsd: 2137n,
-    }
-    const itemB = {
-      blockNumber: 1235n,
-      assetId: AssetId.DAI,
-      priceUsd: 420n,
-    }
-    const itemC = {
-      blockNumber: 1233n,
-      assetId: AssetId.DAI,
-      priceUsd: 69n,
-    }
-
-    await repository.addOrUpdate([itemA, itemB, itemC])
+    await repository.addOrUpdate([
+      {
+        blockNumber: 1234n,
+        assetId: AssetId.WETH,
+        priceUsd: 2137n,
+      },
+      {
+        blockNumber: 1235n,
+        assetId: AssetId.DAI,
+        priceUsd: 420n,
+      },
+      {
+        blockNumber: 1233n,
+        assetId: AssetId.DAI,
+        priceUsd: 69n,
+      },
+    ])
 
     const results = await repository.getAllByAssetId(AssetId.DAI)
-    expect(results).to.deep.equal([itemC, itemB])
+    expect(results).to.deep.equal([
+      { blockNumber: 1233n, priceUsd: 69n },
+      { blockNumber: 1235n, priceUsd: 420n },
+    ])
   })
 })

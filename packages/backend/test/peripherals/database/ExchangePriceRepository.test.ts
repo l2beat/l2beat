@@ -53,41 +53,52 @@ describe('ExchangePriceRepository', () => {
     const repository = new ExchangePriceRepository(knex, Logger.SILENT)
     await repository.deleteAll()
 
-    const itemA = {
-      blockNumber: 1234n,
-      assetId: AssetId.WETH,
-      exchange: Exchange.uniswapV2('dai'),
-      liquidity: 1000n,
-      price: 2137n,
-    }
-    const itemB = {
-      blockNumber: 1235n,
-      assetId: AssetId.DAI,
-      exchange: Exchange.uniswapV2('usdt'),
-      liquidity: 2000n,
-      price: 420n,
-    }
-    const itemC = {
-      blockNumber: 1233n,
-      assetId: AssetId.DAI,
-      exchange: Exchange.uniswapV2('usdt'),
-      liquidity: 3000n,
-      price: 69n,
-    }
-    const itemD = {
-      blockNumber: 1232n,
-      assetId: AssetId.DAI,
-      exchange: Exchange.uniswapV2('weth'),
-      liquidity: 3000n,
-      price: 1337n,
-    }
-
-    await repository.add([itemA, itemB, itemC, itemD])
+    await repository.add([
+      {
+        blockNumber: 1234n,
+        assetId: AssetId.WETH,
+        exchange: Exchange.uniswapV2('dai'),
+        liquidity: 1000n,
+        price: 2137n,
+      },
+      {
+        blockNumber: 1235n,
+        assetId: AssetId.DAI,
+        exchange: Exchange.uniswapV2('usdt'),
+        liquidity: 2000n,
+        price: 420n,
+      },
+      {
+        blockNumber: 1233n,
+        assetId: AssetId.DAI,
+        exchange: Exchange.uniswapV2('usdt'),
+        liquidity: 3000n,
+        price: 69n,
+      },
+      {
+        blockNumber: 1232n,
+        assetId: AssetId.DAI,
+        exchange: Exchange.uniswapV2('weth'),
+        liquidity: 3000n,
+        price: 1337n,
+      },
+    ])
 
     const results = await repository.getAllByAssetIdAndExchange(
       AssetId.DAI,
       Exchange.uniswapV2('usdt')
     )
-    expect(results).to.deep.equal([itemC, itemB])
+    expect(results).to.deep.equal([
+      {
+        blockNumber: 1233n,
+        liquidity: 3000n,
+        price: 69n,
+      },
+      {
+        blockNumber: 1235n,
+        liquidity: 2000n,
+        price: 420n,
+      },
+    ])
   })
 })
