@@ -1,12 +1,12 @@
 import Router from '@koa/router'
 
-import { BlocksView } from '../core/views/BlocksView'
+import { BlocksController } from '../controllers/BlocksController'
 
-export function createBlocksRouter(blocksView: BlocksView) {
+export function createBlocksRouter(blocksController: BlocksController) {
   const router = new Router()
 
   router.get('/api/blocks', async (ctx) => {
-    ctx.body = await blocksView.getAllBlocks()
+    ctx.body = await blocksController.getAllBlocks()
   })
 
   return router

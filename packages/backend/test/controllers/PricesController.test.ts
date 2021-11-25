@@ -1,12 +1,12 @@
 import { expect } from 'chai'
 
-import { PricesView } from '../../../src/core/views/PricesView'
-import { AssetId, Exchange } from '../../../src/model'
-import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
-import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
-import { mock } from '../../mock'
+import { PricesController } from '../../src/controllers/PricesController'
+import { AssetId, Exchange } from '../../src/model'
+import { AggregatePriceRepository } from '../../src/peripherals/database/AggregatePriceRepository'
+import { ExchangePriceRepository } from '../../src/peripherals/database/ExchangePriceRepository'
+import { mock } from '../mock'
 
-describe('PricesView', () => {
+describe('PricesController', () => {
   it('returns transformed aggregate prices', async () => {
     const aggregatePriceRepository = mock<AggregatePriceRepository>({
       async getAllByAssetId(assetId) {
@@ -18,11 +18,11 @@ describe('PricesView', () => {
       },
     })
     const exchangePriceRepository = mock<ExchangePriceRepository>()
-    const pricesView = new PricesView(
+    const pricesController = new PricesController(
       exchangePriceRepository,
       aggregatePriceRepository
     )
-    expect(await pricesView.getPriceHistory(AssetId.DAI)).to.deep.equal([
+    expect(await pricesController.getPriceHistory(AssetId.DAI)).to.deep.equal([
       { blockNumber: '1', priceUsd: '2' },
       { blockNumber: '3', priceUsd: '4' },
     ])
@@ -40,12 +40,12 @@ describe('PricesView', () => {
         ]
       },
     })
-    const pricesView = new PricesView(
+    const pricesController = new PricesController(
       exchangePriceRepository,
       aggregatePriceRepository
     )
     expect(
-      await pricesView.getPriceHistoryOnExchange(
+      await pricesController.getPriceHistoryOnExchange(
         AssetId.DAI,
         Exchange.uniswapV2('weth')
       )

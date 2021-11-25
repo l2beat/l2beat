@@ -1,11 +1,11 @@
 import { expect } from 'chai'
 
-import { BlocksView } from '../../../src/core/views/BlocksView'
-import { UnixTime } from '../../../src/model'
-import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
-import { mock } from '../../mock'
+import { BlocksController } from '../../src/controllers/BlocksController'
+import { UnixTime } from '../../src/model'
+import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
+import { mock } from '../mock'
 
-describe('BlocksView', () => {
+describe('BlocksController', () => {
   it('returns transformed blocks', async () => {
     const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {
@@ -15,8 +15,8 @@ describe('BlocksView', () => {
         ]
       },
     })
-    const blocksView = new BlocksView(blockNumberRepository)
-    expect(await blocksView.getAllBlocks()).to.deep.equal([
+    const blocksController = new BlocksController(blockNumberRepository)
+    expect(await blocksController.getAllBlocks()).to.deep.equal([
       {
         blockNumber: '123',
         timestamp: '1970-01-01T00:16:40.000Z',
