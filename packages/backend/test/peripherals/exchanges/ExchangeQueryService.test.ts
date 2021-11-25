@@ -2,7 +2,7 @@ import { expect } from 'chai'
 
 import { EthereumAddress, Exchange } from '../../../src/model'
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
-import { ExchangePriceService } from '../../../src/peripherals/exchanges/ExchangePriceService'
+import { ExchangeQueryService } from '../../../src/peripherals/exchanges/ExchangeQueryService'
 import { DAI, WETH } from '../../../src/peripherals/exchanges/queries/constants'
 import { encodeUniswapV1Requests } from '../../../src/peripherals/exchanges/queries/uniswapV1'
 import { encodeUniswapV2Requests } from '../../../src/peripherals/exchanges/queries/uniswapV2'
@@ -15,7 +15,7 @@ import {
   encodeUniswapV3Results,
 } from './queries/utils'
 
-describe('ExchangePriceService', () => {
+describe('ExchangeQueryService', () => {
   const TOKEN_A = EthereumAddress('0x' + 'a'.repeat(40))
   const TOKEN_B = EthereumAddress('0x' + 'b'.repeat(40))
   const EXCHANGE = EthereumAddress('0x' + 'c'.repeat(40))
@@ -36,12 +36,12 @@ describe('ExchangePriceService', () => {
         return [...encodeUniswapV1Results(10_000n, 20_000n)]
       },
     })
-    const exchangePriceService = new ExchangePriceService(
+    const exchangeQueryService = new ExchangeQueryService(
       uniswapV1Client,
       multicallClient
     )
 
-    const results = await exchangePriceService.getPrices(
+    const results = await exchangeQueryService.getPrices(
       [
         { token: TOKEN_A, exchange: Exchange.uniswapV1() },
         { token: TOKEN_B, exchange: Exchange.uniswapV1() },
@@ -65,12 +65,12 @@ describe('ExchangePriceService', () => {
         return [...encodeUniswapV2Results(4_000_000n, 1_000n)]
       },
     })
-    const exchangePriceService = new ExchangePriceService(
+    const exchangeQueryService = new ExchangeQueryService(
       uniswapV1Client,
       multicallClient
     )
 
-    const results = await exchangePriceService.getPrices(
+    const results = await exchangeQueryService.getPrices(
       [{ token: DAI, exchange: Exchange.uniswapV2('weth') }],
       12345n
     )
@@ -92,12 +92,12 @@ describe('ExchangePriceService', () => {
         ]
       },
     })
-    const exchangePriceService = new ExchangePriceService(
+    const exchangeQueryService = new ExchangeQueryService(
       uniswapV1Client,
       multicallClient
     )
 
-    const results = await exchangePriceService.getPrices(
+    const results = await exchangeQueryService.getPrices(
       [{ token: DAI, exchange: Exchange.uniswapV3('weth', 3000) }],
       12345n
     )
@@ -129,12 +129,12 @@ describe('ExchangePriceService', () => {
         ]
       },
     })
-    const exchangePriceService = new ExchangePriceService(
+    const exchangeQueryService = new ExchangeQueryService(
       uniswapV1Client,
       multicallClient
     )
 
-    const results = await exchangePriceService.getPrices(
+    const results = await exchangeQueryService.getPrices(
       [
         { token: WETH, exchange: Exchange.uniswapV2('dai') },
         { token: TOKEN_A, exchange: Exchange.uniswapV1() },

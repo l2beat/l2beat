@@ -19,7 +19,7 @@ import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
-import { ExchangePriceService } from './peripherals/exchanges/ExchangePriceService'
+import { ExchangeQueryService } from './peripherals/exchanges/ExchangeQueryService'
 import { UniswapV1Client } from './peripherals/exchanges/UniswapV1Client'
 import { HttpClient } from './peripherals/HttpClient'
 import { Logger } from './tools/Logger'
@@ -57,7 +57,7 @@ export class Application {
     const multicallClient = new MulticallClient(ethereumClient)
 
     const uniswapV1Client = new UniswapV1Client(multicallClient)
-    const exchangePriceService = new ExchangePriceService(
+    const exchangeQueryService = new ExchangeQueryService(
       uniswapV1Client,
       multicallClient
     )
@@ -79,7 +79,7 @@ export class Application {
     )
     const exchangePriceUpdater = new ExchangePriceUpdater(
       exchangePriceRepository,
-      exchangePriceService,
+      exchangeQueryService,
       logger
     )
     const aggregatePriceService = new AggregatePriceService(
