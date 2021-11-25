@@ -1,10 +1,8 @@
 import { ApiServer } from './api/ApiServer'
 import { createBlocksRouter } from './api/BlocksRouter'
-import { createHelloRouter } from './api/HelloRouter'
 import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
-import { HelloService } from './core/HelloService'
 import { AggregatePriceUpdater } from './core/prices/AggregatePriceUpdater'
 import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
 import { PriceUpdater } from './core/prices/PriceUpdater'
@@ -64,8 +62,6 @@ export class Application {
 
     /* - - - - - CORE - - - - - */
 
-    const helloService = new HelloService(config.name)
-
     const safeBlockService = new SafeBlockService(
       config.core.safeBlockRefreshIntervalMs,
       config.core.safeBlockBlockOffset,
@@ -111,7 +107,6 @@ export class Application {
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksView),
-      createHelloRouter(helloService),
       createStatusRouter(statusService),
     ])
 
