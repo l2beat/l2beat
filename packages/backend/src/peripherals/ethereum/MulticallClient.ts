@@ -157,10 +157,11 @@ export function decodeMulticallV2(result: Bytes) {
     result.toString()
   )
   const values = decoded[0] as [boolean, string][]
-  return values.map(
-    ([success, data]): MulticallResponse => ({
-      success,
-      data: Bytes.fromHex(data),
-    })
-  )
+  return values.map(([success, data]): MulticallResponse => {
+    const bytes = Bytes.fromHex(data)
+    return {
+      success: success && bytes.length !== 0,
+      data: bytes,
+    }
+  })
 }
