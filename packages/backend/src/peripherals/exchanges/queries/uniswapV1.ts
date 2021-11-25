@@ -39,14 +39,11 @@ export function decodeUniswapV1Results(results: MulticallResponse[]) {
   return { liquidity: tokenBalance, price }
 }
 
-export const encodeGetEthBalance = memoizee(
-  (account: EthereumAddress) => {
-    return Bytes.fromHex(
-      coder.encodeFunctionData('getEthBalance', [account.toString()])
-    )
-  },
-  { primitive: true }
-)
+export const encodeGetEthBalance = memoizee((account: EthereumAddress) => {
+  return Bytes.fromHex(
+    coder.encodeFunctionData('getEthBalance', [account.toString()])
+  )
+})
 
 export function decodeGetEthBalance(data: Bytes) {
   const decoded = coder.decodeFunctionResult('getEthBalance', data.toString())
