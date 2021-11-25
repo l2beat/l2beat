@@ -1,15 +1,16 @@
 import { ApiServer } from './api/ApiServer'
-import { createBlockNumberRouter } from './api/BlockNumberRouter'
-import { createHelloRouter } from './api/HelloRouter'
+import { createBlocksRouter } from './api/BlocksRouter'
+import { createPricesRouter } from './api/PricesRouter'
 import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
-import { HelloService } from './core/HelloService'
 import { AggregatePriceUpdater } from './core/prices/AggregatePriceUpdater'
 import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
 import { PriceUpdater } from './core/prices/PriceUpdater'
 import { SafeBlockService } from './core/SafeBlockService'
 import { StatusService } from './core/StatusService'
+import { BlocksView } from './core/views/BlocksView'
+import { PricesView } from './core/views/PricesView'
 import { AggregatePriceRepository } from './peripherals/database/AggregatePriceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
@@ -63,8 +64,6 @@ export class Application {
 
     /* - - - - - CORE - - - - - */
 
-    const helloService = new HelloService(config.name)
-
     const safeBlockService = new SafeBlockService(
       config.core.safeBlockRefreshIntervalMs,
       config.core.safeBlockBlockOffset,
@@ -104,11 +103,17 @@ export class Application {
       safeBlockService,
     })
 
+    const blocksView = new BlocksView(blockNumberRepository)
+    const pricesView = new PricesView(
+      exchangePriceRepository,
+      aggregatePriceRepository
+    )
+
     /* - - - - - API - - - - - */
 
     const apiServer = new ApiServer(config.port, logger, [
-      createBlockNumberRouter(blockNumberRepository),
-      createHelloRouter(helloService),
+      createBlocksRouter(blocksView),
+      createPricesRouter(pricesView),
       createStatusRouter(statusService),
     ])
 

@@ -35,6 +35,18 @@ export class ExchangePriceRepository {
     return rows.map(toRecord)
   }
 
+  async getAllByAssetIdAndExchange(assetId: AssetId, exchange: Exchange) {
+    const rows = await this.knex('exchange_prices')
+      .select('block_number', 'liquidity', 'price')
+      .where({ asset_id: assetId.toString(), exchange: exchange.name })
+      .orderBy('block_number', 'asc')
+    this.logger.debug({
+      method: 'getAllByAssetIdAndExchange',
+      rows: rows.length,
+    })
+    return rows.map(toPriceRecord)
+  }
+
   async getAllByBlockNumber(blockNumber: bigint) {
     const rows = await this.knex('exchange_prices')
       .select('block_number', 'asset_id', 'exchange', 'liquidity', 'price')
@@ -64,6 +76,16 @@ function toRecord(row: ExchangePriceRow): ExchangePriceRecord {
     blockNumber: BigInt(row.block_number),
     assetId: AssetId(row.asset_id),
     exchange: Exchange.fromName(row.exchange),
+    liquidity: BigInt(row.liquidity),
+    price: BigInt(row.price),
+  }
+}
+
+function toPriceRecord(
+  row: Omit<ExchangePriceRow, 'asset_id' | 'exchange'>
+): Omit<ExchangePriceRecord, 'assetId' | 'exchange'> {
+  return {
+    blockNumber: BigInt(row.block_number),
     liquidity: BigInt(row.liquidity),
     price: BigInt(row.price),
   }
