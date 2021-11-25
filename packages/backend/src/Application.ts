@@ -1,5 +1,5 @@
 import { ApiServer } from './api/ApiServer'
-import { createBlockNumberRouter } from './api/BlockNumberRouter'
+import { createBlocksRouter } from './api/BlocksRouter'
 import { createHelloRouter } from './api/HelloRouter'
 import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
@@ -10,6 +10,7 @@ import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
 import { PriceUpdater } from './core/prices/PriceUpdater'
 import { SafeBlockService } from './core/SafeBlockService'
 import { StatusService } from './core/StatusService'
+import { BlocksView } from './core/views/BlocksView'
 import { AggregatePriceRepository } from './peripherals/database/AggregatePriceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
@@ -104,10 +105,12 @@ export class Application {
       safeBlockService,
     })
 
+    const blocksView = new BlocksView(blockNumberRepository)
+
     /* - - - - - API - - - - - */
 
     const apiServer = new ApiServer(config.port, logger, [
-      createBlockNumberRouter(blockNumberRepository),
+      createBlocksRouter(blocksView),
       createHelloRouter(helloService),
       createStatusRouter(statusService),
     ])
