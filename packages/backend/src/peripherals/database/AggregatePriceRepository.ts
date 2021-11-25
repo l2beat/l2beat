@@ -1,11 +1,12 @@
 import { Knex } from 'knex'
 import { AggregatePriceRow } from 'knex/types/tables'
 
+import { AssetId } from '../../model'
 import { Logger } from '../../tools/Logger'
 
 export interface AggregatePriceRecord {
   blockNumber: bigint
-  assetId: string
+  assetId: AssetId
   priceUsd: bigint
 }
 
@@ -50,7 +51,7 @@ export class AggregatePriceRepository {
 function toRow(record: AggregatePriceRecord): AggregatePriceRow {
   return {
     block_number: Number(record.blockNumber),
-    asset_id: record.assetId,
+    asset_id: record.assetId.toString(),
     price_usd: record.priceUsd.toString(),
   }
 }
@@ -58,7 +59,7 @@ function toRow(record: AggregatePriceRecord): AggregatePriceRow {
 function toRecord(row: AggregatePriceRow): AggregatePriceRecord {
   return {
     blockNumber: BigInt(row.block_number),
-    assetId: row.asset_id,
+    assetId: AssetId(row.asset_id),
     priceUsd: BigInt(row.price_usd),
   }
 }

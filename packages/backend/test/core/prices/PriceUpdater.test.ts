@@ -4,7 +4,7 @@ import waitForExpect from 'wait-for-expect'
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
 import { AggregatePriceUpdater } from '../../../src/core/prices/AggregatePriceUpdater'
 import { PriceUpdater } from '../../../src/core/prices/PriceUpdater'
-import { EthereumAddress, Token, UnixTime } from '../../../src/model'
+import { AssetId, EthereumAddress, Token, UnixTime } from '../../../src/model'
 import { BlockNumberRecord } from '../../../src/peripherals/database/BlockNumberRepository'
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
@@ -12,14 +12,14 @@ import { mock } from '../../mock'
 describe('PriceUpdater', () => {
   const tokens: Token[] = [
     {
-      id: 'aaa-token',
+      id: AssetId('aaa-token'),
       address: EthereumAddress('0x' + 'a'.repeat(40)),
       symbol: 'AAA',
       decimals: 5,
       priceStrategy: { type: 'market' },
     },
     {
-      id: 'bbb-token',
+      id: AssetId('bbb-token'),
       address: EthereumAddress('0x' + 'b'.repeat(40)),
       symbol: 'BBB',
       decimals: 7,

@@ -1,3 +1,4 @@
+export * from './AssetId'
 export * from './Bytes'
 export * from './EthereumAddress'
 export * from './Exchange'
