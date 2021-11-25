@@ -522,13 +522,6 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 4719568,
   },
   {
-    name: 'Wrapped UST Token',
-    symbol: 'UST',
-    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    decimals: 18,
-    sinceBlock: 11345219,
-  },
-  {
     name: 'yearn.finance',
     symbol: 'YFI',
     address: '0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e',
