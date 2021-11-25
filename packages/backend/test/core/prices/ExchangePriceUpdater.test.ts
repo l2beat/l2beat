@@ -8,7 +8,7 @@ import {
 } from '../../../src/core/prices/ExchangePriceUpdater'
 import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
-import { ExchangePriceChecker } from '../../../src/peripherals/exchanges/ExchangePriceChecker'
+import { ExchangePriceService } from '../../../src/peripherals/exchanges/ExchangePriceService'
 import {
   DAI,
   USDC,
@@ -90,7 +90,7 @@ describe('ExchangePriceUpdater', () => {
           expect(records).to.deep.equal([RECORDS[0], RECORDS[1]])
         },
       })
-      const exchangePriceChecker = mock<ExchangePriceChecker>({
+      const exchangePriceService = mock<ExchangePriceService>({
         async getPrices(queries, blockNumber) {
           expect(queries).to.deep.equal([QUERIES[0], QUERIES[1]])
           expect(blockNumber).to.equal(BLOCK_NUMBER)
@@ -103,7 +103,7 @@ describe('ExchangePriceUpdater', () => {
 
       const exchangePriceUpdater = new ExchangePriceUpdater(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangePriceService,
         Logger.SILENT
       )
 
@@ -124,7 +124,7 @@ describe('ExchangePriceUpdater', () => {
           expect(records).to.deep.equal([RECORDS[1], RECORDS[3]])
         },
       })
-      const exchangePriceChecker = mock<ExchangePriceChecker>({
+      const exchangePriceService = mock<ExchangePriceService>({
         async getPrices(queries, blockNumber) {
           expect(queries).to.deep.equal([QUERIES[1], QUERIES[3]])
           expect(blockNumber).to.equal(BLOCK_NUMBER)
@@ -137,7 +137,7 @@ describe('ExchangePriceUpdater', () => {
 
       const exchangePriceUpdater = new ExchangePriceUpdater(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangePriceService,
         Logger.SILENT
       )
 
@@ -155,10 +155,10 @@ describe('ExchangePriceUpdater', () => {
           return RECORDS
         },
       })
-      const exchangePriceChecker = mock<ExchangePriceChecker>()
+      const exchangePriceService = mock<ExchangePriceService>()
       const exchangePriceUpdater = new ExchangePriceUpdater(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangePriceService,
         Logger.SILENT
       )
 
@@ -173,10 +173,10 @@ describe('ExchangePriceUpdater', () => {
   describe('queries', () => {
     function createTestUpdater() {
       const exchangePriceRepository = mock<ExchangePriceRepository>()
-      const exchangePriceChecker = mock<ExchangePriceChecker>()
+      const exchangePriceService = mock<ExchangePriceService>()
       const exchangePriceUpdater = new ExchangePriceUpdater(
         exchangePriceRepository,
-        exchangePriceChecker,
+        exchangePriceService,
         Logger.SILENT
       )
       return exchangePriceUpdater
