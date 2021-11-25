@@ -61,7 +61,7 @@ export class ExchangePriceChecker {
     const result = new Map<EthereumAddress, EthereumAddress>()
     for (const [i, exchange] of exchanges.entries()) {
       if (exchange) {
-        result.set(queries[i].token, exchange)
+        result.set(v1Queries[i].token, exchange)
       }
     }
     return result

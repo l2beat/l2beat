@@ -79,4 +79,20 @@ describe('decodeUniswapV2Results', () => {
       price: 10n ** 18n * 4_000n,
     })
   })
+
+  it('decodes authentic result for WETH-USDT', () => {
+    const encoded = encodeUniswapV2Results(
+      24_813_092_743_672_255_251_334n,
+      108_420_450_239_474n
+    )
+    const result = decodeUniswapV2Results(
+      WETH,
+      Exchange.uniswapV2('usdt'),
+      encoded
+    )
+    expect(result).to.deep.equal({
+      liquidity: 24_813_092_743_672_255_251_334n,
+      price: 4_369_485_551n,
+    })
+  })
 })
