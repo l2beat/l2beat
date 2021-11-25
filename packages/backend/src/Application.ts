@@ -5,13 +5,21 @@ import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { HelloService } from './core/HelloService'
+import { AggregatePriceUpdater } from './core/prices/AggregatePriceUpdater'
+import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
+import { PriceUpdater } from './core/prices/PriceUpdater'
 import { SafeBlockService } from './core/SafeBlockService'
 import { StatusService } from './core/StatusService'
+import { AggregatePriceRepository } from './peripherals/database/AggregatePriceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
+import { ExchangePriceRepository } from './peripherals/database/ExchangePriceRepository'
 import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
+import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
+import { ExchangePriceChecker } from './peripherals/exchanges/ExchangePriceChecker'
+import { UniswapV1Client } from './peripherals/exchanges/UniswapV1Client'
 import { HttpClient } from './peripherals/HttpClient'
 import { Logger } from './tools/Logger'
 
@@ -27,7 +35,10 @@ export class Application {
 
     const knex = DatabaseService.createKnexInstance(config.databaseUrl)
     const databaseService = new DatabaseService(knex, logger)
+
+    const aggregatePriceRepository = new AggregatePriceRepository(knex, logger)
     const blockNumberRepository = new BlockNumberRepository(knex, logger)
+    const exchangePriceRepository = new ExchangePriceRepository(knex, logger)
 
     const httpClient = new HttpClient()
 
@@ -41,6 +52,13 @@ export class Application {
       config.etherscanApiKey,
       httpClient,
       logger
+    )
+    const multicallClient = new MulticallClient(ethereumClient)
+
+    const uniswapV1Client = new UniswapV1Client(multicallClient)
+    const exchangePriceChecker = new ExchangePriceChecker(
+      uniswapV1Client,
+      multicallClient
     )
 
     /* - - - - - CORE - - - - - */
@@ -60,12 +78,29 @@ export class Application {
       blockNumberRepository,
       logger
     )
+    const exchangePriceUpdater = new ExchangePriceUpdater(
+      exchangePriceRepository,
+      exchangePriceChecker,
+      logger
+    )
+    const aggregatePriceUpdater = new AggregatePriceUpdater(
+      aggregatePriceRepository,
+      exchangePriceUpdater,
+      logger
+    )
+    const priceUpdater = new PriceUpdater(
+      config.tokens,
+      blockNumberUpdater,
+      aggregatePriceUpdater,
+      logger
+    )
 
     const statusService = new StatusService({
       alchemyHttpClient,
       blockNumberUpdater,
       databaseService,
       etherscanClient,
+      priceUpdater,
       safeBlockService,
     })
 
@@ -88,6 +123,7 @@ export class Application {
 
       await safeBlockService.start()
       await blockNumberUpdater.start()
+      await priceUpdater.start()
 
       logger.for(this).info('Started')
     }

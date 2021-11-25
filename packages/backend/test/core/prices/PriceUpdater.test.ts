@@ -1,0 +1,100 @@
+import { expect } from 'chai'
+import waitForExpect from 'wait-for-expect'
+
+import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
+import { AggregatePriceUpdater } from '../../../src/core/prices/AggregatePriceUpdater'
+import { PriceUpdater } from '../../../src/core/prices/PriceUpdater'
+import { EthereumAddress, Token, UnixTime } from '../../../src/model'
+import { BlockNumberRecord } from '../../../src/peripherals/database/BlockNumberRepository'
+import { Logger } from '../../../src/tools/Logger'
+import { mock } from '../../mock'
+
+describe('PriceUpdater', () => {
+  const tokens: Token[] = [
+    {
+      id: 'aaa-token',
+      address: EthereumAddress('0x' + 'a'.repeat(40)),
+      symbol: 'AAA',
+      decimals: 5,
+      priceStrategy: { type: 'market' },
+    },
+    {
+      id: 'bbb-token',
+      address: EthereumAddress('0x' + 'b'.repeat(40)),
+      symbol: 'BBB',
+      decimals: 7,
+      priceStrategy: { type: 'market' },
+    },
+  ]
+
+  it('schedules initial tasks', async () => {
+    const blockNumberUpdater = mock<BlockNumberUpdater>({
+      getBlockList() {
+        return [
+          { timestamp: new UnixTime(123), blockNumber: 400n },
+          { timestamp: new UnixTime(456), blockNumber: 600n },
+        ]
+      },
+      onNewBlocks() {
+        return () => {}
+      },
+    })
+    const calls: { tokens: Token[]; blockNumber: bigint }[] = []
+    const aggregatePriceUpdater = mock<AggregatePriceUpdater>({
+      async updateAggregatePrices(tokens, blockNumber) {
+        calls.push({ tokens, blockNumber })
+      },
+    })
+    const priceUpdater = new PriceUpdater(
+      tokens,
+      blockNumberUpdater,
+      aggregatePriceUpdater,
+      Logger.SILENT
+    )
+    await priceUpdater.start()
+    await waitForExpect(() => {
+      expect(calls.length).to.equal(2)
+    })
+    expect(calls).to.deep.equal([
+      { tokens, blockNumber: 400n },
+      { tokens, blockNumber: 600n },
+    ])
+  })
+
+  it('adds new tasks for new blocks', async () => {
+    let onNewBlock: (blocks: BlockNumberRecord[]) => void = () => {}
+    const blockNumberUpdater = mock<BlockNumberUpdater>({
+      getBlockList() {
+        return []
+      },
+      onNewBlocks(fn) {
+        onNewBlock = fn
+        return () => {}
+      },
+    })
+    const calls: { tokens: Token[]; blockNumber: bigint }[] = []
+    const aggregatePriceUpdater = mock<AggregatePriceUpdater>({
+      async updateAggregatePrices(tokens, blockNumber) {
+        calls.push({ tokens, blockNumber })
+      },
+    })
+    const priceUpdater = new PriceUpdater(
+      tokens,
+      blockNumberUpdater,
+      aggregatePriceUpdater,
+      Logger.SILENT
+    )
+    await priceUpdater.start()
+
+    onNewBlock([{ timestamp: new UnixTime(123), blockNumber: 400n }])
+    onNewBlock([{ timestamp: new UnixTime(456), blockNumber: 600n }])
+
+    await waitForExpect(() => {
+      expect(calls.length).to.equal(2)
+    })
+    expect(calls).to.deep.equal([
+      { tokens, blockNumber: 400n },
+      { tokens, blockNumber: 600n },
+    ])
+  })
+})
