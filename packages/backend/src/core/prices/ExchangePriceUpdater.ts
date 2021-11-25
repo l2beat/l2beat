@@ -1,4 +1,4 @@
-import { EthereumAddress, Exchange, Token } from '../../model'
+import { AssetId, EthereumAddress, Exchange, Token } from '../../model'
 import {
   ExchangePriceRecord,
   ExchangePriceRepository,
@@ -17,7 +17,7 @@ export const UNISWAP_V2_RELEASE_BLOCK = 10000835n
 export const UNISWAP_V3_RELEASE_BLOCK = 12369621n
 
 export interface ExchangeAssetPriceQuery {
-  assetId: string
+  assetId: AssetId
   token: EthereumAddress
   exchange: Exchange
 }
@@ -81,17 +81,25 @@ export class ExchangePriceUpdater {
   }
 
   getEtherPriceQueries(blockNumber: bigint) {
-    const weth = { assetId: 'wrapped-ether', token: WETH }
+    const weth = { assetId: AssetId.WETH, token: WETH }
     const queries: ExchangeAssetPriceQuery[] = []
     if (blockNumber >= UNISWAP_V1_RELEASE_BLOCK) {
       queries.push(
         {
-          assetId: 'dai-stablecoin',
+          assetId: AssetId.DAI,
           token: DAI,
           exchange: Exchange.uniswapV1(),
         },
-        { assetId: 'usd-coin', token: USDC, exchange: Exchange.uniswapV1() },
-        { assetId: 'tether-usd', token: USDT, exchange: Exchange.uniswapV1() }
+        {
+          assetId: AssetId.USDC,
+          token: USDC,
+          exchange: Exchange.uniswapV1(),
+        },
+        {
+          assetId: AssetId.USDT,
+          token: USDT,
+          exchange: Exchange.uniswapV1(),
+        }
       )
     }
     if (blockNumber >= UNISWAP_V2_RELEASE_BLOCK) {

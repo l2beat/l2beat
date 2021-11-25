@@ -6,7 +6,7 @@ import {
   UNISWAP_V2_RELEASE_BLOCK,
   UNISWAP_V3_RELEASE_BLOCK,
 } from '../../../src/core/prices/ExchangePriceUpdater'
-import { EthereumAddress, Exchange, Token } from '../../../src/model'
+import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { ExchangePriceChecker } from '../../../src/peripherals/exchanges/ExchangePriceChecker'
 import {
@@ -29,46 +29,50 @@ describe('ExchangePriceUpdater', () => {
     ]
     const QUERIES = [
       {
-        assetId: 'token-a',
+        assetId: AssetId('token-a'),
         token: TOKENS[0],
         exchange: Exchange.uniswapV2('dai'),
       },
-      { assetId: 'token-b', token: TOKENS[1], exchange: Exchange.uniswapV1() },
       {
-        assetId: 'token-c',
+        assetId: AssetId('token-b'),
+        token: TOKENS[1],
+        exchange: Exchange.uniswapV1(),
+      },
+      {
+        assetId: AssetId('token-c'),
         token: TOKENS[2],
         exchange: Exchange.uniswapV2('weth'),
       },
       {
-        assetId: 'token-d',
+        assetId: AssetId('token-d'),
         token: TOKENS[3],
         exchange: Exchange.uniswapV3('usdc', 500),
       },
     ]
     const RECORDS = [
       {
-        assetId: 'token-a',
+        assetId: AssetId('token-a'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV2('dai'),
         liquidity: 100n,
         price: 1111n,
       },
       {
-        assetId: 'token-b',
+        assetId: AssetId('token-b'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV1(),
         liquidity: 200n,
         price: 2222n,
       },
       {
-        assetId: 'token-c',
+        assetId: AssetId('token-c'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV2('weth'),
         liquidity: 300n,
         price: 3333n,
       },
       {
-        assetId: 'token-d',
+        assetId: AssetId('token-d'),
         blockNumber: BLOCK_NUMBER,
         exchange: Exchange.uniswapV3('usdc', 500),
         liquidity: 400n,
@@ -192,13 +196,17 @@ describe('ExchangePriceUpdater', () => {
         )
         expect(queries).to.contain.deep.members([
           {
-            assetId: 'dai-stablecoin',
+            assetId: AssetId.DAI,
             token: DAI,
             exchange: Exchange.uniswapV1(),
           },
-          { assetId: 'usd-coin', token: USDC, exchange: Exchange.uniswapV1() },
           {
-            assetId: 'tether-usd',
+            assetId: AssetId.USDC,
+            token: USDC,
+            exchange: Exchange.uniswapV1(),
+          },
+          {
+            assetId: AssetId.USDT,
             token: USDT,
             exchange: Exchange.uniswapV1(),
           },
@@ -210,7 +218,7 @@ describe('ExchangePriceUpdater', () => {
         const queries = exchangePriceUpdater.getEtherPriceQueries(
           UNISWAP_V2_RELEASE_BLOCK + 123n
         )
-        const weth = { assetId: 'wrapped-ether', token: WETH }
+        const weth = { assetId: AssetId.WETH, token: WETH }
         expect(queries).to.contain.deep.members([
           { ...weth, exchange: Exchange.uniswapV2('dai') },
           { ...weth, exchange: Exchange.uniswapV2('usdc') },
@@ -223,7 +231,7 @@ describe('ExchangePriceUpdater', () => {
         const queries = exchangePriceUpdater.getEtherPriceQueries(
           UNISWAP_V3_RELEASE_BLOCK + 123n
         )
-        const weth = { assetId: 'wrapped-ether', token: WETH }
+        const weth = { assetId: AssetId.WETH, token: WETH }
         expect(queries).to.contain.deep.members([
           { ...weth, exchange: Exchange.uniswapV3('dai', 500) },
           { ...weth, exchange: Exchange.uniswapV3('usdc', 500) },
@@ -240,7 +248,7 @@ describe('ExchangePriceUpdater', () => {
 
     describe('getTokenPriceQueries', () => {
       const token: Token = {
-        id: 'mock-token',
+        id: AssetId('mock-token'),
         address: EthereumAddress('0x' + '1234'.repeat(10)),
         symbol: 'MCK',
         decimals: 4,
@@ -317,14 +325,14 @@ describe('ExchangePriceUpdater', () => {
 
     describe('getQueries', () => {
       const tokenA: Token = {
-        id: 'mock-token-a',
+        id: AssetId('mock-token-a'),
         address: EthereumAddress('0x' + 'aaaa'.repeat(10)),
         symbol: 'AAA',
         decimals: 6,
         priceStrategy: { type: 'market' },
       }
       const tokenB: Token = {
-        id: 'mock-token-b',
+        id: AssetId('mock-token-b'),
         address: EthereumAddress('0x' + 'bbbb'.repeat(10)),
         symbol: 'BBB',
         decimals: 9,

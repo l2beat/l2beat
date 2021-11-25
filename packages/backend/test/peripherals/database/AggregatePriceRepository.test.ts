@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 
+import { AssetId } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
@@ -20,17 +21,17 @@ describe('AggregatePriceRepository', () => {
 
     const itemA = {
       blockNumber: 1234n,
-      assetId: 'eth',
+      assetId: AssetId('eth'),
       priceUsd: 2137n,
     }
     const itemB = {
       blockNumber: 1234n,
-      assetId: 'dai',
+      assetId: AssetId('dai'),
       priceUsd: 1n,
     }
     const itemC = {
       blockNumber: 4567n,
-      assetId: 'dai',
+      assetId: AssetId('dai'),
       priceUsd: 2n,
     }
 
@@ -49,12 +50,12 @@ describe('AggregatePriceRepository', () => {
 
     const itemA = {
       blockNumber: 1234n,
-      assetId: 'eth',
+      assetId: AssetId('eth'),
       priceUsd: 2137n,
     }
     const itemB = {
       blockNumber: 1234n,
-      assetId: 'dai',
+      assetId: AssetId('dai'),
       priceUsd: 1n,
     }
 

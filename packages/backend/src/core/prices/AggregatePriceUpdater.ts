@@ -1,4 +1,4 @@
-import { Token } from '../../model'
+import { AssetId, Token } from '../../model'
 import {
   AggregatePriceRecord,
   AggregatePriceRepository,
@@ -38,7 +38,7 @@ export class AggregatePriceUpdater {
     })
 
     tokenPrices.push({
-      assetId: 'ether',
+      assetId: AssetId('ether'),
       blockNumber,
       priceUsd: etherPrice,
     })

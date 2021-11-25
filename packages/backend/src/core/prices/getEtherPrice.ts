@@ -1,3 +1,4 @@
+import { AssetId } from '../../model'
 import { ExchangePriceRecord } from '../../peripherals/database/ExchangePriceRepository'
 
 export function getEtherPrice(exchangePrices: ExchangePriceRecord[]) {
@@ -6,13 +7,13 @@ export function getEtherPrice(exchangePrices: ExchangePriceRecord[]) {
 
   for (const item of exchangePrices) {
     let liquidity = 0n
-    if (item.assetId === 'wrapped-ether') {
+    if (item.assetId === AssetId.WETH) {
       liquidity = item.liquidity
     } else if (
       item.exchange.family === 'uniswap-v1' &&
-      (item.assetId === 'dai-stablecoin' ||
-        item.assetId === 'usd-coin' ||
-        item.assetId === 'tether-usd')
+      (item.assetId === AssetId.DAI ||
+        item.assetId === AssetId.USDC ||
+        item.assetId === AssetId.USDT)
     ) {
       liquidity = (item.price * item.liquidity) / 10n ** 18n
     }
@@ -28,11 +29,11 @@ export function getEtherPrice(exchangePrices: ExchangePriceRecord[]) {
   }
 
   if (record.exchange.family === 'uniswap-v1') {
-    if (record.assetId === 'dai-stablecoin') {
+    if (record.assetId === AssetId.DAI) {
       return 10n ** (18n * 3n - 18n) / record.price
     } else if (
-      record.assetId === 'usd-coin' ||
-      record.assetId === 'tether-usd'
+      record.assetId === AssetId.USDC ||
+      record.assetId === AssetId.USDT
     ) {
       return 10n ** (18n * 3n - 6n) / record.price
     }
