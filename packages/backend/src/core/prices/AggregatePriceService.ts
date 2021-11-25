@@ -8,7 +8,7 @@ import { ExchangePriceUpdater } from './ExchangePriceUpdater'
 import { getEtherPrice } from './getEtherPrice'
 import { getTokenPrice } from './getTokenPrice'
 
-export class AggregatePriceUpdater {
+export class AggregatePriceService {
   constructor(
     private aggregatePriceRepository: AggregatePriceRepository,
     private exchangePriceUpdater: ExchangePriceUpdater,

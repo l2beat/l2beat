@@ -4,7 +4,7 @@ import { createPricesRouter } from './api/PricesRouter'
 import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
-import { AggregatePriceUpdater } from './core/prices/AggregatePriceUpdater'
+import { AggregatePriceService } from './core/prices/AggregatePriceService'
 import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
 import { PriceUpdater } from './core/prices/PriceUpdater'
 import { SafeBlockService } from './core/SafeBlockService'
@@ -82,7 +82,7 @@ export class Application {
       exchangePriceService,
       logger
     )
-    const aggregatePriceUpdater = new AggregatePriceUpdater(
+    const aggregatePriceService = new AggregatePriceService(
       aggregatePriceRepository,
       exchangePriceUpdater,
       logger
@@ -90,7 +90,7 @@ export class Application {
     const priceUpdater = new PriceUpdater(
       config.tokens,
       blockNumberUpdater,
-      aggregatePriceUpdater,
+      aggregatePriceService,
       logger
     )
 
