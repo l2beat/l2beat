@@ -28,7 +28,7 @@ interface ExchangePriceResult {
   price: bigint
 }
 
-export class ExchangePriceChecker {
+export class ExchangeQueryService {
   constructor(
     private uniswapV1Client: UniswapV1Client,
     private multicallClient: MulticallClient

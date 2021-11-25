@@ -3,7 +3,7 @@ import {
   ExchangePriceRecord,
   ExchangePriceRepository,
 } from '../../peripherals/database/ExchangePriceRepository'
-import { ExchangePriceChecker } from '../../peripherals/exchanges/ExchangePriceChecker'
+import { ExchangeQueryService } from '../../peripherals/exchanges/ExchangeQueryService'
 import {
   DAI,
   USDC,
@@ -22,10 +22,10 @@ export interface ExchangeAssetPriceQuery {
   exchange: Exchange
 }
 
-export class ExchangePriceUpdater {
+export class ExchangePriceService {
   constructor(
     private exchangePriceRepository: ExchangePriceRepository,
-    private exchangePriceChecker: ExchangePriceChecker,
+    private exchangeQueryService: ExchangeQueryService,
     private logger: Logger
   ) {
     this.logger = this.logger.for(this)
@@ -47,7 +47,7 @@ export class ExchangePriceUpdater {
       (q) => !known.has(`${q.assetId}:${q.exchange.name}`)
     )
     if (unknownQueries.length > 0) {
-      const unknownPrices = await this.exchangePriceChecker.getPrices(
+      const unknownPrices = await this.exchangeQueryService.getPrices(
         unknownQueries,
         blockNumber
       )

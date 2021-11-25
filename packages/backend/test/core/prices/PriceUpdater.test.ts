@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
-import { AggregatePriceUpdater } from '../../../src/core/prices/AggregatePriceUpdater'
+import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
 import { PriceUpdater } from '../../../src/core/prices/PriceUpdater'
 import { AssetId, EthereumAddress, Token, UnixTime } from '../../../src/model'
 import { BlockNumberRecord } from '../../../src/peripherals/database/BlockNumberRepository'
@@ -40,7 +40,7 @@ describe('PriceUpdater', () => {
       },
     })
     const calls: { tokens: Token[]; blockNumber: bigint }[] = []
-    const aggregatePriceUpdater = mock<AggregatePriceUpdater>({
+    const aggregatePriceService = mock<AggregatePriceService>({
       async updateAggregatePrices(tokens, blockNumber) {
         calls.push({ tokens, blockNumber })
       },
@@ -48,7 +48,7 @@ describe('PriceUpdater', () => {
     const priceUpdater = new PriceUpdater(
       tokens,
       blockNumberUpdater,
-      aggregatePriceUpdater,
+      aggregatePriceService,
       Logger.SILENT
     )
     await priceUpdater.start()
@@ -73,7 +73,7 @@ describe('PriceUpdater', () => {
       },
     })
     const calls: { tokens: Token[]; blockNumber: bigint }[] = []
-    const aggregatePriceUpdater = mock<AggregatePriceUpdater>({
+    const aggregatePriceService = mock<AggregatePriceService>({
       async updateAggregatePrices(tokens, blockNumber) {
         calls.push({ tokens, blockNumber })
       },
@@ -81,7 +81,7 @@ describe('PriceUpdater', () => {
     const priceUpdater = new PriceUpdater(
       tokens,
       blockNumberUpdater,
-      aggregatePriceUpdater,
+      aggregatePriceService,
       Logger.SILENT
     )
     await priceUpdater.start()

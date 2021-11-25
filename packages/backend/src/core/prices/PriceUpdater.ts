@@ -4,7 +4,7 @@ import { createEventEmitter } from '../../tools/EventEmitter'
 import { JobQueue } from '../../tools/JobQueue'
 import { Logger } from '../../tools/Logger'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
-import { AggregatePriceUpdater } from './AggregatePriceUpdater'
+import { AggregatePriceService } from './AggregatePriceService'
 
 interface PriceUpdaterEvents {
   pricesUpdated: { blockNumber: bigint }
@@ -18,7 +18,7 @@ export class PriceUpdater {
   constructor(
     private tokens: Token[],
     private blockNumberUpdater: BlockNumberUpdater,
-    private aggregatePriceUpdater: AggregatePriceUpdater,
+    private aggregatePriceService: AggregatePriceService,
     private logger: Logger
   ) {
     this.logger = this.logger.for(this)
@@ -61,7 +61,7 @@ export class PriceUpdater {
   }
 
   private async updatePrices(blockNumber: bigint) {
-    await this.aggregatePriceUpdater.updateAggregatePrices(
+    await this.aggregatePriceService.updateAggregatePrices(
       this.tokens,
       blockNumber
     )

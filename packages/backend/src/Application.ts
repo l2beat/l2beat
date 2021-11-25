@@ -3,14 +3,14 @@ import { createBlocksRouter } from './api/BlocksRouter'
 import { createPricesRouter } from './api/PricesRouter'
 import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
+import { BlocksController } from './controllers/BlocksController'
+import { PricesController } from './controllers/PricesController'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
-import { AggregatePriceUpdater } from './core/prices/AggregatePriceUpdater'
-import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
+import { AggregatePriceService } from './core/prices/AggregatePriceService'
+import { ExchangePriceService } from './core/prices/ExchangePriceService'
 import { PriceUpdater } from './core/prices/PriceUpdater'
 import { SafeBlockService } from './core/SafeBlockService'
 import { StatusService } from './core/StatusService'
-import { BlocksView } from './core/views/BlocksView'
-import { PricesView } from './core/views/PricesView'
 import { AggregatePriceRepository } from './peripherals/database/AggregatePriceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
@@ -19,7 +19,7 @@ import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
-import { ExchangePriceChecker } from './peripherals/exchanges/ExchangePriceChecker'
+import { ExchangeQueryService } from './peripherals/exchanges/ExchangeQueryService'
 import { UniswapV1Client } from './peripherals/exchanges/UniswapV1Client'
 import { HttpClient } from './peripherals/HttpClient'
 import { Logger } from './tools/Logger'
@@ -57,7 +57,7 @@ export class Application {
     const multicallClient = new MulticallClient(ethereumClient)
 
     const uniswapV1Client = new UniswapV1Client(multicallClient)
-    const exchangePriceChecker = new ExchangePriceChecker(
+    const exchangeQueryService = new ExchangeQueryService(
       uniswapV1Client,
       multicallClient
     )
@@ -77,20 +77,20 @@ export class Application {
       blockNumberRepository,
       logger
     )
-    const exchangePriceUpdater = new ExchangePriceUpdater(
+    const exchangePriceService = new ExchangePriceService(
       exchangePriceRepository,
-      exchangePriceChecker,
+      exchangeQueryService,
       logger
     )
-    const aggregatePriceUpdater = new AggregatePriceUpdater(
+    const aggregatePriceService = new AggregatePriceService(
       aggregatePriceRepository,
-      exchangePriceUpdater,
+      exchangePriceService,
       logger
     )
     const priceUpdater = new PriceUpdater(
       config.tokens,
       blockNumberUpdater,
-      aggregatePriceUpdater,
+      aggregatePriceService,
       logger
     )
 
@@ -103,8 +103,10 @@ export class Application {
       safeBlockService,
     })
 
-    const blocksView = new BlocksView(blockNumberRepository)
-    const pricesView = new PricesView(
+    /* - - - - - CONTROLLERS - - - - - */
+
+    const blocksController = new BlocksController(blockNumberRepository)
+    const pricesController = new PricesController(
       exchangePriceRepository,
       aggregatePriceRepository
     )
@@ -112,8 +114,8 @@ export class Application {
     /* - - - - - API - - - - - */
 
     const apiServer = new ApiServer(config.port, logger, [
-      createBlocksRouter(blocksView),
-      createPricesRouter(pricesView),
+      createBlocksRouter(blocksController),
+      createPricesRouter(pricesController),
       createStatusRouter(statusService),
     ])
 

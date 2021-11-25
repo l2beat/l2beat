@@ -4,14 +4,14 @@ import {
   AggregatePriceRepository,
 } from '../../peripherals/database/AggregatePriceRepository'
 import { Logger } from '../../tools/Logger'
-import { ExchangePriceUpdater } from './ExchangePriceUpdater'
+import { ExchangePriceService } from './ExchangePriceService'
 import { getEtherPrice } from './getEtherPrice'
 import { getTokenPrice } from './getTokenPrice'
 
-export class AggregatePriceUpdater {
+export class AggregatePriceService {
   constructor(
     private aggregatePriceRepository: AggregatePriceRepository,
-    private exchangePriceUpdater: ExchangePriceUpdater,
+    private exchangePriceService: ExchangePriceService,
     private logger: Logger
   ) {
     this.logger = this.logger.for(this)
@@ -24,7 +24,7 @@ export class AggregatePriceUpdater {
     const knownPrices = await this.aggregatePriceRepository.getAllByBlockNumber(
       blockNumber
     )
-    const exchangePrices = await this.exchangePriceUpdater.updateExchangePrices(
+    const exchangePrices = await this.exchangePriceService.updateExchangePrices(
       tokens,
       blockNumber
     )

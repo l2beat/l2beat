@@ -1,14 +1,14 @@
-import { AssetId, Exchange } from '../../model'
-import { AggregatePriceRepository } from '../../peripherals/database/AggregatePriceRepository'
-import { ExchangePriceRepository } from '../../peripherals/database/ExchangePriceRepository'
+import { AssetId, Exchange, json } from '../model'
+import { AggregatePriceRepository } from '../peripherals/database/AggregatePriceRepository'
+import { ExchangePriceRepository } from '../peripherals/database/ExchangePriceRepository'
 
-export class PricesView {
+export class PricesController {
   constructor(
     private exchangePriceRepository: ExchangePriceRepository,
     private aggregatePriceRepository: AggregatePriceRepository
   ) {}
 
-  async getPriceHistory(assetId: AssetId) {
+  async getPriceHistory(assetId: AssetId): Promise<json> {
     const records = await this.aggregatePriceRepository.getAllByAssetId(assetId)
     return records.map((x) => ({
       blockNumber: x.blockNumber.toString(),
@@ -16,7 +16,10 @@ export class PricesView {
     }))
   }
 
-  async getPriceHistoryOnExchange(assetId: AssetId, exchange: Exchange) {
+  async getPriceHistoryOnExchange(
+    assetId: AssetId,
+    exchange: Exchange
+  ): Promise<json> {
     const records =
       await this.exchangePriceRepository.getAllByAssetIdAndExchange(
         assetId,
