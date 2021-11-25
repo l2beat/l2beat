@@ -1,6 +1,6 @@
-import { AssetId, Exchange, json } from '../model'
-import { AggregatePriceRepository } from '../peripherals/database/AggregatePriceRepository'
-import { ExchangePriceRepository } from '../peripherals/database/ExchangePriceRepository'
+import { AssetId, Exchange, json } from '../../model'
+import { AggregatePriceRepository } from '../../peripherals/database/AggregatePriceRepository'
+import { ExchangePriceRepository } from '../../peripherals/database/ExchangePriceRepository'
 
 export class PricesController {
   constructor(

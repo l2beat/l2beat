@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 
-import { BlocksController } from '../../src/controllers/BlocksController'
-import { UnixTime } from '../../src/model'
-import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
-import { mock } from '../mock'
+import { BlocksController } from '../../../src/api/controllers/BlocksController'
+import { UnixTime } from '../../../src/model'
+import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
+import { mock } from '../../mock'
 
 describe('BlocksController', () => {
   it('returns transformed blocks', async () => {
