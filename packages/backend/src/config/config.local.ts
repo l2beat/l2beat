@@ -25,14 +25,14 @@ export function getLocalConfig(): Config {
     },
     tokens: [
       {
-        id: AssetId('wrapped-ether'),
+        id: AssetId.WETH,
         symbol: 'WETH',
         decimals: 18,
         address: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
         priceStrategy: { type: 'ether' },
       },
       {
-        id: AssetId('dai-stablecoin'),
+        id: AssetId.DAI,
         symbol: 'DAI',
         decimals: 18,
         address: EthereumAddress('0x6B175474E89094C44Da98b954EedeAC495271d0F'),
@@ -42,7 +42,7 @@ export function getLocalConfig(): Config {
         },
       },
       {
-        id: AssetId('usd-coin'),
+        id: AssetId.USDC,
         symbol: 'USDC',
         decimals: 6,
         address: EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
@@ -52,7 +52,7 @@ export function getLocalConfig(): Config {
         },
       },
       {
-        id: AssetId('tether-usd'),
+        id: AssetId.USDT,
         symbol: 'USDT',
         decimals: 6,
         address: EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),

@@ -81,22 +81,22 @@ export class ExchangePriceUpdater {
   }
 
   getEtherPriceQueries(blockNumber: bigint) {
-    const weth = { assetId: AssetId('wrapped-ether'), token: WETH }
+    const weth = { assetId: AssetId.WETH, token: WETH }
     const queries: ExchangeAssetPriceQuery[] = []
     if (blockNumber >= UNISWAP_V1_RELEASE_BLOCK) {
       queries.push(
         {
-          assetId: AssetId('dai-stablecoin'),
+          assetId: AssetId.DAI,
           token: DAI,
           exchange: Exchange.uniswapV1(),
         },
         {
-          assetId: AssetId('usd-coin'),
+          assetId: AssetId.USDC,
           token: USDC,
           exchange: Exchange.uniswapV1(),
         },
         {
-          assetId: AssetId('tether-usd'),
+          assetId: AssetId.USDT,
           token: USDT,
           exchange: Exchange.uniswapV1(),
         }

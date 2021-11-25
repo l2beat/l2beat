@@ -79,7 +79,7 @@ describe('AggregatePriceUpdater', () => {
         expect(tokensToUpdate).to.equal(tokens)
         return [
           {
-            assetId: AssetId('wrapped-ether'),
+            assetId: AssetId.WETH,
             blockNumber,
             exchange: Exchange.uniswapV2('dai'),
             liquidity: 42069n * 10n ** 18n,
@@ -144,7 +144,7 @@ describe('AggregatePriceUpdater', () => {
         expect(tokensToUpdate).to.equal(tokens)
         return [
           {
-            assetId: AssetId('wrapped-ether'),
+            assetId: AssetId.WETH,
             blockNumber,
             exchange: Exchange.uniswapV2('dai'),
             liquidity: 42069n * 10n ** 18n,

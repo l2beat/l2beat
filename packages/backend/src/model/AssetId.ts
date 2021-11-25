@@ -8,3 +8,8 @@ export function AssetId(value: string) {
   }
   return value as unknown as AssetId
 }
+
+AssetId.WETH = AssetId('wrapped-ether')
+AssetId.DAI = AssetId('dai-stablecoin')
+AssetId.USDT = AssetId('tether-usd')
+AssetId.USDC = AssetId('usd-coin')

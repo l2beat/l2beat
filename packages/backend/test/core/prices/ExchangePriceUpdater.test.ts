@@ -196,17 +196,17 @@ describe('ExchangePriceUpdater', () => {
         )
         expect(queries).to.contain.deep.members([
           {
-            assetId: AssetId('dai-stablecoin'),
+            assetId: AssetId.DAI,
             token: DAI,
             exchange: Exchange.uniswapV1(),
           },
           {
-            assetId: AssetId('usd-coin'),
+            assetId: AssetId.USDC,
             token: USDC,
             exchange: Exchange.uniswapV1(),
           },
           {
-            assetId: AssetId('tether-usd'),
+            assetId: AssetId.USDT,
             token: USDT,
             exchange: Exchange.uniswapV1(),
           },
@@ -218,7 +218,7 @@ describe('ExchangePriceUpdater', () => {
         const queries = exchangePriceUpdater.getEtherPriceQueries(
           UNISWAP_V2_RELEASE_BLOCK + 123n
         )
-        const weth = { assetId: AssetId('wrapped-ether'), token: WETH }
+        const weth = { assetId: AssetId.WETH, token: WETH }
         expect(queries).to.contain.deep.members([
           { ...weth, exchange: Exchange.uniswapV2('dai') },
           { ...weth, exchange: Exchange.uniswapV2('usdc') },
@@ -231,7 +231,7 @@ describe('ExchangePriceUpdater', () => {
         const queries = exchangePriceUpdater.getEtherPriceQueries(
           UNISWAP_V3_RELEASE_BLOCK + 123n
         )
-        const weth = { assetId: AssetId('wrapped-ether'), token: WETH }
+        const weth = { assetId: AssetId.WETH, token: WETH }
         expect(queries).to.contain.deep.members([
           { ...weth, exchange: Exchange.uniswapV3('dai', 500) },
           { ...weth, exchange: Exchange.uniswapV3('usdc', 500) },
