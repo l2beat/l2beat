@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 
-import { PricesController } from '../../src/controllers/PricesController'
-import { AssetId, Exchange } from '../../src/model'
-import { AggregatePriceRepository } from '../../src/peripherals/database/AggregatePriceRepository'
-import { ExchangePriceRepository } from '../../src/peripherals/database/ExchangePriceRepository'
-import { mock } from '../mock'
+import { PricesController } from '../../../src/api/controllers/PricesController'
+import { AssetId, Exchange } from '../../../src/model'
+import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
+import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
+import { mock } from '../../mock'
 
 describe('PricesController', () => {
   it('returns transformed aggregate prices', async () => {

@@ -1,10 +1,10 @@
 import { ApiServer } from './api/ApiServer'
-import { createBlocksRouter } from './api/BlocksRouter'
-import { createPricesRouter } from './api/PricesRouter'
-import { createStatusRouter } from './api/StatusRouter'
+import { BlocksController } from './api/controllers/BlocksController'
+import { PricesController } from './api/controllers/PricesController'
+import { createBlocksRouter } from './api/routers/BlocksRouter'
+import { createPricesRouter } from './api/routers/PricesRouter'
+import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
-import { BlocksController } from './controllers/BlocksController'
-import { PricesController } from './controllers/PricesController'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { AggregatePriceService } from './core/prices/AggregatePriceService'
 import { ExchangePriceService } from './core/prices/ExchangePriceService'
@@ -103,15 +103,13 @@ export class Application {
       safeBlockService,
     })
 
-    /* - - - - - CONTROLLERS - - - - - */
+    /* - - - - - API - - - - - */
 
     const blocksController = new BlocksController(blockNumberRepository)
     const pricesController = new PricesController(
       exchangePriceRepository,
       aggregatePriceRepository
     )
-
-    /* - - - - - API - - - - - */
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),

@@ -1,6 +1,6 @@
-import { createStatusRouter } from '../../src/api/StatusRouter'
-import { StatusService } from '../../src/core/StatusService'
-import { createTestApiServer } from './TestApiServer'
+import { createStatusRouter } from '../../../src/api/routers/StatusRouter'
+import { StatusService } from '../../../src/core/StatusService'
+import { createTestApiServer } from '../TestApiServer'
 
 describe('StatusRouter', () => {
   class FooService {

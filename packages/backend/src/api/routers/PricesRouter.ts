@@ -1,7 +1,7 @@
 import Router from '@koa/router'
 
+import { AssetId, Exchange } from '../../model'
 import { PricesController } from '../controllers/PricesController'
-import { AssetId, Exchange } from '../model'
 
 export function createPricesRouter(pricesController: PricesController) {
   const router = new Router()
