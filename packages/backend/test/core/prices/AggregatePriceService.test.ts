@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
-import { ExchangePriceUpdater } from '../../../src/core/prices/ExchangePriceUpdater'
+import { ExchangePriceService } from '../../../src/core/prices/ExchangePriceService'
 import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
 import { Logger } from '../../../src/tools/Logger'
@@ -10,10 +10,10 @@ import { mock } from '../../mock'
 describe('AggregatePriceService', () => {
   it('does nothing when no tokens are given', async () => {
     const aggregatePriceRepository = mock<AggregatePriceRepository>()
-    const exchangePriceUpdater = mock<ExchangePriceUpdater>()
+    const exchangePriceService = mock<ExchangePriceService>()
     const aggregatePriceService = new AggregatePriceService(
       aggregatePriceRepository,
-      exchangePriceUpdater,
+      exchangePriceService,
       Logger.SILENT
     )
     await expect(aggregatePriceService.updateAggregatePrices([], 0n)).not.to.be
@@ -73,7 +73,7 @@ describe('AggregatePriceService', () => {
         ])
       },
     })
-    const exchangePriceUpdater = mock<ExchangePriceUpdater>({
+    const exchangePriceService = mock<ExchangePriceService>({
       async updateExchangePrices(tokensToUpdate, block) {
         expect(block).to.equal(blockNumber)
         expect(tokensToUpdate).to.equal(tokens)
@@ -97,7 +97,7 @@ describe('AggregatePriceService', () => {
     })
     const aggregatePriceService = new AggregatePriceService(
       aggregatePriceRepository,
-      exchangePriceUpdater,
+      exchangePriceService,
       Logger.SILENT
     )
     await aggregatePriceService.updateAggregatePrices(tokens, blockNumber)
@@ -138,7 +138,7 @@ describe('AggregatePriceService', () => {
         calledUpdate = true
       },
     })
-    const exchangePriceUpdater = mock<ExchangePriceUpdater>({
+    const exchangePriceService = mock<ExchangePriceService>({
       async updateExchangePrices(tokensToUpdate, block) {
         expect(block).to.equal(blockNumber)
         expect(tokensToUpdate).to.equal(tokens)
@@ -162,7 +162,7 @@ describe('AggregatePriceService', () => {
     })
     const aggregatePriceService = new AggregatePriceService(
       aggregatePriceRepository,
-      exchangePriceUpdater,
+      exchangePriceService,
       Logger.SILENT
     )
     await aggregatePriceService.updateAggregatePrices(tokens, blockNumber)

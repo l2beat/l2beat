@@ -5,7 +5,7 @@ import { createStatusRouter } from './api/StatusRouter'
 import { Config } from './config'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { AggregatePriceService } from './core/prices/AggregatePriceService'
-import { ExchangePriceUpdater } from './core/prices/ExchangePriceUpdater'
+import { ExchangePriceService } from './core/prices/ExchangePriceService'
 import { PriceUpdater } from './core/prices/PriceUpdater'
 import { SafeBlockService } from './core/SafeBlockService'
 import { StatusService } from './core/StatusService'
@@ -77,14 +77,14 @@ export class Application {
       blockNumberRepository,
       logger
     )
-    const exchangePriceUpdater = new ExchangePriceUpdater(
+    const exchangePriceService = new ExchangePriceService(
       exchangePriceRepository,
       exchangeQueryService,
       logger
     )
     const aggregatePriceService = new AggregatePriceService(
       aggregatePriceRepository,
-      exchangePriceUpdater,
+      exchangePriceService,
       logger
     )
     const priceUpdater = new PriceUpdater(

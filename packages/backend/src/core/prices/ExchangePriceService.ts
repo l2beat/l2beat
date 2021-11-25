@@ -22,7 +22,7 @@ export interface ExchangeAssetPriceQuery {
   exchange: Exchange
 }
 
-export class ExchangePriceUpdater {
+export class ExchangePriceService {
   constructor(
     private exchangePriceRepository: ExchangePriceRepository,
     private exchangeQueryService: ExchangeQueryService,
