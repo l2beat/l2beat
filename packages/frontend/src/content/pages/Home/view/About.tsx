@@ -7,8 +7,8 @@ export function About() {
     <section className="About">
       <Heading level={2} id="about" title="About L2BEAT" />
       <p>
-        L2BEAT is a analytics and research website about Ethereum layer two (L2)
-        scaling. We provide a comparison of the various Ethereum L2 systems
+        L2BEAT is an analytics and research website about Ethereum layer two
+        (L2) scaling. We provide a comparison of the various Ethereum L2 systems
         available today.
       </p>
       <p>
