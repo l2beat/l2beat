@@ -1,11 +1,12 @@
 import { Knex } from 'knex'
 import { AggregatePriceRow } from 'knex/types/tables'
 
+import { AssetId } from '../../model'
 import { Logger } from '../../tools/Logger'
 
 export interface AggregatePriceRecord {
   blockNumber: bigint
-  assetId: string
+  assetId: AssetId
   priceUsd: bigint
 }
 
@@ -33,6 +34,15 @@ export class AggregatePriceRepository {
     return rows.map(toRecord)
   }
 
+  async getAllByAssetId(assetId: AssetId) {
+    const rows = await this.knex('aggregate_prices')
+      .select('block_number', 'price_usd')
+      .where({ asset_id: assetId.toString() })
+      .orderBy('block_number', 'asc')
+    this.logger.debug({ method: 'getAllByAssetId', rows: rows.length })
+    return rows.map(toPriceRecord)
+  }
+
   async getAllByBlockNumber(blockNumber: bigint) {
     const rows = await this.knex('aggregate_prices')
       .select('block_number', 'asset_id', 'price_usd')
@@ -50,7 +60,7 @@ export class AggregatePriceRepository {
 function toRow(record: AggregatePriceRecord): AggregatePriceRow {
   return {
     block_number: Number(record.blockNumber),
-    asset_id: record.assetId,
+    asset_id: record.assetId.toString(),
     price_usd: record.priceUsd.toString(),
   }
 }
@@ -58,7 +68,16 @@ function toRow(record: AggregatePriceRecord): AggregatePriceRow {
 function toRecord(row: AggregatePriceRow): AggregatePriceRecord {
   return {
     blockNumber: BigInt(row.block_number),
-    assetId: row.asset_id,
+    assetId: AssetId(row.asset_id),
+    priceUsd: BigInt(row.price_usd),
+  }
+}
+
+function toPriceRecord(
+  row: Omit<AggregatePriceRow, 'asset_id'>
+): Omit<AggregatePriceRecord, 'assetId'> {
+  return {
+    blockNumber: BigInt(row.block_number),
     priceUsd: BigInt(row.price_usd),
   }
 }

@@ -71,6 +71,18 @@
   @media (max-width: 550px) {
     margin-right: 0;
   }
+
+  &.less-important {
+    @media (max-width: 550px) {
+      display: none;
+    }
+  }
+}
+
+.Navbar-Donate {
+  padding: 1px 4px;
+  border-radius: 2px;
+  background-color: var(--background-action);
 }
 
 .Navbar-Badge {

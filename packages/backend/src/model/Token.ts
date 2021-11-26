@@ -1,7 +1,8 @@
+import { AssetId } from './AssetId'
 import { EthereumAddress } from './EthereumAddress'
 
 export interface Token {
-  id: string
+  id: AssetId
   symbol: string
   decimals: number
   address: EthereumAddress

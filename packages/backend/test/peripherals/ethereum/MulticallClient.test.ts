@@ -135,7 +135,7 @@ describe('MulticallClient', () => {
     expect(result).to.deep.equal([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: false, data: Bytes.fromHex('0x0f00') },
-      { success: true, data: Bytes.fromHex('0x') },
+      { success: false, data: Bytes.fromHex('0x') },
     ])
     expect(calls).to.deep.equal([
       {

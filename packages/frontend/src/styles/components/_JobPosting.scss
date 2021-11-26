@@ -28,6 +28,16 @@
 .JobPosting-Location {
   margin: 0;
   text-transform: uppercase;
+
+  strong {
+    background-color: var(--background-action);
+    font-weight: normal;
+  }
+}
+
+.JobPosting-Disclaimer {
+  font-family: Lora, serif;
+  font-style: italic;
 }
 
 .JobPosting-Footer {

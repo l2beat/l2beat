@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { config } from '../config'
-import { DonateBanner } from './DonateBanner'
 import {
   DiscordIcon,
   GithubIcon,
@@ -21,9 +20,12 @@ export function Navbar() {
         </a>
         <ul className="Navbar-Links left">
           <li className="Navbar-Link">
-            <a href="/jobs">
-              Jobs <sup className="Navbar-Badge">1</sup>
+            <a className="Navbar-Donate" href="/donate">
+              Donate
             </a>
+          </li>
+          <li className="Navbar-Link less-important">
+            <a href="/jobs">Jobs</a>
           </li>
         </ul>
         <ul className="Navbar-Links">
@@ -54,7 +56,6 @@ export function Navbar() {
           <MoonIcon className="Navbar-DarkMode" aria-label="Toggle dark mode" />
         </button>
       </nav>
-      <DonateBanner />
     </>
   )
 }

@@ -22,11 +22,10 @@ const coder = new utils.Interface([
 
 export const encodeUniswapV2Requests = memoizee(
   (token: EthereumAddress, exchange: Exchange): MulticallRequest[] => {
-    const otherToken = getOtherToken(exchange)
-    const pair = getUniswapV2PairAddress(token, otherToken)
+    const quoteToken = getQuoteToken(exchange)
+    const pair = getUniswapV2PairAddress(token, quoteToken)
     return [{ address: pair, data: encodeGetReserves() }]
-  },
-  { primitive: true }
+  }
 )
 
 export function decodeUniswapV2Results(
@@ -37,16 +36,16 @@ export function decodeUniswapV2Results(
   if (results.length !== 1 || !results[0].success) {
     return { liquidity: 0n, price: 0n }
   }
-  const otherToken = getOtherToken(exchange)
+  const quoteToken = getQuoteToken(exchange)
   const [reserve0, reserve1] = decodeGetReserves(results[0].data)
-  const [tokenReserve, otherReserve] = EthereumAddress.isBefore(
+  const [tokenReserve, quoteReserve] = EthereumAddress.isBefore(
     token,
-    otherToken
+    quoteToken
   )
     ? [reserve0, reserve1]
     : [reserve1, reserve0]
   const price =
-    tokenReserve !== 0n ? (TEN_TO_18 * otherReserve) / tokenReserve : 0n
+    tokenReserve !== 0n ? (TEN_TO_18 * quoteReserve) / tokenReserve : 0n
   return { liquidity: tokenReserve, price: price }
 }
 
@@ -57,7 +56,7 @@ const tokens: Record<string, EthereumAddress> = {
   'tether-usd': USDT,
 }
 
-function getOtherToken(exchange: Exchange) {
+function getQuoteToken(exchange: Exchange) {
   const token = tokens[exchange.quoteAssetId]
   if (!token || exchange.family !== 'uniswap-v2') {
     throw new Error(`Invalid exchange ${exchange.name}`)

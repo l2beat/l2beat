@@ -28,7 +28,7 @@ interface ExchangePriceResult {
   price: bigint
 }
 
-export class ExchangePriceChecker {
+export class ExchangeQueryService {
   constructor(
     private uniswapV1Client: UniswapV1Client,
     private multicallClient: MulticallClient
@@ -61,7 +61,7 @@ export class ExchangePriceChecker {
     const result = new Map<EthereumAddress, EthereumAddress>()
     for (const [i, exchange] of exchanges.entries()) {
       if (exchange) {
-        result.set(queries[i].token, exchange)
+        result.set(v1Queries[i].token, exchange)
       }
     }
     return result
