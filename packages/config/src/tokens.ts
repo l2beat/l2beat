@@ -375,6 +375,13 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 7130380,
   },
   {
+    name: 'Metis Token',
+    symbol: 'Metis',
+    address: '0x9E32b13ce7f2E80A01932B42553652E053D6ed8e',
+    decimals: 18,
+    sinceBlock: 11434969,
+  },
+  {
     name: 'OKB',
     symbol: 'OKB',
     address: '0x75231F58b43240C9718Dd58B4967c5114342a86c',

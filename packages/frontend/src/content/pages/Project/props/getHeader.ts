@@ -29,6 +29,7 @@ function getTitleLength(name: string): 'long' | 'very-long' | undefined {
     case 'Layer2.Finance':
     case 'ZKSwap V2':
     case 'Polygon Hermez':
+    case 'Metis Andromeda':
       return 'very-long'
   }
 }

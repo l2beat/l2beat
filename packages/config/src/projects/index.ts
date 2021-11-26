@@ -10,6 +10,7 @@ import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
 import { loopring } from './loopring'
+import { metis } from './metis'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { sorare } from './sorare'
@@ -33,6 +34,7 @@ export const projects: Project[] = [
   immutablex,
   layer2finance,
   loopring,
+  metis,
   omgnetwork,
   optimism,
   sorare,
