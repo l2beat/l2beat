@@ -65,8 +65,8 @@ export const metis: Project = {
         ],
         references: [
           {
-            text: 'MVM_Verifier github code',
-            href: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol',
+            text: 'MVM_Verifier.sol#L133 - Metis source code',
+            href: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
           },
         ],
       },
@@ -74,8 +74,8 @@ export const metis: Project = {
         ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
-            text: 'Canonical Transaction Chain contract',
-            href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9',
+            text: 'CanonicalTransactionChain - Etherscan source code',
+            href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
           },
         ],
       },
@@ -83,7 +83,7 @@ export const metis: Project = {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: 'Batches can be only submitted by the Sequencer',
+            text: 'CanonicalTransactionChain#L735 - Etherscan source code',
             href: 'https://etherscan.io/address/0x56a76bcc92361f6df8d75476fed8843edc70e1c9#code#F1#L735',
           },
         ],
@@ -92,8 +92,8 @@ export const metis: Project = {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
-            text: '',
-            href: '',
+            text: 'CanonicalTransactionChain - Etherscan source code',
+            href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
           },
         ],
       },
@@ -102,21 +102,11 @@ export const metis: Project = {
           ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
-              text: '',
-              href: '',
+              text: 'Withdrawing from Metis - Metis documentation',
+              href: 'https://docs.metis.io/building-on-metis/metis-bridge#withdrawing-from-metis',
             },
           ],
-          risks: [
-            {
-              ...EXITS.RISK_CENTRALIZED_VALIDATOR,
-              references: [
-                {
-                  text: '',
-                  href: '',
-                },
-              ],
-            },
-          ],
+          risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
       ],
       smartContracts: {
@@ -131,8 +121,8 @@ export const metis: Project = {
         ],
         references: [
           {
-            text: '',
-            href: '',
+            text: 'MVM repository - Metis source code',
+            href: 'https://github.com/MetisProtocol/mvm',
           },
         ],
       },
