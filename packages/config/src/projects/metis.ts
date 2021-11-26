@@ -9,18 +9,19 @@ import {
 import { Project } from './types'
 
 export const metis: Project = {
-  name: 'Metis',
+  name: 'Metis Andromeda',
   slug: 'metis',
   bridges: [
     {
       address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
       sinceBlock: 13627429,
-      tokens: ['Metis'],
+      tokens: ['Metis', 'USDT', 'LINK', 'AAVE', 'UNI', 'DAI', 'USDC'],
     },
   ],
+  associatedToken: 'Metis',
   details: {
     description:
-      'Metis is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure.',
+      'Metis is an EVM-equivalent Optimistic Rollup chain originally forked from Optimism. It provides support for multiple, interconnected rollups with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies)',
     purpose: 'Universal',
     links: {
       websites: ['https://www.metis.io'],
@@ -54,7 +55,7 @@ export const metis: Project = {
       stateCorrectness: {
         name: 'Fraud proofs are disabled',
         description:
-          'Metis will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots.',
+          'Metis will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots. In the meantime any staked validator can challenge invalid state root submitted by the Sequencer. Other validators will then act as referees in a interactive challenge game',
         risks: [
           {
             category: 'Funds can be stolen if',
@@ -64,8 +65,8 @@ export const metis: Project = {
         ],
         references: [
           {
-            text: '',
-            href: '',
+            text: 'MVM_Verifier github code',
+            href: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol',
           },
         ],
       },
@@ -73,8 +74,8 @@ export const metis: Project = {
         ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
         references: [
           {
-            text: '',
-            href: '',
+            text: 'Canonical Transaction Chain contract',
+            href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9',
           },
         ],
       },
@@ -82,8 +83,8 @@ export const metis: Project = {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: '',
-            href: '',
+            text: 'Batches can be only submitted by the Sequencer',
+            href: 'https://etherscan.io/address/0x56a76bcc92361f6df8d75476fed8843edc70e1c9#code#F1#L735',
           },
         ],
       },
@@ -201,6 +202,17 @@ export const metis: Project = {
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
-    news: [],
+    news: [
+      {
+        date: '2021-11-03',
+        name: 'Metis to Launch Andromeda, Honoring Our Commitment to Decentralization',
+        link: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
+      },
+      {
+        date: '2021-11-23',
+        name: 'Metis DAC Staking Starts Nov 26',
+        link: 'https://metisdao.medium.com/metis-dac-staking-starts-nov-26-heres-everything-you-need-to-know-53220bfb4874',
+      },
+    ],
   },
 }
