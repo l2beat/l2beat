@@ -107,8 +107,8 @@ export const optimism: Project = {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: 'Optimism operates the only "Sequencer" node - Optimism FAQ',
-            href: 'https://community.optimism.io/faqs/#optimism-operates-the-only-sequencer-node',
+            text: 'How will the sequencer be decentralized over time? - Optimism documentation',
+            href: 'https://community.optimism.io/docs/protocol/sequencing.html#how-will-the-sequencer-be-decentralized-over-time',
           },
         ],
       },
@@ -117,7 +117,7 @@ export const optimism: Project = {
         references: [
           {
             text: ' Chain Contracts - Optimism documentation',
-            href: 'https://community.optimism.io/docs/protocol/protocol.html#chain-contracts',
+            href: 'https://community.optimism.io/docs/protocol/protocol-2.0.html#chain-contracts',
           },
         ],
       },
@@ -127,7 +127,7 @@ export const optimism: Project = {
           references: [
             {
               text: ' Withdrawing back to L1 - Optimism documentation',
-              href: 'https://community.optimism.io/docs/users/gateway.html#withdrawing-back-to-l1',
+              href: 'https://community.optimism.io/docs/users/withdrawal.html',
             },
           ],
           risks: [
@@ -155,12 +155,8 @@ export const optimism: Project = {
         ],
         references: [
           {
-            text: 'Execution Contracts - Optimism documentation',
-            href: 'https://community.optimism.io/docs/protocol/protocol.html#execution-contracts',
-          },
-          {
             text: 'Deployer Whitelist - Optimism documentation',
-            href: 'https://community.optimism.io/docs/protocol/protocol.html#ovm-deployerwhitelist',
+            href: 'https://community.optimism.io/docs/developers/l2/deploy.html#whitelisting',
           },
         ],
       },
