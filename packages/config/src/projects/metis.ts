@@ -21,7 +21,7 @@ export const metis: Project = {
   associatedToken: 'Metis',
   details: {
     description:
-      'Metis is an EVM-equivalent Optimistic Rollup chain originally forked from Optimism. It provides support for multiple, interconnected rollups with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies)',
+      'Metis is an EVM-equivalent Optimistic Rollup chain originally forked from Optimism. It provides support for multiple, interconnected rollups with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies).',
     purpose: 'Universal',
     links: {
       websites: ['https://www.metis.io'],
@@ -55,7 +55,7 @@ export const metis: Project = {
       stateCorrectness: {
         name: 'Fraud proofs are disabled',
         description:
-          'Metis will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots. In the meantime any staked validator can challenge invalid state root submitted by the Sequencer. Other validators will then act as referees in a interactive challenge game',
+          'Metis will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots. In the meantime any staked validator can challenge invalid state root submitted by the Sequencer. Other validators will then act as referees in a interactive challenge game.',
         risks: [
           {
             category: 'Funds can be stolen if',
