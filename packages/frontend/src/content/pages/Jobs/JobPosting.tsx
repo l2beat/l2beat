@@ -6,22 +6,39 @@ export function JobPosting() {
   return (
     <article className="JobPosting">
       <header className="JobPosting-Header">
-        <h2 className="JobPosting-Title">Software Engineer (TypeScript)</h2>
-        <p className="JobPosting-Location">100% remote</p>
+        <h2 className="JobPosting-Title">
+          Junior Software Engineer (TypeScript)
+        </h2>
+        <p className="JobPosting-Location">
+          <strong>Poland only</strong> - 100% remote
+        </p>
         <OutLink className="JobPosting-Apply" href="mailto:hello@l2beat.com">
           Apply
         </OutLink>
       </header>
+      <p className="JobPosting-Disclaimer">
+        <em>
+          This junior position is only available to people living in Poland. Our
+          future senior-level openings will most likely target the global market
+          again.
+        </em>
+      </p>
+      <h3>Requirements:</h3>
+      <ul>
+        <li>A BSc degree completed or in progress,</li>
+        <li>An working command of the English language,</li>
+        <li>Willingness to learn and grow your skills.</li>
+      </ul>
       <h3>Your responsibilities:</h3>
       <ul>
-        <li>Building backend data gathering and processing pipelines,</li>
-        <li>
-          Researching and implementing integrations with various L2 systems,
-        </li>
-        <li>Building public APIs for consuming the processed data.</li>
+        <li>Implementing integrations with various L2 systems,</li>
+        <li>Building APIs and data processing subsystems,</li>
+        <li>Adding new functionality to the website.</li>
       </ul>
       <h3>We offer:</h3>
       <ul>
+        <li>Mentoring by experienced engineers,</li>
+        <li>Help in learning blockchain technologies,</li>
         <li>Paid time off,</li>
         <li>Fully remote work,</li>
         <li>Work on open source projects,</li>
@@ -37,12 +54,8 @@ export function JobPosting() {
         <li>Ethers.js,</li>
         <li>Yarn workspaces,</li>
         <li>Koa,</li>
-        <li>PostgreSQL.</li>
-      </ul>
-      <h3>Nice to have:</h3>
-      <ul>
-        <li>Experience with Ethereum and Solidity,</li>
-        <li>Working knowledge of python.</li>
+        <li>PostgreSQL,</li>
+        <li>React.</li>
       </ul>
       <p>
         If you are interested please apply by sending your CV to{' '}
