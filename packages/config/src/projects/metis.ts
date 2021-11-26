@@ -175,6 +175,11 @@ export const metis: Project = {
           {
             name: 'Proxy__MVM_ChainManager',
             address: '0xf3d58D1794f2634d6649a978f2dc093898FEEBc0',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5',
+              admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+            },
           },
           {
             name: 'Proxy__OVM_L1CrossDomainMessenger',
@@ -183,6 +188,11 @@ export const metis: Project = {
           {
             name: 'Proxy__OVM_L1StandardBridge',
             address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0xa0cfE8Af2AB5C9232714647702DbACf862EA4798',
+              admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+            },
           },
           {
             name: 'OVM_StateCommitmentChain',
