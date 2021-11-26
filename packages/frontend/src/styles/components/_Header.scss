@@ -25,6 +25,7 @@
   }
 
   &.very-long {
+    white-space: break-spaces;
     @media (max-width: 550px) {
       font-size: var(--font-xl);
     }
