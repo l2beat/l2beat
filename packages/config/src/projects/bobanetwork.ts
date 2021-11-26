@@ -34,7 +34,6 @@ export const bobanetwork: Project = {
         'BUSD',
         'LINK',
         'FXS',
-        'UST',
       ],
     },
     {
