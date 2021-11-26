@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import { getTokenPrice } from '../../../src/core/prices/getTokenPrice'
-import { EthereumAddress, Exchange, Token } from '../../../src/model'
+import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
 import { ExchangePriceRecord } from '../../../src/peripherals/database/ExchangePriceRepository'
 
 describe('getTokenPrice', () => {
@@ -10,7 +10,7 @@ describe('getTokenPrice', () => {
       const expectedPrice = 200n * 10n ** 18n
       const etherPrice = 4_000n * 10n ** 18n
       const token: Token = {
-        id: 'aaa-token',
+        id: AssetId('aaa-token'),
         symbol: 'AAA',
         decimals: 18,
         address: EthereumAddress('0x' + 'a'.repeat(40)),
@@ -19,42 +19,42 @@ describe('getTokenPrice', () => {
       const testCases: ExchangePriceRecord[] = [
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV1(),
           liquidity: 100n * 10n ** 18n,
           price: 10n ** 18n / 20n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('dai'),
           liquidity: 100n * 10n ** 18n,
           price: 200n * 10n ** 18n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('usdc'),
           liquidity: 100n * 10n ** 18n,
           price: 200n * 10n ** 6n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('usdt'),
           liquidity: 100n * 10n ** 18n,
           price: 200n * 10n ** 6n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('weth'),
           liquidity: 100n * 10n ** 18n,
           price: 10n ** 18n / 20n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV3('weth', 3000),
           liquidity: 100n * 10n ** 18n,
           price: 10n ** 18n / 20n,
@@ -71,7 +71,7 @@ describe('getTokenPrice', () => {
 
     it('chooses the most liquid record', () => {
       const token: Token = {
-        id: 'aaa-token',
+        id: AssetId('aaa-token'),
         symbol: 'AAA',
         decimals: 18,
         address: EthereumAddress('0x' + 'a'.repeat(40)),
@@ -80,21 +80,21 @@ describe('getTokenPrice', () => {
       const records: ExchangePriceRecord[] = [
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('dai'),
           liquidity: 100n * 10n ** 18n,
           price: 201n * 10n ** 18n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('usdc'),
           liquidity: 300n * 10n ** 18n,
           price: 202n * 10n ** 6n,
         },
         {
           blockNumber: 123n,
-          assetId: 'aaa-token',
+          assetId: AssetId('aaa-token'),
           exchange: Exchange.uniswapV2('usdt'),
           liquidity: 200n * 10n ** 18n,
           price: 203n * 10n ** 6n,
@@ -108,7 +108,7 @@ describe('getTokenPrice', () => {
 
   it('works for constant price tokens', () => {
     const token: Token = {
-      id: 'aaa-token',
+      id: AssetId('aaa-token'),
       symbol: 'AAA',
       decimals: 18,
       address: EthereumAddress('0x' + 'a'.repeat(40)),
@@ -120,7 +120,7 @@ describe('getTokenPrice', () => {
 
   it('works for ether price tokens', () => {
     const token: Token = {
-      id: 'aaa-token',
+      id: AssetId('aaa-token'),
       symbol: 'AAA',
       decimals: 18,
       address: EthereumAddress('0x' + 'a'.repeat(40)),

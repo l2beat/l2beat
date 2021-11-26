@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { StatusService } from '../core/StatusService'
+import { StatusService } from '../../core/StatusService'
 
 export function createStatusRouter(statusService: StatusService) {
   const router = new Router()

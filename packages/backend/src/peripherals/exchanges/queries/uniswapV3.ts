@@ -24,14 +24,13 @@ const coder = new utils.Interface([
 
 export const encodeUniswapV3Requests = memoizee(
   (token: EthereumAddress, exchange: Exchange): MulticallRequest[] => {
-    const [otherToken, feeLevel] = getExchangeDetails(exchange)
-    const pool = getUniswapV3PoolAddress(token, otherToken, feeLevel)
+    const [quoteToken, feeLevel] = getExchangeDetails(exchange)
+    const pool = getUniswapV3PoolAddress(token, quoteToken, feeLevel)
     return [
       { address: token, data: encodeBalanceOf(pool) },
       { address: pool, data: encodeSlotZero() },
     ]
-  },
-  { primitive: true }
+  }
 )
 
 export function decodeUniswapV3Results(
@@ -42,11 +41,11 @@ export function decodeUniswapV3Results(
   if (results.length !== 2 || !results.every((x) => x.success)) {
     return { liquidity: 0n, price: 0n }
   }
-  const [otherToken] = getExchangeDetails(exchange)
+  const [quoteToken] = getExchangeDetails(exchange)
   const balance = decodeBalanceOf(results[0].data)
   const priceSqrt64x96 = decodeSlotZero(results[1].data)
   let price = (priceSqrt64x96 ** 2n * TEN_TO_18) >> (96n * 2n)
-  if (!EthereumAddress.isBefore(token, otherToken) && price !== 0n) {
+  if (!EthereumAddress.isBefore(token, quoteToken) && price !== 0n) {
     price = (TEN_TO_18 * TEN_TO_18) / price
   }
   return { liquidity: balance, price }
@@ -60,16 +59,16 @@ const tokens: Record<string, EthereumAddress> = {
 }
 
 function getExchangeDetails(exchange: Exchange) {
-  const token = tokens[exchange.quoteAssetId]
+  const quoteToken = tokens[exchange.quoteAssetId]
   const feeLevel = exchange.details.fee
   if (
-    !token ||
+    !quoteToken ||
     typeof feeLevel !== 'number' ||
     exchange.family !== 'uniswap-v3'
   ) {
     throw new Error(`Invalid exchange ${exchange.name}`)
   }
-  return [token, feeLevel] as const
+  return [quoteToken, feeLevel] as const
 }
 
 export function getUniswapV3PoolAddress(
