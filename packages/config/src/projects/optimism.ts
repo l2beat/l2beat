@@ -107,7 +107,7 @@ export const optimism: Project = {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: 'Optimism operates the only "Sequencer" node - Optimism documentation',
+            text: 'How will the sequencer be decentralized over time? - Optimism documentation',
             href: 'https://community.optimism.io/docs/protocol/sequencing.html#how-will-the-sequencer-be-decentralized-over-time',
           },
         ],
