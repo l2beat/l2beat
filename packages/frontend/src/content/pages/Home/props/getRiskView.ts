@@ -10,7 +10,7 @@ export function getRiskViewEntry(project: Project): RiskViewEntry {
   return {
     name: project.name,
     slug: project.slug,
-    isStarkEx: project.details.provider === 'StarkEx',
+    provider: project.details.provider,
     ...project.details.riskView,
   }
 }

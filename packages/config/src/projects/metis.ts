@@ -37,6 +37,7 @@ export const metis: Project = {
         'https://t.me/MetisDAO',
       ],
     },
+    provider: 'Optimism',
     riskView: {
       stateValidation: {
         value: 'Proofs disabled',

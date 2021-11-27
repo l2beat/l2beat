@@ -1,12 +1,13 @@
+import { Project } from '@l2beat/config'
 import React from 'react'
 
-import { StarkWareIcon } from '../../../common/icons'
+import { OptimismIcon, StarkWareIcon } from '../../../common/icons'
 
 interface Props {
   project: {
     name: string
     slug: string
-    isStarkEx: boolean
+    provider?: Project['details']['provider']
   }
 }
 
@@ -21,12 +22,20 @@ export function ProjectLink({ project }: Props) {
         />
         {project.name}
       </a>
-      {project.isStarkEx && (
+      {project.provider === 'StarkEx' && (
         <span
-          className="ProjectLink-StarkEx Tooltip"
+          className="ProjectLink-Provider Tooltip"
           title="This project is built using StarkEx."
         >
           <StarkWareIcon />
+        </span>
+      )}
+      {project.provider === 'Optimism' && (
+        <span
+          className="ProjectLink-Provider Tooltip"
+          title="This project is based on Optimism's code base."
+        >
+          <OptimismIcon />
         </span>
       )}
     </>

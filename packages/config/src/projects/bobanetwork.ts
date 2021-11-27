@@ -74,6 +74,7 @@ export const bobanetwork: Project = {
         'https://discord.gg/m7NysJjKhm',
       ],
     },
+    provider: 'Optimism',
     riskView: {
       stateValidation: {
         value: 'Proofs disabled',

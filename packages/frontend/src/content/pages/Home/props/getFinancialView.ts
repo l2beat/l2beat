@@ -55,7 +55,7 @@ function getFinancialViewEntry(
   return {
     name: project.name,
     slug: project.slug,
-    isStarkEx: project.details.provider === 'StarkEx',
+    provider: project.details.provider,
     tvl: formatUSD(tvl),
     tvlWarning: tvlWarning,
     warningSeverity,

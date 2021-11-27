@@ -13,7 +13,7 @@ export interface ProjectDetails {
   /** List of links */
   links: ProjectLinks
   /** Technology provider */
-  provider?: 'StarkEx'
+  provider?: 'StarkEx' | 'Optimism'
   /** Deep dive into project technology */
   technology: ProjectTechnology
   /** Risk view values for this project */
