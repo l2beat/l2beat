@@ -1,10 +1,10 @@
-.TVLBreakdownCell {
+.TVLBreakdown {
   display: flex;
   justify-content: flex-end;
   align-content: center;
 }
 
-.TVLBreakdownCell-TvlWarning {
+.TVLBreakdown-TvlWarning {
   position: relative;
   display: inline-block;
   height: 1em;
@@ -22,6 +22,8 @@
   }
 }
 
-.TVLBreakdownCell-Breakdown {
+.TVLBreakdown-Breakdown {
   display: block;
+  border-radius: 4px;
+  opacity: 0.8;
 }
