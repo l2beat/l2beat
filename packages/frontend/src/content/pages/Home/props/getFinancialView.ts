@@ -34,15 +34,15 @@ function getFinancialViewEntry(
   const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)[1]
   const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)[1]
 
-  const token = project.associatedToken
-  const tokenTvl = token
-    ? getFromEnd(projectData.byToken[token].data, 0)[2]
-    : undefined
+  const tokens = project.associatedTokens
+  const tokenTvl = tokens
+    ?.map((token) => getFromEnd(projectData.byToken[token].data, 0)[2])
+    .reduce((a, b) => a + b, 0)
 
   const tokenShare = tokenTvl ? tokenTvl / tvl : 0
   let tvlWarning =
-    token && tokenShare > 0.1
-      ? toWarning(project.name, tokenShare, token)
+    tokens && tokenShare > 0.1
+      ? toWarning(project.name, tokenShare, tokens)
       : undefined
   let warningSeverity: 'bad' | 'warning' | 'info' =
     tokenShare > 0.9 ? 'bad' : 'warning'
@@ -67,8 +67,13 @@ function getFinancialViewEntry(
   }
 }
 
-function toWarning(name: string, share: number, token: string) {
+function toWarning(name: string, share: number, tokens: string[]) {
   const percent = formatPercent(share)
-  const what = `The ${token} token associated with ${name}`
-  return `${what} accounts for ${percent} of the TVL!`
+  if (tokens.length === 1) {
+    const what = `The ${tokens[0]} token associated with ${name}`
+    return `${what} accounts for ${percent} of the TVL!`
+  } else {
+    const what = `The ${tokens.join(' and ')} tokens associated with ${name}`
+    return `${what} account for ${percent} of the TVL!`
+  }
 }

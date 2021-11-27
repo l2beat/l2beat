@@ -20,7 +20,7 @@ export const immutablex: Project = {
       tokens: ['ETH', 'IMX', 'USDC'],
     },
   ],
-  associatedToken: 'IMX',
+  associatedTokens: ['IMX'],
   details: {
     description:
       'ImmutableX claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',

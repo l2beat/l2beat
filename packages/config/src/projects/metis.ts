@@ -18,7 +18,7 @@ export const metis: Project = {
       tokens: ['Metis', 'USDT', 'LINK', 'AAVE', 'UNI', 'DAI', 'USDC'],
     },
   ],
-  associatedToken: 'Metis',
+  associatedTokens: ['Metis'],
   details: {
     description:
       'Metis is an EVM-equivalent Optimistic Rollup chain originally forked from Optimism. It provides support for multiple, interconnected rollups with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies).',

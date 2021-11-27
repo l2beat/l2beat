@@ -19,7 +19,7 @@ export const habitat: Project = {
       tokens: ['HBT', 'WETH', 'USDC', 'GNO'],
     },
   ],
-  associatedToken: 'HBT',
+  associatedTokens: ['HBT'],
   details: {
     description:
       'Habitat is an optimistic rollup designed to allow community governance and treasury management.',

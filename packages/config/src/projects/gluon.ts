@@ -24,7 +24,7 @@ export const gluon: Project = {
       tokens: ['DAI', 'USDT'],
     },
   ],
-  associatedToken: 'L2',
+  associatedTokens: ['L2'],
   details: {
     description:
       'Gluon aims to be a Layer 2 scalable trading engine built on top of Ethereum, unlocking low fees and high frequency trading.',

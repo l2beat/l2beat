@@ -5,7 +5,7 @@ import { zkswap } from './zkswap'
 export const zkswapv2: Project = {
   name: 'ZKSwap V2',
   slug: 'zkswapv2',
-  associatedToken: 'ZKS',
+  associatedTokens: ['ZKS'],
   bridges: [
     {
       address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
