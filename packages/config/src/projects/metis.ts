@@ -30,6 +30,7 @@ export const metis: Project = {
       explorers: ['https://andromeda-explorer.metis.io'],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
+        'https://medium.com/@MetisDAO',
         'https://twitter.com/MetisDAO',
         'https://discord.gg/RqfEJZXnxd',
         'https://youtube.com/c/MetisDAO',
