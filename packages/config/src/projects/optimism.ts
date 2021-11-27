@@ -60,6 +60,7 @@ export const optimism: Project = {
         'https://twitch.tv/optimismpbc',
       ],
     },
+    provider: 'Optimism',
     riskView: {
       stateValidation: {
         value: 'Proofs disabled',
