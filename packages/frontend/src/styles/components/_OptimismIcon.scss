@@ -1,0 +1,10 @@
+.OptimismIcon {
+  @include dark-mode {
+    rect {
+      fill: var(--text);
+    }
+    path {
+      fill: var(--background);
+    }
+  }
+}

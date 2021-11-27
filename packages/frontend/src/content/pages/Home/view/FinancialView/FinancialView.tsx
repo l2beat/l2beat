@@ -1,7 +1,12 @@
+import { Project } from '@l2beat/config'
 import React from 'react'
 
 import { PercentChange } from '../../../../common'
-import { StarkWareIcon, WarningIcon } from '../../../../common/icons'
+import {
+  OptimismIcon,
+  StarkWareIcon,
+  WarningIcon,
+} from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { FinancialCell } from './FinancialCell'
@@ -14,7 +19,7 @@ export interface FinancialViewProps {
 export interface FinancialViewEntry {
   name: string
   slug: string
-  isStarkEx: boolean
+  provider?: Project['details']['provider']
   tvl: string
   tvlWarning?: string
   warningSeverity: 'info' | 'warning' | 'bad'
@@ -101,6 +106,11 @@ export function FinancialView({ items }: FinancialViewProps) {
           <StarkWareIcon />
           <span>&ndash;</span>
           <span>This project is built using StarkEx.</span>
+        </p>
+        <p>
+          <OptimismIcon />
+          <span>&ndash;</span>
+          <span>This project is based on Optimism&apos;s code base.</span>
         </p>
       </div>
     </div>

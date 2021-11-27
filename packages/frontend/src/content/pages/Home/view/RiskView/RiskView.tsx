@@ -1,7 +1,7 @@
-import { ProjectRiskView } from '@l2beat/config'
+import { Project, ProjectRiskView } from '@l2beat/config'
 import React from 'react'
 
-import { StarkWareIcon } from '../../../../common/icons'
+import { OptimismIcon, StarkWareIcon } from '../../../../common/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { RiskCell } from './RiskCell'
@@ -13,7 +13,7 @@ export interface RiskViewProps {
 export interface RiskViewEntry extends ProjectRiskView {
   name: string
   slug: string
-  isStarkEx: boolean
+  provider?: Project['details']['provider']
 }
 
 export function RiskView({ items }: RiskViewProps) {
@@ -50,6 +50,10 @@ export function RiskView({ items }: RiskViewProps) {
       <div className="RiskView-Symbols">
         <p>
           <StarkWareIcon /> &ndash; This project is built using StarkEx.
+        </p>
+        <p>
+          <OptimismIcon /> &ndash; This project is based on Optimism&apos;s code
+          base.
         </p>
       </div>
     </div>
