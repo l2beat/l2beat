@@ -51,7 +51,7 @@ export const omgnetwork: Project = {
       ],
     },
   ],
-  associatedToken: 'OMG',
+  associatedTokens: ['OMG'],
   details: {
     description:
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. Using the OMG Network, individuals and businesses can transact on a financial infrastructure that is claimed to be several times faster, 1/3rd the cost, and as secure as the Ethereum Network — while retaining full autonomy over their funds and keys. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',

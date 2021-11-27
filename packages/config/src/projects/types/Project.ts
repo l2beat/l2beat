@@ -6,8 +6,8 @@ export interface Project {
   name: string
   /** Url friendly project name, will be used in website urls */
   slug: string
-  /** Symbol of the token associated with this project */
-  associatedToken?: string
+  /** Symbols of the tokens associated with this project */
+  associatedTokens?: string[]
   /** List of the contract in which L1 funds are locked */
   bridges: ProjectBridge[]
   /** Information displayed about the project on the frontend */

@@ -13,7 +13,7 @@ import { Project } from './types'
 export const zkswap: Project = {
   name: 'ZKSwap',
   slug: 'zkswap',
-  associatedToken: 'ZKS',
+  associatedTokens: ['ZKS'],
   bridges: [
     {
       address: '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad',

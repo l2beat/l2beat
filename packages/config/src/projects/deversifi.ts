@@ -48,7 +48,7 @@ export const deversifi: Project = {
       ],
     },
   ],
-  associatedToken: 'DVF',
+  associatedTokens: ['DVF'],
   details: {
     description:
       'DeversiFi claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',

@@ -20,7 +20,7 @@ export const loopring: Project = {
       tokens: ['DAI', 'ETH', 'LINK', 'LRC', 'MKR', 'USDC', 'USDT', 'WBTC'],
     },
   ],
-  associatedToken: 'LRC',
+  associatedTokens: ['LRC'],
   details: {
     description:
       "Loopring's zkRollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",

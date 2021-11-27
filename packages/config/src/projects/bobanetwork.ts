@@ -55,7 +55,7 @@ export const bobanetwork: Project = {
       ],
     },
   ],
-  associatedToken: 'BOBA',
+  associatedTokens: ['BOBA', 'OMG'],
   details: {
     description:
       'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation. Boba is an Optimistic Rollup scaling solution that claims to reduce gas fees, improve transaction throughput, and extend the capabilities of smart contracts.',
