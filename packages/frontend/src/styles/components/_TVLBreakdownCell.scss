@@ -1,0 +1,27 @@
+.TVLBreakdownCell {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+}
+
+.TVLBreakdownCell-TvlWarning {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  margin-right: 4px;
+  width: 24px;
+
+  .Tooltip {
+    position: absolute;
+    right: 0;
+    top: -1px;
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+.TVLBreakdownCell-Breakdown {
+  display: block;
+}
