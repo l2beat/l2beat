@@ -26,6 +26,8 @@ export function configureTooltips() {
     )
     tooltip.style.left = left + 'px'
     tooltip.style.top = rect.bottom + 7 + 'px'
+    tooltip.style.textAlign =
+      element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
 
     tooltipTriangle.style.left =
       clamp(rect.left + rect.width / 2 - 8, 10, window.innerWidth - 10 - 16) +

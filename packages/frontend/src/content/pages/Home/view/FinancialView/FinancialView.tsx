@@ -10,7 +10,7 @@ import {
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { FinancialCell } from './FinancialCell'
-import { TVLCell } from './TVLCell'
+import { TVLBreakdown, TVLBreakdownProps } from './TVLBreakdown'
 
 export interface FinancialViewProps {
   items: FinancialViewEntry[]
@@ -21,8 +21,7 @@ export interface FinancialViewEntry {
   slug: string
   provider?: Project['details']['provider']
   tvl: string
-  tvlWarning?: string
-  warningSeverity: 'info' | 'warning' | 'bad'
+  tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
   sevenDayChange: string
   marketShare: string
@@ -40,14 +39,17 @@ export function FinancialView({ items }: FinancialViewProps) {
       getValue: (project) => <ProjectLink project={project} />,
     },
     {
-      name: 'Value Locked',
-      shortName: 'TVL',
+      name: 'TVL',
       alignRight: true,
-      getValue: (project) => <TVLCell project={project} />,
+      getValue: (project) => project.tvl,
     },
     {
-      name: '7 days change',
-      shortName: '% / 7 days',
+      name: 'Breakdown',
+      alignRight: true,
+      getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
+    },
+    {
+      name: '7d Change',
       alignRight: true,
       getValue: (project) => <PercentChange value={project.sevenDayChange} />,
     },
