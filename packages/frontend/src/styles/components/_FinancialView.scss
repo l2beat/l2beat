@@ -10,28 +10,6 @@
   }
 }
 
-.FinancialView-TvlWarning {
-  position: relative;
-  display: inline-block;
-  height: 1em;
-  margin-right: 4px;
-  width: 24px;
-
-  .Tooltip {
-    position: absolute;
-    right: 0;
-    top: -3px;
-
-    @media (max-width: 1000px) {
-      top: -3.5px;
-    }
-  }
-
-  svg {
-    display: block;
-  }
-}
-
 .FinancialView-Symbols {
   margin-top: 16px;
   font-size: var(--font-s);

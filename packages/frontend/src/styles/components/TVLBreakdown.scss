@@ -1,0 +1,29 @@
+.TVLBreakdown {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+}
+
+.TVLBreakdown-TvlWarning {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  margin-right: 4px;
+  width: 24px;
+
+  .Tooltip {
+    position: absolute;
+    right: 0;
+    top: -1px;
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+.TVLBreakdown-Breakdown {
+  display: block;
+  border-radius: 4px;
+  opacity: 0.8;
+}
