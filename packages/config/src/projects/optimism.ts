@@ -248,7 +248,7 @@ export const optimism: Project = {
         date: '2021-11-12',
         name: 'Network upgrade to OVM 2.0',
         link: 'https://twitter.com/optimismPBC/status/1458953238867165192?s=20',
-      }
+      },
     ],
   },
 }
