@@ -44,7 +44,9 @@ export const optimism: Project = {
     warning:
       'Currently only whitelisted contracts can be deployed on Optimism.',
     description:
-      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure.',
+      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure. \
+      With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the \
+      new fraud-proof system is being built.',
     purpose: 'Universal',
     links: {
       websites: ['https://optimism.io/'],
@@ -90,8 +92,8 @@ export const optimism: Project = {
         ],
         references: [
           {
-            text: 'The incentive contract for verification proofs is disabled - Optimism FAQ',
-            href: 'https://community.optimism.io/faqs/#the-incentive-contract-for-verification-proofs-is-disabled',
+            text: 'Introducing EVM Equivalence',
+            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -184,65 +186,38 @@ export const optimism: Project = {
             address: '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
           },
           {
-            name: 'OVM_CanonicalTransactionChain',
-            address: '0x4BF681894abEc828B212C906082B444Ceb2f6cf6',
+            name: 'CanonicalTransactionChain',
+            address: '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
           },
           {
-            name: 'OVM_ChainStorageContainer-CTC-batches',
-            address: '0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE',
+            name: 'ChainStorageContainer',
+            address: '0xb0ddFf09c4019e31960de11bD845E836078E8EbE',
           },
           {
-            name: 'OVM_ChainStorageContainer-CTC-queue',
-            address: '0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039',
+            name: 'StateCommitmentChain',
+            address: '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',
           },
           {
-            name: 'OVM_ChainStorageContainer-SCC-batches',
-            address: '0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572',
-          },
-          {
-            name: 'OVM_ExecutionManager',
-            address: '0x2745C24822f542BbfFB41c6cB20EdF766b5619f5',
-          },
-          {
-            name: 'OVM_FraudVerifier',
-            address: '0x042065416C5c665dc196076745326Af3Cd840D15',
-          },
-          {
-            name: 'OVM_L1MultiMessageRelayer',
-            address: '0xF26391FBB1f77481f80a7d646AC08ba3817eA891',
-          },
-          {
-            name: 'OVM_SafetyChecker',
-            address: '0xfe1F9Cf28ecDb12110aa8086e6FD343EA06035cC',
-          },
-          {
-            name: 'OVM_StateCommitmentChain',
-            address: '0xE969C2724d2448F1d1A6189d3e2aA1F37d5998c1',
-          },
-          {
-            name: 'OVM_StateManagerFactory',
-            address: '0xd0e3e318154716BD9d007E1E6B021Eab246ff98d',
-          },
-          {
-            name: 'OVM_StateTransitionerFactory',
-            address: '0x38A6ed6fd76035684caDef38cF49a2FffA782B67',
-          },
-          {
-            name: 'Proxy__OVM_L1CrossDomainMessenger',
-            address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
-          },
-          {
-            name: 'Proxy__OVM_L1StandardBridge',
+            name: 'L1StandardBridge',
             address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
-              implementation: '0x9091dda480B232133A7D2E4cb23336B4F0293196',
+              implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
             },
           },
           {
-            name: 'mockOVM_BondManager',
-            address: '0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057',
+            name: 'L1CrossDomainMessenger',
+            address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
+              implementation: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
+            },
+          },
+          {
+            name: 'BondManager',
+            address: '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -263,6 +238,16 @@ export const optimism: Project = {
         date: '2021-02-24',
         name: 'Dope Hires & Moar Mainnet in March',
         link: 'https://medium.com/ethereum-optimism/dope-hires-moar-mainnet-in-march-174fa8966361',
+      },
+      {
+        date: '2021-10-26',
+        name: 'Introducing EVM Equivalence',
+        link: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+      },
+      {
+        date: '2021-11-12',
+        name: 'Network upgrade to OVM 2.0',
+        link: 'https://twitter.com/optimismPBC/status/1458953238867165192?s=20',
       },
     ],
   },
