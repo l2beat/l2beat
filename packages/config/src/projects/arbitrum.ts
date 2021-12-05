@@ -77,7 +77,12 @@ export const arbitrum: Project = {
       ],
     },
     riskView: {
-      stateValidation: RISK_VIEW.STATE_FP_INT,
+      stateValidation: {
+        value: 'Fraud proofs (INT)',
+        description:
+          'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+        sentiment: 'warning',
+      },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
@@ -88,11 +93,23 @@ export const arbitrum: Project = {
         name: 'Optimistic Rollup',
       },
       stateCorrectness: {
-        ...STATE_CORRECTNESS.FRAUD_PROOFS,
+        name: 'Fraud proofs ensure state correctness',
+        description:
+          'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'there is no one that checks the published state. Fraud proofs assume at least one honest and able validator.',
+          },
+        ],
         references: [
           {
             text: 'Executing and Securing the Chain - Arbitrum documentation',
             href: 'https://developer.offchainlabs.com/docs/rollup_basics#executing-and-securing-the-chain',
+          },
+          {
+            text: 'Note: onlyValidator modifier',
+            href: 'https://etherscan.io/address/0xa490124817cdc4c4e6ff4b7c824a69cb734df74c#code#F31#L382',
           },
         ],
       },
