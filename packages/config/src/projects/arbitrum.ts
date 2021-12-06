@@ -99,7 +99,8 @@ export const arbitrum: Project = {
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'there is no one that checks the published state. Fraud proofs assume at least one honest and able validator.',
+            text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
+            isCritical: true,
           },
         ],
         references: [
@@ -109,7 +110,7 @@ export const arbitrum: Project = {
           },
           {
             text: 'Note: onlyValidator modifier',
-            href: 'https://etherscan.io/address/0xa490124817cdc4c4e6ff4b7c824a69cb734df74c#code#F31#L382',
+            href: 'https://etherscan.io/address/0x00c51f63a2d906510cb2c802c0a30589ba75d942#code#F1#L281',
           },
         ],
       },
