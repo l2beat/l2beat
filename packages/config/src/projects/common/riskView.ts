@@ -100,7 +100,7 @@ export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
 }
 
 export const SEQUENCER_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  value: 'Force trade / exit to L1',
+  value: 'Force trade/exit to L1',
   description:
     'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
   sentiment: 'warning',
