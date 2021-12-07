@@ -57,7 +57,7 @@ export const metis: Project = {
       stateCorrectness: {
         name: 'No automatic on-chain fraud proof system',
         description:
-          'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root on-chain, and potentially slash honest Sequencer',
+          'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root on-chain, and potentially slash honest Sequencer.',
         risks: [
           {
             category: 'Funds can be stolen if',
