@@ -189,12 +189,19 @@ export const hermez: Project = {
             },
           },
           {
+            name: 'ProxyAdmin',
+            address: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+            description:
+              'Admin of HermezAuctionProtocol and Hermez, owned by the timelock',
+          },
+          {
             name: 'WithdrawalDelayer',
             address: '0x392361427Ef5e17b69cFDd1294F31ab555c86124',
           },
           {
             name: 'Timelock',
             address: '0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3',
+            description: 'Enforces a 7 day delay on upgrades',
           },
         ],
         risks: [
