@@ -48,7 +48,7 @@ export const hermez: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('7 days'),
       sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
       validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
     },
@@ -189,11 +189,25 @@ export const hermez: Project = {
             },
           },
           {
+            name: 'ProxyAdmin',
+            address: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+            description:
+              'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
+          },
+          {
             name: 'WithdrawalDelayer',
             address: '0x392361427Ef5e17b69cFDd1294F31ab555c86124',
           },
+          {
+            name: 'Timelock',
+            address: '0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3',
+            description: 'Enforces a 7 day delay on upgrades.',
+          },
         ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+        risks: [
+          CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days'),
+          CONTRACTS.UNVERIFIED_RISK,
+        ],
       },
     },
     news: [
