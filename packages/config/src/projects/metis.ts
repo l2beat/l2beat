@@ -40,7 +40,7 @@ export const metis: Project = {
     provider: 'Optimism',
     riskView: {
       stateValidation: {
-        value: 'No',
+        value: 'No validation',
         description:
           'Currently the system does not have any on-chain mechanism to validate the state roots. More details in project overview.',
         sentiment: 'bad',
