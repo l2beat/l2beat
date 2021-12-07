@@ -1,23 +1,24 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 interface Props {
   checked?: boolean
   name: string
   value: string
   endpoint?: string
+  children?: ReactNode
 }
 
-export function ChartButton({ checked, name, value, endpoint }: Props) {
+export function ChartButton(props: Props) {
   return (
     <label className="Chart-Button">
       <input
-        defaultChecked={checked}
+        defaultChecked={props.checked}
         type="radio"
-        name={name}
-        value={value}
-        data-endpoint={endpoint}
+        name={props.name}
+        value={props.value}
+        data-endpoint={props.endpoint}
       />
-      <span>{value}</span>
+      <span>{props.children ?? props.value}</span>
     </label>
   )
 }

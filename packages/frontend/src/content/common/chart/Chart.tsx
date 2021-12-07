@@ -44,7 +44,9 @@ export function Chart({ endpoint, tokens, days = 90 }: ChartProps) {
       </div>
       <div className="Chart-CurrencyControls">
         <ChartButton checked name="currency" value="USD" />
-        <ChartButton name="currency" value="ETH" />
+        <ChartButton name="currency" value="ETH">
+          ETH<sup>*</sup>
+        </ChartButton>
       </div>
       <p className="Chart-Description">...</p>
       <div className="Chart-ScaleControls">
