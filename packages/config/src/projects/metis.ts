@@ -40,9 +40,9 @@ export const metis: Project = {
     provider: 'Optimism',
     riskView: {
       stateValidation: {
-        value: 'In development',
+        value: 'No validation',
         description:
-          'Currently the system permits invalid state roots. More details in project overview.',
+          'Currently the system does not have any on-chain mechanism to validate the state roots. More details in project overview.',
         sentiment: 'bad',
       },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -55,9 +55,9 @@ export const metis: Project = {
         name: 'Optimistic Rollup',
       },
       stateCorrectness: {
-        name: 'Fraud proofs are in development',
+        name: 'No automatic on-chain fraud proof system',
         description:
-          'Metis will use fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots. In the meantime any staked validator can challenge invalid state root submitted by the Sequencer. Other validators will then act as referees in a interactive challenge game.',
+          'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root on-chain, and potentially slash honest Sequencer.',
         risks: [
           {
             category: 'Funds can be stolen if',
