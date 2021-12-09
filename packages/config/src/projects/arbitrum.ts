@@ -5,7 +5,6 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
 

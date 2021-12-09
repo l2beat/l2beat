@@ -30,9 +30,9 @@ function getFinancialViewEntry(
   projectData: ProjectData,
   aggregateTvl: number
 ): FinancialViewEntry {
-  const tvl = getFromEnd(projectData.aggregate.data, 0)[1]
-  const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)[1]
-  const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)[1]
+  const tvl = getFromEnd(projectData.aggregate.data, 0)?.[1] ?? 0
+  const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)?.[1] ?? 0
+  const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)?.[1] ?? 0
 
   const tvlBreakdown = getTVLBreakdown(
     tvl,
@@ -79,6 +79,16 @@ function getTVLBreakdown(
   byToken: Record<string, ChartData>,
   associatedTokens: string[]
 ) {
+  if (total === 0) {
+    return {
+      empty: true,
+      label: 'No tokens',
+      associated: 0,
+      ether: 0,
+      stable: 0,
+      other: 0,
+    }
+  }
   let associated = 0
   let ether = 0
   let stable = 0
@@ -111,6 +121,7 @@ function getTVLBreakdown(
     .join('\n')
 
   return {
+    empty: false,
     label,
     associated: associated / total,
     ether: ether / total,
