@@ -13,13 +13,7 @@ import { Project } from './types'
 export const starknet: Project = {
   name: 'StarkNet',
   slug: 'starknet',
-  bridges: [
-    // {
-    //   address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
-    //   sinceBlock: 12525700,
-    //   tokens: ['ETH'],
-    // },
-  ],
+  bridges: [],
   details: {
     description:
       'StarkNet is a permissionless decentralized Validity-Rollup \
