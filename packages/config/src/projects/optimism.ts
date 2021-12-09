@@ -65,7 +65,7 @@ export const optimism: Project = {
     provider: 'Optimism',
     riskView: {
       stateValidation: {
-        value: 'Proofs disabled',
+        value: 'In development',
         description:
           'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
@@ -80,9 +80,9 @@ export const optimism: Project = {
         name: 'Optimistic Rollup',
       },
       stateCorrectness: {
-        name: 'Fraud proofs are disabled',
+        name: 'Fraud proofs are in development',
         description:
-          'Ultimately Optimism will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots.',
+          'Ultimately Optimism will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
         risks: [
           {
             category: 'Funds can be stolen if',
