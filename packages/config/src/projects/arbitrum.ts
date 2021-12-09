@@ -244,7 +244,8 @@ export const arbitrum: Project = {
           {
             address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
             name: 'Bridge',
-            description: 'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+            description:
+              'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
