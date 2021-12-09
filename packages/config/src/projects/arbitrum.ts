@@ -206,11 +206,46 @@ export const arbitrum: Project = {
             address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
             name: 'ProxyAdmin',
             description:
-              'Through this contract that controls upgrades for most other contracts. It is owned by a 4-of-6 multisig.',
+              'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
+          },
+          {
+            address: '0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A',
+            name: 'Rollup',
+            description:
+              'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0x637E1CD58Ad3f0071ceCb281395e1823A96a553F',
+            },
+          },
+          {
+            address: '0x4c6f947Ae67F572afa4ae0730947DE7C874F95Ef',
+            name: 'SequencerInbox',
+            description:
+              'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0x9685e7281Fb1507B6f141758d80B08752faF0c43',
+            },
+          },
+          {
+            address: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+            name: 'Inbox',
+            description:
+              'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              implementation: '0x048cc108763de75E080Ad717bD284003aa49eA15',
+            },
           },
           {
             address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
             name: 'Bridge',
+            description:
+              'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
@@ -226,24 +261,7 @@ export const arbitrum: Project = {
               implementation: '0xb872Ea300eDba3872873fa1Aa33DB897c4D2cB66',
             },
           },
-          {
-            address: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
-            name: 'Inbox',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x048cc108763de75E080Ad717bD284003aa49eA15',
-            },
-          },
-          {
-            address: '0x4c6f947Ae67F572afa4ae0730947DE7C874F95Ef',
-            name: 'SequencerInbox',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x9685e7281Fb1507B6f141758d80B08752faF0c43',
-            },
-          },
+
           {
             address: '0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a',
             name: 'Outbox',
@@ -254,23 +272,15 @@ export const arbitrum: Project = {
             },
           },
           {
-            address: '0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A',
-            name: 'Rollup',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x637E1CD58Ad3f0071ceCb281395e1823A96a553F',
-            },
-          },
-          {
             address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
             name: 'ProxyAdmin (2)',
             description:
-              'This is a different proxy admin for the three contracts below. It is also owned by a single private key.',
+              'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
           },
           {
             address: '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef',
             name: 'L1GatewayRouter',
+            description: 'Router managing token <--> gateway mapping.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
@@ -280,6 +290,8 @@ export const arbitrum: Project = {
           {
             address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             name: 'L1ERC20Gateway',
+            description:
+              'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
@@ -289,6 +301,8 @@ export const arbitrum: Project = {
           {
             address: '0xcEe284F754E854890e311e3280b767F80797180d',
             name: 'L1CustomGateway',
+            description:
+              'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
@@ -296,20 +310,16 @@ export const arbitrum: Project = {
             },
           },
           {
-            address: '0x2B36F23ce0bAbD57553b26Da4C7a0585bac65DC1',
-            name: 'ValidatorUtils',
-          },
-          {
-            address: '0xe17d8Fa6BC62590f840C5Dd35f300F77D55CC178',
-            name: 'ValidatorWalletCreator',
-          },
-          {
-            address: '0x84eFa170dC6d521495D7942e372b8e4B2Fb918Ec',
-            name: 'BridgeUtils',
+            address: '0xD3B5b60020504bc3489D6949d545893982BA3011',
+            name: 'L1DaiGateway',
+            description:
+              'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
           },
           {
             address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
             name: 'L1Escrow',
+            description:
+              'DAI Vault for custom DAI Gateway managed by MakerDAO.',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
