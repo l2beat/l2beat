@@ -77,7 +77,7 @@ export const bobanetwork: Project = {
     provider: 'Optimism',
     riskView: {
       stateValidation: {
-        value: 'Proofs disabled',
+        value: 'In development',
         description:
           'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
@@ -92,9 +92,9 @@ export const bobanetwork: Project = {
         name: 'Optimistic Rollup',
       },
       stateCorrectness: {
-        name: 'Fraud proofs are disabled',
+        name: 'Fraud proofs are in development',
         description:
-          'Ultimately Boba Network will use fraud proofs to enforce state correctness. This feature is currently disabled and the system permits invalid state roots. Users have the ability to run a validator software and compute valid state roots locally, but cannot act on them on chain.',
+          'Ultimately Boba Network will use fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots. Users have the ability to run a validator software and compute valid state roots locally, but cannot act on them on chain.',
         risks: [
           {
             category: 'Funds can be stolen if',

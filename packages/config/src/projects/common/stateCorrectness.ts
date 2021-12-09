@@ -3,7 +3,7 @@ import { ProjectTechnologyChoice } from '../types'
 const FRAUD_PROOFS: ProjectTechnologyChoice = {
   name: 'Fraud proofs ensure state correctness',
   description:
-    'The published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
+    'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
   risks: [
     {
       category: 'Funds can be stolen if',

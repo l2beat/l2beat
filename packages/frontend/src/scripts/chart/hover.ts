@@ -36,7 +36,7 @@ export function initHover(chart: HTMLElement) {
   }
 
   function render() {
-    if (!visible || !uiState) {
+    if (!visible || !uiState || uiState.points.length === 0) {
       elements.hover.classList.add('hidden')
       return
     }

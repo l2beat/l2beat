@@ -6,6 +6,7 @@ export interface TVLBreakdownProps {
   warning?: string
   warningSeverity: 'info' | 'warning' | 'bad'
   label: string
+  empty: boolean
   associated: number
   ether: number
   stable: number
@@ -58,6 +59,9 @@ const GAP_SIZE = 2
 const MIN_SIZE = 2
 
 function getGradientGroups(breakdown: TVLBreakdownProps) {
+  if (breakdown.empty) {
+    return []
+  }
   const groups = [
     { weight: breakdown.associated, color: 'var(--gradient-3)' },
     { weight: breakdown.ether, color: 'var(--gradient-1)' },

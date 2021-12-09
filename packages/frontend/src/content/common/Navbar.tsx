@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { config } from '../config'
+import { GitcoinBanner } from './GitcoinBanner'
 import {
   DiscordIcon,
   GithubIcon,
@@ -56,6 +57,7 @@ export function Navbar() {
           <MoonIcon className="Navbar-DarkMode" aria-label="Toggle dark mode" />
         </button>
       </nav>
+      <GitcoinBanner />
     </>
   )
 }

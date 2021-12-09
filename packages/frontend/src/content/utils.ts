@@ -8,6 +8,9 @@ export function getFromEnd<T>(array: T[], n: number) {
 }
 
 export function getPercentageChange(now: number, then: number) {
+  if (now === then) {
+    return '+0.00%'
+  }
   return formatPercent(now / then - 1, true)
 }
 

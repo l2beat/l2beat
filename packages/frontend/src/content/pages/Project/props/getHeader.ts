@@ -6,8 +6,8 @@ import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
 
 export function getHeader(project: Project, l2Data: L2Data): HeaderProps {
   const aggregate = l2Data.byProject[project.name].aggregate
-  const tvl = getFromEnd(aggregate.data, 0)[1]
-  const tvlSevenDaysAgo = getFromEnd(aggregate.data, 7)[1]
+  const tvl = getFromEnd(aggregate.data, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = getFromEnd(aggregate.data, 7)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {

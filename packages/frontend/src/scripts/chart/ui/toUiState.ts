@@ -24,7 +24,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
   const description = state.token
     ? `Total ${state.token} Locked`
     : state.altCurrency
-    ? 'Total Value Locked (ETH equivalent)'
+    ? 'Total Value Locked (*ETH equivalent)'
     : 'Total Value Locked (USD equivalent)'
 
   const values = dataPoints.map((x) => x[state.altCurrency ? 2 : 1])
