@@ -60,7 +60,9 @@ function makeAggregateChart(entries: TVLAnalysis[]): Chart {
 
 function makeProjectData(entries: TVLAnalysis[], project: string): ProjectData {
   const aggregate = makeAggregateProjectChart(entries, project)
-  const minDate = SimpleDate.fromString(aggregate.data[0][0])
+  const minDate = aggregate.data[0]
+    ? SimpleDate.fromString(aggregate.data[0][0])
+    : SimpleDate.today()
   const lastEntry = entries[entries.length - 1]
   const tokens = Object.keys(lastEntry.projects[project].tokens)
   const byToken = Object.fromEntries(
