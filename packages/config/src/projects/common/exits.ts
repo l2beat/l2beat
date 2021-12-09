@@ -2,7 +2,7 @@ import { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
-  proof: 'no proof' | 'merkle proof'
+  proof: 'no proof' | 'merkle proof' | 'zk proof'
 ): ProjectTechnologyChoice {
   const finalized = type === 'zk' ? 'proven' : 'finalized'
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
