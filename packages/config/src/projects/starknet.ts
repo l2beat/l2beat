@@ -36,7 +36,7 @@ export const starknet: Project = {
       socialMedia: [
         'https://discord.gg/uJ9HZTUk2Y',
         'https://twitter.com/StarkWareLtd',
-        'https://medium.com/starkware/starknet/home',
+        'https://medium.com/starkware/starknet/home/',
         'https://starkware.co/',
       ],
     },
@@ -76,7 +76,7 @@ export const starknet: Project = {
             address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0xd8cd77206fcb239bddaaddda8c87cbfe7d67ca2b',
+              implementation: '0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b',
               upgradeDelay: 0,
               isFinal: false,
             },
