@@ -15,9 +15,11 @@ export const starknet: Project = {
   slug: 'starknet',
   bridges: [],
   details: {
+    warning:
+      'Currently only whitelisted contracts can be deployed on StarkNet.',
     description:
       'StarkNet is a general purpose ZK-Rollup built using STARK cryptographic proof system. StarkNet uses the Cairo programming language both for its \
-      infrastructure and for writing StarkNet contracts. Current Alpha release allows deploying only whitelisted contracts. L2 <--> L1 messaging infrastructure \
+      infrastructure and for writing StarkNet contracts. L2 <--> L1 messaging infrastructure \
       is available and contracts are fully composable. Alpha release limitations include lack of events, fees, and anti-censhorship mechanism. It is currently launched \
       with a single Sequencer.',
     purpose: 'Universal',
@@ -35,7 +37,7 @@ export const starknet: Project = {
       socialMedia: [
         'https://discord.gg/uJ9HZTUk2Y',
         'https://twitter.com/StarkWareLtd',
-        'https://medium.com/starkware/starknet/home/',
+        'https://medium.com/starkware',
         'https://starkware.co/',
       ],
     },
@@ -45,7 +47,7 @@ export const starknet: Project = {
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
-      validatorFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM, //TODO: remove?
+      validatorFailure: RISK_VIEW.PROVER_DOWN,
     },
     technology: {
       category: {

@@ -203,6 +203,13 @@ export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const PROVER_DOWN: ProjectRiskViewEntry = {
+  value: 'No mechanism',
+  description:
+    'If the prover goes down, no activity including withdrawals can happen. Funds will be frozen.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -234,4 +241,5 @@ export const RISK_VIEW = {
   VALIDATOR_PROPOSE_BLOCKS_ZKP,
   VALIDATOR_NO_MECHANISM,
   VALIDATOR_WHITELISTED_BLOCKS,
+  PROVER_DOWN,
 }
