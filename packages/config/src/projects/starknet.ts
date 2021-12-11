@@ -16,12 +16,11 @@ export const starknet: Project = {
   bridges: [],
   details: {
     description:
-      'StarkNet is a permissionless decentralized Validity-Rollup \
-      (also known as a “ZK-Rollup”) operating as an L2 network over Ethereum, where any dApp \
-      can achieve unlimited scale for its computation, without compromising Ethereum’s \
-      composability and security. StarkNet uses the Cairo programming language both for its \
-      infrastructure and for writing StarkNet contracts.',
-    purpose: 'ZK Rollup',
+      'StarkNet is a general purpose ZK-Rollup built using STARK cryptographic proof system. StarkNet uses the Cairo programming language both for its \
+      infrastructure and for writing StarkNet contracts. Current Alpha release allows deploying only whitelisted contracts. L2 <--> L1 messaging infrastructure \
+      is available and contracts are fully composable. Alpha release limitations include lack of events, fees, and anti-censhorship mechanism. It is currently launched \
+      with a single Sequencer.',
+    purpose: 'Universal',
     links: {
       apps: [],
       websites: [
