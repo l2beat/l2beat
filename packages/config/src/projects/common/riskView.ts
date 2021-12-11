@@ -206,7 +206,7 @@ export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
 export const PROVER_DOWN: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'If the prover goes down, no activity including withdrawals can happen. Funds will be frozen.',
+    'There is no generic escape hatch as StarkNet cannot be frozen. Application-specific escape hatches can be built.',
   sentiment: 'bad',
 }
 

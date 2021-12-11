@@ -58,18 +58,7 @@ export const starknet: Project = {
       dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
       operator: OPERATOR.CENTRALIZED_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.NO_MECHANISM,
-      exitMechanisms: [
-        {
-          ...EXITS.REGULAR('zk', 'zk proof'),
-          references: [
-            {
-              text: ' Withdrawing is based on l2 to l1 messages - StarkNet documentation',
-              href: 'https://www.cairo-lang.org/docs/hello_starknet/l1l2.html',
-            },
-          ],
-          risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
-        },
-      ],
+      exitMechanisms: EXITS.STARKNET,
       contracts: {
         addresses: [
           {

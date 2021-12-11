@@ -106,6 +106,24 @@ const STARKEX_EMERGENCY: ProjectTechnologyChoice = {
   ],
 }
 
+const STARKNET_REGULAR: ProjectTechnologyChoice = {
+  ...REGULAR('zk', 'no proof'),
+  references: [
+    {
+      text: ' Withdrawing is based on l2 to l1 messages - StarkNet documentation',
+      href: 'https://www.cairo-lang.org/docs/hello_starknet/l1l2.html',
+    },
+  ],
+  //  risks: [RISK_CENTRALIZED_VALIDATOR],
+}
+
+const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
+  ...EMERGENCY('', 'merkle proof'),
+  description:
+    'There is no generic escape hatch mechanism as StarkNet cannot be frozen. Application developers can develp app-specific escape hatches that\
+    could allow users to exit funds when L2 app is frozen. Note that freezing mechanizm on L2, to be secure, requires anti-censorship protection.',
+}
+
 const PLASMA: ProjectTechnologyChoice = {
   name: 'Regular exit',
   description:
@@ -126,6 +144,7 @@ export const EXITS = {
   EMERGENCY,
   STARKEX: [STARKEX_REGULAR, STARKEX_FORCED, STARKEX_EMERGENCY],
   STARKEX_NFT: [STARKEX_REGULAR_NFT, STARKEX_FORCED, STARKEX_EMERGENCY],
+  STARKNET: [STARKNET_REGULAR, STARKNET_EMERGENCY],
   PLASMA,
   RISK_CENTRALIZED_VALIDATOR,
 }
