@@ -13,8 +13,21 @@ export const optimism: Project = {
   slug: 'optimism',
   bridges: [
     {
+      // old snx bridge
+      address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',
+      sinceBlock: 11656238,
+      tokens: ['SNX'],
+    },
+    {
+      // current SNX bridge escrow
       address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
       sinceBlock: 12409015,
+      tokens: ['SNX'],
+    },
+    {
+      // new snx bridge
+      address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
+      sinceBlock: 12409013,
       tokens: ['SNX'],
     },
     {
