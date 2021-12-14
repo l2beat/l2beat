@@ -19,12 +19,13 @@ export const optimism: Project = {
       tokens: ['SNX'],
     },
     {
-      // old snx bridge
+      // current SNX bridge escrow
       address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
       sinceBlock: 12409015,
       tokens: ['SNX'],
     },
     {
+      // new snx bridge
       address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
       sinceBlock: 12409013,
       tokens: ['SNX'],
@@ -166,49 +167,36 @@ export const optimism: Project = {
       contracts: {
         addresses: [
           {
-            name: 'SynthetixBridgeToOptimism',
-            address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',
-          },
-          {
-            name: 'SynthetixBridgeEscrow',
-            address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
-          },
-          {
-            name: 'SynthetixBridgeToOptimism',
-            address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
-          },
-          {
-            name: 'L1Escrow',
-            address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
-          },
-          {
-            name: 'Lib_AddressManager',
-            address: '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
-          },
-          {
             name: 'CanonicalTransactionChain',
+            description:
+              'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
             address: '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
           },
           {
-            name: 'ChainStorageContainer',
-            address: '0xb0ddFf09c4019e31960de11bD845E836078E8EbE',
-          },
-          {
             name: 'StateCommitmentChain',
+            description:
+              'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currenlty olny OVM_Proposer can submit new state roots.',
             address: '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',
           },
           {
-            name: 'L1StandardBridge',
-            address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
-              implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
-            },
+            name: 'ChainStorageContainer-CTC-batches',
+            address: '0xD16463EF9b0338CE3D73309028ef1714D220c024',
+          },
+          {
+            name: 'ChainStorageContainer-SCC-batches',
+            address: '0xb0ddFf09c4019e31960de11bD845E836078E8EbE',
+          },
+          {
+            name: 'BondManager',
+            description:
+              "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+            address: '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',
           },
           {
             name: 'L1CrossDomainMessenger',
             address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
+            description:
+              "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
@@ -216,8 +204,45 @@ export const optimism: Project = {
             },
           },
           {
-            name: 'BondManager',
-            address: '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',
+            name: 'Lib_AddressManager',
+            description:
+              'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
+            address: '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
+          },
+          {
+            name: 'L1StandardBridge',
+            address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+            description:
+              'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
+              implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
+            },
+          },
+          {
+            name: 'SynthetixBridgeToOptimism',
+            description:
+              'Custom SNX Gateway, main entry point for users depositing SNX to L2 where "canonical" L2 SNX token managed by Synthetix will be minted. Managed by Synthetix.',
+            address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
+          },
+          {
+            name: 'SynthetixBridgeEscrow',
+            description:
+              'SNX Vault for custom SNX Gateway managed by Synthetix.',
+            address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+          },
+          {
+            name: 'L1DaiGateway',
+            description:
+              'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+            address: '0x10E6593CDda8c58a1d0f14C5164B376352a55f2F',
+          },
+          {
+            name: 'L1Escrow',
+            description:
+              'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+            address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

@@ -63,19 +63,6 @@ describe('projects', () => {
     })
   })
 
-  describe('contracts', () => {
-    for (const project of projects) {
-      describe(project.name, () => {
-        for (const { address } of project.bridges) {
-          it(`${address} is present in contracts`, () => {
-            const contracts = project.details.technology.contracts.addresses
-            expect(contracts.some((x) => x.address === address)).to.equal(true)
-          })
-        }
-      })
-    }
-  })
-
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
       for (const project of projects) {
