@@ -74,6 +74,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Aluna',
+    symbol: 'ALN',
+    address: '0x8185bc4757572da2a610f887561c32298f1a5748',
+    decimals: 18,
+    sinceBlock: 11966482,
+    category: 'other',
+  },
+  {
     name: 'AlphaToken',
     symbol: 'ALPHA',
     address: '0xa1faa113cbE53436Df28FF0aEe54275c13B40975',
@@ -146,6 +154,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'BarnBridge',
+    symbol: 'BOND',
+    address: '0x0391d2021f89dc339f60fff84546ea23e337750f',
+    decimals: 18,
+    sinceBlock: 10815462,
+    category: 'other',
+  },
+  {
     name: 'CelerToken',
     symbol: 'CELR',
     address: '0x4F9254C83EB525f9FCf346490bbb3ed28a81C667',
@@ -210,6 +226,14 @@ export const tokenList: TokenInfo[] = [
     category: 'stablecoin',
   },
   {
+    name: 'Decentraland',
+    symbol: 'MANA',
+    address: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942',
+    decimals: 18,
+    sinceBlock: 4162059,
+    category: 'other',
+  },
+  {
     name: 'DeversiFi Token',
     symbol: 'DVF',
     address: '0xDDdddd4301A082e62E84e43F474f044423921918',
@@ -247,6 +271,14 @@ export const tokenList: TokenInfo[] = [
     address: '0xD49ff13661451313cA1553fd6954BD1d9b6E02b9',
     decimals: 18,
     sinceBlock: 5123691,
+    category: 'other',
+  },
+  {
+    name: 'Entropyfi',
+    symbol: 'ERP',
+    address: '0x0a0e3bfd5a8ce610e735d4469bc1b3b130402267',
+    decimals: 18,
+    sinceBlock: 13412519,
     category: 'other',
   },
   {
@@ -337,6 +369,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Illuvium',
+    symbol: 'ILV',
+    address: '0x767fe9edc9e0df98e07454847909b5e959d7ca0e',
+    decimals: 18,
+    sinceBlock: 12084124,
+    category: 'other',
+  },
+  {
     name: 'Immutable X',
     symbol: 'IMX',
     address: '0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF',
@@ -398,6 +438,14 @@ export const tokenList: TokenInfo[] = [
     address: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
     decimals: 18,
     sinceBlock: 4620855,
+    category: 'other',
+  },
+  {
+    name: 'Maple',
+    symbol: 'MPL',
+    address: '0x33349b282065b0284d756f0577fb39c158f935e6',
+    decimals: 18,
+    sinceBlock: 12274249,
     category: 'other',
   },
   {
@@ -481,6 +529,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Rai Reflex Index',
+    symbol: 'RAI',
+    address: '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919',
+    decimals: 18,
+    sinceBlock: 11848426,
+    category: 'other',
+  },
+  {
     name: 'renBTC',
     symbol: 'renBTC',
     address: '0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D',
@@ -494,6 +550,14 @@ export const tokenList: TokenInfo[] = [
     address: '0x408e41876cCCDC0F92210600ef50372656052a38',
     decimals: 18,
     sinceBlock: 4827494,
+    category: 'other',
+  },
+  {
+    name: 'Shiba Inu',
+    symbol: 'SHIB',
+    address: '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce',
+    decimals: 18,
+    sinceBlock: 10569013,
     category: 'other',
   },
   {
