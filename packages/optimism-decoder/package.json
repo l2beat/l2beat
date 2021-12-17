@@ -1,5 +1,5 @@
 {
-  "name": "@l2beat/arbitrum-check",
+  "name": "@l2beat/optimism-decoder",
   "version": "0.1.0",
   "private": true,
   "scripts": {
