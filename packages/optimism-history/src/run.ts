@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import { ethers } from 'ethers'
+
 import { config } from './config'
 import { getHistory } from './history'
 
