@@ -15,7 +15,7 @@ Optimism OVM 1.0
 yarn start 0xee381396fdc483890ab31bf6c2d4d6d6d8da76b08e7112f64e1f7bc12991db37
 ```
 
-Metis (currently doesn't work)
+Metis
 
 ```
 yarn start 0xa979f1fa90b4ecf41a0eaf8109b4ce121025c350e1326988445e9724ed34f570
@@ -34,6 +34,7 @@ METHOD ID:
 4 bytes     Method id: appendSequencerBatch()
 
 HEADER:
+32 bytes    (ONLY PRESENT IN METIS) chain id
 5 bytes     (???) shouldStartAtElement
 3 bytes     (???) totalElementsToAppend
 3 bytes     number of contexts

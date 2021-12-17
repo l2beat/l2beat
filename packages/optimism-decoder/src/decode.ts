@@ -2,7 +2,7 @@ import { ethers } from 'ethers'
 
 import { ByteReader } from './ByteReader'
 import { FourBytesApi } from './FourBytesApi'
-import { add0x, remove0x, trimLong } from './utils'
+import { add0x, trimLong } from './utils'
 
 interface BatchContext {
   sequencerTxCount: number
@@ -27,11 +27,16 @@ export async function decodeSequencerBatch(
   const reader = new ByteReader(data)
 
   const methodName = reader.getBytes(4)
+  console.log('MethodName:', methodName)
+
+  if (kind === 'Metis') {
+    const chainId = reader.getNumber(32)
+    console.log('ChainId:', chainId)
+  }
   const shouldStartAtElement = reader.getNumber(5)
   const totalElementsToAppend = reader.getNumber(3)
   const contextCount = reader.getNumber(3)
 
-  console.log('MethodName:', methodName)
   console.log('Should start at Element:', shouldStartAtElement)
   console.log('Total Elements to Append:', totalElementsToAppend)
   console.log('contextCount:', contextCount)
