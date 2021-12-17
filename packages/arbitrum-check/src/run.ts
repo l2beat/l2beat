@@ -5,9 +5,9 @@ import { config } from './config'
 import { EtherscanApi } from './EtherscanApi'
 import { walkConfig } from './walkConfig'
 
-dotenv.config()
-
 export async function run() {
+  dotenv.config()
+
   const alchemyApiKey = getEnv('ALCHEMY_API_KEY')
   const rpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
