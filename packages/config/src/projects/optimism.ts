@@ -43,11 +43,11 @@ export const optimism: Project = {
   ],
   details: {
     warning:
-      'Currently only whitelisted contracts can be deployed on Optimism.',
+      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure. \
       With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the \
-      new fraud-proof system is being built.',
+      new fraud-proof system is being built (https://github.com/geohot/cannon).',
     purpose: 'Universal',
     links: {
       websites: ['https://optimism.io/'],
@@ -150,17 +150,12 @@ export const optimism: Project = {
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
         description:
-          'Optimism uses the Optimistic Virtual Machine (OVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed. Currently there is a whitelist that limits who can deploy smart contracts.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex OVM implementation.',
-          },
-        ],
+          'Optimism is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the lanugauge they are written in, i.e. anything deployed on L1 can be deployed on Optimism.',
+        risks: [],
         references: [
           {
-            text: 'Deployer Whitelist - Optimism documentation',
-            href: 'https://community.optimism.io/docs/developers/l2/deploy.html#whitelisting',
+            text: 'Introducing EVM Equivalence',
+            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -273,6 +268,11 @@ export const optimism: Project = {
         date: '2021-11-12',
         name: 'Network upgrade to OVM 2.0',
         link: 'https://twitter.com/optimismPBC/status/1458953238867165192?s=20',
+      },
+      {
+        date: '2021-12-16',
+        name: 'Optimism removes whitelist for developers',
+        link: 'https://optimismpbc.medium.com/all-gas-no-brakes-8b0f32afd466',
       },
     ],
   },
