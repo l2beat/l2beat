@@ -1,4 +1,4 @@
-import { run } from './optimismDecodeTxBatch'
+import { run } from './run'
 
 run().catch((e) => {
   console.error(e)

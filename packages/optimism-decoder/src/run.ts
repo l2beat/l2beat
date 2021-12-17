@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import { ethers } from 'ethers'
 
 import { analyzeTransaction } from './analyze'
-import { decodeAppendSequencerBatch } from './decode'
+import { decodeSequencerBatch } from './decode'
 import { FourBytesApi } from './FourBytesApi'
 
 function getEnv(key: string) {
@@ -40,5 +40,5 @@ export async function run() {
   const fourBytesApi = new FourBytesApi()
 
   const { data, project } = await analyzeTransaction(provider, txHash)
-  await decodeAppendSequencerBatch(project, data, fourBytesApi)
+  await decodeSequencerBatch(project, data, fourBytesApi)
 }

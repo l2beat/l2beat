@@ -1,18 +1,18 @@
-export const remove0x = (str: string): string => {
+export function remove0x(str: string): string {
   if (str === undefined) {
     return str
   }
   return str.startsWith('0x') ? str.slice(2) : str
 }
 
-export const add0x = (str: string): string => {
+export function add0x(str: string): string {
   if (str === undefined) {
     return str
   }
   return str.startsWith('0x') ? str : '0x' + str
 }
 
-export const trimLong = (str: string): string => {
+export function trimLong(str: string): string {
   if (str.length < 20) {
     return str
   }

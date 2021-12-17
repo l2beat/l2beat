@@ -9,17 +9,19 @@ interface BatchContext {
   timestamp: number
   blockNumber: number
 }
+
 interface AppendSequencerBatchParams {
   shouldStartAtElement: number // 5 bytes -- starts at batch
   totalElementsToAppend: number // 3 bytes -- total_elements_to_append
   contexts: BatchContext[] // total_elements[fixed_size[]]
   transactions: string[] // total_size_bytes[],total_size_bytes[]
 }
-export const decodeAppendSequencerBatch = async (
+
+export async function decodeSequencerBatch(
   kind: string,
   b: string,
   fourBytesApi: FourBytesApi
-): Promise<AppendSequencerBatchParams> => {
+): Promise<AppendSequencerBatchParams> {
   console.log('Decoding', kind, 'L1 Sequencer transaction batch...')
 
   b = remove0x(b)
