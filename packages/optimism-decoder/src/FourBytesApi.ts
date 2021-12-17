@@ -1,5 +1,7 @@
 import fetch from 'node-fetch'
 
+import { Cache } from './Cache'
+
 interface FourBytesResult {
   count: number
   results: {
@@ -9,15 +11,15 @@ interface FourBytesResult {
 }
 
 export class FourBytesApi {
-  private cache = new Map()
+  private cache = new Cache<string | null>()
 
   async getMethodSignature(identifier: string) {
     if (identifier.length != 10) return undefined
     if (!this.cache.has(identifier)) {
       const signature = await this.fetchMethodSignature(identifier)
-      this.cache.set(identifier, signature)
+      this.cache.set(identifier, signature ?? null)
     }
-    return this.cache.get(identifier)
+    return this.cache.get(identifier) ?? undefined
   }
 
   private async fetchMethodSignature(identifier: string) {
