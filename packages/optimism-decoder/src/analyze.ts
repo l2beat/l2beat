@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { providers } from 'ethers'
 
 const ctcMapping: Record<string, string | undefined> = {
   '0x5E4e65926BA27467555EB562121fac00D24E9dD2': 'Optimism OVM 2.0',
@@ -7,7 +7,10 @@ const ctcMapping: Record<string, string | undefined> = {
   '0xfBd2541e316948B259264c02f370eD088E04c3Db': 'Boba Network',
 }
 
-export async function analyzeTransaction(provider: providers.Provider, txHash: string) {
+export async function analyzeTransaction(
+  provider: providers.Provider,
+  txHash: string
+) {
   const tx = await provider.getTransaction(txHash)
   const project = ctcMapping[tx.to ?? ''] ?? 'Unknown'
 

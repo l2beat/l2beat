@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 import { ethers } from 'ethers'
+
 import { analyzeTransaction } from './analyze'
 import { decodeAppendSequencerBatch } from './decode'
-
 import { FourBytesApi } from './FourBytesApi'
 
 function getEnv(key: string) {
