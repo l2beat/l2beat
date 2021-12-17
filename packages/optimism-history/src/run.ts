@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import { ethers } from 'ethers'
 
 import { config } from './config'
+import { EtherscanApi } from './EtherscanApi'
 import { getHistory } from './history'
 
 function getEnv(key: string) {
@@ -34,10 +35,13 @@ export async function run() {
   dotenv.config()
 
   const alchemyApiKey = getEnv('ALCHEMY_API_KEY')
-  const { network, networkConfig } = getArgs()
+  const { networkConfig } = getArgs()
+
+  const etherscanApiKey = getEnv('ETHERSCAN_API_KEY')
+  const etherscanApi = new EtherscanApi(etherscanApiKey)
 
   const rpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
-  await getHistory(provider, network, networkConfig)
+  await getHistory(provider, etherscanApi, networkConfig)
 }

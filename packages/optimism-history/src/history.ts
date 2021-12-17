@@ -1,7 +1,9 @@
 import { Contract, providers } from 'ethers'
 
 import { NetworkConfig } from './config'
+import { EtherscanApi } from './EtherscanApi'
 import { getBlockTimestamp } from './getBlockTimestamp'
+import { getContractName } from './getContractName'
 import { getOptimismName } from './getOptimismName'
 
 const ABI = [
@@ -10,7 +12,7 @@ const ABI = [
 
 export async function getHistory(
   provider: providers.Provider,
-  network: string,
+  etherscanApi: EtherscanApi,
   networkConfig: NetworkConfig
 ) {
   const addressManager = new Contract(
@@ -37,6 +39,10 @@ export async function getHistory(
         e.args?.name.hash,
         e.transactionHash
       ),
+      implementationName: await getContractName(
+        etherscanApi,
+        e.args?.newAddress
+      ),
     }))
   )
 
@@ -50,7 +56,8 @@ export async function getHistory(
       event.name.padEnd(42, ' '),
       event.oldAddress,
       '->',
-      event.newAddress
+      event.newAddress,
+      event.implementationName
     )
   }
 }
