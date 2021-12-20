@@ -14,7 +14,7 @@ export function MetaImage(props: MetaImageProps) {
     >
       <script dangerouslySetInnerHTML={{ __html: '__DARK_MODE__ = false' }} />
       <div className={cx('Meta', !props.name ? 'overview' : 'project')}>
-        {config.__DEV__showNewUpdateBanner && (
+        {config.showNewUpdateBanner && (
           <div className="Meta-Update">New Update Out Now!</div>
         )}
         <Header
