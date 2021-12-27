@@ -1,0 +1,20 @@
+{
+  "name": "@l2beat/common",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint --ext .ts src",
+    "lint:fix": "yarn lint --fix",
+    "build": "tsc",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "zod": "^3.11.6"
+  },
+  "devDependencies": {
+    "@sinonjs/fake-timers": "^8.1.0",
+    "chai-as-promised": "^7.1.1"
+  }
+}
