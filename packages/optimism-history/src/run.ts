@@ -1,13 +1,18 @@
 import {
   AddressAnalyzer,
+  Cache,
+  FileCacheBackend,
   HttpClient,
   MainnetEtherscanClient,
 } from '@l2beat/common'
 import dotenv from 'dotenv'
 import { ethers } from 'ethers'
 
+import { BlockTimestampService } from './BlockTimestampService'
 import { config } from './config'
+import { EventProcessor } from './EventProcessor'
 import { getHistory } from './history'
+import { OptimismNameService } from './OptimismNameService'
 
 function getEnv(key: string) {
   const value = process.env[key]
@@ -38,6 +43,9 @@ function printHelpAndExit(): never {
 export async function run() {
   dotenv.config()
 
+  const cacheBackend = new FileCacheBackend()
+  const cache = new Cache(cacheBackend)
+
   const alchemyApiKey = getEnv('ALCHEMY_API_KEY')
   const { networkConfig } = getArgs()
 
@@ -51,7 +59,19 @@ export async function run() {
     etherscanApiKey
   )
 
-  const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
+  const blockTimestampService = new BlockTimestampService(provider)
+  cache.wrapMethod(blockTimestampService, 'getBlockTimestamp')
 
-  await getHistory(provider, addressAnalyzer, networkConfig)
+  const optimismNameService = new OptimismNameService(provider, cache)
+
+  const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
+  cache.wrapMethod(addressAnalyzer, 'getName')
+
+  const eventProcessor = new EventProcessor(
+    blockTimestampService,
+    optimismNameService,
+    addressAnalyzer
+  )
+
+  await getHistory(provider, networkConfig, eventProcessor)
 }

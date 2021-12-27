@@ -13,11 +13,14 @@
     "test": "mocha"
   },
   "dependencies": {
+    "@types/mkdirp": "^1.0.2",
     "ethers": "^5.5.2",
+    "mkdirp": "^1.0.4",
     "zod": "^3.11.6"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^8.1.0",
-    "chai-as-promised": "^7.1.1"
+    "chai-as-promised": "^7.1.1",
+    "wait-for-expect": "^3.0.2"
   }
 }

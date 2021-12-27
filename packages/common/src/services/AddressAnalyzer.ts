@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
 import { EthereumAddress, json } from '../model'
-import { EtherscanClient } from '../peripherals'
+import { EtherscanClient } from '.'
 
 export type AnalyzedAddress =
   | { type: 'EOA'; name: string }
@@ -13,6 +13,11 @@ export class AddressAnalyzer {
     private provider: providers.Provider,
     private etherscanClient: EtherscanClient
   ) {}
+
+  async getName(address: EthereumAddress) {
+    const { name } = await this.analyze(address)
+    return name
+  }
 
   async analyze(address: EthereumAddress) {
     const [code, source] = await Promise.all([
