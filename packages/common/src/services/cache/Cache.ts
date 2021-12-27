@@ -6,6 +6,7 @@ export interface CacheBackend {
 }
 
 type WithAsyncMethod<K extends string> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [X in K]: (...args: any[]) => Promise<any>
 }
 
