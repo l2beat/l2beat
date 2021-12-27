@@ -1,8 +1,12 @@
+import {
+  AddressAnalyzer,
+  HttpClient,
+  MainnetEtherscanClient,
+} from '@l2beat/common'
 import dotenv from 'dotenv'
 import { ethers } from 'ethers'
 
 import { config } from './config'
-import { EtherscanApi } from './EtherscanApi'
 import { getHistory } from './history'
 
 function getEnv(key: string) {
@@ -37,11 +41,17 @@ export async function run() {
   const alchemyApiKey = getEnv('ALCHEMY_API_KEY')
   const { networkConfig } = getArgs()
 
-  const etherscanApiKey = getEnv('ETHERSCAN_API_KEY')
-  const etherscanApi = new EtherscanApi(etherscanApiKey)
-
   const rpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
-  await getHistory(provider, etherscanApi, networkConfig)
+  const etherscanApiKey = getEnv('ETHERSCAN_API_KEY')
+  const httpClient = new HttpClient()
+  const etherscanClient = new MainnetEtherscanClient(
+    httpClient,
+    etherscanApiKey
+  )
+
+  const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
+
+  await getHistory(provider, addressAnalyzer, networkConfig)
 }

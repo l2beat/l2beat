@@ -35,6 +35,11 @@ export class RateLimiter {
     })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  wrap<A extends any[], R>(fn: (...args: A) => R | Promise<R>) {
+    return (...args: A) => this.call(() => fn(...args))
+  }
+
   private execute() {
     if (this.queue.length === 0) {
       return

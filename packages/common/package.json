@@ -1,0 +1,23 @@
+{
+  "name": "@l2beat/common",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint --ext .ts src",
+    "lint:fix": "yarn lint --fix",
+    "build": "tsc",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "ethers": "^5.5.2",
+    "zod": "^3.11.6"
+  },
+  "devDependencies": {
+    "@sinonjs/fake-timers": "^8.1.0",
+    "chai-as-promised": "^7.1.1"
+  }
+}

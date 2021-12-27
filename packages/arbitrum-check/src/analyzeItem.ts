@@ -1,24 +1,22 @@
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
 import { Contract, providers, utils } from 'ethers'
 
 import { analyzeEip1967Proxy } from './analyzeEip1967Proxy'
-import { analyzeEOA } from './analyzeEOA'
 import { Config, ContractDescription } from './config'
-import { EtherscanApi } from './EtherscanApi'
 
 export async function analyzeItem(
   provider: providers.Provider,
-  etherscanApi: EtherscanApi,
+  addressAnalyzer: AddressAnalyzer,
   config: Config,
   address: string
 ): Promise<{ analyzed: Record<string, unknown>; relatives: string[] }> {
-  const [eoa, baseName, proxy] = await Promise.all([
-    analyzeEOA(provider, address),
-    etherscanApi.getContractName(address),
-    analyzeEip1967Proxy(provider, etherscanApi, address),
+  const [analysis, proxy] = await Promise.all([
+    addressAnalyzer.analyze(EthereumAddress(address)),
+    analyzeEip1967Proxy(provider, addressAnalyzer, address),
   ])
 
-  const name = proxy?.name ?? baseName
-  const description = eoa.EOA ? undefined : config[name]
+  const name = proxy?.name ?? analysis.name
+  const description = analysis.type === 'EOA' ? undefined : config[name]
   const parameters = description
     ? await getParameters(description, address, provider)
     : []
@@ -30,11 +28,12 @@ export async function analyzeItem(
     relatives.push(proxy.eip1967Admin)
   }
 
+  delete analysis.abi
+
   return {
     analyzed: {
       address: address,
-      ...(eoa.EOA ? {} : { name }),
-      ...eoa,
+      ...analysis,
       ...proxy,
       ...Object.fromEntries(parameters.map((x) => [x.name, x.value])),
     },

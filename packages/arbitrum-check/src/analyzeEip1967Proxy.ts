@@ -1,26 +1,26 @@
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
 import { providers, utils } from 'ethers'
 
-import { EtherscanApi } from './EtherscanApi'
+const IMPLEMENTATION_SLOT = slot('eip1967.proxy.implementation')
+const ADMIN_SLOT = slot('eip1967.proxy.admin')
 
 export async function analyzeEip1967Proxy(
   provider: providers.Provider,
-  etherscanApi: EtherscanApi,
+  addressAnalyzer: AddressAnalyzer,
   proxyAddress: string
 ) {
-  const implementationSlot = await provider.getStorageAt(
-    proxyAddress,
-    '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc'
-  )
+  const [implementationSlot, adminSlot] = await Promise.all([
+    provider.getStorageAt(proxyAddress, IMPLEMENTATION_SLOT),
+    provider.getStorageAt(proxyAddress, ADMIN_SLOT),
+  ])
   if (implementationSlot === '0x' + '0'.repeat(64)) {
     return undefined
   }
-  const adminSlot = await provider.getStorageAt(
-    proxyAddress,
-    '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103'
-  )
   const implementation = wordToAddress(implementationSlot)
   const admin = wordToAddress(adminSlot)
-  const name = await etherscanApi.getContractName(implementation)
+  const { name } = await addressAnalyzer.analyze(
+    EthereumAddress(implementation)
+  )
   return {
     name,
     eip1967Implementation: implementation,
@@ -30,4 +30,9 @@ export async function analyzeEip1967Proxy(
 
 function wordToAddress(word: string) {
   return utils.getAddress('0x' + word.substr(26, 40))
+}
+
+function slot(name: string) {
+  const hash = utils.solidityKeccak256(['string'], [name])
+  return '0x' + (BigInt(hash) - 1n).toString(16).padStart(64, '0')
 }

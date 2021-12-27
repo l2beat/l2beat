@@ -1,8 +1,12 @@
+import {
+  AddressAnalyzer,
+  HttpClient,
+  MainnetEtherscanClient,
+} from '@l2beat/common'
 import dotenv from 'dotenv'
 import { ethers } from 'ethers'
 
 import { config } from './config'
-import { EtherscanApi } from './EtherscanApi'
 import { walkConfig } from './walkConfig'
 
 export async function run() {
@@ -13,13 +17,18 @@ export async function run() {
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
   const etherscanApiKey = getEnv('ETHERSCAN_API_KEY')
-  const etherscanApi = new EtherscanApi(etherscanApiKey)
+  const httpClient = new HttpClient()
+  const etherscanClient = new MainnetEtherscanClient(
+    httpClient,
+    etherscanApiKey
+  )
+  const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
 
   const rollupAddress = '0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A'
   const l1GatewayRouter = '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef'
   const l1ERC20Gateway = '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'
 
-  await walkConfig(provider, etherscanApi, config, [
+  await walkConfig(provider, addressAnalyzer, config, [
     rollupAddress,
     l1GatewayRouter,
     l1ERC20Gateway,
