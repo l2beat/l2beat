@@ -5,7 +5,7 @@ import { ContractSourceResult, EtherscanResponse } from './model'
 
 export class EtherscanClient {
   private rateLimiter = new RateLimiter({
-    callsPerMinute: 150,
+    callsPerMinute: 120,
   })
   private timeoutMs = 10_000
 

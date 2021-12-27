@@ -5,6 +5,10 @@ export interface CacheBackend {
   write(data: NestedDict): void
 }
 
+type WithAsyncMethod<K extends string> = {
+  [X in K]: (...args: any[]) => Promise<any>
+}
+
 export class Cache {
   private cache = new NestedDict({})
   private promises = new NestedDict<Promise<unknown>>({})
@@ -50,10 +54,7 @@ export class Cache {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  wrap<A extends any[], R>(
-    module: string,
-    fn: (...args: A) => Promise<R>
-  ) {
+  wrap<A extends any[], R>(module: string, fn: (...args: A) => Promise<R>) {
     return async (...args: A): Promise<R> => {
       const key = JSON.stringify(args)
       if (this.has(module, key)) {
@@ -68,6 +69,17 @@ export class Cache {
       promise.then((value) => this.set(module, key, value))
       return promise
     }
+  }
+
+  wrapMethod<K extends string>(
+    object: WithAsyncMethod<K>,
+    method: K,
+    module?: string
+  ) {
+    if (!module) {
+      module = `${object.constructor.name}.${method}`
+    }
+    object[method] = this.wrap(module, object[method].bind(object))
   }
 
   private flush = debounce(this.save.bind(this))

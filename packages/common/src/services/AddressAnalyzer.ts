@@ -14,6 +14,11 @@ export class AddressAnalyzer {
     private etherscanClient: EtherscanClient
   ) {}
 
+  async getName(address: EthereumAddress) {
+    const { name } = await this.analyze(address)
+    return name
+  }
+
   async analyze(address: EthereumAddress) {
     const [code, source] = await Promise.all([
       this.provider.getCode(address.toString()),

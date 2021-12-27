@@ -1,10 +1,7 @@
-import { AddressAnalyzer } from '@l2beat/common'
 import { Contract, providers } from 'ethers'
 
 import { NetworkConfig } from './config'
-import { getBlockTimestamp } from './getBlockTimestamp'
-import { getContractName } from './getContractName'
-import { getOptimismName } from './getOptimismName'
+import { EventProcessor } from './EventProcessor'
 
 const ABI = [
   'event AddressSet(string indexed name, address newAddress, address oldAddress)',
@@ -12,8 +9,8 @@ const ABI = [
 
 export async function getHistory(
   provider: providers.Provider,
-  addressAnalyzer: AddressAnalyzer,
-  networkConfig: NetworkConfig
+  networkConfig: NetworkConfig,
+  eventProcessor: EventProcessor
 ) {
   const addressManager = new Contract(
     networkConfig.addressManager,
@@ -27,23 +24,7 @@ export async function getHistory(
   )
 
   const processed = await Promise.all(
-    events.map(async (e) => ({
-      blockNumber: e.blockNumber,
-      transactionHash: e.transactionHash,
-      nameHash: e.args?.name.hash as string,
-      oldAddress: e.args?.oldAddress as string,
-      newAddress: e.args?.newAddress as string,
-      timestamp: await getBlockTimestamp(provider, e.blockNumber),
-      name: await getOptimismName(
-        provider,
-        e.args?.name.hash,
-        e.transactionHash
-      ),
-      implementationName: await getContractName(
-        addressAnalyzer,
-        e.args?.newAddress
-      ),
-    }))
+    events.map((e) => eventProcessor.processEvent(e))
   )
 
   processed.sort((a, b) => a.blockNumber - b.blockNumber)
