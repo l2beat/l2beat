@@ -1,13 +1,13 @@
+import { AddressAnalyzer } from '@l2beat/common'
 import chalk from 'chalk'
 import { BigNumber, constants, providers, utils } from 'ethers'
 
 import { analyzeItem } from './analyzeItem'
 import { Config } from './config'
-import { EtherscanApi } from './EtherscanApi'
 
 export async function walkConfig(
   provider: providers.Provider,
-  etherscanApi: EtherscanApi,
+  addressAnalyzer: AddressAnalyzer,
   config: Config,
   startingPoints: string[]
 ) {
@@ -25,7 +25,7 @@ export async function walkConfig(
     }
     const { analyzed, relatives } = await analyzeItem(
       provider,
-      etherscanApi,
+      addressAnalyzer,
       config,
       address
     )
@@ -42,14 +42,13 @@ function prettyPrint(resolved: Map<string, Record<string, unknown>>) {
   for (const [address, analyzed] of resolved) {
     if (typeof analyzed.name === 'string') {
       addressMap.set(address, analyzed.name)
-    } else if (analyzed.EOA) {
-      addressMap.set(address, 'EOA')
-    } else {
-      addressMap.set(address, '???')
     }
   }
 
   for (const [address, analyzed] of resolved) {
+    if (analyzed.type === 'EOA') {
+      continue
+    }
     console.log(chalk.blue(address))
     for (const [key, value] of Object.entries(analyzed)) {
       prettyPrintValue(key, value, addressMap)
@@ -74,7 +73,7 @@ function prettyPrintValue(
   } else if (typeof value === 'string' && utils.isAddress(value)) {
     const name = addressMap.get(value)
     if (name) {
-      if (name !== 'EOA') {
+      if (!name.startsWith('<')) {
         console.log(spaces, key, chalk.magenta(name), chalk.green(value))
       } else {
         console.log(spaces, key, chalk.cyan(name), chalk.cyan(value))

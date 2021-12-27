@@ -2,6 +2,8 @@
   "name": "@l2beat/common",
   "version": "0.1.0",
   "private": true,
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write .",

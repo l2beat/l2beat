@@ -8,16 +8,14 @@
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts src",
     "lint:fix": "yarn lint --fix",
-    "build": "tsc",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/common": "*",
     "@types/node": "^16.11.11",
-    "@types/node-fetch": "^2.5.12",
     "chalk": "^4.1.2",
     "dotenv": "^10.0.0",
-    "ethers": "^5.5.1",
-    "node-fetch": "^2.6.6"
+    "ethers": "^5.5.1"
   },
   "devDependencies": {}
 }
