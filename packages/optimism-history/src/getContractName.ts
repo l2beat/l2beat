@@ -1,15 +1,16 @@
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
+
 import { Cache } from './Cache'
-import { EtherscanApi } from './EtherscanApi'
 
 const contractNameCache = new Cache<string>('contract-names.json')
 
 export async function getContractName(
-  etherscanApi: EtherscanApi,
+  addressAnalyzer: AddressAnalyzer,
   address: string
 ) {
   if (!contractNameCache.has(address)) {
-    const name = await etherscanApi.getContractName(address)
-    contractNameCache.set(address, name ?? '')
+    const { name } = await addressAnalyzer.analyze(EthereumAddress(address))
+    contractNameCache.set(address, name)
   }
   return contractNameCache.get(address) ?? ''
 }

@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/common": "*",
     "@types/node": "^16.11.11",
     "@types/node-fetch": "^2.5.12",
     "chalk": "^4.1.2",

@@ -1,7 +1,7 @@
+import { AddressAnalyzer } from '@l2beat/common'
 import { Contract, providers } from 'ethers'
 
 import { NetworkConfig } from './config'
-import { EtherscanApi } from './EtherscanApi'
 import { getBlockTimestamp } from './getBlockTimestamp'
 import { getContractName } from './getContractName'
 import { getOptimismName } from './getOptimismName'
@@ -12,7 +12,7 @@ const ABI = [
 
 export async function getHistory(
   provider: providers.Provider,
-  etherscanApi: EtherscanApi,
+  addressAnalyzer: AddressAnalyzer,
   networkConfig: NetworkConfig
 ) {
   const addressManager = new Contract(
@@ -40,7 +40,7 @@ export async function getHistory(
         e.transactionHash
       ),
       implementationName: await getContractName(
-        etherscanApi,
+        addressAnalyzer,
         e.args?.newAddress
       ),
     }))
