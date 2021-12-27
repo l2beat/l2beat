@@ -1,2 +1,2 @@
-export * from './etherscan/EtherscanClient'
+export * from './etherscan'
 export * from './HttpClient'

@@ -1,4 +1,9 @@
-import { EtherscanClient, HttpClient, mock } from '../../../src'
+import {
+  EthereumAddress,
+  EtherscanClient,
+  HttpClient,
+  mock,
+} from '../../../src'
 import { Response } from 'node-fetch'
 import { expect } from 'chai'
 
@@ -83,6 +88,38 @@ describe('EtherscanClient', () => {
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       const result = await etherscanClient.call('mod', 'act', {})
       expect(result).to.deep.equal(response)
+    })
+  })
+
+  describe('getContractSource', () => {
+    it('constructs a correct url', async () => {
+      const result = {
+        SourceCode: '',
+        ABI: 'Contract source code not verified',
+        ContractName: '',
+        CompilerVersion: '',
+        OptimizationUsed: '',
+        Runs: '',
+        ConstructorArguments: '',
+        EVMVersion: 'Default',
+        Library: '',
+        LicenseType: 'Unknown',
+        Proxy: '0',
+        Implementation: '',
+        SwarmSource: '',
+      }
+      const httpClient = mock<HttpClient>({
+        async fetch() {
+          return new Response(
+            JSON.stringify({ status: '1', message: 'OK', result: [result] })
+          )
+        },
+      })
+      const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
+      const source = await etherscanClient.getContractSource(
+        EthereumAddress.ZERO
+      )
+      expect(source).to.deep.equal(result)
     })
   })
 })

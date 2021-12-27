@@ -1,7 +1,7 @@
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'chai'
 
-import { RateLimiter } from '../../src/tools/RateLimiter'
+import { RateLimiter } from '../../src'
 
 describe('RateLimiter', () => {
   const cases = [
