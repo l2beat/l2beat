@@ -84,7 +84,7 @@ describe('Cache', () => {
       return a + b
     }
     const cache = new Cache(new EmptyCacheBackend())
-    const wrapped = cache.wrap('add', add)
+    const wrapped = cache.wrapSync('add', add)
 
     expect(wrapped(1, 2)).to.equal(3)
     expect(calls).to.equal(1)
@@ -100,11 +100,11 @@ describe('Cache', () => {
     async function add(a: number, b: number) {
       calls++
       await sleep(1)
-      return a + b
+      return { sum: a + b }
     }
 
     const cache = new Cache(new EmptyCacheBackend())
-    const wrapped = cache.wrapAsync('add', add)
+    const wrapped = cache.wrap('add', add)
 
     const [a, b, c] = await Promise.all([
       wrapped(1, 2),
@@ -112,9 +112,10 @@ describe('Cache', () => {
       wrapped(1, 2),
     ])
 
-    expect(a).to.equal(3)
-    expect(b).to.equal(3)
-    expect(c).to.equal(3)
+    expect(a).to.deep.equal({ sum: 3 })
+    expect(b).to.deep.equal({ sum: 3 })
+    expect(c).to.deep.equal({ sum: 3 })
     expect(calls).to.equal(1)
+    expect(cache.get('add', '[1,2]')).to.deep.equal({ sum: 3 })
   })
 })

@@ -37,7 +37,7 @@ export class Cache {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  wrap<A extends any[], R>(module: string, fn: (...args: A) => R) {
+  wrapSync<A extends any[], R>(module: string, fn: (...args: A) => R) {
     return (...args: A): R => {
       const key = JSON.stringify(args)
       if (this.has(module, key)) {
@@ -50,7 +50,7 @@ export class Cache {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  wrapAsync<A extends any[], R>(
+  wrap<A extends any[], R>(
     module: string,
     fn: (...args: A) => Promise<R>
   ) {
