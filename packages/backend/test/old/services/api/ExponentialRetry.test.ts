@@ -1,5 +1,5 @@
 import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { ExponentialRetry } from '../../../../src/old/services/api/ExponentialRetry'
 
@@ -38,9 +38,9 @@ describe('ExponentialRetry', () => {
     await clock.runAllAsync()
     clock.uninstall()
 
-    expect(clock.now).to.equal(100 + 200 + 400 + 800)
-    expect(completed).to.equal(true)
-    expect(callCount).to.equal(5)
+    expect(clock.now).toEqual(100 + 200 + 400 + 800)
+    expect(completed).toEqual(true)
+    expect(callCount).toEqual(5)
   })
 
   it('will fail if not successful after maxRetryCount', async () => {
@@ -64,7 +64,7 @@ describe('ExponentialRetry', () => {
     await clock.runAllAsync()
     clock.uninstall()
 
-    expect(clock.now).to.equal(100 + 200)
-    expect(failed).to.equal(true)
+    expect(clock.now).toEqual(100 + 200)
+    expect(failed).toEqual(true)
   })
 })

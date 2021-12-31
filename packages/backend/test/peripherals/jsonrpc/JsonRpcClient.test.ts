@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import {
   JsonRpcClient,
@@ -40,7 +40,7 @@ describe('JsonRpcClient', () => {
       { method: 'three', params: { th: 3 } },
     ])
 
-    expect(requests).to.deep.equal([
+    expect(requests).toEqual([
       { jsonrpc: '2.0', id: 1337, method: 'makeBed' },
       { jsonrpc: '2.0', id: 1338, method: 'bakeCake', params: [5, 'big'] },
       { jsonrpc: '2.0', id: 1339, method: 'goTo', params: { x: 1, y: 2 } },
@@ -61,7 +61,7 @@ describe('JsonRpcClient', () => {
       }
       const client = new TestClient()
       const result = await client.call('doStuff')
-      expect(result).to.equal('foo')
+      expect(result).toEqual('foo')
     })
 
     it('throws for mismatched id', async () => {
@@ -71,7 +71,7 @@ describe('JsonRpcClient', () => {
         }
       }
       const client = new TestClient()
-      await expect(client.call('doStuff')).to.be.rejectedWith(
+      await expect(client.call('doStuff')).toBeRejected(
         TypeError,
         'Id mismatched in JSON-RPC response'
       )
@@ -84,7 +84,7 @@ describe('JsonRpcClient', () => {
         }
       }
       const client = new TestClient()
-      await expect(client.call('doStuff')).to.be.rejectedWith(
+      await expect(client.call('doStuff')).toBeRejected(
         TypeError,
         'Unexpected array JSON-RPC response'
       )
@@ -101,10 +101,7 @@ describe('JsonRpcClient', () => {
         }
       }
       const client = new TestClient()
-      await expect(client.call('doStuff')).to.be.rejectedWith(
-        JsonRpcError,
-        'oops'
-      )
+      await expect(client.call('doStuff')).toBeRejected(JsonRpcError, 'oops')
     })
   })
 
@@ -123,7 +120,7 @@ describe('JsonRpcClient', () => {
         { method: 'makeBed' },
         { method: 'bakeCake' },
       ])
-      expect(result).to.deep.equal([{ result: 'foo' }, { result: 'bar' }])
+      expect(result).toEqual([{ result: 'foo' }, { result: 'bar' }])
     })
 
     it('skips execute when given an empty array', async () => {
@@ -134,7 +131,7 @@ describe('JsonRpcClient', () => {
       }
       const client = new TestClient()
       const result = await client.callBatch([])
-      expect(result).to.deep.equal([])
+      expect(result).toEqual([])
     })
 
     it('ignores superfluous items results', async () => {
@@ -152,7 +149,7 @@ describe('JsonRpcClient', () => {
         { method: 'makeBed' },
         { method: 'bakeCake' },
       ])
-      expect(result).to.deep.equal([{ result: 'foo' }, { result: 'bar' }])
+      expect(result).toEqual([{ result: 'foo' }, { result: 'bar' }])
     })
 
     it('throws for object response', async () => {
@@ -164,7 +161,7 @@ describe('JsonRpcClient', () => {
       const client = new TestClient()
       await expect(
         client.callBatch([{ method: 'makeBed' }, { method: 'bakeCake' }])
-      ).to.be.rejectedWith(TypeError, 'Unexpected object JSON-RPC response')
+      ).toBeRejected(TypeError, 'Unexpected object JSON-RPC response')
     })
 
     it('handles individual request errors', async () => {
@@ -189,13 +186,13 @@ describe('JsonRpcClient', () => {
       ])
 
       // We do it this way because chai cannot deep equal errors
-      expect(result.length).to.equal(3)
-      expect(result[0].result).to.equal(undefined)
-      expect(result[0].error).to.be.instanceOf(Error)
-      expect(result[1].result).to.equal(undefined)
-      expect(result[1].error).to.be.instanceOf(JsonRpcError)
-      expect(result[2].result).to.equal('baz')
-      expect(result[2].error).to.equal(undefined)
+      expect(result.length).toEqual(3)
+      expect(result[0].result).toEqual(undefined)
+      expect(result[0].error).toBeA(Error)
+      expect(result[1].result).toEqual(undefined)
+      expect(result[1].error).toBeA(JsonRpcError)
+      expect(result[2].result).toEqual('baz')
+      expect(result[2].error).toEqual(undefined)
     })
   })
 })

@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { as } from '../../../src/tools/cast'
 import { CastError } from '../../../src/tools/cast/CastError'
@@ -6,7 +6,7 @@ import { CastError } from '../../../src/tools/cast/CastError'
 describe('as.object', () => {
   it('processes the value passed', () => {
     const result = as.object({})({})
-    expect(result).to.deep.equal({})
+    expect(result).toEqual({})
   })
 
   it('applies nested casts', () => {
@@ -21,7 +21,7 @@ describe('as.object', () => {
       foo: 'bar',
     })
 
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       name: 'John',
       age: 31,
     })
@@ -39,7 +39,7 @@ describe('as.object', () => {
         age: 31,
         foo: 'bar',
       })
-    ).to.throw(CastError)
+    ).toThrow(CastError)
   })
 
   it('throws when nested casts throw', () => {
@@ -48,19 +48,19 @@ describe('as.object', () => {
       age: as.integer,
     })
 
-    expect(() => asUser({ name: 'John', age: false })).to.throw(CastError)
+    expect(() => asUser({ name: 'John', age: false })).toThrow(CastError)
   })
 
   it('throws for values other than objects', () => {
-    expect(() => as.object({})('foo')).to.throw(CastError)
+    expect(() => as.object({})('foo')).toThrow(CastError)
   })
 
   it('throws for null', () => {
-    expect(() => as.object({})(null)).to.throw(CastError)
+    expect(() => as.object({})(null)).toThrow(CastError)
   })
 
   it('throws for arrays', () => {
-    expect(() => as.object({})([])).to.throw(CastError)
+    expect(() => as.object({})([])).toThrow(CastError)
   })
 
   it('preserves nested optional casts when missing', () => {
@@ -69,7 +69,7 @@ describe('as.object', () => {
       age: as.optional(as.integer),
     })
     const result = asUser({ name: 'John' })
-    expect(result).to.deep.equal({ name: 'John' })
+    expect(result).toEqual({ name: 'John' } as any)
   })
 
   it('preserves nested optional casts when present', () => {
@@ -78,7 +78,7 @@ describe('as.object', () => {
       age: as.optional(as.integer),
     })
     const result = asUser({ name: 'John', age: null })
-    expect(result).to.deep.equal({ name: 'John', age: undefined })
+    expect(result).toEqual({ name: 'John', age: undefined })
   })
 
   it('allows optional properties in strict mode', () => {
@@ -87,6 +87,6 @@ describe('as.object', () => {
       age: as.optional(as.integer),
     })
 
-    expect(() => asUser({ name: 'John' })).not.to.throw()
+    expect(() => asUser({ name: 'John' })).not.toThrow()
   })
 })

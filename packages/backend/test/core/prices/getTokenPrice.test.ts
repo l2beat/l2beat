@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { getTokenPrice } from '../../../src/core/prices/getTokenPrice'
 import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
@@ -64,7 +64,7 @@ describe('getTokenPrice', () => {
       for (const record of testCases) {
         it(`${record.exchange.name} - ${record.assetId}`, () => {
           const price = getTokenPrice(token, [record], etherPrice)
-          expect(price).to.equal(expectedPrice)
+          expect(price).toEqual(expectedPrice)
         })
       }
     })
@@ -102,7 +102,7 @@ describe('getTokenPrice', () => {
       ]
 
       const price = getTokenPrice(token, records, 0n)
-      expect(price).to.equal(202n * 10n ** 18n)
+      expect(price).toEqual(202n * 10n ** 18n)
     })
   })
 
@@ -115,7 +115,7 @@ describe('getTokenPrice', () => {
       priceStrategy: { type: 'constant', value: 1234n },
     }
     const price = getTokenPrice(token, [], 0n)
-    expect(price).to.equal(1234n)
+    expect(price).toEqual(1234n)
   })
 
   it('works for ether price tokens', () => {
@@ -127,6 +127,6 @@ describe('getTokenPrice', () => {
       priceStrategy: { type: 'ether' },
     }
     const price = getTokenPrice(token, [], 5678n)
-    expect(price).to.equal(5678n)
+    expect(price).toEqual(5678n)
   })
 })

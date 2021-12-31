@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, EthereumAddress, Exchange } from '../../../../src/model'
 import {
@@ -24,34 +24,34 @@ describe('getUniswapV2PairAddress', () => {
       '0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11'
     )
 
-    expect(pairDW).to.deep.equal(expected)
-    expect(pairWD).to.deep.equal(expected)
+    expect(pairDW).toEqual(expected)
+    expect(pairWD).toEqual(expected)
   })
 })
 
 describe('encodeUniswapV2Requests', () => {
   it('encodes a call to get the reserves', () => {
     const result = encodeUniswapV2Requests(DAI, Exchange.uniswapV2('weth'))
-    expect(result).to.deep.equal([{ address: pair, data: encodeGetReserves() }])
+    expect(result).toEqual([{ address: pair, data: encodeGetReserves() }])
   })
 
   it('is order agnostic', () => {
     const result = encodeUniswapV2Requests(WETH, Exchange.uniswapV2('dai'))
-    expect(result).to.deep.equal([{ address: pair, data: encodeGetReserves() }])
+    expect(result).toEqual([{ address: pair, data: encodeGetReserves() }])
   })
 })
 
 describe('decodeUniswapV2Results', () => {
   it('decodes empty array', () => {
     const result = decodeUniswapV2Results(DAI, Exchange.uniswapV2('weth'), [])
-    expect(result).to.deep.equal({ liquidity: 0n, price: 0n })
+    expect(result).toEqual({ liquidity: 0n, price: 0n })
   })
 
   it('decodes unsuccessful result', () => {
     const result = decodeUniswapV2Results(DAI, Exchange.uniswapV2('weth'), [
       { success: false, data: Bytes.EMPTY },
     ])
-    expect(result).to.deep.equal({ liquidity: 0n, price: 0n })
+    expect(result).toEqual({ liquidity: 0n, price: 0n })
   })
 
   it('decodes successful result for DAI', () => {
@@ -61,7 +61,7 @@ describe('decodeUniswapV2Results', () => {
       Exchange.uniswapV2('weth'),
       encoded
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       liquidity: 4_000_000n,
       price: 10n ** 18n / 4_000n,
     })
@@ -74,7 +74,7 @@ describe('decodeUniswapV2Results', () => {
       Exchange.uniswapV2('dai'),
       encoded
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       liquidity: 1_000n,
       price: 10n ** 18n * 4_000n,
     })
@@ -90,7 +90,7 @@ describe('decodeUniswapV2Results', () => {
       Exchange.uniswapV2('usdt'),
       encoded
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       liquidity: 24_813_092_743_672_255_251_334n,
       price: 4_369_485_551n,
     })

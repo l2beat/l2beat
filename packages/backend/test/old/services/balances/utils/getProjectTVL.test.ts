@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { ProjectTVL } from '../../../../../src/old/services/balances/model'
 import { getProjectStats } from '../../../../../src/old/services/balances/utils'
@@ -28,6 +28,6 @@ describe('getProjectTVL', () => {
         },
       },
     }
-    expect(tvl).to.deep.equal(expected)
+    expect(tvl).toEqual(expected)
   })
 })

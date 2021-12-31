@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, KeccakHash } from '../../src/model'
 
@@ -7,14 +7,14 @@ describe('KeccakHash', () => {
     const hash = new KeccakHash(
       '0xabcdabcd12345678abcdabcd12345678abcdabcd12345678abcdabcd12345678'
     )
-    expect(hash).to.be.instanceOf(KeccakHash)
+    expect(hash).toBeA(KeccakHash)
   })
 
   it('accepts mixed-case hashes', () => {
     const hash = new KeccakHash(
       '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
     )
-    expect(hash).to.be.instanceOf(KeccakHash)
+    expect(hash).toBeA(KeccakHash)
   })
 
   it('accepts bytes', () => {
@@ -22,18 +22,18 @@ describe('KeccakHash', () => {
       '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
     )
     const hash = new KeccakHash(bytes)
-    expect(hash).to.be.instanceOf(KeccakHash)
+    expect(hash).toBeA(KeccakHash)
   })
 
   it('does not accept shorter strings', () => {
-    expect(() => new KeccakHash('0x1234')).to.throw(
+    expect(() => new KeccakHash('0x1234')).toThrow(
       TypeError,
       'KeccakHash must be exactly 32 bytes'
     )
   })
 
   it('does not accept invalid strings', () => {
-    expect(() => new KeccakHash('foo')).to.throw(
+    expect(() => new KeccakHash('foo')).toThrow(
       TypeError,
       'Hex string expected'
     )
@@ -43,7 +43,7 @@ describe('KeccakHash', () => {
     const address = new KeccakHash(
       '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
     )
-    expect(address.toString()).to.equal(
+    expect(address.toString()).toEqual(
       '0xabcdabcd12345678abcdabcd12345678abcdabcd12345678abcdabcd12345678'
     )
   })
@@ -58,8 +58,8 @@ describe('KeccakHash', () => {
     const c = new KeccakHash(
       '0x0000000000000000000000000000000000000000000000000000000000000000'
     )
-    expect(a.equals(b)).to.equal(true)
-    expect(b.equals(a)).to.equal(true)
-    expect(a.equals(c)).to.equal(false)
+    expect(a.equals(b)).toEqual(true)
+    expect(b.equals(a)).toEqual(true)
+    expect(a.equals(c)).toEqual(false)
   })
 })

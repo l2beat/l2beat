@@ -1,16 +1,14 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { SimpleDate } from '../../../src/old/model'
 
 describe('SimpleDate', () => {
   it('can be created from string', () => {
-    expect(SimpleDate.fromString('2020-06-07')).to.be.instanceOf(SimpleDate)
+    expect(SimpleDate.fromString('2020-06-07')).toBeA(SimpleDate)
   })
 
   it('can be created from a unix timestamp', () => {
-    expect(SimpleDate.fromUnixTimestamp(1623067856)).to.be.instanceOf(
-      SimpleDate
-    )
+    expect(SimpleDate.fromUnixTimestamp(1623067856)).toBeA(SimpleDate)
   })
 
   it('can be compared using equals', () => {
@@ -18,12 +16,12 @@ describe('SimpleDate', () => {
       SimpleDate.fromString('2020-06-07').equals(
         SimpleDate.fromString('2020-06-07')
       )
-    ).to.equal(true)
+    ).toEqual(true)
     expect(
       SimpleDate.fromString('2020-06-07').equals(
         SimpleDate.fromString('2020-06-08')
       )
-    ).to.equal(false)
+    ).toEqual(false)
   })
 
   it('can be compared using isAfter', () => {
@@ -31,17 +29,17 @@ describe('SimpleDate', () => {
       SimpleDate.fromString('2020-06-07').isAfter(
         SimpleDate.fromString('2020-06-07')
       )
-    ).to.equal(false)
+    ).toEqual(false)
     expect(
       SimpleDate.fromString('2020-06-07').isAfter(
         SimpleDate.fromString('2020-06-08')
       )
-    ).to.equal(false)
+    ).toEqual(false)
     expect(
       SimpleDate.fromString('2020-06-07').isAfter(
         SimpleDate.fromString('2020-06-06')
       )
-    ).to.equal(true)
+    ).toEqual(true)
   })
 
   it('can be compared using isBefore', () => {
@@ -49,32 +47,32 @@ describe('SimpleDate', () => {
       SimpleDate.fromString('2020-06-07').isBefore(
         SimpleDate.fromString('2020-06-07')
       )
-    ).to.equal(false)
+    ).toEqual(false)
     expect(
       SimpleDate.fromString('2020-06-07').isBefore(
         SimpleDate.fromString('2020-06-08')
       )
-    ).to.equal(true)
+    ).toEqual(true)
     expect(
       SimpleDate.fromString('2020-06-07').isBefore(
         SimpleDate.fromString('2020-06-06')
       )
-    ).to.equal(false)
+    ).toEqual(false)
   })
 
   it('can return a unix timestamp', () => {
     const ts = SimpleDate.fromString('2020-06-07').toUnixTimestamp()
-    expect(ts).to.equal(1591488000)
+    expect(ts).toEqual(1591488000)
   })
 
   it('can return a YYYY-MM-DD string', () => {
     const result = SimpleDate.fromString('2020-06-07').toString()
-    expect(result).to.equal('2020-06-07')
+    expect(result).toEqual('2020-06-07')
   })
 
   it('can return a DD-MM-YYYY string', () => {
     const result = SimpleDate.fromString('2020-06-07').toDDMMYYYYString()
-    expect(result).to.equal('07-06-2020')
+    expect(result).toEqual('07-06-2020')
   })
 
   it('can add days', () => {
@@ -82,8 +80,8 @@ describe('SimpleDate', () => {
     const b = a.addDays(1)
     const c = a.addDays(30)
     const d = a.addDays(-366)
-    expect(b.equals(SimpleDate.fromString('2020-06-08'))).to.equal(true)
-    expect(c.equals(SimpleDate.fromString('2020-07-07'))).to.equal(true)
-    expect(d.equals(SimpleDate.fromString('2019-06-07'))).to.equal(true)
+    expect(b.equals(SimpleDate.fromString('2020-06-08'))).toEqual(true)
+    expect(c.equals(SimpleDate.fromString('2020-07-07'))).toEqual(true)
+    expect(d.equals(SimpleDate.fromString('2019-06-07'))).toEqual(true)
   })
 })

@@ -7,14 +7,14 @@ describe('EthereumAddress', () => {
     const address = EthereumAddress(
       '0xabcdabcd12345678abcdabcd12345678abcdabcd'
     )
-    expect(typeof address).toEqual('string')
+    expect(address).toBeA(String)
   })
 
   it('accepts addresses with checksum', () => {
     const address = EthereumAddress(
       '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'
     )
-    expect(typeof address).toEqual('string')
+    expect(address).toBeA(String)
   })
 
   it('checks the checksum', () => {

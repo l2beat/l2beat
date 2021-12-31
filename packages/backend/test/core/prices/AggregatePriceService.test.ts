@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
 import { ExchangePriceService } from '../../../src/core/prices/ExchangePriceService'
@@ -16,8 +16,9 @@ describe('AggregatePriceService', () => {
       exchangePriceService,
       Logger.SILENT
     )
-    await expect(aggregatePriceService.updateAggregatePrices([], 0n)).not.to.be
-      .rejected
+    await expect(
+      aggregatePriceService.updateAggregatePrices([], 0n)
+    ).not.toBeRejected()
   })
 
   it('adds new entries and updates existing ones', async () => {
@@ -43,7 +44,7 @@ describe('AggregatePriceService', () => {
 
     const aggregatePriceRepository = mock<AggregatePriceRepository>({
       async getAllByBlockNumber(block) {
-        expect(block).to.equal(blockNumber)
+        expect(block).toEqual(blockNumber)
         return [
           {
             assetId: AssetId('stable-token'),
@@ -59,7 +60,7 @@ describe('AggregatePriceService', () => {
       },
       async addOrUpdate(records) {
         calledUpdate = true
-        expect(records).to.deep.equal([
+        expect(records).toEqual([
           {
             assetId: AssetId('aaa-token'),
             priceUsd: 20n * 10n ** 18n,
@@ -75,8 +76,8 @@ describe('AggregatePriceService', () => {
     })
     const exchangePriceService = mock<ExchangePriceService>({
       async updateExchangePrices(tokensToUpdate, block) {
-        expect(block).to.equal(blockNumber)
-        expect(tokensToUpdate).to.equal(tokens)
+        expect(block).toEqual(blockNumber)
+        expect(tokensToUpdate).toEqual(tokens)
         return [
           {
             assetId: AssetId.WETH,
@@ -101,7 +102,7 @@ describe('AggregatePriceService', () => {
       Logger.SILENT
     )
     await aggregatePriceService.updateAggregatePrices(tokens, blockNumber)
-    expect(calledUpdate).to.equal(true)
+    expect(calledUpdate).toEqual(true)
   })
 
   it('does nothing when all prices remain the same', async () => {
@@ -120,7 +121,7 @@ describe('AggregatePriceService', () => {
 
     const aggregatePriceRepository = mock<AggregatePriceRepository>({
       async getAllByBlockNumber(block) {
-        expect(block).to.equal(blockNumber)
+        expect(block).toEqual(blockNumber)
         return [
           {
             assetId: AssetId('aaa-token'),
@@ -140,8 +141,8 @@ describe('AggregatePriceService', () => {
     })
     const exchangePriceService = mock<ExchangePriceService>({
       async updateExchangePrices(tokensToUpdate, block) {
-        expect(block).to.equal(blockNumber)
-        expect(tokensToUpdate).to.equal(tokens)
+        expect(block).toEqual(blockNumber)
+        expect(tokensToUpdate).toEqual(tokens)
         return [
           {
             assetId: AssetId.WETH,
@@ -166,6 +167,6 @@ describe('AggregatePriceService', () => {
       Logger.SILENT
     )
     await aggregatePriceService.updateAggregatePrices(tokens, blockNumber)
-    expect(calledUpdate).to.equal(false)
+    expect(calledUpdate).toEqual(false)
   })
 })

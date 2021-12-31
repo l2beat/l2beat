@@ -1,5 +1,5 @@
 import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { ProjectInfo } from '../../../../../src/old/model'
 import { getHolders } from '../../../../../src/old/services/balances/utils'
@@ -46,6 +46,6 @@ describe('getHolders', () => {
       },
       ethHolders: [holderA],
     }
-    expect(result).to.deep.equal(expected)
+    expect(result).toEqual(expected)
   })
 })

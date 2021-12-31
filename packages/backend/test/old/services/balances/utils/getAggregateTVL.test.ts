@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { AggregateTVL } from '../../../../../src/old/services/balances/model'
 import { getProjectStats } from '../../../../../src/old/services/balances/utils'
@@ -14,6 +14,6 @@ describe('getAggregateTVL', () => {
       usd: 28203.15,
       eth: 7.050788,
     }
-    expect(tvl).to.deep.equal(expected)
+    expect(tvl).toEqual(expected)
   })
 })

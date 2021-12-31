@@ -1,5 +1,5 @@
 import { getTokenBySymbol } from '@l2beat/config'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { constants } from 'ethers'
 
 import { DAI } from '../../../../../src/old/constants'
@@ -78,6 +78,6 @@ describe('getMulticallCalls', () => {
       exchanges,
       Infinity
     )
-    expect(calls).to.deep.equal(expected)
+    expect(calls).toEqual(expected)
   })
 })

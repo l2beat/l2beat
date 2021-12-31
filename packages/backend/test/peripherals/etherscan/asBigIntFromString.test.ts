@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { asBigIntFromString } from '../../../src/peripherals/etherscan/asBigIntFromString'
 
@@ -15,12 +15,12 @@ describe('asBigIntFromString', () => {
   for (const { value, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => asBigIntFromString(value)).to.throw(TypeError, error)
+        expect(() => asBigIntFromString(value)).toThrow(TypeError, error)
       })
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
         const result = asBigIntFromString(value)
-        expect(result).to.equal(expected)
+        expect(result).toEqual(expected)
       })
     }
   }

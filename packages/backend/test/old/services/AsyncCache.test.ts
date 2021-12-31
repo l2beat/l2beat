@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { AsyncCache } from '../../../src/old/services/AsyncCache'
 
@@ -23,7 +23,7 @@ describe('AsyncCache', () => {
   it('reads data from the file', async () => {
     const { cache } = makeCache({ foo: 'bar' })
     const data = await cache.getOrFetch('foo', () => Promise.resolve('baz'))
-    expect(data).to.equal('bar')
+    expect(data).toEqual('bar')
   })
 
   it('reads complex keys', async () => {
@@ -31,7 +31,7 @@ describe('AsyncCache', () => {
     const data = await cache.getOrFetch(`2020-06-07,123`, () =>
       Promise.resolve('baz')
     )
-    expect(data).to.equal('bar')
+    expect(data).toEqual('bar')
   })
 
   it('supports data transformation', async () => {
@@ -42,7 +42,7 @@ describe('AsyncCache', () => {
       (bool) => bool.toString(),
       (json) => json === 'true'
     )
-    expect(data).to.equal(false)
+    expect(data).toEqual(false)
   })
 
   it('fetches and writes to the file', async () => {
@@ -54,8 +54,8 @@ describe('AsyncCache', () => {
       (json) => json.toUpperCase()
     )
     await new Promise<void>((resolve) => setTimeout(resolve, 10))
-    expect(data).to.equal('XYZ')
-    expect(mock.data).to.deep.equal({
+    expect(data).toEqual('XYZ')
+    expect(mock.data).toEqual({
       foo: 'bar',
       baz: 'xyz',
     })
@@ -65,8 +65,8 @@ describe('AsyncCache', () => {
     const { cache } = makeCache({ foo: 'bar' })
     const oldData = await cache.getOrFetch('baz', async () => 1)
     const newData = await cache.getOrFetch('baz', async () => 2)
-    expect(oldData).to.equal(1)
-    expect(newData).to.equal(1)
+    expect(oldData).toEqual(1)
+    expect(newData).toEqual(1)
   })
 
   it('de-bounces writes', async () => {
@@ -82,6 +82,6 @@ describe('AsyncCache', () => {
     await cache.getOrFetch('a', async () => 1)
     await cache.getOrFetch('b', async () => 2)
     await new Promise<void>((resolve) => setTimeout(resolve, 20))
-    expect(calls).to.equal(1)
+    expect(calls).toEqual(1)
   })
 })

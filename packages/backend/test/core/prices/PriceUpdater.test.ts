@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
@@ -53,9 +53,9 @@ describe('PriceUpdater', () => {
     )
     await priceUpdater.start()
     await waitForExpect(() => {
-      expect(calls.length).to.equal(2)
+      expect(calls.length).toEqual(2)
     })
-    expect(calls).to.deep.equal([
+    expect(calls).toEqual([
       { tokens, blockNumber: 400n },
       { tokens, blockNumber: 600n },
     ])
@@ -90,9 +90,9 @@ describe('PriceUpdater', () => {
     onNewBlock([{ timestamp: new UnixTime(456), blockNumber: 600n }])
 
     await waitForExpect(() => {
-      expect(calls.length).to.equal(2)
+      expect(calls.length).toEqual(2)
     })
-    expect(calls).to.deep.equal([
+    expect(calls).toEqual([
       { tokens, blockNumber: 400n },
       { tokens, blockNumber: 600n },
     ])

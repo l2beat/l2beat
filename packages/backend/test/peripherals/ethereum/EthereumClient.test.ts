@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, EthereumAddress, KeccakHash } from '../../../src/model'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
@@ -11,14 +11,14 @@ describe('EthereumClient', () => {
     it('returns a block number', async () => {
       const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
-          expect(method).to.equal('eth_blockNumber')
-          expect(params).to.equal(undefined)
+          expect(method).toEqual('eth_blockNumber')
+          expect(params).toEqual(undefined)
           return '0xa455'
         },
       })
       const client = new EthereumClient(testRpc)
       const result = await client.getBlockNumber()
-      expect(result).to.equal(42069n)
+      expect(result).toEqual(42069n)
     })
   })
 
@@ -27,40 +27,40 @@ describe('EthereumClient', () => {
       const hash = new KeccakHash('0x' + '12ab'.repeat(16))
       const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
-          expect(method).to.equal('eth_getBlockByHash')
-          expect(params).to.deep.equal([hash.toString(), false])
+          expect(method).toEqual('eth_getBlockByHash')
+          expect(params).toEqual([hash.toString(), false])
           return latestBlockAlchemy
         },
       })
       const client = new EthereumClient(testRpc)
       const result = await client.getBlock(hash)
-      expect(result.number).to.equal(13326971n)
+      expect(result.number).toEqual(13326971n)
     })
 
     it('can return a block by number', async () => {
       const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
-          expect(method).to.equal('eth_getBlockByNumber')
-          expect(params).to.deep.equal(['0xcb5a7b', false])
+          expect(method).toEqual('eth_getBlockByNumber')
+          expect(params).toEqual(['0xcb5a7b', false])
           return latestBlockAlchemy
         },
       })
       const client = new EthereumClient(testRpc)
       const result = await client.getBlock(13326971n)
-      expect(result.number).to.equal(13326971n)
+      expect(result.number).toEqual(13326971n)
     })
 
     it('can return a block by tag', async () => {
       const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
-          expect(method).to.equal('eth_getBlockByNumber')
-          expect(params).to.deep.equal(['latest', false])
+          expect(method).toEqual('eth_getBlockByNumber')
+          expect(params).toEqual(['latest', false])
           return latestBlockAlchemy
         },
       })
       const client = new EthereumClient(testRpc)
       const result = await client.getBlock('latest')
-      expect(result.number).to.equal(13326971n)
+      expect(result.number).toEqual(13326971n)
     })
   })
 
@@ -71,8 +71,8 @@ describe('EthereumClient', () => {
 
       const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
-          expect(method).to.equal('eth_call')
-          expect(params).to.deep.equal([
+          expect(method).toEqual('eth_call')
+          expect(params).toEqual([
             {
               to: to.toString().toLowerCase(),
               data: data.toString(),
@@ -90,7 +90,7 @@ describe('EthereumClient', () => {
         },
         0x123n
       )
-      expect(result).to.deep.equal(Bytes.fromHex('0x1234'))
+      expect(result).toEqual(Bytes.fromHex('0x1234'))
     })
   })
 })
