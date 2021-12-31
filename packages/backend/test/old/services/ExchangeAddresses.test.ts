@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { DAI, WETH } from '../../../src/old/constants'
 import {
@@ -12,8 +12,8 @@ describe('ExchangeAddresses', () => {
       const pairWD = getUniswapV2PairAddress(WETH, DAI)
       const pairDW = getUniswapV2PairAddress(DAI, WETH)
 
-      expect(pairWD).to.equal(pairDW)
-      expect(pairWD).to.equal('0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11')
+      expect(pairWD).toEqual(pairDW)
+      expect(pairWD).toEqual('0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11')
     })
   })
 
@@ -22,8 +22,8 @@ describe('ExchangeAddresses', () => {
       const poolWD3000 = getUniswapV3PoolAddress(WETH, DAI, 3000)
       const poolDW3000 = getUniswapV3PoolAddress(DAI, WETH, 3000)
 
-      expect(poolWD3000).to.equal(poolDW3000)
-      expect(poolWD3000).to.equal('0xC2e9F25Be6257c210d7Adf0D4Cd6E3E881ba25f8')
+      expect(poolWD3000).toEqual(poolDW3000)
+      expect(poolWD3000).toEqual('0xC2e9F25Be6257c210d7Adf0D4Cd6E3E881ba25f8')
     })
   })
 })

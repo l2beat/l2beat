@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { HttpClient } from '../../../src/peripherals/HttpClient'
@@ -13,9 +13,9 @@ describe('JsonRpcHttpClient', () => {
   it('correctly sets up a request', async () => {
     const httpClient = mock<HttpClient>({
       async fetch(url, init) {
-        expect(url).to.equal('https://jsonrpc.test.url')
-        expect(init?.method).to.equal('POST')
-        expect(init?.headers).to.deep.equal({
+        expect(url).toEqual('https://jsonrpc.test.url')
+        expect(init?.method).toEqual('POST')
+        expect(init?.headers).toEqual({
           'Content-Type': 'application/json',
         })
         return new Response(
@@ -45,7 +45,7 @@ describe('JsonRpcHttpClient', () => {
       Logger.SILENT
     )
     const result = await client.call('foo')
-    expect(result).to.equal('ok')
+    expect(result).toEqual('ok')
   })
 
   it('throws for non-json response', async () => {
@@ -59,9 +59,9 @@ describe('JsonRpcHttpClient', () => {
       httpClient,
       Logger.SILENT
     )
-    await expect(client.call('foo')).to.be.rejectedWith(
+    await expect(client.call('foo')).toBeRejected(
       TypeError,
-      'Invalid JSON-RPC response'
+      'Invalid JSON-RPC response.'
     )
   })
 
@@ -76,7 +76,7 @@ describe('JsonRpcHttpClient', () => {
       httpClient,
       Logger.SILENT
     )
-    await expect(client.call('foo')).to.be.rejectedWith(
+    await expect(client.call('foo')).toBeRejected(
       Error,
       'Http error 400: foobar'
     )
@@ -100,6 +100,6 @@ describe('JsonRpcHttpClient', () => {
       httpClient,
       Logger.SILENT
     )
-    await expect(client.call('foo')).to.be.rejectedWith(JsonRpcError)
+    await expect(client.call('foo')).toBeRejected(JsonRpcError)
   })
 })

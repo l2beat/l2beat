@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { Contract, providers, utils } from 'ethers'
 
 import { tokenList } from '../src/tokens'
@@ -11,20 +11,20 @@ describe('tokens', () => {
   describe('every addresses is valid and formatted', () => {
     for (const address of addresses) {
       it(address, () => {
-        expect(address).to.equal(utils.getAddress(address))
+        expect(address).toEqual(utils.getAddress(address))
       })
     }
   })
 
   it('every token has a unique address', () => {
     const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
-    expect(everyUnique).to.equal(true)
+    expect(everyUnique).toEqual(true)
   })
 
   it('tokens are ordered alphabetically', () => {
     const names = tokenList.map((x) => x.name)
     const sorted = [...names].sort((a, b) => a.localeCompare(b))
-    expect(names).to.deep.equal(sorted)
+    expect(names).toEqual(sorted)
   })
 
   describe('metadata is correct', () => {
@@ -99,9 +99,9 @@ describe('tokens', () => {
         if (!token.address) {
           return
         }
-        expect(token.name).to.equal(results[token.address].name)
-        expect(token.symbol).to.equal(results[token.address].symbol)
-        expect(token.decimals).to.equal(results[token.address].decimals)
+        expect(token.name).toEqual(results[token.address].name)
+        expect(token.symbol).toEqual(results[token.address].symbol)
+        expect(token.decimals).toEqual(results[token.address].decimals)
       })
     }
   })

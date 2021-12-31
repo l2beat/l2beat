@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, EthereumAddress, KeccakHash } from '../../../src/model'
 import {
@@ -28,13 +28,13 @@ describe('asBytesFromData', () => {
   for (const { value, length, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => asBytesFromData(value, length)).to.throw(TypeError, error)
+        expect(() => asBytesFromData(value, length)).toThrow(TypeError, error)
       })
     } else if (expected) {
       const len = length !== undefined ? ` - length ${length}` : ''
       it(`reads ${value} as ${expected}${len}`, () => {
         const result = asBytesFromData(value, length)
-        expect(result).to.deep.equal(Bytes.fromByteArray(expected))
+        expect(result).toEqual(Bytes.fromByteArray(expected))
       })
     }
   }
@@ -44,13 +44,11 @@ describe('asEthereumAddressFromData', () => {
   const address = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 
   it('correctly reads a 20 byte address', () => {
-    expect(asEthereumAddressFromData(address)).to.deep.equal(
-      EthereumAddress(address)
-    )
+    expect(asEthereumAddressFromData(address)).toEqual(EthereumAddress(address))
   })
 
   it('throws for shorter bytes', () => {
-    expect(() => asEthereumAddressFromData('0x1234')).to.throw(
+    expect(() => asEthereumAddressFromData('0x1234')).toThrow(
       TypeError,
       'Invalid EthereumAddress'
     )
@@ -62,11 +60,11 @@ describe('asKeccakHashFromData', () => {
     '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
 
   it('correctly reads a 32 byte hash', () => {
-    expect(asKeccakHashFromData(hash)).to.deep.equal(new KeccakHash(hash))
+    expect(asKeccakHashFromData(hash)).toEqual(new KeccakHash(hash))
   })
 
   it('throws for shorter bytes', () => {
-    expect(() => asKeccakHashFromData('0x1234')).to.throw(
+    expect(() => asKeccakHashFromData('0x1234')).toThrow(
       TypeError,
       'KeccakHash must be exactly 32 bytes'
     )
@@ -85,12 +83,12 @@ describe('asBigIntFromQuantity', () => {
   for (const { value, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => asBigIntFromQuantity(value)).to.throw(TypeError, error)
+        expect(() => asBigIntFromQuantity(value)).toThrow(TypeError, error)
       })
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
         const result = asBigIntFromQuantity(value)
-        expect(result).to.equal(expected)
+        expect(result).toEqual(expected)
       })
     }
   }
@@ -106,12 +104,12 @@ describe('bigIntToQuantity', () => {
   for (const { value, error, expected } of cases) {
     if (error) {
       it(`throws for ${value}`, () => {
-        expect(() => bigIntToQuantity(value)).to.throw(TypeError, error)
+        expect(() => bigIntToQuantity(value)).toThrow(TypeError, error)
       })
     } else if (expected !== undefined) {
       it(`reads ${value} as ${expected}`, () => {
         const result = bigIntToQuantity(value)
-        expect(result).to.equal(expected)
+        expect(result).toEqual(expected)
       })
     }
   }
@@ -119,10 +117,10 @@ describe('bigIntToQuantity', () => {
 
 describe('blockTagToString', () => {
   it('converts numbers to quantities', () => {
-    expect(blockTagToString(2n)).to.equal('0x2')
+    expect(blockTagToString(2n)).toEqual('0x2')
   })
 
   it('leaves strings untouched', () => {
-    expect(blockTagToString('latest')).to.equal('latest')
+    expect(blockTagToString('latest')).toEqual('latest')
   })
 })

@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { EthereumAddress, Exchange } from '../../../src/model'
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
@@ -23,16 +23,16 @@ describe('ExchangeQueryService', () => {
   it('supports Uniswap V1', async () => {
     const uniswapV1Client = mock<UniswapV1Client>({
       async getExchangeAddresses(tokens) {
-        expect(tokens).to.deep.equal([TOKEN_A, TOKEN_B])
+        expect(tokens).toEqual([TOKEN_A, TOKEN_B])
         return [EXCHANGE, undefined]
       },
     })
     const multicallClient = mock<MulticallClient>({
       async multicall(requests, blockNumber) {
-        expect(requests).to.deep.equal([
+        expect(requests).toEqual([
           ...encodeUniswapV1Requests(TOKEN_A, new Map([[TOKEN_A, EXCHANGE]])),
         ])
-        expect(blockNumber).to.deep.equal(12345n)
+        expect(blockNumber).toEqual(12345n)
         return [...encodeUniswapV1Results(10_000n, 20_000n)]
       },
     })
@@ -48,7 +48,7 @@ describe('ExchangeQueryService', () => {
       ],
       12345n
     )
-    expect(results).to.deep.equal([
+    expect(results).toEqual([
       { liquidity: 20_000n, price: 10n ** 18n / 2n },
       { liquidity: 0n, price: 0n },
     ])
@@ -58,10 +58,10 @@ describe('ExchangeQueryService', () => {
     const uniswapV1Client = mock<UniswapV1Client>()
     const multicallClient = mock<MulticallClient>({
       async multicall(requests, blockNumber) {
-        expect(requests).to.deep.equal([
+        expect(requests).toEqual([
           ...encodeUniswapV2Requests(DAI, Exchange.uniswapV2('weth')),
         ])
-        expect(blockNumber).to.deep.equal(12345n)
+        expect(blockNumber).toEqual(12345n)
         return [...encodeUniswapV2Results(4_000_000n, 1_000n)]
       },
     })
@@ -74,7 +74,7 @@ describe('ExchangeQueryService', () => {
       [{ token: DAI, exchange: Exchange.uniswapV2('weth') }],
       12345n
     )
-    expect(results).to.deep.equal([
+    expect(results).toEqual([
       { liquidity: 4_000_000n, price: 10n ** 18n / 4_000n },
     ])
   })
@@ -83,10 +83,10 @@ describe('ExchangeQueryService', () => {
     const uniswapV1Client = mock<UniswapV1Client>()
     const multicallClient = mock<MulticallClient>({
       async multicall(requests, blockNumber) {
-        expect(requests).to.deep.equal([
+        expect(requests).toEqual([
           ...encodeUniswapV3Requests(DAI, Exchange.uniswapV3('weth', 3000)),
         ])
-        expect(blockNumber).to.deep.equal(12345n)
+        expect(blockNumber).toEqual(12345n)
         return [
           ...encodeUniswapV3Results(4_000_000n, 1143348599330585316414292419n),
         ]
@@ -101,7 +101,7 @@ describe('ExchangeQueryService', () => {
       [{ token: DAI, exchange: Exchange.uniswapV3('weth', 3000) }],
       12345n
     )
-    expect(results).to.deep.equal([
+    expect(results).toEqual([
       { liquidity: 4_000_000n, price: 208256305967085n },
     ])
   })
@@ -109,13 +109,13 @@ describe('ExchangeQueryService', () => {
   it('correctly decodes multiple sets of requests', async () => {
     const uniswapV1Client = mock<UniswapV1Client>({
       async getExchangeAddresses(tokens) {
-        expect(tokens).to.deep.equal([TOKEN_A, TOKEN_B])
+        expect(tokens).toEqual([TOKEN_A, TOKEN_B])
         return [EXCHANGE, undefined]
       },
     })
     const multicallClient = mock<MulticallClient>({
       async multicall(requests) {
-        expect(requests).to.deep.equal([
+        expect(requests).toEqual([
           ...encodeUniswapV2Requests(WETH, Exchange.uniswapV2('dai')),
           ...encodeUniswapV1Requests(TOKEN_A, new Map([[TOKEN_A, EXCHANGE]])),
           ...encodeUniswapV2Requests(WETH, Exchange.uniswapV2('usdt')),
@@ -144,7 +144,7 @@ describe('ExchangeQueryService', () => {
       ],
       12345n
     )
-    expect(results).to.deep.equal([
+    expect(results).toEqual([
       { liquidity: 10n * 10n ** 18n, price: 4100n * 10n ** 18n },
       { liquidity: 20_000n, price: 10n ** 18n / 2n },
       { liquidity: 0n, price: 0n },

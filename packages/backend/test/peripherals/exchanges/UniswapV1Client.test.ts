@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, EthereumAddress } from '../../../src/model'
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
@@ -25,8 +25,8 @@ describe('UniswapV1Client', () => {
   it('returns exchange addresses', async () => {
     const multicallClient = mock<MulticallClient>({
       async multicall(requests, blockNumber) {
-        expect(requests).to.deep.equal([toRequest(DAI), toRequest(WETH)])
-        expect(blockNumber).to.equal(12345n)
+        expect(requests).toEqual([toRequest(DAI), toRequest(WETH)])
+        expect(blockNumber).toEqual(12345n)
         return [
           toResponse(EthereumAddress('0x' + 'a'.repeat(40))),
           toResponse(EthereumAddress.ZERO),
@@ -38,7 +38,7 @@ describe('UniswapV1Client', () => {
       [DAI, WETH],
       12345n
     )
-    expect(exchangeAddresses).to.deep.equal([
+    expect(exchangeAddresses).toEqual([
       EthereumAddress('0x' + 'a'.repeat(40)),
       undefined,
     ])
@@ -50,7 +50,7 @@ describe('UniswapV1Client', () => {
 
     multicallClient.multicall = async (requests) => {
       // Nothing in cache
-      expect(requests).to.deep.equal([toRequest(DAI), toRequest(WETH)])
+      expect(requests).toEqual([toRequest(DAI), toRequest(WETH)])
       return [
         toResponse(EthereumAddress('0x' + 'a'.repeat(40))),
         toResponse(EthereumAddress.ZERO),
@@ -60,14 +60,14 @@ describe('UniswapV1Client', () => {
 
     multicallClient.multicall = async (requests) => {
       // Lower block number - both in cache
-      expect(requests).to.deep.equal([])
+      expect(requests).toEqual([])
       return []
     }
     await uniswapV1Client.getExchangeAddresses([DAI, WETH], 10000n)
 
     multicallClient.multicall = async (requests) => {
       // Higher block number - only DAI cached
-      expect(requests).to.deep.equal([toRequest(WETH)])
+      expect(requests).toEqual([toRequest(WETH)])
       return [toResponse(EthereumAddress('0x' + 'b'.repeat(40)))]
     }
     const result = await uniswapV1Client.getExchangeAddresses(
@@ -75,7 +75,7 @@ describe('UniswapV1Client', () => {
       20000n
     )
 
-    expect(result).to.deep.equal([
+    expect(result).toEqual([
       EthereumAddress('0x' + 'a'.repeat(40)),
       EthereumAddress('0x' + 'b'.repeat(40)),
     ])

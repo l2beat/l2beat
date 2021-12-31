@@ -1,5 +1,5 @@
 import { getTokenBySymbol } from '@l2beat/config'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { utils } from 'ethers'
 
 import { TokenTVL } from '../../../../../src/old/services/balances/model'
@@ -27,6 +27,6 @@ describe('getTokenTVL', () => {
       ETH: { balance: 10, usd: 40_000 },
       USDC: { balance: 100, usd: 100 },
     }
-    expect(tvl).to.deep.equal(expected)
+    expect(tvl).toEqual(expected)
   })
 })

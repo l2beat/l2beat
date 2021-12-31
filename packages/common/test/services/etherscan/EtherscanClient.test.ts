@@ -5,14 +5,14 @@ import {
   mock,
 } from '../../../src'
 import { Response } from 'node-fetch'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 describe('EtherscanClient', () => {
   describe('call', () => {
     it('constructs a correct url', async () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
-          expect(url).to.equal(
+          expect(url).toEqual(
             'https://example.com/api?module=mod&action=act&foo=bar&baz=123&apikey=KEY123'
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
@@ -35,7 +35,7 @@ describe('EtherscanClient', () => {
       })
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
-      await expect(etherscanClient.call('mod', 'act', {})).to.be.rejectedWith(
+      await expect(etherscanClient.call('mod', 'act', {})).toBeRejected(
         'Server responded with non-2XX result: 404 Not Found'
       )
     })
@@ -48,8 +48,8 @@ describe('EtherscanClient', () => {
       })
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
-      await expect(etherscanClient.call('mod', 'act', {})).to.be.rejectedWith(
-        /json/
+      await expect(etherscanClient.call('mod', 'act', {})).toBeRejected(
+        expect.stringMatching(/json/)
       )
     })
 
@@ -61,11 +61,11 @@ describe('EtherscanClient', () => {
       })
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
-      await expect(etherscanClient.call('mod', 'act', {})).to.be.rejected
+      await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
     })
 
     it('returns a success response', async () => {
-      const response = { status: '1', message: 'OK', result: [1, 2] }
+      const response = { status: '1' as '1', message: 'OK', result: [1, 2] }
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify(response))
@@ -74,11 +74,11 @@ describe('EtherscanClient', () => {
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       const result = await etherscanClient.call('mod', 'act', {})
-      expect(result).to.deep.equal(response)
+      expect(result).toEqual(response)
     })
 
     it('returns an error response', async () => {
-      const response = { status: '0', message: 'NOTOK', result: 'Oops' }
+      const response = { status: '0' as '0', message: 'NOTOK', result: 'Oops' }
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify(response))
@@ -87,7 +87,7 @@ describe('EtherscanClient', () => {
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       const result = await etherscanClient.call('mod', 'act', {})
-      expect(result).to.deep.equal(response)
+      expect(result).toEqual(response)
     })
   })
 
@@ -119,7 +119,7 @@ describe('EtherscanClient', () => {
       const source = await etherscanClient.getContractSource(
         EthereumAddress.ZERO
       )
-      expect(source).to.deep.equal(result)
+      expect(source).toEqual(result)
     })
   })
 })

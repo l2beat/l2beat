@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { UnixTime } from '../../../src/model/UnixTime'
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
@@ -12,7 +12,7 @@ describe('BlockNumberRepository', () => {
     const repository = new BlockNumberRepository(knex, Logger.SILENT)
     await repository.deleteAll()
     const results = await repository.getAll()
-    expect(results).to.deep.equal([])
+    expect(results).toEqual([])
   })
 
   it('can add new records', async () => {
@@ -26,6 +26,7 @@ describe('BlockNumberRepository', () => {
 
     const results = await repository.getAll()
 
-    expect(results).to.have.deep.members([itemA, itemB])
+    expect(results).toBeAnArrayWith(itemA, itemB)
+    expect(results.length).toEqual(2)
   })
 })

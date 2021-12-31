@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { UnixTime } from '../../../src/model/UnixTime'
@@ -27,7 +27,7 @@ describe('EtherscanClient', () => {
       )
       await expect(
         etherscanClient['call']('foo', 'bar', { baz: '1234' })
-      ).to.be.rejectedWith(EtherscanError, 'Oops!')
+      ).toBeRejected(EtherscanError, 'Oops!')
     })
 
     it('throws for malformed responses', async () => {
@@ -43,7 +43,7 @@ describe('EtherscanClient', () => {
       )
       await expect(
         etherscanClient['call']('foo', 'bar', { baz: '1234' })
-      ).to.be.rejectedWith(TypeError, 'Invalid Etherscan response')
+      ).toBeRejected(TypeError, 'Invalid Etherscan response.')
     })
 
     it('throws for http errors', async () => {
@@ -59,7 +59,7 @@ describe('EtherscanClient', () => {
       )
       await expect(
         etherscanClient['call']('foo', 'bar', { baz: '1234' })
-      ).to.be.rejectedWith(Error, 'Http error 400: foo')
+      ).toBeRejected(Error, 'Http error 400: foo')
     })
   })
 
@@ -78,7 +78,7 @@ describe('EtherscanClient', () => {
 
       const httpClient = mock<HttpClient>({
         async fetch(url) {
-          expect(url).to.equal(`https://api.etherscan.io/api?${params}`)
+          expect(url).toEqual(`https://api.etherscan.io/api?${params}`)
           return new Response(
             JSON.stringify({ status: '1', message: 'OK', result: '9251482' })
           )
@@ -110,7 +110,7 @@ describe('EtherscanClient', () => {
       const result = await etherscanClient.getBlockNumberAtOrBefore(
         new UnixTime(1578638524)
       )
-      expect(result).to.equal(9251482n)
+      expect(result).toEqual(9251482n)
     })
   })
 })

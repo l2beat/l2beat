@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { AssetId } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
@@ -12,7 +12,7 @@ describe('AggregatePriceRepository', () => {
     const repository = new AggregatePriceRepository(knex, Logger.SILENT)
     await repository.deleteAll()
     const results = await repository.getAll()
-    expect(results).to.deep.equal([])
+    expect(results).toEqual([])
   })
 
   it('can add new records and query them by block number', async () => {
@@ -38,10 +38,12 @@ describe('AggregatePriceRepository', () => {
     await repository.addOrUpdate([itemA, itemB, itemC])
 
     const resultsA = await repository.getAllByBlockNumber(1234n)
-    expect(resultsA).to.have.deep.members([itemA, itemB])
+    expect(resultsA).toBeAnArrayWith(itemA, itemB)
+    expect(resultsA.length).toEqual(2)
 
     const resultsB = await repository.getAllByBlockNumber(4567n)
-    expect(resultsB).to.have.deep.members([itemC])
+    expect(resultsB).toBeAnArrayWith(itemC)
+    expect(resultsB.length).toEqual(1)
   })
 
   it('can add new records and update existing ones', async () => {
@@ -62,13 +64,14 @@ describe('AggregatePriceRepository', () => {
     await repository.addOrUpdate([itemA])
 
     const resultsBefore = await repository.getAllByBlockNumber(1234n)
-    expect(resultsBefore).to.have.deep.members([itemA])
+    expect(resultsBefore).toEqual([itemA])
 
     const itemC = { ...itemA, priceUsd: 420n }
     await repository.addOrUpdate([itemC, itemB])
 
     const resultsAfter = await repository.getAllByBlockNumber(1234n)
-    expect(resultsAfter).to.have.deep.members([itemC, itemB])
+    expect(resultsAfter).toBeAnArrayWith(itemC, itemB)
+    expect(resultsAfter.length).toEqual(2)
   })
 
   it('getAllByAssetId', async () => {
@@ -94,7 +97,7 @@ describe('AggregatePriceRepository', () => {
     ])
 
     const results = await repository.getAllByAssetId(AssetId.DAI)
-    expect(results).to.deep.equal([
+    expect(results).toEqual([
       { blockNumber: 1233n, priceUsd: 69n },
       { blockNumber: 1235n, priceUsd: 420n },
     ])

@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { providers } from 'ethers'
 import {
   AddressAnalyzer,
@@ -19,7 +19,7 @@ describe('AddressAnalyzer', () => {
     const result = await addressAnalyzer.analyze(
       EthereumAddress('0x11223344556677889900aabbccddeeff11223344')
     )
-    expect(result).to.deep.equal({ type: 'EOA', name: '<EOA 11223344>' })
+    expect(result).toEqual({ type: 'EOA', name: '<EOA 11223344>' })
   })
 
   it('can detect an unverified contract', async () => {
@@ -34,7 +34,7 @@ describe('AddressAnalyzer', () => {
     const result = await addressAnalyzer.analyze(
       EthereumAddress('0x11223344556677889900aabbccddeeff11223344')
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       type: 'Contract',
       verified: false,
       name: '<Unverified 11223344>',
@@ -53,7 +53,7 @@ describe('AddressAnalyzer', () => {
     const result = await addressAnalyzer.analyze(
       EthereumAddress('0x11223344556677889900aabbccddeeff11223344')
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       type: 'Contract',
       verified: true,
       name: 'Foo',

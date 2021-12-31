@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { BlocksController } from '../../../src/api/controllers/BlocksController'
 import { UnixTime } from '../../../src/model'
@@ -16,7 +16,7 @@ describe('BlocksController', () => {
       },
     })
     const blocksController = new BlocksController(blockNumberRepository)
-    expect(await blocksController.getAllBlocks()).to.deep.equal([
+    expect(await blocksController.getAllBlocks()).toEqual([
       {
         blockNumber: '123',
         timestamp: '1970-01-01T00:16:40.000Z',
