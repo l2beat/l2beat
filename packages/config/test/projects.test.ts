@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { utils } from 'ethers'
 
 import {
@@ -13,7 +13,7 @@ describe('projects', () => {
   describe('every slug is valid', () => {
     for (const project of projects) {
       it(project.slug, () => {
-        expect(project.slug).to.match(/^[a-z\d]+$/)
+        expect(project.slug).toEqual(expect.stringMatching(/^[a-z\d]+$/))
       })
     }
   })
@@ -22,7 +22,7 @@ describe('projects', () => {
     describe('every addresses is valid and formatted', () => {
       const testAddress = (address: string) =>
         it(address, () => {
-          expect(utils.getAddress(address)).to.equal(address)
+          expect(utils.getAddress(address)).toEqual(address)
         })
 
       describe('bridges', () => {
@@ -59,7 +59,7 @@ describe('projects', () => {
     it('every bridge has a unique address', () => {
       const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
       const everyUnique = bridges.every((x, i, a) => a.indexOf(x) === i)
-      expect(everyUnique).to.equal(true)
+      expect(everyUnique).toEqual(true)
     })
   })
 
@@ -67,7 +67,7 @@ describe('projects', () => {
     describe('every description ends with a dot', () => {
       for (const project of projects) {
         it(project.name, () => {
-          expect(project.details.description.endsWith('.')).to.equal(true)
+          expect(project.details.description.endsWith('.')).toEqual(true)
         })
       }
     })
@@ -92,11 +92,11 @@ describe('projects', () => {
 
           function checkChoice(choice: ProjectTechnologyChoice, name: string) {
             it(`${name}.name doesn't end with a dot`, () => {
-              expect(choice.name.endsWith('.')).to.equal(false)
+              expect(choice.name.endsWith('.')).toEqual(false)
             })
 
             it(`${name}.description ends with a dot`, () => {
-              expect(choice.description.endsWith('.')).to.equal(true)
+              expect(choice.description.endsWith('.')).toEqual(true)
             })
 
             describe('risks', () => {
@@ -108,7 +108,7 @@ describe('projects', () => {
 
           function checkRisk(risk: ProjectRisk, name: string) {
             it(`${name} is correctly formatted`, () => {
-              expect(risk.text).to.match(/^[a-z].*\.$/)
+              expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
             })
           }
 
@@ -126,7 +126,7 @@ describe('projects', () => {
             const description = contract.description
             if (description) {
               it(`contracts[${i}].description ends with a dot`, () => {
-                expect(description.endsWith('.')).to.equal(true)
+                expect(description.endsWith('.')).toEqual(true)
               })
             }
           }
@@ -143,7 +143,7 @@ describe('projects', () => {
     const purposes = projects.map((x) => x.details.purpose)
     for (const purpose of purposes) {
       it(purpose, () => {
-        expect(purpose.length).to.be.lessThanOrEqual(20)
+        expect(purpose.length).toBeLessThanOrEqualTo(20)
       })
     }
   })
@@ -154,7 +154,7 @@ describe('projects', () => {
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {
       it(symbol, () => {
-        expect(() => getTokenBySymbol(symbol)).not.to.throw()
+        expect(() => getTokenBySymbol(symbol)).not.toThrow()
       })
     }
   })
@@ -163,7 +163,7 @@ describe('projects', () => {
     describe('every project has at least one website link', () => {
       for (const project of projects) {
         it(project.name, () => {
-          expect(project.details.links.websites.length).to.be.greaterThan(0)
+          expect(project.details.links.websites.length).toBeGreaterThan(0)
         })
       }
     })
@@ -174,7 +174,7 @@ describe('projects', () => {
       )
       for (const link of links) {
         it(link, () => {
-          expect(link).to.match(/^https:\/\//)
+          expect(link).toEqual(expect.stringMatching(/^https:\/\//))
         })
       }
     })
@@ -184,27 +184,45 @@ describe('projects', () => {
       for (const link of links) {
         it(link, () => {
           if (link.includes('discord')) {
-            expect(link).to.match(/^https:\/\/discord\.gg\/\w+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/discord\.gg\/\w+$/)
+            )
           } else if (link.includes('t.me')) {
-            expect(link).to.match(/^https:\/\/t\.me\/\w+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/t\.me\/\w+$/)
+            )
           } else if (link.includes('medium')) {
-            expect(link).to.match(/^https:\/\/medium\.com\/[@\w-]+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/medium\.com\/[@\w-]+$/)
+            )
           } else if (link.includes('twitter')) {
-            expect(link).to.match(/^https:\/\/twitter\.com\/[\w-]+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/twitter\.com\/[\w-]+$/)
+            )
           } else if (link.includes('reddit')) {
-            expect(link).to.match(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
+            )
           } else if (link.includes('youtube')) {
             if (!link.includes('playlist')) {
-              expect(link).to.match(
-                /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/
+              expect(link).toEqual(
+                expect.stringMatching(
+                  /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/
+                )
               )
             }
           } else if (link.includes('twitch')) {
-            expect(link).to.match(/^https:\/\/twitch\.tv\/[\w-]+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/twitch\.tv\/[\w-]+$/)
+            )
           } else if (link.includes('gitter')) {
-            expect(link).to.match(/^https:\/\/gitter\.im\/[\w-/]+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/gitter\.im\/[\w-/]+$/)
+            )
           } else if (link.includes('instagram')) {
-            expect(link).to.match(/^https:\/\/instagram\.com\/[\w-/]+$/)
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/instagram\.com\/[\w-/]+$/)
+            )
           }
         })
       }
