@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { Cache, EmptyCacheBackend, NestedDict } from '../../../src'
 import waitForExpect from 'wait-for-expect'
 
@@ -14,11 +14,11 @@ describe('Cache', () => {
     }
     const cache = new Cache(backend)
 
-    expect(cache.get('a', 'b')).to.equal(1)
-    expect(initCount).to.equal(1)
+    expect(cache.get('a', 'b')).toEqual(1)
+    expect(initCount).toEqual(1)
 
-    expect(cache.get('a', 'c')).to.equal(2)
-    expect(initCount).to.equal(1)
+    expect(cache.get('a', 'c')).toEqual(2)
+    expect(initCount).toEqual(1)
   })
 
   it('has initializes on first call', () => {
@@ -32,11 +32,11 @@ describe('Cache', () => {
     }
     const cache = new Cache(backend)
 
-    expect(cache.has('a', 'b')).to.equal(true)
-    expect(initCount).to.equal(1)
+    expect(cache.has('a', 'b')).toEqual(true)
+    expect(initCount).toEqual(1)
 
-    expect(cache.has('a', 'c')).to.equal(false)
-    expect(initCount).to.equal(1)
+    expect(cache.has('a', 'c')).toEqual(false)
+    expect(initCount).toEqual(1)
   })
 
   it('set initializes on first call', () => {
@@ -51,10 +51,10 @@ describe('Cache', () => {
     const cache = new Cache(backend)
 
     cache.set('a', 'b', 1)
-    expect(initCount).to.equal(1)
+    expect(initCount).toEqual(1)
 
     cache.set('a', 'c', 2)
-    expect(initCount).to.equal(1)
+    expect(initCount).toEqual(1)
   })
 
   it('set writes once after multiple calls', async () => {
@@ -63,7 +63,7 @@ describe('Cache', () => {
       read: () => new NestedDict({}),
       write: (data: NestedDict) => {
         writeCount++
-        expect(data.data).to.deep.equal({ a: { b: 1, c: 2, d: 3 } })
+        expect(data.data).toEqual({ a: { b: 1, c: 2, d: 3 } })
       },
     }
     const cache = new Cache(backend)
@@ -73,7 +73,7 @@ describe('Cache', () => {
     cache.set('a', 'd', 3)
 
     await waitForExpect(() => {
-      expect(writeCount).to.equal(1)
+      expect(writeCount).toEqual(1)
     })
   })
 
@@ -86,10 +86,10 @@ describe('Cache', () => {
     const cache = new Cache(new EmptyCacheBackend())
     const wrapped = cache.wrapSync('add', add)
 
-    expect(wrapped(1, 2)).to.equal(3)
-    expect(calls).to.equal(1)
-    expect(wrapped(1, 2)).to.equal(3)
-    expect(calls).to.equal(1)
+    expect(wrapped(1, 2)).toEqual(3)
+    expect(calls).toEqual(1)
+    expect(wrapped(1, 2)).toEqual(3)
+    expect(calls).toEqual(1)
   })
 
   it('can wrap an async function', async () => {
@@ -112,10 +112,10 @@ describe('Cache', () => {
       wrapped(1, 2),
     ])
 
-    expect(a).to.deep.equal({ sum: 3 })
-    expect(b).to.deep.equal({ sum: 3 })
-    expect(c).to.deep.equal({ sum: 3 })
-    expect(calls).to.equal(1)
-    expect(cache.get('add', '[1,2]')).to.deep.equal({ sum: 3 })
+    expect(a).toEqual({ sum: 3 })
+    expect(b).toEqual({ sum: 3 })
+    expect(c).toEqual({ sum: 3 })
+    expect(calls).toEqual(1)
+    expect(cache.get('add', '[1,2]')).toEqual({ sum: 3 })
   })
 })
