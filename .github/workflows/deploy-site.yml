@@ -31,9 +31,7 @@ jobs:
           RPC_URL: ${{ secrets.BC_NODE }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
       - name: Upload frontend
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy -d packages/frontend/build --prod
+        run: npx netlify-cli deploy -d packages/frontend/build --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
