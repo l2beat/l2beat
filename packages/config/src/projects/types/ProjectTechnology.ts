@@ -34,5 +34,6 @@ export type ProjectCategory =
   | 'Optimistic Rollup'
   | 'Plasma'
   | 'State Pools'
+  | 'Summary'
   | 'Validium'
   | 'ZK Rollup'

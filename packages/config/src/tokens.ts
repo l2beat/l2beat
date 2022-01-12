@@ -82,6 +82,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Aventus Token',
+    symbol: 'AVT',
+    address: '0x0d88eD6E74bbFD96B831231638b66C05571e824F',
+    decimals: 18,
+    sinceBlock: 4235140,
+    category: 'other',
+  },
+  {
     name: 'Badger',
     symbol: 'BADGER',
     address: '0x3472A5A71965499acd81997a54BBA8D852C6E53d',
