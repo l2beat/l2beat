@@ -3,7 +3,7 @@ import { aztec } from './aztec'
 import { bobanetwork } from './bobanetwork'
 import { deversifi } from './deversifi'
 import { dydx } from './dydx'
-import { fuel } from './fuel'
+import { fuel_v1 } from './fuel_v1'
 import { gluon } from './gluon'
 import { habitat } from './habitat'
 import { hermez } from './hermez'
@@ -27,7 +27,7 @@ export const projects: Project[] = [
   bobanetwork,
   deversifi,
   dydx,
-  fuel,
+  fuel_v1,
   gluon,
   habitat,
   hermez,
