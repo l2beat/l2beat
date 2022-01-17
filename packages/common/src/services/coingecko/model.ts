@@ -25,3 +25,8 @@ export const CoinMarketChartRangeResult = z.object({
   prices: z.array(z.array(z.number()).length(2))
 })
 
+export interface MarketChartRangeParams {
+  vs_currency: string
+  from: string
+  to: string
+}

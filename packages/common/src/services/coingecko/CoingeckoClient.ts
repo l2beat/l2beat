@@ -1,11 +1,13 @@
 import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
+import { CoingeckoId } from '.'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
   CoinListPlatformResult,
   CoinListResult,
   CoinMarketChartRangeResult,
+  MarketChartRangeParams,
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
@@ -37,8 +39,9 @@ export class CoingeckoClient {
     }
   }
 
-  async getCoinMarketChartRange(): Promise<CoinMarketChartRangeResult> {
-    const data = await this.query('/market_chart/range',{})
+  async getCoinMarketChartRange(coindId: CoingeckoId, params: MarketChartRangeParams): Promise<CoinMarketChartRangeResult> {
+    
+    const data = await this.query(`/coins/${coindId}/market_chart/range`,{...params})
     return CoinMarketChartRangeResult.parse(data)
 
   }
