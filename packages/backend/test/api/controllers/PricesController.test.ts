@@ -22,7 +22,9 @@ describe('PricesController', () => {
       exchangePriceRepository,
       aggregatePriceRepository
     )
-    expect(await pricesController.getPriceHistory(AssetId.DAI)).toEqual([
+    expect<unknown>(
+      await pricesController.getPriceHistory(AssetId.DAI)
+    ).toEqual([
       { blockNumber: '1', priceUsd: '2' },
       { blockNumber: '3', priceUsd: '4' },
     ])
@@ -44,7 +46,7 @@ describe('PricesController', () => {
       exchangePriceRepository,
       aggregatePriceRepository
     )
-    expect(
+    expect<unknown>(
       await pricesController.getPriceHistoryOnExchange(
         AssetId.DAI,
         Exchange.uniswapV2('weth')

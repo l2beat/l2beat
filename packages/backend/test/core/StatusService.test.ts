@@ -21,7 +21,7 @@ describe('StatusService', () => {
       barService: new BarService(),
     })
 
-    expect(statusService.getStatus()).toEqual({
+    expect<unknown>(statusService.getStatus()).toEqual({
       fooService: { foo: 123 },
       barService: { bar: 'baz' },
     })
@@ -42,7 +42,7 @@ describe('StatusService', () => {
       barService: new BarService(),
     })
 
-    expect(statusService.getReporterStatus('fooService')).toEqual({
+    expect<unknown>(statusService.getReporterStatus('fooService')).toEqual({
       foo: 123,
     })
   })
