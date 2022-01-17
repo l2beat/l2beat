@@ -1,7 +1,13 @@
 import { expect } from 'chai'
 import { Response } from 'node-fetch'
 
-import { CoingeckoClient, CoingeckoId,CoingeckoMarketChartRangeParams,HttpClient, mock } from '../../../src'
+import {
+  CoingeckoClient,
+  CoingeckoId,
+  CoingeckoMarketChartRangeParams,
+  HttpClient,
+  mock,
+} from '../../../src'
 import { MOCK_DATA } from './MOCK_DATA'
 
 describe.only('CoingeckoClient', () => {
@@ -128,19 +134,15 @@ describe.only('CoingeckoClient', () => {
   describe('getMarketChartRange', () => {
     it('fetches historical prices', async () => {
       const httpClient = mock<HttpClient>({
-        fetch: async () =>
-          new Response(
-            JSON.stringify(MOCK_DATA)
-          ),
+        fetch: async () => new Response(JSON.stringify(MOCK_DATA)),
       })
       const coingeckoClient = new CoingeckoClient(httpClient)
       const result = await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
-        CoingeckoMarketChartRangeParams('usd',1592577232,new Date(1622577232))
-        )
+        CoingeckoMarketChartRangeParams('usd', 1592577232, new Date(1622577232))
+      )
 
       expect(result).to.deep.equal(MOCK_DATA)
-      
     })
 
     it('constructs correct url', async () => {
@@ -156,9 +158,8 @@ describe.only('CoingeckoClient', () => {
       const coingeckoClient = new CoingeckoClient(httpClient)
       await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
-        CoingeckoMarketChartRangeParams('usd',1592577232,new Date(1622577232))
-        )
-
+        CoingeckoMarketChartRangeParams('usd', 1592577232, new Date(1622577232))
+      )
     })
   })
 })

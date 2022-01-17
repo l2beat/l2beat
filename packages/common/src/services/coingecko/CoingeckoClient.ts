@@ -38,8 +38,13 @@ export class CoingeckoClient {
     }
   }
 
-  async getCoinMarketChartRange(coindId: CoingeckoId, params: MarketChartRangeParams): Promise<CoinMarketChartRangeResult> {
-    const data = await this.query(`/coins/${coindId}/market_chart/range`,{...params})
+  async getCoinMarketChartRange(
+    coindId: CoingeckoId,
+    params: MarketChartRangeParams
+  ): Promise<CoinMarketChartRangeResult> {
+    const data = await this.query(`/coins/${coindId}/market_chart/range`, {
+      ...params,
+    })
     return CoinMarketChartRangeResult.parse(data)
   }
 
