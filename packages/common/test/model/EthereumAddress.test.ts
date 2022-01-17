@@ -39,7 +39,7 @@ describe(EthereumAddress.name, () => {
     )
   })
 
-  describe(isBefore.name, () => {
+  describe(EthereumAddress.isBefore.name, () => {
     it('checks ordering', () => {
       const a = EthereumAddress('0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       const b = EthereumAddress('0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
