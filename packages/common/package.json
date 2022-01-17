@@ -18,8 +18,5 @@
     "mkdirp": "^1.0.4",
     "zod": "^3.11.6"
   },
-  "devDependencies": {
-    "@sinonjs/fake-timers": "^8.1.0",
-    "wait-for-expect": "^3.0.2"
-  }
+  "devDependencies": {}
 }
