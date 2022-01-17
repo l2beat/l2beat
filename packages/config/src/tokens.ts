@@ -489,7 +489,7 @@ export const tokenList: TokenInfo[] = [
     category: 'stablecoin',
   },
   {
-    name: 'Perpetual Protocol',
+    name: 'Perpetual',
     symbol: 'PERP',
     address: '0xbC396689893D065F41bc2C6EcbeE5e0085233447',
     decimals: 18,
