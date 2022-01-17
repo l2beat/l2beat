@@ -19,3 +19,9 @@ export const CoinListPlatformEntry = z.object({
 
 export const CoinListResult = z.array(CoinListEntry)
 export const CoinListPlatformResult = z.array(CoinListPlatformEntry)
+
+export type CoinMarketChartRangeResult = z.infer<typeof CoinMarketChartRangeResult>
+export const CoinMarketChartRangeResult = z.object({
+  prices: z.array(z.array(z.number()).length(2))
+})
+

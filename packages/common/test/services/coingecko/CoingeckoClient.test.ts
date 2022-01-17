@@ -1,8 +1,9 @@
 import { expect } from 'chai'
 import { Response } from 'node-fetch'
-import { HttpClient, mock, CoingeckoClient, CoingeckoId } from '../../../src'
 
-describe('CoingeckoClient', () => {
+import { CoingeckoClient, CoingeckoId,HttpClient, mock } from '../../../src'
+
+describe.only('CoingeckoClient', () => {
   describe('query', () => {
     it('constructs a correct url', async () => {
       const httpClient = mock<HttpClient>({
@@ -50,6 +51,10 @@ describe('CoingeckoClient', () => {
       await expect(coingeckoClient.query('/path', {})).to.be.rejectedWith(
         /json/
       )
+    })
+
+    it('multiple queries take longer than a minute', async () => {
+      //TODO
     })
   })
 
@@ -116,6 +121,64 @@ describe('CoingeckoClient', () => {
           platforms: {},
         },
       ])
+    })
+  })
+
+  describe('getMarketChartRange', () => {
+    it('fetches historical prices', async () => {
+      const httpClient = mock<HttpClient>({
+        fetch: async () =>
+          new Response(
+            JSON.stringify(
+              {
+                prices: [
+                  [
+                    1392595200000,
+                    645.14
+                  ],
+                  [
+                    1392681600000,
+                    625.01
+                  ],
+                  [
+                    1392768000000,
+                    620.99
+                  ],
+                  [
+                    1392854400000,
+                    593.89
+                  ],
+                ]
+              },
+            )
+          ),
+      })
+      const coingeckoClient = new CoingeckoClient(httpClient)
+      const result = await coingeckoClient.getCoinMarketChartRange()
+
+      expect(result).to.deep.equal(
+        {
+          prices: [
+            [
+              1392595200000,
+              645.14
+            ],
+            [
+              1392681600000,
+              625.01
+            ],
+            [
+              1392768000000,
+              620.99
+            ],
+            [
+              1392854400000,
+              593.89
+            ],
+          ]
+        },
+      )
+      
     })
   })
 })
