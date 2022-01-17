@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
 import {
@@ -15,7 +15,7 @@ describe.only('CoingeckoClient', () => {
     it('constructs a correct url', async () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
-          expect(url).to.equal(
+          expect(url).toEqual(
             'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123'
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
@@ -29,7 +29,7 @@ describe.only('CoingeckoClient', () => {
     it('constructs a correct when there are no options', async () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
-          expect(url).to.equal('https://api.coingecko.com/api/v3/a/b')
+          expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
@@ -44,7 +44,7 @@ describe.only('CoingeckoClient', () => {
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient)
-      await expect(coingeckoClient.query('/path', {})).to.be.rejectedWith(
+      await expect(coingeckoClient.query('/path', {})).toBeRejected(
         'Server responded with non-2XX result: 404 Not Found'
       )
     })
@@ -55,8 +55,8 @@ describe.only('CoingeckoClient', () => {
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient)
-      await expect(coingeckoClient.query('/path', {})).to.be.rejectedWith(
-        /json/
+      await expect(coingeckoClient.query('/path', {})).toBeRejected(
+        'invalid json response body at  reason: Unexpected token e in JSON at position 1'
       )
     })
 
@@ -78,7 +78,7 @@ describe.only('CoingeckoClient', () => {
       })
       const coingeckoClient = new CoingeckoClient(httpClient)
       const result = await coingeckoClient.getCoinList()
-      expect(result).to.deep.equal([
+      expect(result).toEqual([
         { id: CoingeckoId('asd'), symbol: 'ASD', name: 'A Sad Dime' },
         { id: CoingeckoId('foobar'), symbol: 'FBR', name: 'Foobar coin' },
       ])
@@ -111,7 +111,7 @@ describe.only('CoingeckoClient', () => {
       const result = await coingeckoClient.getCoinList({
         includePlatform: true,
       })
-      expect(result).to.deep.equal([
+      expect(result).toEqual([
         {
           id: CoingeckoId('asd'),
           symbol: 'ASD',
@@ -142,13 +142,13 @@ describe.only('CoingeckoClient', () => {
         CoingeckoMarketChartRangeParams('usd', 1592577232, new Date(1622577232))
       )
 
-      expect(result).to.deep.equal(MOCK_DATA)
+      expect(result).toEqual(MOCK_DATA)
     })
 
     it('constructs correct url', async () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
-          expect(url).to.equal(
+          expect(url).toEqual(
             'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232'
           )
           return new Response(JSON.stringify(MOCK_DATA))
