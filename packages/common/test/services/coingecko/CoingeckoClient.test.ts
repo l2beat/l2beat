@@ -1,7 +1,8 @@
 import { expect } from 'chai'
 import { Response } from 'node-fetch'
 
-import { CoingeckoClient, CoingeckoId,HttpClient, mock } from '../../../src'
+import { CoingeckoClient, CoingeckoId,CoingeckoMarketChartRangeParams,HttpClient, mock } from '../../../src'
+import { MOCK_DATA } from './MOCK_DATA'
 
 describe.only('CoingeckoClient', () => {
   describe('query', () => {
@@ -129,55 +130,16 @@ describe.only('CoingeckoClient', () => {
       const httpClient = mock<HttpClient>({
         fetch: async () =>
           new Response(
-            JSON.stringify(
-              {
-                prices: [
-                  [
-                    1392595200000,
-                    645.14
-                  ],
-                  [
-                    1392681600000,
-                    625.01
-                  ],
-                  [
-                    1392768000000,
-                    620.99
-                  ],
-                  [
-                    1392854400000,
-                    593.89
-                  ],
-                ]
-              },
-            )
+            JSON.stringify(MOCK_DATA)
           ),
       })
       const coingeckoClient = new CoingeckoClient(httpClient)
-      const result = await coingeckoClient.getCoinMarketChartRange(CoingeckoId('ethereum'),{vs_currency: 'usd', from: '1592577232', to: '1622577232'})
+      const result = await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('ethereum'),
+        CoingeckoMarketChartRangeParams('usd',1592577232,new Date(1622577232))
+        )
 
-      expect(result).to.deep.equal(
-        {
-          prices: [
-            [
-              1392595200000,
-              645.14
-            ],
-            [
-              1392681600000,
-              625.01
-            ],
-            [
-              1392768000000,
-              620.99
-            ],
-            [
-              1392854400000,
-              593.89
-            ],
-          ]
-        },
-      )
+      expect(result).to.deep.equal(MOCK_DATA)
       
     })
 
@@ -187,12 +149,15 @@ describe.only('CoingeckoClient', () => {
           expect(url).to.equal(
             'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232'
           )
-          return new Response(JSON.stringify({prices: []}))
+          return new Response(JSON.stringify(MOCK_DATA))
         },
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient)
-      await coingeckoClient.getCoinMarketChartRange(CoingeckoId('ethereum'),{vs_currency: 'usd', from: '1592577232', to: '1622577232'})
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('ethereum'),
+        CoingeckoMarketChartRangeParams('usd',1592577232,new Date(1622577232))
+        )
 
     })
   })
