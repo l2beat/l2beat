@@ -82,14 +82,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    name: 'Aluna',
-    symbol: 'ALN',
-    address: '0x8185Bc4757572Da2a610f887561c32298f1A5748',
-    decimals: 18,
-    sinceBlock: 11966482,
-    category: 'other',
-  },
-  {
     name: 'Badger',
     symbol: 'BADGER',
     address: '0x3472A5A71965499acd81997a54BBA8D852C6E53d',
@@ -111,14 +103,6 @@ export const tokenList: TokenInfo[] = [
     address: '0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C',
     decimals: 18,
     sinceBlock: 3851136,
-    category: 'other',
-  },
-  {
-    name: 'BarnBridge Governance Token',
-    symbol: 'BOND',
-    address: '0x0391D2021f89DC339F60Fff84546EA23E337750f',
-    decimals: 18,
-    sinceBlock: 10815462,
     category: 'other',
   },
   {
@@ -279,14 +263,6 @@ export const tokenList: TokenInfo[] = [
     address: '0xD49ff13661451313cA1553fd6954BD1d9b6E02b9',
     decimals: 18,
     sinceBlock: 5123691,
-    category: 'other',
-  },
-  {
-    name: 'Entropy',
-    symbol: 'ERP',
-    address: '0x0a0e3bfD5a8cE610E735D4469Bc1b3b130402267',
-    decimals: 18,
-    sinceBlock: 13412519,
     category: 'other',
   },
   {
@@ -457,14 +433,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    name: 'Maple Token',
-    symbol: 'MPL',
-    address: '0x33349B282065b0284d756F0577FB39c158F935e6',
-    decimals: 18,
-    sinceBlock: 12274249,
-    category: 'other',
-  },
-  {
     name: 'MATH Token',
     symbol: 'MATH',
     address: '0x08d967bb0134F2d07f7cfb6E246680c53927DD30',
@@ -550,14 +518,6 @@ export const tokenList: TokenInfo[] = [
     address: '0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d',
     decimals: 18,
     sinceBlock: 5257012,
-    category: 'other',
-  },
-  {
-    name: 'Rai Reflex Index',
-    symbol: 'RAI',
-    address: '0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919',
-    decimals: 18,
-    sinceBlock: 11848426,
     category: 'other',
   },
   {
