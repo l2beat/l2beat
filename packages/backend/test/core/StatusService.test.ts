@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { StatusService } from '../../src/core/StatusService'
 
-describe('StatusService', () => {
+describe(StatusService.name, () => {
   class FooService {
     getStatus() {
       return { foo: 123 }

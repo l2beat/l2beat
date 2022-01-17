@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { AsyncCache } from '../../../src/old/services/AsyncCache'
 
-describe('AsyncCache', () => {
+describe(AsyncCache.name, () => {
   class MockCacheFile {
     constructor(public data: any) {}
     read() {

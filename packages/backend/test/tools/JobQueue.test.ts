@@ -4,7 +4,7 @@ import waitForExpect from 'wait-for-expect'
 import { JobQueue } from '../../src/tools/JobQueue'
 import { Logger } from '../../src/tools/Logger'
 
-describe('JobQueue', () => {
+describe(JobQueue.name, () => {
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms))
 

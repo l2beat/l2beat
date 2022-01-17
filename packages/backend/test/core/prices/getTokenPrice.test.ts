@@ -4,7 +4,7 @@ import { getTokenPrice } from '../../../src/core/prices/getTokenPrice'
 import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
 import { ExchangePriceRecord } from '../../../src/peripherals/database/ExchangePriceRepository'
 
-describe('getTokenPrice', () => {
+describe(getTokenPrice.name, () => {
   describe('for market tokens', () => {
     describe('single record', () => {
       const expectedPrice = 200n * 10n ** 18n

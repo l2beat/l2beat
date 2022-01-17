@@ -6,7 +6,7 @@ import { AggregatePriceRepository } from '../../../src/peripherals/database/Aggr
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { mock } from '../../mock'
 
-describe('PricesController', () => {
+describe(PricesController.name, () => {
   it('returns transformed aggregate prices', async () => {
     const aggregatePriceRepository = mock<AggregatePriceRepository>({
       async getAllByAssetId(assetId) {

@@ -5,7 +5,7 @@ import { getProjectStats } from '../../../../../src/old/services/balances/utils'
 import { getProjectTVL } from '../../../../../src/old/services/balances/utils/getProjectTVL'
 import { makeExampleProjects } from './example'
 
-describe('getProjectTVL', () => {
+describe(getProjectTVL.name, () => {
   it('returns the transformed token stats', () => {
     const { projects, balances, prices } = makeExampleProjects()
     const stats = getProjectStats(projects, balances, prices)

@@ -10,7 +10,7 @@ import {
   blockTagToString,
 } from '../../../src/peripherals/ethereum/primitives'
 
-describe('asBytesFromData', () => {
+describe(asBytesFromData.name, () => {
   const cases = [
     { value: '0x41', expected: [0x41] },
     { value: '0x004200', expected: [0x00, 0x42, 0x00] },
@@ -40,7 +40,7 @@ describe('asBytesFromData', () => {
   }
 })
 
-describe('asEthereumAddressFromData', () => {
+describe(asEthereumAddressFromData.name, () => {
   const address = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 
   it('correctly reads a 20 byte address', () => {
@@ -55,7 +55,7 @@ describe('asEthereumAddressFromData', () => {
   })
 })
 
-describe('asKeccakHashFromData', () => {
+describe(asKeccakHashFromData.name, () => {
   const hash =
     '0xabcdabcd12345678abcdabcd12345678ABCDABCD12345678ABCDABCD12345678'
 
@@ -71,7 +71,7 @@ describe('asKeccakHashFromData', () => {
   })
 })
 
-describe('asBigIntFromQuantity', () => {
+describe(asBigIntFromQuantity.name, () => {
   const cases = [
     { value: '0x41', expected: 65n },
     { value: '0x400', expected: 1024n },
@@ -94,7 +94,7 @@ describe('asBigIntFromQuantity', () => {
   }
 })
 
-describe('bigIntToQuantity', () => {
+describe(bigIntToQuantity.name, () => {
   const cases = [
     { value: 65n, expected: '0x41' },
     { value: 1024n, expected: '0x400' },
@@ -115,7 +115,7 @@ describe('bigIntToQuantity', () => {
   }
 })
 
-describe('blockTagToString', () => {
+describe(blockTagToString.name, () => {
   it('converts numbers to quantities', () => {
     expect(blockTagToString(2n)).toEqual('0x2')
   })

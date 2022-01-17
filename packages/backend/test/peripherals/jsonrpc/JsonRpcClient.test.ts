@@ -7,7 +7,7 @@ import {
   JsonRpcSuccessResponse,
 } from '../../../src/peripherals/jsonrpc'
 
-describe('JsonRpcClient', () => {
+describe(JsonRpcClient.name, () => {
   function toSuccess(request: JsonRpcRequest): JsonRpcSuccessResponse {
     return {
       jsonrpc: '2.0',
@@ -52,7 +52,7 @@ describe('JsonRpcClient', () => {
     ])
   })
 
-  describe('call', () => {
+  describe(JsonRpcClient.prototype.call.name, () => {
     it('returns result', async () => {
       class TestClient extends JsonRpcClient {
         async execute() {
@@ -105,7 +105,7 @@ describe('JsonRpcClient', () => {
     })
   })
 
-  describe('batch', () => {
+  describe(JsonRpcClient.prototype.callBatch.name, () => {
     it('returns results', async () => {
       class TestClient extends JsonRpcClient {
         async execute() {

@@ -9,7 +9,7 @@ import {
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
-describe('JsonRpcHttpClient', () => {
+describe(JsonRpcHttpClient.name, () => {
   it('correctly sets up a request', async () => {
     const httpClient = mock<HttpClient>({
       async fetch(url, init) {

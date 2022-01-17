@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { Bytes, KeccakHash } from '../../src/model'
 
-describe('KeccakHash', () => {
+describe(KeccakHash.name, () => {
   it('accepts lowercase hashes', () => {
     const hash = new KeccakHash(
       '0xabcdabcd12345678abcdabcd12345678abcdabcd12345678abcdabcd12345678'

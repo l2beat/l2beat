@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { SimpleDate } from '../../../src/old/model'
 
-describe('SimpleDate', () => {
+describe(SimpleDate.name, () => {
   it('can be created from string', () => {
     expect(SimpleDate.fromString('2020-06-07')).toBeA(SimpleDate)
   })

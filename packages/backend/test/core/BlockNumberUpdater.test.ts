@@ -12,7 +12,7 @@ import { EtherscanClient } from '../../src/peripherals/etherscan'
 import { Logger } from '../../src/tools/Logger'
 import { mock } from '../mock'
 
-describe('BlockNumberUpdater', () => {
+describe(BlockNumberUpdater.name, () => {
   it('requires minTimestamp to be hour aligned', () => {
     const time = UnixTime.now().toStartOf('hour').add(1, 'seconds')
     expect(

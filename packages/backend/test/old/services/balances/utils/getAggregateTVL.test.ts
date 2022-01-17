@@ -5,7 +5,7 @@ import { getProjectStats } from '../../../../../src/old/services/balances/utils'
 import { getAggregateTVL } from '../../../../../src/old/services/balances/utils/getAggregateTVL'
 import { makeExampleProjects } from './example'
 
-describe('getAggregateTVL', () => {
+describe(getAggregateTVL.name, () => {
   it('returns the transformed token stats', () => {
     const { projects, balances, prices } = makeExampleProjects()
     const stats = getProjectStats(projects, balances, prices)

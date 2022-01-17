@@ -1,7 +1,7 @@
 import { expect } from 'earljs'
 import { formatLargeNumber } from '../../src/shared'
 
-describe('formatLargeNumber', () => {
+describe(formatLargeNumber.name, () => {
   const cases = [
     { value: 0, expected: '0.00' },
     { value: 1, expected: '1.00' },

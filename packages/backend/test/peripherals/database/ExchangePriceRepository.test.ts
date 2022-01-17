@@ -5,7 +5,7 @@ import { ExchangePriceRepository } from '../../../src/peripherals/database/Excha
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
-describe('ExchangePriceRepository', () => {
+describe(ExchangePriceRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
 
   it('can delete all records', async () => {

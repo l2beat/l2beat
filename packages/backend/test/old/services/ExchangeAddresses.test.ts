@@ -2,12 +2,13 @@ import { expect } from 'earljs'
 
 import { DAI, WETH } from '../../../src/old/constants'
 import {
+  ExchangeAddresses,
   getUniswapV2PairAddress,
   getUniswapV3PoolAddress,
 } from '../../../src/old/services/ExchangeAddresses'
 
-describe('ExchangeAddresses', () => {
-  describe('getUniswapV2PairAddress', () => {
+describe(ExchangeAddresses.name, () => {
+  describe(getUniswapV2PairAddress.name, () => {
     it('returns WETH-DAI pair address', () => {
       const pairWD = getUniswapV2PairAddress(WETH, DAI)
       const pairDW = getUniswapV2PairAddress(DAI, WETH)
@@ -17,7 +18,7 @@ describe('ExchangeAddresses', () => {
     })
   })
 
-  describe('getUniswapV3PoolAddress', () => {
+  describe(getUniswapV3PoolAddress.name, () => {
     it('returns WETH-DAI-3000 pair address', () => {
       const poolWD3000 = getUniswapV3PoolAddress(WETH, DAI, 3000)
       const poolDW3000 = getUniswapV3PoolAddress(DAI, WETH, 3000)

@@ -3,7 +3,7 @@ import { expect } from 'earljs'
 
 import { retry } from '../../src/tools/retry'
 
-describe('retry', () => {
+describe(retry.name, () => {
   it('is transparent if call succeeds', async () => {
     const result = await retry(async () => 1, {
       minTimeout: 100,

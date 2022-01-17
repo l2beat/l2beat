@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { Exchange } from '../../src/model'
 
-describe('Exchange', () => {
+describe(Exchange.name, () => {
   it('can represent a Uniswap V1 exchange', () => {
     const exchange = Exchange.uniswapV1()
 

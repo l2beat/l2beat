@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import { asNumber } from '../../../../../src/old/services/balances/utils/asNumber'
 
-describe('asNumber', () => {
+describe(asNumber.name, () => {
   it('correctly formats some ether', () => {
     const value = utils.parseEther('1.23456789')
     const expected = 1.234568

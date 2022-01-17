@@ -3,7 +3,7 @@ import { expect } from 'earljs'
 
 import { ExponentialRetry } from '../../../../src/old/services/api/ExponentialRetry'
 
-describe('ExponentialRetry', () => {
+describe(ExponentialRetry.name, () => {
   it('is transparent if call succeeds', async () => {
     const retry = new ExponentialRetry({
       startTimeout: 100,

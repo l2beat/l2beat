@@ -9,7 +9,7 @@ import { BlockNumberRecord } from '../../../src/peripherals/database/BlockNumber
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
-describe('PriceUpdater', () => {
+describe(PriceUpdater.name, () => {
   const tokens: Token[] = [
     {
       id: AssetId('aaa-token'),

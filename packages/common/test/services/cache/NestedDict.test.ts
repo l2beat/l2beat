@@ -1,7 +1,7 @@
 import { expect } from 'earljs'
 import { NestedDict } from '../../../src'
 
-describe('NestedDict', () => {
+describe(NestedDict.name, () => {
   it('returns value when present', () => {
     const dict = new NestedDict({})
     dict.set('a', 'b', 123)

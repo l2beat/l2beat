@@ -4,7 +4,7 @@ import { getEtherPrice } from '../../../src/core/prices/getEtherPrice'
 import { AssetId, Exchange } from '../../../src/model'
 import { ExchangePriceRecord } from '../../../src/peripherals/database/ExchangePriceRepository'
 
-describe('getEtherPrice', () => {
+describe(getEtherPrice.name, () => {
   describe('single record', () => {
     const expectedPrice = 4_000n * 10n ** 18n
     const testCases: ExchangePriceRecord[] = [

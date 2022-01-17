@@ -8,7 +8,7 @@ import latestBlockInfura from './examples/latestBlockAlchemy.json'
 import pendingBlockAlchemy from './examples/pendingBlockAlchemy.json'
 import pendingBlockInfura from './examples/pendingBlockAlchemy.json'
 
-describe('asRpcBlock', () => {
+describe(asRpcBlock.name, () => {
   const testCases = [
     { type: 'pending', provider: 'Alchemy', data: pendingBlockAlchemy },
     { type: 'latest', provider: 'Alchemy', data: latestBlockAlchemy },

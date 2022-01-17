@@ -8,7 +8,7 @@ import { RpcBlock } from '../../src/peripherals/ethereum/types'
 import { Logger } from '../../src/tools/Logger'
 import { mock } from '../mock'
 
-describe('SafeBlockService', () => {
+describe(SafeBlockService.name, () => {
   it('can obtain the safe block', async () => {
     const ethereumClient = mock<EthereumClient>({
       async getBlockNumber() {

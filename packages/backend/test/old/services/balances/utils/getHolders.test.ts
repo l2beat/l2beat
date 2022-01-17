@@ -4,7 +4,7 @@ import { expect } from 'earljs'
 import { ProjectInfo } from '../../../../../src/old/model'
 import { getHolders } from '../../../../../src/old/services/balances/utils'
 
-describe('getHolders', () => {
+describe(getHolders.name, () => {
   it('returns the various holders', () => {
     const eth = getTokenBySymbol('ETH')
     const dai = getTokenBySymbol('DAI')
