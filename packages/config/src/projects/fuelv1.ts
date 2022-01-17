@@ -8,9 +8,9 @@ import {
 } from './common'
 import { Project } from './types'
 
-export const fuel_v1: Project = {
+export const fuelv1: Project = {
   name: 'Fuel v1',
-  slug: 'fuel_v1',
+  slug: 'fuelv1',
   bridges: [
     {
       address: '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
