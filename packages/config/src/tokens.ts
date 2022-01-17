@@ -234,6 +234,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Dopex Rebate Token',
+    symbol: 'rDPX',
+    address: '0x0ff5A8451A839f5F0BB3562689D9A44089738D11',
+    decimals: 18,
+    sinceBlock: 12674089,
+    category: 'other',
+  },
+  {
     name: 'Dusk Network',
     symbol: 'DUSK',
     address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
