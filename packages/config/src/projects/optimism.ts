@@ -38,7 +38,17 @@ export const optimism: Project = {
     {
       address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
       sinceBlock: 12686786,
-      tokens: ['ETH', 'LINK', 'MKR', 'UNI', 'USDC', 'USDT', 'WBTC'],
+      tokens: [
+        'ETH',
+        'LINK',
+        'LUSD',
+        'MKR',
+        'PERP',
+        'UNI',
+        'USDC',
+        'USDT',
+        'WBTC',
+      ],
     },
   ],
   details: {

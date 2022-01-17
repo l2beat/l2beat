@@ -401,6 +401,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'LUSD Stablecoin',
+    symbol: 'LUSD',
+    address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
+    decimals: 18,
+    sinceBlock: 12178594,
+    category: 'stablecoin',
+  },
+  {
     name: 'Maker',
     symbol: 'MKR',
     address: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
@@ -479,6 +487,14 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     sinceBlock: 6294931,
     category: 'stablecoin',
+  },
+  {
+    name: 'Perpetual',
+    symbol: 'PERP',
+    address: '0xbC396689893D065F41bc2C6EcbeE5e0085233447',
+    decimals: 18,
+    sinceBlock: 10804048,
+    category: 'other',
   },
   {
     name: 'Pinakion',
