@@ -3,3 +3,4 @@
 /project/leverj             /projects/gluon
 /project/*                  /projects/:splat
 /projects/leverj            /projects/gluon
+/projects/fuel              /projects/fuelv1
