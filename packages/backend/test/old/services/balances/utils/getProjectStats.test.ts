@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { utils } from 'ethers'
 
 import {
@@ -40,6 +40,6 @@ describe('getProjectStats', () => {
         },
       },
     ]
-    expect(stats).to.deep.equal(expected)
+    expect(stats).toEqual(expected)
   })
 })

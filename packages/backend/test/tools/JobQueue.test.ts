@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { JobQueue } from '../../src/tools/JobQueue'
@@ -27,9 +27,9 @@ describe('JobQueue', () => {
     }
 
     await waitForExpect(() => {
-      expect(completed).to.equal(10)
+      expect(completed).toEqual(10)
     })
-    expect(max).to.equal(1)
+    expect(max).toEqual(1)
   })
 
   it('works with 3 concurrent jobs', async () => {
@@ -51,9 +51,9 @@ describe('JobQueue', () => {
     }
 
     await waitForExpect(() => {
-      expect(completed).to.equal(10)
+      expect(completed).toEqual(10)
     })
-    expect(max).to.equal(3)
+    expect(max).toEqual(3)
   })
 
   it('can handle occasional failure', async () => {
@@ -76,8 +76,8 @@ describe('JobQueue', () => {
     }
 
     await waitForExpect(() => {
-      expect(completed.length).to.equal(10)
+      expect(completed.length).toEqual(10)
     })
-    expect(completed.sort()).to.deep.equal([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    expect(completed.sort()).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 })

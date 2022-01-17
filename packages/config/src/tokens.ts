@@ -258,6 +258,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Dopex Rebate Token',
+    symbol: 'rDPX',
+    address: '0x0ff5A8451A839f5F0BB3562689D9A44089738D11',
+    decimals: 18,
+    sinceBlock: 12674089,
+    category: 'other',
+  },
+  {
     name: 'Dusk Network',
     symbol: 'DUSK',
     address: '0x940a2dB1B7008B6C776d4faaCa729d6d4A4AA551',
@@ -433,6 +441,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'LUSD Stablecoin',
+    symbol: 'LUSD',
+    address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
+    decimals: 18,
+    sinceBlock: 12178594,
+    category: 'stablecoin',
+  },
+  {
     name: 'Maker',
     symbol: 'MKR',
     address: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
@@ -519,6 +535,14 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     sinceBlock: 6294931,
     category: 'stablecoin',
+  },
+  {
+    name: 'Perpetual',
+    symbol: 'PERP',
+    address: '0xbC396689893D065F41bc2C6EcbeE5e0085233447',
+    decimals: 18,
+    sinceBlock: 10804048,
+    category: 'other',
   },
   {
     name: 'Pinakion',

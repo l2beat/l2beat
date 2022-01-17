@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { UnixTime } from '../../src/model/UnixTime'
 
@@ -8,25 +8,25 @@ describe('UnixTime', () => {
     const time = UnixTime.fromDate(date)
     const seconds = Math.floor(date.getTime() / 1000)
 
-    expect(time.toNumber()).to.equal(seconds)
+    expect(time.toNumber()).toEqual(seconds)
   })
 
   it('cannot be constructed from milliseconds', () => {
-    expect(() => new UnixTime(Date.now())).to.throw(
+    expect(() => new UnixTime(Date.now())).toThrow(
       TypeError,
       'timestamp must represent time in seconds'
     )
   })
 
   it('cannot be constructed from non-integers', () => {
-    expect(() => new UnixTime(6.9)).to.throw(
+    expect(() => new UnixTime(6.9)).toThrow(
       TypeError,
       'timestamp must be an integer'
     )
   })
 
   it('cannot be constructed from non-integers', () => {
-    expect(() => new UnixTime(6.9)).to.throw(
+    expect(() => new UnixTime(6.9)).toThrow(
       TypeError,
       'timestamp must be an integer'
     )
@@ -36,25 +36,25 @@ describe('UnixTime', () => {
     it('can add days', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
       const later = time.add(3, 'days')
-      expect(later.toDate()).to.deep.equal(new Date('2021-09-10T00:00:00Z'))
+      expect(later.toDate()).toEqual(new Date('2021-09-10T00:00:00Z'))
     })
 
     it('can add hours', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
       const later = time.add(5, 'hours')
-      expect(later.toDate()).to.deep.equal(new Date('2021-09-07T05:00:00Z'))
+      expect(later.toDate()).toEqual(new Date('2021-09-07T05:00:00Z'))
     })
 
     it('can add minutes', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
       const later = time.add(4, 'minutes')
-      expect(later.toDate()).to.deep.equal(new Date('2021-09-07T00:04:00Z'))
+      expect(later.toDate()).toEqual(new Date('2021-09-07T00:04:00Z'))
     })
 
     it('can add seconds', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
       const later = time.add(6, 'seconds')
-      expect(later.toDate()).to.deep.equal(new Date('2021-09-07T00:00:06Z'))
+      expect(later.toDate()).toEqual(new Date('2021-09-07T00:00:06Z'))
     })
   })
 
@@ -62,19 +62,19 @@ describe('UnixTime', () => {
     it('can get start of day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('day')
-      expect(start.toDate()).to.deep.equal(new Date('2021-09-07T00:00:00Z'))
+      expect(start.toDate()).toEqual(new Date('2021-09-07T00:00:00Z'))
     })
 
     it('can get start of hour', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('hour')
-      expect(start.toDate()).to.deep.equal(new Date('2021-09-07T12:00:00Z'))
+      expect(start.toDate()).toEqual(new Date('2021-09-07T12:00:00Z'))
     })
 
     it('can get start of minute', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('minute')
-      expect(start.toDate()).to.deep.equal(new Date('2021-09-07T12:34:00Z'))
+      expect(start.toDate()).toEqual(new Date('2021-09-07T12:34:00Z'))
     })
   })
 
@@ -103,7 +103,7 @@ describe('UnixTime', () => {
 
     for (const { a, method, b, result } of testCases) {
       it(`${a}.${method}(${b}) = ${result}`, () => {
-        expect(new UnixTime(a)[method](new UnixTime(b))).to.equal(result)
+        expect(new UnixTime(a)[method](new UnixTime(b))).toEqual(result)
       })
     }
   })

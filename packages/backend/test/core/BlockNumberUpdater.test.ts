@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
@@ -24,7 +24,7 @@ describe('BlockNumberUpdater', () => {
           mock<BlockNumberRepository>(),
           Logger.SILENT
         )
-    ).to.throw(Error, 'minTimestamp must be aligned to full hours')
+    ).toThrow(Error, 'minTimestamp must be aligned to full hours')
   })
 
   it('only considers blocks after minTimestamp', async () => {
@@ -59,7 +59,7 @@ describe('BlockNumberUpdater', () => {
 
     await blockNumberUpdater.start()
     const blocks = blockNumberUpdater.getBlockList()
-    expect(blocks).to.deep.equal([
+    expect(blocks).toEqual([
       { blockNumber: 400n, timestamp: minTimestamp },
       { blockNumber: 500n, timestamp: minTimestamp.add(1, 'hours') },
       { blockNumber: 600n, timestamp: minTimestamp.add(2, 'hours') },
@@ -107,11 +107,11 @@ describe('BlockNumberUpdater', () => {
     await blockNumberUpdater.start()
 
     await waitForExpect(() => {
-      expect(blockNumberUpdater.getBlockList().length).to.equal(3)
+      expect(blockNumberUpdater.getBlockList().length).toEqual(3)
     })
 
     const blocks = blockNumberUpdater.getBlockList()
-    expect(blocks).to.deep.equal([
+    expect(blocks).toEqual([
       { blockNumber: 400n, timestamp: minTimestamp },
       { blockNumber: 500n, timestamp: minTimestamp.add(1, 'hours') },
       { blockNumber: 600n, timestamp: minTimestamp.add(2, 'hours') },
@@ -161,10 +161,10 @@ describe('BlockNumberUpdater', () => {
     blockNumberUpdater.onNewBlocks((event) => events.push(event))
 
     await waitForExpect(() => {
-      expect(blockNumberUpdater.getBlockList().length).to.equal(3)
+      expect(blockNumberUpdater.getBlockList().length).toEqual(3)
     })
 
-    expect(events).to.deep.equal([
+    expect(events).toEqual([
       [{ blockNumber: 400n, timestamp: minTimestamp }],
       [{ blockNumber: 500n, timestamp: minTimestamp.add(1, 'hours') }],
       [{ blockNumber: 600n, timestamp: minTimestamp.add(2, 'hours') }],
@@ -212,7 +212,7 @@ describe('BlockNumberUpdater', () => {
     await blockNumberUpdater.start()
 
     const earlyBlocks = blockNumberUpdater.getBlockList()
-    expect(earlyBlocks).to.deep.equal([
+    expect(earlyBlocks).toEqual([
       { blockNumber: 400n, timestamp: minTimestamp },
     ])
 
@@ -222,11 +222,11 @@ describe('BlockNumberUpdater', () => {
     })
 
     await waitForExpect(() => {
-      expect(blockNumberUpdater.getBlockList().length).to.equal(2)
+      expect(blockNumberUpdater.getBlockList().length).toEqual(2)
     })
 
     const lateBlocks = blockNumberUpdater.getBlockList()
-    expect(lateBlocks).to.deep.equal([
+    expect(lateBlocks).toEqual([
       { blockNumber: 400n, timestamp: minTimestamp },
       { blockNumber: 500n, timestamp: minTimestamp.add(1, 'hours') },
     ])

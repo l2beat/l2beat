@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { AssetId, Exchange } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
@@ -12,7 +12,7 @@ describe('ExchangePriceRepository', () => {
     const repository = new ExchangePriceRepository(knex, Logger.SILENT)
     await repository.deleteAll()
     const results = await repository.getAll()
-    expect(results).to.deep.equal([])
+    expect(results).toEqual([])
   })
 
   it('can add new records and query them by block number', async () => {
@@ -43,10 +43,12 @@ describe('ExchangePriceRepository', () => {
     await repository.add([itemA, itemB, itemC])
 
     const resultsA = await repository.getAllByBlockNumber(1234n)
-    expect(resultsA).to.have.deep.members([itemA, itemB])
+    expect(resultsA).toBeAnArrayWith(itemA, itemB)
+    expect(resultsA.length).toEqual(2)
 
     const resultsB = await repository.getAllByBlockNumber(4567n)
-    expect(resultsB).to.have.deep.members([itemC])
+    expect(resultsB).toBeAnArrayWith(itemC)
+    expect(resultsB.length).toEqual(1)
   })
 
   it('getAllByAssetIdAndExchange', async () => {
@@ -88,7 +90,7 @@ describe('ExchangePriceRepository', () => {
       AssetId.DAI,
       Exchange.uniswapV2('usdt')
     )
-    expect(results).to.deep.equal([
+    expect(results).toEqual([
       {
         blockNumber: 1233n,
         liquidity: 3000n,

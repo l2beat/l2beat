@@ -1,5 +1,5 @@
 import { getTokenBySymbol } from '@l2beat/config'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { BigNumber, utils } from 'ethers'
 
 import {
@@ -22,7 +22,7 @@ describe('getTokenStats', () => {
       const bridge = (a: string) => ({ address: a, sinceBlock: 1, tokens: [] })
       const project = { name: 'foo', bridges: [bridge('a'), bridge('b')] }
       const holders = getHolderAddresses(project)
-      expect(holders).to.deep.equal(['a', 'b'])
+      expect(holders).toEqual(['a', 'b'])
     })
   })
 
@@ -39,7 +39,7 @@ describe('getTokenStats', () => {
       }
       const tokens = getTrackedTokens(project)
       const expected = ['ETH', 'DAI', 'USDC'].map(getTokenBySymbol)
-      expect(tokens).to.deep.equal(expected)
+      expect(tokens).toEqual(expected)
     })
   })
 
@@ -54,7 +54,7 @@ describe('getTokenStats', () => {
         },
       }
       const result = getTokenBalance(['a', 'b', 'c'], eth, balances)
-      expect(result).to.deep.equal(BigNumber.from(15))
+      expect(result).toEqual(BigNumber.from(15))
     })
 
     it('works for tokens', () => {
@@ -75,7 +75,7 @@ describe('getTokenStats', () => {
         },
       }
       const result = getTokenBalance(['a', 'b', 'c'], dai, balances)
-      expect(result).to.deep.equal(BigNumber.from(12))
+      expect(result).toEqual(BigNumber.from(12))
     })
 
     it('can return 0', () => {
@@ -93,9 +93,9 @@ describe('getTokenStats', () => {
         },
       }
       const ethBalance = getTokenBalance(['c', 'd'], eth, balances)
-      expect(ethBalance).to.deep.equal(BigNumber.from(0))
+      expect(ethBalance).toEqual(BigNumber.from(0))
       const daiBalance = getTokenBalance(['c', 'd'], dai, balances)
-      expect(daiBalance).to.deep.equal(BigNumber.from(0))
+      expect(daiBalance).toEqual(BigNumber.from(0))
     })
   })
 
@@ -109,7 +109,7 @@ describe('getTokenStats', () => {
         eth: BigNumber.from(5),
       }
       const price = getTokenPrice(dai, prices)
-      expect(price).to.deep.equal(BigNumber.from(10))
+      expect(price).toEqual(BigNumber.from(10))
     })
 
     it('returns 0 for missing token price', () => {
@@ -122,7 +122,7 @@ describe('getTokenStats', () => {
         eth: BigNumber.from(5),
       }
       const price = getTokenPrice(usdc, prices)
-      expect(price).to.deep.equal(BigNumber.from(0))
+      expect(price).toEqual(BigNumber.from(0))
     })
 
     it('returns the eth price', () => {
@@ -135,7 +135,7 @@ describe('getTokenStats', () => {
         eth: BigNumber.from(5),
       }
       const price = getTokenPrice(eth, prices)
-      expect(price).to.deep.equal(BigNumber.from(5))
+      expect(price).toEqual(BigNumber.from(5))
     })
   })
 
@@ -160,6 +160,6 @@ describe('getTokenStats', () => {
         value: utils.parseUnits('20.2', 18),
       },
     ]
-    expect(stats).to.deep.equal(expected)
+    expect(stats).toEqual(expected)
   })
 })

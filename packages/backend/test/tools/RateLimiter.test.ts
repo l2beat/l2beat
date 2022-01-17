@@ -1,5 +1,5 @@
 import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { RateLimiter } from '../../src/tools/RateLimiter'
 
@@ -41,7 +41,7 @@ describe('RateLimiter', () => {
       clock.uninstall()
       rateLimiter.clear()
 
-      expect(count).to.equal(expectedCount)
+      expect(count).toEqual(expectedCount)
     })
   }
 
@@ -52,7 +52,7 @@ describe('RateLimiter', () => {
     }
     const promiseA = rateLimiter.call(fn)
     const promiseB = rateLimiter.call(fn)
-    await expect(promiseA).to.be.rejectedWith('oops')
-    await expect(promiseB).to.be.rejectedWith('oops')
+    await expect(promiseA).toBeRejected('oops')
+    await expect(promiseB).toBeRejected('oops')
   })
 })

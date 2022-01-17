@@ -21,6 +21,8 @@ export const habitat: Project = {
   ],
   associatedTokens: ['HBT'],
   details: {
+    warning:
+      'Will be shutdown on 17th January. Please withdraw any remaining funds which you need on mainnet.',
     description:
       'Habitat is an optimistic rollup designed to allow community governance and treasury management.',
     purpose: 'DAO, Treasury',
@@ -98,6 +100,11 @@ export const habitat: Project = {
       },
     },
     news: [
+      {
+        date: '2022-01-03',
+        name: 'Announcing Rollup Shutdown on the 17th January 2022',
+        link: 'https://0xhabitat.substack.com/p/rollup-shutdown',
+      },
       {
         date: '2021-08-18',
         name: 'Community Update #20 - Weekly Calls',

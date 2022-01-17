@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, EthereumAddress } from '../../../src/model'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
@@ -47,13 +47,13 @@ describe('MulticallClient', () => {
       ],
       blockTag
     )
-    expect(result).to.deep.equal([
+    expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
       // empty result is is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])
-    expect(calls).to.deep.equal([
+    expect(calls).toEqual([
       { to: ADDRESS_A, data: Bytes.fromHex('0x123456'), blockTag },
       { to: ADDRESS_B, data: Bytes.fromHex('0x'), blockTag },
       { to: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef'), blockTag },
@@ -85,13 +85,13 @@ describe('MulticallClient', () => {
       ],
       blockTag
     )
-    expect(result).to.deep.equal([
+    expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: true, data: Bytes.fromHex('0x0f00') },
       // empty result is is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
     ])
-    expect(calls).to.deep.equal([
+    expect(calls).toEqual([
       {
         to: MULTICALL_V1_ADDRESS,
         data: encodeMulticallV1([
@@ -132,12 +132,12 @@ describe('MulticallClient', () => {
       ],
       blockTag
     )
-    expect(result).to.deep.equal([
+    expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: false, data: Bytes.fromHex('0x0f00') },
       { success: false, data: Bytes.fromHex('0x') },
     ])
-    expect(calls).to.deep.equal([
+    expect(calls).toEqual([
       {
         to: MULTICALL_V2_ADDRESS,
         data: encodeMulticallV2([
@@ -177,8 +177,8 @@ describe('MulticallClient', () => {
       })),
       blockTag
     )
-    expect(result.length).to.equal(MULTICALL_BATCH_SIZE * 2 + 1)
-    expect(calls).to.deep.equal([MULTICALL_BATCH_SIZE, MULTICALL_BATCH_SIZE, 1])
+    expect(result.length).toEqual(MULTICALL_BATCH_SIZE * 2 + 1)
+    expect(calls).toEqual([MULTICALL_BATCH_SIZE, MULTICALL_BATCH_SIZE, 1])
   })
 
   it('offers a named interface', async () => {
@@ -206,7 +206,7 @@ describe('MulticallClient', () => {
       blockTag
     )
 
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       foo: { success: true, data: Bytes.fromHex('0x1234') },
       bar: { success: false, data: Bytes.fromHex('0xdead') },
     })

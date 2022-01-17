@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { DatabaseService } from '../../../src/peripherals/database/DatabaseService'
 import { Logger } from '../../../src/tools/Logger'
@@ -18,6 +18,6 @@ describe('DatabaseService', () => {
     )
     const tables = result.rows.map((x: { table_name: string }) => x.table_name)
 
-    expect(tables).to.deep.equal(['knex_migrations', 'knex_migrations_lock'])
+    expect(tables).toEqual(['knex_migrations', 'knex_migrations_lock'])
   })
 })

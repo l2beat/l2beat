@@ -1,5 +1,5 @@
 import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { retry } from '../../src/tools/retry'
 
@@ -9,7 +9,7 @@ describe('retry', () => {
       minTimeout: 100,
       maxRetryCount: Infinity,
     })
-    expect(result).to.equal(1)
+    expect(result).toEqual(1)
   })
 
   it('will retry until successful', async () => {
@@ -34,9 +34,9 @@ describe('retry', () => {
     await clock.runAllAsync()
     clock.uninstall()
 
-    expect(clock.now).to.equal(100 + 200 + 400 + 800)
-    expect(completed).to.equal(true)
-    expect(callCount).to.equal(5)
+    expect(clock.now).toEqual(100 + 200 + 400 + 800)
+    expect(completed).toEqual(true)
+    expect(callCount).toEqual(5)
   })
 
   it('will fail if not successful after maxRetryCount', async () => {
@@ -56,8 +56,8 @@ describe('retry', () => {
     await clock.runAllAsync()
     clock.uninstall()
 
-    expect(clock.now).to.equal(100 + 200)
-    expect(failed).to.equal(true)
+    expect(clock.now).toEqual(100 + 200)
+    expect(failed).toEqual(true)
   })
 
   it('applies maxTimeout', async () => {
@@ -80,8 +80,8 @@ describe('retry', () => {
     await clock.runAllAsync()
     clock.uninstall()
 
-    expect(clock.now).to.equal(100 + 200 + 300 + 300)
-    expect(callCount).to.equal(5)
+    expect(clock.now).toEqual(100 + 200 + 300 + 300)
+    expect(callCount).toEqual(5)
   })
 
   it('calls onError', async () => {
@@ -97,8 +97,8 @@ describe('retry', () => {
       return 1
     }
     async function onError(e: unknown) {
-      expect(e).to.be.instanceOf(Error)
-      expect((e as any).message).to.equal('Not yet!')
+      expect(e).toBeA(Error)
+      expect((e as any).message).toEqual('Not yet!')
       errorCount++
     }
     retry(call, {
@@ -110,7 +110,7 @@ describe('retry', () => {
     await clock.runAllAsync()
     clock.uninstall()
 
-    expect(errorCount).to.equal(4)
+    expect(errorCount).toEqual(4)
   })
 
   it('handles code that throws in a sync way', async () => {
@@ -124,7 +124,7 @@ describe('retry', () => {
       minTimeout: 0,
       maxTimeout: 0,
     })
-    await expect(promise).to.be.rejectedWith('oops')
-    expect(tries).to.equal(5)
+    await expect(promise).toBeRejected('oops')
+    expect(tries).toEqual(5)
   })
 })

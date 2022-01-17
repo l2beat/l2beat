@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { asRpcBlock } from '../../../src/peripherals/ethereum/types'
 import earliestBlockAlchemy from './examples/earliestBlockAlchemy.json'
@@ -20,14 +20,13 @@ describe('asRpcBlock', () => {
 
   for (const { type, provider, data } of testCases) {
     it(`handles ${type} block from ${provider}`, () => {
-      const result = asRpcBlock(data)
-      expect(result).not.to.equal(undefined)
+      expect(() => asRpcBlock(data)).not.toThrow()
     })
   }
 
   it('throws for malformed data', () => {
     const copy = { ...latestBlockAlchemy }
     copy.difficulty = '0x01'
-    expect(() => asRpcBlock(copy)).to.throw()
+    expect(() => asRpcBlock(copy)).toThrow()
   })
 })

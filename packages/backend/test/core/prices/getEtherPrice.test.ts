@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { getEtherPrice } from '../../../src/core/prices/getEtherPrice'
 import { AssetId, Exchange } from '../../../src/model'
@@ -55,7 +55,7 @@ describe('getEtherPrice', () => {
     for (const record of testCases) {
       it(`${record.exchange.name} - ${record.assetId}`, () => {
         const price = getEtherPrice([record])
-        expect(price).to.equal(expectedPrice)
+        expect(price).toEqual(expectedPrice)
       })
     }
   })
@@ -85,7 +85,7 @@ describe('getEtherPrice', () => {
           price: 4_003n * 10n ** 6n,
         },
       ])
-      expect(price).to.equal(4_002n * 10n ** 18n)
+      expect(price).toEqual(4_002n * 10n ** 18n)
     })
 
     const uniV1Records = [
@@ -126,7 +126,7 @@ describe('getEtherPrice', () => {
           record,
           { ...baseV2Record, liquidity: (baseV2Record.liquidity * 99n) / 100n },
         ])
-        expect(price).to.equal(4_000n * 10n ** 18n)
+        expect(price).toEqual(4_000n * 10n ** 18n)
       })
 
       it(`selects uniswap v2 when ${record.assetId} has less liquidity`, () => {
@@ -137,7 +137,7 @@ describe('getEtherPrice', () => {
             liquidity: (baseV2Record.liquidity * 101n) / 100n,
           },
         ])
-        expect(price).to.equal(3_000n * 10n ** 18n)
+        expect(price).toEqual(3_000n * 10n ** 18n)
       })
     }
 
@@ -150,8 +150,8 @@ describe('getEtherPrice', () => {
         price: 4000n * 10n ** 6n,
       }
       const price = getEtherPrice([baseV2Record, otherRecord])
-      expect(price).to.equal(3_000n * 10n ** 18n)
-      expect(() => getEtherPrice([otherRecord])).to.throw()
+      expect(price).toEqual(3_000n * 10n ** 18n)
+      expect(() => getEtherPrice([otherRecord])).toThrow()
     })
   })
 })
