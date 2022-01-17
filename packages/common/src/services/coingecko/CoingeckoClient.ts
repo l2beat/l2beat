@@ -1,3 +1,4 @@
+import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
 import {
   CoinListEntry,
@@ -9,9 +10,14 @@ import {
 const API_URL = 'https://api.coingecko.com/api/v3'
 
 export class CoingeckoClient {
+  private rateLimiter = new RateLimiter({
+    callsPerMinute: 40,
+  })
   private timeoutMs = 10_000
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    this.query = this.rateLimiter.wrap(this.query.bind(this))
+  }
 
   async getCoinList(options?: {
     includePlatform: false
