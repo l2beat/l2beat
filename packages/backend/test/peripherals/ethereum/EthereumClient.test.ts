@@ -6,8 +6,8 @@ import { JsonRpcClient } from '../../../src/peripherals/jsonrpc'
 import { mock } from '../../mock'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
 
-describe('EthereumClient', () => {
-  describe('getBlockNumber', () => {
+describe(EthereumClient.name, () => {
+  describe(EthereumClient.prototype.getBlockNumber.name, () => {
     it('returns a block number', async () => {
       const testRpc = mock<JsonRpcClient>({
         async call(method, params) {
@@ -22,7 +22,7 @@ describe('EthereumClient', () => {
     })
   })
 
-  describe('getBlock', () => {
+  describe(EthereumClient.prototype.getBlock.name, () => {
     it('can return a block by hash', async () => {
       const hash = new KeccakHash('0x' + '12ab'.repeat(16))
       const testRpc = mock<JsonRpcClient>({
@@ -64,7 +64,7 @@ describe('EthereumClient', () => {
     })
   })
 
-  describe('call', () => {
+  describe(EthereumClient.prototype.call.name, () => {
     it('can call a contract', async () => {
       const to = EthereumAddress('0x' + '34cd'.repeat(10))
       const data = Bytes.fromHex('0xabcdef123456')

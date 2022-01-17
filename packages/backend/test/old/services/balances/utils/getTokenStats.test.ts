@@ -16,8 +16,8 @@ import {
 } from '../../../../../src/old/services/balances/utils/getTokenStats'
 import { makeExampleProjects } from './example'
 
-describe('getTokenStats', () => {
-  describe('getHolderAddresses', () => {
+describe(getTokenStats.name, () => {
+  describe(getHolderAddresses.name, () => {
     it('returns holder addresses', () => {
       const bridge = (a: string) => ({ address: a, sinceBlock: 1, tokens: [] })
       const project = { name: 'foo', bridges: [bridge('a'), bridge('b')] }
@@ -26,7 +26,7 @@ describe('getTokenStats', () => {
     })
   })
 
-  describe('getTrackedTokens', () => {
+  describe(getTrackedTokens.name, () => {
     it('returns de-duplicated tracked tokens', () => {
       const bridge = (tokens: string[]) => ({
         address: '',
@@ -43,7 +43,7 @@ describe('getTokenStats', () => {
     })
   })
 
-  describe('getTokenBalance', () => {
+  describe(getTokenBalance.name, () => {
     it('works for ETH', () => {
       const eth = getTokenBySymbol('ETH')
       const balances: FetchedBalances = {
@@ -99,7 +99,7 @@ describe('getTokenStats', () => {
     })
   })
 
-  describe('getTokenPrice', () => {
+  describe(getTokenPrice.name, () => {
     it('returns a token price', () => {
       const dai = getTokenBySymbol('DAI')
       const prices: FetchedPrices = {

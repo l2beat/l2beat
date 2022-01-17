@@ -7,7 +7,7 @@ import {
   mock,
 } from '../../src'
 
-describe('AddressAnalyzer', () => {
+describe(AddressAnalyzer.name, () => {
   it('can detect an EOA', async () => {
     const provider = mock<providers.Provider>({
       getCode: async () => '0x',

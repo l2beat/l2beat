@@ -18,8 +18,8 @@ import {
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
-describe('ExchangePriceService', () => {
-  describe('updateQueries', () => {
+describe(ExchangePriceService.name, () => {
+  describe(ExchangePriceService.prototype.updateQueries.name, () => {
     const BLOCK_NUMBER = 1234n
     const TOKENS = [
       EthereumAddress('0x' + 'a'.repeat(40)),
@@ -182,7 +182,7 @@ describe('ExchangePriceService', () => {
       return exchangePriceService
     }
 
-    describe('getEtherPriceQueries', () => {
+    describe(ExchangePriceService.prototype.getEtherPriceQueries.name, () => {
       it('returns no queries before uniswap V1', () => {
         const exchangePriceService = createTestUpdater()
         const queries = exchangePriceService.getEtherPriceQueries(123n)
@@ -246,7 +246,7 @@ describe('ExchangePriceService', () => {
       })
     })
 
-    describe('getTokenPriceQueries', () => {
+    describe(ExchangePriceService.prototype.getTokenPriceQueries.name, () => {
       const token: Token = {
         id: AssetId('mock-token'),
         address: EthereumAddress('0x' + '1234'.repeat(10)),
@@ -324,7 +324,7 @@ describe('ExchangePriceService', () => {
       })
     })
 
-    describe('getQueries', () => {
+    describe(ExchangePriceService.prototype.getQueries.name, () => {
       const tokenA: Token = {
         id: AssetId('mock-token-a'),
         address: EthereumAddress('0x' + 'aaaa'.repeat(10)),

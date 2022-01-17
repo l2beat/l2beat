@@ -9,7 +9,7 @@ import {
 } from '../../../src/peripherals/exchanges/UniswapV1Client'
 import { mock } from '../../mock'
 
-describe('UniswapV1Client', () => {
+describe(UniswapV1Client.name, () => {
   const toRequest = (address: EthereumAddress) => ({
     address: UNISWAP_V1_FACTORY,
     data: Bytes.fromHex(

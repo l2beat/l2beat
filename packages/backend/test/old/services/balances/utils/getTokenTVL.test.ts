@@ -6,7 +6,7 @@ import { TokenTVL } from '../../../../../src/old/services/balances/model'
 import { TokenStats } from '../../../../../src/old/services/balances/utils/getTokenStats'
 import { getTokenTVL } from '../../../../../src/old/services/balances/utils/getTokenTVL'
 
-describe('getTokenTVL', () => {
+describe(getTokenTVL.name, () => {
   it('returns the transformed token stats', () => {
     const eth = getTokenBySymbol('ETH')
     const usdc = getTokenBySymbol('USDC')

@@ -3,7 +3,7 @@ import { expect } from 'earljs'
 
 import { RateLimiter } from '../../src'
 
-describe('RateLimiter', () => {
+describe(RateLimiter.name, () => {
   const cases = [
     {
       name: 'one minute',

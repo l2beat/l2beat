@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 import { Cache, EmptyCacheBackend, NestedDict } from '../../../src'
 import waitForExpect from 'wait-for-expect'
 
-describe('Cache', () => {
+describe(Cache.name, () => {
   it('get initializes on first call', () => {
     let initCount = 0
     const backend = {

@@ -10,7 +10,7 @@ import {
 } from '../../../../src/peripherals/exchanges/queries/uniswapV1'
 import { encodeUniswapV1Results } from './utils'
 
-describe('encodeUniswapV1Requests', () => {
+describe(encodeUniswapV1Requests.name, () => {
   const TOKEN_A = EthereumAddress('0x' + 'a'.repeat(40))
   const TOKEN_B = EthereumAddress('0x' + 'b'.repeat(40))
   const EXCHANGE = EthereumAddress('0x' + 'c'.repeat(40))
@@ -35,7 +35,7 @@ describe('encodeUniswapV1Requests', () => {
   })
 })
 
-describe('decodeUniswapV1Results', () => {
+describe(decodeUniswapV1Results.name, () => {
   it('decodes empty array', () => {
     const result = decodeUniswapV1Results([])
     expect(result).toEqual({ liquidity: 0n, price: 0n })

@@ -5,7 +5,7 @@ import { UnixTime } from '../../../src/model'
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
 import { mock } from '../../mock'
 
-describe('BlocksController', () => {
+describe(BlocksController.name, () => {
   it('returns transformed blocks', async () => {
     const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {

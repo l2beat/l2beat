@@ -5,7 +5,7 @@ import { AggregatePriceRepository } from '../../../src/peripherals/database/Aggr
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
-describe('AggregatePriceRepository', () => {
+describe(AggregatePriceRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
 
   it('can delete all records', async () => {

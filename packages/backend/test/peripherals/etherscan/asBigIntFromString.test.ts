@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { asBigIntFromString } from '../../../src/peripherals/etherscan/asBigIntFromString'
 
-describe('asBigIntFromString', () => {
+describe(asBigIntFromString.name, () => {
   const cases = [
     { value: '1', expected: 1n },
     { value: '-1', expected: -1n },

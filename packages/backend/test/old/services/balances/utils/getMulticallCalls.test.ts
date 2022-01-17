@@ -15,7 +15,7 @@ import {
   UniV2ReservesCall,
 } from '../../../../../src/old/services/multicall'
 
-describe('getMulticallCalls', () => {
+describe(getMulticallCalls.name, () => {
   it('returns all required calls', () => {
     const holderA = '0x' + 'a'.repeat(40)
     const holderB = '0x' + 'b'.repeat(40)

@@ -7,7 +7,7 @@ import { AggregatePriceRepository } from '../../../src/peripherals/database/Aggr
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
-describe('AggregatePriceService', () => {
+describe(AggregatePriceService.name, () => {
   it('does nothing when no tokens are given', async () => {
     const aggregatePriceRepository = mock<AggregatePriceRepository>()
     const exchangePriceService = mock<ExchangePriceService>()

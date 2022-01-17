@@ -3,7 +3,7 @@ import { expect } from 'earljs'
 
 import { RequestTracker } from '../../src/tools/RequestTracker'
 
-describe('RequestTracker', () => {
+describe(RequestTracker.name, () => {
   it('tracks requests', () => {
     const clock = FakeTimers.install({ now: 0 })
 

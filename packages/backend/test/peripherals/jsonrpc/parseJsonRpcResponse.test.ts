@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { parseJsonRpcResponse } from '../../../src/peripherals/jsonrpc/parseJsonRpcResponse'
 
-describe('parseJsonRpcResponse', () => {
+describe(parseJsonRpcResponse.name, () => {
   const testCases = [
     {
       name: 'valid success response',

@@ -2,8 +2,8 @@ import { expect } from 'earljs'
 
 import { Bytes } from '../../src/model'
 
-describe('Bytes', () => {
-  describe('fromHex', () => {
+describe(Bytes.name, () => {
+  describe(Bytes.fromHex.name, () => {
     it('checks constructor arguments', () => {
       expect(() => Bytes.fromHex('foo')).toThrow(TypeError)
       expect(() => Bytes.fromHex('0x123G')).toThrow(TypeError)
@@ -15,7 +15,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('fromByte', () => {
+  describe(Bytes.fromByte.name, () => {
     it('checks constructor arguments', () => {
       expect(() => Bytes.fromByte(1.5)).toThrow(TypeError)
       expect(() => Bytes.fromByte(-2)).toThrow(TypeError)
@@ -33,7 +33,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('fromNumber', () => {
+  describe(Bytes.fromNumber.name, () => {
     it('checks constructor arguments', () => {
       expect(() => Bytes.fromNumber(1.5)).toThrow(TypeError)
       expect(() => Bytes.fromNumber(-2)).toThrow(TypeError)
@@ -50,7 +50,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('fromByteArray', () => {
+  describe(Bytes.fromByteArray.name, () => {
     it('checks constructor arguments', () => {
       expect(() => Bytes.fromByteArray([1.5])).toThrow(TypeError)
       expect(() => Bytes.fromByteArray([-2])).toThrow(TypeError)
@@ -63,7 +63,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('equals', () => {
+  describe(Bytes.prototype.equals.name, () => {
     const first = Bytes.fromHex('56ab')
     const second = Bytes.fromHex('56AB')
     const third = Bytes.fromHex('1234')
@@ -93,7 +93,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('toByteArray', () => {
+  describe(Bytes.prototype.toByteArray.name, () => {
     it('encodes empty as []', () => {
       expect(Bytes.EMPTY.toByteArray()).toEqual([])
     })
@@ -104,7 +104,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('toString', () => {
+  describe(Bytes.prototype.toString.name, () => {
     it('encodes empty as "0x"', () => {
       expect(Bytes.EMPTY.toString()).toEqual('0x')
     })
@@ -115,7 +115,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('toNumber', () => {
+  describe(Bytes.prototype.toNumber.name, () => {
     it('treats empty as zero', () => {
       expect(Bytes.EMPTY.toNumber()).toEqual(0)
     })
@@ -126,7 +126,7 @@ describe('Bytes', () => {
     })
   })
 
-  describe('get', () => {
+  describe(Bytes.prototype.get.name, () => {
     it('throws when index is out of bounds', () => {
       const bytes = Bytes.fromHex('112233')
       expect(() => bytes.get(-1)).toThrow()
@@ -151,14 +151,14 @@ describe('Bytes', () => {
     })
   })
 
-  describe('slice', () => {
+  describe(Bytes.prototype.slice.name, () => {
     it('returns a slice', () => {
       const bytes = Bytes.fromHex('123456abcd')
       expect(bytes.slice(1, 3)).toEqual(Bytes.fromHex('3456'))
     })
   })
 
-  describe('concat', () => {
+  describe(Bytes.prototype.concat.name, () => {
     it('concatenates bytes', () => {
       const first = Bytes.fromHex('1234')
       const second = Bytes.fromHex('5678')

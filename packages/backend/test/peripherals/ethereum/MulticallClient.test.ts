@@ -16,7 +16,7 @@ import {
 } from '../../../src/peripherals/ethereum/MulticallClient'
 import { mock } from '../../mock'
 
-describe('MulticallClient', () => {
+describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))
   const ADDRESS_B = EthereumAddress('0x' + 'b'.repeat(40))
   const ADDRESS_C = EthereumAddress('0x' + 'c'.repeat(40))

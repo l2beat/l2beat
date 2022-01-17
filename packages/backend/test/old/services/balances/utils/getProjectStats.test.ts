@@ -7,7 +7,7 @@ import {
 } from '../../../../../src/old/services/balances/utils'
 import { makeExampleProjects } from './example'
 
-describe('getProjectStats', () => {
+describe(getProjectStats.name, () => {
   it('returns stats for projects', () => {
     const { projects, balances, prices } = makeExampleProjects()
 

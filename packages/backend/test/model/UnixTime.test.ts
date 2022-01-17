@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { UnixTime } from '../../src/model/UnixTime'
 
-describe('UnixTime', () => {
+describe(UnixTime.name, () => {
   it('represents time as seconds since Jan 01 1970', () => {
     const date = new Date('2021-09-07T00:00:00Z')
     const time = UnixTime.fromDate(date)
@@ -32,7 +32,7 @@ describe('UnixTime', () => {
     )
   })
 
-  describe('add', () => {
+  describe(UnixTime.prototype.add.name, () => {
     it('can add days', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
       const later = time.add(3, 'days')
@@ -58,7 +58,7 @@ describe('UnixTime', () => {
     })
   })
 
-  describe('toStartOf', () => {
+  describe(UnixTime.prototype.toStartOf.name, () => {
     it('can get start of day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('day')

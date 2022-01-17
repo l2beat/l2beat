@@ -10,8 +10,8 @@ import { HttpClient } from '../../../src/peripherals/HttpClient'
 import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
-describe('EtherscanClient', () => {
-  describe('call', () => {
+describe(EtherscanClient.name, () => {
+  describe(EtherscanClient.prototype['call'].name, () => {
     it('throws for error responses', async () => {
       const httpClient = mock<HttpClient>({
         async fetch() {
@@ -63,7 +63,7 @@ describe('EtherscanClient', () => {
     })
   })
 
-  describe('getBlockNumberAtOrBefore', () => {
+  describe(EtherscanClient.prototype.getBlockNumberAtOrBefore.name, () => {
     it('constructs the correct url', async () => {
       const apiKey = 'xXApiKeyXx'
       const timestamp = new UnixTime(1578638524)

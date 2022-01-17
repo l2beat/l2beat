@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { EthereumAddress } from '../../src/model'
 
-describe('EthereumAddress', () => {
+describe(EthereumAddress.name, () => {
   it('accepts lowercase addresses', () => {
     const address = EthereumAddress(
       '0xabcdabcd12345678abcdabcd12345678abcdabcd'
@@ -39,7 +39,7 @@ describe('EthereumAddress', () => {
     )
   })
 
-  describe('isBefore', () => {
+  describe(EthereumAddress.isBefore.name, () => {
     it('checks ordering', () => {
       const a = EthereumAddress('0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       const b = EthereumAddress('0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')

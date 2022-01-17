@@ -2,7 +2,7 @@ import { createStatusRouter } from '../../../src/api/routers/StatusRouter'
 import { StatusService } from '../../../src/core/StatusService'
 import { createTestApiServer } from '../TestApiServer'
 
-describe('StatusRouter', () => {
+describe(createStatusRouter.name, () => {
   class FooService {
     getStatus() {
       return { foo: 123 }

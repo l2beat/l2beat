@@ -15,7 +15,7 @@ import { encodeUniswapV2Results } from './utils'
 
 const pair = getUniswapV2PairAddress(DAI, WETH)
 
-describe('getUniswapV2PairAddress', () => {
+describe(getUniswapV2PairAddress.name, () => {
   it('returns WETH-DAI pair address', () => {
     const pairDW = getUniswapV2PairAddress(DAI, WETH)
     const pairWD = getUniswapV2PairAddress(WETH, DAI)
@@ -29,7 +29,7 @@ describe('getUniswapV2PairAddress', () => {
   })
 })
 
-describe('encodeUniswapV2Requests', () => {
+describe(encodeUniswapV2Requests.name, () => {
   it('encodes a call to get the reserves', () => {
     const result = encodeUniswapV2Requests(DAI, Exchange.uniswapV2('weth'))
     expect(result).toEqual([{ address: pair, data: encodeGetReserves() }])
@@ -41,7 +41,7 @@ describe('encodeUniswapV2Requests', () => {
   })
 })
 
-describe('decodeUniswapV2Results', () => {
+describe(decodeUniswapV2Results.name, () => {
   it('decodes empty array', () => {
     const result = decodeUniswapV2Results(DAI, Exchange.uniswapV2('weth'), [])
     expect(result).toEqual({ liquidity: 0n, price: 0n })

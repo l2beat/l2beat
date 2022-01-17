@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 
 import { getEnv } from '../../src/config/getEnv'
 
-describe('getEnv', () => {
+describe(getEnv.name, () => {
   it('returns the environment variable', () => {
     process.env.TEST_A = 'foo'
     const result = getEnv('TEST_A')
@@ -20,7 +20,7 @@ describe('getEnv', () => {
     expect(() => getEnv('TEST_A')).toThrow()
   })
 
-  describe('getEnv.integer', () => {
+  describe(getEnv.integer.name, () => {
     it('returns the environment variable as integer', () => {
       process.env.TEST_A = '-420'
       const result = getEnv.integer('TEST_A')

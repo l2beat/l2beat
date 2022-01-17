@@ -5,7 +5,7 @@ import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNu
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
-describe('BlockNumberRepository', () => {
+describe(BlockNumberRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
 
   it('can delete all records', async () => {

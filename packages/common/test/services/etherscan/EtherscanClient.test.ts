@@ -7,8 +7,8 @@ import {
 import { Response } from 'node-fetch'
 import { expect } from 'earljs'
 
-describe('EtherscanClient', () => {
-  describe('call', () => {
+describe(EtherscanClient.name, () => {
+  describe(call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
@@ -91,7 +91,7 @@ describe('EtherscanClient', () => {
     })
   })
 
-  describe('getContractSource', () => {
+  describe(getContractSource.name, () => {
     it('constructs a correct url', async () => {
       const result = {
         SourceCode: '',

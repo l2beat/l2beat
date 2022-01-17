@@ -16,7 +16,7 @@ import { encodeUniswapV3Results } from './utils'
 
 const pool = getUniswapV3PoolAddress(DAI, WETH, 3000)
 
-describe('getUniswapV3PoolAddress', () => {
+describe(getUniswapV3PoolAddress.name, () => {
   it('returns WETH-DAI pair address', () => {
     const poolDW = getUniswapV3PoolAddress(DAI, WETH, 3000)
     const poolWD = getUniswapV3PoolAddress(WETH, DAI, 3000)
@@ -30,7 +30,7 @@ describe('getUniswapV3PoolAddress', () => {
   })
 })
 
-describe('encodeUniswapV3Requests', () => {
+describe(encodeUniswapV3Requests.name, () => {
   it('encodes a call to get the reserves', () => {
     const result = encodeUniswapV3Requests(
       DAI,
@@ -54,7 +54,7 @@ describe('encodeUniswapV3Requests', () => {
   })
 })
 
-describe('decodeUniswapV3Results', () => {
+describe(decodeUniswapV3Results.name, () => {
   it('decodes empty array', () => {
     const result = decodeUniswapV3Results(
       DAI,

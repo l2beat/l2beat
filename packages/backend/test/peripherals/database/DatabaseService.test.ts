@@ -4,7 +4,7 @@ import { DatabaseService } from '../../../src/peripherals/database/DatabaseServi
 import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
-describe('DatabaseService', () => {
+describe(DatabaseService.name, () => {
   const { knex } = setupDatabaseTestSuite()
 
   it('can run and rollback all migrations', async () => {
