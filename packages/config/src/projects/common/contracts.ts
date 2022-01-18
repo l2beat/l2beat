@@ -1,4 +1,4 @@
-import { ProjectContract,ProjectRisk } from '../types'
+import { ProjectContract, ProjectRisk } from '../types'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
