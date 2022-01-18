@@ -55,18 +55,20 @@ export class CoingeckoClient {
     const parsedData = CoinMarketChartRangeResult.parse(data)
 
     return {
-      prices: parsedData.prices.map((val: number[]) => ({
-        milisecondsTimestamp: val[0],
-        value: val[1],
+      prices: parsedData.prices.map(([timestamp, price]) => ({
+        date: new Date(timestamp),
+        price,
       })),
-      marketCaps: parsedData.market_caps.map((val: number[]) => ({
-        milisecondsTimestamp: val[0],
-        value: val[1],
+      marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
+        date: new Date(timestamp),
+        marketCap,
       })),
-      totalVolumes: parsedData.total_volumes.map((val: number[]) => ({
-        milisecondsTimestamp: val[0],
-        value: val[1],
-      })),
+      totalVolumes: parsedData.total_volumes.map(
+        ([timestamp, totalVolume]) => ({
+          date: new Date(timestamp),
+          totalVolume,
+        })
+      ),
     }
   }
 

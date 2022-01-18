@@ -30,11 +30,7 @@ export const CoinMarketChartRangeResult = z.object({
 })
 
 export interface CoinMarketChartRangeData {
-  prices: MeasurePoint[]
-  marketCaps: MeasurePoint[]
-  totalVolumes: MeasurePoint[]
-}
-export interface MeasurePoint {
-  milisecondsTimestamp: number
-  value: number
+  prices: { date: Date; price: number }[]
+  marketCaps: { date: Date; marketCap: number }[]
+  totalVolumes: { date: Date; totalVolume: number }[]
 }
