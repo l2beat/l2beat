@@ -6,8 +6,8 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
   SHARP_VERIFIER_CONTRACT,
+  STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
 
