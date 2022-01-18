@@ -6,6 +6,7 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
+  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
@@ -102,7 +103,7 @@ export const deversifi: Project = {
       contracts: {
         addresses: [
           {
-            name: 'Bridge',
+            name: 'StarkExchange',
             address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
             upgradeability: {
               type: 'StarkWare',
@@ -118,22 +119,7 @@ export const deversifi: Project = {
             name: 'Committee',
             address: '0x28780349A33eEE56bb92241bAAB8095449e24306',
           },
-          {
-            name: 'GpsStatementVerifier',
-            address: '0xd4CF925B9d0f4d1cCf82aB97C25130657474Ee19',
-          },
-          {
-            name: 'MemoryPageFactRegistry',
-            address: '0xc8e4EE91E7C14D625B829D2C2E87cF7348Eca449',
-          },
-          {
-            name: 'FriStatementContract',
-            address: '0x2742A152Be5032DafBC885Ba1801ffbc2345de7B',
-          },
-          {
-            name: 'MerkleStatementContract',
-            address: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0',
-          },
+          SHARP_VERIFIER_CONTRACT,
         ],
         risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },
