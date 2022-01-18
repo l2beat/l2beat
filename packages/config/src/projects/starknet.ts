@@ -20,7 +20,7 @@ export const starknet: Project = {
     description:
       'StarkNet is a general purpose ZK-Rollup built using STARK cryptographic proof system. StarkNet uses the Cairo programming language both for its \
       infrastructure and for writing StarkNet contracts. L2 <--> L1 messaging infrastructure \
-      is available and contracts are fully composable. Alpha release limitations include lack of events, fees, and anti-censhorship mechanism. It is currently launched \
+      is available and contracts are fully composable. It is currently launched \
       with a single Sequencer.',
     purpose: 'Universal',
     links: {
@@ -63,6 +63,7 @@ export const starknet: Project = {
         addresses: [
           {
             name: 'StarkNet Core Contract',
+            description: 'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
             address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
             upgradeability: {
               type: 'StarkWare',
@@ -73,25 +74,23 @@ export const starknet: Project = {
           },
           {
             name: 'GpsStatementVerifier',
+            description: 'Starkware SHARP verifier used collectively by StarkNet, Sorare, ImmutableX and DeversiFi. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these four Programs including correctly computed L2 state root which is part of the Program Output.',
             address: '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0xa739B175325cCA7b71fcB51C3032935Ef7Ac338F',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
           {
             name: 'MemoryPageFactRegistry',
+            description: 'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
             address: '0x96375087b2F6eFc59e5e0dd5111B4d090EBFDD8B',
-          },
-          {
-            name: 'FriStatementContract',
-            address: '0xecf98A84EEa8F83d8510C19488c1bBc2dB9EDA6d',
-          },
-          {
-            name: 'MerkleStatementContract',
-            address: '0xFC359d4565a5F09A7B534ce8ADC049Eb99902607',
           },
         ],
         risks: [
           CONTRACTS.UPGRADE_NO_DELAY_RISK,
-          EXITS.RISK_CENTRALIZED_VALIDATOR,
-          CONTRACTS.UNVERIFIED_RISK,
         ],
       },
     },

@@ -16,11 +16,11 @@ const ZK_SNARKS: ProjectTechnologyChoice = {
 const ZK_STARKS: ProjectTechnologyChoice = {
   name: 'Zero knowledge STARK cryptography is used',
   description:
-    'Despite their production use ZK-STARKs are still new and experimental cryptography. Cryptography has made a lot of advancements in the recent years but all cryptographic solutions rely on time to prove their security.',
+    'Despite their production use ZK-STARKs proof systems are still relatively new, complex and they rely on the proper implementation of the polynomial constraints used to check validity of the Execution Trace.',
   risks: [
     {
-      category: 'Funds can be stolen if',
-      text: 'the cryptography is broken or implemented incorrectly.',
+      category: 'Funds can be lost if',
+      text: ' the proof system is implemented incorrectly.',
     },
   ],
   references: [
