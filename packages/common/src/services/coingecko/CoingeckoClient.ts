@@ -1,11 +1,13 @@
+import { UnixTime } from '../../model/UnixTime'
 import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
-import { CoingeckoId, MarketChartRangeParams } from '.'
+import { CoingeckoId } from './CoingeckoId'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
   CoinListPlatformResult,
   CoinListResult,
+  CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
 } from './model'
 
@@ -40,12 +42,32 @@ export class CoingeckoClient {
 
   async getCoinMarketChartRange(
     coindId: CoingeckoId,
-    params: MarketChartRangeParams
-  ): Promise<CoinMarketChartRangeResult> {
+    vs_currency: string,
+    from: UnixTime,
+    to: UnixTime
+  ): Promise<CoinMarketChartRangeData> {
     const data = await this.query(`/coins/${coindId}/market_chart/range`, {
-      ...params,
+      vs_currency: vs_currency.toLowerCase(),
+      from: from.toString(),
+      to: to.toString(),
     })
-    return CoinMarketChartRangeResult.parse(data)
+
+    const parsedData = CoinMarketChartRangeResult.parse(data)
+
+    return {
+      prices: parsedData.prices.map((val: number[]) => ({
+        milisecondsTimestamp: val[0],
+        value: val[1],
+      })),
+      marketCaps: parsedData.market_caps.map((val: number[]) => ({
+        milisecondsTimestamp: val[0],
+        value: val[1],
+      })),
+      totalVolumes: parsedData.total_volumes.map((val: number[]) => ({
+        milisecondsTimestamp: val[0],
+        value: val[1],
+      })),
+    }
   }
 
   async query(endpoint: string, params: Record<string, string>) {

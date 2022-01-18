@@ -24,7 +24,17 @@ export type CoinMarketChartRangeResult = z.infer<
   typeof CoinMarketChartRangeResult
 >
 export const CoinMarketChartRangeResult = z.object({
-  prices: z.array(z.array(z.number()).length(2)),
-  market_caps: z.array(z.array(z.number()).length(2)),
-  total_volumes: z.array(z.array(z.number()).length(2)),
+  prices: z.array(z.tuple([z.number(), z.number()])),
+  market_caps: z.array(z.tuple([z.number(), z.number()])),
+  total_volumes: z.array(z.tuple([z.number(), z.number()])),
 })
+
+export interface CoinMarketChartRangeData {
+  prices: MeasurePoint[]
+  marketCaps: MeasurePoint[]
+  totalVolumes: MeasurePoint[]
+}
+export interface MeasurePoint {
+  milisecondsTimestamp: number
+  value: number
+}

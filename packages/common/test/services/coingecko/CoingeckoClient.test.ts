@@ -1,16 +1,15 @@
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
+import { CoingeckoClient, CoingeckoId, HttpClient, mock } from '../../../src'
+import { UnixTime } from '../../../src/model/UnixTime'
 import {
-  CoingeckoClient,
-  CoingeckoId,
-  CoingeckoMarketChartRangeParams,
-  HttpClient,
-  mock,
-} from '../../../src'
-import { MOCK_DATA } from './MOCK_DATA'
+  CoinMarketChartRangeData,
+  CoinMarketChartRangeResult,
+} from '../../../src/services/coingecko/model'
 
-describe.only('CoingeckoClient', () => {
+//add names
+describe(CoingeckoClient.name, () => {
   describe('query', () => {
     it('constructs a correct url', async () => {
       const httpClient = mock<HttpClient>({
@@ -59,13 +58,9 @@ describe.only('CoingeckoClient', () => {
         'invalid json response body at  reason: Unexpected token e in JSON at position 1'
       )
     })
-
-    it('multiple queries take longer than a minute', async () => {
-      //TODO
-    })
   })
 
-  describe('getCoinList', () => {
+  describe(CoingeckoClient.prototype.getCoinList.name, () => {
     it('fetches coins without platforms', async () => {
       const httpClient = mock<HttpClient>({
         fetch: async () =>
@@ -131,18 +126,55 @@ describe.only('CoingeckoClient', () => {
     })
   })
 
-  describe('getMarketChartRange', () => {
+  describe(CoingeckoClient.prototype.getCoinMarketChartRange.name, () => {
+    const MOCK_PARSED_DATA: CoinMarketChartRangeResult = {
+      prices: [
+        [1592611200000, 228.9592128032193],
+        [1592697600000, 228.8691487972198],
+        [1592784000000, 227.79190590968685],
+      ],
+      market_caps: [
+        [1592611200000, 25534271650.26011],
+        [1592697600000, 25501270877.342506],
+        [1592784000000, 25381090910.620564],
+      ],
+      total_volumes: [
+        [1592611200000, 6840801770.229276],
+        [1592697600000, 5400222130.457475],
+        [1592784000000, 4995955268.45639],
+      ],
+    }
+    const MOCK_TRANSFORMED_DATA: CoinMarketChartRangeData = {
+      prices: [
+        { milisecondsTimestamp: 1592611200000, value: 228.9592128032193 },
+        { milisecondsTimestamp: 1592697600000, value: 228.8691487972198 },
+        { milisecondsTimestamp: 1592784000000, value: 227.79190590968685 },
+      ],
+      marketCaps: [
+        { milisecondsTimestamp: 1592611200000, value: 25534271650.26011 },
+        { milisecondsTimestamp: 1592697600000, value: 25501270877.342506 },
+        { milisecondsTimestamp: 1592784000000, value: 25381090910.620564 },
+      ],
+      totalVolumes: [
+        { milisecondsTimestamp: 1592611200000, value: 6840801770.229276 },
+        { milisecondsTimestamp: 1592697600000, value: 5400222130.457475 },
+        { milisecondsTimestamp: 1592784000000, value: 4995955268.45639 },
+      ],
+    }
+
     it('fetches historical prices', async () => {
       const httpClient = mock<HttpClient>({
-        fetch: async () => new Response(JSON.stringify(MOCK_DATA)),
+        fetch: async () => new Response(JSON.stringify(MOCK_PARSED_DATA)),
       })
       const coingeckoClient = new CoingeckoClient(httpClient)
       const result = await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
-        CoingeckoMarketChartRangeParams('usd', 1592577232, new Date(1622577232))
+        'usd',
+        new UnixTime(1592577232),
+        new UnixTime(1622577232)
       )
 
-      expect(result).toEqual(MOCK_DATA)
+      expect(result).toEqual(MOCK_TRANSFORMED_DATA)
     })
 
     it('constructs correct url', async () => {
@@ -151,14 +183,16 @@ describe.only('CoingeckoClient', () => {
           expect(url).toEqual(
             'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232'
           )
-          return new Response(JSON.stringify(MOCK_DATA))
+          return new Response(JSON.stringify(MOCK_PARSED_DATA))
         },
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
-        CoingeckoMarketChartRangeParams('usd', 1592577232, new Date(1622577232))
+        'usd',
+        new UnixTime(1592577232),
+        new UnixTime(1622577232)
       )
     })
   })
