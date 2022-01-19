@@ -1,8 +1,8 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { parseJsonRpcResponse } from '../../../src/peripherals/jsonrpc/parseJsonRpcResponse'
 
-describe('parseJsonRpcResponse', () => {
+describe(parseJsonRpcResponse.name, () => {
   const testCases = [
     {
       name: 'valid success response',
@@ -188,7 +188,7 @@ describe('parseJsonRpcResponse', () => {
   ]
 
   it('rejects invalid json strings', () => {
-    expect(() => parseJsonRpcResponse('not json')).to.throw(
+    expect(() => parseJsonRpcResponse('not json')).toThrow(
       TypeError,
       'Invalid JSON-RPC response'
     )
@@ -199,9 +199,9 @@ describe('parseJsonRpcResponse', () => {
       const str = JSON.stringify(testCase.value)
       if (testCase.name.startsWith('valid')) {
         const parsed = parseJsonRpcResponse(str)
-        expect(parsed).to.deep.equal(testCase.value)
+        expect(parsed).toEqual(testCase.value as any)
       } else {
-        expect(() => parseJsonRpcResponse(str)).to.throw(
+        expect(() => parseJsonRpcResponse(str)).toThrow(
           TypeError,
           'Invalid JSON-RPC response'
         )

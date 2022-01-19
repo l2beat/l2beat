@@ -9,7 +9,7 @@ export function getEnv(name: string, fallback?: string) {
   throw new Error(`Missing environment variable ${name}!`)
 }
 
-getEnv.integer = function (name: string, fallback?: number) {
+getEnv.integer = function integer(name: string, fallback?: number) {
   const value = process.env[name]
   if (value !== undefined) {
     const result = parseInt(value)

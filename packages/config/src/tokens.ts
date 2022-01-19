@@ -210,6 +210,14 @@ export const tokenList: TokenInfo[] = [
     category: 'stablecoin',
   },
   {
+    name: 'Decentraland MANA',
+    symbol: 'MANA',
+    address: '0x0F5D2fB29fb7d3CFeE444a200298f468908cC942',
+    decimals: 18,
+    sinceBlock: 4162059,
+    category: 'other',
+  },
+  {
     name: 'DeversiFi Token',
     symbol: 'DVF',
     address: '0xDDdddd4301A082e62E84e43F474f044423921918',
@@ -231,6 +239,14 @@ export const tokenList: TokenInfo[] = [
     address: '0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81',
     decimals: 18,
     sinceBlock: 12674086,
+    category: 'other',
+  },
+  {
+    name: 'Dopex Rebate Token',
+    symbol: 'rDPX',
+    address: '0x0ff5A8451A839f5F0BB3562689D9A44089738D11',
+    decimals: 18,
+    sinceBlock: 12674089,
     category: 'other',
   },
   {
@@ -337,6 +353,14 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    name: 'Illuvium',
+    symbol: 'ILV',
+    address: '0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E',
+    decimals: 18,
+    sinceBlock: 12084124,
+    category: 'other',
+  },
+  {
     name: 'Immutable X',
     symbol: 'IMX',
     address: '0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF',
@@ -391,6 +415,14 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     sinceBlock: 7544036,
     category: 'other',
+  },
+  {
+    name: 'LUSD Stablecoin',
+    symbol: 'LUSD',
+    address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
+    decimals: 18,
+    sinceBlock: 12178594,
+    category: 'stablecoin',
   },
   {
     name: 'Maker',
@@ -473,6 +505,14 @@ export const tokenList: TokenInfo[] = [
     category: 'stablecoin',
   },
   {
+    name: 'Perpetual',
+    symbol: 'PERP',
+    address: '0xbC396689893D065F41bc2C6EcbeE5e0085233447',
+    decimals: 18,
+    sinceBlock: 10804048,
+    category: 'other',
+  },
+  {
     name: 'Pinakion',
     symbol: 'PNK',
     address: '0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d',
@@ -494,6 +534,14 @@ export const tokenList: TokenInfo[] = [
     address: '0x408e41876cCCDC0F92210600ef50372656052a38',
     decimals: 18,
     sinceBlock: 4827494,
+    category: 'other',
+  },
+  {
+    name: 'SHIBA INU',
+    symbol: 'SHIB',
+    address: '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE',
+    decimals: 18,
+    sinceBlock: 10569013,
     category: 'other',
   },
   {

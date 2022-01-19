@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { Bytes, EthereumAddress, Exchange } from '../../../../src/model'
 import { encodeBalanceOf } from '../../../../src/peripherals/exchanges/queries/balanceOf'
@@ -16,7 +16,7 @@ import { encodeUniswapV3Results } from './utils'
 
 const pool = getUniswapV3PoolAddress(DAI, WETH, 3000)
 
-describe('getUniswapV3PoolAddress', () => {
+describe(getUniswapV3PoolAddress.name, () => {
   it('returns WETH-DAI pair address', () => {
     const poolDW = getUniswapV3PoolAddress(DAI, WETH, 3000)
     const poolWD = getUniswapV3PoolAddress(WETH, DAI, 3000)
@@ -25,18 +25,18 @@ describe('getUniswapV3PoolAddress', () => {
       '0xC2e9F25Be6257c210d7Adf0D4Cd6E3E881ba25f8'
     )
 
-    expect(poolDW).to.deep.equal(expected)
-    expect(poolWD).to.deep.equal(expected)
+    expect(poolDW).toEqual(expected)
+    expect(poolWD).toEqual(expected)
   })
 })
 
-describe('encodeUniswapV3Requests', () => {
+describe(encodeUniswapV3Requests.name, () => {
   it('encodes a call to get the reserves', () => {
     const result = encodeUniswapV3Requests(
       DAI,
       Exchange.uniswapV3('weth', 3000)
     )
-    expect(result).to.deep.equal([
+    expect(result).toEqual([
       { address: DAI, data: encodeBalanceOf(pool) },
       { address: pool, data: encodeSlotZero() },
     ])
@@ -47,21 +47,21 @@ describe('encodeUniswapV3Requests', () => {
       WETH,
       Exchange.uniswapV3('dai', 3000)
     )
-    expect(result).to.deep.equal([
+    expect(result).toEqual([
       { address: WETH, data: encodeBalanceOf(pool) },
       { address: pool, data: encodeSlotZero() },
     ])
   })
 })
 
-describe('decodeUniswapV3Results', () => {
+describe(decodeUniswapV3Results.name, () => {
   it('decodes empty array', () => {
     const result = decodeUniswapV3Results(
       DAI,
       Exchange.uniswapV3('weth', 3000),
       []
     )
-    expect(result).to.deep.equal({ liquidity: 0n, price: 0n })
+    expect(result).toEqual({ liquidity: 0n, price: 0n })
   })
 
   it('decodes unsuccessful result', () => {
@@ -73,7 +73,7 @@ describe('decodeUniswapV3Results', () => {
         { success: false, data: Bytes.EMPTY },
       ]
     )
-    expect(result).to.deep.equal({ liquidity: 0n, price: 0n })
+    expect(result).toEqual({ liquidity: 0n, price: 0n })
   })
 
   it('decodes successful result for DAI', () => {
@@ -83,7 +83,7 @@ describe('decodeUniswapV3Results', () => {
       Exchange.uniswapV3('weth', 3000),
       encoded
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       liquidity: 1234n,
       price: 208256305967085n,
     })
@@ -96,7 +96,7 @@ describe('decodeUniswapV3Results', () => {
       Exchange.uniswapV3('dai', 3000),
       encoded
     )
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       liquidity: 5678n,
       price: 4801_775366927186522757n,
     })

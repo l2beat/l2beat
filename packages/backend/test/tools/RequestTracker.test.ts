@@ -1,15 +1,15 @@
 import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 
 import { RequestTracker } from '../../src/tools/RequestTracker'
 
-describe('RequestTracker', () => {
+describe(RequestTracker.name, () => {
   it('tracks requests', () => {
     const clock = FakeTimers.install({ now: 0 })
 
     const requestTracker = new RequestTracker(4)
 
-    expect(requestTracker.getStats()).to.deep.equal({
+    expect(requestTracker.getStats()).toEqual({
       lastUpdatedAt: '1970-01-01T00:00:00.000Z',
       lifetimeAverageResponseTimeMs: 0,
       lifetimeErrorRate: '0.00%',
@@ -37,7 +37,7 @@ describe('RequestTracker', () => {
 
     clock.uninstall()
 
-    expect(requestTracker.getStats()).to.deep.equal({
+    expect(requestTracker.getStats()).toEqual({
       lastUpdatedAt: '1970-01-01T00:00:12.345Z',
       lifetimeAverageResponseTimeMs: 20,
       lifetimeErrorRate: '33.33%',

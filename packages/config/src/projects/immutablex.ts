@@ -6,6 +6,7 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
+  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
@@ -58,7 +59,7 @@ export const immutablex: Project = {
       contracts: {
         addresses: [
           {
-            name: 'Bridge',
+            name: 'StarkExchange',
             address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
             upgradeability: {
               type: 'StarkWare',
@@ -71,22 +72,7 @@ export const immutablex: Project = {
             name: 'Committee',
             address: '0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295',
           },
-          {
-            name: 'GpsStatementVerifier',
-            address: '0x45769d52d47E9CBfac9A2dF68c2051ADB0630F17',
-          },
-          {
-            name: 'MemoryPageFactRegistry',
-            address: '0x076CF2113b6EEd19883a92454C473998FC8479E5',
-          },
-          {
-            name: 'FriStatementContract',
-            address: '0xe74999fBc71455462C8143b56797D3Bb84C1064b',
-          },
-          {
-            name: 'MerkleStatementContract',
-            address: '0x26ec188F555F0C491083D280cF8162E9D5E0d386',
-          },
+          SHARP_VERIFIER_CONTRACT,
         ],
         risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },

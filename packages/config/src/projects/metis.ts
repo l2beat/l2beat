@@ -15,7 +15,7 @@ export const metis: Project = {
     {
       address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
       sinceBlock: 13627429,
-      tokens: ['Metis', 'USDT', 'LINK', 'AAVE', 'UNI', 'DAI', 'USDC'],
+      tokens: ['ETH', 'Metis', 'USDT', 'LINK', 'AAVE', 'UNI', 'DAI', 'USDC'],
     },
   ],
   associatedTokens: ['Metis'],

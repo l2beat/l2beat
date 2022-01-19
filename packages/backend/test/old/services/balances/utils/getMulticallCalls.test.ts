@@ -1,5 +1,5 @@
 import { getTokenBySymbol } from '@l2beat/config'
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { constants } from 'ethers'
 
 import { DAI } from '../../../../../src/old/constants'
@@ -15,7 +15,7 @@ import {
   UniV2ReservesCall,
 } from '../../../../../src/old/services/multicall'
 
-describe('getMulticallCalls', () => {
+describe(getMulticallCalls.name, () => {
   it('returns all required calls', () => {
     const holderA = '0x' + 'a'.repeat(40)
     const holderB = '0x' + 'b'.repeat(40)
@@ -78,6 +78,6 @@ describe('getMulticallCalls', () => {
       exchanges,
       Infinity
     )
-    expect(calls).to.deep.equal(expected)
+    expect(calls).toEqual(expected)
   })
 })

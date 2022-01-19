@@ -6,6 +6,7 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
+  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
@@ -59,7 +60,7 @@ export const sorare: Project = {
       contracts: {
         addresses: [
           {
-            name: 'Bridge',
+            name: 'StarkExchange',
             address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
             upgradeability: {
               type: 'StarkWare',
@@ -72,17 +73,7 @@ export const sorare: Project = {
             name: 'Committee',
             address: '0x90CEb3bD97284df8c3240f3a8C4Aab29c1ee9542',
           },
-          {
-            name: 'SHARP Verifier',
-            address: '0x2cAbD63F6f28b493f33D13E34060f0959F3570aE',
-            upgradeability: {
-              type: 'StarkWare',
-              implementation: '0x1fEE2090492d824D71ee20e4035084d39d39Aa43',
-              callImplementation: '0x9bca5C55137057208ee5b14F3e269133bDCaC1f8',
-              upgradeDelay: 2419200,
-              isFinal: false,
-            },
-          },
+          SHARP_VERIFIER_CONTRACT,
         ],
         risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },

@@ -1,7 +1,7 @@
-import { expect } from 'chai'
+import { expect } from 'earljs'
 import { formatLargeNumber } from '../../src/shared'
 
-describe('formatLargeNumber', () => {
+describe(formatLargeNumber.name, () => {
   const cases = [
     { value: 0, expected: '0.00' },
     { value: 1, expected: '1.00' },
@@ -35,7 +35,7 @@ describe('formatLargeNumber', () => {
     for (const { value, expected } of cases) {
       it(`formats ${value} as ${expected}`, () => {
         const result = formatLargeNumber(value)
-        expect(result).to.equal(expected)
+        expect(result).toEqual(expected)
       })
     }
   })
@@ -47,7 +47,7 @@ describe('formatLargeNumber', () => {
       }
       it(`formats ${-value} as -${expected}`, () => {
         const result = formatLargeNumber(-value)
-        expect(result).to.equal('-' + expected)
+        expect(result).toEqual('-' + expected)
       })
     }
   })
