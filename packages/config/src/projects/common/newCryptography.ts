@@ -20,13 +20,13 @@ const ZK_STARKS: ProjectTechnologyChoice = {
   risks: [
     {
       category: 'Funds can be lost if',
-      text: ' the proof system is implemented incorrectly.',
+      text: 'the proof system is implemented incorrectly.',
     },
   ],
   references: [
     {
-      text: 'Stark Curve - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/crypto/stark-curve',
+      text: 'STARK Core Engine Deep Dive',
+      href: 'https://medium.com/starkware/starkdex-deep-dive-the-stark-core-engine-497942d0f0ab',
     },
   ],
 }

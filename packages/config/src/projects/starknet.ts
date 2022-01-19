@@ -6,6 +6,7 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
+  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Project } from './types'
@@ -53,17 +54,45 @@ export const starknet: Project = {
       category: {
         name: 'ZK Rollup',
       },
-      stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
+      stateCorrectness: {
+        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+        references: [
+          {
+            text: 'What is StarkNet',
+            href: 'https://starkware.co/starknet/',
+          },
+        ],
+      },
       newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
       dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
-      operator: OPERATOR.CENTRALIZED_OPERATOR,
-      forceTransactions: FORCE_TRANSACTIONS.NO_MECHANISM,
+      operator: {
+        ...OPERATOR.CENTRALIZED_OPERATOR,
+        description:
+          OPERATOR.CENTRALIZED_OPERATOR.description +
+          ' Typically, the Operator is the hot wallet of the StarkNet service submitting state updates for which proofs have been already submitted and verified.',
+        references: [
+          {
+            text: 'StarkNet operator Etherscan address',
+            href: 'https://etherscan.io/address/0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+          },
+        ],
+      },
+      forceTransactions: {
+        ...FORCE_TRANSACTIONS.NO_MECHANISM,
+        references: [
+          {
+            text: 'Censorship resistance of StarkNet - Forum Discussion',
+            href: 'https://community.starknet.io/t/censorship-resistance/196',
+          },
+        ],
+      },
       exitMechanisms: EXITS.STARKNET,
       contracts: {
         addresses: [
           {
             name: 'StarkNet Core Contract',
-            description: 'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
+            description:
+              'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
             address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
             upgradeability: {
               type: 'StarkWare',
@@ -72,33 +101,32 @@ export const starknet: Project = {
               isFinal: false,
             },
           },
-          {
-            name: 'GpsStatementVerifier',
-            description: 'Starkware SHARP verifier used collectively by StarkNet, Sorare, ImmutableX and DeversiFi. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these four Programs including correctly computed L2 state root which is part of the Program Output.',
-            address: '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
-            upgradeability: {
-              type: 'StarkWare',
-              implementation: '0xa739B175325cCA7b71fcB51C3032935Ef7Ac338F',
-              upgradeDelay: 0,
-              isFinal: false,
-            },
-          },
+          SHARP_VERIFIER_CONTRACT,
           {
             name: 'MemoryPageFactRegistry',
-            description: 'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
+            description:
+              'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
             address: '0x96375087b2F6eFc59e5e0dd5111B4d090EBFDD8B',
           },
         ],
-        risks: [
-          CONTRACTS.UPGRADE_NO_DELAY_RISK,
-        ],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
       {
+        date: '2022-01-18',
+        name: 'StarkNet Alpha 0.7.0',
+        link: 'https://medium.com/starkware/starknet-alpha-0-7-0-26e04db03509',
+      },
+      {
         date: '2021-11-29',
         name: 'StarkNet alpha is on Mainnet',
         link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      },
+      {
+        date: '2021-01-26',
+        name: 'StarkNet RoadMap',
+        link: 'https://medium.com/starkware/on-the-road-to-starknet-a-permissionless-stark-powered-l2-zk-rollup-83be53640880',
       },
     ],
   },

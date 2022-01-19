@@ -108,6 +108,9 @@ const STARKEX_EMERGENCY: ProjectTechnologyChoice = {
 
 const STARKNET_REGULAR: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
+  description:
+    REGULAR('zk', 'no proof').description +
+    ' Note that the withdrawal request can be censored by the Sequencer.',
   references: [
     {
       text: ' Withdrawing is based on l2 to l1 messages - StarkNet documentation',
@@ -122,6 +125,12 @@ const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
   description:
     'There is no generic escape hatch mechanism as StarkNet cannot be frozen. Application developers can develp app-specific escape hatches that\
     could allow users to exit funds when L2 app is frozen. Note that freezing mechanizm on L2, to be secure, requires anti-censorship protection.',
+  references: [
+    {
+      text: ' StarkNet code',
+      href: 'https://etherscan.io/address/0xd8cd77206fcb239bddaaddda8c87cbfe7d67ca2b#code',
+    },
+  ],
 }
 
 const PLASMA: ProjectTechnologyChoice = {

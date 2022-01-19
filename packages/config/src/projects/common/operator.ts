@@ -25,7 +25,7 @@ const STARKEX_OPERATOR: ProjectTechnologyChoice = {
   ...CENTRALIZED_OPERATOR,
   description:
     CENTRALIZED_OPERATOR.description +
-    ' Typically, the Operator is the hot wallet of the StarkEx service submitting proofs for state updates.',
+    ' Typically, the Operator is the hot wallet of the StarkEx service submitting state updates for which proofs have been already submitted and verified.',
   references: [
     {
       text: 'Operator - StarkEx documentation',
