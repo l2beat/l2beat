@@ -1,6 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/common'
 import { utils } from 'ethers'
 
-import { Bytes, EthereumAddress } from '../../model'
 import { MulticallClient, MulticallRequest } from '../ethereum/MulticallClient'
 
 export const UNISWAP_V1_FACTORY = EthereumAddress(

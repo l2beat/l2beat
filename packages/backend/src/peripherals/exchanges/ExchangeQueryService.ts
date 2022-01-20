@@ -1,4 +1,5 @@
-import { EthereumAddress, Exchange } from '../../model'
+import { EthereumAddress, Exchange } from '@l2beat/common'
+
 import {
   MulticallClient,
   MulticallRequest,

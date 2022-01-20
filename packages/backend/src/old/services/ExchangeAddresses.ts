@@ -1,3 +1,4 @@
+import { tokensInOrder } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { constants, utils } from 'ethers'
 import { AbiCoder } from 'ethers/lib/utils'
@@ -12,7 +13,6 @@ import {
   USDT,
   WETH,
 } from '../constants'
-import { tokensInOrder } from '../utils'
 import { MulticallApi, MulticallRequest, UniV1ExchangeCall } from './multicall'
 
 export interface ExchangeInfo {

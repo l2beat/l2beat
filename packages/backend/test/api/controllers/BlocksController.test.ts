@@ -1,7 +1,7 @@
+import { UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { BlocksController } from '../../../src/api/controllers/BlocksController'
-import { UnixTime } from '../../../src/model'
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
 import { mock } from '../../mock'
 

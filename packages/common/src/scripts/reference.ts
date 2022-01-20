@@ -1,4 +1,5 @@
 import { Contract, providers } from 'ethers'
+
 import { compareResult } from './compare'
 
 async function getReferenceImplementation(

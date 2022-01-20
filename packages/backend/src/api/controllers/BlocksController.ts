@@ -1,4 +1,5 @@
-import { json } from '../../model'
+import { json } from '@l2beat/common'
+
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
 
 export class BlocksController {

@@ -1,8 +1,6 @@
+import { AssetId, Exchange, Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 import { ExchangePriceRow } from 'knex/types/tables'
-
-import { AssetId, Exchange } from '../../model'
-import { Logger } from '../../tools/Logger'
 
 export interface ExchangePriceRecord {
   blockNumber: bigint

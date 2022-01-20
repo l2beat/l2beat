@@ -1,7 +1,7 @@
+import { Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { DatabaseService } from '../../../src/peripherals/database/DatabaseService'
-import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(DatabaseService.name, () => {

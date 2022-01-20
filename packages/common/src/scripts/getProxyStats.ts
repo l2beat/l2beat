@@ -2,6 +2,7 @@ import { projects } from '@l2beat/config'
 import chalk from 'chalk'
 import { config as dotenv } from 'dotenv'
 import { constants, providers } from 'ethers'
+
 import { checkEip1967Admin, checkEip1967Implementation } from './eip1967'
 import { checkNutBerryAdmin, checkNutBerryImplementation } from './nutberry'
 import { checkReferenceImplementation } from './reference'

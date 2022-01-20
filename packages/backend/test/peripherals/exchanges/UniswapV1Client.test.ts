@@ -1,6 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { Bytes, EthereumAddress } from '../../../src/model'
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
 import { DAI, WETH } from '../../../src/peripherals/exchanges/queries/constants'
 import {

@@ -1,4 +1,5 @@
 import { expect } from 'earljs'
+
 import { NestedDict } from '../../../src'
 
 describe(NestedDict.name, () => {

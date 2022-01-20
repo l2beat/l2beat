@@ -1,5 +1,5 @@
-import { ProjectInfo, SimpleDate } from '../model'
-import { dateRange } from '../utils'
+import { dateRange, ProjectInfo, SimpleDate } from '@l2beat/common'
+
 import { BlockInfo } from './BlockInfo'
 
 export class ProjectDates {

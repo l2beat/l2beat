@@ -1,7 +1,6 @@
+import { Logger } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
-
-import { Logger } from '../../tools/Logger'
 
 export class DatabaseService {
   private migrated = false

@@ -1,8 +1,8 @@
 import { AbiCoder } from '@ethersproject/abi'
+import { Bytes, EthereumAddress, Exchange, KeccakHash } from '@l2beat/common'
 import { utils } from 'ethers'
 import memoizee from 'memoizee'
 
-import { Bytes, EthereumAddress, Exchange, KeccakHash } from '../../../model'
 import {
   MulticallRequest,
   MulticallResponse,

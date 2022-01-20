@@ -1,5 +1,5 @@
-import { UnixTime } from '../model'
-import { LogLevel } from '../tools/Logger'
+import { LogLevel, UnixTime } from '@l2beat/common'
+
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 

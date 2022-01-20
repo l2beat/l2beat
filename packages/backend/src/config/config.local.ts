@@ -1,7 +1,6 @@
+import { AssetId, EthereumAddress, LogLevel, UnixTime } from '@l2beat/common'
 import { config as dotenv } from 'dotenv'
 
-import { AssetId, EthereumAddress, UnixTime } from '../model'
-import { LogLevel } from '../tools/Logger'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 

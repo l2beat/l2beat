@@ -1,7 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/common'
 import { utils } from 'ethers'
 import memoizee from 'memoizee'
-
-import { Bytes, EthereumAddress } from '../../../model'
 
 export const coder = new utils.Interface([
   'function balanceOf(address account) returns (uint256)',

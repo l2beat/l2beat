@@ -1,15 +1,14 @@
+import { Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
 import { SafeBlock, SafeBlockService } from '../../src/core/SafeBlockService'
-import { UnixTime } from '../../src/model'
 import {
   BlockNumberRecord,
   BlockNumberRepository,
 } from '../../src/peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../../src/peripherals/etherscan'
-import { Logger } from '../../src/tools/Logger'
 import { mock } from '../mock'
 
 describe(BlockNumberUpdater.name, () => {

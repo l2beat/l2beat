@@ -1,10 +1,10 @@
-import { Logger } from '../../../tools/Logger'
+import { fastHash, Logger } from '@l2beat/common'
+
 import {
   MULTICALL,
   MULTICALL_BATCH_SIZE,
   MULTICALL_BLOCK_NUMBER,
 } from '../../constants'
-import { fastHash } from '../../utils'
 import { AlchemyApi } from '../api/AlchemyApi'
 import { AsyncCache } from '../AsyncCache'
 import { AggregateMulticall } from './calls'

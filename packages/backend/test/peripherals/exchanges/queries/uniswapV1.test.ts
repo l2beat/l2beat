@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { EthereumAddress } from '../../../../src/model'
 import { MULTICALL_V1_ADDRESS } from '../../../../src/peripherals/ethereum/MulticallClient'
 import { encodeBalanceOf } from '../../../../src/peripherals/exchanges/queries/balanceOf'
 import {

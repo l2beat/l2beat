@@ -1,8 +1,6 @@
+import { Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { BlockNumberRow } from 'knex/types/tables'
-
-import { UnixTime } from '../../model/UnixTime'
-import { Logger } from '../../tools/Logger'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime

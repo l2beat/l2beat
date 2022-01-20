@@ -1,4 +1,5 @@
-import { KeccakHash } from '../../model'
+import { KeccakHash } from '@l2beat/common'
+
 import { JsonRpcClient } from '../jsonrpc'
 import {
   asBigIntFromQuantity,

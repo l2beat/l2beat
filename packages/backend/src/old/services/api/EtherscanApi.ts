@@ -1,7 +1,6 @@
+import { Logger, RateLimiter } from '@l2beat/common'
 import fetch from 'node-fetch'
 
-import { Logger } from '../../../tools/Logger'
-import { RateLimiter } from '../../../tools/RateLimiter'
 import { ExponentialRetry } from './ExponentialRetry'
 
 const BLOCK_URL =

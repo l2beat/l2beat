@@ -1,8 +1,6 @@
+import { AssetId, Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 import { AggregatePriceRow } from 'knex/types/tables'
-
-import { AssetId } from '../../model'
-import { Logger } from '../../tools/Logger'
 
 export interface AggregatePriceRecord {
   blockNumber: bigint

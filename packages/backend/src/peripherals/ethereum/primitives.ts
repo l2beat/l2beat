@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, KeccakHash } from '../../model'
-import { as } from '../../tools/cast'
+import { as, Bytes, EthereumAddress, KeccakHash } from '@l2beat/common'
+
 import { BlockTag } from './EthereumClient'
 
 export function asBytesFromData(value: unknown, length?: number) {

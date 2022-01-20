@@ -1,4 +1,5 @@
-import { AssetId } from '../../model'
+import { AssetId } from '@l2beat/common'
+
 import { ExchangePriceRecord } from '../../peripherals/database/ExchangePriceRepository'
 
 export function getEtherPrice(exchangePrices: ExchangePriceRecord[]) {

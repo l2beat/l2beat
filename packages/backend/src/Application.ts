@@ -1,3 +1,5 @@
+import { Logger } from '@l2beat/common'
+
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { PricesController } from './api/controllers/PricesController'
@@ -22,7 +24,6 @@ import { EtherscanClient } from './peripherals/etherscan'
 import { ExchangeQueryService } from './peripherals/exchanges/ExchangeQueryService'
 import { UniswapV1Client } from './peripherals/exchanges/UniswapV1Client'
 import { HttpClient } from './peripherals/HttpClient'
-import { Logger } from './tools/Logger'
 
 export class Application {
   start: () => Promise<void>

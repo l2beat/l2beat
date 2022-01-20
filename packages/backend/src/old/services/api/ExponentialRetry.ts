@@ -1,5 +1,4 @@
-import { Logger } from '../../../tools/Logger'
-import { retry } from '../../../tools/retry'
+import { Logger, retry } from '@l2beat/common'
 
 export interface RetryOptions {
   startTimeout: number
