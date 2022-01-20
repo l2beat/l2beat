@@ -1,4 +1,3 @@
-export * from './cast'
 export * from './EventEmitter'
 export * from './JobQueue'
 export * from './Logger'

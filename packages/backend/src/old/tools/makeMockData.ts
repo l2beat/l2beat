@@ -1,5 +1,5 @@
-import { ProjectInfo, SimpleDate } from '@l2beat/common/src'
-import { dateRange } from '@l2beat/common/src'
+import { ProjectInfo, SimpleDate } from '@l2beat/common'
+import { dateRange } from '@l2beat/common'
 
 import {
   Chart,
