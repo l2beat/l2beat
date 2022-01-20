@@ -2,7 +2,7 @@ import { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
-  proof: 'no proof' | 'merkle proof' | 'zk proof'
+  proof: 'no proof' | 'merkle proof'
 ): ProjectTechnologyChoice {
   const finalized = type === 'zk' ? 'proven' : 'finalized'
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
@@ -106,6 +106,11 @@ const STARKEX_EMERGENCY: ProjectTechnologyChoice = {
   ],
 }
 
+const OPERATOR_CENSORS_WITHDRAWAL: ProjectRisk = {
+  category: 'Funds can be frozen if',
+  text: 'the operator censors withdrawal transaction.',
+}
+
 const STARKNET_REGULAR: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   description:
@@ -117,11 +122,12 @@ const STARKNET_REGULAR: ProjectTechnologyChoice = {
       href: 'https://www.cairo-lang.org/docs/hello_starknet/l1l2.html',
     },
   ],
-  //  risks: [RISK_CENTRALIZED_VALIDATOR],
+  risks: [OPERATOR_CENSORS_WITHDRAWAL],
 }
 
 const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
-  ...EMERGENCY('', 'merkle proof'),
+  name: 'Emergency exit',
+  risks: [],
   description:
     'There is no generic escape hatch mechanism as StarkNet cannot be frozen. Application developers can develp app-specific escape hatches that\
     could allow users to exit funds when L2 app is frozen. Note that freezing mechanizm on L2, to be secure, requires anti-censorship protection.',

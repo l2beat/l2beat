@@ -83,7 +83,7 @@ const NO_MECHANISM: ProjectTechnologyChoice = {
   risks: [
     {
       category: 'Users can be censored if',
-      text: 'the operator refuses to include their transactions and users lack resources to propose blocks themselves.',
+      text: 'the operator refuses to include their transactions.',
     },
   ],
   references: [],
