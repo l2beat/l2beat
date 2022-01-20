@@ -1,4 +1,3 @@
-
 import { Token } from '../../model'
 import { ExchangePriceRecord } from '../../peripherals/database/ExchangePriceRepository'
 
