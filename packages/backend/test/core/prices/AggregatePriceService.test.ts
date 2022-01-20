@@ -1,9 +1,4 @@
-import {
-  AssetId,
-  EthereumAddress,
-  Exchange,
-  Logger,
-} from '@l2beat/common'
+import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'

@@ -1,9 +1,4 @@
-import {
-  AssetId,
-  EthereumAddress,
-  Logger,
-  UnixTime,
-} from '@l2beat/common'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
