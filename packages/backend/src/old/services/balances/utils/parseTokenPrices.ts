@@ -1,7 +1,8 @@
-import { divOrZero, tokenIsBefore } from '@l2beat/common'
+import { divOrZero } from '@l2beat/common'
 import { BigNumber, constants } from 'ethers'
 
 import { CUSDT, DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
+import { tokenIsBefore } from '../../../utils'
 import {
   EthBalanceCall,
   MulticallResponse,

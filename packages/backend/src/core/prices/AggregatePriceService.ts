@@ -1,5 +1,6 @@
-import { AssetId, Logger, Token } from '@l2beat/common'
+import { AssetId, Logger } from '@l2beat/common'
 
+import { Token } from '../../model'
 import {
   AggregatePriceRecord,
   AggregatePriceRepository,

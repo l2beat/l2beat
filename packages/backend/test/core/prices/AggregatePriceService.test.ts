@@ -3,12 +3,12 @@ import {
   EthereumAddress,
   Exchange,
   Logger,
-  Token,
 } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
 import { ExchangePriceService } from '../../../src/core/prices/ExchangePriceService'
+import { Token } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
 import { mock } from '../../mock'
 

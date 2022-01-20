@@ -1,11 +1,6 @@
-import {
-  AssetId,
-  EthereumAddress,
-  Exchange,
-  Logger,
-  Token,
-} from '@l2beat/common'
+import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
 
+import { Token } from '../../model'
 import {
   ExchangePriceRecord,
   ExchangePriceRepository,

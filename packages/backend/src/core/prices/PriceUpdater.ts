@@ -1,5 +1,6 @@
-import { createEventEmitter, JobQueue, Logger, Token } from '@l2beat/common'
+import { createEventEmitter, JobQueue, Logger } from '@l2beat/common'
 
+import { Token } from '../../model'
 import { BlockNumberRecord } from '../../peripherals/database/BlockNumberRepository'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { AggregatePriceService } from './AggregatePriceService'

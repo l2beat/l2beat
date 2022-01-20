@@ -3,7 +3,6 @@ import {
   EthereumAddress,
   Exchange,
   Logger,
-  Token,
 } from '@l2beat/common'
 import { expect } from 'earljs'
 
@@ -13,6 +12,7 @@ import {
   UNISWAP_V2_RELEASE_BLOCK,
   UNISWAP_V3_RELEASE_BLOCK,
 } from '../../../src/core/prices/ExchangePriceService'
+import { Token } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { ExchangeQueryService } from '../../../src/peripherals/exchanges/ExchangeQueryService'
 import {

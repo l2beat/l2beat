@@ -1,6 +1,6 @@
 import Router from '@koa/router'
+import { AssetId, Exchange } from '@l2beat/common'
 
-import { AssetId, Exchange } from '../../model'
 import { PricesController } from '../controllers/PricesController'
 
 export function createPricesRouter(pricesController: PricesController) {
