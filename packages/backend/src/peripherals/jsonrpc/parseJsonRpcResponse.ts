@@ -1,5 +1,4 @@
-import { as, CastError } from '@l2beat/common'
-
+import { as, CastError } from '../../tools/cast'
 import { JsonRpcResponse } from './types'
 
 const asUncheckedResponse = as.object('strict', {

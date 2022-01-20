@@ -1,11 +1,6 @@
-import {
-  as,
-  Bytes,
-  EthereumAddress,
-  KeccakHash,
-  UnixTime,
-} from '@l2beat/common'
+import { Bytes, EthereumAddress, KeccakHash, UnixTime } from '@l2beat/common'
 
+import { as } from '../../tools/cast'
 import {
   addressToData,
   asBigIntFromQuantity,

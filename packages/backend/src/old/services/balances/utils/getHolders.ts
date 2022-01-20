@@ -1,4 +1,4 @@
-import { ProjectInfo } from '@l2beat/common'
+import { ProjectInfo } from '../../../../model'
 
 export function getHolders(projects: ProjectInfo[], blockNumber: number) {
   const tokenHolders: Record<string, string[]> = {}

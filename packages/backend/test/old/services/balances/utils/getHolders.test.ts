@@ -1,7 +1,7 @@
-import { ProjectInfo } from '@l2beat/common'
 import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
+import { ProjectInfo } from '../../../../../src/model'
 import { getHolders } from '../../../../../src/old/services/balances/utils'
 
 describe(getHolders.name, () => {

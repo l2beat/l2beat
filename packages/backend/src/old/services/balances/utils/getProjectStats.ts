@@ -1,6 +1,7 @@
-import { divOrZero, ProjectInfo } from '@l2beat/common'
+import { divOrZero } from '@l2beat/common'
 import { BigNumber } from 'ethers'
 
+import { ProjectInfo } from '../../../../model'
 import { TEN_TO_18 } from '../../../constants'
 import { FetchedBalances, FetchedPrices, TokenTVL } from '../model'
 import { getTokenStats } from './getTokenStats'

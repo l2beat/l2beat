@@ -1,7 +1,7 @@
-import { ProjectInfo } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { BigNumber } from 'ethers'
 
+import { ProjectInfo } from '../../../../model'
 import { TEN_TO_18 } from '../../../constants'
 import { FetchedBalances, FetchedPrices } from '../model'
 

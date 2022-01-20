@@ -1,4 +1,4 @@
-import { as } from '@l2beat/common'
+import { as } from '../../tools/cast'
 
 export interface EtherscanSuccessResponse {
   status: '1'

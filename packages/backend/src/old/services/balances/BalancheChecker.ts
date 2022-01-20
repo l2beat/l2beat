@@ -1,4 +1,6 @@
-import { ProjectInfo, SimpleDate } from '../../model'
+import { SimpleDate } from '@l2beat/common'
+
+import { ProjectInfo } from '../../../model'
 import { BlockInfo } from '../BlockInfo'
 import { ExchangeInfo } from '../ExchangeAddresses'
 import { MulticallApi } from '../multicall'
