@@ -1,5 +1,5 @@
-import { Token } from '@l2beat/common'
 
+import { Token } from '../../model'
 import { ExchangePriceRecord } from '../../peripherals/database/ExchangePriceRepository'
 
 export function getTokenPrice(
