@@ -1,5 +1,5 @@
-import { getErrorMessage, Logger } from '../../tools/Logger'
-import { RequestTracker } from '../../tools/RequestTracker'
+import { getErrorMessage, Logger, RequestTracker } from '@l2beat/common'
+
 import { HttpClient } from '../HttpClient'
 import { JsonRpcClient } from './JsonRpcClient'
 import { parseJsonRpcResponse } from './parseJsonRpcResponse'

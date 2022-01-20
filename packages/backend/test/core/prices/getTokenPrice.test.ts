@@ -1,7 +1,8 @@
+import { AssetId, EthereumAddress, Exchange } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { getTokenPrice } from '../../../src/core/prices/getTokenPrice'
-import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
+import { Token } from '../../../src/model'
 import { ExchangePriceRecord } from '../../../src/peripherals/database/ExchangePriceRepository'
 
 describe(getTokenPrice.name, () => {

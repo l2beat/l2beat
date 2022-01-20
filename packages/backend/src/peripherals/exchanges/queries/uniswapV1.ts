@@ -1,7 +1,7 @@
+import { Bytes, EthereumAddress } from '@l2beat/common'
 import { utils } from 'ethers'
 import memoizee from 'memoizee'
 
-import { Bytes, EthereumAddress } from '../../../model'
 import {
   MULTICALL_V1_ADDRESS,
   MulticallRequest,

@@ -1,13 +1,12 @@
+import { Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { UnixTime } from '../../../src/model/UnixTime'
 import {
   EtherscanClient,
   EtherscanError,
 } from '../../../src/peripherals/etherscan'
 import { HttpClient } from '../../../src/peripherals/HttpClient'
-import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe(EtherscanClient.name, () => {

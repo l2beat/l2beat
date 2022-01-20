@@ -1,6 +1,6 @@
+import { Bytes } from '@l2beat/common'
 import { utils } from 'ethers'
 
-import { Bytes } from '../../../../src/model'
 import { MulticallResponse } from '../../../../src/peripherals/ethereum/MulticallClient'
 
 const coder = new utils.AbiCoder()

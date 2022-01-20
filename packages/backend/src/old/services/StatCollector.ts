@@ -1,6 +1,7 @@
+import { SimpleDate } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 
-import { ProjectInfo, SimpleDate } from '../model'
+import { ProjectInfo } from '../../model'
 import { ArbitrumStatChecker, ArbitrumStats } from './ArbitrumStatChecker'
 import { BalanceChecker } from './balances'
 import { TVLAnalysis } from './balances/model'

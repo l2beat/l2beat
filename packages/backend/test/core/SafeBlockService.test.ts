@@ -1,11 +1,10 @@
+import { Logger, UnixTime } from '@l2beat/common'
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
 import { SafeBlock, SafeBlockService } from '../../src/core/SafeBlockService'
-import { UnixTime } from '../../src/model'
 import { EthereumClient } from '../../src/peripherals/ethereum/EthereumClient'
 import { RpcBlock } from '../../src/peripherals/ethereum/types'
-import { Logger } from '../../src/tools/Logger'
 import { mock } from '../mock'
 
 describe(SafeBlockService.name, () => {

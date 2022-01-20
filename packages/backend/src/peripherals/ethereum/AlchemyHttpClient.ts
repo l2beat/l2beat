@@ -1,5 +1,5 @@
-import { Logger } from '../../tools/Logger'
-import { RateLimiter } from '../../tools/RateLimiter'
+import { Logger, RateLimiter } from '@l2beat/common'
+
 import { HttpClient } from '../HttpClient'
 import { JsonRpcHttpClient, JsonRpcRequest } from '../jsonrpc'
 

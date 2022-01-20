@@ -1,6 +1,6 @@
+import { Bytes, EthereumAddress, KeccakHash } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { Bytes, EthereumAddress, KeccakHash } from '../../../src/model'
 import {
   asBigIntFromQuantity,
   asBytesFromData,

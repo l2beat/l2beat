@@ -1,6 +1,6 @@
+import { Bytes, EthereumAddress, Exchange } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { Bytes, EthereumAddress, Exchange } from '../../../../src/model'
 import {
   DAI,
   WETH,

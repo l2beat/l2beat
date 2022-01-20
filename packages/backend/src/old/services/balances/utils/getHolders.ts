@@ -1,4 +1,4 @@
-import { ProjectInfo } from '../../../model'
+import { ProjectInfo } from '../../../../model'
 
 export function getHolders(projects: ProjectInfo[], blockNumber: number) {
   const tokenHolders: Record<string, string[]> = {}

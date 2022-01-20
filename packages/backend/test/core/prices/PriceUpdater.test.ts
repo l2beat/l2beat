@@ -1,12 +1,12 @@
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
 import { PriceUpdater } from '../../../src/core/prices/PriceUpdater'
-import { AssetId, EthereumAddress, Token, UnixTime } from '../../../src/model'
+import { Token } from '../../../src/model'
 import { BlockNumberRecord } from '../../../src/peripherals/database/BlockNumberRepository'
-import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe(PriceUpdater.name, () => {

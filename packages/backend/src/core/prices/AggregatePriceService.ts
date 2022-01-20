@@ -1,9 +1,10 @@
-import { AssetId, Token } from '../../model'
+import { AssetId, Logger } from '@l2beat/common'
+
+import { Token } from '../../model'
 import {
   AggregatePriceRecord,
   AggregatePriceRepository,
 } from '../../peripherals/database/AggregatePriceRepository'
-import { Logger } from '../../tools/Logger'
 import { ExchangePriceService } from './ExchangePriceService'
 import { getEtherPrice } from './getEtherPrice'
 import { getTokenPrice } from './getTokenPrice'

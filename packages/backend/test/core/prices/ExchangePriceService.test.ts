@@ -1,3 +1,4 @@
+import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import {
@@ -6,7 +7,7 @@ import {
   UNISWAP_V2_RELEASE_BLOCK,
   UNISWAP_V3_RELEASE_BLOCK,
 } from '../../../src/core/prices/ExchangePriceService'
-import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
+import { Token } from '../../../src/model'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
 import { ExchangeQueryService } from '../../../src/peripherals/exchanges/ExchangeQueryService'
 import {
@@ -15,7 +16,6 @@ import {
   USDT,
   WETH,
 } from '../../../src/peripherals/exchanges/queries/constants'
-import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe(ExchangePriceService.name, () => {

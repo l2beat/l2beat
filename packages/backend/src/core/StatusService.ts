@@ -1,4 +1,4 @@
-import { json } from '../model'
+import { json } from '@l2beat/common'
 
 interface StatusReporter {
   getStatus(): json

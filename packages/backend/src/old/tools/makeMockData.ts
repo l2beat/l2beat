@@ -1,5 +1,7 @@
-import { ProjectInfo, SimpleDate } from '../model'
-import { dateRange } from '../utils'
+import { SimpleDate } from '@l2beat/common'
+import { dateRange } from '@l2beat/common'
+
+import { ProjectInfo } from '../../model'
 import {
   Chart,
   ExperimentalData,

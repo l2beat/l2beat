@@ -1,4 +1,5 @@
-import { Bytes, EthereumAddress, KeccakHash } from '../../model'
+import { Bytes, EthereumAddress, KeccakHash } from '@l2beat/common'
+
 import { as } from '../../tools/cast'
 import { BlockTag } from './EthereumClient'
 

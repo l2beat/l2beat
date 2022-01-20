@@ -1,4 +1,5 @@
 import { BigNumber, Contract, providers } from 'ethers'
+
 import { toAddress, toBoolean } from './cast'
 import { createCompare } from './compare'
 

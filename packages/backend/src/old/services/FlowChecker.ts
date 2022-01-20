@@ -1,8 +1,8 @@
 import { TokenInfo } from '@l2beat/config'
 import { BigNumber, providers, utils } from 'ethers'
 
+import { ProjectInfo } from '../../model'
 import { TEN_TO_18 } from '../constants'
-import { ProjectInfo } from '../model'
 import { LogFilter } from './api/AlchemyApi'
 import { LogApi } from './api/LogApi'
 import { TVLAnalysis } from './balances/model'

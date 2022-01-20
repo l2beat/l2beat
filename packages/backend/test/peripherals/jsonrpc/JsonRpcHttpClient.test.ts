@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
@@ -6,7 +7,6 @@ import {
   JsonRpcError,
   JsonRpcHttpClient,
 } from '../../../src/peripherals/jsonrpc'
-import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe(JsonRpcHttpClient.name, () => {

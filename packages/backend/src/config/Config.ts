@@ -1,5 +1,6 @@
-import { Token, UnixTime } from '../model'
-import { LogLevel } from '../tools/Logger'
+import { LogLevel, UnixTime } from '@l2beat/common'
+
+import { Token } from '../model'
 
 export interface Config {
   name: string

@@ -1,4 +1,6 @@
-import { AssetId, EthereumAddress, Exchange, Token } from '../../model'
+import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
+
+import { Token } from '../../model'
 import {
   ExchangePriceRecord,
   ExchangePriceRepository,
@@ -10,7 +12,6 @@ import {
   USDT,
   WETH,
 } from '../../peripherals/exchanges/queries/constants'
-import { Logger } from '../../tools/Logger'
 
 export const UNISWAP_V1_RELEASE_BLOCK = 6627917n
 export const UNISWAP_V2_RELEASE_BLOCK = 10000835n

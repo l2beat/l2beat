@@ -1,12 +1,10 @@
-import { UnixTime } from '../model/UnixTime'
+import { createEventEmitter, JobQueue, Logger, UnixTime } from '@l2beat/common'
+
 import {
   BlockNumberRecord,
   BlockNumberRepository,
 } from '../peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../peripherals/etherscan'
-import { createEventEmitter } from '../tools/EventEmitter'
-import { JobQueue } from '../tools/JobQueue'
-import { Logger } from '../tools/Logger'
 import { SafeBlockService } from './SafeBlockService'
 
 interface BlockNumberEvents {

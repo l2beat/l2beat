@@ -1,7 +1,7 @@
+import { AssetId, Exchange } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { getEtherPrice } from '../../../src/core/prices/getEtherPrice'
-import { AssetId, Exchange } from '../../../src/model'
 import { ExchangePriceRecord } from '../../../src/peripherals/database/ExchangePriceRepository'
 
 describe(getEtherPrice.name, () => {

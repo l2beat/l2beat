@@ -1,11 +1,12 @@
+import { expect } from 'earljs'
+import { Response } from 'node-fetch'
+
 import {
   EthereumAddress,
   EtherscanClient,
   HttpClient,
   mock,
 } from '../../../src'
-import { Response } from 'node-fetch'
-import { expect } from 'earljs'
 
 describe(EtherscanClient.name, () => {
   describe(EtherscanClient.prototype.call.name, () => {

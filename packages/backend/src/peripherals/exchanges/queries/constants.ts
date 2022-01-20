@@ -1,4 +1,4 @@
-import { EthereumAddress } from '../../../model'
+import { EthereumAddress } from '@l2beat/common'
 
 export const TEN_TO_18 = 10n ** 18n
 

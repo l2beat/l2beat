@@ -1,8 +1,7 @@
+import { Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { UnixTime } from '../../../src/model/UnixTime'
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
-import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(BlockNumberRepository.name, () => {

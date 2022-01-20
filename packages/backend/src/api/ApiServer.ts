@@ -1,7 +1,7 @@
 import Router from '@koa/router'
+import { Logger } from '@l2beat/common'
 import Koa from 'koa'
 
-import { Logger } from '../tools/Logger'
 import { createApiLogger } from './ApiLogger'
 
 export class ApiServer {

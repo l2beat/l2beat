@@ -1,6 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { Bytes, EthereumAddress } from '../../../src/model'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 import { BlockTag } from '../../../src/peripherals/ethereum/EthereumClient'
 import {

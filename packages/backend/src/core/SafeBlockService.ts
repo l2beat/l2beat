@@ -1,7 +1,6 @@
-import { UnixTime } from '../model/UnixTime'
+import { createEventEmitter, Logger, UnixTime } from '@l2beat/common'
+
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
-import { createEventEmitter } from '../tools/EventEmitter'
-import { Logger } from '../tools/Logger'
 
 export interface SafeBlock {
   blockNumber: BigInt

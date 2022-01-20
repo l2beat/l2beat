@@ -1,8 +1,8 @@
 import Router from '@koa/router'
+import { Logger } from '@l2beat/common'
 import { agent } from 'supertest'
 
 import { ApiServer } from '../../src/api/ApiServer'
-import { Logger } from '../../src/tools/Logger'
 
 export function createTestApiServer(routers: Router[]) {
   const callback = new ApiServer(0, Logger.SILENT, routers).getNodeCallback()

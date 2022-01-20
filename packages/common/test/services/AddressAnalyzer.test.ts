@@ -1,5 +1,6 @@
 import { expect } from 'earljs'
 import { providers } from 'ethers'
+
 import {
   AddressAnalyzer,
   EthereumAddress,

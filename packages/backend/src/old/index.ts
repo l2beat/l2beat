@@ -1,7 +1,8 @@
+import { SimpleDate } from '@l2beat/common'
 import { projects, tokenList } from '@l2beat/config'
 import fs from 'fs'
 
-import { projectToInfo, SimpleDate } from './model'
+import { projectToInfo } from '../model'
 import { setup } from './services'
 import { makeMockData } from './tools/makeMockData'
 import { makeOutputData, OutputData } from './tools/makeOutputData'

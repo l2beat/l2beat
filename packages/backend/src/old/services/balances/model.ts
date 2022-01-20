@@ -1,6 +1,5 @@
+import { SimpleDate } from '@l2beat/common'
 import { BigNumber } from 'ethers'
-
-import { SimpleDate } from '../../model'
 
 export interface TVLAnalysis {
   date: SimpleDate

@@ -1,6 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/common'
 import { utils } from 'ethers'
 
-import { Bytes, EthereumAddress } from '../../model'
 import { EthereumClient } from './EthereumClient'
 
 export const MULTICALL_BATCH_SIZE = 150

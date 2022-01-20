@@ -19,6 +19,7 @@
   "dependencies": {
     "@koa/router": "^10.1.1",
     "@l2beat/config": "0.1.0",
+    "@l2beat/common": "0.1.0",
     "@types/adm-zip": "^0.4.34",
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.8",

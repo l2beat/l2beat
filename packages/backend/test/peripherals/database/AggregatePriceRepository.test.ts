@@ -1,8 +1,7 @@
+import { AssetId, Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { AssetId } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
-import { Logger } from '../../../src/tools/Logger'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(AggregatePriceRepository.name, () => {

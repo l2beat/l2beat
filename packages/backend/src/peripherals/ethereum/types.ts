@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, KeccakHash } from '../../model'
-import { UnixTime } from '../../model/UnixTime'
+import { Bytes, EthereumAddress, KeccakHash, UnixTime } from '@l2beat/common'
+
 import { as } from '../../tools/cast'
 import {
   addressToData,

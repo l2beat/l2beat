@@ -1,4 +1,5 @@
-import { Logger } from '../../../tools/Logger'
+import { Logger } from '@l2beat/common'
+
 import { AlchemyApi, LogFilter } from './AlchemyApi'
 
 export class LogApi {

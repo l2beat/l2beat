@@ -1,10 +1,10 @@
+import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
 import { ExchangePriceService } from '../../../src/core/prices/ExchangePriceService'
-import { AssetId, EthereumAddress, Exchange, Token } from '../../../src/model'
+import { Token } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
-import { Logger } from '../../../src/tools/Logger'
 import { mock } from '../../mock'
 
 describe(AggregatePriceService.name, () => {

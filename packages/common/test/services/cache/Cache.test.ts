@@ -1,6 +1,7 @@
 import { expect } from 'earljs'
-import { Cache, EmptyCacheBackend, NestedDict } from '../../../src'
 import waitForExpect from 'wait-for-expect'
+
+import { Cache, EmptyCacheBackend, NestedDict } from '../../../src'
 
 describe(Cache.name, () => {
   it('get initializes on first call', () => {
