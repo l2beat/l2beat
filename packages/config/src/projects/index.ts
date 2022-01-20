@@ -14,6 +14,7 @@ import { metis } from './metis'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { sorare } from './sorare'
+import { starknet } from './starknet'
 import { Project } from './types'
 import { zkswap } from './zkswap'
 import { zkswapv2 } from './zkswapv2'
@@ -38,6 +39,7 @@ export const projects: Project[] = [
   omgnetwork,
   optimism,
   sorare,
+  starknet,
   zkswap,
   zkswapv2,
   zksync,

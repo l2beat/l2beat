@@ -55,6 +55,11 @@ function getFinancialViewEntry(
       'The TVL is calculated incorrectly because it does not account for the assets locked in DeFi.'
     warningSeverity = 'info'
   }
+  if (project.name === 'StarkNet') {
+    tvlWarning =
+      'The TVL is zero because there are still no bridges deployed on a mainnet'
+    warningSeverity = 'info'
+  }
 
   return {
     name: project.name,

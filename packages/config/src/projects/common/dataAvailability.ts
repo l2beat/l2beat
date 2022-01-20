@@ -29,6 +29,19 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   ],
 }
 
+const STARKNET_ON_CHAIN: ProjectTechnologyChoice = {
+  name: 'All data required to reconstruct rollup state is published on chain',
+  description:
+    'State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered.',
+  risks: [],
+  references: [
+    {
+      text: 'On-chain Data',
+      href: 'https://starknet.io/on-chain-data/',
+    },
+  ],
+}
+
 const GENERIC_OFF_CHAIN: ProjectTechnologyChoice = {
   name: 'Data is not stored on chain',
   description:
@@ -75,6 +88,7 @@ export const DATA_AVAILABILITY = {
   ON_CHAIN,
   ON_CHAIN_CANONICAL,
   STARKEX_ON_CHAIN,
+  STARKNET_ON_CHAIN,
   GENERIC_OFF_CHAIN,
   STARKEX_OFF_CHAIN,
   PLASMA_OFF_CHAIN,

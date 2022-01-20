@@ -203,6 +203,13 @@ export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const PROVER_DOWN: ProjectRiskViewEntry = {
+  value: 'No mechanism',
+  description:
+    'There is no generic escape hatch as StarkNet cannot be frozen. Application-specific escape hatches can be built.',
+  sentiment: 'warning',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -234,4 +241,5 @@ export const RISK_VIEW = {
   VALIDATOR_PROPOSE_BLOCKS_ZKP,
   VALIDATOR_NO_MECHANISM,
   VALIDATOR_WHITELISTED_BLOCKS,
+  PROVER_DOWN,
 }

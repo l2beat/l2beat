@@ -76,6 +76,19 @@ const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
   references: [],
 }
 
+const NO_MECHANISM: ProjectTechnologyChoice = {
+  name: "Users can't force any transaction",
+  description:
+    'There is no general mechanism to force the sequencer to include the transaction.',
+  risks: [
+    {
+      category: 'Users can be censored if',
+      text: 'the operator refuses to include their transactions.',
+    },
+  ],
+  references: [],
+}
+
 export const FORCE_TRANSACTIONS = {
   WITHDRAW,
   WITHDRAW_OR_HALT,
@@ -83,4 +96,5 @@ export const FORCE_TRANSACTIONS = {
   STARKEX_PERPETUAL_WITHDRAW,
   CANONICAL_ORDERING,
   PROPOSE_OWN_BLOCKS,
+  NO_MECHANISM,
 }
