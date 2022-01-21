@@ -2,7 +2,8 @@ import { constants, utils } from 'ethers'
 import memoizee from 'memoizee'
 
 import { UNISWAP_V1_FACTORY } from '../../../constants'
-import { MulticallRequest, MulticallResponse } from '../MulticallApi'
+import { MulticallResponse } from '../MulticallApi'
+import { MulticallRequest } from '../MulticallRequest'
 
 const coder = new utils.Interface([
   'function getExchange(address token) view returns (address)',

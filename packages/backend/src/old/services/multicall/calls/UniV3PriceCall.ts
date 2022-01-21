@@ -1,7 +1,8 @@
 import { BigNumber, constants, utils } from 'ethers'
 import memoizee from 'memoizee'
 
-import { MulticallRequest, MulticallResponse } from '../MulticallApi'
+import { MulticallResponse } from '../MulticallApi'
+import { MulticallRequest } from '../MulticallRequest'
 
 const coder = new utils.Interface([
   'function slot0() view returns (uint160 sqrtPriceX96, int24, uint16, uint16, uint16, uint8, bool)',

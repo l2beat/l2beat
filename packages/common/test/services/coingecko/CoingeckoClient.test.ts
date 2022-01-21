@@ -44,7 +44,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 Not Found'
+        'Server responded with non-2XX result: 404 '
       )
     })
 
@@ -55,7 +55,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'invalid json response body at  reason: Unexpected token e in JSON at position 1'
+        expect.stringMatching(/JSON/)
       )
     })
   })

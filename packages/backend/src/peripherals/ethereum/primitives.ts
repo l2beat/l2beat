@@ -1,7 +1,8 @@
 import { Bytes, EthereumAddress, KeccakHash } from '@l2beat/common'
 
 import { as } from '../../tools/cast'
-import { BlockTag } from './EthereumClient'
+
+export type BlockTag = bigint | 'earliest' | 'latest' | 'pending'
 
 export function asBytesFromData(value: unknown, length?: number) {
   const parsed = as.string(value)

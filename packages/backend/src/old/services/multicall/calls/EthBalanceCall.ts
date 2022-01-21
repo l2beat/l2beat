@@ -2,7 +2,8 @@ import { BigNumber, constants, utils } from 'ethers'
 import memoizee from 'memoizee'
 
 import { MULTICALL } from '../../../constants'
-import { MulticallRequest, MulticallResponse } from '../MulticallApi'
+import { MulticallResponse } from '../MulticallApi'
+import { MulticallRequest } from '../MulticallRequest'
 
 const coder = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',

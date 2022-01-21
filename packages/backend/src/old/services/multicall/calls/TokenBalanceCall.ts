@@ -1,7 +1,8 @@
 import { BigNumber, constants, utils } from 'ethers'
 import memoizee from 'memoizee'
 
-import { MulticallRequest, MulticallResponse } from '../MulticallApi'
+import { MulticallResponse } from '../MulticallApi'
+import { MulticallRequest } from '../MulticallRequest'
 
 const coder = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',

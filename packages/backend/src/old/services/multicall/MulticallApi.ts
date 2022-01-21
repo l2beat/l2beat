@@ -8,12 +8,8 @@ import {
 import { fastHash } from '../../utils'
 import { AlchemyApi } from '../api/AlchemyApi'
 import { AsyncCache } from '../AsyncCache'
-import { AggregateMulticall } from './calls'
-
-export interface MulticallRequest {
-  address: string
-  data: string
-}
+import { AggregateMulticall } from './calls/AggregateMulticall'
+import { MulticallRequest } from './MulticallRequest'
 
 interface RequestWithCacheKey {
   cacheKey: string
