@@ -2,9 +2,9 @@ import { SimpleDate } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model'
 import { BlockInfo } from '../BlockInfo'
-import { ExchangeInfo } from '../ExchangeAddresses'
 import { MulticallApi } from '../multicall'
-import { FetchedBalances, FetchedPrices, TVLAnalysis } from './model'
+import { FetchedPrices } from '../prices/model'
+import { FetchedBalances, TVLAnalysis } from './model'
 import {
   getAggregateTVL,
   getHolders,
@@ -22,24 +22,23 @@ export class BalanceChecker {
 
   async getStatsForDate(
     projects: ProjectInfo[],
-    exchanges: Record<string, ExchangeInfo>,
+    prices: FetchedPrices,
     date: SimpleDate
   ): Promise<TVLAnalysis> {
     const blockNumber = await this.blockInfo.getMaxBlock(date)
-    const stats = await this.getTVL(projects, exchanges, blockNumber)
+    const stats = await this.getTVL(projects, prices, blockNumber)
     return { date, blockNumber, ...stats }
   }
 
   async getTVL(
     projects: ProjectInfo[],
-    exchanges: Record<string, ExchangeInfo>,
+    prices: FetchedPrices,
     blockNumber: number
   ) {
     const { tokenHolders, ethHolders } = getHolders(projects, blockNumber)
-    const { balances, prices } = await this.fetchBalancesAndPrices(
+    const balances = await this.fetchBalances(
       tokenHolders,
       ethHolders,
-      exchanges,
       blockNumber
     )
     const projectStats = getProjectStats(projects, balances, prices)
@@ -51,18 +50,12 @@ export class BalanceChecker {
     }
   }
 
-  private async fetchBalancesAndPrices(
+  private async fetchBalances(
     tokenHolders: Record<string, string[]>,
     ethHolders: string[],
-    exchanges: Record<string, ExchangeInfo>,
     blockNumber: number
-  ): Promise<{ balances: FetchedBalances; prices: FetchedPrices }> {
-    const calls = getMulticallCalls(
-      tokenHolders,
-      ethHolders,
-      exchanges,
-      blockNumber
-    )
+  ): Promise<FetchedBalances> {
+    const calls = getMulticallCalls(tokenHolders, ethHolders)
     const results = await this.multicallApi.multicall(calls, blockNumber)
     return parseMulticallResults(results)
   }

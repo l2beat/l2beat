@@ -44,8 +44,8 @@ export function parseTokenPrices(results: PartialResults, ethPrice: BigNumber) {
 
 function getUniqueNonDefaultTokens(results: PartialResults) {
   return Object.keys(results)
-    .filter((key) => key.startsWith('token-'))
-    .map((key) => key.split('-')[1])
+    .filter((key) => key.includes('token-'))
+    .map((key) => key.split('token-')[1])
     .filter((x, i, a) => a.indexOf(x) === i && !KNOWN_TOKENS.includes(x))
 }
 

@@ -1,4 +1,4 @@
-import { asNumber } from './asNumber'
+import { asNumber } from '../../common/asNumber'
 import { TokenStats } from './getTokenStats'
 
 export function getTokenTVL(stats: TokenStats[]) {

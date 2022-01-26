@@ -2,10 +2,7 @@ import { getTokenBySymbol } from '@l2beat/config'
 import { expect } from 'earljs'
 import { BigNumber, utils } from 'ethers'
 
-import {
-  FetchedBalances,
-  FetchedPrices,
-} from '../../../../../src/old/services/balances/model'
+import { FetchedBalances } from '../../../../../src/old/services/balances/model'
 import {
   getHolderAddresses,
   getTokenBalance,
@@ -14,6 +11,7 @@ import {
   getTrackedTokens,
   TokenStats,
 } from '../../../../../src/old/services/balances/utils/getTokenStats'
+import { FetchedPrices } from '../../../../../src/old/services/prices/model'
 import { makeExampleProjects } from './example'
 
 describe(getTokenStats.name, () => {

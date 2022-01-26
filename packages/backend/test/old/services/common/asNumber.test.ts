@@ -1,7 +1,7 @@
 import { expect } from 'earljs'
 import { utils } from 'ethers'
 
-import { asNumber } from '../../../../../src/old/services/balances/utils/asNumber'
+import { asNumber } from '../../../../src/old/services/common/asNumber'
 
 describe(asNumber.name, () => {
   it('correctly formats some ether', () => {

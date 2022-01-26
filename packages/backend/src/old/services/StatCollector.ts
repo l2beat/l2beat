@@ -7,6 +7,8 @@ import { BalanceChecker } from './balances'
 import { TVLAnalysis } from './balances/model'
 import { ExchangeAddresses } from './ExchangeAddresses'
 import { FlowChecker, Flows } from './FlowChecker'
+import { PriceService } from './prices'
+import { FetchedPrices } from './prices/model'
 import { ProjectDates } from './ProjectDates'
 
 export interface Stats {
@@ -20,6 +22,7 @@ export class StatCollector {
     private exchangeAddresses: ExchangeAddresses,
     private projectDates: ProjectDates,
     private balanceChecker: BalanceChecker,
+    private priceService: PriceService,
     private flowChecker: FlowChecker,
     private arbitrumStatChecker: ArbitrumStatChecker
   ) {}
@@ -31,9 +34,21 @@ export class StatCollector {
   ): Promise<Stats> {
     const exchanges = await this.exchangeAddresses.getExchanges(tokens)
     const dates = await this.projectDates.getDateRanges(projects, endDate)
+
+    const prices = await Promise.all(
+      dates.map(
+        async (date): Promise<[SimpleDate, FetchedPrices]> => [
+          date,
+          await this.priceService.getPricesForDate(projects, exchanges, date),
+        ]
+      )
+    )
+    const priceMap = new Map(prices)
+
     const tvlEntries = await Promise.all(
       dates.map(async (date) =>
-        this.balanceChecker.getStatsForDate(projects, exchanges, date)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.balanceChecker.getStatsForDate(projects, priceMap.get(date)!, date)
       )
     )
     const flows = await this.flowChecker.getFlows(projects, tvlEntries)
