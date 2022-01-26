@@ -3,7 +3,8 @@ import { BigNumber } from 'ethers'
 
 import { ProjectInfo } from '../../../../model'
 import { TEN_TO_18 } from '../../../constants'
-import { FetchedBalances, FetchedPrices, TokenTVL } from '../model'
+import { FetchedPrices } from '../../prices/model'
+import { FetchedBalances, TokenTVL } from '../model'
 import { getTokenStats } from './getTokenStats'
 import { getTokenTVL } from './getTokenTVL'
 

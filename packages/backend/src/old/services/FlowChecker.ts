@@ -6,7 +6,7 @@ import { TEN_TO_18 } from '../constants'
 import { LogFilter } from './api/AlchemyApi'
 import { LogApi } from './api/LogApi'
 import { TVLAnalysis } from './balances/model'
-import { asNumber } from './balances/utils/asNumber'
+import { asNumber } from './common/asNumber'
 
 export interface FlowsEntry {
   usdIn7DayNoEth: number

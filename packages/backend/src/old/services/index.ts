@@ -12,6 +12,7 @@ import { getConfig } from './Config'
 import { ExchangeAddresses } from './ExchangeAddresses'
 import { FlowChecker } from './FlowChecker'
 import { MulticallApi } from './multicall'
+import { PriceService } from './prices'
 import { ProjectDates } from './ProjectDates'
 import { StatCollector } from './StatCollector'
 
@@ -39,6 +40,7 @@ export function setup() {
   const projectDates = new ProjectDates(blockInfo)
 
   const balanceChecker = new BalanceChecker(multicallApi, blockInfo)
+  const priceService = new PriceService(multicallApi, blockInfo)
   const flowChecker = new FlowChecker(logApi)
   const arbitrumStatChecker = new ArbitrumStatChecker(logApi)
 
@@ -46,6 +48,7 @@ export function setup() {
     exchangeAddresses,
     projectDates,
     balanceChecker,
+    priceService,
     flowChecker,
     arbitrumStatChecker
   )

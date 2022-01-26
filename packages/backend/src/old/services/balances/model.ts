@@ -1,6 +1,8 @@
 import { SimpleDate } from '@l2beat/common'
 import { BigNumber } from 'ethers'
 
+import { FetchedPrices } from '../prices/model'
+
 export interface TVLAnalysis {
   date: SimpleDate
   blockNumber: number
@@ -29,10 +31,4 @@ export interface FetchedBalances {
   token: Record<string, Record<string, BigNumber | undefined> | undefined>
   // holder -> balance
   eth: Record<string, BigNumber | undefined>
-}
-
-export interface FetchedPrices {
-  // address -> price
-  token: Record<string, BigNumber | undefined>
-  eth: BigNumber
 }

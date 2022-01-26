@@ -2,8 +2,8 @@ import { divOrZero } from '@l2beat/common'
 import { BigNumber } from 'ethers'
 
 import { TEN_TO_18 } from '../../../constants'
-import { FetchedPrices } from '../model'
-import { asNumber } from './asNumber'
+import { asNumber } from '../../common/asNumber'
+import { FetchedPrices } from '../../prices/model'
 import { ProjectStats } from './getProjectStats'
 
 export function getAggregateTVL(

@@ -1,4 +1,4 @@
-import { asNumber } from './asNumber'
+import { asNumber } from '../../common/asNumber'
 import { ProjectStats } from './getProjectStats'
 
 export function getProjectTVL(projectStats: ProjectStats[]) {
