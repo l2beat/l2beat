@@ -1,7 +1,15 @@
 import { divOrZero } from '@l2beat/common'
 import { BigNumber, constants } from 'ethers'
 
-import { CUSDT, DAI, TEN_TO_18, USDC, USDT, WETH } from '../../../constants'
+import {
+  CUSDT,
+  DAI,
+  LUSD,
+  TEN_TO_18,
+  USDC,
+  USDT,
+  WETH,
+} from '../../../constants'
 import { tokenIsBefore } from '../../../utils'
 import {
   EthBalanceCall,
@@ -17,7 +25,7 @@ const CUSDT_PRICE = BigNumber.from(10)
   .pow(18 * 2 - 8)
   .mul(215)
   .div(10000) // $0.0215
-const KNOWN_TOKENS = [WETH, DAI, USDC, USDT, CUSDT]
+const KNOWN_TOKENS = [WETH, DAI, USDC, USDT, CUSDT, LUSD]
 
 interface ExchangePrice {
   liquidity: BigNumber
@@ -57,6 +65,7 @@ function defaultTokenPrices(ethPrice: BigNumber) {
   tokenPrices[USDT] = STABLECOIN_PRICE
   // HACK: fix the price of illiquid cUSDT
   tokenPrices[CUSDT] = CUSDT_PRICE
+  tokenPrices[LUSD] = TEN_TO_18
   return tokenPrices
 }
 
