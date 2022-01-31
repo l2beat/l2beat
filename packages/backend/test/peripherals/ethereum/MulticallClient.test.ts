@@ -2,7 +2,6 @@ import { Bytes, EthereumAddress } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import {
-  BlockTag,
   EthereumClient,
 } from '../../../src/peripherals/ethereum/EthereumClient'
 import {
@@ -16,6 +15,7 @@ import {
   MulticallClient,
   multicallInterface,
 } from '../../../src/peripherals/ethereum/MulticallClient'
+import { BlockTag } from '../../../src/peripherals/ethereum/primitives'
 import { mock } from '../../mock'
 
 describe(MulticallClient.name, () => {
