@@ -19,7 +19,9 @@
     "typecheck": "wsrun -ecsm typecheck",
     "test": "wsrun -ecsm test",
     "build": "wsrun -ecsm build",
-    "build:mock": "MOCK_DATA=true yarn build"
+    "build:mock": "MOCK_DATA=true yarn build",
+    "ci:check": "yarn build:mock && yarn format && yarn lint && yarn typecheck && yarn test",
+    "fix": "yarn lint:fix && yarn format:fix"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^7.1.2",
@@ -31,6 +33,8 @@
     "esbuild": "^0.14.11",
     "esbuild-register": "^3.3.2",
     "eslint": "^8.7.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-no-only-tests": "^2.6.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "mocha": "^9.1.4",

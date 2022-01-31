@@ -37,6 +37,7 @@ export class EtherscanClient {
       apikey: this.apiKey,
     })
     const url = `${this.url}?${query}`
+
     const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
 
     if (!res.ok) {

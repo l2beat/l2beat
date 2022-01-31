@@ -1,4 +1,3 @@
-import { AbiCoder } from '@ethersproject/abi'
 import { Bytes, EthereumAddress, Exchange, KeccakHash } from '@l2beat/common'
 import { utils } from 'ethers'
 import memoizee from 'memoizee'
@@ -82,7 +81,7 @@ export function getUniswapV3PoolAddress(
     utils.solidityKeccak256(
       ['bytes'],
       [
-        new AbiCoder().encode(
+        new utils.AbiCoder().encode(
           ['address', 'address', 'uint24'],
           [token0.toString(), token1.toString(), feeLevel]
         ),

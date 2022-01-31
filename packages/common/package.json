@@ -7,15 +7,18 @@
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts src",
+    "lint": "eslint --ext .ts --max-warnings 0 src",
     "lint:fix": "yarn lint --fix",
     "build": "tsc",
     "test": "mocha"
   },
   "dependencies": {
     "@types/mkdirp": "^1.0.2",
+    "@types/node-fetch": "^2.5.12",
+    "chalk": "^5.0.0",
     "ethers": "^5.5.2",
     "mkdirp": "^1.0.4",
+    "node-fetch": "2.6.1",
     "zod": "^3.11.6"
   },
   "devDependencies": {}

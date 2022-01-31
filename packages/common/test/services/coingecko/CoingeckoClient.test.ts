@@ -55,7 +55,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'invalid json response body at  reason: Unexpected token e in JSON at position 1'
+        expect.stringMatching(/json/)
       )
     })
   })

@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
 import { EthereumAddress, json } from '../model'
-import { EtherscanClient } from '.'
+import { EtherscanClient } from './etherscan/EtherscanClient'
 
 export type AnalyzedAddress =
   | { type: 'EOA'; name: string }

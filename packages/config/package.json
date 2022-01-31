@@ -7,7 +7,7 @@
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts src test",
+    "lint": "eslint --ext .ts --max-warnings 0 src test",
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
     "build": "tsc",

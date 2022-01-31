@@ -1,3 +1,4 @@
+
 {
   "env": {
     "es6": true,
@@ -6,24 +7,36 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["simple-import-sort"],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
+  "plugins": ["simple-import-sort", "no-only-tests"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+    ],
+    "import/no-cycle": "error",
+    "import/no-default-export": "error",
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": false }
+    ],
+    "import/no-unresolved": ["error", { "ignore": ["^knex/types/tables$"] }],
+    "no-only-tests/no-only-tests": "error",
+    "no-restricted-imports": [
+      "error",
+      { "paths": [".", "..", "../..", "../../.."] }
+    ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
   },
@@ -33,6 +46,7 @@
       "rules": {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "import/no-extraneous-dependencies": "off",
         "no-unused-expressions": "off"
       }
     }

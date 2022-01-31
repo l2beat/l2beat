@@ -2,11 +2,11 @@ import { expect } from 'earljs'
 
 import { asRpcBlock } from '../../../src/peripherals/ethereum/types'
 import earliestBlockAlchemy from './examples/earliestBlockAlchemy.json'
-import earliestBlockInfura from './examples/earliestBlockAlchemy.json'
+import earliestBlockInfura from './examples/earliestBlockInfura.json'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
-import latestBlockInfura from './examples/latestBlockAlchemy.json'
+import latestBlockInfura from './examples/latestBlockInfura.json'
 import pendingBlockAlchemy from './examples/pendingBlockAlchemy.json'
-import pendingBlockInfura from './examples/pendingBlockAlchemy.json'
+import pendingBlockInfura from './examples/pendingBlockInfura.json'
 
 describe(asRpcBlock.name, () => {
   const testCases = [

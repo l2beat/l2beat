@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { MulticallRequest } from '../MulticallApi'
+import { MulticallRequest } from '../MulticallRequest'
 
 const coder = new utils.Interface([
   `function aggregate(tuple(address target, bytes callData)[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData)`,
