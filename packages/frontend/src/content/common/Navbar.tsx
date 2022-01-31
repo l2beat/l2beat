@@ -21,9 +21,7 @@ export function Navbar() {
         </a>
         <ul className="Navbar-Links left">
           <li className="Navbar-Link">
-            <a className="Navbar-Donate" href="/donate">
-              Donate
-            </a>
+            <a href="/donate">Donate</a>
           </li>
           <li className="Navbar-Link less-important">
             <a href="/jobs">Jobs</a>
