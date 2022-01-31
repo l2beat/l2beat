@@ -19,7 +19,9 @@
     "typecheck": "wsrun -ecsm typecheck",
     "test": "wsrun -ecsm test",
     "build": "wsrun -ecsm build",
-    "build:mock": "MOCK_DATA=true yarn build"
+    "build:mock": "MOCK_DATA=true yarn build",
+    "ci:check": "yarn build:mock && yarn format && yarn lint && yarn typecheck && yarn test",
+    "fix": "yarn lint:fix && yarn format:fix"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^7.1.2",
