@@ -37,7 +37,7 @@ describe(EtherscanClient.name, () => {
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 '
+        'Server responded with non-2XX result: 404 Not Found'
       )
     })
 
@@ -50,7 +50,7 @@ describe(EtherscanClient.name, () => {
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected(
-        expect.stringMatching(/JSON/)
+        expect.stringMatching(/json/)
       )
     })
 

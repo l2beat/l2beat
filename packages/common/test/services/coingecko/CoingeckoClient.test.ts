@@ -44,7 +44,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 '
+        'Server responded with non-2XX result: 404 Not Found'
       )
     })
 
@@ -55,7 +55,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        expect.stringMatching(/JSON/)
+        expect.stringMatching(/json/)
       )
     })
   })
