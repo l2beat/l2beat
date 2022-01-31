@@ -27,9 +27,9 @@ jobs:
         with:
           node-version: 14.x
       - run: yarn --frozen-lockfile
+      - run: yarn build:mock
       - run: yarn format
       - run: yarn lint
-      - run: yarn build:mock
       - run: yarn typecheck
       - run: yarn test
         env:
