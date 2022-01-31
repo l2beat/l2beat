@@ -1,9 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import {
-  EthereumClient,
-} from '../../../src/peripherals/ethereum/EthereumClient'
+import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 import {
   encodeMulticallV1,
   encodeMulticallV2,
