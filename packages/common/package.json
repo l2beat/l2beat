@@ -7,10 +7,11 @@
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "lint": "eslint --ext .ts --max-warnings 0 src test",
     "lint:fix": "yarn lint --fix",
     "build": "tsc",
-    "test": "mocha"
+    "test": "mocha",
+    "clean": "rm -rf build"
   },
   "dependencies": {
     "@types/mkdirp": "^1.0.2",

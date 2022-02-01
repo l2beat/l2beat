@@ -1,4 +1,5 @@
 import { expect } from 'earljs'
+
 import { formatLargeNumber } from '../../src/shared'
 
 describe(formatLargeNumber.name, () => {

@@ -11,7 +11,8 @@
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "test": "mocha"
+    "test": "mocha",
+    "clean": "rm -rf build"
   },
   "devDependencies": {
     "ethers": "^5.4.7"

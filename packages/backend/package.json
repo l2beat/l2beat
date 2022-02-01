@@ -14,7 +14,8 @@
     "lint": "eslint --ext .ts --max-warnings 0 src test",
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
-    "test": "mocha"
+    "test": "mocha",
+    "clean": "rm -rf build"
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
