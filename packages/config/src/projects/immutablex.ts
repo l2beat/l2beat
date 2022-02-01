@@ -12,7 +12,7 @@ import {
 import { Project } from './types'
 
 export const immutablex: Project = {
-  name: 'ImmutableX',
+  name: 'Immutable X',
   slug: 'immutablex',
   bridges: [
     {
@@ -24,7 +24,7 @@ export const immutablex: Project = {
   associatedTokens: ['IMX'],
   details: {
     description:
-      'ImmutableX claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
+      'Immutable X claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
     purpose: 'NFT, Exchange',
     links: {
       websites: ['https://www.immutable.com/'],
