@@ -20,8 +20,9 @@
     "test": "wsrun -ecsm test",
     "build": "wsrun -ecsm build",
     "build:mock": "MOCK_DATA=true yarn build",
-    "ci:check": "yarn build:mock && yarn format && yarn lint && yarn typecheck && yarn test",
-    "fix": "yarn lint:fix && yarn format:fix"
+    "ci:check": "yarn clean && yarn build:mock && yarn format && yarn lint && yarn typecheck && yarn test",
+    "fix": "yarn lint:fix && yarn format:fix",
+    "clean": "wsrun -ecsm clean"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^7.1.2",

@@ -7,12 +7,13 @@
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
+    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
     "lint:fix": "yarn lint --fix",
     "typecheck": "tsc --noEmit",
     "build": "NODE_ENV=production gulp build",
     "start": "gulp watch",
-    "test": "mocha"
+    "test": "mocha",
+    "clean": "rm -rf build"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

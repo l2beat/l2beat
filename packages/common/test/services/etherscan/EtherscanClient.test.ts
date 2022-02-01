@@ -66,7 +66,7 @@ describe(EtherscanClient.name, () => {
     })
 
     it('returns a success response', async () => {
-      const response = { status: '1' as '1', message: 'OK', result: [1, 2] }
+      const response = { status: '1' as const, message: 'OK', result: [1, 2] }
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify(response))
@@ -79,7 +79,11 @@ describe(EtherscanClient.name, () => {
     })
 
     it('returns an error response', async () => {
-      const response = { status: '0' as '0', message: 'NOTOK', result: 'Oops' }
+      const response = {
+        status: '0' as const,
+        message: 'NOTOK',
+        result: 'Oops',
+      }
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify(response))
