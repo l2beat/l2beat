@@ -23,7 +23,7 @@ function getTitleLength(name: string): 'long' | 'very-long' | undefined {
   switch (name) {
     case 'Optimism':
     case 'DeversiFi':
-    case 'ImmutableX':
+    case 'Immutable X':
       return 'long'
     case 'OMG Network':
     case 'Layer2.Finance':
