@@ -1,9 +1,6 @@
 import { CoingeckoClient, UnixTime } from "@l2beat/common";
 
-export enum Granularity {
-    Hourly,
-    Daily
-}
+type Granularity = 'daily' | 'hourly'
 
 export class CoingeckoQueryService {
     constructor(
@@ -12,22 +9,40 @@ export class CoingeckoQueryService {
 
 }
 
-export function generateTimestampsList(
+export function getFullTimestampsList(
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity
-): Date[] {
-    if(granularity === Granularity.Hourly) {
-        if(from.toNumber() % 3600 || to.toNumber() % 3600) return [] //maybe throw an error ?
-
-        const result = []
+): UnixTime[] {
+    if(from.gt(to)) throw new Error('FROM cannot be greater than TO')
     
-        for(let i = from.toNumber(); i <= to.toNumber(); i += 3600) {
-            result.push(new Date(i * 1000))
+    if(granularity === 'hourly') {
+        from = from.isFull('hour') ? from : from.toStartOf('hour')
+        to = to.isFull('hour') ? to : to.toNext('hour')
+
+        const result: UnixTime[] = []
+
+        const SECONDS_PER_HOUR = 3600
+        for(let i = from.toNumber(); i <= to.toNumber(); i += SECONDS_PER_HOUR) {
+            result.push(new UnixTime(i))
         }
     
         return result
     }
-    return [] 
+    else if(granularity === 'daily') {
+        from = from.isFull('day') ? from : from.toStartOf('day')
+        to = to.isFull('day') ? to : to.toNext('day')
+
+        const result: UnixTime[] = []
+        
+        const SECONDS_PER_DAY = 86400
+        for(let i = from.toNumber(); i <= to.toNumber(); i += SECONDS_PER_DAY) {
+            result.push(new UnixTime(i))
+        }
+    
+        return result
+    }
+
+    throw new Error('Granularity was not specified')
 }
 
