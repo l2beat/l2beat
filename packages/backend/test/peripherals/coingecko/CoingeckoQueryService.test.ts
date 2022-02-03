@@ -9,26 +9,53 @@ describe(CoingeckoQueryService.name, () => {
 describe(getFullTimestampsList.name, () => {
     describe("hourly", () => {
         const GRANULARITY = "hourly"
-        const FROM = new UnixTime(1643806800) //Wed Feb 02 2022 13:00:00 GMT+0000
-        const TO = new UnixTime(1643814000) //Wed Feb 02 2022 15:00:00 GMT+0000
+        const FROM = UnixTime.fromDate(new Date('2021-09-07T13:00:00Z'))
+        const TO = UnixTime.fromDate(new Date('2021-09-07T15:00:00Z'))
 
-        const RESULT = [new UnixTime(1643806800), new UnixTime(1643810400), new UnixTime(1643814000)]
+        const RESULT = [FROM, UnixTime.fromDate(new Date('2021-09-07T14:00:00Z')), TO]
 
         it("throws if FROM greater than TO", () => {
             expect(() => getFullTimestampsList(TO,FROM,GRANULARITY))
                 .toThrow('FROM cannot be greater than TO')
         })
 
-        it("works from 13:00 to 15:00", () => {
+        it("13:00 to 15:00", () => {
             expect(getFullTimestampsList(FROM,TO,GRANULARITY)).toEqual(RESULT)
         })
 
-        it("works from 23:00 to 01:00", () => {
-            const from = new UnixTime(1643842800) //Wed Feb 02 2022 23:00:00 GMT+0000
-            const to = new UnixTime(1643850000) //Thu Feb 03 2022 01:00:00 GMT+0000
-            const result = [new UnixTime(1643842800), new UnixTime(1643846400), new UnixTime(1643850000)]
+        it("13:01 to 15:01", () => {
+            expect(getFullTimestampsList(FROM.add(1,"minutes"),TO.add(1,"minutes"),GRANULARITY))
+                .toEqual([...RESULT, UnixTime.fromDate(new Date('2021-09-07T16:00:00Z'))])
+        })
+
+        it("23:00 to 01:00", () => {
+            const from = UnixTime.fromDate(new Date('2021-09-07T23:00:00Z'))
+            const to = UnixTime.fromDate(new Date('2021-09-08T01:00:00Z'))
+            const result = [from, UnixTime.fromDate(new Date('2021-09-08T00:00:00Z')), to]
 
             expect(getFullTimestampsList(from,to,GRANULARITY)).toEqual(result)
+        })
+    })
+
+    describe("daily", () => {
+        const GRANULARITY = "daily"
+        const FROM = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+        const TO = UnixTime.fromDate(new Date('2021-09-09T00:00:00Z'))
+
+        const RESULT = [FROM,UnixTime.fromDate(new Date('2021-09-08T00:00:00Z')),TO]
+
+        it("throws if FROM greater than TO", () => {
+            expect(() => getFullTimestampsList(TO,FROM,GRANULARITY))
+                .toThrow('FROM cannot be greater than TO')
+        })
+
+        it("07.09.2021 00:00 to 09.09.2021 00:00", () => {
+            expect(getFullTimestampsList(FROM,TO,GRANULARITY)).toEqual(RESULT)
+        })
+
+        it("07.09.2021 01:00 to 09.09.2021 01:00", () => {
+            expect(getFullTimestampsList(FROM.add(1,'hours'),TO.add(1,"hours"),GRANULARITY))
+            .toEqual([...RESULT, UnixTime.fromDate(new Date('2021-09-10T00:00:00Z'))])
         })
     })
 })
