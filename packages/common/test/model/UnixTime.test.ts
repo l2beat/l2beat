@@ -134,6 +134,38 @@ describe(UnixTime.name, () => {
     })
   })
 
+  describe(UnixTime.prototype.isFull.name, () => {
+    it('full day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
+      expect(time.isFull('day')).toEqual(true)
+    })
+
+    it('not full day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T10:13:51Z'))
+      expect(time.isFull('day')).toEqual(false)
+    })
+
+    it('full hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:00:00Z'))
+      expect(time.isFull('hour')).toEqual(true)
+    })
+
+    it('not full hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:01:10Z'))
+      expect(time.isFull('hour')).toEqual(false)
+    })
+
+    it('full minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:10:00Z'))
+      expect(time.isFull('minute')).toEqual(true)
+    })
+  
+    it('not full minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:10:01Z'))
+      expect(time.isFull('minute')).toEqual(false)
+    })
+  })
+
   describe('comparison methods', () => {
     const testCases = [
       { a: 4, method: 'lt' as const, b: 3, result: false },
