@@ -1,4 +1,4 @@
-import { CoingeckoClient, UnixTime } from '@l2beat/common'
+import { CoingeckoClient, CoingeckoId, UnixTime } from '@l2beat/common'
 
 type Granularity = 'daily' | 'hourly'
 
@@ -10,6 +10,29 @@ export interface PriceHistoryPoint {
 
 export class CoingeckoQueryService {
   constructor(private coingeckoClient: CoingeckoClient) {}
+
+  async getUsdPriceHistory(
+    coindId: CoingeckoId,
+    from: UnixTime,
+    to: UnixTime,
+    granularity: Granularity
+  ): Promise<PriceHistoryPoint[]> {
+    const [start, end] = adjustAndOffset(from, to, granularity)
+    const data = await this.coingeckoClient.getCoinMarketChartRange(
+      coindId,
+      'usd',
+      start,
+      end
+    )
+    
+    const prices = data.prices.sort(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    )
+
+    const timestamps = getFullTimestampsList(from, to, granularity)
+
+    return pickPrices(prices, timestamps)
+  }
 }
 
 const SECONDS_PER_HOUR = 3600
@@ -49,15 +72,34 @@ export function getFullTimestampsList(
 ): UnixTime[] {
   if (from.gt(to)) throw new Error('FROM cannot be greater than TO')
 
-  const period = granularity === 'hourly' ? 'hour' : 'day'
-  from = from.isFull(period) ? from : from.toNext(period)
-  to = to.isFull(period) ? to : to.toStartOf(period)
+  const [start, end] = adjust(from, to, granularity)
 
   const result: UnixTime[] = []
   const TIME_STEP =
     granularity === 'hourly' ? SECONDS_PER_HOUR : SECONDS_PER_DAY
-  for (let i = from.toNumber(); i <= to.toNumber(); i += TIME_STEP) {
+  for (let i = start.toNumber(); i <= end.toNumber(); i += TIME_STEP) {
     result.push(new UnixTime(i))
   }
   return result
+}
+
+function adjust(from: UnixTime, to: UnixTime, granularity: Granularity) {
+  const period = granularity === 'hourly' ? 'hour' : 'day'
+  return [
+    from.isFull(period) ? from : from.toNext(period),
+    to.isFull(period) ? to : to.toStartOf(period),
+  ]
+}
+
+function adjustAndOffset(
+  from: UnixTime,
+  to: UnixTime,
+  granularity: Granularity
+) {
+  const [start, end] = adjust(from, to, granularity)
+  if (granularity === 'hourly') {
+    return [start.add(-30, 'minutes'), end.add(30, 'minutes')]
+  } else {
+    return [start.add(-12, 'hours'), end.add(12, 'hours')]
+  }
 }

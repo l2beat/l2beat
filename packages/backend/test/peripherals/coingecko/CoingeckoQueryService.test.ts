@@ -1,10 +1,145 @@
-import { CoingeckoClient, mock, UnixTime } from '@l2beat/common'
-import { expect } from 'earljs'
+import { CoingeckoClient, CoingeckoId, mock, UnixTime } from '@l2beat/common'
+import { expect, mockFn } from 'earljs'
 
 import {
+  CoingeckoQueryService,
   pickPrices,
   getFullTimestampsList,
 } from '../../../src/peripherals/coingecko/CoingeckoQueryService'
+
+describe(CoingeckoQueryService.name, () => {
+  describe(CoingeckoQueryService.prototype.getUsdPriceHistory.name, () => {
+    it('is called with correct parameters', async () => {
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          marketCaps: [],
+          totalVolumes: [],
+          prices: [
+            {
+              date: new Date(),
+              price: 1234567,
+            },
+          ],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      await coingeckoQueryService.getUsdPriceHistory(
+        CoingeckoId('bitcoin'),
+        UnixTime.fromDate(new Date('2021-01-01')).add(-5, 'minutes'),
+        UnixTime.fromDate(new Date('2022-01-01')).add(5, 'minutes'),
+        'daily'
+      )
+      expect(
+        coingeckoClient.getCoinMarketChartRange
+      ).toHaveBeenCalledExactlyWith([
+        [
+          CoingeckoId('bitcoin'),
+          'usd',
+          UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
+          UnixTime.fromDate(new Date('2022-01-01')).add(12, 'hours'),
+        ],
+      ])
+    })
+
+    it('handles regular days range returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.toDate(), price: 1200 },
+            { date: START.add(1, 'days').toDate(), price: 1000 },
+            { date: START.add(2, 'days').toDate(), price: 1100 },
+          ],
+          marketCaps: [],
+          totalVolumes: [],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistory(
+        CoingeckoId('bitcoin'),
+        START,
+        START.add(2, 'days'),
+        'daily'
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: 0 },
+        { timestamp: START.add(1, 'days'), value: 1000, deltaMs: 0 },
+        { timestamp: START.add(2, 'days'), value: 1100, deltaMs: 0 },
+      ])
+    })
+
+    it('handles irregular days range returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.add(-2, 'hours').toDate(), price: 1200 },
+            { date: START.add(1, 'days').toDate(), price: 1000 },
+            {
+              date: START.add(2, 'days').add(2, 'hours').toDate(),
+              price: 1100,
+            },
+          ],
+          marketCaps: [],
+          totalVolumes: [],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistory(
+        CoingeckoId('bitcoin'),
+        START,
+        START.add(2, 'days'),
+        'daily'
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: -2 * 60 * 60 * 1000 },
+        { timestamp: START.add(1, 'days'), value: 1000, deltaMs: 0 },
+        {
+          timestamp: START.add(2, 'days'),
+          value: 1100,
+          deltaMs: 2 * 60 * 60 * 1000,
+        },
+      ])
+    })
+
+    it('handles unsorted days range returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.add(1, 'days').toDate(), price: 1000 },
+            { date: START.toDate(), price: 1200 },
+            {
+              date: START.add(2, 'days').add(2, 'hours').toDate(),
+              price: 1100,
+            },
+          ],
+          marketCaps: [],
+          totalVolumes: [],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistory(
+        CoingeckoId('bitcoin'),
+        START,
+        START.add(2, 'days'),
+        'daily'
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: 0 },
+        { timestamp: START.add(1, 'days'), value: 1000, deltaMs: 0 },
+        {
+          timestamp: START.add(2, 'days'),
+          value: 1100,
+          deltaMs: 2 * 60 * 60 * 1000,
+        },
+      ])
+    })
+  })
+})
 
 describe(pickPrices.name, () => {
   const START = new UnixTime(1517961600)
@@ -15,7 +150,11 @@ describe(pickPrices.name, () => {
       { price: 1100, date: START.add(1, 'days').toDate() },
       { price: 1200, date: START.add(2, 'days').toDate() },
     ]
-    const timestamps = getFullTimestampsList(START, START.add(2, 'days'), 'daily')
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
@@ -30,7 +169,11 @@ describe(pickPrices.name, () => {
       { price: 1100, date: START.add(1, 'days').add(1, 'minutes').toDate() },
       { price: 1200, date: START.add(2, 'days').add(3, 'minutes').toDate() },
     ]
-    const timestamps = getFullTimestampsList(START, START.add(2, 'days'), 'daily')
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 2 * 60 * 1000 },
@@ -49,7 +192,11 @@ describe(pickPrices.name, () => {
       { price: 1100, date: START.add(1, 'days').toDate() },
       { price: 1200, date: START.add(2, 'days').toDate() },
     ]
-    const timestamps = getFullTimestampsList(START, START.add(2, 'days'), 'daily')
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: -2 * 60 * 1000 },
@@ -71,7 +218,11 @@ describe(pickPrices.name, () => {
       { price: 1500, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
       { price: 1600, date: START.add(2, 'days').add(2, 'minutes').toDate() },
     ]
-    const timestamps = getFullTimestampsList(START, START.add(2, 'days'), 'daily')
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1200, timestamp: START, deltaMs: 1 * 60 * 1000 },
@@ -83,27 +234,41 @@ describe(pickPrices.name, () => {
   it('manufactures missing datapoint', () => {
     const prices = [
       { price: 1000, date: START.toDate() },
-      { price: 1200, date: START.add(2, 'days').add(-1,'minutes').toDate() },
+      { price: 1200, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
     ]
-    const timestamps = getFullTimestampsList(START, START.add(2, 'days'), 'daily')
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
-      { value: 1200, timestamp: START.add(1, 'days'), deltaMs: 24 * 60 * 60 * 1000 - 60 * 1000  },
+      {
+        value: 1200,
+        timestamp: START.add(1, 'days'),
+        deltaMs: 24 * 60 * 60 * 1000 - 60 * 1000,
+      },
       { value: 1200, timestamp: START.add(2, 'days'), deltaMs: -60 * 1000 },
     ])
   })
 
   it('manufactures start and end datapoints', () => {
-    const prices = [
-      { price: 1100, date: START.add(1, 'days').toDate() },
-    ]
-    const timestamps = getFullTimestampsList(START, START.add(2, 'days'), 'daily')
+    const prices = [{ price: 1100, date: START.add(1, 'days').toDate() }]
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1100, timestamp: START, deltaMs: 24 * 60 * 60 * 1000 },
-      { value: 1100, timestamp: START.add(1, 'days'), deltaMs: 0  },
-      { value: 1100, timestamp: START.add(2, 'days'), deltaMs: -24 * 60 * 60 * 1000 },
+      { value: 1100, timestamp: START.add(1, 'days'), deltaMs: 0 },
+      {
+        value: 1100,
+        timestamp: START.add(2, 'days'),
+        deltaMs: -24 * 60 * 60 * 1000,
+      },
     ])
   })
 
@@ -112,13 +277,29 @@ describe(pickPrices.name, () => {
       { price: 1000, date: START.toDate() },
       { price: 1400, date: START.add(4, 'days').toDate() },
     ]
-    const timestamps = getFullTimestampsList(START, START.add(4, 'days'), 'daily')
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(4, 'days'),
+      'daily'
+    )
 
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
-      { value: 1000, timestamp: START.add(1, 'days'), deltaMs: -24 * 60 * 60 * 1000 },
-      { value: 1000, timestamp: START.add(2, 'days'), deltaMs: -48 * 60 * 60 * 1000 },
-      { value: 1400, timestamp: START.add(3, 'days'), deltaMs: 24 * 60 * 60 * 1000 },
+      {
+        value: 1000,
+        timestamp: START.add(1, 'days'),
+        deltaMs: -24 * 60 * 60 * 1000,
+      },
+      {
+        value: 1000,
+        timestamp: START.add(2, 'days'),
+        deltaMs: -48 * 60 * 60 * 1000,
+      },
+      {
+        value: 1400,
+        timestamp: START.add(3, 'days'),
+        deltaMs: 24 * 60 * 60 * 1000,
+      },
       { value: 1400, timestamp: START.add(4, 'days'), deltaMs: 0 },
     ])
   })
