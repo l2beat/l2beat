@@ -85,8 +85,9 @@ describe(getFullTimestampsList.name, () => {
           GRANULARITY
         )
       ).toEqual([
-        ...RESULT,
-        UnixTime.fromDate(new Date('2021-09-07T16:00:00Z')),
+        UnixTime.fromDate(new Date('2021-09-07T14:00:00Z')),
+        UnixTime.fromDate(new Date('2021-09-07T15:00:00Z')),
+
       ])
     })
 
@@ -132,8 +133,8 @@ describe(getFullTimestampsList.name, () => {
           GRANULARITY
         )
       ).toEqual([
-        ...RESULT,
-        UnixTime.fromDate(new Date('2021-09-10T00:00:00Z')),
+        UnixTime.fromDate(new Date('2021-09-08T00:00:00Z')),
+        UnixTime.fromDate(new Date('2021-09-09T00:00:00Z')),
       ])
     })
   })

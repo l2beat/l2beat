@@ -44,6 +44,9 @@ export class CoingeckoQueryService {
   }
 }
 
+const SECONDS_PER_HOUR = 3600
+const SECONDS_PER_DAY = 86400
+
 export function getFullTimestampsList(
   from: UnixTime,
   to: UnixTime,
@@ -51,31 +54,14 @@ export function getFullTimestampsList(
 ): UnixTime[] {
   if (from.gt(to)) throw new Error('FROM cannot be greater than TO')
 
-  if (granularity === 'hourly') {
-    from = from.isFull('hour') ? from : from.toStartOf('hour')
-    to = to.isFull('hour') ? to : to.toNext('hour')
+  const period = granularity === 'hourly' ? 'hour' : 'day'
+  from = from.isFull(period) ? from : from.toNext(period)
+  to = to.isFull(period) ? to : to.toStartOf(period)
 
-    const result: UnixTime[] = []
-
-    const SECONDS_PER_HOUR = 3600
-    for (let i = from.toNumber(); i <= to.toNumber(); i += SECONDS_PER_HOUR) {
-      result.push(new UnixTime(i))
-    }
-
-    return result
-  } else if (granularity === 'daily') {
-    from = from.isFull('day') ? from : from.toStartOf('day')
-    to = to.isFull('day') ? to : to.toNext('day')
-
-    const result: UnixTime[] = []
-
-    const SECONDS_PER_DAY = 86400
-    for (let i = from.toNumber(); i <= to.toNumber(); i += SECONDS_PER_DAY) {
-      result.push(new UnixTime(i))
-    }
-
-    return result
+  const result: UnixTime[] = []
+  const TIME_STEP = granularity === 'hourly' ? SECONDS_PER_HOUR : SECONDS_PER_DAY
+  for (let i = from.toNumber(); i <= to.toNumber(); i += TIME_STEP) {
+    result.push(new UnixTime(i))
   }
-
-  throw new Error('Granularity was not specified')
+  return result
 }
