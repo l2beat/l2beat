@@ -5,47 +5,42 @@ type Granularity = 'daily' | 'hourly'
 export interface PriceHistoryPoint {
   value: number
   timestamp: UnixTime
-  timeDifference: number
+  deltaMs: number
 }
 
 export class CoingeckoQueryService {
   constructor(private coingeckoClient: CoingeckoClient) {}
-
-  pickPrices(
-    prices: { price: number; date: Date }[],
-    timestamps: UnixTime[]
-  ): PriceHistoryPoint[] {
-    let index = 0
-
-    const result: PriceHistoryPoint[] = []
-
-    for (let i = 0; i < timestamps.length; i++) {
-      //eslint-disable-next-line no-constant-condition
-      while (true) {
-        const delta = Math.abs(
-          timestamps[i].toNumber() * 1000 - prices[index]?.date.getTime()
-        )
-        const nextDelta = Math.abs(
-          timestamps[i].toNumber() * 1000 - prices[index + 1]?.date.getTime()
-        )
-
-        if (delta > nextDelta) index++
-        else {
-          result.push({
-            value: prices[index].price,
-            timestamp: timestamps[i],
-            timeDifference: delta,
-          })
-          break
-        }
-      }
-    }
-    return result
-  }
 }
 
 const SECONDS_PER_HOUR = 3600
 const SECONDS_PER_DAY = 86400
+
+export function pickPrices(
+  prices: { price: number; date: Date }[],
+  timestamps: UnixTime[]
+): PriceHistoryPoint[] {
+  const result: PriceHistoryPoint[] = []
+
+  const getDelta = (i: number, j: number) =>
+    prices[j].date.getTime() - timestamps[i].toNumber() * 1000
+
+  const nextIsCloser = (i: number, j: number) =>
+    j + 1 < prices.length &&
+    Math.abs(getDelta(i, j)) > Math.abs(getDelta(i, j + 1))
+
+  let j = 0
+  for (let i = 0; i < timestamps.length; i++) {
+    while (nextIsCloser(i, j)) {
+      j++
+    }
+    result.push({
+      value: prices[j].price,
+      timestamp: timestamps[i],
+      deltaMs: getDelta(i, j),
+    })
+  }
+  return result
+}
 
 export function getFullTimestampsList(
   from: UnixTime,
@@ -59,7 +54,8 @@ export function getFullTimestampsList(
   to = to.isFull(period) ? to : to.toStartOf(period)
 
   const result: UnixTime[] = []
-  const TIME_STEP = granularity === 'hourly' ? SECONDS_PER_HOUR : SECONDS_PER_DAY
+  const TIME_STEP =
+    granularity === 'hourly' ? SECONDS_PER_HOUR : SECONDS_PER_DAY
   for (let i = from.toNumber(); i <= to.toNumber(); i += TIME_STEP) {
     result.push(new UnixTime(i))
   }
