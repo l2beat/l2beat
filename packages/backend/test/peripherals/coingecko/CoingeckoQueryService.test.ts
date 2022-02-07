@@ -3,8 +3,8 @@ import { expect, mockFn } from 'earljs'
 
 import {
   CoingeckoQueryService,
-  pickPrices,
   getFullTimestampsList,
+  pickPrices,
 } from '../../../src/peripherals/coingecko/CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {

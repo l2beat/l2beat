@@ -24,7 +24,7 @@ export class CoingeckoQueryService {
       start,
       end
     )
-    
+
     const prices = data.prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime()
     )

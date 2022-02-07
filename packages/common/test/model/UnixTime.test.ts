@@ -159,7 +159,7 @@ describe(UnixTime.name, () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:10:00Z'))
       expect(time.isFull('minute')).toEqual(true)
     })
-  
+
     it('not full minute', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:10:01Z'))
       expect(time.isFull('minute')).toEqual(false)

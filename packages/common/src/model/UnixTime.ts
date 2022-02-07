@@ -39,7 +39,7 @@ export class UnixTime {
         ? SECONDS_PER_DAY
         : period === 'hour'
         ? SECONDS_PER_HOUR
-        : SECONDS_PER_MINUTE  
+        : SECONDS_PER_MINUTE
     const remaining = modulus - (this.timestamp % modulus)
     return new UnixTime(this.timestamp + remaining)
   }
@@ -51,7 +51,7 @@ export class UnixTime {
         : period === 'hour'
         ? SECONDS_PER_HOUR
         : SECONDS_PER_MINUTE
-    const isFull = this.timestamp % modulus ? false : true 
+    const isFull = this.timestamp % modulus ? false : true
     return isFull
   }
 

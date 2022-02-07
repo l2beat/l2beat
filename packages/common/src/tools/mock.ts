@@ -1,6 +1,7 @@
 import { Mock as MockFunction, mockFn } from 'earljs'
 
 export type MockedObject<T> = T & {
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   [P in keyof T]: T[P] extends (...args: any[]) => any
     ? MockFunction.Of<T[P]>
     : T[P]
@@ -48,6 +49,7 @@ function replaceFunctionsWithMocks<T>(object: T) {
     const value = clone[key]
     if (typeof value === 'function') {
       if (!isMockFunction(value)) {
+        //eslint-disable-next-line @typescript-eslint/no-explicit-any
         clone[key] = mockFn(value as any) as any
       }
     }
