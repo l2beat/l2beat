@@ -1,10 +1,55 @@
-import { UnixTime } from "@l2beat/common";
+import { CoingeckoClient, mock, UnixTime } from "@l2beat/common";
 import { expect } from "earljs";
 
 import { CoingeckoQueryService, getFullTimestampsList } from "../../../src/peripherals/coingecko/CoingeckoQueryService";
 
 describe(CoingeckoQueryService.name, () => {
+
+    describe(CoingeckoQueryService.prototype.pickPrices.name, () => {
+        const FROM = new UnixTime(1517961600)
+        const TO = new UnixTime(1518134400)
+
+        it("full days", () => {
+            const PRICES = [
+                {price: 1000, date: FROM.toDate()},
+                {price: 1100, date: FROM.add(1,'days').toDate()},
+                {price: 1200, date: TO.toDate()},
+            ]
+            const timestamps = getFullTimestampsList(FROM,TO,'daily')
+
+            const coingeckoQueryService = new CoingeckoQueryService(mock<CoingeckoClient>({}))
+        
+            expect(coingeckoQueryService.pickPrices(PRICES,timestamps))
+            .toEqual([
+                {value: 1000, timestamp: FROM, timeDifference: 0},
+                {value: 1100, timestamp: FROM.add(1,'days'), timeDifference: 0},
+                {value: 1200, timestamp: TO, timeDifference: 0},
+            ])
+        })
+
+        it("not full days", () => {
+            const PRICES = [
+                {price: 1000, date: FROM.add(2,'minutes').toDate()},
+                {price: 1100, date: FROM.add(1,'days').add(1,'minutes').toDate()},
+                {price: 1200, date: TO.add(3,'minutes').toDate()},
+            ]
+            const timestamps = getFullTimestampsList(FROM,TO,'daily')
+
+            const coingeckoQueryService = new CoingeckoQueryService(mock<CoingeckoClient>({}))
+        
+            expect(coingeckoQueryService.pickPrices(PRICES,timestamps))
+            .toEqual([
+                {value: 1000, timestamp: FROM, timeDifference: 2*60*1000},
+                {value: 1100, timestamp: FROM.add(1,'days'), timeDifference: 1*60*1000},
+                {value: 1200, timestamp: TO, timeDifference: 3*60*1000},
+            ])
+        })
+
+    })
+
 })
+
+
 
 describe(getFullTimestampsList.name, () => {
     describe("hourly", () => {

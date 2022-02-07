@@ -1,11 +1,42 @@
 import { CoingeckoClient, UnixTime } from "@l2beat/common";
+import { CoinMarketChartRangeData } from "@l2beat/common/build/src/services/coingecko/model";
 
 type Granularity = 'daily' | 'hourly'
+
+export interface PriceHistoryPoint {
+    value: number
+    timestamp: UnixTime
+    timeDifference: number
+}
 
 export class CoingeckoQueryService {
     constructor(
        private coingeckoClient: CoingeckoClient
     ){}
+
+    pickPrices(prices: {price: number, date: Date}[], timestamps: UnixTime[]): PriceHistoryPoint[]{
+        let index = 0
+
+        const result: PriceHistoryPoint[] = []
+
+        for(let i = 0; i < timestamps.length; i++) {
+            while(true) {
+                const delta = Math.abs(timestamps[i].toNumber() * 1000 - prices[index]?.date.getTime())
+                const nextDelta = Math.abs(timestamps[i].toNumber() * 1000 - prices[index+1]?.date.getTime())
+
+                if(delta > nextDelta) index++;
+                else {
+                    result.push({
+                        value: prices[index].price,
+                        timestamp: timestamps[i],
+                        timeDifference: delta
+                    })
+                    break;
+                }
+            }
+        }
+        return result   
+    }
 
 }
 
