@@ -144,7 +144,7 @@ describe(CoingeckoQueryService.name, () => {
 describe(pickPrices.name, () => {
   const START = new UnixTime(1517961600)
 
-  it('handles full days', () => {
+  it('works for days', () => {
     const prices = [
       { price: 1000, date: START.toDate() },
       { price: 1100, date: START.add(1, 'days').toDate() },
@@ -163,7 +163,26 @@ describe(pickPrices.name, () => {
     ])
   })
 
-  it('adjusts dates for slightly off days', () => {
+  it('works for hours', () => {
+    const prices = [
+      { price: 1000, date: START.toDate() },
+      { price: 1100, date: START.add(1, 'hours').toDate() },
+      { price: 1200, date: START.add(2, 'hours').toDate() },
+    ]
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'hours'),
+      'hourly'
+    )
+
+    expect(pickPrices(prices, timestamps)).toEqual([
+      { value: 1000, timestamp: START, deltaMs: 0 },
+      { value: 1100, timestamp: START.add(1, 'hours'), deltaMs: 0 },
+      { value: 1200, timestamp: START.add(2, 'hours'), deltaMs: 0 },
+    ])
+  })
+
+  it('adjusts dates for slightly off timestamps', () => {
     const prices = [
       { price: 1000, date: START.add(2, 'minutes').toDate() },
       { price: 1100, date: START.add(1, 'days').add(1, 'minutes').toDate() },
@@ -182,7 +201,11 @@ describe(pickPrices.name, () => {
         timestamp: START.add(1, 'days'),
         deltaMs: 1 * 60 * 1000,
       },
-      { value: 1200, timestamp: START.add(2, 'days'), deltaMs: 3 * 60 * 1000 },
+      {
+        value: 1200,
+        timestamp: START.add(2, 'days'),
+        deltaMs: 3 * 60 * 1000,
+      },
     ])
   })
 
@@ -209,7 +232,7 @@ describe(pickPrices.name, () => {
     ])
   })
 
-  it('discards superflous data', () => {
+  it('discards unecessary data', () => {
     const prices = [
       { price: 1100, date: START.add(-2, 'minutes').toDate() },
       { price: 1200, date: START.add(1, 'minutes').toDate() },
@@ -227,11 +250,15 @@ describe(pickPrices.name, () => {
     expect(pickPrices(prices, timestamps)).toEqual([
       { value: 1200, timestamp: START, deltaMs: 1 * 60 * 1000 },
       { value: 1300, timestamp: START.add(1, 'days'), deltaMs: 0 },
-      { value: 1500, timestamp: START.add(2, 'days'), deltaMs: -1 * 60 * 1000 },
+      {
+        value: 1500,
+        timestamp: START.add(2, 'days'),
+        deltaMs: -1 * 60 * 1000,
+      },
     ])
   })
 
-  it('manufactures missing datapoint', () => {
+  it('manufactures single missing datapoint', () => {
     const prices = [
       { price: 1000, date: START.toDate() },
       { price: 1200, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
@@ -253,26 +280,7 @@ describe(pickPrices.name, () => {
     ])
   })
 
-  it('manufactures start and end datapoints', () => {
-    const prices = [{ price: 1100, date: START.add(1, 'days').toDate() }]
-    const timestamps = getFullTimestampsList(
-      START,
-      START.add(2, 'days'),
-      'daily'
-    )
-
-    expect(pickPrices(prices, timestamps)).toEqual([
-      { value: 1100, timestamp: START, deltaMs: 24 * 60 * 60 * 1000 },
-      { value: 1100, timestamp: START.add(1, 'days'), deltaMs: 0 },
-      {
-        value: 1100,
-        timestamp: START.add(2, 'days'),
-        deltaMs: -24 * 60 * 60 * 1000,
-      },
-    ])
-  })
-
-  it('manufactures start and end datapoints', () => {
+  it('manufactures multiple missing datapoints', () => {
     const prices = [
       { price: 1000, date: START.toDate() },
       { price: 1400, date: START.add(4, 'days').toDate() },
@@ -301,6 +309,25 @@ describe(pickPrices.name, () => {
         deltaMs: 24 * 60 * 60 * 1000,
       },
       { value: 1400, timestamp: START.add(4, 'days'), deltaMs: 0 },
+    ])
+  })
+
+  it('manufactures start and end datapoints', () => {
+    const prices = [{ price: 1100, date: START.add(1, 'days').toDate() }]
+    const timestamps = getFullTimestampsList(
+      START,
+      START.add(2, 'days'),
+      'daily'
+    )
+
+    expect(pickPrices(prices, timestamps)).toEqual([
+      { value: 1100, timestamp: START, deltaMs: 24 * 60 * 60 * 1000 },
+      { value: 1100, timestamp: START.add(1, 'days'), deltaMs: 0 },
+      {
+        value: 1100,
+        timestamp: START.add(2, 'days'),
+        deltaMs: -24 * 60 * 60 * 1000,
+      },
     ])
   })
 })
