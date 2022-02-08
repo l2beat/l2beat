@@ -69,6 +69,69 @@ describe(CoingeckoQueryService.name, () => {
       ])
     })
 
+    it('handles multiple calls to get hourly', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn()
+          .returnsOnce({
+            prices: [
+              { date: START.toDate(), price: 1200 },
+              { date: START.add(30, 'days').toDate(), price: 1000 },
+              { date: START.add(60, 'days').toDate(), price: 1400 },
+              { date: START.add(80, 'days').toDate(), price: 1800 },
+            ],
+            marketCaps: [],
+            totalVolumes: [],
+          })
+          .returnsOnce({
+            prices: [
+              { date: START.add(80, 'days').toDate(), price: 1800 },
+              { date: START.add(90, 'days').toDate(), price: 1700 },
+              { date: START.add(120, 'days').toDate(), price: 1900 },
+              { date: START.add(150, 'days').toDate(), price: 2000 },
+              { date: START.add(160, 'days').toDate(), price: 2400 },
+            ],
+            marketCaps: [],
+            totalVolumes: [],
+          })
+          .returnsOnce({
+            prices: [
+              { date: START.add(160, 'days').toDate(), price: 2400 },
+              { date: START.add(180, 'days').toDate(), price: 2600 },
+            ],
+            marketCaps: [],
+            totalVolumes: [],
+          }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistory(
+        CoingeckoId('bitcoin'),
+        START,
+        START.add(180, 'days'),
+        'hourly'
+      )
+
+      const timestamps = getFullTimestampsList(
+        START,
+        START.add(180, 'days'),
+        'hourly'
+      )
+      const constPrices = [
+        { date: START.toDate(), price: 1200 },
+        { date: START.add(30, 'days').toDate(), price: 1000 },
+        { date: START.add(60, 'days').toDate(), price: 1400 },
+        { date: START.add(80, 'days').toDate(), price: 1800 },
+        { date: START.add(90, 'days').toDate(), price: 1700 },
+        { date: START.add(120, 'days').toDate(), price: 1900 },
+        { date: START.add(150, 'days').toDate(), price: 2000 },
+        { date: START.add(160, 'days').toDate(), price: 2400 },
+        { date: START.add(180, 'days').toDate(), price: 2600 },
+      ]
+
+      expect(prices).toEqual(pickPrices(constPrices, timestamps))
+    })
+
     it('handles duplicates in data returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
@@ -99,50 +162,6 @@ describe(CoingeckoQueryService.name, () => {
         { timestamp: START.add(1, 'days'), value: 1000, deltaMs: 0 },
         { timestamp: START.add(2, 'days'), value: 1100, deltaMs: 0 },
       ])
-    })
-
-    it('handles multiple calls to get hourly', async () => {
-      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-
-      const coingeckoClient = mock<CoingeckoClient>({
-        getCoinMarketChartRange: mockFn()
-          .returnsOnce({
-            prices: [
-              { date: START.toDate(), price: 1200 },
-              { date: START.add(90, 'days').toDate(), price: 1800 },
-            ],
-            marketCaps: [],
-            totalVolumes: [],
-          })
-          .returnsOnce({
-            prices: [
-              { date: START.add(90, 'days').toDate(), price: 1800 },
-              { date: START.add(180, 'days').toDate(), price: 2400 },
-            ],
-            marketCaps: [],
-            totalVolumes: [],
-          }),
-      })
-      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-      const prices = await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
-        START,
-        START.add(180, 'days'),
-        'hourly'
-      )
-
-      const timestamps = getFullTimestampsList(
-        START,
-        START.add(180, 'days'),
-        'hourly'
-      )
-      const constPrices = [
-        { date: START.toDate(), price: 1200 },
-        { date: START.add(90, 'days').toDate(), price: 1800 },
-        { date: START.add(180, 'days').toDate(), price: 2400 },
-      ]
-
-      expect(prices).toEqual(pickPrices(constPrices, timestamps))
     })
 
     it('handles irregular days range returned from API', async () => {
@@ -375,9 +394,9 @@ describe(pickPrices.name, () => {
         deltaMs: -24 * 60 * 60 * 1000,
       },
       {
-        value: 1000,
+        value: 1400,
         timestamp: START.add(2, 'days'),
-        deltaMs: -48 * 60 * 60 * 1000,
+        deltaMs: 48 * 60 * 60 * 1000,
       },
       {
         value: 1400,
