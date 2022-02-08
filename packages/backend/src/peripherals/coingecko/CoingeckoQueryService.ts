@@ -20,7 +20,7 @@ export class CoingeckoQueryService {
   ): Promise<PriceHistoryPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
-    const prices = await this.getUsdPrices(coindId, start, end, granularity)
+    const prices = await this.queryPrices(coindId, start, end, granularity)
 
     const sortedPrices = prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime()
@@ -31,7 +31,7 @@ export class CoingeckoQueryService {
     return pickPrices(sortedPrices, timestamps)
   }
 
-  async getUsdPrices(
+  async queryPrices(
     coindId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
@@ -46,24 +46,9 @@ export class CoingeckoQueryService {
       )
       return data.prices
     } else {
-      const ranges: { start: UnixTime; end: UnixTime }[] = []
-
-      const SECONDS_PER_80_DAYS = 80 * 86400
-
-      for (
-        let i = from.toNumber();
-        i < to.toNumber();
-        i += SECONDS_PER_80_DAYS
-      ) {
-        const start = UnixTime.fromDate(new Date(i * 1000))
-        const end = UnixTime.fromDate(
-          new Date((i + SECONDS_PER_80_DAYS) * 1000)
-        )
-
-        ranges.push({ start: start, end: end })
-      }
-
       const mergedPrices: Price[] = []
+
+      const ranges = generateHourlyRanges(from, to)
 
       ranges.map(async (range) => {
         const rangeData = await this.coingeckoClient.getCoinMarketChartRange(
@@ -146,4 +131,22 @@ function adjustAndOffset(
   } else {
     return [start.add(-12, 'hours'), end.add(12, 'hours')]
   }
+}
+
+function generateHourlyRanges(
+  from: UnixTime,
+  to: UnixTime
+): { start: UnixTime; end: UnixTime }[] {
+  const coingeckoMaxHourlySpan = 80
+
+  const rangeSpan = coingeckoMaxHourlySpan * SECONDS_PER_DAY
+
+  const ranges = []
+  for (let i = from.toNumber(); i < to.toNumber(); i += rangeSpan) {
+    const start = UnixTime.fromDate(new Date(i * 1000))
+    const end = UnixTime.fromDate(new Date((i + rangeSpan) * 1000))
+    ranges.push({ start: start, end: end })
+  }
+
+  return ranges
 }

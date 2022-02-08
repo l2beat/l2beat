@@ -492,5 +492,4 @@ describe(getFullTimestampsList.name, () => {
   })
 })
 
-//pure function to cut range
 //skippable test for API delta lower than x
