@@ -1,11 +1,16 @@
-import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
+import {
+  AssetId,
+  EthereumAddress,
+  Exchange,
+  Logger,
+  mock,
+} from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceService'
 import { ExchangePriceService } from '../../../src/core/prices/ExchangePriceService'
 import { Token } from '../../../src/model'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
-import { mock } from '../../mock'
 
 describe(AggregatePriceService.name, () => {
   it('does nothing when no tokens are given', async () => {

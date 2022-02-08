@@ -1,4 +1,10 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  EthereumAddress,
+  Logger,
+  mock,
+  UnixTime,
+} from '@l2beat/common'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
@@ -7,7 +13,6 @@ import { AggregatePriceService } from '../../../src/core/prices/AggregatePriceSe
 import { PriceUpdater } from '../../../src/core/prices/PriceUpdater'
 import { Token } from '../../../src/model'
 import { BlockNumberRecord } from '../../../src/peripherals/database/BlockNumberRepository'
-import { mock } from '../../mock'
 
 describe(PriceUpdater.name, () => {
   const tokens: Token[] = [

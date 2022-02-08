@@ -1,4 +1,4 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { Logger, mock, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
@@ -7,7 +7,6 @@ import {
   EtherscanError,
 } from '../../../src/peripherals/etherscan'
 import { HttpClient } from '../../../src/peripherals/HttpClient'
-import { mock } from '../../mock'
 
 describe(EtherscanClient.name, () => {
   describe(EtherscanClient.prototype['call'].name, () => {

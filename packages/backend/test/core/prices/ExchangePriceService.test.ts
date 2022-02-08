@@ -1,4 +1,10 @@
-import { AssetId, EthereumAddress, Exchange, Logger } from '@l2beat/common'
+import {
+  AssetId,
+  EthereumAddress,
+  Exchange,
+  Logger,
+  mock,
+} from '@l2beat/common'
 import { expect } from 'earljs'
 
 import {
@@ -16,7 +22,6 @@ import {
   USDT,
   WETH,
 } from '../../../src/peripherals/exchanges/queries/constants'
-import { mock } from '../../mock'
 
 describe(ExchangePriceService.name, () => {
   describe(ExchangePriceService.prototype.updateQueries.name, () => {

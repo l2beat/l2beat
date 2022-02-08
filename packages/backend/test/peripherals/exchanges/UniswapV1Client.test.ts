@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/common'
+import { Bytes, EthereumAddress, mock } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
@@ -7,7 +7,6 @@ import {
   UNISWAP_V1_FACTORY,
   UniswapV1Client,
 } from '../../../src/peripherals/exchanges/UniswapV1Client'
-import { mock } from '../../mock'
 
 describe(UniswapV1Client.name, () => {
   const toRequest = (address: EthereumAddress) => ({
