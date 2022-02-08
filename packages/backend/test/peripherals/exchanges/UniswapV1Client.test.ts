@@ -1,13 +1,15 @@
-import { Bytes, EthereumAddress } from '@l2beat/common'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress, mock } from '@l2beat/common'
+import { expect, mockFn } from 'earljs'
 
-import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
+import {
+  MulticallClient,
+  MulticallRequest,
+} from '../../../src/peripherals/ethereum/MulticallClient'
 import { DAI, WETH } from '../../../src/peripherals/exchanges/queries/constants'
 import {
   UNISWAP_V1_FACTORY,
   UniswapV1Client,
 } from '../../../src/peripherals/exchanges/UniswapV1Client'
-import { mock } from '../../mock'
 
 describe(UniswapV1Client.name, () => {
   const toRequest = (address: EthereumAddress) => ({
@@ -48,28 +50,37 @@ describe(UniswapV1Client.name, () => {
     const multicallClient = mock<MulticallClient>()
     const uniswapV1Client = new UniswapV1Client(multicallClient)
 
-    multicallClient.multicall = async (requests) => {
-      // Nothing in cache
-      expect(requests).toEqual([toRequest(DAI), toRequest(WETH)])
-      return [
-        toResponse(EthereumAddress('0x' + 'a'.repeat(40))),
-        toResponse(EthereumAddress.ZERO),
-      ]
-    }
+    multicallClient.multicall = mockFn(
+      //eslint-disable-next-line @typescript-eslint/no-unused-vars
+      async (requests: MulticallRequest[], blockNumber: bigint) => {
+        // Nothing in cache
+        expect(requests).toEqual([toRequest(DAI), toRequest(WETH)])
+        return [
+          toResponse(EthereumAddress('0x' + 'a'.repeat(40))),
+          toResponse(EthereumAddress.ZERO),
+        ]
+      }
+    )
     await uniswapV1Client.getExchangeAddresses([DAI, WETH], 12345n)
 
-    multicallClient.multicall = async (requests) => {
-      // Lower block number - both in cache
-      expect(requests).toEqual([])
-      return []
-    }
+    multicallClient.multicall = mockFn(
+      //eslint-disable-next-line @typescript-eslint/no-unused-vars
+      async (requests: MulticallRequest[], blockNumber: bigint) => {
+        // Lower block number - both in cache
+        expect(requests).toEqual([])
+        return []
+      }
+    )
     await uniswapV1Client.getExchangeAddresses([DAI, WETH], 10000n)
 
-    multicallClient.multicall = async (requests) => {
-      // Higher block number - only DAI cached
-      expect(requests).toEqual([toRequest(WETH)])
-      return [toResponse(EthereumAddress('0x' + 'b'.repeat(40)))]
-    }
+    multicallClient.multicall = mockFn(
+      //eslint-disable-next-line @typescript-eslint/no-unused-vars
+      async (requests: MulticallRequest[], blockNumber: bigint) => {
+        // Higher block number - only DAI cached
+        expect(requests).toEqual([toRequest(WETH)])
+        return [toResponse(EthereumAddress('0x' + 'b'.repeat(40)))]
+      }
+    )
     const result = await uniswapV1Client.getExchangeAddresses(
       [DAI, WETH],
       20000n

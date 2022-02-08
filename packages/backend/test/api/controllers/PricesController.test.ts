@@ -1,10 +1,9 @@
-import { AssetId, Exchange } from '@l2beat/common'
+import { AssetId, Exchange, mock } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { PricesController } from '../../../src/api/controllers/PricesController'
 import { AggregatePriceRepository } from '../../../src/peripherals/database/AggregatePriceRepository'
 import { ExchangePriceRepository } from '../../../src/peripherals/database/ExchangePriceRepository'
-import { mock } from '../../mock'
 
 describe(PricesController.name, () => {
   it('returns transformed aggregate prices', async () => {

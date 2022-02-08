@@ -1,4 +1,4 @@
-import { EthereumAddress, Exchange } from '@l2beat/common'
+import { EthereumAddress, Exchange, mock } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
@@ -8,7 +8,6 @@ import { encodeUniswapV1Requests } from '../../../src/peripherals/exchanges/quer
 import { encodeUniswapV2Requests } from '../../../src/peripherals/exchanges/queries/uniswapV2'
 import { encodeUniswapV3Requests } from '../../../src/peripherals/exchanges/queries/uniswapV3'
 import { UniswapV1Client } from '../../../src/peripherals/exchanges/UniswapV1Client'
-import { mock } from '../../mock'
 import {
   encodeUniswapV1Results,
   encodeUniswapV2Results,

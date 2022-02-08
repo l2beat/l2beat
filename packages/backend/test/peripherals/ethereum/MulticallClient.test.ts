@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/common'
+import { Bytes, EthereumAddress, mock } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
@@ -14,7 +14,6 @@ import {
   multicallInterface,
 } from '../../../src/peripherals/ethereum/MulticallClient'
 import { BlockTag } from '../../../src/peripherals/ethereum/primitives'
-import { mock } from '../../mock'
 
 describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))

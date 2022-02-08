@@ -1,9 +1,8 @@
-import { Bytes, EthereumAddress, KeccakHash } from '@l2beat/common'
+import { Bytes, EthereumAddress, KeccakHash, mock } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 import { JsonRpcClient } from '../../../src/peripherals/jsonrpc'
-import { mock } from '../../mock'
 import latestBlockAlchemy from './examples/latestBlockAlchemy.json'
 
 describe(EthereumClient.name, () => {

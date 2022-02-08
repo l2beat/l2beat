@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { Logger, mock } from '@l2beat/common'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
@@ -7,7 +7,6 @@ import {
   JsonRpcError,
   JsonRpcHttpClient,
 } from '../../../src/peripherals/jsonrpc'
-import { mock } from '../../mock'
 
 describe(JsonRpcHttpClient.name, () => {
   it('correctly sets up a request', async () => {

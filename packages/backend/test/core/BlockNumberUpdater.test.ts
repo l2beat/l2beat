@@ -1,4 +1,4 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { Logger, mock, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
@@ -9,7 +9,6 @@ import {
   BlockNumberRepository,
 } from '../../src/peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../../src/peripherals/etherscan'
-import { mock } from '../mock'
 
 describe(BlockNumberUpdater.name, () => {
   it('requires minTimestamp to be hour aligned', () => {
