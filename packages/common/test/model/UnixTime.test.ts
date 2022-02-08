@@ -59,22 +59,110 @@ describe(UnixTime.name, () => {
   })
 
   describe(UnixTime.prototype.toStartOf.name, () => {
-    it('can get start of day', () => {
+    it('day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('day')
       expect(start.toDate()).toEqual(new Date('2021-09-07T00:00:00Z'))
     })
 
-    it('can get start of hour', () => {
+    it('beginning of a day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+      const start = time.toStartOf('day')
+      expect(start.toDate()).toEqual(new Date('2021-09-07T00:00:00Z'))
+    })
+
+    it('hour', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('hour')
       expect(start.toDate()).toEqual(new Date('2021-09-07T12:00:00Z'))
     })
 
-    it('can get start of minute', () => {
+    it('beginning of an hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:00:00Z'))
+      const start = time.toStartOf('hour')
+      expect(start.toDate()).toEqual(new Date('2021-09-07T12:00:00Z'))
+    })
+
+    it('minute', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
       const start = time.toStartOf('minute')
       expect(start.toDate()).toEqual(new Date('2021-09-07T12:34:00Z'))
+    })
+
+    it('beginning of a minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:00Z'))
+      const start = time.toStartOf('minute')
+      expect(start.toDate()).toEqual(new Date('2021-09-07T12:34:00Z'))
+    })
+  })
+
+  describe(UnixTime.prototype.toNext.name, () => {
+    it('day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
+      const end = time.toNext('day')
+      expect(end.toDate()).toEqual(new Date('2021-09-08T00:00:00Z'))
+    })
+
+    it('begging of a day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
+      const end = time.toNext('day')
+      expect(end.toDate()).toEqual(new Date('2021-09-09T00:00:00Z'))
+    })
+
+    it('hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
+      const end = time.toNext('hour')
+      expect(end.toDate()).toEqual(new Date('2021-09-07T13:00:00Z'))
+    })
+
+    it('beginning of an hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:00:00Z'))
+      const end = time.toNext('hour')
+      expect(end.toDate()).toEqual(new Date('2021-09-07T13:00:00Z'))
+    })
+
+    it('minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
+      const end = time.toNext('minute')
+      expect(end.toDate()).toEqual(new Date('2021-09-07T12:35:00Z'))
+    })
+
+    it('beginning of a minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:00Z'))
+      const end = time.toNext('minute')
+      expect(end.toDate()).toEqual(new Date('2021-09-07T12:35:00Z'))
+    })
+  })
+
+  describe(UnixTime.prototype.isFull.name, () => {
+    it('full day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
+      expect(time.isFull('day')).toEqual(true)
+    })
+
+    it('not full day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T10:13:51Z'))
+      expect(time.isFull('day')).toEqual(false)
+    })
+
+    it('full hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:00:00Z'))
+      expect(time.isFull('hour')).toEqual(true)
+    })
+
+    it('not full hour', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:01:10Z'))
+      expect(time.isFull('hour')).toEqual(false)
+    })
+
+    it('full minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:10:00Z'))
+      expect(time.isFull('minute')).toEqual(true)
+    })
+
+    it('not full minute', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:10:01Z'))
+      expect(time.isFull('minute')).toEqual(false)
     })
   })
 

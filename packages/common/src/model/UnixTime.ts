@@ -33,6 +33,28 @@ export class UnixTime {
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
   }
 
+  toNext(period: 'day' | 'hour' | 'minute') {
+    const modulus =
+      period === 'day'
+        ? SECONDS_PER_DAY
+        : period === 'hour'
+        ? SECONDS_PER_HOUR
+        : SECONDS_PER_MINUTE
+    const remaining = modulus - (this.timestamp % modulus)
+    return new UnixTime(this.timestamp + remaining)
+  }
+
+  isFull(period: 'day' | 'hour' | 'minute') {
+    const modulus =
+      period === 'day'
+        ? SECONDS_PER_DAY
+        : period === 'hour'
+        ? SECONDS_PER_HOUR
+        : SECONDS_PER_MINUTE
+    const isFull = this.timestamp % modulus ? false : true
+    return isFull
+  }
+
   add(value: number, period: 'days' | 'hours' | 'minutes' | 'seconds') {
     if (!Number.isInteger(value)) {
       throw new TypeError('value must be an integer')

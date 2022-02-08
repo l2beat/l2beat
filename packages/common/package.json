@@ -17,6 +17,7 @@
     "@types/mkdirp": "^1.0.2",
     "@types/node-fetch": "^2.5.12",
     "chalk": "^5.0.0",
+    "earljs": "^0.2.0",
     "ethers": "^5.5.2",
     "mkdirp": "^1.0.4",
     "node-fetch": "2.6.1",
