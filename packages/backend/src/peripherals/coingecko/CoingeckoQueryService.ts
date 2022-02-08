@@ -1,6 +1,7 @@
 import { CoingeckoClient, CoingeckoId, UnixTime } from '@l2beat/common'
 
 type Granularity = 'daily' | 'hourly'
+type Price = { date: Date; price: number }
 
 export interface PriceHistoryPoint {
   value: number
@@ -18,23 +19,66 @@ export class CoingeckoQueryService {
     granularity: Granularity
   ): Promise<PriceHistoryPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
-    const data = await this.coingeckoClient.getCoinMarketChartRange(
-      coindId,
-      'usd',
-      start,
-      end
-    )
 
-    const prices = data.prices.sort(
+    const prices = await this.getUsdPrices(coindId, start, end, granularity)
+
+    const sortedPrices = prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime()
     )
 
     const timestamps = getFullTimestampsList(from, to, granularity)
 
-    return pickPrices(prices, timestamps)
+    return pickPrices(sortedPrices, timestamps)
+  }
+
+  async getUsdPrices(
+    coindId: CoingeckoId,
+    from: UnixTime,
+    to: UnixTime,
+    granularity: Granularity
+  ): Promise<Price[]> {
+    if (granularity === 'daily') {
+      const data = await this.coingeckoClient.getCoinMarketChartRange(
+        coindId,
+        'usd',
+        from,
+        to
+      )
+      return data.prices
+    } else {
+      const ranges: { start: UnixTime; end: UnixTime }[] = []
+
+      const SECONDS_PER_80_DAYS = 80 * 86400
+
+      for (
+        let i = from.toNumber();
+        i < to.toNumber();
+        i += SECONDS_PER_80_DAYS
+      ) {
+        const start = UnixTime.fromDate(new Date(i * 1000))
+        const end = UnixTime.fromDate(
+          new Date((i + SECONDS_PER_80_DAYS) * 1000)
+        )
+
+        ranges.push({ start: start, end: end })
+      }
+
+      const mergedPrices: Price[] = []
+
+      ranges.map(async (range) => {
+        const rangeData = await this.coingeckoClient.getCoinMarketChartRange(
+          coindId,
+          'usd',
+          range.start,
+          range.end
+        )
+        mergedPrices.push(...rangeData.prices)
+      })
+
+      return mergedPrices
+    }
   }
 }
-
 const SECONDS_PER_HOUR = 3600
 const SECONDS_PER_DAY = 86400
 
@@ -49,7 +93,7 @@ export function pickPrices(
 
   const nextIsCloser = (i: number, j: number) =>
     j + 1 < prices.length &&
-    Math.abs(getDelta(i, j)) > Math.abs(getDelta(i, j + 1))
+    Math.abs(getDelta(i, j)) >= Math.abs(getDelta(i, j + 1))
 
   let j = 0
   for (let i = 0; i < timestamps.length; i++) {

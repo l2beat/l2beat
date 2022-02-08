@@ -34,3 +34,4 @@ export interface CoinMarketChartRangeData {
   marketCaps: { date: Date; marketCap: number }[]
   totalVolumes: { date: Date; totalVolume: number }[]
 }
+
