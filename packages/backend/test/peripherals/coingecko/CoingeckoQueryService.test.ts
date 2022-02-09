@@ -546,6 +546,25 @@ describe(generateRangesToCallHourly.name, () => {
       },
     ])
   })
+
+  it('180 days', () => {
+    const start = UnixTime.fromDate(new Date('2021-07-01T00:00:00Z'))
+
+    expect(generateRangesToCallHourly(start, start.add(180, 'days'))).toEqual([
+      {
+        start: start,
+        end: start.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+      },
+      {
+        start: start.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+        end: start.add(2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+      },
+      {
+        start: start.add(2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+        end: start.add(180, 'days'),
+      },
+    ])
+  })
 })
 
 describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
@@ -554,12 +573,12 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const COIN = CoingeckoId('ethereum')
   const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
   const DAYS_SPAN = 90
-  const MAX_FAULT_MINUTES = 25
+  const MAX_TRESHOLD_MINUTES = 25
   const EXPECTED_HOURLY_FAULT_RATIO = 0.15
 
-  const coingeckoQueryService = new CoingeckoQueryService(
-    new CoingeckoClient(new HttpClient())
-  )
+  const httpClient = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(httpClient)
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   it('daily', async () => {
     const data = await coingeckoQueryService.getUsdPriceHistory(
@@ -588,7 +607,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
 
     console.log('Coin = ', COIN)
     console.log('Days span = ', DAYS_SPAN)
-    console.log('Max fault [min] = ', MAX_FAULT_MINUTES)
+    console.log('Max fault [min] = ', MAX_TRESHOLD_MINUTES)
     console.log('=================')
     console.log('Fault ratio = ', Math.round(ratio * 100) / 100)
     console.log('Expected hourly fault ratio = ', EXPECTED_HOURLY_FAULT_RATIO)
@@ -609,7 +628,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const getFaultRatio = (data: PriceHistoryPoint[]) => {
     const faultyData = data
       .map((i) => i.deltaMs / 1000 / 60)
-      .filter((i) => i > MAX_FAULT_MINUTES)
+      .filter((i) => i > MAX_TRESHOLD_MINUTES)
 
     return faultyData.length / data.length
   }
