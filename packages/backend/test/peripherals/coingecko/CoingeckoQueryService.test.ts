@@ -1,10 +1,19 @@
-import { CoingeckoClient, CoingeckoId, mock, UnixTime } from '@l2beat/common'
+import {
+  CoingeckoClient,
+  CoingeckoId,
+  HttpClient,
+  mock,
+  UnixTime,
+} from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
 import {
+  COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,
   CoingeckoQueryService,
+  generateRangesToCallHourly,
   getFullTimestampsList,
   pickPrices,
+  PriceHistoryPoint,
 } from '../../../src/peripherals/coingecko/CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {
@@ -511,4 +520,97 @@ describe(getFullTimestampsList.name, () => {
   })
 })
 
-//skippable test for API delta lower than x
+describe(generateRangesToCallHourly.name, () => {
+  it('30 days', () => {
+    const start = UnixTime.fromDate(new Date('2021-07-01T00:00:00Z'))
+
+    expect(generateRangesToCallHourly(start, start.add(30, 'days'))).toEqual([
+      {
+        start: start,
+        end: start.add(30, 'days'),
+      },
+    ])
+  })
+
+  it('90 days', () => {
+    const start = UnixTime.fromDate(new Date('2021-07-01T00:00:00Z'))
+
+    expect(generateRangesToCallHourly(start, start.add(90, 'days'))).toEqual([
+      {
+        start: start,
+        end: start.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+      },
+      {
+        start: start.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+        end: start.add(90, 'days'),
+      },
+    ])
+  })
+})
+
+describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
+  this.timeout(100000)
+
+  const COIN = CoingeckoId('ethereum')
+  const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+  const DAYS_SPAN = 90
+  const MAX_FAULT_MINUTES = 25
+  const EXPECTED_HOURLY_FAULT_RATIO = 0.15
+
+  const coingeckoQueryService = new CoingeckoQueryService(
+    new CoingeckoClient(new HttpClient())
+  )
+
+  it('daily', async () => {
+    const data = await coingeckoQueryService.getUsdPriceHistory(
+      COIN,
+      START,
+      START.add(DAYS_SPAN, 'days'),
+      'daily'
+    )
+
+    const ratio = getFaultRatio(data)
+
+    expect(ratio).toEqual(0)
+  })
+
+  it('hourly', async () => {
+    const data = await coingeckoQueryService.getUsdPriceHistory(
+      COIN,
+      START,
+      START.add(DAYS_SPAN, 'days'),
+      'hourly'
+    )
+
+    const ratio = getFaultRatio(data)
+
+    expect(ratio < EXPECTED_HOURLY_FAULT_RATIO).toEqual(true)
+
+    console.log('Coin = ', COIN)
+    console.log('Days span = ', DAYS_SPAN)
+    console.log('Max fault [min] = ', MAX_FAULT_MINUTES)
+    console.log('=================')
+    console.log('Fault ratio = ', Math.round(ratio * 100) / 100)
+    console.log('Expected hourly fault ratio = ', EXPECTED_HOURLY_FAULT_RATIO)
+    console.log('=================')
+
+    let sum = 0
+    data.forEach((point) => (sum += point.deltaMs))
+    const average = sum / data.length
+
+    console.log('Average fault [min] = ', average / 1000 / 60)
+
+    let res = 0
+    data.forEach((point) => (res += Math.pow(point.deltaMs - average, 2)))
+    const deviation = Math.sqrt(res / data.length)
+    console.log('Standard deviation [min] = ', deviation / 1000 / 60)
+  })
+
+  const getFaultRatio = (data: PriceHistoryPoint[]) => {
+    const faultyData = data
+      .map((i) => i.deltaMs / 1000 / 60)
+      .filter((i) => i > MAX_FAULT_MINUTES)
+
+    return faultyData.length / data.length
+  }
+})
