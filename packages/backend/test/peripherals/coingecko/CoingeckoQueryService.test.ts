@@ -246,11 +246,6 @@ describe(CoingeckoQueryService.name, () => {
   })
 
   describe(CoingeckoQueryService.prototype.getCoinIds.name, () => {
-    const ADDRESSES = [
-      EthereumAddress('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'), //name: 'Aave Token',
-      EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'), //name: 'Compound',
-    ]
-
     it('called with correct parameters', async () => {
       const coingeckoClient = mock<CoingeckoClient>({
         getCoinList: mockFn().returns([]),
@@ -258,8 +253,7 @@ describe(CoingeckoQueryService.name, () => {
 
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
-      await coingeckoQueryService.getCoinIds(ADDRESSES)
-
+      await coingeckoQueryService.getCoinIds()
       expect(coingeckoClient.getCoinList).toHaveBeenCalledExactlyWith([
         [
           {
@@ -301,7 +295,7 @@ describe(CoingeckoQueryService.name, () => {
 
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
-      const coinsIds = await coingeckoQueryService.getCoinIds(ADDRESSES)
+      const coinsIds = await coingeckoQueryService.getCoinIds()
 
       expect(coinsIds).toEqual(
         new Map([
@@ -312,6 +306,10 @@ describe(CoingeckoQueryService.name, () => {
           [
             EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'),
             CoingeckoId('compound-governance-token'),
+          ],
+          [
+            EthereumAddress('0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'),
+            CoingeckoId('uniswap'),
           ],
         ])
       )
@@ -338,26 +336,20 @@ describe(CoingeckoQueryService.name, () => {
             id: CoingeckoId('uniswap'),
             symbol: 'uni',
             name: 'Uniswap',
-            platforms: {
-              ethereum: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-            },
+            platforms: {},
           },
         ]),
       })
 
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
-      const coinsIds = await coingeckoQueryService.getCoinIds(ADDRESSES)
+      const coinsIds = await coingeckoQueryService.getCoinIds()
 
       expect(coinsIds).toEqual(
         new Map([
           [
             EthereumAddress('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'),
             CoingeckoId('aave'),
-          ],
-          [
-            EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'),
-            undefined,
           ],
         ])
       )

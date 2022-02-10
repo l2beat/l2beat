@@ -66,25 +66,16 @@ export class CoingeckoQueryService {
     }
   }
 
-  async getCoinIds(
-    addresses: EthereumAddress[]
-  ): Promise<Map<EthereumAddress, CoingeckoId | undefined>> {
+  async getCoinIds(): Promise<Map<EthereumAddress, CoingeckoId>> {
     const coinsList = await this.coingeckoClient.getCoinList({
       includePlatform: true,
     })
 
     const result = new Map()
 
-    addresses.map((address) => {
-      const coin = coinsList.find((coin) => {
-        if (coin.platforms.ethereum)
-          return EthereumAddress(coin.platforms.ethereum) === address
-        else return false
-      })
-
-      const coinId = coin ? coin.id : undefined
-
-      result.set(address, coinId)
+    coinsList.map((coin) => {
+      if (coin.platforms.ethereum)
+        result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
     })
 
     return result
