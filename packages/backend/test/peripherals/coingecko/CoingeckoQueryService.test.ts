@@ -1,10 +1,16 @@
 import {
   CoingeckoClient,
   CoingeckoId,
+  EthereumAddress,
   HttpClient,
   mock,
   UnixTime,
 } from '@l2beat/common'
+import {
+  CoinListEntry,
+  CoinListPlatformEntry,
+} from '@l2beat/common/build/src/services/coingecko/model'
+import { tokenList } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 
 import {
@@ -15,6 +21,7 @@ import {
   pickPrices,
   PriceHistoryPoint,
 } from '../../../src/peripherals/coingecko/CoingeckoQueryService'
+import { boolean } from '../../../src/tools/cast/boolean'
 
 describe(CoingeckoQueryService.name, () => {
   describe(CoingeckoQueryService.prototype.getUsdPriceHistory.name, () => {
@@ -240,6 +247,73 @@ describe(CoingeckoQueryService.name, () => {
           value: 1100,
           deltaMs: 2 * 60 * 60 * 1000,
         },
+      ])
+    })
+  })
+
+  describe(CoingeckoQueryService.prototype.getCoinsIds.name, () => {
+    const ADDRESSES = [
+      EthereumAddress('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'), //name: 'Aave Token',
+      EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'), //name: 'Compound',
+    ]
+
+    const RESULTS: CoinListPlatformEntry[] = [
+      {
+        id: CoingeckoId('aave'),
+        symbol: 'aave',
+        name: 'Aave',
+        platforms: {
+          ethereum: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
+        },
+      },
+      {
+        id: CoingeckoId('compound-governance-token'),
+        symbol: 'comp',
+        name: 'Compound',
+        platforms: {
+          ethereum: '0xc00e94Cb662C3520282E6f5717214004A7f26888',
+        },
+      },
+      {
+        id: CoingeckoId('uniswap'),
+        symbol: 'uni',
+        name: 'Uniswap',
+        platforms: {
+          ethereum: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+        },
+      },
+    ]
+
+    it('called with correct parameters', async () => {
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinList: mockFn().returns([]),
+      })
+
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+
+      await coingeckoQueryService.getCoinsIds(ADDRESSES)
+
+      expect(coingeckoClient.getCoinList).toHaveBeenCalledExactlyWith([
+        [
+          {
+            includePlatform: true,
+          },
+        ],
+      ])
+    })
+
+    it('list of coingeckoIds', async () => {
+      const coingeckoClient = mock<CoingeckoClient>({
+        getCoinList: mockFn().returns(RESULTS),
+      })
+
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+
+      const coinsIds = await coingeckoQueryService.getCoinsIds(ADDRESSES)
+
+      expect(coinsIds).toEqual([
+        CoingeckoId('aave'),
+        CoingeckoId('compound-governance-token'),
       ])
     })
   })
