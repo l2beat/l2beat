@@ -311,10 +311,18 @@ describe(CoingeckoQueryService.name, () => {
 
       const coinsIds = await coingeckoQueryService.getCoinsIds(ADDRESSES)
 
-      expect(coinsIds).toEqual([
-        CoingeckoId('aave'),
-        CoingeckoId('compound-governance-token'),
-      ])
+      expect(coinsIds).toEqual(
+        new Map([
+          [
+            EthereumAddress('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'),
+            CoingeckoId('aave'),
+          ],
+          [
+            EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'),
+            CoingeckoId('compound-governance-token'),
+          ],
+        ])
+      )
     })
   })
 })
