@@ -1,4 +1,9 @@
-import { CoingeckoClient, CoingeckoId, UnixTime } from '@l2beat/common'
+import {
+  CoingeckoClient,
+  CoingeckoId,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/common'
 
 type Granularity = 'daily' | 'hourly'
 type Price = { date: Date; price: number }
@@ -59,6 +64,21 @@ export class CoingeckoQueryService {
 
       return ranges.map((x) => x.prices).flat()
     }
+  }
+
+  async getCoinIds(): Promise<Map<EthereumAddress, CoingeckoId>> {
+    const coinsList = await this.coingeckoClient.getCoinList({
+      includePlatform: true,
+    })
+
+    const result = new Map()
+
+    coinsList.map((coin) => {
+      if (coin.platforms.ethereum)
+        result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
+    })
+
+    return result
   }
 }
 
