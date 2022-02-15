@@ -17,8 +17,15 @@ export const CoinListPlatformEntry = z.object({
   platforms: z.record(z.string(), z.union([z.string(), z.null()])),
 })
 
-export const CoinListResult = z.array(CoinListEntry)
-export const CoinListPlatformResult = z.array(CoinListPlatformEntry)
+export const CoinListResult = z.preprocess((response) => {
+  const result = z.array(z.any()).parse(response)
+  return result.filter((v) => v.id)
+}, z.array(CoinListEntry))
+
+export const CoinListPlatformResult = z.preprocess((response) => {
+  const result = z.array(z.any()).parse(response)
+  return result.filter((v) => v.id)
+}, z.array(CoinListPlatformEntry))
 
 export type CoinMarketChartRangeResult = z.infer<
   typeof CoinMarketChartRangeResult

@@ -1,3 +1,9 @@
+import {
+  CoingeckoClient,
+  CoingeckoId,
+  EthereumAddress,
+  HttpClient,
+} from '@l2beat/common'
 import { expect } from 'earljs'
 import { Contract, providers, utils } from 'ethers'
 
@@ -104,5 +110,29 @@ describe('tokens', () => {
         expect(token.decimals).toEqual(results[token.address].decimals)
       })
     }
+  })
+
+  it('every token has correct CoingeckoId', async () => {
+    const http = new HttpClient()
+    const coingeckoClient = new CoingeckoClient(http)
+
+    const coinsList = await coingeckoClient.getCoinList({
+      includePlatform: true,
+    })
+
+    const result = new Map()
+
+    coinsList.map((coin) => {
+      if (coin.platforms.ethereum)
+        result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
+    })
+
+    tokenList.map((token) => {
+      if (token.symbol === 'ETH') expect(token.coingeckoId).toEqual('ethereum')
+      else
+        expect(CoingeckoId(token.coingeckoId)).toEqual(
+          result.get(token.address)
+        )
+    })
   })
 })
