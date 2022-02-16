@@ -20,7 +20,7 @@ export const arbitrum: Project = {
     {
       address: '0xcEe284F754E854890e311e3280b767F80797180d',
       sinceBlock: 12647126,
-      tokens: ['LAND', 'MCB', 'rDPX', 'USDC', 'USDT'],
+      tokens: ['MCB', 'rDPX', 'USDC', 'USDT'],
     },
     {
       address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',

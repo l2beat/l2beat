@@ -14,6 +14,9 @@
     "test": "mocha",
     "clean": "rm -rf build"
   },
+  "dependencies": {
+    "@l2beat/common": "0.1.0"
+  },
   "devDependencies": {
     "ethers": "^5.4.7"
   }
