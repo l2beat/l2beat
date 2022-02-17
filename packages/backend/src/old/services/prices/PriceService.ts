@@ -1,35 +1,66 @@
-import { SimpleDate } from '@l2beat/common'
+import { CoingeckoId, Logger, SimpleDate, UnixTime } from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
+import { BigNumber, utils } from 'ethers'
 
-import { ProjectInfo } from '../../../model'
-import { BlockInfo } from '../BlockInfo'
-import { ExchangeInfo } from '../ExchangeAddresses'
-import { MulticallApi } from '../multicall'
+import { CoingeckoQueryService } from '../../../peripherals/coingecko/CoingeckoQueryService'
 import { FetchedPrices } from './model'
-import { getMulticallCalls, getTokens, parseMulticallResults } from './utils'
 
 export class PriceService {
   constructor(
-    private multicallApi: MulticallApi,
-    private blockInfo: BlockInfo
+    private coingeckoQueryService: CoingeckoQueryService,
+    private logger: Logger
   ) {}
 
-  async getPricesForDate(
-    projects: ProjectInfo[],
-    exchanges: Record<string, ExchangeInfo>,
-    date: SimpleDate
-  ) {
-    const blockNumber = await this.blockInfo.getMaxBlock(date)
-    return this.getPrices(projects, exchanges, blockNumber)
-  }
-
   async getPrices(
-    projects: ProjectInfo[],
-    exchanges: Record<string, ExchangeInfo>,
-    blockNumber: number
-  ): Promise<FetchedPrices> {
-    const tokens = getTokens(projects, blockNumber)
-    const calls = getMulticallCalls(tokens, exchanges, blockNumber)
-    const results = await this.multicallApi.multicall(calls, blockNumber)
-    return parseMulticallResults(results)
+    tokens: TokenInfo[],
+    dates: SimpleDate[]
+  ): Promise<Map<SimpleDate, FetchedPrices>> {
+    const start = dates[0]
+    const end = dates[dates.length - 1]
+
+    const fetchedPrices = new Map<number, FetchedPrices>()
+
+    await Promise.all(
+      tokens.map(async (token) => {
+        const prices = await this.coingeckoQueryService.getUsdPriceHistory(
+          CoingeckoId(token.coingeckoId),
+          new UnixTime(start.toUnixTimestamp()),
+          new UnixTime(end.toUnixTimestamp()),
+          'daily'
+        )
+
+        for (const { timestamp, value } of prices) {
+          const fetchedPricesForDate = fetchedPrices.get(
+            timestamp.toNumber()
+          ) ?? {
+            token: {},
+            eth: BigNumber.from(0),
+          }
+          if (!token.address) {
+            fetchedPricesForDate.eth = utils.parseUnits(value.toFixed(18), 18)
+          } else {
+            fetchedPricesForDate.token[token.address] = utils.parseUnits(
+              value.toFixed(18 * 2 - token.decimals),
+              18 * 2 - token.decimals
+            )
+          }
+          fetchedPrices.set(timestamp.toNumber(), fetchedPricesForDate)
+        }
+
+        this.logger.info('Fetched prices', { token: token.coingeckoId })
+      })
+    )
+
+    const entries: [SimpleDate, FetchedPrices][] = []
+    for (const date of dates) {
+      const fetchedPricesForDate = fetchedPrices.get(date.toUnixTimestamp())
+      if (!fetchedPricesForDate) {
+        throw new Error(`No prices for ${date.toString()}`)
+      } else {
+        entries.push([date, fetchedPricesForDate])
+      }
+    }
+
+    return new Map(entries)
   }
 }
