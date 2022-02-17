@@ -1,4 +1,4 @@
-import { getTokenBySymbol, Project, TokenInfo } from '@l2beat/config'
+import { getTokenBySymbol, Project, TokenInfo, tokenList } from '@l2beat/config'
 
 export interface ProjectInfo {
   name: string
@@ -17,7 +17,8 @@ export function projectToInfo(project: Project): ProjectInfo {
     bridges: project.bridges.map((bridge) => ({
       address: bridge.address,
       sinceBlock: bridge.sinceBlock,
-      tokens: bridge.tokens.map(getTokenBySymbol),
+      tokens:
+        bridge.tokens === '*' ? tokenList : bridge.tokens.map(getTokenBySymbol),
     })),
   }
 }
