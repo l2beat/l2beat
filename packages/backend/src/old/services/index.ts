@@ -42,7 +42,11 @@ export function setup() {
   const projectDates = new ProjectDates(blockInfo)
 
   const balanceChecker = new BalanceChecker(multicallApi, blockInfo)
-  const priceService = new PriceService(coingeckoQueryService, logger)
+  const priceService = new PriceService(
+    asyncCache,
+    coingeckoQueryService,
+    logger
+  )
   const flowChecker = new FlowChecker(logApi)
   const arbitrumStatChecker = new ArbitrumStatChecker(logApi)
 
