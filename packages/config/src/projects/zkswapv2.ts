@@ -10,21 +10,7 @@ export const zkswapv2: Project = {
     {
       address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
       sinceBlock: 12810001,
-      tokens: [
-        '1INCH',
-        'AAVE',
-        'ETH',
-        'GT',
-        'LRC',
-        'OKB',
-        'SNX',
-        'SUSHI',
-        'UNI',
-        'USDC',
-        'USDT',
-        'WBTC',
-        'ZKS',
-      ],
+      tokens: '*',
     },
   ],
   details: {

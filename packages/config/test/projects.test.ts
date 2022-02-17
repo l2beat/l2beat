@@ -150,7 +150,9 @@ describe('projects', () => {
 
   describe('every token is valid', () => {
     const symbols = projects
-      .flatMap((x) => x.bridges.flatMap((x) => x.tokens))
+      .flatMap((x) =>
+        x.bridges.filter((x) => x.tokens !== '*').flatMap((x) => x.tokens)
+      )
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {
       it(symbol, () => {
