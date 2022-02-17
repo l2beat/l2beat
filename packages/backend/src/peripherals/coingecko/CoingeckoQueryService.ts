@@ -89,6 +89,7 @@ export function pickPrices(
   prices: { price: number; date: Date }[],
   timestamps: UnixTime[]
 ): PriceHistoryPoint[] {
+  //TODO: Handle this case properly
   if (prices.length === 0) return []
   const result: PriceHistoryPoint[] = []
 

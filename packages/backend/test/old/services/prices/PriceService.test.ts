@@ -1,8 +1,7 @@
-import { CoingeckoId, mock, SimpleDate, UnixTime } from '@l2beat/common'
+import { CoingeckoId, Logger, mock, SimpleDate, UnixTime } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 import { utils } from 'ethers'
-import { Logger } from 'ethers/lib/utils'
 
 import { PriceService } from '../../../../src/old/services/prices'
 import { FetchedPrices } from '../../../../src/old/services/prices/model'
@@ -25,12 +24,9 @@ describe(PriceService.name, () => {
           }))
         ),
       })
-      const logger = mock<Logger>({
-        info: mockFn().returns([]),
-      })
       const priceService = new PriceService(
         coingeckoQueryService,
-        logger as any
+        Logger.SILENT
       )
 
       const tokens: TokenInfo[] = [
@@ -66,8 +62,8 @@ describe(PriceService.name, () => {
       ]
 
       const DAI_PRICE = 200
-      const ETH_PRICE = 1000
-      const UNI_PRICE = 100
+      const ETH_PRICE = 1234.5678
+      const USDC_PRICE = 1
 
       const coingeckoQueryService = mock<CoingeckoQueryService>({
         getUsdPriceHistory: mockFn()
@@ -87,18 +83,15 @@ describe(PriceService.name, () => {
           )
           .returnsOnce(
             dates.map((date, index) => ({
-              value: UNI_PRICE + index,
+              value: USDC_PRICE + index,
               timestamp: new UnixTime(date.toUnixTimestamp()),
               deltaMs: 0,
             }))
           ),
       })
-      const logger = mock<Logger>({
-        info: mockFn().returns([]),
-      })
       const priceService = new PriceService(
         coingeckoQueryService,
-        logger as any
+        Logger.SILENT
       )
 
       const tokens: TokenInfo[] = [
@@ -120,13 +113,13 @@ describe(PriceService.name, () => {
           category: 'ether',
         },
         {
-          name: 'Uniswap',
-          symbol: 'UNI',
-          address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-          coingeckoId: 'uniswap',
-          decimals: 18,
-          sinceBlock: 10861674,
-          category: 'other',
+          name: 'USD Coin',
+          symbol: 'USDC',
+          address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+          coingeckoId: 'usd-coin',
+          decimals: 6,
+          sinceBlock: 6082465,
+          category: 'stablecoin',
         },
       ]
 
@@ -137,17 +130,20 @@ describe(PriceService.name, () => {
           date,
           {
             token: {
-              ['0x6B175474E89094C44Da98b954EedeAC495271d0F']: utils.parseUnits(
-                (DAI_PRICE + index).toFixed(18 * 2 - 18),
-                18 * 2 - 18
+              [tokens[0].address!]: utils.parseUnits(
+                (DAI_PRICE + index).toFixed(18 * 2 - tokens[0].decimals),
+                18 * 2 - tokens[0].decimals
               ),
-              ['0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984']: utils.parseUnits(
-                (UNI_PRICE + index).toFixed(18 * 2 - 18),
-                18 * 2 - 18
+              [tokens[2].address!]: utils.parseUnits(
+                (USDC_PRICE + index).toFixed(18 * 2 - tokens[2].decimals),
+                18 * 2 - tokens[2].decimals
               ),
             },
 
-            eth: utils.parseUnits((ETH_PRICE + index).toFixed(18), 18),
+            eth: utils.parseUnits(
+              (ETH_PRICE + index).toFixed(18),
+              tokens[1].decimals
+            ),
           },
         ])
       )
