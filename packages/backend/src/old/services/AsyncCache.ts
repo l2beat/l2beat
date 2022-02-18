@@ -38,6 +38,7 @@ export class AsyncCache {
         resolved.isDeserialized = true
         resolved.value = fromJSON(resolved.serialized)
       }
+      this.cache.set(key, resolved)
       return resolved.value as T
     }
   }
