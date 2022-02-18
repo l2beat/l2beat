@@ -50,8 +50,6 @@ export class PriceService {
           }
           priceHistory.set(timestamp.toNumber(), priceSnapshot)
         }
-
-        this.logger.info('Fetched prices', { token: token.coingeckoId })
       })
     )
 
