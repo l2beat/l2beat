@@ -159,8 +159,10 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     )?.tokens
     let description = item.description
     if (tokens) {
-      const joined = tokens.join(', ')
-      const tokenText = `This contract stores the following tokens: ${joined}.`
+      const tokenText =
+        tokens === '*'
+          ? 'This contract can store any token'
+          : `This contract stores the following tokens: ${tokens.join(', ')}.`
       if (!description) {
         description = tokenText
       } else {

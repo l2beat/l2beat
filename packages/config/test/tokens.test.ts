@@ -27,6 +27,12 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
+  it('every token has a unique symbol', () => {
+    const symbols = tokenList.map((x) => x.symbol)
+    const everyUnique = symbols.every((x, i) => symbols.indexOf(x) === i)
+    expect(everyUnique).toEqual(true)
+  })
+
   it('tokens are ordered alphabetically', () => {
     const names = tokenList.map((x) => x.name)
     const sorted = [...names].sort((a, b) => a.localeCompare(b))

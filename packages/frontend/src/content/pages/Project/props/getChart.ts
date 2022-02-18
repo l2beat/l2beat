@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { Project, tokenList } from '@l2beat/config'
 
 import { ChartProps } from '../../../common'
 import { L2Data } from '../../../L2Data'
@@ -12,7 +12,9 @@ export function getChart(project: Project, l2Data: L2Data): ChartProps {
 
 function getTokens(project: Project, l2Data: L2Data) {
   return project.bridges
-    .flatMap((x) => x.tokens)
+    .flatMap((x) =>
+      x.tokens === '*' ? tokenList.map((x) => x.symbol) : x.tokens
+    )
     .filter((x, i, a) => a.indexOf(x) === i)
     .map((token) => ({
       symbol: token,

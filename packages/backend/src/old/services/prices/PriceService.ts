@@ -1,4 +1,10 @@
-import { CoingeckoId, Logger, SimpleDate, UnixTime } from '@l2beat/common'
+import {
+  CoingeckoId,
+  Logger,
+  retry,
+  SimpleDate,
+  UnixTime,
+} from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { BigNumber, utils } from 'ethers'
 
@@ -24,7 +30,10 @@ export class PriceService {
 
     await Promise.all(
       tokens.map(async (token) => {
-        const prices = await this.getTokenPrices(token, dates)
+        const prices = await retry(() => this.getTokenPrices(token, dates), {
+          maxRetryCount: 5,
+          minTimeout: 100,
+        })
 
         for (const { timestamp, value } of prices) {
           const priceSnapshot = priceHistory.get(timestamp.toNumber()) ?? {
@@ -41,8 +50,6 @@ export class PriceService {
           }
           priceHistory.set(timestamp.toNumber(), priceSnapshot)
         }
-
-        this.logger.info('Fetched prices', { token: token.coingeckoId })
       })
     )
 

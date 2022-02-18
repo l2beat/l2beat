@@ -32,12 +32,18 @@ export class StatCollector {
     const dates = await this.projectDates.getDateRanges(projects, endDate)
     const prices = await this.priceService.getPrices(tokenList, dates)
 
-    const tvlEntries = await Promise.all(
-      dates.map(async (date) =>
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.balanceChecker.getStatsForDate(projects, prices.get(date)!, date)
+    const tvlEntries: TVLAnalysis[] = []
+    for (const date of dates) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const fetchedPrices = prices.get(date)!
+      const entry = await this.balanceChecker.getStatsForDate(
+        projects,
+        fetchedPrices,
+        date
       )
-    )
+      tvlEntries.push(entry)
+    }
+
     const flows = await this.flowChecker.getFlows(projects, tvlEntries)
     const arbitrum = await this.arbitrumStatChecker.getStats(
       tvlEntries[tvlEntries.length - 8].blockNumber + 1,
