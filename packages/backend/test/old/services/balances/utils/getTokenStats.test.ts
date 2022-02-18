@@ -11,7 +11,7 @@ import {
   getTrackedTokens,
   TokenStats,
 } from '../../../../../src/old/services/balances/utils/getTokenStats'
-import { FetchedPrices } from '../../../../../src/old/services/prices/model'
+import { PriceSnapshot } from '../../../../../src/old/services/prices/model'
 import { makeExampleProjects } from './example'
 
 describe(getTokenStats.name, () => {
@@ -100,7 +100,7 @@ describe(getTokenStats.name, () => {
   describe(getTokenPrice.name, () => {
     it('returns a token price', () => {
       const dai = getTokenBySymbol('DAI')
-      const prices: FetchedPrices = {
+      const prices: PriceSnapshot = {
         token: {
           [dai.address!]: BigNumber.from(10),
         },
@@ -113,7 +113,7 @@ describe(getTokenStats.name, () => {
     it('returns 0 for missing token price', () => {
       const dai = getTokenBySymbol('DAI')
       const usdc = getTokenBySymbol('USDC')
-      const prices: FetchedPrices = {
+      const prices: PriceSnapshot = {
         token: {
           [dai.address!]: BigNumber.from(10),
         },
@@ -126,7 +126,7 @@ describe(getTokenStats.name, () => {
     it('returns the eth price', () => {
       const dai = getTokenBySymbol('DAI')
       const eth = getTokenBySymbol('ETH')
-      const prices: FetchedPrices = {
+      const prices: PriceSnapshot = {
         token: {
           [dai.address!]: BigNumber.from(10),
         },

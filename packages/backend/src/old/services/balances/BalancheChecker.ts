@@ -3,7 +3,7 @@ import { SimpleDate } from '@l2beat/common'
 import { ProjectInfo } from '../../../model'
 import { BlockInfo } from '../BlockInfo'
 import { MulticallApi } from '../multicall'
-import { FetchedPrices } from '../prices/model'
+import { PriceSnapshot } from '../prices/model'
 import { FetchedBalances, TVLAnalysis } from './model'
 import {
   getAggregateTVL,
@@ -22,7 +22,7 @@ export class BalanceChecker {
 
   async getStatsForDate(
     projects: ProjectInfo[],
-    prices: FetchedPrices,
+    prices: PriceSnapshot,
     date: SimpleDate
   ): Promise<TVLAnalysis> {
     const blockNumber = await this.blockInfo.getMaxBlock(date)
@@ -32,7 +32,7 @@ export class BalanceChecker {
 
   async getTVL(
     projects: ProjectInfo[],
-    prices: FetchedPrices,
+    prices: PriceSnapshot,
     blockNumber: number
   ) {
     const { tokenHolders, ethHolders } = getHolders(projects, blockNumber)

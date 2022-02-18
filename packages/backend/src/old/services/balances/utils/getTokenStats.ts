@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 
 import { ProjectInfo } from '../../../../model'
 import { TEN_TO_18 } from '../../../constants'
-import { FetchedPrices } from '../../prices/model'
+import { PriceSnapshot } from '../../prices/model'
 import { FetchedBalances } from '../model'
 
 export interface TokenStats {
@@ -15,7 +15,7 @@ export interface TokenStats {
 export function getTokenStats(
   project: ProjectInfo,
   balances: FetchedBalances,
-  prices: FetchedPrices
+  prices: PriceSnapshot
 ): TokenStats[] {
   const holders = getHolderAddresses(project)
   const tokens = getTrackedTokens(project)
@@ -56,7 +56,7 @@ export function getTokenBalance(
   return balance
 }
 
-export function getTokenPrice(token: TokenInfo, prices: FetchedPrices) {
+export function getTokenPrice(token: TokenInfo, prices: PriceSnapshot) {
   return token.address
     ? prices.token[token.address] ?? BigNumber.from(0)
     : prices.eth

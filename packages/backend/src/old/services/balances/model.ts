@@ -1,12 +1,12 @@
 import { SimpleDate } from '@l2beat/common'
 import { BigNumber } from 'ethers'
 
-import { FetchedPrices } from '../prices/model'
+import { PriceSnapshot } from '../prices/model'
 
 export interface TVLAnalysis {
   date: SimpleDate
   blockNumber: number
-  prices: FetchedPrices
+  prices: PriceSnapshot
   TVL: AggregateTVL
   projects: Record<string, ProjectTVL>
 }

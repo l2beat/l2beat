@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 
 import { ProjectInfo } from '../../../../model'
 import { TEN_TO_18 } from '../../../constants'
-import { FetchedPrices } from '../../prices/model'
+import { PriceSnapshot } from '../../prices/model'
 import { FetchedBalances, TokenTVL } from '../model'
 import { getTokenStats } from './getTokenStats'
 import { getTokenTVL } from './getTokenTVL'
@@ -18,7 +18,7 @@ export interface ProjectStats {
 export function getProjectStats(
   projects: ProjectInfo[],
   balances: FetchedBalances,
-  prices: FetchedPrices
+  prices: PriceSnapshot
 ): ProjectStats[] {
   return projects.map((project) => {
     const tokenStats = getTokenStats(project, balances, prices)

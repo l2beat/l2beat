@@ -3,8 +3,9 @@ import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 import { utils } from 'ethers'
 
+import { AsyncCache } from '../../../../src/old/services/AsyncCache'
 import { PriceService } from '../../../../src/old/services/prices'
-import { FetchedPrices } from '../../../../src/old/services/prices/model'
+import { PriceSnapshot } from '../../../../src/old/services/prices/model'
 import { CoingeckoQueryService } from '../../../../src/peripherals/coingecko/CoingeckoQueryService'
 
 describe(PriceService.name, () => {
@@ -24,7 +25,12 @@ describe(PriceService.name, () => {
           }))
         ),
       })
+      const asyncCache = mock<AsyncCache>({
+        get: mockFn().returnsOnce(undefined),
+        set: mockFn().returns([]),
+      })
       const priceService = new PriceService(
+        asyncCache,
         coingeckoQueryService,
         Logger.SILENT
       )
@@ -89,7 +95,12 @@ describe(PriceService.name, () => {
             }))
           ),
       })
+      const asyncCache = mock<AsyncCache>({
+        get: mockFn().returns(undefined),
+        set: mockFn().returns([]),
+      })
       const priceService = new PriceService(
+        asyncCache,
         coingeckoQueryService,
         Logger.SILENT
       )
@@ -125,7 +136,7 @@ describe(PriceService.name, () => {
 
       const result = await priceService.getPrices(tokens, dates)
 
-      const expected = new Map<SimpleDate, FetchedPrices>(
+      const expected = new Map<SimpleDate, PriceSnapshot>(
         dates.map((date, index) => [
           date,
           {
@@ -149,6 +160,233 @@ describe(PriceService.name, () => {
       )
 
       expect(result).toEqual(expected)
+    })
+
+    describe('caching', () => {
+      it('all from cache', async () => {
+        const dates = [
+          SimpleDate.fromString('2022-02-14'),
+          SimpleDate.fromString('2022-02-15'),
+          SimpleDate.fromString('2022-02-16'),
+        ]
+
+        const tokens: TokenInfo[] = [
+          {
+            name: 'Uniswap',
+            symbol: 'UNI',
+            address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+            coingeckoId: 'uniswap',
+            decimals: 18,
+            sinceBlock: 10861674,
+            category: 'other',
+          },
+        ]
+        const UNI_PRICE = 200
+
+        const asyncCache = mock<AsyncCache>({
+          get: mockFn()
+            .returnsOnce(UNI_PRICE)
+            .returnsOnce(UNI_PRICE + 1)
+            .returnsOnce(UNI_PRICE + 2),
+          set: mockFn().returns([]),
+        })
+
+        const coingeckoQueryService = mock<CoingeckoQueryService>({
+          getUsdPriceHistory: mockFn().returns(undefined),
+        })
+
+        const priceService = new PriceService(
+          asyncCache,
+          coingeckoQueryService,
+          Logger.SILENT
+        )
+
+        await priceService.getPrices(tokens, dates)
+
+        expect(asyncCache.get).toHaveBeenCalledExactlyWith([
+          [
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
+            expect.a(Function as any),
+          ],
+          [
+            `price-${tokens[0].coingeckoId}-${dates[1].toString()}`,
+            expect.a(Function as any),
+          ],
+          [
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
+            expect.a(Function as any),
+          ],
+        ])
+
+        expect(
+          coingeckoQueryService.getUsdPriceHistory
+        ).toHaveBeenCalledExactlyWith([])
+
+        expect(asyncCache.set).toHaveBeenCalledExactlyWith([])
+      })
+
+      it('all from API', async () => {
+        const dates = [
+          SimpleDate.fromString('2022-02-14'),
+          SimpleDate.fromString('2022-02-15'),
+          SimpleDate.fromString('2022-02-16'),
+        ]
+
+        const tokens: TokenInfo[] = [
+          {
+            name: 'Uniswap',
+            symbol: 'UNI',
+            address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+            coingeckoId: 'uniswap',
+            decimals: 18,
+            sinceBlock: 10861674,
+            category: 'other',
+          },
+        ]
+        const UNI_PRICE = 200
+
+        const asyncCache = mock<AsyncCache>({
+          get: mockFn().returnsOnce(undefined),
+          set: mockFn().returns([]),
+        })
+
+        const coingeckoQueryService = mock<CoingeckoQueryService>({
+          getUsdPriceHistory: mockFn().returnsOnce(
+            dates.map((date, index) => ({
+              value: UNI_PRICE + index,
+              timestamp: new UnixTime(date.toUnixTimestamp()),
+              deltaMs: 0,
+            }))
+          ),
+        })
+
+        const priceService = new PriceService(
+          asyncCache,
+          coingeckoQueryService,
+          Logger.SILENT
+        )
+
+        await priceService.getPrices(tokens, dates)
+
+        expect(asyncCache.get).toHaveBeenCalledExactlyWith([
+          [
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
+            expect.a(Function as any),
+          ],
+        ])
+
+        expect(
+          coingeckoQueryService.getUsdPriceHistory
+        ).toHaveBeenCalledExactlyWith([
+          [
+            CoingeckoId(tokens[0].coingeckoId),
+            new UnixTime(dates[0].toUnixTimestamp()),
+            new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
+            'daily',
+          ],
+        ])
+
+        expect(asyncCache.set).toHaveBeenCalledExactlyWith([
+          [
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
+            UNI_PRICE,
+            expect.a(Function as any),
+          ],
+          [
+            `price-${tokens[0].coingeckoId}-${dates[1].toString()}`,
+            UNI_PRICE + 1,
+            expect.a(Function as any),
+          ],
+          [
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
+            UNI_PRICE + 2,
+            expect.a(Function as any),
+          ],
+        ])
+      })
+
+      it('hybrid', async () => {
+        const dates = [
+          SimpleDate.fromString('2022-02-14'),
+          SimpleDate.fromString('2022-02-15'),
+          SimpleDate.fromString('2022-02-16'),
+        ]
+
+        const tokens: TokenInfo[] = [
+          {
+            name: 'Uniswap',
+            symbol: 'UNI',
+            address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+            coingeckoId: 'uniswap',
+            decimals: 18,
+            sinceBlock: 10861674,
+            category: 'other',
+          },
+        ]
+        const UNI_PRICE = 200
+
+        const asyncCache = mock<AsyncCache>({
+          get: mockFn()
+            .returnsOnce(UNI_PRICE)
+            .returnsOnce(UNI_PRICE + 1)
+            .returnsOnce(undefined),
+          set: mockFn().returns([]),
+        })
+
+        const coingeckoQueryService = mock<CoingeckoQueryService>({
+          getUsdPriceHistory: mockFn().returnsOnce([
+            {
+              value: UNI_PRICE + 2,
+              timestamp: new UnixTime(
+                dates[dates.length - 1].toUnixTimestamp()
+              ),
+              deltaMs: 0,
+            },
+          ]),
+        })
+
+        const priceService = new PriceService(
+          asyncCache,
+          coingeckoQueryService,
+          Logger.SILENT
+        )
+
+        await priceService.getPrices(tokens, dates)
+
+        expect(asyncCache.get).toHaveBeenCalledExactlyWith([
+          [
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
+            expect.a(Function as any),
+          ],
+          [
+            `price-${tokens[0].coingeckoId}-${dates[1].toString()}`,
+            expect.a(Function as any),
+          ],
+          [
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
+            expect.a(Function as any),
+          ],
+        ])
+
+        expect(
+          coingeckoQueryService.getUsdPriceHistory
+        ).toHaveBeenCalledExactlyWith([
+          [
+            CoingeckoId(tokens[0].coingeckoId),
+            new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
+            new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
+            'daily',
+          ],
+        ])
+
+        expect(asyncCache.set).toHaveBeenCalledExactlyWith([
+          [
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
+            UNI_PRICE + 2,
+            expect.a(Function as any),
+          ],
+        ])
+      })
     })
   })
 })
