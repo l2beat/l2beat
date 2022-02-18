@@ -3,12 +3,12 @@ import { BigNumber } from 'ethers'
 
 import { TEN_TO_18 } from '../../../constants'
 import { asNumber } from '../../common/asNumber'
-import { FetchedPrices } from '../../prices/model'
+import { PriceSnapshot } from '../../prices/model'
 import { ProjectStats } from './getProjectStats'
 
 export function getAggregateTVL(
   projectStats: ProjectStats[],
-  prices: FetchedPrices
+  prices: PriceSnapshot
 ) {
   const totalUsdBalance = projectStats
     .map((x) => x.usdBalance)

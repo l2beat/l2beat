@@ -5,7 +5,7 @@ import { utils } from 'ethers'
 
 import { AsyncCache } from '../../../../src/old/services/AsyncCache'
 import { PriceService } from '../../../../src/old/services/prices'
-import { FetchedPrices } from '../../../../src/old/services/prices/model'
+import { PriceSnapshot } from '../../../../src/old/services/prices/model'
 import { CoingeckoQueryService } from '../../../../src/peripherals/coingecko/CoingeckoQueryService'
 
 describe(PriceService.name, () => {
@@ -136,7 +136,7 @@ describe(PriceService.name, () => {
 
       const result = await priceService.getPrices(tokens, dates)
 
-      const expected = new Map<SimpleDate, FetchedPrices>(
+      const expected = new Map<SimpleDate, PriceSnapshot>(
         dates.map((date, index) => [
           date,
           {
@@ -185,27 +185,9 @@ describe(PriceService.name, () => {
 
         const asyncCache = mock<AsyncCache>({
           get: mockFn()
-            .returnsOnce({
-              value: UNI_PRICE,
-              timestamp: new UnixTime(
-                dates[dates.length - 3].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            })
-            .returnsOnce({
-              value: UNI_PRICE + 1,
-              timestamp: new UnixTime(
-                dates[dates.length - 2].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            })
-            .returnsOnce({
-              value: UNI_PRICE + 2,
-              timestamp: new UnixTime(
-                dates[dates.length - 1].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            }),
+            .returnsOnce(UNI_PRICE)
+            .returnsOnce(UNI_PRICE + 1)
+            .returnsOnce(UNI_PRICE + 2),
           set: mockFn().returns([]),
         })
 
@@ -223,21 +205,15 @@ describe(PriceService.name, () => {
 
         expect(asyncCache.get).toHaveBeenCalledExactlyWith([
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 3
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
             expect.a(Function as any),
           ],
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 2
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[1].toString()}`,
             expect.a(Function as any),
           ],
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 1
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
             expect.a(Function as any),
           ],
         ])
@@ -294,9 +270,7 @@ describe(PriceService.name, () => {
 
         expect(asyncCache.get).toHaveBeenCalledExactlyWith([
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 3
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
             expect.a(Function as any),
           ],
         ])
@@ -306,7 +280,7 @@ describe(PriceService.name, () => {
         ).toHaveBeenCalledExactlyWith([
           [
             CoingeckoId(tokens[0].coingeckoId),
-            new UnixTime(dates[dates.length - 3].toUnixTimestamp()),
+            new UnixTime(dates[0].toUnixTimestamp()),
             new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
             'daily',
           ],
@@ -314,42 +288,18 @@ describe(PriceService.name, () => {
 
         expect(asyncCache.set).toHaveBeenCalledExactlyWith([
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 3
-            ].toString()}`,
-            {
-              value: UNI_PRICE,
-              timestamp: new UnixTime(
-                dates[dates.length - 3].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            },
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
+            UNI_PRICE,
             expect.a(Function as any),
           ],
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 2
-            ].toString()}`,
-            {
-              value: UNI_PRICE + 1,
-              timestamp: new UnixTime(
-                dates[dates.length - 2].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            },
+            `price-${tokens[0].coingeckoId}-${dates[1].toString()}`,
+            UNI_PRICE + 1,
             expect.a(Function as any),
           ],
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 1
-            ].toString()}`,
-            {
-              value: UNI_PRICE + 2,
-              timestamp: new UnixTime(
-                dates[dates.length - 1].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            },
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
+            UNI_PRICE + 2,
             expect.a(Function as any),
           ],
         ])
@@ -377,20 +327,8 @@ describe(PriceService.name, () => {
 
         const asyncCache = mock<AsyncCache>({
           get: mockFn()
-            .returnsOnce({
-              value: UNI_PRICE,
-              timestamp: new UnixTime(
-                dates[dates.length - 3].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            })
-            .returnsOnce({
-              value: UNI_PRICE + 1,
-              timestamp: new UnixTime(
-                dates[dates.length - 2].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            })
+            .returnsOnce(UNI_PRICE)
+            .returnsOnce(UNI_PRICE + 1)
             .returnsOnce(undefined),
           set: mockFn().returns([]),
         })
@@ -417,21 +355,15 @@ describe(PriceService.name, () => {
 
         expect(asyncCache.get).toHaveBeenCalledExactlyWith([
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 3
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[0].toString()}`,
             expect.a(Function as any),
           ],
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 2
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[1].toString()}`,
             expect.a(Function as any),
           ],
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 1
-            ].toString()}`,
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
             expect.a(Function as any),
           ],
         ])
@@ -449,16 +381,8 @@ describe(PriceService.name, () => {
 
         expect(asyncCache.set).toHaveBeenCalledExactlyWith([
           [
-            `price-${tokens[0].coingeckoId}-${dates[
-              dates.length - 1
-            ].toString()}`,
-            {
-              value: UNI_PRICE + 2,
-              timestamp: new UnixTime(
-                dates[dates.length - 1].toUnixTimestamp()
-              ),
-              deltaMs: 0,
-            },
+            `price-${tokens[0].coingeckoId}-${dates[2].toString()}`,
+            UNI_PRICE + 2,
             expect.a(Function as any),
           ],
         ])

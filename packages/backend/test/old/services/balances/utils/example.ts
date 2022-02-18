@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import { ProjectInfo } from '../../../../../src/model'
 import { FetchedBalances } from '../../../../../src/old/services/balances/model'
-import { FetchedPrices } from '../../../../../src/old/services/prices/model'
+import { PriceSnapshot } from '../../../../../src/old/services/prices/model'
 
 export function makeExampleProjects() {
   const eth = getTokenBySymbol('ETH')
@@ -52,7 +52,7 @@ export function makeExampleProjects() {
     },
   }
 
-  const prices: FetchedPrices = {
+  const prices: PriceSnapshot = {
     token: {
       [dai.address!]: utils.parseUnits('1', 18),
       [usdc.address!]: utils.parseUnits('1.01', 18 * 2 - 6),
