@@ -224,15 +224,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    name: 'Biconomy Token',
-    coingeckoId: 'biconomy',
-    address: '0xF17e65822b568B3903685a7c9F496CF7656Cc6C2',
-    symbol: 'BICO',
-    decimals: 18,
-    sinceBlock: 13354549,
-    category: 'other',
-  },
-  {
     name: 'Bifrost',
     coingeckoId: 'bifrost',
     address: '0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c',
