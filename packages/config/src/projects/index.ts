@@ -15,8 +15,8 @@ import { optimism } from './optimism'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { Project } from './types'
+import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
-import { zkswapv2 } from './zkswapv2'
 import { zksync } from './zksync'
 
 export * from './types'
@@ -39,6 +39,6 @@ export const projects: Project[] = [
   sorare,
   starknet,
   zkswap,
-  zkswapv2,
+  zkspace,
   zksync,
 ]

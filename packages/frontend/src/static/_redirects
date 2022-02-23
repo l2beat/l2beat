@@ -4,3 +4,4 @@
 /project/*                  /projects/:splat
 /projects/leverj            /projects/gluon
 /projects/fuel              /projects/fuelv1
+/projects/zkswapv2          /projects/zkspace
