@@ -1,10 +1,10 @@
-import { CONTRACTS, RISK_VIEW } from './common'
+import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
 import { Project } from './types'
 import { zkswap } from './zkswap'
 
-export const zkswapv2: Project = {
-  name: 'ZKSwap V2',
-  slug: 'zkswapv2',
+export const zkspace: Project = {
+  name: 'ZKSpace',
+  slug: 'zkspace',
   associatedTokens: ['ZKS'],
   bridges: [
     {
@@ -14,7 +14,8 @@ export const zkswapv2: Project = {
     },
   ],
   details: {
-    description: zkswap.details.description,
+    description:
+      'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK-Rollups technology called ZKSwap, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
     purpose: 'Payments, Exchange',
     links: {
       websites: ['https://zks.org/'],
@@ -23,12 +24,11 @@ export const zkswapv2: Project = {
       explorers: ['https://zkswap.info'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],
       socialMedia: [
-        'https://medium.com/@zkswapofficial',
-        'https://twitter.com/ZKSwapOfficial',
-        'https://discord.gg/rpjpeq4Y47',
-        'https://t.me/zkswapofficial',
+        'https://medium.com/@zkspaceofficial',
+        'https://twitter.com/ZKSpaceOfficial',
+        'https://discord.gg/UbjmQfUVvf',
+        'https://t.me/ZKSpaceOfficial',
         'https://reddit.com/r/ZKSwap_Official/',
-        'https://zks.org/en/blog',
       ],
     },
     riskView: {
@@ -41,7 +41,15 @@ export const zkswapv2: Project = {
     technology: {
       category: zkswap.details.technology.category,
       stateCorrectness: zkswap.details.technology.stateCorrectness,
-      newCryptography: zkswap.details.technology.newCryptography,
+      newCryptography: {
+        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+        references: [
+          {
+            text: 'ZKSpace Whitepaper',
+            href: 'https://github.com/l2labs/zkspace-whitepaper',
+          },
+        ],
+      },
       dataAvailability: zkswap.details.technology.dataAvailability,
       operator: zkswap.details.technology.operator,
       forceTransactions: zkswap.details.technology.forceTransactions,

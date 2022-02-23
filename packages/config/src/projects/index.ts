@@ -5,7 +5,6 @@ import { deversifi } from './deversifi'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
-import { habitat } from './habitat'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
@@ -16,8 +15,8 @@ import { optimism } from './optimism'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { Project } from './types'
+import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
-import { zkswapv2 } from './zkswapv2'
 import { zksync } from './zksync'
 
 export * from './types'
@@ -30,7 +29,6 @@ export const projects: Project[] = [
   dydx,
   fuelv1,
   gluon,
-  habitat,
   hermez,
   immutablex,
   layer2finance,
@@ -41,6 +39,6 @@ export const projects: Project[] = [
   sorare,
   starknet,
   zkswap,
-  zkswapv2,
+  zkspace,
   zksync,
 ]
