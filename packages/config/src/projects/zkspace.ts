@@ -12,6 +12,11 @@ export const zkspace: Project = {
       sinceBlock: 12810001,
       tokens: '*',
     },
+    {
+      address: '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+      sinceBlock: 13809566,
+      tokens: '*',
+    },
   ],
   details: {
     description:
