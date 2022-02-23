@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { CoingeckoId, Logger } from '@l2beat/common'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
@@ -17,6 +17,7 @@ import { AggregatePriceRepository } from './peripherals/database/AggregatePriceR
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
 import { ExchangePriceRepository } from './peripherals/database/ExchangePriceRepository'
+import { PriceRepository } from './peripherals/database/PriceRepository'
 import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
@@ -41,6 +42,7 @@ export class Application {
     const aggregatePriceRepository = new AggregatePriceRepository(knex, logger)
     const blockNumberRepository = new BlockNumberRepository(knex, logger)
     const exchangePriceRepository = new ExchangePriceRepository(knex, logger)
+    const priceRepository = new PriceRepository(knex,logger)
 
     const httpClient = new HttpClient()
 
