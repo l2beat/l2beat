@@ -28,7 +28,7 @@ declare module 'knex/types/tables' {
 
   interface PriceRow {
     coingecko_id: string
-    price_usd: string
+    price_usd: number
     unix_timestamp: string
   }
 }

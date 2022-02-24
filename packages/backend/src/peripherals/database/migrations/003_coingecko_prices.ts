@@ -16,9 +16,9 @@ import { Knex } from "knex";
 export async function up(knex:Knex) {
     await knex.schema.createTable('coingecko_prices', function (table) {
         table.string('coingecko_id').notNullable()
-        table.float('price_usd').notNullable()
         table.bigInteger('unix_timestamp').notNullable()
-        table.primary(['coingecko_id','price_usd','unix_timestamp'])
+        table.float('price_usd').notNullable()
+        table.primary(['coingecko_id','unix_timestamp'])
     })
 }
 

@@ -23,9 +23,9 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
-  async getAllForToken(coingeckoId: CoingeckoId) {
+  async getAllByToken(coingeckoId: CoingeckoId) {
     const rows = await this.knex('coingecko_prices')
-      .where({coingecko_id: coingeckoId.toString()})
+      .where({ coingecko_id: coingeckoId.toString() })
       .select('coingecko_id', 'price_usd', 'unix_timestamp')
 
     this.logger.debug('Selected rows', {
@@ -35,16 +35,33 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
+  async addOrUpdate(prices: PriceRecord[]) {
+    const rows: PriceRow[] = prices.map(toRow)
+    await this.knex('coingecko_prices')
+      .insert(rows)
+      .onConflict(['coingecko_id', 'unix_timestamp'])
+      .merge()
+    this.logger.debug({ method: 'add', amount: rows.length })
+  }
+
   async deleteAll() {
     await this.knex('coingecko_prices').delete()
     this.logger.debug({ method: 'deleteAll' })
   }
 }
 
-function toRecord(record: PriceRow): PriceRecord {
+function toRecord(row: PriceRow): PriceRecord {
   return {
-    timestamp: new UnixTime(+record.unix_timestamp),
-    coingeckoId: CoingeckoId(record.coingecko_id),
-    priceUsd: +record.price_usd,
+    timestamp: new UnixTime(+row.unix_timestamp),
+    coingeckoId: CoingeckoId(row.coingecko_id),
+    priceUsd: +row.price_usd,
+  }
+}
+
+function toRow(record: PriceRecord): PriceRow {
+  return {
+    coingecko_id: record.coingeckoId.toString(),
+    price_usd: record.priceUsd,
+    unix_timestamp: record.timestamp.toNumber().toString(),
   }
 }
