@@ -11,17 +11,17 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { Knex } from "knex";
+import { Knex } from 'knex'
 
-export async function up(knex:Knex) {
-    await knex.schema.createTable('coingecko_prices', function (table) {
-        table.string('coingecko_id').notNullable()
-        table.bigInteger('unix_timestamp').notNullable()
-        table.float('price_usd').notNullable()
-        table.primary(['coingecko_id','unix_timestamp'])
-    })
+export async function up(knex: Knex) {
+  await knex.schema.createTable('coingecko_prices', function (table) {
+    table.string('coingecko_id').notNullable()
+    table.bigInteger('unix_timestamp').notNullable()
+    table.float('price_usd').notNullable()
+    table.primary(['coingecko_id', 'unix_timestamp'])
+  })
 }
 
-export async function down(knex:Knex) {
-    await knex.schema.dropTable('coingecko_prices')
+export async function down(knex: Knex) {
+  await knex.schema.dropTable('coingecko_prices')
 }

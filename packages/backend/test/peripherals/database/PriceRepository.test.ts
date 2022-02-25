@@ -31,8 +31,10 @@ describe(PriceRepository.name, () => {
     },
   ]
 
-  beforeEach(() => repository.addOrUpdate(DATA))
-  afterEach(() => repository.deleteAll())
+  beforeEach(async () => {
+    await repository.deleteAll()
+    await repository.addOrUpdate(DATA)
+  })
 
   describe(PriceRepository.prototype.addOrUpdate.name, () => {
     it('only new rows', async () => {
@@ -51,7 +53,8 @@ describe(PriceRepository.name, () => {
       await repository.addOrUpdate(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqual([...DATA, ...newRows])
+      expect(results).toBeAnArrayWith(...DATA, ...newRows)
+      expect(results).toBeAnArrayOfLength(6)
     })
 
     it('only existing rows', async () => {
@@ -70,7 +73,8 @@ describe(PriceRepository.name, () => {
       await repository.addOrUpdate(existingRows)
 
       const results = await repository.getAll()
-      expect(results).toEqual([DATA[2], DATA[3], ...existingRows])
+      expect(results).toBeAnArrayWith(DATA[2], DATA[3], ...existingRows)
+      expect(results).toBeAnArrayOfLength(4)
     })
 
     it('mixed: new and existing rows', async () => {
@@ -89,21 +93,26 @@ describe(PriceRepository.name, () => {
 
       await repository.addOrUpdate(mixedRows)
       const results = await repository.getAll()
-      expect(results).toEqual([DATA[0], DATA[2], DATA[3], ...mixedRows])
+      expect(results).toBeAnArrayWith(DATA[0], DATA[2], DATA[3], ...mixedRows)
+      expect(results).toBeAnArrayOfLength(5)
     })
   })
 
   it(PriceRepository.prototype.getAll.name, async () => {
     const results = await repository.getAll()
 
-    expect(results).toEqual(DATA)
+    expect(results).toBeAnArrayWith(...DATA)
+    expect(results).toBeAnArrayOfLength(4)
   })
 
   it(PriceRepository.prototype.getAllByToken.name, async () => {
     const token = CoingeckoId('uniswap')
     const results = await repository.getAllByToken(token)
 
-    expect(results).toEqual(DATA.filter((d) => d.coingeckoId === token))
+    expect(results).toBeAnArrayWith(
+      ...DATA.filter((d) => d.coingeckoId === token)
+    )
+    expect(results).toBeAnArrayOfLength(2)
   })
 
   it(PriceRepository.prototype.deleteAll.name, async () => {
@@ -111,6 +120,6 @@ describe(PriceRepository.name, () => {
 
     const results = await repository.getAll()
 
-    expect(results).toEqual([])
+    expect(results).toBeAnArrayOfLength(0)
   })
 })

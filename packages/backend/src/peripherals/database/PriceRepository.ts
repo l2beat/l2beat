@@ -19,7 +19,7 @@ export class PriceRepository {
       'price_usd',
       'unix_timestamp'
     )
-    this.logger.debug('Selected rows', { amount: rows.length })
+    this.logger.debug({ method: 'getAll', amount: rows.length })
     return rows.map(toRecord)
   }
 
@@ -28,9 +28,10 @@ export class PriceRepository {
       .where({ coingecko_id: coingeckoId.toString() })
       .select('coingecko_id', 'price_usd', 'unix_timestamp')
 
-    this.logger.debug('Selected rows', {
+    this.logger.debug({
+      method: 'getAllByToken',
       coin: coingeckoId.toString(),
-      rowsCount: rows.length,
+      amount: rows.length,
     })
     return rows.map(toRecord)
   }
