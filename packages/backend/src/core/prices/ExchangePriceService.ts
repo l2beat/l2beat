@@ -122,7 +122,7 @@ export class ExchangePriceService {
     if (token.priceStrategy.type !== 'market') {
       return []
     }
-    const asset = { assetId: token.id, token: token.address }
+    const asset = { assetId: token.id, token: token.address as EthereumAddress }
     const queries: ExchangeAssetPriceQuery[] = []
     if (blockNumber >= UNISWAP_V1_RELEASE_BLOCK) {
       queries.push({ ...asset, exchange: Exchange.uniswapV1() })

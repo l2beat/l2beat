@@ -13,8 +13,8 @@ export function getHolders(projects: ProjectInfo[], blockNumber: number) {
           continue
         }
         if (token.address) {
-          const array = tokenHolders[token.address] ?? []
-          tokenHolders[token.address] = array
+          const array = tokenHolders[token.address.toString()] ?? []
+          tokenHolders[token.address.toString()] = array
           array.push(bridge.address)
         } else {
           ethHolders.push(bridge.address)

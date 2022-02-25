@@ -1,4 +1,10 @@
-import { AssetId, EthereumAddress, LogLevel, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  LogLevel,
+  UnixTime,
+} from '@l2beat/common'
 import { config as dotenv } from 'dotenv'
 
 import { Config } from './Config'
@@ -28,6 +34,7 @@ export function getLocalConfig(): Config {
         symbol: 'WETH',
         decimals: 18,
         address: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
+        coingeckoId: CoingeckoId('weth'),
         priceStrategy: { type: 'ether' },
       },
       {
@@ -35,6 +42,7 @@ export function getLocalConfig(): Config {
         symbol: 'DAI',
         decimals: 18,
         address: EthereumAddress('0x6B175474E89094C44Da98b954EedeAC495271d0F'),
+        coingeckoId: CoingeckoId('dai'),
         priceStrategy: {
           type: 'constant',
           value: 10n ** 18n,
@@ -45,6 +53,7 @@ export function getLocalConfig(): Config {
         symbol: 'USDC',
         decimals: 6,
         address: EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
+        coingeckoId: CoingeckoId('usdc'),
         priceStrategy: {
           type: 'constant',
           value: 10n ** (18n * 2n - 6n),
@@ -55,6 +64,7 @@ export function getLocalConfig(): Config {
         symbol: 'USDT',
         decimals: 6,
         address: EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
+        coingeckoId: CoingeckoId('tether'),
         priceStrategy: {
           type: 'constant',
           value: 10n ** (18n * 2n - 6n),
@@ -65,6 +75,7 @@ export function getLocalConfig(): Config {
         symbol: 'cUSDT',
         decimals: 8,
         address: EthereumAddress('0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'),
+        coingeckoId: CoingeckoId('compound-usdt'),
         priceStrategy: {
           type: 'constant',
           value: (10n ** (18n * 2n - 8n) * 215n) / 10_000n, // $0.0215
@@ -75,6 +86,7 @@ export function getLocalConfig(): Config {
         symbol: 'COMP',
         decimals: 18,
         address: EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'),
+        coingeckoId: CoingeckoId('compound-governance-token'),
         priceStrategy: { type: 'market' },
       },
     ],

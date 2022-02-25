@@ -18,22 +18,22 @@ describe(getMulticallCalls.name, () => {
     const mkr = getTokenBySymbol('MKR')
 
     const tokenHolders = {
-      [usdc.address!]: [holderA, holderB],
-      [mkr.address!]: [holderC],
+      [usdc.address!.toString()]: [holderA, holderB],
+      [mkr.address!.toString()]: [holderC],
     }
     const ethHolders = [holderA, holderC]
     const calls = getMulticallCalls(tokenHolders, ethHolders)
     const expected: Record<string, MulticallRequest> = {
       [`token-${usdc.address}-${holderA}`]: TokenBalanceCall.encode(
-        usdc.address!,
+        usdc.address!.toString(),
         holderA
       ),
       [`token-${usdc.address}-${holderB}`]: TokenBalanceCall.encode(
-        usdc.address!,
+        usdc.address!.toString(),
         holderB
       ),
       [`token-${mkr.address}-${holderC}`]: TokenBalanceCall.encode(
-        mkr.address!,
+        mkr.address!.toString(),
         holderC
       ),
       [`eth-${holderA}`]: EthBalanceCall.encode(holderA),
