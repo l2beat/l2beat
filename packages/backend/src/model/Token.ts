@@ -6,23 +6,4 @@ export interface Token {
   decimals: number
   address?: EthereumAddress
   coingeckoId: CoingeckoId
-  priceStrategy: PriceStrategy
-}
-
-export type PriceStrategy =
-  | EtherPriceStrategy
-  | ConstantPriceStrategy
-  | MarketPriceStrategy
-
-export interface EtherPriceStrategy {
-  type: 'ether'
-}
-
-export interface ConstantPriceStrategy {
-  type: 'constant'
-  value: bigint
-}
-
-export interface MarketPriceStrategy {
-  type: 'market'
 }
