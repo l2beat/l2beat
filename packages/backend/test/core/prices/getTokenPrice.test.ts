@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Exchange } from '@l2beat/common'
+import { AssetId, CoingeckoId, EthereumAddress, Exchange } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { getTokenPrice } from '../../../src/core/prices/getTokenPrice'
@@ -15,6 +15,7 @@ describe(getTokenPrice.name, () => {
         symbol: 'AAA',
         decimals: 18,
         address: EthereumAddress('0x' + 'a'.repeat(40)),
+        coingeckoId: CoingeckoId('token-a'),
         priceStrategy: { type: 'market' },
       }
       const testCases: ExchangePriceRecord[] = [
@@ -76,6 +77,7 @@ describe(getTokenPrice.name, () => {
         symbol: 'AAA',
         decimals: 18,
         address: EthereumAddress('0x' + 'a'.repeat(40)),
+        coingeckoId: CoingeckoId('token-a'),
         priceStrategy: { type: 'market' },
       }
       const records: ExchangePriceRecord[] = [
@@ -113,6 +115,7 @@ describe(getTokenPrice.name, () => {
       symbol: 'AAA',
       decimals: 18,
       address: EthereumAddress('0x' + 'a'.repeat(40)),
+      coingeckoId: CoingeckoId('token-a'),
       priceStrategy: { type: 'constant', value: 1234n },
     }
     const price = getTokenPrice(token, [], 0n)
@@ -125,6 +128,7 @@ describe(getTokenPrice.name, () => {
       symbol: 'AAA',
       decimals: 18,
       address: EthereumAddress('0x' + 'a'.repeat(40)),
+      coingeckoId: CoingeckoId('token-a'),
       priceStrategy: { type: 'ether' },
     }
     const price = getTokenPrice(token, [], 5678n)

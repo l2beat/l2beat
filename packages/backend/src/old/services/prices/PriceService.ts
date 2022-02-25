@@ -1,10 +1,4 @@
-import {
-  CoingeckoId,
-  Logger,
-  retry,
-  SimpleDate,
-  UnixTime,
-} from '@l2beat/common'
+import { Logger, retry, SimpleDate, UnixTime } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { BigNumber, utils } from 'ethers'
 
@@ -43,7 +37,7 @@ export class PriceService {
           if (!token.address) {
             priceSnapshot.eth = utils.parseUnits(value.toFixed(18), 18)
           } else {
-            priceSnapshot.token[token.address] = utils.parseUnits(
+            priceSnapshot.token[token.address.toString()] = utils.parseUnits(
               value.toFixed(18 * 2 - token.decimals),
               18 * 2 - token.decimals
             )
@@ -75,7 +69,7 @@ export class PriceService {
       if (cachedPrice === undefined) {
         earliestUnknownDate = date
         this.logger.debug('Cache miss', {
-          token: token.coingeckoId,
+          token: token.coingeckoId.toString(),
           date: earliestUnknownDate.toString(),
         })
         break
@@ -91,14 +85,14 @@ export class PriceService {
       const end = dates[dates.length - 1]
       const coingeckoPrices =
         await this.coingeckoQueryService.getUsdPriceHistory(
-          CoingeckoId(token.coingeckoId),
+          token.coingeckoId,
           new UnixTime(earliestUnknownDate.toUnixTimestamp()),
           new UnixTime(end.toUnixTimestamp()),
           'daily'
         )
       result.push(...coingeckoPrices)
       this.logger.info('Fetched prices', {
-        token: token.coingeckoId,
+        token: token.coingeckoId.toString(),
         pricePoints: coingeckoPrices.length,
       })
 

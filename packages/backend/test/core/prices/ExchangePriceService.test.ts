@@ -1,5 +1,6 @@
 import {
   AssetId,
+  CoingeckoId,
   EthereumAddress,
   Exchange,
   Logger,
@@ -255,6 +256,7 @@ describe(ExchangePriceService.name, () => {
       const token: Token = {
         id: AssetId('mock-token'),
         address: EthereumAddress('0x' + '1234'.repeat(10)),
+        coingeckoId: CoingeckoId('mock'),
         symbol: 'MCK',
         decimals: 4,
         priceStrategy: { type: 'market' },
@@ -333,6 +335,7 @@ describe(ExchangePriceService.name, () => {
       const tokenA: Token = {
         id: AssetId('mock-token-a'),
         address: EthereumAddress('0x' + 'aaaa'.repeat(10)),
+        coingeckoId: CoingeckoId('token-a'),
         symbol: 'AAA',
         decimals: 6,
         priceStrategy: { type: 'market' },
@@ -340,6 +343,7 @@ describe(ExchangePriceService.name, () => {
       const tokenB: Token = {
         id: AssetId('mock-token-b'),
         address: EthereumAddress('0x' + 'bbbb'.repeat(10)),
+        coingeckoId: CoingeckoId('token-b'),
         symbol: 'BBB',
         decimals: 9,
         priceStrategy: { type: 'market' },

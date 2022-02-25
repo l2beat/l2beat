@@ -1,5 +1,6 @@
 import {
   AssetId,
+  CoingeckoId,
   EthereumAddress,
   Logger,
   mock,
@@ -19,6 +20,7 @@ describe(PriceUpdater.name, () => {
     {
       id: AssetId('aaa-token'),
       address: EthereumAddress('0x' + 'a'.repeat(40)),
+      coingeckoId: CoingeckoId('token-a'),
       symbol: 'AAA',
       decimals: 5,
       priceStrategy: { type: 'market' },
@@ -26,6 +28,7 @@ describe(PriceUpdater.name, () => {
     {
       id: AssetId('bbb-token'),
       address: EthereumAddress('0x' + 'b'.repeat(40)),
+      coingeckoId: CoingeckoId('token-b'),
       symbol: 'BBB',
       decimals: 7,
       priceStrategy: { type: 'market' },
