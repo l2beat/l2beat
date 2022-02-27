@@ -130,6 +130,27 @@ export const zksync: Project = {
       contracts: {
         addresses: [
           {
+            address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+            name: 'ZkSync',
+            description:
+              'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 21 days. Every time the contract upgrades this information has to be verified again.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0x204c6BADaD00Ef326dE0921A940D8267060d1033',
+            },
+          },
+          {
+            address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
+            name: 'Verifier',
+            description: 'Implements zkProof verification logic.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0xEF974376054490C8d87b8438b4cEC00391ac05b9',
+            },
+          },
+          {
             address: '0x38A43F4330f24fe920F943409709fc9A6084C939',
             name: 'UpgradeGatekeeper',
             description:
@@ -142,26 +163,6 @@ export const zksync: Project = {
               type: 'EIP1967',
               admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
               implementation: '0x9a97008ccCbDEc3413F9304602427e66895996A0',
-            },
-          },
-          {
-            address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
-            name: 'Verifier',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0xEF974376054490C8d87b8438b4cEC00391ac05b9',
-            },
-          },
-          {
-            address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
-            name: 'ZkSync',
-            description:
-              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 1209600 seconds which equals 14 days. Every time the contract upgrades this information has to be verified again.',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0xd61dFf4b146e8e6bDCDad5C48e72D0bA85D94DbC',
             },
           },
           {
