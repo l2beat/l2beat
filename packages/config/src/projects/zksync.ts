@@ -22,8 +22,8 @@ export const zksync: Project = {
   ],
   details: {
     description:
-      'zkSync is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet.',
-    purpose: 'Payments',
+      'zkSync is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
+    purpose: 'Tokens, NFTs',
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://wallet.zksync.io/'],
@@ -41,7 +41,12 @@ export const zksync: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
+      upgradeability: {
+        value: '21d or no delay',
+        description:
+          'There is a 21 days delay unless it is overriden by the 9/15 Security Council multisig.',
+        sentiment: 'warning',
+      },
       sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
       validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     },
@@ -130,6 +135,27 @@ export const zksync: Project = {
       contracts: {
         addresses: [
           {
+            address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+            name: 'ZkSync',
+            description:
+              'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant is currently set to 21 days. 9/15 Security Council MSig can override the delay period and execute an emergency immediate upgrade.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0x204c6BADaD00Ef326dE0921A940D8267060d1033',
+            },
+          },
+          {
+            address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
+            name: 'Verifier',
+            description: 'Implements zkProof verification logic.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+              implementation: '0xEF974376054490C8d87b8438b4cEC00391ac05b9',
+            },
+          },
+          {
             address: '0x38A43F4330f24fe920F943409709fc9A6084C939',
             name: 'UpgradeGatekeeper',
             description:
@@ -138,59 +164,27 @@ export const zksync: Project = {
           {
             address: '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
             name: 'Governance',
+            description:
+              'Keeps a list of block producers, NFT factories and whitelisted tokens.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
               implementation: '0x9a97008ccCbDEc3413F9304602427e66895996A0',
             },
           },
-          {
-            address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
-            name: 'Verifier',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0xEF974376054490C8d87b8438b4cEC00391ac05b9',
-            },
-          },
-          {
-            address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
-            name: 'ZkSync',
-            description:
-              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 1209600 seconds which equals 14 days. Every time the contract upgrades this information has to be verified again.',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0xd61dFf4b146e8e6bDCDad5C48e72D0bA85D94DbC',
-            },
-          },
-          {
-            address: '0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D',
-            name: 'ZkSyncNFTFactory',
-            upgradeability: {
-              type: 'Reference',
-              base: 'Governance',
-              method: 'function defaultFactory() view returns(address)',
-            },
-          },
-          {
-            address: '0x5140Cc54Bb876aBE1ba67d15AC66Ad2D42FDf46A',
-            name: 'TokenGovernance',
-            upgradeability: {
-              type: 'Reference',
-              base: 'Governance',
-              method: 'function tokenGovernance() view returns(address)',
-            },
-          },
         ],
-        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
+        risks: [
+          CONTRACTS.UPGRADE_WITH_DELAY_RISK(
+            '21 days or 0 if overriden by 9/15 MSig'
+          ),
+        ],
       },
     },
     news: [
       {
-        date: '2021-05-31',
-        name: 'zkSync 2.0: Hello Ethereum!',
-        link: 'https://medium.com/matter-labs/zksync-2-0-hello-ethereum-ca48588de179',
+        date: '2022-01-14',
+        name: 'On Managing Secure Upgradability',
+        link: 'https://blog.matter-labs.io/upgradability3-934db4433b0c',
       },
       {
         date: '2021-05-24',
