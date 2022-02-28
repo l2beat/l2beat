@@ -42,9 +42,9 @@ export const zksync: Project = {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: {
-        value: '21 days or no delay',
+        value: '21d or no delay',
         description:
-          'There is a 21 days delay unless it is overriden by 9/15 MSig of Security Council',
+          'There is a 21 days delay unless it is overriden by the 9/15 Security Council multisig.',
         sentiment: 'warning',
       },
       sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
