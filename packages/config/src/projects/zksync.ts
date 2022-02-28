@@ -41,7 +41,12 @@ export const zksync: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
+      upgradeability: {
+        value: '21 days or no delay',
+        description:
+          'There is a 21 days delay unless it is overriden by 9/15 MSig of Security Council',
+        sentiment: 'warning',
+      },
       sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
       validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     },
