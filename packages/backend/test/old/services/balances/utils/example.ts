@@ -34,15 +34,15 @@ export function makeExampleProjects() {
 
   const balances: FetchedBalances = {
     token: {
-      [dai.address!]: {
+      [dai.address!.toString()]: {
         [holderA]: utils.parseUnits('123', dai.decimals),
         [holderB]: utils.parseUnits('45', dai.decimals),
       },
-      [usdc.address!]: {
+      [usdc.address!.toString()]: {
         [holderB]: utils.parseUnits('20', usdc.decimals),
         [holderC]: utils.parseUnits('5', usdc.decimals),
       },
-      [usdt.address!]: {
+      [usdt.address!.toString()]: {
         [holderC]: utils.parseUnits('10', usdt.decimals),
       },
     },
@@ -54,9 +54,9 @@ export function makeExampleProjects() {
 
   const prices: PriceSnapshot = {
     token: {
-      [dai.address!]: utils.parseUnits('1', 18),
-      [usdc.address!]: utils.parseUnits('1.01', 18 * 2 - 6),
-      [usdt.address!]: utils.parseUnits('0.99', 18 * 2 - 6),
+      [dai.address!.toString()]: utils.parseUnits('1', 18),
+      [usdc.address!.toString()]: utils.parseUnits('1.01', 18 * 2 - 6),
+      [usdt.address!.toString()]: utils.parseUnits('0.99', 18 * 2 - 6),
     },
     eth: utils.parseUnits('4000', 18),
   }

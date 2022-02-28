@@ -23,7 +23,7 @@ export const zksync: Project = {
   details: {
     description:
       'zkSync is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
-    purpose: 'Payments, Swaps, NFTs',
+    purpose: 'Tokens, NFTs',
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://wallet.zksync.io/'],
@@ -160,7 +160,7 @@ export const zksync: Project = {
             address: '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
             name: 'Governance',
             description:
-              'Keeps a list of block producers, NFT factories and whitelisted tokens',
+              'Keeps a list of block producers, NFT factories and whitelisted tokens.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',

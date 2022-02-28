@@ -11,6 +11,7 @@
     "lint:fix": "yarn lint --fix",
     "build": "tsc",
     "test": "mocha",
+    "typecheck": "tsc --noEmit",
     "clean": "rm -rf build"
   },
   "dependencies": {

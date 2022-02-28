@@ -10,17 +10,7 @@ import { Contract, providers, utils } from 'ethers'
 import { tokenList } from '../src/tokens'
 
 describe('tokens', () => {
-  const addresses = tokenList
-    .map((x) => x.address)
-    .filter((x): x is string => x !== undefined)
-
-  describe('every addresses is valid and formatted', () => {
-    for (const address of addresses) {
-      it(address, () => {
-        expect(address).toEqual(utils.getAddress(address))
-      })
-    }
-  })
+  const addresses = tokenList.map((x) => x.address)
 
   it('every token has a unique address', () => {
     const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
@@ -76,7 +66,7 @@ describe('tokens', () => {
         const nameResult = data[i]
         const symbolResult = data[i + 1]
         const decimalsResult = data[i + 2]
-        results[calls[i][0]] = {
+        results[calls[i][0].toString()] = {
           name: decodeString(nameResult),
           symbol: decodeString(symbolResult),
           decimals: decodeNumber(decimalsResult),
@@ -111,14 +101,18 @@ describe('tokens', () => {
         if (!token.address) {
           return
         }
-        expect(token.name).toEqual(results[token.address].name)
-        expect(token.symbol).toEqual(results[token.address].symbol)
-        expect(token.decimals).toEqual(results[token.address].decimals)
+        expect(token.name).toEqual(results[token.address.toString()].name)
+        expect(token.symbol).toEqual(results[token.address.toString()].symbol)
+        expect(token.decimals).toEqual(
+          results[token.address.toString()].decimals
+        )
       })
     }
   })
 
-  it('every token has correct CoingeckoId', async () => {
+  it('every token has correct CoingeckoId', async function () {
+    this.timeout(10000)
+
     const http = new HttpClient()
     const coingeckoClient = new CoingeckoClient(http)
 
@@ -134,11 +128,9 @@ describe('tokens', () => {
     })
 
     tokenList.map((token) => {
-      if (token.symbol === 'ETH') expect(token.coingeckoId).toEqual('ethereum')
-      else
-        expect(CoingeckoId(token.coingeckoId)).toEqual(
-          result.get(token.address)
-        )
+      if (token.symbol === 'ETH')
+        expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
+      else expect(token.coingeckoId).toEqual(result.get(token.address))
     })
   })
 })
