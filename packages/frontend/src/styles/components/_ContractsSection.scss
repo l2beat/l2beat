@@ -4,6 +4,23 @@
   }
 }
 
+.ContractsSection-Architecture {
+  margin: 16px 0 32px 0;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+
+    @include dark-mode {
+      filter: unquote('invert()');
+    }
+  }
+
+  figcaption {
+    font-size: var(--font-s);
+  }
+}
+
 .ContractsSection-Contracts {
   margin-top: 16px;
 

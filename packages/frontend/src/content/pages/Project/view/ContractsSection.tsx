@@ -10,6 +10,7 @@ export interface ContractsSectionProps {
   issueLink: string
   contracts: TechnologyContract[]
   risks: TechnologyRisk[]
+  architectureImage?: string
 }
 
 export interface TechnologyContract {
@@ -31,6 +32,15 @@ export function ContractsSection(props: ContractsSectionProps) {
       editLink={props.editLink}
       issueLink={props.issueLink}
     >
+      {props.architectureImage && (
+        <figure className="ContractsSection-Architecture">
+          <img
+            src={props.architectureImage}
+            alt="A diagram of the smart contract architecture"
+          />
+          <figcaption>A diagram of the smart contract architecture</figcaption>
+        </figure>
+      )}
       <p>The system consists of the following smart contracts:</p>
       <ul className="ContractsSection-Contracts">
         {props.contracts.map((contract, i) => (
