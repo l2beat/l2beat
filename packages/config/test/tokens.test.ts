@@ -118,7 +118,9 @@ describe('tokens', () => {
     }
   })
 
-  it('every token has correct CoingeckoId', async () => {
+  it('every token has correct CoingeckoId', async function () {
+    this.timeout(10000)
+
     const http = new HttpClient()
     const coingeckoClient = new CoingeckoClient(http)
 

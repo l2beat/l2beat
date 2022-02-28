@@ -25,4 +25,10 @@ declare module 'knex/types/tables' {
     exchange_prices: ExchangePriceRow
     aggregate_prices: AggregatePriceRow
   }
+
+  interface PriceRow {
+    coingecko_id: string
+    price_usd: number
+    unix_timestamp: string
+  }
 }

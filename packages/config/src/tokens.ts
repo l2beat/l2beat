@@ -1178,7 +1178,7 @@ export const tokenList: TokenInfo[] = [
   },
   {
     name: 'pTokens TLOS',
-    coingeckoId: 'telos',
+    coingeckoId: 'wrapped-telos',
     address: '0x7825e833D495F3d1c28872415a4aee339D26AC88',
     symbol: 'TLOS',
     decimals: 18,
