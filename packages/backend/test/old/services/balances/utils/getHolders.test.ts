@@ -1,3 +1,4 @@
+import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/common'
 import { getTokenBySymbol, TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
@@ -10,7 +11,16 @@ describe(getHolders.name, () => {
     const dai = getTokenBySymbol('DAI')
     const usdc = getTokenBySymbol('USDC')
     const usdt = getTokenBySymbol('USDT')
-    const fake = { address: '123', sinceBlock: 13_000_000 } as TokenInfo
+    const fake: TokenInfo = {
+      id: AssetId('dai-dai-stablecoin'),
+      name: 'Dai Stablecoin',
+      symbol: 'DAI',
+      address: EthereumAddress('0x6B175474E89094C44Da98b954EedeAC495271d0F'),
+      coingeckoId: CoingeckoId('dai'),
+      decimals: 18,
+      sinceBlock: 8928158,
+      category: 'stablecoin',
+    }
 
     const holderA = '0x' + '1234'.repeat(10)
     const holderB = '0x' + 'abcd'.repeat(10)
@@ -40,9 +50,9 @@ describe(getHolders.name, () => {
     const result = getHolders(projects, 12_000_000)
     const expected: ReturnType<typeof getHolders> = {
       tokenHolders: {
-        [dai.address!]: [holderA, holderB, holderC],
-        [usdc.address!]: [holderB, holderC],
-        [usdt.address!]: [holderC],
+        [dai.address!.toString()]: [holderA, holderB, holderC],
+        [usdc.address!.toString()]: [holderB, holderC],
+        [usdt.address!.toString()]: [holderC],
       },
       ethHolders: [holderA],
     }

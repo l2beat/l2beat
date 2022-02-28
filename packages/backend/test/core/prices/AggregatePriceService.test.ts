@@ -1,5 +1,6 @@
 import {
   AssetId,
+  CoingeckoId,
   EthereumAddress,
   Exchange,
   Logger,
@@ -31,6 +32,7 @@ describe(AggregatePriceService.name, () => {
       {
         id: AssetId('aaa-token'),
         address: EthereumAddress('0x' + 'a'.repeat(40)),
+        coingeckoId: CoingeckoId('token-a'),
         decimals: 18,
         symbol: 'AAA',
         priceStrategy: { type: 'market' },
@@ -38,6 +40,7 @@ describe(AggregatePriceService.name, () => {
       {
         id: AssetId('stable-token'),
         address: EthereumAddress('0x' + '1'.repeat(40)),
+        coingeckoId: CoingeckoId('token-b'),
         decimals: 18,
         symbol: 'STB',
         priceStrategy: { type: 'constant', value: 123n * 10n ** 18n },
@@ -115,6 +118,7 @@ describe(AggregatePriceService.name, () => {
       {
         id: AssetId('aaa-token'),
         address: EthereumAddress('0x' + 'a'.repeat(40)),
+        coingeckoId: CoingeckoId('token-a'),
         decimals: 18,
         symbol: 'AAA',
         priceStrategy: { type: 'market' },
