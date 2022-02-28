@@ -5,6 +5,8 @@ import {
   ProjectTechnology,
   ProjectTechnologyChoice,
 } from '@l2beat/config'
+import { existsSync } from 'fs'
+import path from 'path'
 
 import {
   ContractsSectionProps,
@@ -187,11 +189,20 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
       isCritical: !!risk.isCritical,
     }))
 
+    const file = path.join(
+      __dirname,
+      `../../../../static/images/${project.slug}-architecture.png`
+    )
+    const architectureImage = existsSync(file)
+      ? `/images/${project.slug}-architecture.png`
+      : undefined
+
     return {
       editLink: getEditLink(project),
       issueLink: getIssueLink(`Problem: ${project.name} - Contracts`),
       contracts,
       risks,
+      architectureImage,
     }
   }
 
