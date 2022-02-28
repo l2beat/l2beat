@@ -6,29 +6,14 @@ declare module 'knex/types/tables' {
     block_number: number
   }
 
-  interface ExchangePriceRow {
-    block_number: number
-    asset_id: string
-    exchange: string
-    liquidity: string
-    price: string
-  }
-
-  interface AggregatePriceRow {
-    block_number: number
-    asset_id: string
-    price_usd: string
-  }
-
-  interface Tables {
-    block_numbers: BlockNumberRow
-    exchange_prices: ExchangePriceRow
-    aggregate_prices: AggregatePriceRow
-  }
-
   interface PriceRow {
     coingecko_id: string
     price_usd: number
     unix_timestamp: string
+  }
+
+  interface Tables {
+    block_numbers: BlockNumberRow
+    coingecko_prices: PriceRow
   }
 }
