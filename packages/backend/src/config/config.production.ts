@@ -1,4 +1,5 @@
 import { LogLevel, UnixTime } from '@l2beat/common'
+import { tokenList } from '@l2beat/config'
 
 import { Config } from './Config'
 import { getEnv } from './getEnv'
@@ -21,6 +22,9 @@ export function getProductionConfig(): Config {
       safeBlockBlockOffset: 100n,
     },
     // TODO: import from @l2beat/config
-    tokens: [],
+    tokens: tokenList.map((token) => ({
+      ...token,
+      priceStrategy: { type: 'market' },
+    })),
   }
 }
