@@ -47,7 +47,7 @@ export function getTokenBalance(
   let balance = BigNumber.from(0)
   for (const holder of holders) {
     const holderBalance = token.address
-      ? balances.token[token.address]?.[holder]
+      ? balances.token[token.address.toString()]?.[holder]
       : balances.eth[holder]
     if (holderBalance) {
       balance = balance.add(holderBalance)
@@ -58,6 +58,6 @@ export function getTokenBalance(
 
 export function getTokenPrice(token: TokenInfo, prices: PriceSnapshot) {
   return token.address
-    ? prices.token[token.address] ?? BigNumber.from(0)
+    ? prices.token[token.address.toString()] ?? BigNumber.from(0)
     : prices.eth
 }

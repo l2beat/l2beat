@@ -60,11 +60,11 @@ describe(getTokenStats.name, () => {
       const usdc = getTokenBySymbol('USDC')
       const balances: FetchedBalances = {
         token: {
-          [dai.address!]: {
+          [dai.address!.toString()]: {
             a: BigNumber.from(10),
             b: BigNumber.from(2),
           },
-          [usdc.address!]: {
+          [usdc.address!.toString()]: {
             c: BigNumber.from(50),
           },
         },
@@ -81,7 +81,7 @@ describe(getTokenStats.name, () => {
       const dai = getTokenBySymbol('DAI')
       const balances: FetchedBalances = {
         token: {
-          [dai.address!]: {
+          [dai.address!.toString()]: {
             a: BigNumber.from(10),
             b: BigNumber.from(2),
           },
@@ -102,7 +102,7 @@ describe(getTokenStats.name, () => {
       const dai = getTokenBySymbol('DAI')
       const prices: PriceSnapshot = {
         token: {
-          [dai.address!]: BigNumber.from(10),
+          [dai.address!.toString()]: BigNumber.from(10),
         },
         eth: BigNumber.from(5),
       }
@@ -115,7 +115,7 @@ describe(getTokenStats.name, () => {
       const usdc = getTokenBySymbol('USDC')
       const prices: PriceSnapshot = {
         token: {
-          [dai.address!]: BigNumber.from(10),
+          [dai.address!.toString()]: BigNumber.from(10),
         },
         eth: BigNumber.from(5),
       }
@@ -128,7 +128,7 @@ describe(getTokenStats.name, () => {
       const eth = getTokenBySymbol('ETH')
       const prices: PriceSnapshot = {
         token: {
-          [dai.address!]: BigNumber.from(10),
+          [dai.address!.toString()]: BigNumber.from(10),
         },
         eth: BigNumber.from(5),
       }
