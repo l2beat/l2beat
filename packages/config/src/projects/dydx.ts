@@ -76,8 +76,10 @@ export const dydx: Project = {
       contracts: {
         addresses: [
           {
-            name: 'Bridge',
+            name: 'StarkPerpetual',
             address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+            description:
+              'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
             upgradeability: {
               type: 'StarkWare',
               implementation: '0x2C0df87E073755139101b35c0A51e065291cc2d3',
@@ -88,6 +90,8 @@ export const dydx: Project = {
           {
             name: 'GpsStatementVerifier',
             address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
+            description:
+              'STARK Verifier. In contrast to Sorare, ImmutableX, DeversiFi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
             upgradeability: {
               type: 'StarkWare',
               implementation: '0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2',
@@ -98,14 +102,18 @@ export const dydx: Project = {
           },
           {
             name: 'MemoryPageFactRegistry',
+            description:
+              'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
             address: '0xEfbCcE4659db72eC6897F46783303708cf9ACef8',
           },
           {
             name: 'FriStatementContract',
+            description: 'Part of STARK Verifier.',
             address: '0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1',
           },
           {
             name: 'MerkleStatementContract',
+            description: 'Part of STARK Verifier.',
             address: '0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830',
           },
         ],

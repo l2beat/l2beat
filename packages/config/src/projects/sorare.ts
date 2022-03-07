@@ -71,11 +71,15 @@ export const sorare: Project = {
           },
           {
             name: 'Committee',
-            address: '0x90CEb3bD97284df8c3240f3a8C4Aab29c1ee9542',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            address: '0x879cD57975d596004863D30c59d579ef78BBbe32',
           },
           SHARP_VERIFIER_CONTRACT,
         ],
-        risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
+        risks: [
+          CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days'),
+          CONTRACTS.UNVERIFIED_RISK,
+        ],
       },
     },
     news: [
