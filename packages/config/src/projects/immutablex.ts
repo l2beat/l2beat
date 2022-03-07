@@ -70,6 +70,8 @@ export const immutablex: Project = {
           },
           {
             name: 'Committee',
+            description:
+              'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
             address: '0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295',
           },
           SHARP_VERIFIER_CONTRACT,
