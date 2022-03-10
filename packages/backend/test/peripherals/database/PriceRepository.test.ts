@@ -8,25 +8,26 @@ describe(PriceRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
   const repository = new PriceRepository(knex, Logger.SILENT)
 
+  const START = UnixTime.fromDate(new Date())
   const DATA = [
     {
       priceUsd: 3000,
-      timestamp: UnixTime.fromDate(new Date()).add(-1, 'hours'),
+      timestamp: START.add(-1, 'hours'),
       coingeckoId: CoingeckoId('ethereum'),
     },
     {
       priceUsd: 3100,
-      timestamp: UnixTime.fromDate(new Date()).add(-2, 'hours'),
+      timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('ethereum'),
     },
     {
       priceUsd: 20,
-      timestamp: UnixTime.fromDate(new Date()).add(-1, 'hours'),
+      timestamp: START.add(-1, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
     },
     {
       priceUsd: 22,
-      timestamp: UnixTime.fromDate(new Date()).add(-2, 'hours'),
+      timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
     },
   ]
@@ -121,5 +122,23 @@ describe(PriceRepository.name, () => {
     const results = await repository.getAll()
 
     expect(results).toBeAnArrayOfLength(0)
+  })
+
+  describe(PriceRepository.prototype.getLatestKnownDateByToken.name, () => {
+    it('saved token', async () => {
+      const result = await repository.getLatestKnownDateByToken(
+        CoingeckoId('uniswap')
+      )
+
+      expect(result).toEqual(START.add(-1, 'hours'))
+    })
+
+    it('not saved token', async () => {
+      const result = await repository.getLatestKnownDateByToken(
+        CoingeckoId('unknown-token')
+      )
+
+      expect(result).toEqual(undefined)
+    })
   })
 })
