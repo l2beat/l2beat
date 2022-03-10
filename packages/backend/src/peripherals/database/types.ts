@@ -12,8 +12,16 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
+  interface BalanceRow {
+    block_number: number
+    holder_address: string
+    asset_id: string
+    balance: string
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
+    asset_balances: BalanceRow
   }
 }
