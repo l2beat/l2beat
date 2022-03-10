@@ -4,5 +4,5 @@ export const config = {
   githubLink: 'https://github.com/l2beat/l2beat',
   showNewUpdateBanner: false,
   showSeasonalBanner: true,
-  showGitcoinOption: false,
+  showGitcoinOption: true,
 }
