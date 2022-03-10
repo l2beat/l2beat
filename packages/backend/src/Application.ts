@@ -28,7 +28,6 @@ export class Application {
     const knex = DatabaseService.createKnexInstance(config.databaseUrl)
     const databaseService = new DatabaseService(knex, logger)
     const blockNumberRepository = new BlockNumberRepository(knex, logger)
-    // const priceRepository = new PriceRepository(knex, logger)
 
     const httpClient = new HttpClient()
     const alchemyHttpClient = new AlchemyHttpClient(
@@ -42,8 +41,6 @@ export class Application {
       httpClient,
       logger
     )
-    // const coingeckoClient = new CoingeckoClient(httpClient)
-    // const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
     /* - - - - - CORE - - - - - */
 
@@ -60,14 +57,6 @@ export class Application {
       blockNumberRepository,
       logger
     )
-
-    // const priceUpdater = new PriceUpdater(
-    //   coingeckoQueryService,
-    //   priceRepository,
-    //   config.tokens,
-    //   config.core.minBlockTimestamp,
-    //   logger
-    // )
 
     const statusService = new StatusService({
       alchemyHttpClient,
