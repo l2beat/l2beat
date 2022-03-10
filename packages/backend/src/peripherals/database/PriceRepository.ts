@@ -49,6 +49,17 @@ export class PriceRepository {
     await this.knex('coingecko_prices').delete()
     this.logger.debug({ method: 'deleteAll' })
   }
+
+  async getLatestKnownDateByToken(
+    coingeckoId: CoingeckoId
+  ): Promise<UnixTime | undefined> {
+    const result = await this.knex('coingecko_prices')
+      .where({ coingecko_id: coingeckoId.toString() })
+      .max('unix_timestamp')
+
+    const maxValue: string | null = result[0].max
+    return maxValue === null ? undefined : new UnixTime(parseInt(maxValue))
+  }
 }
 
 function toRecord(row: PriceRow): PriceRecord {
