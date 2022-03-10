@@ -1,0 +1,64 @@
+import { AssetId, Bytes, EthereumAddress } from '@l2beat/common'
+import { getTokenByAssetId } from '@l2beat/config'
+import { expect } from 'earljs'
+import { utils } from 'ethers'
+
+import { MULTICALL } from '../../../../src/core/constants'
+import { BalanceCall } from '../../../../src/peripherals/ethereum/calls/BalanceCall'
+
+describe('BalanceCall', () => {
+  const coder = new utils.Interface([
+    'function getEthBalance(address account) view returns (uint256)',
+    'function balanceOf(address account) view returns (uint256)',
+  ])
+
+  const MOCK_HOLDER = EthereumAddress(
+    '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+  )
+
+  describe('encode', () => {
+    it('ether', () => {
+      const ether = AssetId('eth-ether')
+      const encoded = BalanceCall.generate(MOCK_HOLDER, ether)
+
+      expect(encoded).toEqual({
+        holder: MOCK_HOLDER,
+        asset: ether,
+        request: {
+          address: MULTICALL,
+          data: Bytes.fromHex(
+            coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()])
+          ),
+        },
+      })
+    })
+
+    it('token', () => {
+      const token = AssetId('dai-dai-stablecoin')
+      const encoded = BalanceCall.generate(MOCK_HOLDER, token)
+
+      expect(encoded).toEqual({
+        holder: MOCK_HOLDER,
+        asset: token,
+        request: {
+          address: getTokenByAssetId(token)!.address!,
+          data: Bytes.fromHex(
+            coder.encodeFunctionData('balanceOf', [MOCK_HOLDER.toString()])
+          ),
+        },
+      })
+    })
+  })
+
+  describe('decode', () => {
+    const response = {
+      success: true,
+      data: Bytes.fromHex(
+        '0x0000000000000000000000000000000000000000000000000000000000000064'
+      ),
+    }
+    const decoded = BalanceCall.decode(response)
+
+    expect(decoded).toEqual(100n)
+  })
+})

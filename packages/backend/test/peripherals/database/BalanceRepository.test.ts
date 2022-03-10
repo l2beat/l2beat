@@ -63,33 +63,38 @@ describe(BalanceRepository.name, () => {
       ])
 
       const boundaries = await repository.getDataBoundaries()
-      expect(boundaries.length).toEqual(3)
-      expect(boundaries).toBeAnArrayWith(
-        {
-          assetId: ASSET_A,
-          holderAddress: HOLDER_A,
-          earliestBlockNumber: 1000n,
-          latestBlockNumber: 1002n,
-        },
-        {
-          assetId: ASSET_B,
-          holderAddress: HOLDER_A,
-          earliestBlockNumber: 1000n,
-          latestBlockNumber: 1000n,
-        },
-        {
-          assetId: ASSET_B,
-          holderAddress: HOLDER_B,
-          earliestBlockNumber: 1000n,
-          latestBlockNumber: 1001n,
-        }
+    
+      expect(boundaries).toEqual(
+        new Map([
+          [
+            `${HOLDER_A}-${ASSET_A}`,
+            {
+              earliestBlockNumber: 1000n,
+              latestBlockNumber: 1002n,
+            },
+          ],
+          [
+            `${HOLDER_A}-${ASSET_B}`,
+            {
+              earliestBlockNumber: 1000n,
+              latestBlockNumber: 1000n,
+            },
+          ],
+          [
+            `${HOLDER_B}-${ASSET_B}`,
+            {
+              earliestBlockNumber: 1000n,
+              latestBlockNumber: 1001n,
+            },
+          ],
+        ])
       )
     })
 
     it('nonexisting data', async () => {
       await repository.deleteAll()
       const boundaries = await repository.getDataBoundaries()
-      expect(boundaries).toEqual([])
+      expect(boundaries).toEqual(new Map([]))
     })
   })
 
