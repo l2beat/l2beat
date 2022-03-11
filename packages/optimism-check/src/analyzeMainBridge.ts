@@ -3,7 +3,7 @@ import {
   AnalyzedAddress,
   EthereumAddress,
 } from '@l2beat/common'
-import { Contract, providers, utils } from 'ethers'
+import { providers, utils } from 'ethers'
 
 import { MainBridgeConfig } from './config'
 

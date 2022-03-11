@@ -1,7 +1,7 @@
-import { AddressAnalyzer, AnalyzedAddress } from '@l2beat/common'
+import { AddressAnalyzer } from '@l2beat/common'
 import chalk from 'chalk'
 import Table from 'easy-table'
-import { BigNumber, constants, providers, utils } from 'ethers'
+import { BigNumber, constants, providers } from 'ethers'
 
 import { AnalyzedItem, analyzeItem } from './analyzeItem'
 import { AnalyzedMainBridge, analyzeMainBridge } from './analyzeMainBridge'
