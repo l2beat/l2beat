@@ -3,6 +3,11 @@ import { Config } from './Config'
 export const config: Config = {
   libAddressManager: '0x7934915C03eA2E2C4D69c269F45598B738ddee08',
   startingPoints: ['NVM_L1CrossDomainMessenger'],
+  mainBridge: {
+    type: 'L1ChugSplashProxy',
+    proxyAddress: '0x2fce9b92a64c1ddf14a1a9e5ec6d4e4c7c9f4fdd',
+    implementation: '0xF46655caD8C7dB3719AF4Eb9CFdAC0987985080c',
+  },
   contracts: {
     NVM_L1CrossDomainMessenger: {
       expectedAddress: '0x0e14f07BCdCacEC46677DFf02685f049A7c3928C',

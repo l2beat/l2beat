@@ -22,6 +22,7 @@ export interface VariableParameter {
 }
 
 export interface ContractDescription {
+
   expectedAddress?: string
   dependencies?: string[]
   parameters?: Parameter[]
@@ -31,7 +32,15 @@ export interface Contracts {
   [name: string]: ContractDescription
 }
 
+export interface MainBridgeConfig {
+  type: string
+  proxyAddress: string
+  implementation: string
+  parameters?: Parameter[]
+}
+
 export interface Config {
+  mainBridge: MainBridgeConfig
   libAddressManager: string
   startingPoints: string[]
   contracts: Contracts

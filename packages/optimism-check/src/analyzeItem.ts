@@ -1,7 +1,6 @@
 import {
   AddressAnalyzer,
   AnalyzedAddress,
-  EthereumAddress,
 } from '@l2beat/common'
 import { Contract, providers, utils } from 'ethers'
 

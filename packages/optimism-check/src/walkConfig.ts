@@ -4,7 +4,8 @@ import chalk from 'chalk'
 import { BigNumber, constants, providers, utils } from 'ethers'
 
 import { analyzeItem, AnalyzedItem } from './analyzeItem'
-import { Contracts } from './config'
+import { analyzeMainBridge, AnalyzedMainBridge } from './analyzeMainBridge'
+import { Contracts, MainBridgeConfig} from './config'
 
 import Table from 'easy-table'
 
@@ -14,10 +15,14 @@ export async function walkConfig(
   contracts: Contracts,
   libAddressManager: string,
   startingPoints: string[],
+  mainBridge: MainBridgeConfig,
   network: string
 ) {
-  const resolved = new Map<string, AnalyzedItem>()
 
+  const bridgeConfig:AnalyzedMainBridge = await analyzeMainBridge(provider,addressAnalyzer,mainBridge)
+  prettyBridgePrint(bridgeConfig, network)
+
+  const resolved = new Map<string, AnalyzedItem>()
   const stack = [...startingPoints]
   while (stack.length !== 0) {
     const componentName = stack.pop()
@@ -36,12 +41,25 @@ export async function walkConfig(
       componentName
     )
 
-    console.log('Resolved', componentName, 'to', analyzed.componentAddress)
+    //console.log('Resolved', componentName, 'to', analyzed.componentAddress)
     resolved.set(componentName, analyzed)
     stack.push(...relatives)
   }
 
   prettyPrint(resolved, network)
+}
+
+function prettyBridgePrint(bridge: AnalyzedMainBridge, network:string) {
+  console.log()
+  console.log('Main Bridge of', network)
+  console.log()
+  console.log('Bridge Proxy Contract: ', bridge.proxy.name)
+  console.log('Brige Proxy Owner:', bridge.owner)
+  if (!bridge.implementation.verified) {
+    console.log(chalk.red("Warning: Bridge implementation is not verified !"))
+  }
+  console.log('Bridge Implementation Contract: ', bridge.implementationAddress, bridge.implementation.name)
+  console.log()
 }
 
 function prettyPrint(resolved: Map<string, AnalyzedItem>, network: string) {

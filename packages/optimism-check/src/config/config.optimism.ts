@@ -3,6 +3,25 @@ import { Config } from './Config'
 export const config: Config = {
   libAddressManager: '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
   startingPoints: ['OVM_L1CrossDomainMessenger'],
+  mainBridge: {
+    type: 'L1ChugSplashProxy',
+    proxyAddress: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+    implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
+    parameters: [
+      {
+        name: 'messenger',
+        type: 'variable',
+        description:'',
+        abi: 'function messenger() view returns (address)',
+      },
+      {
+        name: 'l2TokenBridge',
+        type: 'variable',
+        description:'',
+        abi: 'function l2TokenBridge() view returns (address)',
+      },
+    ],
+  },
   contracts: {
     OVM_L1CrossDomainMessenger: {
       expectedAddress: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
