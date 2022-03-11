@@ -33,13 +33,11 @@ export async function analyzeItem(
     }
   }
   const componentContract = await addressAnalyzer.analyze(componentAddress)
-  let parameters: {name:string, value:unknown}[] = []
+  let parameters: { name: string; value: unknown }[] = []
   let libAddressManagerLocal = ''
 
   if (componentContract.type === 'Contract' && componentContract.verified) {
-    const addMgrAbi = [
-      'function libAddressManager() view returns (address)',
-    ]
+    const addMgrAbi = ['function libAddressManager() view returns (address)']
     const libAddressContract = new Contract(
       componentAddress,
       addMgrAbi,
