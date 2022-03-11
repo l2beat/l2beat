@@ -24,7 +24,7 @@ export const config: Config = {
   },
   contracts: {
     OVM_L1CrossDomainMessenger: {
-      expectedAddress: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
+      expectedAddress: '0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820',
       dependencies: ['StateCommitmentChain', 'CanonicalTransactionChain'],
       parameters: [
         {
@@ -37,7 +37,7 @@ export const config: Config = {
       ],
     },
     StateCommitmentChain: {
-      expectedAddress: '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',
+      expectedAddress: '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
       dependencies: [
         'ChainStorageContainer-SCC-batches',
         'OVM_FraudVerifier',
@@ -61,7 +61,7 @@ export const config: Config = {
       ],
     },
     CanonicalTransactionChain: {
-      expectedAddress: '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
+      expectedAddress: '0xfBd2541e316948B259264c02f370eD088E04c3Db',
       dependencies: [
         'OVM_Sequencer',
         'ChainStorageContainer-CTC-batches',
@@ -107,14 +107,14 @@ export const config: Config = {
       ],
     },
     OVM_FraudVerifier: {
-      expectedAddress: '0x042065416C5c665dc196076745326Af3Cd840D15',
+      expectedAddress: '0x872c65c835deB2CFB3493f2C3dD353633Ae4f4B8',
     },
     BondManager: {
-      expectedAddress: '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',
+      expectedAddress: '0x60660e6CDEb423cf847dD11De4C473130D65b627',
       dependencies: ['OVM_Proposer'],
     },
     'ChainStorageContainer-SCC-batches': {
-      expectedAddress: '0xb0ddFf09c4019e31960de11bD845E836078E8EbE',
+      expectedAddress: '0x13992B9f327faCA11568BE18a8ad3E9747e87d93',
       parameters: [
         {
           name: 'Owner',
@@ -127,6 +127,7 @@ export const config: Config = {
     OVM_Proposer: {},
     OVM_Sequencer: {},
     'ChainStorageContainer-CTC-queue': {
+      expectedAddress: '0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d',
       parameters: [
         {
           name: 'Owner',
@@ -137,7 +138,7 @@ export const config: Config = {
       ],
     },
     'ChainStorageContainer-CTC-batches': {
-      expectedAddress: '0xD16463EF9b0338CE3D73309028ef1714D220c024',
+      expectedAddress: '0x17148284d2da2f38c96346f1776C1BF7D7691231',
       parameters: [
         {
           name: 'Owner',
