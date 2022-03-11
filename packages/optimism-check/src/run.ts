@@ -6,8 +6,21 @@ import {
 import dotenv from 'dotenv'
 import { ethers } from 'ethers'
 
-import { config } from './config'
+import { getConfig } from './config'
 import { walkConfig } from './walkConfig'
+
+function printHelpAndExit(): never {
+  console.log('USAGE: yarn start [network]')
+  process.exit(1)
+}
+
+function getArgs() {
+  if (process.argv.length !== 3) {
+    printHelpAndExit()
+  }
+  const network = process.argv[2]
+  return network
+}
 
 export async function run() {
   dotenv.config()
@@ -15,6 +28,7 @@ export async function run() {
   const alchemyApiKey = getEnv('ALCHEMY_API_KEY')
   const rpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
+  const network = getArgs()
 
   const etherscanApiKey = getEnv('ETHERSCAN_API_KEY')
   const httpClient = new HttpClient()
@@ -24,10 +38,16 @@ export async function run() {
   )
   const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
 
-  const libAddressManager = '0xde1fcfb0851916ca5101820a69b13a4e276bd81f'
-  const startingPoint = 'OVM_L1CrossDomainMessenger'
+  const { libAddressManager, startingPoints, contracts } = getConfig(network)
 
-  await walkConfig(provider, addressAnalyzer, config, libAddressManager, [startingPoint])
+  await walkConfig(
+    provider,
+    addressAnalyzer,
+    contracts,
+    libAddressManager,
+    startingPoints,
+    network
+  )
 }
 
 function getEnv(key: string) {
