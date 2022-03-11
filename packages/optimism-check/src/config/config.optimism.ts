@@ -84,7 +84,7 @@ export const config: Config = {
       ],
     },
     OVM_FraudVerifier: {
-      expectedAddress: '0x042065416C5c665dc196076745326Af3Cd840D15'
+      expectedAddress: '0x042065416C5c665dc196076745326Af3Cd840D15',
     },
     BondManager: {
       expectedAddress: '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',

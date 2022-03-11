@@ -10,21 +10,18 @@ interface EOAAddress {
 
 export interface UnverifiedContract {
   type: 'Contract'
-  verified: false;
+  verified: false
   name: string
 }
 
 export interface VerifiedContract {
-  type: 'Contract';
-  verified: true;
-  name: string;
+  type: 'Contract'
+  verified: true
+  name: string
   abi: json
 }
 
-export type AnalyzedAddress =
-  | EOAAddress
-  | UnverifiedContract
-  | VerifiedContract
+export type AnalyzedAddress = EOAAddress | UnverifiedContract | VerifiedContract
 
 export class AddressAnalyzer {
   constructor(

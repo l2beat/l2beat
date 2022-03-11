@@ -103,9 +103,7 @@ export const config: Config = {
     },
     MVM_DiscountOracle: {
       expectedAddress: '0xC8953ca384b4AdC8B1b11B030Afe2F05471664b0',
-      dependencies: [
-        '1088_MVM_Sequencer',
-      ],
+      dependencies: ['1088_MVM_Sequencer'],
       parameters: [
         {
           name: 'discount',
@@ -125,7 +123,7 @@ export const config: Config = {
           description: '',
           abi: 'function CONFIG_OWNER_KEY() view returns (string)',
         },
-      ]
+      ],
     },
     OVM_FraudVerifier: {},
     MVM_SuperManager: {},
