@@ -5,6 +5,7 @@ export const config: Config = {
   startingPoints: ['OVM_L1CrossDomainMessenger'],
   contracts: {
     OVM_L1CrossDomainMessenger: {
+      expectedAddress: '0x8bF439ef7167023F009E24b21719Ca5f768Ecb36',
       dependencies: [
         'StateCommitmentChain',
         'MVM_DiscountOracle',
@@ -21,6 +22,7 @@ export const config: Config = {
       ],
     },
     StateCommitmentChain: {
+      expectedAddress: '0xf209815E595Cdf3ed0aAF9665b1772e608AB9380',
       dependencies: [
         'ChainStorageContainer-SCC-batches',
         '1088_MVM_FraudVerifier',
@@ -50,8 +52,10 @@ export const config: Config = {
       ],
     },
     CanonicalTransactionChain: {
+      expectedAddress: '0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9',
       dependencies: [
         '1088_OVM_Sequencer',
+        '1088_MVM_Sequencer',
         'OVM_Sequencer',
         'MVM_SuperManager',
         'ChainStorageContainer-CTC-batches',
@@ -97,17 +101,49 @@ export const config: Config = {
         },
       ],
     },
-    MVM_DiscountOracle: {},
+    MVM_DiscountOracle: {
+      expectedAddress: '0xC8953ca384b4AdC8B1b11B030Afe2F05471664b0',
+      dependencies: [
+        '1088_MVM_Sequencer',
+      ],
+      parameters: [
+        {
+          name: 'discount',
+          type: 'variable',
+          description: '',
+          abi: 'function getDiscount() view returns (uint256)',
+        },
+        {
+          name: 'minL2Gas',
+          type: 'variable',
+          description: '',
+          abi: 'function getMinL2Gas() view returns (uint256)',
+        },
+        {
+          name: 'ConfigOwnerKey',
+          type: 'fixed',
+          description: '',
+          abi: 'function CONFIG_OWNER_KEY() view returns (string)',
+        },
+      ]
+    },
     OVM_FraudVerifier: {},
     MVM_SuperManager: {},
     '1088_OVM_Sequencer': {},
-    Proxy__OVM_L1CrossDomainMessenger: {},
+    '1088_MVM_Sequencer': {},
+    Proxy__OVM_L1CrossDomainMessenger: {
+      expectedAddress: '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
+    },
     METIS_MANAGER: {},
-    '1088_MVM_FraudVerifier': {},
+    '1088_MVM_FraudVerifier': {
+      expectedAddress: '0x5fF5316CD1C015970eEC83D34a69E504B577a5bb',
+    },
     BondManager: {
+      expectedAddress: '0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be',
       dependencies: ['OVM_Proposer'],
     },
     'ChainStorageContainer-SCC-batches': {
+      expectedAddress: '0x10739F09f6e62689c0aA8A1878816de9e166d6f9',
       parameters: [
         {
           name: 'Owner',
@@ -120,6 +156,7 @@ export const config: Config = {
     OVM_Proposer: {},
     OVM_Sequencer: {},
     'ChainStorageContainer-CTC-queue': {
+      expectedAddress: '0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57',
       parameters: [
         {
           name: 'Owner',
@@ -130,6 +167,7 @@ export const config: Config = {
       ],
     },
     'ChainStorageContainer-CTC-batches': {
+      expectedAddress: '0x38473Feb3A6366757A249dB2cA4fBB2C663416B7',
       parameters: [
         {
           name: 'Owner',

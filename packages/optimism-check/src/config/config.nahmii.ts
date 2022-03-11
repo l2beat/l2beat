@@ -5,6 +5,7 @@ export const config: Config = {
   startingPoints: ['NVM_L1CrossDomainMessenger'],
   contracts: {
     NVM_L1CrossDomainMessenger: {
+      expectedAddress: '0x0e14f07BCdCacEC46677DFf02685f049A7c3928C',
       dependencies: [
         'NVM_MessageQueue',
         'NVM_L2CrossDomainMessenger',
@@ -22,6 +23,7 @@ export const config: Config = {
       ],
     },
     NVM_MessageQueue: {
+      expectedAddress: '0xAC92b09965B6AAc33Dd43f3Ce752aD79b74Ddb94',
       dependencies: [
         'NVM_ChainStorageContainer-message-queue',
         'NVM_SafetyChecker',
@@ -65,10 +67,14 @@ export const config: Config = {
         },
       ],
     },
-    'NVM_ChainStorageContainer-message-queue': {},
+    'NVM_ChainStorageContainer-message-queue': {
+      expectedAddress: '0x72dDa4F7d131035F523728F11FAe0D7ccbA67128',
+    },
     NVM_SafetyChecker: {},
     NVM_L2CrossDomainMessenger: {},
-    NVM_FraudVerifier: {},
+    NVM_FraudVerifier: {
+      expectedAddress: '0xC0E090e6988FF9d5C471a2106A2cb176b4949E6C',
+    },
     NVM_L2MessageRelayer: {},
     NVM_Sequencer: {},
   },

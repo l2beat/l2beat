@@ -3,10 +3,28 @@ import { providers } from 'ethers'
 import { EthereumAddress, json } from '../model'
 import { EtherscanClient } from './etherscan/EtherscanClient'
 
+interface EOAAddress {
+  type: 'EOA'
+  name: string
+}
+
+export interface UnverifiedContract {
+  type: 'Contract'
+  verified: false;
+  name: string
+}
+
+export interface VerifiedContract {
+  type: 'Contract';
+  verified: true;
+  name: string;
+  abi: json
+}
+
 export type AnalyzedAddress =
-  | { type: 'EOA'; name: string }
-  | { type: 'Contract'; verified: false; name: string }
-  | { type: 'Contract'; verified: true; name: string; abi: json }
+  | EOAAddress
+  | UnverifiedContract
+  | VerifiedContract
 
 export class AddressAnalyzer {
   constructor(

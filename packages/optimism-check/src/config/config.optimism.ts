@@ -5,6 +5,7 @@ export const config: Config = {
   startingPoints: ['OVM_L1CrossDomainMessenger'],
   contracts: {
     OVM_L1CrossDomainMessenger: {
+      expectedAddress: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
       dependencies: ['StateCommitmentChain', 'CanonicalTransactionChain'],
       parameters: [
         {
@@ -17,6 +18,7 @@ export const config: Config = {
       ],
     },
     StateCommitmentChain: {
+      expectedAddress: '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',
       dependencies: [
         'ChainStorageContainer-SCC-batches',
         'OVM_FraudVerifier',
@@ -40,6 +42,7 @@ export const config: Config = {
       ],
     },
     CanonicalTransactionChain: {
+      expectedAddress: '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
       dependencies: ['OVM_Sequencer', 'ChainStorageContainer-CTC-batches'],
       parameters: [
         {
@@ -80,9 +83,14 @@ export const config: Config = {
         },
       ],
     },
-    OVM_FraudVerifier: {},
-    BondManager: {},
+    OVM_FraudVerifier: {
+      expectedAddress: '0x042065416C5c665dc196076745326Af3Cd840D15'
+    },
+    BondManager: {
+      expectedAddress: '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',
+    },
     'ChainStorageContainer-SCC-batches': {
+      expectedAddress: '0xb0ddFf09c4019e31960de11bD845E836078E8EbE',
       parameters: [
         {
           name: 'Owner',
@@ -92,9 +100,12 @@ export const config: Config = {
         },
       ],
     },
-    OVM_Proposer: {},
+    OVM_Proposer: {
+      expectedAddress: '0x473300df21D047806A082244b417f96b32f13A33',
+    },
     OVM_Sequencer: {},
     'ChainStorageContainer-CTC-batches': {
+      expectedAddress: '0xD16463EF9b0338CE3D73309028ef1714D220c024',
       parameters: [
         {
           name: 'Owner',

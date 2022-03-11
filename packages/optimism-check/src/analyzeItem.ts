@@ -5,6 +5,7 @@ import {
 } from '@l2beat/common'
 import { Contract, providers, utils } from 'ethers'
 
+
 import { Contracts, ContractDescription } from './config'
 
 export interface AnalyzedItem {
@@ -29,6 +30,11 @@ export async function analyzeItem(
 
   const libAddressContract = new Contract(libAddressManager, libAbi, provider)
   const componentAddress = await libAddressContract.getAddress(component)
+  if (contracts[component].expectedAddress) {
+    if (componentAddress != contracts[component].expectedAddress) {
+      console.log(`Warning: ${component} resolved to a different address than expected !`)
+    }
+  }
   const componentContract = await addressAnalyzer.analyze(componentAddress)
   var libAddressManager = ''
   var owner = ''
