@@ -3,8 +3,9 @@ import { getTokenByAssetId } from '@l2beat/config'
 import { expect } from 'earljs'
 import { utils } from 'ethers'
 
-import { MULTICALL } from '../../../../src/core/constants'
 import { BalanceCall } from '../../../../src/peripherals/ethereum/calls/BalanceCall'
+import { MULTICALL_V1_ADDRESS } from '../../../../src/peripherals/ethereum/MulticallClient'
+
 
 describe('BalanceCall', () => {
   const coder = new utils.Interface([
@@ -22,14 +23,10 @@ describe('BalanceCall', () => {
       const encoded = BalanceCall.encode(MOCK_HOLDER, ether)
 
       expect(encoded).toEqual({
-        holder: MOCK_HOLDER,
-        asset: ether,
-        request: {
-          address: MULTICALL,
+          address: MULTICALL_V1_ADDRESS,
           data: Bytes.fromHex(
             coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()])
           ),
-        },
       })
     })
 
@@ -38,14 +35,10 @@ describe('BalanceCall', () => {
       const encoded = BalanceCall.encode(MOCK_HOLDER, token)
 
       expect(encoded).toEqual({
-        holder: MOCK_HOLDER,
-        asset: token,
-        request: {
           address: getTokenByAssetId(token)!.address!,
           data: Bytes.fromHex(
             coder.encodeFunctionData('balanceOf', [MOCK_HOLDER.toString()])
           ),
-        },
       })
     })
   })
