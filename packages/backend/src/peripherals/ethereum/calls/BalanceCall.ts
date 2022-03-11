@@ -2,7 +2,11 @@ import { AssetId, Bytes, EthereumAddress } from '@l2beat/common'
 import { getTokenByAssetId } from '@l2beat/config'
 import { BigNumber, utils } from 'ethers'
 
-import { MULTICALL_V1_ADDRESS,MulticallRequest, MulticallResponse } from '../MulticallClient'
+import {
+  MULTICALL_V1_ADDRESS,
+  MulticallRequest,
+  MulticallResponse,
+} from '../MulticallClient'
 
 const coder = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
@@ -14,18 +18,18 @@ export const BalanceCall = {
     //TODO discuss ether constant AssetId.ETHER
     if (asset === AssetId.ETH) {
       return {
-          address: MULTICALL_V1_ADDRESS,
-          data: Bytes.fromHex(
-            coder.encodeFunctionData('getEthBalance', [holder.toString()])
-          ),
+        address: MULTICALL_V1_ADDRESS,
+        data: Bytes.fromHex(
+          coder.encodeFunctionData('getEthBalance', [holder.toString()])
+        ),
       }
     } else {
       return {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          address: getTokenByAssetId(asset).address!,
-          data: Bytes.fromHex(
-            coder.encodeFunctionData('balanceOf', [holder.toString()])
-          ),
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        address: getTokenByAssetId(asset).address!,
+        data: Bytes.fromHex(
+          coder.encodeFunctionData('balanceOf', [holder.toString()])
+        ),
       }
     }
   },
@@ -40,6 +44,6 @@ export const BalanceCall = {
     return (value as BigNumber).toBigInt()
   },
   decodeOr(response: MulticallResponse, fallback: bigint) {
-    return this.decode(response)??fallback
-  }
+    return this.decode(response) ?? fallback
+  },
 }

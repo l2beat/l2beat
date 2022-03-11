@@ -20,7 +20,9 @@ export class BalanceRepository {
   }
 
   async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
-    const rows = await this.knex('asset_balances').select().where('block_number',Number(blockNumber))
+    const rows = await this.knex('asset_balances')
+      .select()
+      .where('block_number', Number(blockNumber))
     return rows.map(toRecord)
   }
 

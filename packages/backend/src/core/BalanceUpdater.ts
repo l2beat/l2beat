@@ -9,7 +9,7 @@ import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
 
 interface HeldAsset {
-  holder: EthereumAddress;
+  holder: EthereumAddress
   assetId: AssetId
 }
 
@@ -26,7 +26,7 @@ export class BalanceUpdater {
   }
 
   async update(blocks: bigint[]) {
-    const unprocessed = blocks.filter(x => !this.processedBlocks.has(x))
+    const unprocessed = blocks.filter((x) => !this.processedBlocks.has(x))
     for (const blockNumber of unprocessed) {
       const missing = await this.getMissingDataByBlock(blockNumber)
 
@@ -42,8 +42,12 @@ export class BalanceUpdater {
   }
 
   async getMissingDataByBlock(blockNumber: bigint): Promise<HeldAsset[]> {
-    const known: BalanceRecord[] = []
-    const knownSet = new Set(known.map(x => `${x.holderAddress}${x.assetId}`))
+    const known: BalanceRecord[] = await this.balanceRepository.getByBlock(
+      blockNumber
+    )
+    const knownSet = new Set(
+      known.map((x) => `${x.holderAddress}-${x.assetId}`)
+    )
 
     const missing: HeldAsset[] = []
     for (const project of this.projects) {
@@ -56,16 +60,22 @@ export class BalanceUpdater {
             continue
           }
           // TODO: make bridge.address EthereumAddress
-          const entry = { holder: EthereumAddress(bridge.address), assetId: token.id }
-          if (!knownSet.has(`${entry.holder}${entry.assetId}`))
-          missing.push(entry)
+          const entry = {
+            holder: EthereumAddress(bridge.address),
+            assetId: token.id,
+          }
+          if (!knownSet.has(`${entry.holder}-${entry.assetId}`))
+            missing.push(entry)
         }
       }
     }
     return missing
   }
 
-  async fetchBalances(missingData: HeldAsset[], blockNumber: bigint): Promise<BalanceRecord[]> {
+  async fetchBalances(
+    missingData: HeldAsset[],
+    blockNumber: bigint
+  ): Promise<BalanceRecord[]> {
     const calls = missingData.map((m) =>
       BalanceCall.encode(m.holder, m.assetId)
     )

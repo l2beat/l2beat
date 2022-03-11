@@ -65,9 +65,8 @@ describe(BalanceRepository.name, () => {
     })
 
     it('unknown block', async () => {
-      const result = await repository.getByBlock(START_BLOCK_NUMBER+1000n)
+      const result = await repository.getByBlock(START_BLOCK_NUMBER + 1000n)
       expect(result).toEqual([])
-
     })
   })
 

@@ -6,7 +6,6 @@ import { utils } from 'ethers'
 import { BalanceCall } from '../../../../src/peripherals/ethereum/calls/BalanceCall'
 import { MULTICALL_V1_ADDRESS } from '../../../../src/peripherals/ethereum/MulticallClient'
 
-
 describe('BalanceCall', () => {
   const coder = new utils.Interface([
     'function getEthBalance(address account) view returns (uint256)',
@@ -23,10 +22,10 @@ describe('BalanceCall', () => {
       const encoded = BalanceCall.encode(MOCK_HOLDER, ether)
 
       expect(encoded).toEqual({
-          address: MULTICALL_V1_ADDRESS,
-          data: Bytes.fromHex(
-            coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()])
-          ),
+        address: MULTICALL_V1_ADDRESS,
+        data: Bytes.fromHex(
+          coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()])
+        ),
       })
     })
 
@@ -35,10 +34,10 @@ describe('BalanceCall', () => {
       const encoded = BalanceCall.encode(MOCK_HOLDER, token)
 
       expect(encoded).toEqual({
-          address: getTokenByAssetId(token)!.address!,
-          data: Bytes.fromHex(
-            coder.encodeFunctionData('balanceOf', [MOCK_HOLDER.toString()])
-          ),
+        address: getTokenByAssetId(token)!.address!,
+        data: Bytes.fromHex(
+          coder.encodeFunctionData('balanceOf', [MOCK_HOLDER.toString()])
+        ),
       })
     })
   })
