@@ -169,8 +169,8 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toEqual([
         {
-          address: HOLDER_A,
-          asset: ASSET_C,
+          holder: HOLDER_A,
+          assetId: ASSET_C,
         },
       ])
     })

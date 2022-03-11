@@ -19,7 +19,7 @@ describe('BalanceCall', () => {
   describe('encode', () => {
     it('ether', () => {
       const ether = AssetId('eth-ether')
-      const encoded = BalanceCall.generate(MOCK_HOLDER, ether)
+      const encoded = BalanceCall.encode(MOCK_HOLDER, ether)
 
       expect(encoded).toEqual({
         holder: MOCK_HOLDER,
@@ -35,7 +35,7 @@ describe('BalanceCall', () => {
 
     it('token', () => {
       const token = AssetId('dai-dai-stablecoin')
-      const encoded = BalanceCall.generate(MOCK_HOLDER, token)
+      const encoded = BalanceCall.encode(MOCK_HOLDER, token)
 
       expect(encoded).toEqual({
         holder: MOCK_HOLDER,

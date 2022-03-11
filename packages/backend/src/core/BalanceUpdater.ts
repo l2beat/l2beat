@@ -8,9 +8,14 @@ import {
 import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
 
-type Metadata = { address: EthereumAddress; asset: AssetId }
+interface HeldAsset {
+  holder: EthereumAddress;
+  assetId: AssetId
+}
 
 export class BalanceUpdater {
+  private processedBlocks = new Set<bigint>()
+
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
@@ -21,72 +26,60 @@ export class BalanceUpdater {
   }
 
   async update(blocks: bigint[]) {
-    for (const block of blocks) {
-      const missing = await this.getMissingDataByBlock(block)
+    const unprocessed = blocks.filter(x => !this.processedBlocks.has(x))
+    for (const blockNumber of unprocessed) {
+      const missing = await this.getMissingDataByBlock(blockNumber)
 
-      await this.fetchBalances(missing, block)
+      const balances = await this.fetchBalances(missing, blockNumber)
+      await this.balanceRepository.addOrUpdate(balances)
+      this.processedBlocks.add(blockNumber)
 
       this.logger.debug('Balances updated', {
-        block: block.toString(),
+        block: blockNumber.toString(),
         amount: missing.length,
       })
     }
   }
 
-  async getMissingDataByBlock(blockNumber: bigint): Promise<Metadata[]> {
-    const known = await this.balanceRepository.getDataBoundaries()
+  async getMissingDataByBlock(blockNumber: bigint): Promise<HeldAsset[]> {
+    const known: BalanceRecord[] = []
+    const knownSet = new Set(known.map(x => `${x.holderAddress}${x.assetId}`))
 
-    const missing = []
-
+    const missing: HeldAsset[] = []
     for (const project of this.projects) {
       for (const bridge of project.bridges) {
         if (bridge.sinceBlock > blockNumber) {
           continue
-        } else {
-          for (const token of bridge.tokens) {
-            if (token.sinceBlock > blockNumber) {
-              continue
-            } else {
-              const data = known.get(`${bridge.address}-${token.id}`)
-              if (
-                data === undefined ||
-                data.earliestBlockNumber > blockNumber ||
-                data!.latestBlockNumber < blockNumber
-              ) {
-                missing.push({
-                  address: EthereumAddress(bridge.address),
-                  asset: token.id,
-                })
-              } else {
-                continue
-              }
-            }
+        }
+        for (const token of bridge.tokens) {
+          if (token.sinceBlock > blockNumber) {
+            continue
           }
+          // TODO: make bridge.address EthereumAddress
+          const entry = { holder: EthereumAddress(bridge.address), assetId: token.id }
+          if (!knownSet.has(`${entry.holder}${entry.assetId}`))
+          missing.push(entry)
         }
       }
     }
     return missing
   }
 
-  async fetchBalances(missingData: Metadata[], blockNumber: bigint) {
+  async fetchBalances(missingData: HeldAsset[], blockNumber: bigint): Promise<BalanceRecord[]> {
     const calls = missingData.map((m) =>
-      BalanceCall.generate(m.address, m.asset)
+      BalanceCall.encode(m.holder, m.assetId)
     )
 
     const multicallResponses = await this.multicall.multicall(
-      calls.map((call) => call.request),
+      calls,
       blockNumber
     )
 
-    const balances: BalanceRecord[] = multicallResponses.map((res, i) => ({
-      holderAddress: calls[i].holder,
-      assetId: calls[i].asset,
-      balance: BalanceCall.decode(res)
-        ? (BalanceCall.decode(res) as bigint)
-        : BigInt(0),
-      blockNumber: blockNumber,
+    return multicallResponses.map((res, i) => ({
+      holderAddress: missingData[i].holder,
+      assetId: missingData[i].assetId,
+      balance: BalanceCall.decodeOr(res, 0n),
+      blockNumber,
     }))
-
-    this.balanceRepository.addOrUpdate(balances)
   }
 }

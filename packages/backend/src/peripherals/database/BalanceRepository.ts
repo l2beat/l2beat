@@ -19,18 +19,9 @@ export class BalanceRepository {
     this.logger = this.logger.for(this)
   }
 
-  async getDataBoundaries(): Promise<Map<string, DataBoundary>> {
-    const rows = await this.knex('asset_balances')
-      .select('holder_address', 'asset_id')
-      .max('block_number')
-      .min('block_number')
-      .groupBy('holder_address', 'asset_id')
-
-    const data = rows.map((row) => [
-      `${row.holder_address}-${row.asset_id}`,
-      { earliestBlockNumber: BigInt(row.min), latestBlockNumber: BigInt(row.max) },
-    ])
-    return new Map(data)
+  async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
+    const rows = await this.knex('asset_balances').select().where('block_number',Number(blockNumber))
+    return rows.map(toRecord)
   }
 
   async getAllByHolderAndAsset(
