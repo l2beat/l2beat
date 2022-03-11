@@ -33,9 +33,9 @@ export async function analyzeItem(
     }
   }
   const componentContract = await addressAnalyzer.analyze(componentAddress)
-  var libAddressManager = ''
   const owner = ''
   let parameters: any[] = []
+  let libAddressManagerLocal = ''
 
   if (componentContract.type === 'Contract' && componentContract.verified) {
     const addMgrAbi = [
@@ -47,7 +47,7 @@ export async function analyzeItem(
       addMgrAbi,
       provider
     )
-    libAddressManager = await libAddressContract.libAddressManager()
+    libAddressManagerLocal = await libAddressContract.libAddressManager()
     if (contracts[component].parameters) {
       parameters = await getParameters(
         contracts[component],
@@ -62,7 +62,7 @@ export async function analyzeItem(
   return {
     analyzed: {
       componentAddress,
-      libAddressManager,
+      libAddressManagerLocal,
       componentContract,
       ...Object.fromEntries(parameters.map((x) => [x.name, x.value])),
     },
