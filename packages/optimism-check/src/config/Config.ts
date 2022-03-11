@@ -22,7 +22,6 @@ export interface VariableParameter {
 }
 
 export interface ContractDescription {
-
   expectedAddress?: string
   dependencies?: string[]
   parameters?: Parameter[]

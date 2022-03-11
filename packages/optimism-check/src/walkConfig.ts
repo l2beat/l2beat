@@ -1,13 +1,11 @@
 import { AddressAnalyzer, AnalyzedAddress } from '@l2beat/common'
 import chalk from 'chalk'
-
+import Table from 'easy-table'
 import { BigNumber, constants, providers, utils } from 'ethers'
 
-import { analyzeItem, AnalyzedItem } from './analyzeItem'
-import { analyzeMainBridge, AnalyzedMainBridge } from './analyzeMainBridge'
-import { Contracts, MainBridgeConfig} from './config'
-
-import Table from 'easy-table'
+import { AnalyzedItem, analyzeItem } from './analyzeItem'
+import { AnalyzedMainBridge, analyzeMainBridge } from './analyzeMainBridge'
+import { Contracts, MainBridgeConfig } from './config'
 
 export async function walkConfig(
   provider: providers.Provider,
@@ -18,8 +16,11 @@ export async function walkConfig(
   mainBridge: MainBridgeConfig,
   network: string
 ) {
-
-  const bridgeConfig:AnalyzedMainBridge = await analyzeMainBridge(provider,addressAnalyzer,mainBridge)
+  const bridgeConfig: AnalyzedMainBridge = await analyzeMainBridge(
+    provider,
+    addressAnalyzer,
+    mainBridge
+  )
   prettyBridgePrint(bridgeConfig, network)
 
   const resolved = new Map<string, AnalyzedItem>()
@@ -49,27 +50,31 @@ export async function walkConfig(
   prettyPrint(resolved, network)
 }
 
-function prettyBridgePrint(bridge: AnalyzedMainBridge, network:string) {
+function prettyBridgePrint(bridge: AnalyzedMainBridge, network: string) {
   console.log()
   console.log('Main Bridge of', network)
   console.log()
   console.log('Bridge Proxy Contract: ', bridge.proxy.name)
   console.log('Brige Proxy Owner:', bridge.owner)
   if (!bridge.implementation.verified) {
-    console.log(chalk.red("Warning: Bridge implementation is not verified !"))
+    console.log(chalk.red('Warning: Bridge implementation is not verified !'))
   }
-  console.log('Bridge Implementation Contract: ', bridge.implementationAddress, bridge.implementation.name)
+  console.log(
+    'Bridge Implementation Contract: ',
+    bridge.implementationAddress,
+    bridge.implementation.name
+  )
   console.log()
 }
 
 function prettyPrint(resolved: Map<string, AnalyzedItem>, network: string) {
   //console.debug(resolved)
-  var t = new Table()
-  var t2 = new Table()
-  var t3 = new Table()
+  const t = new Table()
+  const t2 = new Table()
+  const t3 = new Table()
   for (const [componentName, analyzed] of resolved) {
     const addressType = analyzed.componentContract.type
-    var contractName = ''
+    let contractName = ''
     if (addressType === 'Contract') {
       if (analyzed.componentContract.verified) {
         contractName = analyzed.componentContract.name

@@ -11,13 +11,13 @@ export const config: Config = {
       {
         name: 'messenger',
         type: 'variable',
-        description:'',
+        description: '',
         abi: 'function messenger() view returns (address)',
       },
       {
         name: 'l2TokenBridge',
         type: 'variable',
-        description:'',
+        description: '',
         abi: 'function l2TokenBridge() view returns (address)',
       },
     ],

@@ -1,7 +1,7 @@
-import { config as optimismConfig } from './config.optimism'
-import { config as metisConfig } from './config.metis'
 import { config as bobaConfig } from './config.boba'
+import { config as metisConfig } from './config.metis'
 import { config as nahmiiConfig } from './config.nahmii'
+import { config as optimismConfig } from './config.optimism'
 
 export * from './Config'
 

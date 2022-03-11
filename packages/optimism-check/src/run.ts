@@ -38,7 +38,8 @@ export async function run() {
   )
   const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
 
-  const { libAddressManager, startingPoints, contracts, mainBridge } = getConfig(network)
+  const { libAddressManager, startingPoints, contracts, mainBridge } =
+    getConfig(network)
 
   await walkConfig(
     provider,

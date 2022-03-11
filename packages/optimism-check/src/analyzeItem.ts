@@ -1,10 +1,7 @@
-import {
-  AddressAnalyzer,
-  AnalyzedAddress,
-} from '@l2beat/common'
+import { AddressAnalyzer, AnalyzedAddress } from '@l2beat/common'
 import { Contract, providers, utils } from 'ethers'
 
-import { Contracts, ContractDescription } from './config'
+import { ContractDescription, Contracts } from './config'
 
 export interface AnalyzedItem {
   componentAddress: string
@@ -37,8 +34,8 @@ export async function analyzeItem(
   }
   const componentContract = await addressAnalyzer.analyze(componentAddress)
   var libAddressManager = ''
-  var owner = ''
-  var parameters: any[] = []
+  const owner = ''
+  let parameters: any[] = []
 
   if (componentContract.type === 'Contract' && componentContract.verified) {
     const addMgrAbi = [
