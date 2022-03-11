@@ -1,4 +1,4 @@
-# Arbitrum Checker
+# Optimism Checker
 
 This script checks the current deployment of Optimism Rollup
 

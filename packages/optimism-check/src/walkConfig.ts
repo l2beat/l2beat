@@ -1,9 +1,13 @@
-import { AddressAnalyzer } from '@l2beat/common'
+import { AddressAnalyzer, AnalyzedAddress } from '@l2beat/common'
 import chalk from 'chalk'
+
+
 import { BigNumber, constants, providers, utils } from 'ethers'
 
-import { analyzeItem2 } from './analyzeItem'
+import { analyzeItem } from './analyzeItem'
 import { Config } from './config'
+
+import Table from 'easy-table'
 
 export async function walkConfig(
   provider: providers.Provider,
@@ -24,7 +28,7 @@ export async function walkConfig(
     ) {
       continue
     }
-    const { analyzed, relatives }= await analyzeItem2(
+    const { analyzed, relatives }= await analyzeItem(
       provider,
       addressAnalyzer,
       libAddressManager,
@@ -37,59 +41,68 @@ export async function walkConfig(
     stack.push(...relatives)
   }
 
-  prettyPrint2(resolved)
+  prettyPrint(resolved)
 }
 
-
-function prettyPrint2(resolved: Map<string, Record<string, unknown>>) {
-  console.log(resolved)
-}
 
 function prettyPrint(resolved: Map<string, Record<string, unknown>>) {
-  const addressMap = new Map<string, string>()
-  for (const [address, analyzed] of resolved) {
-    if (typeof analyzed.name === 'string') {
-      addressMap.set(address, analyzed.name)
+  console.debug(resolved) 
+  var t = new Table
+  var t2 = new Table 
+  var t3 = new Table
+  for (const [componentName, analyzed] of resolved) {
+    const addressType = (analyzed.componentContract as AnalyzedAddress).type
+    var contractName = ''
+    if (addressType === 'Contract') {
+      if ((analyzed.componentContract as AnalyzedAddress).verified) {
+        contractName = (analyzed.componentContract as AnalyzedAddress).name
+      }  else {
+        contractName = chalk.red('Not verified !')
+      }
     }
-  }
+    t.cell('Name', componentName)
+    t.cell('Address', analyzed.componentAddress)
+    t.cell('Type', (analyzed.componentContract as AnalyzedAddress).type)
+    t.cell('ContractName', contractName)
+    t.newRow()
 
-  for (const [address, analyzed] of resolved) {
-    if (analyzed.type === 'EOA') {
-      continue
-    }
-    console.log(chalk.blue(address))
-    for (const [key, value] of Object.entries(analyzed)) {
-      prettyPrintValue(key, value, addressMap)
+    if (addressType === 'Contract') {
+      t2.cell('Name', componentName)
+      t2.cell('LibAddressManager', analyzed.libAddressManager)
+      t2.newRow()
+
+      for (const [key, value] of Object.entries(analyzed)) {
+        if (key != 'componentAddress' && key != 'libAddressManager' && key != 'componentContract') {
+          t3.cell('Component', componentName)
+          t3.cell('Parameter', key)
+          t3.cell('Value', prettifyValue(value))
+          t3.newRow()
+        }
+      }
     }
   }
+  console.log()
+  console.log("Components:")
+  console.log()
+  console.log(t.toString())
+  
+  console.log()
+  console.log("LibAddressManager:")
+  console.log()
+  console.log(t2.toString())
+  
+  console.log()
+  console.log("Parameters:")
+  console.log()
+  console.log(t3.toString())
 }
 
-function prettyPrintValue(
-  key: string,
-  value: unknown,
-  addressMap: Map<string, string>,
-  indent = 1
-) {
-  const spaces = ' '.repeat(indent * 4 - 1)
-  if (Array.isArray(value)) {
-    console.log(spaces, key)
-    for (const [i, v] of value.entries()) {
-      prettyPrintValue(i.toString(), v, addressMap, indent + 1)
-    }
-  } else if (BigNumber.isBigNumber(value)) {
-    console.log(spaces, key, chalk.yellow('' + value))
-  } else if (typeof value === 'string' && utils.isAddress(value)) {
-    const name = addressMap.get(value)
-    if (name) {
-      if (!name.startsWith('<')) {
-        console.log(spaces, key, chalk.magenta(name), chalk.green(value))
-      } else {
-        console.log(spaces, key, chalk.cyan(name), chalk.cyan(value))
-      }
-    } else {
-      console.log(spaces, key, chalk.green(value))
-    }
+function prettifyValue(value: unknown) {
+ if (BigNumber.isBigNumber(value)) {
+    return(chalk.yellow(value))
+  } else if (typeof value === 'string') {
+    return (chalk.blue(value))
   } else {
-    console.log(spaces, key, chalk.red('' + value))
+    return(value)
   }
 }

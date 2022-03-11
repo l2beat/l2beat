@@ -1,16 +1,3 @@
-/* 
-Resolved OVM_L1CrossDomainMessenger to 0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5
-Resolved CanonicalTransactionChain to 0x5E4e65926BA27467555EB562121fac00D24E9dD2
-Resolved ChainStorageContainer-CTC-batches to 0xD16463EF9b0338CE3D73309028ef1714D220c024
-Resolved OVM_Sequencer to 0x6887246668a3b87F54DeB3b94Ba47a6f63F32985
-Resolved StateCommitmentChain to 0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19
-Resolved OVM_Proposer to 0x473300df21D047806A082244b417f96b32f13A33
-Resolved BondManager to 0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1
-Resolved OVM_FraudVerifier to 0x042065416C5c665dc196076745326Af3Cd840D15
-Resolved ChainStorageContainer-SCC-batches to 0xb0ddFf09c4019e31960de11bD845E836078E8EbE
-*/
-
-
 export type Parameter = ConstantParameter | FixedParameter | VariableParameter
 
 export interface ConstantParameter {
@@ -51,7 +38,9 @@ export const config: Config = {
       'StateCommitmentChain',
       'CanonicalTransactionChain',
     ],
-    parameters: [],
+    parameters: [
+      {name: 'Owner', type: 'variable', description: 'Current Owner. Owner can block messages, allow messages, pause relayer.', abi:'function owner() view returns (address)'},
+    ],
   },
   'StateCommitmentChain': {
     dependencies: [
@@ -63,6 +52,7 @@ export const config: Config = {
     ],
     parameters: [
       {name: 'FraudProofWindow', type: 'fixed', description: '', abi:'function FRAUD_PROOF_WINDOW() view returns (uint256)'},
+      {name: 'SequencerPublishWindow', type: 'fixed', description: '', abi:'function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)'},
     ],
   },
   'CanonicalTransactionChain': {
@@ -84,11 +74,17 @@ export const config: Config = {
   'BondManager': {
   },
   'ChainStorageContainer-SCC-batches': {
+    parameters: [
+      {name: 'Owner', type: 'fixed', description: 'Only owner can use the congract methods.', abi:'function owner() view returns (string)'},
+    ]
   },
   'OVM_Proposer': {
   },
   'OVM_Sequencer': {
   },
   'ChainStorageContainer-CTC-batches': {
+    parameters: [
+      {name: 'Owner', type: 'fixed', description: 'Only owner can use the congract methods.', abi:'function owner() view returns (string)'},
+    ]
   },
 }

@@ -9,7 +9,7 @@ import { Config, ContractDescription } from './config'
 Analyze Item. Get all item information and the list of "relatives", that is
 the next set of items to be analysed 
 */
-export async function analyzeItem2(
+export async function analyzeItem(
   provider: providers.Provider,
   addressAnalyzer: AddressAnalyzer,
   libAddressManager: string,
