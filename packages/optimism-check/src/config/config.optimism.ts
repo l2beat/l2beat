@@ -49,13 +49,14 @@ export const config: Config = {
         {
           name: 'FraudProofWindow',
           type: 'fixed',
-          description: '',
+          description: 'Fraud Proof Window in seconds',
           abi: 'function FRAUD_PROOF_WINDOW() view returns (uint256)',
         },
         {
           name: 'SequencerPublishWindow',
           type: 'fixed',
-          description: '',
+          description:
+            'Window (in seconds) in which only Sequencer can publish state roots',
           abi: 'function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)',
         },
       ],
@@ -68,13 +69,13 @@ export const config: Config = {
           name: 'MIN_ROLLUP_TX_GAS',
           value: '100000',
           type: 'constant',
-          description: 'This is some parameter',
+          description: 'Mimumum L2 tx gas limit',
         },
         {
           name: 'MAX_ROLLUP_TX_SIZE',
           value: '50000',
           type: 'constant',
-          description: 'This is some parameter',
+          description: 'Maximum L2 tx size',
         },
         {
           name: 'maxTransactionGasLimit',
@@ -85,13 +86,13 @@ export const config: Config = {
         {
           name: 'enqueueGasCost',
           type: 'variable',
-          description: '',
+          description: 'Approximate cost of calling the enqueue() function',
           abi: 'function enqueueGasCost() view returns (uint256)',
         },
         {
           name: 'l2GasDiscountDivisor',
           type: 'variable',
-          description: '',
+          description: 'Ratio of cost of L1 gas to the cost of L2 gas',
           abi: 'function l2GasDiscountDivisor() view returns (uint256)',
         },
         {
