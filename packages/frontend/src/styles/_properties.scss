@@ -46,7 +46,7 @@
   --font-xxl: 64px;
 }
 
-@mixin dark-mode-colors {
+:root.dark {
   --brand-red: #bd114f;
   --background: #1b1b1b;
   --background-2: #2f2f2f;
@@ -67,16 +67,6 @@
   --highlight-warning: #fdcf44;
 
   --background-job: #000000;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    @include dark-mode-colors();
-  }
-}
-
-:root[data-theme='dark'] {
-  @include dark-mode-colors();
 }
 
 @media (max-width: 1000px) {

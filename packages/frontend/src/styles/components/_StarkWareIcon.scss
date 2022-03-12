@@ -1,7 +1,7 @@
 .StarkWareIcon {
   fill: #28286e;
 
-  @include dark-mode {
+  .dark & {
     fill: var(--text);
   }
 }
