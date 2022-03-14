@@ -3,7 +3,8 @@ import {
   AnalyzedAddress,
   EthereumAddress,
 } from '@l2beat/common'
-import { providers, utils } from 'ethers'
+import { Contract, providers, utils } from 'ethers'
+import { keccak256 } from 'ethers/lib/utils'
 
 import { MainBridgeConfig } from './config'
 
@@ -12,7 +13,10 @@ export interface AnalyzedMainBridge {
   proxy: AnalyzedAddress
   implementationAddress: string
   implementation: AnalyzedAddress
-  [key: string]: unknown
+  messengerAddress: string
+  messenger: AnalyzedAddress
+  libResolvedDelegateProxyImplementationName: string
+  libResolvedDelegateProxyAddressManager: string
 }
 
 /* 
@@ -51,13 +55,46 @@ export async function analyzeMainBridge(
     EthereumAddress(implementation)
   )
 
-  // TODO: Refactor fetching parameters, fetch parameters from the bridge similarly to fetching parameters from other contracts
+  const abi = ['function messenger() view returns (address)']
+
+  const bridgeContract = new Contract(mainBridge.proxyAddress, abi, provider)
+  const messenger = await bridgeContract.messenger()
+
+  const analyzedMessenger = await addressAnalyzer.analyze(
+    EthereumAddress(messenger)
+  )
+
+  let libResolvedDelegateProxyImplementationName = ''
+  let libResolvedDelegateProxyAddressManager = ''
+  if (analyzedMessenger.name === 'Lib_ResolvedDelegateProxy') {
+    const slot1 = '0'.padStart(64, '0')
+    const slot2 = '1'.padStart(64, '0')
+    const key = messenger.slice(2).toLowerCase().padStart(64, '0')
+
+    const [implementationName, addressManagerAddress] = await Promise.all([
+      provider.getStorageAt(messenger, keccak256('0x' + key + slot1)),
+      provider.getStorageAt(messenger, keccak256('0x' + key + slot2)),
+    ])
+    libResolvedDelegateProxyAddressManager = wordToAddress(
+      addressManagerAddress
+    )
+    libResolvedDelegateProxyImplementationName = Buffer.from(
+      implementationName.slice(2),
+      'hex'
+    )
+      .toString('utf8')
+      .slice(0, -1)
+  }
 
   return {
     owner,
     proxy: proxyContract as AnalyzedAddress,
     implementationAddress: implementation,
     implementation: implementationContract as AnalyzedAddress,
+    messengerAddress: messenger,
+    messenger: analyzedMessenger as AnalyzedAddress,
+    libResolvedDelegateProxyImplementationName,
+    libResolvedDelegateProxyAddressManager,
   }
 }
 

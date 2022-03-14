@@ -64,6 +64,15 @@ function prettyBridgePrint(bridge: AnalyzedMainBridge, network: string) {
     bridge.implementationAddress,
     bridge.implementation.name
   )
+  console.log('Messenger:', bridge.messengerAddress, bridge.messenger.name)
+  console.log(
+    '   Lib_ResolvedDelegateProxy libaddressManager:',
+    bridge.libResolvedDelegateProxyAddressManager
+  )
+  console.log(
+    '   Lib_ResolvedDelegateProxy implementationName:',
+    bridge.libResolvedDelegateProxyImplementationName
+  )
   console.log()
 }
 
