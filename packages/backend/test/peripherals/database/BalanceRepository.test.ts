@@ -34,62 +34,39 @@ describe(BalanceRepository.name, () => {
     await repository.addOrUpdate(DATA)
   })
 
-  describe(BalanceRepository.prototype.getDataBoundaries.name, () => {
-    it('multiple records', async () => {
-      const record = (
-        block: bigint,
-        holder: EthereumAddress,
-        asset: AssetId
-      ) => ({
-        blockNumber: block,
-        holderAddress: holder,
-        assetId: asset,
-        balance: MOCK_BALANCE,
-      })
-
-      const HOLDER_A = EthereumAddress.random()
-      const HOLDER_B = EthereumAddress.random()
-      const ASSET_A = AssetId('ass-a')
-      const ASSET_B = AssetId('ass-b')
-
-      await repository.deleteAll()
-      await repository.addOrUpdate([
-        record(1000n, HOLDER_A, ASSET_A),
-        record(1001n, HOLDER_A, ASSET_A),
-        record(1002n, HOLDER_A, ASSET_A),
-        record(1000n, HOLDER_A, ASSET_B),
-        record(1000n, HOLDER_B, ASSET_B),
-        record(1001n, HOLDER_B, ASSET_B),
-      ])
-
-      const boundaries = await repository.getDataBoundaries()
-      expect(boundaries.length).toEqual(3)
-      expect(boundaries).toBeAnArrayWith(
+  describe(BalanceRepository.prototype.getByBlock.name, () => {
+    it('known block', async () => {
+      const additionalData = [
         {
-          assetId: ASSET_A,
-          holderAddress: HOLDER_A,
-          earliestBlockNumber: 1000n,
-          latestBlockNumber: 1002n,
+          blockNumber: START_BLOCK_NUMBER,
+          holderAddress: MOCK_HOLDER,
+          assetId: AssetId('asset-a'),
+          balance: MOCK_BALANCE,
         },
         {
-          assetId: ASSET_B,
-          holderAddress: HOLDER_A,
-          earliestBlockNumber: 1000n,
-          latestBlockNumber: 1000n,
+          blockNumber: START_BLOCK_NUMBER,
+          holderAddress: MOCK_HOLDER,
+          assetId: AssetId('asset-b'),
+          balance: MOCK_BALANCE,
         },
         {
-          assetId: ASSET_B,
-          holderAddress: HOLDER_B,
-          earliestBlockNumber: 1000n,
-          latestBlockNumber: 1001n,
-        }
-      )
+          blockNumber: START_BLOCK_NUMBER,
+          holderAddress: MOCK_HOLDER,
+          assetId: AssetId('asset-c'),
+          balance: MOCK_BALANCE,
+        },
+      ]
+      await repository.addOrUpdate(additionalData)
+
+      const result = await repository.getByBlock(START_BLOCK_NUMBER)
+
+      expect(result).toBeAnArrayWith(DATA[0], ...additionalData)
+      expect(result).toBeAnArrayOfLength(4)
     })
 
-    it('nonexisting data', async () => {
-      await repository.deleteAll()
-      const boundaries = await repository.getDataBoundaries()
-      expect(boundaries).toEqual([])
+    it('unknown block', async () => {
+      const result = await repository.getByBlock(START_BLOCK_NUMBER + 1000n)
+      expect(result).toEqual([])
     })
   })
 

@@ -10,10 +10,8 @@ export interface BalanceRecord {
 }
 
 export interface DataBoundary {
-  holderAddress: EthereumAddress
-  assetId: AssetId
-  earliestBlockNumber: bigint
-  latestBlockNumber: bigint
+  earliestBlockNumber: bigint | undefined
+  latestBlockNumber: bigint | undefined
 }
 
 export class BalanceRepository {
@@ -21,19 +19,11 @@ export class BalanceRepository {
     this.logger = this.logger.for(this)
   }
 
-  async getDataBoundaries(): Promise<DataBoundary[]> {
+  async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
     const rows = await this.knex('asset_balances')
-      .select('holder_address', 'asset_id')
-      .max('block_number')
-      .min('block_number')
-      .groupBy('holder_address', 'asset_id')
-
-    return rows.map((row) => ({
-      holderAddress: EthereumAddress(row.holder_address),
-      assetId: AssetId(row.asset_id),
-      earliestBlockNumber: BigInt(row.min),
-      latestBlockNumber: BigInt(row.max),
-    }))
+      .select()
+      .where('block_number', Number(blockNumber))
+    return rows.map(toRecord)
   }
 
   async getAllByHolderAndAsset(
