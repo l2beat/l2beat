@@ -589,31 +589,4 @@ describe(BalanceUpdater.name, () => {
       ])
     })
   })
-
-  //       it('E2E', async () => {
-  //       const httpClient = new HttpClient()
-
-  //       const alchemyHttpClient = new AlchemyHttpClient(
-  //         process.env['ALCHEMY_API_KEY'] as string,
-  //         httpClient,
-  //         Logger.SILENT
-  //       )
-  //       const ethereumClient = new EthereumClient(alchemyHttpClient)
-  //       const multicall = new MulticallClient(ethereumClient)
-
-  //       const balanceRepository = mock<BalanceRepository>({
-  //         addOrUpdate: mockFn().returns([]),
-  //       })
-
-  //       const projects: ProjectInfo[] = []
-
-  //       const balanceUpdater = new BalanceUpdater(multicall, balanceRepository, projects)
-
-  //       const result = await balanceUpdater.updateBalances(
-  //         MOCK_HOLDERS,
-  //         14352593n
-  //       )
-
-  //       console.log(result)
-  //     })
 })
