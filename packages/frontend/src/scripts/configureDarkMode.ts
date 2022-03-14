@@ -7,20 +7,20 @@ export function configureDarkMode() {
   let darkModeEnabled = saved ? saved === 'dark' : prefersDark
   if (typeof override === 'boolean') {
     darkModeEnabled = override
-    updateTheme()
-  } else if (saved) {
-    updateTheme()
   }
+
+  updateTheme()
 
   function toggleDarkMode() {
     darkModeEnabled = !darkModeEnabled
-    updateTheme()
+    updateTheme(true)
   }
 
-  function updateTheme() {
-    const theme = darkModeEnabled ? 'dark' : 'light'
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem('l2beat-theme', theme)
+  function updateTheme(save?: boolean) {
+    document.documentElement.classList.toggle('dark', darkModeEnabled)
+    if (save) {
+      localStorage.setItem('l2beat-theme', darkModeEnabled ? 'dark' : 'light')
+    }
   }
 
   document
