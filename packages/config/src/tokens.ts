@@ -1888,3 +1888,13 @@ export function getTokenBySymbol(symbol: string) {
   }
   return token
 }
+
+const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
+
+export function getTokenByAssetId(assetId: AssetId) {
+  const token = tokenMapByAssetId.get(assetId)
+  if (!token) {
+    throw new TypeError(`Unknown token ${assetId}`)
+  }
+  return token
+}

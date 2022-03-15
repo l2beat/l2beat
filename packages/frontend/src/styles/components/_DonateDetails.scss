@@ -13,14 +13,14 @@
 .DonateDetails-QrCode {
   *:nth-child(1) {
     display: inline;
-    @include dark-mode {
+    .dark & {
       display: none;
     }
   }
 
   *:nth-child(2) {
     display: none;
-    @include dark-mode {
+    .dark & {
       display: inline;
     }
   }

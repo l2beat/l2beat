@@ -1,0 +1,22 @@
+{
+  "name": "@l2beat/optimism-check",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node -r esbuild-register src",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "lint:fix": "yarn lint --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@l2beat/common": "*",
+    "@types/node": "^16.11.11",
+    "chalk": "^4.1.2",
+    "dotenv": "^10.0.0",
+    "easy-table": "^1.2.0",
+    "ethers": "^5.5.1"
+  },
+  "devDependencies": {}
+}

@@ -11,7 +11,7 @@
   img {
     max-width: 100%;
 
-    @include dark-mode {
+    .dark & {
       filter: unquote('invert()');
     }
   }

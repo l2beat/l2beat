@@ -16,8 +16,9 @@ export function getProductionConfig(): Config {
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     databaseUrl: getEnv('DATABASE_URL'),
     core: {
-      // TODO: This should probably be the day after Multicall was deployed
-      minBlockTimestamp: UnixTime.fromDate(new Date('2021-09-07T00:00:00Z')),
+      // TODO: set minimum timestamp from when to fetch prices
+      //right now it is the earliest fetched date from previous backend
+      minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       safeBlockRefreshIntervalMs: 5 * 60 * 1000,
       safeBlockBlockOffset: 100n,
     },
