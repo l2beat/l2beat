@@ -27,3 +27,8 @@ EthereumAddress.inOrder = function inOrder(
 ): [EthereumAddress, EthereumAddress] {
   return EthereumAddress.isBefore(a, b) ? [a, b] : [b, a]
 }
+
+EthereumAddress.random = function random() {
+  const digit = () => '0123456789abcdef'[Math.floor(Math.random() * 16)]
+  return EthereumAddress('0x' + Array.from({ length: 40 }).map(digit).join(''))
+}
