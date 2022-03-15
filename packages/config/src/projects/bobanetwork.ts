@@ -28,7 +28,9 @@ export const bobanetwork: Project = {
   associatedTokens: ['BOBA', 'OMG'],
   details: {
     description:
-      'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation. Boba is an Optimistic Rollup scaling solution that claims to reduce gas fees, improve transaction throughput, and extend the capabilities of smart contracts.',
+      'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation. Boba is an Optimistic Rollup \
+      forked from Optimism. Amongst other features it adds standard fast withdrawal facility that allows users to remove funds immediately without waiting \
+      for the end of the 7-day fraud proof window. This facility is using funds from liquidity providers.',
     purpose: 'Universal',
     links: {
       websites: ['https://boba.network'],
@@ -157,74 +159,105 @@ export const bobanetwork: Project = {
       contracts: {
         addresses: [
           {
-            name: 'L1 Standard Bridge',
-            address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
+            name: 'CanonicalTransactionChain',
+            description:
+              'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+            address: '0xfBd2541e316948B259264c02f370eD088E04c3Db',
+          },
+          {
+            name: 'StateCommitmentChain',
+            description:
+              'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currenlty olny OVM_Proposer can submit new state roots.',
+            address: '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
+          },
+          {
+            name: 'ChainStorageContainer-CTC-batches',
+            address: '0x17148284d2da2f38c96346f1776C1BF7D7691231',
+          },
+          {
+            name: 'ChainStorageContainer-CTC-queue',
+            address: '0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d',
+          },
+          {
+            name: 'ChainStorageContainer-SCC-batches',
+            address: '0x13992B9f327faCA11568BE18a8ad3E9747e87d93',
+          },
+          {
+            name: 'BondManager',
+            description:
+              "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+            address: '0x60660e6CDEb423cf847dD11De4C473130D65b627',
+          },
+          {
+            name: 'L1CrossDomainMessenger',
+            address: '0x6D4528d192dB72E282265D6092F4B872f9Dff69e',
+            description:
+              "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
             upgradeability: {
               type: 'EIP1967',
               admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
-              implementation: '0x4828900EB9dB5346dfe33cCf884984D8014C7B4B',
+              implementation: '0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820',
             },
           },
           {
-            name: 'L1 Liquidity Pool',
+            name: 'L1CrossDomainMessengerFast',
+            address: '0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E',
+            description:
+              'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+              implementation: '0x4CD1948de677e6f791B463daaB807645D3460996',
+            },
+          },
+          {
+            name: 'L1MultiMessageRelayer',
+            description:
+              'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
+            address: '0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B',
+          },
+          {
+            name: 'L1MultiMessageRelayerFast',
+            description:
+              'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessengerFast.',
+            address: '0x2d6134Ac3e480fBDD263B7163d333dCA285f9622',
+          },
+          {
+            name: 'L1LiquidityPool',
             address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
+            description: 'Liquidity Pool manager for fast withdrawal facility.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+              implementation: '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
+            },
           },
           {
-            // TODO: Support this type of proxy
-            name: 'Proxy__OVM_L1CrossDomainMessenger',
-            address: '0x6D4528d192dB72E282265D6092F4B872f9Dff69e',
-          },
-          {
-            name: 'AddressManager',
+            name: 'Lib_AddressManager',
+            description:
+              'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
             address: '0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089',
           },
           {
-            name: 'OVM_CanonicalTransactionChain',
-            address: '0x4B5D9E5A6B1a514eba15A2f949531DcCd7c272F2',
+            name: 'L1StandardBridge',
+            address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
+            description:
+              'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0xAf41c681143Cb91f218959375f4452A604504833',
+              admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+            },
           },
           {
-            name: 'OVM_ChainStorageContainer:CTC:batches',
-            address: '0xA7557b676EA0D9406459409B5ad01c14b5522c46',
-          },
-          {
-            name: 'OVM_ChainStorageContainer:CTC:queue',
-            address: '0x33938f8E5F2c36e3Ca2B01E878b3322E280d4c50',
-          },
-          {
-            name: 'OVM_ChainStorageContainer:SCC:batches',
-            address: '0x318d4dAb7D3793E40139b496c3B89422Ae5372D1',
-          },
-          {
-            name: 'OVM_ExecutionManager',
-            address: '0xa230D4b11F66A3DEEE0bEAf8D04551F236C8B646',
-          },
-          {
-            name: 'OVM_FraudVerifier',
-            address: '0x872c65c835deB2CFB3493f2C3dD353633Ae4f4B8',
-          },
-          {
-            name: 'OVM_L1CrossDomainMessenger',
-            address: '0x25109139f8C4F9f7b4E4d5452A067feaE3a537F3',
-          },
-          {
-            name: 'OVM_L1MultiMessageRelayer',
-            address: '0xAb2AF3A98D229b7dAeD7305Bb88aD0BA2c42f9cA',
-          },
-          {
-            name: 'OVM_SafetyChecker',
-            address: '0x85c0Cebfe3b81d64D256b38fDf65DD05887e5884',
-          },
-          {
-            name: 'OVM_StateCommitmentChain',
-            address: '0x17834b754e2f09946CE48D7B5beB4D7D94D98aB6',
-          },
-          {
-            name: 'OVM_StateManagerFactory',
-            address: '0x0c4935b421Af8F86698Fb77233e90AbC5f146846',
-          },
-          {
-            name: 'OVM_StateTransitionerFactory',
-            address: '0xc6dd73D427Bf784dd1e2f9F64029a79533ffAb40',
+            name: 'L1NFTBridge',
+            address: '0xC891F466e53f40603250837282eAE4e22aD5b088',
+            description: 'Standard NFT bridge.',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0xb8888346C0caBF99b6F9C35d028590Dee32684aE',
+              admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+            },
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
