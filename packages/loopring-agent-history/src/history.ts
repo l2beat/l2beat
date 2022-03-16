@@ -1,4 +1,5 @@
 import { Contract, providers } from 'ethers'
+
 import { EventProcessor } from './EventProcessor'
 
 const ABI = [

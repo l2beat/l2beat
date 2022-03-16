@@ -1,5 +1,5 @@
 import { AddressAnalyzer } from '@l2beat/common'
-import { Contract, providers, Event } from 'ethers'
+import { Contract, Event, providers } from 'ethers'
 
 import { BlockTimestampService } from './BlockTimestampService'
 
