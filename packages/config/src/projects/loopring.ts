@@ -140,8 +140,9 @@ export const loopring: Project = {
       contracts: {
         addresses: [
           {
-            name: 'Exchange',
+            name: 'ExchangeV3',
             address: '0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4',
+            description: 'Main ExchangeV3 contract.',
             upgradeability: {
               type: 'ZeppelinOs',
               admin: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
@@ -149,12 +150,34 @@ export const loopring: Project = {
             },
           },
           {
+            address: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+            name: 'LoopringIOExchangeOwner',
+            description:
+              'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+          },
+          {
             name: 'DefaultDepositContract',
+            description:
+              'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
             address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
           },
           {
-            name: 'Owner',
-            address: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+            name: 'LoopringV3',
+            description:
+              'Contract managinging LRC staking for exchanges (One Loopring contract can manage many exchanges).',
+            address: '0xe56D6ccab6551932C0356E4e8d5dAF0630920C71',
+          },
+          {
+            name: 'BlockVerifier',
+            description: 'zkSNARK Verifier based on ethsnarks library.',
+            address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+          },
+          {
+            name: 'AgentRegistry',
+            description:
+              'Agent rergistery that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
+            DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
+            address: '0x39B9bf169a7e225ba037C443A40460c77438ea14',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
