@@ -29,7 +29,7 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
-  async getByTimestamp(timestamp: UnixTime) {
+  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const rows = await this.knex('coingecko_prices')
       .where({ unix_timestamp: timestamp.toNumber().toString() })
       .select('coingecko_id', 'price_usd', 'unix_timestamp')
