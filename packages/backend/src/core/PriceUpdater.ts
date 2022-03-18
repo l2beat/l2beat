@@ -18,8 +18,10 @@ export class PriceUpdater {
   }
 
   async update(timestamps: UnixTime[]) {
-    if (timestamps.length === 0)
-      throw new Error('Timestamps array cannot be empty')
+    if (timestamps.length === 0) {
+      return
+    }
+    
     const from = timestamps[0]
     const to = timestamps[timestamps.length - 1]
 
@@ -28,7 +30,6 @@ export class PriceUpdater {
     await Promise.all(
       this.coingeckoIds.map((coingeckoId) => {
         const boundary = boundaries.get(coingeckoId)
-
         return this.updateToken(coingeckoId, boundary, from, to)
       })
     )
