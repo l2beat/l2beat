@@ -8,6 +8,11 @@ export interface PriceRecord {
   timestamp: UnixTime
 }
 
+export interface DataBoundary {
+  earliest: UnixTime
+  latest: UnixTime
+}
+
 export class PriceRepository {
   constructor(private knex: Knex, private logger: Logger) {
     this.logger = this.logger.for(this)
@@ -50,15 +55,22 @@ export class PriceRepository {
     this.logger.debug({ method: 'deleteAll' })
   }
 
-  async getLatestKnownDateByToken(
-    coingeckoId: CoingeckoId
-  ): Promise<UnixTime | undefined> {
-    const result = await this.knex('coingecko_prices')
-      .where({ coingecko_id: coingeckoId.toString() })
+  async getDataBoundaries(): Promise<Map<CoingeckoId, DataBoundary>> {
+    const rows = await this.knex('coingecko_prices')
+      .min('unix_timestamp')
       .max('unix_timestamp')
+      .select('coingecko_id')
+      .groupBy('coingecko_id')
 
-    const maxValue: string | null = result[0].max
-    return maxValue === null ? undefined : new UnixTime(parseInt(maxValue))
+    return new Map(
+      rows.map((row) => [
+        CoingeckoId(row.coingecko_id),
+        {
+          earliest: new UnixTime(parseInt(row.min)),
+          latest: new UnixTime(parseInt(row.max)),
+        },
+      ])
+    )
   }
 }
 

@@ -71,6 +71,7 @@ export const bobanetwork: Project = {
           {
             category: 'Funds can be stolen if',
             text: 'an invalid state root is submitted to the system.',
+            isCritical: true,
           },
         ],
         references: [
