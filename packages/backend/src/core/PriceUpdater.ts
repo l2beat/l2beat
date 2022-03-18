@@ -21,7 +21,7 @@ export class PriceUpdater {
     if (timestamps.length === 0) {
       return
     }
-    
+
     const from = timestamps[0]
     const to = timestamps[timestamps.length - 1]
 
