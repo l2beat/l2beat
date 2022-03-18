@@ -30,6 +30,11 @@ describe(PriceRepository.name, () => {
       timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
     },
+    {
+      priceUsd: 1,
+      timestamp: START,
+      coingeckoId: CoingeckoId('dai'),
+    },
   ]
 
   beforeEach(async () => {
@@ -55,7 +60,7 @@ describe(PriceRepository.name, () => {
 
       const results = await repository.getAll()
       expect(results).toBeAnArrayWith(...DATA, ...newRows)
-      expect(results).toBeAnArrayOfLength(6)
+      expect(results).toBeAnArrayOfLength(7)
     })
 
     it('only existing rows', async () => {
@@ -74,8 +79,13 @@ describe(PriceRepository.name, () => {
       await repository.addOrUpdate(existingRows)
 
       const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(DATA[2], DATA[3], ...existingRows)
-      expect(results).toBeAnArrayOfLength(4)
+      expect(results).toBeAnArrayWith(
+        DATA[2],
+        DATA[3],
+        ...existingRows,
+        DATA[4]
+      )
+      expect(results).toBeAnArrayOfLength(5)
     })
 
     it('mixed: new and existing rows', async () => {
@@ -94,8 +104,14 @@ describe(PriceRepository.name, () => {
 
       await repository.addOrUpdate(mixedRows)
       const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(DATA[0], DATA[2], DATA[3], ...mixedRows)
-      expect(results).toBeAnArrayOfLength(5)
+      expect(results).toBeAnArrayWith(
+        DATA[0],
+        DATA[2],
+        DATA[3],
+        ...mixedRows,
+        DATA[4]
+      )
+      expect(results).toBeAnArrayOfLength(6)
     })
   })
 
@@ -103,7 +119,7 @@ describe(PriceRepository.name, () => {
     const results = await repository.getAll()
 
     expect(results).toBeAnArrayWith(...DATA)
-    expect(results).toBeAnArrayOfLength(4)
+    expect(results).toBeAnArrayOfLength(5)
   })
 
   it(PriceRepository.prototype.getAllByToken.name, async () => {
@@ -124,21 +140,35 @@ describe(PriceRepository.name, () => {
     expect(results).toBeAnArrayOfLength(0)
   })
 
-  describe(PriceRepository.prototype.getLatestKnownDateByToken.name, () => {
-    it('saved token', async () => {
-      const result = await repository.getLatestKnownDateByToken(
-        CoingeckoId('uniswap')
+  describe(PriceRepository.prototype.getDataBoundaries.name, () => {
+    it('boundary of single and multi row data', async () => {
+      const result = await repository.getDataBoundaries()
+
+      expect(result).toEqual(
+        new Map([
+          [
+            CoingeckoId('ethereum'),
+            {
+              earliest: START.add(-2, 'hours'),
+              latest: START.add(-1, 'hours'),
+            },
+          ],
+          [
+            CoingeckoId('uniswap'),
+            {
+              earliest: START.add(-2, 'hours'),
+              latest: START.add(-1, 'hours'),
+            },
+          ],
+          [
+            CoingeckoId('dai'),
+            {
+              earliest: START,
+              latest: START,
+            },
+          ],
+        ])
       )
-
-      expect(result).toEqual(START.add(-1, 'hours'))
-    })
-
-    it('not saved token', async () => {
-      const result = await repository.getLatestKnownDateByToken(
-        CoingeckoId('unknown-token')
-      )
-
-      expect(result).toEqual(undefined)
     })
   })
 })

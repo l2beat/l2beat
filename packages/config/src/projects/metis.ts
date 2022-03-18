@@ -42,9 +42,9 @@ export const metis: Project = {
     provider: 'Optimism',
     riskView: {
       stateValidation: {
-        value: 'No validation',
+        value: 'In development',
         description:
-          'Currently the system does not have any on-chain mechanism to validate the state roots. More details in project overview.',
+          'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
       },
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
