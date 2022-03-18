@@ -122,6 +122,14 @@ describe(PriceRepository.name, () => {
     expect(results).toBeAnArrayOfLength(5)
   })
 
+  it(PriceRepository.prototype.getByTimestamp.name, async () => {
+    const timestamp = START.add(-1, 'hours')
+
+    const results = await repository.getByTimestamp(timestamp)
+
+    expect(results).toBeAnArrayWith(DATA[0], DATA[2])
+  })
+
   it(PriceRepository.prototype.getAllByToken.name, async () => {
     const token = CoingeckoId('uniswap')
     const results = await repository.getAllByToken(token)
