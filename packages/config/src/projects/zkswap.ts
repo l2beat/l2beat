@@ -156,6 +156,8 @@ export const zkswap: Project = {
           {
             address: '0x02ecef526f806f06357659fFD14834fe82Ef4B04',
             name: 'Governance',
+            description:
+              'Keeps a list of block producers and whitelisted tokens.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
