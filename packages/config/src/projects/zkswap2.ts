@@ -79,13 +79,15 @@ export const zkswap2: Project = {
               'Additional contract to store implementation details of the main ZkSync contract.',
           },
           {
-            address: 'c0221a4dfb792aa71ce84c2687b1d2b1e7d3eea0',
+            address: '0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0',
             name: 'ZkSyncExit',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
           },
           {
-            address: '86e527bc3c43e6ba3eff3a8cad54a7ed09cd8e8b',
+            address: '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
             name: 'Governance',
+            description:
+              'Keeps a list of block producers and whitelisted tokens.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
@@ -93,7 +95,7 @@ export const zkswap2: Project = {
             },
           },
           {
-            address: 'd2cbdcd7c6b3152bdff6549c208052e4dbcd575d',
+            address: '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
             name: 'PairManager',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
@@ -103,17 +105,17 @@ export const zkswap2: Project = {
             },
           },
           {
-            address: '42f15efe22993c88441ef3467f2e6fa8ffa9adef',
+            address: '0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef',
             name: 'Verifier',
-            description: 'zk-SNARK Plonk Verifier',
+            description: 'zk-SNARK Plonk Verifier.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
-              implementation: '0x94b9401945a9bc06ce5b69e6db3c6b671aabc829',
+              implementation: '0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829',
             },
           },
           {
-            address: 'b56878d21f6b101f48bb55f1aa9d3f624f04e513',
+            address: '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
             name: 'VerifierExit',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
