@@ -5,10 +5,9 @@ import {
   mock,
   UnixTime,
 } from '@l2beat/common'
-import { getTokenByAssetId } from '@l2beat/config'
 import { expect } from 'earljs'
 
-import { ReportUpdater } from '../../src/core/ReportUpdater'
+import { calculateReport, ReportUpdater } from '../../src/core/ReportUpdater'
 import { BalanceRecord, BalanceRepository } from '../../src/peripherals/database/BalanceRepository'
 import {
   PriceRecord,
@@ -17,7 +16,7 @@ import {
 import { ReportRepository } from '../../src/peripherals/database/ReportRepository'
 
 describe(ReportUpdater.name, () => {
-  describe(ReportUpdater.prototype.calculateTVL.name, () => {
+  describe(ReportUpdater.prototype.calculateTvls.name, () => {
     it('**name**', async () => {
       const START = UnixTime.now().toStartOf('hour')
       const MOCK_BRIDGE = EthereumAddress(
@@ -59,7 +58,7 @@ describe(ReportUpdater.name, () => {
         reportRepository
       )
 
-      const result = reportUpdater.calculateTVL(prices,balances)
+      const result = reportUpdater.calculateTvls(prices,balances)
 
       expect(result).toEqual([{
         blockNumber: 1000n,
@@ -73,4 +72,66 @@ describe(ReportUpdater.name, () => {
   })
 })
 
-getTokenByAssetId
+describe(calculateReport.name, () => {
+  it('price: 3.20 $ || balance: 22.123456', async () => {
+    const price: PriceRecord = {
+      priceUsd: 3.20,
+      timestamp: UnixTime.now(),
+      coingeckoId: CoingeckoId('token')
+    }
+
+    const balance: BalanceRecord = {
+      balance: 22123456n,
+      assetId: AssetId('tok-token'),
+      blockNumber: 100000n,
+      holderAddress: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d')
+    }
+
+    const decimals = 6
+
+    const ethPrice = 1000
+
+    const result = calculateReport(price,decimals,balance,ethPrice)
+
+    expect(result).toEqual({
+      blockNumber: balance.blockNumber,
+      timestamp: price.timestamp,
+      bridge: balance.holderAddress,
+      asset: balance.assetId,
+      usdTVL: 70795059200000000000n,
+      ethTVL: 70795059200000000n,
+    })
+  })
+
+  it('price: 3.20 $ || balance: 22.123456789123456789', async () => {
+    const price: PriceRecord = {
+      priceUsd: 3.20,
+      timestamp: UnixTime.now(),
+      coingeckoId: CoingeckoId('token')
+    }
+
+    const balance: BalanceRecord = {
+      balance: 22123456789123456789n,
+      assetId: AssetId('tok-token'),
+      blockNumber: 100000n,
+      holderAddress: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d')
+    }
+
+    const decimals = 18
+
+    const ethPrice = 1000
+
+    const result = calculateReport(price,decimals,balance,ethPrice)
+
+    expect(result).toEqual({
+      blockNumber: balance.blockNumber,
+      timestamp: price.timestamp,
+      bridge: balance.holderAddress,
+      asset: balance.assetId,
+      usdTVL: 70795061725195061724n,
+      ethTVL: 70795061725195061n,
+    })
+  })
+})
+
+
