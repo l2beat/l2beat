@@ -1,5 +1,5 @@
-import { UnixTime } from '@l2beat/common'
-import { getTokenByCoingeckoId } from '@l2beat/config'
+import { AssetId, UnixTime } from '@l2beat/common'
+import { getTokenByAssetId, getTokenByCoingeckoId } from '@l2beat/config'
 
 import {
   BalanceRecord,
@@ -46,48 +46,56 @@ export class ReportUpdater {
       prices.map((p) => [getTokenByCoingeckoId(p.coingeckoId).id, p])
     )
 
-    for (const balance of balances) {
-      const price = priceMap.get(balance.assetId)
+    const ethPrice = priceMap.get(AssetId.ETH)?.priceUsd
 
-      if (price) {
-        tvls.push({
-          blockNumber: balance.blockNumber,
-          timestamp: price.timestamp,
-          bridge: balance.holderAddress,
-          asset: balance.assetId,
-          //TODO calculate prices as in old backend
-          usdTVL: balance.balance * BigInt(price.priceUsd),
-          ethTVL: BigInt(0),
-        })
+    if (ethPrice) {
+      for (const balance of balances) {
+        const price = priceMap.get(balance.assetId)
+        const token = getTokenByAssetId(balance.assetId)
+
+        if (price) {
+          tvls.push(calculateTVL(price, token.decimals, balance, ethPrice))
+        }
       }
     }
-
     return tvls
   }
 }
 
-export function calculateReport(
+export function calculateTVL(
   price: PriceRecord,
   decimals: number,
   balance: BalanceRecord,
   ethPrice: number
 ): ReportRecord {
-  const pp = BigInt(
-    `${(price.priceUsd * 100).toFixed()}${'0'.repeat(36 - decimals - 2)}`
+  const bigintPrice = getBigIntPrice(price.priceUsd, decimals)
+
+  const usdBalance = (balance.balance * bigintPrice) / BigInt(Math.pow(10, 18))
+
+  const etherBigInt = getBigIntPrice(ethPrice, 18)
+
+  const etherBalance = (usdBalance * BigInt(Math.pow(10, 18))) / etherBigInt
+
+  const usdTVL = BigInt(
+    usdBalance.toString().slice(0, usdBalance.toString().length - 18 + 2)
   )
 
-  const usdBalance = (balance.balance * pp) / BigInt(Math.pow(10, 18))
-
-  const etherBigInt = BigInt(`${ethPrice * 100}`)
-
-  const etherBalance = (usdBalance * 100n) / etherBigInt
+  const ethTVL = BigInt(
+    etherBalance.toString().slice(0, usdBalance.toString().length - 18 + 6)
+  )
 
   return {
     blockNumber: balance.blockNumber,
     timestamp: price.timestamp,
     bridge: balance.holderAddress,
     asset: balance.assetId,
-    usdTVL: usdBalance,
-    ethTVL: etherBalance,
+    usdTVL,
+    ethTVL,
   }
+}
+
+export function getBigIntPrice(price: number, decimals: number) {
+  const priceTwoDecimals = `${(price * 100).toFixed()}`
+  const zeroes = '0'.repeat(18 * 2 - decimals - 2)
+  return BigInt(`${priceTwoDecimals}${zeroes}`)
 }
