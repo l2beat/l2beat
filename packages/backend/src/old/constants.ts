@@ -28,3 +28,4 @@ export const UNISWAP_V1_RELEASE_BLOCK = 6627917
 export const UNISWAP_V2_RELEASE_BLOCK = 10000835
 export const UNISWAP_V3_RELEASE_BLOCK = 12369621
 
+export const TEN_TO_18 = BigNumber.from('1' + '0'.repeat(18))
