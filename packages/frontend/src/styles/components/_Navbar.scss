@@ -99,14 +99,14 @@
 
 .Navbar-LightMode {
   display: none;
-  @include dark-mode {
+  .dark & {
     display: block;
   }
 }
 
 .Navbar-DarkMode {
   display: block;
-  @include dark-mode {
+  .dark & {
     display: none;
   }
 }

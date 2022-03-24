@@ -1,5 +1,5 @@
 .OptimismIcon {
-  @include dark-mode {
+  .dark & {
     rect {
       fill: var(--text);
     }

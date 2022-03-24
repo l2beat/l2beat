@@ -8,26 +8,32 @@ describe(PriceRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
   const repository = new PriceRepository(knex, Logger.SILENT)
 
+  const START = UnixTime.fromDate(new Date())
   const DATA = [
     {
       priceUsd: 3000,
-      timestamp: UnixTime.fromDate(new Date()).add(-1, 'hours'),
+      timestamp: START.add(-1, 'hours'),
       coingeckoId: CoingeckoId('ethereum'),
     },
     {
       priceUsd: 3100,
-      timestamp: UnixTime.fromDate(new Date()).add(-2, 'hours'),
+      timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('ethereum'),
     },
     {
       priceUsd: 20,
-      timestamp: UnixTime.fromDate(new Date()).add(-1, 'hours'),
+      timestamp: START.add(-1, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
     },
     {
       priceUsd: 22,
-      timestamp: UnixTime.fromDate(new Date()).add(-2, 'hours'),
+      timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
+    },
+    {
+      priceUsd: 1,
+      timestamp: START,
+      coingeckoId: CoingeckoId('dai'),
     },
   ]
 
@@ -54,7 +60,7 @@ describe(PriceRepository.name, () => {
 
       const results = await repository.getAll()
       expect(results).toBeAnArrayWith(...DATA, ...newRows)
-      expect(results).toBeAnArrayOfLength(6)
+      expect(results).toBeAnArrayOfLength(7)
     })
 
     it('only existing rows', async () => {
@@ -73,8 +79,13 @@ describe(PriceRepository.name, () => {
       await repository.addOrUpdate(existingRows)
 
       const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(DATA[2], DATA[3], ...existingRows)
-      expect(results).toBeAnArrayOfLength(4)
+      expect(results).toBeAnArrayWith(
+        DATA[2],
+        DATA[3],
+        ...existingRows,
+        DATA[4]
+      )
+      expect(results).toBeAnArrayOfLength(5)
     })
 
     it('mixed: new and existing rows', async () => {
@@ -93,8 +104,14 @@ describe(PriceRepository.name, () => {
 
       await repository.addOrUpdate(mixedRows)
       const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(DATA[0], DATA[2], DATA[3], ...mixedRows)
-      expect(results).toBeAnArrayOfLength(5)
+      expect(results).toBeAnArrayWith(
+        DATA[0],
+        DATA[2],
+        DATA[3],
+        ...mixedRows,
+        DATA[4]
+      )
+      expect(results).toBeAnArrayOfLength(6)
     })
   })
 
@@ -102,7 +119,7 @@ describe(PriceRepository.name, () => {
     const results = await repository.getAll()
 
     expect(results).toBeAnArrayWith(...DATA)
-    expect(results).toBeAnArrayOfLength(4)
+    expect(results).toBeAnArrayOfLength(5)
   })
 
   it(PriceRepository.prototype.getAllByToken.name, async () => {
@@ -121,5 +138,37 @@ describe(PriceRepository.name, () => {
     const results = await repository.getAll()
 
     expect(results).toBeAnArrayOfLength(0)
+  })
+
+  describe(PriceRepository.prototype.getDataBoundaries.name, () => {
+    it('boundary of single and multi row data', async () => {
+      const result = await repository.getDataBoundaries()
+
+      expect(result).toEqual(
+        new Map([
+          [
+            CoingeckoId('ethereum'),
+            {
+              earliest: START.add(-2, 'hours'),
+              latest: START.add(-1, 'hours'),
+            },
+          ],
+          [
+            CoingeckoId('uniswap'),
+            {
+              earliest: START.add(-2, 'hours'),
+              latest: START.add(-1, 'hours'),
+            },
+          ],
+          [
+            CoingeckoId('dai'),
+            {
+              earliest: START,
+              latest: START,
+            },
+          ],
+        ])
+      )
+    })
   })
 })

@@ -82,6 +82,8 @@ export const deversifi: Project = {
           },
           {
             name: 'Committee',
+            description:
+              'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
             address: '0x28780349A33eEE56bb92241bAAB8095449e24306',
           },
           SHARP_VERIFIER_CONTRACT,
