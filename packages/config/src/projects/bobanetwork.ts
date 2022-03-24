@@ -37,7 +37,7 @@ export const bobanetwork: Project = {
       apps: [],
       documentation: ['https://docs.boba.network/'],
       explorers: ['https://blockexplorer.boba.network/'],
-      repositories: ['https://github.com/omgnetwork/optimism'],
+      repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
         'https://boba.network/#news',
         'https://www.enya.ai/company/media',
@@ -81,7 +81,7 @@ export const bobanetwork: Project = {
           },
           {
             text: 'Checking Boba Mainnet for Fraud - Boba Optimism repository',
-            href: 'https://github.com/omgnetwork/optimism-v2/tree/develop/boba_community/fraud-detector',
+            href: 'https://github.com/bobanetwork/boba/blob/develop/boba_community/fraud-detector',
           },
         ],
       },
