@@ -49,12 +49,12 @@ function toRow(record: ReportRecord): ReportRow {
 }
 
 function toRecord(row: ReportRow): ReportRecord {
-    return {
-        blockNumber: BigInt(row.block_number),
-        timestamp: new UnixTime(+row.unix_timestamp),
-        bridge: EthereumAddress(row.bridge_address),
-        asset: AssetId(row.asset_id),
-        usdTVL: BigInt(row.usd_tvl),
-        ethTVL: BigInt(row.eth_tvl),
-    }
+  return {
+    blockNumber: BigInt(row.block_number),
+    timestamp: new UnixTime(+row.unix_timestamp),
+    bridge: EthereumAddress(row.bridge_address),
+    asset: AssetId(row.asset_id),
+    usdTVL: BigInt(row.usd_tvl),
+    ethTVL: BigInt(row.eth_tvl),
+  }
 }

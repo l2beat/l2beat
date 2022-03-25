@@ -16,7 +16,6 @@ export interface DataBoundary {
 export class PriceRepository {
   constructor(private knex: Knex, private logger: Logger) {
     this.logger = this.logger.for(this)
-
   }
 
   async getAll(): Promise<PriceRecord[]> {

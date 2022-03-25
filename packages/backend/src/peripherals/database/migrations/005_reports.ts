@@ -6,8 +6,8 @@ export async function up(knex: Knex) {
     table.bigInteger('unix_timestamp').notNullable()
     table.string('bridge_address').notNullable()
     table.string('asset_id').notNullable()
-    table.decimal('usd_tvl',80,0).notNullable()
-    table.decimal('eth_tvl',80,0).notNullable()
+    table.decimal('usd_tvl', 80, 0).notNullable()
+    table.decimal('eth_tvl', 80, 0).notNullable()
     table.primary(['block_number', 'bridge_address', 'asset_id'])
   })
 }
