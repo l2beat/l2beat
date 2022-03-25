@@ -131,15 +131,25 @@ export const aztec: Project = {
         addresses: [
           {
             address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+            description:
+              'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
             name: 'RollupProcessor',
           },
           {
             address: '0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734',
+            description:
+              'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
             name: 'AztecFeeDistributor',
           },
           {
             address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
+            description: 'Turbo Plonk zkSNARK Verifier.',
             name: 'TurboVerifier',
+          },
+          {
+            address: '0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530',
+            description: 'Verification Keys for the Verifier.',
+            name: 'VerificationKeys',
           },
         ],
         risks: [],
