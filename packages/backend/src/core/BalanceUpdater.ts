@@ -27,9 +27,11 @@ export class BalanceUpdater {
     for (const blockNumber of unprocessed) {
       const missing = await this.getMissingDataByBlock(blockNumber)
 
-      const balances = await this.fetchBalances(missing, blockNumber)
-      await this.balanceRepository.addOrUpdate(balances)
-      this.processedBlocks.add(blockNumber)
+      if(missing.length > 0) {
+        const balances = await this.fetchBalances(missing, blockNumber)
+        await this.balanceRepository.addOrUpdate(balances)
+        this.processedBlocks.add(blockNumber)
+      }
     }
   }
 
