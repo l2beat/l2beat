@@ -178,7 +178,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         PROJECTS,
-        Logger.SILENT
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -280,7 +279,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         [],
-        Logger.SILENT
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -288,15 +286,9 @@ describe(BalanceUpdater.name, () => {
       await balanceUpdater.update(blocks)
       await balanceUpdater.update(blocks)
 
-      expect(multicall.multicall).toHaveBeenCalledExactlyWith([
-        [[], START_BLOCK_NUMBER],
-        [[], START_BLOCK_NUMBER + 1000n],
-      ])
+      expect(multicall.multicall.calls.length).toEqual(0)
 
-      expect(balanceRepository.addOrUpdate).toHaveBeenCalledExactlyWith([
-        [[]],
-        [[]],
-      ])
+      expect(balanceRepository.addOrUpdate.calls.length).toEqual(0)
     })
   })
 
@@ -313,7 +305,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         PROJECTS,
-        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -373,7 +364,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         PROJECTS,
-        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -448,7 +438,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         projects,
-        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -505,7 +494,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         projects,
-        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -553,7 +541,6 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         [],
-        Logger.SILENT
       )
 
       const metadata = [

@@ -26,7 +26,6 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         [],
-        Logger.SILENT
       )
 
       await priceUpdater.update([])
@@ -59,7 +58,6 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         tokens,
-        Logger.SILENT
       )
 
       await priceUpdater.update([HOUR_09, HOUR_10, HOUR_11, HOUR_12, HOUR_13])
@@ -90,7 +88,6 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
         )
 
         await priceUpdater.updateToken(
@@ -128,7 +125,6 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_09)
@@ -147,7 +143,6 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_13, HOUR_13)
@@ -166,7 +161,6 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_11, HOUR_11)
@@ -183,7 +177,6 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_13)
@@ -205,7 +198,6 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_10, HOUR_12)
@@ -236,7 +228,6 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         tokens,
-        Logger.SILENT
       )
 
       await priceUpdater.fetchAndSave(tokens[0], from, from.add(2, 'hours'))

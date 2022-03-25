@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress } from '@l2beat/common'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
@@ -27,7 +27,7 @@ export class BalanceUpdater {
     for (const blockNumber of unprocessed) {
       const missing = await this.getMissingDataByBlock(blockNumber)
 
-      if(missing.length > 0) {
+      if (missing.length > 0) {
         const balances = await this.fetchBalances(missing, blockNumber)
         await this.balanceRepository.addOrUpdate(balances)
         this.processedBlocks.add(blockNumber)
