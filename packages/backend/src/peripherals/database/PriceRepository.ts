@@ -60,7 +60,11 @@ export class PriceRepository {
       .insert(rows)
       .onConflict(['coingecko_id', 'unix_timestamp'])
       .merge()
-    this.logger.debug({ method: 'add', amount: rows.length })
+    this.logger.debug({
+      method: 'add',
+      token: rows[0]?.coingecko_id,
+      amount: rows.length,
+    })
   }
 
   async deleteAll() {

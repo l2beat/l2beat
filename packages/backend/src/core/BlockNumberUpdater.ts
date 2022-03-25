@@ -1,4 +1,4 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/common'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../peripherals/etherscan'
@@ -6,11 +6,8 @@ import { EtherscanClient } from '../peripherals/etherscan'
 export class BlockNumberUpdater {
   constructor(
     private etherscanClient: EtherscanClient,
-    private blockNumberRepository: BlockNumberRepository,
-    private logger: Logger
-  ) {
-    this.logger = this.logger.for(this)
-  }
+    private blockNumberRepository: BlockNumberRepository
+  ) {}
 
   async update(timestamps: UnixTime[]): Promise<bigint[]> {
     const knownBlocks = await this.blockNumberRepository.getAll()

@@ -1,4 +1,4 @@
-import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
+import { CoingeckoId, UnixTime } from '@l2beat/common'
 
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
@@ -11,11 +11,8 @@ export class PriceUpdater {
   constructor(
     private coingeckoQueryService: CoingeckoQueryService,
     private priceRepository: PriceRepository,
-    private coingeckoIds: CoingeckoId[],
-    private logger: Logger
-  ) {
-    this.logger = this.logger.for(this)
-  }
+    private coingeckoIds: CoingeckoId[]
+  ) {}
 
   async update(timestamps: UnixTime[]) {
     if (timestamps.length === 0) {
