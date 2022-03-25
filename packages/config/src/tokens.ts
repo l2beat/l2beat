@@ -1898,3 +1898,15 @@ export function getTokenByAssetId(assetId: AssetId) {
   }
   return token
 }
+
+const tokenMapByCoingeckoId = new Map(
+  tokenList.map((t) => [t.coingeckoId, t] as const)
+)
+
+export function getTokenByCoingeckoId(coingeckoId: CoingeckoId) {
+  const token = tokenMapByCoingeckoId.get(coingeckoId)
+  if (!token) {
+    throw new TypeError(`Unknown token ${coingeckoId}`)
+  }
+  return token
+}

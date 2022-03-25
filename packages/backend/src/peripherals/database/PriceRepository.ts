@@ -28,6 +28,19 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
+  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
+    const rows = await this.knex('coingecko_prices')
+      .where({ unix_timestamp: timestamp.toNumber().toString() })
+      .select('coingecko_id', 'price_usd', 'unix_timestamp')
+
+    this.logger.debug({
+      method: 'getAllByTimestamp',
+      timestamp: timestamp.toString(),
+      amount: rows.length,
+    })
+    return rows.map(toRecord)
+  }
+
   async getAllByToken(coingeckoId: CoingeckoId) {
     const rows = await this.knex('coingecko_prices')
       .where({ coingecko_id: coingeckoId.toString() })
