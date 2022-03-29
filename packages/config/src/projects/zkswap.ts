@@ -11,7 +11,7 @@ import {
 import { Project } from './types'
 
 export const zkswap: Project = {
-  name: 'ZKSwap',
+  name: 'ZKSwap 1.0',
   slug: 'zkswap',
   associatedTokens: ['ZKS'],
   bridges: [
@@ -22,9 +22,11 @@ export const zkswap: Project = {
     },
   ],
   details: {
+    warning:
+      'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
     description:
-      'ZKSwap claims to be a Layer 2 AMM decentralized transaction protocol. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
-    purpose: 'Payments, Exchange',
+      'ZKSwap is a fork of ZkSync with added AMM functionality. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
+    purpose: 'Payments, AMM',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -128,16 +130,12 @@ export const zkswap: Project = {
       contracts: {
         addresses: [
           {
-            address: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
-            name: 'UpgradeGatekeeper',
-            description:
-              'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
-          },
-          {
             address: '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad',
             name: 'ZkSync',
             description:
-              'This contract defines the upgrade delay. Unfortunately this information is stored in an internal constant and not exposed as a public view method. The UPGRADE_NOTICE_PERIOD constant is currently set to 691200 seconds which equals 8 days. Every time the contract upgrades this information has to be verified again.',
+              'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
+              contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
+              the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
@@ -145,8 +143,21 @@ export const zkswap: Project = {
             },
           },
           {
+            address: '0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157',
+            name: 'ZkSyncCommitBlock',
+            description:
+              'Additional contract to store implementation details of the main ZkSync contract.',
+          },
+          {
+            address: '0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157',
+            name: 'ZkSyncExit',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+          },
+          {
             address: '0x02ecef526f806f06357659fFD14834fe82Ef4B04',
             name: 'Governance',
+            description:
+              'Keeps a list of block producers and whitelisted tokens.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
@@ -155,7 +166,7 @@ export const zkswap: Project = {
           },
           {
             address: '0x661121AE41edE3f6FECDed922c59acC19A3ea9B3',
-            name: 'Unknown1',
+            name: 'PairManager',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
@@ -165,7 +176,7 @@ export const zkswap: Project = {
           },
           {
             address: '0x27C229937745d697d28FC7853d1bFEA7331Edf56',
-            name: 'Unknown2',
+            name: 'Verifier',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
@@ -175,13 +186,19 @@ export const zkswap: Project = {
           },
           {
             address: '0x961369d347EF7A6896BDD39cBE2B89e3911f521f',
-            name: 'Unknown3',
+            name: 'VerifierExit',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
               admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
               implementation: '0xd12F4D8329584F36aEd67f807F42D9a02bEb9534',
             },
+          },
+          {
+            address: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+            name: 'UpgradeGatekeeper',
+            description:
+              'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
           },
         ],
         risks: [
@@ -191,6 +208,11 @@ export const zkswap: Project = {
       },
     },
     news: [
+      {
+        date: '2021-120-20',
+        name: 'L2 Labs Launches All-in-One Layer2 Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments',
+        link: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      },
       {
         date: '2021-08-25',
         name: 'ZKSwap Announces Deployment of V2 on BSC Mainnet',
