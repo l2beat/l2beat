@@ -1,7 +1,7 @@
-import zlib from 'zlib'
+import { BufferReader } from '@loopx/bufio'
 import { ethers } from 'ethers'
+import zlib from 'zlib'
 
-import { BufferReader } from 'bufio'
 import { FourBytesApi } from './FourBytesApi'
 import { add0x, trimLong } from './utils'
 
