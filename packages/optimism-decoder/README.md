@@ -14,6 +14,7 @@ Optimism OVM 2.0
 
 yarn start 0xd74125855bda2ee25d89e67e1fd537e4573f898b84f76dea7fee3c777cf1d854
 yarn start 0x82d4965f687faf9424bf55086f01fa61643ba2468cffa6a4bf860d2ba8a623e8
+yarn start 0xcc393344a29da4291f79a0cfb35ece2cc8501e859b524ba13515e985ce7a367a
 ```
 
 Optimism OVM 1.0

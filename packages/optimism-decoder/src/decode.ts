@@ -1,6 +1,7 @@
+import { BufferReader } from '@loopx/bufio'
 import { ethers } from 'ethers'
+import zlib from 'zlib'
 
-import { ByteReader } from './ByteReader'
 import { FourBytesApi } from './FourBytesApi'
 import { add0x, trimLong } from './utils'
 
@@ -24,18 +25,18 @@ export async function decodeSequencerBatch(
   fourBytesApi: FourBytesApi
 ): Promise<AppendSequencerBatchParams> {
   console.log('Decoding', kind, 'L1 Sequencer transaction batch...')
-  const reader = new ByteReader(data)
+  let reader = new BufferReader(Buffer.from(data.slice(2), 'hex'))
 
-  const methodName = reader.getBytes(4)
+  const methodName = reader.readBytes(4).toString('hex')
   console.log('MethodName:', methodName)
 
   if (kind === 'Metis') {
-    const chainId = reader.getNumber(32)
+    const chainId = reader.readBytes(32).toString('hex')
     console.log('ChainId:', chainId)
   }
-  const shouldStartAtElement = reader.getNumber(5)
-  const totalElementsToAppend = reader.getNumber(3)
-  const contextCount = reader.getNumber(3)
+  const shouldStartAtElement = reader.readU40BE()
+  const totalElementsToAppend = reader.readU24BE()
+  const contextCount = reader.readU24BE()
 
   console.log('Should start at Element:', shouldStartAtElement)
   console.log('Total Elements to Append:', totalElementsToAppend)
@@ -43,10 +44,10 @@ export async function decodeSequencerBatch(
 
   const contexts = []
   for (let i = 0; i < contextCount; i++) {
-    const sequencerTxCount = reader.getNumber(3)
-    const queueTxCount = reader.getNumber(3)
-    const timestamp = reader.getNumber(5)
-    const blockNumber = reader.getNumber(5)
+    const sequencerTxCount = reader.readU24BE()
+    const queueTxCount = reader.readU24BE()
+    const timestamp = reader.readU40BE()
+    const blockNumber = reader.readU40BE()
     contexts.push({
       sequencerTxCount,
       queueTxCount,
@@ -55,12 +56,22 @@ export async function decodeSequencerBatch(
     })
   }
 
+  if (contexts[0].blockNumber === 0) {
+    console.log(
+      'Block number = 0 ? Transactions are compressed, nice.... Decompressing....'
+    )
+    contexts.slice(1) // remove dummy context that indicates compressed transaction data
+    const bytes = reader.readBytes(reader.left())
+    const inflated = zlib.inflateSync(bytes)
+    reader = new BufferReader(inflated)
+  }
+
   const transactions = []
   for (const context of contexts) {
     console.log('Block:', context.blockNumber, 'Timestamp:', context.timestamp)
     for (let i = 0; i < context.sequencerTxCount; i++) {
-      const size = reader.getNumber(3)
-      const raw = reader.getBytes(size)
+      const size = reader.readU24BE()
+      const raw = reader.readBytes(size).toString('hex')
       const parsed = ethers.utils.parseTransaction(add0x(raw))
       const methodHash = parsed.data.slice(0, 10)
       const methodSignature = await fourBytesApi.getMethodSignature(methodHash)
