@@ -17,6 +17,7 @@ import { starknet } from './starknet'
 import { Project } from './types'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
+import { zkswap2 } from './zkswap2'
 import { zksync } from './zksync'
 
 export * from './types'
@@ -39,6 +40,7 @@ export const projects: Project[] = [
   sorare,
   starknet,
   zkswap,
+  zkswap2,
   zkspace,
   zksync,
 ]

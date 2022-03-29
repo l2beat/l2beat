@@ -2,21 +2,24 @@ import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
 import { Project } from './types'
 import { zkswap } from './zkswap'
 
-export const zkspace: Project = {
-  name: 'ZKSpace',
-  slug: 'zkspace',
+export const zkswap2: Project = {
+  name: 'ZKSwap 2.0',
+  slug: 'zkswap2',
   associatedTokens: ['ZKS'],
   bridges: [
     {
-      address: '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
-      sinceBlock: 13809566,
+      address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
+      sinceBlock: 12810001,
       tokens: '*',
     },
   ],
   details: {
+    warning:
+      'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
     description:
-      'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK-Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
-    purpose: 'Tokens, NFTs, AMM',
+      'ZKSwap is a fork of ZkSync with added AMM functionality. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
+    purpose: 'Payments, AMM',
+
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -57,7 +60,7 @@ export const zkspace: Project = {
       contracts: {
         addresses: [
           {
-            address: '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+            address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
             name: 'ZkSync',
             description:
               'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
@@ -65,82 +68,64 @@ export const zkspace: Project = {
               the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-              implementation: '0x467a2B91f231D930F5eeB6B982C7666E81DA8626',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
+              implementation: '0xf2c351f22b148A9fF583a0F81701471a74E7338e',
             },
           },
           {
-            address: '0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db',
+            address: '0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4',
             name: 'ZkSyncCommitBlock',
             description:
               'Additional contract to store implementation details of the main ZkSync contract.',
           },
           {
-            address: '0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7',
+            address: '0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0',
             name: 'ZkSyncExit',
-            description:
-              'Additional contract to store implementation details of the main ZkSync contract.',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
           },
           {
-            address: '0x899A605a3B7A11eA5D928958b77014e763c53426',
-            name: 'ZkSea',
-            description:
-              'Additional contract to store implementation details of the main ZkSync contract.',
-          },
-          {
-            address: '0x83Cb1531Ec8447366501aE440478da245EcffB89',
+            address: '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
             name: 'Governance',
             description:
               'Keeps a list of block producers and whitelisted tokens.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-              implementation: '0x6659174CdB0c445B897aEd25181f293E468941a5',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
+              implementation: '0x95269f9E76540459c797089034dc74b48dF780a2',
             },
           },
           {
-            address: '0xc07f850b60E0EEd49a09E455b01a869C25963735',
+            address: '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
             name: 'PairManager',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
-              admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-              implementation: '0x5f3bE7846efC473552C5619b929F7d4aa640fb54',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
+              implementation: '0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89',
             },
           },
           {
-            address: '0xc632347cc96A4400653E3514eA148630455295b5',
-            name: 'ZKSeaNFT',
-            description:
-              'Contract managing deposits and withdrawals of NFTs to Layer2.',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-              implementation: '0xD06986022EFE62A5BC8258299e4495Bb27567BE0',
-            },
-          },
-          {
-            address: '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
+            address: '0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef',
             name: 'Verifier',
             description: 'zk-SNARK Plonk Verifier.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-              implementation: '0x9F09666e45A5ceb9D055e2483885dc613f651898',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
+              implementation: '0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829',
             },
           },
           {
-            address: '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
+            address: '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
             name: 'VerifierExit',
-            description: 'zk-SNARK Verifier for the escape hatch.',
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
             upgradeability: {
               type: 'EIP1967',
-              admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-              implementation: '0xd06FC0D24308378926791AB6c039bf13B916AE01',
+              admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
+              implementation: '0x17e51B3659884d70a306906B5BDD73D1c64a3892',
             },
           },
           {
-            address: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
+            address: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
             name: 'UpgradeGatekeeper',
             description: CONTRACTS.UNVERIFIED_DESCRIPTION,
           },
