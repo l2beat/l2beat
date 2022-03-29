@@ -2,6 +2,7 @@ import {
   CoingeckoClient,
   CoingeckoId,
   EthereumAddress,
+  getTimestamps,
   UnixTime,
 } from '@l2beat/common'
 
@@ -31,7 +32,7 @@ export class CoingeckoQueryService {
       (a, b) => a.date.getTime() - b.date.getTime()
     )
 
-    const timestamps = getFullTimestampsList(from, to, granularity)
+    const timestamps = getTimestamps(from, to, granularity)
 
     return pickPrices(sortedPrices, timestamps)
   }
@@ -82,9 +83,6 @@ export class CoingeckoQueryService {
   }
 }
 
-const SECONDS_PER_HOUR = 3600
-const SECONDS_PER_DAY = 86400
-
 export function pickPrices(
   prices: { price: number; date: Date }[],
   timestamps: UnixTime[]
@@ -110,24 +108,6 @@ export function pickPrices(
       timestamp: timestamps[i],
       deltaMs: getDelta(i, j),
     })
-  }
-  return result
-}
-
-export function getFullTimestampsList(
-  from: UnixTime,
-  to: UnixTime,
-  granularity: Granularity
-): UnixTime[] {
-  if (from.gt(to)) throw new Error('FROM cannot be greater than TO')
-
-  const [start, end] = adjust(from, to, granularity)
-
-  const result: UnixTime[] = []
-  const TIME_STEP =
-    granularity === 'hourly' ? SECONDS_PER_HOUR : SECONDS_PER_DAY
-  for (let i = start.toNumber(); i <= end.toNumber(); i += TIME_STEP) {
-    result.push(new UnixTime(i))
   }
   return result
 }

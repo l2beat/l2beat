@@ -3,7 +3,6 @@ import {
   Bytes,
   CoingeckoId,
   EthereumAddress,
-  Logger,
   mock,
 } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
@@ -177,8 +176,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        PROJECTS,
-        Logger.SILENT
+        PROJECTS
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -279,8 +277,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        [],
-        Logger.SILENT
+        []
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -288,15 +285,9 @@ describe(BalanceUpdater.name, () => {
       await balanceUpdater.update(blocks)
       await balanceUpdater.update(blocks)
 
-      expect(multicall.multicall).toHaveBeenCalledExactlyWith([
-        [[], START_BLOCK_NUMBER],
-        [[], START_BLOCK_NUMBER + 1000n],
-      ])
+      expect(multicall.multicall.calls.length).toEqual(0)
 
-      expect(balanceRepository.addOrUpdate).toHaveBeenCalledExactlyWith([
-        [[]],
-        [[]],
-      ])
+      expect(balanceRepository.addOrUpdate.calls.length).toEqual(0)
     })
   })
 
@@ -312,8 +303,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        PROJECTS,
-        Logger.SILENT
+        PROJECTS
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -372,8 +362,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        PROJECTS,
-        Logger.SILENT
+        PROJECTS
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -447,8 +436,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        projects,
-        Logger.SILENT
+        projects
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -504,8 +492,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        projects,
-        Logger.SILENT
+        projects
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -552,8 +539,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        [],
-        Logger.SILENT
+        []
       )
 
       const metadata = [

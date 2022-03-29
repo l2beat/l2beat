@@ -1,6 +1,7 @@
 import { LogLevel, UnixTime } from '@l2beat/common'
-import { tokenList } from '@l2beat/config'
+import { projects, tokenList } from '@l2beat/config'
 
+import { projectToInfo } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 
@@ -27,5 +28,7 @@ export function getProductionConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
+    coingeckoIds: tokenList.map((t) => t.coingeckoId),
+    projects: projects.map(projectToInfo),
   }
 }

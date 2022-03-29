@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress } from '@l2beat/common'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
@@ -19,25 +19,19 @@ export class BalanceUpdater {
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
-    private projects: ProjectInfo[],
-    private logger: Logger
-  ) {
-    this.logger = this.logger.for(this)
-  }
+    private projects: ProjectInfo[]
+  ) {}
 
   async update(blocks: bigint[]) {
     const unprocessed = blocks.filter((x) => !this.processedBlocks.has(x))
     for (const blockNumber of unprocessed) {
       const missing = await this.getMissingDataByBlock(blockNumber)
 
-      const balances = await this.fetchBalances(missing, blockNumber)
-      await this.balanceRepository.addOrUpdate(balances)
-      this.processedBlocks.add(blockNumber)
-
-      this.logger.debug('Balances updated', {
-        block: blockNumber.toString(),
-        amount: missing.length,
-      })
+      if (missing.length > 0) {
+        const balances = await this.fetchBalances(missing, blockNumber)
+        await this.balanceRepository.addOrUpdate(balances)
+        this.processedBlocks.add(blockNumber)
+      }
     }
   }
 

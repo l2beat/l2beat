@@ -1,6 +1,6 @@
-import { LogLevel, UnixTime } from '@l2beat/common'
+import { CoingeckoId, LogLevel, UnixTime } from '@l2beat/common'
 
-import { Token } from '../model'
+import { ProjectInfo, Token } from '../model'
 
 export interface Config {
   name: string
@@ -18,4 +18,6 @@ export interface Config {
     safeBlockBlockOffset: bigint
   }
   tokens: Token[]
+  coingeckoIds: CoingeckoId[]
+  projects: ProjectInfo[]
 }
