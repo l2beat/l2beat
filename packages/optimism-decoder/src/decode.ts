@@ -25,7 +25,7 @@ export async function decodeSequencerBatch(
   fourBytesApi: FourBytesApi
 ): Promise<AppendSequencerBatchParams> {
   console.log('Decoding', kind, 'L1 Sequencer transaction batch...')
-  let reader: BufferReader = new BufferReader(Buffer.from(data.slice(2), 'hex'))
+  let reader = new BufferReader(Buffer.from(data.slice(2), 'hex'))
 
   const methodName = reader.readBytes(4).toString('hex')
   console.log('MethodName:', methodName)
