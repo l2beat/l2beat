@@ -1,5 +1,6 @@
 import { Logger, mock, UnixTime } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
+import waitForExpect from 'wait-for-expect'
 
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
@@ -8,7 +9,7 @@ import { ReportUpdater } from '../../src/core/ReportUpdater'
 import { SyncScheduler } from '../../src/core/SyncScheduler'
 
 describe(SyncScheduler.name, () => {
-  it('correctly calls services', () => {
+  it('correctly calls services', async () => {
     const blockNumberUpdater = mock<BlockNumberUpdater>({
       update: mockFn().returns([1000n]),
     })
@@ -30,12 +31,13 @@ describe(SyncScheduler.name, () => {
 
     syncScheduler.start()
 
-    setTimeout(() => {
+    await waitForExpect(() => {
       expect(blockNumberUpdater.update.calls.length).toEqual(1)
       expect(priceUpdater.update.calls.length).toEqual(1)
       expect(balanceUpdater.update.calls.length).toEqual(1)
       expect(reportUpdater.update.calls.length).toEqual(1)
-      syncScheduler.stop()
-    }, 1000)
+    })
+
+    syncScheduler.stop()
   })
 })
