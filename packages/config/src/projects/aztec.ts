@@ -152,7 +152,7 @@ export const aztec: Project = {
             name: 'VerificationKeys',
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
