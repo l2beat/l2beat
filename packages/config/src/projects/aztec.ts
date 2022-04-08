@@ -1,4 +1,5 @@
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -143,7 +144,8 @@ export const aztec: Project = {
           },
           {
             address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
-            description: 'Turbo Plonk zkSNARK Verifier.',
+            description:
+              'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
             name: 'TurboVerifier',
           },
           {
@@ -152,7 +154,7 @@ export const aztec: Project = {
             name: 'VerificationKeys',
           },
         ],
-        risks: [],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [
