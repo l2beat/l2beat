@@ -130,7 +130,8 @@ describe('tokens', () => {
     tokenList.map((token) => {
       if (token.symbol === 'ETH')
         expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
-      else expect(token.coingeckoId).toEqual(result.get(token.address))
+      else if (result.get(token.address))
+        expect(token.coingeckoId).toEqual(result.get(token.address))
     })
   })
 })

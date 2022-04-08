@@ -1820,7 +1820,7 @@ export const tokenList: TokenInfo[] = [
   {
     id: AssetId('wton-wrapped-ton-crystal'),
     name: 'Wrapped TON Crystal',
-    coingeckoId: CoingeckoId('everscale'),
+    coingeckoId: CoingeckoId('wrapped-ton-crystal'),
     address: EthereumAddress('0xdB3C2515Da400e11Bcaf84f3b5286f18ffF1868F'),
     symbol: 'WTON',
     decimals: 9,
