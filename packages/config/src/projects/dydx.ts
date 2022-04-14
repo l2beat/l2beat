@@ -38,7 +38,7 @@ export const dydx: Project = {
       ],
       socialMedia: [
         'https://dydx.exchange/blog',
-        'https://twitter.com/dydxprotocol',
+        'https://twitter.com/dYdX',
         'https://discord.gg/Tuze6tY',
         'https://youtube.com/c/dydxprotocol',
         'https://reddit.com/r/dydxprotocol/',
