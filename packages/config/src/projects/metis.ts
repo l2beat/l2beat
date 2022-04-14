@@ -20,6 +20,8 @@ export const metis: Project = {
   ],
   associatedTokens: ['Metis'],
   details: {
+    warning:
+      'On April 12 2022 the protocol architecture was significatly upgraded. The risk evaluation, architecture diagram and contract list needs to be updated.',
     description:
       'Metis is an EVM-equivalent Optimistic Rollup chain originally forked from Optimism. It provides support for multiple, \
       interconnected rollups with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
@@ -217,6 +219,11 @@ export const metis: Project = {
       },
     },
     news: [
+      {
+        date: '2022-04-12',
+        name: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
+        link: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
+      },
       {
         date: '2021-11-03',
         name: 'Metis to Launch Andromeda, Honoring Our Commitment to Decentralization',
