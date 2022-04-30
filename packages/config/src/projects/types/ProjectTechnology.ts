@@ -32,6 +32,7 @@ export interface ProjectTechnology {
 
 export type ProjectCategory =
   | 'Optimistic Rollup'
+  | 'Optimistic Chain'
   | 'Plasma'
   | 'State Pools'
   | 'Validium'

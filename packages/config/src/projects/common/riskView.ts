@@ -54,6 +54,13 @@ export const DATA_MIXED: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
+  value: 'External (MEMO)',
+  description:
+    'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.',
+  sentiment: 'warning',
+}
+
 export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
   value: 'External (DAC)',
   description:
@@ -220,6 +227,7 @@ export const RISK_VIEW = {
   DATA_ON_CHAIN,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
+  DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
   UPGRADABLE_YES,
   UPGRADE_DELAY,
