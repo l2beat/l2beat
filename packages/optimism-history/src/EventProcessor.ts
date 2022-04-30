@@ -1,4 +1,4 @@
-import { AddressAnalyzer } from '@l2beat/common'
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
 import { Event, providers, utils } from 'ethers'
 
 import { BlockTimestampService } from './BlockTimestampService'
@@ -43,10 +43,10 @@ export class EventProcessor {
       '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc'
     const ADMIN_SLOT =
       '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103'
-    const [implementationSlot, adminSlot] = await Promise.all([
-      this.provider.getStorageAt(proxyAddress, IMPLEMENTATION_SLOT),
-      this.provider.getStorageAt(proxyAddress, ADMIN_SLOT),
-    ])
+    const implementationSlot = await this.provider.getStorageAt(
+      proxyAddress,
+      IMPLEMENTATION_SLOT
+    )
     const implementation = this.wordToAddress(implementationSlot)
     return this.addressAnalyzer.getName(implementation as any)
   }
