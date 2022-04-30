@@ -1,6 +1,5 @@
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -21,11 +20,13 @@ export const metis: Project = {
   associatedTokens: ['Metis'],
   details: {
     warning:
-      'On April 12 2022 the protocol architecture was significatly upgraded. The risk evaluation, architecture diagram and contract list needs to be updated.',
+      'On April 12 2022 the protocol architecture was significantly upgraded. The transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.',
     description:
-      'Metis is an EVM-equivalent Optimistic Rollup chain originally forked from Optimism. It provides support for multiple, \
-      interconnected rollups with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
-      The risk analysis below relates to the default chain with chainId=1088 called Andromeda.',
+      'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
+      interconnected L2 chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
+      The risk analysis below relates to the default chain with chainId=1088 called Andromeda. Since April 2022 Andromeda \
+      uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
+      request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
     purpose: 'Universal',
     links: {
       websites: ['https://www.metis.io'],
@@ -49,14 +50,14 @@ export const metis: Project = {
           'Currently the system permits invalid state roots. More details in project overview.',
         sentiment: 'bad',
       },
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
       upgradeability: RISK_VIEW.UPGRADABLE_YES,
       sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
       validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     },
     technology: {
       category: {
-        name: 'Optimistic Rollup',
+        name: 'Optimistic Chain',
       },
       stateCorrectness: {
         name: 'No automatic on-chain fraud proof system',
@@ -77,11 +78,22 @@ export const metis: Project = {
         ],
       },
       dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+        name: 'Data is recorded off-chain in MEMO',
+        description:
+          'Transaction data is not stored on-chain, rather it is recorded in off-chain decentralized storage \
+        MEMO from MemoLabs. If Validators find that data is unavailable, they can request that Sequencer \
+        posts data on-chain via L1 contract.',
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'sequencer withholds data for more than seven days while at the same time submits fraudulent state root.',
+            isCritical: true,
+          },
+        ],
         references: [
           {
-            text: 'CanonicalTransactionChain - Etherscan source code',
-            href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
+            text: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
+            href: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
           },
         ],
       },
@@ -135,6 +147,19 @@ export const metis: Project = {
       contracts: {
         addresses: [
           {
+            name: '1088_MVM_CanonicalTransaction',
+            address: '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
+            description:
+              'MVM CanonicalTransaction is a wrapper of Canonical Transactin Chain that implements optimistic data \
+              availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls\
+              to CanonicalTransactionChain.',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+              implementation: '0xC878771A4ff7466B7be8b59FB8766719AEa8d562',
+            },
+          },
+          {
             name: 'CanonicalTransactionChain',
             description:
               'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
@@ -179,7 +204,7 @@ export const metis: Project = {
             name: 'MVM_DiscountOracle',
             description:
               'Oracle specifing user fees for sending L1 -> L2 messages and other parameters for cross-chain communication.',
-            address: '0xC8953ca384b4AdC8B1b11B030Afe2F05471664b0',
+            address: '0x7f6B0b7589febc40419a8646EFf9801b87397063',
           },
           {
             name: 'Lib_AddressManager',
@@ -189,8 +214,14 @@ export const metis: Project = {
           },
           {
             name: 'MVM_Verifier',
-            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
-            address: '0x9Ed4739afd706122591E75F215208ecF522C0Fd3',
+            description:
+              'This contract imlements a voting scheme with which the majority of Verifiers can challenge malicious Sequencer.',
+            address: '0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb',
+            upgradeability: {
+              type: 'EIP1967',
+              implementation: '0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E',
+              admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+            },
           },
           {
             name: 'MVM_L2ChainManagerOnL1',
@@ -215,7 +246,7 @@ export const metis: Project = {
             },
           },
         ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
+        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
     },
     news: [

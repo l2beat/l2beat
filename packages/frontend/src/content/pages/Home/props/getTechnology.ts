@@ -13,5 +13,7 @@ export function getTechnology(project: Project) {
       return { abbreviation: 'VAL', name }
     case 'State Pools':
       return { abbreviation: 'STP', name }
+    case 'Optimistic Chain':
+      return { abbreviation: 'OPC', name }
   }
 }
