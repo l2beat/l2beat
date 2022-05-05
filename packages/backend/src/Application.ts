@@ -2,7 +2,7 @@ import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
-import { ReportController } from './api/controllers/ReportController'
+import { ReportController } from './api/controllers/report/ReportController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { Config } from './config'
@@ -32,7 +32,7 @@ export class Application {
 
     /* - - - - - PERIPHERALS - - - - - */
 
-    const knex = DatabaseService.createKnexInstance(config.databaseConnection)
+    const knex = DatabaseService.createKnexInstance(config.databaseUrl)
     const databaseService = new DatabaseService(knex, logger)
     const blockNumberRepository = new BlockNumberRepository(knex, logger)
     const priceRepository = new PriceRepository(knex, logger)
@@ -102,8 +102,7 @@ export class Application {
 
     const reportController = new ReportController(
       reportRepository,
-      config.projects,
-      config.tokens
+      config.projects
     )
 
     const apiServer = new ApiServer(config.port, logger, [
