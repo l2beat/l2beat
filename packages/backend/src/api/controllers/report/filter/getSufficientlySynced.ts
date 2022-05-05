@@ -4,7 +4,10 @@ import { getSyncedTimestamp } from './getSyncedTimestamp'
 
 export function getSufficientlySynced(reports: ReportWithBalance[]) {
   const maxByAssetInBridge = getMaxAssetInBridge(reports)
-  const syncedTimestamp = getSyncedTimestamp([...maxByAssetInBridge.values()], 'days')
+  const syncedTimestamp = getSyncedTimestamp(
+    [...maxByAssetInBridge.values()],
+    'days'
+  )
 
   const excluded: Set<string> = new Set()
   for (const [key, timestamp] of maxByAssetInBridge.entries()) {
@@ -19,4 +22,3 @@ export function getSufficientlySynced(reports: ReportWithBalance[]) {
       !excluded.has(`${report.bridge}-${report.asset}`)
   )
 }
-

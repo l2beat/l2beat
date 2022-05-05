@@ -49,7 +49,7 @@ describe(getSufficientlySynced.name, () => {
       mockReport(BRIDGE_B, ASSET_A, -1),
       mockReport(BRIDGE_B, ASSET_A, -2),
       mockReport(BRIDGE_B, ASSET_A, -3),
-  
+
       mockReport(BRIDGE_B, ASSET_B, -2),
       mockReport(BRIDGE_B, ASSET_B, -3),
     ]
@@ -63,7 +63,7 @@ describe(getSufficientlySynced.name, () => {
       mockReport(BRIDGE_B, ASSET_A, 0),
       mockReport(BRIDGE_B, ASSET_A, -1),
       mockReport(BRIDGE_B, ASSET_A, -2),
-      mockReport(BRIDGE_B, ASSET_A, -3),      
+      mockReport(BRIDGE_B, ASSET_A, -3),
     ])
   })
 
@@ -78,7 +78,7 @@ describe(getSufficientlySynced.name, () => {
       mockReport(BRIDGE_B, ASSET_A, -1),
       mockReport(BRIDGE_B, ASSET_A, -2),
       mockReport(BRIDGE_B, ASSET_A, -3),
-  
+
       mockReport(BRIDGE_B, ASSET_B, -1),
       mockReport(BRIDGE_B, ASSET_B, -2),
       mockReport(BRIDGE_B, ASSET_B, -3),
@@ -91,11 +91,11 @@ describe(getSufficientlySynced.name, () => {
 
       mockReport(BRIDGE_B, ASSET_A, -1),
       mockReport(BRIDGE_B, ASSET_A, -2),
-      mockReport(BRIDGE_B, ASSET_A, -3),  
-      
+      mockReport(BRIDGE_B, ASSET_A, -3),
+
       mockReport(BRIDGE_B, ASSET_B, -1),
       mockReport(BRIDGE_B, ASSET_B, -2),
-      mockReport(BRIDGE_B, ASSET_B, -3),    
+      mockReport(BRIDGE_B, ASSET_B, -3),
     ])
   })
 })

@@ -7,7 +7,7 @@ export function filterReportsByProjects(
   reports: ReportWithBalance[],
   projects: ProjectInfo[]
 ): ReportWithBalance[] {
-  const bridges = getBridges(projects) 
+  const bridges = getBridges(projects)
   return reports.filter((report) => {
     const bridge = bridges.get(report.bridge)
     if (!bridge || bridge.sinceBlock > report.blockNumber) {

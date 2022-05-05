@@ -35,7 +35,7 @@ describe(getMaxAssetInBridge.name, () => {
       mockReport(BRIDGE_B, ASSET_A, -1),
       mockReport(BRIDGE_B, ASSET_A, -2),
 
-      mockReport(BRIDGE_B, ASSET_B, 0)
+      mockReport(BRIDGE_B, ASSET_B, 0),
     ]
 
     const result = getMaxAssetInBridge(reports)
