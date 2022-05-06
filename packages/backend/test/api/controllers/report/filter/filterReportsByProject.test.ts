@@ -26,6 +26,19 @@ describe(filterReportsByProjects.name, () => {
     }
   }
 
+  const mockToken = (assetId: AssetId, sinceBlock: number): TokenInfo => {
+    return {
+      id: assetId,
+      name: '',
+      coingeckoId: CoingeckoId('-'),
+      address: EthereumAddress.random(),
+      symbol: '',
+      decimals: 18,
+      sinceBlock: sinceBlock,
+      category: 'other',
+    }
+  }
+
   const PROJECTS: ProjectInfo[] = [
     {
       name: 'Arbitrum',
@@ -96,16 +109,3 @@ describe(filterReportsByProjects.name, () => {
     expect(result).toEqual([mockReport(START, ARBITRUM, AssetId.DAI)])
   })
 })
-
-function mockToken(assetId: AssetId, sinceBlock: number): TokenInfo {
-  return {
-    id: assetId,
-    name: '',
-    coingeckoId: CoingeckoId('-'),
-    address: EthereumAddress.random(),
-    symbol: '',
-    decimals: 18,
-    sinceBlock: sinceBlock,
-    category: 'other',
-  }
-}
