@@ -13,7 +13,7 @@ import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRepository } from '../../../../src/peripherals/database/ReportRepository'
 
 describe(ReportController.name, () => {
-  const TODAY = UnixTime.now().toStartOf('day')
+  const START = UnixTime.fromDate(new Date('2022-05-05'))
   const ARBITRUM = EthereumAddress.random()
   const ARBITRUM_2 = EthereumAddress.random()
   const OPTIMISM = EthereumAddress.random()
@@ -23,7 +23,7 @@ describe(ReportController.name, () => {
 
   function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
     return {
-      timestamp: TODAY.add(offset, 'days'),
+      timestamp: START.add(offset, 'days'),
       bridge,
       asset,
       blockNumber: 0n,
