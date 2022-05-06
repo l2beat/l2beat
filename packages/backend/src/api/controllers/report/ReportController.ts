@@ -16,6 +16,6 @@ export class ReportController {
     const relevantReports = filterReportsByProjects(reports, this.projects)
     const syncedReports = getSufficientlySynced(relevantReports)
     const dailyEntries = aggregateReportsDaily(syncedReports, this.projects)
-    return generateReportOutput(dailyEntries)
+    return generateReportOutput(dailyEntries, this.projects)
   }
 }

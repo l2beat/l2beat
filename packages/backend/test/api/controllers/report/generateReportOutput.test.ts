@@ -1,13 +1,50 @@
-import { UnixTime } from '@l2beat/common'
+import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
 import { generateReportOutput } from '../../../../src/api/controllers/report/generateReportOutput'
+import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 
 describe(generateReportOutput.name, () => {
   const TODAY = UnixTime.fromDate(new Date('2022-05-05T00:00:00Z'))
   const USD = 1000_11n
   const ETH = 1_111111n
   const BALANCE = 1111111n
+
+  const ARBITRUM = EthereumAddress.random()
+  const ARBITRUM_2 = EthereumAddress.random()
+  const OPTIMISM = EthereumAddress.random()
+
+  const PROJECTS: ProjectInfo[] = [
+    {
+      name: 'Arbitrum',
+      bridges: [
+        {
+          address: ARBITRUM.toString(),
+          sinceBlock: 0,
+          tokens: [
+            mockToken(AssetId.DAI, 'DAI'),
+            mockToken(AssetId.WETH, 'WETH'),
+          ],
+        },
+        {
+          address: ARBITRUM_2.toString(),
+          sinceBlock: 0,
+          tokens: [mockToken(AssetId.DAI, 'DAI')],
+        },
+      ],
+    },
+    {
+      name: 'Optimism',
+      bridges: [
+        {
+          address: OPTIMISM.toString(),
+          sinceBlock: 0,
+          tokens: [mockToken(AssetId.DAI, 'DAI')],
+        },
+      ],
+    },
+  ]
 
   it('converts to compatible interface', async () => {
     const entries = [
@@ -111,7 +148,7 @@ describe(generateReportOutput.name, () => {
       },
     ]
 
-    const result = generateReportOutput(entries)
+    const result = generateReportOutput(entries, PROJECTS)
 
     expect(result).toEqual({
       aggregate: {
@@ -169,3 +206,16 @@ describe(generateReportOutput.name, () => {
     })
   })
 })
+
+function mockToken(assetId: AssetId, symbol: string): TokenInfo {
+  return {
+    id: assetId,
+    name: '',
+    coingeckoId: CoingeckoId('-'),
+    address: EthereumAddress.random(),
+    symbol,
+    decimals: 0,
+    sinceBlock: 0,
+    category: 'other',
+  }
+}

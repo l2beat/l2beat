@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/common'
 
+import { ProjectInfo } from '../../../model'
 import { asNumber } from '../../../utils/asNumber'
 import { OutputEntry } from './aggregateReportsDaily'
 
@@ -18,13 +19,27 @@ export interface Chart {
   data: [string, number, number][]
 }
 
-export function generateReportOutput(entries: OutputEntry[]): ReportOutput {
+export function generateReportOutput(
+  entries: OutputEntry[],
+  projects: ProjectInfo[]
+): ReportOutput {
   const report: ReportOutput = {
     aggregate: {
       types: ['date', 'usd', 'eth'],
       data: [],
     },
     byProject: {},
+  }
+
+  for (const p of projects) {
+    const project: ProjectData = {
+      aggregate: {
+        types: ['date', 'usd', 'eth'],
+        data: [],
+      },
+      byToken: {},
+    }
+    report.byProject[p.name] = project
   }
 
   for (const entry of entries) {
@@ -36,16 +51,9 @@ export function generateReportOutput(entries: OutputEntry[]): ReportOutput {
     ])
 
     for (const [name, projectEntry] of entry.projects) {
-      let project = report.byProject[name]
+      const project = report.byProject[name]
       if (!project) {
-        project = {
-          aggregate: {
-            types: ['date', 'usd', 'eth'],
-            data: [],
-          },
-          byToken: {},
-        }
-        report.byProject[name] = project
+        throw new Error('Programmer error: Reports not filtered correctly')
       }
 
       project.aggregate.data.push([
