@@ -116,7 +116,7 @@ export const starknet: Project = {
           },
           {
             name: 'Eth Bridge',
-            description: 'Starkgate bridge for ETH',
+            description: 'Starkgate bridge for ETH.',
             address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
             upgradeability: {
               type: 'StarkWare',
