@@ -11,9 +11,27 @@ export interface ReportRecord {
   ethTVL: bigint
 }
 
+export interface ReportWithBalance extends ReportRecord {
+  balance: bigint
+}
+
 export class ReportRepository {
   constructor(private knex: Knex, private logger: Logger) {
     this.logger = this.logger.for(this)
+  }
+
+  async getDaily(): Promise<ReportWithBalance[]> {
+    const rows = await this.knex('reports')
+      .select()
+      .whereRaw('mod(reports.unix_timestamp,86400) = 0')
+      .orderBy('unix_timestamp')
+      .innerJoin('asset_balances', function () {
+        this.on('asset_balances.block_number', '=', 'reports.block_number')
+          .andOn('asset_balances.asset_id', '=', 'reports.asset_id')
+          .andOn('asset_balances.holder_address', '=', 'reports.bridge_address')
+      })
+
+    return rows.map((r) => toRecordWithBalance(r, r.balance))
   }
 
   async getAll(): Promise<ReportRecord[]> {
@@ -56,5 +74,14 @@ function toRecord(row: ReportRow): ReportRecord {
     asset: AssetId(row.asset_id),
     usdTVL: BigInt(row.usd_tvl),
     ethTVL: BigInt(row.eth_tvl),
+  }
+}
+function toRecordWithBalance(
+  row: ReportRow,
+  balance: string
+): ReportWithBalance {
+  return {
+    ...toRecord(row),
+    balance: BigInt(balance),
   }
 }

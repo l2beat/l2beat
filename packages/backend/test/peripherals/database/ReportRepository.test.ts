@@ -1,102 +1,145 @@
 import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import {
-  ReportRecord,
-  ReportRepository,
-} from '../../../src/peripherals/database/ReportRepository'
+import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
+import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(ReportRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
-  const repository = new ReportRepository(knex, Logger.SILENT)
+  const reportsRepository = new ReportRepository(knex, Logger.SILENT)
+  const balancesRepository = new BalanceRepository(knex, Logger.SILENT)
 
-  const START_BLOCK_NUMBER = 123456n
-  const MOCK_BRIDGE = EthereumAddress(
-    '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'
-  )
-  const MOCK_ASSET = AssetId('dai-dai-stablecoin')
-  const MOCK_USD_TVL = 100000000n
-  const MOCK_ETH_TVL = 100000n
+  const TODAY = UnixTime.now().toStartOf('day')
+  const BLOCK = 123456n
+  const BRIDGE_A = EthereumAddress.random()
+  const ASSET_A = AssetId('asset-a')
+  const BALANCE = 100000n
 
-  const START = UnixTime.now()
+  const mockReport = (
+    bridge: EthereumAddress,
+    timestampOffset: number,
+    blockOffset: bigint
+  ) => {
+    return {
+      blockNumber: BLOCK + blockOffset,
+      timestamp: TODAY.add(timestampOffset, 'hours'),
+      bridge,
+      asset: ASSET_A,
+      usdTVL: 1000000n,
+      ethTVL: 100000n,
+    }
+  }
 
-  const DATA: ReportRecord[] = [
-    {
-      blockNumber: START_BLOCK_NUMBER,
-      timestamp: START,
-      bridge: MOCK_BRIDGE,
-      asset: MOCK_ASSET,
-      usdTVL: MOCK_USD_TVL,
-      ethTVL: MOCK_ETH_TVL,
-    },
-    {
-      blockNumber: START_BLOCK_NUMBER + 100n,
-      timestamp: START.add(1, 'hours'),
-      bridge: MOCK_BRIDGE,
-      asset: MOCK_ASSET,
-      usdTVL: MOCK_USD_TVL + 1000n,
-      ethTVL: MOCK_ETH_TVL + 2n,
-    },
-  ]
+  const mockBalance = (
+    bridge: EthereumAddress,
+    asset: AssetId,
+    offset: bigint
+  ) => {
+    return {
+      blockNumber: BLOCK + offset,
+      holderAddress: bridge,
+      assetId: asset,
+      balance: BALANCE,
+    }
+  }
 
   beforeEach(async () => {
-    await repository.deleteAll()
-    await repository.addOrUpdate(DATA)
+    await balancesRepository.deleteAll()
+    await reportsRepository.deleteAll()
+  })
+
+  describe(ReportRepository.prototype.getDaily.name, () => {
+    it('filters data to get only full days', async () => {
+      await reportsRepository.addOrUpdate([
+        mockReport(BRIDGE_A, 0, 0n),
+        mockReport(BRIDGE_A, 1, 100n),
+      ])
+
+      await balancesRepository.addOrUpdate([
+        mockBalance(BRIDGE_A, ASSET_A, 0n),
+        mockBalance(BRIDGE_A, ASSET_A, 100n),
+      ])
+
+      const result = await reportsRepository.getDaily()
+
+      expect(result).toBeAnArrayWith({
+        ...mockReport(BRIDGE_A, 0, 0n),
+        balance: BALANCE,
+      })
+      expect(result).toBeAnArrayOfLength(1)
+    })
+
+    it('returns sorted data', async () => {
+      await reportsRepository.addOrUpdate([
+        mockReport(BRIDGE_A, 48, 2000n),
+        mockReport(BRIDGE_A, 0, 0n),
+        mockReport(BRIDGE_A, 24, 1000n),
+      ])
+
+      await balancesRepository.addOrUpdate([
+        mockBalance(BRIDGE_A, ASSET_A, 0n),
+        mockBalance(BRIDGE_A, ASSET_A, 1000n),
+        mockBalance(BRIDGE_A, ASSET_A, 2000n),
+      ])
+      const result = await reportsRepository.getDaily()
+
+      expect(result).toEqual([
+        { ...mockReport(BRIDGE_A, 0, 0n), balance: BALANCE },
+        { ...mockReport(BRIDGE_A, 24, 1000n), balance: BALANCE },
+        { ...mockReport(BRIDGE_A, 48, 2000n), balance: BALANCE },
+      ])
+    })
   })
 
   describe(ReportRepository.prototype.addOrUpdate.name, () => {
-    it('new row', async () => {
-      const newBridge = EthereumAddress(
-        '0xcEe284F754E854890e311e3280b767F80797180d'
+    it('add or update', async () => {
+      await reportsRepository.addOrUpdate([
+        mockReport(BRIDGE_A, 0, 0n),
+        mockReport(BRIDGE_A, 1, 100n),
+      ])
+
+      await reportsRepository.addOrUpdate([
+        mockReport(BRIDGE_A, 2, 100n),
+        mockReport(BRIDGE_A, 3, 300n),
+      ])
+
+      const result = await reportsRepository.getAll()
+
+      expect(result).toBeAnArrayWith(
+        mockReport(BRIDGE_A, 0, 0n),
+        mockReport(BRIDGE_A, 2, 100n),
+        mockReport(BRIDGE_A, 3, 300n)
       )
-      const newData = {
-        blockNumber: START_BLOCK_NUMBER,
-        timestamp: START,
-        bridge: newBridge,
-        asset: MOCK_ASSET,
-        usdTVL: MOCK_USD_TVL,
-        ethTVL: MOCK_ETH_TVL,
-      }
 
-      await repository.addOrUpdate([newData])
-
-      const result = await repository.getAll()
-
-      expect(result).toBeAnArrayWith(...DATA, newData)
       expect(result).toBeAnArrayOfLength(3)
-    })
-
-    it('update row', async () => {
-      const modifiedData = {
-        blockNumber: START_BLOCK_NUMBER,
-        timestamp: START,
-        bridge: MOCK_BRIDGE,
-        asset: MOCK_ASSET,
-        usdTVL: MOCK_USD_TVL + 1000n,
-        ethTVL: MOCK_ETH_TVL + 1n,
-      }
-
-      await repository.addOrUpdate([modifiedData])
-
-      const result = await repository.getAll()
-
-      expect(result).toBeAnArrayWith(modifiedData, DATA[1])
-      expect(result).toBeAnArrayOfLength(2)
     })
   })
 
   it(ReportRepository.prototype.getAll.name, async () => {
-    const results = await repository.getAll()
+    await reportsRepository.addOrUpdate([
+      mockReport(BRIDGE_A, 0, 0n),
+      mockReport(BRIDGE_A, 1, 100n),
+    ])
 
-    expect(results).toBeAnArrayWith(...DATA)
+    const results = await reportsRepository.getAll()
+
+    expect(results).toBeAnArrayWith(
+      mockReport(BRIDGE_A, 0, 0n),
+      mockReport(BRIDGE_A, 1, 100n)
+    )
     expect(results).toBeAnArrayOfLength(2)
   })
 
   it(ReportRepository.prototype.deleteAll.name, async () => {
-    await repository.deleteAll()
+    await reportsRepository.addOrUpdate([
+      mockReport(BRIDGE_A, 0, 0n),
+      mockReport(BRIDGE_A, 1, 100n),
+    ])
 
-    const results = await repository.getAll()
+    await reportsRepository.deleteAll()
+
+    const results = await reportsRepository.getAll()
 
     expect(results).toBeAnArrayOfLength(0)
   })
