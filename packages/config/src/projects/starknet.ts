@@ -14,7 +14,13 @@ import { Project } from './types'
 export const starknet: Project = {
   name: 'StarkNet',
   slug: 'starknet',
-  bridges: [],
+  bridges: [
+    {
+      address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
+      sinceBlock: 14429055,
+      tokens: ['ETH'],
+    },
+  ],
   details: {
     warning:
       'Currently only whitelisted contracts can be deployed on StarkNet.',
@@ -113,6 +119,11 @@ export const starknet: Project = {
       },
     },
     news: [
+      {
+        date: '2022-05-09',
+        name: 'StarkGate Alpha is live on Mainnet',
+        link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      },
       {
         date: '2022-01-18',
         name: 'StarkNet Alpha 0.7.0',
