@@ -114,6 +114,17 @@ export const starknet: Project = {
               'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
             address: '0x96375087b2F6eFc59e5e0dd5111B4d090EBFDD8B',
           },
+          {
+            name: 'Eth Bridge',
+            description: 'Starkgate bridge for ETH',
+            address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
+          },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
