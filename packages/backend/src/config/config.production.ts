@@ -15,7 +15,10 @@ export function getProductionConfig(): Config {
     port: getEnv.integer('PORT'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-    databaseUrl: getEnv('DATABASE_URL'),
+    databaseConnection: {
+      connectionString: getEnv('DATABASE_URL'),
+      ssl: { rejectUnauthorized: false },
+    },
     core: {
       // TODO: set minimum timestamp from when to fetch prices
       //right now it is the earliest fetched date from previous backend
