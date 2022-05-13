@@ -4,6 +4,7 @@ import { expect } from 'earljs'
 
 import { aggregateReportsDaily } from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
+import { ReportWithBalance } from '../../../../src/peripherals/database/ReportRepository'
 
 describe(aggregateReportsDaily.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
@@ -232,6 +233,14 @@ describe(aggregateReportsDaily.name, () => {
         ]),
       },
     ])
+  })
+
+  it('empty reports', async () => {
+    const reports: ReportWithBalance[] = []
+
+    const result = aggregateReportsDaily(reports, PROJECTS)
+
+    expect(result).toEqual([])
   })
 })
 

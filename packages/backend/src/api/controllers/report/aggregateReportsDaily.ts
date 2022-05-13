@@ -30,6 +30,10 @@ export function aggregateReportsDaily(
   reports: ReportWithBalance[],
   projects: ProjectInfo[]
 ): OutputEntry[] {
+  if (reports.length === 0) {
+    return []
+  }
+
   const { min, max } = getBounds(reports)
   const dates = getDailyTimestamps(min, max)
 

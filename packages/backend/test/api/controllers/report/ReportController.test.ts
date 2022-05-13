@@ -140,6 +140,39 @@ describe(ReportController.name, () => {
         },
       })
     })
+
+    it('empty reports', async () => {
+      const reportRepository = mock<ReportRepository>({
+        getDaily: mockFn().returns([]),
+      })
+
+      const reportController = new ReportController(reportRepository, PROJECTS)
+
+      const result = await reportController.getDaily()
+
+      expect(result).toEqual({
+        aggregate: {
+          types: ['date', 'usd', 'eth'],
+          data: [],
+        },
+        byProject: {
+          ['Arbitrum']: {
+            aggregate: {
+              types: ['date', 'usd', 'eth'],
+              data: [],
+            },
+            byToken: {},
+          },
+          ['Optimism']: {
+            aggregate: {
+              types: ['date', 'usd', 'eth'],
+              data: [],
+            },
+            byToken: {},
+          },
+        },
+      })
+    })
   })
 })
 
