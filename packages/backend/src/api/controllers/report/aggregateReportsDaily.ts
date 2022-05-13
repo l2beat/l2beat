@@ -30,7 +30,7 @@ export function aggregateReportsDaily(
   reports: ReportWithBalance[],
   projects: ProjectInfo[]
 ): OutputEntry[] {
-  if(reports.length === 0) {
+  if (reports.length === 0) {
     return []
   }
 
