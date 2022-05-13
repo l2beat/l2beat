@@ -8,6 +8,7 @@ import { gluon } from './gluon'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
+import { layer2financezk } from './layer2financezk'
 import { loopring } from './loopring'
 import { metis } from './metis'
 import { omgnetwork } from './omgnetwork'
@@ -33,6 +34,7 @@ export const projects: Project[] = [
   hermez,
   immutablex,
   layer2finance,
+  layer2financezk,
   loopring,
   metis,
   omgnetwork,
