@@ -22,6 +22,14 @@ import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
 import { zksync } from './zksync'
+import { nearBridge } from './nearBridge'
+import { avalancheBridge } from './avalancheBridge'
+import { fantomBridge } from './fantomBridge'
+import { polygonBridge } from './polygonBridge'
+import { wormholeBridge } from './wormholeBridge'
+import { starGateBridge } from './starGateBridge'
+import { harmonyBridge } from './harmonyBridge'
+import { xDaiBridge } from './xDaiBridge'
 
 export * from './types'
 
@@ -49,4 +57,12 @@ export const projects: Project[] = [
   zkswap2,
   zkspace,
   zksync,
+  nearBridge,
+  avalancheBridge,
+  fantomBridge,
+  polygonBridge,
+  wormholeBridge,
+  starGateBridge,
+  harmonyBridge,
+  xDaiBridge,
 ]

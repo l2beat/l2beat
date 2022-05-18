@@ -40,3 +40,4 @@ export type ProjectCategory =
   | 'State Pools'
   | 'Validium'
   | 'ZK Rollup'
+  | 'Bridge'
