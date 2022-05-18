@@ -30,6 +30,11 @@ import { wormholeBridge } from './wormholeBridge'
 import { starGateBridge } from './starGateBridge'
 import { harmonyBridge } from './harmonyBridge'
 import { xDaiBridge } from './xDaiBridge'
+import { gravityBridge } from './gravityBridge'
+import { roninBridge } from './roninBridge'
+import { nomadBridge } from './nomadBridge'
+import { solletBridge } from './solletBridge'
+import { synapseBridge } from './synapseBridge'
 
 export * from './types'
 
@@ -65,4 +70,9 @@ export const projects: Project[] = [
   starGateBridge,
   harmonyBridge,
   xDaiBridge,
+  roninBridge,
+  gravityBridge,
+  nomadBridge,
+  solletBridge,
+  synapseBridge,
 ]

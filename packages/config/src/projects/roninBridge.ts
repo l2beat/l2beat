@@ -1,22 +1,22 @@
 import { RISK_VIEW } from './common'
 import { Project } from './types'
 
-export const nearBridge: Project = {
-  name: 'Near Rainbow Bridge',
-  slug: 'nearbridge',
+export const roninBridge: Project = {
+  name: 'Ronin Bridge',
+  slug: 'roninbridge',
   bridges: [
     {
-      address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
+      address: '0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2',
       sinceBlock: 14559298,
-      tokens: ['DAI', 'USDC', 'AURORA', 'USDT', 'WBTC', 'PLY', 'OCT'],
+      tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
     },
   ],
-  associatedTokens: ['AURORA'],
+  associatedTokens: ['AXS'],
   details: {
     description: '.',
     purpose: 'Native Bridge',
     links: {
-      websites: ['https://near.org/bridge/'],
+      websites: ['https://bridge.roninchain.com/'],
       apps: [],
       documentation: [],
       explorers: [],

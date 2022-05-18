@@ -29,7 +29,7 @@ export const fantomBridge: Project = {
     description: '.',
     purpose: 'Native Bridge',
     links: {
-      websites: [],
+      websites: ['https://multichain.xyz/'],
       apps: [],
       documentation: [],
       explorers: [],

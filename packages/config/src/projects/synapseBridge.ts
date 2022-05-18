@@ -1,14 +1,20 @@
 import { RISK_VIEW } from './common'
 import { Project } from './types'
 
-export const nearBridge: Project = {
-  name: 'Near Rainbow Bridge',
-  slug: 'nearbridge',
+export const synapseBridge: Project = {
+  name: 'Synapse Bridge',
+  slug: 'synapsebridge',
   bridges: [
     {
-      address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
+      address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
       sinceBlock: 14559298,
-      tokens: ['DAI', 'USDC', 'AURORA', 'USDT', 'WBTC', 'PLY', 'OCT'],
+      tokens: [
+        'ETH',
+        'WETH',
+        //'gOHM',
+        //'HIGH',
+        'FRAX',
+      ],
     },
   ],
   associatedTokens: ['AURORA'],

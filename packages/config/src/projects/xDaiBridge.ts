@@ -27,7 +27,7 @@ export const xDaiBridge: Project = {
     description: '.',
     purpose: 'Native Bridge',
     links: {
-      websites: [],
+      websites: ['https://omni.xdaichain.com/bridge'],
       apps: [],
       documentation: [],
       explorers: [],

@@ -1,22 +1,29 @@
 import { RISK_VIEW } from './common'
 import { Project } from './types'
 
-export const nearBridge: Project = {
-  name: 'Near Rainbow Bridge',
-  slug: 'nearbridge',
+export const solletBridge: Project = {
+  name: 'Sollet Sol Bridge',
+  slug: 'solletbridge',
   bridges: [
     {
-      address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
+      address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
       sinceBlock: 14559298,
-      tokens: ['DAI', 'USDC', 'AURORA', 'USDT', 'WBTC', 'PLY', 'OCT'],
+      tokens: [
+        'ETH',
+        //'ALEPH',
+        'USDT',
+        'USDC',
+        'UNI',
+        'KEEP',
+        'LINK',
+      ],
     },
   ],
-  associatedTokens: ['AURORA'],
   details: {
     description: '.',
     purpose: 'Native Bridge',
     links: {
-      websites: ['https://near.org/bridge/'],
+      websites: ['https://www.sollet.io/'],
       apps: [],
       documentation: [],
       explorers: [],
