@@ -35,6 +35,8 @@ import { roninBridge } from './roninBridge'
 import { nomadBridge } from './nomadBridge'
 import { solletBridge } from './solletBridge'
 import { synapseBridge } from './synapseBridge'
+import { hopBridge } from './hopBridge'
+import { cBridge } from './cBridge'
 
 export * from './types'
 
@@ -75,4 +77,6 @@ export const projects: Project[] = [
   nomadBridge,
   solletBridge,
   synapseBridge,
+  hopBridge,
+  cBridge,
 ]
