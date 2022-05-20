@@ -7,7 +7,7 @@ export const nomadBridge: Project = {
   bridges: [
     {
       address: '0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3',
-      sinceBlock: 14559298,
+      sinceBlock: 13983843,
       tokens: [
         'USDC',
         'FRAX',

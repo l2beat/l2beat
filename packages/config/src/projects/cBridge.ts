@@ -7,7 +7,7 @@ export const cBridge: Project = {
   bridges: [
     {
       address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
-      sinceBlock: 14559298,
+      sinceBlock: 13719989,
       tokens: [
         'USDC',
         'WETH',

@@ -7,7 +7,7 @@ export const nearBridge: Project = {
   bridges: [
     {
       address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
-      sinceBlock: 14559298,
+      sinceBlock: 12044301,
       tokens: ['DAI', 'USDC', 'AURORA', 'USDT', 'WBTC', 'PLY', 'OCT'],
     },
   ],

@@ -7,7 +7,7 @@ export const wormholeBridge: Project = {
   bridges: [
     {
       address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
-      sinceBlock: 14559298,
+      sinceBlock: 13217349,
       tokens: [
         'WETH',
         //'NEXM',
@@ -22,11 +22,12 @@ export const wormholeBridge: Project = {
         'UNI',
         'LDO',
         'DAI',
+        //'stETH',
       ],
     },
     {
       address: '0xf92cD566Ea4864356C5491c177A430C222d7e678',
-      sinceBlock: 14559298,
+      sinceBlock: 11687664,
       tokens: [
         //'FTT',
         'BUSD',

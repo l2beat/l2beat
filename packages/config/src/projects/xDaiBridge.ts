@@ -7,7 +7,7 @@ export const xDaiBridge: Project = {
   bridges: [
     {
       address: '0x88ad09518695c6c3712AC10a214bE5109a655671',
-      sinceBlock: 14559298,
+      sinceBlock: 10590093,
       tokens: [
         'GNO',
         //'NODE',
@@ -18,7 +18,7 @@ export const xDaiBridge: Project = {
     },
     {
       address: '0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016',
-      sinceBlock: 14559298,
+      sinceBlock: 10590093, // NOT FULL HISTORY
       tokens: ['cDAI', 'DAI'],
     },
   ],

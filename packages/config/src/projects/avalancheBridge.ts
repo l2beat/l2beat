@@ -7,7 +7,7 @@ export const avalancheBridge: Project = {
   bridges: [
     {
       address: '0xE78388b4CE79068e89Bf8aA7f218eF6b9AB0e9d0',
-      sinceBlock: 14559298,
+      sinceBlock: 13410555,
       tokens: [
         'ETH',
         'USDC',

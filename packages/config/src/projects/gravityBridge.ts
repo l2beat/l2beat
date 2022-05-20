@@ -7,7 +7,7 @@ export const gravityBridge: Project = {
   bridges: [
     {
       address: '0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906',
-      sinceBlock: 14559298,
+      sinceBlock: 13798211,
       tokens: ['USDC', 'WETH', 'DAI'],
     },
   ],

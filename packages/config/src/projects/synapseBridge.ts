@@ -7,7 +7,7 @@ export const synapseBridge: Project = {
   bridges: [
     {
       address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
-      sinceBlock: 14559298,
+      sinceBlock: 13033669 ,
       tokens: [
         'ETH',
         'WETH',

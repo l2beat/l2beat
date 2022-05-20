@@ -7,7 +7,7 @@ export const fantomBridge: Project = {
   bridges: [
     {
       address: '0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE',
-      sinceBlock: 14559298,
+      sinceBlock: 12467630,
       tokens: [
         'USDC',
         'WBTC',

@@ -7,12 +7,12 @@ export const harmonyBridge: Project = {
   bridges: [
     {
       address: '0xF9Fb1c508Ff49F78b60d3A96dea99Fa5d7F3A8A6',
-      sinceBlock: 14559298,
+      sinceBlock: 11651416,
       tokens: ['ETH'],
     },
     {
       address: '0x2dCCDB493827E15a5dC8f8b72147E6c4A5620857',
-      sinceBlock: 14559298,
+      sinceBlock: 11037057,
       tokens: [
         'USDC',
         'USDT',

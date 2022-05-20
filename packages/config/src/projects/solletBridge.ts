@@ -7,7 +7,7 @@ export const solletBridge: Project = {
   bridges: [
     {
       address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
-      sinceBlock: 14559298,
+      sinceBlock: 10838129,
       tokens: [
         'ETH',
         //'ALEPH',
