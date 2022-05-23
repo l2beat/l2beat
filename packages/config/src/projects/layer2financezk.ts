@@ -18,7 +18,7 @@ export const layer2financezk: Project = {
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
       sinceBlock: 14225869,
-      tokens: ['*'], //?
+      tokens: '*', //?
     },
   ],
   details: {
@@ -26,7 +26,7 @@ export const layer2financezk: Project = {
       'Celer’s Layer2.finance in ZK Proofs Mode Built with StarkEx from StarkWare.',
     purpose: 'DeFi protocols',
     links: {
-      websites: ['https://layer2.finance/'], //?
+      websites: ['https://layer2.finance/'],
       apps: ['https://zk.layer2.finance'],
       documentation: [],
       explorers: [],
@@ -39,11 +39,11 @@ export const layer2financezk: Project = {
     },
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_ST, //?
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC, //?
+      stateValidation: RISK_VIEW.STATE_ZKP_ST, 
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC, 
       upgradeability: RISK_VIEW.UPGRADE_DELAY('0 days'), 
-      sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT, //?
-      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT, //? 
+      sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT, 
+      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP, 
     },
     technology: {
       category: {
@@ -55,7 +55,7 @@ export const layer2financezk: Project = {
       dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
       operator: OPERATOR.STARKEX_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
-      exitMechanisms: EXITS.STARKEX_NFT, //?
+      exitMechanisms: EXITS.STARKEX, //?
       contracts: {
         addresses: [
           {
@@ -70,9 +70,8 @@ export const layer2financezk: Project = {
           },
           {
             name: 'Committee',
-            description:
-              'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-            address: '',//?
+            description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+            address: '0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9',
           },
           SHARP_VERIFIER_CONTRACT,
         ],
