@@ -1,9 +1,13 @@
-import { RISK_VIEW } from './common'
 import { Project } from './types'
+import { bridge } from './types/bridge'
 
-export const hopBridge: Project = {
+export const hopBridge: Project = bridge({
   name: 'Hop Bridge',
   slug: 'hopbridge',
+  purpose: 'Native Bridge',
+  links: {
+    websites: ['https://hop.exchange/'],
+  },
   bridges: [
     {
       address: '0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a',
@@ -36,65 +40,4 @@ export const hopBridge: Project = {
       tokens: ['WBTC'],
     },
   ],
-  details: {
-    description: '.',
-    purpose: 'Native Bridge',
-    links: {
-      websites: ['https://hop.exchange/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
-    },
-    technology: {
-      category: {
-        name: 'Bridge',
-      },
-      stateCorrectness: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      dataAvailability: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      operator: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      forceTransactions: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      exitMechanisms: [
-        {
-          name: '',
-          description: '.',
-          risks: [],
-          references: [],
-        },
-      ],
-      contracts: {
-        addresses: [],
-        risks: [],
-      },
-    },
-    news: [],
-  },
-}
+})

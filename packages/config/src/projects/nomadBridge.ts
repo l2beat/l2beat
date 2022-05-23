@@ -1,9 +1,13 @@
-import { RISK_VIEW } from './common'
 import { Project } from './types'
+import { bridge } from './types/bridge'
 
-export const nomadBridge: Project = {
+export const nomadBridge: Project = bridge({
   name: 'Nomad Bridge',
   slug: 'nomadbridge',
+  purpose: 'Native Bridge',
+  links: {
+    websites: ['https://app.nomad.xyz/'],
+  },
   bridges: [
     {
       address: '0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3',
@@ -21,65 +25,4 @@ export const nomadBridge: Project = {
       ],
     },
   ],
-  details: {
-    description: '.',
-    purpose: 'Native Bridge',
-    links: {
-      websites: ['https://app.nomad.xyz/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
-    },
-    technology: {
-      category: {
-        name: 'Bridge',
-      },
-      stateCorrectness: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      dataAvailability: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      operator: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      forceTransactions: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      exitMechanisms: [
-        {
-          name: '',
-          description: '.',
-          risks: [],
-          references: [],
-        },
-      ],
-      contracts: {
-        addresses: [],
-        risks: [],
-      },
-    },
-    news: [],
-  },
-}
+})

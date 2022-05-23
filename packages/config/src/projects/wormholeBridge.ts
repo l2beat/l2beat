@@ -1,9 +1,13 @@
-import { RISK_VIEW } from './common'
 import { Project } from './types'
+import { bridge } from './types/bridge'
 
-export const wormholeBridge: Project = {
+export const wormholeBridge: Project = bridge({
   name: 'Wormhole Bridge',
   slug: 'wormholebridge',
+  purpose: 'Native Bridge',
+  links: {
+    websites: ['https://www.portalbridge.com/'],
+  },
   bridges: [
     {
       address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
@@ -41,65 +45,4 @@ export const wormholeBridge: Project = {
       ],
     },
   ],
-  details: {
-    description: '.',
-    purpose: 'Native Bridge',
-    links: {
-      websites: ['https://www.portalbridge.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
-    },
-    technology: {
-      category: {
-        name: 'Bridge',
-      },
-      stateCorrectness: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      dataAvailability: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      operator: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      forceTransactions: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      exitMechanisms: [
-        {
-          name: '',
-          description: '.',
-          risks: [],
-          references: [],
-        },
-      ],
-      contracts: {
-        addresses: [],
-        risks: [],
-      },
-    },
-    news: [],
-  },
-}
+})

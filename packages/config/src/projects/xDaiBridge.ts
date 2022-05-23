@@ -1,9 +1,14 @@
-import { RISK_VIEW } from './common'
 import { Project } from './types'
+import { bridge } from './types/bridge'
 
-export const xDaiBridge: Project = {
+export const xDaiBridge: Project = bridge({
   name: 'xDai Omni Bridge',
   slug: 'xdaibridge',
+  purpose: 'Native Bridge',
+  links: {
+    websites: ['https://omni.xdaichain.com/bridge'],
+  },
+  associatedTokens: ['GNO'],
   bridges: [
     {
       address: '0x88ad09518695c6c3712AC10a214bE5109a655671',
@@ -22,66 +27,4 @@ export const xDaiBridge: Project = {
       tokens: ['cDAI', 'DAI'],
     },
   ],
-  associatedTokens: ['GNO'],
-  details: {
-    description: '.',
-    purpose: 'Native Bridge',
-    links: {
-      websites: ['https://omni.xdaichain.com/bridge'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
-    },
-    technology: {
-      category: {
-        name: 'Bridge',
-      },
-      stateCorrectness: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      dataAvailability: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      operator: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      forceTransactions: {
-        name: '',
-        description: '.',
-        risks: [],
-        references: [],
-      },
-      exitMechanisms: [
-        {
-          name: '',
-          description: '.',
-          risks: [],
-          references: [],
-        },
-      ],
-      contracts: {
-        addresses: [],
-        risks: [],
-      },
-    },
-    news: [],
-  },
-}
+})
