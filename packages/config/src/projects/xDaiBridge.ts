@@ -27,4 +27,5 @@ export const xDaiBridge: Project = bridge({
       tokens: ['cDAI', 'DAI'],
     },
   ],
+  connections: [],
 })

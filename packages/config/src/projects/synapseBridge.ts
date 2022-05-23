@@ -22,4 +22,5 @@ export const synapseBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

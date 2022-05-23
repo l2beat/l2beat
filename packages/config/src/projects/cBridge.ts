@@ -24,4 +24,5 @@ export const cBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

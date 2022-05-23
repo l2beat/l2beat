@@ -32,4 +32,5 @@ export const avalancheBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

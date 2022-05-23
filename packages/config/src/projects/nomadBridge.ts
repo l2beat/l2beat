@@ -25,4 +25,5 @@ export const nomadBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

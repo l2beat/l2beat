@@ -29,4 +29,5 @@ export const fantomBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

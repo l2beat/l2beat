@@ -45,4 +45,5 @@ export const polygonBridge: Project = bridge({
       tokens: ['MATIC', 'DAI'],
     },
   ],
+  connections: [],
 })

@@ -15,4 +15,5 @@ export const gravityBridge: Project = bridge({
       tokens: ['USDC', 'WETH', 'DAI'],
     },
   ],
+  connections: [],
 })

@@ -16,4 +16,5 @@ export const roninBridge: Project = bridge({
       tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
     },
   ],
+  connections: [],
 })

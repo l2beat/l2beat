@@ -15,4 +15,5 @@ export const connextBridge: Project = bridge({
       tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
     },
   ],
+  connections: [],
 })

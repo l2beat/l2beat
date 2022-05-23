@@ -16,4 +16,5 @@ export const nearBridge: Project = bridge({
       tokens: ['DAI', 'USDC', 'AURORA', 'USDT', 'WBTC', 'PLY', 'OCT'],
     },
   ],
+  connections: [],
 })

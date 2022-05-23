@@ -45,4 +45,5 @@ export const wormholeBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

@@ -40,4 +40,5 @@ export const hopBridge: Project = bridge({
       tokens: ['WBTC'],
     },
   ],
+  connections: [],
 })

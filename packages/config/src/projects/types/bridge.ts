@@ -10,6 +10,10 @@ export interface BridgeDescription {
   links: Partial<ProjectLinks>
   associatedTokens?: string[]
   bridges: ProjectBridge[]
+  connections: {
+    network: string,
+    tokens: string[]
+  }[]
 }
 
 export function bridge(bridge: BridgeDescription): Project {

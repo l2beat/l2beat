@@ -20,4 +20,5 @@ export const starGateBridge: Project = bridge({
       tokens: ['USDT'],
     },
   ],
+  connections: [],
 })

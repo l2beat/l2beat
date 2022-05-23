@@ -33,4 +33,5 @@ export const harmonyBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })

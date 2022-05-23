@@ -23,4 +23,5 @@ export const solletBridge: Project = bridge({
       ],
     },
   ],
+  connections: [],
 })
