@@ -31,7 +31,7 @@ export class ReportRepository {
           .andOn('asset_balances.holder_address', '=', 'reports.bridge_address')
       })
 
-    return rows.map((r) => toRecordWithBalance(r, r.balance))
+    return rows.map((r) => toRecordWithBalance(r, '0'))
   }
 
   async getAll(): Promise<ReportRecord[]> {

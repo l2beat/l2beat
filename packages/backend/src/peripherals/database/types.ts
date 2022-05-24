@@ -26,6 +26,7 @@ declare module 'knex/types/tables' {
     asset_id: string
     usd_tvl: string
     eth_tvl: string
+    isDaily: boolean
   }
 
   interface Tables {
