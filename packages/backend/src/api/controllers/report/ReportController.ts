@@ -12,10 +12,10 @@ export class ReportController {
   ) {}
 
   async getDaily() {
-    const reports = await this.reportRepository.getDaily()
-    const relevantReports = filterReportsByProjects(reports, this.projects)
-    const syncedReports = getSufficientlySynced(relevantReports)
-    const dailyEntries = aggregateReportsDaily(syncedReports, this.projects)
+    let reports = await this.reportRepository.getDaily()
+    reports = filterReportsByProjects(reports, this.projects)
+    reports = getSufficientlySynced(reports)
+    const dailyEntries = aggregateReportsDaily(reports, this.projects)
     return generateReportOutput(dailyEntries, this.projects)
   }
 }
