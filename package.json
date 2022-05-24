@@ -19,6 +19,8 @@
     "typecheck": "wsrun -ecsm typecheck",
     "test": "wsrun -ecsm test",
     "build": "wsrun -ecsm build",
+    "heroku-postbuild": "wsrun -p @l2beat/backend -x @l2beat/backend -recsm build",
+    "start": "cd packages/backend && yarn start",
     "build:mock": "MOCK_DATA=true yarn build",
     "ci:check": "yarn clean && yarn build:mock && yarn format && yarn lint && yarn typecheck && yarn test",
     "fix": "yarn lint:fix && yarn format:fix",

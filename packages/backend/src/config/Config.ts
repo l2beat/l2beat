@@ -1,4 +1,5 @@
 import { CoingeckoId, LogLevel, UnixTime } from '@l2beat/common'
+import { Knex } from 'knex'
 
 import { ProjectInfo, Token } from '../model'
 
@@ -11,7 +12,7 @@ export interface Config {
   port: number
   alchemyApiKey: string
   etherscanApiKey: string
-  databaseUrl: string
+  databaseConnection: Knex.Config['connection']
   core: {
     minBlockTimestamp: UnixTime
     safeBlockRefreshIntervalMs: number

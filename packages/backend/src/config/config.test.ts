@@ -15,7 +15,7 @@ export function getTestConfig(): Config {
     port: 1337,
     alchemyApiKey: 'xXTestAlchemyKeyXx',
     etherscanApiKey: 'xXTestEtherscanKeyXx',
-    databaseUrl: getEnv('TEST_DB_URL', 'xXTestDatabaseUrlXx'),
+    databaseConnection: getEnv('TEST_DB_URL', 'xXTestDatabaseUrlXx'),
     core: {
       minBlockTimestamp: new UnixTime(0),
       safeBlockRefreshIntervalMs: 0,

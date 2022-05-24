@@ -32,7 +32,7 @@ export class Application {
 
     /* - - - - - PERIPHERALS - - - - - */
 
-    const knex = DatabaseService.createKnexInstance(config.databaseUrl)
+    const knex = DatabaseService.createKnexInstance(config.databaseConnection)
     const databaseService = new DatabaseService(knex, logger)
     const blockNumberRepository = new BlockNumberRepository(knex, logger)
     const priceRepository = new PriceRepository(knex, logger)
