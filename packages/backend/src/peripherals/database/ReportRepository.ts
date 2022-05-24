@@ -23,15 +23,14 @@ export class ReportRepository {
   async getDaily(): Promise<ReportWithBalance[]> {
     const rows = await this.knex('reports')
       .select()
-      .whereRaw('mod(reports.unix_timestamp,86400) = 0')
+      .where('isDaily', '=', true)
       .orderBy('unix_timestamp')
       .innerJoin('asset_balances', function () {
         this.on('asset_balances.block_number', '=', 'reports.block_number')
           .andOn('asset_balances.asset_id', '=', 'reports.asset_id')
           .andOn('asset_balances.holder_address', '=', 'reports.bridge_address')
       })
-
-    return rows.map((r) => toRecordWithBalance(r, '0'))
+    return rows.map((r) => toRecordWithBalance(r, r.balance))
   }
 
   async getAll(): Promise<ReportRecord[]> {
@@ -63,6 +62,7 @@ function toRow(record: ReportRecord): ReportRow {
     asset_id: record.asset.toString(),
     usd_tvl: record.usdTVL.toString(),
     eth_tvl: record.ethTVL.toString(),
+    isDaily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
   }
 }
 
@@ -70,7 +70,7 @@ function toRecord(row: ReportRow): ReportRecord {
   return {
     blockNumber: BigInt(row.block_number),
     timestamp: new UnixTime(+row.unix_timestamp),
-    bridge: EthereumAddress(row.bridge_address),
+    bridge: EthereumAddress.unsafe(row.bridge_address),
     asset: AssetId(row.asset_id),
     usdTVL: BigInt(row.usd_tvl),
     ethTVL: BigInt(row.eth_tvl),
