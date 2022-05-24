@@ -27,7 +27,7 @@ declare module 'knex/types/tables' {
     balance: string
     usd_tvl: string
     eth_tvl: string
-    isDaily: boolean
+    is_daily: boolean
   }
 
   interface Tables {

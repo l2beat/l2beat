@@ -20,7 +20,7 @@ export class ReportRepository {
   async getDaily(): Promise<ReportRecord[]> {
     const rows = await this.knex('reports')
       .select()
-      .where('isDaily', '=', true)
+      .where('is_daily', '=', true)
       .orderBy('unix_timestamp')
 
     return rows.map((r) => toRecord(r))
@@ -56,7 +56,7 @@ function toRow(record: ReportRecord): ReportRow {
     balance: record.balance.toString(),
     usd_tvl: record.usdTVL.toString(),
     eth_tvl: record.ethTVL.toString(),
-    isDaily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
+    is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
   }
 }
 
