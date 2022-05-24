@@ -181,6 +181,7 @@ describe(ReportUpdater.name, () => {
         timestamp: price.timestamp,
         bridge: balance.holderAddress,
         asset: balance.assetId,
+        balance: balance.balance,
         usdTVL: 7079n,
         ethTVL: 70795n,
       })
@@ -213,6 +214,7 @@ describe(ReportUpdater.name, () => {
         timestamp: price.timestamp,
         bridge: balance.holderAddress,
         asset: balance.assetId,
+        balance: balance.balance,
         usdTVL: 7079n,
         ethTVL: 70795n,
       })
