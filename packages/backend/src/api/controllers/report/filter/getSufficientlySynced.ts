@@ -1,8 +1,8 @@
-import { ReportWithBalance } from '../../../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 import { getMaxAssetInBridge } from './getMaxAssetsInBridge'
 import { getSyncedTimestamp } from './getSyncedTimestamp'
 
-export function getSufficientlySynced(reports: ReportWithBalance[]) {
+export function getSufficientlySynced(reports: ReportRecord[]) {
   const maxByAssetInBridge = getMaxAssetInBridge(reports)
   const syncedTimestamp = getSyncedTimestamp(
     [...maxByAssetInBridge.values()],

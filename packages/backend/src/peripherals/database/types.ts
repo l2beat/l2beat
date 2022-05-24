@@ -24,8 +24,10 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
     bridge_address: string
     asset_id: string
+    balance: string
     usd_tvl: string
     eth_tvl: string
+    is_daily: boolean
   }
 
   interface Tables {

@@ -32,3 +32,7 @@ EthereumAddress.random = function random() {
   const digit = () => '0123456789abcdef'[Math.floor(Math.random() * 16)]
   return EthereumAddress('0x' + Array.from({ length: 40 }).map(digit).join(''))
 }
+
+EthereumAddress.unsafe = function unsafe(address: string) {
+  return address as unknown as EthereumAddress
+}
