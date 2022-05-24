@@ -1,12 +1,12 @@
 import { EthereumAddress } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../../model/ProjectInfo'
-import { ReportWithBalance } from '../../../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 
 export function filterReportsByProjects(
-  reports: ReportWithBalance[],
+  reports: ReportRecord[],
   projects: ProjectInfo[]
-): ReportWithBalance[] {
+): ReportRecord[] {
   const bridges = getBridges(projects)
   return reports.filter((report) => {
     const bridge = bridges.get(report.bridge)

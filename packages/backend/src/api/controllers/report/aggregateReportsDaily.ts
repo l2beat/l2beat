@@ -1,7 +1,7 @@
 import { AssetId, EthereumAddress, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model/ProjectInfo'
-import { ReportWithBalance } from '../../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 
 export interface OutputEntry {
   timestamp: UnixTime
@@ -27,7 +27,7 @@ export interface TokenEntry {
 }
 
 export function aggregateReportsDaily(
-  reports: ReportWithBalance[],
+  reports: ReportRecord[],
   projects: ProjectInfo[]
 ): OutputEntry[] {
   if (reports.length === 0) {
@@ -127,7 +127,7 @@ function getTokenDetails(projects: ProjectInfo[]) {
   return tokenDetails
 }
 
-function getBounds(reports: ReportWithBalance[]) {
+function getBounds(reports: ReportRecord[]) {
   let min = Infinity
   let max = -Infinity
   for (const { timestamp } of reports) {

@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/common'
 
-import { ReportWithBalance } from '../../../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 
-export function getMaxAssetInBridge(reports: ReportWithBalance[]) {
+export function getMaxAssetInBridge(reports: ReportRecord[]) {
   const maxByAssetInBridge = new Map<string, UnixTime>()
   for (const report of reports) {
     const key = `${report.bridge}-${report.asset}`
