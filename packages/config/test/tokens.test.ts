@@ -96,7 +96,7 @@ describe('tokens', () => {
       return CODER.decodeFunctionResult('decimals', hex)[0] as number
     }
 
-    for (const token of tokenList) {
+    for (const token of tokenList.filter((t) => t.symbol !== 'WcETH2')) {
       it(token.symbol, () => {
         if (!token.address) {
           return
