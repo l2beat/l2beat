@@ -59,6 +59,7 @@ export const layer2financezk: Project = {
       operator: OPERATOR.STARKEX_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
       exitMechanisms: EXITS.STARKEX,
+
       contracts: {
         addresses: [
           {
