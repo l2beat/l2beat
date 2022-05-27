@@ -194,7 +194,7 @@ export const optimism: Project = {
               "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
             upgradeability: {
               type: 'EIP1967',
-              admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
+              admin: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               implementation: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
             },
           },
@@ -211,7 +211,7 @@ export const optimism: Project = {
               'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0x9996571372066A1545D3435C6935e3F9593A7eF5',
+              admin: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
             },
           },
