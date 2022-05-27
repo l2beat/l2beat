@@ -18,7 +18,7 @@ export const layer2financezk: Project = {
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
       sinceBlock: 14225869,
-      tokens: '*', //?
+      tokens: ['WcETH', 'WcETH'],
     },
   ],
   details: {
@@ -30,7 +30,10 @@ export const layer2financezk: Project = {
       apps: ['https://zk.layer2.finance'],
       documentation: [],
       explorers: [],
-      repositories: ['https://github.com/starkware-libs/starkex-contracts'],
+      repositories: [
+        'https://github.com/starkware-libs/starkex-contracts',
+        'https://github.com/celer-network/defi-pooling-broker-contracts',
+      ],
       socialMedia: [
         'https://discord.gg/uGx4fjQ',
         'https://t.me/celernetwork',
@@ -39,11 +42,11 @@ export const layer2financezk: Project = {
     },
     provider: 'StarkEx',
     riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_ST, 
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC, 
-      upgradeability: RISK_VIEW.UPGRADE_DELAY('0 days'), 
-      sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT, 
-      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP, 
+      stateValidation: RISK_VIEW.STATE_ZKP_ST,
+      dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+      upgradeability: RISK_VIEW.UPGRADE_DELAY('0 days'),
+      sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
+      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
     },
     technology: {
       category: {
@@ -55,7 +58,7 @@ export const layer2financezk: Project = {
       dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
       operator: OPERATOR.STARKEX_OPERATOR,
       forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
-      exitMechanisms: EXITS.STARKEX, //?
+      exitMechanisms: EXITS.STARKEX,
       contracts: {
         addresses: [
           {
@@ -84,7 +87,6 @@ export const layer2financezk: Project = {
         name: 'Celer’s Layer2.finance Launches in ZK Proofs Mode Built with StarkEx from StarkWare.',
         link: 'https://blog.celer.network/2022/04/27/celers-layer2-finance-launches-in-zk-proofs-mode-built-with-starkex-from-starkware/',
       },
-
     ],
   },
 }

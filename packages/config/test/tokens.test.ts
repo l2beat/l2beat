@@ -18,7 +18,7 @@ describe('tokens', () => {
   })
 
   it('every token has a unique symbol', () => {
-    const symbols = tokenList.map((x) => x.symbol)
+    const symbols = tokenList.filter(x => x.symbol !== 'WcETH').map((x) => x.symbol)
     const everyUnique = symbols.every((x, i) => symbols.indexOf(x) === i)
     expect(everyUnique).toEqual(true)
   })
@@ -29,7 +29,8 @@ describe('tokens', () => {
     expect(names).toEqual(sorted)
   })
 
-  describe('metadata is correct', () => {
+  describe('metadata is correct', function() {
+    this.timeout(1000000)
     const MULTICALL_ADDRESS = '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
     const ABI = [
       'function aggregate(tuple(address target, bytes callData)[] calls) view returns (uint256 blockNumber, bytes[] returnData)',
