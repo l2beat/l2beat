@@ -78,6 +78,12 @@ export const layer2financezk: Project = {
             address: '0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9',
           },
           SHARP_VERIFIER_CONTRACT,
+          {
+            name: 'Broker',
+            description:
+              'Broker manages investment strategies on L1 for tokens deposited to the Rollup.',
+            address: '0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5',
+          },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
