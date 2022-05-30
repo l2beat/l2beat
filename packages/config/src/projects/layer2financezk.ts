@@ -18,7 +18,7 @@ export const layer2financezk: Project = {
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
       sinceBlock: 14225869,
-      tokens: ['WcETH', 'WcETH2'],
+      tokens: ['WcETH', 'WcETH2', 'ETH', 'USDC'],
     },
   ],
   details: {
