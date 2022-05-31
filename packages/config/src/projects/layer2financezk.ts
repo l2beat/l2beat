@@ -18,7 +18,22 @@ export const layer2financezk: Project = {
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
       sinceBlock: 14225869,
-      tokens: ['WcETH', 'WcETH2', 'ETH', 'USDC'],
+      tokens: ['ETH', 'USDC', 'USDT'],
+    },
+    {
+      address: '0x8581cd55ff53F1F85A237fa9D60E72a79f0973b6',
+      sinceBlock: 14485967,
+      tokens: ['cETH'],
+    },
+    {
+      address: '0x4455E4435Cf7e6B6A4Df17bEAE1A413ef3663B90',
+      sinceBlock: 14429472,
+      tokens: ['cETH'],
+    },
+    {
+      address: '0x3F3b821243E5664822c0babBA2B4f37bf294e7a0',
+      sinceBlock: 14485971,
+      tokens: ['cUSDC'],
     },
   ],
   details: {
