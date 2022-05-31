@@ -20,6 +20,11 @@ export const starknet: Project = {
       sinceBlock: 14429055,
       tokens: ['ETH'],
     },
+    {
+      address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
+      sinceBlock: 14742549,
+      tokens: ['DAI'],
+    },
   ],
   details: {
     warning:
@@ -124,6 +129,18 @@ export const starknet: Project = {
               upgradeDelay: 0,
               isFinal: false,
             },
+          },
+          {
+            name: 'L1DaiGateway',
+            description:
+              'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+            address: '0x659a00c33263d9254Fed382dE81349426C795BB6',
+          },
+          {
+            name: 'L1Escrow',
+            description:
+              'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+            address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
