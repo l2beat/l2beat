@@ -33,7 +33,7 @@ describe(ReportController.name, () => {
     }
   }
 
-  describe(ReportController.prototype.getDaily.name, () => {
+  describe(ReportController.prototype.generateDaily.name, () => {
     const PROJECTS: ProjectInfo[] = [
       {
         name: 'Arbitrum',
@@ -83,7 +83,7 @@ describe(ReportController.name, () => {
 
       const reportController = new ReportController(reportRepository, PROJECTS)
 
-      const result = await reportController.getDaily()
+      const result = await reportController.generateDaily()
 
       expect(result).toEqual({
         aggregate: {
@@ -148,7 +148,7 @@ describe(ReportController.name, () => {
 
       const reportController = new ReportController(reportRepository, PROJECTS)
 
-      const result = await reportController.getDaily()
+      const result = await reportController.generateDaily()
 
       expect(result).toEqual({
         aggregate: {

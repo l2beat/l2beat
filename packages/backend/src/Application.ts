@@ -102,7 +102,8 @@ export class Application {
 
     const reportController = new ReportController(
       reportRepository,
-      config.projects
+      config.projects,
+      logger
     )
 
     const apiServer = new ApiServer(config.port, logger, [
@@ -118,6 +119,8 @@ export class Application {
       await databaseService.migrateToLatest()
 
       await apiServer.listen()
+
+      reportController.start()
 
       syncScheduler.start()
     }
