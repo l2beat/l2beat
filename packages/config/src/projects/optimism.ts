@@ -41,6 +41,7 @@ export const optimism: Project = {
       tokens: '*',
     },
   ],
+  associatedTokens: ['OP'],
   details: {
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
