@@ -96,7 +96,7 @@ export const layer2financezk: Project = {
           {
             name: 'Broker',
             description:
-              'Broker manages investment strategies on L1 for tokens deposited to the Rollup.',
+              'Broker manages investment strategies on L1 for tokens deposited to the Rollup. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
             address: '0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5',
           },
         ],
