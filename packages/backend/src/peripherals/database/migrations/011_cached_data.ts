@@ -5,7 +5,7 @@ export async function up(knex: Knex) {
     table.integer('id').notNullable()
     table.bigInteger('unix_timestamp').notNullable()
     table.jsonb('data').notNullable()
-    
+
     table.primary(['id'])
   })
 }

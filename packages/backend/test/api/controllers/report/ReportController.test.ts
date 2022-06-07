@@ -2,6 +2,7 @@ import {
   AssetId,
   CoingeckoId,
   EthereumAddress,
+  Logger,
   mock,
   UnixTime,
 } from '@l2beat/common'
@@ -10,6 +11,7 @@ import { expect, mockFn } from 'earljs'
 
 import { ReportController } from '../../../../src/api/controllers/report/ReportController'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
+import { CachedDataRepository } from '../../../../src/peripherals/database/CachedDataRepository'
 import { ReportRepository } from '../../../../src/peripherals/database/ReportRepository'
 
 describe(ReportController.name, () => {
@@ -81,7 +83,15 @@ describe(ReportController.name, () => {
         ]),
       })
 
-      const reportController = new ReportController(reportRepository, PROJECTS)
+      const cachedRepository = mock<CachedDataRepository>({
+        saveData: async () => {},
+      })
+      const reportController = new ReportController(
+        reportRepository,
+        cachedRepository,
+        PROJECTS,
+        Logger.SILENT
+      )
 
       const result = await reportController.generateDaily()
 
@@ -145,9 +155,15 @@ describe(ReportController.name, () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([]),
       })
-
-      const reportController = new ReportController(reportRepository, PROJECTS)
-
+      const cachedRepository = mock<CachedDataRepository>({
+        saveData: async () => {},
+      })
+      const reportController = new ReportController(
+        reportRepository,
+        cachedRepository,
+        PROJECTS,
+        Logger.SILENT
+      )
       const result = await reportController.generateDaily()
 
       expect(result).toEqual({

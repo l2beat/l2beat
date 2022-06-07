@@ -39,7 +39,7 @@ export class Application {
     const priceRepository = new PriceRepository(knex, logger)
     const balanceRepository = new BalanceRepository(knex, logger)
     const reportRepository = new ReportRepository(knex, logger)
-    const cachedDataRepository = new CachedDataRepository(knex,logger)
+    const cachedDataRepository = new CachedDataRepository(knex, logger)
 
     const http = new HttpClient()
 
