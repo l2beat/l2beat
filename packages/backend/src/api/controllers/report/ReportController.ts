@@ -22,24 +22,19 @@ export class ReportController {
   }
 
   start() {
+    this.addJob()
+    setInterval(() => this.addJob(), this.interval)
+  }
+
+  private addJob() {
     this.jobQueue.add({
       name: 'ReportController started @ ${UnixTime.now().toString()}',
       execute: () => this.generateDailyAndCache(),
     })
-
-    setInterval(
-      () =>
-        this.jobQueue.add({
-          name: 'ReportController started @ ${UnixTime.now().toString()}',
-          execute: () => this.generateDailyAndCache(),
-        }),
-      this.interval
-    )
   }
 
   async getDaily() {
-    const report = await this.cacheRepository.getData()
-    return report
+    return this.cacheRepository.getData()
   }
 
   async generateDailyAndCache() {
