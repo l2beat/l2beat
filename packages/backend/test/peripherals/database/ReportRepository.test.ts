@@ -1,6 +1,5 @@
 import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
-import { after } from 'mocha'
 
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
