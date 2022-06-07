@@ -8,7 +8,7 @@
     "build": "node -r esbuild-register src/old",
     "build:mock": "MOCK_DATA=true yarn build",
     "build:precomputed": "UPDATE_PRECOMPUTED=true yarn build",
-    "start": "NODE_TLS_REJECT_UNAUTHORIZED='0' node -r esbuild-register --max-old-space-size=800 src",
+    "start": "node -r esbuild-register src",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts --max-warnings 0 src test",
