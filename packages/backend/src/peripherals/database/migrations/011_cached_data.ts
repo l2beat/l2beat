@@ -2,11 +2,9 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('cached_data', function (table) {
-    table.integer('id').notNullable()
+    table.integer('id').primary()
     table.bigInteger('unix_timestamp').notNullable()
     table.jsonb('data').notNullable()
-
-    table.primary(['id'])
   })
 }
 
