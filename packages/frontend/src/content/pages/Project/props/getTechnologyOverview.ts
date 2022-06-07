@@ -237,7 +237,7 @@ function getTwitterLink(project: Project) {
     'https://twitter.com/'.length
   )
 
-  const message = `Hey @${twitterAccount}. Your project overview on @l2beatcom would benefit from your help.`
+  const message = `Hey @${twitterAccount}. Your project overview on @l2beat would benefit from your help.`
   const url = `https://l2beat.com/projects/${project.slug}`
 
   const options = [
