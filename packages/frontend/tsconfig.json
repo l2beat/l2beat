@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["es2019", "DOM"],
     "declaration": false,
+    "declarationMap": false,
     "outDir": "build"
   }
 }
