@@ -104,3 +104,14 @@ You can configure the behavior of the app with the following environment variabl
 The scripts are the same with one new addition.
 
 - `yarn start` - run the backend server.
+
+## Repository naming convention
+
+- `add(T): number` - adds a new record and returns it's id
+- `addMany(T[]): R[]` - adds many new records and returns their ids
+- `getAll(): T[]` - returns an array of all records
+- `getByKey(K): T[]` - returns an array of all matching records
+- `findByKey(K): T?` - returns a single matching record or undefined
+- `deleteAll(): number` - removes all records and returns the number of removed records
+- `deleteByKey(K): number` - removes all matching records and returns the number of removed records
+- `save(T): boolean` - updates a record and returns boolean indicating if record was updated

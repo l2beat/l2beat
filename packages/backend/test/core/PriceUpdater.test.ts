@@ -15,7 +15,7 @@ describe(PriceUpdater.name, () => {
   describe(PriceUpdater.prototype.update.name, () => {
     it('returns if empty timestamps', async () => {
       const priceRepository = mock<PriceRepository>({
-        getDataBoundaries: mockFn().returns(new Map()),
+        calcDataBoundaries: mockFn().returns(new Map()),
         addOrUpdate: mockFn().returns([]),
       })
       const coingeckoQueryService = mock<CoingeckoQueryService>({
@@ -30,7 +30,7 @@ describe(PriceUpdater.name, () => {
 
       await priceUpdater.update([])
 
-      expect(priceRepository.getDataBoundaries.calls.length).toEqual(0)
+      expect(priceRepository.calcDataBoundaries.calls.length).toEqual(0)
     })
 
     it('correctly calls updates', async () => {
@@ -41,7 +41,7 @@ describe(PriceUpdater.name, () => {
       ]
 
       const priceRepository = mock<PriceRepository>({
-        getDataBoundaries: mockFn().returns(
+        calcDataBoundaries: mockFn().returns(
           new Map([
             [tokens[0], { earliest: HOUR_10, latest: HOUR_12 }],
             [tokens[1], { earliest: HOUR_09, latest: HOUR_12 }],
@@ -75,7 +75,7 @@ describe(PriceUpdater.name, () => {
   describe(PriceUpdater.prototype.updateToken.name, () => {
     describe('no data in DB', () => {
       const priceRepository = mock<PriceRepository>({
-        getDataBoundaries: mockFn().returns(new Map()),
+        calcDataBoundaries: mockFn().returns(new Map()),
         addOrUpdate: mockFn().returns([]),
       })
 

@@ -2,6 +2,8 @@ import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 import { BalanceRow } from 'knex/types/tables'
 
+import { BaseRepository } from './BaseRepository'
+
 export interface BalanceRecord {
   blockNumber: bigint
   holderAddress: EthereumAddress
@@ -14,9 +16,14 @@ export interface DataBoundary {
   latestBlockNumber: bigint | undefined
 }
 
-export class BalanceRepository {
-  constructor(private knex: Knex, private logger: Logger) {
-    this.logger = this.logger.for(this)
+export class BalanceRepository extends BaseRepository {
+  constructor(knex: Knex, logger: Logger) {
+    super(knex, logger)
+    this.getByBlock = this.wrapGet(this.getByBlock)
+    this.getByHolderAndAsset = this.wrapGet(this.getByHolderAndAsset)
+    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
+    this.getAll = this.wrapGet(this.getAll)
+    this.deleteAll = this.wrapDelete(this.deleteAll)
   }
 
   async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
@@ -26,7 +33,7 @@ export class BalanceRepository {
     return rows.map(toRecord)
   }
 
-  async getAllByHolderAndAsset(
+  async getByHolderAndAsset(
     holder: EthereumAddress,
     asset: AssetId
   ): Promise<BalanceRecord[]> {
@@ -38,14 +45,14 @@ export class BalanceRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdate(balances: BalanceRecord[]) {
+  async addOrUpdateMany(balances: BalanceRecord[]) {
     const rows = balances.map(toRow)
-    await this.knex('asset_balances')
+    const ids = await this.knex('asset_balances')
       .insert(rows)
       .onConflict(['block_number', 'holder_address', 'asset_id'])
       .merge()
 
-    this.logger.debug({ method: 'addOrUpdate', amount: rows.length })
+    return ids
   }
 
   async getAll(): Promise<BalanceRecord[]> {
@@ -55,13 +62,11 @@ export class BalanceRepository {
       'asset_id',
       'balance'
     )
-    this.logger.debug({ method: 'getAll', amount: rows.length })
     return rows.map(toRecord)
   }
 
   async deleteAll() {
-    await this.knex('asset_balances').delete()
-    this.logger.debug({ method: 'deleteAll' })
+    return await this.knex('asset_balances').delete()
   }
 }
 

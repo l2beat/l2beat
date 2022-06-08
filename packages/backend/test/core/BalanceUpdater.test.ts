@@ -157,7 +157,7 @@ describe(BalanceUpdater.name, () => {
             },
           ])
           .returnsOnce([]),
-        addOrUpdate: mockFn().returns([]),
+        addOrUpdateMany: mockFn().returns([]),
       })
 
       const multicall = mock<MulticallClient>({
@@ -204,7 +204,7 @@ describe(BalanceUpdater.name, () => {
         ],
       ])
 
-      expect(balanceRepository.addOrUpdate).toHaveBeenCalledExactlyWith([
+      expect(balanceRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
         [
           [
             {
@@ -267,7 +267,7 @@ describe(BalanceUpdater.name, () => {
     it('skip processed blocks', async () => {
       const balanceRepository = mock<BalanceRepository>({
         getByBlock: mockFn().returns([]),
-        addOrUpdate: mockFn().returns([]),
+        addOrUpdateMany: mockFn().returns([]),
       })
 
       const multicall = mock<MulticallClient>({
@@ -287,7 +287,7 @@ describe(BalanceUpdater.name, () => {
 
       expect(multicall.multicall.calls.length).toEqual(0)
 
-      expect(balanceRepository.addOrUpdate.calls.length).toEqual(0)
+      expect(balanceRepository.addOrUpdateMany.calls.length).toEqual(0)
     })
   })
 
@@ -533,7 +533,7 @@ describe(BalanceUpdater.name, () => {
         ]),
       })
       const balanceRepository = mock<BalanceRepository>({
-        addOrUpdate: mockFn().returns([]),
+        addOrUpdateMany: mockFn().returns([]),
       })
 
       const balanceUpdater = new BalanceUpdater(

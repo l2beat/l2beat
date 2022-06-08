@@ -130,9 +130,9 @@ describe(PriceRepository.name, () => {
     expect(results).toBeAnArrayWith(DATA[0], DATA[2])
   })
 
-  it(PriceRepository.prototype.getAllByToken.name, async () => {
+  it(PriceRepository.prototype.getByToken.name, async () => {
     const token = CoingeckoId('uniswap')
-    const results = await repository.getAllByToken(token)
+    const results = await repository.getByToken(token)
 
     expect(results).toBeAnArrayWith(
       ...DATA.filter((d) => d.coingeckoId === token)
@@ -148,9 +148,9 @@ describe(PriceRepository.name, () => {
     expect(results).toBeAnArrayOfLength(0)
   })
 
-  describe(PriceRepository.prototype.getDataBoundaries.name, () => {
+  describe(PriceRepository.prototype.calcDataBoundaries.name, () => {
     it('boundary of single and multi row data', async () => {
-      const result = await repository.getDataBoundaries()
+      const result = await repository.calcDataBoundaries()
 
       expect(result).toEqual(
         new Map([

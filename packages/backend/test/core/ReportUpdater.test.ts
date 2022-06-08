@@ -88,7 +88,7 @@ describe(ReportUpdater.name, () => {
           ),
       })
       const reportRepository = mock<ReportRepository>({
-        addOrUpdate: mockFn().returns({}),
+        addOrUpdateMany: mockFn().returns({}),
       })
 
       const reportUpdater = new ReportUpdater(
@@ -103,7 +103,7 @@ describe(ReportUpdater.name, () => {
         { timestamp: START.add(1, 'hours'), blockNumber: START_BN + 200n },
       ])
 
-      expect(reportRepository.addOrUpdate.calls.length).toEqual(2)
+      expect(reportRepository.addOrUpdateMany.calls.length).toEqual(2)
     })
   })
 
