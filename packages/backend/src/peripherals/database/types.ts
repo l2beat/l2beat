@@ -1,3 +1,5 @@
+import { ReportOutput } from '../../api/controllers/report/generateReportOutput'
+
 export {}
 
 declare module 'knex/types/tables' {
@@ -30,10 +32,17 @@ declare module 'knex/types/tables' {
     is_daily: boolean
   }
 
+  interface CachedDataRow {
+    id: number
+    unix_timestamp: string
+    data: ReportOutput
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
     asset_balances: BalanceRow
     reports: ReportRow
+    cached_data: CachedDataRow
   }
 }
