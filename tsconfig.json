@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react",
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   }
 }
