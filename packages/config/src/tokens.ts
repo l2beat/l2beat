@@ -1218,6 +1218,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('op-optimism'),
+    name: 'Optimism',
+    coingeckoId: CoingeckoId('optimism'),
+    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
+    symbol: 'OP',
+    decimals: 18,
+    sinceBlock: 14881557,
+    category: 'other',
+  },
+  {
     id: AssetId('orbs-orbs'),
     name: 'Orbs',
     coingeckoId: CoingeckoId('orbs'),

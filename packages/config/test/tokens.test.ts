@@ -1,4 +1,5 @@
 import {
+  AssetId,
   CoingeckoClient,
   CoingeckoId,
   EthereumAddress,
@@ -29,7 +30,8 @@ describe('tokens', () => {
     expect(names).toEqual(sorted)
   })
 
-  describe('metadata is correct', () => {
+  describe('metadata is correct', function () {
+    this.timeout(10_000)
     const MULTICALL_ADDRESS = '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
     const ABI = [
       'function aggregate(tuple(address target, bytes callData)[] calls) view returns (uint256 blockNumber, bytes[] returnData)',
@@ -48,11 +50,15 @@ describe('tokens', () => {
       decimals: number
     }
     const results: Record<string, Metadata> = {}
+    const checkedTokens = tokenList.filter(
+      (x) => x.id !== AssetId('op-optimism')
+    )
 
     before('fetch metadata', async () => {
       const provider = new providers.AlchemyProvider('mainnet')
       const contract = new Contract(MULTICALL_ADDRESS, CODER, provider)
-      const calls = tokenList.flatMap((x) =>
+
+      const calls = checkedTokens.flatMap((x) =>
         !x.address
           ? []
           : [
@@ -96,7 +102,7 @@ describe('tokens', () => {
       return CODER.decodeFunctionResult('decimals', hex)[0] as number
     }
 
-    for (const token of tokenList) {
+    for (const token of checkedTokens) {
       it(token.symbol, () => {
         if (!token.address) {
           return

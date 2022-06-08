@@ -14,6 +14,7 @@ import { SyncScheduler } from './core/SyncScheduler'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
+import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
 import { DatabaseService } from './peripherals/database/DatabaseService'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
@@ -32,12 +33,13 @@ export class Application {
 
     /* - - - - - PERIPHERALS - - - - - */
 
-    const knex = DatabaseService.createKnexInstance(config.databaseUrl)
+    const knex = DatabaseService.createKnexInstance(config.databaseConnection)
     const databaseService = new DatabaseService(knex, logger)
     const blockNumberRepository = new BlockNumberRepository(knex, logger)
     const priceRepository = new PriceRepository(knex, logger)
     const balanceRepository = new BalanceRepository(knex, logger)
     const reportRepository = new ReportRepository(knex, logger)
+    const cachedDataRepository = new CachedDataRepository(knex, logger)
 
     const http = new HttpClient()
 
@@ -102,7 +104,9 @@ export class Application {
 
     const reportController = new ReportController(
       reportRepository,
-      config.projects
+      cachedDataRepository,
+      config.projects,
+      logger
     )
 
     const apiServer = new ApiServer(config.port, logger, [
@@ -118,6 +122,8 @@ export class Application {
       await databaseService.migrateToLatest()
 
       await apiServer.listen()
+
+      reportController.start()
 
       syncScheduler.start()
     }

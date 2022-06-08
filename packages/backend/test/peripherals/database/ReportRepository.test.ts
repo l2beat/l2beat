@@ -26,6 +26,7 @@ describe(ReportRepository.name, () => {
       timestamp: TODAY.add(timestampOffset, 'hours'),
       bridge,
       asset: ASSET_A,
+      balance: BALANCE,
       usdTVL: 1000000n,
       ethTVL: 100000n,
     }
