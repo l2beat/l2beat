@@ -30,7 +30,7 @@ export async function decodeSequencerBatch(
   const methodName = reader.readBytes(4).toString('hex')
   console.log('MethodName:', methodName)
 
-  if (kind === 'Metis') {
+  if (kind === 'Metis' || kind === 'Metis 2.0') {
     const chainId = reader.readBytes(32).toString('hex')
     console.log('ChainId:', chainId)
   }
@@ -54,9 +54,10 @@ export async function decodeSequencerBatch(
       timestamp,
       blockNumber,
     })
+    console.log(sequencerTxCount, queueTxCount, timestamp, blockNumber)
   }
 
-  if (contexts[0].blockNumber === 0) {
+  if (contexts[0].blockNumber === 0 && kind === 'Optimism OVM 2.0') {
     console.log(
       'Block number = 0 ? Transactions are compressed, nice.... Decompressing....'
     )
