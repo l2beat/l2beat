@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
-    "@types/node": "^16.11.11",
+    "@types/node": "^17.0.41",
     "chalk": "^4.1.2",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.1",
     "easy-table": "^1.2.0",
-    "ethers": "^5.5.1"
+    "ethers": "^5.6.8"
   },
   "devDependencies": {}
 }
