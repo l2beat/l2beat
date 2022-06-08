@@ -1,4 +1,4 @@
-import { json, Logger } from '@l2beat/common'
+import { Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 
 interface AnyMethod<A extends unknown[], R> {
