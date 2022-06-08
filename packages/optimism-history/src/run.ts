@@ -68,6 +68,7 @@ export async function run() {
   cache.wrapMethod(addressAnalyzer, 'getName')
 
   const eventProcessor = new EventProcessor(
+    provider,
     blockTimestampService,
     optimismNameService,
     addressAnalyzer
