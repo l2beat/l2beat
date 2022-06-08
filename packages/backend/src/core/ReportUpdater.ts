@@ -92,6 +92,7 @@ export function calculateTVL(
     timestamp: price.timestamp,
     bridge: balance.holderAddress,
     asset: balance.assetId,
+    balance: balance.balance,
     usdTVL,
     ethTVL,
   }

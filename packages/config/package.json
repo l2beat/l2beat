@@ -15,9 +15,9 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@l2beat/common": "0.1.0"
+    "@l2beat/common": "*"
   },
   "devDependencies": {
-    "ethers": "^5.4.7"
+    "ethers": "^5.6.8"
   }
 }

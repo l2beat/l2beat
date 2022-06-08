@@ -19,25 +19,25 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
-    "@l2beat/common": "0.1.0",
-    "@l2beat/config": "0.1.0",
-    "@types/adm-zip": "^0.4.34",
+    "@l2beat/common": "*",
+    "@l2beat/config": "*",
+    "@types/adm-zip": "^0.5.0",
     "@types/koa": "^2.13.4",
-    "@types/koa__router": "^8.0.8",
-    "@types/memoizee": "^0.4.6",
+    "@types/koa__router": "^8.0.11",
+    "@types/memoizee": "^0.4.8",
     "@types/node-fetch": "^2.5.12",
-    "adm-zip": "^0.5.6",
+    "adm-zip": "^0.5.9",
     "chalk": "^4.1.2",
-    "dotenv": "^10.0.0",
-    "ethers": "^5.4.7",
+    "dotenv": "^16.0.1",
+    "ethers": "^5.6.8",
     "knex": "^0.95.11",
-    "koa": "^2.13.1",
+    "koa": "^2.13.4",
     "memoizee": "^0.4.15",
     "node-fetch": "2.6.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.3"
   },
   "devDependencies": {
-    "@types/supertest": "^2.0.11",
-    "supertest": "^6.1.6"
+    "@types/supertest": "^2.0.12",
+    "supertest": "^6.2.3"
   }
 }

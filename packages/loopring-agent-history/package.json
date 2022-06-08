@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
-    "@types/node": "^16.11.11",
+    "@types/node": "^17.0.41",
     "@types/node-fetch": "^2.5.12",
-    "dotenv": "^10.0.0",
-    "ethers": "^5.5.1"
+    "dotenv": "^16.0.1",
+    "ethers": "^5.6.8"
   },
   "devDependencies": {}
 }

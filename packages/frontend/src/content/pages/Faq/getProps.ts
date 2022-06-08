@@ -1,4 +1,4 @@
-import cheerio, { Cheerio, Element } from 'cheerio'
+import { Cheerio, Element, load } from 'cheerio'
 import fsx from 'fs-extra'
 import MarkdownIt from 'markdown-it'
 import path from 'path'
@@ -30,7 +30,7 @@ function getHtml() {
   const markdown = MarkdownIt({ html: true })
   const file = fsx.readFileSync(path.join(__dirname, 'faq.md'), 'utf-8')
   const rendered = markdown.render(file)
-  const $ = cheerio.load(rendered)
+  const $ = load(rendered)
   $('a').each(function () {
     const $el = $(this)
     $el.attr('rel', 'noopener noreferrer')

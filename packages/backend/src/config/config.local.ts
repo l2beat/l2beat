@@ -17,7 +17,7 @@ export function getLocalConfig(): Config {
     port: getEnv.integer('PORT', 3000),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-    databaseUrl: getEnv('LOCAL_DB_URL'),
+    databaseConnection: getEnv('LOCAL_DB_URL'),
     core: {
       // TODO: This should probably be configurable
       minBlockTimestamp: UnixTime.now().add(-2, 'hours').toStartOf('hour'),

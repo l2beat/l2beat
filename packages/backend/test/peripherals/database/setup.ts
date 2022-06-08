@@ -3,8 +3,8 @@ import { DatabaseService } from '../../../src/peripherals/database/DatabaseServi
 
 export function setupDatabaseTestSuite() {
   const config = getConfig('test')
-  const knex = DatabaseService.createKnexInstance(config.databaseUrl)
-  const skip = config.databaseUrl === 'xXTestDatabaseUrlXx'
+  const knex = DatabaseService.createKnexInstance(config.databaseConnection)
+  const skip = config.databaseConnection === 'xXTestDatabaseUrlXx'
 
   before(async function () {
     if (skip) {
