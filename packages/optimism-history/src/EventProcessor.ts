@@ -41,18 +41,18 @@ export class EventProcessor {
   async analyzeChugSplashProxy(proxyAddress: string) {
     const IMPLEMENTATION_SLOT =
       '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc'
-    const ADMIN_SLOT =
-      '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103'
+    // const ADMIN_SLOT =
+    //   '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103'
     const implementationSlot = await this.provider.getStorageAt(
       proxyAddress,
       IMPLEMENTATION_SLOT
     )
     const implementation = this.wordToAddress(implementationSlot)
-    return this.addressAnalyzer.getName(implementation as any)
+    return this.addressAnalyzer.getName(EthereumAddress(implementation))
   }
 
   wordToAddress(word: string) {
-    return utils.getAddress('0x' + word.substr(26, 40))
+    return utils.getAddress('0x' + word.slice(26, 40))
   }
 }
 
