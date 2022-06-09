@@ -1,4 +1,4 @@
-import { SimpleDate } from '../model'
+import { SimpleDate } from '../types'
 
 export function dateRange(start: SimpleDate, end: SimpleDate) {
   let current = start

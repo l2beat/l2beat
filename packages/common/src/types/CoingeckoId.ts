@@ -1,5 +1,5 @@
 export interface CoingeckoId extends String {
-  _coingeckoIdBrand: string
+  _CoingeckoIdBrand: string
 }
 
 export function CoingeckoId(value: string) {
