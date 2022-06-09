@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { SimpleDate } from '../../src/model/SimpleDate'
+import { SimpleDate } from '../../src/types'
 
 describe(SimpleDate.name, () => {
   it('can be created from string', () => {

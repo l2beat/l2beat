@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { asNumber } from '../../src/utils/asNumber'
+import { asNumber } from '../../../../src/api/controllers/report/asNumber'
 
 describe(asNumber.name, () => {
   it('1234567 || 6 precision digits', () => {

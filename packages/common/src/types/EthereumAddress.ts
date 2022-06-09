@@ -1,7 +1,7 @@
 import { constants, utils } from 'ethers'
 
 export interface EthereumAddress extends String {
-  _ethereumAddressBrand: string
+  _EthereumAddressBrand: string
 }
 
 export function EthereumAddress(value: string) {

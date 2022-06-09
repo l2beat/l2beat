@@ -34,7 +34,8 @@
     "koa": "^2.13.4",
     "memoizee": "^0.4.15",
     "node-fetch": "2.6.1",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@types/supertest": "^2.0.12",
