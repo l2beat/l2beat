@@ -6,8 +6,8 @@ import {
   UnixTime,
 } from '@l2beat/common'
 
+import { stringAsBigInt } from '../../tools/types'
 import { HttpClient } from '../HttpClient'
-import { asBigIntFromString } from './asBigIntFromString'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
@@ -35,7 +35,7 @@ export class EtherscanClient {
       timestamp: timestamp.toString(),
       closest: 'before',
     })
-    return asBigIntFromString(result)
+    return stringAsBigInt().parse(result)
   }
 
   private async call(
