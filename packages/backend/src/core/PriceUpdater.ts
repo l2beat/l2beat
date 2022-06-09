@@ -22,7 +22,7 @@ export class PriceUpdater {
     const from = timestamps[0]
     const to = timestamps[timestamps.length - 1]
 
-    const boundaries = await this.priceRepository.getDataBoundaries()
+    const boundaries = await this.priceRepository.calcDataBoundaries()
 
     await Promise.all(
       this.coingeckoIds.map((coingeckoId) => {

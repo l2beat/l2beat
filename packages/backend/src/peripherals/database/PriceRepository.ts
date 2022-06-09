@@ -2,6 +2,8 @@ import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { PriceRow } from 'knex/types/tables'
 
+import { BaseRepository } from './BaseRepository'
+
 export interface PriceRecord {
   coingeckoId: CoingeckoId
   priceUsd: number
@@ -13,9 +15,14 @@ export interface DataBoundary {
   latest: UnixTime
 }
 
-export class PriceRepository {
-  constructor(private knex: Knex, private logger: Logger) {
-    this.logger = this.logger.for(this)
+export class PriceRepository extends BaseRepository {
+  constructor(knex: Knex, logger: Logger) {
+    super(knex, logger)
+
+    this.getAll = this.wrapGet(this.getAll)
+    this.getByTimestamp = this.wrapGet(this.getByTimestamp)
+    this.getByToken = this.wrapGet(this.getByToken)
+    this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
   }
 
   async getAll(): Promise<PriceRecord[]> {
@@ -24,7 +31,6 @@ export class PriceRepository {
       'price_usd',
       'unix_timestamp'
     )
-    this.logger.debug({ method: 'getAll', amount: rows.length })
     return rows.map(toRecord)
   }
 
@@ -41,7 +47,7 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
-  async getAllByToken(coingeckoId: CoingeckoId) {
+  async getByToken(coingeckoId: CoingeckoId) {
     const rows = await this.knex('coingecko_prices')
       .where({ coingecko_id: coingeckoId.toString() })
       .select('coingecko_id', 'price_usd', 'unix_timestamp')
@@ -69,10 +75,9 @@ export class PriceRepository {
 
   async deleteAll() {
     await this.knex('coingecko_prices').delete()
-    this.logger.debug({ method: 'deleteAll' })
   }
 
-  async getDataBoundaries(): Promise<Map<CoingeckoId, DataBoundary>> {
+  async calcDataBoundaries(): Promise<Map<CoingeckoId, DataBoundary>> {
     const rows = await this.knex('coingecko_prices')
       .min('unix_timestamp')
       .max('unix_timestamp')

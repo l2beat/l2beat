@@ -29,7 +29,7 @@ export class BalanceUpdater {
 
       if (missing.length > 0) {
         const balances = await this.fetchBalances(missing, blockNumber)
-        await this.balanceRepository.addOrUpdate(balances)
+        await this.balanceRepository.addOrUpdateMany(balances)
         this.processedBlocks.add(blockNumber)
       }
     }

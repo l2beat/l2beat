@@ -2,6 +2,8 @@ import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
+import { BaseRepository } from './BaseRepository'
+
 export interface ReportRecord {
   blockNumber: bigint
   timestamp: UnixTime
@@ -12,9 +14,14 @@ export interface ReportRecord {
   balance: bigint
 }
 
-export class ReportRepository {
-  constructor(private knex: Knex, private logger: Logger) {
-    this.logger = this.logger.for(this)
+export class ReportRepository extends BaseRepository {
+  constructor(knex: Knex, logger: Logger) {
+    super(knex, logger)
+
+    this.getDaily = this.wrapGet(this.getDaily)
+    this.getAll = this.wrapGet(this.getAll)
+    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
+    this.deleteAll = this.wrapDelete(this.deleteAll)
   }
 
   async getDaily(): Promise<ReportRecord[]> {
@@ -31,19 +38,17 @@ export class ReportRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdate(reports: ReportRecord[]) {
+  async addOrUpdateMany(reports: ReportRecord[]) {
     const rows = reports.map(toRow)
-    await this.knex('reports')
+    return await this.knex('reports')
       .insert(rows)
+      .returning(['block_number', 'bridge_address', 'asset_id'])
       .onConflict(['block_number', 'bridge_address', 'asset_id'])
       .merge()
-
-    this.logger.debug({ method: 'addOrUpdate', amount: rows.length })
   }
 
   async deleteAll() {
-    await this.knex('reports').delete()
-    this.logger.debug({ method: 'deleteAll' })
+    return await this.knex('reports').delete()
   }
 }
 

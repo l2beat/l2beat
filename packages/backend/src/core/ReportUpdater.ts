@@ -37,7 +37,7 @@ export class ReportUpdater {
         this.balanceRepository.getByBlock(blockNumber),
       ])
       const tvlEntries = this.calculateTvls(prices, balances)
-      this.reportRepository.addOrUpdate(tvlEntries)
+      this.reportRepository.addOrUpdateMany(tvlEntries)
       this.lastProcessed = timestamp
     }
   }
