@@ -1,7 +1,6 @@
-import { UnixTime } from '../../model/UnixTime'
 import { RateLimiter } from '../../tools/RateLimiter'
+import { CoingeckoId, UnixTime } from '../../types'
 import { HttpClient } from '../HttpClient'
-import { CoingeckoId } from './CoingeckoId'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
