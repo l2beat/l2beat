@@ -277,6 +277,7 @@
   color: var(--text);
   text-decoration: underline dotted;
   cursor: pointer;
+  padding: 0 4px;
 
   .Chart-Button:nth-of-type(4) ~ & {
     display: block;

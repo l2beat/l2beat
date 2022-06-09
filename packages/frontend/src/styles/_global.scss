@@ -17,9 +17,24 @@ body {
 
 a {
   color: var(--link);
+  text-decoration: underline;
 }
 
 ul,
 ol {
+  margin: 18px 0;
   padding-left: 32px;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+figure > img {
+  display: inline;
+  vertical-align: unset;
 }
