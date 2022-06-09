@@ -9,8 +9,8 @@ interface AddMethod<T, R> {
   (record: T): Promise<R>
 }
 
-interface AddManyMethod<T> {
-  (records: T[]): Promise<number[]>
+interface AddManyMethod<T, R> {
+  (records: T[]): Promise<R[]>
 }
 
 interface GetMethod<A extends unknown[], T> {
@@ -52,7 +52,9 @@ export class BaseRepository {
     )
   }
 
-  protected wrapAddMany<T>(method: AddManyMethod<T>): AddManyMethod<T> {
+  protected wrapAddMany<T, R>(
+    method: AddManyMethod<T, R>
+  ): AddManyMethod<T, R> {
     const fn = async (records: T[]) => {
       if (records.length === 0) {
         this.logger.debug({ method: method.name, count: 0 })
