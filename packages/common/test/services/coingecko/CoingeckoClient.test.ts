@@ -2,11 +2,11 @@ import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { CoingeckoClient, CoingeckoId, HttpClient, mock } from '../../../src'
-import { UnixTime } from '../../../src/model/UnixTime'
 import {
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
 } from '../../../src/services/coingecko/model'
+import { UnixTime } from '../../../src/types'
 
 //add names
 describe(CoingeckoClient.name, () => {
