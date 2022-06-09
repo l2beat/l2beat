@@ -16,6 +16,7 @@ function getTokens(project: Project, l2Data: L2Data) {
       x.tokens === '*' ? tokenList.map((x) => x.symbol) : x.tokens
     )
     .filter((x, i, a) => a.indexOf(x) === i)
+    .filter((token) => !!l2Data.byProject[project.name]?.byToken[token])
     .map((token) => ({
       symbol: token,
       endpoint: `/api/${project.slug}/${token.toLowerCase()}.json`,
