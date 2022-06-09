@@ -13,7 +13,7 @@ import {
   MulticallClient,
   multicallInterface,
 } from '../../../src/peripherals/ethereum/MulticallClient'
-import { BlockTag } from '../../../src/peripherals/ethereum/primitives'
+import { BlockTag } from '../../../src/peripherals/ethereum/types'
 
 describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))

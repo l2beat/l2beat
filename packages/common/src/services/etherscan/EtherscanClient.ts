@@ -1,5 +1,5 @@
-import { EthereumAddress } from '../../model'
 import { RateLimiter } from '../../tools/RateLimiter'
+import { EthereumAddress } from '../../types'
 import { HttpClient } from '../HttpClient'
 import { ContractSourceResult, EtherscanResponse } from './model'
 
