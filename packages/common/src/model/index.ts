@@ -1,7 +1,6 @@
 export * from './AssetId'
 export * from './Bytes'
 export * from './EthereumAddress'
-export * from './Exchange'
 export * from './json'
 export * from './SimpleDate'
 export * from './UnixTime'
