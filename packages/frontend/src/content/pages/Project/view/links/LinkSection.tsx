@@ -1,14 +1,12 @@
 import { ProjectLinks } from '@l2beat/config'
 import React from 'react'
 
-import { ExperimentalStats, ExperimentalStatsProps } from './ExperimentalStats'
 import { LinkSectionLinks } from './LinkSectionLinks'
 
 export interface LinkSectionProps {
   icon: string
   name: string
   links: ProjectLinks
-  experimentalStats7d: ExperimentalStatsProps
 }
 
 export function LinkSection(props: LinkSectionProps) {
@@ -42,7 +40,6 @@ export function LinkSection(props: LinkSectionProps) {
           />
         </tbody>
       </table>
-      <ExperimentalStats {...props.experimentalStats7d} />
     </section>
   )
 }

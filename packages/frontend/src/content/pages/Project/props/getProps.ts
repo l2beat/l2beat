@@ -12,6 +12,6 @@ export function getProps(project: Project, l2Data: L2Data): ProjectPageProps {
     metadata: getPageMetadata(project),
     header: getHeader(project, l2Data),
     chart: getChart(project, l2Data),
-    projectDetails: getProjectDetails(project, l2Data),
+    projectDetails: getProjectDetails(project),
   }
 }
