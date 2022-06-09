@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { CoingeckoId } from './CoingeckoId'
+import { CoingeckoId } from '../../model/CoingeckoId'
 
 export type CoinListEntry = z.infer<typeof CoinListEntry>
 export const CoinListEntry = z.object({
