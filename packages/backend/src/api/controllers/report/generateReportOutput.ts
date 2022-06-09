@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model'
-import { asNumber } from '../../../utils/asNumber'
 import { OutputEntry } from './aggregateReportsDaily'
+import { asNumber } from './asNumber'
 
 export interface ReportOutput {
   aggregate: Chart
