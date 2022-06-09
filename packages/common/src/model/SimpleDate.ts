@@ -1,3 +1,4 @@
+/** @deprecated Will be removed alongside old backend */
 export class SimpleDate {
   private constructor(private date: Date) {}
 
