@@ -21,9 +21,8 @@ export const L2Data = z.object({
 export type L2Data = z.infer<typeof L2Data>
 
 async function getDataFromFile() {
-  const data = await readFile(`${__dirname}/../../../backend/build/data.json`, {
-    encoding: 'utf-8',
-  })
+  const path = require.resolve('@l2beat/backend')
+  const data = await readFile(path, { encoding: 'utf-8' })
   return JSON.parse(data)
 }
 
