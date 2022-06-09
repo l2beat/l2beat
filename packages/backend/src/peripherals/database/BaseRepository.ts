@@ -9,8 +9,8 @@ interface AddMethod<T, R> {
   (record: T): Promise<R>
 }
 
-interface AddManyMethod<T, R> {
-  (records: T[]): Promise<R[]>
+interface AddManyMethod<T> {
+  (records: T[]): Promise<number[]>
 }
 
 interface GetMethod<A extends unknown[], T> {
@@ -44,7 +44,7 @@ export class BaseRepository {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  protected wrapAdd<T, R extends number | string | Number | String>(
+  protected wrapAdd<T, R extends number | string | String | Number>(
     method: AddMethod<T, R>
   ): AddMethod<T, R> {
     return this.wrap(method, (id) =>
@@ -52,9 +52,7 @@ export class BaseRepository {
     )
   }
 
-  protected wrapAddMany<T, R>(
-    method: AddManyMethod<T, R>
-  ): AddManyMethod<T, R> {
+  protected wrapAddMany<T>(method: AddManyMethod<T>): AddManyMethod<T> {
     const fn = async (records: T[]) => {
       if (records.length === 0) {
         this.logger.debug({ method: method.name, count: 0 })
