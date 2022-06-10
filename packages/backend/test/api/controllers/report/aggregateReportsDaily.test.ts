@@ -4,7 +4,6 @@ import { expect } from 'earljs'
 
 import {
   aggregateReportsDaily,
-  OutputEntry,
   saveTVLToEntry,
 } from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
