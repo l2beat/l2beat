@@ -32,7 +32,6 @@ export const zksync: Project = {
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
         'https://medium.com/matter-labs',
-        'https://gitter.im/matter-labs/zksync',
         'https://discord.gg/px2aR7w',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
