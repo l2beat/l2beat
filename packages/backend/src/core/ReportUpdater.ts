@@ -36,8 +36,8 @@ export class ReportUpdater {
         this.priceRepository.getByTimestamp(timestamp),
         this.balanceRepository.getByBlock(blockNumber),
       ])
-      const tvlEntries = this.createReports(prices, balances)
-      this.reportRepository.addOrUpdate(tvlEntries)
+      const reports = this.createReports(prices, balances)
+      this.reportRepository.addOrUpdateMany(reports)
       this.lastProcessed = timestamp
     }
   }

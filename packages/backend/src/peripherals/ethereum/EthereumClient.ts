@@ -1,44 +1,29 @@
-import { KeccakHash } from '@l2beat/common'
+import { Bytes } from '@l2beat/common'
+import { providers } from 'ethers'
 
-import { JsonRpcClient } from '../jsonrpc'
-import {
-  asBigIntFromQuantity,
-  asBytesFromData,
-  BlockTag,
-  blockTagToString,
-} from './primitives'
-import { asRpcBlock, encodeRpcCallParameters, RpcCallParameters } from './types'
+import { BlockTag, CallParameters } from './types'
 
 export class EthereumClient {
-  constructor(private jsonRpcClient: JsonRpcClient) {}
+  constructor(private provider: providers.Provider) {}
 
   async getBlockNumber() {
-    const result = await this.jsonRpcClient.call('eth_blockNumber')
-    return asBigIntFromQuantity(result)
+    const result = await this.provider.getBlockNumber()
+    return BigInt(result) // TODO: probably could be a simple number
   }
 
-  async getBlock(blockTagOrHash: BlockTag | KeccakHash) {
-    if (blockTagOrHash instanceof KeccakHash) {
-      const result = await this.jsonRpcClient.call('eth_getBlockByHash', [
-        blockTagOrHash.toString(),
-        false,
-      ])
-      return asRpcBlock(result)
-    } else {
-      const result = await this.jsonRpcClient.call('eth_getBlockByNumber', [
-        blockTagToString(blockTagOrHash),
-        false,
-      ])
-      return asRpcBlock(result)
-    }
-  }
-
-  async call(parameters: RpcCallParameters, blockTag: BlockTag) {
-    const encoded = encodeRpcCallParameters(parameters)
-    const result = await this.jsonRpcClient.call('eth_call', [
-      encoded,
-      blockTagToString(blockTag),
-    ])
-    return asBytesFromData(result)
+  async call(parameters: CallParameters, blockTag: BlockTag) {
+    const bytes = await this.provider.call(
+      {
+        from: parameters.from?.toString(),
+        to: parameters.to?.toString(),
+        gasLimit: parameters.gas,
+        gasPrice: parameters.gasPrice,
+        value: parameters.value,
+        data: parameters.data?.toString(),
+      },
+      // TODO: probably could be a simple number
+      typeof blockTag === 'bigint' ? Number(blockTag) : blockTag
+    )
+    return Bytes.fromHex(bytes)
   }
 }

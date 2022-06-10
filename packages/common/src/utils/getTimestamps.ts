@@ -1,4 +1,4 @@
-import { UnixTime } from '../model'
+import { UnixTime } from '../types'
 
 type Granularity = 'daily' | 'hourly'
 

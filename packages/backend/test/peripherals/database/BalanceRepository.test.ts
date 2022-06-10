@@ -31,7 +31,7 @@ describe(BalanceRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdate(DATA)
+    await repository.addOrUpdateMany(DATA)
   })
 
   describe(BalanceRepository.prototype.getByBlock.name, () => {
@@ -56,7 +56,7 @@ describe(BalanceRepository.name, () => {
           balance: MOCK_BALANCE,
         },
       ]
-      await repository.addOrUpdate(additionalData)
+      await repository.addOrUpdateMany(additionalData)
 
       const result = await repository.getByBlock(START_BLOCK_NUMBER)
 
@@ -70,9 +70,9 @@ describe(BalanceRepository.name, () => {
     })
   })
 
-  describe(BalanceRepository.prototype.getAllByHolderAndAsset.name, () => {
+  describe(BalanceRepository.prototype.getByHolderAndAsset.name, () => {
     it('entries exist in the DB', async () => {
-      const result = await repository.getAllByHolderAndAsset(
+      const result = await repository.getByHolderAndAsset(
         MOCK_HOLDER,
         MOCK_ASSET
       )
@@ -84,7 +84,7 @@ describe(BalanceRepository.name, () => {
       const nonexistingHolder = EthereumAddress(
         '0xcEe284F754E854890e311e3280b767F80797180d'
       )
-      const result = await repository.getAllByHolderAndAsset(
+      const result = await repository.getByHolderAndAsset(
         nonexistingHolder,
         MOCK_ASSET
       )
@@ -94,7 +94,7 @@ describe(BalanceRepository.name, () => {
 
     it('nonexisting asset', async () => {
       const nonexistingAsset = AssetId('nonexistent-token')
-      const result = await repository.getAllByHolderAndAsset(
+      const result = await repository.getByHolderAndAsset(
         MOCK_HOLDER,
         nonexistingAsset
       )
@@ -103,7 +103,7 @@ describe(BalanceRepository.name, () => {
     })
   })
 
-  describe(BalanceRepository.prototype.addOrUpdate.name, () => {
+  describe(BalanceRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {
       const newRows = [
         {
@@ -123,7 +123,7 @@ describe(BalanceRepository.name, () => {
           balance: MOCK_BALANCE,
         },
       ]
-      await repository.addOrUpdate(newRows)
+      await repository.addOrUpdateMany(newRows)
 
       const result = await repository.getAll()
       expect(result).toBeAnArrayWith(...DATA, ...newRows)
@@ -145,7 +145,7 @@ describe(BalanceRepository.name, () => {
           balance: MOCK_BALANCE,
         },
       ]
-      await repository.addOrUpdate(existingRows)
+      await repository.addOrUpdateMany(existingRows)
 
       const result = await repository.getAll()
       expect(result).toBeAnArrayWith(...existingRows)
@@ -169,7 +169,7 @@ describe(BalanceRepository.name, () => {
           balance: MOCK_BALANCE,
         },
       ]
-      await repository.addOrUpdate(mixedRows)
+      await repository.addOrUpdateMany(mixedRows)
 
       const result = await repository.getAll()
       expect(result).toBeAnArrayWith(DATA[0], ...mixedRows)

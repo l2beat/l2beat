@@ -30,8 +30,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
+    width: 100%;
+    height: 100%;
     border: 2px solid var(--background-4);
     border-radius: 8px;
   }

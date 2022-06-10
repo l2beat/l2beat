@@ -52,12 +52,12 @@ describe(ReportRepository.name, () => {
 
   describe(ReportRepository.prototype.getDaily.name, () => {
     it('filters data to get only full days', async () => {
-      await reportsRepository.addOrUpdate([
+      await reportsRepository.addOrUpdateMany([
         mockReport(BRIDGE_A, 0, 0n),
         mockReport(BRIDGE_A, 1, 100n),
       ])
 
-      await balancesRepository.addOrUpdate([
+      await balancesRepository.addOrUpdateMany([
         mockBalance(BRIDGE_A, ASSET_A, 0n),
         mockBalance(BRIDGE_A, ASSET_A, 100n),
       ])
@@ -72,13 +72,13 @@ describe(ReportRepository.name, () => {
     })
 
     it('returns sorted data', async () => {
-      await reportsRepository.addOrUpdate([
+      await reportsRepository.addOrUpdateMany([
         mockReport(BRIDGE_A, 48, 2000n),
         mockReport(BRIDGE_A, 0, 0n),
         mockReport(BRIDGE_A, 24, 1000n),
       ])
 
-      await balancesRepository.addOrUpdate([
+      await balancesRepository.addOrUpdateMany([
         mockBalance(BRIDGE_A, ASSET_A, 0n),
         mockBalance(BRIDGE_A, ASSET_A, 1000n),
         mockBalance(BRIDGE_A, ASSET_A, 2000n),
@@ -93,14 +93,14 @@ describe(ReportRepository.name, () => {
     })
   })
 
-  describe(ReportRepository.prototype.addOrUpdate.name, () => {
+  describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
     it('add or update', async () => {
-      await reportsRepository.addOrUpdate([
+      await reportsRepository.addOrUpdateMany([
         mockReport(BRIDGE_A, 0, 0n),
         mockReport(BRIDGE_A, 1, 100n),
       ])
 
-      await reportsRepository.addOrUpdate([
+      await reportsRepository.addOrUpdateMany([
         mockReport(BRIDGE_A, 2, 100n),
         mockReport(BRIDGE_A, 3, 300n),
       ])
@@ -118,7 +118,7 @@ describe(ReportRepository.name, () => {
   })
 
   it(ReportRepository.prototype.getAll.name, async () => {
-    await reportsRepository.addOrUpdate([
+    await reportsRepository.addOrUpdateMany([
       mockReport(BRIDGE_A, 0, 0n),
       mockReport(BRIDGE_A, 1, 100n),
     ])
@@ -133,7 +133,7 @@ describe(ReportRepository.name, () => {
   })
 
   it(ReportRepository.prototype.deleteAll.name, async () => {
-    await reportsRepository.addOrUpdate([
+    await reportsRepository.addOrUpdateMany([
       mockReport(BRIDGE_A, 0, 0n),
       mockReport(BRIDGE_A, 1, 100n),
     ])

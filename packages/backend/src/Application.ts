@@ -1,4 +1,5 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
+import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
@@ -18,7 +19,6 @@ import { CachedDataRepository } from './peripherals/database/CachedDataRepositor
 import { DatabaseService } from './peripherals/database/DatabaseService'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
-import { AlchemyHttpClient } from './peripherals/ethereum/AlchemyHttpClient'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
@@ -43,13 +43,12 @@ export class Application {
 
     const http = new HttpClient()
 
-    const alchemyHttpClient = new AlchemyHttpClient(
-      config.alchemyApiKey,
-      http,
-      logger
+    const provider = new providers.AlchemyProvider(
+      'mainnet',
+      config.alchemyApiKey
     )
 
-    const ethereumClient = new EthereumClient(alchemyHttpClient)
+    const ethereumClient = new EthereumClient(provider)
 
     const multicall = new MulticallClient(ethereumClient)
 
