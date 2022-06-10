@@ -1,6 +1,6 @@
 import { ProjectContracts } from './ProjectContracts'
-import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 import { ProjectPermission } from './ProjectPermission'
+import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
 export interface ProjectTechnology {
   category: {

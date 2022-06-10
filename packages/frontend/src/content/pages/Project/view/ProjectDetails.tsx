@@ -7,6 +7,10 @@ import {
 } from './DescriptionSection'
 import { LinkSection, LinkSectionProps } from './links/LinkSection'
 import { NewsSection, NewsSectionProps } from './NewsSection'
+import {
+  PermissionsSection,
+  PermissionsSectionProps,
+} from './PermissionsSection'
 import { ReferencesSection, ReferencesSectionProps } from './ReferencesSection'
 import { RiskSection, RiskSectionProps } from './RiskSection'
 import {
@@ -14,10 +18,6 @@ import {
   TechnologyIncompleteProps,
 } from './TechnologyIncomplete'
 import { TechnologySection, TechnologySectionProps } from './TechnologySection'
-import {
-  PermissionsSection,
-  PermissionsSectionProps,
-} from './PermissionsSection'
 
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps

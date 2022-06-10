@@ -1,6 +1,6 @@
+import { ProjectPermission } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectPermission } from '@l2beat/config'
 import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
