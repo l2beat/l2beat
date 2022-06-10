@@ -35,18 +35,8 @@ describe(addOptimismToken.name, () => {
   })
 
   it('before airdrop', async () => {
-    const projects: Map<string, ProjectEntry> = new Map()
-    const tokens: Map<string, TokenEntry> = new Map()
-    projects.set('Optimism', { value: { eth: 0n, usd: 0n }, tokens })
     const entries: OutputEntry[] = [
-      {
-        timestamp: UnixTime.fromDate(new Date('2022-05-29')),
-        value: {
-          eth: 0n,
-          usd: 0n,
-        },
-        projects,
-      },
+      mockEntry({ timestamp: UnixTime.fromDate(new Date('2022-05-29')) }),
     ]
 
     await addOptimismToken(entries, priceRepository)
@@ -57,24 +47,14 @@ describe(addOptimismToken.name, () => {
           eth: 0n,
           usd: 0n,
         },
-        projects,
+        projects: entries[0].projects,
       },
     ])
   })
 
   it('after airdrop', async () => {
-    const projects: Map<string, ProjectEntry> = new Map()
-    const tokens: Map<string, TokenEntry> = new Map()
-    projects.set('Optimism', { value: { eth: 0n, usd: 0n }, tokens })
     const entries: OutputEntry[] = [
-      {
-        timestamp: UnixTime.fromDate(new Date('2022-05-30')),
-        value: {
-          eth: 0n,
-          usd: 0n,
-        },
-        projects,
-      },
+      mockEntry({ timestamp: UnixTime.fromDate(new Date('2022-05-30')) }),
     ]
 
     const balance = 214_748_364n
@@ -84,6 +64,16 @@ describe(addOptimismToken.name, () => {
     const ethTVL = (usdTVL * 10n ** 4n) / priceEth
 
     await addOptimismToken(entries, priceRepository)
+    const tokens: Map<string, TokenEntry> = new Map()
+    tokens.set('OP', {
+      usd: usdTVL,
+      eth: ethTVL,
+      balance: balance * 10n ** 18n,
+      decimals: 18,
+    })
+    const projects: Map<string, ProjectEntry> = new Map()
+    projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
+
     expect(entries).toEqual([
       {
         timestamp: UnixTime.fromDate(new Date('2022-05-30')),
@@ -94,12 +84,24 @@ describe(addOptimismToken.name, () => {
         projects,
       },
     ])
-    expect(projects.get('Optimism')).toEqual({
-      value: {
-        eth: ethTVL,
-        usd: usdTVL,
-      },
-      tokens,
-    })
   })
 })
+
+export function mockEntry(
+  entry?: Partial<OutputEntry>,
+  projectName = 'Optimism'
+) {
+  const projects: Map<string, ProjectEntry> = new Map()
+  const tokens: Map<string, TokenEntry> = new Map()
+  projects.set(projectName, { value: { eth: 0n, usd: 0n }, tokens })
+
+  return {
+    timestamp: UnixTime.fromDate(new Date('2022-05-30')),
+    value: {
+      eth: 0n,
+      usd: 0n,
+    },
+    projects,
+    ...entry,
+  }
+}

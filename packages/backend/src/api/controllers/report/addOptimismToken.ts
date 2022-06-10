@@ -5,10 +5,7 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../../../peripherals/database/PriceRepository'
-import {
-  OutputEntry,
-  saveTVLToEntry as saveTVLToEntry,
-} from './aggregateReportsDaily'
+import { OutputEntry, saveTVLToEntry } from './aggregateReportsDaily'
 
 // This is the circulating supply of OP as given by Coingecko.
 // The value is obtained by looking at how many tokens have been designated
