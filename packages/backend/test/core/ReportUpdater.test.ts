@@ -8,6 +8,7 @@ import {
 import { expect, mockFn } from 'earljs'
 
 import {
+  calculateTVL,
   createReport,
   getBigIntPrice,
   ReportUpdater,
@@ -267,4 +268,44 @@ describe(ReportUpdater.name, () => {
       expect(result).toEqual(5700000000000000000000000000000n)
     })
   })
+})
+
+describe(calculateTVL.name, () => {
+  const runs = [
+    {
+      priceUsd: 1,
+      decimals: 0,
+      balance: 1n,
+      ethPrice: 1,
+      usdTVL: 100n,
+      ethTVL: 1000000n,
+    },
+    {
+      priceUsd: 2,
+      decimals: 3,
+      balance: 2000n,
+      ethPrice: 1500,
+      usdTVL: 400n,
+      ethTVL: 2666n,
+    },
+    {
+      priceUsd: 3.5,
+      decimals: 18,
+      balance: 12345n * 10n ** 18n,
+      ethPrice: 2334,
+      usdTVL: 4320750n,
+      ethTVL: 18512210n,
+    },
+  ]
+
+  for (const run of runs) {
+    it(`calculates price:${run.priceUsd}, decimals: ${run.decimals}, balance: ${run.balance}, ethPrice: ${run.ethPrice}`, () => {
+      expect(
+        calculateTVL(run.priceUsd, run.decimals, run.balance, run.ethPrice)
+      ).toEqual({
+        usdTVL: run.usdTVL,
+        ethTVL: run.ethTVL,
+      })
+    })
+  }
 })

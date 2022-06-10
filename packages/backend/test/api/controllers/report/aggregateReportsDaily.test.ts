@@ -3,6 +3,7 @@ import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
 import { aggregateReportsDaily } from '../../../../src/api/controllers/report/aggregateReportsDaily'
+import { calculateTVL } from '../../../../src/core/ReportUpdater'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
