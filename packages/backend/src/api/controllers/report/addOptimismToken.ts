@@ -39,7 +39,7 @@ export async function addOptimismToken(
     const { usdTVL, ethTVL } = calculateTVL(
       opPrice,
       18,
-      OP_TOKEN_BALANCE,
+      OP_TOKEN_BALANCE * 10n ** 18n,
       ethPrice
     )
 

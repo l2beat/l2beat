@@ -50,7 +50,7 @@ export class ReportController {
     reports = filterReportsByProjects(reports, this.projects)
     reports = getSufficientlySynced(reports)
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
-    addOptimismToken(dailyEntries, this.priceRepository)
+    await addOptimismToken(dailyEntries, this.priceRepository)
     return generateReportOutput(dailyEntries, this.projects)
   }
 }
