@@ -12,6 +12,7 @@ import { expect, mockFn } from 'earljs'
 import { ReportController } from '../../../../src/api/controllers/report/ReportController'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { CachedDataRepository } from '../../../../src/peripherals/database/CachedDataRepository'
+import { PriceRepository } from '../../../../src/peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../../src/peripherals/database/ReportRepository'
 
 describe(ReportController.name, () => {
@@ -66,6 +67,10 @@ describe(ReportController.name, () => {
         ],
       },
     ]
+    const cachedRepository = mock<CachedDataRepository>({
+      saveData: async () => {},
+    })
+    const priceRepository = mock<PriceRepository>()
     it('happy case', async () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([
@@ -83,12 +88,10 @@ describe(ReportController.name, () => {
         ]),
       })
 
-      const cachedRepository = mock<CachedDataRepository>({
-        saveData: async () => {},
-      })
       const reportController = new ReportController(
         reportRepository,
         cachedRepository,
+        priceRepository,
         PROJECTS,
         Logger.SILENT
       )
@@ -155,12 +158,10 @@ describe(ReportController.name, () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([]),
       })
-      const cachedRepository = mock<CachedDataRepository>({
-        saveData: async () => {},
-      })
       const reportController = new ReportController(
         reportRepository,
         cachedRepository,
+        priceRepository,
         PROJECTS,
         Logger.SILENT
       )

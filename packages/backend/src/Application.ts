@@ -105,6 +105,7 @@ export class Application {
     const reportController = new ReportController(
       reportRepository,
       cachedDataRepository,
+      priceRepository,
       config.projects,
       logger
     )
