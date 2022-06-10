@@ -1,39 +1,29 @@
-import { as } from '../../tools/cast'
+import { z } from 'zod'
 
-export interface EtherscanSuccessResponse {
-  status: '1'
-  message: 'OK'
-  result: unknown
-}
-
-export interface EtherscanErrorResponse {
-  status: '0'
-  message: 'NOTOK'
-  result: string
-}
-
-export type EtherscanResponse =
-  | EtherscanSuccessResponse
-  | EtherscanErrorResponse
-
-const asSuccessResponse = as.object('strict', {
-  status: as.exactly('1' as const),
-  message: as.exactly('OK' as const),
-  result: as.unknown,
+export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>
+const EtherscanSuccessResponse = z.object({
+  status: z.literal('1'),
+  message: z.literal('OK'),
+  result: z.unknown(),
 })
 
-const asErrorResponse = as.object('strict', {
-  status: as.exactly('0' as const),
-  message: as.exactly('NOTOK' as const),
-  result: as.string,
+export type EtherscanErrorResponse = z.infer<typeof EtherscanErrorResponse>
+const EtherscanErrorResponse = z.object({
+  status: z.literal('0'),
+  message: z.literal('NOTOK'),
+  result: z.string(),
 })
 
-const asEtherscanResponse = as.either(asSuccessResponse, asErrorResponse)
+export type EtherscanResponse = z.infer<typeof EtherscanResponse>
+const EtherscanResponse = z.union([
+  EtherscanSuccessResponse,
+  EtherscanErrorResponse,
+])
 
 export function parseEtherscanResponse(value: string): EtherscanResponse {
   try {
     const json = JSON.parse(value)
-    return asEtherscanResponse(json)
+    return EtherscanResponse.parse(json)
   } catch {
     throw new TypeError('Invalid Etherscan response')
   }
