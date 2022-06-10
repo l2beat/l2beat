@@ -16,7 +16,7 @@ import {
 // Our policy is to keep this value in sync with Coingecko.
 // https://www.coingecko.com/en/coins/optimism
 // https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000042?a=0x2a82ae142b2e62cb7d10b55e323acb1cab663a26
-const OP_TOKEN_BALANCE = 214_748_364n
+const OP_TOKEN_BALANCE = 214_748_364n * 10n ** 18n
 
 export async function addOptimismToken(
   entries: OutputEntry[],
@@ -39,7 +39,7 @@ export async function addOptimismToken(
     const { usdTVL, ethTVL } = calculateTVL(
       opPrice,
       18,
-      OP_TOKEN_BALANCE * 10n ** 18n,
+      OP_TOKEN_BALANCE,
       ethPrice
     )
 
