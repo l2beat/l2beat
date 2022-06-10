@@ -22,8 +22,8 @@ export async function addOptimismToken(
   entries: OutputEntry[],
   priceRepository: PriceRepository
 ) {
-  const opPrices = await priceRepository.getAllByToken(CoingeckoId('optimism'))
-  const ethPrices = await priceRepository.getAllByToken(CoingeckoId('ethereum'))
+  const opPrices = await priceRepository.getByToken(CoingeckoId('optimism'))
+  const ethPrices = await priceRepository.getByToken(CoingeckoId('ethereum'))
   for (const entry of entries) {
     const date = entry.timestamp
     if (date.lt(UnixTime.fromDate(new Date('2022-05-30')))) {
