@@ -179,7 +179,7 @@ export const optimism: Project = {
           ],
           name: 'LibAddressManager Owner',
           description:
-            'Can change OVM_SEQUENCER, OVM_PROPOSER and any other system component (unlimited upgrade power).',
+            'Can change OVM_SEQUENCER, OVM_PROPOSER and any other system component (unlimited upgrade power). Permissioneless set of validators, thanks to full on-chain data availability, can monitor the chain for any potential mishbehaviour.',
         },
         {
           accounts: [
@@ -188,9 +188,9 @@ export const optimism: Project = {
               type: 'MultiSig',
             },
           ],
-          name: 'OVM_L1CrossDomainMessenger owner',
+          name: 'OVM_L1CrossDomainMessenger Owner',
           description:
-            'Can censor messages or pause message bridge alltogether.',
+            'Can censor messages or pause message bridge alltogether. Can upgrade messenger implementation.',
         },
         {
           accounts: [
@@ -199,7 +199,7 @@ export const optimism: Project = {
               type: 'MultiSig',
             },
           ],
-          name: 'L1StandardBridge owner',
+          name: 'L1StandardBridge Owner',
           description:
             'Can upgrade bridge implementation potentially gaining access to all funds stored in a bridge.',
         },
