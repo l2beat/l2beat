@@ -8,7 +8,7 @@ import {
 import { expect, mockFn } from 'earljs'
 
 import {
-  calculateTVL,
+  createReport,
   getBigIntPrice,
   ReportUpdater,
 } from '../../src/core/ReportUpdater'
@@ -107,7 +107,7 @@ describe(ReportUpdater.name, () => {
     })
   })
 
-  describe(ReportUpdater.prototype.calculateTvls.name, () => {
+  describe(ReportUpdater.prototype.createReports.name, () => {
     it('correctly aggregates many calculated tvls', () => {
       const prices: PriceRecord[] = [
         {
@@ -144,16 +144,16 @@ describe(ReportUpdater.name, () => {
         TOKENS
       )
 
-      const result = reportUpdater.calculateTvls(prices, balances)
+      const result = reportUpdater.createReports(prices, balances)
 
       expect(result).toEqual([
-        calculateTVL(prices[0], 18, balances[0], 1000),
-        calculateTVL(prices[1], 18, balances[1], 1000),
+        createReport(prices[0], 18, balances[0], 1000),
+        createReport(prices[1], 18, balances[1], 1000),
       ])
     })
   })
 
-  describe(calculateTVL.name, () => {
+  describe(createReport.name, () => {
     it('price: 3.20 $ || balance: 22.123456', async () => {
       const price: PriceRecord = {
         priceUsd: 3.2,
@@ -174,7 +174,7 @@ describe(ReportUpdater.name, () => {
 
       const ethPrice = 1000
 
-      const result = calculateTVL(price, decimals, balance, ethPrice)
+      const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
         blockNumber: balance.blockNumber,
@@ -207,7 +207,7 @@ describe(ReportUpdater.name, () => {
 
       const ethPrice = 1000
 
-      const result = calculateTVL(price, decimals, balance, ethPrice)
+      const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
         blockNumber: balance.blockNumber,
