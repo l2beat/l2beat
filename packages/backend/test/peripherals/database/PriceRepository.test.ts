@@ -1,8 +1,10 @@
 import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { PriceRepository } from '../../../src/peripherals/database/PriceRepository'
-import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
+import {
+  PriceRecord,
+  PriceRepository,
+} from '../../../src/peripherals/database/PriceRepository'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(PriceRepository.name, () => {
