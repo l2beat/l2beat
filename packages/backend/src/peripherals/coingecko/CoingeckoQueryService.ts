@@ -52,7 +52,7 @@ export class CoingeckoQueryService {
       )
       return data.prices
     } else {
-      const ranges = await Promise.all(
+      const results = await Promise.allSettled(
         generateRangesToCallHourly(from, to).map((range) =>
           this.coingeckoClient.getCoinMarketChartRange(
             coinId,
@@ -63,7 +63,16 @@ export class CoingeckoQueryService {
         )
       )
 
-      return ranges.map((x) => x.prices).flat()
+      const prices: Price[] = []
+      for (const result of results) {
+        if (result.status === 'fulfilled') {
+          prices.push(...result.value.prices)
+        } else {
+          throw result.reason
+        }
+      }
+
+      return prices
     }
   }
 
