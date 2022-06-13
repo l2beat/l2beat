@@ -24,12 +24,16 @@ export class PriceUpdater {
 
     const boundaries = await this.priceRepository.calcDataBoundaries()
 
-    await Promise.all(
+    const results = await Promise.allSettled(
       this.coingeckoIds.map((coingeckoId) => {
         const boundary = boundaries.get(coingeckoId)
         return this.updateToken(coingeckoId, boundary, from, to)
       })
     )
+    const error = results.find((x) => x.status === 'rejected')
+    if (error && error.status === 'rejected') {
+      throw error.reason
+    }
   }
 
   async updateToken(
@@ -41,11 +45,13 @@ export class PriceUpdater {
     if (boundary === undefined) {
       await this.fetchAndSave(coingeckoId, from, to)
     } else {
-      if (boundary.earliest.gt(from)) {
-        await this.fetchAndSave(coingeckoId, from, boundary.earliest)
+      if (from.lt(boundary.earliest)) {
+        const lastUnknown = boundary.earliest.add(-1, 'hours')
+        await this.fetchAndSave(coingeckoId, from, lastUnknown)
       }
-      if (boundary.latest.lt(to)) {
-        await this.fetchAndSave(coingeckoId, boundary.latest, to)
+      if (to.gt(boundary.latest)) {
+        const firstUnknown = boundary.latest.add(1, 'hours')
+        await this.fetchAndSave(coingeckoId, firstUnknown, to)
       }
     }
   }
@@ -63,6 +69,6 @@ export class PriceUpdater {
       priceUsd: price.value,
     }))
 
-    this.priceRepository.addMany(priceRecords)
+    await this.priceRepository.addMany(priceRecords)
   }
 }
