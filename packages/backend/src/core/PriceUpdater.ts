@@ -63,6 +63,6 @@ export class PriceUpdater {
       priceUsd: price.value,
     }))
 
-    this.priceRepository.addOrUpdate(priceRecords)
+    this.priceRepository.addMany(priceRecords)
   }
 }
