@@ -113,6 +113,10 @@ describe(PriceRepository.name, () => {
       )
       expect(results).toBeAnArrayOfLength(6)
     })
+
+    it('empty array', async () => {
+      await expect(repository.addOrUpdate([])).not.toBeRejected()
+    })
   })
 
   it(PriceRepository.prototype.getAll.name, async () => {
