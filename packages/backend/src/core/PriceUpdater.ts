@@ -42,10 +42,10 @@ export class PriceUpdater {
       await this.fetchAndSave(coingeckoId, from, to)
     } else {
       if (boundary.earliest.gt(from)) {
-        await this.fetchAndSave(coingeckoId, from, boundary.earliest)
+        await this.fetchAndSave(coingeckoId, from, boundary.earliest.add(-1,'hours'))
       }
       if (boundary.latest.lt(to)) {
-        await this.fetchAndSave(coingeckoId, boundary.latest, to)
+        await this.fetchAndSave(coingeckoId, boundary.latest.add(1,'hours'), to)
       }
     }
   }
