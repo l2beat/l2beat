@@ -16,7 +16,7 @@ describe(PriceUpdater.name, () => {
     it('returns if empty timestamps', async () => {
       const priceRepository = mock<PriceRepository>({
         calcDataBoundaries: mockFn().returns(new Map()),
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
       const coingeckoQueryService = mock<CoingeckoQueryService>({
         getUsdPriceHistory: mockFn().returnsOnce([]),
@@ -47,7 +47,7 @@ describe(PriceUpdater.name, () => {
             [tokens[1], { earliest: HOUR_09, latest: HOUR_12 }],
           ])
         ),
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
 
       const coingeckoQueryService = mock<CoingeckoQueryService>({
@@ -76,7 +76,7 @@ describe(PriceUpdater.name, () => {
     describe('no data in DB', () => {
       const priceRepository = mock<PriceRepository>({
         calcDataBoundaries: mockFn().returns(new Map()),
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
 
       it('whole range query', async () => {
@@ -113,7 +113,7 @@ describe(PriceUpdater.name, () => {
       }
 
       const priceRepository = mock<PriceRepository>({
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
 
       it('9:00', async () => {
@@ -220,7 +220,7 @@ describe(PriceUpdater.name, () => {
       })
 
       const priceRepository = mock<PriceRepository>({
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
       const tokens = [CoingeckoId('uniswap')]
 
@@ -238,7 +238,7 @@ describe(PriceUpdater.name, () => {
         [tokens[0], from, from.add(2, 'hours'), 'hourly'],
       ])
 
-      expect(priceRepository.addOrUpdate).toHaveBeenCalledExactlyWith([
+      expect(priceRepository.addMany).toHaveBeenCalledExactlyWith([
         [
           [
             {

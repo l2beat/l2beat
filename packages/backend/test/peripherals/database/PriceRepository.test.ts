@@ -1,7 +1,10 @@
 import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { PriceRepository } from '../../../src/peripherals/database/PriceRepository'
+import {
+  PriceRecord,
+  PriceRepository,
+} from '../../../src/peripherals/database/PriceRepository'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(PriceRepository.name, () => {
@@ -39,10 +42,10 @@ describe(PriceRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdate(DATA)
+    await repository.addMany(DATA)
   })
 
-  describe(PriceRepository.prototype.addOrUpdate.name, () => {
+  describe(PriceRepository.prototype.addMany.name, () => {
     it('only new rows', async () => {
       const newRows = [
         {
@@ -56,66 +59,28 @@ describe(PriceRepository.name, () => {
           coingeckoId: CoingeckoId('ethereum'),
         },
       ]
-      await repository.addOrUpdate(newRows)
+      await repository.addMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toBeAnArrayWith(...DATA, ...newRows)
       expect(results).toBeAnArrayOfLength(7)
     })
 
-    it('only existing rows', async () => {
-      const existingRows = [
-        {
-          priceUsd: 3000.1,
-          timestamp: DATA[0].timestamp,
-          coingeckoId: DATA[0].coingeckoId,
-        },
-        {
-          priceUsd: 3100.1,
-          timestamp: DATA[1].timestamp,
-          coingeckoId: DATA[1].coingeckoId,
-        },
-      ]
-      await repository.addOrUpdate(existingRows)
-
-      const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(
-        DATA[2],
-        DATA[3],
-        ...existingRows,
-        DATA[4]
-      )
-      expect(results).toBeAnArrayOfLength(5)
-    })
-
-    it('mixed: new and existing rows', async () => {
-      const mixedRows = [
-        {
-          priceUsd: 3000.1,
-          timestamp: DATA[1].timestamp,
-          coingeckoId: DATA[1].coingeckoId,
-        },
-        {
-          priceUsd: 3300.1,
-          timestamp: UnixTime.fromDate(new Date()).add(-3, 'hours'),
-          coingeckoId: CoingeckoId('ethereum'),
-        },
-      ]
-
-      await repository.addOrUpdate(mixedRows)
-      const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(
-        DATA[0],
-        DATA[2],
-        DATA[3],
-        ...mixedRows,
-        DATA[4]
-      )
-      expect(results).toBeAnArrayOfLength(6)
-    })
-
     it('empty array', async () => {
-      await expect(repository.addOrUpdate([])).not.toBeRejected()
+      await expect(repository.addMany([])).not.toBeRejected()
+    })
+
+    it('big query', async () => {
+      const records: PriceRecord[] = []
+      const now = UnixTime.now()
+      for (let i = 0; i < 35_000; i++) {
+        records.push({
+          priceUsd: Math.random() * 1000,
+          timestamp: now.add(-i, 'hours'),
+          coingeckoId: CoingeckoId('ethereum'),
+        })
+      }
+      await expect(repository.addMany(records)).not.toBeRejected()
     })
   })
 
