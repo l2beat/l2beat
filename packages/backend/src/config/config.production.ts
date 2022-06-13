@@ -9,7 +9,7 @@ export function getProductionConfig(): Config {
   return {
     name: 'Backend/Production',
     logger: {
-      logLevel: LogLevel.INFO,
+      logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'json',
     },
     port: getEnv.integer('PORT'),
