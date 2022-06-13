@@ -30,7 +30,7 @@ export class PriceUpdater {
         return this.updateToken(coingeckoId, boundary, from, to)
       })
     )
-    const error = results.find(x => x.status === 'rejected')
+    const error = results.find((x) => x.status === 'rejected')
     if (error && error.status === 'rejected') {
       throw error.reason
     }
@@ -46,11 +46,11 @@ export class PriceUpdater {
       await this.fetchAndSave(coingeckoId, from, to)
     } else {
       if (from.lt(boundary.earliest)) {
-        const lastUnknown = boundary.earliest.add(-1,'hours')
+        const lastUnknown = boundary.earliest.add(-1, 'hours')
         await this.fetchAndSave(coingeckoId, from, lastUnknown)
       }
       if (to.gt(boundary.latest)) {
-        const firstUnknown = boundary.latest.add(1,'hours')
+        const firstUnknown = boundary.latest.add(1, 'hours')
         await this.fetchAndSave(coingeckoId, firstUnknown, to)
       }
     }
