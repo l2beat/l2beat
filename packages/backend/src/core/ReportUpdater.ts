@@ -1,4 +1,4 @@
-import { AssetId, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, UnixTime } from '@l2beat/common'
 
 import { Token } from '../model'
 import {
@@ -22,8 +22,10 @@ export class ReportUpdater {
     private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
     private reportRepository: ReportRepository,
-    private tokens: Token[]
+    private tokens: Token[],
+    private logger: Logger
   ) {
+    this.logger = this.logger.for(this)
     for (const token of this.tokens) {
       this.tokenByAssetId.set(token.id, token)
     }
@@ -31,15 +33,18 @@ export class ReportUpdater {
 
   async update(dataPoints: { timestamp: UnixTime; blockNumber: bigint }[]) {
     dataPoints = dataPoints.filter((x) => x.timestamp.gt(this.lastProcessed))
+    this.logger.info('Update started', { dataPoints: dataPoints.length })
     for (const { timestamp, blockNumber } of dataPoints) {
       const [prices, balances] = await Promise.all([
         this.priceRepository.getByTimestamp(timestamp),
         this.balanceRepository.getByBlock(blockNumber),
       ])
       const tvlEntries = this.calculateTvls(prices, balances)
-      this.reportRepository.addOrUpdateMany(tvlEntries)
+      await this.reportRepository.addOrUpdateMany(tvlEntries)
       this.lastProcessed = timestamp
+      this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
     }
+    this.logger.info('Update completed', { dataPoints: dataPoints.length })
   }
 
   calculateTvls(

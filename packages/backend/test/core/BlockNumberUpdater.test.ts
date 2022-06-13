@@ -1,4 +1,4 @@
-import { mock, UnixTime } from '@l2beat/common'
+import { Logger, mock, UnixTime } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
@@ -25,7 +25,8 @@ describe(BlockNumberUpdater.name, () => {
       const timestamps = [START, START.add(1, 'hours'), START.add(2, 'hours')]
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscan,
-        blockNumberRepository
+        blockNumberRepository,
+        Logger.SILENT
       )
 
       const result = await blockNumberUpdater.update(timestamps)
@@ -49,7 +50,8 @@ describe(BlockNumberUpdater.name, () => {
       const timestamps = [START, START.add(1, 'hours'), START.add(2, 'hours')]
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscan,
-        blockNumberRepository
+        blockNumberRepository,
+        Logger.SILENT
       )
 
       const result = await blockNumberUpdater.update(timestamps)
@@ -81,7 +83,8 @@ describe(BlockNumberUpdater.name, () => {
       const timestamps = [START, START.add(1, 'hours'), START.add(2, 'hours')]
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscan,
-        blockNumberRepository
+        blockNumberRepository,
+        Logger.SILENT
       )
 
       const result = await blockNumberUpdater.update(timestamps)
