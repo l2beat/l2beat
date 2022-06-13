@@ -2,6 +2,7 @@ import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { PriceRepository } from '../../../src/peripherals/database/PriceRepository'
+import {PriceRecord} from '../../../src/peripherals/database/PriceRepository'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(PriceRepository.name, () => {
@@ -116,6 +117,20 @@ describe(PriceRepository.name, () => {
 
     it('empty array', async () => {
       await expect(repository.addOrUpdate([])).not.toBeRejected()
+    })
+
+    it('big query', async () => {
+      const records: PriceRecord[] = []
+      const now = UnixTime.now()
+      for (let i =0; i < 35_000; i++) {
+        records.push({
+          priceUsd: Math.random() * 1000,
+          timestamp: now.add(-i, 'hours'),
+          coingeckoId: CoingeckoId('ethereum'),
+        })
+      }
+      await repository.addOrUpdate(records)
+      // await expect(repository.addOrUpdate(records)).not.toBeRejected()
     })
   })
 
