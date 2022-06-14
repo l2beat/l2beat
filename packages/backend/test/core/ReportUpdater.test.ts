@@ -2,6 +2,7 @@ import {
   AssetId,
   CoingeckoId,
   EthereumAddress,
+  Logger,
   mock,
   UnixTime,
 } from '@l2beat/common'
@@ -96,7 +97,8 @@ describe(ReportUpdater.name, () => {
         priceRepository,
         balanceRepository,
         reportRepository,
-        TOKENS
+        TOKENS,
+        Logger.SILENT
       )
 
       await reportUpdater.update([
@@ -142,7 +144,8 @@ describe(ReportUpdater.name, () => {
         mock<PriceRepository>(),
         mock<BalanceRepository>(),
         mock<ReportRepository>(),
-        TOKENS
+        TOKENS,
+        Logger.SILENT
       )
 
       const result = reportUpdater.createReports(prices, balances)

@@ -45,6 +45,8 @@ export class SyncScheduler {
       return
     }
 
+    this.logger.info('Update started', { timestamps: timestamps.length })
+
     const blocks: bigint[] = await this.blockUpdater.update(timestamps)
     await this.priceUpdater.update(timestamps)
     await this.balanceUpdater.update(blocks)
@@ -54,7 +56,7 @@ export class SyncScheduler {
     }))
     await this.reportUpdater.update(dataPoints)
 
-    this.logger.debug('update completed', { time: to.toString() })
+    this.logger.debug('Update completed', { timestamps: timestamps.length })
   }
 
   stop() {

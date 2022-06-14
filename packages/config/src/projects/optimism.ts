@@ -148,6 +148,62 @@ export const optimism: Project = {
           ],
         },
       ],
+      permissions: [
+        {
+          accounts: [
+            {
+              address: '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
+              type: 'EOA',
+            },
+          ],
+          name: 'OVM_SEQUENCER',
+          description:
+            'Central actor allowed to sequence and post new L2 transaction batch.',
+        },
+        {
+          accounts: [
+            {
+              address: '0x473300df21D047806A082244b417f96b32f13A33',
+              type: 'EOA',
+            },
+          ],
+          name: 'OVM_PROPOSER',
+          description: 'Central actor allowed to post new L2 state root',
+        },
+        {
+          accounts: [
+            {
+              address: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
+              type: 'MultiSig',
+            },
+          ],
+          name: 'LibAddressManager Owner',
+          description:
+            'Can change OVM_SEQUENCER, OVM_PROPOSER and any other system component (unlimited upgrade power). Permissioneless set of validators, thanks to full on-chain data availability, can monitor the chain for any potential mishbehaviour.',
+        },
+        {
+          accounts: [
+            {
+              address: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
+              type: 'MultiSig',
+            },
+          ],
+          name: 'OVM_L1CrossDomainMessenger Owner',
+          description:
+            'Can censor messages or pause message bridge alltogether. Can upgrade messenger implementation.',
+        },
+        {
+          accounts: [
+            {
+              address: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
+              type: 'MultiSig',
+            },
+          ],
+          name: 'L1StandardBridge Owner',
+          description:
+            'Can upgrade bridge implementation potentially gaining access to all funds stored in a bridge.',
+        },
+      ],
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
         description:

@@ -66,26 +66,30 @@ export class Application {
 
     const blockUpdater = new BlockNumberUpdater(
       etherscanClient,
-      blockNumberRepository
+      blockNumberRepository,
+      logger
     )
 
     const priceUpdater = new PriceUpdater(
       coingeckoQueryService,
       priceRepository,
-      config.coingeckoIds
+      config.coingeckoIds,
+      logger
     )
 
     const balanceUpdater = new BalanceUpdater(
       multicall,
       balanceRepository,
-      config.projects
+      config.projects,
+      logger
     )
 
     const reportUpdater = new ReportUpdater(
       priceRepository,
       balanceRepository,
       reportRepository,
-      config.tokens
+      config.tokens,
+      logger
     )
 
     const syncScheduler = new SyncScheduler(

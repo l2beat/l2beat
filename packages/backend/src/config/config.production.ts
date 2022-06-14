@@ -6,10 +6,11 @@ import { Config } from './Config'
 import { getEnv } from './getEnv'
 
 export function getProductionConfig(): Config {
+  const name = 'Backend/Production'
   return {
-    name: 'Backend/Production',
+    name,
     logger: {
-      logLevel: LogLevel.INFO,
+      logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'json',
     },
     port: getEnv.integer('PORT'),
@@ -18,15 +19,13 @@ export function getProductionConfig(): Config {
     databaseConnection: {
       connectionString: getEnv('DATABASE_URL'),
       ssl: { rejectUnauthorized: false },
+      application_name: name,
     },
     core: {
-      // TODO: set minimum timestamp from when to fetch prices
-      //right now it is the earliest fetched date from previous backend
       minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       safeBlockRefreshIntervalMs: 5 * 60 * 1000,
       safeBlockBlockOffset: 100n,
     },
-    // TODO: import from @l2beat/config
     tokens: tokenList.map((token) => ({
       ...token,
       priceStrategy: { type: 'market' },
