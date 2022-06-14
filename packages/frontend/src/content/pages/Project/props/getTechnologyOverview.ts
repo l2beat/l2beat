@@ -12,6 +12,7 @@ import {
   ContractsSectionProps,
   TechnologyContract,
 } from '../view/ContractsSection'
+import { PermissionsSectionProps } from '../view/PermissionsSection'
 import {
   ReferencesSectionProps,
   TechnologyReference,
@@ -26,6 +27,7 @@ import { getEditLink, getIssueLink } from './links'
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
   sections: TechnologySectionProps[]
+  permissionsSection?: PermissionsSectionProps
   contractsSection: ContractsSectionProps
   referencesSection: ReferencesSectionProps
 }
@@ -180,6 +182,19 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     }
   }
 
+  function makePermissionsSection(tech: ProjectTechnology) {
+    if (!tech.permissions) {
+      return undefined
+    }
+    return {
+      editLink: getEditLink(project),
+      issueLink: getIssueLink(
+        `Problem: ${project.name} - PermissionedAddresses`
+      ),
+      permissions: tech.permissions,
+    }
+  }
+
   function makeContractSection(tech: ProjectTechnology) {
     const contracts = tech.contracts.addresses.map(makeTechnologyContract)
 
@@ -221,6 +236,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
   return {
     incomplete,
     sections,
+    permissionsSection: makePermissionsSection(tech),
     contractsSection: makeContractSection(tech),
     referencesSection: { items: references },
   }

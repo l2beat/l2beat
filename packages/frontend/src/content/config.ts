@@ -5,4 +5,5 @@ export const config = {
   showNewUpdateBanner: false,
   showSeasonalBanner: true,
   showGitcoinOption: true,
+  showPermissionedAccounts: false,
 }

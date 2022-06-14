@@ -1,4 +1,5 @@
 import { ProjectContracts } from './ProjectContracts'
+import { ProjectPermission } from './ProjectPermission'
 import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
 export interface ProjectTechnology {
@@ -26,6 +27,8 @@ export interface ProjectTechnology {
   additionalPrivacy?: ProjectTechnologyChoice
   /** What are the smart contract capabilities */
   smartContracts?: ProjectTechnologyChoice
+  /** List of permissioned addresses */
+  permissions?: ProjectPermission[]
   /** List of smart contracts used in the project */
   contracts: ProjectContracts
 }

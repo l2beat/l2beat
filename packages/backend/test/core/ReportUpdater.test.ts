@@ -2,6 +2,7 @@ import {
   AssetId,
   CoingeckoId,
   EthereumAddress,
+  Logger,
   mock,
   UnixTime,
 } from '@l2beat/common'
@@ -9,6 +10,7 @@ import { expect, mockFn } from 'earljs'
 
 import {
   calculateTVL,
+  createReport,
   getBigIntPrice,
   ReportUpdater,
 } from '../../src/core/ReportUpdater'
@@ -95,7 +97,8 @@ describe(ReportUpdater.name, () => {
         priceRepository,
         balanceRepository,
         reportRepository,
-        TOKENS
+        TOKENS,
+        Logger.SILENT
       )
 
       await reportUpdater.update([
@@ -107,7 +110,7 @@ describe(ReportUpdater.name, () => {
     })
   })
 
-  describe(ReportUpdater.prototype.calculateTvls.name, () => {
+  describe(ReportUpdater.prototype.createReports.name, () => {
     it('correctly aggregates many calculated tvls', () => {
       const prices: PriceRecord[] = [
         {
@@ -141,19 +144,20 @@ describe(ReportUpdater.name, () => {
         mock<PriceRepository>(),
         mock<BalanceRepository>(),
         mock<ReportRepository>(),
-        TOKENS
+        TOKENS,
+        Logger.SILENT
       )
 
-      const result = reportUpdater.calculateTvls(prices, balances)
+      const result = reportUpdater.createReports(prices, balances)
 
       expect(result).toEqual([
-        calculateTVL(prices[0], 18, balances[0], 1000),
-        calculateTVL(prices[1], 18, balances[1], 1000),
+        createReport(prices[0], 18, balances[0], 1000),
+        createReport(prices[1], 18, balances[1], 1000),
       ])
     })
   })
 
-  describe(calculateTVL.name, () => {
+  describe(createReport.name, () => {
     it('price: 3.20 $ || balance: 22.123456', async () => {
       const price: PriceRecord = {
         priceUsd: 3.2,
@@ -174,7 +178,7 @@ describe(ReportUpdater.name, () => {
 
       const ethPrice = 1000
 
-      const result = calculateTVL(price, decimals, balance, ethPrice)
+      const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
         blockNumber: balance.blockNumber,
@@ -207,7 +211,7 @@ describe(ReportUpdater.name, () => {
 
       const ethPrice = 1000
 
-      const result = calculateTVL(price, decimals, balance, ethPrice)
+      const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
         blockNumber: balance.blockNumber,
@@ -267,4 +271,44 @@ describe(ReportUpdater.name, () => {
       expect(result).toEqual(5700000000000000000000000000000n)
     })
   })
+})
+
+describe(calculateTVL.name, () => {
+  const runs = [
+    {
+      priceUsd: 1,
+      decimals: 0,
+      balance: 1n,
+      ethPrice: 1,
+      usdTVL: 100n,
+      ethTVL: 1000000n,
+    },
+    {
+      priceUsd: 2,
+      decimals: 3,
+      balance: 2000n,
+      ethPrice: 1500,
+      usdTVL: 400n,
+      ethTVL: 2666n,
+    },
+    {
+      priceUsd: 3.5,
+      decimals: 18,
+      balance: 12345n * 10n ** 18n,
+      ethPrice: 2334,
+      usdTVL: 4320750n,
+      ethTVL: 18512210n,
+    },
+  ]
+
+  for (const run of runs) {
+    it(`calculates price:${run.priceUsd}, decimals: ${run.decimals}, balance: ${run.balance}, ethPrice: ${run.ethPrice}`, () => {
+      expect(
+        calculateTVL(run.priceUsd, run.decimals, run.balance, run.ethPrice)
+      ).toEqual({
+        usdTVL: run.usdTVL,
+        ethTVL: run.ethTVL,
+      })
+    })
+  }
 })
