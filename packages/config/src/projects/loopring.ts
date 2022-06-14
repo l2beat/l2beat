@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -13,6 +15,7 @@ import { Project } from './types'
 export const loopring: Project = {
   name: 'Loopring',
   slug: 'loopring',
+  id: ProjectId('loopring'),
   bridges: [
     {
       address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',

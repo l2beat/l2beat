@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,6 +16,7 @@ import { Project } from './types'
 export const layer2financezk: Project = {
   name: 'Layer2.Finance-zk',
   slug: 'layer2financezk',
+  id: ProjectId('layer2financezk'),
   bridges: [
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
