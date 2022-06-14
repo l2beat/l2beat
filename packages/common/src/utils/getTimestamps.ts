@@ -8,7 +8,7 @@ const SECONDS_PER_DAY = 86400
 export function getTimestamps(
   from: UnixTime,
   to: UnixTime,
-  granularity: Granularity
+  granularity: Granularity,
 ): UnixTime[] {
   if (from.gt(to)) throw new Error('FROM cannot be greater than TO')
 

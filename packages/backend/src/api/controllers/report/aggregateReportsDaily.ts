@@ -28,7 +28,7 @@ export interface TokenEntry {
 
 export function aggregateReportsDaily(
   reports: ReportRecord[],
-  projects: ProjectInfo[]
+  projects: ProjectInfo[],
 ): OutputEntry[] {
   if (reports.length === 0) {
     return []
@@ -44,7 +44,7 @@ export function aggregateReportsDaily(
   }))
 
   const timestampToIndex = new Map(
-    entries.map((x, i) => [x.timestamp.toNumber(), i])
+    entries.map((x, i) => [x.timestamp.toNumber(), i]),
   )
 
   const projectNames = getProjectNames(projects)
@@ -75,7 +75,7 @@ export function aggregateReportsDaily(
       report.ethTVL,
       report.balance,
       details.symbol,
-      details.decimals
+      details.decimals,
     )
   }
 
@@ -137,7 +137,7 @@ export function saveTVLToEntry(
   ethTVL: bigint,
   balance: bigint,
   symbol: string,
-  decimals: number
+  decimals: number,
 ) {
   entry.value.usd += usdTVL
   entry.value.eth += ethTVL

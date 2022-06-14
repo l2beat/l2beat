@@ -26,15 +26,15 @@ describe(getMulticallCalls.name, () => {
     const expected: Record<string, MulticallRequest> = {
       [`token-${usdc.address}-${holderA}`]: TokenBalanceCall.encode(
         usdc.address!.toString(),
-        holderA
+        holderA,
       ),
       [`token-${usdc.address}-${holderB}`]: TokenBalanceCall.encode(
         usdc.address!.toString(),
-        holderB
+        holderB,
       ),
       [`token-${mkr.address}-${holderC}`]: TokenBalanceCall.encode(
         mkr.address!.toString(),
-        holderC
+        holderC,
       ),
       [`eth-${holderA}`]: EthBalanceCall.encode(holderA),
       [`eth-${holderC}`]: EthBalanceCall.encode(holderC),

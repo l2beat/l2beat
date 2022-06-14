@@ -43,7 +43,7 @@ export class CoingeckoClient {
     coindId: CoingeckoId,
     vs_currency: string,
     from: UnixTime,
-    to: UnixTime
+    to: UnixTime,
   ): Promise<CoinMarketChartRangeData> {
     const data = await this.query(`/coins/${coindId}/market_chart/range`, {
       vs_currency: vs_currency.toLowerCase(),
@@ -66,7 +66,7 @@ export class CoingeckoClient {
         ([timestamp, totalVolume]) => ({
           date: new Date(timestamp),
           totalVolume,
-        })
+        }),
       ),
     }
   }
@@ -80,7 +80,7 @@ export class CoingeckoClient {
     const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
     if (!res.ok) {
       throw new Error(
-        `Server responded with non-2XX result: ${res.status} ${res.statusText}`
+        `Server responded with non-2XX result: ${res.status} ${res.statusText}`,
       )
     }
     return res.json()

@@ -38,7 +38,7 @@ function getTopics() {
     'SequencerBatchDelivered',
     'SequencerBatchDeliveredFromOrigin',
   ].map(
-    (name) => coder.encodeFilterTopics(coder.getEvent(name), [])[0] as string
+    (name) => coder.encodeFilterTopics(coder.getEvent(name), [])[0] as string,
   )
 }
 
@@ -55,7 +55,7 @@ export class ArbitrumStatChecker {
         toBlock,
         topics: [topics],
       },
-      'Arbitrum transactions'
+      'Arbitrum transactions',
     )
     const events = logs.map((log) => coder.parseLog(log))
 

@@ -4,7 +4,7 @@ export function tokenIsBefore(tokenA: string, tokenB: string) {
 
 export function tokensInOrder(
   tokenA: string,
-  tokenB: string
+  tokenB: string,
 ): [string, string] {
   return tokenIsBefore(tokenA, tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
 }

@@ -104,7 +104,7 @@ describe(PriceRepository.name, () => {
     const results = await repository.getByToken(token)
 
     expect(results).toBeAnArrayWith(
-      ...DATA.filter((d) => d.coingeckoId === token)
+      ...DATA.filter((d) => d.coingeckoId === token),
     )
     expect(results).toBeAnArrayOfLength(2)
   })
@@ -144,7 +144,7 @@ describe(PriceRepository.name, () => {
               latest: START,
             },
           ],
-        ])
+        ]),
       )
     })
   })

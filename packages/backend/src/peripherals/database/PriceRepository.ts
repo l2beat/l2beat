@@ -30,7 +30,7 @@ export class PriceRepository extends BaseRepository {
     const rows = await this.knex('coingecko_prices').select(
       'coingecko_id',
       'price_usd',
-      'unix_timestamp'
+      'unix_timestamp',
     )
     return rows.map(toRecord)
   }
@@ -89,7 +89,7 @@ export class PriceRepository extends BaseRepository {
           earliest: new UnixTime(parseInt(row.min)),
           latest: new UnixTime(parseInt(row.max)),
         },
-      ])
+      ]),
     )
   }
 }

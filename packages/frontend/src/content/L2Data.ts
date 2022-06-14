@@ -31,7 +31,7 @@ async function getDataFromApi() {
   const response = await http.fetch('https://api.l2beat.com/api/data')
   if (!response.ok) {
     throw new Error(
-      `Could not get data from api (received status ${response.status})`
+      `Could not get data from api (received status ${response.status})`,
     )
   }
   return response.json()

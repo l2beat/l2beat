@@ -15,7 +15,7 @@ export interface TokenStats {
 export function getTokenStats(
   project: ProjectInfo,
   balances: FetchedBalances,
-  prices: PriceSnapshot
+  prices: PriceSnapshot,
 ): TokenStats[] {
   const holders = getHolderAddresses(project)
   const tokens = getTrackedTokens(project)
@@ -42,7 +42,7 @@ export function getTrackedTokens(project: ProjectInfo) {
 export function getTokenBalance(
   holders: string[],
   token: TokenInfo,
-  balances: FetchedBalances
+  balances: FetchedBalances,
 ) {
   let balance = BigNumber.from(0)
   for (const holder of holders) {

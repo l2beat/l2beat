@@ -60,13 +60,13 @@ export class AsyncCache {
     key: string,
     fetch: () => Promise<T>,
     toJSON: (t: T) => U,
-    fromJSON: (v: U) => T
+    fromJSON: (v: U) => T,
   ): Promise<T>
   async getOrFetch(
     key: string,
     fetch: () => Promise<unknown>,
     toJSON = id,
-    fromJSON = id
+    fromJSON = id,
   ) {
     const cached = this.cache.get(key)
     if (cached) {
@@ -84,7 +84,7 @@ export class AsyncCache {
         accessed: true,
         value,
         serialized: toJSON(value),
-      })
+      }),
     )
     this.cache.set(key, promise)
     promise.then((e) => {
@@ -103,7 +103,7 @@ export class AsyncCache {
           }
           return [[k, v.serialized]] as const
         })
-        .sort(([a], [b]) => (a < b ? -1 : a === b ? 0 : 1))
+        .sort(([a], [b]) => (a < b ? -1 : a === b ? 0 : 1)),
     )
     this.cacheFile.write(data)
     this.cacheFile.writePrecomputed(data)

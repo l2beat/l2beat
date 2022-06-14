@@ -15,7 +15,7 @@ export class EtherscanApi {
       maxRetryCount: 10,
       startTimeout: 100,
     },
-    this.logger
+    this.logger,
   )
 
   constructor(private etherscanApiKey: string, private logger: Logger) {}
@@ -23,7 +23,7 @@ export class EtherscanApi {
   async getLastBlockBefore(timestamp: number) {
     return this.safeCall(`getLastBlockBefore(${timestamp})`, async () => {
       const res = await fetch(
-        `${BLOCK_URL}&timestamp=${timestamp}&apikey=${this.etherscanApiKey}`
+        `${BLOCK_URL}&timestamp=${timestamp}&apikey=${this.etherscanApiKey}`,
       )
       if (!res.ok) {
         throw new Error(res.statusText)

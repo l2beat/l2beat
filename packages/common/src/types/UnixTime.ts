@@ -1,5 +1,5 @@
 const YEAR_3000_TIMESTAMP = Math.floor(
-  new Date('3000-01-01T00:00:00.000Z').getTime() / 1000
+  new Date('3000-01-01T00:00:00.000Z').getTime() / 1000,
 )
 
 const SECONDS_PER_DAY = 86_400

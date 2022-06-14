@@ -14,7 +14,7 @@ describe(DatabaseService.name, () => {
     await databaseService.rollbackAll()
 
     const result = await knex.raw(
-      'SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema()'
+      'SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema()',
     )
     const tables = result.rows.map((x: { table_name: string }) => x.table_name)
 

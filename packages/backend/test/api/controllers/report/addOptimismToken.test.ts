@@ -89,7 +89,7 @@ describe(addOptimismToken.name, () => {
 
 export function mockEntry(
   entry?: Partial<OutputEntry>,
-  projectName = 'Optimism'
+  projectName = 'Optimism',
 ) {
   const projects: Map<string, ProjectEntry> = new Map()
   const tokens: Map<string, TokenEntry> = new Map()

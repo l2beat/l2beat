@@ -19,7 +19,7 @@ export class ReportController {
     private priceRepository: PriceRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
-    private interval: number = 5 * 60 * 1000
+    private interval: number = 5 * 60 * 1000,
   ) {
     this.jobQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
   }

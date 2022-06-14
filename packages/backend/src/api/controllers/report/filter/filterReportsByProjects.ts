@@ -5,7 +5,7 @@ import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 
 export function filterReportsByProjects(
   reports: ReportRecord[],
-  projects: ProjectInfo[]
+  projects: ProjectInfo[],
 ): ReportRecord[] {
   const bridges = getBridges(projects)
   return reports.filter((report) => {
@@ -30,7 +30,7 @@ function getBridges(projects: ProjectInfo[]) {
           sinceBlock: b.sinceBlock,
           tokens: new Map(b.tokens.map((t) => [t.id, t.sinceBlock])),
         },
-      ])
-    )
+      ]),
+    ),
   )
 }

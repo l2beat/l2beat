@@ -35,7 +35,7 @@ export function makeOutputData(stats: Stats): OutputData {
     Object.keys(lastEntry.projects).map((name) => [
       name,
       makeProjectData(entries, name),
-    ])
+    ]),
   )
 
   const experimental: OutputData['experimental'] = {}
@@ -70,14 +70,14 @@ function makeProjectData(entries: TVLAnalysis[], project: string): ProjectData {
     tokens.map((token) => [
       token,
       makeTokenChart(entries, project, token, minDate),
-    ])
+    ]),
   )
   return { aggregate, byToken }
 }
 
 function makeAggregateProjectChart(
   entries: TVLAnalysis[],
-  project: string
+  project: string,
 ): Chart {
   const data: Chart['data'] = entries.map((entry) => [
     entry.date.toString(),
@@ -91,7 +91,7 @@ function makeTokenChart(
   entries: TVLAnalysis[],
   project: string,
   token: string,
-  minDate: SimpleDate
+  minDate: SimpleDate,
 ): Chart {
   const data: Chart['data'] = entries
     .filter((x) => !x.date.isBefore(minDate))

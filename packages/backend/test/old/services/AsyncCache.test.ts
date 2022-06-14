@@ -29,7 +29,7 @@ describe(AsyncCache.name, () => {
   it('reads complex keys', async () => {
     const { cache } = makeCache({ '2020-06-07,123': 'bar' })
     const data = await cache.getOrFetch(`2020-06-07,123`, () =>
-      Promise.resolve('baz')
+      Promise.resolve('baz'),
     )
     expect(data).toEqual('bar')
   })
@@ -40,7 +40,7 @@ describe(AsyncCache.name, () => {
       `2020-06-07,123`,
       () => Promise.resolve(true),
       (bool) => bool.toString(),
-      (json) => json === 'true'
+      (json) => json === 'true',
     )
     expect(data).toEqual(false)
   })
@@ -51,7 +51,7 @@ describe(AsyncCache.name, () => {
       'baz',
       () => Promise.resolve('XYZ'),
       (data) => data.toLowerCase(),
-      (json) => json.toUpperCase()
+      (json) => json.toUpperCase(),
     )
     await new Promise<void>((resolve) => setTimeout(resolve, 10))
     expect(data).toEqual('XYZ')

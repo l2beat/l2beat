@@ -26,7 +26,7 @@ describe(BlockNumberUpdater.name, () => {
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscan,
         blockNumberRepository,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await blockNumberUpdater.update(timestamps)
@@ -51,7 +51,7 @@ describe(BlockNumberUpdater.name, () => {
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscan,
         blockNumberRepository,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await blockNumberUpdater.update(timestamps)
@@ -84,7 +84,7 @@ describe(BlockNumberUpdater.name, () => {
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscan,
         blockNumberRepository,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await blockNumberUpdater.update(timestamps)

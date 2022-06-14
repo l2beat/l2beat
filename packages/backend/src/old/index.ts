@@ -25,7 +25,7 @@ async function main() {
     const stats = await statCollector.collectStats(
       projectInfos,
       tokenList,
-      endDate
+      endDate,
     )
     outputData = makeOutputData(stats)
   }
@@ -44,6 +44,6 @@ async function saveData(data: OutputData) {
   await fs.promises.writeFile(
     './build/data.json',
     JSON.stringify(data),
-    'utf-8'
+    'utf-8',
   )
 }

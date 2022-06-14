@@ -10,7 +10,7 @@ const OPTIMISM_TOKEN_ADDRESS = '0x4200000000000000000000000000000000000042'
 export function addOptimismToken(
   entry: TVLAnalysis,
   date: SimpleDate,
-  fetchedPrices: PriceSnapshot
+  fetchedPrices: PriceSnapshot,
 ) {
   if (!date.isAfter(SimpleDate.fromString('2022-05-30'))) {
     return

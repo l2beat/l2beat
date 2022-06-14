@@ -7,7 +7,7 @@ export class EventProcessor {
   constructor(
     private blockTimestampService: BlockTimestampService,
     private addressAnalyzer: AddressAnalyzer,
-    private provider: providers.Provider
+    private provider: providers.Provider,
   ) {}
 
   //TODO: Add cache !
@@ -22,11 +22,11 @@ export class EventProcessor {
       const implContract = new Contract(
         event.args?.agent,
         ['function implementation() view returns (address)'],
-        this.provider
+        this.provider,
       )
       const implementationAddress = await implContract.implementation()
       implOfProxyName = await this.addressAnalyzer.getName(
-        implementationAddress
+        implementationAddress,
       )
     }
     return {

@@ -8,18 +8,18 @@ const ABI = [
 
 export async function getHistory(
   provider: providers.Provider,
-  eventProcessor: EventProcessor
+  eventProcessor: EventProcessor,
 ) {
   const agentRegistry = new Contract(
     '0x39b9bf169a7e225ba037c443a40460c77438ea14',
     ABI,
-    provider
+    provider,
   )
   const filter = agentRegistry.filters.AgentRegistered()
   const events = await agentRegistry.queryFilter(filter, 11149547)
 
   const processed = await Promise.all(
-    events.map((e) => eventProcessor.processEvent(e))
+    events.map((e) => eventProcessor.processEvent(e)),
   )
 
   processed.sort((a, b) => a.blockNumber - b.blockNumber)
@@ -32,7 +32,7 @@ export async function getHistory(
       event.user,
       event.agent,
       event.implementationName,
-      event.implOfProxyName
+      event.implOfProxyName,
     )
   }
 }

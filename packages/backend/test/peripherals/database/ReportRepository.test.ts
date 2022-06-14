@@ -19,7 +19,7 @@ describe(ReportRepository.name, () => {
   const mockReport = (
     bridge: EthereumAddress,
     timestampOffset: number,
-    blockOffset: bigint
+    blockOffset: bigint,
   ) => {
     return {
       blockNumber: BLOCK + blockOffset,
@@ -35,7 +35,7 @@ describe(ReportRepository.name, () => {
   const mockBalance = (
     bridge: EthereumAddress,
     asset: AssetId,
-    offset: bigint
+    offset: bigint,
   ) => {
     return {
       blockNumber: BLOCK + offset,
@@ -110,7 +110,7 @@ describe(ReportRepository.name, () => {
       expect(result).toBeAnArrayWith(
         mockReport(BRIDGE_A, 0, 0n),
         mockReport(BRIDGE_A, 2, 100n),
-        mockReport(BRIDGE_A, 3, 300n)
+        mockReport(BRIDGE_A, 3, 300n),
       )
 
       expect(result).toBeAnArrayOfLength(3)
@@ -131,7 +131,7 @@ describe(ReportRepository.name, () => {
 
     expect(results).toBeAnArrayWith(
       mockReport(BRIDGE_A, 0, 0n),
-      mockReport(BRIDGE_A, 1, 100n)
+      mockReport(BRIDGE_A, 1, 100n),
     )
     expect(results).toBeAnArrayOfLength(2)
   })

@@ -20,7 +20,7 @@ export function mock<T>(overrides: Partial<T> = {}): MockedObject<T> {
 
       const res = () => {
         throw new Error(
-          `Cannot call .${name}() - no mock implementation provided.`
+          `Cannot call .${name}() - no mock implementation provided.`,
         )
       }
 
@@ -31,7 +31,7 @@ export function mock<T>(overrides: Partial<T> = {}): MockedObject<T> {
         get: () => {
           throw new Error(
             'Cannot access .calls - no mock implementation provided' +
-              ' and the function was not called.'
+              ' and the function was not called.',
           )
         },
       })

@@ -34,7 +34,7 @@ export async function run() {
   const httpClient = new HttpClient()
   const etherscanClient = new MainnetEtherscanClient(
     httpClient,
-    etherscanApiKey
+    etherscanApiKey,
   )
   const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
 
@@ -48,7 +48,7 @@ export async function run() {
     libAddressManager,
     startingPoints,
     mainBridge,
-    network
+    network,
   )
 }
 

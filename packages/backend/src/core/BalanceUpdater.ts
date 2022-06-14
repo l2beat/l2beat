@@ -20,7 +20,7 @@ export class BalanceUpdater {
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
     private projects: ProjectInfo[],
-    private logger: Logger
+    private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -45,10 +45,10 @@ export class BalanceUpdater {
 
   async getMissingDataByBlock(blockNumber: bigint): Promise<HeldAsset[]> {
     const known: BalanceRecord[] = await this.balanceRepository.getByBlock(
-      blockNumber
+      blockNumber,
     )
     const knownSet = new Set(
-      known.map((x) => `${x.holderAddress}-${x.assetId}`)
+      known.map((x) => `${x.holderAddress}-${x.assetId}`),
     )
 
     const missing: HeldAsset[] = []
@@ -76,15 +76,15 @@ export class BalanceUpdater {
 
   async fetchBalances(
     missingData: HeldAsset[],
-    blockNumber: bigint
+    blockNumber: bigint,
   ): Promise<BalanceRecord[]> {
     const calls = missingData.map((m) =>
-      BalanceCall.encode(m.holder, m.assetId)
+      BalanceCall.encode(m.holder, m.assetId),
     )
 
     const multicallResponses = await this.multicall.multicall(
       calls,
-      blockNumber
+      blockNumber,
     )
 
     return multicallResponses.map((res, i) => ({

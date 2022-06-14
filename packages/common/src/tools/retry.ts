@@ -7,7 +7,7 @@ export interface RetryOptions {
 
 export async function retry<T>(
   fn: () => Promise<T>,
-  options: RetryOptions
+  options: RetryOptions,
 ): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     let callCount = 0
@@ -21,7 +21,7 @@ export async function retry<T>(
       } else {
         const ms = Math.min(
           options.maxTimeout ?? Infinity,
-          options.minTimeout * 2 ** (callCount - 1)
+          options.minTimeout * 2 ** (callCount - 1),
         )
         setTimeout(call, ms)
       }

@@ -21,7 +21,7 @@ export interface Chart {
 
 export function generateReportOutput(
   entries: OutputEntry[],
-  projects: ProjectInfo[]
+  projects: ProjectInfo[],
 ): ReportOutput {
   const report: ReportOutput = {
     aggregate: {

@@ -10,21 +10,21 @@ const ABI = [
 export async function getHistory(
   provider: providers.Provider,
   networkConfig: NetworkConfig,
-  eventProcessor: EventProcessor
+  eventProcessor: EventProcessor,
 ) {
   const addressManager = new Contract(
     networkConfig.addressManager,
     ABI,
-    provider
+    provider,
   )
   const filter = addressManager.filters.AddressSet()
   const events = await addressManager.queryFilter(
     filter,
-    networkConfig.fromBlock
+    networkConfig.fromBlock,
   )
 
   const processed = await Promise.all(
-    events.map((e) => eventProcessor.processEvent(e))
+    events.map((e) => eventProcessor.processEvent(e)),
   )
 
   processed.sort((a, b) => a.blockNumber - b.blockNumber)
@@ -38,7 +38,7 @@ export async function getHistory(
       event.oldAddress,
       '->',
       event.newAddress,
-      event.implementationName
+      event.implementationName,
     )
   }
 }

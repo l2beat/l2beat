@@ -10,7 +10,7 @@ import {
 
 export function makeMockData(
   projects: ProjectInfo[],
-  endDate: SimpleDate
+  endDate: SimpleDate,
 ): OutputData {
   const byProject: Record<string, ProjectData> = {}
   for (const project of projects) {
@@ -31,7 +31,7 @@ export function makeMockData(
     if (project.name === 'Arbitrum') {
       experimental[project.name].batchCount7d = Math.floor(randRange(10, 1_000))
       experimental[project.name].messageCount7d = Math.floor(
-        randRange(2_000, 20_000)
+        randRange(2_000, 20_000),
       )
     }
   }
@@ -71,7 +71,7 @@ function fakeProjectData(dates: SimpleDate[], tokens: string[]): ProjectData {
 function fakeChart(
   dates: SimpleDate[],
   types: [string, string],
-  boost = 0
+  boost = 0,
 ): Chart {
   let current = randRange(10, 200) + boost
   let price = randRange(10, 2000)
