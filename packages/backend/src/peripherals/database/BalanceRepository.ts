@@ -51,6 +51,7 @@ export class BalanceRepository extends BaseRepository {
       .insert(rows)
       .onConflict(['block_number', 'holder_address', 'asset_id'])
       .merge()
+      .returning('block_number')
 
     return ids
   }
