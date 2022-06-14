@@ -28,7 +28,7 @@ export function getLocalConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
-    coingeckoIds: tokenList.map((t) => t.coingeckoId),
+    assetIds: tokenList.map((t) => [t.coingeckoId, t.id]),
     projects: projects.map(projectToInfo),
   }
 }

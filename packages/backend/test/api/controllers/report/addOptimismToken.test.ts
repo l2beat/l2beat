@@ -1,4 +1,4 @@
-import { CoingeckoId, mock, UnixTime } from '@l2beat/common'
+import { AssetId, CoingeckoId, mock, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { addOptimismToken } from '../../../../src/api/controllers/report/addOptimismToken'
@@ -17,6 +17,7 @@ describe(addOptimismToken.name, () => {
       const result = {
         timestamp: AIRDROP_DATE,
         coingeckoId: token,
+        assetId: token as unknown as AssetId, // WIP
       }
 
       if (token === CoingeckoId('optimism')) {

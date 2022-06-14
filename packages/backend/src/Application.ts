@@ -73,7 +73,7 @@ export class Application {
     const priceUpdater = new PriceUpdater(
       coingeckoQueryService,
       priceRepository,
-      config.coingeckoIds,
+      config.assetIds,
       logger
     )
 

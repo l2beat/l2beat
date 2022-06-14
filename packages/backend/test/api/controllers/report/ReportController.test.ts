@@ -224,5 +224,10 @@ function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
 }
 
 function mockPrice(token: CoingeckoId, priceUsd: number, offset: number) {
-  return { timestamp: START.add(offset, 'days'), coingeckoId: token, priceUsd }
+  return {
+    timestamp: START.add(offset, 'days'),
+    coingeckoId: token,
+    assetId: token as unknown as AssetId, // WIP
+    priceUsd,
+  }
 }

@@ -57,11 +57,13 @@ describe(ReportUpdater.name, () => {
         {
           priceUsd: 3.2,
           coingeckoId: MOCK_COINGECKO,
+          assetId: MOCK_ASSET,
           timestamp: START,
         },
         {
           priceUsd: 1000,
           coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
           timestamp: START,
         },
       ]
@@ -116,11 +118,13 @@ describe(ReportUpdater.name, () => {
         {
           priceUsd: 3.2,
           coingeckoId: MOCK_COINGECKO,
+          assetId: MOCK_ASSET,
           timestamp: START,
         },
         {
           priceUsd: 1000,
           coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
           timestamp: START,
         },
       ]
@@ -163,6 +167,7 @@ describe(ReportUpdater.name, () => {
         priceUsd: 3.2,
         timestamp: UnixTime.now(),
         coingeckoId: CoingeckoId('token'),
+        assetId: AssetId('token'),
       }
 
       const balance: BalanceRecord = {
@@ -196,6 +201,7 @@ describe(ReportUpdater.name, () => {
         priceUsd: 3.2,
         timestamp: UnixTime.now(),
         coingeckoId: CoingeckoId('token'),
+        assetId: AssetId('token'),
       }
 
       const balance: BalanceRecord = {

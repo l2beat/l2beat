@@ -1,4 +1,4 @@
-import { CoingeckoId, Logger, mock, UnixTime } from '@l2beat/common'
+import { AssetId, CoingeckoId, Logger, mock, UnixTime } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
 import { PriceUpdater } from '../../src/core/PriceUpdater'
@@ -35,17 +35,17 @@ describe(PriceUpdater.name, () => {
     })
 
     it('correctly calls updates', async () => {
-      const tokens = [
-        CoingeckoId('uniswap'),
-        CoingeckoId('ethereum'),
-        CoingeckoId('dai'),
+      const tokens: [CoingeckoId, AssetId][] = [
+        [CoingeckoId('uniswap'), AssetId('uni-uniswap')],
+        [CoingeckoId('ethereum'), AssetId.ETH],
+        [CoingeckoId('dai'), AssetId.DAI],
       ]
 
       const priceRepository = mock<PriceRepository>({
         calcDataBoundaries: mockFn().returns(
           new Map([
-            [tokens[0], { earliest: HOUR_10, latest: HOUR_12 }],
-            [tokens[1], { earliest: HOUR_09, latest: HOUR_12 }],
+            [tokens[0][0], { earliest: HOUR_10, latest: HOUR_12 }],
+            [tokens[1][0], { earliest: HOUR_09, latest: HOUR_12 }],
           ])
         ),
         addMany: mockFn().returns([]),
@@ -66,10 +66,10 @@ describe(PriceUpdater.name, () => {
       expect(
         coingeckoQueryService.getUsdPriceHistory
       ).toHaveBeenCalledExactlyWith([
-        [tokens[0], HOUR_09, HOUR_09, 'hourly'],
-        [tokens[1], HOUR_13, HOUR_13, 'hourly'],
-        [tokens[2], HOUR_09, HOUR_13, 'hourly'],
-        [tokens[0], HOUR_13, HOUR_13, 'hourly'],
+        [tokens[0][0], HOUR_09, HOUR_09, 'hourly'],
+        [tokens[1][0], HOUR_13, HOUR_13, 'hourly'],
+        [tokens[2][0], HOUR_09, HOUR_13, 'hourly'],
+        [tokens[0][0], HOUR_13, HOUR_13, 'hourly'],
       ])
     })
   })
@@ -95,6 +95,7 @@ describe(PriceUpdater.name, () => {
 
         await priceUpdater.updateToken(
           CoingeckoId('uniswap'),
+          AssetId('uni-uniswap'),
           undefined,
           HOUR_09,
           HOUR_13
@@ -110,6 +111,7 @@ describe(PriceUpdater.name, () => {
 
     describe('data in DB from 10:00 to 12:00', () => {
       const TOKEN = CoingeckoId('uniswap')
+      const TOKEN_ID = AssetId('uni-uniswap')
       const BOUNDARY = {
         earliest: HOUR_10,
         latest: HOUR_12,
@@ -131,7 +133,13 @@ describe(PriceUpdater.name, () => {
           Logger.SILENT
         )
 
-        await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_09)
+        await priceUpdater.updateToken(
+          TOKEN,
+          TOKEN_ID,
+          BOUNDARY,
+          HOUR_09,
+          HOUR_09
+        )
 
         expect(
           coingeckoQueryService.getUsdPriceHistory
@@ -150,7 +158,13 @@ describe(PriceUpdater.name, () => {
           Logger.SILENT
         )
 
-        await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_13, HOUR_13)
+        await priceUpdater.updateToken(
+          TOKEN,
+          TOKEN_ID,
+          BOUNDARY,
+          HOUR_13,
+          HOUR_13
+        )
 
         expect(
           coingeckoQueryService.getUsdPriceHistory
@@ -169,7 +183,13 @@ describe(PriceUpdater.name, () => {
           Logger.SILENT
         )
 
-        await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_11, HOUR_11)
+        await priceUpdater.updateToken(
+          TOKEN,
+          TOKEN_ID,
+          BOUNDARY,
+          HOUR_11,
+          HOUR_11
+        )
 
         expect(coingeckoQueryService.getUsdPriceHistory.calls.length).toEqual(0)
       })
@@ -186,7 +206,13 @@ describe(PriceUpdater.name, () => {
           Logger.SILENT
         )
 
-        await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_13)
+        await priceUpdater.updateToken(
+          TOKEN,
+          TOKEN_ID,
+          BOUNDARY,
+          HOUR_09,
+          HOUR_13
+        )
 
         expect(
           coingeckoQueryService.getUsdPriceHistory
@@ -208,7 +234,13 @@ describe(PriceUpdater.name, () => {
           Logger.SILENT
         )
 
-        await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_10, HOUR_12)
+        await priceUpdater.updateToken(
+          TOKEN,
+          TOKEN_ID,
+          BOUNDARY,
+          HOUR_10,
+          HOUR_12
+        )
 
         expect(coingeckoQueryService.getUsdPriceHistory.calls.length).toEqual(0)
       })
@@ -230,40 +262,49 @@ describe(PriceUpdater.name, () => {
       const priceRepository = mock<PriceRepository>({
         addMany: mockFn().returns([]),
       })
-      const tokens = [CoingeckoId('uniswap')]
+      const TOKEN = CoingeckoId('uniswap')
+      const TOKEN_ID = AssetId('uni-uniswap')
 
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        tokens,
+        [[TOKEN, TOKEN_ID]],
         Logger.SILENT
       )
 
-      await priceUpdater.fetchAndSave(tokens[0], from, from.add(2, 'hours'))
+      await priceUpdater.fetchAndSave(
+        TOKEN,
+        TOKEN_ID,
+        from,
+        from.add(2, 'hours')
+      )
 
       expect(
         coingeckoQueryService.getUsdPriceHistory
       ).toHaveBeenCalledExactlyWith([
-        [tokens[0], from, from.add(2, 'hours'), 'hourly'],
+        [TOKEN, from, from.add(2, 'hours'), 'hourly'],
       ])
 
       expect(priceRepository.addMany).toHaveBeenCalledExactlyWith([
         [
           [
             {
-              coingeckoId: tokens[0],
+              coingeckoId: TOKEN,
               priceUsd: 100,
               timestamp: from,
+              assetId: TOKEN_ID,
             },
             {
-              coingeckoId: tokens[0],
+              coingeckoId: TOKEN,
               priceUsd: 100,
               timestamp: from.add(1, 'hours'),
+              assetId: TOKEN_ID,
             },
             {
-              coingeckoId: tokens[0],
+              coingeckoId: TOKEN,
               priceUsd: 100,
               timestamp: from.add(2, 'hours'),
+              assetId: TOKEN_ID,
             },
           ],
         ],
