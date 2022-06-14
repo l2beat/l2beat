@@ -1,19 +1,8 @@
 html,
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
   font-size: var(--font-m);
-  font-family: Roboto, Arial, sans-serif;
   background-color: var(--background);
   color: var(--text);
-}
-
-a {
-  color: var(--link);
-  text-decoration: underline;
 }
 
 figure > img {

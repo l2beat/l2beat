@@ -51,7 +51,9 @@ export function ContractsSection(props: ContractsSectionProps) {
               {contract.links.map((x, i) => (
                 <React.Fragment key={i}>
                   {' '}
-                  <OutLink href={x.href}>{x.name}</OutLink>
+                  <OutLink className="text-link underline" href={x.href}>
+                    {x.name}
+                  </OutLink>
                 </React.Fragment>
               ))}
             </div>

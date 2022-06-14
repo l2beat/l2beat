@@ -16,7 +16,10 @@ export function LinkSectionLink({ href, social }: Props) {
   if (social) {
     const parsed = parseSocial(href)
     return (
-      <OutLink className="LinkSection-SocialLink" href={href}>
+      <OutLink
+        className="LinkSection-SocialLink text-link underline"
+        href={href}
+      >
         {parsed.platform ? (
           <ProductIcon product={parsed.platform} />
         ) : (
@@ -26,7 +29,11 @@ export function LinkSectionLink({ href, social }: Props) {
       </OutLink>
     )
   }
-  return <OutLink href={href}>{simplify(href)}</OutLink>
+  return (
+    <OutLink className="text-link underline" href={href}>
+      {simplify(href)}
+    </OutLink>
+  )
 }
 
 interface SocialDetails {
