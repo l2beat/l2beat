@@ -1,4 +1,4 @@
-import { CoingeckoId, mock, UnixTime } from '@l2beat/common'
+import { CoingeckoId, Logger, mock, UnixTime } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
 import { PriceUpdater } from '../../src/core/PriceUpdater'
@@ -25,7 +25,8 @@ describe(PriceUpdater.name, () => {
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        []
+        [],
+        Logger.SILENT
       )
 
       await priceUpdater.update([])
@@ -57,7 +58,8 @@ describe(PriceUpdater.name, () => {
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        tokens
+        tokens,
+        Logger.SILENT
       )
 
       await priceUpdater.update([HOUR_09, HOUR_10, HOUR_11, HOUR_12, HOUR_13])
@@ -87,7 +89,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(
@@ -124,7 +127,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_09)
@@ -142,7 +146,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_13, HOUR_13)
@@ -160,7 +165,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_11, HOUR_11)
@@ -176,7 +182,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_13)
@@ -197,7 +204,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_10, HOUR_12)
@@ -227,7 +235,8 @@ describe(PriceUpdater.name, () => {
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        tokens
+        tokens,
+        Logger.SILENT
       )
 
       await priceUpdater.fetchAndSave(tokens[0], from, from.add(2, 'hours'))

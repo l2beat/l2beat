@@ -3,6 +3,7 @@ import {
   Bytes,
   CoingeckoId,
   EthereumAddress,
+  Logger,
   mock,
 } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
@@ -176,7 +177,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        PROJECTS
+        PROJECTS,
+        Logger.SILENT
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -277,7 +279,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        []
+        [],
+        Logger.SILENT
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -303,7 +306,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        PROJECTS
+        PROJECTS,
+        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -362,7 +366,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        PROJECTS
+        PROJECTS,
+        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -436,7 +441,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        projects
+        projects,
+        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -492,7 +498,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        projects
+        projects,
+        Logger.SILENT
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
@@ -539,7 +546,8 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
-        []
+        [],
+        Logger.SILENT
       )
 
       const metadata = [
