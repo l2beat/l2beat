@@ -2,7 +2,7 @@ import { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
-  proof: 'no proof' | 'merkle proof'
+  proof: 'no proof' | 'merkle proof',
 ): ProjectTechnologyChoice {
   const finalized = type === 'zk' ? 'proven' : 'finalized'
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
@@ -28,7 +28,7 @@ const FORCED: ProjectTechnologyChoice = {
 
 function EMERGENCY(
   state: string,
-  proof: 'zero knowledge proof' | 'merkle proof'
+  proof: 'zero knowledge proof' | 'merkle proof',
 ): ProjectTechnologyChoice {
   const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'

@@ -7,7 +7,7 @@ export class BlockNumberUpdater {
   constructor(
     private etherscanClient: EtherscanClient,
     private blockNumberRepository: BlockNumberRepository,
-    private logger: Logger
+    private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -15,7 +15,7 @@ export class BlockNumberUpdater {
   async update(timestamps: UnixTime[]): Promise<bigint[]> {
     const knownBlocks = await this.blockNumberRepository.getAll()
     const blocksByTimestamp = new Map(
-      knownBlocks.map((x) => [x.timestamp.toNumber(), x.blockNumber])
+      knownBlocks.map((x) => [x.timestamp.toNumber(), x.blockNumber]),
     )
 
     this.logger.info('Update started', { timestamps: timestamps.length })
@@ -26,7 +26,7 @@ export class BlockNumberUpdater {
           return known
         }
         return this.fetchBlockNumber(timestamp)
-      })
+      }),
     )
     this.logger.info('Update completed', { timestamps: timestamps.length })
     return result
@@ -34,7 +34,7 @@ export class BlockNumberUpdater {
 
   private async fetchBlockNumber(timestamp: UnixTime) {
     const blockNumber = await this.etherscanClient.getBlockNumberAtOrBefore(
-      timestamp
+      timestamp,
     )
     const block = { timestamp, blockNumber }
     await this.blockNumberRepository.add(block)

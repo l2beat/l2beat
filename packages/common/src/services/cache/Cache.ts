@@ -75,7 +75,7 @@ export class Cache {
   wrapMethod<K extends string>(
     object: WithAsyncMethod<K>,
     method: K,
-    module?: string
+    module?: string,
   ) {
     if (!module) {
       module = `${object.constructor.name}.${method}`

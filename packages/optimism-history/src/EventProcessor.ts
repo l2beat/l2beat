@@ -9,7 +9,7 @@ export class EventProcessor {
     private provider: providers.Provider,
     private blockTimestampService: BlockTimestampService,
     private optimismNameService: OptimismNameService,
-    private addressAnalyzer: AddressAnalyzer
+    private addressAnalyzer: AddressAnalyzer,
   ) {}
 
   async processEvent(event: Event) {
@@ -17,7 +17,7 @@ export class EventProcessor {
       this.blockTimestampService.getBlockTimestamp(event.blockNumber),
       this.optimismNameService.getOptimismName(
         event.args?.name.hash,
-        event.transactionHash
+        event.transactionHash,
       ),
       this.addressAnalyzer.getName(event.args?.newAddress),
     ])
@@ -45,7 +45,7 @@ export class EventProcessor {
     //   '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103'
     const implementationSlot = await this.provider.getStorageAt(
       proxyAddress,
-      IMPLEMENTATION_SLOT
+      IMPLEMENTATION_SLOT,
     )
     const implementation = this.wordToAddress(implementationSlot)
     return this.addressAnalyzer.getName(EthereumAddress(implementation))

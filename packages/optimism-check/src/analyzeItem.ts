@@ -19,7 +19,7 @@ export async function analyzeItem(
   addressAnalyzer: AddressAnalyzer,
   libAddressManager: string,
   contracts: Contracts,
-  component: string
+  component: string,
 ): Promise<{ analyzed: AnalyzedItem; relatives: string[] }> {
   const libAbi = ['function getAddress(string) view returns (address)']
 
@@ -28,7 +28,7 @@ export async function analyzeItem(
   if (contracts[component].expectedAddress) {
     if (componentAddress != contracts[component].expectedAddress) {
       console.log(
-        `Warning: ${component} resolved to a different address than expected !`
+        `Warning: ${component} resolved to a different address than expected !`,
       )
     }
   }
@@ -41,14 +41,14 @@ export async function analyzeItem(
     const libAddressContract = new Contract(
       componentAddress,
       addMgrAbi,
-      provider
+      provider,
     )
     libAddressManagerLocal = await libAddressContract.libAddressManager()
     if (contracts[component].parameters) {
       parameters = await getParameters(
         contracts[component],
         componentAddress,
-        provider
+        provider,
       )
     }
   }
@@ -69,7 +69,7 @@ export async function analyzeItem(
 async function getParameters(
   description: ContractDescription,
   address: string,
-  provider: providers.Provider
+  provider: providers.Provider,
 ): Promise<{ name: string; value: unknown }[]> {
   return await Promise.all(
     description.parameters?.map(async (entry) => {
@@ -78,14 +78,14 @@ async function getParameters(
       } else {
         return getRegularParameter(address, entry.abi, provider)
       }
-    }) ?? []
+    }) ?? [],
   )
 }
 
 async function getRegularParameter(
   address: string,
   method: string,
-  provider: providers.Provider
+  provider: providers.Provider,
 ) {
   const contract = new Contract(address, [method], provider)
   const methodName = Object.values(contract.interface.functions)[0].name

@@ -91,7 +91,7 @@ describe(ReportController.name, () => {
         cachedRepository,
         priceRepository,
         PROJECTS,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await reportController.generateDaily()
@@ -168,7 +168,7 @@ describe(ReportController.name, () => {
         cachedRepository,
         priceRepository,
         PROJECTS,
-        Logger.SILENT
+        Logger.SILENT,
       )
       const result = await reportController.generateDaily()
 

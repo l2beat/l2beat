@@ -30,7 +30,7 @@ describe(PriceService.name, () => {
             value: 100,
             timestamp: new UnixTime(date.toUnixTimestamp()),
             deltaMs: 0,
-          }))
+          })),
         ),
       })
       const asyncCache = mock<AsyncCache>({
@@ -40,7 +40,7 @@ describe(PriceService.name, () => {
       const priceService = new PriceService(
         asyncCache,
         coingeckoQueryService,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const TOKENS: TokenInfo[] = [
@@ -49,7 +49,7 @@ describe(PriceService.name, () => {
           name: 'Dai Stablecoin',
           symbol: 'DAI',
           address: EthereumAddress(
-            '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+            '0x6B175474E89094C44Da98b954EedeAC495271d0F',
           ),
           coingeckoId: CoingeckoId('dai'),
           decimals: 18,
@@ -61,7 +61,7 @@ describe(PriceService.name, () => {
       await priceService.getPrices(TOKENS, dates)
 
       expect(
-        coingeckoQueryService.getUsdPriceHistory
+        coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
         [
           CoingeckoId('dai'),
@@ -89,21 +89,21 @@ describe(PriceService.name, () => {
               value: DAI_PRICE + index,
               timestamp: new UnixTime(date.toUnixTimestamp()),
               deltaMs: 0,
-            }))
+            })),
           )
           .returnsOnce(
             dates.map((date, index) => ({
               value: ETH_PRICE + index,
               timestamp: new UnixTime(date.toUnixTimestamp()),
               deltaMs: 0,
-            }))
+            })),
           )
           .returnsOnce(
             dates.map((date, index) => ({
               value: USDC_PRICE + index,
               timestamp: new UnixTime(date.toUnixTimestamp()),
               deltaMs: 0,
-            }))
+            })),
           ),
       })
       const asyncCache = mock<AsyncCache>({
@@ -113,7 +113,7 @@ describe(PriceService.name, () => {
       const priceService = new PriceService(
         asyncCache,
         coingeckoQueryService,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const TOKENS: TokenInfo[] = [
@@ -122,7 +122,7 @@ describe(PriceService.name, () => {
           name: 'Dai Stablecoin',
           symbol: 'DAI',
           address: EthereumAddress(
-            '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+            '0x6B175474E89094C44Da98b954EedeAC495271d0F',
           ),
           coingeckoId: CoingeckoId('dai'),
           decimals: 18,
@@ -143,7 +143,7 @@ describe(PriceService.name, () => {
           name: 'USD Coin',
           symbol: 'USDC',
           address: EthereumAddress(
-            '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+            '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
           ),
           coingeckoId: CoingeckoId('usdc'),
           decimals: 6,
@@ -161,20 +161,20 @@ describe(PriceService.name, () => {
             token: {
               [TOKENS[0].address!.toString()]: utils.parseUnits(
                 (DAI_PRICE + index).toFixed(18 * 2 - TOKENS[0].decimals),
-                18 * 2 - TOKENS[0].decimals
+                18 * 2 - TOKENS[0].decimals,
               ),
               [TOKENS[2].address!.toString()]: utils.parseUnits(
                 (USDC_PRICE + index).toFixed(18 * 2 - TOKENS[2].decimals),
-                18 * 2 - TOKENS[2].decimals
+                18 * 2 - TOKENS[2].decimals,
               ),
             },
 
             eth: utils.parseUnits(
               (ETH_PRICE + index).toFixed(18),
-              TOKENS[1].decimals
+              TOKENS[1].decimals,
             ),
           },
-        ])
+        ]),
       )
 
       expect(result).toEqual(expected)
@@ -187,7 +187,7 @@ describe(PriceService.name, () => {
           name: 'Uniswap',
           symbol: 'UNI',
           address: EthereumAddress(
-            '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
+            '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
           ),
           coingeckoId: CoingeckoId('uniswap'),
           decimals: 18,
@@ -219,7 +219,7 @@ describe(PriceService.name, () => {
         const priceService = new PriceService(
           asyncCache,
           coingeckoQueryService,
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceService.getPrices(TOKENS, dates)
@@ -240,7 +240,7 @@ describe(PriceService.name, () => {
         ])
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([])
 
         expect(asyncCache.set).toHaveBeenCalledExactlyWith([])
@@ -266,14 +266,14 @@ describe(PriceService.name, () => {
               value: UNI_PRICE + index,
               timestamp: new UnixTime(date.toUnixTimestamp()),
               deltaMs: 0,
-            }))
+            })),
           ),
         })
 
         const priceService = new PriceService(
           asyncCache,
           coingeckoQueryService,
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceService.getPrices(TOKENS, dates)
@@ -286,7 +286,7 @@ describe(PriceService.name, () => {
         ])
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [
             TOKENS[0].coingeckoId,
@@ -335,7 +335,7 @@ describe(PriceService.name, () => {
             {
               value: UNI_PRICE + 2,
               timestamp: new UnixTime(
-                dates[dates.length - 1].toUnixTimestamp()
+                dates[dates.length - 1].toUnixTimestamp(),
               ),
               deltaMs: 0,
             },
@@ -345,7 +345,7 @@ describe(PriceService.name, () => {
         const priceService = new PriceService(
           asyncCache,
           coingeckoQueryService,
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceService.getPrices(TOKENS, dates)
@@ -366,7 +366,7 @@ describe(PriceService.name, () => {
         ])
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [
             TOKENS[0].coingeckoId,

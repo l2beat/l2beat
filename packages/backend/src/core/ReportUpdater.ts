@@ -23,7 +23,7 @@ export class ReportUpdater {
     private balanceRepository: BalanceRepository,
     private reportRepository: ReportRepository,
     private tokens: Token[],
-    private logger: Logger
+    private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
     for (const token of this.tokens) {
@@ -49,7 +49,7 @@ export class ReportUpdater {
 
   createReports(
     prices: PriceRecord[],
-    balances: BalanceRecord[]
+    balances: BalanceRecord[],
   ): ReportRecord[] {
     const priceMap = new Map(prices.map((p) => [p.coingeckoId, p]))
     const ethCoingeckoId = this.tokenByAssetId.get(AssetId.ETH)?.coingeckoId
@@ -82,13 +82,13 @@ export function createReport(
   price: PriceRecord,
   decimals: number,
   balance: BalanceRecord,
-  ethPrice: number
+  ethPrice: number,
 ): ReportRecord {
   const { usdTVL, ethTVL } = calculateTVL(
     price.priceUsd,
     decimals,
     balance.balance,
-    ethPrice
+    ethPrice,
   )
   return {
     blockNumber: balance.blockNumber,
@@ -105,7 +105,7 @@ export function calculateTVL(
   priceUsd: number,
   decimals: number,
   balance: bigint,
-  ethPrice: number
+  ethPrice: number,
 ) {
   const bigintPrice = getBigIntPrice(priceUsd, decimals)
   const usdBalance = (balance * bigintPrice) / 10n ** 18n

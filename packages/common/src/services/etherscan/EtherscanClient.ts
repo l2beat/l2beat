@@ -12,7 +12,7 @@ export class EtherscanClient {
   constructor(
     private httpClient: HttpClient,
     private url: string,
-    private apiKey: string
+    private apiKey: string,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
@@ -23,7 +23,7 @@ export class EtherscanClient {
     })
     if (response.status !== '1') {
       throw new Error(
-        `Error response ${response.message} ${JSON.stringify(response.result)}`
+        `Error response ${response.message} ${JSON.stringify(response.result)}`,
       )
     }
     return ContractSourceResult.parse(response.result)[0]
@@ -42,7 +42,7 @@ export class EtherscanClient {
 
     if (!res.ok) {
       throw new Error(
-        `Server responded with non-2XX result: ${res.status} ${res.statusText}`
+        `Server responded with non-2XX result: ${res.status} ${res.statusText}`,
       )
     }
 

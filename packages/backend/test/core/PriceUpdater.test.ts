@@ -26,7 +26,7 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         [],
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await priceUpdater.update([])
@@ -46,7 +46,7 @@ describe(PriceUpdater.name, () => {
           new Map([
             [tokens[0], { earliest: HOUR_10, latest: HOUR_12 }],
             [tokens[1], { earliest: HOUR_09, latest: HOUR_12 }],
-          ])
+          ]),
         ),
         addMany: mockFn().returns([]),
       })
@@ -59,12 +59,12 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         tokens,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await priceUpdater.update([HOUR_09, HOUR_10, HOUR_11, HOUR_12, HOUR_13])
       expect(
-        coingeckoQueryService.getUsdPriceHistory
+        coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
         [tokens[0], HOUR_09, HOUR_09, 'hourly'],
         [tokens[1], HOUR_13, HOUR_13, 'hourly'],
@@ -90,18 +90,18 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
           CoingeckoId('uniswap'),
           undefined,
           HOUR_09,
-          HOUR_13
+          HOUR_13,
         )
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [CoingeckoId('uniswap'), HOUR_09, HOUR_13, 'hourly'],
         ])
@@ -128,13 +128,13 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_09)
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_09, HOUR_09, 'hourly']])
       })
 
@@ -147,13 +147,13 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_13, HOUR_13)
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_13, HOUR_13, 'hourly']])
       })
 
@@ -166,7 +166,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_11, HOUR_11)
@@ -183,13 +183,13 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_13)
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [TOKEN, HOUR_09, HOUR_09, 'hourly'],
           [TOKEN, HOUR_13, HOUR_13, 'hourly'],
@@ -205,7 +205,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_10, HOUR_12)
@@ -236,13 +236,13 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         tokens,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await priceUpdater.fetchAndSave(tokens[0], from, from.add(2, 'hours'))
 
       expect(
-        coingeckoQueryService.getUsdPriceHistory
+        coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
         [tokens[0], from, from.add(2, 'hours'), 'hourly'],
       ])

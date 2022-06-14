@@ -20,7 +20,7 @@ export const BalanceCall = {
       return {
         address: MULTICALL_V1_ADDRESS,
         data: Bytes.fromHex(
-          coder.encodeFunctionData('getEthBalance', [holder.toString()])
+          coder.encodeFunctionData('getEthBalance', [holder.toString()]),
         ),
       }
     } else {
@@ -28,7 +28,7 @@ export const BalanceCall = {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         address: getTokenByAssetId(asset).address!,
         data: Bytes.fromHex(
-          coder.encodeFunctionData('balanceOf', [holder.toString()])
+          coder.encodeFunctionData('balanceOf', [holder.toString()]),
         ),
       }
     }
@@ -39,7 +39,7 @@ export const BalanceCall = {
     }
     const [value] = coder.decodeFunctionResult(
       'balanceOf',
-      response.data.toString()
+      response.data.toString(),
     )
     return (value as BigNumber).toBigInt()
   },

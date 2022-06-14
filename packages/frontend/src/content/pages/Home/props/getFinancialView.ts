@@ -16,11 +16,11 @@ import { getTechnology } from './getTechnology'
 export function getFinancialView(
   projects: Project[],
   l2Data: L2Data,
-  tvl: number
+  tvl: number,
 ): FinancialViewProps {
   return {
     items: projects.map((x) =>
-      getFinancialViewEntry(x, l2Data.byProject[x.name], tvl)
+      getFinancialViewEntry(x, l2Data.byProject[x.name], tvl),
     ),
   }
 }
@@ -28,7 +28,7 @@ export function getFinancialView(
 function getFinancialViewEntry(
   project: Project,
   projectData: ProjectData,
-  aggregateTvl: number
+  aggregateTvl: number,
 ): FinancialViewEntry {
   const tvl = getFromEnd(projectData.aggregate.data, 0)?.[1] ?? 0
   const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)?.[1] ?? 0
@@ -37,7 +37,7 @@ function getFinancialViewEntry(
   const tvlBreakdown = getTVLBreakdown(
     tvl,
     projectData.byToken,
-    project.associatedTokens ?? []
+    project.associatedTokens ?? [],
   )
 
   let tvlWarning =
@@ -45,7 +45,7 @@ function getFinancialViewEntry(
       ? toWarning(
           project.name,
           tvlBreakdown.associated,
-          project.associatedTokens ?? []
+          project.associatedTokens ?? [],
         )
       : undefined
   let warningSeverity: 'bad' | 'warning' | 'info' =
@@ -77,7 +77,7 @@ function getFinancialViewEntry(
 function getTVLBreakdown(
   total: number,
   byToken: Record<string, ChartData>,
-  associatedTokens: string[]
+  associatedTokens: string[],
 ) {
   if (total === 0) {
     return {

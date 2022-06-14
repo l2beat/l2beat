@@ -15,7 +15,7 @@ describe(CoingeckoClient.name, () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
-            'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123'
+            'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
@@ -44,7 +44,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 Not Found'
+        'Server responded with non-2XX result: 404 Not Found',
       )
     })
 
@@ -55,7 +55,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        expect.stringMatching(/json/)
+        expect.stringMatching(/json/),
       )
     })
   })
@@ -68,7 +68,7 @@ describe(CoingeckoClient.name, () => {
             JSON.stringify([
               { id: 'asd', symbol: 'ASD', name: 'A Sad Dime' },
               { id: 'foobar', symbol: 'FBR', name: 'Foobar coin' },
-            ])
+            ]),
           ),
       })
       const coingeckoClient = new CoingeckoClient(httpClient)
@@ -99,7 +99,7 @@ describe(CoingeckoClient.name, () => {
                 name: 'Foobar coin',
                 platforms: {},
               },
-            ])
+            ]),
           ),
       })
       const coingeckoClient = new CoingeckoClient(httpClient)
@@ -171,7 +171,7 @@ describe(CoingeckoClient.name, () => {
         CoingeckoId('ethereum'),
         'usd',
         new UnixTime(1592577232),
-        new UnixTime(1622577232)
+        new UnixTime(1622577232),
       )
 
       expect(result).toEqual(MOCK_TRANSFORMED_DATA)
@@ -181,7 +181,7 @@ describe(CoingeckoClient.name, () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
-            'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232'
+            'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232',
           )
           return new Response(JSON.stringify(MOCK_PARSED_DATA))
         },
@@ -192,7 +192,7 @@ describe(CoingeckoClient.name, () => {
         CoingeckoId('ethereum'),
         'usd',
         new UnixTime(1592577232),
-        new UnixTime(1622577232)
+        new UnixTime(1622577232),
       )
     })
   })

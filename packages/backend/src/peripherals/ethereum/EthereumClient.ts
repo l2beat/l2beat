@@ -22,7 +22,7 @@ export class EthereumClient {
         data: parameters.data?.toString(),
       },
       // TODO: probably could be a simple number
-      typeof blockTag === 'bigint' ? Number(blockTag) : blockTag
+      typeof blockTag === 'bigint' ? Number(blockTag) : blockTag,
     )
     return Bytes.fromHex(bytes)
   }

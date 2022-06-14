@@ -1,7 +1,7 @@
 export function calculateTicks(
   ticks: number,
   values: number[],
-  logScale: boolean
+  logScale: boolean,
 ) {
   return logScale
     ? calculateLogTicks(ticks, values)

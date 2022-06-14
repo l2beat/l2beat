@@ -9,12 +9,12 @@ export class BlockInfo {
     private alchemyApi: AlchemyApi,
     private etherscanApi: EtherscanApi,
     private asyncCache: AsyncCache,
-    private logger: Logger
+    private logger: Logger,
   ) {}
 
   async getMaxBlock(date: SimpleDate) {
     return this.asyncCache.getOrFetch(`getMaxBlock,${date}`, () =>
-      this._getMaxBlock(date)
+      this._getMaxBlock(date),
     )
   }
 
@@ -30,7 +30,7 @@ export class BlockInfo {
       `getBlockDate,${block}`,
       () => this._getBlockDate(block),
       (date) => date.toString(),
-      (json) => SimpleDate.fromString(json)
+      (json) => SimpleDate.fromString(json),
     )
   }
 

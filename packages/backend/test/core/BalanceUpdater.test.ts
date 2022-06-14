@@ -48,7 +48,7 @@ describe(BalanceUpdater.name, () => {
               name: 'USD Coin',
               coingeckoId: CoingeckoId('usd-coin'),
               address: EthereumAddress(
-                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
               ),
               symbol: 'USDC',
               decimals: 6,
@@ -60,7 +60,7 @@ describe(BalanceUpdater.name, () => {
               name: 'Tether USD',
               coingeckoId: CoingeckoId('tether'),
               address: EthereumAddress(
-                '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+                '0xdAC17F958D2ee523a2206206994597C13D831ec7',
               ),
               symbol: 'USDT',
               decimals: 6,
@@ -83,7 +83,7 @@ describe(BalanceUpdater.name, () => {
               name: 'USD Coin',
               coingeckoId: CoingeckoId('usd-coin'),
               address: EthereumAddress(
-                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
               ),
               symbol: 'USDC',
               decimals: 6,
@@ -95,7 +95,7 @@ describe(BalanceUpdater.name, () => {
               name: 'Tether USD',
               coingeckoId: CoingeckoId('tether'),
               address: EthereumAddress(
-                '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+                '0xdAC17F958D2ee523a2206206994597C13D831ec7',
               ),
               symbol: 'USDT',
               decimals: 6,
@@ -107,7 +107,7 @@ describe(BalanceUpdater.name, () => {
               name: '0x Protocol Token',
               coingeckoId: CoingeckoId('0x'),
               address: EthereumAddress(
-                '0xE41d2489571d322189246DaFA5ebDe1F4699F498'
+                '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
               ),
               symbol: 'ZRX',
               decimals: 18,
@@ -123,7 +123,7 @@ describe(BalanceUpdater.name, () => {
   const BALANCE_100_RESPONSE = {
     success: true,
     data: Bytes.fromHex(
-      '0x0000000000000000000000000000000000000000000000000000000000000064'
+      '0x0000000000000000000000000000000000000000000000000000000000000064',
     ),
   }
 
@@ -178,7 +178,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         PROJECTS,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -280,7 +280,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         [],
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
@@ -307,11 +307,11 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         PROJECTS,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER
+        START_BLOCK_NUMBER,
       )
 
       expect(result).toEqual([
@@ -367,11 +367,11 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         PROJECTS,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER
+        START_BLOCK_NUMBER,
       )
 
       expect(result).toBeAnArrayWith(
@@ -390,7 +390,7 @@ describe(BalanceUpdater.name, () => {
         {
           holder: HOLDER_B,
           assetId: ASSET_D,
-        }
+        },
       )
       expect(result).toBeAnArrayOfLength(4)
     })
@@ -425,7 +425,7 @@ describe(BalanceUpdater.name, () => {
                   name: 'USD Coin',
                   coingeckoId: CoingeckoId('usd-coin'),
                   address: EthereumAddress(
-                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
                   ),
                   symbol: 'USDC',
                   decimals: 6,
@@ -442,11 +442,11 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         projects,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER
+        START_BLOCK_NUMBER,
       )
 
       expect(result).toEqual([])
@@ -482,7 +482,7 @@ describe(BalanceUpdater.name, () => {
                   name: 'USD Coin',
                   coingeckoId: CoingeckoId('usd-coin'),
                   address: EthereumAddress(
-                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
                   ),
                   symbol: 'USDC',
                   decimals: 6,
@@ -499,11 +499,11 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         projects,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER
+        START_BLOCK_NUMBER,
       )
 
       expect(result).toEqual([
@@ -522,19 +522,19 @@ describe(BalanceUpdater.name, () => {
           {
             success: true,
             data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064'
+              '0x0000000000000000000000000000000000000000000000000000000000000064',
             ),
           },
           {
             success: true,
             data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064'
+              '0x0000000000000000000000000000000000000000000000000000000000000064',
             ),
           },
           {
             success: true,
             data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064'
+              '0x0000000000000000000000000000000000000000000000000000000000000064',
             ),
           },
         ]),
@@ -547,7 +547,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         [],
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const metadata = [
@@ -558,7 +558,7 @@ describe(BalanceUpdater.name, () => {
 
       const result = await balanceUpdater.fetchBalances(
         metadata,
-        START_BLOCK_NUMBER
+        START_BLOCK_NUMBER,
       )
 
       expect(result).toEqual([

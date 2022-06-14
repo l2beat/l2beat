@@ -9,7 +9,7 @@ export async function walkConfig(
   provider: providers.Provider,
   addressAnalyzer: AddressAnalyzer,
   config: Config,
-  startingPoints: string[]
+  startingPoints: string[],
 ) {
   const resolved = new Map<string, Record<string, unknown>>()
 
@@ -27,7 +27,7 @@ export async function walkConfig(
       provider,
       addressAnalyzer,
       config,
-      address
+      address,
     )
     console.log('Analyzed', address)
     resolved.set(address, analyzed)
@@ -60,7 +60,7 @@ function prettyPrintValue(
   key: string,
   value: unknown,
   addressMap: Map<string, string>,
-  indent = 1
+  indent = 1,
 ) {
   const spaces = ' '.repeat(indent * 4 - 1)
   if (Array.isArray(value)) {

@@ -17,13 +17,13 @@ import { parseMulticallResults } from './utils/parseMulticallResults'
 export class BalanceChecker {
   constructor(
     private multicallApi: MulticallApi,
-    private blockInfo: BlockInfo
+    private blockInfo: BlockInfo,
   ) {}
 
   async getStatsForDate(
     projects: ProjectInfo[],
     prices: PriceSnapshot,
-    date: SimpleDate
+    date: SimpleDate,
   ): Promise<TVLAnalysis> {
     const blockNumber = await this.blockInfo.getMaxBlock(date)
     const stats = await this.getTVL(projects, prices, blockNumber)
@@ -33,13 +33,13 @@ export class BalanceChecker {
   async getTVL(
     projects: ProjectInfo[],
     prices: PriceSnapshot,
-    blockNumber: number
+    blockNumber: number,
   ) {
     const { tokenHolders, ethHolders } = getHolders(projects, blockNumber)
     const balances = await this.fetchBalances(
       tokenHolders,
       ethHolders,
-      blockNumber
+      blockNumber,
     )
     const projectStats = getProjectStats(projects, balances, prices)
     const projectTVL = getProjectTVL(projectStats)
@@ -53,7 +53,7 @@ export class BalanceChecker {
   private async fetchBalances(
     tokenHolders: Record<string, string[]>,
     ethHolders: string[],
-    blockNumber: number
+    blockNumber: number,
   ): Promise<FetchedBalances> {
     const calls = getMulticallCalls(tokenHolders, ethHolders)
     const results = await this.multicallApi.multicall(calls, blockNumber)

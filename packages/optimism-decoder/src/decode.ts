@@ -22,7 +22,7 @@ interface AppendSequencerBatchParams {
 export async function decodeSequencerBatch(
   kind: string,
   data: string,
-  fourBytesApi: FourBytesApi
+  fourBytesApi: FourBytesApi,
 ): Promise<AppendSequencerBatchParams> {
   console.log('Decoding', kind, 'L1 Sequencer transaction batch...')
   let reader = new BufferReader(Buffer.from(data.slice(2), 'hex'))
@@ -59,7 +59,7 @@ export async function decodeSequencerBatch(
 
   if (contexts[0].blockNumber === 0 && kind === 'Optimism OVM 2.0') {
     console.log(
-      'Block number = 0 ? Transactions are compressed, nice.... Decompressing....'
+      'Block number = 0 ? Transactions are compressed, nice.... Decompressing....',
     )
     contexts.slice(1) // remove dummy context that indicates compressed transaction data
     const bytes = reader.readBytes(reader.left())

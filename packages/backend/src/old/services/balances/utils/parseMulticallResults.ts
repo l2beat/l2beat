@@ -7,7 +7,7 @@ import {
 } from '../../multicall'
 
 export function parseMulticallResults(
-  results: Record<string, MulticallResponse>
+  results: Record<string, MulticallResponse>,
 ) {
   return {
     token: parseTokenBalances(results),

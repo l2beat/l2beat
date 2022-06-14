@@ -9,6 +9,6 @@ export function getTokenTVL(stats: TokenStats[]) {
         balance: asNumber(balance, token.decimals, 6),
         usd: asNumber(value, 18, 2),
       },
-    ])
+    ]),
   )
 }

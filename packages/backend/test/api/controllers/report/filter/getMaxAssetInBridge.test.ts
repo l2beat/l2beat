@@ -46,7 +46,7 @@ describe(getMaxAssetInBridge.name, () => {
         [`${BRIDGE_A.toString()}-${ASSET_B.toString()}`, TODAY],
         [`${BRIDGE_B.toString()}-${ASSET_A.toString()}`, TODAY.add(-1, 'days')],
         [`${BRIDGE_B.toString()}-${ASSET_B.toString()}`, TODAY],
-      ])
+      ]),
     )
   })
 })

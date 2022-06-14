@@ -14,7 +14,7 @@ describe(EtherscanClient.name, () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
-            'https://example.com/api?module=mod&action=act&foo=bar&baz=123&apikey=KEY123'
+            'https://example.com/api?module=mod&action=act&foo=bar&baz=123&apikey=KEY123',
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
@@ -23,7 +23,7 @@ describe(EtherscanClient.name, () => {
       const etherscanClient = new EtherscanClient(
         httpClient,
         'https://example.com/api',
-        'KEY123'
+        'KEY123',
       )
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
@@ -37,7 +37,7 @@ describe(EtherscanClient.name, () => {
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 Not Found'
+        'Server responded with non-2XX result: 404 Not Found',
       )
     })
 
@@ -50,7 +50,7 @@ describe(EtherscanClient.name, () => {
 
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected(
-        expect.stringMatching(/json/)
+        expect.stringMatching(/json/),
       )
     })
 
@@ -116,13 +116,13 @@ describe(EtherscanClient.name, () => {
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: [result] })
+            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
           )
         },
       })
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       const source = await etherscanClient.getContractSource(
-        EthereumAddress.ZERO
+        EthereumAddress.ZERO,
       )
       expect(source).toEqual(result)
     })

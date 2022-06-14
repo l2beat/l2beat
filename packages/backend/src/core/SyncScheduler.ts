@@ -16,7 +16,7 @@ export class SyncScheduler {
     private reportUpdater: ReportUpdater,
     private minTimestamp: UnixTime,
     private logger: Logger,
-    private interval: number = 10 * 60 * 1000
+    private interval: number = 10 * 60 * 1000,
   ) {
     this.logger = this.logger.for(this)
     this.jobQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
@@ -33,7 +33,7 @@ export class SyncScheduler {
           name: `sync triggered @ ${UnixTime.now().toString()}`,
           execute: () => this.sync(),
         }),
-      this.interval
+      this.interval,
     )
   }
 
