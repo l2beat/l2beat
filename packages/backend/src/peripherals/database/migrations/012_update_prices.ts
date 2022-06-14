@@ -11,6 +11,7 @@ should create a new migration file that fixes the issue.
 
 */
 
+import { tokenList } from '@l2beat/config'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -18,7 +19,16 @@ export async function up(knex: Knex) {
     table.string('asset_id').index()
     table.index('unix_timestamp')
   })
-  await knex('coingecko_prices').update() // update AssetId, how can we get data from @l2beat/common/src/tokens to this file?
+  await Promise.all(
+    tokenList.map(({ id, coingeckoId }) => {
+      return knex('coingecko_prices')
+        .update({ asset_id: id.toString() })
+        .where({ coingecko_id: coingeckoId.toString() })
+    })
+  )
+  await knex.schema.alterTable('coingecko_prices', (table) => {
+    table.string('asset_id').notNullable().alter()
+  })
 }
 
 export async function down(knex: Knex) {
