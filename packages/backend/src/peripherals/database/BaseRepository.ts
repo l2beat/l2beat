@@ -10,7 +10,15 @@ interface AddMethod<T, R> {
 }
 
 interface AddManyMethod<T, R> {
+  (records: T[]): Promise<R[] | number>
+}
+
+interface AddManyMethodWithIds<T, R> {
   (records: T[]): Promise<R[]>
+}
+
+interface AddManyMethodWithCount<T> {
+  (records: T[]): Promise<number>
 }
 
 interface GetMethod<A extends unknown[], T> {
@@ -53,6 +61,12 @@ export class BaseRepository {
   }
 
   protected wrapAddMany<T, R>(
+    method: AddManyMethodWithIds<T, R>,
+  ): AddManyMethodWithIds<T, R>
+  protected wrapAddMany<T>(
+    method: AddManyMethodWithCount<T>,
+  ): AddManyMethodWithCount<T>
+  protected wrapAddMany<T, R>(
     method: AddManyMethod<T, R>,
   ): AddManyMethod<T, R> {
     const fn = async (records: T[]) => {
@@ -60,9 +74,11 @@ export class BaseRepository {
         this.logger.debug({ method: method.name, count: 0 })
         return []
       }
-      const ids = await method.call(this, records)
-      this.logger.debug({ method: method.name, count: ids.length })
-      return ids
+      const idsOrCount = await method.call(this, records)
+      const count =
+        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
+      this.logger.debug({ method: method.name, count })
+      return idsOrCount
     }
     Object.defineProperty(fn, 'name', { value: method.name })
     return fn

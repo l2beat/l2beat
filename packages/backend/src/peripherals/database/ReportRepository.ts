@@ -40,11 +40,11 @@ export class ReportRepository extends BaseRepository {
 
   async addOrUpdateMany(reports: ReportRecord[]) {
     const rows = reports.map(toRow)
-    return await this.knex('reports')
+    await this.knex('reports')
       .insert(rows)
-      .returning(['block_number', 'bridge_address', 'asset_id'])
       .onConflict(['block_number', 'bridge_address', 'asset_id'])
       .merge()
+    return rows.length
   }
 
   async deleteAll() {
