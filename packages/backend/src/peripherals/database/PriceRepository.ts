@@ -1,4 +1,4 @@
-import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { PriceRow } from 'knex/types/tables'
 
@@ -6,6 +6,7 @@ import { BaseRepository } from './BaseRepository'
 
 export interface PriceRecord {
   coingeckoId: CoingeckoId
+  assetId: AssetId
   priceUsd: number
   timestamp: UnixTime
 }
@@ -27,21 +28,17 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getAll(): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices').select(
-      'coingecko_id',
-      'price_usd',
-      'unix_timestamp'
-    )
+    const rows = await this.knex('coingecko_prices').select()
     return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const rows = await this.knex('coingecko_prices')
       .where({ unix_timestamp: timestamp.toNumber().toString() })
-      .select('coingecko_id', 'price_usd', 'unix_timestamp')
+      .select()
 
     this.logger.debug({
-      method: 'getAllByTimestamp',
+      method: 'getByTimestamp',
       timestamp: timestamp.toString(),
       amount: rows.length,
     })
@@ -51,7 +48,7 @@ export class PriceRepository extends BaseRepository {
   async getByToken(coingeckoId: CoingeckoId) {
     const rows = await this.knex('coingecko_prices')
       .where({ coingecko_id: coingeckoId.toString() })
-      .select('coingecko_id', 'price_usd', 'unix_timestamp')
+      .select()
 
     this.logger.debug({
       method: 'getAllByToken',
@@ -98,6 +95,7 @@ function toRecord(row: PriceRow): PriceRecord {
   return {
     timestamp: new UnixTime(+row.unix_timestamp),
     coingeckoId: CoingeckoId(row.coingecko_id),
+    assetId: AssetId(row.asset_id),
     priceUsd: +row.price_usd,
   }
 }
@@ -105,6 +103,7 @@ function toRecord(row: PriceRow): PriceRecord {
 function toRow(record: PriceRecord): PriceRow {
   return {
     coingecko_id: record.coingeckoId.toString(),
+    asset_id: record.assetId.toString(),
     price_usd: record.priceUsd,
     unix_timestamp: record.timestamp.toNumber().toString(),
   }

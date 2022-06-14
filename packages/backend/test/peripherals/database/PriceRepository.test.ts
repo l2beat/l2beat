@@ -1,4 +1,4 @@
-import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import {
@@ -17,26 +17,31 @@ describe(PriceRepository.name, () => {
       priceUsd: 3000,
       timestamp: START.add(-1, 'hours'),
       coingeckoId: CoingeckoId('ethereum'),
+      assetId: AssetId.ETH,
     },
     {
       priceUsd: 3100,
       timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('ethereum'),
+      assetId: AssetId.ETH,
     },
     {
       priceUsd: 20,
       timestamp: START.add(-1, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
+      assetId: AssetId('uni-uniswap'),
     },
     {
       priceUsd: 22,
       timestamp: START.add(-2, 'hours'),
       coingeckoId: CoingeckoId('uniswap'),
+      assetId: AssetId('uni-uniswap'),
     },
     {
       priceUsd: 1,
       timestamp: START,
       coingeckoId: CoingeckoId('dai'),
+      assetId: AssetId('uni-uniswap'),
     },
   ]
 
@@ -52,11 +57,13 @@ describe(PriceRepository.name, () => {
           priceUsd: 3300,
           timestamp: UnixTime.fromDate(new Date()).add(-3, 'hours'),
           coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
         },
         {
           priceUsd: 3500,
           timestamp: UnixTime.fromDate(new Date()).add(-4, 'hours'),
           coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
         },
       ]
       await repository.addMany(newRows)
@@ -73,11 +80,12 @@ describe(PriceRepository.name, () => {
     it('big query', async () => {
       const records: PriceRecord[] = []
       const now = UnixTime.now()
-      for (let i = 0; i < 35_000; i++) {
+      for (let i = 5; i < 35_000; i++) {
         records.push({
           priceUsd: Math.random() * 1000,
           timestamp: now.add(-i, 'hours'),
           coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
