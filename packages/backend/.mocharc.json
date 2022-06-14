@@ -3,5 +3,6 @@
   "require": "esbuild-register",
   "watchExtensions": "ts",
   "extension": "ts",
-  "file": "test/setup.ts"
+  "file": "test/setup.ts",
+  "reporterOption": "maxDiffSize=0"
 }

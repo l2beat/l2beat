@@ -6,6 +6,17 @@ You can browse [existing issues](https://github.com/l2beat/l2beat/issues) on our
 
 If you find something wrong with the website or the data feel free to [open an issue](https://github.com/l2beat/l2beat/issues/new).
 
+## Run website locally with mock data
+
+If you're planning working on frontend (not data pipeline) you can easily spun website build with randomize TVL data.
+
+```
+yarn
+yarn build:mock
+cd packages/frontend
+yarn start
+```
+
 ## Add your L2 project to the website
 
 If you want to add a new L2 project you can do that by opening a PR. To do this you need to:

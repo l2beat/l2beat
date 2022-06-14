@@ -2,7 +2,9 @@ import { JobQueue, Logger } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
+import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
+import { addOptimismToken } from './addOptimismToken'
 import { aggregateReportsDaily } from './aggregateReportsDaily'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
@@ -14,6 +16,7 @@ export class ReportController {
   constructor(
     private reportRepository: ReportRepository,
     private cacheRepository: CachedDataRepository,
+    private priceRepository: PriceRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
     private interval: number = 5 * 60 * 1000
@@ -47,6 +50,7 @@ export class ReportController {
     reports = filterReportsByProjects(reports, this.projects)
     reports = getSufficientlySynced(reports)
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
+    await addOptimismToken(dailyEntries, this.priceRepository)
     return generateReportOutput(dailyEntries, this.projects)
   }
 }

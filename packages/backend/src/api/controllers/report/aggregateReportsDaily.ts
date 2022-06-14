@@ -57,46 +57,26 @@ export function aggregateReportsDaily(
     }
 
     const entry = entries[index]
-    entry.value.usd += report.usdTVL
-    entry.value.eth += report.ethTVL
 
     const projectName = projectNames.get(report.bridge)
     if (projectName === undefined) {
       throw new Error('Programmer error: Invalid bridge')
     }
 
-    let project = entry.projects.get(projectName)
-    if (!project) {
-      project = {
-        value: { usd: 0n, eth: 0n },
-        tokens: new Map(),
-      }
-      entry.projects.set(projectName, project)
-    }
-
-    project.value.usd += report.usdTVL
-    project.value.eth += report.ethTVL
-
     const details = tokenDetails.get(report.asset)
     if (details === undefined) {
       throw new Error('Programmer error: Invalid asset')
     }
 
-    let token = project.tokens.get(details.symbol)
-    if (token === undefined) {
-      token = {
-        usd: 0n,
-        eth: 0n,
-        balance: 0n,
-        decimals: 0,
-      }
-      project.tokens.set(details.symbol, token)
-    }
-
-    token.usd += report.usdTVL
-    token.eth += report.ethTVL
-    token.balance += report.balance
-    token.decimals = details.decimals
+    saveTVLToEntry(
+      entry,
+      projectName,
+      report.usdTVL,
+      report.ethTVL,
+      report.balance,
+      details.symbol,
+      details.decimals
+    )
   }
 
   return entries
@@ -148,4 +128,45 @@ function getDailyTimestamps(min: UnixTime, max: UnixTime) {
     timestamps.push(t)
   }
   return timestamps
+}
+
+export function saveTVLToEntry(
+  entry: OutputEntry,
+  projectName: string,
+  usdTVL: bigint,
+  ethTVL: bigint,
+  balance: bigint,
+  symbol: string,
+  decimals: number
+) {
+  entry.value.usd += usdTVL
+  entry.value.eth += ethTVL
+
+  let project = entry.projects.get(projectName)
+  if (!project) {
+    project = {
+      value: { usd: 0n, eth: 0n },
+      tokens: new Map(),
+    }
+    entry.projects.set(projectName, project)
+  }
+
+  project.value.usd += usdTVL
+  project.value.eth += ethTVL
+
+  let token = project.tokens.get(symbol)
+  if (token === undefined) {
+    token = {
+      usd: 0n,
+      eth: 0n,
+      balance: 0n,
+      decimals: 0,
+    }
+    project.tokens.set(symbol, token)
+  }
+
+  token.usd += usdTVL
+  token.eth += ethTVL
+  token.balance += balance
+  token.decimals = decimals
 }

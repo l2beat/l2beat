@@ -1,4 +1,4 @@
-import { CoingeckoId, UnixTime } from '@l2beat/common'
+import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
 
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
@@ -11,25 +11,36 @@ export class PriceUpdater {
   constructor(
     private coingeckoQueryService: CoingeckoQueryService,
     private priceRepository: PriceRepository,
-    private coingeckoIds: CoingeckoId[]
-  ) {}
+    private coingeckoIds: CoingeckoId[],
+    private logger: Logger
+  ) {
+    this.logger = this.logger.for(this)
+  }
 
   async update(timestamps: UnixTime[]) {
     if (timestamps.length === 0) {
       return
     }
 
+    this.logger.info('Update started', { timestamps: timestamps.length })
+
     const from = timestamps[0]
     const to = timestamps[timestamps.length - 1]
 
     const boundaries = await this.priceRepository.calcDataBoundaries()
 
-    await Promise.all(
+    const results = await Promise.allSettled(
       this.coingeckoIds.map((coingeckoId) => {
         const boundary = boundaries.get(coingeckoId)
         return this.updateToken(coingeckoId, boundary, from, to)
       })
     )
+    const error = results.find((x) => x.status === 'rejected')
+    if (error && error.status === 'rejected') {
+      throw error.reason
+    }
+
+    this.logger.info('Update completed', { timestamps: timestamps.length })
   }
 
   async updateToken(
@@ -38,15 +49,29 @@ export class PriceUpdater {
     from: UnixTime,
     to: UnixTime
   ) {
+    let hours = 0
+    const hourDiff = (from: UnixTime, to: UnixTime) =>
+      Math.floor((to.toNumber() - from.toNumber()) / 3_600) + 1
     if (boundary === undefined) {
       await this.fetchAndSave(coingeckoId, from, to)
+      hours += hourDiff(from, to)
     } else {
-      if (boundary.earliest.gt(from)) {
-        await this.fetchAndSave(coingeckoId, from, boundary.earliest)
+      if (from.lt(boundary.earliest)) {
+        const lastUnknown = boundary.earliest.add(-1, 'hours')
+        await this.fetchAndSave(coingeckoId, from, lastUnknown)
+        hours += hourDiff(from, lastUnknown)
       }
-      if (boundary.latest.lt(to)) {
-        await this.fetchAndSave(coingeckoId, boundary.latest, to)
+      if (to.gt(boundary.latest)) {
+        const firstUnknown = boundary.latest.add(1, 'hours')
+        await this.fetchAndSave(coingeckoId, firstUnknown, to)
+        hours += hourDiff(firstUnknown, to)
       }
+    }
+    if (hours > 0) {
+      this.logger.info('Updated prices', {
+        coingeckoId: coingeckoId.toString(),
+        hours,
+      })
     }
   }
 
@@ -63,6 +88,6 @@ export class PriceUpdater {
       priceUsd: price.value,
     }))
 
-    this.priceRepository.addOrUpdate(priceRecords)
+    await this.priceRepository.addMany(priceRecords)
   }
 }

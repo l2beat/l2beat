@@ -23,6 +23,7 @@ export class PriceRepository extends BaseRepository {
     this.getByTimestamp = this.wrapGet(this.getByTimestamp)
     this.getByToken = this.wrapGet(this.getByToken)
     this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
+    this.addMany = this.wrapAddMany(this.addMany)
   }
 
   async getAll(): Promise<PriceRecord[]> {
@@ -60,17 +61,14 @@ export class PriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdate(prices: PriceRecord[]) {
+  async addMany(prices: PriceRecord[]) {
     const rows: PriceRow[] = prices.map(toRow)
-    await this.knex('coingecko_prices')
-      .insert(rows)
-      .onConflict(['coingecko_id', 'unix_timestamp'])
-      .merge()
-    this.logger.debug({
-      method: 'add',
-      token: rows[0]?.coingecko_id,
-      amount: rows.length,
-    })
+
+    const ids = await this.knex
+      .batchInsert('coingecko_prices', rows, 10_000)
+      .returning('unix_timestamp')
+
+    return ids
   }
 
   async deleteAll() {

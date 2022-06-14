@@ -1,4 +1,4 @@
-import { CoingeckoId, mock, UnixTime } from '@l2beat/common'
+import { CoingeckoId, Logger, mock, UnixTime } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
 import { PriceUpdater } from '../../src/core/PriceUpdater'
@@ -16,7 +16,7 @@ describe(PriceUpdater.name, () => {
     it('returns if empty timestamps', async () => {
       const priceRepository = mock<PriceRepository>({
         calcDataBoundaries: mockFn().returns(new Map()),
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
       const coingeckoQueryService = mock<CoingeckoQueryService>({
         getUsdPriceHistory: mockFn().returnsOnce([]),
@@ -25,7 +25,8 @@ describe(PriceUpdater.name, () => {
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        []
+        [],
+        Logger.SILENT
       )
 
       await priceUpdater.update([])
@@ -47,7 +48,7 @@ describe(PriceUpdater.name, () => {
             [tokens[1], { earliest: HOUR_09, latest: HOUR_12 }],
           ])
         ),
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
 
       const coingeckoQueryService = mock<CoingeckoQueryService>({
@@ -57,17 +58,18 @@ describe(PriceUpdater.name, () => {
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        tokens
+        tokens,
+        Logger.SILENT
       )
 
       await priceUpdater.update([HOUR_09, HOUR_10, HOUR_11, HOUR_12, HOUR_13])
       expect(
         coingeckoQueryService.getUsdPriceHistory
       ).toHaveBeenCalledExactlyWith([
-        [tokens[0], HOUR_09, HOUR_10, 'hourly'],
-        [tokens[1], HOUR_12, HOUR_13, 'hourly'],
+        [tokens[0], HOUR_09, HOUR_09, 'hourly'],
+        [tokens[1], HOUR_13, HOUR_13, 'hourly'],
         [tokens[2], HOUR_09, HOUR_13, 'hourly'],
-        [tokens[0], HOUR_12, HOUR_13, 'hourly'],
+        [tokens[0], HOUR_13, HOUR_13, 'hourly'],
       ])
     })
   })
@@ -76,7 +78,7 @@ describe(PriceUpdater.name, () => {
     describe('no data in DB', () => {
       const priceRepository = mock<PriceRepository>({
         calcDataBoundaries: mockFn().returns(new Map()),
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
 
       it('whole range query', async () => {
@@ -87,7 +89,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(
@@ -113,7 +116,7 @@ describe(PriceUpdater.name, () => {
       }
 
       const priceRepository = mock<PriceRepository>({
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
 
       it('9:00', async () => {
@@ -124,14 +127,15 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_09)
 
         expect(
           coingeckoQueryService.getUsdPriceHistory
-        ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_09, HOUR_10, 'hourly']])
+        ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_09, HOUR_09, 'hourly']])
       })
 
       it('13:00', async () => {
@@ -142,14 +146,15 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_13, HOUR_13)
 
         expect(
           coingeckoQueryService.getUsdPriceHistory
-        ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_12, HOUR_13, 'hourly']])
+        ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_13, HOUR_13, 'hourly']])
       })
 
       it('11:00', async () => {
@@ -160,7 +165,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_11, HOUR_11)
@@ -176,7 +182,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_09, HOUR_13)
@@ -184,8 +191,8 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN, HOUR_09, HOUR_10, 'hourly'],
-          [TOKEN, HOUR_12, HOUR_13, 'hourly'],
+          [TOKEN, HOUR_09, HOUR_09, 'hourly'],
+          [TOKEN, HOUR_13, HOUR_13, 'hourly'],
         ])
       })
 
@@ -197,7 +204,8 @@ describe(PriceUpdater.name, () => {
         const priceUpdater = new PriceUpdater(
           coingeckoQueryService,
           priceRepository,
-          []
+          [],
+          Logger.SILENT
         )
 
         await priceUpdater.updateToken(TOKEN, BOUNDARY, HOUR_10, HOUR_12)
@@ -220,14 +228,15 @@ describe(PriceUpdater.name, () => {
       })
 
       const priceRepository = mock<PriceRepository>({
-        addOrUpdate: mockFn().returns([]),
+        addMany: mockFn().returns([]),
       })
       const tokens = [CoingeckoId('uniswap')]
 
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        tokens
+        tokens,
+        Logger.SILENT
       )
 
       await priceUpdater.fetchAndSave(tokens[0], from, from.add(2, 'hours'))
@@ -238,7 +247,7 @@ describe(PriceUpdater.name, () => {
         [tokens[0], from, from.add(2, 'hours'), 'hourly'],
       ])
 
-      expect(priceRepository.addOrUpdate).toHaveBeenCalledExactlyWith([
+      expect(priceRepository.addMany).toHaveBeenCalledExactlyWith([
         [
           [
             {

@@ -77,7 +77,10 @@ describe('projects', () => {
         describe(project.name, () => {
           const tech = project.details.technology
 
-          type Key = Exclude<keyof ProjectTechnology, 'category' | 'contracts'>
+          type Key = Exclude<
+            keyof ProjectTechnology,
+            'category' | 'contracts' | 'permissions' //TODO: Add test for permissions
+          >
 
           function check(key: Key) {
             const item = tech[key]
