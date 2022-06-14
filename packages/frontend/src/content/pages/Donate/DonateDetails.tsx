@@ -18,7 +18,9 @@ export function DonateDetails(props: DonationDetailsProps) {
         <ul className="DonateDetails-Networks">
           {props.networks.map((network, i) => (
             <li key={i}>
-              <OutLink href={network.linkURL}>{network.name}</OutLink>
+              <OutLink className="text-link underline" href={network.linkURL}>
+                {network.name}
+              </OutLink>
             </li>
           ))}
         </ul>

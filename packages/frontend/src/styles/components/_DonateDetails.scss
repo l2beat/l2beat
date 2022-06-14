@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 700px) {
+  @media (max-width: 750px) {
     display: block;
     text-align: center;
   }
@@ -28,7 +28,7 @@
 
 .DonateDetails-Text {
   margin-left: 32px;
-  @media (max-width: 700px) {
+  @media (max-width: 750px) {
     margin-left: 0;
   }
 }
@@ -45,6 +45,7 @@
 .DonateDetails-Networks {
   list-style-type: none;
   padding: 0;
+  margin: 18px 0;
 
   li:not(:first-child) {
     margin: 8px 0 0 0;

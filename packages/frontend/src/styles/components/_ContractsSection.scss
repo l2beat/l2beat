@@ -22,7 +22,10 @@
 }
 
 .ContractsSection-Contracts {
+  list-style-type: disc;
+  margin-bottom: 18px;
   margin-top: 16px;
+  padding-left: 32px;
 
   & > li + li {
     margin-top: 8px;
