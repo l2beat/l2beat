@@ -1,6 +1,7 @@
 import { ProjectPermission } from '@l2beat/config'
 import React from 'react'
 
+import { config } from '../../../config'
 import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
@@ -11,6 +12,9 @@ export interface PermissionsSectionProps {
 }
 
 export function PermissionsSection(props: PermissionsSectionProps) {
+  if (!config.showPermissionedAccounts) {
+    return null
+  }
   return (
     <Section
       title="Permissioned Addresses"
