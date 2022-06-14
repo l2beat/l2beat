@@ -44,7 +44,7 @@ describe(MulticallClient.name, () => {
         { address: ADDRESS_B, data: Bytes.fromHex('0x') },
         { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
       ],
-      blockTag
+      blockTag,
     )
     expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
@@ -68,7 +68,7 @@ describe(MulticallClient.name, () => {
           multicallInterface.encodeFunctionResult('aggregate', [
             blockTag.toString(),
             ['0x12', '0x0f00', '0x'],
-          ])
+          ]),
         )
       },
     })
@@ -82,7 +82,7 @@ describe(MulticallClient.name, () => {
         { address: ADDRESS_B, data: Bytes.fromHex('0x') },
         { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
       ],
-      blockTag
+      blockTag,
     )
     expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x12') },
@@ -115,7 +115,7 @@ describe(MulticallClient.name, () => {
               [false, '0x0f00'],
               [true, '0x'],
             ],
-          ])
+          ]),
         )
       },
     })
@@ -129,7 +129,7 @@ describe(MulticallClient.name, () => {
         { address: ADDRESS_B, data: Bytes.fromHex('0x') },
         { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
       ],
-      blockTag
+      blockTag,
     )
     expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x12') },
@@ -155,13 +155,13 @@ describe(MulticallClient.name, () => {
       async call(parameters) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
-          parameters.data?.toString() ?? ''
+          parameters.data?.toString() ?? '',
         )[1].length
         calls.push(callCount)
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
             new Array(callCount).fill(0).map(() => [true, '0x1234']),
-          ])
+          ]),
         )
       },
     })
@@ -174,7 +174,7 @@ describe(MulticallClient.name, () => {
         address: ADDRESS_A,
         data: Bytes.fromHex('0x123456'),
       })),
-      blockTag
+      blockTag,
     )
     expect(result.length).toEqual(MULTICALL_BATCH_SIZE * 2 + 1)
     expect(calls).toEqual([MULTICALL_BATCH_SIZE, MULTICALL_BATCH_SIZE, 1])
@@ -189,7 +189,7 @@ describe(MulticallClient.name, () => {
               [true, '0x1234'],
               [false, '0xdead'],
             ],
-          ])
+          ]),
         )
       },
     })
@@ -202,7 +202,7 @@ describe(MulticallClient.name, () => {
         foo: { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
         bar: { address: ADDRESS_B, data: Bytes.fromHex('0x') },
       },
-      blockTag
+      blockTag,
     )
 
     expect(result).toEqual({

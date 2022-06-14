@@ -28,7 +28,7 @@ export class BlockNumberRepository extends BaseRepository {
   async getAll(): Promise<BlockNumberRecord[]> {
     const rows = await this.knex('block_numbers').select(
       'unix_timestamp',
-      'block_number'
+      'block_number',
     )
     return rows.map(toRecord)
   }

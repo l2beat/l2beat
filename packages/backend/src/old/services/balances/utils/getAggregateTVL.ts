@@ -8,7 +8,7 @@ import { ProjectStats } from './getProjectStats'
 
 export function getAggregateTVL(
   projectStats: ProjectStats[],
-  prices: PriceSnapshot
+  prices: PriceSnapshot,
 ) {
   const totalUsdBalance = projectStats
     .map((x) => x.usdBalance)

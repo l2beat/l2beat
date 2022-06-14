@@ -1,6 +1,6 @@
 export class NestedDict<T = unknown> {
   constructor(
-    public data: Record<string, Record<string, T | undefined> | undefined>
+    public data: Record<string, Record<string, T | undefined> | undefined>,
   ) {}
 
   get(a: string, b: string) {

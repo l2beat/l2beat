@@ -13,12 +13,12 @@ export class PriceService {
   constructor(
     private asyncCache: AsyncCache,
     private coingeckoQueryService: CoingeckoQueryService,
-    private logger: Logger
+    private logger: Logger,
   ) {}
 
   async getPrices(
     tokens: TokenInfo[],
-    dates: SimpleDate[]
+    dates: SimpleDate[],
   ): Promise<Map<SimpleDate, PriceSnapshot>> {
     const priceHistory = new Map<number, PriceSnapshot>()
 
@@ -39,12 +39,12 @@ export class PriceService {
           } else {
             priceSnapshot.token[token.address.toString()] = utils.parseUnits(
               value.toFixed(18 * 2 - token.decimals),
-              18 * 2 - token.decimals
+              18 * 2 - token.decimals,
             )
           }
           priceHistory.set(timestamp.toNumber(), priceSnapshot)
         }
-      })
+      }),
     )
 
     const entries: [SimpleDate, PriceSnapshot][] = []
@@ -88,7 +88,7 @@ export class PriceService {
           token.coingeckoId,
           new UnixTime(earliestUnknownDate.toUnixTimestamp()),
           new UnixTime(end.toUnixTimestamp()),
-          'daily'
+          'daily',
         )
       result.push(...coingeckoPrices)
       this.logger.info('Fetched prices', {
@@ -112,7 +112,7 @@ export class PriceService {
     this.asyncCache.set(
       getCacheKey(token, price.timestamp),
       price.value,
-      (x) => x
+      (x) => x,
     )
   }
 }

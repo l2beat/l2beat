@@ -17,7 +17,7 @@ const OP_TOKEN_BALANCE = 214_748_364n * 10n ** 18n
 
 export async function addOptimismToken(
   entries: OutputEntry[],
-  priceRepository: PriceRepository
+  priceRepository: PriceRepository,
 ) {
   const opPrices = await priceRepository.getByToken(CoingeckoId('optimism'))
   const ethPrices = await priceRepository.getByToken(CoingeckoId('ethereum'))
@@ -37,7 +37,7 @@ export async function addOptimismToken(
       opPrice,
       18,
       OP_TOKEN_BALANCE,
-      ethPrice
+      ethPrice,
     )
 
     saveTVLToEntry(
@@ -47,7 +47,7 @@ export async function addOptimismToken(
       ethTVL,
       OP_TOKEN_BALANCE,
       'OP',
-      18
+      18,
     )
   }
 }

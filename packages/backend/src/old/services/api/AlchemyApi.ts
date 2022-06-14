@@ -20,7 +20,7 @@ export class AlchemyApi {
       maxRetryCount: 10,
       startTimeout: 100,
     },
-    this.logger
+    this.logger,
   )
 
   constructor(private url: string, private logger: Logger) {}
@@ -51,7 +51,7 @@ export class AlchemyApi {
         // modified to support this
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return this.provider.getLogs(filter as any)
-      }
+      },
     )
   }
 

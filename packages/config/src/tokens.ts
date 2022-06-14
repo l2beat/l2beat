@@ -1910,7 +1910,7 @@ export function getTokenByAssetId(assetId: AssetId) {
 }
 
 const tokenMapByCoingeckoId = new Map(
-  tokenList.map((t) => [t.coingeckoId, t] as const)
+  tokenList.map((t) => [t.coingeckoId, t] as const),
 )
 
 export function getTokenByCoingeckoId(coingeckoId: CoingeckoId) {

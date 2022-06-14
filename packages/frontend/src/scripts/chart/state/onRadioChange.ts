@@ -1,6 +1,6 @@
 export function onRadioChange(
   inputs: HTMLInputElement[],
-  onChange: (input: HTMLInputElement) => void
+  onChange: (input: HTMLInputElement) => void,
 ) {
   for (const input of inputs) {
     input.addEventListener('change', () => {

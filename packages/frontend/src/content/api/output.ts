@@ -8,7 +8,7 @@ export function outputCharts(charts: Map<string, ChartData>) {
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(
       path.join('build/api', `${url}.json`),
-      JSON.stringify(chart)
+      JSON.stringify(chart),
     )
   }
 }

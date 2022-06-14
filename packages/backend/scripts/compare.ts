@@ -12,7 +12,7 @@ export function compare<T>(name: string, expected: T, actual: T) {
 export async function compareResult<T>(
   name: string,
   expected: T,
-  actual: Promise<T>
+  actual: Promise<T>,
 ) {
   try {
     compare(name, expected, await actual)
@@ -23,12 +23,12 @@ export async function compareResult<T>(
 
 export function createCompare<T>(
   name: string,
-  fn: (provider: providers.Provider, address: string) => Promise<T>
+  fn: (provider: providers.Provider, address: string) => Promise<T>,
 ) {
   return async function (
     provider: providers.Provider,
     address: string,
-    expected: T
+    expected: T,
   ) {
     await compareResult(name, expected, fn(provider, address))
   }

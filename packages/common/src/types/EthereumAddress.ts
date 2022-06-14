@@ -16,14 +16,14 @@ EthereumAddress.ZERO = EthereumAddress(constants.AddressZero)
 
 EthereumAddress.isBefore = function isBefore(
   a: EthereumAddress,
-  b: EthereumAddress
+  b: EthereumAddress,
 ) {
   return a.toLowerCase() < b.toLowerCase()
 }
 
 EthereumAddress.inOrder = function inOrder(
   a: EthereumAddress,
-  b: EthereumAddress
+  b: EthereumAddress,
 ): [EthereumAddress, EthereumAddress] {
   return EthereumAddress.isBefore(a, b) ? [a, b] : [b, a]
 }

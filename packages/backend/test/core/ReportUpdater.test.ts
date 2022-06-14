@@ -29,7 +29,7 @@ describe(ReportUpdater.name, () => {
   const START = UnixTime.now().toStartOf('hour')
   const START_BN = 1000n
   const MOCK_BRIDGE = EthereumAddress(
-    '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'
+    '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
   )
 
   const MOCK_ASSET = AssetId('dai-dai-stablecoin')
@@ -79,14 +79,14 @@ describe(ReportUpdater.name, () => {
         getByTimestamp: mockFn()
           .returnsOnce(prices)
           .returnsOnce(
-            prices.map((p) => ({ ...p, timestamp: START.add(1, 'hours') }))
+            prices.map((p) => ({ ...p, timestamp: START.add(1, 'hours') })),
           ),
       })
       const balanceRepository = mock<BalanceRepository>({
         getByBlock: mockFn()
           .returnsOnce(balances)
           .returnsOnce(
-            balances.map((b) => ({ ...b, blockNumber: START_BN + 200n }))
+            balances.map((b) => ({ ...b, blockNumber: START_BN + 200n })),
           ),
       })
       const reportRepository = mock<ReportRepository>({
@@ -98,7 +98,7 @@ describe(ReportUpdater.name, () => {
         balanceRepository,
         reportRepository,
         TOKENS,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await reportUpdater.update([
@@ -145,7 +145,7 @@ describe(ReportUpdater.name, () => {
         mock<BalanceRepository>(),
         mock<ReportRepository>(),
         TOKENS,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       const result = reportUpdater.createReports(prices, balances)
@@ -170,7 +170,7 @@ describe(ReportUpdater.name, () => {
         assetId: AssetId('tok-token'),
         blockNumber: 100000n,
         holderAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d'
+          '0xcEe284F754E854890e311e3280b767F80797180d',
         ),
       }
 
@@ -203,7 +203,7 @@ describe(ReportUpdater.name, () => {
         assetId: AssetId('tok-token'),
         blockNumber: 100000n,
         holderAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d'
+          '0xcEe284F754E854890e311e3280b767F80797180d',
         ),
       }
 
@@ -304,7 +304,7 @@ describe(calculateTVL.name, () => {
   for (const run of runs) {
     it(`calculates price:${run.priceUsd}, decimals: ${run.decimals}, balance: ${run.balance}, ethPrice: ${run.ethPrice}`, () => {
       expect(
-        calculateTVL(run.priceUsd, run.decimals, run.balance, run.ethPrice)
+        calculateTVL(run.priceUsd, run.decimals, run.balance, run.ethPrice),
       ).toEqual({
         usdTVL: run.usdTVL,
         ethTVL: run.ethTVL,

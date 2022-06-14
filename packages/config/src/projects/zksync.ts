@@ -174,7 +174,7 @@ export const zksync: Project = {
         ],
         risks: [
           CONTRACTS.UPGRADE_WITH_DELAY_RISK(
-            '21 days or 0 if overriden by 9/15 MSig'
+            '21 days or 0 if overriden by 9/15 MSig',
           ),
         ],
       },

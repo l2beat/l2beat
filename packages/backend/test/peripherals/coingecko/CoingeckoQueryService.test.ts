@@ -37,10 +37,10 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('bitcoin'),
         UnixTime.fromDate(new Date('2021-01-01')).add(-5, 'minutes'),
         UnixTime.fromDate(new Date('2022-01-01')).add(5, 'minutes'),
-        'daily'
+        'daily',
       )
       expect(
-        coingeckoClient.getCoinMarketChartRange
+        coingeckoClient.getCoinMarketChartRange,
       ).toHaveBeenCalledExactlyWith([
         [
           CoingeckoId('bitcoin'),
@@ -70,7 +70,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('bitcoin'),
         START,
         START.add(2, 'days'),
-        'daily'
+        'daily',
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200, deltaMs: 0 },
@@ -119,7 +119,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('bitcoin'),
         START,
         START.add(180, 'days'),
-        'hourly'
+        'hourly',
       )
 
       const timestamps = getTimestamps(START, START.add(180, 'days'), 'hourly')
@@ -161,7 +161,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('bitcoin'),
         START,
         START.add(2, 'days'),
-        'daily'
+        'daily',
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200, deltaMs: 0 },
@@ -192,7 +192,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('bitcoin'),
         START,
         START.add(2, 'days'),
-        'daily'
+        'daily',
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200, deltaMs: -2 * 60 * 60 * 1000 },
@@ -227,7 +227,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('bitcoin'),
         START,
         START.add(2, 'days'),
-        'daily'
+        'daily',
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200, deltaMs: 0 },
@@ -307,7 +307,7 @@ describe(CoingeckoQueryService.name, () => {
             EthereumAddress('0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'),
             CoingeckoId('uniswap'),
           ],
-        ])
+        ]),
       )
     })
 
@@ -347,7 +347,7 @@ describe(CoingeckoQueryService.name, () => {
             EthereumAddress('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'),
             CoingeckoId('aave'),
           ],
-        ])
+        ]),
       )
     })
   })
@@ -577,7 +577,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
       COIN,
       START,
       START.add(DAYS_SPAN, 'days'),
-      'daily'
+      'daily',
     )
 
     const ratio = getFaultRatio(data)
@@ -590,7 +590,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
       COIN,
       START,
       START.add(DAYS_SPAN, 'days'),
-      'hourly'
+      'hourly',
     )
 
     const ratio = getFaultRatio(data)

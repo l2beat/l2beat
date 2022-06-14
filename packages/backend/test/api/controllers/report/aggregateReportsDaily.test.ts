@@ -265,7 +265,7 @@ describe(saveTVLToEntry.name, () => {
       ethTVL,
       balance,
       symbol,
-      decimals
+      decimals,
     )
 
     const tokens = new Map()

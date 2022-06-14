@@ -22,14 +22,14 @@ export class CoingeckoQueryService {
     coinId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    granularity: Granularity
+    granularity: Granularity,
   ): Promise<PriceHistoryPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
     const prices = await this.queryPrices(coinId, start, end, granularity)
 
     const sortedPrices = prices.sort(
-      (a, b) => a.date.getTime() - b.date.getTime()
+      (a, b) => a.date.getTime() - b.date.getTime(),
     )
 
     const timestamps = getTimestamps(from, to, granularity)
@@ -41,14 +41,14 @@ export class CoingeckoQueryService {
     coinId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    granularity: Granularity
+    granularity: Granularity,
   ): Promise<Price[]> {
     if (granularity === 'daily') {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
         coinId,
         'usd',
         from,
-        to
+        to,
       )
       return data.prices
     } else {
@@ -58,9 +58,9 @@ export class CoingeckoQueryService {
             coinId,
             'usd',
             range.start,
-            range.end
-          )
-        )
+            range.end,
+          ),
+        ),
       )
 
       const prices: Price[] = []
@@ -94,7 +94,7 @@ export class CoingeckoQueryService {
 
 export function pickPrices(
   prices: { price: number; date: Date }[],
-  timestamps: UnixTime[]
+  timestamps: UnixTime[],
 ): PriceHistoryPoint[] {
   //TODO: Handle this case properly
   if (prices.length === 0) return []
@@ -132,7 +132,7 @@ function adjust(from: UnixTime, to: UnixTime, granularity: Granularity) {
 function adjustAndOffset(
   from: UnixTime,
   to: UnixTime,
-  granularity: Granularity
+  granularity: Granularity,
 ) {
   const [start, end] = adjust(from, to, granularity)
   if (granularity === 'hourly') {

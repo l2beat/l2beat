@@ -10,7 +10,7 @@ const ctcMapping: Record<string, string | undefined> = {
 
 export async function analyzeTransaction(
   provider: providers.Provider,
-  txHash: string
+  txHash: string,
 ) {
   const tx = await provider.getTransaction(txHash)
   const project = ctcMapping[tx.to ?? ''] ?? 'Unknown'

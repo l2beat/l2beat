@@ -32,28 +32,28 @@ interface SaveMethod<T> {
 export class BaseRepository {
   constructor(
     protected readonly knex: Knex,
-    protected readonly logger: Logger
+    protected readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
   }
 
   protected wrapAny<A extends unknown[], R>(
-    method: AnyMethod<A, R>
+    method: AnyMethod<A, R>,
   ): AnyMethod<A, R> {
     return this.wrap(method, () => this.logger.debug({ method: method.name }))
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   protected wrapAdd<T, R extends number | string | String | Number>(
-    method: AddMethod<T, R>
+    method: AddMethod<T, R>,
   ): AddMethod<T, R> {
     return this.wrap(method, (id) =>
-      this.logger.debug({ method: method.name, id: id.valueOf() })
+      this.logger.debug({ method: method.name, id: id.valueOf() }),
     )
   }
 
   protected wrapAddMany<T, R>(
-    method: AddManyMethod<T, R>
+    method: AddManyMethod<T, R>,
   ): AddManyMethod<T, R> {
     const fn = async (records: T[]) => {
       if (records.length === 0) {
@@ -69,38 +69,38 @@ export class BaseRepository {
   }
 
   protected wrapGet<A extends unknown[], T>(
-    method: GetMethod<A, T>
+    method: GetMethod<A, T>,
   ): GetMethod<A, T> {
     return this.wrap(method, (records) =>
-      this.logger.debug({ method: method.name, count: records.length })
+      this.logger.debug({ method: method.name, count: records.length }),
     )
   }
 
   protected wrapFind<A extends unknown[], T>(
-    method: FindMethod<A, T>
+    method: FindMethod<A, T>,
   ): FindMethod<A, T> {
     return this.wrap(method, (record) =>
-      this.logger.debug({ method: method.name, count: record ? 1 : 0 })
+      this.logger.debug({ method: method.name, count: record ? 1 : 0 }),
     )
   }
 
   protected wrapDelete<A extends unknown[]>(
-    method: DeleteMethod<A>
+    method: DeleteMethod<A>,
   ): DeleteMethod<A> {
     return this.wrap(method, (count) =>
-      this.logger.debug({ method: method.name, count })
+      this.logger.debug({ method: method.name, count }),
     )
   }
 
   protected wrapSave<T>(method: SaveMethod<T>): SaveMethod<T> {
     return this.wrap(method, (updated) =>
-      this.logger.debug({ method: method.name, updated })
+      this.logger.debug({ method: method.name, updated }),
     )
   }
 
   private wrap<A extends unknown[], R>(
     method: AnyMethod<A, R>,
-    log: (result: R) => void
+    log: (result: R) => void,
   ): AnyMethod<A, R> {
     const fn = async (...args: A) => {
       const result = await method.call(this, ...args)

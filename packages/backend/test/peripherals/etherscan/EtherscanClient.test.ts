@@ -14,17 +14,17 @@ describe(EtherscanClient.name, () => {
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(
-            JSON.stringify({ status: '0', message: 'NOTOK', result: 'Oops!' })
+            JSON.stringify({ status: '0', message: 'NOTOK', result: 'Oops!' }),
           )
         },
       })
       const etherscanClient = new EtherscanClient(
         'xXApiKeyXx',
         httpClient,
-        Logger.SILENT
+        Logger.SILENT,
       )
       await expect(
-        etherscanClient['call']('foo', 'bar', { baz: '1234' })
+        etherscanClient['call']('foo', 'bar', { baz: '1234' }),
       ).toBeRejected(EtherscanError, 'Oops!')
     })
 
@@ -37,10 +37,10 @@ describe(EtherscanClient.name, () => {
       const etherscanClient = new EtherscanClient(
         'xXApiKeyXx',
         httpClient,
-        Logger.SILENT
+        Logger.SILENT,
       )
       await expect(
-        etherscanClient['call']('foo', 'bar', { baz: '1234' })
+        etherscanClient['call']('foo', 'bar', { baz: '1234' }),
       ).toBeRejected(TypeError, 'Invalid Etherscan response.')
     })
 
@@ -53,10 +53,10 @@ describe(EtherscanClient.name, () => {
       const etherscanClient = new EtherscanClient(
         'xXApiKeyXx',
         httpClient,
-        Logger.SILENT
+        Logger.SILENT,
       )
       await expect(
-        etherscanClient['call']('foo', 'bar', { baz: '1234' })
+        etherscanClient['call']('foo', 'bar', { baz: '1234' }),
       ).toBeRejected(Error, 'Http error 400: foo')
     })
   })
@@ -78,7 +78,7 @@ describe(EtherscanClient.name, () => {
         async fetch(url) {
           expect(url).toEqual(`https://api.etherscan.io/api?${params}`)
           return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: '9251482' })
+            JSON.stringify({ status: '1', message: 'OK', result: '9251482' }),
           )
         },
       })
@@ -86,7 +86,7 @@ describe(EtherscanClient.name, () => {
       const etherscanClient = new EtherscanClient(
         apiKey,
         httpClient,
-        Logger.SILENT
+        Logger.SILENT,
       )
       await etherscanClient.getBlockNumberAtOrBefore(timestamp)
     })
@@ -95,7 +95,7 @@ describe(EtherscanClient.name, () => {
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: '9251482' })
+            JSON.stringify({ status: '1', message: 'OK', result: '9251482' }),
           )
         },
       })
@@ -103,10 +103,10 @@ describe(EtherscanClient.name, () => {
       const etherscanClient = new EtherscanClient(
         'xXApiKeyXx',
         httpClient,
-        Logger.SILENT
+        Logger.SILENT,
       )
       const result = await etherscanClient.getBlockNumberAtOrBefore(
-        new UnixTime(1578638524)
+        new UnixTime(1578638524),
       )
       expect(result).toEqual(9251482n)
     })

@@ -45,7 +45,7 @@ export class Application {
 
     const provider = new providers.AlchemyProvider(
       'mainnet',
-      config.alchemyApiKey
+      config.alchemyApiKey,
     )
 
     const ethereumClient = new EthereumClient(provider)
@@ -59,7 +59,7 @@ export class Application {
     const etherscanClient = new EtherscanClient(
       config.etherscanApiKey,
       http,
-      logger
+      logger,
     )
 
     /* - - - - - CORE - - - - - */
@@ -67,21 +67,21 @@ export class Application {
     const blockUpdater = new BlockNumberUpdater(
       etherscanClient,
       blockNumberRepository,
-      logger
+      logger,
     )
 
     const priceUpdater = new PriceUpdater(
       coingeckoQueryService,
       priceRepository,
       config.coingeckoIds,
-      logger
+      logger,
     )
 
     const balanceUpdater = new BalanceUpdater(
       multicall,
       balanceRepository,
       config.projects,
-      logger
+      logger,
     )
 
     const reportUpdater = new ReportUpdater(
@@ -89,7 +89,7 @@ export class Application {
       balanceRepository,
       reportRepository,
       config.tokens,
-      logger
+      logger,
     )
 
     const syncScheduler = new SyncScheduler(
@@ -98,7 +98,7 @@ export class Application {
       balanceUpdater,
       reportUpdater,
       config.core.minBlockTimestamp,
-      logger
+      logger,
     )
 
     /* - - - - - API - - - - - */
@@ -110,7 +110,7 @@ export class Application {
       cachedDataRepository,
       priceRepository,
       config.projects,
-      logger
+      logger,
     )
 
     const apiServer = new ApiServer(config.port, logger, [

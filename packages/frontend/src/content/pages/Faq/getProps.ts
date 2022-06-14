@@ -41,7 +41,7 @@ function getHtml() {
     const html = renderHeading(
       parseInt(this.tagName[1]),
       $el.text(),
-      getId($el)
+      getId($el),
     )
     $el.replaceWith($(html))
   })

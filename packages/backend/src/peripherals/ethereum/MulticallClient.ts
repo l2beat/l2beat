@@ -6,11 +6,11 @@ import { EthereumClient } from './EthereumClient'
 export const MULTICALL_BATCH_SIZE = 150
 export const MULTICALL_V1_BLOCK = 7929876n
 export const MULTICALL_V1_ADDRESS = EthereumAddress(
-  '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
+  '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
 )
 export const MULTICALL_V2_BLOCK = 12336033n
 export const MULTICALL_V2_ADDRESS = EthereumAddress(
-  '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
+  '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
 )
 
 export interface MulticallRequest {
@@ -28,15 +28,15 @@ export class MulticallClient {
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,
-    blockNumber: bigint
+    blockNumber: bigint,
   ): Promise<Record<string, MulticallResponse>> {
     const entries = Object.entries(requests)
     const results = await this.multicall(
       entries.map((x) => x[1]),
-      blockNumber
+      blockNumber,
     )
     const resultEntries = results.map(
-      (result, i) => [entries[i][0], result] as const
+      (result, i) => [entries[i][0], result] as const,
     )
     return Object.fromEntries(resultEntries)
   }
@@ -47,14 +47,14 @@ export class MulticallClient {
     }
     const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
     const batchedResults = await Promise.all(
-      batches.map((batch) => this.executeBatch(batch, blockNumber))
+      batches.map((batch) => this.executeBatch(batch, blockNumber)),
     )
     return batchedResults.flat()
   }
 
   private async executeIndividual(
     requests: MulticallRequest[],
-    blockNumber: bigint
+    blockNumber: bigint,
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
       requests.map((request) =>
@@ -63,21 +63,21 @@ export class MulticallClient {
             to: request.address,
             data: request.data,
           },
-          blockNumber
-        )
-      )
+          blockNumber,
+        ),
+      ),
     )
     return results.map(
       (result): MulticallResponse => ({
         success: result.length !== 0,
         data: result,
-      })
+      }),
     )
   }
 
   private async executeBatch(
     requests: MulticallRequest[],
-    blockNumber: bigint
+    blockNumber: bigint,
   ): Promise<MulticallResponse[]> {
     if (blockNumber < MULTICALL_V2_BLOCK) {
       const encoded = encodeMulticallV1(requests)
@@ -86,7 +86,7 @@ export class MulticallClient {
           to: MULTICALL_V1_ADDRESS,
           data: encoded,
         },
-        blockNumber
+        blockNumber,
       )
       return decodeMulticallV1(result)
     } else {
@@ -96,7 +96,7 @@ export class MulticallClient {
           to: MULTICALL_V2_ADDRESS,
           data: encoded,
         },
-        blockNumber
+        blockNumber,
       )
       return decodeMulticallV2(result)
     }
@@ -129,14 +129,14 @@ export function encodeMulticallV1(requests: MulticallRequest[]) {
 export function decodeMulticallV1(result: Bytes) {
   const decoded = multicallInterface.decodeFunctionResult(
     'aggregate',
-    result.toString()
+    result.toString(),
   )
   const values = decoded[1] as string[]
   return values.map(
     (data): MulticallResponse => ({
       success: data !== '0x',
       data: Bytes.fromHex(data),
-    })
+    }),
   )
 }
 
@@ -154,7 +154,7 @@ export function encodeMulticallV2(requests: MulticallRequest[]) {
 export function decodeMulticallV2(result: Bytes) {
   const decoded = multicallInterface.decodeFunctionResult(
     'tryAggregate',
-    result.toString()
+    result.toString(),
   )
   const values = decoded[0] as [boolean, string][]
   return values.map(([success, data]): MulticallResponse => {

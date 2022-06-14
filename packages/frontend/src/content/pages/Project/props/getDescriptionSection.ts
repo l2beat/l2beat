@@ -4,7 +4,7 @@ import { DescriptionSectionProps } from '../view/DescriptionSection'
 import { getEditLink, getIssueLink } from './links'
 
 export function getDescriptionSection(
-  project: Project
+  project: Project,
 ): DescriptionSectionProps {
   return {
     issueLink: getIssueLink(`Problem: ${project.name} - Description`),

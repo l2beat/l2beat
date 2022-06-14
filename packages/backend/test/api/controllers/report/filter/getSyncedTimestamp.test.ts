@@ -15,7 +15,7 @@ describe(getSyncedTimestamp.name, () => {
   it('one report very out of sync', async () => {
     const result = getSyncedTimestamp(
       [TODAY, TODAY, TODAY.add(-2, 'days')],
-      'days'
+      'days',
     )
 
     expect(result).toEqual(TODAY)
@@ -24,7 +24,7 @@ describe(getSyncedTimestamp.name, () => {
   it('get previous day', async () => {
     const result = getSyncedTimestamp(
       [TODAY, TODAY, TODAY.add(-1, 'days')],
-      'days'
+      'days',
     )
 
     expect(result).toEqual(TODAY.add(-1, 'days'))

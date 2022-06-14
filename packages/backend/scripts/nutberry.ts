@@ -5,7 +5,7 @@ import { createCompare } from './compare'
 
 async function getNutBerryImplementation(
   provider: providers.Provider,
-  address: string
+  address: string,
 ) {
   const SLOT =
     '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
@@ -15,14 +15,14 @@ async function getNutBerryImplementation(
 
 export const checkNutBerryImplementation = createCompare(
   'NutBerry implementation',
-  getNutBerryImplementation
+  getNutBerryImplementation,
 )
 
 async function getNutBerryAdmin(provider: providers.Provider, address: string) {
   const contract = new Contract(
     address,
     ['function ROLLUP_MANAGER() view returns(address)'],
-    provider
+    provider,
   )
   const result: string = await contract.ROLLUP_MANAGER()
   return result
@@ -30,5 +30,5 @@ async function getNutBerryAdmin(provider: providers.Provider, address: string) {
 
 export const checkNutBerryAdmin = createCompare(
   'NutBerry admin',
-  getNutBerryAdmin
+  getNutBerryAdmin,
 )

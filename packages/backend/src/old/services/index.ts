@@ -45,7 +45,7 @@ export function setup() {
   const priceService = new PriceService(
     asyncCache,
     coingeckoQueryService,
-    logger
+    logger,
   )
   const flowChecker = new FlowChecker(logApi)
   const arbitrumStatChecker = new ArbitrumStatChecker(logApi)
@@ -55,7 +55,7 @@ export function setup() {
     balanceChecker,
     priceService,
     flowChecker,
-    arbitrumStatChecker
+    arbitrumStatChecker,
   )
 
   return {

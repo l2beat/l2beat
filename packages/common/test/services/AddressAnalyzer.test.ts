@@ -18,7 +18,7 @@ describe(AddressAnalyzer.name, () => {
     })
     const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
     const result = await addressAnalyzer.analyze(
-      EthereumAddress('0x11223344556677889900aabbccddeeff11223344')
+      EthereumAddress('0x11223344556677889900aabbccddeeff11223344'),
     )
     expect(result).toEqual({ type: 'EOA', name: '<EOA 11223344>' })
   })
@@ -33,7 +33,7 @@ describe(AddressAnalyzer.name, () => {
     })
     const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
     const result = await addressAnalyzer.analyze(
-      EthereumAddress('0x11223344556677889900aabbccddeeff11223344')
+      EthereumAddress('0x11223344556677889900aabbccddeeff11223344'),
     )
     expect(result).toEqual({
       type: 'Contract',
@@ -52,7 +52,7 @@ describe(AddressAnalyzer.name, () => {
     })
     const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
     const result = await addressAnalyzer.analyze(
-      EthereumAddress('0x11223344556677889900aabbccddeeff11223344')
+      EthereumAddress('0x11223344556677889900aabbccddeeff11223344'),
     )
     expect(result).toEqual({
       type: 'Contract',

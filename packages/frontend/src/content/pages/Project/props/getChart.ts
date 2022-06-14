@@ -13,7 +13,7 @@ export function getChart(project: Project, l2Data: L2Data): ChartProps {
 function getTokens(project: Project, l2Data: L2Data) {
   return project.bridges
     .flatMap((x) =>
-      x.tokens === '*' ? tokenList.map((x) => x.symbol) : x.tokens
+      x.tokens === '*' ? tokenList.map((x) => x.symbol) : x.tokens,
     )
     .filter((x, i, a) => a.indexOf(x) === i)
     .filter((token) => !!l2Data.byProject[project.name]?.byToken[token])

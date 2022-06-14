@@ -12,7 +12,7 @@ export class PriceUpdater {
     private coingeckoQueryService: CoingeckoQueryService,
     private priceRepository: PriceRepository,
     private coingeckoIds: CoingeckoId[],
-    private logger: Logger
+    private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -33,7 +33,7 @@ export class PriceUpdater {
       this.coingeckoIds.map((coingeckoId) => {
         const boundary = boundaries.get(coingeckoId)
         return this.updateToken(coingeckoId, boundary, from, to)
-      })
+      }),
     )
     const error = results.find((x) => x.status === 'rejected')
     if (error && error.status === 'rejected') {
@@ -47,7 +47,7 @@ export class PriceUpdater {
     coingeckoId: CoingeckoId,
     boundary: DataBoundary | undefined,
     from: UnixTime,
-    to: UnixTime
+    to: UnixTime,
   ) {
     let hours = 0
     const hourDiff = (from: UnixTime, to: UnixTime) =>
@@ -80,7 +80,7 @@ export class PriceUpdater {
       coingeckoId,
       from,
       to,
-      'hourly'
+      'hourly',
     )
     const priceRecords: PriceRecord[] = prices.map((price) => ({
       coingeckoId,

@@ -7,7 +7,7 @@ const ADMIN_SLOT = slot('eip1967.proxy.admin')
 export async function analyzeEip1967Proxy(
   provider: providers.Provider,
   addressAnalyzer: AddressAnalyzer,
-  proxyAddress: string
+  proxyAddress: string,
 ) {
   const [implementationSlot, adminSlot] = await Promise.all([
     provider.getStorageAt(proxyAddress, IMPLEMENTATION_SLOT),
@@ -19,7 +19,7 @@ export async function analyzeEip1967Proxy(
   const implementation = wordToAddress(implementationSlot)
   const admin = wordToAddress(adminSlot)
   const { name } = await addressAnalyzer.analyze(
-    EthereumAddress(implementation)
+    EthereumAddress(implementation),
   )
   return {
     name,

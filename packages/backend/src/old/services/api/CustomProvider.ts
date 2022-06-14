@@ -13,7 +13,7 @@ export class CustomProvider extends providers.StaticJsonRpcProvider {
           params.filter.address = params.filter.address.toLowerCase()
         } else if (Array.isArray(params.filter.address)) {
           params.filter.address = params.filter.address.map((x: string) =>
-            x.toLowerCase()
+            x.toLowerCase(),
           )
         }
       }
@@ -32,7 +32,7 @@ export class CustomProvider extends providers.StaticJsonRpcProvider {
       if (Array.isArray(filter.address)) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ;(processed as any).address = await Promise.all(
-          filter.address.map((x) => this._getAddress(x))
+          filter.address.map((x) => this._getAddress(x)),
         )
       } else {
         processed.address = await this._getAddress(filter.address)
