@@ -56,7 +56,7 @@ export class SyncScheduler {
     }))
     await this.reportUpdater.update(dataPoints)
 
-    this.logger.debug('Update completed', { timestamps: timestamps.length })
+    this.logger.info('Update completed', { timestamps: timestamps.length })
   }
 
   stop() {

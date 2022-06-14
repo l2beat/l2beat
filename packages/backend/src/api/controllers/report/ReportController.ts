@@ -21,6 +21,7 @@ export class ReportController {
     private logger: Logger,
     private interval: number = 5 * 60 * 1000,
   ) {
+    this.logger = this.logger.for(this)
     this.jobQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
   }
 
@@ -41,8 +42,10 @@ export class ReportController {
   }
 
   async generateDailyAndCache() {
+    this.logger.info('Daily report started')
     const report = await this.generateDaily()
     await this.cacheRepository.saveData(report)
+    this.logger.info('Daily report saved')
   }
 
   async generateDaily() {
