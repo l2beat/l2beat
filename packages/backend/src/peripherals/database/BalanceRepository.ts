@@ -47,12 +47,11 @@ export class BalanceRepository extends BaseRepository {
 
   async addOrUpdateMany(balances: BalanceRecord[]) {
     const rows = balances.map(toRow)
-    const ids = await this.knex('asset_balances')
+    await this.knex('asset_balances')
       .insert(rows)
       .onConflict(['block_number', 'holder_address', 'asset_id'])
       .merge()
-
-    return ids
+    return rows.length
   }
 
   async getAll(): Promise<BalanceRecord[]> {
