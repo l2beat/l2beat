@@ -8,7 +8,7 @@ export async function analyzeItem(
   provider: providers.Provider,
   addressAnalyzer: AddressAnalyzer,
   config: Config,
-  address: string
+  address: string,
 ): Promise<{ analyzed: Record<string, unknown>; relatives: string[] }> {
   const [analysis, proxy] = await Promise.all([
     addressAnalyzer.analyze(EthereumAddress(address)),
@@ -44,7 +44,7 @@ export async function analyzeItem(
 async function getParameters(
   description: ContractDescription,
   address: string,
-  provider: providers.Provider
+  provider: providers.Provider,
 ): Promise<{ name: string; value: unknown }[]> {
   return await Promise.all(
     description.abi.map(async (entry) => {
@@ -53,14 +53,14 @@ async function getParameters(
       } else {
         return getArrayParameter(address, entry.method, provider)
       }
-    })
+    }),
   )
 }
 
 async function getRegularParameter(
   address: string,
   method: string,
-  provider: providers.Provider
+  provider: providers.Provider,
 ) {
   const contract = new Contract(address, [method], provider)
   const methodName = Object.values(contract.interface.functions)[0].name
@@ -74,7 +74,7 @@ async function getRegularParameter(
 async function getArrayParameter(
   address: string,
   method: string,
-  provider: providers.Provider
+  provider: providers.Provider,
 ) {
   const contract = new Contract(address, [method], provider)
   const methodName = Object.values(contract.interface.functions)[0].name

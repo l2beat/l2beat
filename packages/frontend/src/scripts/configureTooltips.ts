@@ -22,7 +22,7 @@ export function configureTooltips() {
     const left = clamp(
       rect.left + rect.width / 2 - tooltipWidth / 2,
       10,
-      window.innerWidth - 10 - tooltipWidth
+      window.innerWidth - 10 - tooltipWidth,
     )
     tooltip.style.left = left + 'px'
     tooltip.style.top = rect.bottom + 7 + 'px'

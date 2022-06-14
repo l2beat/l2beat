@@ -111,7 +111,7 @@ export function getErrorMessage(error: unknown) {
 
 function combine(
   message: string | LoggerParameters,
-  parameters?: LoggerParameters
+  parameters?: LoggerParameters,
 ) {
   if (typeof message === 'string') {
     return { message, ...parameters }

@@ -12,6 +12,6 @@ export function getProjectTVL(projectStats: ProjectStats[]) {
         },
         tokens: tokenTVL,
       },
-    ])
+    ]),
   )
 }

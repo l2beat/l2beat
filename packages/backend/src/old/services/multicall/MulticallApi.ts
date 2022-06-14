@@ -26,12 +26,12 @@ export class MulticallApi {
   constructor(
     private alchemyApi: AlchemyApi,
     private asyncCache: AsyncCache,
-    private logger: Logger
+    private logger: Logger,
   ) {}
 
   async multicall(
     requests: Record<string, MulticallRequest>,
-    blockNumber: number
+    blockNumber: number,
   ): Promise<Record<string, MulticallResponse>> {
     const known: [string, MulticallResponse][] = []
     const unknown: [string, RequestWithCacheKey][] = []
@@ -59,13 +59,13 @@ export class MulticallApi {
 
   private async callInBatches(
     requests: RequestWithCacheKey[],
-    blockNumber: number
+    blockNumber: number,
   ) {
     const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
     const batchedResults = await Promise.all(
       batches.map((batch, i) =>
-        this.executeBatch(batch, `${i + 1}/${batches.length}`, blockNumber)
-      )
+        this.executeBatch(batch, `${i + 1}/${batches.length}`, blockNumber),
+      ),
     )
     return batchedResults.flat()
   }
@@ -73,16 +73,16 @@ export class MulticallApi {
   private async executeBatch(
     requests: RequestWithCacheKey[],
     batchId: string,
-    blockNumber: number
+    blockNumber: number,
   ) {
     const callData = AggregateMulticall.encode(requests)
     const returnData = await this.alchemyApi.call(
       MULTICALL,
       callData,
-      blockNumber
+      blockNumber,
     )
     this.logger.info(
-      `fetched batch ${batchId} (${requests.length} calls) @ ${blockNumber}`
+      `fetched batch ${batchId} (${requests.length} calls) @ ${blockNumber}`,
     )
     const result = AggregateMulticall.decode(returnData)
     for (const [i, request] of requests.entries()) {
@@ -93,7 +93,7 @@ export class MulticallApi {
 
   private async callIndividually(
     requests: RequestWithCacheKey[],
-    blockNumber: number
+    blockNumber: number,
   ) {
     let completed = 0
     return Promise.all(
@@ -101,15 +101,15 @@ export class MulticallApi {
         const data = await this.alchemyApi.call(
           request.address,
           request.data,
-          blockNumber
+          blockNumber,
         )
         this.asyncCache.set(request.cacheKey, data, (x) => x)
         completed++
         this.logger.info(
-          `fetched request ${completed} of ${requests.length} @ ${blockNumber}`
+          `fetched request ${completed} of ${requests.length} @ ${blockNumber}`,
         )
         return dataToResponse(data)
-      })
+      }),
     )
   }
 }

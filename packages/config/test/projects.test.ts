@@ -154,7 +154,7 @@ describe('projects', () => {
   describe('every token is valid', () => {
     const symbols = projects
       .flatMap((x) =>
-        x.bridges.filter((x) => x.tokens !== '*').flatMap((x) => x.tokens)
+        x.bridges.filter((x) => x.tokens !== '*').flatMap((x) => x.tokens),
       )
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {
@@ -175,7 +175,7 @@ describe('projects', () => {
 
     describe('every link is https', () => {
       const links = projects.flatMap((x) =>
-        Object.values(x.details.links).flat()
+        Object.values(x.details.links).flat(),
       )
       for (const link of links) {
         it(link, () => {
@@ -190,43 +190,43 @@ describe('projects', () => {
         it(link, () => {
           if (link.includes('discord')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/discord\.gg\/\w+$/)
+              expect.stringMatching(/^https:\/\/discord\.gg\/\w+$/),
             )
           } else if (link.includes('t.me')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/t\.me\/\w+$/)
+              expect.stringMatching(/^https:\/\/t\.me\/\w+$/),
             )
           } else if (link.includes('medium')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/medium\.com\/[@\w-]+$/)
+              expect.stringMatching(/^https:\/\/medium\.com\/[@\w-]+$/),
             )
           } else if (link.includes('twitter')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/twitter\.com\/[\w-]+$/)
+              expect.stringMatching(/^https:\/\/twitter\.com\/[\w-]+$/),
             )
           } else if (link.includes('reddit')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
+              expect.stringMatching(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/),
             )
           } else if (link.includes('youtube')) {
             if (!link.includes('playlist')) {
               expect(link).toEqual(
                 expect.stringMatching(
-                  /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/
-                )
+                  /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/,
+                ),
               )
             }
           } else if (link.includes('twitch')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/twitch\.tv\/[\w-]+$/)
+              expect.stringMatching(/^https:\/\/twitch\.tv\/[\w-]+$/),
             )
           } else if (link.includes('gitter')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/gitter\.im\/[\w-/]+$/)
+              expect.stringMatching(/^https:\/\/gitter\.im\/[\w-/]+$/),
             )
           } else if (link.includes('instagram')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/instagram\.com\/[\w-/]+$/)
+              expect.stringMatching(/^https:\/\/instagram\.com\/[\w-/]+$/),
             )
           }
         })

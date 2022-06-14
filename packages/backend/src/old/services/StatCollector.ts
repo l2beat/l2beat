@@ -22,13 +22,13 @@ export class StatCollector {
     private balanceChecker: BalanceChecker,
     private priceService: PriceService,
     private flowChecker: FlowChecker,
-    private arbitrumStatChecker: ArbitrumStatChecker
+    private arbitrumStatChecker: ArbitrumStatChecker,
   ) {}
 
   async collectStats(
     projects: ProjectInfo[],
     tokenList: TokenInfo[],
-    endDate: SimpleDate
+    endDate: SimpleDate,
   ): Promise<Stats> {
     const dates = await this.projectDates.getDateRanges(projects, endDate)
     const priceDates = dates.map((x) => x.addDays(1))
@@ -42,7 +42,7 @@ export class StatCollector {
       const entry = await this.balanceChecker.getStatsForDate(
         projects,
         fetchedPrices,
-        date
+        date,
       )
       addOptimismToken(entry, date, fetchedPrices)
       tvlEntries.push(entry)
@@ -51,7 +51,7 @@ export class StatCollector {
     const flows = await this.flowChecker.getFlows(projects, tvlEntries)
     const arbitrum = await this.arbitrumStatChecker.getStats(
       tvlEntries[tvlEntries.length - 8].blockNumber + 1,
-      tvlEntries[tvlEntries.length - 1].blockNumber
+      tvlEntries[tvlEntries.length - 1].blockNumber,
     )
 
     return { tvlEntries, flows, arbitrum }

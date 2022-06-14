@@ -5,37 +5,37 @@ import { EthereumAddress } from '../../src/types'
 describe(EthereumAddress.name, () => {
   it('accepts lowercase addresses', () => {
     const address = EthereumAddress(
-      '0xabcdabcd12345678abcdabcd12345678abcdabcd'
+      '0xabcdabcd12345678abcdabcd12345678abcdabcd',
     )
     expect(address).toBeA(String)
   })
 
   it('accepts addresses with checksum', () => {
     const address = EthereumAddress(
-      '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'
+      '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
     )
     expect(address).toBeA(String)
   })
 
   it('checks the checksum', () => {
     expect(() =>
-      EthereumAddress('0xAbCdABCd12345678abcDabCd12345678ABcdaBcD')
+      EthereumAddress('0xAbCdABCd12345678abcDabCd12345678ABcdaBcD'),
     ).toThrow(TypeError, 'Invalid EthereumAddress')
   })
 
   it('does not accept invalid strings', () => {
     expect(() => EthereumAddress('foo')).toThrow(
       TypeError,
-      'Invalid EthereumAddress'
+      'Invalid EthereumAddress',
     )
   })
 
   it('converts to a representation with a checksum', () => {
     const address = EthereumAddress(
-      '0xabcdabcd12345678abcdabcd12345678abcdabcd'
+      '0xabcdabcd12345678abcdabcd12345678abcdabcd',
     )
     expect(address).toEqual(
-      '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as EthereumAddress
+      '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as EthereumAddress,
     )
   })
 
@@ -58,7 +58,7 @@ describe(EthereumAddress.name, () => {
 
   it('ZERO is the zero address', () => {
     expect(EthereumAddress.ZERO).toEqual(
-      ('0x' + '0'.repeat(40)) as unknown as EthereumAddress
+      ('0x' + '0'.repeat(40)) as unknown as EthereumAddress,
     )
   })
 })

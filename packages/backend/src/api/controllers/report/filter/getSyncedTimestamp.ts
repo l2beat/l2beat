@@ -2,15 +2,15 @@ import { UnixTime } from '@l2beat/common'
 
 export function getSyncedTimestamp(
   timestamps: UnixTime[],
-  granularity: 'days' | 'hours'
+  granularity: 'days' | 'hours',
 ): UnixTime {
   const maxTimestamp = timestamps.reduce(
     (max, current) => (current.gt(max) ? current : max),
-    new UnixTime(0)
+    new UnixTime(0),
   )
 
   const allSynced = timestamps.every((timestamp) =>
-    timestamp.equals(maxTimestamp)
+    timestamp.equals(maxTimestamp),
   )
 
   if (!allSynced) {

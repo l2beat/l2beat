@@ -24,7 +24,7 @@ main()
 async function main() {
   const provider = new providers.StaticJsonRpcProvider(
     process.env.RPC_URL,
-    'mainnet'
+    'mainnet',
   )
 
   for (const project of projects) {
@@ -38,12 +38,12 @@ async function main() {
         await checkEip1967Implementation(
           provider,
           contract.address,
-          upgradeability.implementation
+          upgradeability.implementation,
         )
         await checkEip1967Admin(
           provider,
           contract.address,
-          upgradeability.admin
+          upgradeability.admin,
         )
       }
 
@@ -51,30 +51,30 @@ async function main() {
         await checkStarkWareImplementation(
           provider,
           contract.address,
-          upgradeability.implementation
+          upgradeability.implementation,
         )
         await checkStarkWareCallImplementation(
           provider,
           contract.address,
-          upgradeability.callImplementation ?? constants.AddressZero
+          upgradeability.callImplementation ?? constants.AddressZero,
         )
         if (upgradeability.useConstantDelay) {
           await checkStarkWareConstantUpgradeDelay(
             provider,
             contract.address,
-            upgradeability.upgradeDelay
+            upgradeability.upgradeDelay,
           )
         } else {
           await checkStarkWareUpgradeDelay(
             provider,
             contract.address,
-            upgradeability.upgradeDelay
+            upgradeability.upgradeDelay,
           )
         }
         await checkStarkWareIsFinal(
           provider,
           contract.address,
-          upgradeability.isFinal
+          upgradeability.isFinal,
         )
       }
 
@@ -82,12 +82,12 @@ async function main() {
         await checkZeppelinOsImplementation(
           provider,
           contract.address,
-          upgradeability.implementation
+          upgradeability.implementation,
         )
         await checkZeppelinOsAdmin(
           provider,
           contract.address,
-          upgradeability.admin
+          upgradeability.admin,
         )
       }
 
@@ -95,12 +95,12 @@ async function main() {
         await checkNutBerryImplementation(
           provider,
           contract.address,
-          upgradeability.implementation
+          upgradeability.implementation,
         )
         await checkNutBerryAdmin(
           provider,
           contract.address,
-          upgradeability.admin
+          upgradeability.admin,
         )
       }
 
@@ -112,7 +112,7 @@ async function main() {
             base.address,
             upgradeability.method,
             upgradeability.args ?? [],
-            contract.address
+            contract.address,
           )
         }
       }
@@ -121,22 +121,22 @@ async function main() {
         await checkEip1967Implementation(
           provider,
           contract.address,
-          constants.AddressZero
+          constants.AddressZero,
         )
         await checkStarkWareImplementation(
           provider,
           contract.address,
-          constants.AddressZero
+          constants.AddressZero,
         )
         await checkZeppelinOsImplementation(
           provider,
           contract.address,
-          constants.AddressZero
+          constants.AddressZero,
         )
         await checkNutBerryImplementation(
           provider,
           contract.address,
-          constants.AddressZero
+          constants.AddressZero,
         )
       }
     }

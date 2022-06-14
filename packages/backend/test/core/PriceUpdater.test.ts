@@ -26,7 +26,7 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         [],
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await priceUpdater.update([])
@@ -46,7 +46,7 @@ describe(PriceUpdater.name, () => {
           new Map([
             [tokens[0][0], { earliest: HOUR_10, latest: HOUR_12 }],
             [tokens[1][0], { earliest: HOUR_09, latest: HOUR_12 }],
-          ])
+          ]),
         ),
         addMany: mockFn().returns([]),
       })
@@ -59,12 +59,12 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         tokens,
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await priceUpdater.update([HOUR_09, HOUR_10, HOUR_11, HOUR_12, HOUR_13])
       expect(
-        coingeckoQueryService.getUsdPriceHistory
+        coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
         [tokens[0][0], HOUR_09, HOUR_09, 'hourly'],
         [tokens[1][0], HOUR_13, HOUR_13, 'hourly'],
@@ -90,7 +90,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
@@ -98,11 +98,11 @@ describe(PriceUpdater.name, () => {
           AssetId('uni-uniswap'),
           undefined,
           HOUR_09,
-          HOUR_13
+          HOUR_13,
         )
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [CoingeckoId('uniswap'), HOUR_09, HOUR_13, 'hourly'],
         ])
@@ -130,7 +130,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
@@ -138,11 +138,11 @@ describe(PriceUpdater.name, () => {
           TOKEN_ID,
           BOUNDARY,
           HOUR_09,
-          HOUR_09
+          HOUR_09,
         )
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_09, HOUR_09, 'hourly']])
       })
 
@@ -155,7 +155,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
@@ -163,11 +163,11 @@ describe(PriceUpdater.name, () => {
           TOKEN_ID,
           BOUNDARY,
           HOUR_13,
-          HOUR_13
+          HOUR_13,
         )
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([[TOKEN, HOUR_13, HOUR_13, 'hourly']])
       })
 
@@ -180,7 +180,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
@@ -188,7 +188,7 @@ describe(PriceUpdater.name, () => {
           TOKEN_ID,
           BOUNDARY,
           HOUR_11,
-          HOUR_11
+          HOUR_11,
         )
 
         expect(coingeckoQueryService.getUsdPriceHistory.calls.length).toEqual(0)
@@ -203,7 +203,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
@@ -211,11 +211,11 @@ describe(PriceUpdater.name, () => {
           TOKEN_ID,
           BOUNDARY,
           HOUR_09,
-          HOUR_13
+          HOUR_13,
         )
 
         expect(
-          coingeckoQueryService.getUsdPriceHistory
+          coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [TOKEN, HOUR_09, HOUR_09, 'hourly'],
           [TOKEN, HOUR_13, HOUR_13, 'hourly'],
@@ -231,7 +231,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService,
           priceRepository,
           [],
-          Logger.SILENT
+          Logger.SILENT,
         )
 
         await priceUpdater.updateToken(
@@ -239,7 +239,7 @@ describe(PriceUpdater.name, () => {
           TOKEN_ID,
           BOUNDARY,
           HOUR_10,
-          HOUR_12
+          HOUR_12,
         )
 
         expect(coingeckoQueryService.getUsdPriceHistory.calls.length).toEqual(0)
@@ -269,18 +269,18 @@ describe(PriceUpdater.name, () => {
         coingeckoQueryService,
         priceRepository,
         [[TOKEN, TOKEN_ID]],
-        Logger.SILENT
+        Logger.SILENT,
       )
 
       await priceUpdater.fetchAndSave(
         TOKEN,
         TOKEN_ID,
         from,
-        from.add(2, 'hours')
+        from.add(2, 'hours'),
       )
 
       expect(
-        coingeckoQueryService.getUsdPriceHistory
+        coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
         [TOKEN, from, from.add(2, 'hours'), 'hourly'],
       ])

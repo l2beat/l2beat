@@ -60,12 +60,8 @@ export class PriceRepository extends BaseRepository {
 
   async addMany(prices: PriceRecord[]) {
     const rows: PriceRow[] = prices.map(toRow)
-
-    const ids = await this.knex
-      .batchInsert('coingecko_prices', rows, 10_000)
-      .returning('unix_timestamp')
-
-    return ids
+    await this.knex.batchInsert('coingecko_prices', rows, 10_000)
+    return rows.length
   }
 
   async deleteAll() {
@@ -86,7 +82,7 @@ export class PriceRepository extends BaseRepository {
           earliest: new UnixTime(parseInt(row.min)),
           latest: new UnixTime(parseInt(row.max)),
         },
-      ])
+      ]),
     )
   }
 }

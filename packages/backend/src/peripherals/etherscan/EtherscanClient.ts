@@ -21,7 +21,7 @@ export class EtherscanClient {
   constructor(
     private etherscanApiKey: string,
     private httpClient: HttpClient,
-    private logger: Logger
+    private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -41,17 +41,17 @@ export class EtherscanClient {
   private async call(
     module: string,
     action: string,
-    params: Record<string, string>
+    params: Record<string, string>,
   ) {
     return this.rateLimiter.call(() =>
-      this.callUnlimited(module, action, params)
+      this.callUnlimited(module, action, params),
     )
   }
 
   private async callUnlimited(
     module: string,
     action: string,
-    params: Record<string, string>
+    params: Record<string, string>,
   ) {
     const query = new URLSearchParams({
       module,
@@ -66,7 +66,7 @@ export class EtherscanClient {
       .fetch(url, { timeout: 20_000 })
       .then(
         (httpResponse) => ({ httpResponse, error: undefined }),
-        (error: unknown) => ({ httpResponse: undefined, error })
+        (error: unknown) => ({ httpResponse: undefined, error }),
       )
     const timeMs = Date.now() - start
 
@@ -108,7 +108,7 @@ export class EtherscanClient {
     module: string,
     action: string,
     timeMs: number,
-    message: string
+    message: string,
   ) {
     this.requestTracker.add(timeMs, false)
     this.logger.debug({ type: 'error', message, timeMs, module, action })

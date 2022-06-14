@@ -14,49 +14,49 @@ describe(SimpleDate.name, () => {
   it('can be compared using equals', () => {
     expect(
       SimpleDate.fromString('2020-06-07').equals(
-        SimpleDate.fromString('2020-06-07')
-      )
+        SimpleDate.fromString('2020-06-07'),
+      ),
     ).toEqual(true)
     expect(
       SimpleDate.fromString('2020-06-07').equals(
-        SimpleDate.fromString('2020-06-08')
-      )
+        SimpleDate.fromString('2020-06-08'),
+      ),
     ).toEqual(false)
   })
 
   it('can be compared using isAfter', () => {
     expect(
       SimpleDate.fromString('2020-06-07').isAfter(
-        SimpleDate.fromString('2020-06-07')
-      )
+        SimpleDate.fromString('2020-06-07'),
+      ),
     ).toEqual(false)
     expect(
       SimpleDate.fromString('2020-06-07').isAfter(
-        SimpleDate.fromString('2020-06-08')
-      )
+        SimpleDate.fromString('2020-06-08'),
+      ),
     ).toEqual(false)
     expect(
       SimpleDate.fromString('2020-06-07').isAfter(
-        SimpleDate.fromString('2020-06-06')
-      )
+        SimpleDate.fromString('2020-06-06'),
+      ),
     ).toEqual(true)
   })
 
   it('can be compared using isBefore', () => {
     expect(
       SimpleDate.fromString('2020-06-07').isBefore(
-        SimpleDate.fromString('2020-06-07')
-      )
+        SimpleDate.fromString('2020-06-07'),
+      ),
     ).toEqual(false)
     expect(
       SimpleDate.fromString('2020-06-07').isBefore(
-        SimpleDate.fromString('2020-06-08')
-      )
+        SimpleDate.fromString('2020-06-08'),
+      ),
     ).toEqual(true)
     expect(
       SimpleDate.fromString('2020-06-07').isBefore(
-        SimpleDate.fromString('2020-06-06')
-      )
+        SimpleDate.fromString('2020-06-06'),
+      ),
     ).toEqual(false)
   })
 

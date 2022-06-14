@@ -10,7 +10,7 @@ describe(BalanceRepository.name, () => {
 
   const START_BLOCK_NUMBER = 123456n
   const MOCK_HOLDER = EthereumAddress(
-    '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'
+    '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
   )
   const MOCK_ASSET = AssetId('dai-dai-stablecoin')
   const MOCK_BALANCE = 1000000000000000000n
@@ -74,7 +74,7 @@ describe(BalanceRepository.name, () => {
     it('entries exist in the DB', async () => {
       const result = await repository.getByHolderAndAsset(
         MOCK_HOLDER,
-        MOCK_ASSET
+        MOCK_ASSET,
       )
 
       expect(result).toEqual(DATA)
@@ -82,11 +82,11 @@ describe(BalanceRepository.name, () => {
 
     it('nonexisting holder', async () => {
       const nonexistingHolder = EthereumAddress(
-        '0xcEe284F754E854890e311e3280b767F80797180d'
+        '0xcEe284F754E854890e311e3280b767F80797180d',
       )
       const result = await repository.getByHolderAndAsset(
         nonexistingHolder,
-        MOCK_ASSET
+        MOCK_ASSET,
       )
 
       expect(result).toEqual([])
@@ -96,7 +96,7 @@ describe(BalanceRepository.name, () => {
       const nonexistingAsset = AssetId('nonexistent-token')
       const result = await repository.getByHolderAndAsset(
         MOCK_HOLDER,
-        nonexistingAsset
+        nonexistingAsset,
       )
 
       expect(result).toEqual([])
@@ -109,7 +109,7 @@ describe(BalanceRepository.name, () => {
         {
           blockNumber: START_BLOCK_NUMBER + 2n,
           holderAddress: EthereumAddress(
-            '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'
+            '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
           assetId: AssetId('dai-dai-stablecoin'),
           balance: MOCK_BALANCE,
@@ -117,7 +117,7 @@ describe(BalanceRepository.name, () => {
         {
           blockNumber: START_BLOCK_NUMBER + 3n,
           holderAddress: EthereumAddress(
-            '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'
+            '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
           assetId: AssetId('dai-dai-stablecoin'),
           balance: MOCK_BALANCE,
@@ -163,7 +163,7 @@ describe(BalanceRepository.name, () => {
         {
           blockNumber: START_BLOCK_NUMBER + 2n,
           holderAddress: EthereumAddress(
-            '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'
+            '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
           assetId: AssetId('dai-dai-stablecoin'),
           balance: MOCK_BALANCE,

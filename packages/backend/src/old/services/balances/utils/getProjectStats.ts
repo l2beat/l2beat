@@ -18,7 +18,7 @@ export interface ProjectStats {
 export function getProjectStats(
   projects: ProjectInfo[],
   balances: FetchedBalances,
-  prices: PriceSnapshot
+  prices: PriceSnapshot,
 ): ProjectStats[] {
   return projects.map((project) => {
     const tokenStats = getTokenStats(project, balances, prices)
@@ -28,7 +28,7 @@ export function getProjectStats(
       .reduce((a, b) => a.add(b), BigNumber.from(0))
     const projectEthBalance = divOrZero(
       projectUsdBalance.mul(TEN_TO_18),
-      prices.eth
+      prices.eth,
     )
     return {
       project,

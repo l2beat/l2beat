@@ -7,7 +7,7 @@ export class LogApi {
 
   async getLogs(
     filter: LogFilter,
-    loggerLabel = `${filter.fromBlock} - ${filter.toBlock}`
+    loggerLabel = `${filter.fromBlock} - ${filter.toBlock}`,
   ) {
     const ranges = []
     let rangeEnd = filter.fromBlock - 1
@@ -25,7 +25,7 @@ export class LogApi {
         i++
         this.logger.info(`Got logs: ${loggerLabel} (${i}/${total})`)
         return result
-      })
+      }),
     )
     return logRanges.flat()
   }

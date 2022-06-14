@@ -6,7 +6,7 @@ async function getReferenceImplementation(
   provider: providers.Provider,
   address: string,
   method: string,
-  args: (string | number | boolean)[]
+  args: (string | number | boolean)[],
 ) {
   const contract = new Contract(address, [method], provider)
   const name = method.match(/^function (\w+)\(/)![1]
@@ -19,11 +19,11 @@ export async function checkReferenceImplementation(
   address: string,
   method: string,
   args: (string | number | boolean)[],
-  expected: string
+  expected: string,
 ) {
   await compareResult(
     'Reference implementation',
     expected,
-    getReferenceImplementation(provider, address, method, args)
+    getReferenceImplementation(provider, address, method, args),
   )
 }

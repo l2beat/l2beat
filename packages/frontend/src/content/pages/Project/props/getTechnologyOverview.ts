@@ -49,7 +49,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
   function makeTechnologyChoice(
     id: string,
-    item: ProjectTechnologyChoice
+    item: ProjectTechnologyChoice,
   ): TechnologyChoice {
     const risks = item.risks.map((risk) => ({
       referenceIds: (risk.references ?? []).map(addReference),
@@ -97,7 +97,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
       title: 'Withdrawals',
       items: [
         ...tech.exitMechanisms.map((x, i) =>
-          makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x)
+          makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x),
         ),
         tech.massExit && makeTechnologyChoice('mass-exit', tech.massExit),
       ].filter(noUndefined),
@@ -115,7 +115,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     }
 
     return [technology, operator, withdrawals, other].filter(
-      (x) => x.items.length > 0
+      (x) => x.items.length > 0,
     )
   }
 
@@ -159,7 +159,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     }
 
     const tokens = project.bridges.find(
-      (x) => x.address === item.address
+      (x) => x.address === item.address,
     )?.tokens
     let description = item.description
     if (tokens) {
@@ -189,7 +189,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     return {
       editLink: getEditLink(project),
       issueLink: getIssueLink(
-        `Problem: ${project.name} - PermissionedAddresses`
+        `Problem: ${project.name} - PermissionedAddresses`,
       ),
       permissions: tech.permissions,
     }
@@ -206,7 +206,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
     const file = path.join(
       __dirname,
-      `../../../../static/images/${project.slug}-architecture.png`
+      `../../../../static/images/${project.slug}-architecture.png`,
     )
     const architectureImage = existsSync(file)
       ? `/images/${project.slug}-architecture.png`
@@ -223,7 +223,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
   const sections = makeSections(tech)
   const isIncomplete = sections.some((x) =>
-    x.items.some((x) => x.isIncomplete === true || x.referenceIds.length === 0)
+    x.items.some((x) => x.isIncomplete === true || x.referenceIds.length === 0),
   )
 
   const incomplete = isIncomplete
@@ -244,13 +244,13 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
 function getTwitterLink(project: Project) {
   const twitterSocialMedia = project.details.links.socialMedia.find((x) =>
-    x.includes('twitter')
+    x.includes('twitter'),
   )
   if (!twitterSocialMedia) {
     return
   }
   const twitterAccount = twitterSocialMedia.substring(
-    'https://twitter.com/'.length
+    'https://twitter.com/'.length,
   )
 
   const message = `Hey @${twitterAccount}. Your project overview on @l2beat would benefit from your help.`

@@ -5,7 +5,7 @@ import { createCompare } from './compare'
 
 async function getEip1967Implementation(
   provider: providers.Provider,
-  address: string
+  address: string,
 ) {
   const SLOT =
     '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc'
@@ -15,7 +15,7 @@ async function getEip1967Implementation(
 
 export const checkEip1967Implementation = createCompare(
   'EIP-1967 implementation',
-  getEip1967Implementation
+  getEip1967Implementation,
 )
 
 async function getEip1967Admin(provider: providers.Provider, address: string) {
@@ -27,5 +27,5 @@ async function getEip1967Admin(provider: providers.Provider, address: string) {
 
 export const checkEip1967Admin = createCompare(
   'EIP-1967 admin',
-  getEip1967Admin
+  getEip1967Admin,
 )

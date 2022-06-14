@@ -49,13 +49,13 @@ export class RequestTracker {
       lifetimeErrors: this.lifetimeErrors,
       lifetimeErrorRate: toPercent(this.lifetimeErrors, this.lifetimeRequests),
       lifetimeAverageResponseTimeMs: Math.floor(
-        this.lifetimeResponseTimeMs / (this.lifetimeRequests || 1)
+        this.lifetimeResponseTimeMs / (this.lifetimeRequests || 1),
       ),
       recentRequests: this.recentRequests,
       recentErrors: this.recentErrors,
       recentErrorRate: toPercent(this.recentErrors, this.recentRequests),
       recentAverageResponseTimeMs: Math.floor(
-        this.recentResponseTimeMs / (this.recentRequests || 1)
+        this.recentResponseTimeMs / (this.recentRequests || 1),
       ),
     }
   }

@@ -17,7 +17,7 @@ describe(getTimestamps.name, () => {
 
     it('throws if FROM greater than TO', () => {
       expect(() => getTimestamps(TO, FROM, GRANULARITY)).toThrow(
-        'FROM cannot be greater than TO'
+        'FROM cannot be greater than TO',
       )
     })
 
@@ -27,7 +27,11 @@ describe(getTimestamps.name, () => {
 
     it('13:01 to 15:01', () => {
       expect(
-        getTimestamps(FROM.add(1, 'minutes'), TO.add(1, 'minutes'), GRANULARITY)
+        getTimestamps(
+          FROM.add(1, 'minutes'),
+          TO.add(1, 'minutes'),
+          GRANULARITY,
+        ),
       ).toEqual([
         UnixTime.fromDate(new Date('2021-09-07T14:00:00Z')),
         UnixTime.fromDate(new Date('2021-09-07T15:00:00Z')),
@@ -60,7 +64,7 @@ describe(getTimestamps.name, () => {
 
     it('throws if FROM greater than TO', () => {
       expect(() => getTimestamps(TO, FROM, GRANULARITY)).toThrow(
-        'FROM cannot be greater than TO'
+        'FROM cannot be greater than TO',
       )
     })
 
@@ -70,7 +74,7 @@ describe(getTimestamps.name, () => {
 
     it('07.09.2021 01:00 to 09.09.2021 01:00', () => {
       expect(
-        getTimestamps(FROM.add(1, 'hours'), TO.add(1, 'hours'), GRANULARITY)
+        getTimestamps(FROM.add(1, 'hours'), TO.add(1, 'hours'), GRANULARITY),
       ).toEqual([
         UnixTime.fromDate(new Date('2021-09-08T00:00:00Z')),
         UnixTime.fromDate(new Date('2021-09-09T00:00:00Z')),

@@ -26,7 +26,7 @@ describe(SyncScheduler.name, () => {
       balanceUpdater,
       reportUpdater,
       UnixTime.now().add(-2, 'hours'),
-      Logger.SILENT
+      Logger.SILENT,
     )
 
     syncScheduler.start()

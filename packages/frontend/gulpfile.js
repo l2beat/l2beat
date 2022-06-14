@@ -14,7 +14,7 @@ function clean() {
 
 function buildScripts() {
   return exec(
-    `esbuild --bundle src/scripts/index.ts --outfile=build/scripts/main.js --minify`
+    `esbuild --bundle src/scripts/index.ts --outfile=build/scripts/main.js --minify`,
   )
 }
 
@@ -36,7 +36,7 @@ function watchSass() {
 
 function buildStyles() {
   return exec(
-    `tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css`
+    `tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css`,
   )
 }
 
@@ -75,7 +75,7 @@ function serve() {
 const build = gulp.series(
   clean,
   gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
-  generateMetaImages
+  generateMetaImages,
 )
 
 const watch = gulp.series(
@@ -86,8 +86,8 @@ const watch = gulp.series(
     watchStyles,
     watchContent,
     watchStatic,
-    serve
-  )
+    serve,
+  ),
 )
 
 module.exports = {

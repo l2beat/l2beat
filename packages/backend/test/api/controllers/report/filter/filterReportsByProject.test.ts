@@ -13,7 +13,7 @@ describe(filterReportsByProjects.name, () => {
   const mockReport = (
     blockNumber: bigint,
     bridge: EthereumAddress,
-    asset: AssetId
+    asset: AssetId,
   ) => {
     return {
       blockNumber: blockNumber,

@@ -32,7 +32,7 @@ export class FlowChecker {
 
   async getFlows(
     projects: ProjectInfo[],
-    tvlEntries: TVLAnalysis[]
+    tvlEntries: TVLAnalysis[],
   ): Promise<Flows> {
     const lastSevenDays = tvlEntries.slice(-7)
     const fromBlock = tvlEntries[tvlEntries.length - 8].blockNumber + 1
@@ -41,7 +41,7 @@ export class FlowChecker {
     const { eventsIn, eventsOut } = await this.getEvents(
       projects,
       fromBlock,
-      toBlock
+      toBlock,
     )
 
     const inflows = this.calculateFlows(projects, lastSevenDays, eventsIn, 'to')
@@ -49,7 +49,7 @@ export class FlowChecker {
       projects,
       lastSevenDays,
       eventsOut,
-      'from'
+      'from',
     )
 
     const result: Flows = {}
@@ -67,7 +67,7 @@ export class FlowChecker {
     projects: ProjectInfo[],
     lastSevenDays: TVLAnalysis[],
     events: TransferEvent[],
-    inOut: 'to' | 'from'
+    inOut: 'to' | 'from',
   ): Record<string, number> {
     const entries = projects.map((project) => {
       const bridges = project.bridges.map((x) => x.address)
@@ -92,7 +92,7 @@ export class FlowChecker {
   private async getEvents(
     projects: ProjectInfo[],
     fromBlock: number,
-    toBlock: number
+    toBlock: number,
   ) {
     type TokenNotEth = TokenInfo & { address: string }
     const tokens = projects

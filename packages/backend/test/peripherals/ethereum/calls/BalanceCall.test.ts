@@ -13,7 +13,7 @@ describe('BalanceCall', () => {
   ])
 
   const MOCK_HOLDER = EthereumAddress(
-    '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+    '0x6B175474E89094C44Da98b954EedeAC495271d0F',
   )
 
   describe('encode', () => {
@@ -24,7 +24,7 @@ describe('BalanceCall', () => {
       expect(encoded).toEqual({
         address: MULTICALL_V1_ADDRESS,
         data: Bytes.fromHex(
-          coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()])
+          coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()]),
         ),
       })
     })
@@ -36,7 +36,7 @@ describe('BalanceCall', () => {
       expect(encoded).toEqual({
         address: getTokenByAssetId(token)!.address!,
         data: Bytes.fromHex(
-          coder.encodeFunctionData('balanceOf', [MOCK_HOLDER.toString()])
+          coder.encodeFunctionData('balanceOf', [MOCK_HOLDER.toString()]),
         ),
       })
     })
@@ -46,7 +46,7 @@ describe('BalanceCall', () => {
     const response = {
       success: true,
       data: Bytes.fromHex(
-        '0x0000000000000000000000000000000000000000000000000000000000000064'
+        '0x0000000000000000000000000000000000000000000000000000000000000064',
       ),
     }
     const decoded = BalanceCall.decode(response)

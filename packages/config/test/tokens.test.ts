@@ -51,7 +51,7 @@ describe('tokens', () => {
     }
     const results: Record<string, Metadata> = {}
     const checkedTokens = tokenList.filter(
-      (x) => x.id !== AssetId('op-optimism')
+      (x) => x.id !== AssetId('op-optimism'),
     )
 
     before('fetch metadata', async () => {
@@ -65,7 +65,7 @@ describe('tokens', () => {
               [x.address, NAME_CALL],
               [x.address, SYMBOL_CALL],
               [x.address, DECIMALS],
-            ]
+            ],
       )
       const [, data] = await contract.functions.aggregate(calls)
       for (let i = 0; i < calls.length; i += 3) {
@@ -110,7 +110,7 @@ describe('tokens', () => {
         expect(token.name).toEqual(results[token.address.toString()].name)
         expect(token.symbol).toEqual(results[token.address.toString()].symbol)
         expect(token.decimals).toEqual(
-          results[token.address.toString()].decimals
+          results[token.address.toString()].decimals,
         )
       })
     }

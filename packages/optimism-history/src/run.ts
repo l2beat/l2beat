@@ -56,7 +56,7 @@ export async function run() {
   const httpClient = new HttpClient()
   const etherscanClient = new MainnetEtherscanClient(
     httpClient,
-    etherscanApiKey
+    etherscanApiKey,
   )
 
   const blockTimestampService = new BlockTimestampService(provider)
@@ -71,7 +71,7 @@ export async function run() {
     provider,
     blockTimestampService,
     optimismNameService,
-    addressAnalyzer
+    addressAnalyzer,
   )
 
   await getHistory(provider, networkConfig, eventProcessor)

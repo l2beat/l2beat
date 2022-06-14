@@ -14,12 +14,12 @@ export async function walkConfig(
   libAddressManager: string,
   startingPoints: string[],
   mainBridge: MainBridgeConfig,
-  network: string
+  network: string,
 ) {
   const bridgeConfig: AnalyzedMainBridge = await analyzeMainBridge(
     provider,
     addressAnalyzer,
-    mainBridge
+    mainBridge,
   )
   prettyBridgePrint(bridgeConfig, network)
 
@@ -39,7 +39,7 @@ export async function walkConfig(
       addressAnalyzer,
       libAddressManager,
       contracts,
-      componentName
+      componentName,
     )
 
     //console.log('Resolved', componentName, 'to', analyzed.componentAddress)
@@ -62,16 +62,16 @@ function prettyBridgePrint(bridge: AnalyzedMainBridge, network: string) {
   console.log(
     'Bridge Implementation Contract: ',
     bridge.implementationAddress,
-    bridge.implementation.name
+    bridge.implementation.name,
   )
   console.log('Messenger:', bridge.messengerAddress, bridge.messenger.name)
   console.log(
     '   Lib_ResolvedDelegateProxy libaddressManager:',
-    bridge.libResolvedDelegateProxyAddressManager
+    bridge.libResolvedDelegateProxyAddressManager,
   )
   console.log(
     '   Lib_ResolvedDelegateProxy implementationName:',
-    bridge.libResolvedDelegateProxyImplementationName
+    bridge.libResolvedDelegateProxyImplementationName,
   )
   console.log()
 }

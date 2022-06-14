@@ -6,7 +6,7 @@ import { UiState } from './UiState'
 
 export function toUiState(state: ChartStateWithInput): UiState {
   const dataPoints = state.input.data.filter(
-    (_, i, a) => a.length - 1 - i < state.days
+    (_, i, a) => a.length - 1 - i < state.days,
   )
   if (dataPoints.length === 0) {
     return {
@@ -18,7 +18,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
   }
   const dateRange = toDateRange(
     dataPoints[0][0],
-    dataPoints[dataPoints.length - 1][0]
+    dataPoints[dataPoints.length - 1][0],
   )
 
   const description = state.token

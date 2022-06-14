@@ -21,7 +21,7 @@ export interface Chart {
 
 export function generateReportOutput(
   entries: OutputEntry[],
-  projects: ProjectInfo[]
+  projects: ProjectInfo[],
 ): ReportOutput {
   const report: ReportOutput = {
     aggregate: {
@@ -43,7 +43,8 @@ export function generateReportOutput(
   }
 
   for (const entry of entries) {
-    const date = timestampToDate(entry.timestamp)
+    // we subtract a day so that the date represents the end of that day
+    const date = timestampToDate(entry.timestamp.add(-1, 'days'))
     report.aggregate.data.push([
       date,
       asNumber(entry.value.usd, 2),
