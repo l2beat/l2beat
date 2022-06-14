@@ -3,7 +3,7 @@ export const config = {
   discordLink: 'https://discord.gg/eaVKXPmtWk',
   githubLink: 'https://github.com/l2beat/l2beat',
   showNewUpdateBanner: false,
-  showSeasonalBanner: false,
-  showGitcoinOption: false,
+  showSeasonalBanner: true,
+  showGitcoinOption: true,
   showPermissionedAccounts: false,
 }

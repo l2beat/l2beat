@@ -115,6 +115,10 @@ describe(ReportRepository.name, () => {
 
       expect(result).toBeAnArrayOfLength(3)
     })
+
+    it('empty array', async () => {
+      await expect(reportsRepository.addOrUpdateMany([])).not.toBeRejected()
+    })
   })
 
   it(ReportRepository.prototype.getAll.name, async () => {

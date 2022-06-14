@@ -175,6 +175,10 @@ describe(BalanceRepository.name, () => {
       expect(result).toBeAnArrayWith(DATA[0], ...mixedRows)
       expect(result).toBeAnArrayOfLength(3)
     })
+
+    it('empty array', async () => {
+      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+    })
   })
 
   it(BalanceRepository.prototype.getAll.name, async () => {
