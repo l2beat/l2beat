@@ -2,9 +2,13 @@ import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
-import { aggregateReportsDaily } from '../../../../src/api/controllers/report/aggregateReportsDaily'
+import {
+  aggregateReportsDaily,
+  saveTVLToEntry,
+} from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
+import { mockEntry } from './addOptimismToken.test'
 
 describe(aggregateReportsDaily.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
@@ -241,6 +245,53 @@ describe(aggregateReportsDaily.name, () => {
     const result = aggregateReportsDaily(reports, PROJECTS)
 
     expect(result).toEqual([])
+  })
+})
+
+describe(saveTVLToEntry.name, () => {
+  it('happy path', () => {
+    const projectName = 'Optimism'
+    const symbol = 'OP'
+    const decimals = 18
+    const usdTVL = 1500n
+    const ethTVL = 1n
+    const balance = 10n
+    const entry = mockEntry({}, projectName)
+
+    saveTVLToEntry(
+      entry,
+      projectName,
+      usdTVL,
+      ethTVL,
+      balance,
+      symbol,
+      decimals
+    )
+
+    const tokens = new Map()
+    tokens.set(symbol, {
+      usd: usdTVL,
+      eth: ethTVL,
+      balance,
+      decimals,
+    })
+    const projects = new Map()
+    projects.set(projectName, {
+      value: {
+        usd: usdTVL,
+        eth: ethTVL,
+      },
+      tokens,
+    })
+
+    expect(entry).toEqual({
+      timestamp: entry.timestamp,
+      value: {
+        usd: usdTVL,
+        eth: ethTVL,
+      },
+      projects,
+    })
   })
 })
 

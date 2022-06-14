@@ -39,15 +39,15 @@ export class ReportUpdater {
         this.priceRepository.getByTimestamp(timestamp),
         this.balanceRepository.getByBlock(blockNumber),
       ])
-      const tvlEntries = this.calculateTvls(prices, balances)
-      await this.reportRepository.addOrUpdateMany(tvlEntries)
+      const reports = this.createReports(prices, balances)
+      await this.reportRepository.addOrUpdateMany(reports)
       this.lastProcessed = timestamp
       this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
     }
     this.logger.info('Update completed', { dataPoints: dataPoints.length })
   }
 
-  calculateTvls(
+  createReports(
     prices: PriceRecord[],
     balances: BalanceRecord[]
   ): ReportRecord[] {
@@ -59,7 +59,7 @@ export class ReportUpdater {
       return []
     }
 
-    const tvls: ReportRecord[] = []
+    const reports: ReportRecord[] = []
     for (const balance of balances) {
       const token = this.tokenByAssetId.get(balance.assetId)
       if (!token) {
@@ -69,29 +69,27 @@ export class ReportUpdater {
       if (!price) {
         continue
       }
-      tvls.push(calculateTVL(price, token.decimals, balance, ethPrice))
+      reports.push(createReport(price, token.decimals, balance, ethPrice))
     }
-    return tvls
+    return reports
   }
 }
 
 const ETH_PRECISION = 6n
 const USD_PRECISION = 2n
 
-export function calculateTVL(
+export function createReport(
   price: PriceRecord,
   decimals: number,
   balance: BalanceRecord,
   ethPrice: number
 ): ReportRecord {
-  const bigintPrice = getBigIntPrice(price.priceUsd, decimals)
-  const usdBalance = (balance.balance * bigintPrice) / 10n ** 18n
-  const usdTVL = usdBalance / 10n ** (18n - USD_PRECISION)
-
-  const etherBigInt = getBigIntPrice(ethPrice, 18)
-  const etherBalance = (usdBalance * 10n ** 18n) / etherBigInt
-  const ethTVL = etherBalance / 10n ** (18n - ETH_PRECISION)
-
+  const { usdTVL, ethTVL } = calculateTVL(
+    price.priceUsd,
+    decimals,
+    balance.balance,
+    ethPrice
+  )
   return {
     blockNumber: balance.blockNumber,
     timestamp: price.timestamp,
@@ -101,6 +99,22 @@ export function calculateTVL(
     usdTVL,
     ethTVL,
   }
+}
+
+export function calculateTVL(
+  priceUsd: number,
+  decimals: number,
+  balance: bigint,
+  ethPrice: number
+) {
+  const bigintPrice = getBigIntPrice(priceUsd, decimals)
+  const usdBalance = (balance * bigintPrice) / 10n ** 18n
+  const usdTVL = usdBalance / 10n ** (18n - USD_PRECISION)
+
+  const etherBigInt = getBigIntPrice(ethPrice, 18)
+  const etherBalance = (usdBalance * 10n ** 18n) / etherBigInt
+  const ethTVL = etherBalance / 10n ** (18n - ETH_PRECISION)
+  return { usdTVL, ethTVL }
 }
 
 export function getBigIntPrice(price: number, decimals: number) {
