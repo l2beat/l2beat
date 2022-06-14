@@ -35,6 +35,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.architectureImage && (
         <figure className="ContractsSection-Architecture">
           <img
+            className="inline align-[unset]"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
