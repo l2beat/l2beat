@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 700px) {
+  @media (max-width: 750px) {
     display: block;
     text-align: center;
   }
@@ -28,7 +28,7 @@
 
 .DonateDetails-Text {
   margin-left: 32px;
-  @media (max-width: 700px) {
+  @media (max-width: 750px) {
     margin-left: 0;
   }
 }

@@ -7,6 +7,12 @@ module.exports = {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
     },
+    screens: {
+      xs: '400px',
+      sm: '550px',
+      md: '750px',
+      lg: '1000px',
+    },
   },
   plugins: [],
 }
