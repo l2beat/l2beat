@@ -38,6 +38,10 @@ export class BalanceUpdater {
           blockNumber: Number(blockNumber),
         })
         this.processedBlocks.add(blockNumber)
+      } else {
+        this.logger.info('Skipped updating balances', {
+          blockNumber: Number(blockNumber),
+        })
       }
     }
     this.logger.info('Update completed', { blocks: unprocessed.length })

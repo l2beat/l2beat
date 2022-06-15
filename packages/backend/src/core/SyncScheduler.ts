@@ -39,7 +39,7 @@ export class SyncScheduler {
 
   async sync() {
     const to = UnixTime.now().add(-1, 'hours').toStartOf('hour')
-    const timestamps = getTimestamps(this.minTimestamp, to, 'hourly')
+    const timestamps = getTimestamps(this.minTimestamp, to, 'daily')
 
     if (timestamps.length === 0) {
       return
