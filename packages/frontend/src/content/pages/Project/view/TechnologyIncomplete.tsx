@@ -13,11 +13,14 @@ export function TechnologyIncomplete(props: TechnologyIncompleteProps) {
       <strong>Note:</strong> This project&apos;s overview requires more research
       and might not present accurate information. If you want to contribute you
       can{' '}
-      <OutLink href={props.editLink}>edit the information on Github</OutLink>.{' '}
+      <OutLink className="text-link underline" href={props.editLink}>
+        edit the information on Github
+      </OutLink>
+      .{' '}
       {props.twitterLink && (
         <>
           Alternatively you{' '}
-          <OutLink href={props.twitterLink}>
+          <OutLink className="text-link underline" href={props.twitterLink}>
             contact the project team on Twitter
           </OutLink>{' '}
           and encourage them to contribute a PR.

@@ -6,6 +6,15 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
+      colors: {
+        link: 'rgb(var(--link-rgb) / <alpha-value>)',
+      },
+    },
+    screens: {
+      xs: '400px',
+      sm: '550px',
+      md: '750px',
+      lg: '1000px',
     },
   },
   plugins: [],

@@ -10,7 +10,9 @@ export function InlineReferences({ ids, citationNeededLink }: Props) {
     if (citationNeededLink) {
       return (
         <sup>
-          <a href={citationNeededLink}>[Citation needed]</a>
+          <a className="text-link underline" href={citationNeededLink}>
+            [Citation needed]
+          </a>
         </sup>
       )
     } else {
@@ -20,7 +22,7 @@ export function InlineReferences({ ids, citationNeededLink }: Props) {
   return (
     <sup>
       {ids.map((id) => (
-        <a key={id} href={`#reference-${id}`}>
+        <a className="text-link underline" key={id} href={`#reference-${id}`}>
           [{id}]
         </a>
       ))}

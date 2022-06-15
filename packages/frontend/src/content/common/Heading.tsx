@@ -27,7 +27,11 @@ export function Heading(props: HeadingProps) {
         {props.title}
       </a>
       {props.links?.map((link, i) => (
-        <OutLink key={i} className="Heading-Link" href={link.href}>
+        <OutLink
+          key={i}
+          className="Heading-Link text-link underline"
+          href={link.href}
+        >
           [{link.name}]
         </OutLink>
       ))}

@@ -31,6 +31,16 @@
     margin: 16px auto 0 auto;
     max-width: 100%;
   }
+
+  .Heading-Title {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  a {
+    color: var(--link);
+    text-decoration: underline;
+  }
 }
 
 .Faq-Table {

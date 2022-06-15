@@ -35,6 +35,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.architectureImage && (
         <figure className="ContractsSection-Architecture">
           <img
+            className="inline align-[unset]"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
@@ -51,7 +52,9 @@ export function ContractsSection(props: ContractsSectionProps) {
               {contract.links.map((x, i) => (
                 <React.Fragment key={i}>
                   {' '}
-                  <OutLink href={x.href}>{x.name}</OutLink>
+                  <OutLink className="text-link underline" href={x.href}>
+                    {x.name}
+                  </OutLink>
                 </React.Fragment>
               ))}
             </div>

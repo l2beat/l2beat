@@ -22,7 +22,9 @@ export function ReferencesSection({ items }: ReferencesSectionProps) {
       <ol className="ReferencesSection-List">
         {items.map((item, i) => (
           <li key={i} id={`reference-${item.id}`}>
-            <OutLink href={item.href}>{item.text}</OutLink>
+            <OutLink className="text-link underline" href={item.href}>
+              {item.text}
+            </OutLink>
           </li>
         ))}
       </ol>
