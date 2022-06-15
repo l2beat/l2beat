@@ -51,7 +51,7 @@ export class ReportController {
   async generateDaily() {
     let reports = await this.reportRepository.getDaily()
     reports = filterReportsByProjects(reports, this.projects)
-    reports = getSufficientlySynced(reports)
+    // reports = getSufficientlySynced(reports)
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
     await addOptimismToken(dailyEntries, this.priceRepository)
     return generateReportOutput(dailyEntries, this.projects)
