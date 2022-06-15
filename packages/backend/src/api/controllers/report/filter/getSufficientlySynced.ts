@@ -4,6 +4,7 @@ import { getSyncedTimestamp } from './getSyncedTimestamp'
 
 export function getSufficientlySynced(reports: ReportRecord[]) {
   const maxByAssetInBridge = getMaxAssetInBridge(reports)
+  console.log(maxByAssetInBridge)
   const syncedTimestamp = getSyncedTimestamp(
     [...maxByAssetInBridge.values()],
     'days',
