@@ -1,4 +1,4 @@
-import { AssetId, CoingeckoId, LogLevel, UnixTime } from '@l2beat/common'
+import { AssetId, LogLevel, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 
 import { ProjectInfo, Token } from '../model'
@@ -19,6 +19,6 @@ export interface Config {
     safeBlockBlockOffset: bigint
   }
   tokens: Token[]
-  assetIds: [CoingeckoId, AssetId][]
+  assetIds: AssetId[]
   projects: ProjectInfo[]
 }

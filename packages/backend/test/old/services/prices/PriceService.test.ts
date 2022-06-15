@@ -45,7 +45,7 @@ describe(PriceService.name, () => {
 
       const TOKENS: TokenInfo[] = [
         {
-          id: AssetId('dai-dai-stablecoin'),
+          id: AssetId.DAI,
           name: 'Dai Stablecoin',
           symbol: 'DAI',
           address: EthereumAddress(
@@ -64,7 +64,7 @@ describe(PriceService.name, () => {
         coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
         [
-          CoingeckoId('dai'),
+          AssetId.DAI,
           new UnixTime(dates[0].toUnixTimestamp()),
           new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
           'daily',
@@ -289,7 +289,7 @@ describe(PriceService.name, () => {
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [
-            TOKENS[0].coingeckoId,
+            TOKENS[0].id,
             new UnixTime(dates[0].toUnixTimestamp()),
             new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
             'daily',
@@ -369,7 +369,7 @@ describe(PriceService.name, () => {
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
           [
-            TOKENS[0].coingeckoId,
+            TOKENS[0].id,
             new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
             new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
             'daily',

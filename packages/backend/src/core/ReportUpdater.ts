@@ -51,9 +51,9 @@ export class ReportUpdater {
     prices: PriceRecord[],
     balances: BalanceRecord[],
   ): ReportRecord[] {
-    const priceMap = new Map(prices.map((p) => [p.coingeckoId, p]))
-    const ethCoingeckoId = this.tokenByAssetId.get(AssetId.ETH)?.coingeckoId
-    const ethPrice = ethCoingeckoId && priceMap.get(ethCoingeckoId)?.priceUsd
+    const priceMap = new Map(prices.map((p) => [p.assetId, p]))
+    const ethAssetId = this.tokenByAssetId.get(AssetId.ETH)?.id
+    const ethPrice = ethAssetId && priceMap.get(ethAssetId)?.priceUsd
 
     if (!ethPrice) {
       return []
@@ -65,7 +65,7 @@ export class ReportUpdater {
       if (!token) {
         continue
       }
-      const price = priceMap.get(token.coingeckoId)
+      const price = priceMap.get(token.id)
       if (!price) {
         continue
       }

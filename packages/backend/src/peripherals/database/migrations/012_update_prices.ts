@@ -23,11 +23,14 @@ export async function up(knex: Knex) {
     tokenList.map(({ id, coingeckoId }) => {
       return knex('coingecko_prices')
         .update({ asset_id: id.toString() })
-        .where({ coingecko_id: coingeckoId.toString() })
-    })
+        .whereRaw('coingecko_id = ?', [coingeckoId.toString()])
+    }),
   )
   await knex.schema.alterTable('coingecko_prices', (table) => {
+    table.dropPrimary()
     table.string('asset_id').notNullable().alter()
+    table.setNullable('coingecko_id')
+    table.primary(['unix_timestamp', 'asset_id'])
   })
 }
 

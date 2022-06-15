@@ -1,4 +1,4 @@
-import { AssetId, CoingeckoId, mock, UnixTime } from '@l2beat/common'
+import { AssetId, mock, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { addOptimismToken } from '../../../../src/api/controllers/report/addOptimismToken'
@@ -16,14 +16,13 @@ describe(addOptimismToken.name, () => {
     getByToken: async (token) => {
       const result = {
         timestamp: AIRDROP_DATE,
-        coingeckoId: token,
-        assetId: token as unknown as AssetId, // WIP
+        assetId: token,
       }
 
-      if (token === CoingeckoId('optimism')) {
+      if (token === AssetId('op-optimism')) {
         return [{ ...result, priceUsd: 9 }]
       }
-      if (token === CoingeckoId('ethereum')) {
+      if (token === AssetId.ETH) {
         return [{ ...result, priceUsd: 1500 }]
       }
       return [

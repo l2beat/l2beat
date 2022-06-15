@@ -18,7 +18,7 @@ export async function up(knex: Knex) {
     table.bigInteger('unix_timestamp').index()
   })
   await knex.raw(
-    'UPDATE asset_balances SET unix_timestamp = block_numbers.unix_timestamp FROM block_numbers WHERE asset_balances.block_number = block_numbers.block_number'
+    'UPDATE asset_balances SET unix_timestamp = block_numbers.unix_timestamp FROM block_numbers WHERE asset_balances.block_number = block_numbers.block_number',
   )
 }
 

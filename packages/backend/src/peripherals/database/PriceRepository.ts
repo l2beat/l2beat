@@ -1,11 +1,10 @@
-import { AssetId, CoingeckoId, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { PriceRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
 
 export interface PriceRecord {
-  coingeckoId: CoingeckoId
   assetId: AssetId
   priceUsd: number
   timestamp: UnixTime
@@ -34,7 +33,7 @@ export class PriceRepository extends BaseRepository {
 
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const rows = await this.knex('coingecko_prices')
-      .where({ unix_timestamp: timestamp.toNumber().toString() })
+      .where({ unix_timestamp: timestamp.toString() })
       .select()
 
     this.logger.debug({
@@ -45,14 +44,14 @@ export class PriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByToken(coingeckoId: CoingeckoId) {
+  async getByToken(assetId: AssetId) {
     const rows = await this.knex('coingecko_prices')
-      .where({ coingecko_id: coingeckoId.toString() })
+      .where({ asset_id: assetId.toString() })
       .select()
 
     this.logger.debug({
-      method: 'getAllByToken',
-      coin: coingeckoId.toString(),
+      method: 'getByToken',
+      coin: assetId.toString(),
       amount: rows.length,
     })
     return rows.map(toRecord)
@@ -68,16 +67,16 @@ export class PriceRepository extends BaseRepository {
     await this.knex('coingecko_prices').delete()
   }
 
-  async calcDataBoundaries(): Promise<Map<CoingeckoId, DataBoundary>> {
+  async calcDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
     const rows = await this.knex('coingecko_prices')
       .min('unix_timestamp')
       .max('unix_timestamp')
-      .select('coingecko_id')
-      .groupBy('coingecko_id')
+      .select('asset_id')
+      .groupBy('asset_id')
 
     return new Map(
       rows.map((row) => [
-        CoingeckoId(row.coingecko_id),
+        AssetId(row.asset_id),
         {
           earliest: new UnixTime(parseInt(row.min)),
           latest: new UnixTime(parseInt(row.max)),
@@ -90,7 +89,6 @@ export class PriceRepository extends BaseRepository {
 function toRecord(row: PriceRow): PriceRecord {
   return {
     timestamp: new UnixTime(+row.unix_timestamp),
-    coingeckoId: CoingeckoId(row.coingecko_id),
     assetId: AssetId(row.asset_id),
     priceUsd: +row.price_usd,
   }
@@ -98,7 +96,6 @@ function toRecord(row: PriceRow): PriceRecord {
 
 function toRow(record: PriceRecord): PriceRow {
   return {
-    coingecko_id: record.coingeckoId.toString(),
     asset_id: record.assetId.toString(),
     price_usd: record.priceUsd,
     unix_timestamp: record.timestamp.toNumber().toString(),

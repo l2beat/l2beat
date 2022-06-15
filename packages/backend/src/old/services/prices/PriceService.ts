@@ -85,7 +85,7 @@ export class PriceService {
       const end = dates[dates.length - 1]
       const coingeckoPrices =
         await this.coingeckoQueryService.getUsdPriceHistory(
-          token.coingeckoId,
+          token.id,
           new UnixTime(earliestUnknownDate.toUnixTimestamp()),
           new UnixTime(end.toUnixTimestamp()),
           'daily',
