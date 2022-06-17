@@ -50,6 +50,41 @@ export class ReportRepository extends BaseRepository {
   async deleteAll() {
     return await this.knex('reports').delete()
   }
+
+  async getLatestPerBridge(): Promise<Map<EthereumAddress, ReportRecord[]>> {
+    const rows = await this.knex
+      .select('a1.*')
+      .from('reports as a1')
+      .innerJoin(
+        this.knex('reports')
+          .select(
+            this.knex.raw('max(unix_timestamp) as unix_timestamp'),
+            'bridge_address',
+            'asset_id',
+          )
+          .from('reports')
+          .as('a2')
+          .groupBy('bridge_address', 'asset_id'),
+        function () {
+          return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp')
+            .andOn('a1.bridge_address', '=', 'a2.bridge_address')
+            .andOn('a1.asset_id', '=', 'a2.asset_id')
+        },
+      )
+
+    const records = rows.map((row) => ({
+      ...toRecord(row),
+    }))
+
+    const result = new Map()
+
+    for (const record of records) {
+      const entry = result.get(record.bridge) || []
+      result.set(record.bridge, [...entry, record])
+    }
+
+    return result
+  }
 }
 
 function toRow(record: ReportRecord): ReportRow {

@@ -13,5 +13,9 @@ export function createStatusRouter(statusController: StatusController) {
     ctx.body = await statusController.getBalancesStatus()
   })
 
+  router.get('/api/status/reports', async (ctx) => {
+    ctx.body = await statusController.getReportsStatus()
+  })
+
   return router
 }
