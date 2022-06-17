@@ -138,8 +138,7 @@ function adjustAndOffset(
   if (granularity === 'hourly') {
     return [start.add(-30, 'minutes'), end.add(30, 'minutes')]
   } else {
-    // make sure that we have enough data to fill in missing prices
-    return [start.add(-7, 'days'), end.add(12, 'hours')]
+    return [start.add(-12, 'hours'), end.add(12, 'hours')]
   }
 }
 
