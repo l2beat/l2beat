@@ -65,7 +65,7 @@ describe(PriceService.name, () => {
       ).toHaveBeenCalledExactlyWith([
         [
           CoingeckoId('dai'),
-          new UnixTime(dates[0].toUnixTimestamp()),
+          new UnixTime(dates[0].toUnixTimestamp()).add(-7, 'days'),
           new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
           'daily',
         ],
@@ -290,7 +290,7 @@ describe(PriceService.name, () => {
         ).toHaveBeenCalledExactlyWith([
           [
             TOKENS[0].coingeckoId,
-            new UnixTime(dates[0].toUnixTimestamp()),
+            new UnixTime(dates[0].toUnixTimestamp()).add(-7, 'days'),
             new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
             'daily',
           ],
@@ -370,7 +370,10 @@ describe(PriceService.name, () => {
         ).toHaveBeenCalledExactlyWith([
           [
             TOKENS[0].coingeckoId,
-            new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
+            new UnixTime(dates[dates.length - 1].toUnixTimestamp()).add(
+              -7,
+              'days',
+            ),
             new UnixTime(dates[dates.length - 1].toUnixTimestamp()),
             'daily',
           ],

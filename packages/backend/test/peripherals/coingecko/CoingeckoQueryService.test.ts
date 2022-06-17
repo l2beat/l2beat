@@ -45,7 +45,7 @@ describe(CoingeckoQueryService.name, () => {
         [
           CoingeckoId('bitcoin'),
           'usd',
-          UnixTime.fromDate(new Date('2021-01-01')).add(-7, 'days'),
+          UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
           UnixTime.fromDate(new Date('2022-01-01')).add(12, 'hours'),
         ],
       ])
