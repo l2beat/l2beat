@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   EXITS,
@@ -10,6 +12,7 @@ import { Project } from './types'
 export const metis: Project = {
   name: 'Metis Andromeda',
   slug: 'metis',
+  id: ProjectId('metis'),
   bridges: [
     {
       address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',

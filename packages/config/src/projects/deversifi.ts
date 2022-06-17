@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,6 +16,7 @@ import { Project } from './types'
 export const deversifi: Project = {
   name: 'DeversiFi',
   slug: 'deversifi',
+  id: ProjectId('deversifi'),
   bridges: [
     {
       address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
