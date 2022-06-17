@@ -24,13 +24,13 @@ export async function addOptimismToken(
   for (const entry of entries) {
     const date = entry.timestamp
     if (date.lt(UnixTime.fromDate(new Date('2022-05-30')))) {
-      return
+      continue
     }
 
     const opPrice = opPrices.find(findByTimestamp(entry.timestamp))?.priceUsd
     const ethPrice = ethPrices.find(findByTimestamp(entry.timestamp))?.priceUsd
     if (opPrice === undefined || ethPrice === undefined) {
-      return
+      continue
     }
 
     const { usdTVL, ethTVL } = calculateTVL(
