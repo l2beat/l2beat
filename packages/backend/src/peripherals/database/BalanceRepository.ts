@@ -64,7 +64,7 @@ export class BalanceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getStatus(): Promise<
+  async getLatestPerHolder(): Promise<
     Map<EthereumAddress, (BalanceRecord & { timestamp: UnixTime })[]>
   > {
     const rows = await this.knex
@@ -104,12 +104,8 @@ export class BalanceRepository extends BaseRepository {
     > = new Map()
 
     for (const record of records) {
-      const entry = result.get(record.holderAddress)
-      if (entry === undefined) {
-        result.set(record.holderAddress, [record])
-      } else {
-        result.set(record.holderAddress, [...entry, record])
-      }
+      const entry = result.get(record.holderAddress) || []
+      result.set(record.holderAddress, [...entry, record])
     }
 
     return result

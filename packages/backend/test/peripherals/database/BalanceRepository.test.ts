@@ -198,7 +198,7 @@ describe(BalanceRepository.name, () => {
     expect(result).toEqual([])
   })
 
-  it(BalanceRepository.prototype.getStatus.name, async () => {
+  it(BalanceRepository.prototype.getLatestPerHolder.name, async () => {
     const blockNumberRepository = new BlockNumberRepository(knex, Logger.SILENT)
 
     DATA.map((d, index) =>
@@ -208,9 +208,9 @@ describe(BalanceRepository.name, () => {
       }),
     )
 
-    const status = await repository.getStatus()
+    const holderLatest = await repository.getLatestPerHolder()
 
-    expect(status).toEqual(
+    expect(holderLatest).toEqual(
       new Map([
         [
           MOCK_HOLDER,

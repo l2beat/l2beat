@@ -48,17 +48,18 @@ export class StatusController {
   }
 
   async getBalancesStatus() {
-    const balances = await this.balanceRepository.getStatus()
+    const holderLatest = await this.balanceRepository.getLatestPerHolder()
     return this.projects.flatMap(({ bridges, name }) =>
       bridges.map(({ address }) => ({
         name,
         address,
         tokens:
-          balances.get(EthereumAddress(address))?.map((token) => ({
-            assetId: token.assetId,
-            balance: token.balance.toString(),
-            blockNumber: token.blockNumber.toString(),
-            timestamp: unixTimeToString(token.timestamp),
+          holderLatest.get(EthereumAddress(address))?.map((latest) => ({
+            assetId: latest.assetId,
+            balance: latest.balance.toString(),
+            blockNumber: latest.blockNumber.toString(),
+            timestamp: unixTimeToString(latest.timestamp),
+            syncStatus: getSyncStatus(latest.timestamp),
           })) ?? [],
       })),
     )
