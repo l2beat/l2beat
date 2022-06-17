@@ -68,11 +68,11 @@ export function aggregateReportsDaily(
       throw new Error('Programmer error: Invalid asset')
     }
 
-    saveTVLToEntry(
+    saveBalancesToEntry(
       entry,
       projectName,
-      report.usdTVL,
-      report.ethTVL,
+      report.balanceUsd,
+      report.balanceEth,
       report.balance,
       details.symbol,
       details.decimals,
@@ -130,17 +130,17 @@ function getDailyTimestamps(min: UnixTime, max: UnixTime) {
   return timestamps
 }
 
-export function saveTVLToEntry(
+export function saveBalancesToEntry(
   entry: OutputEntry,
   projectName: string,
-  usdTVL: bigint,
-  ethTVL: bigint,
+  balanceUsd: bigint,
+  balanceEth: bigint,
   balance: bigint,
   symbol: string,
   decimals: number,
 ) {
-  entry.value.usd += usdTVL
-  entry.value.eth += ethTVL
+  entry.value.usd += balanceUsd
+  entry.value.eth += balanceEth
 
   let project = entry.projects.get(projectName)
   if (!project) {
@@ -151,8 +151,8 @@ export function saveTVLToEntry(
     entry.projects.set(projectName, project)
   }
 
-  project.value.usd += usdTVL
-  project.value.eth += ethTVL
+  project.value.usd += balanceUsd
+  project.value.eth += balanceEth
 
   let token = project.tokens.get(symbol)
   if (token === undefined) {
@@ -165,8 +165,8 @@ export function saveTVLToEntry(
     project.tokens.set(symbol, token)
   }
 
-  token.usd += usdTVL
-  token.eth += ethTVL
+  token.usd += balanceUsd
+  token.eth += balanceEth
   token.balance += balance
   token.decimals = decimals
 }

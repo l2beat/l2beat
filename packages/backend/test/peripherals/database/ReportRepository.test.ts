@@ -27,8 +27,8 @@ describe(ReportRepository.name, () => {
       bridge,
       asset: ASSET_A,
       balance: BALANCE,
-      usdTVL: 1000000n,
-      ethTVL: 100000n,
+      balanceUsd: 1000000n,
+      balanceEth: 100000n,
     }
   }
 
