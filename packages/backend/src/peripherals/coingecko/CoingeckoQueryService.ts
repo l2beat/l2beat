@@ -6,7 +6,7 @@ import {
   getTimestamps,
   UnixTime,
 } from '@l2beat/common'
-import { tokenList } from '@l2beat/config'
+import { getTokenByAssetId } from '@l2beat/config'
 
 type Granularity = 'daily' | 'hourly'
 type Price = { date: Date; price: number }
@@ -45,7 +45,7 @@ export class CoingeckoQueryService {
     to: UnixTime,
     granularity: Granularity,
   ): Promise<Price[]> {
-    const coinId = tokenList.find((token) => token.id === assetId)?.coingeckoId
+    const coinId = getTokenByAssetId(assetId)?.coingeckoId
     if (!coinId) {
       throw new Error('Programmer error: incorrect asset ID')
     }
