@@ -9,7 +9,7 @@ import {
 import { expect, mockFn } from 'earljs'
 
 import {
-  calculateTVL,
+  convertBalance,
   createReport,
   getBigIntPrice,
   ReportUpdater,
@@ -186,8 +186,8 @@ describe(ReportUpdater.name, () => {
         bridge: balance.holderAddress,
         asset: balance.assetId,
         balance: balance.balance,
-        usdTVL: 7079n,
-        ethTVL: 70795n,
+        balanceUsd: 7079n,
+        balanceEth: 70795n,
       })
     })
 
@@ -219,8 +219,8 @@ describe(ReportUpdater.name, () => {
         bridge: balance.holderAddress,
         asset: balance.assetId,
         balance: balance.balance,
-        usdTVL: 7079n,
-        ethTVL: 70795n,
+        balanceUsd: 7079n,
+        balanceEth: 70795n,
       })
     })
   })
@@ -273,41 +273,41 @@ describe(ReportUpdater.name, () => {
   })
 })
 
-describe(calculateTVL.name, () => {
+describe(convertBalance.name, () => {
   const runs = [
     {
       priceUsd: 1,
       decimals: 0,
       balance: 1n,
       ethPrice: 1,
-      usdTVL: 100n,
-      ethTVL: 1000000n,
+      balanceUsd: 100n,
+      balanceEth: 1000000n,
     },
     {
       priceUsd: 2,
       decimals: 3,
       balance: 2000n,
       ethPrice: 1500,
-      usdTVL: 400n,
-      ethTVL: 2666n,
+      balanceUsd: 400n,
+      balanceEth: 2666n,
     },
     {
       priceUsd: 3.5,
       decimals: 18,
       balance: 12345n * 10n ** 18n,
       ethPrice: 2334,
-      usdTVL: 4320750n,
-      ethTVL: 18512210n,
+      balanceUsd: 4320750n,
+      balanceEth: 18512210n,
     },
   ]
 
   for (const run of runs) {
     it(`calculates price:${run.priceUsd}, decimals: ${run.decimals}, balance: ${run.balance}, ethPrice: ${run.ethPrice}`, () => {
       expect(
-        calculateTVL(run.priceUsd, run.decimals, run.balance, run.ethPrice),
+        convertBalance(run.priceUsd, run.decimals, run.balance, run.ethPrice),
       ).toEqual({
-        usdTVL: run.usdTVL,
-        ethTVL: run.ethTVL,
+        balanceUsd: run.balanceUsd,
+        balanceEth: run.balanceEth,
       })
     })
   }

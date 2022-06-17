@@ -9,8 +9,8 @@ export interface ReportRecord {
   timestamp: UnixTime
   bridge: EthereumAddress
   asset: AssetId
-  usdTVL: bigint
-  ethTVL: bigint
+  balanceUsd: bigint
+  balanceEth: bigint
   balance: bigint
 }
 
@@ -59,8 +59,8 @@ function toRow(record: ReportRecord): ReportRow {
     bridge_address: record.bridge.toString(),
     asset_id: record.asset.toString(),
     balance: record.balance.toString(),
-    usd_tvl: record.usdTVL.toString(),
-    eth_tvl: record.ethTVL.toString(),
+    usd_tvl: record.balanceUsd.toString(),
+    eth_tvl: record.balanceEth.toString(),
     is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
   }
 }
@@ -72,7 +72,7 @@ function toRecord(row: ReportRow): ReportRecord {
     bridge: EthereumAddress.unsafe(row.bridge_address),
     asset: AssetId(row.asset_id),
     balance: BigInt(row.balance),
-    usdTVL: BigInt(row.usd_tvl),
-    ethTVL: BigInt(row.eth_tvl),
+    balanceUsd: BigInt(row.usd_tvl),
+    balanceEth: BigInt(row.eth_tvl),
   }
 }
