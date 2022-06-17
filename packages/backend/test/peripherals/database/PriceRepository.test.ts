@@ -77,7 +77,7 @@ describe(PriceRepository.name, () => {
         records.push({
           priceUsd: Math.random() * 1000,
           timestamp: now.add(-i, 'hours'),
-          coingeckoId: CoingeckoId('ethereum'),
+          coingeckoId: CoingeckoId('fake-coin'),
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()

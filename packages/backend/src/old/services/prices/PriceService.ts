@@ -82,21 +82,25 @@ export class PriceService {
     }
 
     if (earliestUnknownDate !== undefined) {
-      const end = dates[dates.length - 1]
+      const from = new UnixTime(earliestUnknownDate.toUnixTimestamp())
+      const to = new UnixTime(dates[dates.length - 1].toUnixTimestamp())
       const coingeckoPrices =
         await this.coingeckoQueryService.getUsdPriceHistory(
           token.coingeckoId,
-          new UnixTime(earliestUnknownDate.toUnixTimestamp()),
-          new UnixTime(end.toUnixTimestamp()),
+          // Make sure that we have enough old data to fill holes
+          from.add(-7, 'days'),
+          to,
           'daily',
         )
-      result.push(...coingeckoPrices)
+      const pricePoints = coingeckoPrices.filter((x) => x.timestamp.gte(from))
+
+      result.push(...pricePoints)
       this.logger.info('Fetched prices', {
         token: token.coingeckoId.toString(),
-        pricePoints: coingeckoPrices.length,
+        pricePoints: pricePoints.length,
       })
 
-      for (const price of coingeckoPrices) {
+      for (const price of pricePoints) {
         this.setCachedPrice(token, price)
       }
     }
