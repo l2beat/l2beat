@@ -78,15 +78,18 @@ export class PriceUpdater {
   async fetchAndSave(assetId: AssetId, from: UnixTime, to: UnixTime) {
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       assetId,
-      from,
+      // Make sure that we have enough old data to fill holes
+      from.add(-7, 'days'),
       to,
       'hourly',
     )
-    const priceRecords: PriceRecord[] = prices.map((price) => ({
-      assetId: assetId,
-      timestamp: price.timestamp,
-      priceUsd: price.value,
-    }))
+    const priceRecords: PriceRecord[] = prices
+      .filter((x) => x.timestamp.gte(from))
+      .map((price) => ({
+        assetId,
+        timestamp: price.timestamp,
+        priceUsd: price.value,
+      }))
 
     await this.priceRepository.addMany(priceRecords)
   }
