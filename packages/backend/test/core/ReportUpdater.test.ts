@@ -9,7 +9,7 @@ import {
 import { expect, mockFn } from 'earljs'
 
 import {
-  changeCurrency,
+  convertBalance,
   createReport,
   getBigIntPrice,
   ReportUpdater,
@@ -273,7 +273,7 @@ describe(ReportUpdater.name, () => {
   })
 })
 
-describe(changeCurrency.name, () => {
+describe(convertBalance.name, () => {
   const runs = [
     {
       priceUsd: 1,
@@ -304,7 +304,7 @@ describe(changeCurrency.name, () => {
   for (const run of runs) {
     it(`calculates price:${run.priceUsd}, decimals: ${run.decimals}, balance: ${run.balance}, ethPrice: ${run.ethPrice}`, () => {
       expect(
-        changeCurrency(run.priceUsd, run.decimals, run.balance, run.ethPrice),
+        convertBalance(run.priceUsd, run.decimals, run.balance, run.ethPrice),
       ).toEqual({
         balanceUsd: run.balanceUsd,
         balanceEth: run.balanceEth,

@@ -1,6 +1,6 @@
 import { CoingeckoId, UnixTime } from '@l2beat/common'
 
-import { changeCurrency } from '../../../core/ReportUpdater'
+import { convertBalance } from '../../../core/ReportUpdater'
 import {
   PriceRecord,
   PriceRepository,
@@ -33,7 +33,7 @@ export async function addOptimismToken(
       continue
     }
 
-    const { balanceUsd, balanceEth } = changeCurrency(
+    const { balanceUsd, balanceEth } = convertBalance(
       opPrice,
       18,
       OP_TOKEN_BALANCE,

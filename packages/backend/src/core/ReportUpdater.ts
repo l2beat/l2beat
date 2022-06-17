@@ -84,7 +84,7 @@ export function createReport(
   balance: BalanceRecord,
   ethPrice: number,
 ): ReportRecord {
-  const { balanceUsd, balanceEth } = changeCurrency(
+  const { balanceUsd, balanceEth } = convertBalance(
     price.priceUsd,
     decimals,
     balance.balance,
@@ -101,7 +101,7 @@ export function createReport(
   }
 }
 
-export function changeCurrency(
+export function convertBalance(
   priceUsd: number,
   decimals: number,
   balance: bigint,
