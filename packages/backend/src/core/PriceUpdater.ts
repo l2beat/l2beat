@@ -75,10 +75,20 @@ export class PriceUpdater {
       })
     }
   }
+  private getCoingeckoId(assetId: AssetId) {
+    const coingeckoId = this.tokens.find(
+      (token) => token.id === assetId,
+    )?.coingeckoId
+    if (!coingeckoId) {
+      throw new Error('Programmer error: incorrect asset ID')
+    }
+    return coingeckoId
+  }
 
   async fetchAndSave(assetId: AssetId, from: UnixTime, to: UnixTime) {
+    const coingeckoId = this.getCoingeckoId(assetId)
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
-      assetId,
+      coingeckoId,
       // Make sure that we have enough old data to fill holes
       from.add(-7, 'days'),
       to,

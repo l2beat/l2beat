@@ -1,5 +1,4 @@
 import {
-  AssetId,
   CoingeckoClient,
   CoingeckoId,
   EthereumAddress,
@@ -35,7 +34,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       await coingeckoQueryService.getUsdPriceHistory(
-        AssetId.WETH,
+        CoingeckoId('weth'),
         UnixTime.fromDate(new Date('2021-01-01')).add(-5, 'minutes'),
         UnixTime.fromDate(new Date('2022-01-01')).add(5, 'minutes'),
         'daily',
@@ -68,7 +67,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        AssetId.WETH,
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -117,7 +116,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        AssetId.WETH,
+        CoingeckoId('weth'),
         START,
         START.add(180, 'days'),
         'hourly',
@@ -159,7 +158,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        AssetId.WETH,
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -190,7 +189,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        AssetId.WETH,
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -225,7 +224,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        AssetId.WETH,
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -563,7 +562,7 @@ describe(generateRangesToCallHourly.name, () => {
 describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   this.timeout(100000)
 
-  const TOKEN = AssetId.ETH
+  const TOKEN = CoingeckoId('ethereum')
   const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
   const DAYS_SPAN = 90
   const MAX_TRESHOLD_MINUTES = 25

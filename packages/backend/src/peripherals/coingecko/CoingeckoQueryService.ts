@@ -1,12 +1,10 @@
 import {
-  AssetId,
   CoingeckoClient,
   CoingeckoId,
   EthereumAddress,
   getTimestamps,
   UnixTime,
 } from '@l2beat/common'
-import { getTokenByAssetId } from '@l2beat/config'
 
 type Granularity = 'daily' | 'hourly'
 type Price = { date: Date; price: number }
@@ -21,14 +19,14 @@ export class CoingeckoQueryService {
   constructor(private coingeckoClient: CoingeckoClient) {}
 
   async getUsdPriceHistory(
-    assetId: AssetId,
+    coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
   ): Promise<PriceHistoryPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
-    const prices = await this.queryPrices(assetId, start, end, granularity)
+    const prices = await this.queryPrices(coingeckoId, start, end, granularity)
 
     const sortedPrices = prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime(),
@@ -40,18 +38,14 @@ export class CoingeckoQueryService {
   }
 
   async queryPrices(
-    assetId: AssetId,
+    coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
   ): Promise<Price[]> {
-    const coinId = getTokenByAssetId(assetId)?.coingeckoId
-    if (!coinId) {
-      throw new Error('Programmer error: incorrect asset ID')
-    }
     if (granularity === 'daily') {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
-        coinId,
+        coingeckoId,
         'usd',
         from,
         to,
@@ -61,7 +55,7 @@ export class CoingeckoQueryService {
       const results = await Promise.allSettled(
         generateRangesToCallHourly(from, to).map((range) =>
           this.coingeckoClient.getCoinMarketChartRange(
-            coinId,
+            coingeckoId,
             'usd',
             range.start,
             range.end,
