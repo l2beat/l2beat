@@ -194,4 +194,24 @@ describe(BalanceRepository.name, () => {
 
     expect(result).toEqual([])
   })
+
+  it(BalanceRepository.prototype.getStatus.name, async () => {
+    const status = await repository.getStatus()
+
+    expect(status).toEqual(
+      new Map([
+        [
+          MOCK_HOLDER,
+          [
+            {
+              blockNumber: START_BLOCK_NUMBER + 1n,
+              holderAddress: MOCK_HOLDER,
+              assetId: MOCK_ASSET,
+              balance: MOCK_BALANCE,
+            },
+          ],
+        ],
+      ]),
+    )
+  })
 })

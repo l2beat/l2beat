@@ -10,7 +10,7 @@ export interface BalanceRecord {
   assetId: AssetId
   balance: bigint
 }
-
+;``
 export interface DataBoundary {
   earliestBlockNumber: bigint | undefined
   latestBlockNumber: bigint | undefined
@@ -62,6 +62,43 @@ export class BalanceRepository extends BaseRepository {
       'balance',
     )
     return rows.map(toRecord)
+  }
+
+  async getStatus(): Promise<Map<EthereumAddress, BalanceRecord[]>> {
+    const rows = await this.knex
+      .select('a1.*')
+      .from('asset_balances as a1')
+      .innerJoin(
+        this.knex('asset_balances')
+          .select(
+            'holder_address',
+            'asset_id',
+            this.knex.raw('max(block_number) as block_number'),
+          )
+          .from('asset_balances')
+          .as('a2')
+          .groupBy('holder_address', 'asset_id'),
+        function () {
+          return this.on('a1.block_number', '=', 'a2.block_number')
+            .andOn('a1.holder_address', '=', 'a2.holder_address')
+            .andOn('a1.asset_id', '=', 'a2.asset_id')
+        },
+      )
+
+    const records = rows.map(toRecord)
+
+    const result: Map<EthereumAddress, BalanceRecord[]> = new Map()
+
+    for (const record of records) {
+      const entry = result.get(record.holderAddress)
+      if (entry === undefined) {
+        result.set(record.holderAddress, [record])
+      } else {
+        result.set(record.holderAddress, [...entry, record])
+      }
+    }
+
+    return result
   }
 
   async deleteAll() {
