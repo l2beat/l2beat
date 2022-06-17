@@ -1,5 +1,3 @@
-import { ProjectId } from '@l2beat/common'
-
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,7 +13,6 @@ import { Project } from './types'
 export const zksync: Project = {
   name: 'zkSync',
   slug: 'zksync',
-  id: ProjectId('zksync'),
   bridges: [
     {
       address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',

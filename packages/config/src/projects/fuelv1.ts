@@ -1,5 +1,3 @@
-import { ProjectId } from '@l2beat/common'
-
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -13,7 +11,6 @@ import { Project } from './types'
 export const fuelv1: Project = {
   name: 'Fuel v1',
   slug: 'fuelv1',
-  id: ProjectId('fuelv1'),
   bridges: [
     {
       address: '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',

@@ -1,5 +1,3 @@
-import { ProjectId } from '@l2beat/common'
-
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,7 +12,6 @@ import { Project } from './types'
 export const gluon: Project = {
   name: 'Gluon',
   slug: 'gluon',
-  id: ProjectId('gluon'),
   bridges: [
     {
       address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',

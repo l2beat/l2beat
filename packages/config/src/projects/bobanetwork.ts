@@ -1,5 +1,3 @@
-import { ProjectId } from '@l2beat/common'
-
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -13,7 +11,6 @@ import { Project } from './types'
 export const bobanetwork: Project = {
   name: 'Boba Network',
   slug: 'bobanetwork',
-  id: ProjectId('bobanetwork'),
   bridges: [
     {
       // Proxy__OVM_L1StandardBridge
