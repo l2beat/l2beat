@@ -29,12 +29,15 @@ export async function up(knex: Knex) {
   await knex.schema.alterTable('coingecko_prices', (table) => {
     table.dropPrimary()
     table.string('asset_id').notNullable().alter()
-    table.setNullable('coingecko_id')
+    table.dropColumn('coingecko_id')
     table.primary(['unix_timestamp', 'asset_id'])
   })
 }
 
 export async function down(knex: Knex) {
+  await knex.schema.alterTable('coingecko_prices', (table) => {
+    table.string('coingecko_id')
+  })
   await Promise.all(
     tokenList.map(({ id, coingeckoId }) => {
       return (
