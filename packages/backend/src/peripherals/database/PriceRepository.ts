@@ -27,14 +27,14 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getAll(): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices').select()
+    const rows = await this.knex('coingecko_prices')
     return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices')
-      .where({ unix_timestamp: timestamp.toString() })
-      .select()
+    const rows = await this.knex('coingecko_prices').where({
+      unix_timestamp: timestamp.toString(),
+    })
 
     this.logger.debug({
       method: 'getByTimestamp',
@@ -45,9 +45,9 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getByToken(assetId: AssetId) {
-    const rows = await this.knex('coingecko_prices')
-      .where({ asset_id: assetId.toString() })
-      .select()
+    const rows = await this.knex('coingecko_prices').where({
+      asset_id: assetId.toString(),
+    })
 
     this.logger.debug({
       method: 'getByToken',

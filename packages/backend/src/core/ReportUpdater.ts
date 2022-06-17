@@ -52,8 +52,7 @@ export class ReportUpdater {
     balances: BalanceRecord[],
   ): ReportRecord[] {
     const priceMap = new Map(prices.map((p) => [p.assetId, p]))
-    const ethAssetId = this.tokenByAssetId.get(AssetId.ETH)?.id
-    const ethPrice = ethAssetId && priceMap.get(ethAssetId)?.priceUsd
+    const ethPrice = priceMap.get(AssetId.ETH)?.priceUsd
 
     if (!ethPrice) {
       return []
