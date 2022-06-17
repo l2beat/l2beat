@@ -16,7 +16,6 @@ declare module 'knex/types/tables' {
 
   interface BalanceRow {
     block_number: number
-    unix_timestamp?: string
     holder_address: string
     asset_id: string
     balance: string
@@ -33,22 +32,6 @@ declare module 'knex/types/tables' {
     is_daily: boolean
   }
 
-  interface ProjectAssetBalanceRow {
-    unix_timestamp: string
-    project_id: string
-    asset_id: string
-    balance: string
-    balance_usd: string
-    balance_eth: string
-  }
-
-  interface ProjectBalanceRow {
-    unix_timestamp: string
-    project_id: string
-    usd_tvl: string
-    eth_tvl: string
-  }
-
   interface CachedDataRow {
     id: number
     unix_timestamp: string
@@ -61,7 +44,5 @@ declare module 'knex/types/tables' {
     asset_balances: BalanceRow
     reports: ReportRow
     cached_data: CachedDataRow
-    project_asset_balances: ProjectAssetBalanceRow
-    project_balances: ProjectBalanceRow
   }
 }
