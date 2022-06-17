@@ -10,25 +10,28 @@ import {
 import { PriceRepository } from '../../../../src/peripherals/database/PriceRepository'
 
 describe(addOptimismToken.name, () => {
-  const AIRDROP_DATE = UnixTime.fromDate(new Date('2022-05-30'))
+  const balance = 214_748_364n * 10n ** 18n
+  const priceOp = 9n
+  const priceEth = 1500n
+  const usdTVL = (balance * priceOp) / 10n ** (18n - 2n)
+  const ethTVL = (usdTVL * 10n ** 4n) / priceEth
+
+  const DAY_BEFORE_AIRDROP = UnixTime.fromDate(new Date('2022-05-29'))
+  const AIRDROP_DAY = UnixTime.fromDate(new Date('2022-05-30'))
 
   const priceRepository = mock<PriceRepository>({
     getByToken: async (token) => {
-      const result = {
-        timestamp: AIRDROP_DATE,
-        coingeckoId: token,
-      }
-
-      if (token === CoingeckoId('optimism')) {
-        return [{ ...result, priceUsd: 9 }]
-      }
-      if (token === CoingeckoId('ethereum')) {
-        return [{ ...result, priceUsd: 1500 }]
-      }
+      const priceUsd =
+        token === CoingeckoId('optimism')
+          ? Number(priceOp)
+          : token === CoingeckoId('ethereum')
+          ? Number(priceEth)
+          : 0
       return [
         {
-          ...result,
-          priceUsd: 0,
+          timestamp: AIRDROP_DAY,
+          coingeckoId: token,
+          priceUsd,
         },
       ]
     },
@@ -36,51 +39,58 @@ describe(addOptimismToken.name, () => {
 
   it('before airdrop', async () => {
     const entries: OutputEntry[] = [
-      mockEntry({ timestamp: UnixTime.fromDate(new Date('2022-05-29')) }),
+      mockEntry({ timestamp: DAY_BEFORE_AIRDROP }),
     ]
 
     await addOptimismToken(entries, priceRepository)
     expect(entries).toEqual([
       {
-        timestamp: UnixTime.fromDate(new Date('2022-05-29')),
-        value: {
-          eth: 0n,
-          usd: 0n,
-        },
+        timestamp: DAY_BEFORE_AIRDROP,
+        value: { eth: 0n, usd: 0n },
         projects: entries[0].projects,
       },
     ])
   })
 
   it('after airdrop', async () => {
-    const entries: OutputEntry[] = [
-      mockEntry({ timestamp: UnixTime.fromDate(new Date('2022-05-30')) }),
-    ]
-
-    const balance = 214_748_364n
-    const price = 9n
-    const priceEth = 1500n
-    const usdTVL = balance * price * 10n ** 2n
-    const ethTVL = (usdTVL * 10n ** 4n) / priceEth
+    const entries: OutputEntry[] = [mockEntry({ timestamp: AIRDROP_DAY })]
 
     await addOptimismToken(entries, priceRepository)
+
     const tokens: Map<string, TokenEntry> = new Map()
-    tokens.set('OP', {
-      usd: usdTVL,
-      eth: ethTVL,
-      balance: balance * 10n ** 18n,
-      decimals: 18,
-    })
+    tokens.set('OP', { usd: usdTVL, eth: ethTVL, balance, decimals: 18 })
     const projects: Map<string, ProjectEntry> = new Map()
     projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
-
     expect(entries).toEqual([
       {
-        timestamp: UnixTime.fromDate(new Date('2022-05-30')),
-        value: {
-          eth: ethTVL,
-          usd: usdTVL,
-        },
+        timestamp: AIRDROP_DAY,
+        value: { eth: ethTVL, usd: usdTVL },
+        projects,
+      },
+    ])
+  })
+
+  it('during airdrop', async () => {
+    const entries: OutputEntry[] = [
+      mockEntry({ timestamp: DAY_BEFORE_AIRDROP }),
+      mockEntry({ timestamp: AIRDROP_DAY }),
+    ]
+
+    await addOptimismToken(entries, priceRepository)
+
+    const tokens: Map<string, TokenEntry> = new Map()
+    tokens.set('OP', { usd: usdTVL, eth: ethTVL, balance, decimals: 18 })
+    const projects: Map<string, ProjectEntry> = new Map()
+    projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
+    expect(entries).toEqual([
+      {
+        timestamp: DAY_BEFORE_AIRDROP,
+        value: { eth: 0n, usd: 0n },
+        projects: entries[0].projects,
+      },
+      {
+        timestamp: AIRDROP_DAY,
+        value: { eth: ethTVL, usd: usdTVL },
         projects,
       },
     ])
