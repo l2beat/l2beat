@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,6 +14,7 @@ import { Project } from './types'
 export const omgnetwork: Project = {
   name: 'OMG Network',
   slug: 'omgnetwork',
+  id: ProjectId('omgnetwork'),
   bridges: [
     {
       address: '0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0',

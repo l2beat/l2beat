@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,6 +16,7 @@ import { Project } from './types'
 export const sorare: Project = {
   name: 'Sorare',
   slug: 'sorare',
+  id: ProjectId('sorare'),
   bridges: [
     {
       address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
