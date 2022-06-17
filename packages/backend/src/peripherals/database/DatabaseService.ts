@@ -2,6 +2,8 @@ import { Logger } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
+import { PolyglotMigrationSource } from './PolyglotMigrationSource'
+
 export class DatabaseService {
   private migrated = false
   private version: string | null = null
@@ -15,7 +17,9 @@ export class DatabaseService {
       client: 'pg',
       connection,
       migrations: {
-        directory: path.join(__dirname, 'migrations'),
+        migrationSource: new PolyglotMigrationSource(
+          path.join(__dirname, 'migrations'),
+        ),
       },
     })
   }
