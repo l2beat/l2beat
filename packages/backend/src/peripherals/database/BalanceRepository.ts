@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { BalanceRow } from 'knex/types/tables'
 
@@ -64,9 +64,11 @@ export class BalanceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getStatus(): Promise<Map<EthereumAddress, BalanceRecord[]>> {
+  async getStatus(): Promise<
+    Map<EthereumAddress, (BalanceRecord & { timestamp: UnixTime })[]>
+  > {
     const rows = await this.knex
-      .select('a1.*')
+      .select('a1.*', 'unix_timestamp')
       .from('asset_balances as a1')
       .innerJoin(
         this.knex('asset_balances')
@@ -84,10 +86,22 @@ export class BalanceRepository extends BaseRepository {
             .andOn('a1.asset_id', '=', 'a2.asset_id')
         },
       )
+      .innerJoin(
+        'block_numbers',
+        'block_numbers.block_number',
+        '=',
+        'a1.block_number',
+      )
 
-    const records = rows.map(toRecord)
+    const records = rows.map((row) => ({
+      ...toRecord(row),
+      timestamp: new UnixTime(+row.unix_timestamp),
+    }))
 
-    const result: Map<EthereumAddress, BalanceRecord[]> = new Map()
+    const result: Map<
+      EthereumAddress,
+      (BalanceRecord & { timestamp: UnixTime })[]
+    > = new Map()
 
     for (const record of records) {
       const entry = result.get(record.holderAddress)

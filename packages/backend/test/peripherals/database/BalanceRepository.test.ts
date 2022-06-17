@@ -1,7 +1,8 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
+import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(BalanceRepository.name, () => {
@@ -28,6 +29,8 @@ describe(BalanceRepository.name, () => {
       balance: MOCK_BALANCE,
     },
   ]
+
+  const START = UnixTime.fromDate(new Date('2022-05-17'))
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -196,6 +199,15 @@ describe(BalanceRepository.name, () => {
   })
 
   it(BalanceRepository.prototype.getStatus.name, async () => {
+    const blockNumberRepository = new BlockNumberRepository(knex, Logger.SILENT)
+
+    DATA.map((d, index) =>
+      blockNumberRepository.add({
+        timestamp: START.add(index, 'hours'),
+        blockNumber: d.blockNumber,
+      }),
+    )
+
     const status = await repository.getStatus()
 
     expect(status).toEqual(
@@ -205,6 +217,7 @@ describe(BalanceRepository.name, () => {
           [
             {
               blockNumber: START_BLOCK_NUMBER + 1n,
+              timestamp: START.add(1, 'hours'),
               holderAddress: MOCK_HOLDER,
               assetId: MOCK_ASSET,
               balance: MOCK_BALANCE,

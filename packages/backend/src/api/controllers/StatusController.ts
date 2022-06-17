@@ -58,6 +58,7 @@ export class StatusController {
             assetId: token.assetId,
             balance: token.balance.toString(),
             blockNumber: token.blockNumber.toString(),
+            timestamp: unixTimeToString(token.timestamp),
           })) ?? [],
       })),
     )
