@@ -28,7 +28,6 @@ export function getLocalConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
-    assetIds: tokenList.map((t) => t.id),
     projects: projects.map(projectToInfo),
   }
 }

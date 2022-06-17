@@ -1,5 +1,6 @@
 import { AssetId, Logger, UnixTime } from '@l2beat/common'
 
+import { Token } from '../model'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   DataBoundary,
@@ -11,7 +12,7 @@ export class PriceUpdater {
   constructor(
     private coingeckoQueryService: CoingeckoQueryService,
     private priceRepository: PriceRepository,
-    private assetIds: AssetId[],
+    private tokens: Token[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -30,7 +31,7 @@ export class PriceUpdater {
     const boundaries = await this.priceRepository.calcDataBoundaries()
 
     const results = await Promise.allSettled(
-      this.assetIds.map((assetId) => {
+      this.tokens.map(({ id: assetId }) => {
         const boundary = boundaries.get(assetId)
         return this.updateToken(assetId, boundary, from, to)
       }),
