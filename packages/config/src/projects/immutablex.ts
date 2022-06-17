@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,6 +16,7 @@ import { Project } from './types'
 export const immutablex: Project = {
   name: 'Immutable X',
   slug: 'immutablex',
+  id: ProjectId('immutablex'),
   bridges: [
     {
       address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',

@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/common'
+
 import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
 import { Project } from './types'
 import { zkswap } from './zkswap'
@@ -5,6 +7,7 @@ import { zkswap } from './zkswap'
 export const zkswap2: Project = {
   name: 'ZKSwap 2.0',
   slug: 'zkswap2',
+  id: ProjectId('zkswap2'),
   associatedTokens: ['ZKS'],
   bridges: [
     {
