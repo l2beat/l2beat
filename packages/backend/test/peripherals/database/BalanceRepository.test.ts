@@ -201,6 +201,17 @@ describe(BalanceRepository.name, () => {
   it(BalanceRepository.prototype.getLatestPerHolder.name, async () => {
     const blockNumberRepository = new BlockNumberRepository(knex, Logger.SILENT)
 
+    const additionalRecords = [
+      {
+        blockNumber: START_BLOCK_NUMBER,
+        holderAddress: MOCK_HOLDER,
+        assetId: AssetId('token-a'),
+        balance: MOCK_BALANCE,
+      },
+    ]
+
+    repository.addOrUpdateMany(additionalRecords)
+
     DATA.map((d, index) =>
       blockNumberRepository.add({
         timestamp: START.add(index, 'hours'),
@@ -220,6 +231,13 @@ describe(BalanceRepository.name, () => {
               timestamp: START.add(1, 'hours'),
               holderAddress: MOCK_HOLDER,
               assetId: MOCK_ASSET,
+              balance: MOCK_BALANCE,
+            },
+            {
+              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
+              holderAddress: MOCK_HOLDER,
+              assetId: AssetId('token-a'),
               balance: MOCK_BALANCE,
             },
           ],

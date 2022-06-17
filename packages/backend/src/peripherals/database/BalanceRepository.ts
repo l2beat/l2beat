@@ -10,7 +10,6 @@ export interface BalanceRecord {
   assetId: AssetId
   balance: bigint
 }
-;``
 export interface DataBoundary {
   earliestBlockNumber: bigint | undefined
   latestBlockNumber: bigint | undefined
