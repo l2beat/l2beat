@@ -35,7 +35,21 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
+  await Promise.all(
+    tokenList.map(({ id, coingeckoId }) => {
+      return (
+        knex('coingecko_prices')
+          // @ts-expect-error coingecko_id removed from knex types module
+          .update({ coingecko_id: coingeckoId.toString() })
+          .where({ asset_id: id.toString() })
+      )
+    }),
+  )
+
   await knex.schema.alterTable('coingecko_prices', (table) => {
+    table.dropPrimary()
+    table.string('coingecko_id').notNullable().alter()
+    table.primary(['coingecko_id', 'unix_timestamp'])
     table.dropIndex('unix_timestamp')
     table.dropIndex('asset_id')
     table.dropColumn('asset_id')
