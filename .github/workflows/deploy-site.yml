@@ -16,17 +16,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16.x
-      - name: Backend cache.json
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: ./packages/backend/cache/cache.json
-          # Update the version if cache format changes
-          key: cache-json-v-2-${{ github.run_id }}
-          restore-keys: |
-            cache-json-v-2-
       - run: yarn --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:frontend
         env:
           RPC_URL: ${{ secrets.BC_NODE }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
