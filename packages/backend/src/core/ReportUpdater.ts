@@ -84,7 +84,7 @@ export function createReport(
   balance: BalanceRecord,
   ethPrice: number,
 ): ReportRecord {
-  const { usdTVL, ethTVL } = calculateTVL(
+  const { balanceUsd, balanceEth } = convertBalance(
     price.priceUsd,
     decimals,
     balance.balance,
@@ -96,12 +96,12 @@ export function createReport(
     bridge: balance.holderAddress,
     asset: balance.assetId,
     balance: balance.balance,
-    usdTVL,
-    ethTVL,
+    balanceUsd,
+    balanceEth,
   }
 }
 
-export function calculateTVL(
+export function convertBalance(
   priceUsd: number,
   decimals: number,
   balance: bigint,
@@ -109,12 +109,12 @@ export function calculateTVL(
 ) {
   const bigintPrice = getBigIntPrice(priceUsd, decimals)
   const usdBalance = (balance * bigintPrice) / 10n ** 18n
-  const usdTVL = usdBalance / 10n ** (18n - USD_PRECISION)
+  const balanceUsd = usdBalance / 10n ** (18n - USD_PRECISION)
 
   const etherBigInt = getBigIntPrice(ethPrice, 18)
   const etherBalance = (usdBalance * 10n ** 18n) / etherBigInt
-  const ethTVL = etherBalance / 10n ** (18n - ETH_PRECISION)
-  return { usdTVL, ethTVL }
+  const balanceEth = etherBalance / 10n ** (18n - ETH_PRECISION)
+  return { balanceUsd, balanceEth }
 }
 
 export function getBigIntPrice(price: number, decimals: number) {

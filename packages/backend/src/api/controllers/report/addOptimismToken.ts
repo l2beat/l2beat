@@ -1,11 +1,11 @@
 import { CoingeckoId, UnixTime } from '@l2beat/common'
 
-import { calculateTVL as calculateTVL } from '../../../core/ReportUpdater'
+import { convertBalance } from '../../../core/ReportUpdater'
 import {
   PriceRecord,
   PriceRepository,
 } from '../../../peripherals/database/PriceRepository'
-import { OutputEntry, saveTVLToEntry } from './aggregateReportsDaily'
+import { OutputEntry, saveBalancesToEntry } from './aggregateReportsDaily'
 
 // This is the circulating supply of OP as given by Coingecko.
 // The value is obtained by looking at how many tokens have been designated
@@ -33,18 +33,18 @@ export async function addOptimismToken(
       continue
     }
 
-    const { usdTVL, ethTVL } = calculateTVL(
+    const { balanceUsd, balanceEth } = convertBalance(
       opPrice,
       18,
       OP_TOKEN_BALANCE,
       ethPrice,
     )
 
-    saveTVLToEntry(
+    saveBalancesToEntry(
       entry,
       'Optimism',
-      usdTVL,
-      ethTVL,
+      balanceUsd,
+      balanceEth,
       OP_TOKEN_BALANCE,
       'OP',
       18,
