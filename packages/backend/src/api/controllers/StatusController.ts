@@ -25,7 +25,7 @@ export class StatusController {
     const result: PriceStatus[] = []
 
     for (const token of this.tokens) {
-      const boundary = boundaries.get(token.coingeckoId)
+      const boundary = boundaries.get(token.id)
 
       if (!boundary) {
         result.push({

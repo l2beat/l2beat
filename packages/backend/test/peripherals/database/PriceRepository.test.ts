@@ -1,4 +1,4 @@
-import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import {
@@ -11,32 +11,32 @@ describe(PriceRepository.name, () => {
   const { knex } = setupDatabaseTestSuite()
   const repository = new PriceRepository(knex, Logger.SILENT)
 
-  const START = UnixTime.fromDate(new Date())
+  const START = UnixTime.now()
   const DATA = [
     {
       priceUsd: 3000,
       timestamp: START.add(-1, 'hours'),
-      coingeckoId: CoingeckoId('ethereum'),
+      assetId: AssetId.ETH,
     },
     {
       priceUsd: 3100,
       timestamp: START.add(-2, 'hours'),
-      coingeckoId: CoingeckoId('ethereum'),
+      assetId: AssetId.ETH,
     },
     {
       priceUsd: 20,
       timestamp: START.add(-1, 'hours'),
-      coingeckoId: CoingeckoId('uniswap'),
+      assetId: AssetId('uni-uniswap'),
     },
     {
       priceUsd: 22,
       timestamp: START.add(-2, 'hours'),
-      coingeckoId: CoingeckoId('uniswap'),
+      assetId: AssetId('uni-uniswap'),
     },
     {
       priceUsd: 1,
       timestamp: START,
-      coingeckoId: CoingeckoId('dai'),
+      assetId: AssetId.DAI,
     },
   ]
 
@@ -51,12 +51,12 @@ describe(PriceRepository.name, () => {
         {
           priceUsd: 3300,
           timestamp: UnixTime.fromDate(new Date()).add(-3, 'hours'),
-          coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
         },
         {
           priceUsd: 3500,
           timestamp: UnixTime.fromDate(new Date()).add(-4, 'hours'),
-          coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
         },
       ]
       await repository.addMany(newRows)
@@ -73,11 +73,11 @@ describe(PriceRepository.name, () => {
     it('big query', async () => {
       const records: PriceRecord[] = []
       const now = UnixTime.now()
-      for (let i = 0; i < 35_000; i++) {
+      for (let i = 5; i < 35_000; i++) {
         records.push({
           priceUsd: Math.random() * 1000,
           timestamp: now.add(-i, 'hours'),
-          coingeckoId: CoingeckoId('fake-coin'),
+          assetId: AssetId('fake-coin'),
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
@@ -100,12 +100,10 @@ describe(PriceRepository.name, () => {
   })
 
   it(PriceRepository.prototype.getByToken.name, async () => {
-    const token = CoingeckoId('uniswap')
+    const token = AssetId('uni-uniswap')
     const results = await repository.getByToken(token)
 
-    expect(results).toBeAnArrayWith(
-      ...DATA.filter((d) => d.coingeckoId === token),
-    )
+    expect(results).toBeAnArrayWith(...DATA.filter((d) => d.assetId === token))
     expect(results).toBeAnArrayOfLength(2)
   })
 
@@ -124,21 +122,21 @@ describe(PriceRepository.name, () => {
       expect(result).toEqual(
         new Map([
           [
-            CoingeckoId('ethereum'),
+            AssetId.ETH,
             {
               earliest: START.add(-2, 'hours'),
               latest: START.add(-1, 'hours'),
             },
           ],
           [
-            CoingeckoId('uniswap'),
+            AssetId('uni-uniswap'),
             {
               earliest: START.add(-2, 'hours'),
               latest: START.add(-1, 'hours'),
             },
           ],
           [
-            CoingeckoId('dai'),
+            AssetId.DAI,
             {
               earliest: START,
               latest: START,

@@ -19,14 +19,14 @@ export class CoingeckoQueryService {
   constructor(private coingeckoClient: CoingeckoClient) {}
 
   async getUsdPriceHistory(
-    coinId: CoingeckoId,
+    coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
   ): Promise<PriceHistoryPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
-    const prices = await this.queryPrices(coinId, start, end, granularity)
+    const prices = await this.queryPrices(coingeckoId, start, end, granularity)
 
     const sortedPrices = prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime(),
@@ -38,14 +38,14 @@ export class CoingeckoQueryService {
   }
 
   async queryPrices(
-    coinId: CoingeckoId,
+    coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
   ): Promise<Price[]> {
     if (granularity === 'daily') {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
-        coinId,
+        coingeckoId,
         'usd',
         from,
         to,
@@ -55,7 +55,7 @@ export class CoingeckoQueryService {
       const results = await Promise.allSettled(
         generateRangesToCallHourly(from, to).map((range) =>
           this.coingeckoClient.getCoinMarketChartRange(
-            coinId,
+            coingeckoId,
             'usd',
             range.start,
             range.end,

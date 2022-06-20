@@ -31,7 +31,6 @@ export function getProductionConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
-    coingeckoIds: tokenList.map((t) => t.coingeckoId),
     projects: projects.map(projectToInfo),
   }
 }

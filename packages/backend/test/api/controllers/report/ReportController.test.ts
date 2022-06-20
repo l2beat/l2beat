@@ -60,10 +60,10 @@ describe(ReportController.name, () => {
     })
     const priceRepository = mock<PriceRepository>({
       getByToken: async (token) => {
-        if (token === CoingeckoId('optimism')) {
+        if (token === AssetId('op-optimism')) {
           return [mockPrice(token, 1, -1), mockPrice(token, 1, 0)]
         }
-        if (token === CoingeckoId('ethereum')) {
+        if (token === AssetId.ETH) {
           return [mockPrice(token, 1500, -1), mockPrice(token, 1500, 0)]
         }
         return [mockPrice(token, 0, -1), mockPrice(token, 0, 0)]
@@ -223,6 +223,6 @@ function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
   }
 }
 
-function mockPrice(token: CoingeckoId, priceUsd: number, offset: number) {
-  return { timestamp: START.add(offset, 'days'), coingeckoId: token, priceUsd }
+function mockPrice(token: AssetId, priceUsd: number, offset: number) {
+  return { timestamp: START.add(offset, 'days'), assetId: token, priceUsd }
 }
