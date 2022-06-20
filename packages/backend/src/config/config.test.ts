@@ -13,6 +13,7 @@ export function getTestConfig(): Config {
       format: 'json',
     },
     port: 1337,
+    coingeckoApiKey: undefined,
     alchemyApiKey: 'xXTestAlchemyKeyXx',
     etherscanApiKey: 'xXTestEtherscanKeyXx',
     databaseConnection: getEnv('TEST_DB_URL', 'xXTestDatabaseUrlXx'),
