@@ -138,9 +138,10 @@ export class Application {
 
       await apiServer.listen()
 
-      reportController.start()
-
-      syncScheduler.start()
+      if (config.syncDisabled === false) {
+        reportController.start()
+        syncScheduler.start()
+      }
     }
   }
 }
