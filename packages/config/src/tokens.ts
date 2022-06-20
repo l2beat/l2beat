@@ -447,16 +447,19 @@ export const tokenList: TokenInfo[] = [
     sinceBlock: 7710760,
     category: 'other',
   },
-  {
-    id: AssetId('cusdt-compound-usdt'),
-    name: 'Compound USDT',
-    coingeckoId: CoingeckoId('compound-usdt'),
-    address: EthereumAddress('0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'),
-    symbol: 'cUSDT',
-    decimals: 8,
-    sinceBlock: 9879363,
-    category: 'other',
-  },
+  // There is an issue with cUSDT price on coingecko
+  // https://www.coingecko.com/en/coins/compound-usdt
+  // until it is resolved the cUSDT tvl would not be tracked
+  // {
+  //   id: AssetId('cusdt-compound-usdt'),
+  //   name: 'Compound USDT',
+  //   coingeckoId: CoingeckoId('compound-usdt'),
+  //   address: EthereumAddress('0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'),
+  //   symbol: 'cUSDT',
+  //   decimals: 8,
+  //   sinceBlock: 9879363,
+  //   category: 'other',
+  // },
   {
     id: AssetId('people-constitution-dao'),
     name: 'ConstitutionDAO',
@@ -1825,16 +1828,6 @@ export const tokenList: TokenInfo[] = [
     symbol: 'MIR',
     decimals: 18,
     sinceBlock: 11345242,
-    category: 'other',
-  },
-  {
-    id: AssetId('wton-wrapped-ton-crystal'),
-    name: 'Wrapped TON Crystal',
-    coingeckoId: CoingeckoId('wrapped-ton-crystal'),
-    address: EthereumAddress('0xdB3C2515Da400e11Bcaf84f3b5286f18ffF1868F'),
-    symbol: 'WTON',
-    decimals: 9,
-    sinceBlock: 12163127,
     category: 'other',
   },
   {
