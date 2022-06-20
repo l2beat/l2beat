@@ -1398,9 +1398,9 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    id: AssetId('reef-reef-finance'),
+    id: AssetId('reef-reef'),
     name: 'Reef.finance',
-    coingeckoId: CoingeckoId('reef-finance'),
+    coingeckoId: CoingeckoId('reef'),
     address: EthereumAddress('0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf'),
     symbol: 'REEF',
     decimals: 18,
