@@ -13,6 +13,7 @@ describe(ReportRepository.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
   const BLOCK = 123456n
   const BRIDGE_A = EthereumAddress.random()
+  const BRIDGE_B = EthereumAddress.random()
   const ASSET_A = AssetId('asset-a')
   const BALANCE = 100000n
 
@@ -147,5 +148,23 @@ describe(ReportRepository.name, () => {
     const results = await reportsRepository.getAll()
 
     expect(results).toBeAnArrayOfLength(0)
+  })
+
+  it(ReportRepository.prototype.getLatestPerBridge.name, async () => {
+    await reportsRepository.addOrUpdateMany([
+      mockReport(BRIDGE_A, 0, 0n),
+      mockReport(BRIDGE_A, 1, 100n),
+      mockReport(BRIDGE_B, 0, 0n),
+      mockReport(BRIDGE_B, 1, 100n),
+    ])
+
+    const result = await reportsRepository.getLatestPerBridge()
+
+    expect(result).toEqual(
+      new Map([
+        [BRIDGE_A, [mockReport(BRIDGE_A, 1, 100n)]],
+        [BRIDGE_B, [mockReport(BRIDGE_B, 1, 100n)]],
+      ]),
+    )
   })
 })

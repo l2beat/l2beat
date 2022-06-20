@@ -1,8 +1,10 @@
 import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
 
-import { ProjectInfo, Token } from '../../model'
+import { ProjectInfo } from '../../model'
+import { Token } from '../../model/Token'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
+import { ReportRepository } from '../../peripherals/database/ReportRepository'
 
 interface PriceStatus {
   coingeckoId: CoingeckoId
@@ -15,6 +17,7 @@ export class StatusController {
   constructor(
     private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
+    private reportsRepository: ReportRepository,
     private tokens: Token[],
     private projects: ProjectInfo[],
   ) {}
@@ -57,6 +60,26 @@ export class StatusController {
           holderLatest.get(EthereumAddress(address))?.map((latest) => ({
             assetId: latest.assetId,
             balance: latest.balance.toString(),
+            blockNumber: latest.blockNumber.toString(),
+            timestamp: unixTimeToString(latest.timestamp),
+            syncStatus: getSyncStatus(latest.timestamp),
+          })) ?? [],
+      })),
+    )
+  }
+
+  async getReportsStatus() {
+    const bridgeLatest = await this.reportsRepository.getLatestPerBridge()
+    return this.projects.flatMap(({ bridges, name }) =>
+      bridges.map(({ address }) => ({
+        name,
+        address,
+        tokens:
+          bridgeLatest.get(EthereumAddress(address))?.map((latest) => ({
+            assetId: latest.asset,
+            balance: latest.balance.toString(),
+            usd: latest.balanceUsd.toString(),
+            eth: latest.balanceEth.toString(),
             blockNumber: latest.blockNumber.toString(),
             timestamp: unixTimeToString(latest.timestamp),
             syncStatus: getSyncStatus(latest.timestamp),
