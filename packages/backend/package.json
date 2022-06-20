@@ -6,7 +6,8 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node -r esbuild-register src",
+    "start": "node -r source-map-support/register build/src/index.js",
+    "start:dev": "node -r esbuild-register src",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --ext .ts --max-warnings 0 src test",
@@ -29,6 +30,7 @@
     "koa": "^2.13.4",
     "node-fetch": "2.6.1",
     "pg": "^8.7.3",
+    "source-map-support": "^0.5.21",
     "zod": "^3.17.3"
   },
   "devDependencies": {
