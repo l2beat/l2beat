@@ -1,8 +1,8 @@
 import { AssetId, Logger, UnixTime } from '@l2beat/common'
-import { Knex } from 'knex'
 import { PriceRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
+import { Database } from './Database'
 
 export interface PriceRecord {
   assetId: AssetId
@@ -16,8 +16,8 @@ export interface DataBoundary {
 }
 
 export class PriceRepository extends BaseRepository {
-  constructor(knex: Knex, logger: Logger) {
-    super(knex, logger)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
 
     this.getAll = this.wrapGet(this.getAll)
     this.getByTimestamp = this.wrapGet(this.getByTimestamp)
@@ -27,12 +27,14 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getAll(): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices')
+    const knex = await this.knex()
+    const rows = await knex('coingecko_prices')
     return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices').where({
+    const knex = await this.knex()
+    const rows = await knex('coingecko_prices').where({
       unix_timestamp: timestamp.toString(),
     })
 
@@ -45,7 +47,8 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getByToken(assetId: AssetId) {
-    const rows = await this.knex('coingecko_prices').where({
+    const knex = await this.knex()
+    const rows = await knex('coingecko_prices').where({
       asset_id: assetId.toString(),
     })
 
@@ -59,16 +62,19 @@ export class PriceRepository extends BaseRepository {
 
   async addMany(prices: PriceRecord[]) {
     const rows: PriceRow[] = prices.map(toRow)
-    await this.knex.batchInsert('coingecko_prices', rows, 10_000)
+    const knex = await this.knex()
+    await knex.batchInsert('coingecko_prices', rows, 10_000)
     return rows.length
   }
 
   async deleteAll() {
-    await this.knex('coingecko_prices').delete()
+    const knex = await this.knex()
+    await knex('coingecko_prices').delete()
   }
 
   async calcDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
-    const rows = await this.knex('coingecko_prices')
+    const knex = await this.knex()
+    const rows = await knex('coingecko_prices')
       .min('unix_timestamp')
       .max('unix_timestamp')
       .select('asset_id')

@@ -1,8 +1,8 @@
 import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
-import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
+import { Database } from './Database'
 
 export interface ReportRecord {
   blockNumber: bigint
@@ -15,8 +15,8 @@ export interface ReportRecord {
 }
 
 export class ReportRepository extends BaseRepository {
-  constructor(knex: Knex, logger: Logger) {
-    super(knex, logger)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
 
     this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
@@ -25,7 +25,8 @@ export class ReportRepository extends BaseRepository {
   }
 
   async getDaily(): Promise<ReportRecord[]> {
-    const rows = await this.knex('reports')
+    const knex = await this.knex()
+    const rows = await knex('reports')
       .select()
       .where('is_daily', '=', true)
       .orderBy('unix_timestamp')
@@ -34,13 +35,15 @@ export class ReportRepository extends BaseRepository {
   }
 
   async getAll(): Promise<ReportRecord[]> {
-    const rows = await this.knex('reports').select()
+    const knex = await this.knex()
+    const rows = await knex('reports').select()
     return rows.map(toRecord)
   }
 
   async addOrUpdateMany(reports: ReportRecord[]) {
     const rows = reports.map(toRow)
-    await this.knex('reports')
+    const knex = await this.knex()
+    await knex('reports')
       .insert(rows)
       .onConflict(['block_number', 'bridge_address', 'asset_id'])
       .merge()
@@ -48,17 +51,19 @@ export class ReportRepository extends BaseRepository {
   }
 
   async deleteAll() {
-    return await this.knex('reports').delete()
+    const knex = await this.knex()
+    return await knex('reports').delete()
   }
 
   async getLatestPerBridge(): Promise<Map<EthereumAddress, ReportRecord[]>> {
-    const rows = await this.knex
+    const knex = await this.knex()
+    const rows = await knex
       .select('a1.*')
       .from('reports as a1')
       .innerJoin(
-        this.knex('reports')
+        knex('reports')
           .select(
-            this.knex.raw('max(unix_timestamp) as unix_timestamp'),
+            knex.raw('max(unix_timestamp) as unix_timestamp'),
             'bridge_address',
             'asset_id',
           )
