@@ -24,6 +24,6 @@ export function getTestConfig(): Config {
     },
     tokens: [],
     projects: [],
-    syncDisabled: getEnv.boolean('DISABLE_SYNC', false),
+    syncDisabled: getEnv.boolean('SYNC_DISABLED', false),
   }
 }

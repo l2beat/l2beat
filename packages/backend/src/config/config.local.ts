@@ -30,6 +30,6 @@ export function getLocalConfig(): Config {
       priceStrategy: { type: 'market' },
     })),
     projects: projects.map(projectToInfo),
-    syncDisabled: getEnv.boolean('DISABLE_SYNC', false),
+    syncDisabled: getEnv.boolean('SYNC_DISABLED', false),
   }
 }
