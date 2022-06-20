@@ -11,7 +11,7 @@ import { UnixTime } from '../../../src/types'
 //add names
 describe(CoingeckoClient.name, () => {
   describe('query', () => {
-    it('constructs a correct url', async () => {
+    it('constructs a correct url without api key', async () => {
       const httpClient = mock<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
@@ -21,7 +21,21 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
+      await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
+    })
+
+    it('constructs a correct url with api key', async () => {
+      const httpClient = mock<HttpClient>({
+        async fetch(url) {
+          expect(url).toEqual(
+            'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
+          )
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        },
+      })
+
+      const coingeckoClient = new CoingeckoClient(httpClient, 'myapikey')
       await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
     })
 
@@ -33,7 +47,7 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       await coingeckoClient.query('/a/b', {})
     })
 
@@ -42,7 +56,7 @@ describe(CoingeckoClient.name, () => {
         fetch: async () => new Response('', { status: 404 }),
       })
 
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
         'Server responded with non-2XX result: 404 Not Found',
       )
@@ -53,7 +67,7 @@ describe(CoingeckoClient.name, () => {
         fetch: async () => new Response('text'),
       })
 
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
         expect.stringMatching(/json/),
       )
@@ -71,7 +85,7 @@ describe(CoingeckoClient.name, () => {
             ]),
           ),
       })
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       const result = await coingeckoClient.getCoinList()
       expect(result).toEqual([
         { id: CoingeckoId('asd'), symbol: 'ASD', name: 'A Sad Dime' },
@@ -102,7 +116,7 @@ describe(CoingeckoClient.name, () => {
             ]),
           ),
       })
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       const result = await coingeckoClient.getCoinList({
         includePlatform: true,
       })
@@ -166,7 +180,7 @@ describe(CoingeckoClient.name, () => {
       const httpClient = mock<HttpClient>({
         fetch: async () => new Response(JSON.stringify(MOCK_PARSED_DATA)),
       })
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       const result = await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
         'usd',
@@ -187,7 +201,7 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient(httpClient)
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
         'usd',

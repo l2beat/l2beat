@@ -569,7 +569,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const EXPECTED_HOURLY_FAULT_RATIO = 0.15
 
   const httpClient = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(httpClient)
+  const coingeckoClient = new CoingeckoClient(httpClient, undefined)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   it('daily', async () => {
