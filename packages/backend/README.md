@@ -98,7 +98,7 @@ You can configure the behavior of the app with the following environment variabl
 - `TEST_DB_URL` - Database url used in `yarn test`
 - `LOG_LEVEL` - Integer specifying the log level. See `src/services/Logger.ts`
 - `PORT` - The port on which the application exposes the api
-- `DISABLE_SYNC` (default `0`) - When set to `1` it will prevent app from syncing, useful for local debugging
+- `DISABLE_SYNC` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 
 ## Scripts
 
