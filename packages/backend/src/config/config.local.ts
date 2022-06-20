@@ -15,6 +15,7 @@ export function getLocalConfig(): Config {
       format: 'pretty',
     },
     port: getEnv.integer('PORT', 3000),
+    coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     databaseConnection: getEnv('LOCAL_DB_URL'),

@@ -14,6 +14,7 @@ export function getProductionConfig(): Config {
       format: 'json',
     },
     port: getEnv.integer('PORT'),
+    coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     databaseConnection: {

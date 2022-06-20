@@ -29,7 +29,7 @@ export function setup() {
   const etherscanApi = new EtherscanApi(config.etherscanApiKey, logger)
 
   const httpClient = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(httpClient)
+  const coingeckoClient = new CoingeckoClient(httpClient, undefined)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   const cacheFile = new CacheFile()

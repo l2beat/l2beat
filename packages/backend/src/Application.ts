@@ -54,7 +54,7 @@ export class Application {
 
     const multicall = new MulticallClient(ethereumClient)
 
-    const coingeckoClient = new CoingeckoClient(http)
+    const coingeckoClient = new CoingeckoClient(http, config.coingeckoApiKey)
 
     const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 

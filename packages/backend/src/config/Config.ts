@@ -9,6 +9,7 @@ export interface Config {
     format: 'pretty' | 'json'
   }
   port: number
+  coingeckoApiKey: string | undefined
   alchemyApiKey: string
   etherscanApiKey: string
   databaseConnection: Knex.Config['connection']

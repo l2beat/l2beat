@@ -11,15 +11,19 @@ import {
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
+const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
 export class CoingeckoClient {
-  private rateLimiter = new RateLimiter({
-    callsPerMinute: 40,
-  })
   private timeoutMs = 10_000
 
-  constructor(private httpClient: HttpClient) {
-    this.query = this.rateLimiter.wrap(this.query.bind(this))
+  constructor(
+    private httpClient: HttpClient,
+    private apiKey: string | undefined,
+  ) {
+    const rateLimiter = new RateLimiter({
+      callsPerMinute: apiKey ? 450 : 35,
+    })
+    this.query = rateLimiter.wrap(this.query.bind(this))
   }
 
   async getCoinList(options?: {
@@ -72,8 +76,11 @@ export class CoingeckoClient {
   }
 
   async query(endpoint: string, params: Record<string, string>) {
-    const query = new URLSearchParams(params).toString()
-    let url = `${API_URL}${endpoint}`
+    const queryParams = this.apiKey
+      ? { ...params, x_cg_pro_api_key: this.apiKey }
+      : params
+    const query = new URLSearchParams(queryParams).toString()
+    let url = `${this.apiKey ? PRO_API_URL : API_URL}${endpoint}`
     if (query) {
       url += `?${query}`
     }
