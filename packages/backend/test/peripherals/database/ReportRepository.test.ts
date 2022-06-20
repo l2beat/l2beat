@@ -6,9 +6,9 @@ import { ReportRepository } from '../../../src/peripherals/database/ReportReposi
 import { setupDatabaseTestSuite } from './setup'
 
 describe(ReportRepository.name, () => {
-  const { knex } = setupDatabaseTestSuite()
-  const reportsRepository = new ReportRepository(knex, Logger.SILENT)
-  const balancesRepository = new BalanceRepository(knex, Logger.SILENT)
+  const { database } = setupDatabaseTestSuite()
+  const reportsRepository = new ReportRepository(database, Logger.SILENT)
+  const balancesRepository = new BalanceRepository(database, Logger.SILENT)
 
   const TODAY = UnixTime.now().toStartOf('day')
   const BLOCK = 123456n

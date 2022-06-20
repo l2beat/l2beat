@@ -8,8 +8,8 @@ import {
 import { setupDatabaseTestSuite } from './setup'
 
 describe(PriceRepository.name, () => {
-  const { knex } = setupDatabaseTestSuite()
-  const repository = new PriceRepository(knex, Logger.SILENT)
+  const { database } = setupDatabaseTestSuite()
+  const repository = new PriceRepository(database, Logger.SILENT)
 
   const START = UnixTime.now()
   const DATA = [

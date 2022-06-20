@@ -27,8 +27,8 @@ const mockReport: ReportOutput = {
 }
 
 describe(CachedDataRepository.name, () => {
-  const { knex } = setupDatabaseTestSuite()
-  const repository = new CachedDataRepository(knex, Logger.SILENT)
+  const { database } = setupDatabaseTestSuite()
+  const repository = new CachedDataRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()

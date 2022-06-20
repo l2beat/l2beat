@@ -18,7 +18,7 @@ import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQuerySer
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
-import { DatabaseService } from './peripherals/database/DatabaseService'
+import { Database } from './peripherals/database/Database'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
@@ -35,13 +35,12 @@ export class Application {
 
     /* - - - - - PERIPHERALS - - - - - */
 
-    const knex = DatabaseService.createKnexInstance(config.databaseConnection)
-    const databaseService = new DatabaseService(knex, logger)
-    const blockNumberRepository = new BlockNumberRepository(knex, logger)
-    const priceRepository = new PriceRepository(knex, logger)
-    const balanceRepository = new BalanceRepository(knex, logger)
-    const reportRepository = new ReportRepository(knex, logger)
-    const cachedDataRepository = new CachedDataRepository(knex, logger)
+    const database = new Database(config.databaseConnection, logger)
+    const blockNumberRepository = new BlockNumberRepository(database, logger)
+    const priceRepository = new PriceRepository(database, logger)
+    const balanceRepository = new BalanceRepository(database, logger)
+    const reportRepository = new ReportRepository(database, logger)
+    const cachedDataRepository = new CachedDataRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -134,12 +133,10 @@ export class Application {
     this.start = async () => {
       logger.for(this).info('Starting')
 
-      await databaseService.migrateToLatest()
-
       await apiServer.listen()
+      await database.migrateToLatest()
 
       reportController.start()
-
       syncScheduler.start()
     }
   }

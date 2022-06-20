@@ -1,8 +1,8 @@
 import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
-import { Knex } from 'knex'
 import { BalanceRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
+import { Database } from './Database'
 
 export interface BalanceRecord {
   blockNumber: bigint
@@ -16,8 +16,8 @@ export interface DataBoundary {
 }
 
 export class BalanceRepository extends BaseRepository {
-  constructor(knex: Knex, logger: Logger) {
-    super(knex, logger)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
     this.getByBlock = this.wrapGet(this.getByBlock)
     this.getByHolderAndAsset = this.wrapGet(this.getByHolderAndAsset)
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
@@ -26,7 +26,9 @@ export class BalanceRepository extends BaseRepository {
   }
 
   async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
-    const rows = await this.knex('asset_balances')
+    const knex = await this.knex()
+    const rows = await knex
+      .from('asset_balances')
       .select()
       .where('block_number', Number(blockNumber))
     return rows.map(toRecord)
@@ -36,7 +38,9 @@ export class BalanceRepository extends BaseRepository {
     holder: EthereumAddress,
     asset: AssetId,
   ): Promise<BalanceRecord[]> {
-    const rows = await this.knex('asset_balances')
+    const knex = await this.knex()
+    const rows = await knex
+      .from('asset_balances')
       .select('block_number', 'holder_address', 'asset_id', 'balance')
       .where('holder_address', holder.toString())
       .where('asset_id', asset.toString())
@@ -46,7 +50,8 @@ export class BalanceRepository extends BaseRepository {
 
   async addOrUpdateMany(balances: BalanceRecord[]) {
     const rows = balances.map(toRow)
-    await this.knex('asset_balances')
+    const knex = await this.knex()
+    await knex('asset_balances')
       .insert(rows)
       .onConflict(['block_number', 'holder_address', 'asset_id'])
       .merge()
@@ -54,7 +59,8 @@ export class BalanceRepository extends BaseRepository {
   }
 
   async getAll(): Promise<BalanceRecord[]> {
-    const rows = await this.knex('asset_balances').select(
+    const knex = await this.knex()
+    const rows = await knex('asset_balances').select(
       'block_number',
       'holder_address',
       'asset_id',
@@ -66,15 +72,16 @@ export class BalanceRepository extends BaseRepository {
   async getLatestPerHolder(): Promise<
     Map<EthereumAddress, (BalanceRecord & { timestamp: UnixTime })[]>
   > {
-    const rows = await this.knex
+    const knex = await this.knex()
+    const rows = await knex
       .select('a1.*', 'unix_timestamp')
       .from('asset_balances as a1')
       .innerJoin(
-        this.knex('asset_balances')
+        knex('asset_balances')
           .select(
             'holder_address',
             'asset_id',
-            this.knex.raw('max(block_number) as block_number'),
+            knex.raw('max(block_number) as block_number'),
           )
           .from('asset_balances')
           .as('a2')
@@ -111,7 +118,8 @@ export class BalanceRepository extends BaseRepository {
   }
 
   async deleteAll() {
-    return await this.knex('asset_balances').delete()
+    const knex = await this.knex()
+    return await knex('asset_balances').delete()
   }
 }
 

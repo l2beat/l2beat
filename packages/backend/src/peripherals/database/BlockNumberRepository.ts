@@ -1,8 +1,8 @@
 import { Logger, UnixTime } from '@l2beat/common'
-import { Knex } from 'knex'
 import { BlockNumberRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
+import { Database } from './Database'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime
@@ -10,8 +10,8 @@ export interface BlockNumberRecord {
 }
 
 export class BlockNumberRepository extends BaseRepository {
-  constructor(knex: Knex, logger: Logger) {
-    super(knex, logger)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
     this.add = this.wrapAdd(this.add)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
@@ -19,14 +19,16 @@ export class BlockNumberRepository extends BaseRepository {
 
   async add(record: BlockNumberRecord) {
     const row = toRow(record)
-    const [id] = await this.knex('block_numbers')
+    const knex = await this.knex()
+    const [id] = await knex('block_numbers')
       .insert(row)
       .returning('block_number')
     return id
   }
 
   async getAll(): Promise<BlockNumberRecord[]> {
-    const rows = await this.knex('block_numbers').select(
+    const knex = await this.knex()
+    const rows = await knex('block_numbers').select(
       'unix_timestamp',
       'block_number',
     )
@@ -34,7 +36,8 @@ export class BlockNumberRepository extends BaseRepository {
   }
 
   async deleteAll() {
-    return await this.knex('block_numbers').delete()
+    const knex = await this.knex()
+    return await knex('block_numbers').delete()
   }
 }
 

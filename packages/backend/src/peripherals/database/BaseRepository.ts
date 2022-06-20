@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/common'
-import { Knex } from 'knex'
+
+import { Database } from './Database'
 
 interface AnyMethod<A extends unknown[], R> {
   (...args: A): Promise<R>
@@ -39,10 +40,14 @@ interface SaveMethod<T> {
 
 export class BaseRepository {
   constructor(
-    protected readonly knex: Knex,
+    protected readonly database: Database,
     protected readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
+  }
+
+  protected knex() {
+    return this.database.getKnex()
   }
 
   protected wrapAny<A extends unknown[], R>(
