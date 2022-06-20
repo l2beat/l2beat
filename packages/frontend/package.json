@@ -16,7 +16,6 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@l2beat/backend": "*",
     "@l2beat/common": "*",
     "@l2beat/config": "*",
     "@types/express": "^4.17.13",

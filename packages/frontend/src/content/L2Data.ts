@@ -1,5 +1,6 @@
 import { HttpClient } from '@l2beat/common'
-import { readFile } from 'fs/promises'
+import crypto from 'crypto'
+import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 import z from 'zod'
 
 export const ChartData = z.object({
@@ -20,25 +21,53 @@ export const L2Data = z.object({
 })
 export type L2Data = z.infer<typeof L2Data>
 
-async function getDataFromFile() {
-  const path = require.resolve('@l2beat/backend')
-  const data = await readFile(path, { encoding: 'utf-8' })
-  return JSON.parse(data)
-}
+export async function getL2Data(apiUrl: string): Promise<L2Data> {
+  const cached = await readCachedData(apiUrl)
+  if (cached) {
+    return cached
+  }
 
-async function getDataFromApi() {
   const http = new HttpClient()
-  const response = await http.fetch('https://api.l2beat.com/api/data')
+  const response = await http.fetch(apiUrl)
   if (!response.ok) {
     throw new Error(
       `Could not get data from api (received status ${response.status})`,
     )
   }
-  return response.json()
+  const json = await response.json()
+  const data = L2Data.parse(json)
+  await writeCachedData(apiUrl, data)
+  return data
 }
 
-export async function getL2Data(source: 'api' | 'file'): Promise<L2Data> {
-  const data =
-    source === 'file' ? await getDataFromFile() : await getDataFromApi()
-  return L2Data.parse(data)
+const TEN_MINUTES_IN_MS = 10 * 60 * 1000
+async function readCachedData(apiUrl: string): Promise<L2Data | undefined> {
+  const hash = getUrlHash(apiUrl)
+  const now = Date.now()
+  try {
+    await stat('cache')
+  } catch {
+    await mkdir('cache')
+  }
+  const files = await readdir('cache')
+  for (const file of files) {
+    if (file.startsWith(hash)) {
+      const timestamp = Number(file.slice(9, -5))
+      if (now - timestamp <= TEN_MINUTES_IN_MS) {
+        const contents = await readFile(`cache/${file}`, 'utf-8')
+        return L2Data.parse(JSON.parse(contents))
+      }
+    }
+  }
+  return undefined
+}
+
+async function writeCachedData(apiUrl: string, data: L2Data) {
+  const hash = getUrlHash(apiUrl)
+  const now = Date.now()
+  await writeFile(`cache/${hash}-${now}.json`, JSON.stringify(data))
+}
+
+function getUrlHash(url: string) {
+  return crypto.createHash('sha256').update(url).digest('hex').slice(0, 8)
 }
