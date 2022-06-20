@@ -1,7 +1,8 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
+import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(BalanceRepository.name, () => {
@@ -28,6 +29,8 @@ describe(BalanceRepository.name, () => {
       balance: MOCK_BALANCE,
     },
   ]
+
+  const START = UnixTime.fromDate(new Date('2022-05-17'))
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -193,5 +196,53 @@ describe(BalanceRepository.name, () => {
     const result = await repository.getAll()
 
     expect(result).toEqual([])
+  })
+
+  it(BalanceRepository.prototype.getLatestPerHolder.name, async () => {
+    const blockNumberRepository = new BlockNumberRepository(knex, Logger.SILENT)
+
+    const additionalRecords = [
+      {
+        blockNumber: START_BLOCK_NUMBER,
+        holderAddress: MOCK_HOLDER,
+        assetId: AssetId('token-a'),
+        balance: MOCK_BALANCE,
+      },
+    ]
+
+    repository.addOrUpdateMany(additionalRecords)
+
+    DATA.map((d, index) =>
+      blockNumberRepository.add({
+        timestamp: START.add(index, 'hours'),
+        blockNumber: d.blockNumber,
+      }),
+    )
+
+    const holderLatest = await repository.getLatestPerHolder()
+
+    expect(holderLatest).toEqual(
+      new Map([
+        [
+          MOCK_HOLDER,
+          [
+            {
+              blockNumber: START_BLOCK_NUMBER + 1n,
+              timestamp: START.add(1, 'hours'),
+              holderAddress: MOCK_HOLDER,
+              assetId: MOCK_ASSET,
+              balance: MOCK_BALANCE,
+            },
+            {
+              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
+              holderAddress: MOCK_HOLDER,
+              assetId: AssetId('token-a'),
+              balance: MOCK_BALANCE,
+            },
+          ],
+        ],
+      ]),
+    )
   })
 })

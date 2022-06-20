@@ -1,6 +1,7 @@
-import { CoingeckoId, UnixTime } from '@l2beat/common'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
 
-import { Token } from '../../model/Token'
+import { ProjectInfo, Token } from '../../model'
+import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 
 interface PriceStatus {
@@ -13,7 +14,9 @@ interface PriceStatus {
 export class StatusController {
   constructor(
     private priceRepository: PriceRepository,
+    private balanceRepository: BalanceRepository,
     private tokens: Token[],
+    private projects: ProjectInfo[],
   ) {}
 
   async getPricesStatus() {
@@ -38,10 +41,28 @@ export class StatusController {
         coingeckoId: token.coingeckoId,
         min: unixTimeToString(boundary.earliest),
         max: unixTimeToString(boundary.latest),
-        message: calculateOutOfSync(boundary.latest),
+        message: getSyncStatus(boundary.latest),
       })
     }
     return result
+  }
+
+  async getBalancesStatus() {
+    const holderLatest = await this.balanceRepository.getLatestPerHolder()
+    return this.projects.flatMap(({ bridges, name }) =>
+      bridges.map(({ address }) => ({
+        name,
+        address,
+        tokens:
+          holderLatest.get(EthereumAddress(address))?.map((latest) => ({
+            assetId: latest.assetId,
+            balance: latest.balance.toString(),
+            blockNumber: latest.blockNumber.toString(),
+            timestamp: unixTimeToString(latest.timestamp),
+            syncStatus: getSyncStatus(latest.timestamp),
+          })) ?? [],
+      })),
+    )
   }
 }
 
@@ -50,7 +71,7 @@ const unixTimeToString = (date: UnixTime) => {
 }
 
 const SECONDS_PER_HOUR = 60 * 60
-const calculateOutOfSync = (date: UnixTime): string => {
+const getSyncStatus = (date: UnixTime): string => {
   const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
 
   const diff = now.toNumber() - date.toNumber()
