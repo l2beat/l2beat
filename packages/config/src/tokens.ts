@@ -1831,16 +1831,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    id: AssetId('wton-wrapped-ton-crystal'),
-    name: 'Wrapped TON Crystal',
-    coingeckoId: CoingeckoId('wrapped-ton-crystal'),
-    address: EthereumAddress('0xdB3C2515Da400e11Bcaf84f3b5286f18ffF1868F'),
-    symbol: 'WTON',
-    decimals: 9,
-    sinceBlock: 12163127,
-    category: 'other',
-  },
-  {
     id: AssetId('xyo-xy-oracle'),
     name: 'XY Oracle',
     coingeckoId: CoingeckoId('xyo-network'),
