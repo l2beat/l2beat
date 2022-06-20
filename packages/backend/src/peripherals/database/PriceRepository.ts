@@ -1,11 +1,11 @@
-import { CoingeckoId, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { PriceRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
 
 export interface PriceRecord {
-  coingeckoId: CoingeckoId
+  assetId: AssetId
   priceUsd: number
   timestamp: UnixTime
 }
@@ -27,35 +27,31 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getAll(): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices').select(
-      'coingecko_id',
-      'price_usd',
-      'unix_timestamp',
-    )
+    const rows = await this.knex('coingecko_prices')
     return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
-    const rows = await this.knex('coingecko_prices')
-      .where({ unix_timestamp: timestamp.toNumber().toString() })
-      .select('coingecko_id', 'price_usd', 'unix_timestamp')
+    const rows = await this.knex('coingecko_prices').where({
+      unix_timestamp: timestamp.toString(),
+    })
 
     this.logger.debug({
-      method: 'getAllByTimestamp',
+      method: 'getByTimestamp',
       timestamp: timestamp.toString(),
       amount: rows.length,
     })
     return rows.map(toRecord)
   }
 
-  async getByToken(coingeckoId: CoingeckoId) {
-    const rows = await this.knex('coingecko_prices')
-      .where({ coingecko_id: coingeckoId.toString() })
-      .select('coingecko_id', 'price_usd', 'unix_timestamp')
+  async getByToken(assetId: AssetId) {
+    const rows = await this.knex('coingecko_prices').where({
+      asset_id: assetId.toString(),
+    })
 
     this.logger.debug({
-      method: 'getAllByToken',
-      coin: coingeckoId.toString(),
+      method: 'getByToken',
+      coin: assetId.toString(),
       amount: rows.length,
     })
     return rows.map(toRecord)
@@ -71,16 +67,16 @@ export class PriceRepository extends BaseRepository {
     await this.knex('coingecko_prices').delete()
   }
 
-  async calcDataBoundaries(): Promise<Map<CoingeckoId, DataBoundary>> {
+  async calcDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
     const rows = await this.knex('coingecko_prices')
       .min('unix_timestamp')
       .max('unix_timestamp')
-      .select('coingecko_id')
-      .groupBy('coingecko_id')
+      .select('asset_id')
+      .groupBy('asset_id')
 
     return new Map(
       rows.map((row) => [
-        CoingeckoId(row.coingecko_id),
+        AssetId(row.asset_id),
         {
           earliest: new UnixTime(parseInt(row.min)),
           latest: new UnixTime(parseInt(row.max)),
@@ -93,14 +89,14 @@ export class PriceRepository extends BaseRepository {
 function toRecord(row: PriceRow): PriceRecord {
   return {
     timestamp: new UnixTime(+row.unix_timestamp),
-    coingeckoId: CoingeckoId(row.coingecko_id),
+    assetId: AssetId(row.asset_id),
     priceUsd: +row.price_usd,
   }
 }
 
 function toRow(record: PriceRecord): PriceRow {
   return {
-    coingecko_id: record.coingeckoId.toString(),
+    asset_id: record.assetId.toString(),
     price_usd: record.priceUsd,
     unix_timestamp: record.timestamp.toNumber().toString(),
   }

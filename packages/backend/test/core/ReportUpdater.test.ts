@@ -54,16 +54,8 @@ describe(ReportUpdater.name, () => {
   describe(ReportUpdater.prototype.update.name, () => {
     it('calculates and saves to DB', async () => {
       const prices: PriceRecord[] = [
-        {
-          priceUsd: 3.2,
-          coingeckoId: MOCK_COINGECKO,
-          timestamp: START,
-        },
-        {
-          priceUsd: 1000,
-          coingeckoId: CoingeckoId('ethereum'),
-          timestamp: START,
-        },
+        fakePrice({ assetId: MOCK_ASSET }),
+        fakePrice(),
       ]
 
       const balances: BalanceRecord[] = [
@@ -115,12 +107,12 @@ describe(ReportUpdater.name, () => {
       const prices: PriceRecord[] = [
         {
           priceUsd: 3.2,
-          coingeckoId: MOCK_COINGECKO,
+          assetId: MOCK_ASSET,
           timestamp: START,
         },
         {
           priceUsd: 1000,
-          coingeckoId: CoingeckoId('ethereum'),
+          assetId: AssetId.ETH,
           timestamp: START,
         },
       ]
@@ -159,12 +151,7 @@ describe(ReportUpdater.name, () => {
 
   describe(createReport.name, () => {
     it('price: 3.20 $ || balance: 22.123456', async () => {
-      const price: PriceRecord = {
-        priceUsd: 3.2,
-        timestamp: UnixTime.now(),
-        coingeckoId: CoingeckoId('token'),
-      }
-
+      const price = fakePrice({ priceUsd: 3.2 })
       const balance: BalanceRecord = {
         balance: 22123456n,
         assetId: AssetId('tok-token'),
@@ -192,12 +179,7 @@ describe(ReportUpdater.name, () => {
     })
 
     it('price: 3.20 $ || balance: 22.123456789123456789', async () => {
-      const price: PriceRecord = {
-        priceUsd: 3.2,
-        timestamp: UnixTime.now(),
-        coingeckoId: CoingeckoId('token'),
-      }
-
+      const price = fakePrice({ priceUsd: 3.2 })
       const balance: BalanceRecord = {
         balance: 22123456789123456789n,
         assetId: AssetId('tok-token'),
@@ -312,3 +294,12 @@ describe(convertBalance.name, () => {
     })
   }
 })
+
+function fakePrice(price?: Partial<PriceRecord>): PriceRecord {
+  return {
+    priceUsd: Math.floor(Math.random() * 100) / 10,
+    timestamp: UnixTime.now(),
+    assetId: AssetId.ETH,
+    ...price,
+  }
+}

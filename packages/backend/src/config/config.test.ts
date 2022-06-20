@@ -23,7 +23,6 @@ export function getTestConfig(): Config {
       safeBlockBlockOffset: 0n,
     },
     tokens: [],
-    coingeckoIds: [],
     projects: [],
   }
 }

@@ -44,12 +44,12 @@ export class CoingeckoClient {
   }
 
   async getCoinMarketChartRange(
-    coindId: CoingeckoId,
+    coinId: CoingeckoId,
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
   ): Promise<CoinMarketChartRangeData> {
-    const data = await this.query(`/coins/${coindId}/market_chart/range`, {
+    const data = await this.query(`/coins/${coinId}/market_chart/range`, {
       vs_currency: vs_currency.toLowerCase(),
       from: from.toString(),
       to: to.toString(),

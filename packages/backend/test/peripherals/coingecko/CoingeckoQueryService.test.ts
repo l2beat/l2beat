@@ -34,7 +34,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
+        CoingeckoId('weth'),
         UnixTime.fromDate(new Date('2021-01-01')).add(-5, 'minutes'),
         UnixTime.fromDate(new Date('2022-01-01')).add(5, 'minutes'),
         'daily',
@@ -43,7 +43,7 @@ describe(CoingeckoQueryService.name, () => {
         coingeckoClient.getCoinMarketChartRange,
       ).toHaveBeenCalledExactlyWith([
         [
-          CoingeckoId('bitcoin'),
+          CoingeckoId('weth'),
           'usd',
           UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
           UnixTime.fromDate(new Date('2022-01-01')).add(12, 'hours'),
@@ -67,7 +67,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -116,7 +116,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
+        CoingeckoId('weth'),
         START,
         START.add(180, 'days'),
         'hourly',
@@ -158,7 +158,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -189,7 +189,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -224,7 +224,7 @@ describe(CoingeckoQueryService.name, () => {
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getUsdPriceHistory(
-        CoingeckoId('bitcoin'),
+        CoingeckoId('weth'),
         START,
         START.add(2, 'days'),
         'daily',
@@ -562,7 +562,7 @@ describe(generateRangesToCallHourly.name, () => {
 describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   this.timeout(100000)
 
-  const COIN = CoingeckoId('ethereum')
+  const TOKEN = CoingeckoId('ethereum')
   const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
   const DAYS_SPAN = 90
   const MAX_TRESHOLD_MINUTES = 25
@@ -574,7 +574,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
 
   it('daily', async () => {
     const data = await coingeckoQueryService.getUsdPriceHistory(
-      COIN,
+      TOKEN,
       START,
       START.add(DAYS_SPAN, 'days'),
       'daily',
@@ -587,7 +587,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
 
   it('hourly', async () => {
     const data = await coingeckoQueryService.getUsdPriceHistory(
-      COIN,
+      TOKEN,
       START,
       START.add(DAYS_SPAN, 'days'),
       'hourly',
@@ -597,7 +597,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
 
     expect(ratio < EXPECTED_HOURLY_FAULT_RATIO).toEqual(true)
 
-    console.log('Coin = ', COIN)
+    console.log('Token = ', TOKEN)
     console.log('Days span = ', DAYS_SPAN)
     console.log('Max fault [min] = ', MAX_TRESHOLD_MINUTES)
     console.log('=================')

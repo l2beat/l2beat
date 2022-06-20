@@ -1,4 +1,4 @@
-import { CoingeckoId, UnixTime } from '@l2beat/common'
+import { AssetId, UnixTime } from '@l2beat/common'
 
 import { convertBalance } from '../../../core/ReportUpdater'
 import {
@@ -19,8 +19,8 @@ export async function addOptimismToken(
   entries: OutputEntry[],
   priceRepository: PriceRepository,
 ) {
-  const opPrices = await priceRepository.getByToken(CoingeckoId('optimism'))
-  const ethPrices = await priceRepository.getByToken(CoingeckoId('ethereum'))
+  const opPrices = await priceRepository.getByToken(AssetId('op-optimism'))
+  const ethPrices = await priceRepository.getByToken(AssetId.ETH)
   for (const entry of entries) {
     const date = entry.timestamp
     if (date.lt(UnixTime.fromDate(new Date('2022-05-30')))) {

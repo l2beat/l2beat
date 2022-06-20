@@ -45,7 +45,7 @@ describe(PriceService.name, () => {
 
       const TOKENS: TokenInfo[] = [
         {
-          id: AssetId('dai-dai-stablecoin'),
+          id: AssetId.DAI,
           name: 'Dai Stablecoin',
           symbol: 'DAI',
           address: EthereumAddress(
