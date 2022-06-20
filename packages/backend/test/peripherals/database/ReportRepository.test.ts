@@ -160,7 +160,6 @@ describe(ReportRepository.name, () => {
 
     const result = await reportsRepository.getLatestPerBridge()
 
-
     expect(result).toEqual(
       new Map([
         [BRIDGE_A, [mockReport(BRIDGE_A, 1, 100n)]],

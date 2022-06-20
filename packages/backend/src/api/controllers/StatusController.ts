@@ -19,7 +19,7 @@ export class StatusController {
     private balanceRepository: BalanceRepository,
     private reportsRepository: ReportRepository,
     private tokens: Token[],
-    private projects: ProjectInfo[]
+    private projects: ProjectInfo[],
   ) {}
 
   async getPricesStatus() {

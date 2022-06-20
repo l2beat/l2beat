@@ -120,7 +120,7 @@ export class Application {
       balanceRepository,
       reportRepository,
       config.tokens,
-      config.projects
+      config.projects,
     )
 
     const apiServer = new ApiServer(config.port, logger, [
