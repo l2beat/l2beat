@@ -217,8 +217,8 @@ function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
     bridge,
     asset,
     blockNumber: 0n,
-    usdTVL: USD,
-    ethTVL: ETH,
+    balanceUsd: USD,
+    balanceEth: ETH,
     balance: BALANCE,
   }
 }

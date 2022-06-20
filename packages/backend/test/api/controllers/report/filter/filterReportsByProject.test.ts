@@ -20,8 +20,8 @@ describe(filterReportsByProjects.name, () => {
       timestamp: new UnixTime(0),
       bridge: bridge,
       asset: asset,
-      usdTVL: 0n,
-      ethTVL: 0n,
+      balanceUsd: 0n,
+      balanceEth: 0n,
       balance: 0n,
     }
   }

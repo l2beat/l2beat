@@ -16,8 +16,8 @@ describe(getMaxAssetInBridge.name, () => {
       bridge,
       asset,
       blockNumber: 0n,
-      usdTVL: 0n,
-      ethTVL: 0n,
+      balanceUsd: 0n,
+      balanceEth: 0n,
       balance: 0n,
     }
   }

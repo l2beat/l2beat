@@ -9,5 +9,9 @@ export function createStatusRouter(statusController: StatusController) {
     ctx.body = await statusController.getPricesStatus()
   })
 
+  router.get('/api/status/balances', async (ctx) => {
+    ctx.body = await statusController.getBalancesStatus()
+  })
+
   return router
 }

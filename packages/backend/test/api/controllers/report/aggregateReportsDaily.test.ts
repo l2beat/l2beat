@@ -4,7 +4,7 @@ import { expect } from 'earljs'
 
 import {
   aggregateReportsDaily,
-  saveTVLToEntry,
+  saveBalancesToEntry,
 } from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
@@ -25,8 +25,8 @@ describe(aggregateReportsDaily.name, () => {
       bridge,
       asset,
       blockNumber: 0n,
-      usdTVL: USD,
-      ethTVL: ETH,
+      balanceUsd: USD,
+      balanceEth: ETH,
       balance: BALANCE,
     }
   }
@@ -248,7 +248,7 @@ describe(aggregateReportsDaily.name, () => {
   })
 })
 
-describe(saveTVLToEntry.name, () => {
+describe(saveBalancesToEntry.name, () => {
   it('happy path', () => {
     const projectName = 'Optimism'
     const symbol = 'OP'
@@ -258,7 +258,7 @@ describe(saveTVLToEntry.name, () => {
     const balance = 10n
     const entry = mockEntry({}, projectName)
 
-    saveTVLToEntry(
+    saveBalancesToEntry(
       entry,
       projectName,
       usdTVL,
