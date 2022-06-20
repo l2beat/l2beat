@@ -1,4 +1,4 @@
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { EthereumAddress, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../model'
 import { Token } from '../../model/Token'
@@ -6,12 +6,17 @@ import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 
-interface PriceStatus {
-  coingeckoId: CoingeckoId
-  min: string
-  max: string
-  message: string
+interface Status {
+  name: string
+  timestamp: string
+  value: string
+  status: {
+    isSynced: boolean
+    message: string
+  }
 }
+const HEAD =
+  '<head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"></head>'
 
 export class StatusController {
   constructor(
@@ -23,31 +28,22 @@ export class StatusController {
   ) {}
 
   async getPricesStatus() {
-    const boundaries = await this.priceRepository.calcDataBoundaries()
+    const latestByToken = await this.priceRepository.getLatestByToken()
 
-    const result: PriceStatus[] = []
+    const statuses = this.tokens.map((token) => {
+      const latest = latestByToken.get(token.id)
 
-    for (const token of this.tokens) {
-      const boundary = boundaries.get(token.id)
-
-      if (!boundary) {
-        result.push({
-          coingeckoId: token.coingeckoId,
-          min: '',
-          max: '',
-          message: '!!! no prices !!!',
-        })
-        continue
+      return {
+        name: latest ? latest.assetId.toString() : token.coingeckoId.toString(),
+        timestamp: latest ? unixTimeToString(latest.timestamp) : '',
+        value: latest ? latest.priceUsd.toString() : '',
+        status: latest
+          ? getSyncStatus(latest.timestamp)
+          : { isSynced: false, message: '! no prices' },
       }
+    })
 
-      result.push({
-        coingeckoId: token.coingeckoId,
-        min: unixTimeToString(boundary.earliest),
-        max: unixTimeToString(boundary.latest),
-        message: getSyncStatus(boundary.latest),
-      })
-    }
-    return result
+    return HEAD + generateTable(statuses)
   }
 
   async getBalancesStatus() {
@@ -94,23 +90,54 @@ const unixTimeToString = (date: UnixTime) => {
 }
 
 const SECONDS_PER_HOUR = 60 * 60
-const getSyncStatus = (date: UnixTime): string => {
+const getSyncStatus = (
+  date: UnixTime,
+): {
+  isSynced: boolean
+  message: string
+} => {
   const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
 
   const diff = now.toNumber() - date.toNumber()
 
   if (diff === 0) {
-    return '✔'
+    return { isSynced: true, message: '✔' }
   }
 
-  if (diff < 24 * SECONDS_PER_HOUR) {
-    return `out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`
+  if (diff > 0 && diff < 24 * SECONDS_PER_HOUR) {
+    return {
+      isSynced: false,
+      message: `out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`,
+    }
   }
 
   if (diff >= 24 * SECONDS_PER_HOUR) {
-    return `out of sync for ${Math.floor(
-      diff / (24 * SECONDS_PER_HOUR),
-    )} day(s)`
+    return {
+      isSynced: false,
+      message: `out of sync for ${Math.floor(
+        diff / (24 * SECONDS_PER_HOUR),
+      )} day(s)`,
+    }
   }
-  return ''
+
+  return { isSynced: false, message: '? price synced ahead of time' }
+}
+
+const generateTable = (statuses: Status[]) => {
+  const tableHeader =
+    '<table><tr><th>Name</th><th>Last synced</th><th>Latest value</th><th>Status</th></tr>'
+
+  const rows = statuses.map(
+    (status) =>
+      `<tr>
+        <td>${status.name}</td>
+        <td>${status.timestamp}</td>
+        <td>${status.value}</td>
+        <td style="color:${status.status.isSynced ? 'green' : 'red'}">${
+        status.status.message
+      }</td>
+      </tr>`,
+  )
+
+  return tableHeader + rows.join('') + '</table>'
 }
