@@ -4,16 +4,18 @@ import path from 'path'
 
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
 
-export class DatabaseService {
+export class Database {
+  private knex: Knex
   private migrated = false
   private version: string | null = null
+  private onMigrationsComplete: () => void = () => {}
+  private migrationsComplete = new Promise<void>((resolve) => {
+    this.onMigrationsComplete = resolve
+  })
 
-  constructor(private knex: Knex, private logger: Logger) {
+  constructor(connection: Knex.Config['connection'], private logger: Logger) {
     this.logger = this.logger.for(this)
-  }
-
-  static createKnexInstance(connection: Knex.Config['connection']) {
-    return KnexConstructor({
+    this.knex = KnexConstructor({
       client: 'pg',
       connection,
       migrations: {
@@ -24,15 +26,28 @@ export class DatabaseService {
     })
   }
 
+  async getKnex() {
+    if (!this.migrated) {
+      await this.migrationsComplete
+    }
+    return this.knex
+  }
+
   getStatus() {
     return { migrated: this.migrated, version: this.version }
+  }
+
+  skipMigrations() {
+    this.onMigrationsComplete()
+    this.migrated = true
   }
 
   async migrateToLatest() {
     await this.knex.migrate.latest()
     const version = await this.knex.migrate.currentVersion()
-    this.migrated = true
     this.version = version
+    this.onMigrationsComplete()
+    this.migrated = true
     this.logger.info('Migrations completed', { version })
   }
 
