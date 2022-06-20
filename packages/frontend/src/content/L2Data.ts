@@ -40,7 +40,7 @@ export async function getL2Data(apiUrl: string): Promise<L2Data> {
   return data
 }
 
-const TEN_MINUTES_IN_MS = 10 * 60 * 60 * 1000
+const TEN_MINUTES_IN_MS = 10 * 60 * 1000
 async function readCachedData(apiUrl: string): Promise<L2Data | undefined> {
   const hash = getUrlHash(apiUrl)
   const now = Date.now()
