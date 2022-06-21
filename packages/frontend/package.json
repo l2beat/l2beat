@@ -13,6 +13,7 @@
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
     "start": "gulp watch",
     "test": "mocha",
+    "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -8,6 +8,7 @@
     "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .ts --max-warnings 0 src",
     "start": "node -r esbuild-register src",
+    "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
