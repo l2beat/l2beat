@@ -6,15 +6,15 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node -r source-map-support/register build/src/index.js",
-    "start:dev": "node -r esbuild-register src",
-    "format": "prettier --check .",
+    "clean": "rm -rf build",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts --max-warnings 0 src test",
+    "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
-    "typecheck": "tsc --noEmit",
+    "lint": "eslint --ext .ts --max-warnings 0 src test",
+    "start:dev": "node -r esbuild-register src",
+    "start": "node -r source-map-support/register build/src/index.js",
     "test": "mocha",
-    "clean": "rm -rf build"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@koa/router": "^10.1.1",

@@ -62,14 +62,14 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 ## Scripts
 
 - `yarn build` - build
-- `yarn start` - run the backend server from built js
-- `yarn start:dev` - run the backend server from source ts
-- `yarn format` - check if formatting is correct with prettier
 - `yarn format:fix` - run prettier automatic formatter
-- `yarn lint` - check if the code satisfies the eslint configuration
+- `yarn format` - check if formatting is correct with prettier
 - `yarn lint:fix` - run eslint automatic fixer
-- `yarn typecheck` - check if the code satisfies the typescript compiler
+- `yarn lint` - check if the code satisfies the eslint configuration
+- `yarn start:dev` - run the backend server from source ts
+- `yarn start` - run the backend server from built js
 - `yarn test` - run tests
+- `yarn typecheck` - check if the code satisfies the typescript compiler
 
 ## Repository naming convention
 
