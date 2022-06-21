@@ -79,7 +79,6 @@ export class StatusController {
             balance: latest.balance.toString(),
             usd: latest.balanceUsd.toString(),
             eth: latest.balanceEth.toString(),
-            blockNumber: latest.blockNumber.toString(),
             timestamp: unixTimeToString(latest.timestamp),
             syncStatus: getSyncStatus(latest.timestamp),
           })) ?? [],

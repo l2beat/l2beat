@@ -90,7 +90,6 @@ export function createReport(
     ethPrice,
   )
   return {
-    blockNumber: balance.blockNumber,
     timestamp: price.timestamp,
     bridge: balance.holderAddress,
     asset: balance.assetId,

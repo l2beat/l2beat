@@ -155,7 +155,6 @@ describe(ReportUpdater.name, () => {
       const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
-        blockNumber: balance.blockNumber,
         timestamp: price.timestamp,
         bridge: balance.holderAddress,
         asset: balance.assetId,
@@ -179,7 +178,6 @@ describe(ReportUpdater.name, () => {
       const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
-        blockNumber: balance.blockNumber,
         timestamp: price.timestamp,
         bridge: balance.holderAddress,
         asset: balance.assetId,

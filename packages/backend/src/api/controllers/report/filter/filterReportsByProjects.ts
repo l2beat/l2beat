@@ -10,14 +10,8 @@ export function filterReportsByProjects(
   const bridges = getBridges(projects)
   return reports.filter((report) => {
     const bridge = bridges.get(report.bridge)
-    if (!bridge || bridge.sinceBlock > report.blockNumber) {
-      return false
-    }
-    const tokenSinceBlock = bridge.tokens.get(report.asset)
-    if (tokenSinceBlock === undefined || tokenSinceBlock > report.blockNumber) {
-      return false
-    }
-    return true
+    const balance = bridge?.tokens.get(report.asset)
+    return balance !== undefined
   })
 }
 

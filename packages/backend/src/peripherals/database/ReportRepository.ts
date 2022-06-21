@@ -5,7 +5,6 @@ import { BaseRepository } from './BaseRepository'
 import { Database } from './Database'
 
 export interface ReportRecord {
-  blockNumber: bigint
   timestamp: UnixTime
   bridge: EthereumAddress
   asset: AssetId
@@ -45,7 +44,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     await knex('reports')
       .insert(rows)
-      .onConflict(['block_number', 'bridge_address', 'asset_id'])
+      .onConflict(['unix_timestamp', 'project_id', 'asset_id'])
       .merge()
     return rows.length
   }
@@ -77,9 +76,7 @@ export class ReportRepository extends BaseRepository {
         },
       )
 
-    const records = rows.map((row) => ({
-      ...toRecord(row),
-    }))
+    const records = rows.map(toRecord)
 
     const result = new Map()
 
@@ -94,25 +91,23 @@ export class ReportRepository extends BaseRepository {
 
 function toRow(record: ReportRecord): ReportRow {
   return {
-    block_number: Number(record.blockNumber),
     unix_timestamp: record.timestamp.toNumber().toString(),
     bridge_address: record.bridge.toString(),
     asset_id: record.asset.toString(),
     balance: record.balance.toString(),
-    usd_tvl: record.balanceUsd.toString(),
-    eth_tvl: record.balanceEth.toString(),
+    balance_usd: record.balanceUsd.toString(),
+    balance_eth: record.balanceEth.toString(),
     is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
   }
 }
 
 function toRecord(row: ReportRow): ReportRecord {
   return {
-    blockNumber: BigInt(row.block_number),
     timestamp: new UnixTime(+row.unix_timestamp),
     bridge: EthereumAddress.unsafe(row.bridge_address),
     asset: AssetId(row.asset_id),
     balance: BigInt(row.balance),
-    balanceUsd: BigInt(row.usd_tvl),
-    balanceEth: BigInt(row.eth_tvl),
+    balanceUsd: BigInt(row.balance_usd),
+    balanceEth: BigInt(row.balance_eth),
   }
 }
