@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { ReportRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
@@ -6,7 +6,7 @@ import { Database } from './Database'
 
 export interface ReportRecord {
   timestamp: UnixTime
-  bridge: EthereumAddress
+  projectId: ProjectId
   asset: AssetId
   balanceUsd: bigint
   balanceEth: bigint
@@ -54,7 +54,7 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  async getLatestPerBridge(): Promise<Map<EthereumAddress, ReportRecord[]>> {
+  async getLatestPerBridge(): Promise<Map<ProjectId, ReportRecord[]>> {
     const knex = await this.knex()
     const rows = await knex
       .select('a1.*')
@@ -81,8 +81,8 @@ export class ReportRepository extends BaseRepository {
     const result = new Map()
 
     for (const record of records) {
-      const entry = result.get(record.bridge) || []
-      result.set(record.bridge, [...entry, record])
+      const entry = result.get(record.projectId) || []
+      result.set(record.projectId, [...entry, record])
     }
 
     return result
@@ -92,7 +92,7 @@ export class ReportRepository extends BaseRepository {
 function toRow(record: ReportRecord): ReportRow {
   return {
     unix_timestamp: record.timestamp.toNumber().toString(),
-    bridge_address: record.bridge.toString(),
+    project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
     balance: record.balance.toString(),
     balance_usd: record.balanceUsd.toString(),
@@ -104,7 +104,7 @@ function toRow(record: ReportRecord): ReportRow {
 function toRecord(row: ReportRow): ReportRecord {
   return {
     timestamp: new UnixTime(+row.unix_timestamp),
-    bridge: EthereumAddress.unsafe(row.bridge_address),
+    projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
     balance: BigInt(row.balance),
     balanceUsd: BigInt(row.balance_usd),
