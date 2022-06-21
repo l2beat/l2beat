@@ -60,7 +60,6 @@ export class StatusController {
           holderLatest.get(EthereumAddress(address))?.map((latest) => ({
             assetId: latest.assetId,
             balance: latest.balance.toString(),
-            blockNumber: latest.blockNumber.toString(),
             timestamp: unixTimeToString(latest.timestamp),
             syncStatus: getSyncStatus(latest.timestamp),
           })) ?? [],

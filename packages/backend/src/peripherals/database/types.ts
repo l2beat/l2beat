@@ -15,7 +15,7 @@ declare module 'knex/types/tables' {
   }
 
   interface BalanceRow {
-    block_number: number
+    unix_timestamp: string
     holder_address: string
     asset_id: string
     balance: string

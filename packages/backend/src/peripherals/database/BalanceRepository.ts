@@ -5,7 +5,7 @@ import { BaseRepository } from './BaseRepository'
 import { Database } from './Database'
 
 export interface BalanceRecord {
-  blockNumber: bigint
+  timestamp: UnixTime
   holderAddress: EthereumAddress
   assetId: AssetId
   balance: bigint
@@ -27,9 +27,12 @@ export class BalanceRepository extends BaseRepository {
 
   async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex
-      .from('asset_balances')
-      .select()
+    const rows = await knex('asset_balances')
+      .leftJoin(
+        'block_numbers',
+        'asset_balances.unix_timestamp',
+        'block_numbers.unix_timestamp',
+      )
       .where('block_number', Number(blockNumber))
     return rows.map(toRecord)
   }
@@ -41,7 +44,6 @@ export class BalanceRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex
       .from('asset_balances')
-      .select('block_number', 'holder_address', 'asset_id', 'balance')
       .where('holder_address', holder.toString())
       .where('asset_id', asset.toString())
 
@@ -53,19 +55,14 @@ export class BalanceRepository extends BaseRepository {
     const knex = await this.knex()
     await knex('asset_balances')
       .insert(rows)
-      .onConflict(['block_number', 'holder_address', 'asset_id'])
+      .onConflict(['unix_timestamp', 'holder_address', 'asset_id'])
       .merge()
     return rows.length
   }
 
   async getAll(): Promise<BalanceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('asset_balances').select(
-      'block_number',
-      'holder_address',
-      'asset_id',
-      'balance',
-    )
+    const rows = await knex('asset_balances')
     return rows.map(toRecord)
   }
 
@@ -74,35 +71,26 @@ export class BalanceRepository extends BaseRepository {
   > {
     const knex = await this.knex()
     const rows = await knex
-      .select('a1.*', 'unix_timestamp')
+      .select('a1.*')
       .from('asset_balances as a1')
       .innerJoin(
         knex('asset_balances')
           .select(
             'holder_address',
             'asset_id',
-            knex.raw('max(block_number) as block_number'),
+            knex.raw('max(unix_timestamp) as unix_timestamp'),
           )
           .from('asset_balances')
           .as('a2')
           .groupBy('holder_address', 'asset_id'),
         function () {
-          return this.on('a1.block_number', '=', 'a2.block_number')
+          return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp')
             .andOn('a1.holder_address', '=', 'a2.holder_address')
             .andOn('a1.asset_id', '=', 'a2.asset_id')
         },
       )
-      .innerJoin(
-        'block_numbers',
-        'block_numbers.block_number',
-        '=',
-        'a1.block_number',
-      )
 
-    const records = rows.map((row) => ({
-      ...toRecord(row),
-      timestamp: new UnixTime(+row.unix_timestamp),
-    }))
+    const records = rows.map(toRecord)
 
     const result: Map<
       EthereumAddress,
@@ -125,7 +113,7 @@ export class BalanceRepository extends BaseRepository {
 
 function toRecord(row: BalanceRow): BalanceRecord {
   return {
-    blockNumber: BigInt(row.block_number),
+    timestamp: new UnixTime(+row.unix_timestamp),
     holderAddress: EthereumAddress(row.holder_address),
     assetId: AssetId(row.asset_id),
     balance: BigInt(row.balance),
@@ -134,7 +122,7 @@ function toRecord(row: BalanceRow): BalanceRecord {
 
 function toRow(record: BalanceRecord): BalanceRow {
   return {
-    block_number: Number(record.blockNumber),
+    unix_timestamp: record.timestamp.toString(),
     holder_address: record.holderAddress.toString(),
     asset_id: record.assetId.toString(),
     balance: record.balance.toString(),

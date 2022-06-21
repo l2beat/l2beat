@@ -5,6 +5,7 @@ import {
   BalanceRecord,
   BalanceRepository,
 } from '../peripherals/database/BalanceRepository'
+import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
 
@@ -19,6 +20,7 @@ export class BalanceUpdater {
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
+    private blockNumberRepository: BlockNumberRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
@@ -92,11 +94,15 @@ export class BalanceUpdater {
       blockNumber,
     )
 
+    const { timestamp } = await this.blockNumberRepository.findByBlockNumber(
+      blockNumber,
+    )
+
     return multicallResponses.map((res, i) => ({
       holderAddress: missingData[i].holder,
       assetId: missingData[i].assetId,
       balance: BalanceCall.decodeOr(res, 0n),
-      blockNumber,
+      timestamp,
     }))
   }
 }

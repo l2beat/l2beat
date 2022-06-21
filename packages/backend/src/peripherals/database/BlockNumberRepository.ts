@@ -35,6 +35,16 @@ export class BlockNumberRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async findByBlockNumber(blockNumber: bigint): Promise<BlockNumberRecord> {
+    const knex = await this.knex()
+    const [row] = await knex('block_numbers').where(
+      'block_number',
+      '=',
+      blockNumber.toString(),
+    )
+    return toRecord(row)
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return await knex('block_numbers').delete()

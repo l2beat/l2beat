@@ -3,6 +3,7 @@ import { expect } from 'earljs'
 
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
+import { fakeBalance } from '../../fakes'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(ReportRepository.name, () => {
@@ -33,19 +34,6 @@ describe(ReportRepository.name, () => {
     }
   }
 
-  const mockBalance = (
-    bridge: EthereumAddress,
-    asset: AssetId,
-    offset: bigint,
-  ) => {
-    return {
-      blockNumber: BLOCK + offset,
-      holderAddress: bridge,
-      assetId: asset,
-      balance: BALANCE,
-    }
-  }
-
   beforeEach(async () => {
     await balancesRepository.deleteAll()
     await reportsRepository.deleteAll()
@@ -59,8 +47,16 @@ describe(ReportRepository.name, () => {
       ])
 
       await balancesRepository.addOrUpdateMany([
-        mockBalance(BRIDGE_A, ASSET_A, 0n),
-        mockBalance(BRIDGE_A, ASSET_A, 100n),
+        fakeBalance({
+          holderAddress: BRIDGE_A,
+          assetId: ASSET_A,
+          timestamp: TODAY,
+        }),
+        fakeBalance({
+          holderAddress: BRIDGE_A,
+          assetId: ASSET_A,
+          timestamp: TODAY.add(1, 'hours'),
+        }),
       ])
 
       const result = await reportsRepository.getDaily()
@@ -80,9 +76,21 @@ describe(ReportRepository.name, () => {
       ])
 
       await balancesRepository.addOrUpdateMany([
-        mockBalance(BRIDGE_A, ASSET_A, 0n),
-        mockBalance(BRIDGE_A, ASSET_A, 1000n),
-        mockBalance(BRIDGE_A, ASSET_A, 2000n),
+        fakeBalance({
+          holderAddress: BRIDGE_A,
+          assetId: ASSET_A,
+          timestamp: TODAY,
+        }),
+        fakeBalance({
+          holderAddress: BRIDGE_A,
+          assetId: ASSET_A,
+          timestamp: TODAY.add(1, 'hours'),
+        }),
+        fakeBalance({
+          holderAddress: BRIDGE_A,
+          assetId: ASSET_A,
+          timestamp: TODAY.add(2, 'hours'),
+        }),
       ])
       const result = await reportsRepository.getDaily()
 

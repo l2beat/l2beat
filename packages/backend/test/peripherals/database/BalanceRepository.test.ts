@@ -10,6 +10,7 @@ describe(BalanceRepository.name, () => {
   const repository = new BalanceRepository(database, Logger.SILENT)
 
   const START_BLOCK_NUMBER = 123456n
+  const START = UnixTime.fromDate(new Date('2022-05-17'))
   const MOCK_HOLDER = EthereumAddress(
     '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
   )
@@ -17,20 +18,18 @@ describe(BalanceRepository.name, () => {
   const MOCK_BALANCE = 1000000000000000000n
   const DATA = [
     {
-      blockNumber: START_BLOCK_NUMBER,
+      timestamp: START,
       holderAddress: MOCK_HOLDER,
       assetId: MOCK_ASSET,
       balance: MOCK_BALANCE,
     },
     {
-      blockNumber: START_BLOCK_NUMBER + 1n,
+      timestamp: START.add(1, 'hours'),
       holderAddress: MOCK_HOLDER,
       assetId: MOCK_ASSET,
       balance: MOCK_BALANCE,
     },
   ]
-
-  const START = UnixTime.fromDate(new Date('2022-05-17'))
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -41,19 +40,19 @@ describe(BalanceRepository.name, () => {
     it('known block', async () => {
       const additionalData = [
         {
-          blockNumber: START_BLOCK_NUMBER,
+          timestamp: START,
           holderAddress: MOCK_HOLDER,
           assetId: AssetId('asset-a'),
           balance: MOCK_BALANCE,
         },
         {
-          blockNumber: START_BLOCK_NUMBER,
+          timestamp: START,
           holderAddress: MOCK_HOLDER,
           assetId: AssetId('asset-b'),
           balance: MOCK_BALANCE,
         },
         {
-          blockNumber: START_BLOCK_NUMBER,
+          timestamp: START,
           holderAddress: MOCK_HOLDER,
           assetId: AssetId('asset-c'),
           balance: MOCK_BALANCE,
@@ -110,7 +109,7 @@ describe(BalanceRepository.name, () => {
     it('new rows only', async () => {
       const newRows = [
         {
-          blockNumber: START_BLOCK_NUMBER + 2n,
+          timestamp: START.add(2, 'hours'),
           holderAddress: EthereumAddress(
             '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
@@ -118,7 +117,7 @@ describe(BalanceRepository.name, () => {
           balance: MOCK_BALANCE,
         },
         {
-          blockNumber: START_BLOCK_NUMBER + 3n,
+          timestamp: START.add(3, 'hours'),
           holderAddress: EthereumAddress(
             '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
@@ -136,13 +135,13 @@ describe(BalanceRepository.name, () => {
     it('existing rows only', async () => {
       const existingRows = [
         {
-          blockNumber: DATA[0].blockNumber,
+          timestamp: DATA[0].timestamp,
           holderAddress: DATA[0].holderAddress,
           assetId: DATA[0].assetId,
           balance: MOCK_BALANCE,
         },
         {
-          blockNumber: DATA[1].blockNumber,
+          timestamp: DATA[1].timestamp,
           holderAddress: DATA[1].holderAddress,
           assetId: DATA[1].assetId,
           balance: MOCK_BALANCE,
@@ -158,13 +157,13 @@ describe(BalanceRepository.name, () => {
     it('mixed: existing and new rows', async () => {
       const mixedRows = [
         {
-          blockNumber: DATA[1].blockNumber,
+          timestamp: DATA[1].timestamp,
           holderAddress: DATA[1].holderAddress,
           assetId: DATA[1].assetId,
           balance: MOCK_BALANCE,
         },
         {
-          blockNumber: START_BLOCK_NUMBER + 2n,
+          timestamp: START.add(2, 'hours'),
           holderAddress: EthereumAddress(
             '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
@@ -206,7 +205,7 @@ describe(BalanceRepository.name, () => {
 
     const additionalRecords = [
       {
-        blockNumber: START_BLOCK_NUMBER,
+        timestamp: START,
         holderAddress: MOCK_HOLDER,
         assetId: AssetId('token-a'),
         balance: MOCK_BALANCE,
@@ -217,8 +216,8 @@ describe(BalanceRepository.name, () => {
 
     DATA.map((d, index) =>
       blockNumberRepository.add({
-        timestamp: START.add(index, 'hours'),
-        blockNumber: d.blockNumber,
+        timestamp: d.timestamp,
+        blockNumber: START_BLOCK_NUMBER + BigInt(index),
       }),
     )
 
@@ -230,14 +229,12 @@ describe(BalanceRepository.name, () => {
           MOCK_HOLDER,
           [
             {
-              blockNumber: START_BLOCK_NUMBER + 1n,
               timestamp: START.add(1, 'hours'),
               holderAddress: MOCK_HOLDER,
               assetId: MOCK_ASSET,
               balance: MOCK_BALANCE,
             },
             {
-              blockNumber: START_BLOCK_NUMBER,
               timestamp: START,
               holderAddress: MOCK_HOLDER,
               assetId: AssetId('token-a'),

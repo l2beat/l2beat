@@ -24,6 +24,7 @@ import {
   PriceRepository,
 } from '../../src/peripherals/database/PriceRepository'
 import { ReportRepository } from '../../src/peripherals/database/ReportRepository'
+import { fakeBalance } from '../fakes'
 
 describe(ReportUpdater.name, () => {
   const START = UnixTime.now().toStartOf('hour')
@@ -60,7 +61,7 @@ describe(ReportUpdater.name, () => {
 
       const balances: BalanceRecord[] = [
         {
-          blockNumber: START_BN,
+          timestamp: START,
           holderAddress: MOCK_BRIDGE,
           assetId: MOCK_ASSET,
           balance: 22123456789123456789n,
@@ -103,7 +104,7 @@ describe(ReportUpdater.name, () => {
   })
 
   describe(ReportUpdater.prototype.createReports.name, () => {
-    it('correctly aggregates many calculated tvls', () => {
+    it('correctly aggregates many calculated balances', () => {
       const prices: PriceRecord[] = [
         {
           priceUsd: 3.2,
@@ -118,18 +119,8 @@ describe(ReportUpdater.name, () => {
       ]
 
       const balances: BalanceRecord[] = [
-        {
-          blockNumber: START_BN,
-          holderAddress: MOCK_BRIDGE,
-          assetId: MOCK_ASSET,
-          balance: 22123456789123456789n,
-        },
-        {
-          blockNumber: START_BN,
-          holderAddress: MOCK_BRIDGE,
-          assetId: AssetId.ETH,
-          balance: 22123456789123456789n,
-        },
+        fakeBalance({ assetId: prices[0].assetId }),
+        fakeBalance({ assetId: prices[1].assetId }),
       ]
 
       const reportUpdater = new ReportUpdater(
@@ -152,14 +143,10 @@ describe(ReportUpdater.name, () => {
   describe(createReport.name, () => {
     it('price: 3.20 $ || balance: 22.123456', async () => {
       const price = fakePrice({ priceUsd: 3.2 })
-      const balance: BalanceRecord = {
+      const balance = fakeBalance({
+        assetId: price.assetId,
         balance: 22123456n,
-        assetId: AssetId('tok-token'),
-        blockNumber: 100000n,
-        holderAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d',
-        ),
-      }
+      })
 
       const decimals = 6
 
@@ -180,14 +167,10 @@ describe(ReportUpdater.name, () => {
 
     it('price: 3.20 $ || balance: 22.123456789123456789', async () => {
       const price = fakePrice({ priceUsd: 3.2 })
-      const balance: BalanceRecord = {
+      const balance = fakeBalance({
         balance: 22123456789123456789n,
-        assetId: AssetId('tok-token'),
-        blockNumber: 100000n,
-        holderAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d',
-        ),
-      }
+        assetId: price.assetId,
+      })
 
       const decimals = 18
 
