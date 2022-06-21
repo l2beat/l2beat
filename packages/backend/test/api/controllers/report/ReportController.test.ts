@@ -56,7 +56,7 @@ describe(ReportController.name, () => {
       },
     ]
     const cachedRepository = mock<CachedDataRepository>({
-      saveData: async () => {},
+      saveData: async () => 0,
     })
     const priceRepository = mock<PriceRepository>({
       getByToken: async (token) => {

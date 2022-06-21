@@ -1,22 +1,24 @@
+import { Logger } from '@l2beat/common'
+
 import { getConfig } from '../../../src/config'
-import { DatabaseService } from '../../../src/peripherals/database/DatabaseService'
+import { Database } from '../../../src/peripherals/database/Database'
 
 export function setupDatabaseTestSuite() {
   const config = getConfig('test')
-  const knex = DatabaseService.createKnexInstance(config.databaseConnection)
+  const database = new Database(config.databaseConnection, Logger.SILENT)
   const skip = config.databaseConnection === 'xXTestDatabaseUrlXx'
 
   before(async function () {
     if (skip) {
       this.skip()
     } else {
-      await knex.migrate.latest()
+      await database.migrateToLatest()
     }
   })
 
   after(async () => {
-    await knex.destroy()
+    await database.closeConnection()
   })
 
-  return { knex }
+  return { database }
 }

@@ -26,6 +26,10 @@ export async function up(knex: Knex) {
         .whereRaw('coingecko_id = ?', [coingeckoId.toString()])
     }),
   )
+
+  // @ts-expect-error asset_id not nullable in knex types module
+  await knex('coingecko_prices').where({ asset_id: null }).delete()
+
   await knex.schema.alterTable('coingecko_prices', (table) => {
     table.dropPrimary()
     table.string('asset_id').notNullable().alter()
@@ -48,6 +52,9 @@ export async function down(knex: Knex) {
       )
     }),
   )
+
+  // @ts-expect-error coingecko_id removed from knex types module
+  await knex('coingecko_prices').where({ coingecko_id: null }).delete()
 
   await knex.schema.alterTable('coingecko_prices', (table) => {
     table.dropPrimary()

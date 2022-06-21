@@ -5,17 +5,17 @@ import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNu
 import { setupDatabaseTestSuite } from './setup'
 
 describe(BlockNumberRepository.name, () => {
-  const { knex } = setupDatabaseTestSuite()
+  const { database } = setupDatabaseTestSuite()
 
   it('can delete all records', async () => {
-    const repository = new BlockNumberRepository(knex, Logger.SILENT)
+    const repository = new BlockNumberRepository(database, Logger.SILENT)
     await repository.deleteAll()
     const results = await repository.getAll()
     expect(results).toEqual([])
   })
 
   it('can add new records', async () => {
-    const repository = new BlockNumberRepository(knex, Logger.SILENT)
+    const repository = new BlockNumberRepository(database, Logger.SILENT)
 
     const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
     const itemB = { blockNumber: 7777n, timestamp: new UnixTime(222222) }

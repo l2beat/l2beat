@@ -6,8 +6,8 @@ import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNu
 import { setupDatabaseTestSuite } from './setup'
 
 describe(BalanceRepository.name, () => {
-  const { knex } = setupDatabaseTestSuite()
-  const repository = new BalanceRepository(knex, Logger.SILENT)
+  const { database } = setupDatabaseTestSuite()
+  const repository = new BalanceRepository(database, Logger.SILENT)
 
   const START_BLOCK_NUMBER = 123456n
   const MOCK_HOLDER = EthereumAddress(
@@ -199,7 +199,10 @@ describe(BalanceRepository.name, () => {
   })
 
   it(BalanceRepository.prototype.getLatestPerHolder.name, async () => {
-    const blockNumberRepository = new BlockNumberRepository(knex, Logger.SILENT)
+    const blockNumberRepository = new BlockNumberRepository(
+      database,
+      Logger.SILENT,
+    )
 
     const additionalRecords = [
       {
