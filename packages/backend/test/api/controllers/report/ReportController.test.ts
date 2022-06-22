@@ -4,6 +4,7 @@ import {
   EthereumAddress,
   Logger,
   mock,
+  ProjectId,
   UnixTime,
 } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
@@ -16,9 +17,11 @@ import { PriceRepository } from '../../../../src/peripherals/database/PriceRepos
 import { ReportRepository } from '../../../../src/peripherals/database/ReportRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
-const ARBITRUM = EthereumAddress.random()
-const ARBITRUM_2 = EthereumAddress.random()
-const OPTIMISM = EthereumAddress.random()
+const ARBITRUM = ProjectId('arbitrum')
+const OPTIMISM = ProjectId('optimism')
+const ARBITRUM_ADDRESS = EthereumAddress.random()
+const ARBITRUM_ADDRESS_2 = EthereumAddress.random()
+const OPTIMISM_ADDRESS = EthereumAddress.random()
 const USD = 1000_11n
 const ETH = 1_111111n
 const BALANCE = 111_1111n
@@ -27,10 +30,11 @@ describe(ReportController.name, () => {
   describe(ReportController.prototype.generateDaily.name, () => {
     const PROJECTS: ProjectInfo[] = [
       {
+        projectId: ARBITRUM,
         name: 'Arbitrum',
         bridges: [
           {
-            address: ARBITRUM.toString(),
+            address: ARBITRUM_ADDRESS.toString(),
             sinceBlock: 0,
             tokens: [
               mockToken(AssetId.DAI, 'DAI'),
@@ -38,17 +42,18 @@ describe(ReportController.name, () => {
             ],
           },
           {
-            address: ARBITRUM_2.toString(),
+            address: ARBITRUM_ADDRESS_2.toString(),
             sinceBlock: 0,
             tokens: [mockToken(AssetId.DAI, 'DAI')],
           },
         ],
       },
       {
+        projectId: OPTIMISM,
         name: 'Optimism',
         bridges: [
           {
-            address: OPTIMISM.toString(),
+            address: OPTIMISM_ADDRESS.toString(),
             sinceBlock: 0,
             tokens: [mockToken(AssetId.DAI, 'DAI')],
           },
@@ -78,8 +83,8 @@ describe(ReportController.name, () => {
           mockReport(ARBITRUM, AssetId.WETH, -1),
           mockReport(ARBITRUM, AssetId.WETH, 0),
 
-          mockReport(ARBITRUM_2, AssetId.DAI, -1),
-          mockReport(ARBITRUM_2, AssetId.DAI, 0),
+          mockReport(ARBITRUM, AssetId.DAI, -1),
+          mockReport(ARBITRUM, AssetId.DAI, 0),
 
           mockReport(OPTIMISM, AssetId.DAI, -1),
           mockReport(OPTIMISM, AssetId.DAI, 0),
@@ -211,10 +216,10 @@ function mockToken(assetId: AssetId, symbol: string): TokenInfo {
   }
 }
 
-function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
+function mockReport(projectId: ProjectId, asset: AssetId, offset: number) {
   return {
     timestamp: START.add(offset, 'days'),
-    bridge,
+    projectId,
     asset,
     blockNumber: 0n,
     balanceUsd: USD,

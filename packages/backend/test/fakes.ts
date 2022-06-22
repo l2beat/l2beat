@@ -1,7 +1,14 @@
-import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
 
 import { Token } from '../src/model'
 import { BalanceRecord } from '../src/peripherals/database/BalanceRepository'
+import { ReportRecord } from '../src/peripherals/database/ReportRepository'
 
 const MAX_SAFE_POSTGRES_INT = 2 ** 31 - 1
 export function fakeInt(max = MAX_SAFE_POSTGRES_INT): number {
@@ -37,4 +44,14 @@ export const fakeBalance = (
   holderAddress: EthereumAddress.random(),
   balance: fakeBigInt(),
   ...balance,
+})
+
+export const fakeReport = (report?: Partial<ReportRecord>): ReportRecord => ({
+  timestamp: fakeUnixTime(),
+  projectId: ProjectId('fake-project'),
+  asset: AssetId('fake-asset'),
+  balance: fakeBigInt(),
+  balanceUsd: fakeBigInt(),
+  balanceEth: fakeBigInt(),
+  ...report,
 })

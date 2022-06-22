@@ -1,20 +1,20 @@
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 
 export interface OutputEntry {
   timestamp: UnixTime
-  value: AggregateValue
+  tvl: Tvl
   projects: Map<string, ProjectEntry>
 }
 
 export interface ProjectEntry {
-  value: AggregateValue
+  tvl: Tvl
   tokens: Map<string, TokenEntry>
 }
 
-export interface AggregateValue {
+export interface Tvl {
   usd: bigint
   eth: bigint
 }
@@ -39,12 +39,12 @@ export function aggregateReportsDaily(
 
   const entries: OutputEntry[] = dates.map((timestamp) => ({
     timestamp,
-    value: { usd: 0n, eth: 0n },
+    tvl: { usd: 0n, eth: 0n },
     projects: new Map(),
   }))
 
   const timestampToIndex = new Map(
-    entries.map((x, i) => [x.timestamp.toNumber(), i]),
+    entries.map((entry, i) => [entry.timestamp.toNumber(), i]),
   )
 
   const projectNames = getProjectNames(projects)
@@ -58,7 +58,7 @@ export function aggregateReportsDaily(
 
     const entry = entries[index]
 
-    const projectName = projectNames.get(report.bridge)
+    const projectName = projectNames.get(report.projectId)
     if (projectName === undefined) {
       throw new Error('Programmer error: Invalid bridge')
     }
@@ -83,11 +83,9 @@ export function aggregateReportsDaily(
 }
 
 function getProjectNames(projects: ProjectInfo[]) {
-  const projectNames = new Map<EthereumAddress, string>()
+  const projectNames = new Map<ProjectId, string>()
   for (const project of projects) {
-    for (const bridge of project.bridges) {
-      projectNames.set(EthereumAddress(bridge.address), project.name)
-    }
+    projectNames.set(project.projectId, project.name)
   }
   return projectNames
 }
@@ -109,7 +107,7 @@ function getTokenDetails(projects: ProjectInfo[]) {
 
 function getBounds(reports: ReportRecord[]) {
   let min = Infinity
-  let max = -Infinity
+  let max = 0
   for (const { timestamp } of reports) {
     const n = timestamp.toNumber()
     if (n < min) {
@@ -139,20 +137,20 @@ export function saveBalancesToEntry(
   symbol: string,
   decimals: number,
 ) {
-  entry.value.usd += balanceUsd
-  entry.value.eth += balanceEth
+  entry.tvl.usd += balanceUsd
+  entry.tvl.eth += balanceEth
 
   let project = entry.projects.get(projectName)
   if (!project) {
     project = {
-      value: { usd: 0n, eth: 0n },
+      tvl: { usd: 0n, eth: 0n },
       tokens: new Map(),
     }
     entry.projects.set(projectName, project)
   }
 
-  project.value.usd += balanceUsd
-  project.value.eth += balanceEth
+  project.tvl.usd += balanceUsd
+  project.tvl.eth += balanceEth
 
   let token = project.tokens.get(symbol)
   if (token === undefined) {

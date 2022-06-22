@@ -90,6 +90,7 @@ export class Application {
       priceRepository,
       balanceRepository,
       reportRepository,
+      config.projects,
       config.tokens,
       logger,
     )

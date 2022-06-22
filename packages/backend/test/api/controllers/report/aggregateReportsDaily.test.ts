@@ -1,4 +1,10 @@
-import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
@@ -8,35 +14,38 @@ import {
 } from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
+import { fakeReport } from '../../../fakes'
 import { mockEntry } from './addOptimismToken.test'
 
 describe(aggregateReportsDaily.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
-  const ARBITRUM = EthereumAddress.random()
-  const ARBITRUM_2 = EthereumAddress.random()
-  const OPTIMISM = EthereumAddress.random()
+  const ARBITRUM = ProjectId('arbitrum')
+  const OPTIMISM = ProjectId('optimism')
+  const ARBITRUM_ADDRESS = EthereumAddress.random()
+  const ARBITRUM_ADDRESS_2 = EthereumAddress.random()
+  const OPTIMISM_ADDRESS = EthereumAddress.random()
   const USD = 1000n
   const ETH = 1n
   const BALANCE = 1000n
 
-  function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
-    return {
+  function mockReport(projectId: ProjectId, asset: AssetId, offset: number) {
+    return fakeReport({
+      projectId,
       timestamp: TODAY.add(offset, 'days'),
-      bridge,
       asset,
-      blockNumber: 0n,
+      balance: BALANCE,
       balanceUsd: USD,
       balanceEth: ETH,
-      balance: BALANCE,
-    }
+    })
   }
 
   const PROJECTS: ProjectInfo[] = [
     {
+      projectId: ARBITRUM,
       name: 'Arbitrum',
       bridges: [
         {
-          address: ARBITRUM.toString(),
+          address: ARBITRUM_ADDRESS.toString(),
           sinceBlock: 0,
           tokens: [
             mockToken(AssetId.DAI, 'DAI'),
@@ -44,17 +53,18 @@ describe(aggregateReportsDaily.name, () => {
           ],
         },
         {
-          address: ARBITRUM_2.toString(),
+          address: ARBITRUM_ADDRESS_2.toString(),
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
     },
     {
+      projectId: ProjectId('optimism'),
       name: 'Optimism',
       bridges: [
         {
-          address: OPTIMISM.toString(),
+          address: OPTIMISM_ADDRESS.toString(),
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
@@ -73,12 +83,12 @@ describe(aggregateReportsDaily.name, () => {
     expect(result).toEqual([
       {
         timestamp: TODAY.add(-1, 'days'),
-        value: { usd: USD, eth: ETH },
+        tvl: { usd: USD, eth: ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              value: { usd: USD, eth: ETH },
+              tvl: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -96,12 +106,12 @@ describe(aggregateReportsDaily.name, () => {
       },
       {
         timestamp: TODAY,
-        value: { usd: USD, eth: ETH },
+        tvl: { usd: USD, eth: ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              value: { usd: USD, eth: ETH },
+              tvl: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -128,8 +138,8 @@ describe(aggregateReportsDaily.name, () => {
       mockReport(ARBITRUM, AssetId.WETH, -1),
       mockReport(ARBITRUM, AssetId.WETH, 0),
 
-      mockReport(ARBITRUM_2, AssetId.DAI, -1),
-      mockReport(ARBITRUM_2, AssetId.DAI, 0),
+      mockReport(ARBITRUM, AssetId.DAI, -1),
+      mockReport(ARBITRUM, AssetId.DAI, 0),
 
       mockReport(OPTIMISM, AssetId.DAI, -1),
       mockReport(OPTIMISM, AssetId.DAI, 0),
@@ -140,12 +150,12 @@ describe(aggregateReportsDaily.name, () => {
     expect(result).toEqual([
       {
         timestamp: TODAY.add(-1, 'days'),
-        value: { usd: 4n * USD, eth: 4n * ETH },
+        tvl: { usd: 4n * USD, eth: 4n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              value: { usd: 3n * USD, eth: 3n * ETH },
+              tvl: { usd: 3n * USD, eth: 3n * ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -171,7 +181,7 @@ describe(aggregateReportsDaily.name, () => {
           [
             'Optimism',
             {
-              value: { usd: USD, eth: ETH },
+              tvl: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -189,12 +199,12 @@ describe(aggregateReportsDaily.name, () => {
       },
       {
         timestamp: TODAY,
-        value: { usd: 4n * USD, eth: 4n * ETH },
+        tvl: { usd: 4n * USD, eth: 4n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              value: { usd: 3n * USD, eth: 3n * ETH },
+              tvl: { usd: 3n * USD, eth: 3n * ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -220,7 +230,7 @@ describe(aggregateReportsDaily.name, () => {
           [
             'Optimism',
             {
-              value: { usd: USD, eth: ETH },
+              tvl: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -251,7 +261,7 @@ describe(aggregateReportsDaily.name, () => {
 describe(saveBalancesToEntry.name, () => {
   it('happy path', () => {
     const projectName = 'Optimism'
-    const symbol = 'OP'
+    const assetSymbol = 'OP'
     const decimals = 18
     const usdTVL = 1500n
     const ethTVL = 1n
@@ -264,12 +274,12 @@ describe(saveBalancesToEntry.name, () => {
       usdTVL,
       ethTVL,
       balance,
-      symbol,
+      assetSymbol,
       decimals,
     )
 
     const tokens = new Map()
-    tokens.set(symbol, {
+    tokens.set(assetSymbol, {
       usd: usdTVL,
       eth: ethTVL,
       balance,
@@ -277,7 +287,7 @@ describe(saveBalancesToEntry.name, () => {
     })
     const projects = new Map()
     projects.set(projectName, {
-      value: {
+      tvl: {
         usd: usdTVL,
         eth: ethTVL,
       },
@@ -286,7 +296,7 @@ describe(saveBalancesToEntry.name, () => {
 
     expect(entry).toEqual({
       timestamp: entry.timestamp,
-      value: {
+      tvl: {
         usd: usdTVL,
         eth: ethTVL,
       },

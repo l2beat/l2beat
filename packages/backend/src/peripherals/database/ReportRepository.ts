@@ -26,7 +26,6 @@ export class ReportRepository extends BaseRepository {
   async getDaily(): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports')
-      .select()
       .where('is_daily', '=', true)
       .orderBy('unix_timestamp')
 
@@ -54,7 +53,7 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  async getLatestPerBridge(): Promise<Map<ProjectId, ReportRecord[]>> {
+  async getLatestPerProject(): Promise<Map<ProjectId, ReportRecord[]>> {
     const knex = await this.knex()
     const rows = await knex
       .select('a1.*')
@@ -63,15 +62,15 @@ export class ReportRepository extends BaseRepository {
         knex('reports')
           .select(
             knex.raw('max(unix_timestamp) as unix_timestamp'),
-            'bridge_address',
+            'project_id',
             'asset_id',
           )
           .from('reports')
           .as('a2')
-          .groupBy('bridge_address', 'asset_id'),
+          .groupBy('project_id', 'asset_id'),
         function () {
           return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp')
-            .andOn('a1.bridge_address', '=', 'a2.bridge_address')
+            .andOn('a1.project_id', '=', 'a2.project_id')
             .andOn('a1.asset_id', '=', 'a2.asset_id')
         },
       )

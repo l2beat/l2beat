@@ -5,7 +5,9 @@ import {
   EthereumAddress,
   Logger,
   mock,
+  ProjectId,
 } from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
@@ -21,6 +23,10 @@ describe(BalanceUpdater.name, () => {
   const HOLDER_B = EthereumAddress.random()
   const HOLDER_C = EthereumAddress.random()
 
+  const PROJECT_A = ProjectId('project-a')
+  const ARBITRUM = ProjectId('arbitrum')
+  const ZKSWAP = ProjectId('zk-swap')
+
   const ASSET_A = AssetId('eth-ether')
   const ASSET_B = AssetId('usdc-usd-coin')
   const ASSET_C = AssetId('usdt-tether-usd')
@@ -29,106 +35,50 @@ describe(BalanceUpdater.name, () => {
   const START = fakeUnixTime()
   const START_BLOCK_NUMBER = 10000n
 
+  const mockToken = (id: AssetId, sinceBlock: number): TokenInfo => {
+    return {
+      id,
+      name: 'fake',
+      symbol: 'FK',
+      decimals: 18,
+      coingeckoId: CoingeckoId('fake'),
+      sinceBlock,
+      category: 'other',
+    }
+  }
+
   const PROJECTS: ProjectInfo[] = [
     {
       name: 'Arbitrum',
+      projectId: ProjectId('arbitrum'),
       bridges: [
         {
           address: HOLDER_A.toString(),
           sinceBlock: Number(START_BLOCK_NUMBER - 100n),
           tokens: [
-            {
-              id: ASSET_A,
-              name: 'Ether',
-              symbol: 'ETH',
-              decimals: 18,
-              coingeckoId: CoingeckoId('ethereum'),
-              sinceBlock: 0,
-              category: 'ether',
-            },
-            {
-              id: ASSET_B,
-              name: 'USD Coin',
-              coingeckoId: CoingeckoId('usd-coin'),
-              address: EthereumAddress(
-                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-              ),
-              symbol: 'USDC',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
-            {
-              id: ASSET_C,
-              name: 'Tether USD',
-              coingeckoId: CoingeckoId('tether'),
-              address: EthereumAddress(
-                '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-              ),
-              symbol: 'USDT',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
+            mockToken(ASSET_A, 0),
+            mockToken(ASSET_B, 800),
+            mockToken(ASSET_C, 800),
           ],
         },
       ],
     },
     {
-      name: 'Zkswap',
+      name: 'ZKswap',
+      projectId: ProjectId('zk-swap'),
       bridges: [
         {
           address: HOLDER_B.toString(),
           sinceBlock: Number(START_BLOCK_NUMBER - 100n),
           tokens: [
-            {
-              id: ASSET_B,
-              name: 'USD Coin',
-              coingeckoId: CoingeckoId('usd-coin'),
-              address: EthereumAddress(
-                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-              ),
-              symbol: 'USDC',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
-            {
-              id: ASSET_C,
-              name: 'Tether USD',
-              coingeckoId: CoingeckoId('tether'),
-              address: EthereumAddress(
-                '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-              ),
-              symbol: 'USDT',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
-            {
-              id: ASSET_D,
-              name: '0x Protocol Token',
-              coingeckoId: CoingeckoId('0x'),
-              address: EthereumAddress(
-                '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
-              ),
-              symbol: 'ZRX',
-              decimals: 18,
-              sinceBlock: 800,
-              category: 'other',
-            },
+            mockToken(ASSET_B, 0),
+            mockToken(ASSET_C, 800),
+            mockToken(ASSET_D, 800),
           ],
         },
       ],
     },
   ]
-
-  const BALANCE_100_RESPONSE = {
-    success: true,
-    data: Bytes.fromHex(
-      '0x0000000000000000000000000000000000000000000000000000000000000064',
-    ),
-  }
 
   const fakeFindByBlockNumber = async (blockNumber: bigint) => {
     return blockNumber === START_BLOCK_NUMBER
@@ -197,14 +147,14 @@ describe(BalanceUpdater.name, () => {
 
       const multicall = mock<MulticallClient>({
         multicall: mockFn()
-          .returnsOnce([BALANCE_100_RESPONSE, BALANCE_100_RESPONSE])
+          .returnsOnce([MULTICALL_RESPONSE_FAKE, MULTICALL_RESPONSE_FAKE])
           .returnsOnce([
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
           ]),
       })
 
@@ -333,26 +283,37 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toEqual([
         {
+          projectId: ARBITRUM,
           holder: HOLDER_A,
           assetId: ASSET_A,
         },
         {
+          projectId: ARBITRUM,
+
           holder: HOLDER_A,
           assetId: ASSET_B,
         },
         {
+          projectId: ARBITRUM,
+
           holder: HOLDER_A,
           assetId: ASSET_C,
         },
         {
+          projectId: ZKSWAP,
+
           holder: HOLDER_B,
           assetId: ASSET_B,
         },
         {
+          projectId: ZKSWAP,
+
           holder: HOLDER_B,
           assetId: ASSET_C,
         },
         {
+          projectId: ZKSWAP,
+
           holder: HOLDER_B,
           assetId: ASSET_D,
         },
@@ -391,18 +352,25 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toBeAnArrayWith(
         {
+          projectId: ARBITRUM,
           holder: HOLDER_A,
           assetId: ASSET_B,
         },
         {
+          projectId: ARBITRUM,
+
           holder: HOLDER_A,
           assetId: ASSET_C,
         },
         {
+          projectId: ZKSWAP,
+
           holder: HOLDER_B,
           assetId: ASSET_C,
         },
         {
+          projectId: ZKSWAP,
+
           holder: HOLDER_B,
           assetId: ASSET_D,
         },
@@ -414,33 +382,12 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           name: 'Arbitrum',
+          projectId: ProjectId('arbitrum'),
           bridges: [
             {
               address: HOLDER_A.toString(),
               sinceBlock: Number(START_BLOCK_NUMBER + 1000n),
-              tokens: [
-                {
-                  id: ASSET_A,
-                  name: 'Ether',
-                  symbol: 'ETH',
-                  decimals: 18,
-                  coingeckoId: CoingeckoId('ethereum'),
-                  sinceBlock: 0,
-                  category: 'ether',
-                },
-                {
-                  id: ASSET_B,
-                  name: 'USD Coin',
-                  coingeckoId: CoingeckoId('usd-coin'),
-                  address: EthereumAddress(
-                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-                  ),
-                  symbol: 'USDC',
-                  decimals: 6,
-                  sinceBlock: 800,
-                  category: 'stablecoin',
-                },
-              ],
+              tokens: [mockToken(ASSET_A, 0), mockToken(ASSET_B, 800)],
             },
           ],
         },
@@ -465,32 +412,14 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           name: 'Arbitrum',
+          projectId: ProjectId('arbitrum'),
           bridges: [
             {
               address: HOLDER_A.toString(),
               sinceBlock: 999,
               tokens: [
-                {
-                  id: ASSET_A,
-                  name: 'Ether',
-                  symbol: 'ETH',
-                  decimals: 18,
-                  coingeckoId: CoingeckoId('ethereum'),
-                  sinceBlock: 0,
-                  category: 'ether',
-                },
-                {
-                  id: ASSET_B,
-                  name: 'USD Coin',
-                  coingeckoId: CoingeckoId('usd-coin'),
-                  address: EthereumAddress(
-                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-                  ),
-                  symbol: 'USDC',
-                  decimals: 6,
-                  sinceBlock: Number(START_BLOCK_NUMBER + 1000n),
-                  category: 'stablecoin',
-                },
+                mockToken(ASSET_A, 0),
+                mockToken(ASSET_B, Number(START_BLOCK_NUMBER + 1000n)),
               ],
             },
           ],
@@ -511,6 +440,7 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toEqual([
         {
+          projectId: ARBITRUM,
           holder: HOLDER_A,
           assetId: ASSET_A,
         },
@@ -556,9 +486,9 @@ describe(BalanceUpdater.name, () => {
       )
 
       const metadata = [
-        { holder: HOLDER_A, assetId: ASSET_A },
-        { holder: HOLDER_B, assetId: ASSET_B },
-        { holder: HOLDER_C, assetId: ASSET_C },
+        { projectId: PROJECT_A, holder: HOLDER_A, assetId: ASSET_A },
+        { projectId: PROJECT_A, holder: HOLDER_B, assetId: ASSET_B },
+        { projectId: PROJECT_A, holder: HOLDER_C, assetId: ASSET_C },
       ]
 
       const result = await balanceUpdater.fetchBalances(
@@ -589,3 +519,10 @@ describe(BalanceUpdater.name, () => {
     })
   })
 })
+
+const MULTICALL_RESPONSE_FAKE = {
+  success: true,
+  data: Bytes.fromHex(
+    '0x0000000000000000000000000000000000000000000000000000000000000064',
+  ),
+}

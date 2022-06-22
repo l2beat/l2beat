@@ -47,8 +47,8 @@ export function generateReportOutput(
     const date = timestampToDate(entry.timestamp.add(-1, 'days'))
     report.aggregate.data.push([
       date,
-      asNumber(entry.value.usd, 2),
-      asNumber(entry.value.eth, 6),
+      asNumber(entry.tvl.usd, 2),
+      asNumber(entry.tvl.eth, 6),
     ])
 
     for (const [name, projectEntry] of entry.projects) {
@@ -59,8 +59,8 @@ export function generateReportOutput(
 
       project.aggregate.data.push([
         date,
-        asNumber(projectEntry.value.usd, 2),
-        asNumber(projectEntry.value.eth, 6),
+        asNumber(projectEntry.tvl.usd, 2),
+        asNumber(projectEntry.tvl.eth, 6),
       ])
 
       for (const [symbol, tokenValue] of projectEntry.tokens) {

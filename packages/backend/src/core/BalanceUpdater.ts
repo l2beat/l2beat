@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress, Logger, ProjectId } from '@l2beat/common'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
@@ -10,6 +10,7 @@ import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
 
 interface HeldAsset {
+  projectId: ProjectId
   holder: EthereumAddress
   assetId: AssetId
 }
@@ -70,6 +71,7 @@ export class BalanceUpdater {
           }
           // TODO: make bridge.address EthereumAddress
           const entry = {
+            projectId: project.projectId,
             holder: EthereumAddress(bridge.address),
             assetId: token.id,
           }

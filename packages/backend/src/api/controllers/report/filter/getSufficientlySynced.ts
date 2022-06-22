@@ -1,16 +1,16 @@
 import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
-import { getMaxAssetInBridge } from './getMaxAssetsInBridge'
+import { getNewestAssetInProject } from './getMaxAssetsInBridge'
 import { getSyncedTimestamp } from './getSyncedTimestamp'
 
 export function getSufficientlySynced(reports: ReportRecord[]) {
-  const maxByAssetInBridge = getMaxAssetInBridge(reports)
+  const newestByAssetInProject = getNewestAssetInProject(reports)
   const syncedTimestamp = getSyncedTimestamp(
-    [...maxByAssetInBridge.values()],
+    [...newestByAssetInProject.values()],
     'days',
   )
 
   const excluded: Set<string> = new Set()
-  for (const [key, timestamp] of maxByAssetInBridge.entries()) {
+  for (const [key, timestamp] of newestByAssetInProject.entries()) {
     if (timestamp.lt(syncedTimestamp)) {
       excluded.add(key)
     }
@@ -19,6 +19,6 @@ export function getSufficientlySynced(reports: ReportRecord[]) {
   return reports.filter(
     (report) =>
       report.timestamp.lte(syncedTimestamp) &&
-      !excluded.has(`${report.bridge}-${report.asset}`),
+      !excluded.has(`${report.projectId}-${report.asset}`),
   )
 }

@@ -22,8 +22,8 @@ export async function up(knex: Knex) {
     projects.flatMap(async ({ id, bridges }) =>
       bridges.map(async (bridge) => {
         await knex('reports')
-          // @ts-expect-error project_id not yet in types TODO
-          .update({ project_id: id })
+          .update({ project_id: id.toString() })
+          // @ts-expect-error bridge_address removed from knex module type
           .where({ bridge_address: bridge.address })
       }),
     ),
