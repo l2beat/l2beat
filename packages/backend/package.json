@@ -23,6 +23,8 @@
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.11",
     "@types/node-fetch": "^2.5.12",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
@@ -30,6 +32,8 @@
     "koa": "^2.13.4",
     "node-fetch": "2.6.1",
     "pg": "^8.7.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "source-map-support": "^0.5.21",
     "zod": "^3.17.3"
   },

@@ -104,4 +104,8 @@ export class PriceUpdater {
 
     await this.priceRepository.addMany(priceRecords)
   }
+
+  async getStatus() {
+    return await this.priceRepository.getLatestByToken()
+  }
 }
