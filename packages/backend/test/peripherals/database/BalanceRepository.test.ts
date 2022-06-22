@@ -213,13 +213,15 @@ describe(BalanceRepository.name, () => {
       },
     ]
 
-    repository.addOrUpdateMany(additionalRecords)
+    await repository.addOrUpdateMany(additionalRecords)
 
-    DATA.map((d, index) =>
-      blockNumberRepository.add({
-        timestamp: START.add(index, 'hours'),
-        blockNumber: d.blockNumber,
-      }),
+    await Promise.all(
+      DATA.map(({ blockNumber }, i) =>
+        blockNumberRepository.add({
+          timestamp: START.add(i, 'hours'),
+          blockNumber,
+        }),
+      ),
     )
 
     const holderLatest = await repository.getLatestPerHolder()

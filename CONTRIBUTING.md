@@ -6,13 +6,27 @@ You can browse [existing issues](https://github.com/l2beat/l2beat/issues) on our
 
 If you find something wrong with the website or the data feel free to [open an issue](https://github.com/l2beat/l2beat/issues/new).
 
-## Run website locally with mock data
+## Cloning the repository
 
-If you're planning working on frontend (not data pipeline) you can easily spun website build with randomize TVL data.
+We encourage you to fork our repository first and then clone your fork. That way the changes you make will be visible in your repository after you push and you can easily make pull requests. It's easy:
+
+https://github.com/l2beat/l2beat/fork
+
+## Installing dependencies
+
+To do any development work, even simple config changes you probably want to have the project running locally. To install dependencies do the following.
+
+1. Install [node.js](https://nodejs.org/en/) version 16. To easily manage node versions we recommend [fnm](https://github.com/Schniz/fnm)
+2. Install [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable), preferably through `npm i -g yarn`
+3. In the repository root run `yarn` to install project specific dependencies
+
+## Running the website locally
+
+If you're planning working only on the frontend part of the website (i.e. you don't care what data is actually displayed) then it's quite easy. Just run the following commands after having cloned the repository:
 
 ```
 yarn
-yarn build:mock
+yarn build:frontend
 cd packages/frontend
 yarn start
 ```
@@ -21,12 +35,11 @@ yarn start
 
 If you want to add a new L2 project you can do that by opening a PR. To do this you need to:
 
-1. Fork the repository
-2. Read the specification in `packages/config/src/projects/types/Project.ts`. It contains an annotated data format for the project definition.
-3. Modify `packages/config/src/projects` by adding a new file describing your project. You can use the existing projects as reference.
-4. Add your project into `packages/config/src/projects/index.ts`. The order of the projects should be kept alphabetical.
-5. Add an 256x256 png project icon under 10KB into `packages/frontend/static/icons`.
-6. Open a PR :D
+1. Read the specification in `packages/config/src/projects/types/Project.ts`. It contains an annotated data format for the project definition.
+2. Modify `packages/config/src/projects` by adding a new file describing your project. You can use the existing projects as reference.
+3. Add your project into `packages/config/src/projects/index.ts`. The order of the projects should be kept alphabetical.
+4. Add an 256x256 png project icon under 10KB into `packages/frontend/static/icons`.
+5. Open a PR :D
 
 Adding a new project in this way will automatically update both the data fetching logic as well as the frontend.
 
@@ -46,15 +59,11 @@ You are encouraged to provide your feedback on the data presented on L2BEAT by [
 
 ## Contribute code
 
-Make sure that you have the required dependencies installed:
+The L2BEAT website repository is a monorepo consisting of many interdependent packages.
 
-- [node.js](https://nodejs.org/en/) - version 14
-- [Yarn](https://classic.yarnpkg.com/en/docs/install) - version 1.22.0 or later
-
-The L2BEAT website repository is a monorepo consisting of three interdependent projects.
-
-1. `packages/config` - the shared configuration that defines what projects and tokens are tracked by the website
-2. `packages/backend` - node script that fetches data from the blockchain and calculates metrics like TVL
-3. `packages/frontend` - statically generated site which displays data fetched by the backend
+1. `packages/common` - common utils used by the other packages
+2. `packages/config` - the shared configuration that defines what projects and tokens are tracked by the website
+3. `packages/backend` - a backend server that downloads balances from chain and exposes and API for the frontend
+4. `packages/frontend` - statically generated site which displays data fetched from the backend API
 
 To learn more about each of the projects read their respective README's.
