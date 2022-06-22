@@ -1,15 +1,30 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  EthereumAddress,
+  Logger,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
 import { BalanceRow } from 'knex/types/tables'
 
 import { BaseRepository } from './BaseRepository'
 import { Database } from './Database'
 
 export interface BalanceRecord {
-  timestamp: UnixTime
+  projectId: ProjectId
   holderAddress: EthereumAddress
   assetId: AssetId
+  timestamp: UnixTime
   balance: bigint
 }
+
+export interface BalancePerProjectRecord {
+  projectId: ProjectId
+  assetId: AssetId
+  timestamp: UnixTime
+  balance: bigint
+}
+
 export interface DataBoundary {
   earliestBlockNumber: bigint | undefined
   latestBlockNumber: bigint | undefined
@@ -35,6 +50,30 @@ export class BalanceRepository extends BaseRepository {
       )
       .where('block_number', Number(blockNumber))
     return rows.map(toRecord)
+  }
+
+  async getByTimestampPerProjectPerAsset(
+    timestamp: UnixTime,
+  ): Promise<BalancePerProjectRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('asset_balances')
+      .where({
+        unix_timestamp: timestamp.toString(),
+      })
+      .select(
+        knex.raw('sum(balance) as balance'),
+        'unix_timestamp',
+        'project_id',
+        'asset_id',
+      )
+      .groupBy('unix_timestamp', 'project_id', 'asset_id')
+
+    return rows.map((row) => ({
+      projectId: ProjectId(row.project_id),
+      balance: BigInt(row.balance),
+      timestamp: new UnixTime(+row.unix_timestamp),
+      assetId: AssetId(row.asset_id),
+    }))
   }
 
   async getByHolderAndAsset(
@@ -113,18 +152,20 @@ export class BalanceRepository extends BaseRepository {
 
 function toRecord(row: BalanceRow): BalanceRecord {
   return {
-    timestamp: new UnixTime(+row.unix_timestamp),
+    projectId: ProjectId(row.project_id),
     holderAddress: EthereumAddress(row.holder_address),
     assetId: AssetId(row.asset_id),
+    timestamp: new UnixTime(+row.unix_timestamp),
     balance: BigInt(row.balance),
   }
 }
 
 function toRow(record: BalanceRecord): BalanceRow {
   return {
-    unix_timestamp: record.timestamp.toString(),
+    project_id: record.projectId.toString(),
     holder_address: record.holderAddress.toString(),
     asset_id: record.assetId.toString(),
+    unix_timestamp: record.timestamp.toString(),
     balance: record.balance.toString(),
   }
 }

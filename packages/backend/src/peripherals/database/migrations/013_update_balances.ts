@@ -11,11 +11,13 @@ should create a new migration file that fixes the issue.
 
 */
 
+import { projects } from '@l2beat/config'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('asset_balances', (table) => {
     table.bigInteger('unix_timestamp')
+    table.string('project_id')
   })
   await knex.raw(`
     UPDATE asset_balances
@@ -25,6 +27,16 @@ export async function up(knex: Knex) {
       WHERE asset_balances.block_number = block_numbers.block_number
     )
   `)
+
+  await Promise.all(
+    projects.flatMap(async ({ id, bridges }) =>
+      bridges.map(async (bridge) => {
+        await knex('asset_balances')
+          .update({ project_id: id.toString() })
+          .where({ holder_address: bridge.address })
+      }),
+    ),
+  )
 
   // @ts-expect-error unix_timestamp not nullable in knex types module
   await knex('asset_balances').where({ unix_timestamp: null }).delete()
