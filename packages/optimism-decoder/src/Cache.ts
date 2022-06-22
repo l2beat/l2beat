@@ -10,6 +10,7 @@ export class Cache<T> {
     if (this.initialized || !fs.existsSync(CACHE_LOCATION)) {
       return
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.cache = JSON.parse(fs.readFileSync(CACHE_LOCATION, 'utf8'))
     this.initialized = true
   }
