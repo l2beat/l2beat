@@ -40,7 +40,13 @@ export class JobQueue {
     return this.inProgress.length + this.queue.length
   }
 
-  private async execute() {
+  private execute() {
+    this.executeUnchecked().catch((e) => {
+      this.logger.error(e)
+    })
+  }
+
+  private async executeUnchecked() {
     this.lastUpdatedAt = new Date().toISOString()
     if (this.inProgress.length >= this.options.maxConcurrentJobs) {
       return

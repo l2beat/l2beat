@@ -1,4 +1,3 @@
-
 {
   "env": {
     "es6": true,
@@ -9,7 +8,8 @@
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -46,6 +46,9 @@
       "rules": {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/require-await": "off",
         "import/no-extraneous-dependencies": "off",
         "no-unused-expressions": "off"
       }

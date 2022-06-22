@@ -67,7 +67,7 @@ export class Cache {
       }
       promise = fn(...args)
       this.promises.set(module, key, promise)
-      promise.then((value) => this.set(module, key, value))
+      void promise.then((value) => this.set(module, key, value))
       return promise
     }
   }
