@@ -16,7 +16,7 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["simple-import-sort", "no-only-tests"],
+  "plugins": ["simple-import-sort", "no-only-tests", "unused-imports"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
@@ -38,7 +38,8 @@
       { "paths": [".", "..", "../..", "../../.."] }
     ],
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "unused-imports/no-unused-imports": "error"
   },
   "overrides": [
     {

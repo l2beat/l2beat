@@ -12,12 +12,16 @@ export class OptimismNameService {
     if (!this.cache.has('transactions', transactionHash)) {
       const tx = await this.provider.getTransaction(transactionHash)
       try {
-        const [name] = coder.decodeFunctionData('setAddress', tx.data)
+        const [name] = coder.decodeFunctionData(
+          'setAddress',
+          tx.data,
+        ) as string[]
         const hash = utils.solidityKeccak256(['string'], [name])
         this.cache.set('names', hash, name)
       } catch {} // eslint-disable-line no-empty
       this.cache.set('transactions', transactionHash, true)
     }
-    return (this.cache.get('names', nameHash) as string) ?? '[Unknown]'
+    const cached = this.cache.get('names', nameHash)
+    return typeof cached === 'string' ? cached : '[Unknown]'
   }
 }
