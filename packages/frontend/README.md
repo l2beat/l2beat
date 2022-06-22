@@ -9,11 +9,8 @@ commands in the repository root:
 
 ```
 yarn
-yarn build:mock
+yarn build:frontend
 ```
-
-To learn why we use `build:mock` instead of `build` please refer to the backend&apos;s
-[README](https://github.com/l2beat/l2beat/blob/master/packages/backend/README.md).
 
 ## Scripts
 

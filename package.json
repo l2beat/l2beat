@@ -12,20 +12,21 @@
     ]
   },
   "scripts": {
-    "format": "wsrun -ecsm format",
-    "format:fix": "wsrun -ecsm format:fix",
-    "lint": "wsrun -ecsm lint",
-    "lint:fix": "wsrun -ecsm lint:fix",
-    "typecheck": "wsrun -ecsm typecheck",
-    "test": "wsrun -ecsm test",
-    "build": "wsrun -ecsm build",
+    "build:backend": "wsrun -p @l2beat/frontend -recsm build",
     "build:frontend": "wsrun -p @l2beat/frontend -recsm build",
-    "heroku-postbuild": "wsrun -p @l2beat/backend -x @l2beat/backend -recsm build",
-    "start": "cd packages/backend && yarn start",
-    "build:mock": "MOCK_DATA=true yarn build",
-    "ci:check": "yarn clean && yarn build:mock && yarn format && yarn lint && yarn typecheck && yarn test",
+    "build": "wsrun -ecsm build",
+    "ci:check": "yarn clean && yarn build:mock && yarn format && yarn lint && yarn typecheck:ci && yarn test",
+    "clean": "wsrun -ecsm clean",
     "fix": "yarn lint:fix && yarn format:fix",
-    "clean": "wsrun -ecsm clean"
+    "format:fix": "wsrun -ecsm format:fix",
+    "format": "wsrun -ecsm format",
+    "heroku-postbuild": "yarn build:backend",
+    "lint:fix": "wsrun -ecsm lint:fix",
+    "lint": "wsrun -ecsm lint",
+    "start": "cd packages/backend && yarn start",
+    "test": "wsrun -ecsm test",
+    "typecheck:ci": "wsrun -ecsm typecheck:ci",
+    "typecheck": "wsrun -ecsm typecheck"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^9.1.2",

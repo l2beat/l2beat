@@ -5,15 +5,16 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
-    "lint:fix": "yarn lint --fix",
-    "typecheck": "tsc --noEmit",
     "build": "NODE_ENV=production gulp build",
+    "clean": "rm -rf build",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
     "start": "gulp watch",
     "test": "mocha",
-    "clean": "rm -rf build"
+    "typecheck:ci": "yarn typecheck",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@l2beat/common": "*",

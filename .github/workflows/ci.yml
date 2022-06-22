@@ -27,10 +27,10 @@ jobs:
         with:
           node-version: 16.x
       - run: yarn --frozen-lockfile
-      - run: yarn build:mock
+      - run: yarn build
+      - run: yarn typecheck:ci
       - run: yarn format
       - run: yarn lint
-      - run: yarn typecheck
       - run: yarn test
         env:
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
