@@ -23,3 +23,26 @@ getEnv.integer = function integer(name: string, fallback?: number) {
   }
   throw new Error(`Missing environment variable ${name}!`)
 }
+
+getEnv.boolean = function getBooleanFromEnv(name: string, fallback?: boolean) {
+  const value = process.env[name]
+
+  if (value !== undefined) {
+    const lowerCased = value.toLowerCase()
+
+    const trues = ['true', 'yes', '1']
+    const falses = ['false', 'no', '0']
+
+    if (trues.includes(lowerCased)) return true
+    if (falses.includes(lowerCased)) return false
+    const allowedValues = trues.concat(falses).join(', ')
+    throw new Error(
+      `Environment variable ${name} is "${value}", but must be one of ${allowedValues}!`,
+    )
+  }
+
+  if (fallback !== undefined) {
+    return fallback
+  }
+  throw new Error(`Missing environment variable ${name}!`)
+}

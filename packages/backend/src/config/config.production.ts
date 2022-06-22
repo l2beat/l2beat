@@ -32,5 +32,6 @@ export function getProductionConfig(): Config {
       priceStrategy: { type: 'market' },
     })),
     projects: projects.map(projectToInfo),
+    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
   }
 }
