@@ -7,7 +7,10 @@ import {
 } from '@l2beat/common'
 
 type Granularity = 'daily' | 'hourly'
-type Price = { date: Date; price: number }
+interface Price {
+  date: Date
+  price: number
+}
 
 export interface PriceHistoryPoint {
   value: number

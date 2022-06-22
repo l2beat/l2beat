@@ -5,7 +5,7 @@ import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 export function getMaxAssetInBridge(reports: ReportRecord[]) {
   const maxByAssetInBridge = new Map<string, UnixTime>()
   for (const report of reports) {
-    const key = `${report.bridge}-${report.asset}`
+    const key = `${report.bridge.toString()}-${report.asset.toString()}`
     const max = maxByAssetInBridge.get(key)
     if (!max || max.lt(report.timestamp)) {
       maxByAssetInBridge.set(key, report.timestamp)

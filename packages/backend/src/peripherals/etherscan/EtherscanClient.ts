@@ -59,7 +59,7 @@ export class EtherscanClient {
       ...params,
       apikey: this.etherscanApiKey,
     })
-    const url = `https://api.etherscan.io/api?${query}`
+    const url = `https://api.etherscan.io/api?${query.toString()}`
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient

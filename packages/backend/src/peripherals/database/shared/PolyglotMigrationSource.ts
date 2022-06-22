@@ -1,7 +1,6 @@
 import { readdirSync } from 'fs'
-// @ts-expect-error We import FsMigrations to ignore migration file extension
-// in database. See https://github.com/knex/knex/issues/2756.
-import { FsMigrations } from 'knex/lib/migrations/migrate/sources/fs-migrations.js'
+// See https://github.com/knex/knex/issues/2756
+import { FsMigrations } from 'knex/lib/migrations/migrate/sources/fs-migrations'
 import type { Knex } from 'knex/types'
 import path from 'path'
 
@@ -12,12 +11,10 @@ export class PolyglotMigrationSource
 {
   fsSource: FsMigrations
 
-  loadExtensions: string[] | undefined
-
   constructor(
     migrationsDirectory: string,
     sortDirsSeparately = false,
-    loadExtensions: string[] | undefined = undefined,
+    private loadExtensions = ['.js', '.ts'],
   ) {
     const migrationsDirContents = readdirSync(migrationsDirectory)
     // If there is a built .js file in migrations directory,

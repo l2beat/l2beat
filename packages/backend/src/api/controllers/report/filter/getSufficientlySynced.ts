@@ -9,7 +9,7 @@ export function getSufficientlySynced(reports: ReportRecord[]) {
     'days',
   )
 
-  const excluded: Set<string> = new Set()
+  const excluded = new Set<string>()
   for (const [key, timestamp] of maxByAssetInBridge.entries()) {
     if (timestamp.lt(syncedTimestamp)) {
       excluded.add(key)
@@ -19,6 +19,6 @@ export function getSufficientlySynced(reports: ReportRecord[]) {
   return reports.filter(
     (report) =>
       report.timestamp.lte(syncedTimestamp) &&
-      !excluded.has(`${report.bridge}-${report.asset}`),
+      !excluded.has(`${report.bridge.toString()}-${report.asset.toString()}`),
   )
 }

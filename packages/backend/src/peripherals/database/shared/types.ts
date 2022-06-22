@@ -1,4 +1,4 @@
-import { ReportOutput } from '../../api/controllers/report/generateReportOutput'
+import { ReportOutput } from '../../../api/controllers/report/generateReportOutput'
 
 export {}
 

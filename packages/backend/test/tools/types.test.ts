@@ -8,6 +8,7 @@ describe(stringAsInt.name, () => {
     const inputs = [undefined, null, '1']
 
     inputs.forEach((input) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       it(`${input}`, () =>
         expect(parser.safeParse(input).success).toEqual(true))
     })
@@ -30,6 +31,7 @@ describe(stringAsBigInt.name, () => {
     const inputs = [undefined, null, '1']
 
     inputs.forEach((input) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       it(`${input}`, () =>
         expect(parser.safeParse(input).success).toEqual(true))
     })

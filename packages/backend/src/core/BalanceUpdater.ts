@@ -53,7 +53,7 @@ export class BalanceUpdater {
       blockNumber,
     )
     const knownSet = new Set(
-      known.map((x) => `${x.holderAddress}-${x.assetId}`),
+      known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
     )
 
     const missing: HeldAsset[] = []
@@ -71,7 +71,11 @@ export class BalanceUpdater {
             holder: EthereumAddress(bridge.address),
             assetId: token.id,
           }
-          if (!knownSet.has(`${entry.holder}-${entry.assetId}`))
+          if (
+            !knownSet.has(
+              `${entry.holder.toString()}-${entry.assetId.toString()}`,
+            )
+          )
             missing.push(entry)
         }
       }
