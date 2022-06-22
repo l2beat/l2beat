@@ -29,12 +29,16 @@ export const dydx: Project = {
     purpose: 'Exchange',
     links: {
       websites: ['https://dydx.exchange/'],
-      apps: ['https://trade.dydx.exchange/', 'https://margin.dydx.exchange/'],
+      apps: [
+        'https://trade.dydx.exchange/',
+        'https://margin.dydx.exchange/',
+        'https://dydx.l2beat.com',
+      ],
       documentation: [
         'https://docs.starkware.co/starkex-docs-v2/',
         'https://docs.dydx.exchange/',
       ],
-      explorers: [],
+      explorers: ['https://dydx.l2beat.com'],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/dydxprotocol/',
