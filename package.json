@@ -12,7 +12,7 @@
     ]
   },
   "scripts": {
-    "build:backend": "wsrun -p @l2beat/frontend -recsm build",
+    "build:backend": "wsrun -p @l2beat/backend -recsm build",
     "build:frontend": "wsrun -p @l2beat/frontend -recsm build",
     "build": "wsrun -ecsm build",
     "ci:check": "yarn clean && yarn build:mock && yarn format && yarn lint && yarn typecheck:ci && yarn test",
