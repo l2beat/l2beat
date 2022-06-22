@@ -136,7 +136,7 @@ export class Application {
       await apiServer.listen()
       await database.migrateToLatest()
 
-      if (config.syncDisabled === false) {
+      if (config.syncEnabled) {
         reportController.start()
         syncScheduler.start()
       }

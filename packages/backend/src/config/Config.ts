@@ -20,5 +20,5 @@ export interface Config {
   }
   tokens: Token[]
   projects: ProjectInfo[]
-  syncDisabled: boolean
+  syncEnabled: boolean
 }
