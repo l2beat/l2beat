@@ -213,7 +213,7 @@ describe(BalanceRepository.name, () => {
       },
     ]
 
-    repository.addOrUpdateMany(additionalRecords)
+    await repository.addOrUpdateMany(additionalRecords)
 
     await Promise.all(
       DATA.map(({ blockNumber }, i) =>
