@@ -3,7 +3,11 @@ import express from 'express'
 import { Server } from 'http'
 import puppeteer from 'puppeteer'
 
-main()
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
+
 async function main() {
   const app = express()
   app.use(express.static('build'))

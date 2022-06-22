@@ -9,8 +9,14 @@ export function createApi(projects: Project[], l2Data: L2Data) {
   charts.set('tvl', l2Data.aggregate)
   for (const project of projects) {
     const projectData = l2Data.byProject[project.name]
+    if (!projectData) {
+      continue
+    }
     charts.set(project.slug, projectData.aggregate)
     for (const [token, chart] of Object.entries(projectData.byToken)) {
+      if (!chart) {
+        continue
+      }
       charts.set(`${project.slug}/${token.toLowerCase()}`, chart)
     }
   }

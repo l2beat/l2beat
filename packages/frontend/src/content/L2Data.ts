@@ -11,13 +11,13 @@ export type ChartData = z.infer<typeof ChartData>
 
 export const ProjectData = z.object({
   aggregate: ChartData,
-  byToken: z.record(z.string(), ChartData),
+  byToken: z.record(z.string(), ChartData.optional()),
 })
 export type ProjectData = z.infer<typeof ProjectData>
 
 export const L2Data = z.object({
   aggregate: ChartData,
-  byProject: z.record(z.string(), ProjectData),
+  byProject: z.record(z.string(), ProjectData.optional()),
 })
 export type L2Data = z.infer<typeof L2Data>
 
@@ -34,7 +34,7 @@ export async function getL2Data(apiUrl: string): Promise<L2Data> {
       `Could not get data from api (received status ${response.status})`,
     )
   }
-  const json = await response.json()
+  const json: unknown = await response.json()
   const data = L2Data.parse(json)
   await writeCachedData(apiUrl, data)
   return data

@@ -46,20 +46,20 @@ export function initHover(chart: HTMLElement) {
     const point = uiState.points[closest]
     const left = point.x * width
     const bottom = Math.max(0, point.y * (height - 20))
-    elements.line.style.left = left - 1 + 'px'
-    elements.circle.style.left = left - 4 + 'px'
-    elements.circle.style.bottom = bottom - 4 + 'px'
+    elements.line.style.left = `${left - 1}px`
+    elements.circle.style.left = `${left - 4}px`
+    elements.circle.style.bottom = `${bottom - 4}px`
     elements.date.innerHTML = point.date
     elements.valueA.innerHTML = point.valueA
     elements.valueB.innerHTML = point.valueB
-    elements.contents.style.bottom =
-      Math.min(height - 76 - 8, Math.max(bottom - 38, 8)) + 'px'
+    const contentsBottom = Math.min(height - 76 - 8, Math.max(bottom - 38, 8))
+    elements.contents.style.bottom = `${contentsBottom}px`
     if (position < 0.5) {
       elements.contents.style.removeProperty('right')
-      elements.contents.style.left = left + 8 + 'px'
+      elements.contents.style.left = `${left + 8}px`
     } else {
       elements.contents.style.removeProperty('left')
-      elements.contents.style.right = width - left + 8 + 'px'
+      elements.contents.style.right = `${width - left + 8}px`
     }
   }
 
