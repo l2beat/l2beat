@@ -67,7 +67,8 @@ describe('tokens', () => {
               [x.address, DECIMALS],
             ],
       )
-      const [, data] = await contract.functions.aggregate(calls)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const data: string[] = (await contract.functions.aggregate(calls))[1]
       for (let i = 0; i < calls.length; i += 3) {
         const nameResult = data[i]
         const symbolResult = data[i + 1]
@@ -126,7 +127,7 @@ describe('tokens', () => {
       includePlatform: true,
     })
 
-    const result = new Map()
+    const result = new Map<EthereumAddress, CoingeckoId | undefined>()
 
     coinsList.map((coin) => {
       if (coin.platforms.ethereum)
@@ -134,10 +135,14 @@ describe('tokens', () => {
     })
 
     tokenList.map((token) => {
-      if (token.symbol === 'ETH')
+      if (token.symbol === 'ETH') {
         expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
-      else if (result.get(token.address))
-        expect(token.coingeckoId).toEqual(result.get(token.address))
+      } else {
+        const expectedId = token.address && result.get(token.address)
+        if (expectedId) {
+          expect(token.coingeckoId).toEqual(expectedId)
+        }
+      }
     })
   })
 })

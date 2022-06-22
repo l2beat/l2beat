@@ -175,7 +175,7 @@ describe('projects', () => {
 
     describe('every link is https', () => {
       const links = projects.flatMap((x) =>
-        Object.values(x.details.links).flat(),
+        (Object.values(x.details.links) as string[]).flat(),
       )
       for (const link of links) {
         it(link, () => {
