@@ -4,10 +4,10 @@ This is the shared config for the L2BEAT website. It contains project definition
 
 ## Scripts
 
-- `yarn format` - check if formatting is correct with prettier
-- `yarn format:fix` - run prettier automatic formatter
-- `yarn lint` - check if the code satisfies the eslint configuration
-- `yarn lint:fix` - run eslint automatic fixer
-- `yarn typecheck` - check if the code satisfies the typescript compiler
 - `yarn build` - build the project
+- `yarn format:fix` - run prettier automatic formatter
+- `yarn format` - check if formatting is correct with prettier
+- `yarn lint:fix` - run eslint automatic fixer
+- `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn test` - run tests
+- `yarn typecheck` - check if the code satisfies the typescript compiler

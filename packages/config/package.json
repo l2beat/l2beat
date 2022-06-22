@@ -5,14 +5,14 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts --max-warnings 0 src test",
-    "lint:fix": "yarn lint --fix",
-    "typecheck": "tsc --noEmit",
     "build": "tsc",
+    "clean": "rm -rf build",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts --max-warnings 0 src test",
     "test": "mocha",
-    "clean": "rm -rf build"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@l2beat/common": "*"

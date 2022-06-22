@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node -r esbuild-register src",
-    "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "start": "node -r esbuild-register src",
+    "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

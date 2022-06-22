@@ -6,14 +6,15 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node -r esbuild-register src",
-    "format": "prettier --check .",
+    "clean": "rm -rf build",
     "format:fix": "prettier --write .",
-    "lint": "eslint --ext .ts --max-warnings 0 src test",
+    "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
-    "typecheck": "tsc --noEmit",
+    "lint": "eslint --ext .ts --max-warnings 0 src test",
+    "start:dev": "node -r esbuild-register src",
+    "start": "node -r source-map-support/register build/src/index.js",
     "test": "mocha",
-    "clean": "rm -rf build"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
@@ -29,6 +30,7 @@
     "koa": "^2.13.4",
     "node-fetch": "2.6.1",
     "pg": "^8.7.3",
+    "source-map-support": "^0.5.21",
     "zod": "^3.17.3"
   },
   "devDependencies": {

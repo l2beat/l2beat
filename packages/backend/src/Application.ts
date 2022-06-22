@@ -138,8 +138,10 @@ export class Application {
       await apiServer.listen()
       await database.migrateToLatest()
 
-      reportController.start()
-      syncScheduler.start()
+      if (config.syncEnabled) {
+        reportController.start()
+        syncScheduler.start()
+      }
     }
   }
 }

@@ -43,4 +43,28 @@ describe(getEnv.name, () => {
       expect(() => getEnv.integer('TEST_A')).toThrow()
     })
   })
+
+  describe(getEnv.boolean.name, () => {
+    it('returns the environment variable as boolean', () => {
+      process.env.TEST_B = 'FALSE'
+      const result = getEnv.boolean('TEST_B')
+      expect(result).toEqual(false)
+    })
+
+    it('returns the fallback if the variable is not present', () => {
+      delete process.env.TEST_B
+      const result = getEnv.boolean('TEST_B', false)
+      expect(result).toEqual(false)
+    })
+
+    it('throws if variable is not present and there is no fallback', () => {
+      delete process.env.TEST_B
+      expect(() => getEnv.boolean('TEST_B')).toThrow()
+    })
+
+    it('throws if variable is not a boolean', () => {
+      process.env.TEST_B = '69'
+      expect(() => getEnv.boolean('TEST_B')).toThrow()
+    })
+  })
 })
