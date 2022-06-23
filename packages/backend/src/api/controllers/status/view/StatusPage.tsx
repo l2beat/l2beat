@@ -32,8 +32,8 @@ export function StatusPage({ title, statuses }: StatusPageProps) {
           {statuses.map((status, i) => (
             <tr key={i} style={{ color: status.isSynced ? undefined : 'red' }}>
               <td>{status.name}</td>
-              <td>{status.timestamp ?? '-'}</td>
-              <td>{timestampToIsoString(status.timestamp) ?? '-'}</td>
+              <td>{status.timestamp?.toNumber() ?? '-'}</td>
+              <td>{status.timestamp?.toDate().toISOString() ?? '-'}</td>
               <td>{status.value ?? '-'}</td>
               <td>{getSyncStatus(status.timestamp)}</td>
             </tr>
@@ -44,20 +44,14 @@ export function StatusPage({ title, statuses }: StatusPageProps) {
   )
 }
 
-function timestampToIsoString(timestamp: number | undefined) {
-  if (timestamp !== undefined) {
-    return new Date(timestamp * 1000).toISOString()
-  }
-}
-
 const SECONDS_PER_HOUR = 60 * 60
-function getSyncStatus(timestamp: number | undefined): string {
+function getSyncStatus(timestamp: UnixTime | undefined): string {
   if (timestamp === undefined) {
     return 'No data'
   }
   const now = UnixTime.now().add(-1, 'hours').toStartOf('hour').toNumber()
 
-  const diff = now - timestamp
+  const diff = now - timestamp.toNumber()
 
   if (diff === 0) {
     return 'Up to date'

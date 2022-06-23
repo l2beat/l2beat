@@ -26,7 +26,7 @@ export class StatusController {
 
         return {
           name: token.coingeckoId.toString(),
-          timestamp: latest?.timestamp.toNumber(),
+          timestamp: latest?.timestamp,
           value: latest?.priceUsd.toString(),
           isSynced: isSynced(latest?.timestamp),
         }
