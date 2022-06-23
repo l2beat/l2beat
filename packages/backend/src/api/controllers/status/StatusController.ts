@@ -5,43 +5,49 @@ import { Token } from '../../../model/Token'
 import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
-import { Status } from './Status'
-import { renderStatusPage } from './view/StatusPage'
+import { asNumber } from '../report/asNumber'
+import { fromTimestamp, Status } from './Status'
+import { renderBalancesPage } from './view/BalancesPage'
+import { renderPricesPage } from './view/PricesPage'
+import { renderReportsPage } from './view/ReportsPage'
 
 export class StatusController {
+  private tokenDecimals: Map<AssetId, number>
+
   constructor(
     private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
     private reportsRepository: ReportRepository,
     private tokens: Token[],
     private projects: ProjectInfo[],
-  ) {}
+  ) {
+    this.tokenDecimals = this.toTokenDecimals(projects)
+  }
 
-  async getPricesStatus() {
+  async getPricesStatus(): Promise<string> {
     const latestByToken = await this.priceRepository.getLatestByToken()
 
-    const statuses = this.tokens
-      .map((token): Status => {
+    const prices = this.tokens
+      .map((token) => {
         const latest = latestByToken.get(token.id)
 
         return {
-          name: token.coingeckoId.toString(),
-          timestamp: latest?.timestamp,
-          value: latest?.priceUsd.toString(),
-          isSynced: isSynced(latest?.timestamp),
+          coingeckoId: token.coingeckoId,
+          priceUsd: latest?.priceUsd,
+          status: fromTimestamp(latest?.timestamp),
         }
       })
-      .sort((a, b) => Number(a.isSynced) - Number(b.isSynced))
+      .sort(this.isSyncedDesc)
 
-    return renderStatusPage({ title: 'Prices', statuses })
+    return renderPricesPage({ prices })
   }
 
-  async getBalancesStatus() {
+  async getBalancesStatus(): Promise<string> {
     const holderLatest = await this.balanceRepository.getLatestPerHolder()
-    return this.projects.flatMap(({ bridges, name }) =>
-      bridges.map(({ address }) => ({
-        name,
-        address,
+    const balances = this.projects.flatMap(({ bridges, name }) =>
+      bridges.map(({ address, tokens }) => ({
+        projectName: name,
+        holderAddress: address,
         tokens:
           holderLatest.get(address)?.map((latest) => ({
             assetId: latest.assetId,
@@ -51,6 +57,7 @@ export class StatusController {
           })) ?? [],
       })),
     )
+    return renderBalancesPage({ balances })
   }
 
   async getReportsStatus() {
@@ -94,21 +101,29 @@ const getSyncStatus = (
     return { isSynced: true, message: '✔' }
   }
 
-  if (diff > 0 && diff < 24 * SECONDS_PER_HOUR) {
-    return {
-      isSynced: false,
-      message: `out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`,
+  private toTokenDecimals(projects: ProjectInfo[]) {
+    const tokenDecimals = new Map<AssetId, number>()
+    for (const project of projects) {
+      for (const bridge of project.bridges) {
+        for (const token of bridge.tokens) {
+          tokenDecimals.set(token.id, token.decimals)
+        }
+      }
     }
+    return tokenDecimals
   }
 
-  if (diff >= 24 * SECONDS_PER_HOUR) {
-    return {
-      isSynced: false,
-      message: `out of sync for ${Math.floor(
-        diff / (24 * SECONDS_PER_HOUR),
-      )} day(s)`,
-    }
+  private getDecimals(assetId: AssetId): number {
+    return this.tokenDecimals.get(assetId) ?? 0
   }
 
-  return { isSynced: false, message: '? price synced ahead of time' }
+  private getBalance(
+    balance: bigint | undefined,
+    assetId: AssetId | undefined,
+  ) {
+    if (balance === undefined || assetId === undefined) {
+      return undefined
+    }
+    return asNumber(balance, this.getDecimals(assetId))
+  }
 }

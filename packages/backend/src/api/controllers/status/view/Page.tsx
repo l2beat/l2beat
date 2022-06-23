@@ -13,7 +13,10 @@ export function Page({ title, children }: PageProps) {
         <style>{':root{--width:1200px}'}</style>
         <title>{title}</title>
       </head>
-      <body>{children}</body>
+      <body>
+        <h1>{title}</h1>
+        {children}
+      </body>
     </html>
   )
 }
