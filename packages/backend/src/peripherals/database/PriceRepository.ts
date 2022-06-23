@@ -90,6 +90,30 @@ export class PriceRepository extends BaseRepository {
       ]),
     )
   }
+
+  async getLatestByToken(): Promise<Map<AssetId, PriceRecord>> {
+    const knex = await this.knex()
+
+    const rows = await knex
+      .select('a1.*')
+      .from('coingecko_prices as a1')
+      .innerJoin(
+        knex('coingecko_prices')
+          .select(knex.raw('max(unix_timestamp) as unix_timestamp'), 'asset_id')
+          .from('coingecko_prices')
+          .as('a2')
+          .groupBy('asset_id'),
+        function () {
+          return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp').andOn(
+            'a1.asset_id',
+            '=',
+            'a2.asset_id',
+          )
+        },
+      )
+
+    return new Map(rows.map((row) => [AssetId(row.asset_id), toRecord(row)]))
+  }
 }
 
 function toRecord(row: PriceRow): PriceRecord {

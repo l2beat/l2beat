@@ -1,17 +1,12 @@
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { EthereumAddress, UnixTime } from '@l2beat/common'
 
-import { ProjectInfo } from '../../model'
-import { Token } from '../../model/Token'
-import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
-import { PriceRepository } from '../../peripherals/database/PriceRepository'
-import { ReportRepository } from '../../peripherals/database/ReportRepository'
-
-interface PriceStatus {
-  coingeckoId: CoingeckoId
-  min: string
-  max: string
-  message: string
-}
+import { ProjectInfo } from '../../../model'
+import { Token } from '../../../model/Token'
+import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import { PriceRepository } from '../../../peripherals/database/PriceRepository'
+import { ReportRepository } from '../../../peripherals/database/ReportRepository'
+import { Status } from './Status'
+import { renderStatusPage } from './view/StatusPage'
 
 export class StatusController {
   constructor(
@@ -23,31 +18,22 @@ export class StatusController {
   ) {}
 
   async getPricesStatus() {
-    const boundaries = await this.priceRepository.calcDataBoundaries()
+    const latestByToken = await this.priceRepository.getLatestByToken()
 
-    const result: PriceStatus[] = []
+    const statuses = this.tokens
+      .map((token): Status => {
+        const latest = latestByToken.get(token.id)
 
-    for (const token of this.tokens) {
-      const boundary = boundaries.get(token.id)
-
-      if (!boundary) {
-        result.push({
-          coingeckoId: token.coingeckoId,
-          min: '',
-          max: '',
-          message: '!!! no prices !!!',
-        })
-        continue
-      }
-
-      result.push({
-        coingeckoId: token.coingeckoId,
-        min: unixTimeToString(boundary.earliest),
-        max: unixTimeToString(boundary.latest),
-        message: getSyncStatus(boundary.latest),
+        return {
+          name: token.coingeckoId.toString(),
+          timestamp: latest?.timestamp,
+          value: latest?.priceUsd.toString(),
+          isSynced: isSynced(latest?.timestamp),
+        }
       })
-    }
-    return result
+      .sort((a, b) => Number(a.isSynced) - Number(b.isSynced))
+
+    return renderStatusPage({ title: 'Prices', statuses })
   }
 
   async getBalancesStatus() {
@@ -89,28 +75,45 @@ export class StatusController {
   }
 }
 
+function isSynced(timestamp: UnixTime | undefined) {
+  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
+  return !!timestamp && now.equals(timestamp)
+}
+
 const unixTimeToString = (date: UnixTime) => {
   return date.toDate().toString().slice(4, 21)
 }
 
 const SECONDS_PER_HOUR = 60 * 60
-const getSyncStatus = (date: UnixTime): string => {
+const getSyncStatus = (
+  date: UnixTime,
+): {
+  isSynced: boolean
+  message: string
+} => {
   const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
 
   const diff = now.toNumber() - date.toNumber()
 
   if (diff === 0) {
-    return '✔'
+    return { isSynced: true, message: '✔' }
   }
 
-  if (diff < 24 * SECONDS_PER_HOUR) {
-    return `out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`
+  if (diff > 0 && diff < 24 * SECONDS_PER_HOUR) {
+    return {
+      isSynced: false,
+      message: `out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`,
+    }
   }
 
   if (diff >= 24 * SECONDS_PER_HOUR) {
-    return `out of sync for ${Math.floor(
-      diff / (24 * SECONDS_PER_HOUR),
-    )} day(s)`
+    return {
+      isSynced: false,
+      message: `out of sync for ${Math.floor(
+        diff / (24 * SECONDS_PER_HOUR),
+      )} day(s)`,
+    }
   }
-  return ''
+
+  return { isSynced: false, message: '? price synced ahead of time' }
 }
