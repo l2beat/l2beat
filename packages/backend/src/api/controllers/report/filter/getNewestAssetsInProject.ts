@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/common'
 
 import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 
-export function getNewestAssetInProject(reports: ReportRecord[]) {
-  const newestByAssetInProject = new Map<string, UnixTime>()
+export function getNewestAssetsInProject(reports: ReportRecord[]) {
+  const newestByAssetsInProject = new Map<string, UnixTime>()
   for (const report of reports) {
     const key = `${report.projectId}-${report.asset}`
-    const newest = newestByAssetInProject.get(key)
+    const newest = newestByAssetsInProject.get(key)
     if (!newest || newest.lt(report.timestamp)) {
-      newestByAssetInProject.set(key, report.timestamp)
+      newestByAssetsInProject.set(key, report.timestamp)
     }
   }
-  return newestByAssetInProject
+  return newestByAssetsInProject
 }

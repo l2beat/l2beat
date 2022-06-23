@@ -23,10 +23,6 @@ describe(BalanceUpdater.name, () => {
   const HOLDER_B = EthereumAddress.random()
   const HOLDER_C = EthereumAddress.random()
 
-  const PROJECT_A = ProjectId('project-a')
-  const ARBITRUM = ProjectId('arbitrum')
-  const ZKSWAP = ProjectId('zk-swap')
-
   const ASSET_A = AssetId('eth-ether')
   const ASSET_B = AssetId('usdc-usd-coin')
   const ASSET_C = AssetId('usdt-tether-usd')
@@ -283,37 +279,26 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toEqual([
         {
-          projectId: ARBITRUM,
           holder: HOLDER_A,
           assetId: ASSET_A,
         },
         {
-          projectId: ARBITRUM,
-
           holder: HOLDER_A,
           assetId: ASSET_B,
         },
         {
-          projectId: ARBITRUM,
-
           holder: HOLDER_A,
           assetId: ASSET_C,
         },
         {
-          projectId: ZKSWAP,
-
           holder: HOLDER_B,
           assetId: ASSET_B,
         },
         {
-          projectId: ZKSWAP,
-
           holder: HOLDER_B,
           assetId: ASSET_C,
         },
         {
-          projectId: ZKSWAP,
-
           holder: HOLDER_B,
           assetId: ASSET_D,
         },
@@ -352,25 +337,18 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toBeAnArrayWith(
         {
-          projectId: ARBITRUM,
           holder: HOLDER_A,
           assetId: ASSET_B,
         },
         {
-          projectId: ARBITRUM,
-
           holder: HOLDER_A,
           assetId: ASSET_C,
         },
         {
-          projectId: ZKSWAP,
-
           holder: HOLDER_B,
           assetId: ASSET_C,
         },
         {
-          projectId: ZKSWAP,
-
           holder: HOLDER_B,
           assetId: ASSET_D,
         },
@@ -440,7 +418,6 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toEqual([
         {
-          projectId: ARBITRUM,
           holder: HOLDER_A,
           assetId: ASSET_A,
         },
@@ -486,9 +463,9 @@ describe(BalanceUpdater.name, () => {
       )
 
       const metadata = [
-        { projectId: PROJECT_A, holder: HOLDER_A, assetId: ASSET_A },
-        { projectId: PROJECT_A, holder: HOLDER_B, assetId: ASSET_B },
-        { projectId: PROJECT_A, holder: HOLDER_C, assetId: ASSET_C },
+        { holder: HOLDER_A, assetId: ASSET_A },
+        { holder: HOLDER_B, assetId: ASSET_B },
+        { holder: HOLDER_C, assetId: ASSET_C },
       ]
 
       const result = await balanceUpdater.fetchBalances(

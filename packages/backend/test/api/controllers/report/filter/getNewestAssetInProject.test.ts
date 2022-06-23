@@ -1,10 +1,10 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { getNewestAssetInProject } from '../../../../../src/api/controllers/report/filter/getMaxAssetsInBridge'
+import { getNewestAssetsInProject } from '../../../../../src/api/controllers/report/filter/getNewestAssetsInProject'
 import { fakeReport } from '../../../../fakes'
 
-describe(getNewestAssetInProject.name, () => {
+describe(getNewestAssetsInProject.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
 
   const PROJECT_A = ProjectId('project-a')
@@ -38,7 +38,7 @@ describe(getNewestAssetInProject.name, () => {
       mockReport(PROJECT_B, ASSET_B, 0),
     ]
 
-    const result = getNewestAssetInProject(reports)
+    const result = getNewestAssetsInProject(reports)
 
     expect(result).toEqual(
       new Map([

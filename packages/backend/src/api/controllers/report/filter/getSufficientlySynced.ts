@@ -1,9 +1,9 @@
 import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
-import { getNewestAssetInProject } from './getMaxAssetsInBridge'
+import { getNewestAssetsInProject } from './getNewestAssetsInProject'
 import { getSyncedTimestamp } from './getSyncedTimestamp'
 
 export function getSufficientlySynced(reports: ReportRecord[]) {
-  const newestByAssetInProject = getNewestAssetInProject(reports)
+  const newestByAssetInProject = getNewestAssetsInProject(reports)
   const syncedTimestamp = getSyncedTimestamp(
     [...newestByAssetInProject.values()],
     'days',

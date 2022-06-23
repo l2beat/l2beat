@@ -75,7 +75,7 @@ describe(ReportUpdater.name, () => {
       id: AssetId('eth-ether'),
       symbol: 'ETH',
       decimals: 18,
-      coingeckoId: CoingeckoId('wrapped-ethereum'),
+      coingeckoId: CoingeckoId('ethereum'),
     },
     {
       id: MOCK_ASSET,
@@ -113,7 +113,7 @@ describe(ReportUpdater.name, () => {
         getByTimestamp: mockFn()
           .returnsOnce(balances)
           .returnsOnce(
-            balances.map((b) => ({ ...b, blockNumber: START_BN + 200n })),
+            balances.map((b) => ({ ...b, timestamp: START.add(1, 'hours') })),
           ),
       })
       const reportRepository = mock<ReportRepository>({

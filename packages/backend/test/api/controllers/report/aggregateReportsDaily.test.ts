@@ -261,7 +261,7 @@ describe(aggregateReportsDaily.name, () => {
 describe(saveBalancesToEntry.name, () => {
   it('happy path', () => {
     const projectName = 'Optimism'
-    const assetSymbol = 'OP'
+    const symbol = 'OP'
     const decimals = 18
     const usdTVL = 1500n
     const ethTVL = 1n
@@ -274,12 +274,12 @@ describe(saveBalancesToEntry.name, () => {
       usdTVL,
       ethTVL,
       balance,
-      assetSymbol,
+      symbol,
       decimals,
     )
 
     const tokens = new Map()
-    tokens.set(assetSymbol, {
+    tokens.set(symbol, {
       usd: usdTVL,
       eth: ethTVL,
       balance,
