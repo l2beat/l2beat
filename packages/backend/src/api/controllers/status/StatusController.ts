@@ -1,16 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/common'
 
-import { PriceUpdater } from '../../../core/PriceUpdater'
 import { ProjectInfo } from '../../../model'
 import { Token } from '../../../model/Token'
 import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { Status } from './Status'
 import { renderStatusPage } from './view/StatusPage'
 
 export class StatusController {
   constructor(
-    private priceUpdater: PriceUpdater,
+    private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
     private reportsRepository: ReportRepository,
     private tokens: Token[],
@@ -18,7 +18,7 @@ export class StatusController {
   ) {}
 
   async getPricesStatus() {
-    const latestByToken = await this.priceUpdater.getStatus()
+    const latestByToken = await this.priceRepository.getLatestByToken()
 
     const statuses = this.tokens
       .map((token): Status => {

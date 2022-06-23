@@ -115,7 +115,7 @@ export class Application {
     )
 
     const statusController = new StatusController(
-      priceUpdater,
+      priceRepository,
       balanceRepository,
       reportRepository,
       config.tokens,
