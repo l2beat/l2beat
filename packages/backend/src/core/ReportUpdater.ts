@@ -85,13 +85,10 @@ export class ReportUpdater {
       balances,
     )
 
-    console.log('balancesPerProject', balancesPerProject)
-
     const reports: ReportRecord[] = []
     for (const balance of balancesPerProject) {
       const token = this.tokenByAssetId.get(balance.assetId)
       if (!token) {
-        console.log('dupa', balance.assetId, this.tokenByAssetId)
         continue
       }
       const price = priceMap.get(token.id)
@@ -101,8 +98,6 @@ export class ReportUpdater {
 
       reports.push(createReport(price, token.decimals, balance, ethPrice))
     }
-
-    console.log('reports', reports)
 
     return reports
   }
