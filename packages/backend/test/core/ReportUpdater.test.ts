@@ -30,7 +30,6 @@ import { fakeBalance } from '../fakes'
 
 describe(ReportUpdater.name, () => {
   const START = UnixTime.now().toStartOf('hour')
-  const START_BN = 1000n
   const MOCK_BRIDGE = EthereumAddress(
     '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
   )
