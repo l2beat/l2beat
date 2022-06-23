@@ -23,6 +23,7 @@ import {
 interface BalancePerProject extends Pick<BalanceRecord, 'assetId' | 'balance'> {
   projectId: ProjectId
 }
+
 export class ReportUpdater {
   private projectDetailsById = new Map<
     ProjectId,

@@ -5,16 +5,16 @@ import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 
 export interface OutputEntry {
   timestamp: UnixTime
-  tvl: Tvl
+  value: AggregateValue
   projects: Map<string, ProjectEntry>
 }
 
 export interface ProjectEntry {
-  tvl: Tvl
+  value: AggregateValue
   tokens: Map<string, TokenEntry>
 }
 
-export interface Tvl {
+export interface AggregateValue {
   usd: bigint
   eth: bigint
 }
@@ -39,12 +39,12 @@ export function aggregateReportsDaily(
 
   const entries: OutputEntry[] = dates.map((timestamp) => ({
     timestamp,
-    tvl: { usd: 0n, eth: 0n },
+    value: { usd: 0n, eth: 0n },
     projects: new Map(),
   }))
 
   const timestampToIndex = new Map(
-    entries.map((entry, i) => [entry.timestamp.toNumber(), i]),
+    entries.map((x, i) => [x.timestamp.toNumber(), i]),
   )
 
   const projectNames = getProjectNames(projects)
@@ -107,7 +107,7 @@ function getTokenDetails(projects: ProjectInfo[]) {
 
 function getBounds(reports: ReportRecord[]) {
   let min = Infinity
-  let max = 0
+  let max = -Infinity
   for (const { timestamp } of reports) {
     const n = timestamp.toNumber()
     if (n < min) {
@@ -137,20 +137,20 @@ export function saveBalancesToEntry(
   symbol: string,
   decimals: number,
 ) {
-  entry.tvl.usd += balanceUsd
-  entry.tvl.eth += balanceEth
+  entry.value.usd += balanceUsd
+  entry.value.eth += balanceEth
 
   let project = entry.projects.get(projectName)
   if (!project) {
     project = {
-      tvl: { usd: 0n, eth: 0n },
+      value: { usd: 0n, eth: 0n },
       tokens: new Map(),
     }
     entry.projects.set(projectName, project)
   }
 
-  project.tvl.usd += balanceUsd
-  project.tvl.eth += balanceEth
+  project.value.usd += balanceUsd
+  project.value.eth += balanceEth
 
   let token = project.tokens.get(symbol)
   if (token === undefined) {

@@ -8,10 +8,10 @@ import {
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
-import { filterReportsByProject } from '../../../../../src/api/controllers/report/filter/filterReportsByProjects'
+import { filterReportsByProjects } from '../../../../../src/api/controllers/report/filter/filterReportsByProjects'
 import { ProjectInfo } from '../../../../../src/model'
 
-describe(filterReportsByProject.name, () => {
+describe(filterReportsByProjects.name, () => {
   const START = 123456n
   const TODAY = UnixTime.now()
   const ARBITRUM = ProjectId('arbitrum')
@@ -78,7 +78,7 @@ describe(filterReportsByProject.name, () => {
       mockReport(ProjectId('fake-project'), AssetId.DAI, 0),
     ]
 
-    const result = filterReportsByProject(reports, PROJECTS)
+    const result = filterReportsByProjects(reports, PROJECTS)
 
     expect(result).toEqual([mockReport(ARBITRUM, AssetId.DAI, 0)])
   })
@@ -89,7 +89,7 @@ describe(filterReportsByProject.name, () => {
       mockReport(ARBITRUM, AssetId('non-existing'), 0),
     ]
 
-    const result = filterReportsByProject(reports, PROJECTS)
+    const result = filterReportsByProjects(reports, PROJECTS)
 
     expect(result).toEqual([mockReport(ARBITRUM, AssetId.DAI, 0)])
   })

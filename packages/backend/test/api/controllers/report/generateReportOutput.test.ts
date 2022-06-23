@@ -61,12 +61,12 @@ describe(generateReportOutput.name, () => {
     const entries = [
       {
         timestamp: TODAY.add(-1, 'days'),
-        tvl: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 4n * USD, eth: 4n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              tvl: { usd: 3n * USD, eth: 3n * ETH },
+              value: { usd: 3n * USD, eth: 3n * ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -92,7 +92,7 @@ describe(generateReportOutput.name, () => {
           [
             'Optimism',
             {
-              tvl: { usd: USD, eth: ETH },
+              value: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -110,12 +110,12 @@ describe(generateReportOutput.name, () => {
       },
       {
         timestamp: TODAY,
-        tvl: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 4n * USD, eth: 4n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              tvl: { usd: 3n * USD, eth: 3n * ETH },
+              value: { usd: 3n * USD, eth: 3n * ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -141,7 +141,7 @@ describe(generateReportOutput.name, () => {
           [
             'Optimism',
             {
-              tvl: { usd: USD, eth: ETH },
+              value: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',

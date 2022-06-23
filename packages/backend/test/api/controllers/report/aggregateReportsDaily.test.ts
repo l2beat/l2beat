@@ -83,12 +83,12 @@ describe(aggregateReportsDaily.name, () => {
     expect(result).toEqual([
       {
         timestamp: TODAY.add(-1, 'days'),
-        tvl: { usd: USD, eth: ETH },
+        value: { usd: USD, eth: ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              tvl: { usd: USD, eth: ETH },
+              value: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -106,12 +106,12 @@ describe(aggregateReportsDaily.name, () => {
       },
       {
         timestamp: TODAY,
-        tvl: { usd: USD, eth: ETH },
+        value: { usd: USD, eth: ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              tvl: { usd: USD, eth: ETH },
+              value: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -150,12 +150,12 @@ describe(aggregateReportsDaily.name, () => {
     expect(result).toEqual([
       {
         timestamp: TODAY.add(-1, 'days'),
-        tvl: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 4n * USD, eth: 4n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              tvl: { usd: 3n * USD, eth: 3n * ETH },
+              value: { usd: 3n * USD, eth: 3n * ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -181,7 +181,7 @@ describe(aggregateReportsDaily.name, () => {
           [
             'Optimism',
             {
-              tvl: { usd: USD, eth: ETH },
+              value: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -199,12 +199,12 @@ describe(aggregateReportsDaily.name, () => {
       },
       {
         timestamp: TODAY,
-        tvl: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 4n * USD, eth: 4n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              tvl: { usd: 3n * USD, eth: 3n * ETH },
+              value: { usd: 3n * USD, eth: 3n * ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -230,7 +230,7 @@ describe(aggregateReportsDaily.name, () => {
           [
             'Optimism',
             {
-              tvl: { usd: USD, eth: ETH },
+              value: { usd: USD, eth: ETH },
               tokens: new Map([
                 [
                   'DAI',
@@ -287,7 +287,7 @@ describe(saveBalancesToEntry.name, () => {
     })
     const projects = new Map()
     projects.set(projectName, {
-      tvl: {
+      value: {
         usd: usdTVL,
         eth: ethTVL,
       },
@@ -296,7 +296,7 @@ describe(saveBalancesToEntry.name, () => {
 
     expect(entry).toEqual({
       timestamp: entry.timestamp,
-      tvl: {
+      value: {
         usd: usdTVL,
         eth: ethTVL,
       },

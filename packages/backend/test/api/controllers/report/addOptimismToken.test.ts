@@ -46,7 +46,7 @@ describe(addOptimismToken.name, () => {
     expect(entries).toEqual([
       {
         timestamp: DAY_BEFORE_AIRDROP,
-        tvl: { eth: 0n, usd: 0n },
+        value: { eth: 0n, usd: 0n },
         projects: entries[0].projects,
       },
     ])
@@ -60,11 +60,11 @@ describe(addOptimismToken.name, () => {
     const tokens: Map<string, TokenEntry> = new Map()
     tokens.set('OP', { usd: usdTVL, eth: ethTVL, balance, decimals: 18 })
     const projects: Map<string, ProjectEntry> = new Map()
-    projects.set('Optimism', { tvl: { usd: usdTVL, eth: ethTVL }, tokens })
+    projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
     expect(entries).toEqual([
       {
         timestamp: AIRDROP_DAY,
-        tvl: { eth: ethTVL, usd: usdTVL },
+        value: { eth: ethTVL, usd: usdTVL },
         projects,
       },
     ])
@@ -81,16 +81,16 @@ describe(addOptimismToken.name, () => {
     const tokens: Map<string, TokenEntry> = new Map()
     tokens.set('OP', { usd: usdTVL, eth: ethTVL, balance, decimals: 18 })
     const projects: Map<string, ProjectEntry> = new Map()
-    projects.set('Optimism', { tvl: { usd: usdTVL, eth: ethTVL }, tokens })
+    projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
     expect(entries).toEqual([
       {
         timestamp: DAY_BEFORE_AIRDROP,
-        tvl: { eth: 0n, usd: 0n },
+        value: { eth: 0n, usd: 0n },
         projects: entries[0].projects,
       },
       {
         timestamp: AIRDROP_DAY,
-        tvl: { eth: ethTVL, usd: usdTVL },
+        value: { eth: ethTVL, usd: usdTVL },
         projects,
       },
     ])
@@ -103,11 +103,11 @@ export function mockEntry(
 ) {
   const projects: Map<string, ProjectEntry> = new Map()
   const tokens: Map<string, TokenEntry> = new Map()
-  projects.set(projectName, { tvl: { eth: 0n, usd: 0n }, tokens })
+  projects.set(projectName, { value: { eth: 0n, usd: 0n }, tokens })
 
   return {
     timestamp: UnixTime.fromDate(new Date('2022-05-30')),
-    tvl: {
+    value: {
       eth: 0n,
       usd: 0n,
     },

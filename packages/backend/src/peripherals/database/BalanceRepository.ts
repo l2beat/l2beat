@@ -5,9 +5,9 @@ import { BaseRepository } from './BaseRepository'
 import { Database } from './Database'
 
 export interface BalanceRecord {
+  timestamp: UnixTime
   holderAddress: EthereumAddress
   assetId: AssetId
-  timestamp: UnixTime
   balance: bigint
 }
 

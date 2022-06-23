@@ -14,13 +14,12 @@ import { OutputEntry, saveBalancesToEntry } from './aggregateReportsDaily'
 // https://www.coingecko.com/en/coins/optimism
 // https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000042?a=0x2a82ae142b2e62cb7d10b55e323acb1cab663a26
 const OP_TOKEN_BALANCE = 214_748_364n * 10n ** 18n
-const OP_TOKEN_ID = AssetId('op-optimism')
 
 export async function addOptimismToken(
   entries: OutputEntry[],
   priceRepository: PriceRepository,
 ) {
-  const opPrices = await priceRepository.getByToken(OP_TOKEN_ID)
+  const opPrices = await priceRepository.getByToken(AssetId('op-optimism'))
   const ethPrices = await priceRepository.getByToken(AssetId.ETH)
   for (const entry of entries) {
     const date = entry.timestamp
