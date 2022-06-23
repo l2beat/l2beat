@@ -1,7 +1,7 @@
 import { ProjectInfo } from '../../../../model/ProjectInfo'
 import { ReportRecord } from '../../../../peripherals/database/ReportRepository'
 
-export function filterReportsByProject(
+export function filterReportsByProjects(
   reports: ReportRecord[],
   projects: ProjectInfo[],
 ): ReportRecord[] {

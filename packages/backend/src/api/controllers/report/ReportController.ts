@@ -6,7 +6,7 @@ import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { addOptimismToken } from './addOptimismToken'
 import { aggregateReportsDaily } from './aggregateReportsDaily'
-import { filterReportsByProject } from './filter/filterReportsByProjects'
+import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
 import { generateReportOutput } from './generateReportOutput'
 
@@ -50,7 +50,7 @@ export class ReportController {
 
   async generateDaily() {
     let reports = await this.reportRepository.getDaily()
-    reports = filterReportsByProject(reports, this.projects)
+    reports = filterReportsByProjects(reports, this.projects)
     reports = getSufficientlySynced(reports)
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
     await addOptimismToken(dailyEntries, this.priceRepository)
