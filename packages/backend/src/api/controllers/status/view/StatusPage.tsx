@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Status } from '../Status'
 import { Page } from './Page'
-import { renderHtml } from './renderHtml'
+import { reactToHtml } from './renderHtml'
 
 export interface StatusPageProps {
   title: string
@@ -11,7 +11,7 @@ export interface StatusPageProps {
 }
 
 export function renderStatusPage(props: StatusPageProps) {
-  return renderHtml(<StatusPage {...props} />)
+  return reactToHtml(<StatusPage {...props} />)
 }
 
 export function StatusPage({ title, statuses }: StatusPageProps) {
