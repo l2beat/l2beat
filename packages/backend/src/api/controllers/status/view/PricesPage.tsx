@@ -23,10 +23,7 @@ export function PricesPage({ prices }: PricesPageProps) {
         columns={['Name', 'Latest value']}
         rows={prices.map((price) => ({
           status: price.status,
-          cells: [
-            price.assetId.toString(),
-            price.priceUsd?.toString() ?? '-',
-          ],
+          cells: [price.assetId.toString(), price.priceUsd?.toString() ?? '-'],
         }))}
       />
     </Page>
