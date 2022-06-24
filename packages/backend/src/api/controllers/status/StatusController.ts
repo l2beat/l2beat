@@ -32,7 +32,7 @@ export class StatusController {
         const latest = latestByToken.get(token.id)
 
         return {
-          coingeckoId: token.coingeckoId,
+          assetId: token.id,
           priceUsd: latest?.priceUsd,
           status: fromTimestamp(latest?.timestamp),
         }

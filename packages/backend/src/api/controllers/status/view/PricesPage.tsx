@@ -1,4 +1,4 @@
-import { CoingeckoId } from '@l2beat/common'
+import { AssetId } from '@l2beat/common'
 import React from 'react'
 
 import { Status } from '../Status'
@@ -7,7 +7,7 @@ import { reactToHtml } from './reactToHtml'
 import { StatusTable } from './StatusTable'
 
 interface Price {
-  coingeckoId: CoingeckoId
+  assetId: AssetId
   priceUsd: number | undefined
   status: Status
 }
@@ -24,7 +24,7 @@ export function PricesPage({ prices }: PricesPageProps) {
         rows={prices.map((price) => ({
           status: price.status,
           cells: [
-            price.coingeckoId.toString(),
+            price.assetId.toString(),
             price.priceUsd?.toString() ?? '-',
           ],
         }))}
