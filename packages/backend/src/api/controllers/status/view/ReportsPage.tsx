@@ -30,7 +30,7 @@ export function ReportsPage({ reports }: ReportsPageProps) {
       {reports.map((balance) => (
         <div>
           <h2>
-            {balance.holderAddress} - {balance.holderAddress}
+            {balance.projectName} - {balance.holderAddress}
           </h2>
           <StatusTable
             columns={['Name', 'USD', 'ETH', 'Balance']}

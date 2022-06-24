@@ -28,7 +28,7 @@ export function BalancesPage({ balances }: BalancesPageProps) {
       {balances.map((balance) => (
         <div>
           <h2>
-            {balance.holderAddress} - {balance.holderAddress}
+            {balance.projectName} - {balance.holderAddress}
           </h2>
           <StatusTable
             columns={['Asset', 'Balance']}
