@@ -8,9 +8,9 @@ import { StatusTable } from './StatusTable'
 
 interface Token {
   assetId: AssetId
-  balance: number
-  usd: number
-  eth: number
+  balance: number | undefined
+  usd: number | undefined
+  eth: number | undefined
   status: Status
 }
 
@@ -39,9 +39,9 @@ export function ReportsPage({ reports }: ReportsPageProps) {
                 status,
                 cells: [
                   assetId.toString(),
-                  usd.toString() ?? '-',
-                  eth.toString() ?? '-',
-                  balance.toString() ?? '-',
+                  usd?.toString() ?? '-',
+                  eth?.toString() ?? '-',
+                  balance?.toString() ?? '-',
                 ],
               }),
             )}

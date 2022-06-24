@@ -13,34 +13,6 @@ interface StatusTableProps {
   rows: Row[]
 }
 
-const SECONDS_PER_HOUR = 60 * 60
-
-function getSyncStatus(timestamp: UnixTime | undefined): string {
-  if (timestamp === undefined) {
-    return 'No data'
-  }
-  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour').toNumber()
-
-  const diff = now - timestamp.toNumber()
-
-  if (diff === 0) {
-    return 'Up to date'
-  }
-
-  const hours = diff / SECONDS_PER_HOUR
-  const days = Math.floor(diff / (24 * SECONDS_PER_HOUR))
-
-  if (hours > 0 && hours < 24) {
-    return `Out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`
-  }
-
-  if (days >= 1) {
-    return `Out of sync for ${days} day(s)`
-  }
-
-  return 'We are in the future'
-}
-
 export function StatusTable(props: StatusTableProps) {
   return (
     <table>
@@ -68,4 +40,31 @@ export function StatusTable(props: StatusTableProps) {
       </tbody>
     </table>
   )
+}
+
+const SECONDS_PER_HOUR = 60 * 60
+function getSyncStatus(timestamp: UnixTime | undefined): string {
+  if (timestamp === undefined) {
+    return 'No data'
+  }
+  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour').toNumber()
+
+  const diff = now - timestamp.toNumber()
+
+  if (diff === 0) {
+    return 'Up to date'
+  }
+
+  const hours = diff / SECONDS_PER_HOUR
+  const days = Math.floor(diff / (24 * SECONDS_PER_HOUR))
+
+  if (hours > 0 && hours < 24) {
+    return `Out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`
+  }
+
+  if (days >= 1) {
+    return `Out of sync for ${days} day(s)`
+  }
+
+  return 'We are in the future'
 }

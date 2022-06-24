@@ -101,6 +101,10 @@ const getSyncStatus = (
     return { isSynced: true, message: '✔' }
   }
 
+  private isSyncedDesc(a: { status: Status }, b: { status: Status }) {
+    return +a.status.isSynced - +b.status.isSynced
+  }
+
   private toTokenDecimals(projects: ProjectInfo[]) {
     const tokenDecimals = new Map<AssetId, number>()
     for (const project of projects) {
@@ -113,10 +117,6 @@ const getSyncStatus = (
     return tokenDecimals
   }
 
-  private getDecimals(assetId: AssetId): number {
-    return this.tokenDecimals.get(assetId) ?? 0
-  }
-
   private getBalance(
     balance: bigint | undefined,
     assetId: AssetId | undefined,
@@ -124,6 +124,18 @@ const getSyncStatus = (
     if (balance === undefined || assetId === undefined) {
       return undefined
     }
-    return asNumber(balance, this.getDecimals(assetId))
+    return toNumber(balance, this.getDecimals(assetId))
   }
+
+  private getDecimals(assetId: AssetId): number {
+    return this.tokenDecimals.get(assetId) ?? 0
+  }
+}
+
+function toNumber(value: bigint | undefined, decimals: number) {
+  if (value === undefined) {
+    return undefined
+  }
+
+  return asNumber(value, decimals)
 }
