@@ -9,7 +9,7 @@ import {
 import { HttpClient } from '../../../src/peripherals/HttpClient'
 
 describe(EtherscanClient.name, () => {
-  describe(EtherscanClient.prototype['call'].name, () => {
+  describe(EtherscanClient.prototype.call.name, () => {
     it('throws for error responses', async () => {
       const httpClient = mock<HttpClient>({
         async fetch() {
@@ -24,7 +24,7 @@ describe(EtherscanClient.name, () => {
         Logger.SILENT,
       )
       await expect(
-        etherscanClient['call']('foo', 'bar', { baz: '1234' }),
+        etherscanClient.call('foo', 'bar', { baz: '1234' }),
       ).toBeRejected(EtherscanError, 'Oops!')
     })
 
@@ -40,7 +40,7 @@ describe(EtherscanClient.name, () => {
         Logger.SILENT,
       )
       await expect(
-        etherscanClient['call']('foo', 'bar', { baz: '1234' }),
+        etherscanClient.call('foo', 'bar', { baz: '1234' }),
       ).toBeRejected(TypeError, 'Invalid Etherscan response.')
     })
 
@@ -56,7 +56,7 @@ describe(EtherscanClient.name, () => {
         Logger.SILENT,
       )
       await expect(
-        etherscanClient['call']('foo', 'bar', { baz: '1234' }),
+        etherscanClient.call('foo', 'bar', { baz: '1234' }),
       ).toBeRejected(Error, 'Http error 400: foo')
     })
   })
@@ -76,7 +76,9 @@ describe(EtherscanClient.name, () => {
 
       const httpClient = mock<HttpClient>({
         async fetch(url) {
-          expect(url).toEqual(`https://api.etherscan.io/api?${params}`)
+          expect(url).toEqual(
+            `https://api.etherscan.io/api?${params.toString()}`,
+          )
           return new Response(
             JSON.stringify({ status: '1', message: 'OK', result: '9251482' }),
           )

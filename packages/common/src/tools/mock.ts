@@ -1,7 +1,7 @@
 import { Mock as MockFunction, mockFn } from 'earljs'
 
 export type MockedObject<T> = T & {
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [P in keyof T]: T[P] extends (...args: any[]) => any
     ? MockFunction.Of<T[P]>
     : T[P]
@@ -12,7 +12,7 @@ export function mock<T>(overrides: Partial<T> = {}): MockedObject<T> {
 
   const proxy = new Proxy(clone as unknown as MockedObject<T>, {
     get(target, property, receiver) {
-      const value = Reflect.get(target, property, receiver)
+      const value: unknown = Reflect.get(target, property, receiver)
       if (value !== undefined) {
         return value
       }
@@ -49,7 +49,8 @@ function replaceFunctionsWithMocks<T>(object: T) {
     const value = clone[key]
     if (typeof value === 'function') {
       if (!isMockFunction(value)) {
-        //eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         clone[key] = mockFn(value as any) as any
       }
     }

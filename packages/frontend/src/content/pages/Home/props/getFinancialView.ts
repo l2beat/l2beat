@@ -27,16 +27,17 @@ export function getFinancialView(
 
 function getFinancialViewEntry(
   project: Project,
-  projectData: ProjectData,
+  projectData: ProjectData | undefined,
   aggregateTvl: number,
 ): FinancialViewEntry {
-  const tvl = getFromEnd(projectData.aggregate.data, 0)?.[1] ?? 0
-  const tvlOneDayAgo = getFromEnd(projectData.aggregate.data, 1)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(projectData.aggregate.data, 7)?.[1] ?? 0
+  const aggregate = projectData?.aggregate.data ?? []
+  const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
+  const tvlOneDayAgo = getFromEnd(aggregate, 1)?.[1] ?? 0
+  const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
 
   const tvlBreakdown = getTVLBreakdown(
     tvl,
-    projectData.byToken,
+    projectData?.byToken ?? {},
     project.associatedTokens ?? [],
   )
 
@@ -76,7 +77,7 @@ function getFinancialViewEntry(
 
 function getTVLBreakdown(
   total: number,
-  byToken: Record<string, ChartData>,
+  byToken: Record<string, ChartData | undefined>,
   associatedTokens: string[],
 ) {
   if (total === 0) {
@@ -94,7 +95,7 @@ function getTVLBreakdown(
   let stable = 0
   let other = 0
   for (const [token, data] of Object.entries(byToken)) {
-    const tvl = getFromEnd(data.data, 0)[2]
+    const tvl = getFromEnd(data?.data ?? [], 0)?.[2] ?? 0
     const category = getTokenBySymbol(token).category
     if (associatedTokens.includes(token)) {
       associated += tvl
@@ -102,7 +103,7 @@ function getTVLBreakdown(
       ether += tvl
     } else if (category === 'stablecoin') {
       stable += tvl
-    } else if (category === 'other') {
+    } else {
       other += tvl
     }
   }

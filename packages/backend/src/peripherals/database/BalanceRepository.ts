@@ -1,8 +1,8 @@
 import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { BalanceRow } from 'knex/types/tables'
 
-import { BaseRepository } from './BaseRepository'
-import { Database } from './Database'
+import { BaseRepository } from './shared/BaseRepository'
+import { Database } from './shared/Database'
 
 export interface BalanceRecord {
   timestamp: UnixTime
@@ -19,11 +19,16 @@ export interface DataBoundary {
 export class BalanceRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
+
+    /* eslint-disable @typescript-eslint/unbound-method */
+
     this.getByBlock = this.wrapGet(this.getByBlock)
     this.getByHolderAndAsset = this.wrapGet(this.getByHolderAndAsset)
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+
+    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
@@ -102,13 +107,10 @@ export class BalanceRepository extends BaseRepository {
 
     const records = rows.map(toRecord)
 
-    const result: Map<
-      EthereumAddress,
-      (BalanceRecord & { timestamp: UnixTime })[]
-    > = new Map()
+    const result = new Map<EthereumAddress, BalanceRecord[]>()
 
     for (const record of records) {
-      const entry = result.get(record.holderAddress) || []
+      const entry = result.get(record.holderAddress) ?? []
       result.set(record.holderAddress, [...entry, record])
     }
 

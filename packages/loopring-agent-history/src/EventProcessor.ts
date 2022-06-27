@@ -1,4 +1,4 @@
-import { AddressAnalyzer } from '@l2beat/common'
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
 import { Contract, Event, providers } from 'ethers'
 
 import { BlockTimestampService } from './BlockTimestampService'
@@ -14,17 +14,20 @@ export class EventProcessor {
 
   async processEvent(event: Event) {
     let implOfProxyName = ''
+    const agent = EthereumAddress(event.args?.agent as string)
     const [timestamp, implementationName] = await Promise.all([
       this.blockTimestampService.getBlockTimestamp(event.blockNumber),
-      this.addressAnalyzer.getName(event.args?.agent),
+      this.addressAnalyzer.getName(agent),
     ])
     if (implementationName === 'OwnedUpgradabilityProxy') {
       const implContract = new Contract(
-        event.args?.agent,
+        agent.toString(),
         ['function implementation() view returns (address)'],
         this.provider,
       )
-      const implementationAddress = await implContract.implementation()
+      const implementationAddress = EthereumAddress(
+        (await implContract.functions.implementation()) as string,
+      )
       implOfProxyName = await this.addressAnalyzer.getName(
         implementationAddress,
       )
@@ -33,7 +36,7 @@ export class EventProcessor {
       blockNumber: event.blockNumber,
       transactionHash: event.transactionHash,
       user: event.args?.user as string,
-      agent: event.args?.agent as string,
+      agent,
       timestamp,
       implementationName,
       implOfProxyName,

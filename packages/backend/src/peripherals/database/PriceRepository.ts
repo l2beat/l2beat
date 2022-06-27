@@ -1,8 +1,8 @@
 import { AssetId, Logger, UnixTime } from '@l2beat/common'
 import { PriceRow } from 'knex/types/tables'
 
-import { BaseRepository } from './BaseRepository'
-import { Database } from './Database'
+import { BaseRepository } from './shared/BaseRepository'
+import { Database } from './shared/Database'
 
 export interface PriceRecord {
   assetId: AssetId
@@ -19,11 +19,15 @@ export class PriceRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
+    /* eslint-disable @typescript-eslint/unbound-method */
+
     this.getAll = this.wrapGet(this.getAll)
     this.getByTimestamp = this.wrapGet(this.getByTimestamp)
     this.getByToken = this.wrapGet(this.getByToken)
     this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
     this.addMany = this.wrapAddMany(this.addMany)
+
+    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getAll(): Promise<PriceRecord[]> {
@@ -94,7 +98,7 @@ export class PriceRepository extends BaseRepository {
   async getLatestByToken(): Promise<Map<AssetId, PriceRecord>> {
     const knex = await this.knex()
 
-    const rows = await knex
+    const rows: PriceRow[] = await knex
       .select('a1.*')
       .from('coingecko_prices as a1')
       .innerJoin(

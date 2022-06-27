@@ -3,7 +3,7 @@ export interface NetworkConfig {
   fromBlock: number
 }
 
-export const config: Record<string, NetworkConfig> = {
+export const config: Record<string, NetworkConfig | undefined> = {
   optimism: {
     addressManager: '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
     fromBlock: 12686687,

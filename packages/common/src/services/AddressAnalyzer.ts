@@ -34,7 +34,7 @@ export class AddressAnalyzer {
     return name
   }
 
-  async analyze(address: EthereumAddress) {
+  async analyze(address: EthereumAddress): Promise<AnalyzedAddress> {
     const [code, source] = await Promise.all([
       this.provider.getCode(address.toString()),
       this.etherscanClient.getContractSource(address),
@@ -52,7 +52,7 @@ export class AddressAnalyzer {
         type: 'Contract',
         verified: true,
         name: source.ContractName,
-        abi: JSON.parse(source.ABI),
+        abi: JSON.parse(source.ABI) as unknown as json,
       }
     }
   }

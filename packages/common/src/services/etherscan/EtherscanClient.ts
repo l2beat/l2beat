@@ -36,7 +36,7 @@ export class EtherscanClient {
       ...params,
       apikey: this.apiKey,
     })
-    const url = `${this.url}?${query}`
+    const url = `${this.url}?${query.toString()}`
 
     const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
 
@@ -46,7 +46,7 @@ export class EtherscanClient {
       )
     }
 
-    const json = await res.json()
+    const json = (await res.json()) as unknown
     return EtherscanResponse.parse(json)
   }
 }

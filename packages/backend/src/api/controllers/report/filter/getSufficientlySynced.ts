@@ -9,7 +9,7 @@ export function getSufficientlySynced(reports: ReportRecord[]) {
     'days',
   )
 
-  const excluded: Set<string> = new Set()
+  const excluded = new Set<string>()
   for (const [key, timestamp] of newestByAssetInProject.entries()) {
     if (timestamp.lt(syncedTimestamp)) {
       excluded.add(key)
@@ -19,6 +19,8 @@ export function getSufficientlySynced(reports: ReportRecord[]) {
   return reports.filter(
     (report) =>
       report.timestamp.lte(syncedTimestamp) &&
-      !excluded.has(`${report.projectId}-${report.asset}`),
+      !excluded.has(
+        `${report.projectId.toString()}-${report.asset.toString()}`,
+      ),
   )
 }

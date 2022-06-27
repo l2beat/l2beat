@@ -15,7 +15,7 @@ export class EthereumClient {
     const bytes = await this.provider.call(
       {
         from: parameters.from?.toString(),
-        to: parameters.to?.toString(),
+        to: parameters.to.toString(),
         gasLimit: parameters.gas,
         gasPrice: parameters.gasPrice,
         value: parameters.value,

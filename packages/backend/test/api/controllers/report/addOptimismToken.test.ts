@@ -57,9 +57,9 @@ describe(addOptimismToken.name, () => {
 
     await addOptimismToken(entries, priceRepository)
 
-    const tokens: Map<string, TokenEntry> = new Map()
+    const tokens = new Map<string, TokenEntry>()
     tokens.set('OP', { usd: usdTVL, eth: ethTVL, balance, decimals: 18 })
-    const projects: Map<string, ProjectEntry> = new Map()
+    const projects = new Map<string, ProjectEntry>()
     projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
     expect(entries).toEqual([
       {
@@ -78,9 +78,9 @@ describe(addOptimismToken.name, () => {
 
     await addOptimismToken(entries, priceRepository)
 
-    const tokens: Map<string, TokenEntry> = new Map()
+    const tokens = new Map<string, TokenEntry>()
     tokens.set('OP', { usd: usdTVL, eth: ethTVL, balance, decimals: 18 })
-    const projects: Map<string, ProjectEntry> = new Map()
+    const projects = new Map<string, ProjectEntry>()
     projects.set('Optimism', { value: { usd: usdTVL, eth: ethTVL }, tokens })
     expect(entries).toEqual([
       {
@@ -101,8 +101,8 @@ export function mockEntry(
   entry?: Partial<OutputEntry>,
   projectName = 'Optimism',
 ) {
-  const projects: Map<string, ProjectEntry> = new Map()
-  const tokens: Map<string, TokenEntry> = new Map()
+  const projects = new Map<string, ProjectEntry>()
+  const tokens = new Map<string, TokenEntry>()
   projects.set(projectName, { value: { eth: 0n, usd: 0n }, tokens })
 
   return {

@@ -2,41 +2,23 @@ import { Logger } from '@l2beat/common'
 
 import { Database } from './Database'
 
-interface AnyMethod<A extends unknown[], R> {
-  (...args: A): Promise<R>
-}
+type AnyMethod<A extends unknown[], R> = (...args: A) => Promise<R>
 
-interface AddMethod<T, R> {
-  (record: T): Promise<R>
-}
+type AddMethod<T, R> = (record: T) => Promise<R>
 
-interface AddManyMethod<T, R> {
-  (records: T[]): Promise<R[] | number>
-}
+type AddManyMethod<T, R> = (records: T[]) => Promise<R[] | number>
 
-interface AddManyMethodWithIds<T, R> {
-  (records: T[]): Promise<R[]>
-}
+type AddManyMethodWithIds<T, R> = (records: T[]) => Promise<R[]>
 
-interface AddManyMethodWithCount<T> {
-  (records: T[]): Promise<number>
-}
+type AddManyMethodWithCount<T> = (records: T[]) => Promise<number>
 
-interface GetMethod<A extends unknown[], T> {
-  (...args: A): Promise<T[]>
-}
+type GetMethod<A extends unknown[], T> = (...args: A) => Promise<T[]>
 
-interface FindMethod<A extends unknown[], T> {
-  (...args: A): Promise<T | undefined>
-}
+type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T | undefined>
 
-interface DeleteMethod<A extends unknown[]> {
-  (...args: A): Promise<number>
-}
+type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 
-interface SaveMethod<T> {
-  (record: T): Promise<boolean>
-}
+type SaveMethod<T> = (record: T) => Promise<boolean>
 
 export class BaseRepository {
   constructor(

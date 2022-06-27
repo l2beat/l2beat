@@ -22,7 +22,7 @@ const EtherscanResponse = z.union([
 
 export function parseEtherscanResponse(value: string): EtherscanResponse {
   try {
-    const json = JSON.parse(value)
+    const json: unknown = JSON.parse(value)
     return EtherscanResponse.parse(json)
   } catch {
     throw new TypeError('Invalid Etherscan response')

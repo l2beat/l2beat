@@ -1,8 +1,8 @@
 import { AssetId, Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { ReportRow } from 'knex/types/tables'
 
-import { BaseRepository } from './BaseRepository'
-import { Database } from './Database'
+import { BaseRepository } from './shared/BaseRepository'
+import { Database } from './shared/Database'
 
 export interface ReportRecord {
   timestamp: UnixTime
@@ -17,10 +17,14 @@ export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
+    /* eslint-disable @typescript-eslint/unbound-method */
+
     this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+
+    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getDaily(): Promise<ReportRecord[]> {
@@ -55,7 +59,7 @@ export class ReportRepository extends BaseRepository {
 
   async getLatestPerProject(): Promise<Map<ProjectId, ReportRecord[]>> {
     const knex = await this.knex()
-    const rows = await knex
+    const rows: ReportRow[] = await knex
       .select('a1.*')
       .from('reports as a1')
       .innerJoin(
@@ -77,10 +81,10 @@ export class ReportRepository extends BaseRepository {
 
     const records = rows.map(toRecord)
 
-    const result = new Map()
+    const result = new Map<ProjectId, ReportRecord[]>()
 
     for (const record of records) {
-      const entry = result.get(record.projectId) || []
+      const entry = result.get(record.projectId) ?? []
       result.set(record.projectId, [...entry, record])
     }
 

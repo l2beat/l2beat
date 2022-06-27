@@ -8,12 +8,13 @@ import { getPageMetadata } from './getPageMetadata'
 import { getRiskView } from './getRiskView'
 
 export function getProps(projects: Project[], l2Data: L2Data): HomePageProps {
-  const tvl = getFromEnd(l2Data.aggregate.data, 0)[1]
-  const tvlSevenDaysAgo = getFromEnd(l2Data.aggregate.data, 7)[1]
+  const tvl = getFromEnd(l2Data.aggregate.data, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = getFromEnd(l2Data.aggregate.data, 7)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const getTvl = (project: Project) =>
-    getFromEnd(l2Data.byProject[project.name].aggregate.data, 0)?.[1] ?? 0
+    getFromEnd(l2Data.byProject[project.name]?.aggregate.data ?? [], 0)?.[1] ??
+    0
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
 
   return {

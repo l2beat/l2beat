@@ -27,9 +27,7 @@ export interface ContractDescription {
   parameters?: Parameter[]
 }
 
-export interface Contracts {
-  [name: string]: ContractDescription
-}
+export type Contracts = Record<string, ContractDescription>
 
 export interface MainBridgeConfig {
   type: string

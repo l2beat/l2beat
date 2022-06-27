@@ -1,4 +1,8 @@
-import { AddressAnalyzer, AnalyzedAddress } from '@l2beat/common'
+import {
+  AddressAnalyzer,
+  AnalyzedAddress,
+  EthereumAddress,
+} from '@l2beat/common'
 import { Contract, providers } from 'ethers'
 
 import { ContractDescription, Contracts } from './config'
@@ -24,7 +28,10 @@ export async function analyzeItem(
   const libAbi = ['function getAddress(string) view returns (address)']
 
   const libAddressContract = new Contract(libAddressManager, libAbi, provider)
-  const componentAddress = await libAddressContract.getAddress(component)
+  const componentAddress = (await libAddressContract.functions.getAddress(
+    component,
+  )) as string
+
   if (contracts[component].expectedAddress) {
     if (componentAddress != contracts[component].expectedAddress) {
       console.log(
@@ -32,7 +39,9 @@ export async function analyzeItem(
       )
     }
   }
-  const componentContract = await addressAnalyzer.analyze(componentAddress)
+  const componentContract = await addressAnalyzer.analyze(
+    EthereumAddress(componentAddress),
+  )
   let parameters: { name: string; value: unknown }[] = []
   let libAddressManagerLocal = ''
 
@@ -43,7 +52,8 @@ export async function analyzeItem(
       addMgrAbi,
       provider,
     )
-    libAddressManagerLocal = await libAddressContract.libAddressManager()
+    libAddressManagerLocal =
+      (await libAddressContract.functions.libAddressManager()) as string
     if (contracts[component].parameters) {
       parameters = await getParameters(
         contracts[component],
@@ -59,7 +69,7 @@ export async function analyzeItem(
     analyzed: {
       componentAddress,
       libAddressManager: libAddressManagerLocal,
-      componentContract: componentContract as AnalyzedAddress,
+      componentContract: componentContract,
       ...Object.fromEntries(parameters.map((x) => [x.name, x.value])),
     },
     relatives,
@@ -89,7 +99,7 @@ async function getRegularParameter(
 ) {
   const contract = new Contract(address, [method], provider)
   const methodName = Object.values(contract.interface.functions)[0].name
-  const result = await contract[methodName]()
+  const result: unknown = await contract.functions[methodName]()
   return {
     name: methodName,
     value: result,
