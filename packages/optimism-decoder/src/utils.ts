@@ -1,14 +1,8 @@
 export function remove0x(str: string): string {
-  if (str === undefined) {
-    return str
-  }
   return str.startsWith('0x') ? str.slice(2) : str
 }
 
 export function add0x(str: string): string {
-  if (str === undefined) {
-    return str
-  }
   return str.startsWith('0x') ? str : '0x' + str
 }
 

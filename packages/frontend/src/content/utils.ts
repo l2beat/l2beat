@@ -1,6 +1,6 @@
 import { formatLargeNumber } from '../shared'
 
-export function getFromEnd<T>(array: T[], n: number) {
+export function getFromEnd<T>(array: T[], n: number): T | undefined {
   if (n >= array.length) {
     return array[0]
   }
@@ -16,7 +16,7 @@ export function getPercentageChange(now: number, then: number) {
 
 export function formatPercent(value: number, addPlus = false) {
   const result = (value * 100).toFixed(2) + '%'
-  if (addPlus && result[0] !== '-') {
+  if (addPlus && !result.startsWith('-')) {
     return '+' + result
   }
   return result

@@ -1,4 +1,4 @@
-import { AddressAnalyzer, UnverifiedContract } from '@l2beat/common'
+import { AddressAnalyzer } from '@l2beat/common'
 import chalk from 'chalk'
 import Table from 'easy-table'
 import { BigNumber, constants, providers } from 'ethers'
@@ -56,7 +56,7 @@ function prettyBridgePrint(bridge: AnalyzedMainBridge, network: string) {
   console.log()
   console.log('Bridge Proxy Contract: ', bridge.proxy.name)
   console.log('Brige Proxy Owner:', bridge.owner)
-  if (!(bridge.implementation as UnverifiedContract).verified) {
+  if (!(bridge.implementation as { verified: boolean }).verified) {
     console.log(chalk.red('Warning: Bridge implementation is not verified !'))
   }
   console.log(

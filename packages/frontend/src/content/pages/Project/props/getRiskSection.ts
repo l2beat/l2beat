@@ -4,20 +4,19 @@ import { RiskSectionProps } from '../view/RiskSection'
 
 export function getRiskSection(project: Project): RiskSectionProps {
   const technology = project.details.technology
-  const exits =
-    technology?.exitMechanisms.map((x, i) => ({
-      id: `exit-mechanisms-${i + 1}`,
-      value: x,
-    })) ?? []
+  const exits = technology.exitMechanisms.map((x, i) => ({
+    id: `exit-mechanisms-${i + 1}`,
+    value: x,
+  }))
   const sections = [
-    { id: 'state-correctness', value: technology?.stateCorrectness },
-    { id: 'data-availability', value: technology?.dataAvailability },
-    { id: 'new-cryptography', value: technology?.newCryptography },
-    { id: 'mass-exit', value: technology?.massExit },
-    { id: 'additional-privacy', value: technology?.additionalPrivacy },
-    { id: 'smart-contracts', value: technology?.smartContracts },
-    { id: 'operator', value: technology?.operator },
-    { id: 'force-transactions', value: technology?.forceTransactions },
+    { id: 'state-correctness', value: technology.stateCorrectness },
+    { id: 'data-availability', value: technology.dataAvailability },
+    { id: 'new-cryptography', value: technology.newCryptography },
+    { id: 'mass-exit', value: technology.massExit },
+    { id: 'additional-privacy', value: technology.additionalPrivacy },
+    { id: 'smart-contracts', value: technology.smartContracts },
+    { id: 'operator', value: technology.operator },
+    { id: 'force-transactions', value: technology.forceTransactions },
     ...exits,
   ]
 
@@ -27,7 +26,7 @@ export function getRiskSection(project: Project): RiskSectionProps {
       risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
     }
   }
-  for (const risk of technology?.contracts.risks ?? []) {
+  for (const risk of technology.contracts.risks) {
     risks.push({ ...risk, referencedId: 'contracts' })
   }
 

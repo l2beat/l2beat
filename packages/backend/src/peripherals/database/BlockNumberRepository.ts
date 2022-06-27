@@ -1,8 +1,8 @@
 import { Logger, UnixTime } from '@l2beat/common'
 import { BlockNumberRow } from 'knex/types/tables'
 
-import { BaseRepository } from './BaseRepository'
-import { Database } from './Database'
+import { BaseRepository } from './shared/BaseRepository'
+import { Database } from './shared/Database'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime
@@ -12,15 +12,20 @@ export interface BlockNumberRecord {
 export class BlockNumberRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
+
+    /* eslint-disable @typescript-eslint/unbound-method */
+
     this.add = this.wrapAdd(this.add)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+
+    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async add(record: BlockNumberRecord) {
     const row = toRow(record)
     const knex = await this.knex()
-    const [id] = await knex('block_numbers')
+    const [id]: string[] = await knex('block_numbers')
       .insert(row)
       .returning('block_number')
     return id

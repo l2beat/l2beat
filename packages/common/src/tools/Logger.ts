@@ -84,11 +84,11 @@ export class Logger {
     const time = getPrettyTime()
     const levelOut = getPrettyLevel(level)
     const service = getPrettyService(this.options.service)
-    const message = parameters.message
-    if (message !== undefined) {
+    let messageOut = ''
+    if (typeof parameters.message === 'string') {
+      messageOut = ` ${parameters.message}`
       delete parameters.message
     }
-    const messageOut = message !== undefined ? ` ${message}` : ''
     const params = getPrettyParameters(parameters)
     const str = `${time} ${levelOut}${service}${messageOut}${params}`
     if (parameters.level === 'error') {
@@ -105,7 +105,8 @@ export function getErrorMessage(error: unknown) {
   } else if (error instanceof Error) {
     return error.message
   } else {
-    return '' + error
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    return `${error}`
   }
 }
 
@@ -155,6 +156,7 @@ function getPrettyParameters(parameters: LoggerParameters | undefined) {
   const previous = inspect.styles
   const newStyles = { ...previous }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   ;(newStyles as any).name = 'magenta'
   newStyles.string = ''
   newStyles.number = ''

@@ -69,7 +69,7 @@ function prettyPrintValue(
       prettyPrintValue(i.toString(), v, addressMap, indent + 1)
     }
   } else if (BigNumber.isBigNumber(value)) {
-    console.log(spaces, key, chalk.yellow('' + value))
+    console.log(spaces, key, chalk.yellow(value.toString()))
   } else if (typeof value === 'string' && utils.isAddress(value)) {
     const name = addressMap.get(value)
     if (name) {
@@ -82,6 +82,7 @@ function prettyPrintValue(
       console.log(spaces, key, chalk.green(value))
     }
   } else {
-    console.log(spaces, key, chalk.red('' + value))
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    console.log(spaces, key, chalk.red(`${value}`))
   }
 }

@@ -49,11 +49,14 @@ export class CoingeckoClient {
     from: UnixTime,
     to: UnixTime,
   ): Promise<CoinMarketChartRangeData> {
-    const data = await this.query(`/coins/${coinId}/market_chart/range`, {
-      vs_currency: vs_currency.toLowerCase(),
-      from: from.toString(),
-      to: to.toString(),
-    })
+    const data = await this.query(
+      `/coins/${coinId.toString()}/market_chart/range`,
+      {
+        vs_currency: vs_currency.toLowerCase(),
+        from: from.toString(),
+        to: to.toString(),
+      },
+    )
 
     const parsedData = CoinMarketChartRangeResult.parse(data)
 
@@ -90,6 +93,6 @@ export class CoingeckoClient {
         `Server responded with non-2XX result: ${res.status} ${res.statusText}`,
       )
     }
-    return res.json()
+    return res.json() as unknown
   }
 }
