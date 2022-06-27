@@ -5,14 +5,18 @@ import {
   EthereumAddress,
   Logger,
   mock,
+  ProjectId,
 } from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { ProjectInfo } from '../../src/model/ProjectInfo'
 import { BalanceRepository } from '../../src/peripherals/database/BalanceRepository'
+import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../../src/peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../src/peripherals/ethereum/MulticallClient'
+import { fakeUnixTime } from '../fakes'
 
 describe(BalanceUpdater.name, () => {
   const HOLDER_A = EthereumAddress.random()
@@ -24,108 +28,84 @@ describe(BalanceUpdater.name, () => {
   const ASSET_C = AssetId('usdt-tether-usd')
   const ASSET_D = AssetId('zrx-0x-protocol-token')
 
+  const START = fakeUnixTime()
   const START_BLOCK_NUMBER = 10000n
+
+  const mockToken = (id: AssetId, sinceBlock: number): TokenInfo => {
+    return {
+      id,
+      name: 'fake',
+      symbol: 'FK',
+      decimals: 18,
+      coingeckoId: CoingeckoId('fake'),
+      sinceBlock,
+      category: 'other',
+    }
+  }
 
   const PROJECTS: ProjectInfo[] = [
     {
       name: 'Arbitrum',
+      projectId: ProjectId('arbitrum'),
       bridges: [
         {
           address: HOLDER_A.toString(),
           sinceBlock: Number(START_BLOCK_NUMBER - 100n),
           tokens: [
-            {
-              id: ASSET_A,
-              name: 'Ether',
-              symbol: 'ETH',
-              decimals: 18,
-              coingeckoId: CoingeckoId('ethereum'),
-              sinceBlock: 0,
-              category: 'ether',
-            },
-            {
-              id: ASSET_B,
-              name: 'USD Coin',
-              coingeckoId: CoingeckoId('usd-coin'),
-              address: EthereumAddress(
-                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-              ),
-              symbol: 'USDC',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
-            {
-              id: ASSET_C,
-              name: 'Tether USD',
-              coingeckoId: CoingeckoId('tether'),
-              address: EthereumAddress(
-                '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-              ),
-              symbol: 'USDT',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
+            mockToken(ASSET_A, 0),
+            mockToken(ASSET_B, 800),
+            mockToken(ASSET_C, 800),
           ],
         },
       ],
     },
     {
-      name: 'Zkswap',
+      name: 'ZKswap',
+      projectId: ProjectId('zk-swap'),
       bridges: [
         {
           address: HOLDER_B.toString(),
           sinceBlock: Number(START_BLOCK_NUMBER - 100n),
           tokens: [
-            {
-              id: ASSET_B,
-              name: 'USD Coin',
-              coingeckoId: CoingeckoId('usd-coin'),
-              address: EthereumAddress(
-                '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-              ),
-              symbol: 'USDC',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
-            {
-              id: ASSET_C,
-              name: 'Tether USD',
-              coingeckoId: CoingeckoId('tether'),
-              address: EthereumAddress(
-                '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-              ),
-              symbol: 'USDT',
-              decimals: 6,
-              sinceBlock: 800,
-              category: 'stablecoin',
-            },
-            {
-              id: ASSET_D,
-              name: '0x Protocol Token',
-              coingeckoId: CoingeckoId('0x'),
-              address: EthereumAddress(
-                '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
-              ),
-              symbol: 'ZRX',
-              decimals: 18,
-              sinceBlock: 800,
-              category: 'other',
-            },
+            mockToken(ASSET_B, 0),
+            mockToken(ASSET_C, 800),
+            mockToken(ASSET_D, 800),
           ],
         },
       ],
     },
   ]
 
-  const BALANCE_100_RESPONSE = {
-    success: true,
-    data: Bytes.fromHex(
-      '0x0000000000000000000000000000000000000000000000000000000000000064',
-    ),
+  const fakeFindByBlockNumber = async (blockNumber: bigint) => {
+    return blockNumber === START_BLOCK_NUMBER
+      ? {
+          timestamp: START,
+          blockNumber: START_BLOCK_NUMBER,
+        }
+      : {
+          timestamp: START.add(1, 'hours'),
+          blockNumber: START_BLOCK_NUMBER + 1000n,
+        }
   }
+
+  const balanceRepository = mock<BalanceRepository>({
+    getByBlock: mockFn().returns([]),
+    addOrUpdateMany: mockFn().returns([]),
+  })
+
+  const multicall = mock<MulticallClient>({
+    multicall: mockFn().returns([]),
+  })
+
+  const blockNumberRepository = mock<BlockNumberRepository>()
+
+  const balanceUpdater = new BalanceUpdater(
+    multicall,
+    balanceRepository,
+    blockNumberRepository,
+    [],
+    Logger.SILENT,
+  )
 
   describe(BalanceUpdater.prototype.update.name, () => {
     it('integration test', async () => {
@@ -133,25 +113,25 @@ describe(BalanceUpdater.name, () => {
         getByBlock: mockFn()
           .returnsOnce([
             {
-              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
               holderAddress: HOLDER_A,
               assetId: ASSET_A,
               balance: 100n,
             },
             {
-              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
               holderAddress: HOLDER_A,
               assetId: ASSET_B,
               balance: 100n,
             },
             {
-              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
               holderAddress: HOLDER_B,
               assetId: ASSET_B,
               balance: 100n,
             },
             {
-              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
               holderAddress: HOLDER_B,
               assetId: ASSET_C,
               balance: 100n,
@@ -163,20 +143,25 @@ describe(BalanceUpdater.name, () => {
 
       const multicall = mock<MulticallClient>({
         multicall: mockFn()
-          .returnsOnce([BALANCE_100_RESPONSE, BALANCE_100_RESPONSE])
+          .returnsOnce([MULTICALL_RESPONSE_FAKE, MULTICALL_RESPONSE_FAKE])
           .returnsOnce([
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
-            BALANCE_100_RESPONSE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
+            MULTICALL_RESPONSE_FAKE,
           ]),
+      })
+
+      const blockNumberRepository = mock<BlockNumberRepository>({
+        findByBlockNumber: fakeFindByBlockNumber,
       })
 
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
+        blockNumberRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -212,13 +197,13 @@ describe(BalanceUpdater.name, () => {
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_C,
-              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
               balance: 100n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_D,
-              blockNumber: START_BLOCK_NUMBER,
+              timestamp: START,
               balance: 100n,
             },
           ],
@@ -228,37 +213,37 @@ describe(BalanceUpdater.name, () => {
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_A,
-              blockNumber: START_BLOCK_NUMBER + 1000n,
+              timestamp: START.add(1, 'hours'),
               balance: 100n,
             },
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_B,
-              blockNumber: START_BLOCK_NUMBER + 1000n,
+              timestamp: START.add(1, 'hours'),
               balance: 100n,
             },
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_C,
-              blockNumber: START_BLOCK_NUMBER + 1000n,
+              timestamp: START.add(1, 'hours'),
               balance: 100n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_B,
-              blockNumber: START_BLOCK_NUMBER + 1000n,
+              timestamp: START.add(1, 'hours'),
               balance: 100n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_C,
-              blockNumber: START_BLOCK_NUMBER + 1000n,
+              timestamp: START.add(1, 'hours'),
               balance: 100n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_D,
-              blockNumber: START_BLOCK_NUMBER + 1000n,
+              timestamp: START.add(1, 'hours'),
               balance: 100n,
             },
           ],
@@ -267,22 +252,6 @@ describe(BalanceUpdater.name, () => {
     })
 
     it('skip processed blocks', async () => {
-      const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn().returns([]),
-        addOrUpdateMany: mockFn().returns([]),
-      })
-
-      const multicall = mock<MulticallClient>({
-        multicall: mockFn().returns([]),
-      })
-
-      const balanceUpdater = new BalanceUpdater(
-        multicall,
-        balanceRepository,
-        [],
-        Logger.SILENT,
-      )
-
       const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
 
       await balanceUpdater.update(blocks)
@@ -296,16 +265,10 @@ describe(BalanceUpdater.name, () => {
 
   describe(BalanceUpdater.prototype.getMissingDataByBlock.name, () => {
     it('no data in DB', async () => {
-      const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn().returns([]),
-      })
-      const multicall = mock<MulticallClient>({
-        multicall: mockFn().returns([]),
-      })
-
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
+        blockNumberRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -359,13 +322,11 @@ describe(BalanceUpdater.name, () => {
           },
         ]),
       })
-      const multicall = mock<MulticallClient>({
-        multicall: mockFn().returns([]),
-      })
 
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
+        blockNumberRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -396,43 +357,15 @@ describe(BalanceUpdater.name, () => {
     })
 
     it('blocks before bridge', async () => {
-      const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn().returns([]),
-      })
-      const multicall = mock<MulticallClient>({
-        multicall: mockFn().returns([]),
-      })
-
       const projects: ProjectInfo[] = [
         {
           name: 'Arbitrum',
+          projectId: ProjectId('arbitrum'),
           bridges: [
             {
               address: HOLDER_A.toString(),
               sinceBlock: Number(START_BLOCK_NUMBER + 1000n),
-              tokens: [
-                {
-                  id: ASSET_A,
-                  name: 'Ether',
-                  symbol: 'ETH',
-                  decimals: 18,
-                  coingeckoId: CoingeckoId('ethereum'),
-                  sinceBlock: 0,
-                  category: 'ether',
-                },
-                {
-                  id: ASSET_B,
-                  name: 'USD Coin',
-                  coingeckoId: CoingeckoId('usd-coin'),
-                  address: EthereumAddress(
-                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-                  ),
-                  symbol: 'USDC',
-                  decimals: 6,
-                  sinceBlock: 800,
-                  category: 'stablecoin',
-                },
-              ],
+              tokens: [mockToken(ASSET_A, 0), mockToken(ASSET_B, 800)],
             },
           ],
         },
@@ -441,6 +374,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
+        blockNumberRepository,
         projects,
         Logger.SILENT,
       )
@@ -453,42 +387,17 @@ describe(BalanceUpdater.name, () => {
     })
 
     it('blocks before token', async () => {
-      const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn().returns([]),
-      })
-      const multicall = mock<MulticallClient>({
-        multicall: mockFn().returns([]),
-      })
-
       const projects: ProjectInfo[] = [
         {
           name: 'Arbitrum',
+          projectId: ProjectId('arbitrum'),
           bridges: [
             {
               address: HOLDER_A.toString(),
               sinceBlock: 999,
               tokens: [
-                {
-                  id: ASSET_A,
-                  name: 'Ether',
-                  symbol: 'ETH',
-                  decimals: 18,
-                  coingeckoId: CoingeckoId('ethereum'),
-                  sinceBlock: 0,
-                  category: 'ether',
-                },
-                {
-                  id: ASSET_B,
-                  name: 'USD Coin',
-                  coingeckoId: CoingeckoId('usd-coin'),
-                  address: EthereumAddress(
-                    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-                  ),
-                  symbol: 'USDC',
-                  decimals: 6,
-                  sinceBlock: Number(START_BLOCK_NUMBER + 1000n),
-                  category: 'stablecoin',
-                },
+                mockToken(ASSET_A, 0),
+                mockToken(ASSET_B, Number(START_BLOCK_NUMBER + 1000n)),
               ],
             },
           ],
@@ -498,6 +407,7 @@ describe(BalanceUpdater.name, () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
+        blockNumberRepository,
         projects,
         Logger.SILENT,
       )
@@ -539,13 +449,15 @@ describe(BalanceUpdater.name, () => {
           },
         ]),
       })
-      const balanceRepository = mock<BalanceRepository>({
-        addOrUpdateMany: mockFn().returns([]),
+
+      const blockNumberRepository = mock<BlockNumberRepository>({
+        findByBlockNumber: fakeFindByBlockNumber,
       })
 
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
+        blockNumberRepository,
         [],
         Logger.SILENT,
       )
@@ -563,24 +475,31 @@ describe(BalanceUpdater.name, () => {
 
       expect(result).toEqual([
         {
+          timestamp: START,
           holderAddress: HOLDER_A,
           assetId: ASSET_A,
           balance: BigInt(100),
-          blockNumber: START_BLOCK_NUMBER,
         },
         {
+          timestamp: START,
           holderAddress: HOLDER_B,
           assetId: ASSET_B,
           balance: BigInt(100),
-          blockNumber: START_BLOCK_NUMBER,
         },
         {
+          timestamp: START,
           holderAddress: HOLDER_C,
           assetId: ASSET_C,
           balance: BigInt(100),
-          blockNumber: START_BLOCK_NUMBER,
         },
       ])
     })
   })
 })
+
+const MULTICALL_RESPONSE_FAKE = {
+  success: true,
+  data: Bytes.fromHex(
+    '0x0000000000000000000000000000000000000000000000000000000000000064',
+  ),
+}

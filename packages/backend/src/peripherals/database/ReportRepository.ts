@@ -1,13 +1,12 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { ReportRow } from 'knex/types/tables'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface ReportRecord {
-  blockNumber: bigint
   timestamp: UnixTime
-  bridge: EthereumAddress
+  projectId: ProjectId
   asset: AssetId
   balanceUsd: bigint
   balanceEth: bigint
@@ -31,7 +30,6 @@ export class ReportRepository extends BaseRepository {
   async getDaily(): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports')
-      .select()
       .where('is_daily', '=', true)
       .orderBy('unix_timestamp')
 
@@ -49,7 +47,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     await knex('reports')
       .insert(rows)
-      .onConflict(['block_number', 'bridge_address', 'asset_id'])
+      .onConflict(['unix_timestamp', 'project_id', 'asset_id'])
       .merge()
     return rows.length
   }
@@ -59,7 +57,7 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  async getLatestPerBridge(): Promise<Map<EthereumAddress, ReportRecord[]>> {
+  async getLatestPerProject(): Promise<Map<ProjectId, ReportRecord[]>> {
     const knex = await this.knex()
     const rows: ReportRow[] = await knex
       .select('a1.*')
@@ -68,26 +66,26 @@ export class ReportRepository extends BaseRepository {
         knex('reports')
           .select(
             knex.raw('max(unix_timestamp) as unix_timestamp'),
-            'bridge_address',
+            'project_id',
             'asset_id',
           )
           .from('reports')
           .as('a2')
-          .groupBy('bridge_address', 'asset_id'),
+          .groupBy('project_id', 'asset_id'),
         function () {
           return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp')
-            .andOn('a1.bridge_address', '=', 'a2.bridge_address')
+            .andOn('a1.project_id', '=', 'a2.project_id')
             .andOn('a1.asset_id', '=', 'a2.asset_id')
         },
       )
 
     const records = rows.map(toRecord)
 
-    const result = new Map<EthereumAddress, ReportRecord[]>()
+    const result = new Map<ProjectId, ReportRecord[]>()
 
     for (const record of records) {
-      const entry = result.get(record.bridge) ?? []
-      result.set(record.bridge, [...entry, record])
+      const entry = result.get(record.projectId) ?? []
+      result.set(record.projectId, [...entry, record])
     }
 
     return result
@@ -96,25 +94,23 @@ export class ReportRepository extends BaseRepository {
 
 function toRow(record: ReportRecord): ReportRow {
   return {
-    block_number: Number(record.blockNumber),
     unix_timestamp: record.timestamp.toNumber().toString(),
-    bridge_address: record.bridge.toString(),
+    project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
     balance: record.balance.toString(),
-    usd_tvl: record.balanceUsd.toString(),
-    eth_tvl: record.balanceEth.toString(),
+    balance_usd: record.balanceUsd.toString(),
+    balance_eth: record.balanceEth.toString(),
     is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
   }
 }
 
 function toRecord(row: ReportRow): ReportRecord {
   return {
-    blockNumber: BigInt(row.block_number),
     timestamp: new UnixTime(+row.unix_timestamp),
-    bridge: EthereumAddress.unsafe(row.bridge_address),
+    projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
     balance: BigInt(row.balance),
-    balanceUsd: BigInt(row.usd_tvl),
-    balanceEth: BigInt(row.eth_tvl),
+    balanceUsd: BigInt(row.balance_usd),
+    balanceEth: BigInt(row.balance_eth),
   }
 }

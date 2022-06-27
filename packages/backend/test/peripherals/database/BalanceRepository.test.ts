@@ -1,36 +1,43 @@
 import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
+import {
+  BalanceRecord,
+  BalanceRepository,
+} from '../../../src/peripherals/database/BalanceRepository'
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
 import { setupDatabaseTestSuite } from './setup'
+
+const START = UnixTime.fromDate(new Date('2022-05-17'))
+const mockBalance = (
+  holderAddress: EthereumAddress,
+  offset: number,
+  assetId: AssetId,
+  balance: bigint,
+) => {
+  return {
+    timestamp: START.add(offset, 'hours'),
+    holderAddress: holderAddress,
+    assetId,
+    balance,
+  }
+}
 
 describe(BalanceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new BalanceRepository(database, Logger.SILENT)
 
   const START_BLOCK_NUMBER = 123456n
-  const MOCK_HOLDER = EthereumAddress(
-    '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
-  )
-  const MOCK_ASSET = AssetId('dai-dai-stablecoin')
-  const MOCK_BALANCE = 1000000000000000000n
-  const DATA = [
-    {
-      blockNumber: START_BLOCK_NUMBER,
-      holderAddress: MOCK_HOLDER,
-      assetId: MOCK_ASSET,
-      balance: MOCK_BALANCE,
-    },
-    {
-      blockNumber: START_BLOCK_NUMBER + 1n,
-      holderAddress: MOCK_HOLDER,
-      assetId: MOCK_ASSET,
-      balance: MOCK_BALANCE,
-    },
-  ]
 
-  const START = UnixTime.fromDate(new Date('2022-05-17'))
+  const HOLDER_A = EthereumAddress.random()
+  const HOLDER_B = EthereumAddress.random()
+  const ASSET_1 = AssetId('dai-dai-stablecoin')
+  const ASSET_2 = AssetId('asset-2')
+  const BALANCE = 1000000000000000000n
+  const DATA: BalanceRecord[] = [
+    mockBalance(HOLDER_A, 0, ASSET_1, BALANCE),
+    mockBalance(HOLDER_A, 1, ASSET_1, BALANCE),
+  ]
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -40,24 +47,9 @@ describe(BalanceRepository.name, () => {
   describe(BalanceRepository.prototype.getByBlock.name, () => {
     it('known block', async () => {
       const additionalData = [
-        {
-          blockNumber: START_BLOCK_NUMBER,
-          holderAddress: MOCK_HOLDER,
-          assetId: AssetId('asset-a'),
-          balance: MOCK_BALANCE,
-        },
-        {
-          blockNumber: START_BLOCK_NUMBER,
-          holderAddress: MOCK_HOLDER,
-          assetId: AssetId('asset-b'),
-          balance: MOCK_BALANCE,
-        },
-        {
-          blockNumber: START_BLOCK_NUMBER,
-          holderAddress: MOCK_HOLDER,
-          assetId: AssetId('asset-c'),
-          balance: MOCK_BALANCE,
-        },
+        mockBalance(HOLDER_A, 0, AssetId('asset-a'), BALANCE),
+        mockBalance(HOLDER_A, 0, AssetId('asset-b'), BALANCE),
+        mockBalance(HOLDER_A, 0, AssetId('asset-c'), BALANCE),
       ]
       await repository.addOrUpdateMany(additionalData)
 
@@ -75,10 +67,7 @@ describe(BalanceRepository.name, () => {
 
   describe(BalanceRepository.prototype.getByHolderAndAsset.name, () => {
     it('entries exist in the DB', async () => {
-      const result = await repository.getByHolderAndAsset(
-        MOCK_HOLDER,
-        MOCK_ASSET,
-      )
+      const result = await repository.getByHolderAndAsset(HOLDER_A, ASSET_1)
 
       expect(result).toEqual(DATA)
     })
@@ -89,7 +78,7 @@ describe(BalanceRepository.name, () => {
       )
       const result = await repository.getByHolderAndAsset(
         nonexistingHolder,
-        MOCK_ASSET,
+        ASSET_1,
       )
 
       expect(result).toEqual([])
@@ -98,7 +87,7 @@ describe(BalanceRepository.name, () => {
     it('nonexisting asset', async () => {
       const nonexistingAsset = AssetId('nonexistent-token')
       const result = await repository.getByHolderAndAsset(
-        MOCK_HOLDER,
+        HOLDER_A,
         nonexistingAsset,
       )
 
@@ -110,20 +99,20 @@ describe(BalanceRepository.name, () => {
     it('new rows only', async () => {
       const newRows = [
         {
-          blockNumber: START_BLOCK_NUMBER + 2n,
+          timestamp: START.add(2, 'hours'),
           holderAddress: EthereumAddress(
             '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
           assetId: AssetId('dai-dai-stablecoin'),
-          balance: MOCK_BALANCE,
+          balance: BALANCE,
         },
         {
-          blockNumber: START_BLOCK_NUMBER + 3n,
+          timestamp: START.add(3, 'hours'),
           holderAddress: EthereumAddress(
             '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
           assetId: AssetId('dai-dai-stablecoin'),
-          balance: MOCK_BALANCE,
+          balance: BALANCE,
         },
       ]
       await repository.addOrUpdateMany(newRows)
@@ -136,16 +125,16 @@ describe(BalanceRepository.name, () => {
     it('existing rows only', async () => {
       const existingRows = [
         {
-          blockNumber: DATA[0].blockNumber,
+          timestamp: DATA[0].timestamp,
           holderAddress: DATA[0].holderAddress,
           assetId: DATA[0].assetId,
-          balance: MOCK_BALANCE,
+          balance: BALANCE,
         },
         {
-          blockNumber: DATA[1].blockNumber,
+          timestamp: DATA[1].timestamp,
           holderAddress: DATA[1].holderAddress,
           assetId: DATA[1].assetId,
-          balance: MOCK_BALANCE,
+          balance: BALANCE,
         },
       ]
       await repository.addOrUpdateMany(existingRows)
@@ -158,18 +147,18 @@ describe(BalanceRepository.name, () => {
     it('mixed: existing and new rows', async () => {
       const mixedRows = [
         {
-          blockNumber: DATA[1].blockNumber,
+          timestamp: DATA[1].timestamp,
           holderAddress: DATA[1].holderAddress,
           assetId: DATA[1].assetId,
-          balance: MOCK_BALANCE,
+          balance: BALANCE,
         },
         {
-          blockNumber: START_BLOCK_NUMBER + 2n,
+          timestamp: START.add(2, 'hours'),
           holderAddress: EthereumAddress(
             '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
           ),
           assetId: AssetId('dai-dai-stablecoin'),
-          balance: MOCK_BALANCE,
+          balance: BALANCE,
         },
       ]
       await repository.addOrUpdateMany(mixedRows)
@@ -206,20 +195,20 @@ describe(BalanceRepository.name, () => {
 
     const additionalRecords = [
       {
-        blockNumber: START_BLOCK_NUMBER,
-        holderAddress: MOCK_HOLDER,
+        timestamp: START,
+        holderAddress: HOLDER_A,
         assetId: AssetId('token-a'),
-        balance: MOCK_BALANCE,
+        balance: BALANCE,
       },
     ]
 
     await repository.addOrUpdateMany(additionalRecords)
 
     await Promise.all(
-      DATA.map(({ blockNumber }, i) =>
+      DATA.map(({ timestamp }, i) =>
         blockNumberRepository.add({
-          timestamp: START.add(i, 'hours'),
-          blockNumber,
+          timestamp,
+          blockNumber: START_BLOCK_NUMBER + BigInt(i),
         }),
       ),
     )
@@ -229,25 +218,87 @@ describe(BalanceRepository.name, () => {
     expect(holderLatest).toEqual(
       new Map([
         [
-          MOCK_HOLDER,
+          HOLDER_A,
           [
             {
-              blockNumber: START_BLOCK_NUMBER + 1n,
               timestamp: START.add(1, 'hours'),
-              holderAddress: MOCK_HOLDER,
-              assetId: MOCK_ASSET,
-              balance: MOCK_BALANCE,
+              holderAddress: HOLDER_A,
+              assetId: ASSET_1,
+              balance: BALANCE,
             },
             {
-              blockNumber: START_BLOCK_NUMBER,
               timestamp: START,
-              holderAddress: MOCK_HOLDER,
+              holderAddress: HOLDER_A,
               assetId: AssetId('token-a'),
-              balance: MOCK_BALANCE,
+              balance: BALANCE,
             },
           ],
         ],
       ]),
     )
+  })
+
+  describe(BalanceRepository.prototype.getByTimestamp.name, () => {
+    it('one project one asset', async () => {
+      await repository.deleteAll()
+      const data = [
+        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
+      ]
+
+      await repository.addOrUpdateMany(data)
+
+      const result = await repository.getByTimestamp(START)
+      expect(result).toEqual([
+        {
+          holderAddress: HOLDER_A,
+          timestamp: START,
+          assetId: ASSET_1,
+          balance: 1n,
+        },
+      ])
+    })
+
+    it('many projects many assets', async () => {
+      await repository.deleteAll()
+      const data = [
+        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
+
+        mockBalance(HOLDER_A, 0, ASSET_2, 3000n),
+        mockBalance(HOLDER_A, 1, ASSET_2, 1000n),
+
+        mockBalance(HOLDER_B, 0, ASSET_2, 1n),
+        mockBalance(HOLDER_B, 1, ASSET_2, 3n),
+        mockBalance(HOLDER_B, 2, ASSET_2, 5n),
+      ]
+
+      await repository.addOrUpdateMany(data)
+
+      const result = await repository.getByTimestamp(START)
+      expect(result).toBeAnArrayOfLength(3)
+      expect(result).toBeAnArrayWith(
+        {
+          holderAddress: HOLDER_A,
+          timestamp: START,
+          assetId: ASSET_1,
+          balance: 1n,
+        },
+        {
+          holderAddress: HOLDER_A,
+          timestamp: START,
+          assetId: ASSET_2,
+          balance: 3000n,
+        },
+        {
+          holderAddress: HOLDER_B,
+          timestamp: START,
+          assetId: ASSET_2,
+          balance: 1n,
+        },
+      )
+    })
   })
 })

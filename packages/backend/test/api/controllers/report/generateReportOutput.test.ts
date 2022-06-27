@@ -1,4 +1,10 @@
-import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
@@ -11,16 +17,20 @@ describe(generateReportOutput.name, () => {
   const ETH = 1_111111n
   const BALANCE = 1111111n
 
-  const ARBITRUM = EthereumAddress.random()
-  const ARBITRUM_2 = EthereumAddress.random()
-  const OPTIMISM = EthereumAddress.random()
+  const ARBITRUM = ProjectId('arbitrum')
+  const OPTIMISM = ProjectId('optimism')
+
+  const ARBITRUM_ADDRESS = EthereumAddress.random()
+  const ARBITRUM_ADDRESS_2 = EthereumAddress.random()
+  const OPTIMISM_ADDRESS = EthereumAddress.random()
 
   const PROJECTS: ProjectInfo[] = [
     {
+      projectId: ARBITRUM,
       name: 'Arbitrum',
       bridges: [
         {
-          address: ARBITRUM.toString(),
+          address: ARBITRUM_ADDRESS.toString(),
           sinceBlock: 0,
           tokens: [
             mockToken(AssetId.DAI, 'DAI'),
@@ -28,17 +38,18 @@ describe(generateReportOutput.name, () => {
           ],
         },
         {
-          address: ARBITRUM_2.toString(),
+          address: ARBITRUM_ADDRESS_2.toString(),
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
     },
     {
+      projectId: OPTIMISM,
       name: 'Optimism',
       bridges: [
         {
-          address: OPTIMISM.toString(),
+          address: OPTIMISM_ADDRESS.toString(),
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },

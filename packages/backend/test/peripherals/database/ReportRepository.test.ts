@@ -1,8 +1,9 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import { Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
+import { fakeBalance, fakeReport } from '../../fakes'
 import { setupDatabaseTestSuite } from './setup'
 
 describe(ReportRepository.name, () => {
@@ -11,40 +12,8 @@ describe(ReportRepository.name, () => {
   const balancesRepository = new BalanceRepository(database, Logger.SILENT)
 
   const TODAY = UnixTime.now().toStartOf('day')
-  const BLOCK = 123456n
-  const BRIDGE_A = EthereumAddress.random()
-  const BRIDGE_B = EthereumAddress.random()
-  const ASSET_A = AssetId('asset-a')
-  const BALANCE = 100000n
-
-  const mockReport = (
-    bridge: EthereumAddress,
-    timestampOffset: number,
-    blockOffset: bigint,
-  ) => {
-    return {
-      blockNumber: BLOCK + blockOffset,
-      timestamp: TODAY.add(timestampOffset, 'hours'),
-      bridge,
-      asset: ASSET_A,
-      balance: BALANCE,
-      balanceUsd: 1000000n,
-      balanceEth: 100000n,
-    }
-  }
-
-  const mockBalance = (
-    bridge: EthereumAddress,
-    asset: AssetId,
-    offset: bigint,
-  ) => {
-    return {
-      blockNumber: BLOCK + offset,
-      holderAddress: bridge,
-      assetId: asset,
-      balance: BALANCE,
-    }
-  }
+  const PROJECT_A = ProjectId('project-a')
+  const PROJECT_B = ProjectId('project-b')
 
   beforeEach(async () => {
     await balancesRepository.deleteAll()
@@ -53,66 +22,67 @@ describe(ReportRepository.name, () => {
 
   describe(ReportRepository.prototype.getDaily.name, () => {
     it('filters data to get only full days', async () => {
-      await reportsRepository.addOrUpdateMany([
-        mockReport(BRIDGE_A, 0, 0n),
-        mockReport(BRIDGE_A, 1, 100n),
-      ])
+      const REPORT = fakeReport({ timestamp: TODAY })
+      await reportsRepository.addOrUpdateMany([REPORT])
 
       await balancesRepository.addOrUpdateMany([
-        mockBalance(BRIDGE_A, ASSET_A, 0n),
-        mockBalance(BRIDGE_A, ASSET_A, 100n),
+        fakeBalance({
+          timestamp: TODAY,
+        }),
+        fakeBalance({
+          timestamp: TODAY.add(1, 'hours'),
+        }),
       ])
 
       const result = await reportsRepository.getDaily()
 
-      expect(result).toBeAnArrayWith({
-        ...mockReport(BRIDGE_A, 0, 0n),
-        balance: BALANCE,
-      })
+      expect(result).toBeAnArrayWith(REPORT)
       expect(result).toBeAnArrayOfLength(1)
     })
 
     it('returns sorted data', async () => {
-      await reportsRepository.addOrUpdateMany([
-        mockReport(BRIDGE_A, 48, 2000n),
-        mockReport(BRIDGE_A, 0, 0n),
-        mockReport(BRIDGE_A, 24, 1000n),
-      ])
+      const REPORTS = [
+        fakeReport({ timestamp: TODAY }),
+        fakeReport({ timestamp: TODAY.add(1, 'days') }),
+        fakeReport({ timestamp: TODAY.add(2, 'days') }),
+      ]
+      await reportsRepository.addOrUpdateMany(REPORTS)
 
       await balancesRepository.addOrUpdateMany([
-        mockBalance(BRIDGE_A, ASSET_A, 0n),
-        mockBalance(BRIDGE_A, ASSET_A, 1000n),
-        mockBalance(BRIDGE_A, ASSET_A, 2000n),
+        fakeBalance({
+          timestamp: TODAY,
+        }),
+        fakeBalance({
+          timestamp: TODAY.add(1, 'days'),
+        }),
+        fakeBalance({
+          timestamp: TODAY.add(2, 'days'),
+        }),
       ])
       const result = await reportsRepository.getDaily()
 
-      expect(result).toEqual([
-        { ...mockReport(BRIDGE_A, 0, 0n), balance: BALANCE },
-        { ...mockReport(BRIDGE_A, 24, 1000n), balance: BALANCE },
-        { ...mockReport(BRIDGE_A, 48, 2000n), balance: BALANCE },
-      ])
+      expect(result).toEqual(REPORTS)
     })
   })
 
   describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
     it('add or update', async () => {
-      await reportsRepository.addOrUpdateMany([
-        mockReport(BRIDGE_A, 0, 0n),
-        mockReport(BRIDGE_A, 1, 100n),
-      ])
+      const REPORTS_1 = [
+        fakeReport({ timestamp: TODAY }),
+        fakeReport({ timestamp: TODAY.add(1, 'hours') }),
+      ]
 
-      await reportsRepository.addOrUpdateMany([
-        mockReport(BRIDGE_A, 2, 100n),
-        mockReport(BRIDGE_A, 3, 300n),
-      ])
+      const REPORTS_2 = [
+        fakeReport({ timestamp: TODAY.add(1, 'hours') }),
+        fakeReport({ timestamp: TODAY.add(2, 'hours') }),
+      ]
+      await reportsRepository.addOrUpdateMany(REPORTS_1)
+
+      await reportsRepository.addOrUpdateMany(REPORTS_2)
 
       const result = await reportsRepository.getAll()
 
-      expect(result).toBeAnArrayWith(
-        mockReport(BRIDGE_A, 0, 0n),
-        mockReport(BRIDGE_A, 2, 100n),
-        mockReport(BRIDGE_A, 3, 300n),
-      )
+      expect(result).toBeAnArrayWith(REPORTS_1[0], REPORTS_2[0], REPORTS_2[1])
 
       expect(result).toBeAnArrayOfLength(3)
     })
@@ -123,25 +93,17 @@ describe(ReportRepository.name, () => {
   })
 
   it(ReportRepository.prototype.getAll.name, async () => {
-    await reportsRepository.addOrUpdateMany([
-      mockReport(BRIDGE_A, 0, 0n),
-      mockReport(BRIDGE_A, 1, 100n),
-    ])
+    const reports = [fakeReport(), fakeReport()]
+    await reportsRepository.addOrUpdateMany(reports)
 
     const results = await reportsRepository.getAll()
 
-    expect(results).toBeAnArrayWith(
-      mockReport(BRIDGE_A, 0, 0n),
-      mockReport(BRIDGE_A, 1, 100n),
-    )
+    expect(results).toBeAnArrayWith(reports[0], reports[1])
     expect(results).toBeAnArrayOfLength(2)
   })
 
   it(ReportRepository.prototype.deleteAll.name, async () => {
-    await reportsRepository.addOrUpdateMany([
-      mockReport(BRIDGE_A, 0, 0n),
-      mockReport(BRIDGE_A, 1, 100n),
-    ])
+    await reportsRepository.addOrUpdateMany([fakeReport(), fakeReport()])
 
     await reportsRepository.deleteAll()
 
@@ -150,20 +112,21 @@ describe(ReportRepository.name, () => {
     expect(results).toBeAnArrayOfLength(0)
   })
 
-  it(ReportRepository.prototype.getLatestPerBridge.name, async () => {
-    await reportsRepository.addOrUpdateMany([
-      mockReport(BRIDGE_A, 0, 0n),
-      mockReport(BRIDGE_A, 1, 100n),
-      mockReport(BRIDGE_B, 0, 0n),
-      mockReport(BRIDGE_B, 1, 100n),
-    ])
+  it(ReportRepository.prototype.getLatestPerProject.name, async () => {
+    const reports = [
+      fakeReport({ projectId: PROJECT_A, timestamp: TODAY }),
+      fakeReport({ projectId: PROJECT_B, timestamp: TODAY }),
+      fakeReport({ projectId: PROJECT_A, timestamp: TODAY.add(1, 'hours') }),
+      fakeReport({ projectId: PROJECT_B, timestamp: TODAY.add(1, 'hours') }),
+    ]
+    await reportsRepository.addOrUpdateMany(reports)
 
-    const result = await reportsRepository.getLatestPerBridge()
+    const result = await reportsRepository.getLatestPerProject()
 
     expect(result).toEqual(
       new Map([
-        [BRIDGE_A, [mockReport(BRIDGE_A, 1, 100n)]],
-        [BRIDGE_B, [mockReport(BRIDGE_B, 1, 100n)]],
+        [PROJECT_A, [reports[2]]],
+        [PROJECT_B, [reports[3]]],
       ]),
     )
   })

@@ -5,6 +5,7 @@ import {
   BalanceRecord,
   BalanceRepository,
 } from '../peripherals/database/BalanceRepository'
+import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
 
@@ -19,6 +20,7 @@ export class BalanceUpdater {
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
+    private blockNumberRepository: BlockNumberRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
@@ -96,11 +98,19 @@ export class BalanceUpdater {
       blockNumber,
     )
 
+    const blockNumberRecord =
+      await this.blockNumberRepository.findByBlockNumber(blockNumber)
+    if (!blockNumberRecord) {
+      throw new Error(
+        'Programmer error: can not find timestamp for this block number',
+      )
+    }
+
     return multicallResponses.map((res, i) => ({
       holderAddress: missingData[i].holder,
       assetId: missingData[i].assetId,
       balance: BalanceCall.decodeOr(res, 0n),
-      blockNumber,
+      timestamp: blockNumberRecord.timestamp,
     }))
   }
 }

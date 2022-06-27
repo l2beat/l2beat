@@ -81,6 +81,7 @@ export class Application {
     const balanceUpdater = new BalanceUpdater(
       multicall,
       balanceRepository,
+      blockNumberRepository,
       config.projects,
       logger,
     )
@@ -89,6 +90,7 @@ export class Application {
       priceRepository,
       balanceRepository,
       reportRepository,
+      config.projects,
       config.tokens,
       logger,
     )
