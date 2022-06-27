@@ -98,7 +98,7 @@ export class PriceRepository extends BaseRepository {
   async getLatestByToken(): Promise<Map<AssetId, PriceRecord>> {
     const knex = await this.knex()
 
-    const rows = await knex
+    const rows: PriceRow[] = await knex
       .select('a1.*')
       .from('coingecko_prices as a1')
       .innerJoin(
