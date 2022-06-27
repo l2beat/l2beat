@@ -18,9 +18,6 @@ export function filterReportsByProjects(
   })
 }
 
-// change
-// now tokens are filtered based on project not bridge
-// todo discuss it
 function getProjectAssetMap(projects: ProjectInfo[]) {
   return new Map(
     projects.map((p) => [
