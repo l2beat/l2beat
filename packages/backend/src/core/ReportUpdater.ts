@@ -48,7 +48,10 @@ export class ReportUpdater {
     for (const { projectId, bridges } of projects) {
       this.projectDetailsById.set(projectId, {
         bridges: bridges.map((b) => EthereumAddress.unsafe(b.address)),
-        assetIds: bridges.flatMap((b) => b.tokens.map((t) => t.id)),
+        assetIds: [
+          // Set used to deduplicate AssetIds
+          ...new Set(bridges.flatMap((b) => b.tokens.map((t) => t.id))),
+        ],
       })
     }
   }
