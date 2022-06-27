@@ -94,15 +94,19 @@ export class BalanceUpdater {
       blockNumber,
     )
 
-    const { timestamp } = await this.blockNumberRepository.findByBlockNumber(
-      blockNumber,
-    )
+    const blockNumberRecord =
+      await this.blockNumberRepository.findByBlockNumber(blockNumber)
+    if (!blockNumberRecord) {
+      throw new Error(
+        'Programmer error: can not find timestamp for this block number',
+      )
+    }
 
     return multicallResponses.map((res, i) => ({
       holderAddress: missingData[i].holder,
       assetId: missingData[i].assetId,
       balance: BalanceCall.decodeOr(res, 0n),
-      timestamp,
+      timestamp: blockNumberRecord.timestamp,
     }))
   }
 }
