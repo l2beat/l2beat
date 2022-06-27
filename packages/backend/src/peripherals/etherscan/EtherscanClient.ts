@@ -38,11 +38,7 @@ export class EtherscanClient {
     return stringAsBigInt().parse(result)
   }
 
-  private async call(
-    module: string,
-    action: string,
-    params: Record<string, string>,
-  ) {
+  async call(module: string, action: string, params: Record<string, string>) {
     return this.rateLimiter.call(() =>
       this.callUnlimited(module, action, params),
     )

@@ -58,7 +58,7 @@ export async function analyzeMainBridge(
   const abi = ['function messenger() view returns (address)']
 
   const bridgeContract = new Contract(mainBridge.proxyAddress, abi, provider)
-  const messenger = await bridgeContract.functions.messenger() as string
+  const messenger = (await bridgeContract.functions.messenger()) as string
 
   const analyzedMessenger = await addressAnalyzer.analyze(
     EthereumAddress(messenger),
@@ -88,11 +88,11 @@ export async function analyzeMainBridge(
 
   return {
     owner,
-    proxy: proxyContract ,
+    proxy: proxyContract,
     implementationAddress: implementation,
-    implementation: implementationContract ,
+    implementation: implementationContract,
     messengerAddress: messenger,
-    messenger: analyzedMessenger ,
+    messenger: analyzedMessenger,
     libResolvedDelegateProxyImplementationName,
     libResolvedDelegateProxyAddressManager,
   }

@@ -15,7 +15,7 @@
     "build:backend": "wsrun -p @l2beat/backend -recsm build",
     "build:frontend": "wsrun -p @l2beat/frontend -recsm build",
     "build": "wsrun -ecsm build",
-    "ci:check": "yarn clean && yarn build:mock && yarn format && yarn lint && yarn typecheck:ci && yarn test",
+    "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck:ci && yarn test",
     "clean": "wsrun -ecsm clean",
     "fix": "yarn lint:fix && yarn format:fix",
     "format:fix": "wsrun -ecsm format:fix",
