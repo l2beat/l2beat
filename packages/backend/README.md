@@ -49,6 +49,7 @@ environment variables. One variable per line `KEY=value`.
 - `COINGECKO_API_KEY` - (Optional) Api key for Coingecko
 - `LOG_LEVEL` - (Optional) Integer specifying the log level. `0` - none, `1` - error, `2` - info, `3` - debug
 - `PORT` - (Optional) The port on which the application exposes the api
+- `DISABLE_SYNC` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 
 Example:
 

@@ -4,7 +4,7 @@ import { providers } from 'ethers'
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { ReportController } from './api/controllers/report/ReportController'
-import { StatusController } from './api/controllers/StatusController'
+import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
@@ -136,8 +136,10 @@ export class Application {
       await apiServer.listen()
       await database.migrateToLatest()
 
-      reportController.start()
-      syncScheduler.start()
+      if (config.syncEnabled) {
+        reportController.start()
+        syncScheduler.start()
+      }
     }
   }
 }
