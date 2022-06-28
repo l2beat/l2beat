@@ -7,10 +7,10 @@ import {
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
-import { getReportsConfigHash } from '../../../src/core/reports/getReportsConfigHash'
-import { BridgeInfo, ProjectInfo } from '../../../src/model'
+import { getConfigHash } from '../../src/core/getConfigHash'
+import { BridgeInfo, ProjectInfo } from '../../src/model'
 
-describe(getReportsConfigHash.name, () => {
+describe(getConfigHash.name, () => {
   it('hash changes if project added', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -24,8 +24,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -40,8 +40,8 @@ describe(getReportsConfigHash.name, () => {
       ]),
     ]
     const projectsAfter = [projectsBefore[0]]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -58,8 +58,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('bb', 2000, [fakeToken('dai', 123), fakeToken('usdc', 456)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -76,8 +76,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -92,8 +92,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('aa', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -108,8 +108,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('aa', 1000, [fakeToken('dai', 456)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -124,8 +124,8 @@ describe(getReportsConfigHash.name, () => {
       ]),
     ]
     const projectsAfter = [projectsBefore[1], projectsBefore[0]]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
 
@@ -142,8 +142,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
 
@@ -160,8 +160,8 @@ describe(getReportsConfigHash.name, () => {
         fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getReportsConfigHash(projectsBefore)
-    const hashAfter = getReportsConfigHash(projectsAfter)
+    const hashBefore = getConfigHash(projectsBefore)
+    const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
 })

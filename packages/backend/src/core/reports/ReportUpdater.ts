@@ -6,7 +6,7 @@ import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { createReports } from './createReports'
-import { getReportsConfigHash } from './getReportsConfigHash'
+import { getConfigHash } from '../getConfigHash'
 
 export class ReportUpdater {
   private configHash: Hash256
@@ -20,7 +20,7 @@ export class ReportUpdater {
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.configHash = getReportsConfigHash(projects)
+    this.configHash = getConfigHash(projects)
   }
 
   async update(timestamps: UnixTime[]) {
