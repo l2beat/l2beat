@@ -1,6 +1,12 @@
-import { AssetId, Logger, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  EthereumAddress,
+  Logger,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
 
-import { Token } from '../model'
+import { ProjectInfo, Token } from '../model'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -14,7 +20,15 @@ import {
   ReportRepository,
 } from '../peripherals/database/ReportRepository'
 
+interface BalancePerProject extends Pick<BalanceRecord, 'assetId' | 'balance'> {
+  projectId: ProjectId
+}
+
 export class ReportUpdater {
+  private projectDetailsById = new Map<
+    ProjectId,
+    { bridges: EthereumAddress[]; assetIds: AssetId[] }
+  >()
   private tokenByAssetId = new Map<AssetId, Token>()
   private lastProcessed = new UnixTime(0)
 
@@ -22,6 +36,7 @@ export class ReportUpdater {
     private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
     private reportRepository: ReportRepository,
+    private projects: ProjectInfo[],
     private tokens: Token[],
     private logger: Logger,
   ) {
@@ -29,22 +44,32 @@ export class ReportUpdater {
     for (const token of this.tokens) {
       this.tokenByAssetId.set(token.id, token)
     }
+
+    for (const { projectId, bridges } of projects) {
+      this.projectDetailsById.set(projectId, {
+        bridges: bridges.map((b) => EthereumAddress.unsafe(b.address)),
+        assetIds: [
+          // Set used to deduplicate AssetIds
+          ...new Set(bridges.flatMap((b) => b.tokens.map((t) => t.id))),
+        ],
+      })
+    }
   }
 
-  async update(dataPoints: { timestamp: UnixTime; blockNumber: bigint }[]) {
-    dataPoints = dataPoints.filter((x) => x.timestamp.gt(this.lastProcessed))
-    this.logger.info('Update started', { dataPoints: dataPoints.length })
-    for (const { timestamp, blockNumber } of dataPoints) {
+  async update(timestamps: UnixTime[]) {
+    timestamps = timestamps.filter((x) => x.gt(this.lastProcessed))
+    this.logger.info('Update started', { timestamps: timestamps.length })
+    for (const timestamp of timestamps) {
       const [prices, balances] = await Promise.all([
         this.priceRepository.getByTimestamp(timestamp),
-        this.balanceRepository.getByBlock(blockNumber),
+        this.balanceRepository.getByTimestamp(timestamp),
       ])
       const reports = this.createReports(prices, balances)
       await this.reportRepository.addOrUpdateMany(reports)
       this.lastProcessed = timestamp
-      this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+      this.logger.info('Report updated', { timestamp: timestamp.toString() })
     }
-    this.logger.info('Update completed', { dataPoints: dataPoints.length })
+    this.logger.info('Update completed', { timestamps: timestamps.length })
   }
 
   createReports(
@@ -58,8 +83,13 @@ export class ReportUpdater {
       return []
     }
 
+    const balancesPerProject = this.aggregateBalancesPerProject(
+      this.projects,
+      balances,
+    )
+
     const reports: ReportRecord[] = []
-    for (const balance of balances) {
+    for (const balance of balancesPerProject) {
       const token = this.tokenByAssetId.get(balance.assetId)
       if (!token) {
         continue
@@ -68,9 +98,43 @@ export class ReportUpdater {
       if (!price) {
         continue
       }
+
       reports.push(createReport(price, token.decimals, balance, ethPrice))
     }
+
     return reports
+  }
+
+  private aggregateBalancesPerProject(
+    projects: ProjectInfo[],
+    balances: BalanceRecord[],
+  ): BalancePerProject[] {
+    const balancesPerProject = []
+    for (const { projectId } of projects) {
+      const project = this.projectDetailsById.get(projectId)
+      if (!project) {
+        continue
+      }
+      const projectBalances = balances.filter((balance) =>
+        project.bridges.some((bridge) => bridge === balance.holderAddress),
+      )
+
+      for (const assetId of project.assetIds) {
+        const assetBalances = projectBalances.filter(
+          (balance) => balance.assetId === assetId,
+        )
+
+        balancesPerProject.push({
+          projectId: projectId,
+          balance: assetBalances.reduce(
+            (acc, { balance }) => acc + balance,
+            0n,
+          ),
+          assetId: assetId,
+        })
+      }
+    }
+    return balancesPerProject
   }
 }
 
@@ -80,7 +144,7 @@ const USD_PRECISION = 2n
 export function createReport(
   price: PriceRecord,
   decimals: number,
-  balance: BalanceRecord,
+  balance: BalancePerProject,
   ethPrice: number,
 ): ReportRecord {
   const { balanceUsd, balanceEth } = convertBalance(
@@ -89,10 +153,10 @@ export function createReport(
     balance.balance,
     ethPrice,
   )
+
   return {
-    blockNumber: balance.blockNumber,
     timestamp: price.timestamp,
-    bridge: balance.holderAddress,
+    projectId: balance.projectId,
     asset: balance.assetId,
     balance: balance.balance,
     balanceUsd,

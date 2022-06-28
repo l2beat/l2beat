@@ -26,13 +26,13 @@ describe(RateLimiter.name, () => {
   ]
 
   for (const { name, callsPerMinute, tick, expectedCount } of cases) {
-    it(`enforces rate limits over ${name}`, async () => {
+    it(`enforces rate limits over ${name}`, () => {
       const clock = FakeTimers.install()
 
       let count = 0
       const rateLimiter = new RateLimiter({ callsPerMinute })
       for (let i = 0; i < 100; i++) {
-        rateLimiter.call(() => {
+        void rateLimiter.call(() => {
           count++
         })
       }

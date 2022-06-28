@@ -24,15 +24,18 @@ export function configureTooltips() {
       10,
       window.innerWidth - 10 - tooltipWidth,
     )
-    tooltip.style.left = left + 'px'
-    tooltip.style.top = rect.bottom + 7 + 'px'
+    tooltip.style.left = `${left}px`
+    tooltip.style.top = `${rect.bottom + 7}px`
     tooltip.style.textAlign =
       element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
 
-    tooltipTriangle.style.left =
-      clamp(rect.left + rect.width / 2 - 8, 10, window.innerWidth - 10 - 16) +
-      'px'
-    tooltipTriangle.style.top = rect.bottom + 'px'
+    const triangleLeft = clamp(
+      rect.left + rect.width / 2 - 8,
+      10,
+      window.innerWidth - 10 - 16,
+    )
+    tooltipTriangle.style.left = `${triangleLeft}px`
+    tooltipTriangle.style.top = `${rect.bottom}px`
   }
 
   function hide() {

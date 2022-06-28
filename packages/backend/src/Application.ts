@@ -18,9 +18,9 @@ import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQuerySer
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
-import { Database } from './peripherals/database/Database'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
+import { Database } from './peripherals/database/shared/Database'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
@@ -81,6 +81,7 @@ export class Application {
     const balanceUpdater = new BalanceUpdater(
       multicall,
       balanceRepository,
+      blockNumberRepository,
       config.projects,
       logger,
     )
@@ -89,6 +90,7 @@ export class Application {
       priceRepository,
       balanceRepository,
       reportRepository,
+      config.projects,
       config.tokens,
       logger,
     )

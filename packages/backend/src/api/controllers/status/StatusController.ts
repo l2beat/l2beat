@@ -46,7 +46,6 @@ export class StatusController {
           holderLatest.get(EthereumAddress(address))?.map((latest) => ({
             assetId: latest.assetId,
             balance: latest.balance.toString(),
-            blockNumber: latest.blockNumber.toString(),
             timestamp: unixTimeToString(latest.timestamp),
             syncStatus: getSyncStatus(latest.timestamp),
           })) ?? [],
@@ -55,23 +54,19 @@ export class StatusController {
   }
 
   async getReportsStatus() {
-    const bridgeLatest = await this.reportsRepository.getLatestPerBridge()
-    return this.projects.flatMap(({ bridges, name }) =>
-      bridges.map(({ address }) => ({
-        name,
-        address,
-        tokens:
-          bridgeLatest.get(EthereumAddress(address))?.map((latest) => ({
-            assetId: latest.asset,
-            balance: latest.balance.toString(),
-            usd: latest.balanceUsd.toString(),
-            eth: latest.balanceEth.toString(),
-            blockNumber: latest.blockNumber.toString(),
-            timestamp: unixTimeToString(latest.timestamp),
-            syncStatus: getSyncStatus(latest.timestamp),
-          })) ?? [],
-      })),
-    )
+    const projectLatest = await this.reportsRepository.getLatestPerProject()
+    return this.projects.map(({ projectId }) => ({
+      projectId,
+      tokens:
+        projectLatest.get(projectId)?.map((latest) => ({
+          assetId: latest.asset,
+          balance: latest.balance.toString(),
+          usd: latest.balanceUsd.toString(),
+          eth: latest.balanceEth.toString(),
+          timestamp: unixTimeToString(latest.timestamp),
+          syncStatus: getSyncStatus(latest.timestamp),
+        })) ?? [],
+    }))
   }
 }
 

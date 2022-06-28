@@ -14,9 +14,11 @@ export interface MetaImageProps {
 }
 
 export function getProps(l2Data: L2Data, project?: Project): MetaImageProps {
-  const { aggregate } = project ? l2Data.byProject[project.name] : l2Data
-  const tvl = getFromEnd(aggregate.data, 0)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(aggregate.data, 7)?.[1] ?? 0
+  const aggregate = project
+    ? l2Data.byProject[project.name]?.aggregate.data ?? []
+    : l2Data.aggregate.data
+  const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {

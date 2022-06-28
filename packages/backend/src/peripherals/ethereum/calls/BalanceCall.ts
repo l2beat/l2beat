@@ -34,7 +34,7 @@ export const BalanceCall = {
     }
   },
   decode(response: MulticallResponse) {
-    if (!response?.success) {
+    if (!response.success) {
       return
     }
     const [value] = coder.decodeFunctionResult(

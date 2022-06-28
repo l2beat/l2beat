@@ -18,7 +18,9 @@ export class FileCacheBackend implements CacheBackend {
     if (!fs.existsSync(this.filename)) {
       return new NestedDict({})
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = JSON.parse(fs.readFileSync(this.filename, 'utf8'))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return new NestedDict(data)
   }
 

@@ -4,8 +4,10 @@ import {
   EthereumAddress,
   Logger,
   mock,
+  ProjectId,
   UnixTime,
 } from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 
 import {
@@ -14,7 +16,7 @@ import {
   getBigIntPrice,
   ReportUpdater,
 } from '../../src/core/ReportUpdater'
-import { Token } from '../../src/model'
+import { ProjectInfo, Token } from '../../src/model'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -24,16 +26,48 @@ import {
   PriceRepository,
 } from '../../src/peripherals/database/PriceRepository'
 import { ReportRepository } from '../../src/peripherals/database/ReportRepository'
+import { fakeBalance } from '../fakes'
 
 describe(ReportUpdater.name, () => {
   const START = UnixTime.now().toStartOf('hour')
-  const START_BN = 1000n
   const MOCK_BRIDGE = EthereumAddress(
     '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
   )
 
+  const ARBITRUM = ProjectId('arbitrum')
+  const OPTIMISM = ProjectId('optimism')
+  const ARBITRUM_ADDRESS = EthereumAddress.random()
+  const OPTIMISM_ADDRESS = EthereumAddress.random()
   const MOCK_ASSET = AssetId('dai-dai-stablecoin')
   const MOCK_COINGECKO = CoingeckoId('dai')
+
+  const PROJECTS: ProjectInfo[] = [
+    {
+      projectId: ARBITRUM,
+      name: 'Arbitrum',
+      bridges: [
+        {
+          address: ARBITRUM_ADDRESS.toString(),
+          sinceBlock: 0,
+          tokens: [
+            mockToken(MOCK_ASSET, 'DAI'),
+            mockToken(AssetId.ETH, 'WETH'),
+          ],
+        },
+      ],
+    },
+    {
+      projectId: OPTIMISM,
+      name: 'Optimism',
+      bridges: [
+        {
+          address: OPTIMISM_ADDRESS.toString(),
+          sinceBlock: 0,
+          tokens: [mockToken(MOCK_ASSET, 'DAI')],
+        },
+      ],
+    },
+  ]
 
   const TOKENS: Token[] = [
     {
@@ -60,7 +94,7 @@ describe(ReportUpdater.name, () => {
 
       const balances: BalanceRecord[] = [
         {
-          blockNumber: START_BN,
+          timestamp: START,
           holderAddress: MOCK_BRIDGE,
           assetId: MOCK_ASSET,
           balance: 22123456789123456789n,
@@ -75,10 +109,10 @@ describe(ReportUpdater.name, () => {
           ),
       })
       const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn()
+        getByTimestamp: mockFn()
           .returnsOnce(balances)
           .returnsOnce(
-            balances.map((b) => ({ ...b, blockNumber: START_BN + 200n })),
+            balances.map((b) => ({ ...b, timestamp: START.add(1, 'hours') })),
           ),
       })
       const reportRepository = mock<ReportRepository>({
@@ -89,21 +123,19 @@ describe(ReportUpdater.name, () => {
         priceRepository,
         balanceRepository,
         reportRepository,
+        PROJECTS,
         TOKENS,
         Logger.SILENT,
       )
 
-      await reportUpdater.update([
-        { timestamp: START, blockNumber: START_BN },
-        { timestamp: START.add(1, 'hours'), blockNumber: START_BN + 200n },
-      ])
+      await reportUpdater.update([START, START.add(1, 'hours')])
 
       expect(reportRepository.addOrUpdateMany.calls.length).toEqual(2)
     })
   })
 
   describe(ReportUpdater.prototype.createReports.name, () => {
-    it('correctly aggregates many calculated tvls', () => {
+    it('correctly aggregates many calculated balances', () => {
       const prices: PriceRecord[] = [
         {
           priceUsd: 3.2,
@@ -118,47 +150,59 @@ describe(ReportUpdater.name, () => {
       ]
 
       const balances: BalanceRecord[] = [
-        {
-          blockNumber: START_BN,
-          holderAddress: MOCK_BRIDGE,
-          assetId: MOCK_ASSET,
-          balance: 22123456789123456789n,
-        },
-        {
-          blockNumber: START_BN,
-          holderAddress: MOCK_BRIDGE,
-          assetId: AssetId.ETH,
-          balance: 22123456789123456789n,
-        },
+        fakeBalance({
+          assetId: prices[0].assetId,
+          holderAddress: OPTIMISM_ADDRESS,
+        }),
+        fakeBalance({
+          assetId: prices[1].assetId,
+          holderAddress: ARBITRUM_ADDRESS,
+        }),
       ]
 
       const reportUpdater = new ReportUpdater(
         mock<PriceRepository>(),
         mock<BalanceRepository>(),
         mock<ReportRepository>(),
+        PROJECTS,
         TOKENS,
         Logger.SILENT,
       )
 
       const result = reportUpdater.createReports(prices, balances)
 
-      expect(result).toEqual([
-        createReport(prices[0], 18, balances[0], 1000),
-        createReport(prices[1], 18, balances[1], 1000),
-      ])
+      expect(result).toBeAnArrayWith(
+        createReport(
+          prices[0],
+          18,
+          {
+            projectId: OPTIMISM,
+            assetId: prices[0].assetId,
+            balance: balances[0].balance,
+          },
+          1000,
+        ),
+        createReport(
+          prices[1],
+          18,
+          {
+            projectId: ARBITRUM,
+            assetId: prices[1].assetId,
+            balance: balances[1].balance,
+          },
+          1000,
+        ),
+      )
     })
   })
 
   describe(createReport.name, () => {
     it('price: 3.20 $ || balance: 22.123456', async () => {
       const price = fakePrice({ priceUsd: 3.2 })
-      const balance: BalanceRecord = {
+      const balance = {
+        projectId: ARBITRUM,
+        assetId: price.assetId,
         balance: 22123456n,
-        assetId: AssetId('tok-token'),
-        blockNumber: 100000n,
-        holderAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d',
-        ),
       }
 
       const decimals = 6
@@ -168,9 +212,8 @@ describe(ReportUpdater.name, () => {
       const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
-        blockNumber: balance.blockNumber,
         timestamp: price.timestamp,
-        bridge: balance.holderAddress,
+        projectId: balance.projectId,
         asset: balance.assetId,
         balance: balance.balance,
         balanceUsd: 7079n,
@@ -180,13 +223,10 @@ describe(ReportUpdater.name, () => {
 
     it('price: 3.20 $ || balance: 22.123456789123456789', async () => {
       const price = fakePrice({ priceUsd: 3.2 })
-      const balance: BalanceRecord = {
+      const balance = {
+        projectId: ARBITRUM,
         balance: 22123456789123456789n,
-        assetId: AssetId('tok-token'),
-        blockNumber: 100000n,
-        holderAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d',
-        ),
+        assetId: price.assetId,
       }
 
       const decimals = 18
@@ -196,9 +236,8 @@ describe(ReportUpdater.name, () => {
       const result = createReport(price, decimals, balance, ethPrice)
 
       expect(result).toEqual({
-        blockNumber: balance.blockNumber,
         timestamp: price.timestamp,
-        bridge: balance.holderAddress,
+        projectId: balance.projectId,
         asset: balance.assetId,
         balance: balance.balance,
         balanceUsd: 7079n,
@@ -301,5 +340,18 @@ function fakePrice(price?: Partial<PriceRecord>): PriceRecord {
     timestamp: UnixTime.now(),
     assetId: AssetId.ETH,
     ...price,
+  }
+}
+
+function mockToken(assetId: AssetId, symbol: string): TokenInfo {
+  return {
+    id: assetId,
+    name: '',
+    coingeckoId: CoingeckoId('-'),
+    address: EthereumAddress.random(),
+    symbol,
+    decimals: 0,
+    sinceBlock: 0,
+    category: 'other',
   }
 }

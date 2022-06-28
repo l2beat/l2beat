@@ -21,14 +21,17 @@ export async function analyzeItem(
     ? await getParameters(description, address, provider)
     : []
   const relatives = parameters
-    .flatMap((x) => (Array.isArray(x.value) ? x.value : [x.value]))
+    .flatMap((x) =>
+      Array.isArray(x.value) ? (x.value as unknown[]) : [x.value],
+    )
     .filter((x): x is string => typeof x === 'string' && utils.isAddress(x))
 
   if (proxy) {
     relatives.push(proxy.eip1967Admin)
   }
 
-  delete analysis.abi
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  delete (analysis as any).abi
 
   return {
     analyzed: {
@@ -64,7 +67,8 @@ async function getRegularParameter(
 ) {
   const contract = new Contract(address, [method], provider)
   const methodName = Object.values(contract.interface.functions)[0].name
-  const result = await contract[methodName]()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const result: unknown = await contract[methodName]()
   return {
     name: methodName,
     value: result,
@@ -80,7 +84,8 @@ async function getArrayParameter(
   const methodName = Object.values(contract.interface.functions)[0].name
   const results: unknown[] = []
   for (let i = 0; ; i++) {
-    const result = await contract[methodName](i).catch(() => undefined)
+    // eslint-disable-next-line
+    const result: unknown = await contract[methodName](i).catch(() => undefined)
     if (result !== undefined) {
       results.push(result)
     } else {

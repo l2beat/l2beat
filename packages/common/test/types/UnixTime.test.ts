@@ -190,7 +190,7 @@ describe(UnixTime.name, () => {
     ]
 
     for (const { a, method, b, result } of testCases) {
-      it(`${a}.${method}(${b}) = ${result}`, () => {
+      it(`${a}.${method}(${b}) = ${result.toString()}`, () => {
         expect(new UnixTime(a)[method](new UnixTime(b))).toEqual(result)
       })
     }

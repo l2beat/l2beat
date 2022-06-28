@@ -75,7 +75,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
         state.input = result
         onChange()
       }
-    })
+    }, console.error)
   }
 
   return state

@@ -20,7 +20,7 @@ export class Database {
       connection,
       migrations: {
         migrationSource: new PolyglotMigrationSource(
-          path.join(__dirname, 'migrations'),
+          path.join(__dirname, '..', 'migrations'),
         ),
       },
     })

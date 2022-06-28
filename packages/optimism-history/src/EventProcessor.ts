@@ -13,25 +13,24 @@ export class EventProcessor {
   ) {}
 
   async processEvent(event: Event) {
+    const nameHash = (event.args?.name as { hash: string }).hash
+    const newAddress = EthereumAddress(event.args?.newAddress as string)
     const [timestamp, name, implementationName] = await Promise.all([
       this.blockTimestampService.getBlockTimestamp(event.blockNumber),
-      this.optimismNameService.getOptimismName(
-        event.args?.name.hash,
-        event.transactionHash,
-      ),
-      this.addressAnalyzer.getName(event.args?.newAddress),
+      this.optimismNameService.getOptimismName(nameHash, event.transactionHash),
+      this.addressAnalyzer.getName(newAddress),
     ])
     let fullImplName = implementationName
     if (implementationName === 'L1ChugSplashProxy') {
-      const implName = await this.analyzeChugSplashProxy(event.args?.newAddress)
+      const implName = await this.analyzeChugSplashProxy(newAddress.toString())
       fullImplName = implementationName + ' (impl: ' + implName + ')'
     }
     return {
       blockNumber: event.blockNumber,
       transactionHash: event.transactionHash,
-      nameHash: event.args?.name.hash as string,
+      nameHash,
       oldAddress: event.args?.oldAddress as string,
-      newAddress: event.args?.newAddress as string,
+      newAddress,
       timestamp,
       name,
       implementationName: fullImplName,

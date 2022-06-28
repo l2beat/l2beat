@@ -223,7 +223,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
   const sections = makeSections(tech)
   const isIncomplete = sections.some((x) =>
-    x.items.some((x) => x.isIncomplete === true || x.referenceIds.length === 0),
+    x.items.some((x) => x.isIncomplete || x.referenceIds.length === 0),
   )
 
   const incomplete = isIncomplete

@@ -43,5 +43,5 @@ function Hx({
   level,
   ...props
 }: HTMLAttributes<HTMLHeadingElement> & { level: number }) {
-  return createElement('h' + level, props)
+  return createElement(`h${level}`, props)
 }

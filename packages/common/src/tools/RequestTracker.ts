@@ -18,7 +18,7 @@ export class RequestTracker {
   private lastUpdatedAt: string = new Date().toISOString()
 
   constructor(private recentSize: number) {
-    this.recentBuffer = new Array(recentSize).fill(null)
+    this.recentBuffer = new Array<null>(recentSize).fill(null)
   }
 
   add(responseTimeMs: number, success: boolean) {

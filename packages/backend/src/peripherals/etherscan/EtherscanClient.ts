@@ -38,11 +38,7 @@ export class EtherscanClient {
     return stringAsBigInt().parse(result)
   }
 
-  private async call(
-    module: string,
-    action: string,
-    params: Record<string, string>,
-  ) {
+  async call(module: string, action: string, params: Record<string, string>) {
     return this.rateLimiter.call(() =>
       this.callUnlimited(module, action, params),
     )
@@ -59,7 +55,7 @@ export class EtherscanClient {
       ...params,
       apikey: this.etherscanApiKey,
     })
-    const url = `https://api.etherscan.io/api?${query}`
+    const url = `https://api.etherscan.io/api?${query.toString()}`
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient

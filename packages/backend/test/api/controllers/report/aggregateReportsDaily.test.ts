@@ -1,4 +1,10 @@
-import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
@@ -8,36 +14,39 @@ import {
 } from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
+import { fakeReport } from '../../../fakes'
 import { mockEntry } from './addOptimismToken.test'
 
 describe(aggregateReportsDaily.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
-  const ARBITRUM = EthereumAddress.random()
-  const ARBITRUM_2 = EthereumAddress.random()
-  const OPTIMISM = EthereumAddress.random()
+  const ARBITRUM = ProjectId('arbitrum')
+  const OPTIMISM = ProjectId('optimism')
+  const ARBITRUM_ADDRESS = EthereumAddress.random()
+  const ARBITRUM_ADDRESS_2 = EthereumAddress.random()
+  const OPTIMISM_ADDRESS = EthereumAddress.random()
   const USD = 1000n
   const ETH = 1n
   const BALANCE = 1000n
 
-  function mockReport(bridge: EthereumAddress, asset: AssetId, offset: number) {
-    return {
+  function mockReport(projectId: ProjectId, asset: AssetId, offset: number) {
+    return fakeReport({
+      projectId,
       timestamp: TODAY.add(offset, 'days'),
-      bridge,
       asset,
-      blockNumber: 0n,
+      balance: BALANCE,
       balanceUsd: USD,
       balanceEth: ETH,
-      balance: BALANCE,
-    }
+    })
   }
 
   const PROJECTS: ProjectInfo[] = [
     {
+      projectId: ARBITRUM,
       name: 'Arbitrum',
       technology: "Optimistic Rollup",
       bridges: [
         {
-          address: ARBITRUM.toString(),
+          address: ARBITRUM_ADDRESS.toString(),
           sinceBlock: 0,
           tokens: [
             mockToken(AssetId.DAI, 'DAI'),
@@ -45,18 +54,19 @@ describe(aggregateReportsDaily.name, () => {
           ],
         },
         {
-          address: ARBITRUM_2.toString(),
+          address: ARBITRUM_ADDRESS_2.toString(),
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
     },
     {
+      projectId: ProjectId('optimism'),
       name: 'Optimism',
       technology: "Optimistic Rollup",
       bridges: [
         {
-          address: OPTIMISM.toString(),
+          address: OPTIMISM_ADDRESS.toString(),
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
@@ -130,8 +140,8 @@ describe(aggregateReportsDaily.name, () => {
       mockReport(ARBITRUM, AssetId.WETH, -1),
       mockReport(ARBITRUM, AssetId.WETH, 0),
 
-      mockReport(ARBITRUM_2, AssetId.DAI, -1),
-      mockReport(ARBITRUM_2, AssetId.DAI, 0),
+      mockReport(ARBITRUM, AssetId.DAI, -1),
+      mockReport(ARBITRUM, AssetId.DAI, 0),
 
       mockReport(OPTIMISM, AssetId.DAI, -1),
       mockReport(OPTIMISM, AssetId.DAI, 0),

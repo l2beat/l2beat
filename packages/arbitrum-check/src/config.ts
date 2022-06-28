@@ -4,9 +4,7 @@ export interface ContractDescription {
 
 type AbiEntry = string | { type: 'array'; method: string }
 
-export interface Config {
-  [name: string]: ContractDescription
-}
+export type Config = Record<string, ContractDescription>
 
 export const config: Config = {
   Rollup: {

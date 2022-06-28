@@ -72,6 +72,7 @@ export function generateReportOutput(
       }
       
       const project = report.byProject[name]
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!project) {
         throw new Error('Programmer error: Reports not filtered correctly')
       }
@@ -102,6 +103,7 @@ export function generateReportOutput(
 
       for (const [symbol, tokenValue] of projectEntry.tokens) {
         let token = project.byToken[symbol]
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!token) {
           token = {
             types: ['date', symbol.toLocaleLowerCase(), 'usd'],

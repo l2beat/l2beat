@@ -1897,7 +1897,7 @@ const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
 export function getTokenByAssetId(assetId: AssetId) {
   const token = tokenMapByAssetId.get(assetId)
   if (!token) {
-    throw new TypeError(`Unknown token ${assetId}`)
+    throw new TypeError(`Unknown token ${assetId.toString()}`)
   }
   return token
 }
@@ -1909,7 +1909,7 @@ const tokenMapByCoingeckoId = new Map(
 export function getTokenByCoingeckoId(coingeckoId: CoingeckoId) {
   const token = tokenMapByCoingeckoId.get(coingeckoId)
   if (!token) {
-    throw new TypeError(`Unknown token ${coingeckoId}`)
+    throw new TypeError(`Unknown token ${coingeckoId.toString()}`)
   }
   return token
 }

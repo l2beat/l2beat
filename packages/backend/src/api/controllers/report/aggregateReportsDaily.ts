@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
@@ -58,7 +58,7 @@ export function aggregateReportsDaily(
 
     const entry = entries[index]
 
-    const projectName = projectNames.get(report.bridge)
+    const projectName = projectNames.get(report.projectId)
     if (projectName === undefined) {
       throw new Error('Programmer error: Invalid bridge')
     }
@@ -83,11 +83,9 @@ export function aggregateReportsDaily(
 }
 
 function getProjectNames(projects: ProjectInfo[]) {
-  const projectNames = new Map<EthereumAddress, string>()
+  const projectNames = new Map<ProjectId, string>()
   for (const project of projects) {
-    for (const bridge of project.bridges) {
-      projectNames.set(EthereumAddress(bridge.address), project.name)
-    }
+    projectNames.set(project.projectId, project.name)
   }
   return projectNames
 }

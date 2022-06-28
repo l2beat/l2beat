@@ -26,6 +26,6 @@ function getTokens(project: Project, l2Data: L2Data) {
 }
 
 function getTVL(project: Project, l2Data: L2Data, token: string) {
-  const data = l2Data.byProject[project.name].byToken[token].data
-  return data[data.length - 1][2]
+  const data = l2Data.byProject[project.name]?.byToken[token]?.data
+  return data?.[data.length - 1][2] ?? 0
 }
