@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -18,12 +18,12 @@ export const gluon: Project = {
   bridges: [
     {
       address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
-      sinceBlock: 8929632,
+      sinceTimestamp: new UnixTime(1573694037),
       tokens: ['ETH', 'DAI', 'L2'],
     },
     {
       address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
-      sinceBlock: 11783715,
+      sinceTimestamp: new UnixTime(1612360715),
       tokens: ['DAI', 'USDT'],
     },
   ],

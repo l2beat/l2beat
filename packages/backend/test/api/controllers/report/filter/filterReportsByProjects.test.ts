@@ -51,7 +51,7 @@ describe(filterReportsByProjects.name, () => {
       bridges: [
         {
           address: ARBITRUM_ADDRESS,
-          sinceBlock: 0,
+          sinceTimestamp: new UnixTime(0),
           tokens: [
             mockToken(AssetId.DAI, 0),
             mockToken(AssetId.WETH, Number(START + 1000n)),

@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
 import { Project } from './types'
@@ -12,7 +12,7 @@ export const zkswap2: Project = {
   bridges: [
     {
       address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
-      sinceBlock: 12810001,
+      sinceTimestamp: new UnixTime(1626059966),
       tokens: '*',
     },
   ],

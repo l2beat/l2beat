@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -17,22 +17,22 @@ export const arbitrum: Project = {
   bridges: [
     {
       address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
-      sinceBlock: 12525700,
+      sinceTimestamp: new UnixTime(1622243344),
       tokens: ['ETH'],
     },
     {
       address: '0xcEe284F754E854890e311e3280b767F80797180d',
-      sinceBlock: 12647126,
+      sinceTimestamp: new UnixTime(1623867835),
       tokens: '*',
     },
     {
       address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
-      sinceBlock: 12640867,
+      sinceTimestamp: new UnixTime(1623784100),
       tokens: '*',
     },
     {
       address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
-      sinceBlock: 13262081,
+      sinceTimestamp: new UnixTime(1632133470),
       tokens: ['DAI'],
     },
   ],

@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -18,29 +18,29 @@ export const optimism: Project = {
     {
       // old snx bridge
       address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',
-      sinceBlock: 11656238,
+      sinceTimestamp: new UnixTime(1610668212),
       tokens: ['SNX'],
     },
     {
       // current SNX bridge escrow
       address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
-      sinceBlock: 12409015,
+      sinceTimestamp: new UnixTime(1620680982),
       tokens: ['SNX'],
     },
     {
       // new snx bridge
       address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
-      sinceBlock: 12409013,
+      sinceTimestamp: new UnixTime(1620680934),
       tokens: ['SNX'],
     },
     {
       address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
-      sinceBlock: 12781431,
+      sinceTimestamp: new UnixTime(1625675779),
       tokens: ['DAI'],
     },
     {
       address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
-      sinceBlock: 12686786,
+      sinceTimestamp: new UnixTime(1624401464),
       tokens: '*',
     },
   ],

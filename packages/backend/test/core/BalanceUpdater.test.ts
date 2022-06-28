@@ -394,7 +394,7 @@ describe(BalanceUpdater.name, () => {
           bridges: [
             {
               address: HOLDER_A,
-              sinceBlock: 999,
+              sinceTimestamp: new UnixTime(1438272137),
               tokens: [
                 mockToken(ASSET_A, 0),
                 mockToken(ASSET_B, Number(START_BLOCK_NUMBER + 1000n)),

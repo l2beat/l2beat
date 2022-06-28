@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -19,7 +19,7 @@ export const hermez: Project = {
   bridges: [
     {
       address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
-      sinceBlock: 12093596,
+      sinceTimestamp: new UnixTime(1616482490),
       tokens: '*',
     },
   ],
