@@ -42,6 +42,7 @@ describe(filterReportsByProjects.name, () => {
   const PROJECTS: ProjectInfo[] = [
     {
       name: 'Arbitrum',
+      technology: "Optimistic Rollup",
       bridges: [
         {
           address: ARBITRUM.toString(),
@@ -55,6 +56,7 @@ describe(filterReportsByProjects.name, () => {
     },
     {
       name: 'Optimism',
+      technology: "Optimistic Rollup",
       bridges: [
         {
           address: OPTIMISM.toString(),

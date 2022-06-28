@@ -14,6 +14,7 @@ describe(generateReportOutput.name, () => {
   const ARBITRUM = EthereumAddress.random()
   const ARBITRUM_2 = EthereumAddress.random()
   const OPTIMISM = EthereumAddress.random()
+  const LOOPRING = EthereumAddress.random()
 
   const PROJECTS: ProjectInfo[] = [
     {
@@ -33,6 +34,7 @@ describe(generateReportOutput.name, () => {
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
+      technology: "Optimistic Rollup",
     },
     {
       name: 'Optimism',
@@ -43,6 +45,18 @@ describe(generateReportOutput.name, () => {
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
+      technology: "Optimistic Rollup"
+    },
+    {
+      name: 'Loopring',
+      bridges: [
+        {
+          address: LOOPRING.toString(),
+          sinceBlock: 0,
+          tokens: [mockToken(AssetId.DAI, 'DAI')],
+        },
+      ],
+      technology: "ZK Rollup",
     },
   ]
 
@@ -50,8 +64,25 @@ describe(generateReportOutput.name, () => {
     const entries = [
       {
         timestamp: TODAY.add(-1, 'days'),
-        value: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 5n * USD, eth: 5n * ETH },
         projects: new Map([
+          [
+            'Loopring',
+            {
+              value: { usd: USD, eth: ETH },
+              tokens: new Map([
+                [
+                  'DAI',
+                  {
+                    usd: USD,
+                    eth: ETH,
+                    balance: BALANCE,
+                    decimals: 4,
+                  },
+                ],
+              ]),
+            }
+          ],
           [
             'Arbitrum',
             {
@@ -154,11 +185,78 @@ describe(generateReportOutput.name, () => {
       aggregate: {
         types: ['date', 'usd', 'eth'],
         data: [
-          ['2022-05-03', 4000.44, 4.444444],
+          ['2022-05-03', 5000.55, 5.555555],
           ['2022-05-04', 4000.44, 4.444444],
         ],
       },
+      byTechnologyType: {
+          "Optimistic Rollup": {
+            data: [
+              [
+                "2022-05-03",
+                4000.44,
+                4.444444
+              ],
+              [
+                "2022-05-04",
+                4000.44,
+                4.444444
+              ]
+            ],
+            types: [
+              "date",
+              "usd",
+              "eth"
+            ]
+          },
+          "ZK Rollup": {
+            data: [
+              [
+                "2022-05-03",
+                1000.11,
+                1.111111,
+              ]
+            ],
+            types: [
+              "date",
+              "usd",
+              "eth",
+            ]
+          }
+      },
       byProject: {
+        ['Loopring']: {
+          aggregate: {
+            data: [
+              [
+                "2022-05-03",
+                1000.11,
+                1.111111,
+              ]
+            ],
+            types: [
+              "date",
+              "usd",
+              "eth",
+            ]
+          },
+          byToken: {
+            DAI: {
+              data: [
+                [
+                  "2022-05-03",
+                  111.1111,
+                  1000.11,
+                ]
+              ],
+              types: [
+                "date",
+                "dai",
+                "usd",
+              ]
+            }
+          }
+        },
         ['Arbitrum']: {
           aggregate: {
             types: ['date', 'usd', 'eth'],

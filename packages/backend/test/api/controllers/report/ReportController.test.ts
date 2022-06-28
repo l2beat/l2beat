@@ -28,6 +28,7 @@ describe(ReportController.name, () => {
     const PROJECTS: ProjectInfo[] = [
       {
         name: 'Arbitrum',
+        technology: 'Optimistic Rollup',
         bridges: [
           {
             address: ARBITRUM.toString(),
@@ -46,6 +47,7 @@ describe(ReportController.name, () => {
       },
       {
         name: 'Optimism',
+        technology: 'Optimistic Rollup',
         bridges: [
           {
             address: OPTIMISM.toString(),
@@ -103,6 +105,27 @@ describe(ReportController.name, () => {
             ['2022-05-29', 214752364.44, 143170.020444],
             ['2022-05-30', 214752364.44, 143170.020444],
           ],
+        },
+        byTechnologyType: {
+            "Optimistic Rollup": {
+              data: [
+                [
+                  "2022-05-29",
+                  214752364.44000003,
+                  143170.020444,
+                ],
+                [
+                  "2022-05-30",
+                  214752364.44000003,
+                  143170.020444,
+                ]
+              ],
+              types: [
+                "date",
+                "usd",
+                "eth",
+              ],
+            }
         },
         byProject: {
           ['Arbitrum']: {
@@ -176,6 +199,16 @@ describe(ReportController.name, () => {
         aggregate: {
           types: ['date', 'usd', 'eth'],
           data: [],
+        },
+        byTechnologyType: {
+          "Optimistic Rollup": {
+              data: [],
+              types: [
+                "date",
+                "usd",
+                "eth",
+              ]
+            }
         },
         byProject: {
           ['Arbitrum']: {

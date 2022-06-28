@@ -34,6 +34,7 @@ describe(aggregateReportsDaily.name, () => {
   const PROJECTS: ProjectInfo[] = [
     {
       name: 'Arbitrum',
+      technology: "Optimistic Rollup",
       bridges: [
         {
           address: ARBITRUM.toString(),
@@ -52,6 +53,7 @@ describe(aggregateReportsDaily.name, () => {
     },
     {
       name: 'Optimism',
+      technology: "Optimistic Rollup",
       bridges: [
         {
           address: OPTIMISM.toString(),

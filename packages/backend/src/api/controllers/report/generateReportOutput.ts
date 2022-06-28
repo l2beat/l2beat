@@ -7,6 +7,7 @@ import { asNumber } from './asNumber'
 export interface ReportOutput {
   aggregate: Chart
   byProject: Record<string, ProjectData>
+  byTechnologyType: Record<string, Chart>
 }
 
 export interface ProjectData {
@@ -23,11 +24,18 @@ export function generateReportOutput(
   entries: OutputEntry[],
   projects: ProjectInfo[],
 ): ReportOutput {
+  const projectToTechnologyMapping: Map<string,string>  = new Map();
+  const byTechnologyTypeMappingToDates = new Map<
+    string,
+    Map<string, [string, number, number]>
+  >()
+
   const report: ReportOutput = {
     aggregate: {
       types: ['date', 'usd', 'eth'],
       data: [],
     },
+    byTechnologyType: {},
     byProject: {},
   }
 
@@ -40,6 +48,12 @@ export function generateReportOutput(
       byToken: {},
     }
     report.byProject[p.name] = project
+    report.byTechnologyType[p.technology] = {
+        types: ['date', 'usd', 'eth'],
+        data: [],
+    }
+
+    projectToTechnologyMapping.set(p.name, p.technology)
   }
 
   for (const entry of entries) {
@@ -52,15 +66,38 @@ export function generateReportOutput(
     ])
 
     for (const [name, projectEntry] of entry.projects) {
+      const technology = projectToTechnologyMapping.get(name)
+      if (!technology) {
+        throw new Error('Programmer error: name to technology not mapped correctly')
+      }
+      
       const project = report.byProject[name]
       if (!project) {
         throw new Error('Programmer error: Reports not filtered correctly')
       }
 
+
+      const entryUSDValue = asNumber(projectEntry.value.usd, 2)
+      const entryETHValue = asNumber(projectEntry.value.eth, 6)
+
+      const datesForTechnology = byTechnologyTypeMappingToDates.get(technology)
+      if (datesForTechnology) {
+        const hasEntryForDate = datesForTechnology.get(date)
+        datesForTechnology.set(date, [
+          date,
+          hasEntryForDate ?  entryUSDValue + hasEntryForDate[1] : entryUSDValue,
+          hasEntryForDate ?  entryETHValue + hasEntryForDate[2] : entryETHValue,
+        ])
+      } else {
+        const dateMap = new Map()
+        dateMap.set(date, [date, entryUSDValue, entryETHValue,])
+        byTechnologyTypeMappingToDates.set(technology, dateMap)
+      }
+   
       project.aggregate.data.push([
         date,
-        asNumber(projectEntry.value.usd, 2),
-        asNumber(projectEntry.value.eth, 6),
+        entryUSDValue,
+        entryETHValue,
       ])
 
       for (const [symbol, tokenValue] of projectEntry.tokens) {
@@ -82,6 +119,10 @@ export function generateReportOutput(
     }
   }
 
+
+  for (const [technology, projectEntry] of byTechnologyTypeMappingToDates) {
+    report.byTechnologyType[technology].data.push(...Array.from(projectEntry.values()))
+  }
   return report
 }
 

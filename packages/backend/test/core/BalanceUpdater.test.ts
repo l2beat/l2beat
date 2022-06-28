@@ -29,6 +29,7 @@ describe(BalanceUpdater.name, () => {
   const PROJECTS: ProjectInfo[] = [
     {
       name: 'Arbitrum',
+      technology: "Optimistic Rollup",
       bridges: [
         {
           address: HOLDER_A.toString(),
@@ -73,6 +74,7 @@ describe(BalanceUpdater.name, () => {
     },
     {
       name: 'Zkswap',
+      technology: "ZK Rollup",
       bridges: [
         {
           address: HOLDER_B.toString(),
@@ -406,6 +408,7 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           name: 'Arbitrum',
+          technology: "Optimistic Rollup",
           bridges: [
             {
               address: HOLDER_A.toString(),
@@ -463,6 +466,7 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           name: 'Arbitrum',
+          technology: "Optimistic Rollup",
           bridges: [
             {
               address: HOLDER_A.toString(),
