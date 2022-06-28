@@ -8,15 +8,11 @@ describe(BlockNumberRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new BlockNumberRepository(database, Logger.SILENT)
 
-
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  
-
   it('can add new records', async () => {
-
     const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
     const itemB = { blockNumber: 7777n, timestamp: new UnixTime(222222) }
 
@@ -38,7 +34,7 @@ describe(BlockNumberRepository.name, () => {
 
     const result = await repository.findByBlockNumber(1234n)
     expect(result).toEqual(itemA)
-  })  
+  })
 
   it('can find by timestamp', async () => {
     const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
@@ -49,11 +45,10 @@ describe(BlockNumberRepository.name, () => {
 
     const result = await repository.findByTimestamp(new UnixTime(222222))
     expect(result).toEqual(itemB)
-  })  
-
+  })
 
   it('can delete all records', async () => {
-    await repository.add({blockNumber: 1n, timestamp: new UnixTime(1)})
+    await repository.add({ blockNumber: 1n, timestamp: new UnixTime(1) })
     await repository.deleteAll()
 
     const results = await repository.getAll()

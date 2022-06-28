@@ -36,6 +36,11 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
+  interface BalanceStatusRow {
+    config_hash: string
+    unix_timestamp: string
+  }
+
   interface CachedDataRow {
     id: number
     unix_timestamp: string
@@ -46,6 +51,7 @@ declare module 'knex/types/tables' {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
     asset_balances: BalanceRow
+    balance_status: BalanceStatusRow
     reports: ReportRow
     report_status: ReportStatusRow
     cached_data: CachedDataRow

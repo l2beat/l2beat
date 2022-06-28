@@ -5,8 +5,8 @@ import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { createReports } from './createReports'
 import { getConfigHash } from '../getConfigHash'
+import { createReports } from './createReports'
 
 export class ReportUpdater {
   private configHash: Hash256

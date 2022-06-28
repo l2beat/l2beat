@@ -1,8 +1,8 @@
 import { Logger, mock } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
-import { createReports } from '../../../src/core/reports/createReports'
 import { getConfigHash } from '../../../src/core/getConfigHash'
+import { createReports } from '../../../src/core/reports/createReports'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../../src/peripherals/database/PriceRepository'
