@@ -1,7 +1,14 @@
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+} from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
 import { getReportsConfigHash } from '../../../src/core/reports/getReportsConfigHash'
-import { fakeBridge, fakeProject, fakeToken } from './fakes'
+import { BridgeInfo, ProjectInfo } from '../../../src/model'
 
 describe(getReportsConfigHash.name, () => {
   it('can calculate a hash of no projects', () => {
@@ -163,3 +170,35 @@ describe(getReportsConfigHash.name, () => {
     expect(hashBefore).toEqual(hashAfter)
   })
 })
+
+function fakeProject(id: string, bridges: BridgeInfo[]): ProjectInfo {
+  return {
+    name: id[0].toUpperCase() + id.slice(1),
+    projectId: ProjectId(id),
+    bridges,
+  }
+}
+
+function fakeBridge(
+  address: string,
+  sinceBlock: number,
+  tokens: TokenInfo[],
+): BridgeInfo {
+  return {
+    address: EthereumAddress('0x' + address + '0'.repeat(40 - address.length)),
+    sinceBlock,
+    tokens,
+  }
+}
+
+function fakeToken(id: string, sinceBlock: number): TokenInfo {
+  return {
+    name: 'irrelevant',
+    symbol: 'irrelevant',
+    id: AssetId(id),
+    coingeckoId: CoingeckoId('irrelevant'),
+    decimals: 18,
+    sinceBlock,
+    category: 'ether', // irrelevant
+  }
+}
