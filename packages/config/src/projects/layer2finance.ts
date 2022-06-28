@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   DATA_AVAILABILITY,
@@ -16,7 +16,7 @@ export const layer2finance: Project = {
   bridges: [
     {
       address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
-      sinceBlock: 12283778,
+      sinceTimestamp: new UnixTime(1619011215),
       tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
     },
   ],

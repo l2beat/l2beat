@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -20,12 +20,12 @@ export const starknet: Project = {
   bridges: [
     {
       address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
-      sinceBlock: 14429055,
+      sinceTimestamp: new UnixTime(1647857148),
       tokens: ['ETH'],
     },
     {
       address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
-      sinceBlock: 14742549,
+      sinceTimestamp: new UnixTime(1652101033),
       tokens: ['DAI'],
     },
   ],

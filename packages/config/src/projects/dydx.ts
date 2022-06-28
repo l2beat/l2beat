@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -19,7 +19,7 @@ export const dydx: Project = {
   bridges: [
     {
       address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
-      sinceBlock: 11834295,
+      sinceTimestamp: new UnixTime(1613033682),
       tokens: ['USDC'],
     },
   ],

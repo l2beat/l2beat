@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -18,13 +18,13 @@ export const bobanetwork: Project = {
     {
       // Proxy__OVM_L1StandardBridge
       address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
-      sinceBlock: 13012048,
+      sinceTimestamp: new UnixTime(1628793901),
       tokens: '*',
     },
     {
       // Proxy__L1LiquidityPool
       address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
-      sinceBlock: 13013879,
+      sinceTimestamp: new UnixTime(1628818577),
       tokens: '*',
     },
   ],

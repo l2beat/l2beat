@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -18,12 +18,12 @@ export const omgnetwork: Project = {
   bridges: [
     {
       address: '0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0',
-      sinceBlock: 9687270,
+      sinceTimestamp: new UnixTime(1584424507),
       tokens: ['ETH'],
     },
     {
       address: '0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B',
-      sinceBlock: 9687286,
+      sinceTimestamp: new UnixTime(1584424719),
       tokens: '*',
     },
   ],

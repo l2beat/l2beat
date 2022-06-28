@@ -58,14 +58,20 @@ export class BalanceUpdater {
       known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
     )
 
+    const blockNumberRecord =
+      await this.blockNumberRepository.findByBlockNumber(blockNumber)
+    if (!blockNumberRecord) {
+      throw new Error('Programmer error: block number not found')
+    }
+
     const missing: HeldAsset[] = []
     for (const project of this.projects) {
       for (const bridge of project.bridges) {
-        if (bridge.sinceBlock > blockNumber) {
+        if (bridge.sinceTimestamp.gt(blockNumberRecord.timestamp)) {
           continue
         }
         for (const token of bridge.tokens) {
-          if (token.sinceBlock > blockNumber) {
+          if (token.sinceTimestamp.gt(blockNumberRecord.timestamp)) {
             continue
           }
           const entry = {

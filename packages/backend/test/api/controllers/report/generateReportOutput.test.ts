@@ -31,7 +31,7 @@ describe(generateReportOutput.name, () => {
       bridges: [
         {
           address: ARBITRUM_ADDRESS,
-          sinceBlock: 0,
+          sinceTimestamp: new UnixTime(0),
           tokens: [
             mockToken(AssetId.DAI, 'DAI'),
             mockToken(AssetId.WETH, 'WETH'),
@@ -39,7 +39,7 @@ describe(generateReportOutput.name, () => {
         },
         {
           address: ARBITRUM_ADDRESS_2,
-          sinceBlock: 0,
+          sinceTimestamp: new UnixTime(0),
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
@@ -50,7 +50,7 @@ describe(generateReportOutput.name, () => {
       bridges: [
         {
           address: OPTIMISM_ADDRESS,
-          sinceBlock: 0,
+          sinceTimestamp: new UnixTime(0),
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
       ],
@@ -226,7 +226,7 @@ function mockToken(assetId: AssetId, symbol: string): TokenInfo {
     address: EthereumAddress.random(),
     symbol,
     decimals: 0,
-    sinceBlock: 0,
+    sinceTimestamp: new UnixTime(0),
     category: 'other',
   }
 }
