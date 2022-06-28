@@ -5,7 +5,7 @@ import waitForExpect from 'wait-for-expect'
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
 import { PriceUpdater } from '../../src/core/PriceUpdater'
-import { ReportUpdater } from '../../src/core/ReportUpdater'
+import { ReportUpdater } from '../../src/core/reports/ReportUpdater'
 import { SyncScheduler } from '../../src/core/SyncScheduler'
 
 describe(SyncScheduler.name, () => {

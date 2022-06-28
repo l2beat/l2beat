@@ -46,7 +46,7 @@ describe(aggregateReportsDaily.name, () => {
       technology: "Optimistic Rollup",
       bridges: [
         {
-          address: ARBITRUM_ADDRESS.toString(),
+          address: ARBITRUM_ADDRESS,
           sinceBlock: 0,
           tokens: [
             mockToken(AssetId.DAI, 'DAI'),
@@ -54,7 +54,7 @@ describe(aggregateReportsDaily.name, () => {
           ],
         },
         {
-          address: ARBITRUM_ADDRESS_2.toString(),
+          address: ARBITRUM_ADDRESS_2,
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },
@@ -66,7 +66,7 @@ describe(aggregateReportsDaily.name, () => {
       technology: "Optimistic Rollup",
       bridges: [
         {
-          address: OPTIMISM_ADDRESS.toString(),
+          address: OPTIMISM_ADDRESS,
           sinceBlock: 0,
           tokens: [mockToken(AssetId.DAI, 'DAI')],
         },

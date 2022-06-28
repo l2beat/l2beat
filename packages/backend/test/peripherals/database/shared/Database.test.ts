@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { getConfig } from '../../../src/config'
-import { Database } from '../../../src/peripherals/database/shared/Database'
+import { getConfig } from '../../../../src/config'
+import { Database } from '../../../../src/peripherals/database/shared/Database'
 
 describe(Database.name, () => {
   it('can run and rollback all migrations', async function () {

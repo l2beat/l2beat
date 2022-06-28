@@ -3,7 +3,7 @@ import { getTimestamps, JobQueue, Logger, UnixTime } from '@l2beat/common'
 import { BalanceUpdater } from './BalanceUpdater'
 import { BlockNumberUpdater } from './BlockNumberUpdater'
 import { PriceUpdater } from './PriceUpdater'
-import { ReportUpdater } from './ReportUpdater'
+import { ReportUpdater } from './reports/ReportUpdater'
 
 export class SyncScheduler {
   private jobQueue: JobQueue

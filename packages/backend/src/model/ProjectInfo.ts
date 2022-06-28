@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, EthereumAddress } from '@l2beat/common'
 import { getTokenBySymbol, Project, ProjectCategory, TokenInfo, tokenList } from '@l2beat/config'
 
 export interface ProjectInfo {
@@ -9,7 +9,7 @@ export interface ProjectInfo {
 }
 
 export interface BridgeInfo {
-  address: string
+  address: EthereumAddress
   sinceBlock: number
   tokens: TokenInfo[]
 }
@@ -19,7 +19,7 @@ export function projectToInfo(project: Project): ProjectInfo {
     name: project.name,
     projectId: project.id,
     bridges: project.bridges.map((bridge) => ({
-      address: bridge.address,
+      address: EthereumAddress(bridge.address),
       sinceBlock: bridge.sinceBlock,
       tokens:
         bridge.tokens === '*' ? tokenList : bridge.tokens.map(getTokenBySymbol),
