@@ -12,27 +12,17 @@ import { getReportsConfigHash } from '../../../src/core/reports/getReportsConfig
 import { BridgeInfo, ProjectInfo } from '../../../src/model'
 
 describe(getReportsConfigHash.name, () => {
-  const SINCE_0 = new UnixTime(0)
-  const SINCE_1 = new UnixTime(123)
-  const SINCE_2 = new UnixTime(456)
-
-  const SINCE_3 = new UnixTime(1000)
-  const SINCE_4 = new UnixTime(2000)
-
   it('hash changes if project added', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       ...projectsBefore,
       fakeProject('optimism', [
-        fakeBridge('cc', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -43,14 +33,11 @@ describe(getReportsConfigHash.name, () => {
   it('hash changes if project is removed', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
       fakeProject('optimism', [
-        fakeBridge('cc', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [projectsBefore[0]]
@@ -62,23 +49,14 @@ describe(getReportsConfigHash.name, () => {
   it('hash changes if token is added', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('usdc', SINCE_2),
-        ]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123), fakeToken('usdc', 456)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -89,17 +67,14 @@ describe(getReportsConfigHash.name, () => {
   it('hash changes if token is removed', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [fakeToken('eth', SINCE_0)]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -110,12 +85,12 @@ describe(getReportsConfigHash.name, () => {
   it('hash changes if bridge sinceBlock changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -126,12 +101,12 @@ describe(getReportsConfigHash.name, () => {
   it('hash changes if token sinceBlock changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [fakeToken('dai', SINCE_2)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 456)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -142,14 +117,11 @@ describe(getReportsConfigHash.name, () => {
   it('hash stays the same if the project order changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
       fakeProject('optimism', [
-        fakeBridge('cc', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [projectsBefore[1], projectsBefore[0]]
@@ -161,20 +133,14 @@ describe(getReportsConfigHash.name, () => {
   it('hash stays the same if the bridge order changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       fakeProject('arbitrum', [
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -185,20 +151,14 @@ describe(getReportsConfigHash.name, () => {
   it('hash stays the same if the token order changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('dai', SINCE_1),
-          fakeToken('eth', SINCE_0),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       fakeProject('arbitrum', [
-        fakeBridge('aa', SINCE_3, [
-          fakeToken('eth', SINCE_0),
-          fakeToken('dai', SINCE_1),
-        ]),
-        fakeBridge('bb', SINCE_4, [fakeToken('dai', SINCE_1)]),
+        fakeBridge('aa', 1000, [fakeToken('eth', 0), fakeToken('dai', 123)]),
+        fakeBridge('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const hashBefore = getReportsConfigHash(projectsBefore)
@@ -217,24 +177,24 @@ function fakeProject(id: string, bridges: BridgeInfo[]): ProjectInfo {
 
 function fakeBridge(
   address: string,
-  sinceTimestamp: UnixTime,
+  timestamp: number,
   tokens: TokenInfo[],
 ): BridgeInfo {
   return {
     address: EthereumAddress('0x' + address + '0'.repeat(40 - address.length)),
-    sinceTimestamp,
+    sinceTimestamp: new UnixTime(timestamp),
     tokens,
   }
 }
 
-function fakeToken(id: string, sinceTimestamp: UnixTime): TokenInfo {
+function fakeToken(id: string, timestamp: number): TokenInfo {
   return {
     name: 'irrelevant',
     symbol: 'irrelevant',
     id: AssetId(id),
     coingeckoId: CoingeckoId('irrelevant'),
     decimals: 18,
-    sinceTimestamp,
+    sinceTimestamp: new UnixTime(timestamp),
     category: 'ether', // irrelevant
   }
 }

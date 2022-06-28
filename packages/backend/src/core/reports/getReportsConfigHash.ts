@@ -13,7 +13,7 @@ export function getReportsConfigHash(projects: ProjectInfo[]): Hash256 {
           holder: address,
           holderSinceTimestamp: sinceTimestamp,
           assetId: token.id,
-          assetSinceBlock: token.sinceTimestamp,
+          assetSinceTimestamp: token.sinceTimestamp,
         })
       }
     }
