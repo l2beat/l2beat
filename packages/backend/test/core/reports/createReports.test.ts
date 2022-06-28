@@ -1,7 +1,15 @@
-import { AssetId, EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
 
 import { createReports } from '../../../src/core/reports/createReports'
+import { ProjectInfo } from '../../../src/model'
 import { BalanceRecord } from '../../../src/peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
 
@@ -44,34 +52,41 @@ describe(createReports.name, () => {
       },
     ]
 
-    const projectDetailsById = new Map([
-      [
-        ProjectId('arbitrum'),
-        {
-          bridges: [ARBITRUM_BRIDGE_ONE, ARBITRUM_BRIDGE_TWO],
-          assetIds: [AssetId.DAI, AssetId.ETH],
-        },
-      ],
-      [
-        ProjectId('optimism'),
-        {
-          bridges: [OPTIMISM_BRIDGE],
-          assetIds: [AssetId.ETH],
-        },
-      ],
-    ])
+    const projects: ProjectInfo[] = [
+      {
+        projectId: ProjectId('arbitrum'),
+        name: 'Arbitrum',
 
-    const decimalsByAssetId = new Map<AssetId, number>([
-      [AssetId.ETH, 18],
-      [AssetId.DAI, 18],
-    ])
+        bridges: [
+          {
+            address: ARBITRUM_BRIDGE_ONE,
+            sinceBlock: 0,
+            tokens: [fakeTokenInfo({ id: AssetId.DAI, decimals: 18 })],
+          },
+          {
+            address: ARBITRUM_BRIDGE_TWO,
+            sinceBlock: 0,
+            tokens: [
+              fakeTokenInfo({ id: AssetId.DAI, decimals: 18 }),
+              fakeTokenInfo({ id: AssetId.ETH, decimals: 18 }),
+            ],
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('optimism'),
+        name: 'Optimism',
+        bridges: [
+          {
+            address: OPTIMISM_BRIDGE,
+            sinceBlock: 0,
+            tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
+          },
+        ],
+      },
+    ]
 
-    const result = createReports(
-      prices,
-      balances,
-      projectDetailsById,
-      decimalsByAssetId,
-    )
+    const result = createReports(prices, balances, projects)
 
     expect(result).toEqual([
       {
@@ -101,3 +116,17 @@ describe(createReports.name, () => {
     ])
   })
 })
+
+export function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
+  return {
+    name: 'Fake',
+    id: AssetId('fake-token'),
+    coingeckoId: CoingeckoId('fake-token'),
+    symbol: 'FKT',
+    decimals: 18,
+    address: EthereumAddress.random(),
+    sinceBlock: 0,
+    category: 'other',
+    ...token,
+  }
+}

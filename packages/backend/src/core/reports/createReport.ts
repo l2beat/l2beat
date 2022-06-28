@@ -1,11 +1,12 @@
-import { ProjectId } from '@l2beat/common'
+import { AssetId, ProjectId } from '@l2beat/common'
 
-import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 
-export interface BalancePerProject
-  extends Pick<BalanceRecord, 'assetId' | 'balance'> {
+export interface BalancePerProject {
+  assetId: AssetId
+  balance: bigint
+  decimals: number
   projectId: ProjectId
 }
 
@@ -14,13 +15,12 @@ const USD_PRECISION = 2n
 
 export function createReport(
   price: PriceRecord,
-  decimals: number,
   balance: BalancePerProject,
   ethPrice: number,
 ): ReportRecord {
   const { balanceUsd, balanceEth } = convertBalance(
     price.priceUsd,
-    decimals,
+    balance.decimals,
     balance.balance,
     ethPrice,
   )

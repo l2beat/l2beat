@@ -16,11 +16,11 @@ describe(createReport.name, () => {
         timestamp,
         assetId: AssetId.ETH,
       },
-      6,
       {
         projectId: ProjectId('arbitrum'),
         assetId: AssetId.ETH,
         balance: 22123456n,
+        decimals: 6,
       },
       1000,
     )
@@ -43,11 +43,11 @@ describe(createReport.name, () => {
         timestamp,
         assetId: AssetId.ETH,
       },
-      18,
       {
         projectId: ProjectId('arbitrum'),
         assetId: AssetId.ETH,
         balance: 22123456789123456789n,
+        decimals: 18,
       },
       1000,
     )

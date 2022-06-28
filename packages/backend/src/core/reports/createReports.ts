@@ -1,5 +1,6 @@
-import { AssetId, EthereumAddress, ProjectId } from '@l2beat/common'
+import { AssetId, EthereumAddress } from '@l2beat/common'
 
+import { ProjectInfo } from '../../model'
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
@@ -13,8 +14,7 @@ export interface ProjectDetails {
 export function createReports(
   prices: PriceRecord[],
   balances: BalanceRecord[],
-  projectDetailsById: Map<ProjectId, ProjectDetails>,
-  decimalsByAssetId: Map<AssetId, number>,
+  projects: ProjectInfo[],
 ): ReportRecord[] {
   const priceMap = new Map(prices.map((p) => [p.assetId, p]))
   const ethPrice = priceMap.get(AssetId.ETH)?.priceUsd
@@ -23,39 +23,39 @@ export function createReports(
     return []
   }
 
-  const balancesPerProject = aggregateBalancesPerProject(
-    projectDetailsById,
-    balances,
-  )
+  const balancesPerProject = aggregateBalancesPerProject(projects, balances)
 
   const reports: ReportRecord[] = []
   for (const balance of balancesPerProject) {
-    const decimals = decimalsByAssetId.get(balance.assetId)
-    if (decimals === undefined) {
-      continue
-    }
     const price = priceMap.get(balance.assetId)
     if (!price) {
       continue
     }
-
-    reports.push(createReport(price, decimals, balance, ethPrice))
+    reports.push(createReport(price, balance, ethPrice))
   }
 
   return reports
 }
 
 export function aggregateBalancesPerProject(
-  projects: Map<ProjectId, ProjectDetails>,
+  projects: ProjectInfo[],
   balances: BalanceRecord[],
 ): BalancePerProject[] {
   const balancesPerProject = []
-  for (const [projectId, project] of projects) {
+
+  for (const { projectId, bridges } of projects) {
     const projectBalances = balances.filter((balance) =>
-      project.bridges.some((bridge) => bridge === balance.holderAddress),
+      bridges.some((bridge) => bridge.address === balance.holderAddress),
     )
 
-    for (const assetId of project.assetIds) {
+    const assets = new Map<AssetId, number>()
+    for (const bridge of bridges) {
+      for (const token of bridge.tokens) {
+        assets.set(token.id, token.decimals)
+      }
+    }
+
+    for (const [assetId, decimals] of assets) {
       const assetBalances = projectBalances.filter(
         (balance) => balance.assetId === assetId,
       )
@@ -64,8 +64,10 @@ export function aggregateBalancesPerProject(
         projectId,
         balance: assetBalances.reduce((acc, { balance }) => acc + balance, 0n),
         assetId: assetId,
+        decimals,
       })
     }
   }
+
   return balancesPerProject
 }
