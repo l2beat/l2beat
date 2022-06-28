@@ -14,3 +14,12 @@ AssetId.DAI = AssetId('dai-dai-stablecoin')
 AssetId.USDT = AssetId('usdt-tether-usd')
 AssetId.USDC = AssetId('usdc-usd-coin')
 AssetId.ETH = AssetId('eth-ether')
+
+AssetId.fake = function fake(name?: string) {
+  if (name) {
+    return AssetId(`fake-${name}`)
+  }
+  const letters = 'abcdefghijklmnopqrstuvwxyz'
+  const letter = () => letters[Math.floor(Math.random() * letters.length)]
+  return AssetId('fake-' + Array.from({ length: 10 }).map(letter).join(''))
+}
