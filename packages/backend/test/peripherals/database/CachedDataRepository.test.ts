@@ -3,7 +3,7 @@ import { expect } from 'earljs'
 
 import { ReportOutput } from '../../../src/api/controllers/report/generateReportOutput'
 import { CachedDataRepository } from '../../../src/peripherals/database/CachedDataRepository'
-import { setupDatabaseTestSuite } from './setup'
+import { setupDatabaseTestSuite } from './shared/setup'
 
 const mockReport: ReportOutput = {
   aggregate: {

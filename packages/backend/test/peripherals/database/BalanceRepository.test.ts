@@ -6,7 +6,7 @@ import {
   BalanceRepository,
 } from '../../../src/peripherals/database/BalanceRepository'
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
-import { setupDatabaseTestSuite } from './setup'
+import { setupDatabaseTestSuite } from './shared/setup'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockBalance = (

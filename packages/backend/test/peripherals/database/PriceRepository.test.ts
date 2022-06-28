@@ -5,7 +5,7 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../../../src/peripherals/database/PriceRepository'
-import { setupDatabaseTestSuite } from './setup'
+import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(PriceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
