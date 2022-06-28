@@ -6,19 +6,19 @@ import {
   UnixTime,
 } from '@l2beat/common'
 
-import { ProjectInfo, Token } from '../model'
+import { ProjectInfo, Token } from '../../model'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../peripherals/database/BalanceRepository'
+} from '../../peripherals/database/BalanceRepository'
 import {
   PriceRecord,
   PriceRepository,
-} from '../peripherals/database/PriceRepository'
+} from '../../peripherals/database/PriceRepository'
 import {
   ReportRecord,
   ReportRepository,
-} from '../peripherals/database/ReportRepository'
+} from '../../peripherals/database/ReportRepository'
 
 interface BalancePerProject extends Pick<BalanceRecord, 'assetId' | 'balance'> {
   projectId: ProjectId
@@ -47,7 +47,7 @@ export class ReportUpdater {
 
     for (const { projectId, bridges } of projects) {
       this.projectDetailsById.set(projectId, {
-        bridges: bridges.map((b) => EthereumAddress.unsafe(b.address)),
+        bridges: bridges.map((b) => b.address),
         assetIds: [
           // Set used to deduplicate AssetIds
           ...new Set(bridges.flatMap((b) => b.tokens.map((t) => t.id))),

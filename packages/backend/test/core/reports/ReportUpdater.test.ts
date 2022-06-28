@@ -15,18 +15,18 @@ import {
   createReport,
   getBigIntPrice,
   ReportUpdater,
-} from '../../src/core/ReportUpdater'
-import { ProjectInfo, Token } from '../../src/model'
+} from '../../../src/core/reports/ReportUpdater'
+import { ProjectInfo, Token } from '../../../src/model'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../../src/peripherals/database/BalanceRepository'
+} from '../../../src/peripherals/database/BalanceRepository'
 import {
   PriceRecord,
   PriceRepository,
-} from '../../src/peripherals/database/PriceRepository'
-import { ReportRepository } from '../../src/peripherals/database/ReportRepository'
-import { fakeBalance } from '../fakes'
+} from '../../../src/peripherals/database/PriceRepository'
+import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
+import { fakeBalance } from '../../fakes'
 
 describe(ReportUpdater.name, () => {
   const START = UnixTime.now().toStartOf('hour')
@@ -47,7 +47,7 @@ describe(ReportUpdater.name, () => {
       name: 'Arbitrum',
       bridges: [
         {
-          address: ARBITRUM_ADDRESS.toString(),
+          address: ARBITRUM_ADDRESS,
           sinceBlock: 0,
           tokens: [
             mockToken(MOCK_ASSET, 'DAI'),
@@ -61,7 +61,7 @@ describe(ReportUpdater.name, () => {
       name: 'Optimism',
       bridges: [
         {
-          address: OPTIMISM_ADDRESS.toString(),
+          address: OPTIMISM_ADDRESS,
           sinceBlock: 0,
           tokens: [mockToken(MOCK_ASSET, 'DAI')],
         },

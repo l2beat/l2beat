@@ -68,9 +68,8 @@ export class BalanceUpdater {
           if (token.sinceBlock > blockNumber) {
             continue
           }
-          // TODO: make bridge.address EthereumAddress
           const entry = {
-            holder: EthereumAddress(bridge.address),
+            holder: bridge.address,
             assetId: token.id,
           }
           if (
