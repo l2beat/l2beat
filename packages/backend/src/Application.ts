@@ -12,7 +12,7 @@ import { Config } from './config'
 import { BalanceUpdater } from './core/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
-import { ReportUpdater } from './core/ReportUpdater'
+import { ReportUpdater } from './core/reports/ReportUpdater'
 import { SyncScheduler } from './core/SyncScheduler'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -20,6 +20,7 @@ import { BlockNumberRepository } from './peripherals/database/BlockNumberReposit
 import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
+import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
@@ -40,6 +41,7 @@ export class Application {
     const priceRepository = new PriceRepository(database, logger)
     const balanceRepository = new BalanceRepository(database, logger)
     const reportRepository = new ReportRepository(database, logger)
+    const reportStatusRepository = new ReportStatusRepository(database, logger)
     const cachedDataRepository = new CachedDataRepository(database, logger)
 
     const http = new HttpClient()
@@ -90,8 +92,8 @@ export class Application {
       priceRepository,
       balanceRepository,
       reportRepository,
+      reportStatusRepository,
       config.projects,
-      config.tokens,
       logger,
     )
 

@@ -4,7 +4,7 @@ import { expect } from 'earljs'
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { fakeBalance, fakeReport } from '../../fakes'
-import { setupDatabaseTestSuite } from './setup'
+import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(ReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()

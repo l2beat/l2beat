@@ -2,7 +2,7 @@ import { Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
-import { setupDatabaseTestSuite } from './setup'
+import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(BlockNumberRepository.name, () => {
   const { database } = setupDatabaseTestSuite()

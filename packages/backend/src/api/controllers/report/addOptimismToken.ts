@@ -1,6 +1,6 @@
 import { AssetId, UnixTime } from '@l2beat/common'
 
-import { convertBalance } from '../../../core/ReportUpdater'
+import { convertBalance } from '../../../core/reports/createReport'
 import {
   PriceRecord,
   PriceRepository,

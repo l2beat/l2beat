@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -43,7 +43,7 @@ export class StatusController {
         name,
         address,
         tokens:
-          holderLatest.get(EthereumAddress(address))?.map((latest) => ({
+          holderLatest.get(address)?.map((latest) => ({
             assetId: latest.assetId,
             balance: latest.balance.toString(),
             timestamp: unixTimeToString(latest.timestamp),

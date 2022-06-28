@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/common'
 
-import { getConfig } from '../../../src/config'
-import { Database } from '../../../src/peripherals/database/shared/Database'
+import { getConfig } from '../../../../src/config'
+import { Database } from '../../../../src/peripherals/database/shared/Database'
 
 export function setupDatabaseTestSuite() {
   const config = getConfig('test')

@@ -34,7 +34,7 @@ describe(ReportController.name, () => {
         name: 'Arbitrum',
         bridges: [
           {
-            address: ARBITRUM_ADDRESS.toString(),
+            address: ARBITRUM_ADDRESS,
             sinceBlock: 0,
             tokens: [
               mockToken(AssetId.DAI, 'DAI'),
@@ -42,7 +42,7 @@ describe(ReportController.name, () => {
             ],
           },
           {
-            address: ARBITRUM_ADDRESS_2.toString(),
+            address: ARBITRUM_ADDRESS_2,
             sinceBlock: 0,
             tokens: [mockToken(AssetId.DAI, 'DAI')],
           },
@@ -53,7 +53,7 @@ describe(ReportController.name, () => {
         name: 'Optimism',
         bridges: [
           {
-            address: OPTIMISM_ADDRESS.toString(),
+            address: OPTIMISM_ADDRESS,
             sinceBlock: 0,
             tokens: [mockToken(AssetId.DAI, 'DAI')],
           },

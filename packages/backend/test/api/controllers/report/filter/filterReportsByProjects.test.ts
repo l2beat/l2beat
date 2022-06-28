@@ -50,7 +50,7 @@ describe(filterReportsByProjects.name, () => {
       projectId: ARBITRUM,
       bridges: [
         {
-          address: ARBITRUM_ADDRESS.toString(),
+          address: ARBITRUM_ADDRESS,
           sinceBlock: 0,
           tokens: [
             mockToken(AssetId.DAI, 0),
@@ -64,7 +64,7 @@ describe(filterReportsByProjects.name, () => {
       projectId: OPTIMISM,
       bridges: [
         {
-          address: OPTIMISM_ADDRESS.toString(),
+          address: OPTIMISM_ADDRESS,
           sinceBlock: Number(START + 1000n),
           tokens: [],
         },

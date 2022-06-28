@@ -49,7 +49,7 @@ describe(BalanceUpdater.name, () => {
       projectId: ProjectId('arbitrum'),
       bridges: [
         {
-          address: HOLDER_A.toString(),
+          address: HOLDER_A,
           sinceBlock: Number(START_BLOCK_NUMBER - 100n),
           tokens: [
             mockToken(ASSET_A, 0),
@@ -64,7 +64,7 @@ describe(BalanceUpdater.name, () => {
       projectId: ProjectId('zk-swap'),
       bridges: [
         {
-          address: HOLDER_B.toString(),
+          address: HOLDER_B,
           sinceBlock: Number(START_BLOCK_NUMBER - 100n),
           tokens: [
             mockToken(ASSET_B, 0),
@@ -363,7 +363,7 @@ describe(BalanceUpdater.name, () => {
           projectId: ProjectId('arbitrum'),
           bridges: [
             {
-              address: HOLDER_A.toString(),
+              address: HOLDER_A,
               sinceBlock: Number(START_BLOCK_NUMBER + 1000n),
               tokens: [mockToken(ASSET_A, 0), mockToken(ASSET_B, 800)],
             },
@@ -393,7 +393,7 @@ describe(BalanceUpdater.name, () => {
           projectId: ProjectId('arbitrum'),
           bridges: [
             {
-              address: HOLDER_A.toString(),
+              address: HOLDER_A,
               sinceBlock: 999,
               tokens: [
                 mockToken(ASSET_A, 0),
