@@ -27,8 +27,6 @@ describe(BalanceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new BalanceRepository(database, Logger.SILENT)
 
-  const START_BLOCK_NUMBER = 123456n
-
   const HOLDER_A = EthereumAddress.random()
   const HOLDER_B = EthereumAddress.random()
   const ASSET_1 = AssetId('dai-dai-stablecoin')
@@ -44,8 +42,8 @@ describe(BalanceRepository.name, () => {
     await repository.addOrUpdateMany(DATA)
   })
 
-  describe(BalanceRepository.prototype.getByBlock.name, () => {
-    it('known block', async () => {
+  describe(BalanceRepository.prototype.getByTimestamp.name, () => {
+    it('known timestamp', async () => {
       const additionalData = [
         mockBalance(HOLDER_A, 0, AssetId('asset-a'), BALANCE),
         mockBalance(HOLDER_A, 0, AssetId('asset-b'), BALANCE),
@@ -53,15 +51,77 @@ describe(BalanceRepository.name, () => {
       ]
       await repository.addOrUpdateMany(additionalData)
 
-      const result = await repository.getByBlock(START_BLOCK_NUMBER)
+      const result = await repository.getByTimestamp(START)
 
       expect(result).toBeAnArrayWith(DATA[0], ...additionalData)
       expect(result).toBeAnArrayOfLength(4)
     })
 
-    it('unknown block', async () => {
-      const result = await repository.getByBlock(START_BLOCK_NUMBER + 1000n)
+    it('unknown timestamp', async () => {
+      const result = await repository.getByTimestamp(START.add(1, 'days'))
       expect(result).toEqual([])
+    })
+
+    it('one project one asset', async () => {
+      await repository.deleteAll()
+      const data = [
+        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
+      ]
+
+      await repository.addOrUpdateMany(data)
+
+      const result = await repository.getByTimestamp(START)
+      expect(result).toEqual([
+        {
+          holderAddress: HOLDER_A,
+          timestamp: START,
+          assetId: ASSET_1,
+          balance: 1n,
+        },
+      ])
+    })
+
+    it('many projects many assets', async () => {
+      await repository.deleteAll()
+      const data = [
+        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
+
+        mockBalance(HOLDER_A, 0, ASSET_2, 3000n),
+        mockBalance(HOLDER_A, 1, ASSET_2, 1000n),
+
+        mockBalance(HOLDER_B, 0, ASSET_2, 1n),
+        mockBalance(HOLDER_B, 1, ASSET_2, 3n),
+        mockBalance(HOLDER_B, 2, ASSET_2, 5n),
+      ]
+
+      await repository.addOrUpdateMany(data)
+
+      const result = await repository.getByTimestamp(START)
+      expect(result).toBeAnArrayOfLength(3)
+      expect(result).toBeAnArrayWith(
+        {
+          holderAddress: HOLDER_A,
+          timestamp: START,
+          assetId: ASSET_1,
+          balance: 1n,
+        },
+        {
+          holderAddress: HOLDER_A,
+          timestamp: START,
+          assetId: ASSET_2,
+          balance: 3000n,
+        },
+        {
+          holderAddress: HOLDER_B,
+          timestamp: START,
+          assetId: ASSET_2,
+          balance: 1n,
+        },
+      )
     })
   })
 
@@ -208,7 +268,7 @@ describe(BalanceRepository.name, () => {
       DATA.map(({ timestamp }, i) =>
         blockNumberRepository.add({
           timestamp,
-          blockNumber: START_BLOCK_NUMBER + BigInt(i),
+          blockNumber: 123456n + BigInt(i),
         }),
       ),
     )
@@ -236,69 +296,5 @@ describe(BalanceRepository.name, () => {
         ],
       ]),
     )
-  })
-
-  describe(BalanceRepository.prototype.getByTimestamp.name, () => {
-    it('one project one asset', async () => {
-      await repository.deleteAll()
-      const data = [
-        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
-      ]
-
-      await repository.addOrUpdateMany(data)
-
-      const result = await repository.getByTimestamp(START)
-      expect(result).toEqual([
-        {
-          holderAddress: HOLDER_A,
-          timestamp: START,
-          assetId: ASSET_1,
-          balance: 1n,
-        },
-      ])
-    })
-
-    it('many projects many assets', async () => {
-      await repository.deleteAll()
-      const data = [
-        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
-
-        mockBalance(HOLDER_A, 0, ASSET_2, 3000n),
-        mockBalance(HOLDER_A, 1, ASSET_2, 1000n),
-
-        mockBalance(HOLDER_B, 0, ASSET_2, 1n),
-        mockBalance(HOLDER_B, 1, ASSET_2, 3n),
-        mockBalance(HOLDER_B, 2, ASSET_2, 5n),
-      ]
-
-      await repository.addOrUpdateMany(data)
-
-      const result = await repository.getByTimestamp(START)
-      expect(result).toBeAnArrayOfLength(3)
-      expect(result).toBeAnArrayWith(
-        {
-          holderAddress: HOLDER_A,
-          timestamp: START,
-          assetId: ASSET_1,
-          balance: 1n,
-        },
-        {
-          holderAddress: HOLDER_A,
-          timestamp: START,
-          assetId: ASSET_2,
-          balance: 3000n,
-        },
-        {
-          holderAddress: HOLDER_B,
-          timestamp: START,
-          assetId: ASSET_2,
-          balance: 1n,
-        },
-      )
-    })
   })
 })

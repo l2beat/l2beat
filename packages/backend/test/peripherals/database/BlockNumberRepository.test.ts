@@ -25,17 +25,6 @@ describe(BlockNumberRepository.name, () => {
     expect(results.length).toEqual(2)
   })
 
-  it('can find by block number', async () => {
-    const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
-    const itemB = { blockNumber: 7777n, timestamp: new UnixTime(222222) }
-
-    await repository.add(itemA)
-    await repository.add(itemB)
-
-    const result = await repository.findByBlockNumber(1234n)
-    expect(result).toEqual(itemA)
-  })
-
   it('can find by timestamp', async () => {
     const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
     const itemB = { blockNumber: 7777n, timestamp: new UnixTime(222222) }

@@ -40,16 +40,6 @@ export class BlockNumberRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async findByBlockNumber(
-    blockNumber: bigint,
-  ): Promise<BlockNumberRecord | undefined> {
-    const knex = await this.knex()
-    const row = await knex('block_numbers')
-      .where('block_number', '=', blockNumber.toString())
-      .first()
-    return row ? toRecord(row) : undefined
-  }
-
   async findByTimestamp(
     timestamp: UnixTime,
   ): Promise<BlockNumberRecord | undefined> {
