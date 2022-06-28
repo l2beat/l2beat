@@ -1,12 +1,12 @@
 import { Hash256, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { ReportProgressRepository } from '../../../src/peripherals/database/ReportProgressRepository'
+import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
-describe(ReportProgressRepository.name, () => {
+describe(ReportStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new ReportProgressRepository(database, Logger.SILENT)
+  const repository = new ReportStatusRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()

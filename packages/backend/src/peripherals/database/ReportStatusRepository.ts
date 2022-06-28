@@ -3,7 +3,7 @@ import { Hash256, Logger, UnixTime } from '@l2beat/common'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
-export class ReportProgressRepository extends BaseRepository {
+export class ReportStatusRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -18,7 +18,7 @@ export class ReportProgressRepository extends BaseRepository {
 
   async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {
     const knex = await this.knex()
-    const rows = await knex('report_progress')
+    const rows = await knex('report_status')
       .where({ config_hash: configHash.toString() })
       .select('unix_timestamp')
 
@@ -30,7 +30,7 @@ export class ReportProgressRepository extends BaseRepository {
     timestamp: UnixTime
   }): Promise<Hash256> {
     const knex = await this.knex()
-    await knex('report_progress')
+    await knex('report_status')
       .insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toString(),
@@ -42,6 +42,6 @@ export class ReportProgressRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('report_progress').delete()
+    return await knex('report_status').delete()
   }
 }

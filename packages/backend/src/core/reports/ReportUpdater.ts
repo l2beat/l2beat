@@ -3,8 +3,8 @@ import { Hash256, Logger, UnixTime } from '@l2beat/common'
 import { ProjectInfo } from '../../model'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
-import { ReportProgressRepository } from '../../peripherals/database/ReportProgressRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { createReports } from './createReports'
 import { getReportsConfigHash } from './getReportsConfigHash'
 
@@ -15,7 +15,7 @@ export class ReportUpdater {
     private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
     private reportRepository: ReportRepository,
-    private reportProgressRepository: ReportProgressRepository,
+    private reportStatusRepository: ReportStatusRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
@@ -25,7 +25,7 @@ export class ReportUpdater {
 
   async update(timestamps: UnixTime[]) {
     this.logger.info('Update started', { timestamps: timestamps.length })
-    const known = await this.reportProgressRepository.getByConfigHash(
+    const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
     )
     const knownSet = new Set(known.map((x) => x.toNumber()))
@@ -45,7 +45,7 @@ export class ReportUpdater {
     ])
     const reports = createReports(prices, balances, this.projects)
     await this.reportRepository.addOrUpdateMany(reports)
-    await this.reportProgressRepository.add({
+    await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
     })

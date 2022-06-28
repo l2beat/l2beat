@@ -19,8 +19,8 @@ import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
-import { ReportProgressRepository } from './peripherals/database/ReportProgressRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
+import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
@@ -41,10 +41,7 @@ export class Application {
     const priceRepository = new PriceRepository(database, logger)
     const balanceRepository = new BalanceRepository(database, logger)
     const reportRepository = new ReportRepository(database, logger)
-    const reportProgressRepository = new ReportProgressRepository(
-      database,
-      logger,
-    )
+    const reportStatusRepository = new ReportStatusRepository(database, logger)
     const cachedDataRepository = new CachedDataRepository(database, logger)
 
     const http = new HttpClient()
@@ -95,7 +92,7 @@ export class Application {
       priceRepository,
       balanceRepository,
       reportRepository,
-      reportProgressRepository,
+      reportStatusRepository,
       config.projects,
       logger,
     )

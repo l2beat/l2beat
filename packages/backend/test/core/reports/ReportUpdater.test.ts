@@ -6,8 +6,8 @@ import { getReportsConfigHash } from '../../../src/core/reports/getReportsConfig
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../../src/peripherals/database/PriceRepository'
-import { ReportProgressRepository } from '../../../src/peripherals/database/ReportProgressRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
 import { BALANCES, NOW, PRICES, PROJECTS } from './fakes'
 
 describe(ReportUpdater.name, () => {
@@ -34,7 +34,7 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
-      const reportProgressRepository = mock<ReportProgressRepository>({
+      const reportStatusRepository = mock<ReportStatusRepository>({
         getByConfigHash: async () => [],
         add: async ({ configHash }) => configHash,
       })
@@ -43,7 +43,7 @@ describe(ReportUpdater.name, () => {
         priceRepository,
         balanceRepository,
         reportRepository,
-        reportProgressRepository,
+        reportStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -51,7 +51,7 @@ describe(ReportUpdater.name, () => {
       await reportUpdater.update([NOW, NOW.add(1, 'hours')])
 
       const configHash = getReportsConfigHash(PROJECTS)
-      expect(reportProgressRepository.add).toHaveBeenCalledExactlyWith([
+      expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
         [{ configHash, timestamp: NOW }],
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
       ])
@@ -75,7 +75,7 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
-      const reportProgressRepository = mock<ReportProgressRepository>({
+      const reportStatusRepository = mock<ReportStatusRepository>({
         getByConfigHash: async () => [
           NOW.add(-1, 'hours'),
           NOW.add(2, 'hours'),
@@ -87,7 +87,7 @@ describe(ReportUpdater.name, () => {
         priceRepository,
         balanceRepository,
         reportRepository,
-        reportProgressRepository,
+        reportStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -100,7 +100,7 @@ describe(ReportUpdater.name, () => {
       ])
 
       const configHash = getReportsConfigHash(PROJECTS)
-      expect(reportProgressRepository.add).toHaveBeenCalledExactlyWith([
+      expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
         [{ configHash, timestamp: NOW }],
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
       ])
