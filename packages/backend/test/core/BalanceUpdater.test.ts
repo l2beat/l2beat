@@ -80,8 +80,8 @@ describe(BalanceUpdater.name, () => {
     },
   ]
 
-  const fakeFindByBlockNumber = async (blockNumber: bigint) => {
-    return blockNumber === START_BLOCK_NUMBER
+  const fakeFindByTimestamp = async (timestamp: UnixTime) => {
+    return timestamp.equals(START)
       ? {
           timestamp: START,
           blockNumber: START_BLOCK_NUMBER,
@@ -93,7 +93,7 @@ describe(BalanceUpdater.name, () => {
   }
 
   const balanceRepository = mock<BalanceRepository>({
-    getByBlock: mockFn().returns([]),
+    getByTimestamp: mockFn().returns([]),
     addOrUpdateMany: mockFn().returns([]),
   })
 
@@ -102,7 +102,7 @@ describe(BalanceUpdater.name, () => {
   })
 
   const blockNumberRepository = mock<BlockNumberRepository>({
-    findByBlockNumber: fakeFindByBlockNumber,
+    findByTimestamp: fakeFindByTimestamp,
   })
   const balanceUpdater = new BalanceUpdater(
     multicall,
@@ -115,7 +115,7 @@ describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.update.name, () => {
     it('integration test', async () => {
       const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn()
+        getByTimestamp: mockFn()
           .returnsOnce([
             {
               timestamp: START,
@@ -167,9 +167,9 @@ describe(BalanceUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
+      const timestamp = [START, AFTER]
 
-      await balanceUpdater.update(blocks)
+      await balanceUpdater.update(timestamp)
 
       expect(multicall.multicall).toHaveBeenCalledExactlyWith([
         [
@@ -253,10 +253,10 @@ describe(BalanceUpdater.name, () => {
     })
 
     it('skip processed blocks', async () => {
-      const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
+      const timestamps = [START, AFTER]
 
-      await balanceUpdater.update(blocks)
-      await balanceUpdater.update(blocks)
+      await balanceUpdater.update(timestamps)
+      await balanceUpdater.update(timestamps)
 
       expect(multicall.multicall.calls.length).toEqual(0)
 
@@ -264,7 +264,7 @@ describe(BalanceUpdater.name, () => {
     })
   })
 
-  describe(BalanceUpdater.prototype.getMissingDataByBlock.name, () => {
+  describe(BalanceUpdater.prototype.getMissingData.name, () => {
     it('no data in DB', async () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
@@ -274,9 +274,7 @@ describe(BalanceUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toEqual([
         {
@@ -308,7 +306,7 @@ describe(BalanceUpdater.name, () => {
 
     it('finds missing data', async () => {
       const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn().returns([
+        getByTimestamp: mockFn().returns([
           {
             blockNumber: START_BLOCK_NUMBER,
             holderAddress: HOLDER_A,
@@ -332,9 +330,7 @@ describe(BalanceUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toBeAnArrayWith(
         {
@@ -383,9 +379,7 @@ describe(BalanceUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toEqual([])
     })
@@ -413,9 +407,7 @@ describe(BalanceUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toEqual([
         {
@@ -452,7 +444,7 @@ describe(BalanceUpdater.name, () => {
       })
 
       const blockNumberRepository = mock<BlockNumberRepository>({
-        findByBlockNumber: fakeFindByBlockNumber,
+        findByTimestamp: fakeFindByTimestamp,
       })
 
       const balanceUpdater = new BalanceUpdater(
@@ -469,10 +461,7 @@ describe(BalanceUpdater.name, () => {
         { holder: HOLDER_C, assetId: ASSET_C },
       ]
 
-      const result = await balanceUpdater.fetchBalances(
-        metadata,
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.fetchBalances(metadata, START)
 
       expect(result).toEqual([
         {

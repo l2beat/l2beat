@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
@@ -15,8 +15,6 @@ interface HeldAsset {
 }
 
 export class BalanceUpdater {
-  private processedBlocks = new Set<bigint>()
-
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
@@ -27,51 +25,41 @@ export class BalanceUpdater {
     this.logger = this.logger.for(this)
   }
 
-  async update(blocks: bigint[]) {
-    const unprocessed = blocks.filter((x) => !this.processedBlocks.has(x))
-    this.logger.info('Update started', { blocks: unprocessed.length })
-    for (const blockNumber of unprocessed) {
-      const missing = await this.getMissingDataByBlock(blockNumber)
+  async update(timestamps: UnixTime[]) {
+    // TODO: filter processed timestamps
+    this.logger.info('Update started', { timestamps: timestamps.length })
+    for (const timestamp of timestamps) {
+      const missing = await this.getMissingData(timestamp)
 
       if (missing.length > 0) {
-        const balances = await this.fetchBalances(missing, blockNumber)
+        const balances = await this.fetchBalances(missing, timestamp)
         await this.balanceRepository.addOrUpdateMany(balances)
         this.logger.info('Updated balances', {
-          blockNumber: Number(blockNumber),
+          timestamp: timestamp.toNumber(),
         })
       } else {
         this.logger.info('Skipped updating balances', {
-          blockNumber: Number(blockNumber),
+          timestamp: timestamp.toNumber(),
         })
       }
-
-      this.processedBlocks.add(blockNumber)
     }
-    this.logger.info('Update completed', { blocks: unprocessed.length })
+    this.logger.info('Update completed', { timestamps: timestamps.length })
   }
 
-  async getMissingDataByBlock(blockNumber: bigint): Promise<HeldAsset[]> {
-    const known: BalanceRecord[] = await this.balanceRepository.getByBlock(
-      blockNumber,
-    )
+  async getMissingData(timestamp: UnixTime): Promise<HeldAsset[]> {
+    const known = await this.balanceRepository.getByTimestamp(timestamp)
     const knownSet = new Set(
       known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
     )
 
-    const blockNumberRecord =
-      await this.blockNumberRepository.findByBlockNumber(blockNumber)
-    if (!blockNumberRecord) {
-      throw new Error('Programmer error: block number not found')
-    }
-
     const missing: HeldAsset[] = []
     for (const project of this.projects) {
       for (const bridge of project.bridges) {
-        if (bridge.sinceTimestamp.gt(blockNumberRecord.timestamp)) {
+        if (bridge.sinceTimestamp.gt(timestamp)) {
           continue
         }
         for (const token of bridge.tokens) {
-          if (token.sinceTimestamp.gt(blockNumberRecord.timestamp)) {
+          if (token.sinceTimestamp.gt(timestamp)) {
             continue
           }
           const entry = {
@@ -92,30 +80,29 @@ export class BalanceUpdater {
 
   async fetchBalances(
     missingData: HeldAsset[],
-    blockNumber: bigint,
+    timestamp: UnixTime,
   ): Promise<BalanceRecord[]> {
+    const blockNumberRecord = await this.blockNumberRepository.findByTimestamp(
+      timestamp,
+    )
+    if (!blockNumberRecord) {
+      throw new Error('Programmer error: No timestamp for this block number')
+    }
+
     const calls = missingData.map((m) =>
       BalanceCall.encode(m.holder, m.assetId),
     )
 
     const multicallResponses = await this.multicall.multicall(
       calls,
-      blockNumber,
+      blockNumberRecord.blockNumber,
     )
-
-    const blockNumberRecord =
-      await this.blockNumberRepository.findByBlockNumber(blockNumber)
-    if (!blockNumberRecord) {
-      throw new Error(
-        'Programmer error: can not find timestamp for this block number',
-      )
-    }
 
     return multicallResponses.map((res, i) => ({
       holderAddress: missingData[i].holder,
       assetId: missingData[i].assetId,
       balance: BalanceCall.decodeOr(res, 0n),
-      timestamp: blockNumberRecord.timestamp,
+      timestamp,
     }))
   }
 }

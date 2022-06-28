@@ -47,9 +47,9 @@ export class SyncScheduler {
 
     this.logger.info('Update started', { timestamps: timestamps.length })
 
-    const blocks: bigint[] = await this.blockUpdater.update(timestamps)
+    await this.blockUpdater.update(timestamps)
     await this.priceUpdater.update(timestamps)
-    await this.balanceUpdater.update(blocks)
+    await this.balanceUpdater.update(timestamps)
     await this.reportUpdater.update(timestamps)
 
     this.logger.info('Update completed', { timestamps: timestamps.length })

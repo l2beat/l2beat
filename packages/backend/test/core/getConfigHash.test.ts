@@ -29,7 +29,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
-
   it('hash changes if project is removed', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -45,7 +44,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
-
   it('hash changes if token is added', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -63,7 +61,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
-
   it('hash changes if token is removed', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -81,7 +78,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
-
   it('hash changes if bridge sinceBlock changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -97,7 +93,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
-
   it('hash changes if token sinceBlock changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -113,7 +108,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
-
   it('hash stays the same if the project order changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -129,7 +123,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
-
   it('hash stays the same if the bridge order changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -147,7 +140,6 @@ describe(getConfigHash.name, () => {
     const hashAfter = getConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
-
   it('hash stays the same if the token order changes', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [
@@ -166,7 +158,6 @@ describe(getConfigHash.name, () => {
     expect(hashBefore).toEqual(hashAfter)
   })
 })
-
 function fakeProject(id: string, bridges: BridgeInfo[]): ProjectInfo {
   return {
     name: id[0].toUpperCase() + id.slice(1),
