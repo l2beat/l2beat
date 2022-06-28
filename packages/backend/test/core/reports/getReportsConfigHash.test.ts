@@ -11,11 +11,6 @@ import { getReportsConfigHash } from '../../../src/core/reports/getReportsConfig
 import { BridgeInfo, ProjectInfo } from '../../../src/model'
 
 describe(getReportsConfigHash.name, () => {
-  it('can calculate a hash of no projects', () => {
-    const hash = getReportsConfigHash([])
-    expect(hash).toEqual(expect.stringMatching(/^[\da-f]{64}$/))
-  })
-
   it('hash changes if project added', () => {
     const projectsBefore = [
       fakeProject('arbitrum', [

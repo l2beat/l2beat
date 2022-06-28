@@ -1,29 +1,39 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { Hash256, Logger, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../model'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
+import { ReportProgressRepository } from '../../peripherals/database/ReportProgressRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { createReports } from './createReports'
+import { getReportsConfigHash } from './getReportsConfigHash'
 
 export class ReportUpdater {
-  private lastProcessed = new UnixTime(0)
+  private configHash: Hash256
 
   constructor(
     private priceRepository: PriceRepository,
     private balanceRepository: BalanceRepository,
     private reportRepository: ReportRepository,
+    private reportProgressRepository: ReportProgressRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+    this.configHash = getReportsConfigHash(projects)
   }
 
   async update(timestamps: UnixTime[]) {
-    timestamps = timestamps.filter((x) => x.gt(this.lastProcessed))
     this.logger.info('Update started', { timestamps: timestamps.length })
+    const known = await this.reportProgressRepository.getByConfigHash(
+      this.configHash,
+    )
+    const knownSet = new Set(known.map((x) => x.toNumber()))
+
     for (const timestamp of timestamps) {
-      await this.updateForTimestamp(timestamp)
+      if (!knownSet.has(timestamp.toNumber())) {
+        await this.updateForTimestamp(timestamp)
+      }
     }
     this.logger.info('Update completed', { timestamps: timestamps.length })
   }
@@ -35,7 +45,10 @@ export class ReportUpdater {
     ])
     const reports = createReports(prices, balances, this.projects)
     await this.reportRepository.addOrUpdateMany(reports)
-    this.lastProcessed = timestamp
+    await this.reportProgressRepository.add({
+      configHash: this.configHash,
+      timestamp,
+    })
     this.logger.info('Report updated', { timestamp: timestamp.toString() })
   }
 }
