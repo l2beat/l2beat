@@ -1,9 +1,9 @@
 import { Hash256 } from '@l2beat/common'
 import { createHash } from 'crypto'
 
-import { ProjectInfo } from '../../model'
+import { ProjectInfo } from '../model'
 
-export function getReportsConfigHash(projects: ProjectInfo[]): Hash256 {
+export function getConfigHash(projects: ProjectInfo[]): Hash256 {
   const entries = []
   for (const { projectId, bridges } of projects) {
     for (const { tokens, address, sinceTimestamp } of bridges) {

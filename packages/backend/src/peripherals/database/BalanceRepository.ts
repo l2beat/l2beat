@@ -22,25 +22,12 @@ export class BalanceRepository extends BaseRepository {
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
-    this.getByBlock = this.wrapGet(this.getByBlock)
     this.getByHolderAndAsset = this.wrapGet(this.getByHolderAndAsset)
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
 
     /* eslint-enable @typescript-eslint/unbound-method */
-  }
-
-  async getByBlock(blockNumber: bigint): Promise<BalanceRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('asset_balances')
-      .leftJoin(
-        'block_numbers',
-        'asset_balances.unix_timestamp',
-        'block_numbers.unix_timestamp',
-      )
-      .where('block_number', Number(blockNumber))
-    return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<BalanceRecord[]> {
