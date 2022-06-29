@@ -144,7 +144,7 @@ export const zksync: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0x204c6BADaD00Ef326dE0921A940D8267060d1033',
+              implementation: '0x59a5e7c08be8356193cd9f92ca8ac95c42ab0bdd',
             },
           },
           {
