@@ -32,6 +32,7 @@ export class ReportUpdater {
     )
     const knownSet = new Set(known.map((x) => x.toNumber()))
 
+    this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
       if (!knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
@@ -41,16 +42,18 @@ export class ReportUpdater {
   }
 
   async update(timestamp: UnixTime) {
+    this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
       this.balanceUpdater.getBalancesWhenReady(timestamp),
     ])
+    this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
     await this.reportRepository.addOrUpdateMany(reports)
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
     })
-    this.logger.info('Report updated', { timestamp: timestamp.toString() })
+    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
 }
