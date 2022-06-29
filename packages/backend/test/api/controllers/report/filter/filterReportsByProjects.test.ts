@@ -12,8 +12,9 @@ import { filterReportsByProjects } from '../../../../../src/api/controllers/repo
 import { ProjectInfo } from '../../../../../src/model'
 
 describe(filterReportsByProjects.name, () => {
-  const START = 123456n
+  const SINCE_0 = new UnixTime(0)
   const TODAY = UnixTime.now()
+  const LATER = TODAY.add(1, 'hours')
   const ARBITRUM = ProjectId('arbitrum')
   const OPTIMISM = ProjectId('optimism')
 
@@ -31,7 +32,7 @@ describe(filterReportsByProjects.name, () => {
     }
   }
 
-  const mockToken = (assetId: AssetId, sinceBlock: number): TokenInfo => {
+  const mockToken = (assetId: AssetId, sinceTimestamp: UnixTime): TokenInfo => {
     return {
       id: assetId,
       name: '',
@@ -39,7 +40,7 @@ describe(filterReportsByProjects.name, () => {
       address: EthereumAddress.random(),
       symbol: '',
       decimals: 18,
-      sinceBlock: sinceBlock,
+      sinceTimestamp,
       category: 'other',
     }
   }
@@ -51,10 +52,10 @@ describe(filterReportsByProjects.name, () => {
       bridges: [
         {
           address: ARBITRUM_ADDRESS,
-          sinceBlock: 0,
+          sinceTimestamp: SINCE_0,
           tokens: [
-            mockToken(AssetId.DAI, 0),
-            mockToken(AssetId.WETH, Number(START + 1000n)),
+            mockToken(AssetId.DAI, SINCE_0),
+            mockToken(AssetId.WETH, LATER),
           ],
         },
       ],
@@ -65,7 +66,7 @@ describe(filterReportsByProjects.name, () => {
       bridges: [
         {
           address: OPTIMISM_ADDRESS,
-          sinceBlock: Number(START + 1000n),
+          sinceTimestamp: LATER,
           tokens: [],
         },
       ],

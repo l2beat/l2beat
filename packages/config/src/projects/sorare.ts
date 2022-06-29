@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -20,7 +20,7 @@ export const sorare: Project = {
   bridges: [
     {
       address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
-      sinceBlock: 12831579,
+      sinceTimestamp: new UnixTime(1626352527),
       tokens: ['ETH'],
     },
   ],

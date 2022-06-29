@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -19,7 +19,7 @@ export const zksync: Project = {
   bridges: [
     {
       address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
-      sinceBlock: 10269890,
+      sinceTimestamp: new UnixTime(1592218707),
       tokens: '*',
     },
   ],

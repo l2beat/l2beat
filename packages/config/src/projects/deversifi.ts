@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -20,7 +20,7 @@ export const deversifi: Project = {
   bridges: [
     {
       address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
-      sinceBlock: 10141009,
+      sinceTimestamp: new UnixTime(1590491810),
       tokens: '*',
     },
   ],

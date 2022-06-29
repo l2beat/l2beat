@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -19,7 +19,7 @@ export const loopring: Project = {
   bridges: [
     {
       address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
-      sinceBlock: 11149779,
+      sinceTimestamp: new UnixTime(1603949642),
       tokens: '*',
     },
   ],

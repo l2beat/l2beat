@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -18,7 +18,7 @@ export const aztec: Project = {
   bridges: [
     {
       address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
-      sinceBlock: 11967192,
+      sinceTimestamp: new UnixTime(1614799636),
       tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
     },
   ],

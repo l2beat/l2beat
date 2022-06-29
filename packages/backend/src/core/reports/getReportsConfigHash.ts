@@ -6,14 +6,14 @@ import { ProjectInfo } from '../../model'
 export function getReportsConfigHash(projects: ProjectInfo[]): Hash256 {
   const entries = []
   for (const { projectId, bridges } of projects) {
-    for (const { tokens, address, sinceBlock } of bridges) {
+    for (const { tokens, address, sinceTimestamp } of bridges) {
       for (const token of tokens) {
         entries.push({
           projectId,
           holder: address,
-          holderSinceBlock: sinceBlock,
+          holderSinceTimestamp: sinceTimestamp,
           assetId: token.id,
-          assetSinceBlock: token.sinceBlock,
+          assetSinceTimestamp: token.sinceTimestamp,
         })
       }
     }

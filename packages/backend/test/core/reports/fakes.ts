@@ -56,12 +56,12 @@ export const PROJECTS: ProjectInfo[] = [
     bridges: [
       {
         address: ARBITRUM_BRIDGE_ONE,
-        sinceBlock: 0,
+        sinceTimestamp: new UnixTime(0),
         tokens: [fakeTokenInfo({ id: AssetId.DAI, decimals: 18 })],
       },
       {
         address: ARBITRUM_BRIDGE_TWO,
-        sinceBlock: 0,
+        sinceTimestamp: new UnixTime(0),
         tokens: [
           fakeTokenInfo({ id: AssetId.DAI, decimals: 18 }),
           fakeTokenInfo({ id: AssetId.ETH, decimals: 18 }),
@@ -75,7 +75,7 @@ export const PROJECTS: ProjectInfo[] = [
     bridges: [
       {
         address: OPTIMISM_BRIDGE,
-        sinceBlock: 0,
+        sinceTimestamp: new UnixTime(0),
         tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
       },
     ],
@@ -90,7 +90,7 @@ export function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
     symbol: 'FKT',
     decimals: 18,
     address: EthereumAddress.random(),
-    sinceBlock: 0,
+    sinceTimestamp: new UnixTime(0),
     category: 'other',
     ...token,
   }

@@ -6,6 +6,7 @@ import {
   Logger,
   mock,
   ProjectId,
+  UnixTime,
 } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
@@ -16,7 +17,6 @@ import { BalanceRepository } from '../../src/peripherals/database/BalanceReposit
 import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../../src/peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../src/peripherals/ethereum/MulticallClient'
-import { fakeUnixTime } from '../fakes'
 
 describe(BalanceUpdater.name, () => {
   const HOLDER_A = EthereumAddress.random()
@@ -28,17 +28,21 @@ describe(BalanceUpdater.name, () => {
   const ASSET_C = AssetId('usdt-tether-usd')
   const ASSET_D = AssetId('zrx-0x-protocol-token')
 
-  const START = fakeUnixTime()
+  const START = UnixTime.now()
+  const BEFORE = START.add(-1, 'hours')
+  const AFTER = START.add(1, 'hours')
+  const SINCE_0 = START.add(-100, 'days')
+  const SINCE_1 = START.add(-50, 'days')
   const START_BLOCK_NUMBER = 10000n
 
-  const mockToken = (id: AssetId, sinceBlock: number): TokenInfo => {
+  const mockToken = (id: AssetId, sinceTimestamp: UnixTime): TokenInfo => {
     return {
       id,
       name: 'fake',
       symbol: 'FK',
       decimals: 18,
       coingeckoId: CoingeckoId('fake'),
-      sinceBlock,
+      sinceTimestamp,
       category: 'other',
     }
   }
@@ -50,11 +54,11 @@ describe(BalanceUpdater.name, () => {
       bridges: [
         {
           address: HOLDER_A,
-          sinceBlock: Number(START_BLOCK_NUMBER - 100n),
+          sinceTimestamp: BEFORE,
           tokens: [
-            mockToken(ASSET_A, 0),
-            mockToken(ASSET_B, 800),
-            mockToken(ASSET_C, 800),
+            mockToken(ASSET_A, SINCE_0),
+            mockToken(ASSET_B, SINCE_1),
+            mockToken(ASSET_C, SINCE_1),
           ],
         },
       ],
@@ -65,11 +69,11 @@ describe(BalanceUpdater.name, () => {
       bridges: [
         {
           address: HOLDER_B,
-          sinceBlock: Number(START_BLOCK_NUMBER - 100n),
+          sinceTimestamp: BEFORE,
           tokens: [
-            mockToken(ASSET_B, 0),
-            mockToken(ASSET_C, 800),
-            mockToken(ASSET_D, 800),
+            mockToken(ASSET_B, SINCE_0),
+            mockToken(ASSET_C, SINCE_1),
+            mockToken(ASSET_D, SINCE_1),
           ],
         },
       ],
@@ -83,7 +87,7 @@ describe(BalanceUpdater.name, () => {
           blockNumber: START_BLOCK_NUMBER,
         }
       : {
-          timestamp: START.add(1, 'hours'),
+          timestamp: AFTER,
           blockNumber: START_BLOCK_NUMBER + 1000n,
         }
   }
@@ -97,8 +101,9 @@ describe(BalanceUpdater.name, () => {
     multicall: mockFn().returns([]),
   })
 
-  const blockNumberRepository = mock<BlockNumberRepository>()
-
+  const blockNumberRepository = mock<BlockNumberRepository>({
+    findByBlockNumber: fakeFindByBlockNumber,
+  })
   const balanceUpdater = new BalanceUpdater(
     multicall,
     balanceRepository,
@@ -152,10 +157,6 @@ describe(BalanceUpdater.name, () => {
             MULTICALL_RESPONSE_FAKE,
             MULTICALL_RESPONSE_FAKE,
           ]),
-      })
-
-      const blockNumberRepository = mock<BlockNumberRepository>({
-        findByBlockNumber: fakeFindByBlockNumber,
       })
 
       const balanceUpdater = new BalanceUpdater(
@@ -364,8 +365,11 @@ describe(BalanceUpdater.name, () => {
           bridges: [
             {
               address: HOLDER_A,
-              sinceBlock: Number(START_BLOCK_NUMBER + 1000n),
-              tokens: [mockToken(ASSET_A, 0), mockToken(ASSET_B, 800)],
+              sinceTimestamp: AFTER,
+              tokens: [
+                mockToken(ASSET_A, SINCE_0),
+                mockToken(ASSET_B, SINCE_1),
+              ],
             },
           ],
         },
@@ -394,11 +398,8 @@ describe(BalanceUpdater.name, () => {
           bridges: [
             {
               address: HOLDER_A,
-              sinceBlock: 999,
-              tokens: [
-                mockToken(ASSET_A, 0),
-                mockToken(ASSET_B, Number(START_BLOCK_NUMBER + 1000n)),
-              ],
+              sinceTimestamp: new UnixTime(1438272137),
+              tokens: [mockToken(ASSET_A, SINCE_0), mockToken(ASSET_B, AFTER)],
             },
           ],
         },

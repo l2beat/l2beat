@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -20,22 +20,22 @@ export const layer2financezk: Project = {
   bridges: [
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
-      sinceBlock: 14225869,
+      sinceTimestamp: new UnixTime(1645130774),
       tokens: ['ETH', 'USDC', 'USDT'],
     },
     {
       address: '0x8581cd55ff53F1F85A237fa9D60E72a79f0973b6',
-      sinceBlock: 14485967,
+      sinceTimestamp: new UnixTime(1648621885),
       tokens: ['cETH'],
     },
     {
       address: '0x4455E4435Cf7e6B6A4Df17bEAE1A413ef3663B90',
-      sinceBlock: 14429472,
+      sinceTimestamp: new UnixTime(1647862894),
       tokens: ['cETH'],
     },
     {
       address: '0x3F3b821243E5664822c0babBA2B4f37bf294e7a0',
-      sinceBlock: 14485971,
+      sinceTimestamp: new UnixTime(1648621976),
       tokens: ['cUSDC'],
     },
   ],

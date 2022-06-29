@@ -25,7 +25,7 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/common'
+import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
 
 export interface TokenInfo {
   /** Internal token id. Usually ticker-name */
@@ -40,8 +40,8 @@ export interface TokenInfo {
   coingeckoId: CoingeckoId
   /** Token decimals as dictated by the token contract */
   decimals: number
-  /** Block number of the token contract deployment transaction */
-  sinceBlock: number
+  /** Timestamp of the token contract deployment transaction */
+  sinceTimestamp: UnixTime
   /** Which category does the token belong to */
   category: 'ether' | 'stablecoin' | 'other'
 }
@@ -54,7 +54,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xE41d2489571d322189246DaFA5ebDe1F4699F498'),
     symbol: 'ZRX',
     decimals: 18,
-    sinceBlock: 4145415,
+    sinceTimestamp: new UnixTime(1502476756),
     category: 'other',
   },
   {
@@ -64,7 +64,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7FF4169a6B5122b664c51c95727d87750eC07c84'),
     symbol: '10SET',
     decimals: 18,
-    sinceBlock: 11900384,
+    sinceTimestamp: new UnixTime(1613912075),
     category: 'other',
   },
   {
@@ -74,7 +74,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x111111111117dC0aa78b770fA6A738034120C302'),
     symbol: '1INCH',
     decimals: 18,
-    sinceBlock: 11511393,
+    sinceTimestamp: new UnixTime(1608747211),
     category: 'other',
   },
   {
@@ -84,7 +84,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'),
     symbol: 'AAVE',
     decimals: 18,
-    sinceBlock: 10926829,
+    sinceTimestamp: new UnixTime(1600970788),
     category: 'other',
   },
   {
@@ -94,7 +94,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9'),
     symbol: 'alUSD',
     decimals: 18,
-    sinceBlock: 11937214,
+    sinceTimestamp: new UnixTime(1614400291),
     category: 'stablecoin',
   },
   {
@@ -104,7 +104,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xEd04915c23f00A313a544955524EB7DBD823143d'),
     symbol: 'ACH',
     decimals: 8,
-    sinceBlock: 8482162,
+    sinceTimestamp: new UnixTime(1567580452),
     category: 'other',
   },
   {
@@ -114,7 +114,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xfF20817765cB7f73d4bde2e66e067E58D11095C2'),
     symbol: 'AMP',
     decimals: 18,
-    sinceBlock: 10635417,
+    sinceTimestamp: new UnixTime(1597105639),
     category: 'other',
   },
   {
@@ -124,7 +124,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4'),
     symbol: 'ANKR',
     decimals: 18,
-    sinceBlock: 7246755,
+    sinceTimestamp: new UnixTime(1550710665),
     category: 'other',
   },
   {
@@ -134,7 +134,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xf99d58e463A2E07e5692127302C20A191861b4D6'),
     symbol: 'ANY',
     decimals: 18,
-    sinceBlock: 11267788,
+    sinceTimestamp: new UnixTime(1605514726),
     category: 'other',
   },
   {
@@ -144,7 +144,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xEF40B859D21e4d566a3d713e756197c021BffaAa'),
     symbol: 'NFT',
     decimals: 6,
-    sinceBlock: 12432942,
+    sinceTimestamp: new UnixTime(1621001241),
     category: 'other',
   },
   {
@@ -154,7 +154,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0b38210ea11411557c13457D4dA7dC6ea731B88a'),
     symbol: 'API3',
     decimals: 18,
-    sinceBlock: 11203771,
+    sinceTimestamp: new UnixTime(1604665283),
     category: 'other',
   },
   {
@@ -164,7 +164,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xa117000000f279D81A1D3cc75430fAA017FA5A2e'),
     symbol: 'ANT',
     decimals: 18,
-    sinceBlock: 11060110,
+    sinceTimestamp: new UnixTime(1602761920),
     category: 'other',
   },
   {
@@ -174,7 +174,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x18aAA7115705e8be94bfFEBDE57Af9BFc265B998'),
     symbol: 'AUDIO',
     decimals: 18,
-    sinceBlock: 11103292,
+    sinceTimestamp: new UnixTime(1603333709),
     category: 'other',
   },
   {
@@ -184,7 +184,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xAaAAAA20D9E0e2461697782ef11675f668207961'),
     symbol: 'AURORA',
     decimals: 18,
-    sinceBlock: 13371307,
+    sinceTimestamp: new UnixTime(1633603227),
     category: 'other',
   },
   {
@@ -194,7 +194,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b'),
     symbol: 'AXS',
     decimals: 18,
-    sinceBlock: 12314534,
+    sinceTimestamp: new UnixTime(1619421369),
     category: 'other',
   },
   {
@@ -204,7 +204,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xAC57De9C1A09FeC648E93EB98875B212DB0d460B'),
     symbol: 'BabyDoge',
     decimals: 9,
-    sinceBlock: 13570063,
+    sinceTimestamp: new UnixTime(1636297637),
     category: 'other',
   },
   {
@@ -214,7 +214,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C'),
     symbol: 'BNT',
     decimals: 18,
-    sinceBlock: 3851136,
+    sinceTimestamp: new UnixTime(1497110560),
     category: 'other',
   },
   {
@@ -224,7 +224,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xBA11D00c5f74255f56a5E366F4F77f5A186d7f55'),
     symbol: 'BAND',
     decimals: 18,
-    sinceBlock: 8514296,
+    sinceTimestamp: new UnixTime(1568013787),
     category: 'other',
   },
   {
@@ -234,7 +234,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0D8775F648430679A709E98d2b0Cb6250d2887EF'),
     symbol: 'BAT',
     decimals: 18,
-    sinceBlock: 3788558,
+    sinceTimestamp: new UnixTime(1496083510),
     category: 'other',
   },
   {
@@ -244,7 +244,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xDC349913d53b446485E98b76800b6254f43Df695'),
     symbol: 'BEZOGE',
     decimals: 9,
-    sinceBlock: 12432350,
+    sinceTimestamp: new UnixTime(1620993315),
     category: 'other',
   },
   {
@@ -254,7 +254,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c'),
     symbol: 'BFC',
     decimals: 18,
-    sinceBlock: 10152914,
+    sinceTimestamp: new UnixTime(1590651480),
     category: 'other',
   },
   {
@@ -264,7 +264,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4Fabb145d64652a948d72533023f6E7A623C7C53'),
     symbol: 'BUSD',
     decimals: 18,
-    sinceBlock: 8493105,
+    sinceTimestamp: new UnixTime(1567727777),
     category: 'stablecoin',
   },
   {
@@ -274,7 +274,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x2AF5D2aD76741191D15Dfe7bF6aC92d4Bd912Ca3'),
     symbol: 'LEO',
     decimals: 18,
-    sinceBlock: 7803477,
+    sinceTimestamp: new UnixTime(1558444909),
     category: 'other',
   },
   {
@@ -284,7 +284,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xC669928185DbCE49d2230CC9B0979BE6DC797957'),
     symbol: 'BTT',
     decimals: 18,
-    sinceBlock: 13776242,
+    sinceTimestamp: new UnixTime(1639124481),
     category: 'other',
   },
   {
@@ -294,7 +294,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc'),
     symbol: 'BOBA',
     decimals: 18,
-    sinceBlock: 13225262,
+    sinceTimestamp: new UnixTime(1631641934),
     category: 'other',
   },
   {
@@ -304,7 +304,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xC0d4Ceb216B3BA9C3701B291766fDCbA977ceC3A'),
     symbol: 'BTRFLY',
     decimals: 9,
-    sinceBlock: 13806396,
+    sinceTimestamp: new UnixTime(1639526491),
     category: 'other',
   },
   {
@@ -314,7 +314,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D'),
     symbol: 'CTSI',
     decimals: 18,
-    sinceBlock: 9907101,
+    sinceTimestamp: new UnixTime(1587355556),
     category: 'other',
   },
   {
@@ -324,7 +324,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4F9254C83EB525f9FCf346490bbb3ed28a81C667'),
     symbol: 'CELR',
     decimals: 18,
-    sinceBlock: 7107317,
+    sinceTimestamp: new UnixTime(1548134340),
     category: 'other',
   },
   {
@@ -334,7 +334,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xaaAEBE6Fe48E54f431b0C390CfaF0b017d09D42d'),
     symbol: 'CEL',
     decimals: 4,
-    sinceBlock: 5409020,
+    sinceTimestamp: new UnixTime(1523274016),
     category: 'other',
   },
   {
@@ -344,7 +344,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x514910771AF9Ca656af840dff83E8264EcF986CA'),
     symbol: 'LINK',
     decimals: 18,
-    sinceBlock: 4281611,
+    sinceTimestamp: new UnixTime(1505597189),
     category: 'other',
   },
   {
@@ -354,7 +354,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x3506424F91fD33084466F402d5D97f05F8e3b4AF'),
     symbol: 'CHZ',
     decimals: 18,
-    sinceBlock: 6585593,
+    sinceTimestamp: new UnixTime(1540537245),
     category: 'other',
   },
   {
@@ -364,7 +364,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2'),
     symbol: 'CHR',
     decimals: 6,
-    sinceBlock: 10988298,
+    sinceTimestamp: new UnixTime(1601800062),
     category: 'other',
   },
   {
@@ -374,7 +374,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x41e5560054824eA6B0732E656E3Ad64E20e94E45'),
     symbol: 'CVC',
     decimals: 8,
-    sinceBlock: 4009731,
+    sinceTimestamp: new UnixTime(1499817451),
     category: 'other',
   },
   {
@@ -384,7 +384,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xAE12C5930881c53715B369ceC7606B70d8EB229f'),
     symbol: 'C98',
     decimals: 18,
-    sinceBlock: 12829313,
+    sinceTimestamp: new UnixTime(1626322460),
     category: 'other',
   },
   {
@@ -394,7 +394,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x081F67aFA0cCF8c7B17540767BBe95DF2bA8D97F'),
     symbol: 'CET',
     decimals: 18,
-    sinceBlock: 5294655,
+    sinceTimestamp: new UnixTime(1521628040),
     category: 'other',
   },
   {
@@ -404,7 +404,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x36ac219f90f5A6A3C77f2a7B660E3cC701f68e25'),
     symbol: 'XCM',
     decimals: 18,
-    sinceBlock: 11320818,
+    sinceTimestamp: new UnixTime(1606218049),
     category: 'other',
   },
   {
@@ -414,7 +414,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xc00e94Cb662C3520282E6f5717214004A7f26888'),
     symbol: 'COMP',
     decimals: 18,
-    sinceBlock: 9601359,
+    sinceTimestamp: new UnixTime(1583280535),
     category: 'other',
   },
   {
@@ -424,7 +424,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643'),
     symbol: 'cDAI',
     decimals: 8,
-    sinceBlock: 8983575,
+    sinceTimestamp: new UnixTime(1574471013),
     category: 'other',
   },
   {
@@ -434,7 +434,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5'),
     symbol: 'cETH',
     decimals: 8,
-    sinceBlock: 7710758,
+    sinceTimestamp: new UnixTime(1557192318),
     category: 'other',
   },
   {
@@ -444,7 +444,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x39AA39c021dfbaE8faC545936693aC917d5E7563'),
     symbol: 'cUSDC',
     decimals: 8,
-    sinceBlock: 7710760,
+    sinceTimestamp: new UnixTime(1557192331),
     category: 'other',
   },
   // There is an issue with cUSDT price on coingecko
@@ -457,7 +457,7 @@ export const tokenList: TokenInfo[] = [
   //   address: EthereumAddress('0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'),
   //   symbol: 'cUSDT',
   //   decimals: 8,
-  //   sinceBlock: 9879363,
+  //   sinceTimestamp: new UnixTime(1586985186),
   //   category: 'other',
   // },
   {
@@ -467,7 +467,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71'),
     symbol: 'PEOPLE',
     decimals: 18,
-    sinceBlock: 13627483,
+    sinceTimestamp: new UnixTime(1637077921),
     category: 'other',
   },
   {
@@ -477,7 +477,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7'),
     symbol: 'cvxCRV',
     decimals: 18,
-    sinceBlock: 12451018,
+    sinceTimestamp: new UnixTime(1621242935),
     category: 'other',
   },
   {
@@ -487,7 +487,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B'),
     symbol: 'CVX',
     decimals: 18,
-    sinceBlock: 12450988,
+    sinceTimestamp: new UnixTime(1621242525),
     category: 'other',
   },
   {
@@ -497,7 +497,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xDDB3422497E61e13543BeA06989C0789117555c5'),
     symbol: 'COTI',
     decimals: 18,
-    sinceBlock: 8040814,
+    sinceTimestamp: new UnixTime(1561649739),
     category: 'other',
   },
   {
@@ -507,7 +507,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x678e840C640F619E17848045D23072844224dD37'),
     symbol: 'CRTS',
     decimals: 18,
-    sinceBlock: 12693728,
+    sinceTimestamp: new UnixTime(1624495330),
     category: 'other',
   },
   {
@@ -517,7 +517,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b'),
     symbol: 'CRO',
     decimals: 8,
-    sinceBlock: 6702068,
+    sinceTimestamp: new UnixTime(1542186708),
     category: 'other',
   },
   {
@@ -527,7 +527,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xD533a949740bb3306d119CC777fa900bA034cd52'),
     symbol: 'CRV',
     decimals: 18,
-    sinceBlock: 10647806,
+    sinceTimestamp: new UnixTime(1597270648),
     category: 'other',
   },
   {
@@ -537,7 +537,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6B175474E89094C44Da98b954EedeAC495271d0F'),
     symbol: 'DAI',
     decimals: 18,
-    sinceBlock: 8950398,
+    sinceTimestamp: new UnixTime(1573993299),
     category: 'stablecoin',
   },
   {
@@ -547,7 +547,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0f51bb10119727a7e5eA3538074fb341F56B09Ad'),
     symbol: 'DAO',
     decimals: 18,
-    sinceBlock: 11607504,
+    sinceTimestamp: new UnixTime(1610021949),
     category: 'other',
   },
   {
@@ -557,7 +557,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0F5D2fB29fb7d3CFeE444a200298f468908cC942'),
     symbol: 'MANA',
     decimals: 18,
-    sinceBlock: 4170788,
+    sinceTimestamp: new UnixTime(1503006656),
     category: 'other',
   },
   {
@@ -567,7 +567,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x3597bfD533a99c9aa083587B074434E61Eb0A258'),
     symbol: 'DENT',
     decimals: 8,
-    sinceBlock: 4010949,
+    sinceTimestamp: new UnixTime(1499841781),
     category: 'other',
   },
   {
@@ -578,7 +578,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xDDdddd4301A082e62E84e43F474f044423921918'),
     coingeckoId: CoingeckoId('dvf'),
     decimals: 18,
-    sinceBlock: 12008914,
+    sinceTimestamp: new UnixTime(1615354524),
     category: 'other',
   },
   {
@@ -588,7 +588,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xB9EefC4b0d472A44be93970254Df4f4016569d27'),
     symbol: 'XDB',
     decimals: 7,
-    sinceBlock: 8297651,
+    sinceTimestamp: new UnixTime(1565102047),
     category: 'other',
   },
   {
@@ -598,7 +598,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3'),
     symbol: 'ELON',
     decimals: 18,
-    sinceBlock: 12293419,
+    sinceTimestamp: new UnixTime(1619140030),
     category: 'other',
   },
   {
@@ -608,7 +608,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81'),
     symbol: 'DPX',
     decimals: 18,
-    sinceBlock: 12674086,
+    sinceTimestamp: new UnixTime(1624230467),
     category: 'other',
   },
   {
@@ -618,7 +618,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0ff5A8451A839f5F0BB3562689D9A44089738D11'),
     coingeckoId: CoingeckoId('dopex-rebate-token'),
     decimals: 18,
-    sinceBlock: 12674089,
+    sinceTimestamp: new UnixTime(1624230521),
     category: 'other',
   },
   {
@@ -628,7 +628,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x92D6C1e31e14520e676a687F0a93788B716BEff5'),
     symbol: 'DYDX',
     decimals: 18,
-    sinceBlock: 12809555,
+    sinceTimestamp: new UnixTime(1626053832),
     category: 'other',
   },
   {
@@ -638,7 +638,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414'),
     symbol: 'eXRD',
     decimals: 18,
-    sinceBlock: 11138920,
+    sinceTimestamp: new UnixTime(1603805479),
     category: 'other',
   },
   {
@@ -648,7 +648,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c'),
     symbol: 'ENJ',
     decimals: 18,
-    sinceBlock: 4329040,
+    sinceTimestamp: new UnixTime(1506906127),
     category: 'other',
   },
   {
@@ -658,7 +658,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xA2085073878152aC3090eA13D1e41bD69e60Dc99'),
     symbol: 'ELG',
     decimals: 18,
-    sinceBlock: 10123949,
+    sinceTimestamp: new UnixTime(1590261525),
     category: 'other',
   },
   {
@@ -667,7 +667,7 @@ export const tokenList: TokenInfo[] = [
     symbol: 'ETH',
     decimals: 18,
     coingeckoId: CoingeckoId('ethereum'),
-    sinceBlock: 0,
+    sinceTimestamp: new UnixTime(0),
     category: 'ether',
   },
   {
@@ -677,7 +677,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72'),
     symbol: 'ENS',
     decimals: 18,
-    sinceBlock: 13533418,
+    sinceTimestamp: new UnixTime(1635800117),
     category: 'other',
   },
   {
@@ -687,7 +687,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xC581b735A1688071A1746c968e0798D642EDE491'),
     symbol: 'EURT',
     decimals: 6,
-    sinceBlock: 11016156,
+    sinceTimestamp: new UnixTime(1602176748),
     category: 'other',
   },
   {
@@ -697,7 +697,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4E15361FD6b4BB609Fa63C81A2be19d873717870'),
     symbol: 'FTM',
     decimals: 18,
-    sinceBlock: 5787425,
+    sinceTimestamp: new UnixTime(1528979942),
     category: 'other',
   },
   {
@@ -707,7 +707,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x389999216860AB8E0175387A0c90E5c52522C945'),
     symbol: 'FEG',
     decimals: 9,
-    sinceBlock: 11762222,
+    sinceTimestamp: new UnixTime(1612075738),
     category: 'other',
   },
   {
@@ -717,7 +717,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x956F47F50A910163D8BF957Cf5846D573E7f87CA'),
     symbol: 'FEI',
     decimals: 18,
-    sinceBlock: 12159908,
+    sinceTimestamp: new UnixTime(1617364200),
     category: 'stablecoin',
   },
   {
@@ -727,7 +727,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85'),
     symbol: 'FET',
     decimals: 18,
-    sinceBlock: 10998076,
+    sinceTimestamp: new UnixTime(1601931978),
     category: 'other',
   },
   {
@@ -737,7 +737,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xFcF8eda095e37A41e002E266DaAD7efC1579bc0A'),
     symbol: 'FLEX',
     decimals: 18,
-    sinceBlock: 11654666,
+    sinceTimestamp: new UnixTime(1610646626),
     category: 'other',
   },
   {
@@ -747,7 +747,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x853d955aCEf822Db058eb8505911ED77F175b99e'),
     symbol: 'FRAX',
     decimals: 18,
-    sinceBlock: 11465581,
+    sinceTimestamp: new UnixTime(1608140520),
     category: 'other',
   },
   {
@@ -757,7 +757,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0'),
     symbol: 'FXS',
     decimals: 18,
-    sinceBlock: 11465584,
+    sinceTimestamp: new UnixTime(1608140560),
     category: 'other',
   },
   {
@@ -767,7 +767,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9'),
     symbol: 'FTX Token',
     decimals: 18,
-    sinceBlock: 7611221,
+    sinceTimestamp: new UnixTime(1555852887),
     category: 'other',
   },
   {
@@ -777,7 +777,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8c15Ef5b4B21951d50E53E4fbdA8298FFAD25057'),
     symbol: 'FX',
     decimals: 18,
-    sinceBlock: 6965508,
+    sinceTimestamp: new UnixTime(1545963928),
     category: 'other',
   },
   {
@@ -787,7 +787,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA'),
     symbol: 'GALA',
     decimals: 8,
-    sinceBlock: 10828939,
+    sinceTimestamp: new UnixTime(1599673371),
     category: 'other',
   },
   {
@@ -797,7 +797,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xE66747a101bFF2dBA3697199DCcE5b743b454759'),
     symbol: 'GT',
     decimals: 18,
-    sinceBlock: 7726894,
+    sinceTimestamp: new UnixTime(1557411619),
     category: 'other',
   },
   {
@@ -807,7 +807,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd'),
     symbol: 'GUSD',
     decimals: 2,
-    sinceBlock: 6301780,
+    sinceTimestamp: new UnixTime(1536521774),
     category: 'stablecoin',
   },
   {
@@ -817,7 +817,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6810e776880C02933D47DB1b9fc05908e5386b96'),
     symbol: 'GNO',
     decimals: 18,
-    sinceBlock: 3557596,
+    sinceTimestamp: new UnixTime(1492523116),
     category: 'other',
   },
   {
@@ -827,7 +827,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429'),
     symbol: 'GLM',
     decimals: 18,
-    sinceBlock: 11281056,
+    sinceTimestamp: new UnixTime(1605690833),
     category: 'other',
   },
   {
@@ -837,7 +837,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xc944E90C64B2c07662A292be6244BDf05Cda44a7'),
     symbol: 'GRT',
     decimals: 18,
-    sinceBlock: 11446769,
+    sinceTimestamp: new UnixTime(1607890633),
     category: 'other',
   },
   {
@@ -847,7 +847,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xEEF9f339514298C6A857EfCfC1A762aF84438dEE'),
     coingeckoId: CoingeckoId('hermez-network-token'),
     decimals: 18,
-    sinceBlock: 11056775,
+    sinceTimestamp: new UnixTime(1602717322),
     category: 'other',
   },
   {
@@ -857,7 +857,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6c6EE5e31d828De241282B9606C8e98Ea48526E2'),
     symbol: 'HOT',
     decimals: 18,
-    sinceBlock: 5008746,
+    sinceTimestamp: new UnixTime(1517448069),
     category: 'other',
   },
   {
@@ -867,7 +867,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8FAc8031e079F409135766C7d5De29cf22EF897C'),
     symbol: 'HEART',
     decimals: 18,
-    sinceBlock: 13771084,
+    sinceTimestamp: new UnixTime(1639053378),
     category: 'other',
   },
   {
@@ -877,7 +877,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0316EB71485b0Ab14103307bf65a021042c6d380'),
     symbol: 'HBTC',
     decimals: 18,
-    sinceBlock: 9076087,
+    sinceTimestamp: new UnixTime(1575874126),
     category: 'other',
   },
   {
@@ -887,7 +887,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6f259637dcD74C767781E37Bc6133cd6A68aa161'),
     symbol: 'HT',
     decimals: 18,
-    sinceBlock: 5005233,
+    sinceTimestamp: new UnixTime(1517395802),
     category: 'other',
   },
   {
@@ -897,7 +897,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xdF574c24545E5FfEcb9a659c229253D4111d87e1'),
     symbol: 'HUSD',
     decimals: 8,
-    sinceBlock: 8174400,
+    sinceTimestamp: new UnixTime(1563449444),
     category: 'stablecoin',
   },
   {
@@ -907,7 +907,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E'),
     symbol: 'ILV',
     decimals: 18,
-    sinceBlock: 12084124,
+    sinceTimestamp: new UnixTime(1616355826),
     category: 'other',
   },
   {
@@ -917,7 +917,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF'),
     symbol: 'IMX',
     decimals: 18,
-    sinceBlock: 13415141,
+    sinceTimestamp: new UnixTime(1634198360),
     category: 'other',
   },
   {
@@ -927,7 +927,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30'),
     symbol: 'INJ',
     decimals: 18,
-    sinceBlock: 11072329,
+    sinceTimestamp: new UnixTime(1602922956),
     category: 'other',
   },
   {
@@ -937,7 +937,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xc4E15973E6fF2A35cC804c2CF9D2a1b817a8b40F'),
     symbol: 'ibBTC',
     decimals: 18,
-    sinceBlock: 12342123,
+    sinceTimestamp: new UnixTime(1619789623),
     category: 'other',
   },
   {
@@ -947,7 +947,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x85Eee30c52B0b379b046Fb0F85F4f3Dc3009aFEC'),
     symbol: 'KEEP',
     decimals: 18,
-    sinceBlock: 9958363,
+    sinceTimestamp: new UnixTime(1588042366),
     category: 'other',
   },
   {
@@ -957,7 +957,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44'),
     symbol: 'KP3R',
     decimals: 18,
-    sinceBlock: 11143904,
+    sinceTimestamp: new UnixTime(1603871844),
     category: 'other',
   },
   {
@@ -967,7 +967,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xf34960d9d60be18cC1D5Afc1A6F012A723a28811'),
     symbol: 'KCS',
     decimals: 6,
-    sinceBlock: 11638804,
+    sinceTimestamp: new UnixTime(1610436587),
     category: 'other',
   },
   {
@@ -977,7 +977,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202'),
     symbol: 'KNC',
     decimals: 18,
-    sinceBlock: 12224343,
+    sinceTimestamp: new UnixTime(1618218294),
     category: 'other',
   },
   {
@@ -987,7 +987,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xBbff34E47E559ef680067a6B1c980639EEb64D24'),
     coingeckoId: CoingeckoId('leverj-gluon'),
     decimals: 18,
-    sinceBlock: 11096120,
+    sinceTimestamp: new UnixTime(1603238349),
     category: 'other',
   },
   {
@@ -997,7 +997,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32'),
     coingeckoId: CoingeckoId('lido-dao'),
     decimals: 18,
-    sinceBlock: 11473216,
+    sinceTimestamp: new UnixTime(1608242396),
     category: 'other',
   },
   {
@@ -1007,7 +1007,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'),
     symbol: 'stETH',
     decimals: 18,
-    sinceBlock: 11480180,
+    sinceTimestamp: new UnixTime(1608334322),
     category: 'other',
   },
   {
@@ -1017,7 +1017,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x58b6A8A3302369DAEc383334672404Ee733aB239'),
     symbol: 'LPT',
     decimals: 18,
-    sinceBlock: 5533907,
+    sinceTimestamp: new UnixTime(1525118631),
     category: 'other',
   },
   {
@@ -1027,7 +1027,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xf4d2888d29D722226FafA5d9B24F9164c092421E'),
     symbol: 'LOOKS',
     decimals: 18,
-    sinceBlock: 13847597,
+    sinceTimestamp: new UnixTime(1640077252),
     category: 'other',
   },
   {
@@ -1037,7 +1037,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD'),
     symbol: 'LRC',
     decimals: 18,
-    sinceBlock: 7544036,
+    sinceTimestamp: new UnixTime(1554948637),
     category: 'other',
   },
   {
@@ -1047,7 +1047,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xA8b919680258d369114910511cc87595aec0be6D'),
     symbol: 'LYXe',
     decimals: 18,
-    sinceBlock: 10057681,
+    sinceTimestamp: new UnixTime(1589371378),
     category: 'other',
   },
   {
@@ -1057,7 +1057,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x5f98805A4E8be255a32880FDeC7F6728C6568bA0'),
     symbol: 'LUSD',
     decimals: 18,
-    sinceBlock: 12178594,
+    sinceTimestamp: new UnixTime(1617611299),
     category: 'stablecoin',
   },
   {
@@ -1067,7 +1067,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3'),
     symbol: 'MIM',
     decimals: 18,
-    sinceBlock: 12505975,
+    sinceTimestamp: new UnixTime(1621978961),
     category: 'other',
   },
   {
@@ -1077,7 +1077,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2'),
     symbol: 'MKR',
     decimals: 18,
-    sinceBlock: 4621060,
+    sinceTimestamp: new UnixTime(1511637118),
     category: 'other',
   },
   {
@@ -1087,7 +1087,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074'),
     symbol: 'MASK',
     decimals: 18,
-    sinceBlock: 11886238,
+    sinceTimestamp: new UnixTime(1613723201),
     category: 'other',
   },
   {
@@ -1097,7 +1097,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0'),
     symbol: 'MATIC',
     decimals: 18,
-    sinceBlock: 7605604,
+    sinceTimestamp: new UnixTime(1555778052),
     category: 'other',
   },
   {
@@ -1107,7 +1107,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6'),
     symbol: 'MC',
     decimals: 18,
-    sinceBlock: 13468356,
+    sinceTimestamp: new UnixTime(1634918516),
     category: 'other',
   },
   {
@@ -1117,7 +1117,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x9E32b13ce7f2E80A01932B42553652E053D6ed8e'),
     symbol: 'Metis',
     decimals: 18,
-    sinceBlock: 11434969,
+    sinceTimestamp: new UnixTime(1607734167),
     category: 'other',
   },
   {
@@ -1127,7 +1127,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e'),
     symbol: 'MXC',
     decimals: 18,
-    sinceBlock: 6111735,
+    sinceTimestamp: new UnixTime(1533749838),
     category: 'other',
   },
   {
@@ -1137,7 +1137,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x674C6Ad92Fd080e4004b2312b45f796a192D27a0'),
     symbol: 'USDN',
     decimals: 18,
-    sinceBlock: 10970706,
+    sinceTimestamp: new UnixTime(1601563115),
     category: 'stablecoin',
   },
   {
@@ -1147,7 +1147,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206'),
     symbol: 'NEXO',
     decimals: 18,
-    sinceBlock: 5475683,
+    sinceTimestamp: new UnixTime(1524250249),
     category: 'other',
   },
   {
@@ -1157,7 +1157,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4fE83213D56308330EC302a8BD641f1d0113A4Cc'),
     symbol: 'NU',
     decimals: 18,
-    sinceBlock: 10763456,
+    sinceTimestamp: new UnixTime(1598807335),
     category: 'other',
   },
   {
@@ -1167,7 +1167,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xd7c49CEE7E9188cCa6AD8FF264C1DA2e69D4Cf3B'),
     symbol: 'NXM',
     decimals: 18,
-    sinceBlock: 7815779,
+    sinceTimestamp: new UnixTime(1558611941),
     category: 'other',
   },
   {
@@ -1177,7 +1177,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x967da4048cD07aB37855c090aAF366e4ce1b9F48'),
     symbol: 'OCEAN',
     decimals: 18,
-    sinceBlock: 10945544,
+    sinceTimestamp: new UnixTime(1601222047),
     category: 'other',
   },
   {
@@ -1187,7 +1187,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x75231F58b43240C9718Dd58B4967c5114342a86c'),
     symbol: 'OKB',
     decimals: 18,
-    sinceBlock: 7641712,
+    sinceTimestamp: new UnixTime(1556264879),
     category: 'other',
   },
   {
@@ -1197,7 +1197,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5'),
     symbol: 'OHM',
     decimals: 9,
-    sinceBlock: 13782589,
+    sinceTimestamp: new UnixTime(1639209014),
     category: 'other',
   },
   {
@@ -1207,7 +1207,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xd26114cd6EE289AccF82350c8d8487fedB8A0C07'),
     symbol: 'OMG',
     decimals: 18,
-    sinceBlock: 3978297,
+    sinceTimestamp: new UnixTime(1499264338),
     category: 'other',
   },
   {
@@ -1217,7 +1217,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e'),
     symbol: 'OMI',
     decimals: 18,
-    sinceBlock: 13254878,
+    sinceTimestamp: new UnixTime(1632037514),
     category: 'other',
   },
   {
@@ -1227,7 +1227,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4200000000000000000000000000000000000042'),
     symbol: 'OP',
     decimals: 18,
-    sinceBlock: 14881557,
+    sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
   },
   {
@@ -1237,7 +1237,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xff56Cc6b1E6dEd347aA0B7676C85AB0B3D08B0FA'),
     symbol: 'ORBS',
     decimals: 18,
-    sinceBlock: 5710114,
+    sinceTimestamp: new UnixTime(1527798219),
     category: 'other',
   },
   {
@@ -1247,7 +1247,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86'),
     symbol: 'OUSD',
     decimals: 18,
-    sinceBlock: 10884563,
+    sinceTimestamp: new UnixTime(1600410737),
     category: 'stablecoin',
   },
   {
@@ -1257,7 +1257,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8E870D67F660D95d5be530380D0eC0bd388289E1'),
     symbol: 'USDP',
     decimals: 18,
-    sinceBlock: 6294931,
+    sinceTimestamp: new UnixTime(1536420623),
     category: 'stablecoin',
   },
   {
@@ -1267,7 +1267,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x45804880De22913dAFE09f4980848ECE6EcbAf78'),
     symbol: 'PAXG',
     decimals: 18,
-    sinceBlock: 8426430,
+    sinceTimestamp: new UnixTime(1566830180),
     category: 'other',
   },
   {
@@ -1277,7 +1277,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xbC396689893D065F41bc2C6EcbeE5e0085233447'),
     symbol: 'PERP',
     decimals: 18,
-    sinceBlock: 10804048,
+    sinceTimestamp: new UnixTime(1599343689),
     category: 'other',
   },
   {
@@ -1287,7 +1287,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x79C75E2e8720B39e258F41c37cC4f309E0b0fF80'),
     symbol: 'SOUL',
     decimals: 8,
-    sinceBlock: 10933279,
+    sinceTimestamp: new UnixTime(1601056863),
     category: 'other',
   },
   {
@@ -1297,7 +1297,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430'),
     symbol: 'PLA',
     decimals: 18,
-    sinceBlock: 9921528,
+    sinceTimestamp: new UnixTime(1587548415),
     category: 'other',
   },
   {
@@ -1307,7 +1307,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC'),
     symbol: 'POLY',
     decimals: 18,
-    sinceBlock: 5003910,
+    sinceTimestamp: new UnixTime(1517376819),
     category: 'other',
   },
   {
@@ -1317,7 +1317,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x595832F8FC6BF59c85C527fEC3740A1b7a361269'),
     symbol: 'POWR',
     decimals: 6,
-    sinceBlock: 3811884,
+    sinceTimestamp: new UnixTime(1496460359),
     category: 'other',
   },
   {
@@ -1327,7 +1327,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7825e833D495F3d1c28872415a4aee339D26AC88'),
     symbol: 'TLOS',
     decimals: 18,
-    sinceBlock: 11882236,
+    sinceTimestamp: new UnixTime(1613670383),
     category: 'other',
   },
   {
@@ -1337,7 +1337,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0FD10b9899882a6f2fcb5c371E17e70FdEe00C38'),
     symbol: 'PUNDIX',
     decimals: 18,
-    sinceBlock: 11995547,
+    sinceTimestamp: new UnixTime(1615175880),
     category: 'other',
   },
   {
@@ -1347,7 +1347,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x430EF9263E76DAE63c84292C3409D61c598E9682'),
     symbol: 'PYR',
     decimals: 18,
-    sinceBlock: 13849184,
+    sinceTimestamp: new UnixTime(1640098645),
     category: 'other',
   },
   {
@@ -1357,7 +1357,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4a220E6096B25EADb88358cb44068A3248254675'),
     symbol: 'QNT',
     decimals: 18,
-    sinceBlock: 5392950,
+    sinceTimestamp: new UnixTime(1523044361),
     category: 'other',
   },
   {
@@ -1367,7 +1367,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x31c8EAcBFFdD875c74b94b077895Bd78CF1E64A3'),
     symbol: 'RAD',
     decimals: 18,
-    sinceBlock: 11867297,
+    sinceTimestamp: new UnixTime(1613471654),
     category: 'other',
   },
   {
@@ -1377,7 +1377,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x12BB890508c125661E03b09EC06E404bc9289040'),
     symbol: 'RACA',
     decimals: 18,
-    sinceBlock: 13073708,
+    sinceTimestamp: new UnixTime(1629616433),
     category: 'other',
   },
   {
@@ -1387,7 +1387,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b'),
     symbol: 'RLY',
     decimals: 18,
-    sinceBlock: 10997867,
+    sinceTimestamp: new UnixTime(1601929393),
     category: 'other',
   },
   {
@@ -1397,7 +1397,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xD291E7a03283640FDc51b121aC401383A46cC623'),
     symbol: 'RGT',
     decimals: 18,
-    sinceBlock: 11094181,
+    sinceTimestamp: new UnixTime(1603212673),
     category: 'other',
   },
   {
@@ -1407,7 +1407,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf'),
     symbol: 'REEF',
     decimals: 18,
-    sinceBlock: 11427059,
+    sinceTimestamp: new UnixTime(1607628365),
     category: 'other',
   },
   {
@@ -1417,7 +1417,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D'),
     symbol: 'renBTC',
     decimals: 8,
-    sinceBlock: 9736969,
+    sinceTimestamp: new UnixTime(1585090944),
     category: 'other',
   },
   {
@@ -1427,7 +1427,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24'),
     symbol: 'RNDR',
     decimals: 18,
-    sinceBlock: 7208992,
+    sinceTimestamp: new UnixTime(1549934999),
     category: 'other',
   },
   {
@@ -1437,7 +1437,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x408e41876cCCDC0F92210600ef50372656052a38'),
     symbol: 'REN',
     decimals: 18,
-    sinceBlock: 4827494,
+    sinceTimestamp: new UnixTime(1514688568),
     category: 'other',
   },
   {
@@ -1447,7 +1447,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8f8221aFbB33998d8584A2B05749bA73c37a938a'),
     symbol: 'REQ',
     decimals: 18,
-    sinceBlock: 4356679,
+    sinceTimestamp: new UnixTime(1507735071),
     category: 'other',
   },
   {
@@ -1457,7 +1457,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x320623b8E4fF03373931769A31Fc52A4E78B5d70'),
     symbol: 'RSR',
     decimals: 18,
-    sinceBlock: 13947046,
+    sinceTimestamp: new UnixTime(1641407258),
     category: 'other',
   },
   {
@@ -1467,7 +1467,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xD33526068D116cE69F19A9ee46F0bd304F21A51f'),
     symbol: 'RPL',
     decimals: 18,
-    sinceBlock: 13325306,
+    sinceTimestamp: new UnixTime(1632980703),
     category: 'other',
   },
   {
@@ -1477,7 +1477,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x3845badAde8e6dFF049820680d1F14bD3903a5d0'),
     symbol: 'SAND',
     decimals: 18,
-    sinceBlock: 8835135,
+    sinceTimestamp: new UnixTime(1572367723),
     category: 'other',
   },
   {
@@ -1487,7 +1487,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x476c5E26a75bd202a9683ffD34359C0CC15be0fF'),
     symbol: 'SRM',
     decimals: 6,
-    sinceBlock: 10570346,
+    sinceTimestamp: new UnixTime(1596238023),
     category: 'other',
   },
   {
@@ -1497,7 +1497,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE'),
     symbol: 'SHIB',
     decimals: 18,
-    sinceBlock: 10569013,
+    sinceTimestamp: new UnixTime(1596220363),
     category: 'other',
   },
   {
@@ -1507,7 +1507,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'),
     symbol: 'SKL',
     decimals: 18,
-    sinceBlock: 10363171,
+    sinceTimestamp: new UnixTime(1593467066),
     category: 'other',
   },
   {
@@ -1517,7 +1517,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xCC8Fa225D80b9c7D42F96e9570156c65D6cAAa25'),
     symbol: 'SLP',
     decimals: 0,
-    sinceBlock: 12314545,
+    sinceTimestamp: new UnixTime(1619421512),
     category: 'other',
   },
   {
@@ -1527,7 +1527,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x090185f2135308BaD17527004364eBcC2D37e5F6'),
     symbol: 'SPELL',
     decimals: 18,
-    sinceBlock: 12454535,
+    sinceTimestamp: new UnixTime(1621289435),
     category: 'other',
   },
   {
@@ -1537,7 +1537,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24'),
     symbol: 'STARL',
     decimals: 18,
-    sinceBlock: 12739085,
+    sinceTimestamp: new UnixTime(1625105851),
     category: 'other',
   },
   {
@@ -1547,7 +1547,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x744d70FDBE2Ba4CF95131626614a1763DF805B9E'),
     symbol: 'SNT',
     decimals: 18,
-    sinceBlock: 3898960,
+    sinceTimestamp: new UnixTime(1497889273),
     category: 'other',
   },
   {
@@ -1557,7 +1557,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55'),
     symbol: 'SUPER',
     decimals: 18,
-    sinceBlock: 11897052,
+    sinceTimestamp: new UnixTime(1613866257),
     category: 'other',
   },
   {
@@ -1567,7 +1567,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272'),
     symbol: 'xSUSHI',
     decimals: 18,
-    sinceBlock: 10801571,
+    sinceTimestamp: new UnixTime(1599311156),
     category: 'other',
   },
   {
@@ -1577,7 +1577,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x6B3595068778DD592e39A122f4f5a5cF09C90fE2'),
     symbol: 'SUSHI',
     decimals: 18,
-    sinceBlock: 10736094,
+    sinceTimestamp: new UnixTime(1598444887),
     category: 'other',
   },
   {
@@ -1587,7 +1587,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9'),
     symbol: 'SXP',
     decimals: 18,
-    sinceBlock: 8363030,
+    sinceTimestamp: new UnixTime(1565978672),
     category: 'other',
   },
   {
@@ -1597,7 +1597,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xba9d4199faB4f26eFE3551D490E3821486f135Ba'),
     symbol: 'CHSB',
     decimals: 8,
-    sinceBlock: 4470432,
+    sinceTimestamp: new UnixTime(1509542207),
     category: 'other',
   },
   {
@@ -1607,7 +1607,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0f2D719407FdBeFF09D87557AbB7232601FD9F29'),
     symbol: 'SYN',
     decimals: 18,
-    sinceBlock: 13116045,
+    sinceTimestamp: new UnixTime(1630182084),
     category: 'other',
   },
   {
@@ -1617,7 +1617,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F'),
     symbol: 'SNX',
     decimals: 18,
-    sinceBlock: 8314597,
+    sinceTimestamp: new UnixTime(1565329008),
     category: 'other',
   },
   {
@@ -1627,7 +1627,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x467Bccd9d29f223BcE8043b84E8C8B282827790F'),
     symbol: 'TEL',
     decimals: 2,
-    sinceBlock: 9369177,
+    sinceTimestamp: new UnixTime(1580196479),
     category: 'other',
   },
   {
@@ -1637,7 +1637,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x68749665FF8D2d112Fa859AA293F07A622782F38'),
     symbol: 'XAUt',
     decimals: 6,
-    sinceBlock: 13524498,
+    sinceTimestamp: new UnixTime(1635679310),
     category: 'other',
   },
   {
@@ -1647,7 +1647,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xdAC17F958D2ee523a2206206994597C13D831ec7'),
     symbol: 'USDT',
     decimals: 6,
-    sinceBlock: 4634748,
+    sinceTimestamp: new UnixTime(1511829681),
     category: 'stablecoin',
   },
   {
@@ -1657,7 +1657,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x249e38Ea4102D0cf8264d3701f1a0E39C4f2DC3B'),
     symbol: 'UFO',
     decimals: 18,
-    sinceBlock: 12478255,
+    sinceTimestamp: new UnixTime(1621608122),
     category: 'other',
   },
   {
@@ -1667,7 +1667,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x3155BA85D5F96b2d030a4966AF206230e46849cb'),
     coingeckoId: CoingeckoId('thorchain-erc20'),
     decimals: 18,
-    sinceBlock: 11644425,
+    sinceTimestamp: new UnixTime(1610511447),
     category: 'other',
   },
   {
@@ -1677,7 +1677,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x2e9d63788249371f1DFC918a52f8d799F4a38C94'),
     symbol: 'TOKE',
     decimals: 18,
-    sinceBlock: 12961612,
+    sinceTimestamp: new UnixTime(1628120225),
     category: 'other',
   },
   {
@@ -1687,7 +1687,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xaA7a9CA87d3694B5755f213B5D04094b8d0F0A6F'),
     symbol: 'TRAC',
     decimals: 18,
-    sinceBlock: 4961540,
+    sinceTimestamp: new UnixTime(1516760378),
     category: 'other',
   },
   {
@@ -1697,7 +1697,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B'),
     symbol: 'TRIBE',
     decimals: 18,
-    sinceBlock: 12147964,
+    sinceTimestamp: new UnixTime(1617205273),
     category: 'other',
   },
   {
@@ -1707,7 +1707,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0000000000085d4780B73119b644AE5ecd22b376'),
     symbol: 'TUSD',
     decimals: 18,
-    sinceBlock: 6988184,
+    sinceTimestamp: new UnixTime(1546294558),
     category: 'stablecoin',
   },
   {
@@ -1717,7 +1717,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c'),
     symbol: 'UOS',
     decimals: 4,
-    sinceBlock: 8164986,
+    sinceTimestamp: new UnixTime(1563321887),
     category: 'other',
   },
   {
@@ -1727,7 +1727,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828'),
     symbol: 'UMA',
     decimals: 18,
-    sinceBlock: 9247089,
+    sinceTimestamp: new UnixTime(1578581061),
     category: 'other',
   },
   {
@@ -1737,7 +1737,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'),
     symbol: 'UNI',
     decimals: 18,
-    sinceBlock: 10861674,
+    sinceTimestamp: new UnixTime(1600107086),
     category: 'other',
   },
   {
@@ -1747,7 +1747,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'),
     symbol: 'USDC',
     decimals: 6,
-    sinceBlock: 6082465,
+    sinceTimestamp: new UnixTime(1533324504),
     category: 'stablecoin',
   },
   {
@@ -1757,7 +1757,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x7d5121505149065b562C789A0145eD750e6E8cdD'),
     symbol: 'VR',
     decimals: 18,
-    sinceBlock: 11095278,
+    sinceTimestamp: new UnixTime(1603226675),
     category: 'other',
   },
   {
@@ -1767,7 +1767,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x8C543AED163909142695f2d2aCd0D55791a9Edb9'),
     symbol: 'VLX',
     decimals: 18,
-    sinceBlock: 12017421,
+    sinceTimestamp: new UnixTime(1615467640),
     category: 'other',
   },
   {
@@ -1777,7 +1777,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x1cF4592ebfFd730c7dc92c1bdFFDfc3B9EfCf29a'),
     symbol: 'WAVES',
     decimals: 18,
-    sinceBlock: 11093593,
+    sinceTimestamp: new UnixTime(1603204574),
     category: 'other',
   },
   {
@@ -1787,7 +1787,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x4691937a7508860F876c9c0a2a617E7d9E945D4B'),
     symbol: 'WOO',
     decimals: 18,
-    sinceBlock: 11067236,
+    sinceTimestamp: new UnixTime(1602855151),
     category: 'other',
   },
   {
@@ -1797,7 +1797,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0F3ADC247E91c3c50bC08721355A41037E89Bc20'),
     symbol: 'ANC',
     decimals: 18,
-    sinceBlock: 12003415,
+    sinceTimestamp: new UnixTime(1615280900),
     category: 'other',
   },
   {
@@ -1807,7 +1807,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'),
     symbol: 'WBTC',
     decimals: 8,
-    sinceBlock: 6766284,
+    sinceTimestamp: new UnixTime(1543095952),
     category: 'other',
   },
   {
@@ -1817,7 +1817,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
     coingeckoId: CoingeckoId('weth'),
     decimals: 18,
-    sinceBlock: 4719568,
+    sinceTimestamp: new UnixTime(1513077455),
     category: 'ether',
   },
   {
@@ -1827,7 +1827,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x09a3EcAFa817268f77BE1283176B946C4ff2E608'),
     symbol: 'MIR',
     decimals: 18,
-    sinceBlock: 11345242,
+    sinceTimestamp: new UnixTime(1606542899),
     category: 'other',
   },
   {
@@ -1837,7 +1837,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x55296f69f40Ea6d20E478533C15A6B08B654E758'),
     symbol: 'XYO',
     decimals: 18,
-    sinceBlock: 4862225,
+    sinceTimestamp: new UnixTime(1515221841),
     category: 'other',
   },
   {
@@ -1847,7 +1847,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e'),
     symbol: 'YFI',
     decimals: 18,
-    sinceBlock: 10475744,
+    sinceTimestamp: new UnixTime(1594972885),
     category: 'other',
   },
   {
@@ -1857,7 +1857,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x25f8087EAD173b73D6e8B84329989A8eEA16CF73'),
     symbol: 'YGG',
     decimals: 18,
-    sinceBlock: 12901564,
+    sinceTimestamp: new UnixTime(1627299017),
     category: 'other',
   },
   {
@@ -1867,7 +1867,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xaa602dE53347579f86b996D2Add74bb6F79462b2'),
     symbol: 'ZMT',
     decimals: 18,
-    sinceBlock: 9129781,
+    sinceTimestamp: new UnixTime(1576744001),
     category: 'other',
   },
   {
@@ -1877,7 +1877,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6'),
     coingeckoId: CoingeckoId('zkspace'),
     decimals: 18,
-    sinceBlock: 11305469,
+    sinceTimestamp: new UnixTime(1606014225),
     category: 'other',
   },
 ]

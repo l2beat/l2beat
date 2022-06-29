@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -20,7 +20,7 @@ export const immutablex: Project = {
   bridges: [
     {
       address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
-      sinceBlock: 12011518,
+      sinceTimestamp: new UnixTime(1615389188),
       tokens: ['ETH', 'IMX', 'USDC'],
     },
   ],

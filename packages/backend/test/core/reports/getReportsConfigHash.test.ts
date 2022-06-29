@@ -3,6 +3,7 @@ import {
   CoingeckoId,
   EthereumAddress,
   ProjectId,
+  UnixTime,
 } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect } from 'earljs'
@@ -176,24 +177,24 @@ function fakeProject(id: string, bridges: BridgeInfo[]): ProjectInfo {
 
 function fakeBridge(
   address: string,
-  sinceBlock: number,
+  timestamp: number,
   tokens: TokenInfo[],
 ): BridgeInfo {
   return {
     address: EthereumAddress('0x' + address + '0'.repeat(40 - address.length)),
-    sinceBlock,
+    sinceTimestamp: new UnixTime(timestamp),
     tokens,
   }
 }
 
-function fakeToken(id: string, sinceBlock: number): TokenInfo {
+function fakeToken(id: string, timestamp: number): TokenInfo {
   return {
     name: 'irrelevant',
     symbol: 'irrelevant',
     id: AssetId(id),
     coingeckoId: CoingeckoId('irrelevant'),
     decimals: 18,
-    sinceBlock,
+    sinceTimestamp: new UnixTime(timestamp),
     category: 'ether', // irrelevant
   }
 }
