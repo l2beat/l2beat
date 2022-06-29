@@ -40,7 +40,7 @@ export interface TokenInfo {
   coingeckoId: CoingeckoId
   /** Token decimals as dictated by the token contract */
   decimals: number
-  /** Block number of the token contract deployment transaction */
+  /** Timestamp of the token contract deployment transaction */
   sinceTimestamp: UnixTime
   /** Which category does the token belong to */
   category: 'ether' | 'stablecoin' | 'other'
