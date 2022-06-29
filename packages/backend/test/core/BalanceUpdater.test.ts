@@ -3,6 +3,7 @@ import {
   Bytes,
   CoingeckoId,
   EthereumAddress,
+  Hash256,
   Logger,
   mock,
   ProjectId,
@@ -14,6 +15,7 @@ import { expect, mockFn } from 'earljs'
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { ProjectInfo } from '../../src/model/ProjectInfo'
 import { BalanceRepository } from '../../src/peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../../src/peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../../src/peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../src/peripherals/ethereum/MulticallClient'
@@ -34,6 +36,7 @@ describe(BalanceUpdater.name, () => {
   const SINCE_0 = START.add(-100, 'days')
   const SINCE_1 = START.add(-50, 'days')
   const START_BLOCK_NUMBER = 10000n
+  const AFTER_BLOCK_NUMBER = 11000n
 
   const mockToken = (id: AssetId, sinceTimestamp: UnixTime): TokenInfo => {
     return {
@@ -80,20 +83,20 @@ describe(BalanceUpdater.name, () => {
     },
   ]
 
-  const fakeFindByBlockNumber = async (blockNumber: bigint) => {
-    return blockNumber === START_BLOCK_NUMBER
+  const fakeFindByTimestamp = async (timestamp: UnixTime) => {
+    return timestamp.equals(START)
       ? {
           timestamp: START,
           blockNumber: START_BLOCK_NUMBER,
         }
       : {
           timestamp: AFTER,
-          blockNumber: START_BLOCK_NUMBER + 1000n,
+          blockNumber: AFTER_BLOCK_NUMBER,
         }
   }
 
   const balanceRepository = mock<BalanceRepository>({
-    getByBlock: mockFn().returns([]),
+    getByTimestamp: mockFn().returns([]),
     addOrUpdateMany: mockFn().returns([]),
   })
 
@@ -102,12 +105,19 @@ describe(BalanceUpdater.name, () => {
   })
 
   const blockNumberRepository = mock<BlockNumberRepository>({
-    findByBlockNumber: fakeFindByBlockNumber,
+    findByTimestamp: fakeFindByTimestamp,
   })
+
+  const balanceStatusRepository = mock<BalanceStatusRepository>({
+    getByConfigHash: async () => [],
+    add: async () => Hash256.random(),
+  })
+
   const balanceUpdater = new BalanceUpdater(
     multicall,
     balanceRepository,
     blockNumberRepository,
+    balanceStatusRepository,
     [],
     Logger.SILENT,
   )
@@ -115,7 +125,7 @@ describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.update.name, () => {
     it('integration test', async () => {
       const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn()
+        getByTimestamp: mockFn()
           .returnsOnce([
             {
               timestamp: START,
@@ -148,14 +158,14 @@ describe(BalanceUpdater.name, () => {
 
       const multicall = mock<MulticallClient>({
         multicall: mockFn()
-          .returnsOnce([MULTICALL_RESPONSE_FAKE, MULTICALL_RESPONSE_FAKE])
+          .returnsOnce([mockMulticall(100n), mockMulticall(200n)])
           .returnsOnce([
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
+            mockMulticall(1n),
+            mockMulticall(2n),
+            mockMulticall(3n),
+            mockMulticall(4n),
+            mockMulticall(5n),
+            mockMulticall(6n),
           ]),
       })
 
@@ -163,13 +173,14 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
 
-      const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
+      const timestamp = [START, AFTER]
 
-      await balanceUpdater.update(blocks)
+      await balanceUpdater.update(timestamp)
 
       expect(multicall.multicall).toHaveBeenCalledExactlyWith([
         [
@@ -188,7 +199,7 @@ describe(BalanceUpdater.name, () => {
             BalanceCall.encode(HOLDER_B, ASSET_C),
             BalanceCall.encode(HOLDER_B, ASSET_D),
           ],
-          START_BLOCK_NUMBER + 1000n,
+          AFTER_BLOCK_NUMBER,
         ],
       ])
 
@@ -205,7 +216,7 @@ describe(BalanceUpdater.name, () => {
               holderAddress: HOLDER_B,
               assetId: ASSET_D,
               timestamp: START,
-              balance: 100n,
+              balance: 200n,
             },
           ],
         ],
@@ -214,69 +225,89 @@ describe(BalanceUpdater.name, () => {
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_A,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 1n,
             },
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_B,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 2n,
             },
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_C,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 3n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_B,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 4n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_C,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 5n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_D,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 6n,
             },
           ],
         ],
       ])
     })
 
-    it('skip processed blocks', async () => {
-      const blocks = [START_BLOCK_NUMBER, START_BLOCK_NUMBER + 1000n]
+    it('skip downloading data that is available', async () => {
+      const timestamps = [START, AFTER]
 
-      await balanceUpdater.update(blocks)
-      await balanceUpdater.update(blocks)
+      await balanceUpdater.update(timestamps)
 
       expect(multicall.multicall.calls.length).toEqual(0)
 
       expect(balanceRepository.addOrUpdateMany.calls.length).toEqual(0)
     })
+
+    it('skips known timestamps', async () => {
+      const timestamps = [START, AFTER]
+
+      const balanceStatusRepository = mock<BalanceStatusRepository>({
+        getByConfigHash: async () => [START, AFTER],
+        add: async () => Hash256.random(),
+      })
+
+      const balanceUpdater = new BalanceUpdater(
+        multicall,
+        balanceRepository,
+        blockNumberRepository,
+        balanceStatusRepository,
+        PROJECTS,
+        Logger.SILENT,
+      )
+
+      await balanceUpdater.update(timestamps)
+
+      expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([])
+    })
   })
 
-  describe(BalanceUpdater.prototype.getMissingDataByBlock.name, () => {
+  describe(BalanceUpdater.prototype.getMissingData.name, () => {
     it('no data in DB', async () => {
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toEqual([
         {
@@ -308,7 +339,7 @@ describe(BalanceUpdater.name, () => {
 
     it('finds missing data', async () => {
       const balanceRepository = mock<BalanceRepository>({
-        getByBlock: mockFn().returns([
+        getByTimestamp: mockFn().returns([
           {
             blockNumber: START_BLOCK_NUMBER,
             holderAddress: HOLDER_A,
@@ -328,13 +359,12 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toBeAnArrayWith(
         {
@@ -379,13 +409,12 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         projects,
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toEqual([])
     })
@@ -398,7 +427,7 @@ describe(BalanceUpdater.name, () => {
           bridges: [
             {
               address: HOLDER_A,
-              sinceTimestamp: new UnixTime(1438272137),
+              sinceTimestamp: START,
               tokens: [mockToken(ASSET_A, SINCE_0), mockToken(ASSET_B, AFTER)],
             },
           ],
@@ -409,13 +438,12 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         projects,
         Logger.SILENT,
       )
 
-      const result = await balanceUpdater.getMissingDataByBlock(
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.getMissingData(START)
 
       expect(result).toEqual([
         {
@@ -429,36 +457,18 @@ describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.fetchBalances.name, () => {
     it('queries and parses data from multicall', async () => {
       const multicall = mock<MulticallClient>({
-        multicall: mockFn().returnsOnce([
-          {
-            success: true,
-            data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064',
-            ),
-          },
-          {
-            success: true,
-            data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064',
-            ),
-          },
-          {
-            success: true,
-            data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064',
-            ),
-          },
-        ]),
-      })
-
-      const blockNumberRepository = mock<BlockNumberRepository>({
-        findByBlockNumber: fakeFindByBlockNumber,
+        multicall: async () => [
+          mockMulticall(100n),
+          mockMulticall(200n),
+          mockMulticall(300n),
+        ],
       })
 
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         [],
         Logger.SILENT,
       )
@@ -469,38 +479,33 @@ describe(BalanceUpdater.name, () => {
         { holder: HOLDER_C, assetId: ASSET_C },
       ]
 
-      const result = await balanceUpdater.fetchBalances(
-        metadata,
-        START_BLOCK_NUMBER,
-      )
+      const result = await balanceUpdater.fetchBalances(metadata, START)
 
       expect(result).toEqual([
         {
           timestamp: START,
           holderAddress: HOLDER_A,
           assetId: ASSET_A,
-          balance: BigInt(100),
+          balance: 100n,
         },
         {
           timestamp: START,
           holderAddress: HOLDER_B,
           assetId: ASSET_B,
-          balance: BigInt(100),
+          balance: 200n,
         },
         {
           timestamp: START,
           holderAddress: HOLDER_C,
           assetId: ASSET_C,
-          balance: BigInt(100),
+          balance: 300n,
         },
       ])
     })
   })
 })
 
-const MULTICALL_RESPONSE_FAKE = {
+const mockMulticall = (amount: bigint) => ({
   success: true,
-  data: Bytes.fromHex(
-    '0x0000000000000000000000000000000000000000000000000000000000000064',
-  ),
-}
+  data: Bytes.fromHex('0x' + amount.toString(16).padStart(64, '0')),
+})

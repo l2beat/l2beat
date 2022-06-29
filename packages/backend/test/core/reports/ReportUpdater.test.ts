@@ -1,8 +1,8 @@
 import { Logger, mock } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 
+import { getConfigHash } from '../../../src/core/getConfigHash'
 import { createReports } from '../../../src/core/reports/createReports'
-import { getReportsConfigHash } from '../../../src/core/reports/getReportsConfigHash'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
 import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../../src/peripherals/database/PriceRepository'
@@ -50,7 +50,7 @@ describe(ReportUpdater.name, () => {
 
       await reportUpdater.update([NOW, NOW.add(1, 'hours')])
 
-      const configHash = getReportsConfigHash(PROJECTS)
+      const configHash = getConfigHash(PROJECTS)
       expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
         [{ configHash, timestamp: NOW }],
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
@@ -99,7 +99,7 @@ describe(ReportUpdater.name, () => {
         NOW.add(2, 'hours'),
       ])
 
-      const configHash = getReportsConfigHash(PROJECTS)
+      const configHash = getConfigHash(PROJECTS)
       expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
         [{ configHash, timestamp: NOW }],
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
