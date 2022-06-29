@@ -1,18 +1,16 @@
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
+import { setTimeout } from 'timers/promises'
 
 import { TaskQueue } from '../../src/tools/TaskQueue'
 import { Logger } from '../../src/tools/Logger'
 
 describe(TaskQueue.name, () => {
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms))
-
   it('executes all jobs', async () => {
     let completed: number[] = []
 
     async function execute(value: number) {
-      await sleep(1)
+      await setTimeout(1)
       completed.push(value)
     }
 
@@ -32,7 +30,7 @@ describe(TaskQueue.name, () => {
     let failures = 10
 
     async function execute(i: number) {
-      await sleep(1)
+      await setTimeout(1)
       if (failures > 0) {
         failures--
         throw new Error('oops')
@@ -54,7 +52,7 @@ describe(TaskQueue.name, () => {
     let completed: number[] = []
 
     async function execute(value: number) {
-      await sleep(1)
+      await setTimeout(1)
       completed.push(value)
     }
 
@@ -73,7 +71,7 @@ describe(TaskQueue.name, () => {
     let completed: number[] = []
 
     async function execute(value: number) {
-      await sleep(1)
+      await setTimeout(1)
       completed.push(value)
     }
 
@@ -92,7 +90,7 @@ describe(TaskQueue.name, () => {
     let completed: number[] = []
 
     async function execute(value: number) {
-      await sleep(1)
+      await setTimeout(1)
       completed.push(value)
     }
 

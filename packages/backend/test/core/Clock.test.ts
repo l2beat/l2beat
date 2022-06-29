@@ -1,7 +1,8 @@
-import { Clock } from '../../src/core/Clock'
-import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { UnixTime } from '@l2beat/common'
+import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
+
+import { Clock } from '../../src/core/Clock'
 
 describe(Clock.name, () => {
   let time: InstalledClock
