@@ -3,6 +3,7 @@ import {
   Bytes,
   CoingeckoId,
   EthereumAddress,
+  Hash256,
   Logger,
   mock,
   ProjectId,
@@ -14,6 +15,7 @@ import { expect, mockFn } from 'earljs'
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { ProjectInfo } from '../../src/model/ProjectInfo'
 import { BalanceRepository } from '../../src/peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../../src/peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../../src/peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../src/peripherals/ethereum/MulticallClient'
@@ -34,6 +36,7 @@ describe(BalanceUpdater.name, () => {
   const SINCE_0 = START.add(-100, 'days')
   const SINCE_1 = START.add(-50, 'days')
   const START_BLOCK_NUMBER = 10000n
+  const AFTER_BLOCK_NUMBER = 11000n
 
   const mockToken = (id: AssetId, sinceTimestamp: UnixTime): TokenInfo => {
     return {
@@ -88,7 +91,7 @@ describe(BalanceUpdater.name, () => {
         }
       : {
           timestamp: AFTER,
-          blockNumber: START_BLOCK_NUMBER + 1000n,
+          blockNumber: AFTER_BLOCK_NUMBER,
         }
   }
 
@@ -104,10 +107,17 @@ describe(BalanceUpdater.name, () => {
   const blockNumberRepository = mock<BlockNumberRepository>({
     findByTimestamp: fakeFindByTimestamp,
   })
+
+  const balanceStatusRepository = mock<BalanceStatusRepository>({
+    getByConfigHash: async () => [],
+    add: async () => Hash256.random(),
+  })
+
   const balanceUpdater = new BalanceUpdater(
     multicall,
     balanceRepository,
     blockNumberRepository,
+    balanceStatusRepository,
     [],
     Logger.SILENT,
   )
@@ -148,14 +158,14 @@ describe(BalanceUpdater.name, () => {
 
       const multicall = mock<MulticallClient>({
         multicall: mockFn()
-          .returnsOnce([MULTICALL_RESPONSE_FAKE, MULTICALL_RESPONSE_FAKE])
+          .returnsOnce([mockMulticall(100n), mockMulticall(200n)])
           .returnsOnce([
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
-            MULTICALL_RESPONSE_FAKE,
+            mockMulticall(1n),
+            mockMulticall(2n),
+            mockMulticall(3n),
+            mockMulticall(4n),
+            mockMulticall(5n),
+            mockMulticall(6n),
           ]),
       })
 
@@ -163,6 +173,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -188,7 +199,7 @@ describe(BalanceUpdater.name, () => {
             BalanceCall.encode(HOLDER_B, ASSET_C),
             BalanceCall.encode(HOLDER_B, ASSET_D),
           ],
-          START_BLOCK_NUMBER + 1000n,
+          AFTER_BLOCK_NUMBER,
         ],
       ])
 
@@ -205,7 +216,7 @@ describe(BalanceUpdater.name, () => {
               holderAddress: HOLDER_B,
               assetId: ASSET_D,
               timestamp: START,
-              balance: 100n,
+              balance: 200n,
             },
           ],
         ],
@@ -214,53 +225,74 @@ describe(BalanceUpdater.name, () => {
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_A,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 1n,
             },
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_B,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 2n,
             },
             {
               holderAddress: HOLDER_A,
               assetId: ASSET_C,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 3n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_B,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 4n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_C,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 5n,
             },
             {
               holderAddress: HOLDER_B,
               assetId: ASSET_D,
-              timestamp: START.add(1, 'hours'),
-              balance: 100n,
+              timestamp: AFTER,
+              balance: 6n,
             },
           ],
         ],
       ])
     })
 
-    it('skip processed blocks', async () => {
+    it('skip downloading data that is available', async () => {
       const timestamps = [START, AFTER]
 
-      await balanceUpdater.update(timestamps)
       await balanceUpdater.update(timestamps)
 
       expect(multicall.multicall.calls.length).toEqual(0)
 
       expect(balanceRepository.addOrUpdateMany.calls.length).toEqual(0)
+    })
+
+    it('skips known timestamps', async () => {
+      const timestamps = [START, AFTER]
+
+      const balanceStatusRepository = mock<BalanceStatusRepository>({
+        getByConfigHash: async () => [START, AFTER],
+        add: async () => Hash256.random(),
+      })
+
+      const balanceUpdater = new BalanceUpdater(
+        multicall,
+        balanceRepository,
+        blockNumberRepository,
+        balanceStatusRepository,
+        PROJECTS,
+        Logger.SILENT,
+      )
+
+      await balanceUpdater.update(timestamps)
+
+      expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([])
     })
   })
 
@@ -270,6 +302,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -326,6 +359,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         PROJECTS,
         Logger.SILENT,
       )
@@ -375,6 +409,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         projects,
         Logger.SILENT,
       )
@@ -392,7 +427,7 @@ describe(BalanceUpdater.name, () => {
           bridges: [
             {
               address: HOLDER_A,
-              sinceTimestamp: new UnixTime(1438272137),
+              sinceTimestamp: START,
               tokens: [mockToken(ASSET_A, SINCE_0), mockToken(ASSET_B, AFTER)],
             },
           ],
@@ -403,6 +438,7 @@ describe(BalanceUpdater.name, () => {
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         projects,
         Logger.SILENT,
       )
@@ -421,36 +457,18 @@ describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.fetchBalances.name, () => {
     it('queries and parses data from multicall', async () => {
       const multicall = mock<MulticallClient>({
-        multicall: mockFn().returnsOnce([
-          {
-            success: true,
-            data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064',
-            ),
-          },
-          {
-            success: true,
-            data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064',
-            ),
-          },
-          {
-            success: true,
-            data: Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000064',
-            ),
-          },
-        ]),
-      })
-
-      const blockNumberRepository = mock<BlockNumberRepository>({
-        findByTimestamp: fakeFindByTimestamp,
+        multicall: async () => [
+          mockMulticall(100n),
+          mockMulticall(200n),
+          mockMulticall(300n),
+        ],
       })
 
       const balanceUpdater = new BalanceUpdater(
         multicall,
         balanceRepository,
         blockNumberRepository,
+        balanceStatusRepository,
         [],
         Logger.SILENT,
       )
@@ -468,28 +486,26 @@ describe(BalanceUpdater.name, () => {
           timestamp: START,
           holderAddress: HOLDER_A,
           assetId: ASSET_A,
-          balance: BigInt(100),
+          balance: 100n,
         },
         {
           timestamp: START,
           holderAddress: HOLDER_B,
           assetId: ASSET_B,
-          balance: BigInt(100),
+          balance: 200n,
         },
         {
           timestamp: START,
           holderAddress: HOLDER_C,
           assetId: ASSET_C,
-          balance: BigInt(100),
+          balance: 300n,
         },
       ])
     })
   })
 })
 
-const MULTICALL_RESPONSE_FAKE = {
+const mockMulticall = (amount: bigint) => ({
   success: true,
-  data: Bytes.fromHex(
-    '0x0000000000000000000000000000000000000000000000000000000000000064',
-  ),
-}
+  data: Bytes.fromHex('0x' + amount.toString(16).padStart(64, '0')),
+})

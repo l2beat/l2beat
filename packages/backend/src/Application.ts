@@ -16,6 +16,7 @@ import { ReportUpdater } from './core/reports/ReportUpdater'
 import { SyncScheduler } from './core/SyncScheduler'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
@@ -42,6 +43,10 @@ export class Application {
     const balanceRepository = new BalanceRepository(database, logger)
     const reportRepository = new ReportRepository(database, logger)
     const reportStatusRepository = new ReportStatusRepository(database, logger)
+    const balanceStatusRepository = new BalanceStatusRepository(
+      database,
+      logger,
+    )
     const cachedDataRepository = new CachedDataRepository(database, logger)
 
     const http = new HttpClient()
@@ -84,6 +89,7 @@ export class Application {
       multicall,
       balanceRepository,
       blockNumberRepository,
+      balanceStatusRepository,
       config.projects,
       logger,
     )

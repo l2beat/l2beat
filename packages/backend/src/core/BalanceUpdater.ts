@@ -1,13 +1,21 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  EthereumAddress,
+  Hash256,
+  Logger,
+  UnixTime,
+} from '@l2beat/common'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
   BalanceRecord,
   BalanceRepository,
 } from '../peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
+import { getConfigHash } from './getConfigHash'
 
 interface HeldAsset {
   holder: EthereumAddress
@@ -15,20 +23,28 @@ interface HeldAsset {
 }
 
 export class BalanceUpdater {
+  private configHash: Hash256
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
     private blockNumberRepository: BlockNumberRepository,
+    private balanceStatusRepository: BalanceStatusRepository,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+    this.configHash = getConfigHash(projects)
   }
 
   async update(timestamps: UnixTime[]) {
-    // TODO: filter processed timestamps
-    this.logger.info('Update started', { timestamps: timestamps.length })
-    for (const timestamp of timestamps) {
+    const known = await this.balanceStatusRepository.getByConfigHash(
+      this.configHash,
+    )
+    const knownSet = new Set(known.map((x) => x.toNumber()))
+
+    const unprocessed = timestamps.filter((x) => !knownSet.has(x.toNumber()))
+    this.logger.info('Update started', { timestamps: unprocessed.length })
+    for (const timestamp of unprocessed) {
       const missing = await this.getMissingData(timestamp)
 
       if (missing.length > 0) {
@@ -42,6 +58,10 @@ export class BalanceUpdater {
           timestamp: timestamp.toNumber(),
         })
       }
+      await this.balanceStatusRepository.add({
+        configHash: this.configHash,
+        timestamp,
+      })
     }
     this.logger.info('Update completed', { timestamps: timestamps.length })
   }
