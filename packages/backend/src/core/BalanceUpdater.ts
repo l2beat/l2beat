@@ -39,7 +39,7 @@ export class BalanceUpdater {
     this.configHash = getConfigHash(projects)
   }
 
-  async getByTimestamp(timestamp: UnixTime, refreshIntervalMs = 1000) {
+  async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }

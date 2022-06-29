@@ -1,4 +1,5 @@
 import { AssetId, Logger, UnixTime } from '@l2beat/common'
+import { setTimeout } from 'timers/promises'
 
 import { Token } from '../model'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
@@ -9,6 +10,8 @@ import {
 } from '../peripherals/database/PriceRepository'
 
 export class PriceUpdater {
+  private knownSet = new Set<number>()
+
   constructor(
     private coingeckoQueryService: CoingeckoQueryService,
     private priceRepository: PriceRepository,
@@ -16,6 +19,13 @@ export class PriceUpdater {
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+  }
+
+  async getPricesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
+    while (!this.knownSet.has(timestamp.toNumber())) {
+      await setTimeout(refreshIntervalMs)
+    }
+    return this.priceRepository.getByTimestamp(timestamp)
   }
 
   async update(timestamps: UnixTime[]) {
@@ -41,6 +51,9 @@ export class PriceUpdater {
       throw error.reason
     }
 
+    for (const timestamp of timestamps) {
+      this.knownSet.add(timestamp.toNumber())
+    }
     this.logger.info('Update completed', { timestamps: timestamps.length })
   }
 

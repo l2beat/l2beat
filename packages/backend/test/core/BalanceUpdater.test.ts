@@ -301,7 +301,7 @@ describe(BalanceUpdater.name, () => {
     })
   })
 
-  describe(BalanceUpdater.prototype.getByTimestamp.name, () => {
+  describe(BalanceUpdater.prototype.getBalancesWhenReady.name, () => {
     const balances: BalanceRecord[] = [
       {
         assetId: AssetId.ETH,
@@ -330,7 +330,7 @@ describe(BalanceUpdater.name, () => {
       )
 
       await balanceUpdater.update([START])
-      const result = await balanceUpdater.getByTimestamp(START)
+      const result = await balanceUpdater.getBalancesWhenReady(START)
 
       expect(result).toEqual(balances)
     })
@@ -346,7 +346,7 @@ describe(BalanceUpdater.name, () => {
       )
 
       let result: unknown = undefined
-      void balanceUpdater.getByTimestamp(START, 10).then((value) => {
+      void balanceUpdater.getBalancesWhenReady(START, 10).then((value) => {
         result = value
       })
 
