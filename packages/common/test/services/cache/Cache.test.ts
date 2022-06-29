@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
-import waitForExpect from 'wait-for-expect'
 import { setTimeout } from 'timers/promises'
+import waitForExpect from 'wait-for-expect'
 
 import { Cache, EmptyCacheBackend, NestedDict } from '../../../src'
 

@@ -1,13 +1,13 @@
 import { expect } from 'earljs'
-import waitForExpect from 'wait-for-expect'
 import { setTimeout } from 'timers/promises'
+import waitForExpect from 'wait-for-expect'
 
-import { TaskQueue } from '../../src/tools/TaskQueue'
 import { Logger } from '../../src/tools/Logger'
+import { TaskQueue } from '../../src/tools/TaskQueue'
 
 describe(TaskQueue.name, () => {
   it('executes all jobs', async () => {
-    let completed: number[] = []
+    const completed: number[] = []
 
     async function execute(value: number) {
       await setTimeout(1)
@@ -49,7 +49,7 @@ describe(TaskQueue.name, () => {
   })
 
   it('can add jobs to front', async () => {
-    let completed: number[] = []
+    const completed: number[] = []
 
     async function execute(value: number) {
       await setTimeout(1)
@@ -68,7 +68,7 @@ describe(TaskQueue.name, () => {
   })
 
   it('can add jobs to front', async () => {
-    let completed: number[] = []
+    const completed: number[] = []
 
     async function execute(value: number) {
       await setTimeout(1)
@@ -87,7 +87,7 @@ describe(TaskQueue.name, () => {
   })
 
   it('can add jobs only if empty', async () => {
-    let completed: number[] = []
+    const completed: number[] = []
 
     async function execute(value: number) {
       await setTimeout(1)
