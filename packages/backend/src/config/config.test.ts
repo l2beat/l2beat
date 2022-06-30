@@ -20,7 +20,7 @@ export function getTestConfig(): Config {
     core: {
       minBlockTimestamp: new UnixTime(0),
       safeBlockRefreshIntervalMs: 0,
-      safeBlockBlockOffset: 0n,
+      safeTimeOffsetSeconds: 0,
     },
     tokens: [],
     projects: [],

@@ -11,6 +11,7 @@ import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
 import { BalanceUpdater } from './core/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
+import { Clock } from './core/Clock'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { SyncScheduler } from './core/SyncScheduler'
@@ -72,6 +73,11 @@ export class Application {
 
     /* - - - - - CORE - - - - - */
 
+    const clock = new Clock(
+      config.core.minBlockTimestamp,
+      config.core.safeTimeOffsetSeconds,
+    )
+
     const blockUpdater = new BlockNumberUpdater(
       etherscanClient,
       blockNumberRepository,
@@ -95,10 +101,11 @@ export class Application {
     )
 
     const reportUpdater = new ReportUpdater(
-      priceRepository,
-      balanceRepository,
+      priceUpdater,
+      balanceUpdater,
       reportRepository,
       reportStatusRepository,
+      clock,
       config.projects,
       logger,
     )
@@ -107,7 +114,6 @@ export class Application {
       blockUpdater,
       priceUpdater,
       balanceUpdater,
-      reportUpdater,
       config.core.minBlockTimestamp,
       logger,
     )
@@ -149,6 +155,7 @@ export class Application {
       if (config.syncEnabled) {
         reportController.start()
         syncScheduler.start()
+        await reportUpdater.start()
       }
     }
   }

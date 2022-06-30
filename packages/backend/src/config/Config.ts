@@ -16,7 +16,7 @@ export interface Config {
   core: {
     minBlockTimestamp: UnixTime
     safeBlockRefreshIntervalMs: number
-    safeBlockBlockOffset: bigint
+    safeTimeOffsetSeconds: number
   }
   tokens: Token[]
   projects: ProjectInfo[]

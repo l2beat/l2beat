@@ -1,4 +1,5 @@
 import { expect } from 'earljs'
+import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
 import { Cache, EmptyCacheBackend, NestedDict } from '../../../src'
@@ -95,12 +96,10 @@ describe(Cache.name, () => {
 
   it('can wrap an async function', async () => {
     let calls = 0
-    const sleep = (ms: number) =>
-      new Promise((resolve) => setTimeout(resolve, ms))
 
     async function add(a: number, b: number) {
       calls++
-      await sleep(1)
+      await setTimeout(1)
       return { sum: a + b }
     }
 

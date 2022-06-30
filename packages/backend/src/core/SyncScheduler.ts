@@ -1,38 +1,29 @@
-import { getTimestamps, JobQueue, Logger, UnixTime } from '@l2beat/common'
+import { getTimestamps, Logger, TaskQueue, UnixTime } from '@l2beat/common'
 
 import { BalanceUpdater } from './BalanceUpdater'
 import { BlockNumberUpdater } from './BlockNumberUpdater'
 import { PriceUpdater } from './PriceUpdater'
-import { ReportUpdater } from './reports/ReportUpdater'
 
 export class SyncScheduler {
-  private jobQueue: JobQueue
+  private taskQueue: TaskQueue<void>
   private intervalID: NodeJS.Timer | undefined
 
   constructor(
     private blockUpdater: BlockNumberUpdater,
     private priceUpdater: PriceUpdater,
     private balanceUpdater: BalanceUpdater,
-    private reportUpdater: ReportUpdater,
     private minTimestamp: UnixTime,
     private logger: Logger,
     private interval: number = 10 * 60 * 1000,
   ) {
     this.logger = this.logger.for(this)
-    this.jobQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
+    this.taskQueue = new TaskQueue(this.sync.bind(this), this.logger)
   }
 
   start() {
-    this.jobQueue.add({
-      name: `sync triggered @ ${UnixTime.now().toString()}`,
-      execute: () => this.sync(),
-    })
+    this.taskQueue.addIfEmpty()
     this.intervalID = setInterval(
-      () =>
-        this.jobQueue.add({
-          name: `sync triggered @ ${UnixTime.now().toString()}`,
-          execute: () => this.sync(),
-        }),
+      () => this.taskQueue.addIfEmpty(),
       this.interval,
     )
   }
@@ -50,7 +41,6 @@ export class SyncScheduler {
     await this.blockUpdater.update(timestamps)
     await this.priceUpdater.update(timestamps)
     await this.balanceUpdater.update(timestamps)
-    await this.reportUpdater.update(timestamps)
 
     this.logger.info('Update completed', { timestamps: timestamps.length })
   }
