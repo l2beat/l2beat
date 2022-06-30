@@ -144,7 +144,7 @@ export const zksync: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0x204c6BADaD00Ef326dE0921A940D8267060d1033',
+              implementation: '0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd',
             },
           },
           {
@@ -154,7 +154,7 @@ export const zksync: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-              implementation: '0xEF974376054490C8d87b8438b4cEC00391ac05b9',
+              implementation: '0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC',
             },
           },
           {
