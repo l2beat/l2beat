@@ -11,10 +11,15 @@ import {
 } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
+import { setTimeout } from 'timers/promises'
+import waitForExpect from 'wait-for-expect'
 
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { ProjectInfo } from '../../src/model/ProjectInfo'
-import { BalanceRepository } from '../../src/peripherals/database/BalanceRepository'
+import {
+  BalanceRecord,
+  BalanceRepository,
+} from '../../src/peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../src/peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../../src/peripherals/ethereum/calls/BalanceCall'
@@ -293,6 +298,66 @@ describe(BalanceUpdater.name, () => {
       await balanceUpdater.update(timestamps)
 
       expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([])
+    })
+  })
+
+  describe(BalanceUpdater.prototype.getBalancesWhenReady.name, () => {
+    const balances: BalanceRecord[] = [
+      {
+        assetId: AssetId.ETH,
+        balance: 1234n,
+        holderAddress: EthereumAddress.random(),
+        timestamp: START,
+      },
+    ]
+
+    const balanceRepository = mock<BalanceRepository>({
+      getByTimestamp: async () => balances,
+    })
+
+    const balanceStatusRepository = mock<BalanceStatusRepository>({
+      getByConfigHash: async () => [START],
+    })
+
+    it('returns immediately if the data is available', async () => {
+      const balanceUpdater = new BalanceUpdater(
+        multicall,
+        balanceRepository,
+        blockNumberRepository,
+        balanceStatusRepository,
+        PROJECTS,
+        Logger.SILENT,
+      )
+
+      await balanceUpdater.update([START])
+      const result = await balanceUpdater.getBalancesWhenReady(START)
+
+      expect(result).toEqual(balances)
+    })
+
+    it('waits until data is available, then returns', async () => {
+      const balanceUpdater = new BalanceUpdater(
+        multicall,
+        balanceRepository,
+        blockNumberRepository,
+        balanceStatusRepository,
+        PROJECTS,
+        Logger.SILENT,
+      )
+
+      let result: unknown = undefined
+      void balanceUpdater.getBalancesWhenReady(START, 10).then((value) => {
+        result = value
+      })
+
+      await setTimeout(20)
+      expect(result).toEqual(undefined)
+
+      await balanceUpdater.update([START])
+
+      await waitForExpect(() => {
+        expect(result).toEqual(balances)
+      })
     })
   })
 

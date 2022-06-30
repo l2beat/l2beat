@@ -5,7 +5,6 @@ import waitForExpect from 'wait-for-expect'
 import { BalanceUpdater } from '../../src/core/BalanceUpdater'
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
 import { PriceUpdater } from '../../src/core/PriceUpdater'
-import { ReportUpdater } from '../../src/core/reports/ReportUpdater'
 import { SyncScheduler } from '../../src/core/SyncScheduler'
 
 describe(SyncScheduler.name, () => {
@@ -17,14 +16,10 @@ describe(SyncScheduler.name, () => {
     const balanceUpdater = mock<BalanceUpdater>({
       update: mockFn().returns(null),
     })
-    const reportUpdater = mock<ReportUpdater>({
-      update: mockFn().returns(null),
-    })
     const syncScheduler = new SyncScheduler(
       blockNumberUpdater,
       priceUpdater,
       balanceUpdater,
-      reportUpdater,
       UnixTime.now().add(-2, 'hours'),
       Logger.SILENT,
     )
@@ -35,7 +30,6 @@ describe(SyncScheduler.name, () => {
       expect(blockNumberUpdater.update.calls.length).toEqual(1)
       expect(priceUpdater.update.calls.length).toEqual(1)
       expect(balanceUpdater.update.calls.length).toEqual(1)
-      expect(reportUpdater.update.calls.length).toEqual(1)
     })
 
     syncScheduler.stop()

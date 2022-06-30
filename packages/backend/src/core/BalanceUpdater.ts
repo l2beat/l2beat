@@ -5,6 +5,7 @@ import {
   Logger,
   UnixTime,
 } from '@l2beat/common'
+import { setTimeout } from 'timers/promises'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
@@ -24,6 +25,8 @@ interface HeldAsset {
 
 export class BalanceUpdater {
   private configHash: Hash256
+  private knownSet = new Set<number>()
+
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
@@ -36,13 +39,24 @@ export class BalanceUpdater {
     this.configHash = getConfigHash(projects)
   }
 
+  async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
+    while (!this.knownSet.has(timestamp.toNumber())) {
+      await setTimeout(refreshIntervalMs)
+    }
+    return this.balanceRepository.getByTimestamp(timestamp)
+  }
+
   async update(timestamps: UnixTime[]) {
     const known = await this.balanceStatusRepository.getByConfigHash(
       this.configHash,
     )
-    const knownSet = new Set(known.map((x) => x.toNumber()))
+    for (const timestamp of known) {
+      this.knownSet.add(timestamp.toNumber())
+    }
+    const unprocessed = timestamps.filter(
+      (x) => !this.knownSet.has(x.toNumber()),
+    )
 
-    const unprocessed = timestamps.filter((x) => !knownSet.has(x.toNumber()))
     this.logger.info('Update started', { timestamps: unprocessed.length })
     for (const timestamp of unprocessed) {
       const missing = await this.getMissingData(timestamp)
@@ -58,6 +72,7 @@ export class BalanceUpdater {
           timestamp: timestamp.toNumber(),
         })
       }
+      this.knownSet.add(timestamp.toNumber())
       await this.balanceStatusRepository.add({
         configHash: this.configHash,
         timestamp,

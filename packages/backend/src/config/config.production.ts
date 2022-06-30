@@ -25,7 +25,7 @@ export function getProductionConfig(): Config {
     core: {
       minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       safeBlockRefreshIntervalMs: 5 * 60 * 1000,
-      safeBlockBlockOffset: 100n,
+      safeTimeOffsetSeconds: 60 * 60,
     },
     tokens: tokenList.map((token) => ({
       ...token,

@@ -1,4 +1,4 @@
-import { JobQueue, Logger } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
@@ -11,7 +11,7 @@ import { getSufficientlySynced } from './filter/getSufficientlySynced'
 import { generateReportOutput } from './generateReportOutput'
 
 export class ReportController {
-  private jobQueue: JobQueue
+  private taskQueue: TaskQueue<void>
 
   constructor(
     private reportRepository: ReportRepository,
@@ -22,19 +22,15 @@ export class ReportController {
     private interval: number = 5 * 60 * 1000,
   ) {
     this.logger = this.logger.for(this)
-    this.jobQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
+    this.taskQueue = new TaskQueue(
+      this.generateDailyAndCache.bind(this),
+      this.logger,
+    )
   }
 
   start() {
-    this.addJob()
-    setInterval(() => this.addJob(), this.interval)
-  }
-
-  private addJob() {
-    this.jobQueue.add({
-      name: 'ReportController started @ ${UnixTime.now().toString()}',
-      execute: () => this.generateDailyAndCache(),
-    })
+    this.taskQueue.addIfEmpty()
+    setInterval(() => this.taskQueue.addIfEmpty(), this.interval)
   }
 
   async getDaily() {

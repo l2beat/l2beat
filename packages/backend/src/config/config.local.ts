@@ -23,7 +23,7 @@ export function getLocalConfig(): Config {
       // TODO: This should probably be configurable
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       safeBlockRefreshIntervalMs: 30 * 1000,
-      safeBlockBlockOffset: 100n,
+      safeTimeOffsetSeconds: 60 * 60,
     },
     tokens: tokenList.map((token) => ({
       ...token,
