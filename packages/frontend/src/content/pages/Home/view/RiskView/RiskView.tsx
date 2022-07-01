@@ -49,11 +49,14 @@ export function RiskView({ items }: RiskViewProps) {
       <TableView items={items} columns={columns} />
       <div className="RiskView-Symbols">
         <p>
-          <StarkWareIcon /> &ndash; This project is built using StarkEx.
+          <StarkWareIcon />
+          <span>&ndash;</span>
+          <span>This project is built using StarkEx.</span>
         </p>
         <p>
-          <OptimismIcon /> &ndash; This project is based on Optimism&apos;s code
-          base.
+          <OptimismIcon />
+          <span>&ndash;</span>
+          <span>This project is based on Optimism&apos;s code base.</span>
         </p>
       </div>
     </div>
