@@ -4,6 +4,7 @@ import { providers } from 'ethers'
 
 import {
   Contracts,
+  GovernanceProxyCreationBlock,
   Treasury,
   Upgradeable,
   UpgradeMasterOwners,
@@ -31,10 +32,9 @@ async function getUpgradeableContracts(
 async function getActiveValidators(
   governanceProxy: MainnetSdk['governanceProxy'],
 ) {
-  const fromBlock = 10269890
   const events = await governanceProxy.queryFilter(
     governanceProxy.filters.ValidatorStatusUpdate(),
-    fromBlock,
+    GovernanceProxyCreationBlock,
   )
   const activeValidators = events.reduce<string[]>((acc, { args: e }) => {
     const idx = acc.indexOf(e.validatorAddress)
@@ -42,7 +42,6 @@ async function getActiveValidators(
     if (e.isActive && idx === -1) acc.push(e.validatorAddress)
     return acc
   }, [])
-
   return activeValidators
 }
 

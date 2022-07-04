@@ -28,3 +28,4 @@ export const UpgradeMasterOwners = [
   '0xa265146cA40F52cfC439888D0b4291b5440e6769',
 ]
 export const UpgradeMasterThreshold = 3
+export const GovernanceProxyCreationBlock = 10269890
