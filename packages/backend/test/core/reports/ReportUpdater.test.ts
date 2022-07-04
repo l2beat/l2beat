@@ -1,4 +1,4 @@
-import { Logger, mock, UnixTime } from '@l2beat/common'
+import { Logger, mock } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
@@ -48,7 +48,7 @@ describe(ReportUpdater.name, () => {
         balanceUpdater,
         reportRepository,
         reportStatusRepository,
-        new Clock(new UnixTime(0), 0),
+        mock<Clock>(),
         PROJECTS,
         Logger.SILENT,
       )
