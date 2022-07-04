@@ -155,8 +155,7 @@ function getPrettyParameters(parameters: LoggerParameters | undefined) {
   }
   const previous = inspect.styles
   const newStyles = { ...previous }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
   ;(newStyles as any).name = 'magenta'
   newStyles.string = ''
   newStyles.number = ''
