@@ -15,11 +15,17 @@
   font-size: var(--font-s);
 
   p {
-    margin: 0;
+    margin: 0 0 16px 0;
+    display: flex;
+  }
+
+  span {
+    margin-left: 4px;
   }
 
   svg {
     position: relative;
-    top: 5px;
+    min-width: 24px;
+    top: -0.25em;
   }
 }
