@@ -14,15 +14,16 @@
     "generate-types": "eth-sdk -p ./src/eth-sdk"
   },
   "dependencies": {
+    "@dethcrypto/eth-sdk": "^0.3.3",
     "@l2beat/common": "*",
     "@types/node": "^17.0.41",
     "@types/node-fetch": "^2.5.12",
     "dotenv": "^16.0.1",
-    "ethers": "^5.6.8",
-    "@dethcrypto/eth-sdk": "^0.3.3"
+    "ethers": "^5.6.8"
   },
   "devDependencies": {
     "@dethcrypto/eth-sdk-client": "^0.1.6",
+    "@types/glob": "^7.2.0",
     "ts-node": "^10.8.2"
   }
 }
