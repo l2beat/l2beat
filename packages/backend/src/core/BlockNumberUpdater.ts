@@ -15,10 +15,7 @@ export class BlockNumberUpdater {
     this.logger = this.logger.for(this)
   }
 
-  async getBlockNumberWhenReady(
-    timestamp: UnixTime,
-    refreshIntervalMs = 1000,
-  ) {
+  async getBlockNumberWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       const blockNumber = this.blocksByTimestamp.get(timestamp.toNumber())

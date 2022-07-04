@@ -131,9 +131,11 @@ describe(BlockNumberUpdater.name, () => {
       )
 
       let result: unknown = undefined
-      void blockNumberUpdater.getBlockNumberWhenReady(timestamp, 10).then((value) => {
-        result = value
-      })
+      void blockNumberUpdater
+        .getBlockNumberWhenReady(timestamp, 10)
+        .then((value) => {
+          result = value
+        })
 
       await setTimeout(20)
       expect(result).toEqual(undefined)

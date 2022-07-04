@@ -10,7 +10,7 @@ import { createReports } from '../../../src/core/reports/createReports'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
-import { BALANCES, NOW, PRICES, PROJECTS } from './fakes'
+import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
 
 describe(ReportUpdater.name, () => {
   const FUTURE_PRICES = PRICES.map((price) => ({
