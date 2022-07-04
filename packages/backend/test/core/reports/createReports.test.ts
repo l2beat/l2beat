@@ -40,7 +40,7 @@ describe(createReports.name, () => {
 })
 
 describe(aggregateBalancesPerProject.name, () => {
-  it('discards balances before bridge sinceTimestamp', () => {
+  it('skips balances before bridge sinceTimestamp', () => {
     const result = aggregateBalancesPerProject(PROJECTS, [
       {
         holderAddress: PROJECTS[0].bridges[0].address,
