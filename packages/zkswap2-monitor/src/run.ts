@@ -125,6 +125,8 @@ export async function run() {
 
   const networkGovernor = await sdk.governanceProxy.networkGovernor()
   assert.equal(networkGovernor, Contracts.upgradeMaster)
+  const tokenLister = await sdk.governanceProxy.tokenLister()
+  assert.equal(tokenLister, Contracts.tokenLister)
 
   assert.deepEqual(await getActiveValidators(sdk.governanceProxy), Validators)
 }

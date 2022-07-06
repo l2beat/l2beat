@@ -15,6 +15,7 @@ export const Contracts: Record<string, Address> = {
   upgradeMaster: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
   zkSyncCommitBlock: '0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4',
   zkSyncExit: '0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0',
+  tokenLister: '0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E',
 }
 export const Validators = ['0x38101ae98196C8BCf7dF1835Bf3983B384272ae4']
 export const Upgradeable = [

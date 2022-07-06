@@ -13,7 +13,6 @@ export default defineConfig({
       governanceProxy: Contracts.governanceProxy,
       pairManagerProxy: Contracts.pairManagerProxy,
       mainProxy: Contracts.mainProxy,
-      // tokenGovernance: Contracts.tokenGovernance,
     },
   },
 })
