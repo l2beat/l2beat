@@ -1,5 +1,5 @@
 {
-  "name": "@l2beat/zkswap1-monitor",
+  "name": "@l2beat/zkswap-monitor",
   "version": "0.1.0",
   "private": true,
   "scripts": {
