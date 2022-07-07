@@ -5,7 +5,7 @@ import {
   aggregateBalancesPerProject,
   createReports,
 } from '../../../src/core/reports/createReports'
-import { BALANCES, NOW, PRICES, PROJECTS } from './fakes'
+import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
 
 describe(createReports.name, () => {
   it('correctly aggregates many calculated balances', () => {

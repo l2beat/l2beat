@@ -82,7 +82,7 @@ export const PROJECTS: ProjectInfo[] = [
   },
 ]
 
-export function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
+function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
   return {
     name: 'Fake',
     id: AssetId('fake-token'),
