@@ -1,39 +1,33 @@
-import { Logger, ProjectId, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { BalanceRepository } from '../../../src/peripherals/database/BalanceRepository'
-import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
-import { fakeBalance, fakeReport } from '../../fakes'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../../src/peripherals/database/ReportRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(ReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const reportsRepository = new ReportRepository(database, Logger.SILENT)
-  const balancesRepository = new BalanceRepository(database, Logger.SILENT)
 
-  const TODAY = UnixTime.now().toStartOf('day')
+  const TIME_0 = UnixTime.now().toStartOf('day')
+  const TIME_1 = TIME_0.add(1, 'hours')
+  const TIME_2 = TIME_0.add(2, 'hours')
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
   beforeEach(async () => {
-    await balancesRepository.deleteAll()
     await reportsRepository.deleteAll()
   })
 
   describe(ReportRepository.prototype.getDaily.name, () => {
     it('filters data to get only full days', async () => {
-      const REPORT = fakeReport({ timestamp: TODAY })
-      await reportsRepository.addOrUpdateMany([REPORT])
-
-      await balancesRepository.addOrUpdateMany([
-        fakeBalance({
-          timestamp: TODAY,
-        }),
-        fakeBalance({
-          timestamp: TODAY.add(1, 'hours'),
-        }),
+      const REPORT = fakeReport({ timestamp: TIME_0 })
+      await reportsRepository.addOrUpdateMany([
+        REPORT,
+        fakeReport({ timestamp: TIME_1 }),
       ])
-
       const result = await reportsRepository.getDaily()
 
       expect(result).toBeAnArrayWith(REPORT)
@@ -42,23 +36,11 @@ describe(ReportRepository.name, () => {
 
     it('returns sorted data', async () => {
       const REPORTS = [
-        fakeReport({ timestamp: TODAY }),
-        fakeReport({ timestamp: TODAY.add(1, 'days') }),
-        fakeReport({ timestamp: TODAY.add(2, 'days') }),
+        fakeReport({ timestamp: TIME_0.add(-2, 'days') }),
+        fakeReport({ timestamp: TIME_0.add(-1, 'days') }),
+        fakeReport({ timestamp: TIME_0 }),
       ]
       await reportsRepository.addOrUpdateMany(REPORTS)
-
-      await balancesRepository.addOrUpdateMany([
-        fakeBalance({
-          timestamp: TODAY,
-        }),
-        fakeBalance({
-          timestamp: TODAY.add(1, 'days'),
-        }),
-        fakeBalance({
-          timestamp: TODAY.add(2, 'days'),
-        }),
-      ])
       const result = await reportsRepository.getDaily()
 
       expect(result).toEqual(REPORTS)
@@ -68,13 +50,13 @@ describe(ReportRepository.name, () => {
   describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
     it('add or update', async () => {
       const REPORTS_1 = [
-        fakeReport({ timestamp: TODAY }),
-        fakeReport({ timestamp: TODAY.add(1, 'hours') }),
+        fakeReport({ timestamp: TIME_0 }),
+        fakeReport({ timestamp: TIME_1 }),
       ]
 
       const REPORTS_2 = [
-        fakeReport({ timestamp: TODAY.add(1, 'hours') }),
-        fakeReport({ timestamp: TODAY.add(2, 'hours') }),
+        fakeReport({ timestamp: TIME_1 }),
+        fakeReport({ timestamp: TIME_2 }),
       ]
       await reportsRepository.addOrUpdateMany(REPORTS_1)
 
@@ -93,7 +75,10 @@ describe(ReportRepository.name, () => {
   })
 
   it(ReportRepository.prototype.getAll.name, async () => {
-    const reports = [fakeReport(), fakeReport()]
+    const reports = [
+      fakeReport({ timestamp: TIME_0 }),
+      fakeReport({ timestamp: TIME_1 }),
+    ]
     await reportsRepository.addOrUpdateMany(reports)
 
     const results = await reportsRepository.getAll()
@@ -103,7 +88,10 @@ describe(ReportRepository.name, () => {
   })
 
   it(ReportRepository.prototype.deleteAll.name, async () => {
-    await reportsRepository.addOrUpdateMany([fakeReport(), fakeReport()])
+    await reportsRepository.addOrUpdateMany([
+      fakeReport({ timestamp: TIME_0 }),
+      fakeReport({ timestamp: TIME_1 }),
+    ])
 
     await reportsRepository.deleteAll()
 
@@ -114,10 +102,10 @@ describe(ReportRepository.name, () => {
 
   it(ReportRepository.prototype.getLatestPerProject.name, async () => {
     const reports = [
-      fakeReport({ projectId: PROJECT_A, timestamp: TODAY }),
-      fakeReport({ projectId: PROJECT_B, timestamp: TODAY }),
-      fakeReport({ projectId: PROJECT_A, timestamp: TODAY.add(1, 'hours') }),
-      fakeReport({ projectId: PROJECT_B, timestamp: TODAY.add(1, 'hours') }),
+      fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
+      fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+      fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
+      fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
     ]
     await reportsRepository.addOrUpdateMany(reports)
 
@@ -130,4 +118,16 @@ describe(ReportRepository.name, () => {
       ]),
     )
   })
+
+  function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
+    return {
+      timestamp: UnixTime.now(),
+      projectId: ProjectId('fake-project'),
+      asset: AssetId('fake-asset'),
+      balance: 1234n,
+      balanceUsd: 1234n,
+      balanceEth: 1234n,
+      ...report,
+    }
+  }
 })

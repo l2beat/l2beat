@@ -8,6 +8,7 @@
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict"
   ],
@@ -32,6 +33,7 @@
       { "devDependencies": false }
     ],
     "import/no-unresolved": ["error", { "ignore": ["^knex/types/tables$"] }],
+    "no-constant-condition": "off",
     "no-only-tests/no-only-tests": "error",
     "no-restricted-imports": [
       "error",

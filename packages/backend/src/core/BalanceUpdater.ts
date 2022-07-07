@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   Hash256,
   Logger,
+  TaskQueue,
   UnixTime,
 } from '@l2beat/common'
 import { setTimeout } from 'timers/promises'
@@ -13,9 +14,10 @@ import {
   BalanceRepository,
 } from '../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../peripherals/database/BalanceStatusRepository'
-import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
+import { BlockNumberUpdater } from './BlockNumberUpdater'
+import { Clock } from './Clock'
 import { getConfigHash } from './getConfigHash'
 
 interface HeldAsset {
@@ -26,12 +28,14 @@ interface HeldAsset {
 export class BalanceUpdater {
   private configHash: Hash256
   private knownSet = new Set<number>()
+  private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
   constructor(
     private multicall: MulticallClient,
     private balanceRepository: BalanceRepository,
-    private blockNumberRepository: BlockNumberRepository,
+    private blockNumberUpdater: BlockNumberUpdater,
     private balanceStatusRepository: BalanceStatusRepository,
+    private clock: Clock,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
@@ -46,81 +50,55 @@ export class BalanceUpdater {
     return this.balanceRepository.getByTimestamp(timestamp)
   }
 
-  async update(timestamps: UnixTime[]) {
+  async start() {
     const known = await this.balanceStatusRepository.getByConfigHash(
       this.configHash,
     )
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
     }
-    const unprocessed = timestamps.filter(
-      (x) => !this.knownSet.has(x.toNumber()),
-    )
 
-    this.logger.info('Update started', { timestamps: unprocessed.length })
-    for (const timestamp of unprocessed) {
-      const missing = await this.getMissingData(timestamp)
-
-      if (missing.length > 0) {
-        const balances = await this.fetchBalances(missing, timestamp)
-        await this.balanceRepository.addOrUpdateMany(balances)
-        this.logger.info('Updated balances', {
-          timestamp: timestamp.toNumber(),
-        })
-      } else {
-        this.logger.info('Skipped updating balances', {
-          timestamp: timestamp.toNumber(),
-        })
+    this.logger.info('Started')
+    return this.clock.onEveryHour((timestamp) => {
+      if (!this.knownSet.has(timestamp.toNumber())) {
+        // we add to front to sync from newest to oldest
+        this.taskQueue.addToFront(timestamp)
       }
-      this.knownSet.add(timestamp.toNumber())
-      await this.balanceStatusRepository.add({
-        configHash: this.configHash,
-        timestamp,
-      })
-    }
-    this.logger.info('Update completed', { timestamps: timestamps.length })
+    })
   }
 
-  async getMissingData(timestamp: UnixTime): Promise<HeldAsset[]> {
+  async update(timestamp: UnixTime) {
+    this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const known = await this.balanceRepository.getByTimestamp(timestamp)
-    const knownSet = new Set(
-      known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
-    )
+    const missing = getMissingData(timestamp, known, this.projects)
 
-    const missing: HeldAsset[] = []
-    for (const project of this.projects) {
-      for (const bridge of project.bridges) {
-        if (bridge.sinceTimestamp.gt(timestamp)) {
-          continue
-        }
-        for (const token of bridge.tokens) {
-          if (token.sinceTimestamp.gt(timestamp)) {
-            continue
-          }
-          const entry = {
-            holder: bridge.address,
-            assetId: token.id,
-          }
-          if (
-            !knownSet.has(
-              `${entry.holder.toString()}-${entry.assetId.toString()}`,
-            )
-          )
-            missing.push(entry)
-        }
-      }
+    if (missing.length > 0) {
+      const balances = await this.fetchBalances(missing, timestamp)
+      await this.balanceRepository.addOrUpdateMany(balances)
+      this.logger.debug('Updated balances', {
+        timestamp: timestamp.toNumber(),
+      })
+    } else {
+      this.logger.debug('Skipped updating balances', {
+        timestamp: timestamp.toNumber(),
+      })
     }
-    return missing
+    this.knownSet.add(timestamp.toNumber())
+    await this.balanceStatusRepository.add({
+      configHash: this.configHash,
+      timestamp,
+    })
+    this.logger.info('Update completed', { timestamp: timestamp.toNumber() })
   }
 
   async fetchBalances(
     missingData: HeldAsset[],
     timestamp: UnixTime,
   ): Promise<BalanceRecord[]> {
-    const blockNumberRecord = await this.blockNumberRepository.findByTimestamp(
+    const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
       timestamp,
     )
-    if (!blockNumberRecord) {
+    if (!blockNumber) {
       throw new Error('Programmer error: No timestamp for this block number')
     }
 
@@ -130,7 +108,7 @@ export class BalanceUpdater {
 
     const multicallResponses = await this.multicall.multicall(
       calls,
-      blockNumberRecord.blockNumber,
+      blockNumber,
     )
 
     return multicallResponses.map((res, i) => ({
@@ -140,4 +118,39 @@ export class BalanceUpdater {
       timestamp,
     }))
   }
+}
+
+export function getMissingData(
+  timestamp: UnixTime,
+  known: BalanceRecord[],
+  projects: ProjectInfo[],
+): HeldAsset[] {
+  const knownSet = new Set(
+    known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
+  )
+
+  const missing: HeldAsset[] = []
+  for (const project of projects) {
+    for (const bridge of project.bridges) {
+      if (bridge.sinceTimestamp.gt(timestamp)) {
+        continue
+      }
+      for (const token of bridge.tokens) {
+        if (token.sinceTimestamp.gt(timestamp)) {
+          continue
+        }
+        const entry = {
+          holder: bridge.address,
+          assetId: token.id,
+        }
+        if (
+          !knownSet.has(
+            `${entry.holder.toString()}-${entry.assetId.toString()}`,
+          )
+        )
+          missing.push(entry)
+      }
+    }
+  }
+  return missing
 }

@@ -14,7 +14,6 @@ import {
 } from '../../../../src/api/controllers/report/aggregateReportsDaily'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
-import { fakeReport } from '../../../fakes'
 import { mockEntry } from './addOptimismToken.test'
 
 describe(aggregateReportsDaily.name, () => {
@@ -28,15 +27,19 @@ describe(aggregateReportsDaily.name, () => {
   const ETH = 1n
   const BALANCE = 1000n
 
-  function mockReport(projectId: ProjectId, asset: AssetId, offset: number) {
-    return fakeReport({
+  function fakeReport(
+    projectId: ProjectId,
+    asset: AssetId,
+    offset: number,
+  ): ReportRecord {
+    return {
       projectId,
       timestamp: TODAY.add(offset, 'days'),
       asset,
       balance: BALANCE,
       balanceUsd: USD,
       balanceEth: ETH,
-    })
+    }
   }
 
   const PROJECTS: ProjectInfo[] = [
@@ -74,8 +77,8 @@ describe(aggregateReportsDaily.name, () => {
 
   it('one project one bridge one token', () => {
     const reports = [
-      mockReport(ARBITRUM, AssetId.DAI, -1),
-      mockReport(ARBITRUM, AssetId.DAI, 0),
+      fakeReport(ARBITRUM, AssetId.DAI, -1),
+      fakeReport(ARBITRUM, AssetId.DAI, 0),
     ]
 
     const result = aggregateReportsDaily(reports, PROJECTS)
@@ -132,17 +135,17 @@ describe(aggregateReportsDaily.name, () => {
 
   it('multiple projects with multiple bridges', () => {
     const reports = [
-      mockReport(ARBITRUM, AssetId.DAI, -1),
-      mockReport(ARBITRUM, AssetId.DAI, 0),
+      fakeReport(ARBITRUM, AssetId.DAI, -1),
+      fakeReport(ARBITRUM, AssetId.DAI, 0),
 
-      mockReport(ARBITRUM, AssetId.WETH, -1),
-      mockReport(ARBITRUM, AssetId.WETH, 0),
+      fakeReport(ARBITRUM, AssetId.WETH, -1),
+      fakeReport(ARBITRUM, AssetId.WETH, 0),
 
-      mockReport(ARBITRUM, AssetId.DAI, -1),
-      mockReport(ARBITRUM, AssetId.DAI, 0),
+      fakeReport(ARBITRUM, AssetId.DAI, -1),
+      fakeReport(ARBITRUM, AssetId.DAI, 0),
 
-      mockReport(OPTIMISM, AssetId.DAI, -1),
-      mockReport(OPTIMISM, AssetId.DAI, 0),
+      fakeReport(OPTIMISM, AssetId.DAI, -1),
+      fakeReport(OPTIMISM, AssetId.DAI, 0),
     ]
 
     const result = aggregateReportsDaily(reports, PROJECTS)

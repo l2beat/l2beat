@@ -1,5 +1,7 @@
 import { Logger, mock, UnixTime } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
+import { setTimeout } from 'timers/promises'
+import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
 import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
@@ -68,6 +70,7 @@ describe(BlockNumberUpdater.name, () => {
         [{ timestamp: START.add(2, 'hours'), blockNumber: START_BN + 200n }],
       ])
     })
+
     it('mixed: known and unknown blocks', async () => {
       const etherscan = mock<EtherscanClient>({
         getBlockNumberAtOrBefore: mockFn().returnsOnce(START_BN + 200n),
@@ -96,6 +99,52 @@ describe(BlockNumberUpdater.name, () => {
       expect(blockNumberRepository.add).toHaveBeenCalledExactlyWith([
         [{ timestamp: START.add(2, 'hours'), blockNumber: START_BN + 200n }],
       ])
+    })
+  })
+
+  describe(BlockNumberUpdater.prototype.getBlockNumberWhenReady.name, () => {
+    it('returns immediately if the data is available', async () => {
+      const timestamp = UnixTime.now()
+      const blockNumberRepository = mock<BlockNumberRepository>({
+        getAll: mockFn().returns([{ timestamp, blockNumber: 1234n }]),
+      })
+      const blockNumberUpdater = new BlockNumberUpdater(
+        mock<EtherscanClient>(),
+        blockNumberRepository,
+        Logger.SILENT,
+      )
+
+      await blockNumberUpdater.update([timestamp])
+      const result = await blockNumberUpdater.getBlockNumberWhenReady(timestamp)
+      expect(result).toEqual(1234n)
+    })
+
+    it('waits until data is available, then returns', async () => {
+      const timestamp = UnixTime.now()
+      const blockNumberRepository = mock<BlockNumberRepository>({
+        getAll: mockFn().returns([{ timestamp, blockNumber: 1234n }]),
+      })
+      const blockNumberUpdater = new BlockNumberUpdater(
+        mock<EtherscanClient>(),
+        blockNumberRepository,
+        Logger.SILENT,
+      )
+
+      let result: unknown = undefined
+      void blockNumberUpdater
+        .getBlockNumberWhenReady(timestamp, 10)
+        .then((value) => {
+          result = value
+        })
+
+      await setTimeout(20)
+      expect(result).toEqual(undefined)
+
+      await blockNumberUpdater.update([timestamp])
+
+      await waitForExpect(() => {
+        expect(result).toEqual(1234n)
+      })
     })
   })
 })
