@@ -78,7 +78,7 @@ export class Application {
       config.core.safeTimeOffsetSeconds,
     )
 
-    const blockUpdater = new BlockNumberUpdater(
+    const blockNumberUpdater = new BlockNumberUpdater(
       etherscanClient,
       blockNumberRepository,
       logger,
@@ -94,8 +94,9 @@ export class Application {
     const balanceUpdater = new BalanceUpdater(
       multicall,
       balanceRepository,
-      blockNumberRepository,
+      blockNumberUpdater,
       balanceStatusRepository,
+      clock,
       config.projects,
       logger,
     )
@@ -111,9 +112,8 @@ export class Application {
     )
 
     const syncScheduler = new SyncScheduler(
-      blockUpdater,
+      blockNumberUpdater,
       priceUpdater,
-      balanceUpdater,
       config.core.minBlockTimestamp,
       logger,
     )
@@ -155,6 +155,7 @@ export class Application {
       if (config.syncEnabled) {
         reportController.start()
         syncScheduler.start()
+        await balanceUpdater.start()
         await reportUpdater.start()
       }
     }

@@ -2,7 +2,7 @@ import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { getNewestAssetsInProject } from '../../../../../src/api/controllers/report/filter/getNewestAssetsInProject'
-import { fakeReport } from '../../../../fakes'
+import { ReportRecord } from '../../../../../src/peripherals/database/ReportRepository'
 
 describe(getNewestAssetsInProject.name, () => {
   const TODAY = UnixTime.now().toStartOf('day')
@@ -13,29 +13,35 @@ describe(getNewestAssetsInProject.name, () => {
   const ASSET_A = AssetId('apple')
   const ASSET_B = AssetId('banana')
 
-  function mockReport(projectId: ProjectId, asset: AssetId, offset: number) {
+  function fakeReport(
+    projectId: ProjectId,
+    asset: AssetId,
+    offset: number,
+  ): ReportRecord {
     return {
-      ...fakeReport(),
       timestamp: TODAY.add(offset, 'days'),
       projectId,
       asset,
+      balance: 1234n,
+      balanceUsd: 1234n,
+      balanceEth: 1234n,
     }
   }
 
   it('returns mapping', () => {
     const reports = [
-      mockReport(PROJECT_A, ASSET_A, 0),
-      mockReport(PROJECT_A, ASSET_A, -1),
-      mockReport(PROJECT_A, ASSET_A, -2),
+      fakeReport(PROJECT_A, ASSET_A, 0),
+      fakeReport(PROJECT_A, ASSET_A, -1),
+      fakeReport(PROJECT_A, ASSET_A, -2),
 
-      mockReport(PROJECT_A, ASSET_B, 0),
-      mockReport(PROJECT_A, ASSET_B, -1),
-      mockReport(PROJECT_A, ASSET_B, -2),
+      fakeReport(PROJECT_A, ASSET_B, 0),
+      fakeReport(PROJECT_A, ASSET_B, -1),
+      fakeReport(PROJECT_A, ASSET_B, -2),
 
-      mockReport(PROJECT_B, ASSET_A, -1),
-      mockReport(PROJECT_B, ASSET_A, -2),
+      fakeReport(PROJECT_B, ASSET_A, -1),
+      fakeReport(PROJECT_B, ASSET_A, -2),
 
-      mockReport(PROJECT_B, ASSET_B, 0),
+      fakeReport(PROJECT_B, ASSET_B, 0),
     ]
 
     const result = getNewestAssetsInProject(reports)

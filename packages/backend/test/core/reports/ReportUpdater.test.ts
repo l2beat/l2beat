@@ -1,4 +1,4 @@
-import { Logger, mock, UnixTime } from '@l2beat/common'
+import { Logger, mock } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
@@ -10,7 +10,7 @@ import { createReports } from '../../../src/core/reports/createReports'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
-import { BALANCES, NOW, PRICES, PROJECTS } from './fakes'
+import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
 
 describe(ReportUpdater.name, () => {
   const FUTURE_PRICES = PRICES.map((price) => ({
@@ -48,7 +48,7 @@ describe(ReportUpdater.name, () => {
         balanceUpdater,
         reportRepository,
         reportStatusRepository,
-        new Clock(new UnixTime(0), 0),
+        mock<Clock>(),
         PROJECTS,
         Logger.SILENT,
       )

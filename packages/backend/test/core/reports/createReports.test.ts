@@ -2,7 +2,7 @@ import { AssetId, ProjectId } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { createReports } from '../../../src/core/reports/createReports'
-import { BALANCES, NOW, PRICES, PROJECTS } from './fakes'
+import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
 
 describe(createReports.name, () => {
   it('correctly aggregates many calculated balances', () => {

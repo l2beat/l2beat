@@ -30,7 +30,7 @@ export async function analyzeItem(
     relatives.push(proxy.eip1967Admin)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
   delete (analysis as any).abi
 
   return {
