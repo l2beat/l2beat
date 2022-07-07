@@ -165,4 +165,16 @@ describe(Bytes.name, () => {
       expect(first.concat(second)).toEqual(Bytes.fromHex('12345678'))
     })
   })
+
+  describe(Bytes.prototype.padStart.name, () => {
+    it('pads shorter strings with zeroes', () => {
+      const result = Bytes.fromHex('1234').padStart(5)
+      expect(result).toEqual(Bytes.fromHex('0000001234'))
+    })
+
+    it('leaves longer strings untouched', () => {
+      const result = Bytes.fromHex('12345678').padStart(3)
+      expect(result).toEqual(Bytes.fromHex('12345678'))
+    })
+  })
 })

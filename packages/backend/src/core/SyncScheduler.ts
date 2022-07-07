@@ -1,6 +1,5 @@
 import { getTimestamps, Logger, TaskQueue, UnixTime } from '@l2beat/common'
 
-import { BalanceUpdater } from './BalanceUpdater'
 import { BlockNumberUpdater } from './BlockNumberUpdater'
 import { PriceUpdater } from './PriceUpdater'
 
@@ -11,7 +10,6 @@ export class SyncScheduler {
   constructor(
     private blockUpdater: BlockNumberUpdater,
     private priceUpdater: PriceUpdater,
-    private balanceUpdater: BalanceUpdater,
     private minTimestamp: UnixTime,
     private logger: Logger,
     private interval: number = 10 * 60 * 1000,
@@ -40,7 +38,6 @@ export class SyncScheduler {
 
     await this.blockUpdater.update(timestamps)
     await this.priceUpdater.update(timestamps)
-    await this.balanceUpdater.update(timestamps)
 
     this.logger.info('Update completed', { timestamps: timestamps.length })
   }

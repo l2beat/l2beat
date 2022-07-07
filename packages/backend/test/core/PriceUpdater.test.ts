@@ -1,15 +1,22 @@
-import { AssetId, CoingeckoId, Logger, mock, UnixTime } from '@l2beat/common'
+import {
+  AssetId,
+  CoingeckoId,
+  EthereumAddress,
+  Logger,
+  mock,
+  UnixTime,
+} from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
 import { PriceUpdater } from '../../src/core/PriceUpdater'
+import { Token } from '../../src/model'
 import { CoingeckoQueryService } from '../../src/peripherals/coingecko/CoingeckoQueryService'
 import {
   PriceRecord,
   PriceRepository,
 } from '../../src/peripherals/database/PriceRepository'
-import { fakeToken } from '../fakes'
 
 describe(PriceUpdater.name, () => {
   const HOUR_09 = UnixTime.fromDate(new Date('2021-09-07T09:00:00Z'))
@@ -20,7 +27,7 @@ describe(PriceUpdater.name, () => {
 
   describe(PriceUpdater.prototype.getPricesWhenReady.name, () => {
     it('returns immediately if the data is available', async () => {
-      const tokens = [fakeToken({ id: AssetId.ETH })]
+      const tokens = [fakeToken(AssetId.ETH)]
       const prices: PriceRecord[] = [
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
@@ -42,7 +49,7 @@ describe(PriceUpdater.name, () => {
     })
 
     it('waits until data is available, then returns', async () => {
-      const tokens = [fakeToken({ id: AssetId.ETH })]
+      const tokens = [fakeToken(AssetId.ETH)]
       const prices: PriceRecord[] = [
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
@@ -99,9 +106,9 @@ describe(PriceUpdater.name, () => {
 
     it('correctly calls updates', async () => {
       const tokens = [
-        fakeToken({ id: AssetId('uni-uniswap') }),
-        fakeToken({ id: AssetId.ETH }),
-        fakeToken({ id: AssetId.WETH }),
+        fakeToken(AssetId('uni-uniswap')),
+        fakeToken(AssetId.ETH),
+        fakeToken(AssetId.WETH),
       ]
 
       const priceRepository = mock<PriceRepository>({
@@ -155,7 +162,7 @@ describe(PriceUpdater.name, () => {
       priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        [fakeToken({ id: TOKEN_ID, coingeckoId: TOKEN_COINGECKO_ID })],
+        [fakeToken(TOKEN_ID, TOKEN_COINGECKO_ID)],
         Logger.SILENT,
       )
     })
@@ -238,7 +245,7 @@ describe(PriceUpdater.name, () => {
       const priceRepository = mock<PriceRepository>({
         addMany: mockFn().returns([]),
       })
-      const tokens = [fakeToken({ id: AssetId('uni-uniswap') })]
+      const tokens = [fakeToken(AssetId('uni-uniswap'))]
 
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
@@ -283,4 +290,14 @@ describe(PriceUpdater.name, () => {
       ])
     })
   })
+
+  function fakeToken(id?: AssetId, coingeckoId?: CoingeckoId): Token {
+    return {
+      id: id ?? AssetId('fake-token'),
+      coingeckoId: coingeckoId ?? CoingeckoId('fake-token'),
+      symbol: 'FKT',
+      decimals: 18,
+      address: EthereumAddress.random(),
+    }
+  }
 })

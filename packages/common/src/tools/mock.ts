@@ -49,8 +49,7 @@ function replaceFunctionsWithMocks<T>(object: T) {
     const value = clone[key]
     if (typeof value === 'function') {
       if (!isMockFunction(value)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
         clone[key] = mockFn(value as any) as any
       }
     }
