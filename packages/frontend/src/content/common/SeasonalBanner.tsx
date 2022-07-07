@@ -8,12 +8,8 @@ export function SeasonalBanner() {
     return null
   }
   return (
-    <OutLink
-      className="SeasonalBanner"
-      href="https://gitcoin.co/grants/3857/l2beat"
-    >
-      Donate to L2BEAT&apos;s Gitcoin grant. A new matching round has just
-      started!
+    <OutLink className="SeasonalBanner" href="https://gov.l2beat.com/">
+      L2Beat Governance forum is live!
     </OutLink>
   )
 }
