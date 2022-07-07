@@ -13,6 +13,7 @@ export default defineConfig({
       governanceProxy: Contracts.governanceProxy,
       pairManagerProxy: Contracts.pairManagerProxy,
       mainProxy: Contracts.mainProxy,
+      zkSeaNFTProxy: Contracts.zkSeaNFTProxy,
     },
   },
 })

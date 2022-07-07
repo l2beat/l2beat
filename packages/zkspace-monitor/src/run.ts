@@ -137,5 +137,8 @@ export async function run() {
   const tokenLister = await sdk.governanceProxy.tokenLister()
   assert.equal(tokenLister, Contracts.tokenLister)
 
+  assert.equal(await sdk.zkSeaNFTProxy.owner(), Contracts.upgradeMaster)
+  assert.equal(await sdk.zkSeaNFTProxy.zksCore(), Contracts.mainProxy)
+
   assert.deepEqual(await getActiveValidators(sdk.governanceProxy), Validators)
 }
