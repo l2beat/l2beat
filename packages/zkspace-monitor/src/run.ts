@@ -54,23 +54,28 @@ async function getAddressAtPositionInMain(
 }
 
 async function getVerifierAddress(provider: providers.AlchemyProvider) {
-  const verifierAddressPosition = 5 // checked manually in contract code
-  return getAddressAtPositionInMain(provider, verifierAddressPosition)
+  const position = 5 // checked manually in contract code
+  return getAddressAtPositionInMain(provider, position)
 }
 
 async function getVerifierExitAddress(provider: providers.AlchemyProvider) {
-  const verifierAddressPosition = 6 // checked manually in contract code
-  return getAddressAtPositionInMain(provider, verifierAddressPosition)
+  const position = 6 // checked manually in contract code
+  return getAddressAtPositionInMain(provider, position)
 }
 
 async function getGovernanceAddress(provider: providers.AlchemyProvider) {
-  const verifierAddressPosition = 7 // checked manually in contract code
-  return getAddressAtPositionInMain(provider, verifierAddressPosition)
+  const position = 7 // checked manually in contract code
+  return getAddressAtPositionInMain(provider, position)
+}
+
+async function getZkSeaNFTAddress(provider: providers.AlchemyProvider) {
+  const position = 8 // checked manually in contract code
+  return getAddressAtPositionInMain(provider, position)
 }
 
 async function getPairManagerAddress(provider: providers.AlchemyProvider) {
-  const pairManagerAddressPosition = 8 // checked manually in contract code
-  return getAddressAtPositionInMain(provider, pairManagerAddressPosition)
+  const position = 9 // checked manually in contract code
+  return getAddressAtPositionInMain(provider, position)
 }
 
 export async function run() {
@@ -117,6 +122,10 @@ export async function run() {
   assert.equal(
     await getGovernanceAddress(provider),
     Contracts.governanceProxy.toLowerCase(),
+  )
+  assert.equal(
+    await getZkSeaNFTAddress(provider),
+    Contracts.zkSeaNFTProxy.toLowerCase(),
   )
   assert.equal(
     await getPairManagerAddress(provider),

@@ -41,6 +41,19 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newTokenLister",
+        "type": "address"
+      }
+    ],
+    "name": "NewTokenLister",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "validatorAddress",
@@ -61,6 +74,17 @@
     "inputs": [
       { "internalType": "address", "name": "_token", "type": "address" }
     ],
+    "name": "addFeeToken",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "address", "name": "_token", "type": "address" }
+    ],
     "name": "addToken",
     "outputs": [],
     "payable": false,
@@ -73,6 +97,21 @@
       { "internalType": "address", "name": "_newGovernor", "type": "address" }
     ],
     "name": "changeGovernor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newTokenLister",
+        "type": "address"
+      }
+    ],
+    "name": "changeTokenLister",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -126,15 +165,6 @@
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "tokenLister",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [
       { "internalType": "address", "name": "_address", "type": "address" }
     ],
@@ -150,6 +180,17 @@
       { "internalType": "address", "name": "_address", "type": "address" }
     ],
     "name": "requireGovernor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      { "internalType": "address", "name": "_address", "type": "address" }
+    ],
+    "name": "requireTokenLister",
     "outputs": [],
     "payable": false,
     "stateMutability": "view",
@@ -188,7 +229,25 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "totalTokens",
+    "name": "tokenLister",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalFeeTokens",
+    "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalUserTokens",
     "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
     "payable": false,
     "stateMutability": "view",

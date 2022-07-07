@@ -1,5 +1,11 @@
 [
   {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -124,6 +130,37 @@
     "name": "DepositCommit",
     "type": "event"
   },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "zkSyncBlockId",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "accountId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint64",
+        "name": "globalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "DepositNFTCommit",
+    "type": "event"
+  },
   { "anonymous": false, "inputs": [], "name": "ExodusMode", "type": "event" },
   {
     "anonymous": false,
@@ -193,6 +230,37 @@
       {
         "indexed": true,
         "internalType": "uint32",
+        "name": "zkSyncBlockId",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "accountId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint64",
+        "name": "globalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "FullExitNFTCommit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
         "name": "blockNumberFrom",
         "type": "uint32"
       },
@@ -231,6 +299,12 @@
         "indexed": false,
         "internalType": "bytes",
         "name": "pubData",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "userData",
         "type": "bytes"
       },
       {
@@ -322,6 +396,62 @@
       }
     ],
     "name": "OnchainDeposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "OnchainDepositNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "accountId",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint64",
+        "name": "globalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "OnchainFullExitNFT",
     "type": "event"
   },
   {
@@ -457,6 +587,27 @@
     "constant": false,
     "inputs": [{ "internalType": "uint64", "name": "_n", "type": "uint64" }],
     "name": "cancelOutstandingDepositsForExodusMode",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "_blockNumberFrom",
+        "type": "uint32"
+      },
+      { "internalType": "uint32", "name": "_blockNumberTo", "type": "uint32" },
+      {
+        "internalType": "bytes[]",
+        "name": "_withdrawalsData",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "checkWithdrawals",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -621,6 +772,24 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "maxDepositAmount",
+    "outputs": [{ "internalType": "uint128", "name": "", "type": "uint128" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "name": "nft_exited",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "numberOfPendingWithdrawals",
     "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
     "payable": false,
@@ -673,9 +842,43 @@
         "internalType": "address",
         "name": "_zkSyncExitAddress",
         "type": "address"
-      }
+      },
+      { "internalType": "address", "name": "_zkSeaAddress", "type": "address" }
     ],
     "name": "setGenesisRootAndAddresses",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "uint128", "name": "_amount", "type": "uint128" }
+    ],
+    "name": "setMaxDepositAmount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "uint256", "name": "_gasLimit", "type": "uint256" }
+    ],
+    "name": "setWithdrawGasLimit",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "uint256", "name": "_gasLimit", "type": "uint256" }
+    ],
+    "name": "setWithdrawNFTGasLimit",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -707,6 +910,15 @@
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "tokenIds",
     "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalBlocksChecked",
+    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -875,12 +1087,68 @@
   {
     "constant": false,
     "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_token",
+        "type": "address"
+      },
+      { "internalType": "uint128", "name": "_amount", "type": "uint128" },
+      { "internalType": "address payable", "name": "_to", "type": "address" }
+    ],
+    "name": "withdrawERC20WithAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
       { "internalType": "uint128", "name": "_amount", "type": "uint128" }
     ],
     "name": "withdrawETH",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "uint128", "name": "_amount", "type": "uint128" },
+      { "internalType": "address payable", "name": "_to", "type": "address" }
+    ],
+    "name": "withdrawETHWithAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "withdrawGasLimit",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "withdrawNFTGasLimit",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "zkSeaAddress",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
