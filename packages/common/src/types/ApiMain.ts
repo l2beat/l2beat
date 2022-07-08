@@ -1,9 +1,14 @@
 import z from 'zod'
 
 import { AssetId } from './AssetId'
-import { stringAs } from './stringAs'
+import { branded } from './branded'
+import { UnixTime } from './UnixTime'
 
-const ChartPoint = z.tuple([z.number(), z.number(), z.number()]) // timestamp, usd, eth
+const ChartPoint = z.tuple([
+  branded(z.number(), (n) => new UnixTime(n)),
+  z.number(), // usd
+  z.number(), // eth
+])
 export type ChartPoint = z.infer<typeof ChartPoint>
 
 const Chart = z.array(ChartPoint)
@@ -17,7 +22,7 @@ export const Charts = z.object({
 export type Charts = z.infer<typeof Charts>
 
 export const Token = z.object({
-  assetId: stringAs(AssetId),
+  assetId: branded(z.string(), AssetId),
   tvl: z.number(),
 })
 export type Token = z.infer<typeof Token>
