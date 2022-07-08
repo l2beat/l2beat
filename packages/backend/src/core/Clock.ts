@@ -11,6 +11,10 @@ export class Clock {
     }
   }
 
+  getFirstHour() {
+    return this.minTimestamp
+  }
+
   getLastHour() {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('hour')
   }
@@ -22,6 +26,21 @@ export class Clock {
       while (next.lte(last)) {
         callback(next)
         next = next.add(1, 'hours')
+      }
+    }
+
+    onNewTimestamps()
+    const interval = setInterval(onNewTimestamps, this.refreshIntervalMs)
+    return () => clearInterval(interval)
+  }
+
+  onNewHour(callback: (timestamp: UnixTime) => void) {
+    let current = this.getLastHour()
+    const onNewTimestamps = () => {
+      const last = this.getLastHour()
+      while (current.lt(last)) {
+        current = current.add(1, 'hours')
+        callback(current)
       }
     }
 
