@@ -1,6 +1,5 @@
 import { getTimestamps, Logger, TaskQueue, UnixTime } from '@l2beat/common'
 
-import { BlockNumberUpdater } from './BlockNumberUpdater'
 import { PriceUpdater } from './PriceUpdater'
 
 export class SyncScheduler {
@@ -8,7 +7,6 @@ export class SyncScheduler {
   private intervalID: NodeJS.Timer | undefined
 
   constructor(
-    private blockUpdater: BlockNumberUpdater,
     private priceUpdater: PriceUpdater,
     private minTimestamp: UnixTime,
     private logger: Logger,
@@ -36,7 +34,6 @@ export class SyncScheduler {
 
     this.logger.info('Update started', { timestamps: timestamps.length })
 
-    await this.blockUpdater.update(timestamps)
     await this.priceUpdater.update(timestamps)
 
     this.logger.info('Update completed', { timestamps: timestamps.length })

@@ -32,11 +32,12 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config) {
-    /* - - - - - TOOLS - - - - - */
+    // #region tools
 
     const logger = new Logger(config.logger)
 
-    /* - - - - - PERIPHERALS - - - - - */
+    // #endregion
+    // #region peripherals
 
     const database = new Database(config.databaseConnection, logger)
     const blockNumberRepository = new BlockNumberRepository(database, logger)
@@ -71,7 +72,8 @@ export class Application {
       logger,
     )
 
-    /* - - - - - CORE - - - - - */
+    // #endregion
+    // #region core
 
     const clock = new Clock(
       config.core.minBlockTimestamp,
@@ -81,6 +83,7 @@ export class Application {
     const blockNumberUpdater = new BlockNumberUpdater(
       etherscanClient,
       blockNumberRepository,
+      clock,
       logger,
     )
 
@@ -93,8 +96,8 @@ export class Application {
 
     const balanceUpdater = new BalanceUpdater(
       multicall,
-      balanceRepository,
       blockNumberUpdater,
+      balanceRepository,
       balanceStatusRepository,
       clock,
       config.projects,
@@ -112,13 +115,13 @@ export class Application {
     )
 
     const syncScheduler = new SyncScheduler(
-      blockNumberUpdater,
       priceUpdater,
       config.core.minBlockTimestamp,
       logger,
     )
 
-    /* - - - - - API - - - - - */
+    // #endregion
+    // #region api
 
     const blocksController = new BlocksController(blockNumberRepository)
 
@@ -144,7 +147,8 @@ export class Application {
       createStatusRouter(statusController),
     ])
 
-    /* - - - - - START - - - - - */
+    // #endregion
+    // #region start
 
     this.start = async () => {
       logger.for(this).info('Starting')
@@ -155,9 +159,12 @@ export class Application {
       if (config.syncEnabled) {
         reportController.start()
         syncScheduler.start()
+        await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
       }
     }
+
+    // #endregion
   }
 }
