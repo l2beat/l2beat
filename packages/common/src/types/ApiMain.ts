@@ -6,12 +6,15 @@ import { UnixTime } from './UnixTime'
 
 const ChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
-  z.number(), // usd
-  z.number(), // eth
+  z.number(),
+  z.number(),
 ])
 export type ChartPoint = z.infer<typeof ChartPoint>
 
-const Chart = z.array(ChartPoint)
+const Chart = z.object({
+  types: z.tuple([z.literal('timestamp'), z.string(), z.string()]),
+  data: z.array(ChartPoint),
+})
 export type Chart = z.infer<typeof Chart>
 
 export const Charts = z.object({
