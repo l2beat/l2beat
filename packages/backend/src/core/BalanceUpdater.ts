@@ -32,8 +32,8 @@ export class BalanceUpdater {
 
   constructor(
     private multicall: MulticallClient,
-    private balanceRepository: BalanceRepository,
     private blockNumberUpdater: BlockNumberUpdater,
+    private balanceRepository: BalanceRepository,
     private balanceStatusRepository: BalanceStatusRepository,
     private clock: Clock,
     private projects: ProjectInfo[],
