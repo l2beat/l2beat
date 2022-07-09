@@ -9,6 +9,9 @@ export class Clock {
     if (!this.minTimestamp.isFull('hour')) {
       this.minTimestamp = this.minTimestamp.toNext('hour')
     }
+    if (this.minTimestamp.gt(this.getLastHour())) {
+      throw new Error('minTimestamp must be in the past')
+    }
   }
 
   getFirstHour() {

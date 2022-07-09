@@ -22,8 +22,17 @@ describe(Clock.name, () => {
     time.setSystemTime(new Date(`2022-06-29T${hhmmss}.000Z`))
   }
 
+  it('cannot be constructed with minTimestamp in the future', () => {
+    setTime('13:05:48')
+    const minTimestamp = toTimestamp('15:12:34')
+    expect(() => new Clock(minTimestamp, 0)).toThrow(
+      'minTimestamp must be in the past',
+    )
+  })
+
   describe(Clock.prototype.getFirstHour.name, () => {
     it('returns minTimestamp aligned to an hour', () => {
+      time.setSystemTime(10_000_000_000_000)
       const start = new UnixTime(123456789)
       const clock = new Clock(start, 0)
 
