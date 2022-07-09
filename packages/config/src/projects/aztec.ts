@@ -45,7 +45,11 @@ export const aztec: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      upgradeability: {
+        value: 'Yes',
+        description: '1/2 MSig can change Validator.',
+        sentiment: 'bad',
+      },
       sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
       validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
     },
