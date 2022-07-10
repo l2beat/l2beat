@@ -11,26 +11,24 @@ import {
 } from './common'
 import { Project } from './types'
 
-export const aztec: Project = {
-  name: 'Aztec',
-  slug: 'aztec',
-  id: ProjectId('aztec'),
+export const aztecconnect: Project = {
+  name: 'Aztec Connect',
+  slug: 'aztecconnect',
+  id: ProjectId('aztecconnect'),
   bridges: [
     {
-      address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
-      sinceTimestamp: new UnixTime(1614799636),
-      tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
+      address: '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+      sinceTimestamp: new UnixTime(1654587783),
+      tokens: ['ETH', 'DAI', 'wstETH'],
     },
   ],
   details: {
-    warning:
-      'A new version of the protocol, Aztec Connect is available and users are encouraged to move their assets there.',
     description:
-      'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
+      'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
     purpose: 'Private payments',
     links: {
       websites: ['https://aztec.network/'],
-      apps: ['https://old.zk.money'],
+      apps: ['https://zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://explorer.aztec.network/'],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
@@ -47,7 +45,8 @@ export const aztec: Project = {
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
       upgradeability: {
         value: 'Yes',
-        description: '1/2 MSig can change Validator.',
+        description:
+          '1/2 MSig can upgrade or change Validator. 2/15 MSig can pause.',
         sentiment: 'bad',
       },
       sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
@@ -62,7 +61,7 @@ export const aztec: Project = {
         references: [
           {
             text: 'RollupProcessor.sol#L395 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
+            href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L986',
           },
         ],
       },
@@ -70,8 +69,8 @@ export const aztec: Project = {
         ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
         references: [
           {
-            text: 'TurboVerifier.sol#L37 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x3937f965e824fe4e7885b8662669821966d3f293#code#F1#L37',
+            text: 'StandardVerifier.sol#L37 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x07528c46a34d16e4fb7cfa9db7333c521bec8ea2#code#F1#L144',
           },
         ],
       },
@@ -80,7 +79,7 @@ export const aztec: Project = {
         references: [
           {
             text: 'RollupProcessor.sol#L359 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
+            href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L980',
           },
         ],
       },
@@ -91,11 +90,7 @@ export const aztec: Project = {
         references: [
           {
             text: 'RollupProcessor.sol#L97 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L97',
-          },
-          {
-            text: 'RollupProcessor.sol#L369 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L369',
+            href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L586',
           },
         ],
       },
@@ -107,7 +102,7 @@ export const aztec: Project = {
         references: [
           {
             text: 'RollupProcessor.sol#L347 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
+            href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L1433',
           },
         ],
       },
@@ -120,7 +115,7 @@ export const aztec: Project = {
           references: [
             {
               text: 'RollupProcessor.sol#LL396 - Etherscan source code',
-              href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L396',
+              href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L987',
             },
           ],
         },
@@ -140,27 +135,37 @@ export const aztec: Project = {
       contracts: {
         addresses: [
           {
-            address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+            address: '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
             description:
               'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
             name: 'RollupProcessor',
+            upgradeability: {
+              type: 'EIP1967',
+              admin: '0xC5b735d05c26579B701Be9bED253Bb588503B26B',
+              implementation: '0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28',
+            },
           },
           {
-            address: '0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734',
+            address: '0x4cf32670a53657596E641DFCC6d40f01e4d64927',
             description:
               'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
             name: 'AztecFeeDistributor',
           },
           {
-            address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
-            description:
-              'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-            name: 'TurboVerifier',
+            address: '0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487',
+            description: 'Bridge Connector to various DeFi Bridges.',
+            name: 'DefiBridgeProxy',
           },
           {
-            address: '0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530',
+            address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
+            description:
+              'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
+            name: 'StandardVerifier',
+          },
+          {
+            address: '0x8C3B53F450E53FF14D8C9449465F79ff40668966',
             description: 'Verification Keys for the Verifier.',
-            name: 'VerificationKeys',
+            name: 'VerificationKey28x32',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -181,6 +186,11 @@ export const aztec: Project = {
         date: '2021-03-15',
         name: 'Launching Aztec 2.0 Rollup',
         link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      },
+      {
+        date: '2022-07-09',
+        name: 'Aztec Network Launches First Ever Private DeFi Solution for Ethereum',
+        link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
       },
     ],
   },
