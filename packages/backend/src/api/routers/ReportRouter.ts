@@ -14,5 +14,9 @@ export function createReportRouter(reportController: ReportController) {
     ctx.body = data
   })
 
+  router.get('/api/main', (ctx) => {
+    ctx.body = {}
+  })
+
   return router
 }
