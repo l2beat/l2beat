@@ -12,10 +12,15 @@ export interface ContractParameters {
 
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
+  | GnosisSafeUpgradeability
   | ProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
+}
+
+export interface GnosisSafeUpgradeability {
+  type: 'gnosis safe'
 }
 
 export interface ProxyUpgradeability {
