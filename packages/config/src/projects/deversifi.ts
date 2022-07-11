@@ -159,7 +159,8 @@ export const deversifi: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+          description:
+            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
         },
       ],
     },

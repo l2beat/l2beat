@@ -112,10 +112,11 @@ export const sorare: Project = {
           accounts: [
             {
               address: '0x63881ac44293E22F3c3183a0C4113586ABb3e653',
-              type: 'EOA'
+              type: 'EOA',
             },
           ],
-          description: 'Allowed to update state of the rollup. When Operator is down the state cannot be updated.'
+          description:
+            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
         },
       ],
     },

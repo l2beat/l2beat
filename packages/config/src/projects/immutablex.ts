@@ -144,10 +144,11 @@ export const immutablex: Project = {
           accounts: [
             {
               address: '0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e',
-              type: 'EOA'
+              type: 'EOA',
             },
           ],
-          description: 'Allowed to update the state. When Operator is down the state cannot be updated.'
+          description:
+            'Allowed to update the state. When Operator is down the state cannot be updated.',
         },
       ],
     },
