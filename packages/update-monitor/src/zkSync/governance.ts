@@ -17,7 +17,6 @@ export async function getGovernance(
         addresses.governance,
       ),
     },
-    roles: [],
     values: [
       {
         name: 'validators',
@@ -36,11 +35,13 @@ async function getValidators(provider: providers.JsonRpcProvider) {
     governance.filters.ValidatorStatusUpdate(),
     13_809_566,
   )
-  const activeValidators = events.reduce<string[]>((acc, { args: e }) => {
-    const idx = acc.indexOf(e.validatorAddress)
-    if (!e.isActive && idx !== -1) acc.splice(idx, 1)
-    if (e.isActive && idx === -1) acc.push(e.validatorAddress)
-    return acc
-  }, [])
-  return activeValidators
+  const validators = new Set<string>()
+  for (const event of events) {
+    if (event.args.isActive) {
+      validators.add(event.args.validatorAddress)
+    } else {
+      validators.delete(event.args.validatorAddress)
+    }
+  }
+  return [...validators]
 }

@@ -1,4 +1,5 @@
 import { providers } from 'ethers'
+import { readArray } from '../common/array'
 import { ZkSyncUpgradeGatekeeper__factory } from '../typechain'
 import { ContractParameters } from '../types'
 import { addresses } from './constants'
@@ -10,7 +11,6 @@ export async function getUpgradeGatekeeper(
     name: 'UpgradeGatekeeper',
     address: addresses.upgradeGatekeeper,
     upgradeability: { type: 'immutable' },
-    roles: [],
     values: [
       {
         name: 'managedContracts',
@@ -25,16 +25,5 @@ async function getManagedContracts(provider: providers.JsonRpcProvider) {
     addresses.upgradeGatekeeper,
     provider,
   )
-
-  let shouldContinue = true
-  const managed: string[] = []
-  for (let i = 0; shouldContinue; ++i) {
-    try {
-      const address = await gateKeeper.managedContracts(i)
-      managed.push(address)
-    } catch {
-      shouldContinue = false
-    }
-  }
-  return managed
+  return readArray((i) => gateKeeper.managedContracts(i))
 }

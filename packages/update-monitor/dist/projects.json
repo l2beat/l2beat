@@ -1,6 +1,40 @@
 [
   {
     "name": "zkSync 1.0",
-    "contracts": []
+    "contracts": [
+      {
+        "name": "UpgradeGatekeeper",
+        "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+        "upgradeability": {
+          "type": "immutable"
+        },
+        "values": [
+          {
+            "name": "managedContracts",
+            "value": [
+              "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+              "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+              "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Governance",
+        "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x934ef5836E78d93125317034f5CF855A97B13f43"
+        },
+        "values": [
+          {
+            "name": "validators",
+            "value": [
+              "0x18c208921F7a741510a7fc0CfA51E941735DAE54"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

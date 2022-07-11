@@ -7,7 +7,6 @@ export interface ContractParameters {
   name: string
   address: string
   upgradeability: UpgradeabilityParameters
-  roles: RoleParameters[]
   values: ContractValue[]
 }
 
@@ -22,12 +21,6 @@ export interface ImmutableUpgradeability {
 export interface ProxyUpgradeability {
   type: 'proxy'
   implementation: string
-}
-
-export interface RoleParameters {
-  name: string
-  members: string[]
-  permissions: string[]
 }
 
 export interface ContractValue {
