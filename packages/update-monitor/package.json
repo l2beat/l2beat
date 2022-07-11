@@ -11,7 +11,7 @@
     "start": "node -r esbuild-register src",
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
-    "typechain": "rm -rf src/typechain && typechain --target ethers-v5 --out-dir src/typechain  abi/*.json"
+    "typechain": "rm -rf src/typechain && typechain --target ethers-v5 --out-dir src/typechain  abi/**/*.json"
   },
   "dependencies": {
     "@l2beat/common": "*",

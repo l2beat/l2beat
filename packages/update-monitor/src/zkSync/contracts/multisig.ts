@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { ZkSyncMultisig__factory } from '../../typechain/factories/ZkSyncMultisig__factory'
+import { ZkSyncMultisig__factory } from '../../typechain'
 import { ContractParameters } from '../../types'
 import { addresses } from '../constants'
 

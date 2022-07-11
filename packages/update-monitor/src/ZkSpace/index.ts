@@ -2,24 +2,26 @@ import { providers } from 'ethers'
 
 import { ProjectParameters } from '../types'
 import { getGovernance } from './contracts/governance'
-import { getMultisig } from './contracts/multisig'
-import { getTokenGovernance } from './contracts/tokenGovernance'
+import { getPairManager } from './contracts/pairManager'
 import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
 import { getVerifier } from './contracts/verifier'
+import { getVerifierExit } from './contracts/verifierExit'
+import { getZKSeaNFT } from './contracts/zkSeaNFT'
 import { getZkSync } from './contracts/zkSync'
 
-export async function getZkSyncParameters(
+export async function getZkSpaceParameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'zkSync 1.0',
+    name: 'ZkSpace',
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getGovernance(provider),
-      getZkSync(provider),
+      getPairManager(provider),
       getVerifier(provider),
-      getTokenGovernance(provider),
-      getMultisig(provider),
+      getVerifierExit(provider),
+      getZKSeaNFT(provider),
+      getZkSync(provider),
     ]),
   }
 }
