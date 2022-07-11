@@ -14,8 +14,9 @@ export function createReportRouter(reportController: ReportController) {
     ctx.body = data
   })
 
-  router.get('/api/main', (ctx) => {
-    ctx.body = {}
+  router.get('/api/main', async (ctx) => {
+    const data = await reportController.getDailyMain()
+    ctx.body = data
   })
 
   return router

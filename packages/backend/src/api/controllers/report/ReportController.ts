@@ -1,14 +1,17 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { ApiMain, Logger, TaskQueue } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
-import { addOptimismToken } from './addOptimismToken'
-import { aggregateReportsDaily } from './aggregateReportsDaily'
+import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
+import {
+  aggregateReportsDaily,
+  aggregateReportsDailyV2,
+} from './aggregateReportsDaily'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
-import { generateReportOutput } from './generateReportOutput'
+import { generateApiMain, generateReportOutput } from './generateReportOutput'
 
 export class ReportController {
   private taskQueue: TaskQueue<void>
@@ -35,6 +38,15 @@ export class ReportController {
 
   async getDaily() {
     return this.cacheRepository.getData()
+  }
+
+  async getDailyMain(): Promise<ApiMain> {
+    let reports = await this.reportRepository.getDaily()
+    reports = filterReportsByProjects(reports, this.projects)
+    reports = getSufficientlySynced(reports)
+    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
+    await addOptimismTokenV2(dailyEntries, this.priceRepository)
+    return generateApiMain(dailyEntries, this.projects)
   }
 
   async generateDailyAndCache() {

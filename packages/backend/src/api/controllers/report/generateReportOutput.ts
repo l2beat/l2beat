@@ -1,7 +1,7 @@
-import { UnixTime } from '@l2beat/common'
+import { ApiMain, Project, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model'
-import { OutputEntry } from './aggregateReportsDaily'
+import { OutputEntry, OutputEntryV2 } from './aggregateReportsDaily'
 import { asNumber } from './asNumber'
 
 export interface ReportOutput {
@@ -89,4 +89,95 @@ export function generateReportOutput(
 
 function timestampToDate(timestamp: UnixTime) {
   return timestamp.toDate().toISOString().slice(0, 10)
+}
+
+// return {
+//   charts: {
+//     daily: {
+//       types: ['timestamp', 'usd', 'eth'],
+//       data: [[new UnixTime(1), 1, 1]],
+//     },
+//   },
+//   projects: {
+//     arbitrum: {
+//       charts: {
+//         hourly: {
+//           types: ['timestamp', 'usd', 'eth'],
+//           data: [[new UnixTime(1), 1, 1]],
+//         },
+//         sixHourly: {
+//           types: ['timestamp', 'usd', 'eth'],
+//           data: [[new UnixTime(1), 1, 1]],
+//         },
+//         daily: {
+//           types: ['timestamp', 'usd', 'eth'],
+//           data: [[new UnixTime(1), 1, 1]],
+//         },
+//       },
+//       tokens: [{
+//         assetId: AssetId.DAI,
+//         tvl: 1
+//       }]
+//     }
+//   }
+// }
+export function generateApiMain(
+  entries: OutputEntryV2[],
+  projects: ProjectInfo[],
+): ApiMain {
+  const report: ApiMain = {
+    charts: {
+      daily: {
+        types: ['timestamp', 'usd', 'eth'],
+        data: [],
+      },
+    },
+    projects: {},
+  }
+
+  for (const p of projects) {
+    const project: Project = {
+      charts: {
+        daily: {
+          types: ['timestamp', 'usd', 'eth'],
+          data: [],
+        },
+      },
+      tokens: [],
+    }
+    report.projects[p.name] = project
+  }
+
+  for (const entry of entries) {
+    // we subtract a day so that the date represents the end of that day
+    const date = entry.timestamp.add(-1, 'days')
+    report.charts.daily.data.push([
+      date,
+      asNumber(entry.value.usd, 2),
+      asNumber(entry.value.eth, 6),
+    ])
+
+    for (const [name, projectEntry] of entry.projects) {
+      const project = report.projects[name]
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!project) {
+        throw new Error('Programmer error: Reports not filtered correctly')
+      }
+
+      project.charts.daily.data.push([
+        date,
+        asNumber(projectEntry.value.usd, 2),
+        asNumber(projectEntry.value.eth, 6),
+      ])
+
+      for (const [assetId, tokenValue] of projectEntry.tokens) {
+        project.tokens.push({
+          assetId,
+          tvl: asNumber(tokenValue.usd, 2),
+        })
+      }
+    }
+  }
+
+  return report
 }

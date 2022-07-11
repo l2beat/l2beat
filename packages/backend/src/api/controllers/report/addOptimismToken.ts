@@ -5,7 +5,12 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../../../peripherals/database/PriceRepository'
-import { OutputEntry, saveBalancesToEntry } from './aggregateReportsDaily'
+import {
+  OutputEntry,
+  OutputEntryV2,
+  saveBalancesToEntry,
+  saveBalancesToEntryV2,
+} from './aggregateReportsDaily'
 
 // This is the circulating supply of OP as given by Coingecko.
 // The value is obtained by looking at how many tokens have been designated
@@ -47,6 +52,43 @@ export async function addOptimismToken(
       balanceEth,
       OP_TOKEN_BALANCE,
       'OP',
+      18,
+    )
+  }
+}
+
+export async function addOptimismTokenV2(
+  entries: OutputEntryV2[],
+  priceRepository: PriceRepository,
+) {
+  const opPrices = await priceRepository.getByToken(AssetId('op-optimism'))
+  const ethPrices = await priceRepository.getByToken(AssetId.ETH)
+  for (const entry of entries) {
+    const date = entry.timestamp
+    if (date.lt(UnixTime.fromDate(new Date('2022-05-30')))) {
+      continue
+    }
+
+    const opPrice = opPrices.find(findByTimestamp(entry.timestamp))?.priceUsd
+    const ethPrice = ethPrices.find(findByTimestamp(entry.timestamp))?.priceUsd
+    if (opPrice === undefined || ethPrice === undefined) {
+      continue
+    }
+
+    const { balanceUsd, balanceEth } = convertBalance(
+      opPrice,
+      18,
+      OP_TOKEN_BALANCE,
+      ethPrice,
+    )
+
+    saveBalancesToEntryV2(
+      entry,
+      'Optimism',
+      balanceUsd,
+      balanceEth,
+      OP_TOKEN_BALANCE,
+      AssetId('op-optimism'),
       18,
     )
   }
