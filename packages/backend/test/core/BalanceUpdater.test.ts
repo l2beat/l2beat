@@ -49,8 +49,8 @@ describe(BalanceUpdater.name, () => {
 
       const balanceUpdater = new BalanceUpdater(
         mock<MulticallClient>(),
-        balanceRepository,
         mock<BlockNumberUpdater>(),
+        balanceRepository,
         balanceStatusRepository,
         clock,
         [],
@@ -100,8 +100,8 @@ describe(BalanceUpdater.name, () => {
       })
       const balanceUpdater = new BalanceUpdater(
         mock<MulticallClient>(),
-        balanceRepository,
         mock<BlockNumberUpdater>(),
+        balanceRepository,
         balanceStatusRepository,
         mock<Clock>(),
         projects,
@@ -167,8 +167,8 @@ describe(BalanceUpdater.name, () => {
       })
       const balanceUpdater = new BalanceUpdater(
         mock<MulticallClient>(),
-        balanceRepository,
         mock<BlockNumberUpdater>(),
+        balanceRepository,
         balanceStatusRepository,
         mock<Clock>(),
         projects,
@@ -197,8 +197,8 @@ describe(BalanceUpdater.name, () => {
       })
       const balanceUpdater = new BalanceUpdater(
         multicallClient,
-        mock<BalanceRepository>(),
         blockNumberUpdater,
+        mock<BalanceRepository>(),
         mock<BalanceStatusRepository>(),
         mock<Clock>(),
         [],
