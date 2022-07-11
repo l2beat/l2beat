@@ -14,8 +14,6 @@
     "typechain": "rm -rf src/typechain && typechain --target ethers-v5 --out-dir src/typechain  abi/**/*.json"
   },
   "dependencies": {
-    "@l2beat/common": "*",
-    "@types/node": "^17.0.41",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8"
   },
