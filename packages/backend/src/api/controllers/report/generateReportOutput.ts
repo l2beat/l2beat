@@ -169,13 +169,23 @@ export function generateApiMain(
         asNumber(projectEntry.value.usd, 2),
         asNumber(projectEntry.value.eth, 6),
       ])
+    }
+  }
+  const lastEntry = entries.reduce((prev, curr) => {
+    return curr.timestamp.gt(prev.timestamp) ? curr : prev
+  }, entries[0])
 
-      for (const [assetId, tokenValue] of projectEntry.tokens) {
-        project.tokens.push({
-          assetId,
-          tvl: asNumber(tokenValue.usd, 2),
-        })
+  for (const [name, projectEntry] of lastEntry.projects) {
+    for (const [assetId, tokenValue] of projectEntry.tokens) {
+      const project = report.projects[name]
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!project) {
+        throw new Error('Programmer error: Reports not filtered correctly')
       }
+      project.tokens.push({
+        assetId,
+        tvl: asNumber(tokenValue.usd, 2),
+      })
     }
   }
 
