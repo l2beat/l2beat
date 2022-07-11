@@ -220,7 +220,7 @@ export const optimism: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Allowed to post new L2 state roots to L1.',
+          description: 'Central actor to post new L2 state roots to L1.',
         },
       ],
       smartContracts: {
