@@ -162,7 +162,7 @@ describe(aggregateReportsDaily.name, () => {
                   {
                     usd: USD,
                     eth: ETH,
-                    balance: 1n * BALANCE,
+                    balance: BALANCE,
                     decimals: 0,
                   },
                 ],
