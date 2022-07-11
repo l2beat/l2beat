@@ -196,7 +196,7 @@ export const dydx: Project = {
               type: 'EOA'
             },
           ],
-          description: ''
+          description: 'Allowed to update state of the rollup'
         },
       ],
     },
