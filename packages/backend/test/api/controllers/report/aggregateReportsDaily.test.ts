@@ -141,9 +141,6 @@ describe(aggregateReportsDaily.name, () => {
       fakeReport(ARBITRUM, AssetId.WETH, -1),
       fakeReport(ARBITRUM, AssetId.WETH, 0),
 
-      fakeReport(ARBITRUM, AssetId.DAI, -1),
-      fakeReport(ARBITRUM, AssetId.DAI, 0),
-
       fakeReport(OPTIMISM, AssetId.DAI, -1),
       fakeReport(OPTIMISM, AssetId.DAI, 0),
     ]
@@ -153,19 +150,19 @@ describe(aggregateReportsDaily.name, () => {
     expect(result).toEqual([
       {
         timestamp: TODAY.add(-1, 'days'),
-        value: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 3n * USD, eth: 3n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              value: { usd: 3n * USD, eth: 3n * ETH },
+              value: { usd: 2n * USD, eth: 2n * ETH },
               tokens: new Map([
                 [
                   'DAI',
                   {
-                    usd: 2n * USD,
-                    eth: 2n * ETH,
-                    balance: 2n * BALANCE,
+                    usd: USD,
+                    eth: ETH,
+                    balance: BALANCE,
                     decimals: 0,
                   },
                 ],
@@ -202,19 +199,19 @@ describe(aggregateReportsDaily.name, () => {
       },
       {
         timestamp: TODAY,
-        value: { usd: 4n * USD, eth: 4n * ETH },
+        value: { usd: 3n * USD, eth: 3n * ETH },
         projects: new Map([
           [
             'Arbitrum',
             {
-              value: { usd: 3n * USD, eth: 3n * ETH },
+              value: { usd: 2n * USD, eth: 2n * ETH },
               tokens: new Map([
                 [
                   'DAI',
                   {
-                    usd: 2n * USD,
-                    eth: 2n * ETH,
-                    balance: 2n * BALANCE,
+                    usd: USD,
+                    eth: ETH,
+                    balance: BALANCE,
                     decimals: 0,
                   },
                 ],
