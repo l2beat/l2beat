@@ -83,9 +83,6 @@ describe(ReportController.name, () => {
           mockReport(ARBITRUM, AssetId.WETH, -1),
           mockReport(ARBITRUM, AssetId.WETH, 0),
 
-          mockReport(ARBITRUM, AssetId.DAI, -1),
-          mockReport(ARBITRUM, AssetId.DAI, 0),
-
           mockReport(OPTIMISM, AssetId.DAI, -1),
           mockReport(OPTIMISM, AssetId.DAI, 0),
         ]),
@@ -105,8 +102,8 @@ describe(ReportController.name, () => {
         aggregate: {
           types: ['date', 'usd', 'eth'],
           data: [
-            ['2022-05-29', 214752364.44, 143170.020444],
-            ['2022-05-30', 214752364.44, 143170.020444],
+            ['2022-05-29', 214751364.33, 143168.909333],
+            ['2022-05-30', 214751364.33, 143168.909333],
           ],
         },
         byProject: {
@@ -114,16 +111,16 @@ describe(ReportController.name, () => {
             aggregate: {
               types: ['date', 'usd', 'eth'],
               data: [
-                ['2022-05-29', 3000.33, 3.333333],
-                ['2022-05-30', 3000.33, 3.333333],
+                ['2022-05-29', 2000.22, 2.222222],
+                ['2022-05-30', 2000.22, 2.222222],
               ],
             },
             byToken: {
               ['DAI']: {
                 types: ['date', 'dai', 'usd'],
                 data: [
-                  ['2022-05-29', 222.2222, 2000.22],
-                  ['2022-05-30', 222.2222, 2000.22],
+                  ['2022-05-29', 111.1111, 1000.11],
+                  ['2022-05-30', 111.1111, 1000.11],
                 ],
               },
               ['WETH']: {
