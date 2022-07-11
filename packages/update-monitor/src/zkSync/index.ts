@@ -1,8 +1,9 @@
 import { providers } from 'ethers'
+
 import { ProjectParameters } from '../types'
-import { addresses } from './constants'
-import { getGovernance } from './governance'
-import { getUpgradeGatekeeper } from './upgradeGatekeeper'
+import { getGovernance } from './contracts/governance'
+import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
+import { getVerifier } from './contracts/verifier'
 
 export async function getZkSyncParameters(
   provider: providers.JsonRpcProvider,
@@ -12,6 +13,7 @@ export async function getZkSyncParameters(
     contracts: [
       await getUpgradeGatekeeper(provider),
       await getGovernance(provider),
+      await getVerifier(provider),
     ],
   }
 }
@@ -26,33 +28,8 @@ export async function getZkSyncParameters(
 // }
 
 // export async function run() {
-//   dotenv.config()
-//   const alchemyApiKey = process.env.ALCHEMY_API_KEY
-//   const provider = new providers.AlchemyProvider('mainnet', alchemyApiKey)
-//   const sdk = getMainnetSdk(provider)
-
-//   const upgradeable = await getUpgradeableContracts(sdk.upgradeGatekeeper)
-//   assert.deepEqual(upgradeable, Upgradeable)
-//   assert.equal(await sdk.upgradeGatekeeper.getMaster(), addresses.upgradeMaster)
-//   assert.equal(await sdk.upgradeGatekeeper.mainContract(), addresses.mainProxy)
-
-//   assert.equal(await sdk.governanceProxy.getTarget(), addresses.governance)
-//   const governanceProxyMaster = await sdk.governanceProxy.getMaster()
-//   assert.equal(governanceProxyMaster, addresses.upgradeGatekeeper)
-
-//   assert.equal(await sdk.verifierProxy.getTarget(), addresses.verifier)
-//   assert.equal(await sdk.verifierProxy.getMaster(), addresses.upgradeGatekeeper)
-
 //   assert.equal(await sdk.mainProxy.getTarget(), addresses.main)
 //   assert.equal(await sdk.mainProxy.getMaster(), addresses.upgradeGatekeeper)
-
-//   const networkGovernor = await sdk.governanceProxy.networkGovernor()
-//   assert.equal(networkGovernor, addresses.upgradeMaster)
-
-//   const tokenGovernance = await sdk.governanceProxy.tokenGovernance()
-//   assert.equal(tokenGovernance, addresses.tokenGovernance)
-
-//   assert.deepEqual(await getActiveValidators(sdk.governanceProxy), Validators)
 
 //   assert.equal(await sdk.tokenGovernance.treasury(), Treasury)
 

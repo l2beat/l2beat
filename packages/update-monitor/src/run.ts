@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
 import { providers } from 'ethers'
-import { getZkSyncParameters } from './zkSync'
 import { writeFile } from 'fs/promises'
+
+import { getZkSyncParameters } from './zkSync'
 
 export async function run() {
   dotenv.config()
