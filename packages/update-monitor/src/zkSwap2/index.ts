@@ -8,11 +8,11 @@ import { getVerifier } from './contracts/verifier'
 import { getVerifierExit } from './contracts/verifierExit'
 import { getZkSync } from './contracts/zkSync'
 
-export async function getZkSwap1Parameters(
+export async function getZkSwap2Parameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'ZkSwap 1.0',
+    name: 'ZkSwap 2.0',
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
