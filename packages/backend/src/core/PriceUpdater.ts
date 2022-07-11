@@ -1,4 +1,4 @@
-import { AssetId, Logger, UnixTime } from '@l2beat/common'
+import { AssetId, Logger, TaskQueue, UnixTime } from '@l2beat/common'
 import { setTimeout } from 'timers/promises'
 
 import { Token } from '../model'
@@ -8,13 +8,16 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
+import { Clock } from './Clock'
 
 export class PriceUpdater {
   private knownSet = new Set<number>()
+  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
 
   constructor(
     private coingeckoQueryService: CoingeckoQueryService,
     private priceRepository: PriceRepository,
+    private clock: Clock,
     private tokens: Token[],
     private logger: Logger,
   ) {
@@ -28,15 +31,19 @@ export class PriceUpdater {
     return this.priceRepository.getByTimestamp(timestamp)
   }
 
-  async update(timestamps: UnixTime[]) {
-    if (timestamps.length === 0) {
-      return
-    }
+  start() {
+    this.taskQueue.addToFront()
+    this.logger.info('Started')
+    return this.clock.onNewHour(() => {
+      this.taskQueue.addToFront()
+    })
+  }
 
-    this.logger.info('Update started', { timestamps: timestamps.length })
+  async update() {
+    const from = this.clock.getFirstHour()
+    const to = this.clock.getLastHour()
 
-    const from = timestamps[0]
-    const to = timestamps[timestamps.length - 1]
+    this.logger.info('Update started', { timestamp: to.toNumber() })
 
     const boundaries = await this.priceRepository.calcDataBoundaries()
 
@@ -51,10 +58,10 @@ export class PriceUpdater {
       throw error.reason
     }
 
-    for (const timestamp of timestamps) {
-      this.knownSet.add(timestamp.toNumber())
+    for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
+      this.knownSet.add(t.toNumber())
     }
-    this.logger.info('Update completed', { timestamps: timestamps.length })
+    this.logger.info('Update completed', { timestamp: to.toNumber() })
   }
 
   async updateToken(
@@ -82,7 +89,7 @@ export class PriceUpdater {
       }
     }
     if (hours > 0) {
-      this.logger.info('Updated prices', {
+      this.logger.debug('Updated prices', {
         coingeckoId: assetId.toString(),
         hours,
       })

@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress } from '@l2beat/common'
+import { AssetId, EthereumAddress, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../model'
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
@@ -37,6 +37,11 @@ export function createReports(
   return reports
 }
 
+export interface TokenDetails {
+  decimals: number
+  sinceTimestamp: UnixTime
+}
+
 export function aggregateBalancesPerProject(
   projects: ProjectInfo[],
   balances: BalanceRecord[],
@@ -45,19 +50,27 @@ export function aggregateBalancesPerProject(
 
   for (const { projectId, bridges } of projects) {
     const projectBalances = balances.filter((balance) =>
-      bridges.some((bridge) => bridge.address === balance.holderAddress),
+      bridges.some(
+        (bridge) =>
+          bridge.address === balance.holderAddress &&
+          bridge.sinceTimestamp.lte(balance.timestamp),
+      ),
     )
 
-    const assets = new Map<AssetId, number>()
+    const assets = new Map<AssetId, TokenDetails>()
     for (const bridge of bridges) {
       for (const token of bridge.tokens) {
-        assets.set(token.id, token.decimals)
+        assets.set(token.id, {
+          decimals: token.decimals,
+          sinceTimestamp: token.sinceTimestamp,
+        })
       }
     }
 
-    for (const [assetId, decimals] of assets) {
+    for (const [assetId, { decimals, sinceTimestamp }] of assets) {
       const assetBalances = projectBalances.filter(
-        (balance) => balance.assetId === assetId,
+        (balance) =>
+          balance.assetId === assetId && balance.timestamp.gte(sinceTimestamp),
       )
 
       balancesPerProject.push({
