@@ -136,7 +136,7 @@ export const dydx: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of dYdX: L2 Perpetual Smart Contract, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
         },
         {
           name: 'dYdX token holders',
@@ -186,7 +186,7 @@ export const dydx: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of dydx: GPS Statement Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+            'Can upgrade implementation of Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
         },
         {
           name: 'Operator',
@@ -196,7 +196,7 @@ export const dydx: Project = {
               type: 'EOA'
             },
           ],
-          description: 'Allowed to update state of the rollup'
+          description: 'Allowed to update state of the rollup.'
         },
       ],
     },
