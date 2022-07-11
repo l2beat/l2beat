@@ -30,13 +30,17 @@ export class ReportStatusRepository extends BaseRepository {
     timestamp: UnixTime
   }): Promise<Hash256> {
     const knex = await this.knex()
-    await knex('report_status')
-      .insert({
+    await knex.transaction(async (trx) => {
+      await trx('report_status')
+        .where({
+          unix_timestamp: record.timestamp.toString(),
+        })
+        .delete()
+      await trx('report_status').insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toString(),
       })
-      .onConflict(['config_hash', 'unix_timestamp'])
-      .merge()
+    })
     return record.configHash
   }
 
