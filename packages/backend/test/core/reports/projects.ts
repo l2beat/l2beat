@@ -90,7 +90,7 @@ function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
     symbol: 'FKT',
     decimals: 18,
     address: EthereumAddress.random(),
-    sinceTimestamp: new UnixTime(0).add(2, 'days'),
+    sinceTimestamp: new UnixTime(0),
     category: 'other',
     ...token,
   }
