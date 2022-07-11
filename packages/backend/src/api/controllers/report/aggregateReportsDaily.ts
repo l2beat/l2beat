@@ -152,19 +152,10 @@ export function saveBalancesToEntry(
   project.value.usd += balanceUsd
   project.value.eth += balanceEth
 
-  let token = project.tokens.get(symbol)
-  if (token === undefined) {
-    token = {
-      usd: 0n,
-      eth: 0n,
-      balance: 0n,
-      decimals: 0,
-    }
-    project.tokens.set(symbol, token)
-  }
-
-  token.usd += balanceUsd
-  token.eth += balanceEth
-  token.balance += balance
-  token.decimals = decimals
+  project.tokens.set(symbol, {
+    usd: balanceUsd,
+    eth: balanceEth,
+    balance,
+    decimals,
+  })
 }
