@@ -14,7 +14,6 @@ import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { Clock } from './core/Clock'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { SyncScheduler } from './core/SyncScheduler'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
@@ -32,11 +31,12 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config) {
-    /* - - - - - TOOLS - - - - - */
+    // #region tools
 
     const logger = new Logger(config.logger)
 
-    /* - - - - - PERIPHERALS - - - - - */
+    // #endregion
+    // #region peripherals
 
     const database = new Database(config.databaseConnection, logger)
     const blockNumberRepository = new BlockNumberRepository(database, logger)
@@ -71,31 +71,35 @@ export class Application {
       logger,
     )
 
-    /* - - - - - CORE - - - - - */
+    // #endregion
+    // #region core
 
     const clock = new Clock(
       config.core.minBlockTimestamp,
       config.core.safeTimeOffsetSeconds,
     )
 
-    const blockUpdater = new BlockNumberUpdater(
+    const blockNumberUpdater = new BlockNumberUpdater(
       etherscanClient,
       blockNumberRepository,
+      clock,
       logger,
     )
 
     const priceUpdater = new PriceUpdater(
       coingeckoQueryService,
       priceRepository,
+      clock,
       config.tokens,
       logger,
     )
 
     const balanceUpdater = new BalanceUpdater(
       multicall,
+      blockNumberUpdater,
       balanceRepository,
-      blockNumberRepository,
       balanceStatusRepository,
+      clock,
       config.projects,
       logger,
     )
@@ -110,15 +114,8 @@ export class Application {
       logger,
     )
 
-    const syncScheduler = new SyncScheduler(
-      blockUpdater,
-      priceUpdater,
-      balanceUpdater,
-      config.core.minBlockTimestamp,
-      logger,
-    )
-
-    /* - - - - - API - - - - - */
+    // #endregion
+    // #region api
 
     const blocksController = new BlocksController(blockNumberRepository)
 
@@ -144,7 +141,8 @@ export class Application {
       createStatusRouter(statusController),
     ])
 
-    /* - - - - - START - - - - - */
+    // #endregion
+    // #region start
 
     this.start = async () => {
       logger.for(this).info('Starting')
@@ -154,9 +152,13 @@ export class Application {
 
       if (config.syncEnabled) {
         reportController.start()
-        syncScheduler.start()
+        priceUpdater.start()
+        await blockNumberUpdater.start()
+        await balanceUpdater.start()
         await reportUpdater.start()
       }
     }
+
+    // #endregion
   }
 }

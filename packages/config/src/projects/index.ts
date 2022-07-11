@@ -1,5 +1,6 @@
 import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
+import { aztecconnect } from './aztecconnect'
 import { bobanetwork } from './bobanetwork'
 import { deversifi } from './deversifi'
 import { dydx } from './dydx'
@@ -26,6 +27,7 @@ export * from './types'
 export const projects: Project[] = [
   arbitrum,
   aztec,
+  aztecconnect,
   bobanetwork,
   deversifi,
   dydx,

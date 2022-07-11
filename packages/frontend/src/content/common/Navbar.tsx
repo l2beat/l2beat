@@ -20,6 +20,9 @@ export function Navbar() {
           <Logo className="Navbar-Logo" />
         </a>
         <ul className="Navbar-Links left">
+          <li className="Navbar-Link compact">
+            <a href={config.forumLink}>Forum</a>
+          </li>
           <li className="Navbar-Link">
             <a href="/donate">Donate</a>
           </li>

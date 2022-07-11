@@ -81,6 +81,10 @@ export class Bytes {
   concat(other: Bytes) {
     return new Bytes(this.value + other.value)
   }
+
+  padStart(maxLength: number) {
+    return new Bytes(this.value.padStart(maxLength * 2, '0'))
+  }
 }
 
 const HEX_REGEX = /^(0x)?[a-f\d]*$/i
