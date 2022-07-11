@@ -192,7 +192,7 @@ export const dydx: Project = {
           name: 'Operator',
           accounts: [
             {
-              address: '0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e',
+              address: '0x8129b737912e17212C8693B781928f5D0303390a',
               type: 'EOA',
             },
           ],
