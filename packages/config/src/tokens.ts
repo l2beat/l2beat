@@ -1821,6 +1821,16 @@ export const tokenList: TokenInfo[] = [
     category: 'ether',
   },
   {
+    id: AssetId('wstETH-wrapped-steth'),
+    name: 'Wrapped liquid staked Ether 2.0',
+    symbol: 'wstETH',
+    address: EthereumAddress('0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'),
+    coingeckoId: CoingeckoId('wrapped-steth'),
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1613749071),
+    category: 'ether',
+  },
+  {
     id: AssetId('mir-wrapped-mir-token'),
     name: 'Wrapped MIR Token',
     coingeckoId: CoingeckoId('mirror-protocol'),
