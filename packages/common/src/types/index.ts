@@ -1,3 +1,4 @@
+export * from './ApiMain'
 export * from './AssetId'
 export * from './Bytes'
 export * from './CoingeckoId'
