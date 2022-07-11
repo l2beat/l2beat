@@ -26,7 +26,7 @@ describe(BalanceStatusRepository.name, () => {
     expect(timestamps).toEqual([TIME_ONE])
   })
 
-  it('stores many timestamps across many hashes ', async () => {
+  it('stores many timestamps across many hashes, but only latest', async () => {
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_TWO })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_THREE })
@@ -34,8 +34,7 @@ describe(BalanceStatusRepository.name, () => {
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
     const timestampsOne = await repository.getByConfigHash(HASH_ONE)
-    expect(timestampsOne.length).toEqual(3)
-    expect(timestampsOne).toBeAnArrayWith(TIME_ONE, TIME_TWO, TIME_THREE)
+    expect(timestampsOne).toEqual([TIME_THREE])
 
     const timestampsTwo = await repository.getByConfigHash(HASH_TWO)
     expect(timestampsTwo.length).toEqual(2)
