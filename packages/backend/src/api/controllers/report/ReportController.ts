@@ -25,10 +25,9 @@ export class ReportController {
     private interval: number = 5 * 60 * 1000,
   ) {
     this.logger = this.logger.for(this)
-    this.taskQueue = new TaskQueue(
-      this.generateDailyAndCache.bind(this),
-      this.logger,
-    )
+    this.taskQueue = new TaskQueue(async () => {
+      await Promise.all([this.generateDailyAndCache(), this.generateMain()])
+    }, this.logger)
   }
 
   start() {
@@ -40,7 +39,18 @@ export class ReportController {
     return this.cacheRepository.getData()
   }
 
-  async getDailyMain(): Promise<ApiMain> {
+  async getMain() {
+    return this.cacheRepository.getMain()
+  }
+
+  async generateMainAndCache() {
+    this.logger.info('Main started')
+    const main = await this.generateMain()
+    await this.cacheRepository.saveMain(main)
+    this.logger.info('Main saved')
+  }
+
+  async generateMain(): Promise<ApiMain> {
     let reports = await this.reportRepository.getDaily()
     reports = filterReportsByProjects(reports, this.projects)
     reports = getSufficientlySynced(reports)

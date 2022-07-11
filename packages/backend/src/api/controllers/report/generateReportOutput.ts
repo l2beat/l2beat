@@ -171,6 +171,11 @@ export function generateApiMain(
       ])
     }
   }
+
+  if (entries.length === 0) {
+    return report
+  }
+
   const lastEntry = entries.reduce((prev, curr) => {
     return curr.timestamp.gt(prev.timestamp) ? curr : prev
   }, entries[0])
