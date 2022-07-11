@@ -16,12 +16,12 @@ export async function getZkSpaceParameters(
     name: 'ZkSpace',
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
+      getZkSync(provider),
       getGovernance(provider),
-      getPairManager(provider),
       getVerifier(provider),
       getVerifierExit(provider),
+      getPairManager(provider),
       getZKSeaNFT(provider),
-      getZkSync(provider),
     ]),
   }
 }

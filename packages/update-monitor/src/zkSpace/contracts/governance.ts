@@ -44,7 +44,7 @@ export async function getGovernance(
 async function getValidators(governance: ZkSpaceGovernance) {
   const events = await governance.queryFilter(
     governance.filters.ValidatorStatusUpdate(),
-    13_809_566,
+    0,
   )
   const validators = new Set<string>()
   for (const event of events) {

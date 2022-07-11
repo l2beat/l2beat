@@ -3,6 +3,7 @@ import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
 import { getZkSpaceParameters } from './zkSpace'
+import { getZkSwap1Parameters } from './zkSwap1'
 import { getZkSyncParameters } from './zkSync'
 
 export async function run() {
@@ -12,6 +13,7 @@ export async function run() {
 
   const projects = await Promise.all([
     getZkSyncParameters(provider),
+    getZkSwap1Parameters(provider),
     getZkSpaceParameters(provider),
   ])
 
