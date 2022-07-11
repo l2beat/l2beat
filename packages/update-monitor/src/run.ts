@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
-import { getZkSpaceParameters } from './ZkSpace'
+import { getZkSpaceParameters } from './zkSpace'
 import { getZkSyncParameters } from './zkSync'
 
 export async function run() {
