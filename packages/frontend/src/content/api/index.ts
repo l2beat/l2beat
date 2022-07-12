@@ -1,24 +1,18 @@
+import { ApiMain, Chart } from '@l2beat/common'
 import { Project } from '@l2beat/config'
 
-import { ChartData, L2Data } from '../L2Data'
 import { outputCharts } from './output'
 
-export function createApi(projects: Project[], l2Data: L2Data) {
-  const charts = new Map<string, ChartData>()
+export function createApi(projects: Project[], apiMain: ApiMain) {
+  const charts = new Map<string, Chart>()
 
-  charts.set('tvl', l2Data.aggregate)
+  charts.set('tvl', apiMain.charts.daily)
   for (const project of projects) {
-    const projectData = l2Data.byProject[project.name]
+    const projectData = apiMain.projects[project.name]
     if (!projectData) {
       continue
     }
-    charts.set(project.slug, projectData.aggregate)
-    for (const [token, chart] of Object.entries(projectData.byToken)) {
-      if (!chart) {
-        continue
-      }
-      charts.set(`${project.slug}/${token.toLowerCase()}`, chart)
-    }
+    charts.set(project.slug, projectData.charts.daily)
   }
 
   outputCharts(charts)

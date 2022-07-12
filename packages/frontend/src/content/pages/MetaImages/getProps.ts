@@ -1,6 +1,6 @@
+import { ApiMain } from '@l2beat/common'
 import { Project } from '@l2beat/config'
 
-import { L2Data } from '../../L2Data'
 import { PageMetadata } from '../../PageMetadata'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../utils'
 
@@ -13,12 +13,12 @@ export interface MetaImageProps {
   metadata: PageMetadata
 }
 
-export function getProps(l2Data: L2Data, project?: Project): MetaImageProps {
-  const aggregate = project
-    ? l2Data.byProject[project.name]?.aggregate.data ?? []
-    : l2Data.aggregate.data
-  const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
+export function getProps(apiMain: ApiMain, project?: Project): MetaImageProps {
+  const daily = project
+    ? apiMain.projects[project.name]?.charts.daily.data ?? []
+    : apiMain.charts.daily.data
+  const tvl = getFromEnd(daily, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = getFromEnd(daily, 7)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {
