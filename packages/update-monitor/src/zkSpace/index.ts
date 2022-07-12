@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 
 import { getSimpleProxy } from '../common/simpleProxy'
+import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../types'
 import { addresses } from './constants'
 import { getGovernance } from './contracts/governance'
@@ -23,4 +24,8 @@ export async function getZkSpaceParameters(
       getZKSeaNFT(provider),
     ]),
   }
+}
+
+export async function discoverZkSpace(discoveryEngine: DiscoveryEngine) {
+  await discoveryEngine.analyze([addresses.upgradeGatekeeper])
 }
