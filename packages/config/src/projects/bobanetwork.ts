@@ -143,6 +143,39 @@ export const bobanetwork: Project = {
           risks: [],
         },
       ],
+      permissions: [
+        {
+          name: 'Owner',
+          accounts: [
+            {
+              address: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, block proposer or any other system component (unlimited upgrade power).',
+        },
+        {
+          name: 'Sequencer',
+          accounts: [
+            {
+              address: '0xfa46908B587f9102E81CE6C43b7B41b52881c57F',
+              type: 'EOA',
+            },
+          ],
+          description: 'Central actor allowed to post new L2 state root.',
+        },
+        {
+          name: 'Block Proposer',
+          accounts: [
+            {
+              address: '0x5558c63d5bf229450995adc160c023C9F4d4bE80',
+              type: 'EOA',
+            },
+          ],
+          description: 'Central actor to post new L2 state roots to L1.',
+        },
+      ],
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
         description:
