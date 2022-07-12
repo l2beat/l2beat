@@ -140,6 +140,113 @@ export const loopring: Project = {
           ],
         },
       ],
+      permissions: [
+        {
+          name: 'Loopring MultiSig',
+          accounts: [
+            {
+              address: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
+              type: 'MultiSig',
+            },
+          ],
+          description:
+            'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy owner), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submit blocks, upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+        },
+        {
+          name: 'MultiSig participants',
+          accounts: [
+            {
+              address: '0x3b1d1f89e0b6803174a2de72e21a6f6f8464d5f1',
+              type: 'EOA',
+            },
+            {
+              address: '0x4cbbd41a2c057cab8db00ac60f1ab52f36870185',
+              type: 'EOA',
+            },
+            {
+              address: '0x55d79345afc87806b690c9f96c4d7bfe2bca8268',
+              type: 'EOA',
+            },
+            {
+              address: '0xb89cdf808da6cfb39f3c2e167ffb5ddfc811c33e',
+              type: 'EOA',
+            },
+            {
+              address: '0x51b8982ebfa21eb01b1e591b8f45a33fca216e0d',
+              type: 'EOA',
+            },
+            {
+              address: '0x1f28f10176f89f4e9985873b84d14e75751bb3d1',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'These addresses are the participants of the 4/6 Loopring MultiSig',
+        },
+        {
+          name: 'Block Submitters',
+          accounts: [
+            {
+              address: '0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0',
+              type: 'EOA',
+            },
+            {
+              address: '0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7',
+              type: 'EOA',
+            },
+            {
+              address: '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
+              type: 'EOA',
+            },
+            {
+              address: '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
+              type: 'EOA',
+            },
+            {
+              address: '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
+              type: 'EOA',
+            },
+            {
+              address: '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
+              type: 'EOA',
+            },
+            {
+              address: '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
+              type: 'EOA',
+            },
+            {
+              address: '0x238b649E62a0C383b54060b1625516b489183843',
+              type: 'EOA',
+            },
+            {
+              address: '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
+              type: 'EOA',
+            },
+            {
+              address: '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
+              type: 'EOA',
+            },
+            {
+              address: '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
+              type: 'EOA',
+            },
+            {
+              address: '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
+              type: 'EOA',
+            },
+            {
+              address: '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
+              type: 'EOA',
+            },
+            {
+              address: '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Actors who can submit new blocks, updating the L2 state on L1',
+        },
+      ],
       contracts: {
         addresses: [
           {
