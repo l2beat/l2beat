@@ -1,11 +1,10 @@
 import { providers } from 'ethers'
 
+import { getSimpleProxy } from '../common/simpleProxy'
 import { ProjectParameters } from '../types'
+import { addresses } from './constants'
 import { getGovernance } from './contracts/governance'
-import { getPairManager } from './contracts/pairManager'
 import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
-import { getVerifier } from './contracts/verifier'
-import { getVerifierExit } from './contracts/verifierExit'
 import { getZKSeaNFT } from './contracts/zkSeaNFT'
 import { getZkSync } from './contracts/zkSync'
 
@@ -13,14 +12,14 @@ export async function getZkSpaceParameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'ZkSpace',
+    name: 'zkSpace',
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
       getGovernance(provider),
-      getVerifier(provider),
-      getVerifierExit(provider),
-      getPairManager(provider),
+      getSimpleProxy(provider, addresses.verifier, 'Verifier'),
+      getSimpleProxy(provider, addresses.verifierExit, 'VerifierExit'),
+      getSimpleProxy(provider, addresses.pairManager, 'PairManager'),
       getZKSeaNFT(provider),
     ]),
   }

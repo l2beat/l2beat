@@ -15,12 +15,27 @@ export async function run() {
   }
   const provider = new providers.AlchemyProvider('mainnet', alchemyApiKey)
 
+  const args = process.argv.slice(2)
+  function includeProject(name: string) {
+    if (args.length === 0) {
+      return true
+    }
+    return args.includes(name)
+  }
+
   const projects = await Promise.all([
-    getZkSyncParameters(provider),
-    getZkSwap1Parameters(provider),
-    getZkSwap2Parameters(provider),
-    getZkSpaceParameters(provider),
+    includeProject('zkSync') && getZkSyncParameters(provider),
+    includeProject('zkSwap1') && getZkSwap1Parameters(provider),
+    includeProject('zkSwap2') && getZkSwap2Parameters(provider),
+    includeProject('zkSpace') && getZkSpaceParameters(provider),
   ])
 
-  await writeFile('dist/projects.json', JSON.stringify(projects, null, 2))
+  for (const project of projects) {
+    if (project) {
+      await writeFile(
+        `dist/${project.name}.json`,
+        JSON.stringify(project, null, 2),
+      )
+    }
+  }
 }

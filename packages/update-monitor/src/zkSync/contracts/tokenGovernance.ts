@@ -18,11 +18,8 @@ export async function getTokenGovernance(
     upgradeability: {
       type: 'immutable',
     },
-    values: [
-      {
-        name: 'treasury',
-        value: await tokenGovernance.treasury(),
-      },
-    ],
+    values: {
+      treasury: await tokenGovernance.treasury(),
+    },
   }
 }

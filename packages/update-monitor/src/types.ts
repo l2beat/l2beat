@@ -7,7 +7,7 @@ export interface ContractParameters {
   name: string
   address: string
   upgradeability: UpgradeabilityParameters
-  values: ContractValue[]
+  values: Record<string, ContractValue>
 }
 
 export type UpgradeabilityParameters =
@@ -28,7 +28,4 @@ export interface ProxyUpgradeability {
   implementation: string
 }
 
-export interface ContractValue {
-  name: string
-  value: string | number | boolean | string[] | number[]
-}
+export type ContractValue = string | number | boolean | string[] | number[]
