@@ -1,0 +1,596 @@
+[
+  {
+    "name": "zkSync",
+    "contracts": [
+      {
+        "name": "UpgradeGatekeeper",
+        "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+        "upgradeability": {
+          "type": "immutable"
+        },
+        "values": [
+          {
+            "name": "managedContracts",
+            "value": [
+              "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+              "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+              "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+            ]
+          },
+          {
+            "name": "master",
+            "value": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
+          },
+          {
+            "name": "mainContract",
+            "value": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+          }
+        ]
+      },
+      {
+        "name": "zkSync",
+        "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x38A43F4330f24fe920F943409709fc9A6084C939"
+          },
+          {
+            "name": "additional",
+            "value": "0x080812701c94087F1DEE425EbD7CBF9EFAF878e2"
+          },
+          {
+            "name": "securityCouncil",
+            "value": [
+              "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
+              "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
+              "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
+              "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3",
+              "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11",
+              "0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190",
+              "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
+              "0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6",
+              "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
+              "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
+              "0x399a6a13D298CF3F41a562966C1a450136Ea52C2",
+              "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB",
+              "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f",
+              "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B",
+              "0x225d3822De44E58eE935440E0c0B829C4232086e"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Governance",
+        "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x934ef5836E78d93125317034f5CF855A97B13f43"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x38A43F4330f24fe920F943409709fc9A6084C939"
+          },
+          {
+            "name": "validators",
+            "value": [
+              "0x18c208921F7a741510a7fc0CfA51E941735DAE54"
+            ]
+          },
+          {
+            "name": "networkGovernor",
+            "value": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
+          },
+          {
+            "name": "tokenGovernance",
+            "value": "0x35cc31f63deef017c38d51B038891bAE7d614e86"
+          }
+        ]
+      },
+      {
+        "name": "Verifier",
+        "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x38A43F4330f24fe920F943409709fc9A6084C939"
+          }
+        ]
+      },
+      {
+        "name": "TokenGovernance",
+        "address": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
+        "upgradeability": {
+          "type": "immutable"
+        },
+        "values": [
+          {
+            "name": "treasury",
+            "value": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
+          }
+        ]
+      },
+      {
+        "name": "Multisig",
+        "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
+        "upgradeability": {
+          "type": "gnosis safe"
+        },
+        "values": [
+          {
+            "name": "owners",
+            "value": [
+              "0xA5F3C860441c0EeD02BF8A6472AF32B68884b0FF",
+              "0x474D2b82E02D9712A077574E7764dEfA182653D4",
+              "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
+              "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
+              "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
+              "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+            ]
+          },
+          {
+            "name": "threshold",
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ZkSwap 1.0",
+    "contracts": [
+      {
+        "name": "UpgradeGatekeeper",
+        "address": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "upgradeability": {
+          "type": "immutable"
+        },
+        "values": [
+          {
+            "name": "managedContracts",
+            "value": [
+              "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+              "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+              "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+              "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+              "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+            ]
+          },
+          {
+            "name": "master",
+            "value": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037"
+          },
+          {
+            "name": "mainContract",
+            "value": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+          }
+        ]
+      },
+      {
+        "name": "zkSync",
+        "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+          },
+          {
+            "name": "zkSyncCommitBlock",
+            "value": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157"
+          },
+          {
+            "name": "zkSyncExit",
+            "value": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5"
+          },
+          {
+            "name": "verifier",
+            "value": "0x27C229937745d697d28FC7853d1bFEA7331Edf56"
+          },
+          {
+            "name": "verifierExit",
+            "value": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
+          },
+          {
+            "name": "governance",
+            "value": "0x02ecef526f806f06357659fFD14834fe82Ef4B04"
+          },
+          {
+            "name": "pairManager",
+            "value": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
+          }
+        ]
+      },
+      {
+        "name": "Governance",
+        "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+          },
+          {
+            "name": "validators",
+            "value": [
+              "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"
+            ]
+          },
+          {
+            "name": "networkGovernor",
+            "value": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037"
+          }
+        ]
+      },
+      {
+        "name": "Verifier",
+        "address": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+          }
+        ]
+      },
+      {
+        "name": "VerifierExit",
+        "address": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+          }
+        ]
+      },
+      {
+        "name": "PairManager",
+        "address": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ZkSwap 2.0",
+    "contracts": [
+      {
+        "name": "UpgradeGatekeeper",
+        "address": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
+        "upgradeability": {
+          "type": "immutable"
+        },
+        "values": [
+          {
+            "name": "managedContracts",
+            "value": [
+              "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B",
+              "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D",
+              "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef",
+              "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
+              "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
+            ]
+          },
+          {
+            "name": "master",
+            "value": "0x9D7397204F32e0Ee919Ea3475630cdf131086255"
+          },
+          {
+            "name": "mainContract",
+            "value": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
+          }
+        ]
+      },
+      {
+        "name": "zkSync",
+        "address": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0xf2c351f22b148A9fF583a0F81701471a74E7338e"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+          },
+          {
+            "name": "zkSyncCommitBlock",
+            "value": "0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4"
+          },
+          {
+            "name": "zkSyncExit",
+            "value": "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0"
+          },
+          {
+            "name": "verifier",
+            "value": "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef"
+          },
+          {
+            "name": "verifierExit",
+            "value": "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513"
+          },
+          {
+            "name": "governance",
+            "value": "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B"
+          },
+          {
+            "name": "pairManager",
+            "value": "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D"
+          }
+        ]
+      },
+      {
+        "name": "Governance",
+        "address": "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x95269f9E76540459c797089034dc74b48dF780a2"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+          },
+          {
+            "name": "validators",
+            "value": [
+              "0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"
+            ]
+          },
+          {
+            "name": "networkGovernor",
+            "value": "0x9D7397204F32e0Ee919Ea3475630cdf131086255"
+          },
+          {
+            "name": "tokenLister",
+            "value": "0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E"
+          }
+        ]
+      },
+      {
+        "name": "Verifier",
+        "address": "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+          }
+        ]
+      },
+      {
+        "name": "VerifierExit",
+        "address": "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x17e51B3659884d70a306906B5BDD73D1c64a3892"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+          }
+        ]
+      },
+      {
+        "name": "PairManager",
+        "address": "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ZkSpace",
+    "contracts": [
+      {
+        "name": "UpgradeGatekeeper",
+        "address": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+        "upgradeability": {
+          "type": "immutable"
+        },
+        "values": [
+          {
+            "name": "managedContracts",
+            "value": [
+              "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+              "0xc632347cc96A4400653E3514eA148630455295b5",
+              "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+              "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+              "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
+              "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+            ]
+          },
+          {
+            "name": "master",
+            "value": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be"
+          },
+          {
+            "name": "mainContract",
+            "value": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+          }
+        ]
+      },
+      {
+        "name": "zkSync",
+        "address": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+          },
+          {
+            "name": "zkSyncCommitBlock",
+            "value": "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db"
+          },
+          {
+            "name": "zkSyncExit",
+            "value": "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7"
+          },
+          {
+            "name": "zkSea",
+            "value": "0x899A605a3B7A11eA5D928958b77014e763c53426"
+          },
+          {
+            "name": "verifier",
+            "value": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af"
+          },
+          {
+            "name": "verifierExit",
+            "value": "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81"
+          },
+          {
+            "name": "governance",
+            "value": "0x83Cb1531Ec8447366501aE440478da245EcffB89"
+          },
+          {
+            "name": "zkSeaNFT",
+            "value": "0xc632347cc96A4400653E3514eA148630455295b5"
+          },
+          {
+            "name": "pairManager",
+            "value": "0xc07f850b60E0EEd49a09E455b01a869C25963735"
+          }
+        ]
+      },
+      {
+        "name": "Governance",
+        "address": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x6659174CdB0c445B897aEd25181f293E468941a5"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+          },
+          {
+            "name": "validators",
+            "value": [
+              "0x5bd9404260D2B0D55081E599e4e085BE080141E2"
+            ]
+          },
+          {
+            "name": "networkGovernor",
+            "value": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be"
+          },
+          {
+            "name": "tokenLister",
+            "value": "0x8aA2C56dca9d59F4317c2fad632c192b18127709"
+          }
+        ]
+      },
+      {
+        "name": "Verifier",
+        "address": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+          }
+        ]
+      },
+      {
+        "name": "VerifierExit",
+        "address": "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x41455808B3109AD0f79672C44D75933D3529FEaE"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+          }
+        ]
+      },
+      {
+        "name": "PairManager",
+        "address": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+          }
+        ]
+      },
+      {
+        "name": "ZKSeaNFT",
+        "address": "0xc632347cc96A4400653E3514eA148630455295b5",
+        "upgradeability": {
+          "type": "proxy",
+          "implementation": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0"
+        },
+        "values": [
+          {
+            "name": "admin",
+            "value": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+          },
+          {
+            "name": "owner",
+            "value": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be"
+          },
+          {
+            "name": "zkSync",
+            "value": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+          }
+        ]
+      }
+    ]
+  }
+]
