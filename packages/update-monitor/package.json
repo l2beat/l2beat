@@ -1,0 +1,24 @@
+{
+  "name": "@l2beat/update-monitor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "yarn typechain",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "start": "node -r esbuild-register src",
+    "typecheck:ci": "yarn typecheck",
+    "typecheck": "tsc --noEmit",
+    "typechain": "rm -rf src/typechain && typechain --target ethers-v5 --out-dir src/typechain  abi/**/*.json"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "ethers": "^5.6.8"
+  },
+  "devDependencies": {
+    "@typechain/ethers-v5": "^10.1.0",
+    "typechain": "^8.1.0"
+  }
+}

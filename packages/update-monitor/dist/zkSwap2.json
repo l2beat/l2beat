@@ -1,0 +1,89 @@
+{
+  "name": "zkSwap2",
+  "contracts": [
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "managedContracts": [
+          "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B",
+          "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D",
+          "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef",
+          "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
+          "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
+        ],
+        "master": "0x9D7397204F32e0Ee919Ea3475630cdf131086255",
+        "mainContract": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
+      }
+    },
+    {
+      "name": "zkSync",
+      "address": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0xf2c351f22b148A9fF583a0F81701471a74E7338e"
+      },
+      "values": {
+        "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
+        "zkSyncCommitBlock": "0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4",
+        "zkSyncExit": "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0",
+        "verifier": "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef",
+        "verifierExit": "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
+        "governance": "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B",
+        "pairManager": "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D"
+      }
+    },
+    {
+      "name": "Governance",
+      "address": "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x95269f9E76540459c797089034dc74b48dF780a2"
+      },
+      "values": {
+        "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
+        "validators": [
+          "0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"
+        ],
+        "networkGovernor": "0x9D7397204F32e0Ee919Ea3475630cdf131086255",
+        "tokenLister": "0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E"
+      }
+    },
+    {
+      "name": "Verifier",
+      "address": "0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829"
+      },
+      "values": {
+        "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+      }
+    },
+    {
+      "name": "VerifierExit",
+      "address": "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x17e51B3659884d70a306906B5BDD73D1c64a3892"
+      },
+      "values": {
+        "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+      }
+    },
+    {
+      "name": "PairManager",
+      "address": "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89"
+      },
+      "values": {
+        "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
+      }
+    }
+  ]
+}
