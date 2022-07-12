@@ -10,6 +10,9 @@ import { getZkSyncParameters } from './zkSync'
 export async function run() {
   dotenv.config()
   const alchemyApiKey = process.env.ALCHEMY_API_KEY
+  if (!alchemyApiKey) {
+    throw new Error('Missing env variable ALCHEMY_API_KEY')
+  }
   const provider = new providers.AlchemyProvider('mainnet', alchemyApiKey)
 
   const projects = await Promise.all([
