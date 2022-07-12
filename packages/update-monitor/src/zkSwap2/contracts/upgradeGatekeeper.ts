@@ -17,19 +17,10 @@ export async function getUpgradeGatekeeper(
     name: 'UpgradeGatekeeper',
     address: gatekeeper.address,
     upgradeability: { type: 'immutable' },
-    values: [
-      {
-        name: 'managedContracts',
-        value: await readArray((i) => gatekeeper.managedContracts(i)),
-      },
-      {
-        name: 'master',
-        value: await gatekeeper.getMaster(),
-      },
-      {
-        name: 'mainContract',
-        value: await gatekeeper.mainContract(),
-      },
-    ],
+    values: {
+      managedContracts: await readArray((i) => gatekeeper.managedContracts(i)),
+      master: await gatekeeper.getMaster(),
+      mainContract: await gatekeeper.mainContract(),
+    },
   }
 }
