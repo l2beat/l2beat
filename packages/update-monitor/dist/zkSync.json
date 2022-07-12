@@ -1,0 +1,105 @@
+{
+  "name": "zkSync",
+  "contracts": [
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "managedContracts": [
+          "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+          "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+          "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+        ],
+        "master": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
+        "mainContract": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      }
+    },
+    {
+      "name": "zkSync",
+      "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd"
+      },
+      "values": {
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+        "additional": "0x080812701c94087F1DEE425EbD7CBF9EFAF878e2",
+        "securityCouncil": [
+          "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
+          "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
+          "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
+          "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3",
+          "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11",
+          "0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190",
+          "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
+          "0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6",
+          "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
+          "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
+          "0x399a6a13D298CF3F41a562966C1a450136Ea52C2",
+          "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB",
+          "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f",
+          "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B",
+          "0x225d3822De44E58eE935440E0c0B829C4232086e"
+        ]
+      }
+    },
+    {
+      "name": "Governance",
+      "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x934ef5836E78d93125317034f5CF855A97B13f43"
+      },
+      "values": {
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+        "validators": [
+          "0x18c208921F7a741510a7fc0CfA51E941735DAE54"
+        ],
+        "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
+        "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86"
+      }
+    },
+    {
+      "name": "Verifier",
+      "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC"
+      },
+      "values": {
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      }
+    },
+    {
+      "name": "TokenGovernance",
+      "address": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "treasury": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
+      }
+    },
+    {
+      "name": "Multisig",
+      "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
+      "upgradeability": {
+        "type": "gnosis safe"
+      },
+      "values": {
+        "owners": [
+          "0xA5F3C860441c0EeD02BF8A6472AF32B68884b0FF",
+          "0x474D2b82E02D9712A077574E7764dEfA182653D4",
+          "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
+          "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
+          "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
+          "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+        ],
+        "threshold": 3
+      }
+    }
+  ]
+}

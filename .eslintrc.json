@@ -19,6 +19,7 @@
   },
   "plugins": ["simple-import-sort", "no-only-tests", "unused-imports"],
   "rules": {
+    "@typescript-eslint/ban-tslint-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-empty-function": "off",
