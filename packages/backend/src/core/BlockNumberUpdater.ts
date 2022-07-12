@@ -1,15 +1,18 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { Logger, TaskQueue, UnixTime } from '@l2beat/common'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../peripherals/etherscan'
+import { Clock } from './Clock'
 
 export class BlockNumberUpdater {
   private blocksByTimestamp = new Map<number, bigint>()
+  private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
   constructor(
     private etherscanClient: EtherscanClient,
     private blockNumberRepository: BlockNumberRepository,
+    private clock: Clock,
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -26,37 +29,32 @@ export class BlockNumberUpdater {
     }
   }
 
-  async update(timestamps: UnixTime[]): Promise<bigint[]> {
-    const knownBlocks = await this.blockNumberRepository.getAll()
-    for (const { timestamp, blockNumber } of knownBlocks) {
+  async start() {
+    const known = await this.blockNumberRepository.getAll()
+    for (const { timestamp, blockNumber } of known) {
       this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)
     }
 
-    this.logger.info('Update started', { timestamps: timestamps.length })
-    const result = await Promise.all(
-      timestamps.map((timestamp) => {
-        const known = this.blocksByTimestamp.get(timestamp.toNumber())
-        if (known !== undefined) {
-          return known
-        }
-        return this.fetchBlockNumber(timestamp)
-      }),
-    )
-    this.logger.info('Update completed', { timestamps: timestamps.length })
-    return result
+    this.logger.info('Started')
+    return this.clock.onEveryHour((timestamp) => {
+      if (!this.blocksByTimestamp.has(timestamp.toNumber())) {
+        // we add to front to sync from newest to oldest
+        this.taskQueue.addToFront(timestamp)
+      }
+    })
   }
 
-  private async fetchBlockNumber(timestamp: UnixTime) {
+  async update(timestamp: UnixTime) {
+    this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const blockNumber = await this.etherscanClient.getBlockNumberAtOrBefore(
       timestamp,
     )
     const block = { timestamp, blockNumber }
     await this.blockNumberRepository.add(block)
     this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)
-    this.logger.info('Fetched block', {
+    this.logger.info('Update completed', {
       blockNumber: Number(blockNumber),
       timestamp: timestamp.toNumber(),
     })
-    return blockNumber
   }
 }

@@ -25,10 +25,8 @@ export class BlockNumberRepository extends BaseRepository {
   async add(record: BlockNumberRecord) {
     const row = toRow(record)
     const knex = await this.knex()
-    const [id]: string[] = await knex('block_numbers')
-      .insert(row)
-      .returning('block_number')
-    return id
+    await knex('block_numbers').insert(row)
+    return Number(record.blockNumber)
   }
 
   async getAll(): Promise<BlockNumberRecord[]> {

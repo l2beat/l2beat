@@ -23,12 +23,14 @@ export const aztec: Project = {
     },
   ],
   details: {
+    warning:
+      'A new version of the protocol, Aztec Connect is available and users are encouraged to move their assets there.',
     description:
       'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
     purpose: 'Private payments',
     links: {
       websites: ['https://aztec.network/'],
-      apps: ['https://zk.money'],
+      apps: ['https://old.zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://explorer.aztec.network/'],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
@@ -43,7 +45,11 @@ export const aztec: Project = {
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
+      upgradeability: {
+        value: 'Yes',
+        description: '1/2 MSig can change Validator.',
+        sentiment: 'bad',
+      },
       sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
       validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
     },
