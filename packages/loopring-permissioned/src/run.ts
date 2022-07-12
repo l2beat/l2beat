@@ -15,7 +15,7 @@ export async function run() {
   const alchemyApiKey = getEnv('ALCHEMY_API_KEY')
   const provider = new providers.AlchemyProvider('mainnet', alchemyApiKey)
 
-  // gets events emmited while adding a new allowed address in SelectorBasedAccessManager
+  // gets events emitted while adding a new allowed address in SelectorBasedAccessManager
   await getEvents(provider)
 }
 
@@ -43,19 +43,23 @@ async function getEvents(provider: providers.AlchemyProvider) {
     '0x09824a80': 'registerToken(address)',
   }
 
-  const timestamp = await (await provider.getBlock(13953023)).timestamp
+  const timestamp = (await provider.getBlock(13953023)).timestamp
   console.log(timestamp, new Date(timestamp * 1000))
 
   const data = events.map(({ log, event }) => ({
     blockNumber: log.blockNumber,
+    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
     address: event.args.user,
     selector: event.args.selector,
-    function: knownSelectors[event.args.selector],
     allowed: event.args.allowed,
+    /* eslint-enable @typescript-eslint/no-unsafe-assignment */
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    function: knownSelectors[event.args.selector],
   }))
 
   console.table(data)
   console.log(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     data.filter((d) => d.selector === '0x53228430').map((d) => d.address),
   )
 }
