@@ -27,7 +27,11 @@ export async function analyzeItem(
     analyzeProxy(provider, addressAnalyzer, address),
   ])
 
-  const abi = getAbi(proxy?.implementationAnalysis, analysis)
+  const abi = getAbi(
+    options.addAbis[address],
+    proxy?.implementationAnalysis,
+    analysis,
+  )
   const parameters = await getParameters(abi, address, provider, options)
 
   const relatives = parameters
@@ -38,10 +42,7 @@ export async function analyzeItem(
 
   if (proxy) {
     if (proxy.type === 'eip1967') {
-      parameters.unshift(
-        { name: 'eip1967Implementation', value: proxy.eip1967Implementation },
-        { name: 'eip1967Admin', value: proxy.eip1967Admin },
-      )
+      parameters.unshift({ name: 'eip1967Admin', value: proxy.eip1967Admin })
     }
   }
 

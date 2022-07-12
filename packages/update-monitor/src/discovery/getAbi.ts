@@ -13,11 +13,15 @@ export type JsonFragment = FragmentFrom extends
   ? T
   : never
 
-export function getAbi(...analyses: (AnalyzedAddress | undefined)[]) {
+export function getAbi(
+  ...analyses: (AnalyzedAddress | undefined | JsonFragment[])[]
+) {
   const fragments: JsonFragment[] = []
   // we reverse to make sure that later arguments override earlier
   for (const analysis of [...analyses].reverse()) {
-    if (analysis?.type === 'Contract' && analysis.verified) {
+    if (Array.isArray(analysis)) {
+      fragments.push(...analysis)
+    } else if (analysis?.type === 'Contract' && analysis.verified) {
       fragments.push(...(analysis.abi as JsonFragment[]))
     }
   }

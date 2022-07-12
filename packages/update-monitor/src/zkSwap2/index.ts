@@ -1,4 +1,5 @@
 import { providers } from 'ethers'
+import { readFile } from 'fs/promises'
 
 import { getSimpleProxy } from '../common/simpleProxy'
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
@@ -25,5 +26,12 @@ export async function getZkSwap2Parameters(
 }
 
 export async function discoverZkSwap2(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover('zkSwap2', [addresses.upgradeGatekeeper])
+  await discoveryEngine.discover('zkSwap2', [addresses.upgradeGatekeeper], {
+    addAbis: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7': JSON.parse(
+        await readFile('abi/zkSwap2/ZkSwap2UpgradeGatekeeper.json', 'utf-8'),
+      ),
+    },
+  })
 }

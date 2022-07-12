@@ -25,6 +25,7 @@ export class DiscoveryEngine {
       {
         skipAddresses: [],
         skipMethods: {},
+        addAbis: {},
         ...options,
       },
     )

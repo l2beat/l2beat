@@ -27,5 +27,30 @@ export async function getZkSpaceParameters(
 }
 
 export async function discoverZkSpace(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover('zkSpace', [addresses.upgradeGatekeeper])
+  await discoveryEngine.discover('zkSpace', [addresses.upgradeGatekeeper], {
+    skipMethods: {
+      '0xc632347cc96A4400653E3514eA148630455295b5': [
+        'tokenByIndex',
+        'getApproved',
+        'tokenURI',
+        'externSeqIdMap',
+        'ownerOf',
+        'infoMapL1',
+        'firstPendingWithdrawal',
+        'pendingWithdrawals',
+        'getContentHash',
+      ],
+      '0xD06986022EFE62A5BC8258299e4495Bb27567BE0': [
+        'tokenByIndex',
+        'getApproved',
+        'tokenURI',
+        'externSeqIdMap',
+        'ownerOf',
+        'infoMapL1',
+        'firstPendingWithdrawal',
+        'pendingWithdrawals',
+        'getContentHash',
+      ],
+    },
+  })
 }
