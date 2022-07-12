@@ -20,24 +20,12 @@ export async function getGovernance(
       type: 'proxy',
       implementation: await getEip1967Implementation(provider, governance),
     },
-    values: [
-      {
-        name: 'admin',
-        value: await getEip1967Admin(provider, governance),
-      },
-      {
-        name: 'validators',
-        value: await getValidators(governance),
-      },
-      {
-        name: 'networkGovernor',
-        value: await governance.networkGovernor(),
-      },
-      {
-        name: 'tokenGovernance',
-        value: await governance.tokenGovernance(),
-      },
-    ],
+    values: {
+      admin: await getEip1967Admin(provider, governance),
+      validators: await getValidators(governance),
+      networkGovernor: await governance.networkGovernor(),
+      tokenGovernance: await governance.tokenGovernance(),
+    },
   }
 }
 
