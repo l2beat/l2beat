@@ -1,8 +1,6 @@
 import dotenv from 'dotenv'
 import { providers, utils } from 'ethers'
 
-import abi from './exchangev3.json'
-
 function getEnv(key: string) {
   const value = process.env[key]
   if (!value) {
@@ -19,27 +17,6 @@ export async function run() {
 
   // gets events emmited while adding a new allowed address in SelectorBasedAccessManager
   await getEvents(provider)
-
-  // storage lookup
-  const exchangev3Address = '0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4'
-  await getStorage(provider, exchangev3Address)
-
-  const gnosisSafeProxy = '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97'
-  await getStorage(provider, gnosisSafeProxy)
-
-  // selectors map from interface, maight be useful if a new access is granted
-  await getSelectorsMap(new utils.Interface(abi))
-}
-
-const getSelectorsMap = async (iface: utils.Interface) => {
-  const selectorToFunctionMap = new Map<string, string>()
-  const ifaceFunctions = Object.keys(iface.functions)
-
-  for (const ifaceFunction in ifaceFunctions) {
-    selectorToFunctionMap.set(iface.getSighash(ifaceFunction), ifaceFunction)
-  }
-
-  return selectorToFunctionMap
 }
 
 async function getEvents(provider: providers.AlchemyProvider) {
@@ -81,16 +58,4 @@ async function getEvents(provider: providers.AlchemyProvider) {
   console.log(
     data.filter((d) => d.selector === '0x53228430').map((d) => d.address),
   )
-}
-
-async function getStorage(
-  provider: providers.AlchemyProvider,
-  address: string,
-) {
-  const storage = []
-  for (let i = 0; i < 26; i++) storage.push(provider.getStorageAt(address, i))
-
-  const resolved = await Promise.all(storage)
-
-  console.table(resolved)
 }
