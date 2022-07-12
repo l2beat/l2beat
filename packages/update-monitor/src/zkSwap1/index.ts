@@ -12,7 +12,7 @@ export async function getZkSwap1Parameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'ZkSwap 1.0',
+    name: 'zkSwap1',
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),

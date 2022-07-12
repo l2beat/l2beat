@@ -13,7 +13,7 @@ export async function getZkSpaceParameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'ZkSpace',
+    name: 'zkSpace',
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
