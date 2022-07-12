@@ -1,4 +1,5 @@
 import { ProjectPermission } from '@l2beat/config'
+import classNames from 'classnames'
 import React from 'react'
 
 import { config } from '../../../config'
@@ -23,20 +24,29 @@ export function PermissionsSection(props: PermissionsSectionProps) {
       editLink={props.editLink}
       issueLink={props.issueLink}
     >
-      <p>The system uses the following set of permissioned addresses:</p>
-      <ul className="PermissionsSection-Addresseses">
+      <p className="mt-4">
+        The system uses the following set of permissioned addresses:
+      </p>
+      <ul className="list-disc mt-4 pl-8 space-y-4">
         {props.permissions.map((permission, i) => (
           <li key={i}>
             <div className="PermissionsSection-Address">
-              <strong className="PermissionsSection-Name">
-                {permission.name}
-              </strong>{' '}
-              {permission.accounts.map((account, i) => (
-                <EtherscanLink
-                  key={i}
-                  address={account.address}
-                >{` (${account.type})`}</EtherscanLink>
-              ))}
+              <strong>{permission.name}</strong>{' '}
+              <span
+                className={classNames(
+                  'text-sm lg:text-base',
+                  permission.accounts.length > 1 && 'block',
+                )}
+              >
+                {permission.accounts.map((account, i, { length }) => (
+                  <React.Fragment key={i}>
+                    <EtherscanLink key={i} address={account.address}>
+                      &nbsp;{`(${account.type})`}
+                    </EtherscanLink>
+                    {i !== length - 1 && <span>, </span>}
+                  </React.Fragment>
+                ))}
+              </span>
             </div>
             {permission.description && (
               <div className="PermissionsSection-Description">
