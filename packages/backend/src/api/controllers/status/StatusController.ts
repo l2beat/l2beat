@@ -1,28 +1,25 @@
-import { UnixTime } from '@l2beat/common'
+import { getTimestamps, Hash256, UnixTime } from '@l2beat/common'
 
+import { getConfigHash } from '../../../core/getConfigHash'
 import { ProjectInfo } from '../../../model'
 import { Token } from '../../../model/Token'
-import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import {
+  BalanceStatusRecord,
+  BalanceStatusRepository,
+} from '../../../peripherals/database/BalanceStatusRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
-import { asNumber } from '../report/asNumber'
-import { fromTimestamp, Status } from './Status'
 import { renderBalancesPage } from './view/BalancesPage'
 import { renderPricesPage } from './view/PricesPage'
-import { renderReportsPage } from './view/ReportsPage'
 
 export class StatusController {
-  private tokenDecimals: Map<AssetId, number>
-
   constructor(
     private priceRepository: PriceRepository,
-    private balanceRepository: BalanceRepository,
+    private balanceStatusRepository: BalanceStatusRepository,
     private reportsRepository: ReportRepository,
     private tokens: Token[],
     private projects: ProjectInfo[],
-  ) {
-    this.tokenDecimals = this.toTokenDecimals(projects)
-  }
+  ) {}
 
   async getPricesStatus(): Promise<string> {
     const latestByToken = await this.priceRepository.getLatestByToken()
@@ -37,26 +34,23 @@ export class StatusController {
           status: fromTimestamp(latest?.timestamp),
         }
       })
-      .sort(this.isSyncedDesc)
+      .sort(notSyncedFirst)
 
     return renderPricesPage({ prices })
   }
 
-  async getBalancesStatus(): Promise<string> {
-    const holderLatest = await this.balanceRepository.getLatestPerHolder()
-    const balances = this.projects.flatMap(({ bridges, name }) =>
-      bridges.map(({ address, tokens }) => ({
-        projectName: name,
-        holderAddress: address,
-        tokens:
-          holderLatest.get(address)?.map((latest) => ({
-            assetId: latest.assetId,
-            balance: latest.balance.toString(),
-            timestamp: unixTimeToString(latest.timestamp),
-            syncStatus: getSyncStatus(latest.timestamp),
-          })) ?? [],
-      })),
-    )
+  async getBalancesStatus(from: UnixTime, to: UnixTime): Promise<string> {
+    const timestamps = getTimestamps(from, to, 'hourly').reverse()
+    const statuses = await this.balanceStatusRepository.getFromTo(from, to)
+    const configHash = getConfigHash(this.projects)
+
+    const balances = timestamps
+      .map((timestamp) => ({
+        timestamp,
+        isSynced: isSynced(statuses, timestamp, configHash),
+      }))
+      .sort(notSyncedFirst)
+
     return renderBalancesPage({ balances })
   }
 
@@ -70,72 +64,23 @@ export class StatusController {
           balance: latest.balance.toString(),
           usd: latest.balanceUsd.toString(),
           eth: latest.balanceEth.toString(),
-          timestamp: unixTimeToString(latest.timestamp),
-          syncStatus: getSyncStatus(latest.timestamp),
+          status: getSyncStatus(latest.timestamp),
         })) ?? [],
     }))
   }
 }
 
-function isSynced(timestamp: UnixTime | undefined) {
-  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
-  return !!timestamp && now.equals(timestamp)
+function isSynced(
+  statuses: BalanceStatusRecord[],
+  timestamp: UnixTime,
+  configHash: Hash256,
+): boolean {
+  return (
+    statuses.find((s) => s.timestamp.toString() === timestamp.toString())
+      ?.configHash === configHash
+  )
 }
 
-const unixTimeToString = (date: UnixTime) => {
-  return date.toDate().toString().slice(4, 21)
-}
-
-const SECONDS_PER_HOUR = 60 * 60
-const getSyncStatus = (
-  date: UnixTime,
-): {
-  isSynced: boolean
-  message: string
-} => {
-  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
-
-  const diff = now.toNumber() - date.toNumber()
-
-  if (diff === 0) {
-    return { isSynced: true, message: '✔' }
-  }
-
-  private isSyncedDesc(a: { status: Status }, b: { status: Status }) {
-    return +a.status.isSynced - +b.status.isSynced
-  }
-
-  private toTokenDecimals(projects: ProjectInfo[]) {
-    const tokenDecimals = new Map<AssetId, number>()
-    for (const project of projects) {
-      for (const bridge of project.bridges) {
-        for (const token of bridge.tokens) {
-          tokenDecimals.set(token.id, token.decimals)
-        }
-      }
-    }
-    return tokenDecimals
-  }
-
-  private getBalance(
-    balance: bigint | undefined,
-    assetId: AssetId | undefined,
-  ) {
-    if (balance === undefined || assetId === undefined) {
-      return undefined
-    }
-    return toNumber(balance, this.getDecimals(assetId))
-  }
-
-  private getDecimals(assetId: AssetId): number {
-    return this.tokenDecimals.get(assetId) ?? 0
-  }
-}
-
-function toNumber(value: bigint | undefined, decimals: number) {
-  if (value === undefined) {
-    return undefined
-  }
-
-  return asNumber(value, decimals)
+function notSyncedFirst(a: { isSynced: boolean }, b: { isSynced: boolean }) {
+  return +a.isSynced - +b.isSynced
 }

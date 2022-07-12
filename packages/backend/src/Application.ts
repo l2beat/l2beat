@@ -129,7 +129,7 @@ export class Application {
 
     const statusController = new StatusController(
       priceRepository,
-      balanceRepository,
+      balanceStatusRepository,
       reportRepository,
       config.tokens,
       config.projects,

@@ -3,6 +3,11 @@ import { Hash256, Logger, UnixTime } from '@l2beat/common'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
+export interface BalanceStatusRecord {
+  configHash: Hash256
+  timestamp: UnixTime
+}
+
 export class BalanceStatusRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -25,10 +30,7 @@ export class BalanceStatusRepository extends BaseRepository {
     return rows.map((r) => new UnixTime(+r.unix_timestamp))
   }
 
-  async add(record: {
-    configHash: Hash256
-    timestamp: UnixTime
-  }): Promise<Hash256> {
+  async add(record: BalanceStatusRecord): Promise<Hash256> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
       await trx('balance_status')
@@ -47,5 +49,21 @@ export class BalanceStatusRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return await knex('balance_status').delete()
+  }
+
+  async getFromTo(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<BalanceStatusRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('balance_status')
+      .where('unix_timestamp', '>=', from.toString())
+      .andWhere('unix_timestamp', '<=', to.toString())
+
+    return rows.map((r) => ({
+      timestamp: new UnixTime(+r.unix_timestamp),
+      configHash: Hash256(r.config_hash),
+    }))
   }
 }

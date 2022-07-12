@@ -1,4 +1,5 @@
 import Router from '@koa/router'
+import { UnixTime } from '@l2beat/common'
 
 import { StatusController } from '../controllers/status/StatusController'
 
@@ -10,7 +11,13 @@ export function createStatusRouter(statusController: StatusController) {
   })
 
   router.get('/status/balances', async (ctx) => {
-    ctx.body = await statusController.getBalancesStatus()
+    const now = UnixTime.now()
+    const from = ctx.query.from
+      ? new UnixTime(+ctx.query.from)
+      : now.add(-90, 'days')
+    const to = ctx.query.to ? new UnixTime(+ctx.query.to) : now
+
+    ctx.body = await statusController.getBalancesStatus(from, to)
   })
 
   router.get('/status/reports', async (ctx) => {
