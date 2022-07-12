@@ -1,0 +1,29 @@
+{
+  "name": "@l2beat/zkswap2-monitor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "start": "node -r esbuild-register src",
+    "typecheck:ci": "yarn typecheck",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "yarn generate-types",
+    "generate-types": "eth-sdk -p ./src/eth-sdk"
+  },
+  "dependencies": {
+    "@dethcrypto/eth-sdk": "^0.3.3",
+    "@l2beat/common": "*",
+    "@types/node": "^17.0.41",
+    "@types/node-fetch": "^2.5.12",
+    "dotenv": "^16.0.1",
+    "ethers": "^5.6.8"
+  },
+  "devDependencies": {
+    "@dethcrypto/eth-sdk-client": "^0.1.6",
+    "@types/glob": "^7.2.0",
+    "ts-node": "^10.8.2"
+  }
+}
