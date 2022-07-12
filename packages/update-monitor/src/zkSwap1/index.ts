@@ -25,5 +25,5 @@ export async function getZkSwap1Parameters(
 }
 
 export async function discoverZkSwap1(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.analyze([addresses.upgradeGatekeeper])
+  await discoveryEngine.discover('zkSwap1', [addresses.upgradeGatekeeper])
 }

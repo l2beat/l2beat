@@ -1,18 +1,19 @@
-import {
-  AddressAnalyzer,
-  AnalyzedAddress,
-  EthereumAddress,
-} from '@l2beat/common'
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
 import { providers, utils } from 'ethers'
 
+import { ContractParameters, UpgradeabilityParameters } from '../types'
 import { analyzeProxy } from './analyzeProxy'
 import { DiscoveryOptions } from './DiscoveryOptions'
-import { getParameters, Parameter } from './getParameters'
+import { getAbi, JsonFragment } from './getAbi'
+import { getParameters } from './getParameters'
 
-export interface AnalyzedData {
-  address: string
-  analysis: AnalyzedAddress
-  parameters: Parameter[]
+export interface AnalyzedData extends ContractParameters {
+  meta: {
+    isEOA: boolean
+    verified: boolean
+    implementationVerified: boolean
+    abi: JsonFragment[]
+  }
 }
 
 export async function analyzeItem(
@@ -26,7 +27,7 @@ export async function analyzeItem(
     analyzeProxy(provider, addressAnalyzer, address),
   ])
 
-  const abi = getAbi(proxy?.implementationAnalysis) ?? getAbi(analysis) ?? []
+  const abi = getAbi(proxy?.implementationAnalysis, analysis)
   const parameters = await getParameters(abi, address, provider, options)
 
   const relatives = parameters
@@ -37,7 +38,6 @@ export async function analyzeItem(
 
   if (proxy) {
     if (proxy.type === 'eip1967') {
-      relatives.push(proxy.eip1967Admin)
       parameters.unshift(
         { name: 'eip1967Implementation', value: proxy.eip1967Implementation },
         { name: 'eip1967Admin', value: proxy.eip1967Admin },
@@ -45,20 +45,34 @@ export async function analyzeItem(
     }
   }
 
-  const finalAnalysis = proxy?.implementationAnalysis ?? analysis
+  let upgradeability: UpgradeabilityParameters = { type: 'immutable' }
+  if (proxy?.type === 'eip1967') {
+    relatives.push(proxy.eip1967Admin)
+    parameters.unshift({ name: 'eip1967Admin', value: proxy.eip1967Admin })
+    upgradeability = {
+      type: 'proxy',
+      implementation: proxy.eip1967Implementation,
+    }
+  } else if (proxy?.type === 'gnosis safe') {
+    upgradeability = { type: 'gnosis safe' }
+  }
 
   return {
     analyzed: {
+      name: proxy?.implementationAnalysis.name ?? analysis.name,
       address,
-      analysis: finalAnalysis,
-      parameters,
+      upgradeability,
+      values: Object.fromEntries(parameters.map((x) => [x.name, x.value])),
+      meta: {
+        isEOA: analysis.type === 'EOA',
+        verified: analysis.type === 'Contract' ? analysis.verified : true,
+        implementationVerified:
+          proxy?.implementationAnalysis.type === 'Contract'
+            ? proxy.implementationAnalysis.verified
+            : true,
+        abi,
+      },
     },
     relatives,
-  }
-}
-
-function getAbi(analysis?: AnalyzedAddress) {
-  if (analysis?.type === 'Contract' && analysis.verified) {
-    return analysis.abi
   }
 }

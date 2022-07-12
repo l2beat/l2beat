@@ -15,9 +15,11 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
+    "@types/mkdirp": "^1.0.2",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.1",
-    "ethers": "^5.6.8"
+    "ethers": "^5.6.8",
+    "mkdirp": "^1.0.4"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^10.1.0",

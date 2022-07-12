@@ -27,7 +27,7 @@ export async function getZkSyncParameters(
 }
 
 export async function discoverZkSync(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.analyze([addresses.upgradeGatekeeper], {
+  await discoveryEngine.discover('zkSync', [addresses.upgradeGatekeeper], {
     skipMethods: {
       '0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D': [
         'tokenURI',
@@ -37,6 +37,8 @@ export async function discoverZkSync(discoveryEngine: DiscoveryEngine) {
         'getCreatorAccountId',
         'getCreatorAddress',
         'tokenByIndex',
+        'getApproved',
+        'ownerOf',
       ],
     },
   })

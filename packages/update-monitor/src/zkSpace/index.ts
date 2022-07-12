@@ -27,5 +27,5 @@ export async function getZkSpaceParameters(
 }
 
 export async function discoverZkSpace(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.analyze([addresses.upgradeGatekeeper])
+  await discoveryEngine.discover('zkSpace', [addresses.upgradeGatekeeper])
 }
