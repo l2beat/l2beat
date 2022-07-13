@@ -20,22 +20,23 @@ export class StatusController {
     private reportsRepository: ReportRepository,
     private tokens: Token[],
     private projects: ProjectInfo[],
-    private clock: Clock
+    private clock: Clock,
   ) {}
   //TODO
-  // remove unused code from repositories
-  // add test to BalanceStatusRepository
   // rewrite reports
+  // add tests to repositories
+  // remove unused code from repositories
   // remove unused code
   // fix formatting
-  // readme 
+  // readme
 
+  //TODO
+  // check if there are prices for every timestamp <from,to>
   async getPricesStatus(from: UnixTime, to: UnixTime): Promise<string> {
-    const now = this.clock.getLastHour()
-    const sync = now.equals(to) ? now : to 
+    const lastHour = this.clock.getLastHour()
+    const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
 
-
-    const pricesByToken = await this.priceRepository.getByTokenFromTo(from, to)
+    const pricesByToken = await this.priceRepository.getLatestByTokenFromTo(from, to)
 
     const prices = this.tokens
       .map((token) => {
@@ -45,7 +46,7 @@ export class StatusController {
           assetId: token.id,
           priceUsd: latest?.priceUsd,
           timestamp: latest?.timestamp,
-          isSynced: latest?.timestamp.toString() === sync.toString(),
+          isSynced: latest?.timestamp.toString() === syncTimestamp.toString(),
         }
       })
       .sort(notSyncedFirst)

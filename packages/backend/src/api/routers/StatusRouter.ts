@@ -27,7 +27,7 @@ export function createStatusRouter(statusController: StatusController) {
 }
 
 function getFromTo(query: ParsedUrlQuery): { from: UnixTime; to: UnixTime } {
-  const now = UnixTime.now().add(-1,'hours').toStartOf('hour')
+  const now = UnixTime.now()
   const from = query.from ? new UnixTime(+query.from) : now.add(-90, 'days')
   const to = query.to ? new UnixTime(+query.to) : now
 
