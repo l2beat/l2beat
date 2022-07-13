@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 
 import { getSimpleProxy } from '../common/simpleProxy'
+import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../types'
 import { addresses } from './constants'
 import { getGovernance } from './contracts/governance'
@@ -21,4 +22,8 @@ export async function getZkSwap1Parameters(
       getSimpleProxy(provider, addresses.pairManager, 'PairManager'),
     ]),
   }
+}
+
+export async function discoverZkSwap1(discoveryEngine: DiscoveryEngine) {
+  await discoveryEngine.discover('zkSwap1', [addresses.upgradeGatekeeper])
 }

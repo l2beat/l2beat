@@ -138,6 +138,30 @@ export const zkswap2: Project = {
           CONTRACTS.UNVERIFIED_RISK,
         ],
       },
+      permissions: [
+        {
+          name: 'zkSwap 2.0 Admin',
+          accounts: [
+            {
+              type: 'EOA',
+              address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
+            },
+          ],
+          description:
+            'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
+        },
+        {
+          name: 'Active validator',
+          accounts: [
+            {
+              address: '0x38101ae98196C8BCf7dF1835Bf3983B384272ae4',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
+        },
+      ],
     },
     news: zkswap.details.news,
   },

@@ -28,4 +28,8 @@ export interface ProxyUpgradeability {
   implementation: string
 }
 
-export type ContractValue = string | number | boolean | string[] | number[]
+export type ContractValue =
+  | string
+  | number
+  | boolean
+  | (string | number | boolean)[]
