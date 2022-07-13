@@ -91,36 +91,6 @@ function timestampToDate(timestamp: UnixTime) {
   return timestamp.toDate().toISOString().slice(0, 10)
 }
 
-// return {
-//   charts: {
-//     daily: {
-//       types: ['timestamp', 'usd', 'eth'],
-//       data: [[new UnixTime(1), 1, 1]],
-//     },
-//   },
-//   projects: {
-//     arbitrum: {
-//       charts: {
-//         hourly: {
-//           types: ['timestamp', 'usd', 'eth'],
-//           data: [[new UnixTime(1), 1, 1]],
-//         },
-//         sixHourly: {
-//           types: ['timestamp', 'usd', 'eth'],
-//           data: [[new UnixTime(1), 1, 1]],
-//         },
-//         daily: {
-//           types: ['timestamp', 'usd', 'eth'],
-//           data: [[new UnixTime(1), 1, 1]],
-//         },
-//       },
-//       tokens: [{
-//         assetId: AssetId.DAI,
-//         tvl: 1
-//       }]
-//     }
-//   }
-// }
 export function generateApiMain(
   entries: OutputEntryV2[],
   projects: ProjectInfo[],
@@ -159,7 +129,6 @@ export function generateApiMain(
 
     for (const [name, projectEntry] of entry.projects) {
       const project = report.projects[name]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!project) {
         throw new Error('Programmer error: Reports not filtered correctly')
       }
@@ -183,7 +152,6 @@ export function generateApiMain(
   for (const [name, projectEntry] of lastEntry.projects) {
     for (const [assetId, tokenValue] of projectEntry.tokens) {
       const project = report.projects[name]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!project) {
         throw new Error('Programmer error: Reports not filtered correctly')
       }
