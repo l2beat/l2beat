@@ -119,6 +119,29 @@ describe(ReportRepository.name, () => {
     )
   })
 
+  it(ReportRepository.prototype.getByProjectAndAsset.name, async () => {
+    const asset = AssetId('my-asset')
+    const report = fakeReport({
+      projectId: PROJECT_A,
+      asset,
+      timestamp: TIME_0,
+    })
+    const reports = [
+      report,
+      fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+      fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
+      fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
+    ]
+    await reportsRepository.addOrUpdateMany(reports)
+
+    const result = await reportsRepository.getByProjectAndAsset(
+      PROJECT_A,
+      asset,
+    )
+
+    expect(result).toEqual([report])
+  })
+
   function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     return {
       timestamp: UnixTime.now(),

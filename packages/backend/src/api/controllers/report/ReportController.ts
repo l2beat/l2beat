@@ -1,5 +1,13 @@
-import { ApiMain, Logger, TaskQueue } from '@l2beat/common'
+import {
+  ApiMain,
+  AssetId,
+  Chart,
+  Logger,
+  ProjectId,
+  TaskQueue,
+} from '@l2beat/common'
 
+import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
@@ -9,6 +17,7 @@ import {
   aggregateReportsDaily,
   aggregateReportsDailyV2,
 } from './aggregateReportsDaily'
+import { asNumber } from './asNumber'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
 import { generateApiMain, generateReportOutput } from './generateReportOutput'
@@ -21,6 +30,7 @@ export class ReportController {
     private cacheRepository: CachedDataRepository,
     private priceRepository: PriceRepository,
     private projects: ProjectInfo[],
+    private tokens: Token[],
     private logger: Logger,
     private interval: number = 5 * 60 * 1000,
   ) {
@@ -76,5 +86,28 @@ export class ReportController {
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
     await addOptimismToken(dailyEntries, this.priceRepository)
     return generateReportOutput(dailyEntries, this.projects)
+  }
+
+  async getProjectAssetChart(
+    projectId: ProjectId,
+    assetId: AssetId,
+  ): Promise<Chart | undefined> {
+    const project = this.projects.find((p) => p.projectId === projectId)
+    const asset = this.tokens.find((t) => t.id === assetId)
+    if (!project || !asset) {
+      return undefined
+    }
+    const reports = await this.reportRepository.getByProjectAndAsset(
+      projectId,
+      assetId,
+    )
+    return {
+      types: ['timestamp', asset.symbol.toLowerCase(), 'usd'],
+      data: reports.map((r) => [
+        r.timestamp,
+        +asNumber(r.balance, asset.decimals).toFixed(6),
+        asNumber(r.balanceUsd, 2),
+      ]),
+    }
   }
 }
