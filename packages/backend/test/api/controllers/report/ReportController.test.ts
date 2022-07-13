@@ -11,6 +11,7 @@ import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 
 import { ReportController } from '../../../../src/api/controllers/report/ReportController'
+import { Token } from '../../../../src/model'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { CachedDataRepository } from '../../../../src/peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../../src/peripherals/database/PriceRepository'
@@ -60,6 +61,7 @@ describe(ReportController.name, () => {
         ],
       },
     ]
+    const TOKENS: Token[] = []
     const cachedRepository = mock<CachedDataRepository>({
       saveData: async () => 0,
     })
@@ -93,6 +95,7 @@ describe(ReportController.name, () => {
         cachedRepository,
         priceRepository,
         PROJECTS,
+        TOKENS,
         Logger.SILENT,
       )
 
@@ -170,6 +173,7 @@ describe(ReportController.name, () => {
         cachedRepository,
         priceRepository,
         PROJECTS,
+        TOKENS,
         Logger.SILENT,
       )
       const result = await reportController.generateDaily()
@@ -195,6 +199,262 @@ describe(ReportController.name, () => {
             byToken: {},
           },
         },
+      })
+    })
+  })
+
+  describe(ReportController.prototype.generateMain.name, () => {
+    const PROJECTS: ProjectInfo[] = [
+      {
+        projectId: ARBITRUM,
+        name: 'Arbitrum',
+        bridges: [
+          {
+            address: ARBITRUM_ADDRESS,
+            sinceTimestamp: new UnixTime(0),
+            tokens: [
+              mockToken(AssetId.DAI, 'DAI'),
+              mockToken(AssetId.WETH, 'WETH'),
+            ],
+          },
+          {
+            address: ARBITRUM_ADDRESS_2,
+            sinceTimestamp: new UnixTime(0),
+            tokens: [mockToken(AssetId.DAI, 'DAI')],
+          },
+        ],
+      },
+      {
+        projectId: OPTIMISM,
+        name: 'Optimism',
+        bridges: [
+          {
+            address: OPTIMISM_ADDRESS,
+            sinceTimestamp: new UnixTime(0),
+            tokens: [mockToken(AssetId.DAI, 'DAI')],
+          },
+        ],
+      },
+    ]
+    const cachedRepository = mock<CachedDataRepository>({
+      saveData: async () => 0,
+    })
+    const priceRepository = mock<PriceRepository>({
+      getByToken: async (token) => {
+        if (token === AssetId('op-optimism')) {
+          return [mockPrice(token, 1, -1), mockPrice(token, 1, 0)]
+        }
+        if (token === AssetId.ETH) {
+          return [mockPrice(token, 1500, -1), mockPrice(token, 1500, 0)]
+        }
+        return [mockPrice(token, 0, -1), mockPrice(token, 0, 0)]
+      },
+    })
+    it('happy case', async () => {
+      const reportRepository = mock<ReportRepository>({
+        getDaily: mockFn().returns([
+          mockReport(ARBITRUM, AssetId.DAI, -1),
+          mockReport(ARBITRUM, AssetId.DAI, 0),
+
+          mockReport(ARBITRUM, AssetId.WETH, -1),
+          mockReport(ARBITRUM, AssetId.WETH, 0),
+
+          mockReport(ARBITRUM, AssetId.DAI, -1),
+          mockReport(ARBITRUM, AssetId.DAI, 0),
+
+          mockReport(OPTIMISM, AssetId.DAI, -1),
+          mockReport(OPTIMISM, AssetId.DAI, 0),
+        ]),
+      })
+
+      const reportController = new ReportController(
+        reportRepository,
+        cachedRepository,
+        priceRepository,
+        PROJECTS,
+        [],
+        Logger.SILENT,
+      )
+
+      const result = await reportController.generateMain()
+
+      const TIME_0 = UnixTime.fromDate(new Date('2022-05-29'))
+      const TIME_1 = UnixTime.fromDate(new Date('2022-05-30'))
+
+      expect(result).toEqual({
+        charts: {
+          daily: {
+            types: ['timestamp', 'usd', 'eth'],
+            data: [
+              [TIME_0, 214752364.44, 143170.020444],
+              [TIME_1, 214752364.44, 143170.020444],
+            ],
+          },
+        },
+        projects: {
+          Arbitrum: {
+            charts: {
+              daily: {
+                types: ['timestamp', 'usd', 'eth'],
+                data: [
+                  [TIME_0, 3000.33, 3.333333],
+                  [TIME_1, 3000.33, 3.333333],
+                ],
+              },
+            },
+            tokens: [
+              {
+                assetId: AssetId.DAI,
+                tvl: 2000.22,
+              },
+              {
+                assetId: AssetId.WETH,
+                tvl: 1000.11,
+              },
+            ],
+          },
+          Optimism: {
+            charts: {
+              daily: {
+                types: ['timestamp', 'usd', 'eth'],
+                data: [
+                  [TIME_0, 214749364.11, 143166.687111],
+                  [TIME_1, 214749364.11, 143166.687111],
+                ],
+              },
+            },
+            tokens: [
+              {
+                assetId: AssetId.DAI,
+                tvl: 1000.11,
+              },
+              {
+                assetId: AssetId('op-optimism'),
+                tvl: 214748364,
+              },
+            ],
+          },
+        },
+      })
+    })
+
+    it('empty reports', async () => {
+      const reportRepository = mock<ReportRepository>({
+        getDaily: mockFn().returns([]),
+      })
+      const reportController = new ReportController(
+        reportRepository,
+        cachedRepository,
+        priceRepository,
+        PROJECTS,
+        [],
+        Logger.SILENT,
+      )
+      const result = await reportController.generateMain()
+
+      expect(result).toEqual({
+        charts: {
+          daily: {
+            types: ['timestamp', 'usd', 'eth'],
+            data: [],
+          },
+        },
+        projects: {
+          Arbitrum: {
+            charts: {
+              daily: {
+                types: ['timestamp', 'usd', 'eth'],
+                data: [],
+              },
+            },
+            tokens: [],
+          },
+          Optimism: {
+            charts: {
+              daily: {
+                types: ['timestamp', 'usd', 'eth'],
+                data: [],
+              },
+            },
+            tokens: [],
+          },
+        },
+      })
+    })
+  })
+
+  describe(ReportController.prototype.getProjectAssetChart.name, () => {
+    it('returns undefined if project does not exist', async () => {
+      const controller = new ReportController(
+        mock<ReportRepository>(),
+        mock<CachedDataRepository>(),
+        mock<PriceRepository>(),
+        [],
+        [],
+        Logger.SILENT,
+      )
+      const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
+      expect(chart).toEqual(undefined)
+    })
+
+    it('returns undefined if asset does not exist', async () => {
+      const controller = new ReportController(
+        mock<ReportRepository>(),
+        mock<CachedDataRepository>(),
+        mock<PriceRepository>(),
+        [
+          {
+            projectId: OPTIMISM,
+            name: 'Optimism',
+            bridges: [
+              {
+                address: OPTIMISM_ADDRESS,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [mockToken(AssetId.DAI, 'DAI')],
+              },
+            ],
+          },
+        ],
+        [],
+        Logger.SILENT,
+      )
+      const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
+      expect(chart).toEqual(undefined)
+    })
+
+    it('returns reports', async () => {
+      const controller = new ReportController(
+        mock<ReportRepository>({
+          getByProjectAndAsset: async () => [
+            mockReport(OPTIMISM, AssetId.DAI, 0),
+            mockReport(OPTIMISM, AssetId.DAI, 1),
+          ],
+        }),
+        mock<CachedDataRepository>(),
+        mock<PriceRepository>(),
+        [
+          {
+            projectId: OPTIMISM,
+            name: 'Optimism',
+            bridges: [
+              {
+                address: OPTIMISM_ADDRESS,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [mockToken(AssetId.DAI, 'DAI')],
+              },
+            ],
+          },
+        ],
+        [mockToken(AssetId.DAI, 'DAI')],
+        Logger.SILENT,
+      )
+      const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
+      expect(chart).toEqual({
+        types: ['timestamp', 'dai', 'usd'],
+        data: [
+          [new UnixTime(1653955200), 111.1111, 1000.11],
+          [new UnixTime(1654041600), 111.1111, 1000.11],
+        ],
       })
     })
   })
