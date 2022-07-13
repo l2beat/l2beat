@@ -11,6 +11,7 @@ import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn } from 'earljs'
 
 import { ReportController } from '../../../../src/api/controllers/report/ReportController'
+import { Token } from '../../../../src/model'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { CachedDataRepository } from '../../../../src/peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../../src/peripherals/database/PriceRepository'
@@ -60,6 +61,7 @@ describe(ReportController.name, () => {
         ],
       },
     ]
+    const TOKENS: Token[] = []
     const cachedRepository = mock<CachedDataRepository>({
       saveData: async () => 0,
     })
@@ -93,6 +95,7 @@ describe(ReportController.name, () => {
         cachedRepository,
         priceRepository,
         PROJECTS,
+        TOKENS,
         Logger.SILENT,
       )
 
@@ -170,6 +173,7 @@ describe(ReportController.name, () => {
         cachedRepository,
         priceRepository,
         PROJECTS,
+        TOKENS,
         Logger.SILENT,
       )
       const result = await reportController.generateDaily()
