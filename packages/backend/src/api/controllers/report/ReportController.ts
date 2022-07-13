@@ -26,7 +26,7 @@ export class ReportController {
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(async () => {
-      await Promise.all([this.generateDailyAndCache(), this.generateMain()])
+      await Promise.all([this.generateDailyAndCache(), this.generateMainAndCache()])
     }, this.logger)
   }
 
