@@ -1,5 +1,6 @@
 import { getTimestamps, Hash256, UnixTime } from '@l2beat/common'
 
+import { Clock } from '../../../core/Clock'
 import { getConfigHash } from '../../../core/getConfigHash'
 import { ProjectInfo } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -19,9 +20,20 @@ export class StatusController {
     private reportsRepository: ReportRepository,
     private tokens: Token[],
     private projects: ProjectInfo[],
+    private clock: Clock
   ) {}
+  //TODO
+  // pagination on prices
+  // remove unused code from repositories
+  // add test to BalanceStatusRepository
+  // rewrite reports
+  // remove unused code
+  // fix formatting
+  
 
   async getPricesStatus(): Promise<string> {
+    const current = this.clock.getLastHour()
+
     const latestByToken = await this.priceRepository.getLatestByToken()
 
     const prices = this.tokens
@@ -31,7 +43,8 @@ export class StatusController {
         return {
           assetId: token.id,
           priceUsd: latest?.priceUsd,
-          status: fromTimestamp(latest?.timestamp),
+          timestamp: latest?.timestamp,
+          isSynced: latest?.timestamp.toString() === current.toString(),
         }
       })
       .sort(notSyncedFirst)

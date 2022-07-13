@@ -133,6 +133,7 @@ export class Application {
       reportRepository,
       config.tokens,
       config.projects,
+      clock
     )
 
     const apiServer = new ApiServer(config.port, logger, [

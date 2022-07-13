@@ -1,7 +1,6 @@
-import { AssetId } from '@l2beat/common'
+import { AssetId, UnixTime } from '@l2beat/common'
 import React from 'react'
 
-import { Status } from '../Status'
 import { Page } from './Page'
 import { reactToHtml } from './reactToHtml'
 import { StatusTable } from './StatusTable'
@@ -9,7 +8,8 @@ import { StatusTable } from './StatusTable'
 interface Price {
   assetId: AssetId
   priceUsd: number | undefined
-  status: Status
+  timestamp: UnixTime | undefined
+  isSynced: boolean
 }
 
 interface PricesPageProps {
@@ -20,10 +20,14 @@ export function PricesPage({ prices }: PricesPageProps) {
   return (
     <Page title="Prices">
       <StatusTable
-        columns={['Name', 'Latest value']}
+        columns={['Name', 'Latest value', 'Latest timestamp']}
         rows={prices.map((price) => ({
-          status: price.status,
-          cells: [price.assetId.toString(), price.priceUsd?.toString() ?? '-'],
+          isSynced: price.isSynced,
+          cells: [
+            price.assetId.toString(),
+            price.priceUsd?.toString() ?? '-',
+            price.timestamp?.toString() ?? '-',
+          ],
         }))}
       />
     </Page>
