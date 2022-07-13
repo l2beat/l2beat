@@ -264,7 +264,7 @@ describe(ReportController.name, () => {
             ],
           },
         ],
-        [mockToken(AssetId.DAI, 'dai')],
+        [mockToken(AssetId.DAI, 'DAI')],
         Logger.SILENT,
       )
       const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
