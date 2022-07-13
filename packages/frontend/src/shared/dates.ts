@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/common'
+
 const MONTHS: Record<string, string> = {
   '01': 'Jan',
   '02': 'Feb',
@@ -32,4 +34,8 @@ function toNiceDate(day: string, month: string, year?: string) {
   return year === undefined
     ? `${parseInt(day)} ${MONTHS[month]}`
     : `${parseInt(day)} ${MONTHS[month]} ${parseInt(year)}`
+}
+
+export function timestampToDateDays(timestamp: string) {
+  return new UnixTime(Number(timestamp)).toDateDays()
 }
