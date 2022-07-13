@@ -21,7 +21,10 @@ export function BalancesPage({ balances }: BalancesPageProps) {
         columns={['Timestamp', 'Date']}
         rows={balances.map(({ isSynced, timestamp }) => ({
           isSynced,
-          cells: [timestamp.toString(), timestamp.toDate().toLocaleString('pl')],
+          cells: [
+            timestamp.toString(),
+            timestamp.toDate().toLocaleString('pl'),
+          ],
         }))}
       />
     </Page>

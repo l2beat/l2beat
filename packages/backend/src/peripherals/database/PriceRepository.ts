@@ -95,7 +95,10 @@ export class PriceRepository extends BaseRepository {
     )
   }
 
-  async getLatestByTokenFromTo(from: UnixTime, to: UnixTime): Promise<Map<AssetId, PriceRecord>> {
+  async getLatestByTokenFromTo(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<Map<AssetId, PriceRecord>> {
     const knex = await this.knex()
 
     const rows: PriceRow[] = await knex

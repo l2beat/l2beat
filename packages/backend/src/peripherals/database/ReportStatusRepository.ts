@@ -54,10 +54,7 @@ export class ReportStatusRepository extends BaseRepository {
     return await knex('report_status').delete()
   }
 
-  async getFromTo(
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<ReportStatusRecord[]> {
+  async getFromTo(from: UnixTime, to: UnixTime): Promise<ReportStatusRecord[]> {
     const knex = await this.knex()
 
     const rows = await knex('balance_status')

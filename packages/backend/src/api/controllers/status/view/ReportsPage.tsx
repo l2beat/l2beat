@@ -21,7 +21,10 @@ export function ReportsPage({ reports }: ReportsPageProps) {
         columns={['Timestamp', 'Date']}
         rows={reports.map(({ isSynced, timestamp }) => ({
           isSynced,
-          cells: [timestamp.toString(), timestamp.toDate().toLocaleString('pl')],
+          cells: [
+            timestamp.toString(),
+            timestamp.toDate().toLocaleString('pl'),
+          ],
         }))}
       />
     </Page>

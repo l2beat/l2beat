@@ -24,10 +24,8 @@ export class StatusController {
     private clock: Clock,
   ) {}
   //TODO
-  // rewrite reports
   // add tests to repositories
   // remove unused code from repositories
-  // remove unused code
   // fix formatting
   // readme
 

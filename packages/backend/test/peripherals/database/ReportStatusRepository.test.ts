@@ -49,4 +49,14 @@ describe(ReportStatusRepository.name, () => {
     const timestamps = await repository.getByConfigHash(HASH_ONE)
     expect(timestamps).toEqual([TIME_ONE])
   })
+
+  it(ReportStatusRepository.prototype.getFromTo.name, async () => {
+    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
+    await repository.add({ configHash: HASH_ONE, timestamp: TIME_TWO })
+    await repository.add({ configHash: HASH_ONE, timestamp: TIME_THREE })
+
+    const result = await repository.getFromTo(TIME_THREE, TIME_TWO)
+
+    expect(result).toEqual([{ configHash: HASH_ONE, timestamp: TIME_TWO }])
+  })
 })
