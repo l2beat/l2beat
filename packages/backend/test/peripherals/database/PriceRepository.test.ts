@@ -147,9 +147,9 @@ describe(PriceRepository.name, () => {
     })
   })
 
-  describe(PriceRepository.prototype.getLatestByToken.name, () => {
+  describe(PriceRepository.prototype.getByTokenFromTo.name, () => {
     it('gets most recent record of each token', async () => {
-      const result = await repository.getLatestByToken()
+      const result = await repository.getByTokenFromTo()
 
       expect(result).toEqual(
         new Map([

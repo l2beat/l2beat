@@ -23,28 +23,29 @@ export class StatusController {
     private clock: Clock
   ) {}
   //TODO
-  // pagination on prices
   // remove unused code from repositories
   // add test to BalanceStatusRepository
   // rewrite reports
   // remove unused code
   // fix formatting
-  
+  // readme 
 
-  async getPricesStatus(): Promise<string> {
-    const current = this.clock.getLastHour()
+  async getPricesStatus(from: UnixTime, to: UnixTime): Promise<string> {
+    const now = this.clock.getLastHour()
+    const sync = now.equals(to) ? now : to 
 
-    const latestByToken = await this.priceRepository.getLatestByToken()
+
+    const pricesByToken = await this.priceRepository.getByTokenFromTo(from, to)
 
     const prices = this.tokens
       .map((token) => {
-        const latest = latestByToken.get(token.id)
+        const latest = pricesByToken.get(token.id)
 
         return {
           assetId: token.id,
           priceUsd: latest?.priceUsd,
           timestamp: latest?.timestamp,
-          isSynced: latest?.timestamp.toString() === current.toString(),
+          isSynced: latest?.timestamp.toString() === sync.toString(),
         }
       })
       .sort(notSyncedFirst)

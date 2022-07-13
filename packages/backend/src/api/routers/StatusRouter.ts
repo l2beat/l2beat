@@ -1,5 +1,6 @@
 import Router from '@koa/router'
 import { UnixTime } from '@l2beat/common'
+import { ParsedUrlQuery } from 'querystring'
 
 import { StatusController } from '../controllers/status/StatusController'
 
@@ -7,15 +8,13 @@ export function createStatusRouter(statusController: StatusController) {
   const router = new Router()
 
   router.get('/status/prices', async (ctx) => {
-    ctx.body = await statusController.getPricesStatus()
+    const {from,to} = getFromTo(ctx.query)
+    
+    ctx.body = await statusController.getPricesStatus(from, to)
   })
 
   router.get('/status/balances', async (ctx) => {
-    const now = UnixTime.now()
-    const from = ctx.query.from
-      ? new UnixTime(+ctx.query.from)
-      : now.add(-90, 'days')
-    const to = ctx.query.to ? new UnixTime(+ctx.query.to) : now
+    const {from,to} = getFromTo(ctx.query)
 
     ctx.body = await statusController.getBalancesStatus(from, to)
   })
@@ -25,4 +24,12 @@ export function createStatusRouter(statusController: StatusController) {
   })
 
   return router
+}
+
+function getFromTo(query: ParsedUrlQuery): { from: UnixTime; to: UnixTime } {
+  const now = UnixTime.now().add(-1,'hours').toStartOf('hour')
+  const from = query.from ? new UnixTime(+query.from) : now.add(-90, 'days')
+  const to = query.to ? new UnixTime(+query.to) : now
+
+  return {from,to}
 }

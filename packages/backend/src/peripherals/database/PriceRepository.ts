@@ -95,11 +95,13 @@ export class PriceRepository extends BaseRepository {
     )
   }
 
-  async getLatestByToken(): Promise<Map<AssetId, PriceRecord>> {
+  async getByTokenFromTo(from: UnixTime, to: UnixTime): Promise<Map<AssetId, PriceRecord>> {
     const knex = await this.knex()
 
     const rows: PriceRow[] = await knex
       .select('a1.*')
+      .where('a1.unix_timestamp', '>=', from.toString())
+      .andWhere('a1.unix_timestamp', '<=', to.toString())
       .from('coingecko_prices as a1')
       .innerJoin(
         knex('coingecko_prices')
