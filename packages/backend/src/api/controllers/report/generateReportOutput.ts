@@ -140,7 +140,6 @@ export function generateApiMain(
       ])
     }
   }
-
   if (entries.length === 0) {
     return report
   }

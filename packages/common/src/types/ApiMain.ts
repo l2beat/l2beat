@@ -38,6 +38,6 @@ export type Project = z.infer<typeof Project>
 
 export const ApiMain = z.object({
   charts: Charts,
-  projects: z.record(z.string(), Project),
+  projects: z.record(z.string(), Project.optional()),
 })
 export type ApiMain = z.infer<typeof ApiMain>
