@@ -9,15 +9,16 @@ import {
   BalanceStatusRepository,
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
-import { ReportRepository } from '../../../peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { renderBalancesPage } from './view/BalancesPage'
 import { renderPricesPage } from './view/PricesPage'
+import { renderReportsPage } from './view/ReportsPage'
 
 export class StatusController {
   constructor(
     private priceRepository: PriceRepository,
     private balanceStatusRepository: BalanceStatusRepository,
-    private reportsRepository: ReportRepository,
+    private reportStatusRepository: ReportStatusRepository,
     private tokens: Token[],
     private projects: ProjectInfo[],
     private clock: Clock,
@@ -36,7 +37,10 @@ export class StatusController {
     const lastHour = this.clock.getLastHour()
     const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
 
-    const pricesByToken = await this.priceRepository.getLatestByTokenFromTo(from, to)
+    const pricesByToken = await this.priceRepository.getLatestByTokenFromTo(
+      from,
+      to,
+    )
 
     const prices = this.tokens
       .map((token) => {
@@ -55,7 +59,10 @@ export class StatusController {
   }
 
   async getBalancesStatus(from: UnixTime, to: UnixTime): Promise<string> {
-    const timestamps = getTimestamps(from, to, 'hourly').reverse()
+    const lastHour = this.clock.getLastHour()
+    const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
+    const timestamps = getTimestamps(from, syncTimestamp, 'hourly').reverse()
+
     const statuses = await this.balanceStatusRepository.getFromTo(from, to)
     const configHash = getConfigHash(this.projects)
 
@@ -69,19 +76,22 @@ export class StatusController {
     return renderBalancesPage({ balances })
   }
 
-  async getReportsStatus() {
-    const projectLatest = await this.reportsRepository.getLatestPerProject()
-    return this.projects.map(({ projectId }) => ({
-      projectId,
-      tokens:
-        projectLatest.get(projectId)?.map((latest) => ({
-          assetId: latest.asset,
-          balance: latest.balance.toString(),
-          usd: latest.balanceUsd.toString(),
-          eth: latest.balanceEth.toString(),
-          status: getSyncStatus(latest.timestamp),
-        })) ?? [],
-    }))
+  async getReportsStatus(from: UnixTime, to: UnixTime) {
+    const lastHour = this.clock.getLastHour()
+    const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
+    const timestamps = getTimestamps(from, syncTimestamp, 'hourly').reverse()
+
+    const statuses = await this.reportStatusRepository.getFromTo(from, to)
+    const configHash = getConfigHash(this.projects)
+
+    const reports = timestamps
+      .map((timestamp) => ({
+        timestamp,
+        isSynced: isSynced(statuses, timestamp, configHash),
+      }))
+      .sort(notSyncedFirst)
+
+    return renderReportsPage({ reports })
   }
 }
 

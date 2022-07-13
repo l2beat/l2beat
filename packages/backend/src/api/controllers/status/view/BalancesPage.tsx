@@ -18,10 +18,10 @@ export function BalancesPage({ balances }: BalancesPageProps) {
   return (
     <Page title="Balances">
       <StatusTable
-        columns={['timestamp']}
+        columns={['Timestamp', 'Date']}
         rows={balances.map(({ isSynced, timestamp }) => ({
           isSynced,
-          cells: [timestamp.toString()],
+          cells: [timestamp.toString(), timestamp.toDate().toLocaleString('pl')],
         }))}
       />
     </Page>
