@@ -23,11 +23,6 @@ export class StatusController {
     private projects: ProjectInfo[],
     private clock: Clock,
   ) {}
-  //TODO
-  // add tests to repositories
-  // remove unused code from repositories
-  // fix formatting
-  // readme
 
   //TODO
   // check if there are prices for every timestamp <from,to>

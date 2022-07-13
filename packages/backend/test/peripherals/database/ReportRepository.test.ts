@@ -100,25 +100,6 @@ describe(ReportRepository.name, () => {
     expect(results).toBeAnArrayOfLength(0)
   })
 
-  it(ReportRepository.prototype.getLatestPerProject.name, async () => {
-    const reports = [
-      fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
-      fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-      fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
-      fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
-    ]
-    await reportsRepository.addOrUpdateMany(reports)
-
-    const result = await reportsRepository.getLatestPerProject()
-
-    expect(result).toEqual(
-      new Map([
-        [PROJECT_A, [reports[2]]],
-        [PROJECT_B, [reports[3]]],
-      ]),
-    )
-  })
-
   function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     return {
       timestamp: UnixTime.now(),

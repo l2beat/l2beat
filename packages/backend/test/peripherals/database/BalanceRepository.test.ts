@@ -5,7 +5,6 @@ import {
   BalanceRecord,
   BalanceRepository,
 } from '../../../src/peripherals/database/BalanceRepository'
-import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
@@ -245,56 +244,5 @@ describe(BalanceRepository.name, () => {
     const result = await repository.getAll()
 
     expect(result).toEqual([])
-  })
-
-  it(BalanceRepository.prototype.getLatestPerHolder.name, async () => {
-    const blockNumberRepository = new BlockNumberRepository(
-      database,
-      Logger.SILENT,
-    )
-
-    const additionalRecords = [
-      {
-        timestamp: START,
-        holderAddress: HOLDER_A,
-        assetId: AssetId('token-a'),
-        balance: BALANCE,
-      },
-    ]
-
-    await repository.addOrUpdateMany(additionalRecords)
-
-    await Promise.all(
-      DATA.map(({ timestamp }, i) =>
-        blockNumberRepository.add({
-          timestamp,
-          blockNumber: 123456n + BigInt(i),
-        }),
-      ),
-    )
-
-    const holderLatest = await repository.getLatestPerHolder()
-
-    expect(holderLatest).toEqual(
-      new Map([
-        [
-          HOLDER_A,
-          [
-            {
-              timestamp: START.add(1, 'hours'),
-              holderAddress: HOLDER_A,
-              assetId: ASSET_1,
-              balance: BALANCE,
-            },
-            {
-              timestamp: START,
-              holderAddress: HOLDER_A,
-              assetId: AssetId('token-a'),
-              balance: BALANCE,
-            },
-          ],
-        ],
-      ]),
-    )
   })
 })
