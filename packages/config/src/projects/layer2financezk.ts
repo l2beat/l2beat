@@ -99,7 +99,7 @@ export const layer2financezk: Project = {
           {
             name: 'Broker',
             description:
-              'Broker manages investment strategies on L1 for tokens deposited to the Rollup. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
+              'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
             address: '0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5',
           },
         ],
@@ -115,7 +115,13 @@ export const layer2financezk: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'Data Availability Committee',
+          accounts: [],
+          description:
+            'There exists a Data Availability Committee with unknown members and an unverified smart contract.',
         },
         {
           name: 'SHARP Verifier Governor',
@@ -137,7 +143,7 @@ export const layer2financezk: Project = {
             },
           ],
           description:
-            'Most Broker functionality is restricted only for the owner, it includes managing rides, setting prices or slippages, burning shares',
+            'Most Broker functionality is restricted only for the owner, it includes managing rides, setting prices or slippages, burning shares.',
         },
         {
           name: 'Operator',
@@ -148,7 +154,7 @@ export const layer2financezk: Project = {
             },
           ],
           description:
-            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+            'Allowed to update state of the system. When Operator is down the state cannot be updated.',
         },
       ],
     },

@@ -150,6 +150,17 @@ export const starknet: Project = {
       },
       permissions: [
         {
+          name: 'Governor',
+          accounts: [
+            {
+              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+        },
+        {
           name: 'StarknetCore Governor',
           accounts: [
             {
@@ -158,10 +169,10 @@ export const starknet: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of the contract, potentially allowing fraudulent state to be posted.',
+            'Can upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
         },
         {
-          name: 'Starknet Operator',
+          name: 'Operator',
           accounts: [
             {
               address: '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
@@ -172,29 +183,7 @@ export const starknet: Project = {
             'Allowed to post state updates. When the operator is down the state cannot be updated.',
         },
         {
-          name: 'ETH Bridge  Governor',
-          accounts: [
-            {
-              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
-        },
-        {
-          name: 'SHARP Verifier Governor',
-          accounts: [
-            {
-              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
-        },
-        {
-          name: 'L1DaiBridge ward',
+          name: 'MakerDAO Governance',
           accounts: [
             {
               address: '0x0a3f6849f78076aefaDf113F5BED87720274dDC0',
@@ -202,18 +191,7 @@ export const starknet: Project = {
             },
           ],
           description:
-            'Can set max deposit per bridge and per user, controlled by MakerDAO.',
-        },
-        {
-          name: 'L1Escrow ward',
-          accounts: [
-            {
-              address: '0x0a3f6849f78076aefaDf113F5BED87720274dDC0',
-              type: 'Contract',
-            },
-          ],
-          description:
-            'Can approve token transfers in L1Escrow, controlled by MakerDAO.',
+            'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
         },
       ],
     },

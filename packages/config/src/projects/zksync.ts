@@ -191,7 +191,7 @@ export const zksync: Project = {
             },
           ],
           description:
-            'This MultiSig is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier and ZkSync contracts.',
+            'This MultiSig is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can change the list of active validators.',
         },
         {
           name: 'MultiSig participants',
@@ -223,28 +223,6 @@ export const zksync: Project = {
           ],
           description:
             'These addresses are the participants of the 3/6 zkSync MultiSig.',
-        },
-        {
-          name: 'Active validator',
-          accounts: [
-            {
-              address: '0x18c208921F7a741510a7fc0CfA51E941735DAE54',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSync MultiSig.',
-        },
-        {
-          name: 'Treasury',
-          accounts: [
-            {
-              address: '0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Account holding fees for listing tokens. Can be updated by zkSync MultiSig.',
         },
         {
           name: 'Security Council',
@@ -312,6 +290,28 @@ export const zksync: Project = {
           ],
           description:
             'By default upgradeable contracts can be upgraded only after 3 weeks period. Security council can vote to cut this period to 0 days making the upgrade possible immediately if at least 9 out of 15 counselors agree on this.',
+        },
+        {
+          name: 'Active validator',
+          accounts: [
+            {
+              address: '0x18c208921F7a741510a7fc0CfA51E941735DAE54',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'This actor is allowed to propose, revert and execute L2 blocks on L1.',
+        },
+        {
+          name: 'Token listing beneficiary',
+          accounts: [
+            {
+              address: '0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Account receiving fees for listing tokens. Can be updated by zkSync MultiSig.',
         },
       ],
     },
