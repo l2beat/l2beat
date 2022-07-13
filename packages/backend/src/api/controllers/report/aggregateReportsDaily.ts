@@ -14,6 +14,17 @@ export interface ProjectEntry {
   tokens: Map<string, TokenEntry>
 }
 
+export interface OutputEntryV2 {
+  timestamp: UnixTime
+  value: AggregateValue
+  projects: Map<string, ProjectEntryV2>
+}
+
+export interface ProjectEntryV2 {
+  value: AggregateValue
+  tokens: Map<AssetId, TokenEntry>
+}
+
 export interface AggregateValue {
   usd: bigint
   eth: bigint
@@ -24,6 +35,62 @@ export interface TokenEntry {
   eth: bigint
   balance: bigint
   decimals: number
+}
+
+export function aggregateReportsDailyV2(
+  reports: ReportRecord[],
+  projects: ProjectInfo[],
+): OutputEntryV2[] {
+  if (reports.length === 0) {
+    return []
+  }
+
+  const { min, max } = getBounds(reports)
+  const dates = getDailyTimestamps(min, max)
+
+  const entries: OutputEntryV2[] = dates.map((timestamp) => ({
+    timestamp,
+    value: { usd: 0n, eth: 0n },
+    projects: new Map(),
+  }))
+
+  const timestampToIndex = new Map(
+    entries.map((x, i) => [x.timestamp.toNumber(), i]),
+  )
+
+  const projectNames = getProjectNames(projects)
+  const tokenDetails = getTokenDetails(projects)
+
+  for (const report of reports) {
+    const index = timestampToIndex.get(report.timestamp.toNumber())
+    if (index === undefined) {
+      throw new Error('Programmer error: Invalid timestamp')
+    }
+
+    const entry = entries[index]
+
+    const projectName = projectNames.get(report.projectId)
+    if (projectName === undefined) {
+      throw new Error('Programmer error: Invalid bridge')
+    }
+
+    const details = tokenDetails.get(report.asset)
+    if (details === undefined) {
+      throw new Error('Programmer error: Invalid asset')
+    }
+
+    saveBalancesToEntryV2(
+      entry,
+      projectName,
+      report.balanceUsd,
+      report.balanceEth,
+      report.balance,
+      report.asset,
+      details.decimals,
+    )
+  }
+
+  return entries
 }
 
 export function aggregateReportsDaily(
@@ -158,4 +225,45 @@ export function saveBalancesToEntry(
     balance,
     decimals,
   })
+}
+
+export function saveBalancesToEntryV2(
+  entry: OutputEntryV2,
+  projectName: string,
+  balanceUsd: bigint,
+  balanceEth: bigint,
+  balance: bigint,
+  assetId: AssetId,
+  decimals: number,
+) {
+  entry.value.usd += balanceUsd
+  entry.value.eth += balanceEth
+
+  let project = entry.projects.get(projectName)
+  if (!project) {
+    project = {
+      value: { usd: 0n, eth: 0n },
+      tokens: new Map(),
+    }
+    entry.projects.set(projectName, project)
+  }
+
+  project.value.usd += balanceUsd
+  project.value.eth += balanceEth
+
+  let token = project.tokens.get(assetId)
+  if (token === undefined) {
+    token = {
+      usd: 0n,
+      eth: 0n,
+      balance: 0n,
+      decimals: 0,
+    }
+    project.tokens.set(assetId, token)
+  }
+
+  token.usd += balanceUsd
+  token.eth += balanceEth
+  token.balance += balance
+  token.decimals = decimals
 }

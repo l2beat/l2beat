@@ -1,16 +1,26 @@
-import { AssetId, Chart, Logger, ProjectId, TaskQueue } from '@l2beat/common'
+import {
+  ApiMain,
+  AssetId,
+  Chart,
+  Logger,
+  ProjectId,
+  TaskQueue,
+} from '@l2beat/common'
 
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
-import { addOptimismToken } from './addOptimismToken'
-import { aggregateReportsDaily } from './aggregateReportsDaily'
+import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
+import {
+  aggregateReportsDaily,
+  aggregateReportsDailyV2,
+} from './aggregateReportsDaily'
 import { asNumber } from './asNumber'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
-import { generateReportOutput } from './generateReportOutput'
+import { generateApiMain, generateReportOutput } from './generateReportOutput'
 
 export class ReportController {
   private taskQueue: TaskQueue<void>
@@ -25,10 +35,12 @@ export class ReportController {
     private interval: number = 5 * 60 * 1000,
   ) {
     this.logger = this.logger.for(this)
-    this.taskQueue = new TaskQueue(
-      this.generateDailyAndCache.bind(this),
-      this.logger,
-    )
+    this.taskQueue = new TaskQueue(async () => {
+      await Promise.all([
+        this.generateDailyAndCache(),
+        this.generateMainAndCache(),
+      ])
+    }, this.logger)
   }
 
   start() {
@@ -38,6 +50,26 @@ export class ReportController {
 
   async getDaily() {
     return this.cacheRepository.getData()
+  }
+
+  async getMain() {
+    return this.cacheRepository.getMain()
+  }
+
+  async generateMainAndCache() {
+    this.logger.info('Main started')
+    const main = await this.generateMain()
+    await this.cacheRepository.saveMain(main)
+    this.logger.info('Main saved')
+  }
+
+  async generateMain(): Promise<ApiMain> {
+    let reports = await this.reportRepository.getDaily()
+    reports = filterReportsByProjects(reports, this.projects)
+    reports = getSufficientlySynced(reports)
+    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
+    await addOptimismTokenV2(dailyEntries, this.priceRepository)
+    return generateApiMain(dailyEntries, this.projects)
   }
 
   async generateDailyAndCache() {

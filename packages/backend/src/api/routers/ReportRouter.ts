@@ -17,6 +17,15 @@ export function createReportRouter(reportController: ReportController) {
     ctx.body = data
   })
 
+  router.get('/api/main', async (ctx) => {
+    const data = await reportController.getMain()
+    if (!data) {
+      ctx.status = 404
+      return
+    }
+    ctx.body = data
+  })
+
   router.get(
     '/api/projects/:projectId/tvl/assets/:assetId',
     withTypedContext(
