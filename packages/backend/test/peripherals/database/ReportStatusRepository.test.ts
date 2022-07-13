@@ -52,7 +52,7 @@ describe(ReportStatusRepository.name, () => {
 
   it(ReportStatusRepository.prototype.getFromTo.name, async () => {
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })    
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
     const result = await repository.getFromTo(TIME_THREE, TIME_TWO)
     expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
