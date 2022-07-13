@@ -20,21 +20,12 @@ export async function getZkSync(
       type: 'proxy',
       implementation: await getEip1967Implementation(provider, zkSync),
     },
-    values: [
-      {
-        name: 'admin',
-        value: await getEip1967Admin(provider, zkSync),
-      },
-      {
-        name: 'additional',
-        value: additional,
-      },
-      {
-        name: 'securityCouncil',
-        value:
-          additional === addresses.additional ? securityCouncil : 'unknown',
-      },
-    ],
+    values: {
+      admin: await getEip1967Admin(provider, zkSync),
+      additional,
+      securityCouncil:
+        additional === addresses.additional ? securityCouncil : 'unknown',
+    },
   }
 }
 

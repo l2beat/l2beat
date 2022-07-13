@@ -20,19 +20,10 @@ export async function getZKSeaNFT(
       type: 'proxy',
       implementation: await getEip1967Implementation(provider, zkSeaNFT),
     },
-    values: [
-      {
-        name: 'admin',
-        value: await getEip1967Admin(provider, zkSeaNFT),
-      },
-      {
-        name: 'owner',
-        value: await zkSeaNFT.owner(),
-      },
-      {
-        name: 'zkSync',
-        value: await zkSeaNFT.zksCore(),
-      },
-    ],
+    values: {
+      admin: await getEip1967Admin(provider, zkSeaNFT),
+      owner: await zkSeaNFT.owner(),
+      zkSync: await zkSeaNFT.zksCore(),
+    },
   }
 }

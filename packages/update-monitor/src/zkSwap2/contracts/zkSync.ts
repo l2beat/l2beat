@@ -18,36 +18,15 @@ export async function getZkSync(
       type: 'proxy',
       implementation: await getEip1967Implementation(provider, zkSync),
     },
-    values: [
-      {
-        name: 'admin',
-        value: await getEip1967Admin(provider, zkSync),
-      },
-      {
-        name: 'zkSyncCommitBlock',
-        value: await zkSync.zkSyncCommitBlockAddress(),
-      },
-      {
-        name: 'zkSyncExit',
-        value: await zkSync.zkSyncExitAddress(),
-      },
-      {
-        name: 'verifier',
-        value: await getAddressAt(zkSync, 5),
-      },
-      {
-        name: 'verifierExit',
-        value: await getAddressAt(zkSync, 6),
-      },
-      {
-        name: 'governance',
-        value: await getAddressAt(zkSync, 7),
-      },
-      {
-        name: 'pairManager',
-        value: await getAddressAt(zkSync, 8),
-      },
-    ],
+    values: {
+      admin: await getEip1967Admin(provider, zkSync),
+      zkSyncCommitBlock: await zkSync.zkSyncCommitBlockAddress(),
+      zkSyncExit: await zkSync.zkSyncExitAddress(),
+      verifier: await getAddressAt(zkSync, 5),
+      verifierExit: await getAddressAt(zkSync, 6),
+      governance: await getAddressAt(zkSync, 7),
+      pairManager: await getAddressAt(zkSync, 8),
+    },
   }
 }
 
