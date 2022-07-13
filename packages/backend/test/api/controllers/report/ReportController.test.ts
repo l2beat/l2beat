@@ -203,7 +203,7 @@ describe(ReportController.name, () => {
     })
   })
   describe(ReportController.prototype.getProjectAssetChart.name, () => {
-    it('returns undefined if project does not exit', async () => {
+    it('returns undefined if project does not exist', async () => {
       const controller = new ReportController(
         mock<ReportRepository>(),
         mock<CachedDataRepository>(),
@@ -216,7 +216,7 @@ describe(ReportController.name, () => {
       expect(chart).toEqual(undefined)
     })
 
-    it('returns undefined if asset does not exit', async () => {
+    it('returns undefined if asset does not exist', async () => {
       const controller = new ReportController(
         mock<ReportRepository>(),
         mock<CachedDataRepository>(),
