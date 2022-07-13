@@ -93,6 +93,76 @@ export const deversifi: Project = {
         ],
         risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
       },
+      permissions: [
+        {
+          name: 'Governor',
+          accounts: [
+            {
+              address: '0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+        },
+        {
+          name: 'DAC members',
+          accounts: [
+            {
+              address: '0x6a8ea587133c1aa4b3ba0417b6d8ae38e61fd1e',
+              type: 'EOA',
+            },
+            {
+              address: '0x3bf2562178ea0cef6b3f66d971494d65561efd3',
+              type: 'EOA',
+            },
+            {
+              address: '0xf872cf881873029b8955b582c29b66347f3f132',
+              type: 'EOA',
+            },
+            {
+              address: '0x70eeaa8b7cbf7124e349e94eade6188ddd2d617',
+              type: 'EOA',
+            },
+            {
+              address: '0x51abde72a4542500a7b1cb32b18b13fbe1f9ff2',
+              type: 'EOA',
+            },
+            {
+              address: '0x2b6593fcfbfded663d7a6448d45b12c16df6b64',
+              type: 'EOA',
+            },
+            {
+              address: '0xfbd7599fe0c3735b94c369adf0f0045d8d4f6cb9',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Validity proof must be signed by at least 4 of these addresses to approve state update.',
+        },
+        {
+          name: 'SHARP Verifier Governor',
+          accounts: [
+            {
+              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'Operator',
+          accounts: [
+            {
+              address: '0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+        },
+      ],
     },
     news: [
       {

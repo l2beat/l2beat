@@ -6,5 +6,5 @@ export interface ProjectPermission {
 
 export interface ProjectPermissionedAccount {
   address: string
-  type: 'EOA' | 'MultiSig'
+  type: 'EOA' | 'MultiSig' | 'Contract'
 }
