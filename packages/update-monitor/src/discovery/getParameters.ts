@@ -1,5 +1,7 @@
 import { BigNumber, Contract, providers, utils } from 'ethers'
 
+import { readArray } from '../common/array'
+import { isRevert } from '../common/isRevert'
 import { ContractValue } from '../types'
 import { DiscoveryOptions } from './DiscoveryOptions'
 import { JsonFragment } from './getAbi'
@@ -48,8 +50,12 @@ async function getRegularParameter(
       name: method.name,
       value: toContractValue(result),
     }
-  } catch {
-    return undefined
+  } catch (e) {
+    if (isRevert(e)) {
+      return undefined
+    }
+    console.error(`Failed to call ${address}.${method.name}()`)
+    throw e
   }
 }
 
@@ -59,19 +65,13 @@ async function getArrayParameter(
   provider: providers.Provider,
 ): Promise<Parameter> {
   const contract = new Contract(address, [method], provider)
-  const results: unknown[] = []
-  for (let i = 0; ; i++) {
+  const results = await readArray((i) =>
     // eslint-disable-next-line
-    const result: unknown = await contract[method.name](i).catch(
-      () => undefined,
-    )
-    console.log(`Called ${address}.${method.name}(${i})`)
-    if (result !== undefined) {
-      results.push(result)
-    } else {
-      break
-    }
-  }
+    contract[method.name](i).then((x: unknown) => {
+      console.log(`Called ${address}.${method.name}(${i})`)
+      return x
+    }),
+  )
   return {
     name: method.name,
     value: toContractValue(results),
@@ -94,7 +94,7 @@ function toSimpleContractValue(value: unknown): string | number | boolean {
     return value
   }
   if (BigNumber.isBigNumber(value)) {
-    if (value.gt(Number.MAX_SAFE_INTEGER)) {
+    if (value.gt(Number.MAX_SAFE_INTEGER.toString())) {
       return value.toString()
     } else {
       return value.toNumber()

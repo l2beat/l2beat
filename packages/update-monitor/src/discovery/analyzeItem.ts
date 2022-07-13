@@ -32,6 +32,7 @@ export async function analyzeItem(
     proxy?.implementationAnalysis,
     analysis,
   )
+
   const parameters = await getParameters(abi, address, provider, options)
 
   const relatives = parameters
