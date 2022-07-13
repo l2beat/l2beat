@@ -1,3 +1,5 @@
+import { isRevert } from './isRevert'
+
 export async function readArray<T>(
   callback: (index: number) => Promise<T>,
 ): Promise<T[]> {
@@ -8,7 +10,7 @@ export async function readArray<T>(
       const value = await callback(i)
       result.push(value)
     } catch (e) {
-      if (e instanceof Error && e.message.includes('invalid opcode: INVALID')) {
+      if (isRevert(e)) {
         shouldContinue = false
       } else {
         throw e

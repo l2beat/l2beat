@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
+import { getArbitrumParameters } from './arbitrum'
 import { getEnv } from './getEnv'
 import { getZkSpaceParameters } from './zkSpace'
 import { getZkSwap1Parameters } from './zkSwap1'
@@ -25,6 +26,7 @@ export async function analyze(projects: string[]) {
     includeProject('zkSwap1') && getZkSwap1Parameters(provider),
     includeProject('zkSwap2') && getZkSwap2Parameters(provider),
     includeProject('zkSpace') && getZkSpaceParameters(provider),
+    includeProject('arbitrum') && getArbitrumParameters(provider),
   ])
 
   for (const project of results) {

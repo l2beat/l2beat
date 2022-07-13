@@ -5,6 +5,7 @@ import {
 } from '@l2beat/common'
 import { providers } from 'ethers'
 
+import { discoverArbitrum } from './arbitrum'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { getEnv } from './getEnv'
 import { discoverZkSpace } from './zkSpace'
@@ -37,5 +38,6 @@ export async function discover(projects: string[]) {
     includeProject('zkSwap2') && discoverZkSwap2(discoveryEngine),
     includeProject('zkSwap1') && discoverZkSwap1(discoveryEngine),
     includeProject('zkSpace') && discoverZkSpace(discoveryEngine),
+    includeProject('arbitrum') && discoverArbitrum(discoveryEngine),
   ])
 }
