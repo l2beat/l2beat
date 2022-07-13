@@ -167,7 +167,7 @@ export const metis: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Central actor allowed to post new L2 state root.',
+          description: 'Central actor allowed to commit L2 transactions to L1.',
         },
         {
           name: 'State Root Proposer',
@@ -187,7 +187,8 @@ export const metis: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Those addresses can try to force the sequencer to post data on chain.',
+          description:
+            'Those addresses can try to force the sequencer to post data on chain.',
         },
         {
           name: 'Execution Verifiers',
@@ -197,7 +198,8 @@ export const metis: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Those addresses can challenge the state roots submitted by the state root proposer.',
+          description:
+            'Those addresses can challenge the state roots submitted by the state root proposer.',
         },
       ],
       contracts: {

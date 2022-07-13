@@ -210,7 +210,7 @@ export const optimism: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Central actor allowed to post new L2 state root.',
+          description: 'Central actor allowed to commit L2 transactions to L1.',
         },
         {
           name: 'State Root Proposer',
