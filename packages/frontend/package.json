@@ -4,6 +4,7 @@
   "private": true,
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "NODE_ENV=production gulp build",
     "clean": "rm -rf build",
