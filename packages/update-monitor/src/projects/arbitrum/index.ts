@@ -4,19 +4,21 @@ import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 
+export const ARBITRUM_NAME = 'arbitrum'
+
 export async function getArbitrumParameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   provider
   return {
-    name: 'arbitrum',
+    name: ARBITRUM_NAME,
     contracts: await Promise.all([]),
   }
 }
 
 export async function discoverArbitrum(discoveryEngine: DiscoveryEngine) {
   await discoveryEngine.discover(
-    'arbitrum',
+    ARBITRUM_NAME,
     [
       addresses.rollupAddress,
       addresses.l1ERC20Gateway,

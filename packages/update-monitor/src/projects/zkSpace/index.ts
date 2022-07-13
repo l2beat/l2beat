@@ -9,11 +9,13 @@ import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
 import { getZKSeaNFT } from './contracts/zkSeaNFT'
 import { getZkSync } from './contracts/zkSync'
 
+export const ZK_SPACE_NAME = 'zkSpace'
+
 export async function getZkSpaceParameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'zkSpace',
+    name: ZK_SPACE_NAME,
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
@@ -27,7 +29,7 @@ export async function getZkSpaceParameters(
 }
 
 export async function discoverZkSpace(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover('zkSpace', [addresses.upgradeGatekeeper], {
+  await discoveryEngine.discover(ZK_SPACE_NAME, [addresses.upgradeGatekeeper], {
     skipMethods: {
       '0xc632347cc96A4400653E3514eA148630455295b5': [
         'tokenByIndex',

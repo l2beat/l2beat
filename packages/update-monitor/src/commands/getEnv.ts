@@ -1,7 +1,9 @@
+import { exitWithUsage } from './usage'
+
 export function getEnv(key: string) {
   const value = process.env[key]
   if (!value) {
-    throw new Error(`Env variable ${key} is not present!`)
+    exitWithUsage(`Env variable ${key} is not present!`)
   }
   return value
 }

@@ -10,11 +10,13 @@ import { getTokenGovernance } from './contracts/tokenGovernance'
 import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
 import { getZkSync } from './contracts/zkSync'
 
+export const ZK_SYNC_NAME = 'zkSync'
+
 export async function getZkSyncParameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'zkSync',
+    name: ZK_SYNC_NAME,
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
@@ -27,7 +29,7 @@ export async function getZkSyncParameters(
 }
 
 export async function discoverZkSync(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover('zkSync', [addresses.upgradeGatekeeper], {
+  await discoveryEngine.discover(ZK_SYNC_NAME, [addresses.upgradeGatekeeper], {
     skipMethods: {
       '0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D': [
         'tokenURI',

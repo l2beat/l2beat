@@ -9,11 +9,13 @@ import { getGovernance } from './contracts/governance'
 import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
 import { getZkSync } from './contracts/zkSync'
 
+export const ZK_SWAP_2_NAME = 'zkSwap2'
+
 export async function getZkSwap2Parameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'zkSwap2',
+    name: ZK_SWAP_2_NAME,
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
@@ -26,12 +28,16 @@ export async function getZkSwap2Parameters(
 }
 
 export async function discoverZkSwap2(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover('zkSwap2', [addresses.upgradeGatekeeper], {
-    addAbis: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7': JSON.parse(
-        await readFile('abi/zkSwap2/ZkSwap2UpgradeGatekeeper.json', 'utf-8'),
-      ),
+  await discoveryEngine.discover(
+    ZK_SWAP_2_NAME,
+    [addresses.upgradeGatekeeper],
+    {
+      addAbis: {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7': JSON.parse(
+          await readFile('abi/zkSwap2/ZkSwap2UpgradeGatekeeper.json', 'utf-8'),
+        ),
+      },
     },
-  })
+  )
 }

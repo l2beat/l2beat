@@ -8,11 +8,13 @@ import { getGovernance } from './contracts/governance'
 import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'
 import { getZkSync } from './contracts/zkSync'
 
+export const ZK_SWAP_1_NAME = 'zkSwap1'
+
 export async function getZkSwap1Parameters(
   provider: providers.JsonRpcProvider,
 ): Promise<ProjectParameters> {
   return {
-    name: 'zkSwap1',
+    name: ZK_SWAP_1_NAME,
     contracts: await Promise.all([
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
@@ -25,5 +27,5 @@ export async function getZkSwap1Parameters(
 }
 
 export async function discoverZkSwap1(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover('zkSwap1', [addresses.upgradeGatekeeper])
+  await discoveryEngine.discover(ZK_SWAP_1_NAME, [addresses.upgradeGatekeeper])
 }
