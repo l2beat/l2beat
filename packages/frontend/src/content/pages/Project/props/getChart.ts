@@ -16,7 +16,7 @@ function getTokens(project: Project, apiMain: ApiMain) {
       const symbol = getTokenByAssetId(assetId).symbol
       return {
         symbol,
-        endpoint: `/api/${project.slug}/${symbol.toLowerCase()}.json`,
+        endpoint: `/api/projects/${project.id.toString()}/tvl/assets/${assetId.toString()}`,
         tvl,
       }
     })
