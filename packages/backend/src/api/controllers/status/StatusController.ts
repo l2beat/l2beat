@@ -35,18 +35,16 @@ export class StatusController {
       to,
     )
 
-    const prices = this.tokens
-      .map((token) => {
-        const latest = pricesByToken.get(token.id)
+    const prices = this.tokens.map((token) => {
+      const latest = pricesByToken.get(token.id)
 
-        return {
-          assetId: token.id,
-          priceUsd: latest?.priceUsd,
-          timestamp: latest?.timestamp,
-          isSynced: latest?.timestamp.toString() === syncTimestamp.toString(),
-        }
-      })
-      .sort(notSyncedFirst)
+      return {
+        assetId: token.id,
+        priceUsd: latest?.priceUsd,
+        timestamp: latest?.timestamp,
+        isSynced: latest?.timestamp.toString() === syncTimestamp.toString(),
+      }
+    })
 
     return renderPricesPage({ prices })
   }
@@ -59,12 +57,10 @@ export class StatusController {
     const statuses = await this.balanceStatusRepository.getFromTo(from, to)
     const configHash = getConfigHash(this.projects)
 
-    const balances = timestamps
-      .map((timestamp) => ({
-        timestamp,
-        isSynced: isSynced(statuses, timestamp, configHash),
-      }))
-      .sort(notSyncedFirst)
+    const balances = timestamps.map((timestamp) => ({
+      timestamp,
+      isSynced: isSynced(statuses, timestamp, configHash),
+    }))
 
     return renderBalancesPage({ balances })
   }
@@ -77,12 +73,10 @@ export class StatusController {
     const statuses = await this.reportStatusRepository.getFromTo(from, to)
     const configHash = getConfigHash(this.projects)
 
-    const reports = timestamps
-      .map((timestamp) => ({
-        timestamp,
-        isSynced: isSynced(statuses, timestamp, configHash),
-      }))
-      .sort(notSyncedFirst)
+    const reports = timestamps.map((timestamp) => ({
+      timestamp,
+      isSynced: isSynced(statuses, timestamp, configHash),
+    }))
 
     return renderReportsPage({ reports })
   }
@@ -97,8 +91,4 @@ function isSynced(
     statuses.find((s) => s.timestamp.toString() === timestamp.toString())
       ?.configHash === configHash
   )
-}
-
-function notSyncedFirst(a: { isSynced: boolean }, b: { isSynced: boolean }) {
-  return +a.isSynced - +b.isSynced
 }
