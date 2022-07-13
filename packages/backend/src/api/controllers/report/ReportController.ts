@@ -70,7 +70,7 @@ export class ReportController {
       assetId,
     )
     return {
-      types: ['timestamp', asset.symbol, 'usd'],
+      types: ['timestamp', asset.symbol.toLowerCase(), 'usd'],
       data: reports.map((r) => [
         r.timestamp,
         +asNumber(r.balance, asset.decimals).toFixed(6),
