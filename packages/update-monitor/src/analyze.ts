@@ -1,12 +1,12 @@
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
-import { getArbitrumParameters } from './arbitrum'
 import { getEnv } from './getEnv'
-import { getZkSpaceParameters } from './zkSpace'
-import { getZkSwap1Parameters } from './zkSwap1'
-import { getZkSwap2Parameters } from './zkSwap2'
-import { getZkSyncParameters } from './zkSync'
+import { getArbitrumParameters } from './projects/arbitrum'
+import { getZkSpaceParameters } from './projects/zkSpace'
+import { getZkSwap1Parameters } from './projects/zkSwap1'
+import { getZkSwap2Parameters } from './projects/zkSwap2'
+import { getZkSyncParameters } from './projects/zkSync'
 
 export async function analyze(projects: string[]) {
   const provider = new providers.AlchemyProvider(

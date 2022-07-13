@@ -1,8 +1,11 @@
 import { providers } from 'ethers'
 
-import { getEip1967Admin, getEip1967Implementation } from '../../common/eip1967'
-import { ZkSpaceZkSeaNFT__factory } from '../../typechain'
-import { ContractParameters } from '../../types'
+import {
+  getEip1967Admin,
+  getEip1967Implementation,
+} from '../../../common/eip1967'
+import { ZkSpaceZkSeaNFT__factory } from '../../../typechain'
+import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
 
 export async function getZKSeaNFT(

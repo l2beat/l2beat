@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
-import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
-import { ProjectParameters } from '../types'
+import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
+import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 
 export async function getArbitrumParameters(

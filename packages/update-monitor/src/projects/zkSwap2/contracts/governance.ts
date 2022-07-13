@@ -1,14 +1,20 @@
 import { providers } from 'ethers'
 
-import { getEip1967Admin, getEip1967Implementation } from '../../common/eip1967'
-import { ZkSpaceGovernance, ZkSpaceGovernance__factory } from '../../typechain'
-import { ContractParameters } from '../../types'
+import {
+  getEip1967Admin,
+  getEip1967Implementation,
+} from '../../../common/eip1967'
+import {
+  ZkSwap2Governance,
+  ZkSwap2Governance__factory,
+} from '../../../typechain'
+import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
 
 export async function getGovernance(
   provider: providers.JsonRpcProvider,
 ): Promise<ContractParameters> {
-  const governance = ZkSpaceGovernance__factory.connect(
+  const governance = ZkSwap2Governance__factory.connect(
     addresses.governance,
     provider,
   )
@@ -29,7 +35,7 @@ export async function getGovernance(
   }
 }
 
-async function getValidators(governance: ZkSpaceGovernance) {
+async function getValidators(governance: ZkSwap2Governance) {
   const events = await governance.queryFilter(
     governance.filters.ValidatorStatusUpdate(),
     0,

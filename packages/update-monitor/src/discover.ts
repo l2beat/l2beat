@@ -5,13 +5,13 @@ import {
 } from '@l2beat/common'
 import { providers } from 'ethers'
 
-import { discoverArbitrum } from './arbitrum'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { getEnv } from './getEnv'
-import { discoverZkSpace } from './zkSpace'
-import { discoverZkSwap1 } from './zkSwap1'
-import { discoverZkSwap2 } from './zkSwap2'
-import { discoverZkSync } from './zkSync'
+import { discoverArbitrum } from './projects/arbitrum'
+import { discoverZkSpace } from './projects/zkSpace'
+import { discoverZkSwap1 } from './projects/zkSwap1'
+import { discoverZkSwap2 } from './projects/zkSwap2'
+import { discoverZkSync } from './projects/zkSync'
 
 export async function discover(projects: string[]) {
   const provider = new providers.AlchemyProvider(

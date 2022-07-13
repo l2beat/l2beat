@@ -1,9 +1,12 @@
 import { providers } from 'ethers'
 
-import { bytes32ToAddress } from '../../common/address'
-import { getEip1967Admin, getEip1967Implementation } from '../../common/eip1967'
-import { ZkSync, ZkSync__factory } from '../../typechain'
-import { ContractParameters } from '../../types'
+import { bytes32ToAddress } from '../../../common/address'
+import {
+  getEip1967Admin,
+  getEip1967Implementation,
+} from '../../../common/eip1967'
+import { ZkSync, ZkSync__factory } from '../../../typechain'
+import { ContractParameters } from '../../../types'
 import { addresses, securityCouncil } from '../constants'
 
 export async function getZkSync(

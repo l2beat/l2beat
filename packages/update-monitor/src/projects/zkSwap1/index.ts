@@ -1,8 +1,8 @@
 import { providers } from 'ethers'
 
-import { getSimpleProxy } from '../common/simpleProxy'
-import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
-import { ProjectParameters } from '../types'
+import { getSimpleProxy } from '../../common/simpleProxy'
+import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
+import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 import { getGovernance } from './contracts/governance'
 import { getUpgradeGatekeeper } from './contracts/upgradeGatekeeper'

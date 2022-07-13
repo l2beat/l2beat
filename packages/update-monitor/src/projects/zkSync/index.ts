@@ -1,9 +1,9 @@
 import { providers } from 'ethers'
 
-import { getGnosisSafe } from '../common/gnosisSafe'
-import { getSimpleProxy } from '../common/simpleProxy'
-import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
-import { ProjectParameters } from '../types'
+import { getGnosisSafe } from '../../common/gnosisSafe'
+import { getSimpleProxy } from '../../common/simpleProxy'
+import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
+import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 import { getGovernance } from './contracts/governance'
 import { getTokenGovernance } from './contracts/tokenGovernance'

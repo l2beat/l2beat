@@ -1,14 +1,14 @@
 import { providers } from 'ethers'
 
-import { readArray } from '../../common/array'
-import { ZkSpaceUpgradeGatekeeper__factory } from '../../typechain'
-import { ContractParameters } from '../../types'
+import { readArray } from '../../../common/array'
+import { ZkSwap2UpgradeGatekeeper__factory } from '../../../typechain'
+import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
 
 export async function getUpgradeGatekeeper(
   provider: providers.JsonRpcProvider,
 ): Promise<ContractParameters> {
-  const gatekeeper = ZkSpaceUpgradeGatekeeper__factory.connect(
+  const gatekeeper = ZkSwap2UpgradeGatekeeper__factory.connect(
     addresses.upgradeGatekeeper,
     provider,
   )
