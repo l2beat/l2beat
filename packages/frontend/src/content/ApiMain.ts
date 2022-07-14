@@ -3,13 +3,14 @@ import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
 export async function getApiMain(apiUrl: string): Promise<ApiMain> {
-  const cached = await readCachedData(apiUrl)
+  const url = apiUrl + '/api/main'
+  const cached = await readCachedData(url)
   if (cached) {
     return cached
   }
 
   const http = new HttpClient()
-  const response = await http.fetch(apiUrl)
+  const response = await http.fetch(url)
   if (!response.ok) {
     throw new Error(
       `Could not get data from api (received status ${response.status})`,
@@ -17,13 +18,13 @@ export async function getApiMain(apiUrl: string): Promise<ApiMain> {
   }
   const json: unknown = await response.json()
   const data = ApiMain.parse(json)
-  await writeCachedData(apiUrl, data)
+  await writeCachedData(url, data)
   return data
 }
 
 const TEN_MINUTES_IN_MS = 10 * 60 * 1000
-async function readCachedData(apiUrl: string): Promise<ApiMain | undefined> {
-  const hash = getUrlHash(apiUrl)
+async function readCachedData(url: string): Promise<ApiMain | undefined> {
+  const hash = getUrlHash(url)
   const now = Date.now()
   try {
     await stat('cache')
@@ -43,8 +44,8 @@ async function readCachedData(apiUrl: string): Promise<ApiMain | undefined> {
   return undefined
 }
 
-async function writeCachedData(apiUrl: string, data: ApiMain) {
-  const hash = getUrlHash(apiUrl)
+async function writeCachedData(url: string, data: ApiMain) {
+  const hash = getUrlHash(url)
   const now = Date.now()
   await writeFile(`cache/${hash}-${now}.json`, JSON.stringify(data))
 }
