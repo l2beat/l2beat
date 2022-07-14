@@ -102,7 +102,7 @@ export class ReportRepository extends BaseRepository {
     const rows = await knex('reports')
       .where('asset_id', assetId.toString())
       .andWhere('project_id', projectId.toString())
-      .andWhere('is_daily', '=', true)
+      .andWhere('is_daily', true)
       .orderBy('unix_timestamp', 'asc')
     return rows.map(toRecord)
   }
