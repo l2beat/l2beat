@@ -573,7 +573,7 @@ export const tokenList: TokenInfo[] = [
   {
     id: AssetId('dvf-deversi-fi-token'),
 
-    name: 'DeversiFi Token',
+    name: 'rhino.fi Token',
     symbol: 'DVF',
     address: EthereumAddress('0xDDdddd4301A082e62E84e43F474f044423921918'),
     coingeckoId: CoingeckoId('dvf'),

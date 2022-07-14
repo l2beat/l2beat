@@ -13,10 +13,10 @@ import {
 } from './common'
 import { Project } from './types'
 
-export const deversifi: Project = {
-  name: 'DeversiFi',
-  slug: 'deversifi',
-  id: ProjectId('deversifi'),
+export const rhinofi: Project = {
+  name: 'rhino.fi',
+  slug: 'rhino.fi',
+  id: ProjectId('rhino.fi'),
   bridges: [
     {
       address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
@@ -27,26 +27,26 @@ export const deversifi: Project = {
   associatedTokens: ['DVF'],
   details: {
     description:
-      'DeversiFi claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
+      'rhino.fi claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',
     links: {
-      websites: ['https://www.deversifi.com/'],
-      apps: ['https://app.deversifi.com/'],
+      websites: ['https://rhino.fi/'],
+      apps: ['https://app.rhino.fi/'],
       documentation: [
-        'https://docs.deversifi.com/',
-        'https://support.deversifi.com/en/',
+        'https://docs.rhino.fi/',
+        'https://support.rhino.fi/en/',
         'https://docs.starkware.co/starkex-docs-v2/',
       ],
       explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
-        'https://github.com/deversifi',
+        'https://github.com/rhinofi',
       ],
       socialMedia: [
-        'https://blog.deversifi.com/',
-        'https://twitter.com/deversifi',
-        'https://linkedin.com/company/deversifi/',
-        'https://youtube.com/c/deversifi',
+        'https://blog.rhino.fi/',
+        'https://twitter.com/rhino.fi',
+        'https://linkedin.com/company/rhino.fi/',
+        'https://youtube.com/c/rhino.fi',
       ],
     },
     provider: 'StarkEx',
@@ -168,17 +168,17 @@ export const deversifi: Project = {
       {
         date: '2021-08-11',
         name: "It's here. The launch of DVF Governance.",
-        link: 'https://blog.deversifi.com/its-here-the-launch-of-dvf-governance/',
+        link: 'https://blog.rhino.fi/its-here-the-launch-of-dvf-governance/',
       },
       {
         date: '2021-08-03',
-        name: 'DeversiFi launches first Layer 2 bridge between Polygon for instant transfers',
-        link: 'https://blog.deversifi.com/deversifi-launches-first-layer-2-bridge-between-polygon-for-instant-transfers',
+        name: 'rhino.fi launches first Layer 2 bridge between Polygon for instant transfers',
+        link: 'https://blog.rhino.fi/rhino.fi-launches-first-layer-2-bridge-between-polygon-for-instant-transfers',
       },
       {
         date: '2021-07-20',
         name: 'Introducing the DVF DAO Treasury',
-        link: 'https://blog.deversifi.com/dvf-dao-treasury/',
+        link: 'https://blog.rhino.fi/dvf-dao-treasury/',
       },
     ],
   },

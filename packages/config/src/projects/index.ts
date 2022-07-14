@@ -2,7 +2,7 @@ import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { bobanetwork } from './bobanetwork'
-import { deversifi } from './deversifi'
+import { rhinofi } from './rhinofi'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -29,7 +29,7 @@ export const projects: Project[] = [
   aztec,
   aztecconnect,
   bobanetwork,
-  deversifi,
+  rhinofi,
   dydx,
   fuelv1,
   gluon,
