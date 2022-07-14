@@ -429,7 +429,7 @@ describe(ReportController.name, () => {
     it('returns reports', async () => {
       const controller = new ReportController(
         mock<ReportRepository>({
-          getByProjectAndAsset: async () => [
+          getDailyByProjectAndAsset: async () => [
             mockReport(OPTIMISM, AssetId.DAI, 0),
             mockReport(OPTIMISM, AssetId.DAI, 1),
           ],

@@ -119,7 +119,7 @@ describe(ReportRepository.name, () => {
     )
   })
 
-  it(ReportRepository.prototype.getByProjectAndAsset.name, async () => {
+  it(ReportRepository.prototype.getDailyByProjectAndAsset.name, async () => {
     const asset = AssetId('my-asset')
     const report = fakeReport({
       projectId: PROJECT_A,
@@ -134,7 +134,7 @@ describe(ReportRepository.name, () => {
     ]
     await reportsRepository.addOrUpdateMany(reports)
 
-    const result = await reportsRepository.getByProjectAndAsset(
+    const result = await reportsRepository.getDailyByProjectAndAsset(
       PROJECT_A,
       asset,
     )

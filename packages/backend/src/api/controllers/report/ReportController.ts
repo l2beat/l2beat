@@ -93,7 +93,7 @@ export class ReportController {
     if (!project || !asset) {
       return undefined
     }
-    const reports = await this.reportRepository.getByProjectAndAsset(
+    const reports = await this.reportRepository.getDailyByProjectAndAsset(
       projectId,
       assetId,
     )
