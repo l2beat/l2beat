@@ -1,7 +1,6 @@
 import { ApiMain } from '@l2beat/common'
 import { getTokenByAssetId, Project } from '@l2beat/config'
 
-import { getApiUrl } from '../../../../shared/getApiUrl'
 import { ChartProps } from '../../../common'
 
 export function getChart(project: Project, apiMain: ApiMain): ChartProps {
@@ -17,9 +16,7 @@ function getTokens(project: Project, apiMain: ApiMain) {
       const symbol = getTokenByAssetId(assetId).symbol
       return {
         symbol,
-        endpoint: getApiUrl(
-          `/api/projects/${project.id.toString()}/tvl/assets/${assetId.toString()}`,
-        ),
+        endpoint: `/api/projects/${project.id.toString()}/tvl/assets/${assetId.toString()}`,
         tvl,
       }
     })

@@ -10,7 +10,8 @@ main().catch((e) => {
 })
 
 async function main() {
-  const apiMain = await getApiMain()
+  const apiUrl = process.env.API_URL ?? 'https://api.l2beat.com/api/main'
+  const apiMain = await getApiMain(apiUrl)
   const projects = configProjects.filter((p) => !!apiMain.projects[p.name])
   createApi(projects, apiMain)
   await renderPages(projects, apiMain)
