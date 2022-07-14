@@ -21,7 +21,9 @@ export class ReportRepository extends BaseRepository {
 
     this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
-    this.getByProjectAndAsset = this.wrapGet(this.getByProjectAndAsset)
+    this.getDailyByProjectAndAsset = this.wrapGet(
+      this.getDailyByProjectAndAsset,
+    )
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
 
@@ -92,7 +94,7 @@ export class ReportRepository extends BaseRepository {
     return result
   }
 
-  async getByProjectAndAsset(
+  async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
   ): Promise<ReportRecord[]> {
@@ -100,6 +102,7 @@ export class ReportRepository extends BaseRepository {
     const rows = await knex('reports')
       .where('asset_id', assetId.toString())
       .andWhere('project_id', projectId.toString())
+      .andWhere('is_daily', true)
       .orderBy('unix_timestamp', 'asc')
     return rows.map(toRecord)
   }
