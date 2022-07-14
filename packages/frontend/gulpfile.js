@@ -68,10 +68,13 @@ function generateMetaImages() {
 function serve() {
   const app = express()
   app.use(express.static('build'))
-  app.use('/api/projects', createProxyMiddleware({
-    target: process.env.API_URL ?? 'https://api.l2beat.com',
-    changeOrigin: true
-  }))
+  app.use(
+    '/api/projects',
+    createProxyMiddleware({
+      target: process.env.API_URL ?? 'https://api.l2beat.com',
+      changeOrigin: true,
+    }),
+  )
   const server = app.listen(8080, '0.0.0.0')
   console.log('Listening on http://localhost:8080')
   return server
