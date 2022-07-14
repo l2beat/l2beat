@@ -99,7 +99,8 @@ describe(ReportController.name, () => {
         Logger.SILENT,
       )
 
-      const result = await reportController.generateDaily()
+      const reports = await reportController.getReports()
+      const result = await reportController.generateDaily(reports)
 
       expect(result).toEqual({
         aggregate: {
@@ -176,7 +177,8 @@ describe(ReportController.name, () => {
         TOKENS,
         Logger.SILENT,
       )
-      const result = await reportController.generateDaily()
+      const reports = await reportController.getReports()
+      const result = await reportController.generateDaily(reports)
 
       expect(result).toEqual({
         aggregate: {
@@ -276,7 +278,8 @@ describe(ReportController.name, () => {
         Logger.SILENT,
       )
 
-      const result = await reportController.generateMain()
+      const reports = await reportController.getReports()
+      const result = await reportController.generateMain(reports)
 
       const TIME_0 = UnixTime.fromDate(new Date('2022-05-29'))
       const TIME_1 = UnixTime.fromDate(new Date('2022-05-30'))
@@ -350,7 +353,8 @@ describe(ReportController.name, () => {
         [],
         Logger.SILENT,
       )
-      const result = await reportController.generateMain()
+      const reports = await reportController.getReports()
+      const result = await reportController.generateMain(reports)
 
       expect(result).toEqual({
         charts: {
