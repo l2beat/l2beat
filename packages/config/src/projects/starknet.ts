@@ -148,6 +148,52 @@ export const starknet: Project = {
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
+      permissions: [
+        {
+          name: 'Governor',
+          accounts: [
+            {
+              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+        },
+        {
+          name: 'StarknetCore Governor',
+          accounts: [
+            {
+              address: '0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
+        },
+        {
+          name: 'Operator',
+          accounts: [
+            {
+              address: '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        },
+        {
+          name: 'MakerDAO Governance',
+          accounts: [
+            {
+              address: '0x0a3f6849f78076aefaDf113F5BED87720274dDC0',
+              type: 'Contract',
+            },
+          ],
+          description:
+            'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
+        },
+      ],
     },
     news: [
       {

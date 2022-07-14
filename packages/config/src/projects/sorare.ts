@@ -84,6 +84,47 @@ export const sorare: Project = {
           CONTRACTS.UNVERIFIED_RISK,
         ],
       },
+      permissions: [
+        {
+          name: 'Governor',
+          accounts: [
+            {
+              address: '0x5918481F777dBe437De249492B90AffB4e655de4',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'Data Availability Committee',
+          accounts: [],
+          description:
+            'There exists a Data Availability Committee with unknown members and an unverified smart contract.',
+        },
+        {
+          name: 'SHARP Verifier Governor',
+          accounts: [
+            {
+              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'Operator',
+          accounts: [
+            {
+              address: '0x63881ac44293E22F3c3183a0C4113586ABb3e653',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Allowed to update state of the system. When Operator is down the state cannot be updated.',
+        },
+      ],
     },
     news: [
       {

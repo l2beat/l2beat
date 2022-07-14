@@ -1,3 +1,5 @@
+import { ApiMain } from '@l2beat/common'
+
 import { ReportOutput } from '../../../api/controllers/report/generateReportOutput'
 
 export {}
@@ -44,7 +46,7 @@ declare module 'knex/types/tables' {
   interface CachedDataRow {
     id: number
     unix_timestamp: string
-    data: ReportOutput
+    data: ReportOutput | ApiMain
   }
 
   interface Tables {

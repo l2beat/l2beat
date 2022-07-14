@@ -180,6 +180,85 @@ export const arbitrum: Project = {
           },
         ],
       },
+      permissions: [
+        {
+          name: 'Arbitrum MultiSig',
+          accounts: [
+            {
+              address: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+              type: 'MultiSig',
+            },
+          ],
+          description:
+            'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+        },
+        {
+          name: 'MultiSig participants',
+          accounts: [
+            {
+              address: '0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e',
+              type: 'EOA',
+            },
+            {
+              address: '0x68aF7F698aA20A1B804833654E82D8d7b6816e12',
+              type: 'EOA',
+            },
+            {
+              address: '0x80420B3216E87e4ed25489ef392901Aafc10951B',
+              type: 'EOA',
+            },
+            {
+              address: '0xf7FAf474aB8c503CF1786FfE708c861b438A59c6',
+              type: 'EOA',
+            },
+            {
+              address: '0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972',
+              type: 'EOA',
+            },
+            {
+              address: '0xc73b82AC141ce46D8987135E57D0ead1BFB35075',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'These addresses are the participants of the 4/6 Arbitrum MultiSig.',
+        },
+        {
+          name: 'Sequencer',
+          accounts: [
+            {
+              address: '0xcCe5c6cFF61C49b4d53dd6024f8295F3c5230513',
+              type: 'EOA',
+            },
+          ],
+          description: 'Central actor allowed to commit L2 transactions to L1.',
+        },
+        {
+          name: 'Validators',
+          accounts: [
+            {
+              address: '0xa8c3e94015f1f91ff60e4e939e0a4d14b8d9fc4f',
+              type: 'EOA',
+            },
+            {
+              address: '0x9919dbf38e05c6496d852d8e5705eb101308f089',
+              type: 'EOA',
+            },
+            {
+              // owner of 0xdcc298Dd0041341aE679a77740601Fbc87B02f2d
+              address: '0xF76d5fd2465ea5df336C2DB2c7B17f5F99890858',
+              type: 'EOA',
+            },
+            {
+              // owner of 0x51de512AA5dfb02143a91c6F772261623AE64564
+              address: '0xDdfFDAF55326B9765a2e69ebf0e6Dca11ae669cD',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
+        },
+      ],
       contracts: {
         addresses: [
           {

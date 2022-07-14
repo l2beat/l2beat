@@ -126,6 +126,41 @@ export const dydx: Project = {
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
+      permissions: [
+        {
+          name: 'dYdX Governance',
+          accounts: [
+            {
+              address: '0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2',
+              type: 'Contract',
+            },
+          ],
+          description:
+            'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'GpsStatementVerifier Governor',
+          accounts: [
+            {
+              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'Operator',
+          accounts: [
+            {
+              address: '0x8129b737912e17212C8693B781928f5D0303390a',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+        },
+      ],
     },
     news: [
       {
