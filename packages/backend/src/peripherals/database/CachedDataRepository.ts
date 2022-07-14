@@ -31,7 +31,10 @@ export class CachedDataRepository extends BaseRepository {
   async getMain(): Promise<ApiMain | undefined> {
     const knex = await this.knex()
     const row = await knex('cached_data').where({ id: MAIN_ID }).first()
-    return ApiMain.parse(row?.data)
+    if (!row) {
+      return undefined
+    }
+    return ApiMain.parse(row.data)
   }
 
   async saveData(data: ReportOutput) {
