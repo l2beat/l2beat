@@ -52,7 +52,11 @@ export class ReportUpdater {
     ])
     this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
-    const aggregatedReports = aggregateReports(reports, this.projects, timestamp)
+    const aggregatedReports = aggregateReports(
+      reports,
+      this.projects,
+      timestamp,
+    )
     await this.reportRepository.addOrUpdateMany(reports)
     await this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports)
     await this.reportStatusRepository.add({

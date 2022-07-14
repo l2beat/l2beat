@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/common'
+
 import { ProjectInfo } from '../../model'
 import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
