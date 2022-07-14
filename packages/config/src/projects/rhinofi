@@ -27,7 +27,7 @@ export const rhinofi: Project = {
   associatedTokens: ['DVF'],
   details: {
     description:
-      'rhino.fi claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
+      'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',
     links: {
       websites: ['https://rhino.fi/'],
