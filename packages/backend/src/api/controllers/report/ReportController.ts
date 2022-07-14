@@ -11,7 +11,10 @@ import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
-import { ReportRepository } from '../../../peripherals/database/ReportRepository'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../../peripherals/database/ReportRepository'
 import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
 import {
   aggregateReportsDaily,
@@ -35,12 +38,10 @@ export class ReportController {
     private interval: number = 5 * 60 * 1000,
   ) {
     this.logger = this.logger.for(this)
-    this.taskQueue = new TaskQueue(async () => {
-      await Promise.all([
-        this.generateDailyAndCache(),
-        this.generateMainAndCache(),
-      ])
-    }, this.logger)
+    this.taskQueue = new TaskQueue(
+      async () => this.generateAndCache(),
+      this.logger,
+    )
   }
 
   start() {
@@ -56,36 +57,31 @@ export class ReportController {
     return this.cacheRepository.getMain()
   }
 
-  async generateMainAndCache() {
-    this.logger.info('Main started')
-    const main = await this.generateMain()
-    await this.cacheRepository.saveMain(main)
-    this.logger.info('Main saved')
-  }
-
-  async generateMain(): Promise<ApiMain> {
-    let reports = await this.reportRepository.getDaily()
-    reports = filterReportsByProjects(reports, this.projects)
-    reports = getSufficientlySynced(reports)
-    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
-    await addOptimismTokenV2(dailyEntries, this.priceRepository)
-    return generateApiMain(dailyEntries, this.projects)
-  }
-
-  async generateDailyAndCache() {
+  async generateAndCache() {
     this.logger.info('Daily report started')
-    const report = await this.generateDaily()
-    await this.cacheRepository.saveData(report)
+    const reports = await this.getReports()
+    await this.cacheRepository.saveData(await this.generateDaily(reports))
+    await this.cacheRepository.saveMain(await this.generateMain(reports))
     this.logger.info('Daily report saved')
   }
 
-  async generateDaily() {
+  async getReports() {
     let reports = await this.reportRepository.getDaily()
     reports = filterReportsByProjects(reports, this.projects)
     reports = getSufficientlySynced(reports)
+    return reports
+  }
+
+  async generateDaily(reports: ReportRecord[]) {
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
     await addOptimismToken(dailyEntries, this.priceRepository)
     return generateReportOutput(dailyEntries, this.projects)
+  }
+
+  async generateMain(reports: ReportRecord[]): Promise<ApiMain> {
+    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
+    await addOptimismTokenV2(dailyEntries, this.priceRepository)
+    return generateApiMain(dailyEntries, this.projects)
   }
 
   async getProjectAssetChart(
