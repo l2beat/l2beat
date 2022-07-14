@@ -1,4 +1,4 @@
-import { ApiMain, Project, UnixTime } from '@l2beat/common'
+import { ApiMain, Project } from '@l2beat/common'
 
 import { ProjectInfo } from '../../../model'
 import { OutputEntry, OutputEntryV2 } from './aggregateReportsDaily'
