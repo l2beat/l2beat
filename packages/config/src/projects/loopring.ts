@@ -150,7 +150,7 @@ export const loopring: Project = {
             },
           ],
           description:
-            'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy owner), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submit blocks, upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+            'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy owner), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
         },
         {
           name: 'MultiSig participants',
@@ -181,7 +181,7 @@ export const loopring: Project = {
             },
           ],
           description:
-            'These addresses are the participants of the 4/6 Loopring MultiSig',
+            'These addresses are the participants of the 4/6 Loopring MultiSig.',
         },
         {
           name: 'Block Submitters',
@@ -244,7 +244,7 @@ export const loopring: Project = {
             },
           ],
           description:
-            'Actors who can submit new blocks, updating the L2 state on L1',
+            'Actors who can submit new blocks, updating the L2 state on L1.',
         },
       ],
       contracts: {

@@ -91,10 +91,10 @@ export const immutablex: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
         },
         {
-          name: 'DAC members',
+          name: 'Data Availability Committee',
           accounts: [
             {
               address: '0x1ffbdb8061b586a6d29fb608d025e5d8744f58d1',
@@ -148,7 +148,7 @@ export const immutablex: Project = {
             },
           ],
           description:
-            'Allowed to update the state. When Operator is down the state cannot be updated.',
+            'Allowed to update the state. When the Operator is down the state cannot be updated.',
         },
       ],
     },

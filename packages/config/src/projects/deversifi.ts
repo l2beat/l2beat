@@ -103,10 +103,10 @@ export const deversifi: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+            'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
         },
         {
-          name: 'DAC members',
+          name: 'Data Availability Committee',
           accounts: [
             {
               address: '0x6a8ea587133c1aa4b3ba0417b6d8ae38e61fd1e',
@@ -160,7 +160,7 @@ export const deversifi: Project = {
             },
           ],
           description:
-            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+            'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
         },
       ],
     },

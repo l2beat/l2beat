@@ -128,7 +128,7 @@ export const dydx: Project = {
       },
       permissions: [
         {
-          name: 'dYdX Governor',
+          name: 'dYdX Governance',
           accounts: [
             {
               address: '0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2',
@@ -136,46 +136,7 @@ export const dydx: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
-        },
-        {
-          name: 'dYdX token holders',
-          accounts: [
-            {
-              address: '0xb9431E19B29B952d9358025f680077C3Fd37292f',
-              type: 'Contract',
-            },
-            {
-              address: '0xf95746B2c3D120B78Fd1Cb3f9954CB451c2163E4',
-              type: 'EOA',
-            },
-            {
-              address: '0xCc9507708a918b1d44Cf63FaB4E7B98b7517060f',
-              type: 'EOA',
-            },
-            {
-              address: '0x08a90Fe0741B7DeF03fB290cc7B273F1855767D8',
-              type: 'Contract',
-            },
-            {
-              address: '0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC',
-              type: 'Contract',
-            },
-            {
-              address: '0xE710CEd57456D3A16152c32835B5FB4E72D9eA5b',
-              type: 'Contract',
-            },
-            {
-              address: '0xF977814e90dA44bFA03b6295A0616a897441aceC',
-              type: 'EOA',
-            },
-            {
-              address: '0xd7ec2398980102d2e1994263777333491536cCEe',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Token holders with share above 2%, which means they can create a voting proposal.',
+            'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
         },
         {
           name: 'GpsStatementVerifier Governor',
