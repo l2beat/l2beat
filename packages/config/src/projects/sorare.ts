@@ -94,7 +94,13 @@ export const sorare: Project = {
             },
           ],
           description:
-            'Can upgrade implementation of the Bridge, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'Data Availability Committee',
+          accounts: [],
+          description:
+            'There exists a Data Availability Committee with unknown members and an unverified smart contract.',
         },
         {
           name: 'SHARP Verifier Governor',
@@ -116,7 +122,7 @@ export const sorare: Project = {
             },
           ],
           description:
-            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+            'Allowed to update state of the system. When Operator is down the state cannot be updated.',
         },
       ],
     },
