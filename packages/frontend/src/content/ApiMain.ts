@@ -2,14 +2,17 @@ import { ApiMain, HttpClient } from '@l2beat/common'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
-export async function getApiMain(apiUrl: string): Promise<ApiMain> {
-  const cached = await readCachedData(apiUrl)
+import { getApiUrl } from '../shared/getApiUrl'
+
+export async function getApiMain(): Promise<ApiMain> {
+  const url = getApiUrl('/api/main')
+  const cached = await readCachedData(url)
   if (cached) {
     return cached
   }
 
   const http = new HttpClient()
-  const response = await http.fetch(apiUrl)
+  const response = await http.fetch(url)
   if (!response.ok) {
     throw new Error(
       `Could not get data from api (received status ${response.status})`,
@@ -17,7 +20,7 @@ export async function getApiMain(apiUrl: string): Promise<ApiMain> {
   }
   const json: unknown = await response.json()
   const data = ApiMain.parse(json)
-  await writeCachedData(apiUrl, data)
+  await writeCachedData(url, data)
   return data
 }
 
