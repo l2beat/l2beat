@@ -25,7 +25,7 @@ export const aztecconnect: Project = {
   details: {
     description:
       'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
-    purpose: 'Private payments',
+    purpose: 'Private DeFi',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
