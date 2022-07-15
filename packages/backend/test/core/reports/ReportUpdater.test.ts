@@ -9,10 +9,7 @@ import { PriceUpdater } from '../../../src/core/PriceUpdater'
 import { aggregateReports } from '../../../src/core/reports/aggregateReports'
 import { createReports } from '../../../src/core/reports/createReports'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
-import {
-  AggregateReportRecord,
-  AggregateReportRepository,
-} from '../../../src/peripherals/database/AggregateReportRepository'
+import { AggregateReportRepository } from '../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
 import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
@@ -77,10 +74,23 @@ describe(ReportUpdater.name, () => {
         [createReports(PRICES, BALANCES, PROJECTS)],
       ])
 
-
-      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-        [aggregateReports(createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS), PROJECTS, NOW.add(1, 'hours'))],
-        [aggregateReports(createReports(PRICES, BALANCES, PROJECTS), PROJECTS, NOW)],
+      expect(
+        aggregateReportRepository.addOrUpdateMany,
+      ).toHaveBeenCalledExactlyWith([
+        [
+          aggregateReports(
+            createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
+            PROJECTS,
+            NOW.add(1, 'hours'),
+          ),
+        ],
+        [
+          aggregateReports(
+            createReports(PRICES, BALANCES, PROJECTS),
+            PROJECTS,
+            NOW,
+          ),
+        ],
       ])
     })
   })
@@ -148,9 +158,23 @@ describe(ReportUpdater.name, () => {
           [createReports(PRICES, BALANCES, PROJECTS)],
         ])
 
-        expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-          [aggregateReports(createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS), PROJECTS, NOW.add(1, 'hours'))],
-          [aggregateReports(createReports(PRICES, BALANCES, PROJECTS), PROJECTS, NOW)],
+        expect(
+          aggregateReportRepository.addOrUpdateMany,
+        ).toHaveBeenCalledExactlyWith([
+          [
+            aggregateReports(
+              createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
+              PROJECTS,
+              NOW.add(1, 'hours'),
+            ),
+          ],
+          [
+            aggregateReports(
+              createReports(PRICES, BALANCES, PROJECTS),
+              PROJECTS,
+              NOW,
+            ),
+          ],
         ])
       })
     })
