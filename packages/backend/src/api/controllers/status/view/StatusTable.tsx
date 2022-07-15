@@ -25,7 +25,7 @@ export function StatusTable(props: StatusTableProps) {
         {props.rows.map(({ cells, isSynced }, i) => (
           <tr key={i} style={{ color: isSynced ? undefined : 'red' }}>
             {cells.map((cell) => (
-              <td>{cell}</td>
+              <td key={`${i}-${cell}`}>{cell}</td>
             ))}
             <td>{isSynced.toString()}</td>
           </tr>
