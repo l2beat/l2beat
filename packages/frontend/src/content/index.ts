@@ -12,6 +12,8 @@ main().catch((e) => {
 async function main() {
   const apiUrl = process.env.API_URL ?? 'https://api.l2beat.com/api/data'
   const l2Data = await getL2Data(apiUrl)
+  // TODO: remove this in the future
+  l2Data.byProject['rhino.fi'] = l2Data.byProject.DeversiFi
   const projects = configProjects.filter((p) => !!l2Data.byProject[p.name])
   createApi(projects, l2Data)
   await renderPages(projects, l2Data)

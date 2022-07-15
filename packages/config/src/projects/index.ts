@@ -2,7 +2,6 @@ import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { bobanetwork } from './bobanetwork'
-import { deversifi } from './deversifi'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -14,6 +13,7 @@ import { loopring } from './loopring'
 import { metis } from './metis'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { rhinofi } from './rhinofi'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { Project } from './types'
@@ -29,7 +29,7 @@ export const projects: Project[] = [
   aztec,
   aztecconnect,
   bobanetwork,
-  deversifi,
+  rhinofi,
   dydx,
   fuelv1,
   gluon,
