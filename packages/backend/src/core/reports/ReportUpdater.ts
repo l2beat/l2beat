@@ -1,4 +1,4 @@
-import { Hash256, Logger, TaskQueue, UnixTime } from '@l2beat/common'
+import { Logger, TaskQueue, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../model'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
@@ -12,7 +12,7 @@ import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 
 export class ReportUpdater {
-  private configHash: Hash256
+  private configHash: string
   private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
   constructor(
