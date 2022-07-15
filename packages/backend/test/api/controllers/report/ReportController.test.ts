@@ -404,6 +404,8 @@ describe(ReportController.name, () => {
   describe(ReportController.prototype.getProjectAssetChart.name, () => {
     it('returns undefined if project does not exist', async () => {
       const controller = new ReportController(
+        mock<ReportStatusRepository>(),
+        mock<AggregateReportRepository>(),
         mock<ReportRepository>(),
         mock<CachedDataRepository>(),
         mock<PriceRepository>(),
@@ -417,7 +419,10 @@ describe(ReportController.name, () => {
 
     it('returns undefined if asset does not exist', async () => {
       const controller = new ReportController(
+        mock<ReportStatusRepository>(),
+        mock<AggregateReportRepository>(),
         mock<ReportRepository>(),
+
         mock<CachedDataRepository>(),
         mock<PriceRepository>(),
         [
@@ -442,6 +447,8 @@ describe(ReportController.name, () => {
 
     it('returns reports', async () => {
       const controller = new ReportController(
+        mock<ReportStatusRepository>(),
+        mock<AggregateReportRepository>(),
         mock<ReportRepository>({
           getDailyByProjectAndAsset: async () => [
             mockReport(OPTIMISM, AssetId.DAI, 0),

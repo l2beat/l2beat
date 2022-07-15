@@ -18,6 +18,7 @@ export class ReportStatusRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getBetween = this.wrapGet(this.getBetween)
+    this.findLatestTimestamp = this.wrapFind(this.findLatestTimestamp)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -77,6 +78,6 @@ export class ReportStatusRepository extends BaseRepository {
     if (!row) {
       return undefined
     }
-    return new UnixTime(+row.timestamp)
+    return new UnixTime(+row.max)
   }
 }

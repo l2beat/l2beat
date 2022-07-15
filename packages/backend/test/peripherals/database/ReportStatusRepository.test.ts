@@ -63,6 +63,6 @@ describe(ReportStatusRepository.name, () => {
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
     const result = await repository.findLatestTimestamp()
-    expect(result).toEqual(TIME_TWO)
+    expect(result).toEqual(TIME_ONE)
   })
 })
