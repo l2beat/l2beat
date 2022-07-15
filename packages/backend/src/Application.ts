@@ -126,6 +126,8 @@ export class Application {
     const blocksController = new BlocksController(blockNumberRepository)
 
     const reportController = new ReportController(
+      reportStatusRepository,
+      aggregateReportRepository,
       reportRepository,
       cachedDataRepository,
       priceRepository,

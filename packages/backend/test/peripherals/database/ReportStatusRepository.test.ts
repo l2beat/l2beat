@@ -41,7 +41,7 @@ describe(ReportStatusRepository.name, () => {
     expect(timestampsTwo).toBeAnArrayWith(TIME_ONE, TIME_TWO)
   })
 
-  it('can add the same value multiple times ', async () => {
+  it('can add the same value multiple times', async () => {
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
@@ -50,11 +50,19 @@ describe(ReportStatusRepository.name, () => {
     expect(timestamps).toEqual([TIME_ONE])
   })
 
-  it(ReportStatusRepository.prototype.getBetween.name, async () => {
+  it('gets statuses between timestamps', async () => {
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
     const result = await repository.getBetween(TIME_THREE, TIME_TWO)
     expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
+  })
+
+  it('finds latest timestamp', async () => {
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
+
+    const result = await repository.findLatestTimestamp()
+    expect(result).toEqual(TIME_TWO)
   })
 })

@@ -2,19 +2,27 @@ import {
   ApiMain,
   AssetId,
   Chart,
+  ChartPoint,
   Logger,
+  Project,
   ProjectId,
   TaskQueue,
+  UnixTime,
 } from '@l2beat/common'
 
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
+import {
+  AggregateReportRecord,
+  AggregateReportRepository,
+} from '../../../peripherals/database/AggregateReportRepository'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
 import {
   aggregateReportsDaily,
@@ -25,10 +33,42 @@ import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
 import { generateApiMain, generateReportOutput } from './generateReportOutput'
 
+function getDailyTimestamps(min: UnixTime, max: UnixTime) {
+  const timestamps: UnixTime[] = []
+  for (let t = min; !t.gt(max); t = t.add(1, 'days')) {
+    timestamps.push(t)
+  }
+  return timestamps
+}
+
+function addMissingTimestamps(points: ChartPoint[]): ChartPoint[] {
+  const min = points[0][0]
+  const max = points[points.length - 1][0]
+  const daily = getDailyTimestamps(min, max)
+
+  return daily.map((timestamp, i) => {
+    const point = points[i]
+    const value = point[0].equals(timestamp) ? point[1] : points[i - 1][1]
+    return [timestamp, value, point[2]]
+  })
+}
+
+function getProjectDailyChartData(
+  reports: AggregateReportRecord[],
+  projectId?: ProjectId,
+): ChartPoint[] {
+  const existing: ChartPoint[] = reports
+    .filter((r) => r.projectId === (projectId ?? ProjectId.ALL))
+    .map((r) => [r.timestamp, asNumber(r.tvlUsd, 2), asNumber(r.tvlEth, 6)])
+  return addMissingTimestamps(existing)
+}
+
 export class ReportController {
   private taskQueue: TaskQueue<void>
 
   constructor(
+    private reportStatusRepository: ReportStatusRepository,
+    private aggregateReportRepository: AggregateReportRepository,
     private reportRepository: ReportRepository,
     private cacheRepository: CachedDataRepository,
     private priceRepository: PriceRepository,
@@ -53,8 +93,41 @@ export class ReportController {
     return this.cacheRepository.getData()
   }
 
-  async getMain() {
-    return this.cacheRepository.getMain()
+  async getMain(): Promise<ApiMain | undefined> {
+    const latestTimestamp =
+      await this.reportStatusRepository.findLatestTimestamp()
+    if (!latestTimestamp) {
+      return undefined
+    }
+    const [aggregateReports, tokenBreakdown] = await Promise.all([
+      this.aggregateReportRepository.getDaily(),
+      this.reportRepository.getByTimestamp(latestTimestamp),
+    ])
+
+    const apiMain: ApiMain = {
+      charts: {
+        daily: {
+          types: ['timestamp', 'usd', 'eth'],
+          data: getProjectDailyChartData(aggregateReports, ProjectId.ALL),
+        },
+      },
+      projects: {},
+    }
+
+    for (const p of this.projects) {
+      const project: Project = {
+        charts: {
+          daily: {
+            types: ['timestamp', 'usd', 'eth'],
+            data: getProjectDailyChartData(aggregateReports, p.projectId),
+          },
+        },
+        tokens: tokenBreakdown
+          .filter((r) => r.projectId === p.projectId)
+          .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
+      }
+      apiMain.projects[p.name] = project
+    }
   }
 
   async generateAndCache() {

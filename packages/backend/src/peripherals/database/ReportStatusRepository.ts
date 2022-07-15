@@ -70,4 +70,13 @@ export class ReportStatusRepository extends BaseRepository {
       configHash: Hash256(r.config_hash),
     }))
   }
+
+  async findLatestTimestamp(): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = await knex('report_status').max('unix_timestamp').first()
+    if (!row) {
+      return undefined
+    }
+    return new UnixTime(+row.timestamp)
+  }
 }

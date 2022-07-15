@@ -13,9 +13,11 @@ import { expect, mockFn } from 'earljs'
 import { ReportController } from '../../../../src/api/controllers/report/ReportController'
 import { Token } from '../../../../src/model'
 import { ProjectInfo } from '../../../../src/model/ProjectInfo'
+import { AggregateReportRepository } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { CachedDataRepository } from '../../../../src/peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../../src/peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../../src/peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../../../src/peripherals/database/ReportStatusRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
 const ARBITRUM = ProjectId('arbitrum')
@@ -76,6 +78,8 @@ describe(ReportController.name, () => {
         return [mockPrice(token, 0, -1), mockPrice(token, 0, 0)]
       },
     })
+    const reportStatusRepository = mock<ReportStatusRepository>()
+    const aggregateReportRepository = mock<AggregateReportRepository>()
     it('happy case', async () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([
@@ -91,6 +95,8 @@ describe(ReportController.name, () => {
       })
 
       const reportController = new ReportController(
+        reportStatusRepository,
+        aggregateReportRepository,
         reportRepository,
         cachedRepository,
         priceRepository,
@@ -170,6 +176,8 @@ describe(ReportController.name, () => {
         getDaily: mockFn().returns([]),
       })
       const reportController = new ReportController(
+        reportStatusRepository,
+        aggregateReportRepository,
         reportRepository,
         cachedRepository,
         priceRepository,
@@ -252,6 +260,8 @@ describe(ReportController.name, () => {
         return [mockPrice(token, 0, -1), mockPrice(token, 0, 0)]
       },
     })
+    const reportStatusRepository = mock<ReportStatusRepository>()
+    const aggregateReportRepository = mock<AggregateReportRepository>()
     it('happy case', async () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([
@@ -270,6 +280,8 @@ describe(ReportController.name, () => {
       })
 
       const reportController = new ReportController(
+        reportStatusRepository,
+        aggregateReportRepository,
         reportRepository,
         cachedRepository,
         priceRepository,
@@ -346,6 +358,8 @@ describe(ReportController.name, () => {
         getDaily: mockFn().returns([]),
       })
       const reportController = new ReportController(
+        reportStatusRepository,
+        aggregateReportRepository,
         reportRepository,
         cachedRepository,
         priceRepository,

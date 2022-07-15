@@ -39,6 +39,16 @@ export class ReportRepository extends BaseRepository {
     return rows.map((r) => toRecord(r))
   }
 
+  async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('reports').where(
+      'unix_timestamp',
+      timestamp as unknown as string,
+    )
+
+    return rows.map((r) => toRecord(r))
+  }
+
   async getAll(): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports').select()
