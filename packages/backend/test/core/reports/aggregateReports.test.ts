@@ -46,6 +46,12 @@ describe(aggregateReports.name, () => {
         tvlUsd: 20_000_00n,
         tvlEth: 20_000000n,
       },
+      {
+        timestamp: NOW,
+        projectId: ProjectId.ALL,
+        tvlUsd: 55_000_00n,
+        tvlEth: 55_000000n,
+      },
     ])
   })
   it('works with empty reports', () => {
@@ -60,6 +66,12 @@ describe(aggregateReports.name, () => {
       {
         timestamp: NOW,
         projectId: ProjectId('optimism'),
+        tvlUsd: 0n,
+        tvlEth: 0n,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId.ALL,
         tvlUsd: 0n,
         tvlEth: 0n,
       },

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../model'
 import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
@@ -10,6 +10,9 @@ export function aggregateReports(
   timestamp: UnixTime,
 ): AggregateReportRecord[] {
   const aggregateReports: AggregateReportRecord[] = []
+  let tvlAllUsd = 0n
+  let tvlAllEth = 0n
+
   for (const project of projects) {
     const filteredReports = reports.filter(
       (x) => x.projectId === project.projectId,
@@ -27,7 +30,16 @@ export function aggregateReports(
       tvlEth,
       tvlUsd,
     })
+    tvlAllEth += tvlEth
+    tvlAllUsd += tvlUsd
   }
+
+  aggregateReports.push({
+    timestamp,
+    projectId: ProjectId.ALL,
+    tvlEth: tvlAllEth,
+    tvlUsd: tvlAllUsd,
+  })
 
   return aggregateReports
 }
