@@ -26,6 +26,7 @@ export class PriceRepository extends BaseRepository {
     this.getByToken = this.wrapGet(this.getByToken)
     this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
     this.addMany = this.wrapAddMany(this.addMany)
+    this.getLatestByTokenBetween = this.wrapAny(this.getLatestByTokenBetween)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -95,7 +96,7 @@ export class PriceRepository extends BaseRepository {
     )
   }
 
-  async getLatestByTokenFromTo(
+  async getLatestByTokenBetween(
     from: UnixTime,
     to: UnixTime,
   ): Promise<Map<AssetId, PriceRecord>> {

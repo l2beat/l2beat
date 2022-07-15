@@ -15,8 +15,8 @@ export function StatusTable(props: StatusTableProps) {
     <table>
       <thead>
         <tr>
-          {props.columns.map((column) => (
-            <th>{column}</th>
+          {props.columns.map((column, i) => (
+            <th key={i}>{column}</th>
           ))}
           <th>isSynced</th>
         </tr>

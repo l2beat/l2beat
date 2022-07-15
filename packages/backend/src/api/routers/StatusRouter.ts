@@ -28,10 +28,12 @@ export function createStatusRouter(statusController: StatusController) {
   return router
 }
 
-function getFromTo(query: ParsedUrlQuery): { from: UnixTime; to: UnixTime } {
-  const now = UnixTime.now()
-  const from = query.from ? new UnixTime(+query.from) : now.add(-90, 'days')
-  const to = query.to ? new UnixTime(+query.to) : now
+function getFromTo(query: ParsedUrlQuery): {
+  from: UnixTime | undefined
+  to: UnixTime | undefined
+} {
+  const from = query.from ? new UnixTime(+query.from) : undefined
+  const to = query.to ? new UnixTime(+query.to) : undefined
 
   return { from, to }
 }

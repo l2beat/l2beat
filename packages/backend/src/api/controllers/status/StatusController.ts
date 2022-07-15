@@ -19,20 +19,21 @@ export class StatusController {
     private priceRepository: PriceRepository,
     private balanceStatusRepository: BalanceStatusRepository,
     private reportStatusRepository: ReportStatusRepository,
+    private clock: Clock,
     private tokens: Token[],
     private projects: ProjectInfo[],
-    private clock: Clock,
   ) {}
 
-  //TODO
-  // check if there are prices for every timestamp <from,to>
-  async getPricesStatus(from: UnixTime, to: UnixTime): Promise<string> {
-    const lastHour = this.clock.getLastHour()
-    const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
+  async getPricesStatus(
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ): Promise<string> {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
 
-    const pricesByToken = await this.priceRepository.getLatestByTokenFromTo(
-      from,
-      to,
+    const pricesByToken = await this.priceRepository.getLatestByTokenBetween(
+      firstHour,
+      lastHour,
     )
 
     const prices = this.tokens.map((token) => {
@@ -42,19 +43,26 @@ export class StatusController {
         assetId: token.id,
         priceUsd: latest?.priceUsd,
         timestamp: latest?.timestamp,
-        isSynced: latest?.timestamp.toString() === syncTimestamp.toString(),
+        isSynced: latest?.timestamp.toString() === lastHour.toString(),
       }
     })
 
     return renderPricesPage({ prices })
   }
 
-  async getBalancesStatus(from: UnixTime, to: UnixTime): Promise<string> {
-    const lastHour = this.clock.getLastHour()
-    const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
-    const timestamps = getTimestamps(from, syncTimestamp, 'hourly').reverse()
+  async getBalancesStatus(
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ): Promise<string> {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
 
-    const statuses = await this.balanceStatusRepository.getFromTo(from, to)
+    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+
+    const statuses = await this.balanceStatusRepository.getBetween(
+      firstHour,
+      lastHour,
+    )
     const configHash = getConfigHash(this.projects)
 
     const balances = timestamps.map((timestamp) => ({
@@ -65,12 +73,16 @@ export class StatusController {
     return renderBalancesPage({ balances })
   }
 
-  async getReportsStatus(from: UnixTime, to: UnixTime) {
-    const lastHour = this.clock.getLastHour()
-    const syncTimestamp = to.gte(lastHour) ? lastHour : to.toStartOf('hour')
-    const timestamps = getTimestamps(from, syncTimestamp, 'hourly').reverse()
+  async getReportsStatus(from: UnixTime | undefined, to: UnixTime | undefined) {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
 
-    const statuses = await this.reportStatusRepository.getFromTo(from, to)
+    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+
+    const statuses = await this.reportStatusRepository.getBetween(
+      firstHour,
+      lastHour,
+    )
     const configHash = getConfigHash(this.projects)
 
     const reports = timestamps.map((timestamp) => ({
@@ -79,6 +91,20 @@ export class StatusController {
     }))
 
     return renderReportsPage({ reports })
+  }
+
+  private getFirstHour(from: UnixTime | undefined) {
+    if (from) {
+      return from
+    } else {
+      const firstHour = this.clock.getFirstHour()
+      const lastHour = this.clock.getLastHour()
+      if (firstHour.gt(lastHour.add(-90, 'days'))) {
+        return firstHour
+      } else {
+        return lastHour.add(-90, 'days')
+      }
+    }
   }
 }
 

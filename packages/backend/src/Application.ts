@@ -131,9 +131,9 @@ export class Application {
       priceRepository,
       balanceStatusRepository,
       reportStatusRepository,
+      clock,
       config.tokens,
       config.projects,
-      clock,
     )
 
     const apiServer = new ApiServer(config.port, logger, [

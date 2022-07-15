@@ -14,11 +14,11 @@ export class Clock {
     }
   }
 
-  getFirstHour() {
+  getFirstHour(): UnixTime {
     return this.minTimestamp
   }
 
-  getLastHour() {
+  getLastHour(): UnixTime {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('hour')
   }
 

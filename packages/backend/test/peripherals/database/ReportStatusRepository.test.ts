@@ -50,11 +50,11 @@ describe(ReportStatusRepository.name, () => {
     expect(timestamps).toEqual([TIME_ONE])
   })
 
-  it(ReportStatusRepository.prototype.getFromTo.name, async () => {
+  it(ReportStatusRepository.prototype.getBetween.name, async () => {
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
-    const result = await repository.getFromTo(TIME_THREE, TIME_TWO)
+    const result = await repository.getBetween(TIME_THREE, TIME_TWO)
     expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
   })
 })

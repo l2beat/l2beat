@@ -50,11 +50,11 @@ describe(BalanceStatusRepository.name, () => {
     expect(timestamps).toEqual([TIME_ONE])
   })
 
-  it(BalanceStatusRepository.prototype.getFromTo.name, async () => {
+  it(BalanceStatusRepository.prototype.getBetween.name, async () => {
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_TWO })
 
-    const result = await repository.getFromTo(TIME_THREE, TIME_TWO)
+    const result = await repository.getBetween(TIME_THREE, TIME_TWO)
 
     expect(result).toEqual([{ configHash: HASH_ONE, timestamp: TIME_TWO }])
   })

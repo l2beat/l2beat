@@ -17,6 +17,7 @@ export class BalanceStatusRepository extends BaseRepository {
     this.getByConfigHash = this.wrapGet(this.getByConfigHash)
     this.add = this.wrapAdd(this.add)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.getBetween = this.wrapGet(this.getBetween)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -51,7 +52,7 @@ export class BalanceStatusRepository extends BaseRepository {
     return await knex('balance_status').delete()
   }
 
-  async getFromTo(
+  async getBetween(
     from: UnixTime,
     to: UnixTime,
   ): Promise<BalanceStatusRecord[]> {

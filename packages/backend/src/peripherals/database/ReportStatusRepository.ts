@@ -17,7 +17,7 @@ export class ReportStatusRepository extends BaseRepository {
     this.getByConfigHash = this.wrapGet(this.getByConfigHash)
     this.add = this.wrapAdd(this.add)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getFromTo = this.wrapGet(this.getFromTo)
+    this.getBetween = this.wrapGet(this.getBetween)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -55,7 +55,10 @@ export class ReportStatusRepository extends BaseRepository {
     return await knex('report_status').delete()
   }
 
-  async getFromTo(from: UnixTime, to: UnixTime): Promise<ReportStatusRecord[]> {
+  async getBetween(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<ReportStatusRecord[]> {
     const knex = await this.knex()
 
     const rows = await knex('report_status')

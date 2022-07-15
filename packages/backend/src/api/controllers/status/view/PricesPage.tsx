@@ -20,13 +20,14 @@ export function PricesPage({ prices }: PricesPageProps) {
   return (
     <Page title="Prices">
       <StatusTable
-        columns={['Name', 'Latest value', 'Latest timestamp']}
+        columns={['Name', 'Value', 'Timestamp', 'Date']}
         rows={prices.map((price) => ({
           isSynced: price.isSynced,
           cells: [
             price.assetId.toString(),
             price.priceUsd?.toString() ?? '-',
             price.timestamp?.toString() ?? '-',
+            price.timestamp?.toDate().toLocaleString('pl') ?? '-'
           ],
         }))}
       />

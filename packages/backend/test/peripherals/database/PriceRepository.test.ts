@@ -147,7 +147,7 @@ describe(PriceRepository.name, () => {
     })
   })
 
-  describe(PriceRepository.prototype.getLatestByTokenFromTo.name, () => {
+  describe(PriceRepository.prototype.getLatestByTokenBetween.name, () => {
     it('gets most recent record of each token', async () => {
       await repository.deleteAll()
       await repository.addMany([
@@ -163,7 +163,7 @@ describe(PriceRepository.name, () => {
         },
       ])
 
-      const result = await repository.getLatestByTokenFromTo(
+      const result = await repository.getLatestByTokenBetween(
         START.add(-1, 'days'),
         START.add(-1, 'hours'),
       )
