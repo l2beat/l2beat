@@ -43,10 +43,15 @@ export class AggregateReportRepository extends BaseRepository {
   async addOrUpdateMany(reports: AggregateReportRecord[]) {
     const rows = reports.map(toRow)
     const knex = await this.knex()
-    await knex('aggregate_reports')
-      .insert(rows)
-      .onConflict(['unix_timestamp', 'project_id'])
-      .merge()
+    await knex.transaction(async (trx) => {
+      await trx('aggregate_reports')
+        .where('unix_timestamp', rows[0].unix_timestamp)
+        .delete()
+      await trx('aggregate_reports')
+        .insert(rows)
+        .onConflict(['unix_timestamp', 'project_id'])
+        .merge()
+    })
     return rows.length
   }
 

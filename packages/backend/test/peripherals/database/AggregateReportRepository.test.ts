@@ -70,6 +70,24 @@ describe(AggregateReportRepository.name, () => {
     it('empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
+
+    it('prunes old reports', async () => {
+      const REPORTS_1 = [
+        fakeAggregateReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
+        fakeAggregateReport({ projectId: ProjectId('optimism'), timestamp: TIME_0 }),
+      ]
+
+      const REPORTS_2 = [
+        fakeAggregateReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
+        fakeAggregateReport({ projectId: ProjectId('dydx'), timestamp: TIME_0 }),
+      ]
+
+      await repository.addOrUpdateMany(REPORTS_1)
+      await repository.addOrUpdateMany(REPORTS_2)
+
+      const result = await repository.getAll();
+      expect(result).toEqual(REPORTS_2)
+    })
   })
 
   it(AggregateReportRepository.prototype.getAll.name, async () => {

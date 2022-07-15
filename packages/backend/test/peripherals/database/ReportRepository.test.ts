@@ -73,6 +73,24 @@ describe(ReportRepository.name, () => {
     it('empty array', async () => {
       await expect(reportsRepository.addOrUpdateMany([])).not.toBeRejected()
     })
+
+    it('prunes old reports', async () => {
+      const REPORTS_1 = [
+        fakeReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
+        fakeReport({ projectId: ProjectId('optimism'), timestamp: TIME_0 }),
+      ]
+
+      const REPORTS_2 = [
+        fakeReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
+        fakeReport({ projectId: ProjectId('dydx'), timestamp: TIME_0 }),
+      ]
+
+      await reportsRepository.addOrUpdateMany(REPORTS_1)
+      await reportsRepository.addOrUpdateMany(REPORTS_2)
+
+      const result = await reportsRepository.getAll();
+      expect(result).toEqual(REPORTS_2)
+    })
   })
 
   it(ReportRepository.prototype.getAll.name, async () => {
