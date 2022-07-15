@@ -1,114 +1,119 @@
-import { UnixTime } from '@l2beat/common'
+import { getTimestamps, Hash256, UnixTime } from '@l2beat/common'
 
+import { Clock } from '../../../core/Clock'
+import { getConfigHash } from '../../../core/getConfigHash'
 import { ProjectInfo } from '../../../model'
 import { Token } from '../../../model/Token'
-import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import {
+  BalanceStatusRecord,
+  BalanceStatusRepository,
+} from '../../../peripherals/database/BalanceStatusRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
-import { ReportRepository } from '../../../peripherals/database/ReportRepository'
-import { Status } from './Status'
-import { renderStatusPage } from './view/StatusPage'
+import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import { renderBalancesPage } from './view/BalancesPage'
+import { renderPricesPage } from './view/PricesPage'
+import { renderReportsPage } from './view/ReportsPage'
 
 export class StatusController {
   constructor(
     private priceRepository: PriceRepository,
-    private balanceRepository: BalanceRepository,
-    private reportsRepository: ReportRepository,
+    private balanceStatusRepository: BalanceStatusRepository,
+    private reportStatusRepository: ReportStatusRepository,
+    private clock: Clock,
     private tokens: Token[],
     private projects: ProjectInfo[],
   ) {}
 
-  async getPricesStatus() {
-    const latestByToken = await this.priceRepository.getLatestByToken()
+  async getPricesStatus(
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ): Promise<string> {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
 
-    const statuses = this.tokens
-      .map((token): Status => {
-        const latest = latestByToken.get(token.id)
-
-        return {
-          name: token.coingeckoId.toString(),
-          timestamp: latest?.timestamp,
-          value: latest?.priceUsd.toString(),
-          isSynced: isSynced(latest?.timestamp),
-        }
-      })
-      .sort((a, b) => Number(a.isSynced) - Number(b.isSynced))
-
-    return renderStatusPage({ title: 'Prices', statuses })
-  }
-
-  async getBalancesStatus() {
-    const holderLatest = await this.balanceRepository.getLatestPerHolder()
-    return this.projects.flatMap(({ bridges, name }) =>
-      bridges.map(({ address }) => ({
-        name,
-        address,
-        tokens:
-          holderLatest.get(address)?.map((latest) => ({
-            assetId: latest.assetId,
-            balance: latest.balance.toString(),
-            timestamp: unixTimeToString(latest.timestamp),
-            syncStatus: getSyncStatus(latest.timestamp),
-          })) ?? [],
-      })),
+    const pricesByToken = await this.priceRepository.getLatestByTokenBetween(
+      firstHour,
+      lastHour,
     )
+
+    const prices = this.tokens.map((token) => {
+      const latest = pricesByToken.get(token.id)
+
+      return {
+        assetId: token.id,
+        timestamp: latest,
+        isSynced: latest?.toString() === lastHour.toString(),
+      }
+    })
+
+    return renderPricesPage({ prices })
   }
 
-  async getReportsStatus() {
-    const projectLatest = await this.reportsRepository.getLatestPerProject()
-    return this.projects.map(({ projectId }) => ({
-      projectId,
-      tokens:
-        projectLatest.get(projectId)?.map((latest) => ({
-          assetId: latest.asset,
-          balance: latest.balance.toString(),
-          usd: latest.balanceUsd.toString(),
-          eth: latest.balanceEth.toString(),
-          timestamp: unixTimeToString(latest.timestamp),
-          syncStatus: getSyncStatus(latest.timestamp),
-        })) ?? [],
+  async getBalancesStatus(
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ): Promise<string> {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
+
+    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+
+    const statuses = await this.balanceStatusRepository.getBetween(
+      firstHour,
+      lastHour,
+    )
+    const configHash = getConfigHash(this.projects)
+
+    const balances = timestamps.map((timestamp) => ({
+      timestamp,
+      isSynced: isSynced(statuses, timestamp, configHash),
     }))
-  }
-}
 
-function isSynced(timestamp: UnixTime | undefined) {
-  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
-  return !!timestamp && now.equals(timestamp)
-}
-
-const unixTimeToString = (date: UnixTime) => {
-  return date.toDate().toString().slice(4, 21)
-}
-
-const SECONDS_PER_HOUR = 60 * 60
-const getSyncStatus = (
-  date: UnixTime,
-): {
-  isSynced: boolean
-  message: string
-} => {
-  const now = UnixTime.now().add(-1, 'hours').toStartOf('hour')
-
-  const diff = now.toNumber() - date.toNumber()
-
-  if (diff === 0) {
-    return { isSynced: true, message: '✔' }
+    return renderBalancesPage({ balances })
   }
 
-  if (diff > 0 && diff < 24 * SECONDS_PER_HOUR) {
-    return {
-      isSynced: false,
-      message: `out of sync for ${diff / SECONDS_PER_HOUR} hour(s)`,
+  async getReportsStatus(from: UnixTime | undefined, to: UnixTime | undefined) {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
+
+    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+
+    const statuses = await this.reportStatusRepository.getBetween(
+      firstHour,
+      lastHour,
+    )
+    const configHash = getConfigHash(this.projects)
+
+    const reports = timestamps.map((timestamp) => ({
+      timestamp,
+      isSynced: isSynced(statuses, timestamp, configHash),
+    }))
+
+    return renderReportsPage({ reports })
+  }
+
+  private getFirstHour(from: UnixTime | undefined) {
+    if (from) {
+      return from
+    } else {
+      const firstHour = this.clock.getFirstHour()
+      const lastHour = this.clock.getLastHour()
+      if (firstHour.gt(lastHour.add(-90, 'days'))) {
+        return firstHour
+      } else {
+        return lastHour.add(-90, 'days')
+      }
     }
   }
+}
 
-  if (diff >= 24 * SECONDS_PER_HOUR) {
-    return {
-      isSynced: false,
-      message: `out of sync for ${Math.floor(
-        diff / (24 * SECONDS_PER_HOUR),
-      )} day(s)`,
-    }
-  }
-
-  return { isSynced: false, message: '? price synced ahead of time' }
+function isSynced(
+  statuses: BalanceStatusRecord[],
+  timestamp: UnixTime,
+  configHash: Hash256,
+): boolean {
+  return (
+    statuses.find((s) => s.timestamp.toString() === timestamp.toString())
+      ?.configHash === configHash
+  )
 }

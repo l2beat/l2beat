@@ -60,40 +60,6 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  async getLatestPerProject(): Promise<Map<ProjectId, ReportRecord[]>> {
-    const knex = await this.knex()
-    const rows: ReportRow[] = await knex
-      .select('a1.*')
-      .from('reports as a1')
-      .innerJoin(
-        knex('reports')
-          .select(
-            knex.raw('max(unix_timestamp) as unix_timestamp'),
-            'project_id',
-            'asset_id',
-          )
-          .from('reports')
-          .as('a2')
-          .groupBy('project_id', 'asset_id'),
-        function () {
-          return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp')
-            .andOn('a1.project_id', '=', 'a2.project_id')
-            .andOn('a1.asset_id', '=', 'a2.asset_id')
-        },
-      )
-
-    const records = rows.map(toRecord)
-
-    const result = new Map<ProjectId, ReportRecord[]>()
-
-    for (const record of records) {
-      const entry = result.get(record.projectId) ?? []
-      result.set(record.projectId, [...entry, record])
-    }
-
-    return result
-  }
-
   async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,

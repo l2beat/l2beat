@@ -147,38 +147,28 @@ describe(PriceRepository.name, () => {
     })
   })
 
-  describe(PriceRepository.prototype.getLatestByToken.name, () => {
+  describe(PriceRepository.prototype.getLatestByTokenBetween.name, () => {
     it('gets most recent record of each token', async () => {
-      const result = await repository.getLatestByToken()
+      await repository.deleteAll()
+      await repository.addMany([
+        {
+          priceUsd: 3000,
+          timestamp: START.add(-1, 'days'),
+          assetId: AssetId.ETH,
+        },
+        {
+          priceUsd: 1,
+          timestamp: START,
+          assetId: AssetId.DAI,
+        },
+      ])
 
-      expect(result).toEqual(
-        new Map([
-          [
-            AssetId.ETH,
-            {
-              priceUsd: 3000,
-              timestamp: START.add(-1, 'hours'),
-              assetId: AssetId.ETH,
-            },
-          ],
-          [
-            AssetId('uni-uniswap'),
-            {
-              priceUsd: 20,
-              timestamp: START.add(-1, 'hours'),
-              assetId: AssetId('uni-uniswap'),
-            },
-          ],
-          [
-            AssetId.DAI,
-            {
-              priceUsd: 1,
-              timestamp: START,
-              assetId: AssetId.DAI,
-            },
-          ],
-        ]),
+      const result = await repository.getLatestByTokenBetween(
+        START.add(-1, 'days'),
+        START.add(-1, 'hours'),
       )
+
+      expect(result).toEqual(new Map([[AssetId.ETH, START.add(-1, 'days')]]))
     })
   })
 })
