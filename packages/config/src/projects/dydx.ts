@@ -98,7 +98,7 @@ export const dydx: Project = {
             name: 'GpsStatementVerifier',
             address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
             description:
-              'STARK Verifier. In contrast to Sorare, ImmutableX, DeversiFi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
+              'STARK Verifier. In contrast to Sorare, ImmutableX, rhino.fi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
             upgradeability: {
               type: 'StarkWare',
               implementation: '0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2',
