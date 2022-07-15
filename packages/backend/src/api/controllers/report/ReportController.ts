@@ -46,6 +46,7 @@ function insertAt<T>(arr: T[], i: number, el: T): T[] {
 }
 
 function addMissingTimestamps(points: ChartPoint[]): ChartPoint[] {
+  if (points.length === 0) return []
   const [min] = points[0]
   const [max] = points[points.length - 1]
   const daily = getDailyTimestamps(min, max)
