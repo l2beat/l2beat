@@ -88,7 +88,7 @@ describe(ReportRepository.name, () => {
       await reportsRepository.addOrUpdateMany(REPORTS_1)
       await reportsRepository.addOrUpdateMany(REPORTS_2)
 
-      const result = await reportsRepository.getAll();
+      const result = await reportsRepository.getAll()
       expect(result).toEqual(REPORTS_2)
     })
   })
