@@ -6,8 +6,13 @@ import { BalanceUpdater } from '../../../src/core/BalanceUpdater'
 import { Clock } from '../../../src/core/Clock'
 import { getConfigHash } from '../../../src/core/getConfigHash'
 import { PriceUpdater } from '../../../src/core/PriceUpdater'
+import { aggregateReports } from '../../../src/core/reports/aggregateReports'
 import { createReports } from '../../../src/core/reports/createReports'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
+import {
+  AggregateReportRecord,
+  AggregateReportRepository,
+} from '../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
 import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
@@ -38,6 +43,10 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
+      const aggregateReportRepository = mock<AggregateReportRepository>({
+        addOrUpdateMany: async () => 0,
+      })
+
       const reportStatusRepository = mock<ReportStatusRepository>({
         getByConfigHash: async () => [],
         add: async ({ configHash }) => configHash,
@@ -47,6 +56,7 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
+        aggregateReportRepository,
         reportStatusRepository,
         mock<Clock>(),
         PROJECTS,
@@ -66,6 +76,12 @@ describe(ReportUpdater.name, () => {
         [createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)],
         [createReports(PRICES, BALANCES, PROJECTS)],
       ])
+
+
+      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
+        [aggregateReports(createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS), PROJECTS, NOW.add(1, 'hours'))],
+        [aggregateReports(createReports(PRICES, BALANCES, PROJECTS), PROJECTS, NOW)],
+      ])
     })
   })
 
@@ -82,6 +98,10 @@ describe(ReportUpdater.name, () => {
           .returnsOnce(BALANCES),
       })
       const reportRepository = mock<ReportRepository>({
+        addOrUpdateMany: async () => 0,
+      })
+
+      const aggregateReportRepository = mock<AggregateReportRepository>({
         addOrUpdateMany: async () => 0,
       })
 
@@ -107,6 +127,7 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
+        aggregateReportRepository,
         reportStatusRepository,
         clock,
         PROJECTS,
@@ -125,6 +146,11 @@ describe(ReportUpdater.name, () => {
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
           [createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)],
           [createReports(PRICES, BALANCES, PROJECTS)],
+        ])
+
+        expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
+          [aggregateReports(createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS), PROJECTS, NOW.add(1, 'hours'))],
+          [aggregateReports(createReports(PRICES, BALANCES, PROJECTS), PROJECTS, NOW)],
         ])
       })
     })
