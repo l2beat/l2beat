@@ -15,8 +15,8 @@ import { Project } from './types'
 
 export const rhinofi: Project = {
   name: 'rhino.fi',
-  slug: 'rhino.fi',
-  id: ProjectId('rhino.fi'),
+  slug: 'rhinofi',
+  id: ProjectId('deversifi'),
   bridges: [
     {
       address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
@@ -26,6 +26,7 @@ export const rhinofi: Project = {
   ],
   associatedTokens: ['DVF'],
   details: {
+    warning: 'DeversiFi has rebranded to rhino.fi on Jul 14 2022.',
     description:
       'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',
@@ -167,17 +168,12 @@ export const rhinofi: Project = {
     news: [
       {
         date: '2022-07-14',
-        name: "Today DeversiFi becomes rhino.fi: the first multi-chain platform to bring you all the best DeFi opportunities in one place.",
-        link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
-      },
-      {
-        date: '2022-07-14',
         name: 'Today DeversiFi becomes rhino.fi: the first multi-chain platform to bring you all the best DeFi opportunities in one place.',
         link: 'https://rhino.fi/blog/beat-the-stampede-with-our-breaking-news-and-win-a-share-of-5k/',
       },
       {
         date: '2022-07-20',
-        name: 'Noah\'s Ark moment for DeFi',
+        name: "Noah's Ark moment for DeFi",
         link: 'https://rhino.fi/blog/noahs-ark-moment-defi/',
       },
     ],
