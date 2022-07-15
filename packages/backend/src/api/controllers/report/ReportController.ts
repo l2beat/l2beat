@@ -41,24 +41,31 @@ function getDailyTimestamps(min: UnixTime, max: UnixTime) {
   return timestamps
 }
 
+function insertAt<T>(arr: T[], i: number, el: T): T[] {
+  return [...arr.slice(0, i), el, ...arr.slice(i + 1)]
+}
+
 function addMissingTimestamps(points: ChartPoint[]): ChartPoint[] {
-  const min = points[0][0]
-  const max = points[points.length - 1][0]
+  const [min] = points[0]
+  const [max] = points[points.length - 1]
   const daily = getDailyTimestamps(min, max)
 
-  return daily.map((timestamp, i) => {
-    const point = points[i]
-    const value = point[0].equals(timestamp) ? point[1] : points[i - 1][1]
-    return [timestamp, value, point[2]]
-  })
+  return daily.reduce((acc, timestamp, i) => {
+    const [currTimestamp] = acc[i]
+    if (currTimestamp.equals(timestamp)) {
+      return acc
+    }
+    const [, prev1, prev2] = acc[i - 1]
+    return insertAt(acc, i, [timestamp, prev1, prev2])
+  }, points)
 }
 
 function getProjectDailyChartData(
   reports: AggregateReportRecord[],
-  projectId?: ProjectId,
+  projectId: ProjectId,
 ): ChartPoint[] {
   const existing: ChartPoint[] = reports
-    .filter((r) => r.projectId === (projectId ?? ProjectId.ALL))
+    .filter((r) => r.projectId === projectId)
     .map((r) => [r.timestamp, asNumber(r.tvlUsd, 2), asNumber(r.tvlEth, 6)])
   return addMissingTimestamps(existing)
 }
@@ -128,6 +135,8 @@ export class ReportController {
       }
       apiMain.projects[p.name] = project
     }
+
+    return apiMain
   }
 
   async generateAndCache() {

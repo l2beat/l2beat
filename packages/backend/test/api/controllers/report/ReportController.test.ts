@@ -262,6 +262,7 @@ describe(ReportController.name, () => {
     })
     const reportStatusRepository = mock<ReportStatusRepository>()
     const aggregateReportRepository = mock<AggregateReportRepository>()
+
     it('happy case', async () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([
