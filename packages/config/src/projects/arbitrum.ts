@@ -231,7 +231,8 @@ export const arbitrum: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Central actor allowed to set the order in which L2 transactions are executed.',
+          description:
+            'Central actor allowed to set the order in which L2 transactions are executed.',
         },
         {
           name: 'Validators',
