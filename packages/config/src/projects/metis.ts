@@ -147,6 +147,61 @@ export const metis: Project = {
           },
         ],
       },
+      permissions: [
+        {
+          name: 'Metis manager',
+          accounts: [
+            {
+              address: '0xDD6FFC7D9a4Fb420b637747edc6456340d12d377',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'This address is the owner of the following contracts: MVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+        },
+        {
+          name: 'Sequencer',
+          accounts: [
+            {
+              address: '0xcDf02971871B7736874E20B8487c019D28090019',
+              type: 'EOA',
+            },
+          ],
+          description: 'Central actor allowed to commit L2 transactions to L1.',
+        },
+        {
+          name: 'State Root Proposer',
+          accounts: [
+            {
+              address: '0x9cB01d516D930EF49591a05B09e0D33E6286689D',
+              type: 'EOA',
+            },
+          ],
+          description: 'Central actor to post new L2 state roots to L1.',
+        },
+        {
+          name: 'Data Availability Verifiers',
+          accounts: [
+            {
+              address: '0x48fe1f85ff8ad9d088863a42af54d06a1328cf21',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Those addresses can try to force the sequencer to post data on chain.',
+        },
+        {
+          name: 'Execution Verifiers',
+          accounts: [
+            {
+              address: '0x48fe1f85ff8ad9d088863a42af54d06a1328cf21',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Those addresses can challenge the state roots submitted by the state root proposer.',
+        },
+      ],
       contracts: {
         addresses: [
           {

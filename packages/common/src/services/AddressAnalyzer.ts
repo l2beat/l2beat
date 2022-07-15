@@ -18,7 +18,7 @@ export interface VerifiedContract {
   type: 'Contract'
   verified: true
   name: string
-  abi: json
+  abi: json[]
 }
 
 export type AnalyzedAddress = EOAAddress | UnverifiedContract | VerifiedContract
@@ -52,7 +52,7 @@ export class AddressAnalyzer {
         type: 'Contract',
         verified: true,
         name: source.ContractName,
-        abi: JSON.parse(source.ABI) as unknown as json,
+        abi: JSON.parse(source.ABI) as unknown as json[],
       }
     }
   }

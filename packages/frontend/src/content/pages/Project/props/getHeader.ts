@@ -22,7 +22,7 @@ export function getHeader(project: Project, l2Data: L2Data): HeaderProps {
 function getTitleLength(name: string): 'long' | 'very-long' | undefined {
   switch (name) {
     case 'Optimism':
-    case 'DeversiFi':
+    case 'rhino.fi':
     case 'Immutable X':
       return 'long'
     case 'OMG Network':

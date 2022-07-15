@@ -15,6 +15,9 @@ describe(ReportRepository.name, () => {
   const TIME_1 = TIME_0.add(1, 'hours')
   const TIME_2 = TIME_0.add(2, 'hours')
 
+  const PROJECT_A = ProjectId('project-a')
+  const PROJECT_B = ProjectId('project-b')
+
   beforeEach(async () => {
     await reportsRepository.deleteAll()
   })
@@ -96,6 +99,29 @@ describe(ReportRepository.name, () => {
     const results = await reportsRepository.getAll()
 
     expect(results).toBeAnArrayOfLength(0)
+  })
+
+  it(ReportRepository.prototype.getDailyByProjectAndAsset.name, async () => {
+    const asset = AssetId('my-asset')
+    const report = fakeReport({
+      projectId: PROJECT_A,
+      asset,
+      timestamp: TIME_0,
+    })
+    const reports = [
+      report,
+      fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+      fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
+      fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
+    ]
+    await reportsRepository.addOrUpdateMany(reports)
+
+    const result = await reportsRepository.getDailyByProjectAndAsset(
+      PROJECT_A,
+      asset,
+    )
+
+    expect(result).toEqual([report])
   })
 
   function fakeReport(report?: Partial<ReportRecord>): ReportRecord {

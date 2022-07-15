@@ -124,6 +124,7 @@ export class Application {
       cachedDataRepository,
       priceRepository,
       config.projects,
+      config.tokens,
       logger,
     )
 

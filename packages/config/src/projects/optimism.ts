@@ -161,7 +161,7 @@ export const optimism: Project = {
             },
           ],
           description:
-            'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, block proposer or any other system component (unlimited upgrade power).',
+            'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
         },
         {
           name: 'MultiSig participants',
@@ -210,10 +210,10 @@ export const optimism: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Central actor allowed to post new L2 state root.',
+          description: 'Central actor allowed to commit L2 transactions to L1.',
         },
         {
-          name: 'Block Proposer',
+          name: 'State Root Proposer',
           accounts: [
             {
               address: '0x473300df21D047806A082244b417f96b32f13A33',

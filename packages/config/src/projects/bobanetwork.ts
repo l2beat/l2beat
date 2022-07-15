@@ -153,7 +153,7 @@ export const bobanetwork: Project = {
             },
           ],
           description:
-            'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, block proposer or any other system component (unlimited upgrade power).',
+            'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
         },
         {
           name: 'Sequencer',
@@ -163,10 +163,10 @@ export const bobanetwork: Project = {
               type: 'EOA',
             },
           ],
-          description: 'Central actor allowed to post new L2 state root.',
+          description: 'Central actor allowed to commit L2 transactions to L1.',
         },
         {
-          name: 'Block Proposer',
+          name: 'State Root Proposer',
           accounts: [
             {
               address: '0x5558c63d5bf229450995adc160c023C9F4d4bE80',
