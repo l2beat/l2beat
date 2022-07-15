@@ -82,3 +82,13 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 - `deleteAll(): number` - removes all records and returns the number of removed records
 - `deleteByKey(K): number` - removes all matching records and returns the number of removed records
 - `save(T): boolean` - updates a record and returns boolean indicating if record was updated
+
+## Maintenance endpoints
+
+The `/status` endpoints were created to see the current progress of the Updaters.
+
+### Endpoints:
+
+- `/status/prices`
+- `/status/balances`
+- `/status/reports`

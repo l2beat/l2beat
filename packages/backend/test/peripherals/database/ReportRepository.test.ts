@@ -14,6 +14,7 @@ describe(ReportRepository.name, () => {
   const TIME_0 = UnixTime.now().toStartOf('day')
   const TIME_1 = TIME_0.add(1, 'hours')
   const TIME_2 = TIME_0.add(2, 'hours')
+
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
@@ -98,25 +99,6 @@ describe(ReportRepository.name, () => {
     const results = await reportsRepository.getAll()
 
     expect(results).toBeAnArrayOfLength(0)
-  })
-
-  it(ReportRepository.prototype.getLatestPerProject.name, async () => {
-    const reports = [
-      fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
-      fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-      fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
-      fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
-    ]
-    await reportsRepository.addOrUpdateMany(reports)
-
-    const result = await reportsRepository.getLatestPerProject()
-
-    expect(result).toEqual(
-      new Map([
-        [PROJECT_A, [reports[2]]],
-        [PROJECT_B, [reports[3]]],
-      ]),
-    )
   })
 
   it(ReportRepository.prototype.getDailyByProjectAndAsset.name, async () => {
