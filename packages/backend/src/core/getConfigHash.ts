@@ -1,13 +1,14 @@
 import { Hash256 } from '@l2beat/common'
-import { FORCED_UPDATE_ID } from '@l2beat/config'
 import { createHash } from 'crypto'
 
 import { ProjectInfo } from '../model'
 
+const FORCED_RESYNC_ID = 0
+
 export function getConfigHash(
   projects: ProjectInfo[],
-  forcedUpdateId = FORCED_UPDATE_ID,
-): Hash256 {
+  forcedResyncId = FORCED_RESYNC_ID,
+): string {
   const entries = []
   for (const { projectId, bridges } of projects) {
     for (const { tokens, address, sinceTimestamp } of bridges) {
@@ -22,9 +23,7 @@ export function getConfigHash(
       }
     }
   }
-  const string = JSON.stringify([
-    entries.map((x) => JSON.stringify(x)).sort(),
-    forcedUpdateId,
-  ])
-  return Hash256('0x' + createHash('sha256').update(string).digest('hex'))
+  const string = JSON.stringify(entries.map((x) => JSON.stringify(x)).sort())
+  const hash = Hash256('0x' + createHash('sha256').update(string).digest('hex'))
+  return `${hash.toString()}-${forcedResyncId}`
 }
