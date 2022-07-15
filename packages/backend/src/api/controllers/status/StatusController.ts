@@ -41,9 +41,8 @@ export class StatusController {
 
       return {
         assetId: token.id,
-        priceUsd: latest?.priceUsd,
-        timestamp: latest?.timestamp,
-        isSynced: latest?.timestamp.toString() === lastHour.toString(),
+        timestamp: latest,
+        isSynced: latest?.toString() === lastHour.toString(),
       }
     })
 

@@ -168,18 +168,7 @@ describe(PriceRepository.name, () => {
         START.add(-1, 'hours'),
       )
 
-      expect(result).toEqual(
-        new Map([
-          [
-            AssetId.ETH,
-            {
-              priceUsd: 3000,
-              timestamp: START.add(-1, 'days'),
-              assetId: AssetId.ETH,
-            },
-          ],
-        ]),
-      )
+      expect(result).toEqual(new Map([[AssetId.ETH, START.add(-1, 'days')]]))
     })
   })
 })

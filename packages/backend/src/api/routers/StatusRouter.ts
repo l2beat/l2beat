@@ -8,19 +8,19 @@ export function createStatusRouter(statusController: StatusController) {
   const router = new Router()
 
   router.get('/status/prices', async (ctx) => {
-    const { from, to } = getFromTo(ctx.query)
+    const { from, to } = getParams(ctx.query)
 
     ctx.body = await statusController.getPricesStatus(from, to)
   })
 
   router.get('/status/balances', async (ctx) => {
-    const { from, to } = getFromTo(ctx.query)
+    const { from, to } = getParams(ctx.query)
 
     ctx.body = await statusController.getBalancesStatus(from, to)
   })
 
   router.get('/status/reports', async (ctx) => {
-    const { from, to } = getFromTo(ctx.query)
+    const { from, to } = getParams(ctx.query)
 
     ctx.body = await statusController.getReportsStatus(from, to)
   })
@@ -28,7 +28,7 @@ export function createStatusRouter(statusController: StatusController) {
   return router
 }
 
-function getFromTo(query: ParsedUrlQuery): {
+function getParams(query: ParsedUrlQuery): {
   from: UnixTime | undefined
   to: UnixTime | undefined
 } {

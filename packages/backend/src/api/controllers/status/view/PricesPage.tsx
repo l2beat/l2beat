@@ -7,7 +7,6 @@ import { StatusTable } from './StatusTable'
 
 interface Price {
   assetId: AssetId
-  priceUsd: number | undefined
   timestamp: UnixTime | undefined
   isSynced: boolean
 }
@@ -20,14 +19,13 @@ export function PricesPage({ prices }: PricesPageProps) {
   return (
     <Page title="Prices">
       <StatusTable
-        columns={['Name', 'Value', 'Timestamp', 'Date']}
-        rows={prices.map((price) => ({
-          isSynced: price.isSynced,
+        columns={['Name', 'Latest timestamp', 'Date']}
+        rows={prices.map(({ isSynced, assetId, timestamp }) => ({
+          isSynced: isSynced,
           cells: [
-            price.assetId.toString(),
-            price.priceUsd?.toString() ?? '-',
-            price.timestamp?.toString() ?? '-',
-            price.timestamp?.toDate().toLocaleString('pl') ?? '-'
+            assetId.toString(),
+            timestamp?.toString() ?? '-',
+            timestamp?.toDate().toLocaleString('pl') ?? '-',
           ],
         }))}
       />

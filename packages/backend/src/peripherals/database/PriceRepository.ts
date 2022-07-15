@@ -99,30 +99,22 @@ export class PriceRepository extends BaseRepository {
   async getLatestByTokenBetween(
     from: UnixTime,
     to: UnixTime,
-  ): Promise<Map<AssetId, PriceRecord>> {
+  ): Promise<Map<AssetId, UnixTime | undefined>> {
     const knex = await this.knex()
 
-    const rows: PriceRow[] = await knex
-      .select('a1.*')
-      .where('a1.unix_timestamp', '>=', from.toString())
-      .andWhere('a1.unix_timestamp', '<=', to.toString())
-      .from('coingecko_prices as a1')
-      .innerJoin(
-        knex('coingecko_prices')
-          .select(knex.raw('max(unix_timestamp) as unix_timestamp'), 'asset_id')
-          .from('coingecko_prices')
-          .as('a2')
-          .groupBy('asset_id'),
-        function () {
-          return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp').andOn(
-            'a1.asset_id',
-            '=',
-            'a2.asset_id',
-          )
-        },
-      )
+    const rows = await knex('coingecko_prices')
+      .max('unix_timestamp')
+      .select('asset_id')
+      .groupBy('asset_id')
+      .where('unix_timestamp', '>=', from.toString())
+      .andWhere('unix_timestamp', '<=', to.toString())
 
-    return new Map(rows.map((row) => [AssetId(row.asset_id), toRecord(row)]))
+    return new Map(
+      rows.map((row) => [
+        AssetId(row.asset_id),
+        row.max ? new UnixTime(+row.max) : undefined,
+      ]),
+    )
   }
 }
 
