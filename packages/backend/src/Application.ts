@@ -130,8 +130,9 @@ export class Application {
 
     const statusController = new StatusController(
       priceRepository,
-      balanceRepository,
-      reportRepository,
+      balanceStatusRepository,
+      reportStatusRepository,
+      clock,
       config.tokens,
       config.projects,
     )

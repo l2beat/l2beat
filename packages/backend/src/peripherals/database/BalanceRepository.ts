@@ -68,42 +68,6 @@ export class BalanceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLatestPerHolder(): Promise<
-    Map<EthereumAddress, (BalanceRecord & { timestamp: UnixTime })[]>
-  > {
-    const knex = await this.knex()
-    const rows = await knex
-      .select('a1.*')
-      .from('asset_balances as a1')
-      .innerJoin(
-        knex('asset_balances')
-          .select(
-            'holder_address',
-            'asset_id',
-            knex.raw('max(unix_timestamp) as unix_timestamp'),
-          )
-          .from('asset_balances')
-          .as('a2')
-          .groupBy('holder_address', 'asset_id'),
-        function () {
-          return this.on('a1.unix_timestamp', '=', 'a2.unix_timestamp')
-            .andOn('a1.holder_address', '=', 'a2.holder_address')
-            .andOn('a1.asset_id', '=', 'a2.asset_id')
-        },
-      )
-
-    const records = rows.map(toRecord)
-
-    const result = new Map<EthereumAddress, BalanceRecord[]>()
-
-    for (const record of records) {
-      const entry = result.get(record.holderAddress) ?? []
-      result.set(record.holderAddress, [...entry, record])
-    }
-
-    return result
-  }
-
   async deleteAll() {
     const knex = await this.knex()
     return await knex('asset_balances').delete()
