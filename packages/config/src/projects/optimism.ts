@@ -60,9 +60,9 @@ export const optimism: Project = {
       explorers: ['https://optimistic.etherscan.io/'],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
-        'https://medium.com/ethereum-optimism',
-        'https://twitter.com/optimismPBC',
-        'https://discord.gg/jrnFEvq',
+        'https://optimism.mirror.xyz/',
+        'https://twitter.com/OptimismFND',
+        'https://discord-gateway.optimism.io/',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
