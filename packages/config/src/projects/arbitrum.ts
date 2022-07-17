@@ -387,19 +387,9 @@ export const arbitrum: Project = {
     },
     news: [
       {
-        date: '2022-03-01',
-        name: 'Arbitrum AnyTrust Introduced',
-        link: 'https://medium.com/offchainlabs/introducing-anytrust-chains-cheaper-faster-l2-chains-with-minimal-trust-assumptions-31def59eb8d7',
-      },
-      {
-        date: '2022-04-12',
-        name: 'The Arbitrum Odyssey',
-        link: 'https://medium.com/offchainlabs/the-arbitrum-odyssey-87d6e11171d5',
-      },
-      {
-        date: '2022-06-11',
-        name: 'Arbitrum Nova Introduced',
-        link: 'https://medium.com/offchainlabs/introducing-nova-arbitrum-anytrust-mainnet-is-open-for-developers-9a54692f345e',
+        date: '2022-06-29',
+        name: 'Arbitrum Odyssey paused',
+        link: 'https://twitter.com/arbitrum/status/1542159105946787840',
       },
       {
         date: '2022-06-24',
@@ -407,9 +397,19 @@ export const arbitrum: Project = {
         link: 'https://twitter.com/arbitrum/status/1540441771485831169',
       },
       {
-        date: '2022-06-29',
-        name: 'Arbitrum Odyssey paused',
-        link: 'https://twitter.com/arbitrum/status/1542159105946787840',
+        date: '2022-06-11',
+        name: 'Arbitrum Nova Introduced',
+        link: 'https://medium.com/offchainlabs/introducing-nova-arbitrum-anytrust-mainnet-is-open-for-developers-9a54692f345e',
+      },
+      {
+        date: '2022-04-12',
+        name: 'The Arbitrum Odyssey',
+        link: 'https://medium.com/offchainlabs/the-arbitrum-odyssey-87d6e11171d5',
+      },
+      {
+        date: '2022-03-01',
+        name: 'Arbitrum AnyTrust Introduced',
+        link: 'https://medium.com/offchainlabs/introducing-anytrust-chains-cheaper-faster-l2-chains-with-minimal-trust-assumptions-31def59eb8d7',
       },
     ],
   },
