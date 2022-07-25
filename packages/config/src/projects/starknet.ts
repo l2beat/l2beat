@@ -28,6 +28,21 @@ export const starknet: Project = {
       sinceTimestamp: new UnixTime(1652101033),
       tokens: ['DAI'],
     },
+    {
+      address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
+      sinceTimestamp: new UnixTime(1657137600),
+      tokens: ['WBTC'],
+    },
+    {
+      address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
+      sinceTimestamp: new UnixTime(1657137639),
+      tokens: ['USDC'],
+    },
+    {
+      address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
+      sinceTimestamp: new UnixTime(1657137615),
+      tokens: ['USDT'],
+    },
   ],
   details: {
     warning:
@@ -145,6 +160,39 @@ export const starknet: Project = {
               'DAI Vault for custom DAI Gateway managed by MakerDAO.',
             address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
           },
+          {
+            name: 'WBTC Bridge',
+            description: 'Starkgate bridge for WBTC.',
+            address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x56e233d613743297CdD27fafc5c1f5c1DC2a381b',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
+          },
+          {
+            name: 'USDC Bridge',
+            description: 'Starkgate bridge for USDC.',
+            address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x56e233d613743297CdD27fafc5c1f5c1DC2a381b',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
+          },
+          {
+            name: 'USDT Bridge',
+            description: 'Starkgate bridge for USDT.',
+            address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x56e233d613743297CdD27fafc5c1f5c1DC2a381b',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
+          },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
@@ -196,6 +244,31 @@ export const starknet: Project = {
       ],
     },
     news: [
+      {
+        date: '2022-07-13',
+        name: 'Part 3: StarkNet Token Design',
+        link: 'https://medium.com/starkware/part-3-starknet-token-design-5cc17af066c6',
+      },
+      {
+        date: '2022-07-13',
+        name: 'Part 2: A Decentralization and Governance Proposal for StarkNet',
+        link: 'https://medium.com/starkware/part-2-a-decentralization-and-governance-proposal-for-starknet-23e335645778',
+      },
+      {
+        date: '2022-07-13',
+        name: 'Part 1: StarkNet Sovereignty: A Decentralization Proposal',
+        link: 'https://medium.com/starkware/part-1-starknet-sovereignty-a-decentralization-proposal-bca3e98a01ef',
+      },
+      {
+        date: '2022-07-04',
+        name: 'Regenesis: StarkNet’s No-Sweat State Reset',
+        link: 'https://medium.com/starkware/regenesis-starknets-no-sweat-state-reset-e296b12b80ae',
+      },
+      {
+        date: '2022-06-06',
+        name: 'StarkNet Alpha 0.9.0',
+        link: 'https://medium.com/starkware/starknet-alpha-0-9-0-dce43cf13490',
+      },
       {
         date: '2022-05-09',
         name: 'StarkGate Alpha is live on Mainnet',
