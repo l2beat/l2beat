@@ -28,6 +28,21 @@ export const starknet: Project = {
       sinceTimestamp: new UnixTime(1652101033),
       tokens: ['DAI'],
     },
+    {
+      address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
+      sinceTimestamp: new UnixTime(1657137600),
+      tokens: ['WBTC'],
+    },
+    {
+      address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
+      sinceTimestamp: new UnixTime(1657137639),
+      tokens: ['USDC'],
+    },
+    {
+      address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
+      sinceTimestamp: new UnixTime(1657137615),
+      tokens: ['USDT'],
+    },
   ],
   details: {
     warning:
@@ -144,6 +159,42 @@ export const starknet: Project = {
             description:
               'DAI Vault for custom DAI Gateway managed by MakerDAO.',
             address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
+          },
+          {
+            name: 'WBTC Bridge',
+            description:
+              'Starkgate bridge for WBTC.',
+            address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x56e233d613743297cdd27fafc5c1f5c1dc2a381b',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
+          },
+          {
+            name: 'USDC Bridge',
+            description:
+              'Starkgate bridge for USDC.',
+            address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x56e233d613743297cdd27fafc5c1f5c1dc2a381b',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
+          },
+          {
+            name: 'USDT Bridge',
+            description:
+              'Starkgate bridge for USDT.',
+            address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
+            upgradeability: {
+              type: 'StarkWare',
+              implementation: '0x56e233d613743297cdd27fafc5c1f5c1dc2a381b',
+              upgradeDelay: 0,
+              isFinal: false,
+            },
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
