@@ -166,7 +166,7 @@ export const starknet: Project = {
             address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0x56e233d613743297cdd27fafc5c1f5c1dc2a381b',
+              implementation: '0x56e233d613743297CdD27fafc5c1f5c1DC2a381b',
               upgradeDelay: 0,
               isFinal: false,
             },
@@ -177,7 +177,7 @@ export const starknet: Project = {
             address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0x56e233d613743297cdd27fafc5c1f5c1dc2a381b',
+              implementation: '0x56e233d613743297CdD27fafc5c1f5c1DC2a381b',
               upgradeDelay: 0,
               isFinal: false,
             },
@@ -188,7 +188,7 @@ export const starknet: Project = {
             address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0x56e233d613743297cdd27fafc5c1f5c1dc2a381b',
+              implementation: '0x56e233d613743297CdD27fafc5c1f5c1DC2a381b',
               upgradeDelay: 0,
               isFinal: false,
             },
