@@ -164,19 +164,9 @@ export const dydx: Project = {
     },
     news: [
       {
-        date: '2021-08-24',
-        name: 'EOS is now live',
-        link: 'https://dydx.exchange/blog/markets-17',
-      },
-      {
-        date: '2021-08-12',
-        name: 'dYdX Market Maker Debate',
-        link: 'https://dydx.exchange/blog/debate-recap-cms-mgnr-wintermute',
-      },
-      {
-        date: '2021-08-03',
-        name: 'Introducing the dYdX Foundation',
-        link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+        date: '2022-06-22',
+        name: 'Announcing dYdX Chain',
+        link: 'https://dydx.exchange/blog/dydx-chain',
       },
     ],
   },
