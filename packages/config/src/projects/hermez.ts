@@ -37,10 +37,7 @@ export const hermez: Project = {
         'https://hermez.io/hermez-whitepaper.pdf',
       ],
       explorers: ['https://explorer.hermez.io/'],
-      repositories: [
-        'https://github.com/hermeznetwork/contracts',
-        'https://github.com/hermeznetwork/hermez-node',
-      ],
+      repositories: ['https://github.com/0xpolygonhermez'],
       socialMedia: [
         'https://blog.hermez.io/',
         'https://t.me/hermez_network',
