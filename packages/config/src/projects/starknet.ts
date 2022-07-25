@@ -162,8 +162,7 @@ export const starknet: Project = {
           },
           {
             name: 'WBTC Bridge',
-            description:
-              'Starkgate bridge for WBTC.',
+            description: 'Starkgate bridge for WBTC.',
             address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
             upgradeability: {
               type: 'StarkWare',
@@ -174,8 +173,7 @@ export const starknet: Project = {
           },
           {
             name: 'USDC Bridge',
-            description:
-              'Starkgate bridge for USDC.',
+            description: 'Starkgate bridge for USDC.',
             address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
             upgradeability: {
               type: 'StarkWare',
@@ -186,8 +184,7 @@ export const starknet: Project = {
           },
           {
             name: 'USDT Bridge',
-            description:
-              'Starkgate bridge for USDT.',
+            description: 'Starkgate bridge for USDT.',
             address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
             upgradeability: {
               type: 'StarkWare',
