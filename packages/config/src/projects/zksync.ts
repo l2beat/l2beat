@@ -34,7 +34,7 @@ export const zksync: Project = {
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
-        'https://matterlabs.medium.com/',
+        'https://blog.matter-labs.io/',
         'https://discord.gg/px2aR7w',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
