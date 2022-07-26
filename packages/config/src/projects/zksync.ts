@@ -34,7 +34,7 @@ export const zksync: Project = {
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
-        'https://medium.com/matter-labs',
+        'https://blog.matter-labs.io/',
         'https://discord.gg/px2aR7w',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
@@ -317,19 +317,24 @@ export const zksync: Project = {
     },
     news: [
       {
+        date: '2022-07-20',
+        name: '100 days to Mainnet',
+        link: 'https://matterlabs.medium.com/100-days-to-mainnet-6f230893bd73',
+      },
+      {
+        date: '2022-06-22',
+        name: 'Introducing Account Abstraction, L2 → L1 Messaging, and more.',
+        link: 'https://matterlabs.medium.com/introducing-account-abstraction-l2-l1-messaging-and-more-760282cb31a7',
+      },
+      {
+        date: '2022-02-22',
+        name: 'zkEVM testnet is live',
+        link: 'https://blog.matter-labs.io/zksync-2-0-public-testnet-is-live-de870ba9632a',
+      },
+      {
         date: '2022-01-14',
-        name: 'On Managing Secure Upgradability',
+        name: 'On Managing Secure Upgradeability',
         link: 'https://blog.matter-labs.io/upgradability3-934db4433b0c',
-      },
-      {
-        date: '2021-05-24',
-        name: 'zkSync 1.x: Swaps, NFTs, event system, and permissionless token listing',
-        link: 'https://medium.com/matter-labs/zksync-1-x-swaps-nfts-event-system-and-permissionless-token-listing-e126fcc04d61',
-      },
-      {
-        date: '2021-05-21',
-        name: 'Keeping Funds Safe: a 3-Factor Approach to Security in zkSync 2.0',
-        link: 'https://medium.com/matter-labs/keeping-funds-safe-a-3-factor-approach-to-security-in-zksync-2-0-a70b0f53f360',
       },
     ],
   },

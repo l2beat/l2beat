@@ -37,15 +37,12 @@ export const hermez: Project = {
         'https://hermez.io/hermez-whitepaper.pdf',
       ],
       explorers: ['https://explorer.hermez.io/'],
-      repositories: [
-        'https://github.com/hermeznetwork/contracts',
-        'https://github.com/hermeznetwork/hermez-node',
-      ],
+      repositories: ['https://github.com/0xpolygonhermez'],
       socialMedia: [
         'https://blog.hermez.io/',
         'https://t.me/hermez_network',
         'https://discord.gg/AczuUXDA2N',
-        'https://twitter.com/hermez_network',
+        'https://twitter.com/0xPolygonHermez',
       ],
     },
     riskView: {
@@ -215,19 +212,19 @@ export const hermez: Project = {
     },
     news: [
       {
+        date: '2022-07-20',
+        name: 'Introducing Polygon zkEVM',
+        link: 'https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/',
+      },
+      {
+        date: '2022-03-13',
+        name: 'Polygon Hermez 2.0',
+        link: 'https://blog.polygon.technology/zkverse-deep-dive-into-polygon-hermez-2-0/',
+      },
+      {
         date: '2021-08-13',
         name: 'Polygon and Hermez Merge',
         link: 'https://blog.hermez.io/polygon-hermez-merge/',
-      },
-      {
-        date: '2021-08-10',
-        name: 'Introducing Hermez zkEVM',
-        link: 'https://blog.hermez.io/introducing-hermez-zkevm/',
-      },
-      {
-        date: '2021-08-03',
-        name: 'Hermez Atomic Transactions Are Here!',
-        link: 'https://blog.hermez.io/hermez-atomic-transactions/',
       },
     ],
   },

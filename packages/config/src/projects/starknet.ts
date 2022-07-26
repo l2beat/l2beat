@@ -274,21 +274,6 @@ export const starknet: Project = {
         name: 'StarkGate Alpha is live on Mainnet',
         link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
       },
-      {
-        date: '2022-01-18',
-        name: 'StarkNet Alpha 0.7.0',
-        link: 'https://medium.com/starkware/starknet-alpha-0-7-0-26e04db03509',
-      },
-      {
-        date: '2021-11-29',
-        name: 'StarkNet alpha is on Mainnet',
-        link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
-      },
-      {
-        date: '2021-01-26',
-        name: 'StarkNet RoadMap',
-        link: 'https://medium.com/starkware/on-the-road-to-starknet-a-permissionless-stark-powered-l2-zk-rollup-83be53640880',
-      },
     ],
   },
 }

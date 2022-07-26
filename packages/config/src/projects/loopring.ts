@@ -295,19 +295,14 @@ export const loopring: Project = {
     },
     news: [
       {
-        date: '2020-08-24',
-        name: 'Loopring Now Supports NFTs on L2',
-        link: 'https://medium.com/loopring-protocol/loopring-now-supports-nfts-on-l2-29174a343d0d',
+        date: '2022-06-20',
+        name: 'Force Withdrawal UI is now available',
+        link: 'https://twitter.com/loopringorg/status/1549831131868045342',
       },
       {
-        date: '2020-08-24',
-        name: 'dAMM (distributed AMM)',
-        link: 'https://medium.com/loopring-protocol/damm-distributed-amm-98dcfa2b26dd',
-      },
-      {
-        date: '2020-08-18',
-        name: 'Loopring L2 Liquidity Mining: Round 13',
-        link: 'https://medium.com/loopring-protocol/loopring-l2-liquidity-mining-round-13-9957aac9a21b',
+        date: '2022-03-23',
+        name: 'GameStop NFT Marketplace, powered by Loopring L2',
+        link: 'https://medium.loopring.io/gamestop-nft-marketplace-powered-by-loopring-l2-6cdb9289d937',
       },
     ],
   },
