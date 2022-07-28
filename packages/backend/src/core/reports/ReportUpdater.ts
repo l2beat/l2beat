@@ -53,12 +53,8 @@ export class ReportUpdater {
     ])
     this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
-    let aggregatedReports = aggregateReports(
-      reports,
-      this.projects,
-      timestamp,
-    )
-    aggregatedReports = await addOptimismToken(aggregatedReports, prices)
+    let aggregatedReports = aggregateReports(reports, this.projects, timestamp)
+    aggregatedReports = addOptimismToken(aggregatedReports, prices)
     await this.reportRepository.addOrUpdateMany(reports)
     await this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports)
     await this.reportStatusRepository.add({
