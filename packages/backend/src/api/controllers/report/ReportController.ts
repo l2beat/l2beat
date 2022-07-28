@@ -17,16 +17,13 @@ import {
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
-import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
-import {
-  aggregateReportsDaily,
-  aggregateReportsDailyV2,
-} from './aggregateReportsDaily'
+import { addOptimismToken } from './addOptimismToken'
+import { aggregateReportsDaily } from './aggregateReportsDaily'
 import { asNumber } from './asNumber'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
 import { generateMain } from './generateMain'
-import { generateApiMain, generateReportOutput } from './generateReportOutput'
+import { generateReportOutput } from './generateReportOutput'
 
 export class ReportController {
   private taskQueue: TaskQueue<void>
@@ -82,7 +79,6 @@ export class ReportController {
     this.logger.info('Daily report started')
     const reports = await this.getReports()
     await this.cacheRepository.saveData(await this.generateDaily(reports))
-    await this.cacheRepository.saveMain(await this.generateMain(reports))
     this.logger.info('Daily report saved')
   }
 
@@ -97,12 +93,6 @@ export class ReportController {
     const dailyEntries = aggregateReportsDaily(reports, this.projects)
     await addOptimismToken(dailyEntries, this.priceRepository)
     return generateReportOutput(dailyEntries, this.projects)
-  }
-
-  async generateMain(reports: ReportRecord[]): Promise<ApiMain> {
-    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
-    await addOptimismTokenV2(dailyEntries, this.priceRepository)
-    return generateApiMain(dailyEntries, this.projects)
   }
 
   async getProjectAssetChart(
