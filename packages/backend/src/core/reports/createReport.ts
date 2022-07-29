@@ -51,6 +51,16 @@ export function convertBalance(
   return { balanceUsd, balanceEth }
 }
 
+export function toBalanceUsd(
+  priceUsd: number,
+  decimals: number,
+  balance: bigint,
+) {
+  const bigintPrice = getBigIntPrice(priceUsd, decimals)
+  const usdBalance = (balance * bigintPrice) / 10n ** 18n
+  return usdBalance / 10n ** (18n - USD_PRECISION)
+}
+
 export function getBigIntPrice(price: number, decimals: number) {
   const integerPart = BigInt(Math.floor(price)) * 10n ** 8n
   const fractionPart = BigInt(Math.floor((price % 1) * 100000000))

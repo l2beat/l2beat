@@ -2,14 +2,18 @@ import {
   ApiMain,
   AssetId,
   Chart,
+  ChartPoint,
   Logger,
   ProjectId,
   TaskQueue,
-  UnixTime,
 } from '@l2beat/common'
-import { OP_TOKEN_BALANCE } from '../../../core/reports/addOptimismToken'
-import { convertBalance } from '../../../core/reports/createReport'
 
+import { addMissingDailyTimestamps } from '../../../core/reports/charts'
+import {
+  createOpTokenReport,
+  getOpTokenDailyChartData,
+  OP_TOKEN_ID,
+} from '../../../core/reports/optimism'
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
@@ -59,23 +63,23 @@ export class ReportController {
   }
 
   async getMain(): Promise<ApiMain | undefined> {
-    const latestTimestamp =
-      await this.reportStatusRepository.findLatestTimestamp()
-    if (!latestTimestamp) {
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    if (!timestamp) {
       return undefined
     }
-    const [aggregateReports, tokenBreakdown] = await Promise.all([
-      this.aggregateReportRepository.getDaily(),
-      this.reportRepository.getByTimestamp(latestTimestamp),
-    ])
+    const [aggregateReports, latestReports, ethPrice, opPrice] =
+      await Promise.all([
+        this.aggregateReportRepository.getDaily(),
+        this.reportRepository.getByTimestamp(timestamp),
+        this.priceRepository.findByTimestampAndToken(timestamp, AssetId.ETH),
+        this.priceRepository.findByTimestampAndToken(timestamp, OP_TOKEN_ID),
+      ])
 
-    await this.addOptimismToken(tokenBreakdown, latestTimestamp)
+    if (opPrice && ethPrice) {
+      latestReports.push(createOpTokenReport(opPrice, ethPrice, timestamp))
+    }
 
-    const apiMain = generateMain(
-      aggregateReports,
-      tokenBreakdown,
-      this.projects,
-    )
+    const apiMain = generateMain(aggregateReports, latestReports, this.projects)
 
     return apiMain
   }
@@ -100,6 +104,27 @@ export class ReportController {
     return generateReportOutput(dailyEntries, this.projects)
   }
 
+  private async getOpTokenChartData() {
+    const prices = await this.priceRepository.getByToken(OP_TOKEN_ID)
+    return getOpTokenDailyChartData(prices)
+  }
+
+  private async getChartData(asset: Token, projectId: ProjectId) {
+    const data =
+      asset.id === OP_TOKEN_ID
+        ? await this.getOpTokenChartData()
+        : await this.reportRepository.getDailyByProjectAndAsset(
+            projectId,
+            asset.id,
+          )
+    const points: ChartPoint[] = data.map((d) => [
+      d.timestamp,
+      +asNumber(d.balance, asset.decimals).toFixed(6),
+      asNumber(d.balanceUsd, 2),
+    ])
+    return addMissingDailyTimestamps(points)
+  }
+
   async getProjectAssetChart(
     projectId: ProjectId,
     assetId: AssetId,
@@ -109,29 +134,10 @@ export class ReportController {
     if (!project || !asset) {
       return undefined
     }
-    const reports = await this.reportRepository.getDailyByProjectAndAsset(
-      projectId,
-      assetId,
-    )
+    const data = await this.getChartData(asset, projectId)
     return {
       types: ['timestamp', asset.symbol.toLowerCase(), 'usd'],
-      data: reports.map((r) => [
-        r.timestamp,
-        +asNumber(r.balance, asset.decimals).toFixed(6),
-        asNumber(r.balanceUsd, 2),
-      ]),
+      data,
     }
-  }
-
-  private async addOptimismToken (tokenBreakdown: ReportRecord[], timestamp: UnixTime) {
-    const opPrice = async this.priceRepository.getByToken()
-    const {} = convertBalance()
-    tokenBreakdown.push({
-      timestamp,
-      projectId: ProjectId('optimism'),
-      asset: AssetId('op-optimism'),
-      balance: OP_TOKEN_BALANCE,
-      tvlUsd: 
-    })
   }
 }

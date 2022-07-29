@@ -1,15 +1,15 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import {
-  addOptimismToken,
-  OP_TOKEN_BALANCE,
-} from '../../../src/core/reports/addOptimismToken'
 import { convertBalance } from '../../../src/core/reports/createReport'
+import {
+  addOpTokenToAggregatedReports,
+  OP_TOKEN_BALANCE,
+} from '../../../src/core/reports/optimism'
 import { AggregateReportRecord } from '../../../src/peripherals/database/AggregateReportRepository'
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
 
-describe(addOptimismToken.name, () => {
+describe(addOpTokenToAggregatedReports.name, () => {
   const NOW = UnixTime.now()
   const OP_PRICE = 100
   const ETH_PRICE = 2000
@@ -47,7 +47,7 @@ describe(addOptimismToken.name, () => {
   )
 
   it('adds op-optimism to an empty reports array', () => {
-    const result = addOptimismToken([], PRICES, NOW)
+    const result = addOpTokenToAggregatedReports([], PRICES, NOW)
     expect(result).toEqual([
       {
         timestamp: NOW,
@@ -65,7 +65,7 @@ describe(addOptimismToken.name, () => {
   })
 
   it('adds op-optimism to aggregated reports array', () => {
-    const result = addOptimismToken(REPORTS, PRICES, NOW)
+    const result = addOpTokenToAggregatedReports(REPORTS, PRICES, NOW)
 
     expect(result).toEqual([
       {
@@ -84,7 +84,7 @@ describe(addOptimismToken.name, () => {
   })
 
   it('does nothing if no prices provided', () => {
-    const result = addOptimismToken(REPORTS, PRICES, NOW)
+    const result = addOpTokenToAggregatedReports(REPORTS, PRICES, NOW)
     expect(result).toEqual(REPORTS)
   })
 })
