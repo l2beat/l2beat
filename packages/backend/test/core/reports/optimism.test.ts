@@ -3,21 +3,37 @@ import { expect } from 'earljs'
 
 import { convertBalance } from '../../../src/core/reports/createReport'
 import {
-  amendAggregateReport,
+  addOpTokenToReports,
   OP_TOKEN_BALANCE,
 } from '../../../src/core/reports/optimism'
 import { AggregateReportRecord } from '../../../src/peripherals/database/AggregateReportRepository'
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
+import { ReportRecord } from '../../../src/peripherals/database/ReportRepository'
 
-describe.skip(amendAggregateReport.name, () => {
+describe(addOpTokenToReports.name, () => {
   const NOW = UnixTime.now()
+  const EARLIER = NOW.add(-1, 'hours')
   const OP_PRICE = 100
+  const OP_PRICE_EARLIER = 69
   const ETH_PRICE = 2000
-  const PRICES: PriceRecord[] = [
+  const ETH_PRICE_EARLIER = 1500
+  const opPrices: PriceRecord[] = [
+    {
+      timestamp: EARLIER,
+      assetId: AssetId('op-optimism'),
+      priceUsd: OP_PRICE_EARLIER,
+    },
     {
       timestamp: NOW,
       assetId: AssetId('op-optimism'),
       priceUsd: OP_PRICE,
+    },
+  ]
+  const ethPrices: PriceRecord[] = [
+    {
+      timestamp: EARLIER,
+      assetId: AssetId.ETH,
+      priceUsd: ETH_PRICE_EARLIER,
     },
     {
       timestamp: NOW,
@@ -25,20 +41,7 @@ describe.skip(amendAggregateReport.name, () => {
       priceUsd: ETH_PRICE,
     },
   ]
-  const REPORTS: AggregateReportRecord[] = [
-    {
-      timestamp: NOW,
-      projectId: ProjectId('optimism'),
-      tvlUsd: 420_00n,
-      tvlEth: 69_000000n,
-    },
-    {
-      timestamp: NOW,
-      projectId: ProjectId.ALL,
-      tvlUsd: 2137_00n,
-      tvlEth: 996_000000n,
-    },
-  ]
+
   const { balanceUsd: opTvlUsd, balanceEth: opTvlEth } = convertBalance(
     OP_PRICE,
     18,
@@ -46,9 +49,26 @@ describe.skip(amendAggregateReport.name, () => {
     ETH_PRICE,
   )
 
+  const { balanceUsd: opTvlUsdEarlier, balanceEth: opTvlEthEarlier } =
+    convertBalance(OP_PRICE_EARLIER, 18, OP_TOKEN_BALANCE, ETH_PRICE_EARLIER)
+
   it('adds op-optimism to an empty reports array', () => {
-    const result = amendAggregateReport([], PRICES, NOW)
-    expect(result).toEqual([
+    const aggregateReports: AggregateReportRecord[] = []
+    const reports: ReportRecord[] = []
+    addOpTokenToReports(aggregateReports, reports, opPrices, ethPrices, NOW)
+    expect(aggregateReports).toEqual([
+      {
+        timestamp: EARLIER,
+        projectId: ProjectId('optimism'),
+        tvlUsd: opTvlUsdEarlier,
+        tvlEth: opTvlEthEarlier,
+      },
+      {
+        timestamp: EARLIER,
+        projectId: ProjectId.ALL,
+        tvlUsd: opTvlUsdEarlier,
+        tvlEth: opTvlEthEarlier,
+      },
       {
         timestamp: NOW,
         projectId: ProjectId('optimism'),
@@ -62,12 +82,35 @@ describe.skip(amendAggregateReport.name, () => {
         tvlEth: opTvlEth,
       },
     ])
+    expect(reports).toEqual([
+      {
+        timestamp: NOW,
+        projectId: ProjectId('optimism'),
+        asset: AssetId('op-optimism'),
+        balanceUsd: opTvlUsd,
+        balanceEth: opTvlEth,
+        balance: OP_TOKEN_BALANCE,
+      },
+    ])
   })
 
   it('adds op-optimism to aggregated reports array', () => {
-    const result = amendAggregateReport(REPORTS, PRICES, NOW)
-
-    expect(result).toEqual([
+    const aggregateReports: AggregateReportRecord[] = [
+      {
+        timestamp: NOW,
+        projectId: ProjectId('optimism'),
+        tvlUsd: 420_00n,
+        tvlEth: 69_000000n,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId.ALL,
+        tvlUsd: 2137_00n,
+        tvlEth: 996_000000n,
+      },
+    ]
+    addOpTokenToReports(aggregateReports, [], opPrices, ethPrices, NOW)
+    expect(aggregateReports).toEqual([
       {
         timestamp: NOW,
         projectId: ProjectId('optimism'),
@@ -80,11 +123,20 @@ describe.skip(amendAggregateReport.name, () => {
         tvlUsd: 2137_00n + opTvlUsd,
         tvlEth: 996_000000n + opTvlEth,
       },
+      {
+        timestamp: EARLIER,
+        projectId: ProjectId('optimism'),
+        tvlUsd: opTvlUsdEarlier,
+        tvlEth: opTvlEthEarlier,
+      },
+      {
+        timestamp: EARLIER,
+        projectId: ProjectId.ALL,
+        tvlUsd: opTvlUsdEarlier,
+        tvlEth: opTvlEthEarlier,
+      },
     ])
   })
-
-  it('does nothing if no prices provided', () => {
-    const result = amendAggregateReport(REPORTS, PRICES, NOW)
-    expect(result).toEqual(REPORTS)
-  })
 })
+
+// TODO: write tests for amendAggregateReport

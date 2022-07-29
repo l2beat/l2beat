@@ -78,8 +78,8 @@ export class ReportController {
     addOpTokenToReports(
       aggregateReports,
       latestReports,
-      ethPrices,
       opPrices,
+      ethPrices,
       timestamp,
     )
 

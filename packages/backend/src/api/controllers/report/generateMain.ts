@@ -8,7 +8,7 @@ import { asNumber } from './asNumber'
 
 export function generateMain(
   aggregateReports: AggregateReportRecord[],
-  tokenBreakdown: ReportRecord[],
+  latestRecords: ReportRecord[],
   projects: ProjectInfo[],
 ): ApiMain {
   const apiMain: ApiMain = {
@@ -29,7 +29,7 @@ export function generateMain(
           data: getProjectDailyChartData(aggregateReports, projectId),
         },
       },
-      tokens: tokenBreakdown
+      tokens: latestRecords
         .filter((r) => r.projectId === projectId)
         .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
     }
