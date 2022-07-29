@@ -8,7 +8,7 @@ import { BalanceUpdater } from '../BalanceUpdater'
 import { Clock } from '../Clock'
 import { getConfigHash } from '../getConfigHash'
 import { PriceUpdater } from '../PriceUpdater'
-import { addOptimismToken } from './addOptimismTokenReport'
+import { addOptimismToken } from './addOptimismToken'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 
@@ -54,13 +54,15 @@ export class ReportUpdater {
     this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
     let aggregatedReports = aggregateReports(reports, this.projects, timestamp)
-    aggregatedReports = addOptimismToken(aggregatedReports, prices)
-    await this.reportRepository.addOrUpdateMany(reports)
-    await this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports)
-    await this.reportStatusRepository.add({
-      configHash: this.configHash,
-      timestamp,
-    })
+    aggregatedReports = addOptimismToken(aggregatedReports, prices, timestamp)
+    await Promise.all([
+      this.reportRepository.addOrUpdateMany(reports),
+      this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports),
+      this.reportStatusRepository.add({
+        configHash: this.configHash,
+        timestamp,
+      }),
+    ])
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
 }

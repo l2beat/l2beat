@@ -5,7 +5,10 @@ import {
   Logger,
   ProjectId,
   TaskQueue,
+  UnixTime,
 } from '@l2beat/common'
+import { OP_TOKEN_BALANCE } from '../../../core/reports/addOptimismToken'
+import { convertBalance } from '../../../core/reports/createReport'
 
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
@@ -66,6 +69,8 @@ export class ReportController {
       this.reportRepository.getByTimestamp(latestTimestamp),
     ])
 
+    await this.addOptimismToken(tokenBreakdown, latestTimestamp)
+
     const apiMain = generateMain(
       aggregateReports,
       tokenBreakdown,
@@ -116,5 +121,17 @@ export class ReportController {
         asNumber(r.balanceUsd, 2),
       ]),
     }
+  }
+
+  private async addOptimismToken (tokenBreakdown: ReportRecord[], timestamp: UnixTime) {
+    const opPrice = async this.priceRepository.getByToken()
+    const {} = convertBalance()
+    tokenBreakdown.push({
+      timestamp,
+      projectId: ProjectId('optimism'),
+      asset: AssetId('op-optimism'),
+      balance: OP_TOKEN_BALANCE,
+      tvlUsd: 
+    })
   }
 }

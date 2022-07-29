@@ -31,6 +31,7 @@ describe(aggregateReports.name, () => {
       balanceEth: 20_000000n,
     },
   ]
+
   it('correctly aggregates many reports', () => {
     const result = aggregateReports(REPORTS, PROJECTS, NOW)
     expect(result).toEqual([
@@ -54,6 +55,7 @@ describe(aggregateReports.name, () => {
       },
     ])
   })
+
   it('works with empty reports', () => {
     const result = aggregateReports([], PROJECTS, NOW)
     expect(result).toEqual([
