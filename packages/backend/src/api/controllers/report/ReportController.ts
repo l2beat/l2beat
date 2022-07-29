@@ -10,7 +10,7 @@ import {
 
 import { addMissingDailyTimestamps } from '../../../core/reports/charts'
 import {
-  createOpTokenReport,
+  addOpTokenToReports,
   getOpTokenDailyChartData,
   OP_TOKEN_ID,
 } from '../../../core/reports/optimism'
@@ -67,17 +67,21 @@ export class ReportController {
     if (!timestamp) {
       return undefined
     }
-    const [aggregateReports, latestReports, ethPrice, opPrice] =
+    const [aggregateReports, latestReports, ethPrices, opPrices] =
       await Promise.all([
         this.aggregateReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(timestamp),
-        this.priceRepository.findByTimestampAndToken(timestamp, AssetId.ETH),
-        this.priceRepository.findByTimestampAndToken(timestamp, OP_TOKEN_ID),
+        this.priceRepository.getByToken(AssetId.ETH),
+        this.priceRepository.getByToken(OP_TOKEN_ID),
       ])
 
-    if (opPrice && ethPrice) {
-      latestReports.push(createOpTokenReport(opPrice, ethPrice, timestamp))
-    }
+    addOpTokenToReports(
+      aggregateReports,
+      latestReports,
+      ethPrices,
+      opPrices,
+      timestamp,
+    )
 
     const apiMain = generateMain(aggregateReports, latestReports, this.projects)
 

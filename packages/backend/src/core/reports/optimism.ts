@@ -5,36 +5,74 @@ import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { convertBalance, toBalanceUsd } from './createReport'
 
+const OP_TOKEN_DECIMALS = 18
+const OPTIMISM_PROJECT_ID = ProjectId('optimism')
+const OP_TOKEN_SINCE_TIMESTAMP = UnixTime.fromDate(new Date('2022-05-30'))
+export const OP_TOKEN_ID = AssetId('op-optimism')
 // This is the circulating supply of OP as given by Coingecko.
 // The value is obtained by looking at how many tokens have been designated
 // to be distributed in the Optimism's airdrop.
 // Our policy is to keep this value in sync with Coingecko.
 // https://www.coingecko.com/en/coins/optimism
 // https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000042?a=0x2a82ae142b2e62cb7d10b55e323acb1cab663a26
-const OP_TOKEN_DECIMALS = 18
-const OPTIMISM_PROJECT_ID = ProjectId('optimism')
 export const OP_TOKEN_BALANCE = 214_748_364n * 10n ** BigInt(OP_TOKEN_DECIMALS)
-export const OP_TOKEN_ID = AssetId('op-optimism')
-export const OP_TOKEN_SINCE_TIMESTAMP = UnixTime.fromDate(
-  new Date('2022-05-30'),
-)
 
-export function addOpTokenToAggregatedReports(
-  aggregatedReports: AggregateReportRecord[],
-  prices: PriceRecord[],
-  timestamp: UnixTime,
-): AggregateReportRecord[] {
-  const opPrice = prices.find((p) => p.assetId === OP_TOKEN_ID)
-  const ethPrice = prices.find((p) => p.assetId === AssetId.ETH)
-
-  if (!opPrice || !ethPrice) {
-    return aggregatedReports
-  }
-
-  let optimismReport = aggregatedReports.find(
-    (r) => r.projectId === OPTIMISM_PROJECT_ID,
+export function addOpTokenToReports(
+  aggregateReports: AggregateReportRecord[],
+  reports: ReportRecord[],
+  opPrices: PriceRecord[],
+  ethPrices: PriceRecord[],
+  maxTimestamp: UnixTime,
+): void {
+  const prices = getUsablePrices(opPrices, ethPrices, maxTimestamp)
+  prices.forEach(({ opPrice, ethPrice }) =>
+    amendAggregateReport(opPrice, ethPrice, aggregateReports),
   )
-  let reportAll = aggregatedReports.at(-1)
+  const latestPrices = prices[prices.length - 1]
+  reports.push(
+    createOpTokenReport(
+      latestPrices.opPrice,
+      latestPrices.ethPrice,
+      latestPrices.opPrice.timestamp,
+    ),
+  )
+}
+
+function getUsablePrices(
+  opPrices: PriceRecord[],
+  ethPrices: PriceRecord[],
+  maxTimestamp: UnixTime,
+) {
+  return opPrices.reduce<{ opPrice: PriceRecord; ethPrice: PriceRecord }[]>(
+    (acc, opPrice) => {
+      const ethPrice = ethPrices.find((p) => p.timestamp === opPrice.timestamp)
+      if (
+        ethPrice?.timestamp.gte(OP_TOKEN_SINCE_TIMESTAMP) &&
+        ethPrice.timestamp.lte(maxTimestamp)
+      ) {
+        acc.push({
+          ethPrice,
+          opPrice,
+        })
+      }
+      return acc
+    },
+    [],
+  )
+}
+
+export function amendAggregateReport(
+  opPrice: PriceRecord,
+  ethPrice: PriceRecord,
+  aggregateReports: AggregateReportRecord[],
+) {
+  const timestamp = opPrice.timestamp
+  let optimismReport = aggregateReports.find(
+    (r) => r.projectId === OPTIMISM_PROJECT_ID && r.timestamp.equals(timestamp),
+  )
+  let reportAll = aggregateReports.find(
+    (r) => r.projectId === ProjectId.ALL && r.timestamp.equals(timestamp),
+  )
 
   if (!optimismReport) {
     optimismReport = {
@@ -43,7 +81,7 @@ export function addOpTokenToAggregatedReports(
       tvlUsd: 0n,
       tvlEth: 0n,
     }
-    aggregatedReports.push(optimismReport)
+    aggregateReports.push(optimismReport)
   }
 
   if (!reportAll) {
@@ -53,23 +91,19 @@ export function addOpTokenToAggregatedReports(
       tvlUsd: 0n,
       tvlEth: 0n,
     }
-    aggregatedReports.push(reportAll)
+    aggregateReports.push(reportAll)
   }
 
-  const { balanceUsd, balanceEth } = convertBalance(
-    opPrice.priceUsd,
-    18,
-    OP_TOKEN_BALANCE,
-    ethPrice.priceUsd,
+  const { balanceEth, balanceUsd } = createOpTokenReport(
+    opPrice,
+    ethPrice,
+    opPrice.timestamp,
   )
 
   optimismReport.tvlEth += balanceEth
   optimismReport.tvlUsd += balanceUsd
-
   reportAll.tvlEth += balanceEth
   reportAll.tvlUsd += balanceUsd
-
-  return aggregatedReports
 }
 
 export function createOpTokenReport(
