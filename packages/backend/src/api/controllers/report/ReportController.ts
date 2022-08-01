@@ -123,7 +123,7 @@ export class ReportController {
             asset.id,
           )
     const points: ChartPoint[] = data.map((d) => [
-      d.timestamp,
+      d.timestamp.add(-1, 'days').toStartOf('day'),
       +asNumber(d.balance, asset.decimals).toFixed(6),
       asNumber(d.balanceUsd, 2),
     ])
