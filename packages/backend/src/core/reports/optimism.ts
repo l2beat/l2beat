@@ -45,7 +45,9 @@ export function getUsablePrices(
 ) {
   return opPrices.reduce<{ opPrice: PriceRecord; ethPrice: PriceRecord }[]>(
     (acc, opPrice) => {
-      const ethPrice = ethPrices.find((p) => p.timestamp.equals(opPrice.timestamp))
+      const ethPrice = ethPrices.find((p) =>
+        p.timestamp.equals(opPrice.timestamp),
+      )
       if (
         ethPrice?.timestamp.gte(OP_TOKEN_SINCE_TIMESTAMP) &&
         ethPrice.timestamp.lte(maxTimestamp)

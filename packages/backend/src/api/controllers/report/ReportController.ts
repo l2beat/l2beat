@@ -67,10 +67,11 @@ export class ReportController {
     if (!timestamp) {
       return undefined
     }
+    const dailyTimestamp = timestamp.toStartOf('day')
     const [aggregateReports, latestReports, ethPrices, opPrices] =
       await Promise.all([
         this.aggregateReportRepository.getDaily(),
-        this.reportRepository.getByTimestamp(timestamp),
+        this.reportRepository.getByTimestamp(dailyTimestamp),
         this.priceRepository.getByToken(AssetId.ETH),
         this.priceRepository.getByToken(OP_TOKEN_ID),
       ])
@@ -80,7 +81,7 @@ export class ReportController {
       latestReports,
       opPrices,
       ethPrices,
-      timestamp,
+      dailyTimestamp,
     )
 
     const apiMain = generateMain(aggregateReports, latestReports, this.projects)

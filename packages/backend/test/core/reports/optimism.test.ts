@@ -166,9 +166,7 @@ describe(getUsablePrices.name, () => {
   })
 
   it('skips eth prices with no matching timestamps', () => {
-    const opPrices = [
-      opPriceEarlier
-    ]
+    const opPrices = [opPriceEarlier]
     const prices = getUsablePrices(opPrices, ethPrices, NOW)
 
     expect(prices).toEqual([
@@ -180,9 +178,7 @@ describe(getUsablePrices.name, () => {
   })
 
   it('skips op prices with no matching timestamps', () => {
-    const ethPrices = [
-      ethPriceNow
-    ]
+    const ethPrices = [ethPriceNow]
     const prices = getUsablePrices(opPrices, ethPrices, NOW)
 
     expect(prices).toEqual([
