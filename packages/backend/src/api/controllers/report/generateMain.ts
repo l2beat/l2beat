@@ -44,6 +44,11 @@ function getProjectDailyChartData(
 ): ChartPoint[] {
   const existing: ChartPoint[] = reports
     .filter((r) => r.projectId === projectId)
-    .map((r) => [r.timestamp, asNumber(r.tvlUsd, 2), asNumber(r.tvlEth, 6)])
+    .map((r) => [
+      // we subtract a day so that the date represents the end of that day
+      r.timestamp.add(-1, 'days').toStartOf('day'),
+      asNumber(r.tvlUsd, 2),
+      asNumber(r.tvlEth, 6),
+    ])
   return addMissingDailyTimestamps(existing)
 }
