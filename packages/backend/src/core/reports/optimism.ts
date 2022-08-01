@@ -50,7 +50,8 @@ export function getUsablePrices(
       )
       if (
         ethPrice?.timestamp.gte(OP_TOKEN_SINCE_TIMESTAMP) &&
-        ethPrice.timestamp.lte(maxTimestamp)
+        ethPrice.timestamp.lte(maxTimestamp) && 
+        ethPrice.timestamp.isFull('day')
       ) {
         acc.push({
           ethPrice,
