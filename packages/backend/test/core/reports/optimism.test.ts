@@ -49,57 +49,15 @@ describe(addOpTokenToReports.name, () => {
     ETH_PRICE,
   )
 
-  const { balanceUsd: opTvlUsdYesterday, balanceEth: opTvlEthYesterday } =
-    convertBalance(
-      OP_PRICE_YESTERDAY,
-      18,
-      OP_TOKEN_BALANCE,
-      ETH_PRICE_YESTERDAY,
-    )
-
-  it('adds op-optimism to an empty reports array', () => {
+  it('does not add op-optimism if optimism is not there', () => {
     const aggregateReports: AggregateReportRecord[] = []
     const reports: ReportRecord[] = []
     addOpTokenToReports(aggregateReports, reports, opPrices, ethPrices, TODAY)
-    expect(aggregateReports).toEqual([
-      {
-        timestamp: YESTERDAY,
-        projectId: ProjectId('optimism'),
-        tvlUsd: opTvlUsdYesterday,
-        tvlEth: opTvlEthYesterday,
-      },
-      {
-        timestamp: YESTERDAY,
-        projectId: ProjectId.ALL,
-        tvlUsd: opTvlUsdYesterday,
-        tvlEth: opTvlEthYesterday,
-      },
-      {
-        timestamp: TODAY,
-        projectId: ProjectId('optimism'),
-        tvlUsd: opTvlUsd,
-        tvlEth: opTvlEth,
-      },
-      {
-        timestamp: TODAY,
-        projectId: ProjectId.ALL,
-        tvlUsd: opTvlUsd,
-        tvlEth: opTvlEth,
-      },
-    ])
-    expect(reports).toEqual([
-      {
-        timestamp: TODAY,
-        projectId: ProjectId('optimism'),
-        asset: AssetId('op-optimism'),
-        balanceUsd: opTvlUsd,
-        balanceEth: opTvlEth,
-        balance: OP_TOKEN_BALANCE,
-      },
-    ])
+    expect(aggregateReports).toEqual(aggregateReports)
+    expect(reports).toEqual(reports)
   })
 
-  it('adds op-optimism to aggregated reports array', () => {
+  it('adds op-optimism to aggregated reports', () => {
     const aggregateReports: AggregateReportRecord[] = [
       {
         timestamp: TODAY,
@@ -128,18 +86,6 @@ describe(addOpTokenToReports.name, () => {
         tvlUsd: 2137_00n + opTvlUsd,
         tvlEth: 996_000000n + opTvlEth,
       },
-      {
-        timestamp: YESTERDAY,
-        projectId: ProjectId('optimism'),
-        tvlUsd: opTvlUsdYesterday,
-        tvlEth: opTvlEthYesterday,
-      },
-      {
-        timestamp: YESTERDAY,
-        projectId: ProjectId.ALL,
-        tvlUsd: opTvlUsdYesterday,
-        tvlEth: opTvlEthYesterday,
-      },
     ])
   })
 })
@@ -159,6 +105,7 @@ describe(getUsablePrices.name, () => {
       },
     ])
   })
+
   it('skips prices after maxTimestamp', () => {
     const prices = getUsablePrices(opPrices, ethPrices, YESTERDAY)
 
@@ -245,25 +192,13 @@ describe(amendAggregateReport.name, () => {
     ETH_PRICE,
   )
 
-  it('amends the empty array', () => {
+  it('does not amend empty aggregated reports', () => {
     const aggregateReports: AggregateReportRecord[] = []
     amendAggregateReport(opPrice, ethPrice, aggregateReports)
-    expect(aggregateReports).toEqual([
-      {
-        timestamp: TODAY,
-        projectId: ProjectId('optimism'),
-        tvlUsd: opTvlUsd,
-        tvlEth: opTvlEth,
-      },
-      {
-        timestamp: TODAY,
-        projectId: ProjectId.ALL,
-        tvlUsd: opTvlUsd,
-        tvlEth: opTvlEth,
-      },
-    ])
+    expect(aggregateReports).toEqual([])
   })
-  it('amends the aggtegated reports', () => {
+
+  it('amends aggregated reports', () => {
     const aggregateReports: AggregateReportRecord[] = [
       {
         timestamp: TODAY,

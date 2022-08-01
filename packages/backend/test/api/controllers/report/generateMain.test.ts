@@ -13,9 +13,10 @@ import { ProjectInfo } from '../../../../src/model'
 import { AggregateReportRecord } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
-const now = UnixTime.now()
-const yesterday = now.add(-1, 'days')
-const tomorrow = now.add(1, 'days')
+const now = UnixTime.now().toStartOf('day')
+const twoDaysAgo = now.add(-2, 'days').toStartOf('day')
+const yesterday = now.add(-1, 'days').toStartOf('day')
+const tomorrow = now.add(1, 'days').toStartOf('day')
 
 function mockToken(assetId: AssetId, symbol: string): TokenInfo {
   return {
@@ -129,9 +130,9 @@ describe(generateMain.name, () => {
         daily: {
           types: ['timestamp', 'usd', 'eth'],
           data: [
+            [twoDaysAgo, 20, 0.002],
             [yesterday, 20, 0.002],
-            [now, 20, 0.002],
-            [tomorrow, 30, 0.003],
+            [now, 30, 0.003],
           ],
         },
       },
@@ -141,9 +142,9 @@ describe(generateMain.name, () => {
             daily: {
               types: ['timestamp', 'usd', 'eth'],
               data: [
+                [twoDaysAgo, 10, 0.001],
                 [yesterday, 10, 0.001],
-                [now, 10, 0.001],
-                [tomorrow, 20, 0.002],
+                [now, 20, 0.002],
               ],
             },
           },
@@ -154,9 +155,9 @@ describe(generateMain.name, () => {
             daily: {
               types: ['timestamp', 'usd', 'eth'],
               data: [
+                [twoDaysAgo, 10, 0.001],
                 [yesterday, 10, 0.001],
-                [now, 10, 0.001],
-                [tomorrow, 20, 0.002],
+                [now, 20, 0.002],
               ],
             },
           },

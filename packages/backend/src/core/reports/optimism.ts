@@ -70,43 +70,27 @@ export function amendAggregateReport(
   aggregateReports: AggregateReportRecord[],
 ) {
   const timestamp = opPrice.timestamp
-  let optimismReport = aggregateReports.find(
-    (r) => r.projectId === OPTIMISM_PROJECT_ID && r.timestamp.equals(timestamp),
-  )
-  let reportAll = aggregateReports.find(
-    (r) => r.projectId === ProjectId.ALL && r.timestamp.equals(timestamp),
-  )
-
-  if (!optimismReport) {
-    optimismReport = {
-      timestamp,
-      projectId: OPTIMISM_PROJECT_ID,
-      tvlUsd: 0n,
-      tvlEth: 0n,
-    }
-    aggregateReports.push(optimismReport)
-  }
-
-  if (!reportAll) {
-    reportAll = {
-      timestamp,
-      projectId: ProjectId.ALL,
-      tvlUsd: 0n,
-      tvlEth: 0n,
-    }
-    aggregateReports.push(reportAll)
-  }
-
   const { balanceEth, balanceUsd } = createOpTokenReport(
     opPrice,
     ethPrice,
     opPrice.timestamp,
   )
 
-  optimismReport.tvlEth += balanceEth
-  optimismReport.tvlUsd += balanceUsd
-  reportAll.tvlEth += balanceEth
-  reportAll.tvlUsd += balanceUsd
+  const optimismReport = aggregateReports.find(
+    (r) => r.projectId === OPTIMISM_PROJECT_ID && r.timestamp.equals(timestamp),
+  )
+  if (optimismReport) {
+    optimismReport.tvlEth += balanceEth
+    optimismReport.tvlUsd += balanceUsd
+  }
+
+  const reportAll = aggregateReports.find(
+    (r) => r.projectId === ProjectId.ALL && r.timestamp.equals(timestamp),
+  )
+  if (reportAll) {
+    reportAll.tvlEth += balanceEth
+    reportAll.tvlUsd += balanceUsd
+  }
 }
 
 export function createOpTokenReport(
