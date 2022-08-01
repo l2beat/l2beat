@@ -5,44 +5,43 @@ import { convertBalance } from '../../../src/core/reports/createReport'
 import {
   addOpTokenToReports,
   amendAggregateReport,
+  getUsablePrices,
   OP_TOKEN_BALANCE,
 } from '../../../src/core/reports/optimism'
 import { AggregateReportRecord } from '../../../src/peripherals/database/AggregateReportRepository'
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../src/peripherals/database/ReportRepository'
 
-describe(addOpTokenToReports.name, () => {
-  const NOW = UnixTime.now()
-  const EARLIER = NOW.add(-1, 'hours')
-  const OP_PRICE = 100
-  const OP_PRICE_EARLIER = 69
-  const ETH_PRICE = 2000
-  const ETH_PRICE_EARLIER = 1500
-  const opPrices: PriceRecord[] = [
-    {
-      timestamp: EARLIER,
-      assetId: AssetId('op-optimism'),
-      priceUsd: OP_PRICE_EARLIER,
-    },
-    {
-      timestamp: NOW,
-      assetId: AssetId('op-optimism'),
-      priceUsd: OP_PRICE,
-    },
-  ]
-  const ethPrices: PriceRecord[] = [
-    {
-      timestamp: EARLIER,
-      assetId: AssetId.ETH,
-      priceUsd: ETH_PRICE_EARLIER,
-    },
-    {
-      timestamp: NOW,
-      assetId: AssetId.ETH,
-      priceUsd: ETH_PRICE,
-    },
-  ]
+const NOW = UnixTime.now()
+const EARLIER = NOW.add(-1, 'hours')
+const OP_PRICE = 100
+const OP_PRICE_EARLIER = 69
+const ETH_PRICE = 2000
+const ETH_PRICE_EARLIER = 1500
+const opPriceNow = {
+  timestamp: NOW,
+  assetId: AssetId('op-optimism'),
+  priceUsd: OP_PRICE,
+}
+const opPriceEarlier = {
+  timestamp: EARLIER,
+  assetId: AssetId('op-optimism'),
+  priceUsd: OP_PRICE_EARLIER,
+}
+const opPrices: PriceRecord[] = [opPriceEarlier, opPriceNow]
+const ethPriceEarlier = {
+  timestamp: EARLIER,
+  assetId: AssetId.ETH,
+  priceUsd: ETH_PRICE_EARLIER,
+}
+const ethPriceNow = {
+  timestamp: NOW,
+  assetId: AssetId.ETH,
+  priceUsd: ETH_PRICE,
+}
+const ethPrices: PriceRecord[] = [ethPriceEarlier, ethPriceNow]
 
+describe(addOpTokenToReports.name, () => {
   const { balanceUsd: opTvlUsd, balanceEth: opTvlEth } = convertBalance(
     OP_PRICE,
     18,
@@ -140,8 +139,62 @@ describe(addOpTokenToReports.name, () => {
   })
 })
 
+describe(getUsablePrices.name, () => {
+  it('reduces to prices with matching timestamps', () => {
+    const prices = getUsablePrices(opPrices, ethPrices, NOW)
+
+    expect(prices).toEqual([
+      {
+        opPrice: opPriceEarlier,
+        ethPrice: ethPriceEarlier,
+      },
+      {
+        opPrice: opPriceNow,
+        ethPrice: ethPriceNow,
+      },
+    ])
+  })
+  it('skips prices after maxTimestamp', () => {
+    const prices = getUsablePrices(opPrices, ethPrices, EARLIER)
+
+    expect(prices).toEqual([
+      {
+        opPrice: opPriceEarlier,
+        ethPrice: ethPriceEarlier,
+      },
+    ])
+  })
+
+  it('skips eth prices with no matching timestamps', () => {
+    const opPrices = [
+      opPriceEarlier
+    ]
+    const prices = getUsablePrices(opPrices, ethPrices, NOW)
+
+    expect(prices).toEqual([
+      {
+        opPrice: opPriceEarlier,
+        ethPrice: ethPriceEarlier,
+      },
+    ])
+  })
+
+  it('skips op prices with no matching timestamps', () => {
+    const ethPrices = [
+      ethPriceNow
+    ]
+    const prices = getUsablePrices(opPrices, ethPrices, NOW)
+
+    expect(prices).toEqual([
+      {
+        opPrice: opPriceNow,
+        ethPrice: ethPriceNow,
+      },
+    ])
+  })
+})
+
 describe(amendAggregateReport.name, () => {
-  const NOW = UnixTime.now()
   const OP_PRICE = 300
   const ETH_PRICE = 1669
 
