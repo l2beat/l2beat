@@ -289,8 +289,8 @@ describe(ReportController.name, () => {
       expect(chart).toEqual({
         types: ['timestamp', 'dai', 'usd'],
         data: [
+          [new UnixTime(1653868800), 111.1111, 1000.11],
           [new UnixTime(1653955200), 111.1111, 1000.11],
-          [new UnixTime(1654041600), 111.1111, 1000.11],
         ],
       })
     })
