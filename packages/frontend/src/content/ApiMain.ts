@@ -2,11 +2,17 @@ import { ApiMain, HttpClient } from '@l2beat/common'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
-export async function getApiMain(apiUrl: string): Promise<ApiMain> {
+export async function getApiMain(
+  apiUrl: string,
+  skipCache = false,
+): Promise<ApiMain> {
   const url = apiUrl + '/api/main'
-  const cached = await readCachedData(url)
-  if (cached) {
-    return cached
+
+  if (!skipCache) {
+    const cached = await readCachedData(url)
+    if (cached) {
+      return cached
+    }
   }
 
   const http = new HttpClient()
@@ -18,7 +24,9 @@ export async function getApiMain(apiUrl: string): Promise<ApiMain> {
   }
   const json: unknown = await response.json()
   const data = ApiMain.parse(json)
-  await writeCachedData(url, data)
+  if (!skipCache) {
+    await writeCachedData(url, data)
+  }
   return data
 }
 
