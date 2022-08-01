@@ -28,10 +28,10 @@ export class AggregateReportRepository extends BaseRepository {
   async getDaily(): Promise<AggregateReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports')
-      .where('is_daily', '=', true)
+      .where('is_daily', true)
       .orderBy('unix_timestamp')
 
-    return rows.map((r) => toRecord(r))
+    return rows.map(toRecord)
   }
 
   async getAll(): Promise<AggregateReportRecord[]> {
