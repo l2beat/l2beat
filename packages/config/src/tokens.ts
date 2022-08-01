@@ -178,6 +178,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('ply-aurigami-token'),
+    name: 'Aurigami Token',
+    symbol: 'PLY',
+    address: EthereumAddress('0x1aB43204a195a0fD37EdeC621482AFd3792ef90b'),
+    coingeckoId: CoingeckoId('aurigami'),
+    decimals: 18,
+    sinceBlock: 14559298,
+    category: 'other',
+  },
+  {
     id: AssetId('aurora-aurora'),
     name: 'Aurora',
     coingeckoId: CoingeckoId('aurora-near'),
@@ -1177,6 +1187,17 @@ export const tokenList: TokenInfo[] = [
     symbol: 'OCEAN',
     decimals: 18,
     sinceTimestamp: new UnixTime(1601222047),
+    category: 'other',
+  },
+
+  {
+    id: AssetId('oct-octopus-network-token'),
+    name: 'Octopus Network Token',
+    symbol: 'OCT',
+    address: EthereumAddress('0xF5cFBC74057C610c8EF151A439252680AC68c6DC'),
+    coingeckoId: CoingeckoId('octopus-network'),
+    decimals: 18,
+    sinceBlock: 14559298,
     category: 'other',
   },
   {

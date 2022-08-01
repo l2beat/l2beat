@@ -15,5 +15,7 @@ export function getTechnology(project: Project) {
       return { abbreviation: 'STP', name }
     case 'Optimistic Chain':
       return { abbreviation: 'OPC', name }
+    case 'Bridge':
+      return { abbreviation: 'BRG', name }
   }
 }

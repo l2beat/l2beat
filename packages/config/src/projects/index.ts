@@ -21,6 +21,22 @@ import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
 import { zksync } from './zksync'
+import { nearBridge } from './nearBridge'
+import { avalancheBridge } from './avalancheBridge'
+import { fantomBridge } from './fantomBridge'
+import { polygonBridge } from './polygonBridge'
+import { wormholeBridge } from './wormholeBridge'
+import { starGateBridge } from './starGateBridge'
+import { harmonyBridge } from './harmonyBridge'
+import { xDaiBridge } from './xDaiBridge'
+import { gravityBridge } from './gravityBridge'
+import { roninBridge } from './roninBridge'
+import { nomadBridge } from './nomadBridge'
+import { solletBridge } from './solletBridge'
+import { synapseBridge } from './synapseBridge'
+import { hopBridge } from './hopBridge'
+import { cBridge } from './cBridge'
+import { connextBridge } from './connextBridge'
 
 export * from './types'
 
@@ -47,4 +63,20 @@ export const projects: Project[] = [
   zkswap2,
   zkspace,
   zksync,
+  nearBridge,
+  avalancheBridge,
+  fantomBridge,
+  polygonBridge,
+  wormholeBridge,
+  starGateBridge,
+  harmonyBridge,
+  xDaiBridge,
+  roninBridge,
+  gravityBridge,
+  nomadBridge,
+  solletBridge,
+  synapseBridge,
+  hopBridge,
+  cBridge,
+  connextBridge,
 ]
