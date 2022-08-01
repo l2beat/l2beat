@@ -4,6 +4,7 @@ import { expect } from 'earljs'
 import { convertBalance } from '../../../src/core/reports/createReport'
 import {
   addOpTokenToReports,
+  amendAggregateReport,
   OP_TOKEN_BALANCE,
 } from '../../../src/core/reports/optimism'
 import { AggregateReportRecord } from '../../../src/peripherals/database/AggregateReportRepository'
@@ -139,4 +140,89 @@ describe(addOpTokenToReports.name, () => {
   })
 })
 
-// TODO: write tests for amendAggregateReport
+describe(amendAggregateReport.name, () => {
+  const NOW = UnixTime.now()
+  const OP_PRICE = 300
+  const ETH_PRICE = 1669
+
+  const opPrice = {
+    timestamp: NOW,
+    assetId: AssetId('op-optimism'),
+    priceUsd: OP_PRICE,
+  }
+
+  const ethPrice = {
+    timestamp: NOW,
+    assetId: AssetId.ETH,
+    priceUsd: ETH_PRICE,
+  }
+
+  const { balanceUsd: opTvlUsd, balanceEth: opTvlEth } = convertBalance(
+    OP_PRICE,
+    18,
+    OP_TOKEN_BALANCE,
+    ETH_PRICE,
+  )
+
+  it('amends the empty array', () => {
+    const aggregateReports: AggregateReportRecord[] = []
+    amendAggregateReport(opPrice, ethPrice, aggregateReports)
+    expect(aggregateReports).toEqual([
+      {
+        timestamp: NOW,
+        projectId: ProjectId('optimism'),
+        tvlUsd: opTvlUsd,
+        tvlEth: opTvlEth,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId.ALL,
+        tvlUsd: opTvlUsd,
+        tvlEth: opTvlEth,
+      },
+    ])
+  })
+  it('amends the aggtegated reports', () => {
+    const aggregateReports: AggregateReportRecord[] = [
+      {
+        timestamp: NOW,
+        projectId: ProjectId('optimism'),
+        tvlUsd: 2100n,
+        tvlEth: 24n,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId('arbitrum'),
+        tvlUsd: 1000n,
+        tvlEth: 1n,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId.ALL,
+        tvlUsd: 12456n,
+        tvlEth: 76n,
+      },
+    ]
+    amendAggregateReport(opPrice, ethPrice, aggregateReports)
+    expect(aggregateReports).toEqual([
+      {
+        timestamp: NOW,
+        projectId: ProjectId('optimism'),
+        tvlUsd: 2100n + opTvlUsd,
+        tvlEth: 24n + opTvlEth,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId('arbitrum'),
+        tvlUsd: 1000n,
+        tvlEth: 1n,
+      },
+      {
+        timestamp: NOW,
+        projectId: ProjectId.ALL,
+        tvlUsd: 12456n + opTvlUsd,
+        tvlEth: 76n + opTvlEth,
+      },
+    ])
+  })
+})
