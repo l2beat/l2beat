@@ -6,7 +6,7 @@ import { ProjectTechnology } from './ProjectTechnology'
 export interface ProjectDetails {
   /** A warning displayed at the top of the project page */
   warning?: string
-  /** A few sentences describing the project the project */
+  /** A few sentences describing the project */
   description: string
   /** A short (<20 characters) description of the use case */
   purpose: string
