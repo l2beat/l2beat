@@ -32,6 +32,24 @@ describe(ReportUpdater.name, () => {
     ...balance,
     timestamp: NOW.add(1, 'hours'),
   }))
+  const REPORTS = createReports(PRICES, BALANCES, PROJECTS)
+  const FUTURE_REPORTS = [
+    ...createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
+    {
+      asset: OP_TOKEN_ID,
+      balance: 214748364000000000000000000n,
+      balanceEth: 214748364000000n,
+      balanceUsd: 21474836400000n,
+      timestamp: NOW.add(1, 'hours'),
+      projectId: OPTIMISM_PROJECT_ID,
+    },
+  ]
+  const AGGREGATE_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
+  const FUTURE_AGGREGATE_REPORTS = aggregateReports(
+    FUTURE_REPORTS,
+    PROJECTS,
+    NOW.add(1, 'hours'),
+  )
 
   describe(ReportUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
@@ -77,34 +95,15 @@ describe(ReportUpdater.name, () => {
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
         [{ configHash, timestamp: NOW }],
       ])
-
-      const futureReports = [
-        ...createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
-        {
-          asset: OP_TOKEN_ID,
-          balance: 214748364000000000000000000n,
-          balanceEth: 214748364000000n,
-          balanceUsd: 21474836400000n,
-          timestamp: NOW.add(1, 'hours'),
-          projectId: OPTIMISM_PROJECT_ID,
-        },
-      ]
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-        [futureReports],
-        [createReports(PRICES, BALANCES, PROJECTS)],
+        [FUTURE_REPORTS],
+        [REPORTS],
       ])
-
       expect(
         aggregateReportRepository.addOrUpdateMany,
       ).toHaveBeenCalledExactlyWith([
-        [aggregateReports(futureReports, PROJECTS, NOW.add(1, 'hours'))],
-        [
-          aggregateReports(
-            createReports(PRICES, BALANCES, PROJECTS),
-            PROJECTS,
-            NOW,
-          ),
-        ],
+        [FUTURE_AGGREGATE_REPORTS],
+        [AGGREGATE_REPORTS],
       ])
     })
   })
@@ -168,27 +167,15 @@ describe(ReportUpdater.name, () => {
         ])
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-          [createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)],
-          [createReports(PRICES, BALANCES, PROJECTS)],
+          [FUTURE_REPORTS],
+          [REPORTS],
         ])
 
         expect(
           aggregateReportRepository.addOrUpdateMany,
         ).toHaveBeenCalledExactlyWith([
-          [
-            aggregateReports(
-              createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
-              PROJECTS,
-              NOW.add(1, 'hours'),
-            ),
-          ],
-          [
-            aggregateReports(
-              createReports(PRICES, BALANCES, PROJECTS),
-              PROJECTS,
-              NOW,
-            ),
-          ],
+          [FUTURE_AGGREGATE_REPORTS],
+          [AGGREGATE_REPORTS],
         ])
       })
     })
