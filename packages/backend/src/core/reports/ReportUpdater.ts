@@ -62,11 +62,11 @@ export class ReportUpdater {
     await Promise.all([
       this.reportRepository.addOrUpdateMany(reports),
       this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports),
-      this.reportStatusRepository.add({
-        configHash: this.configHash,
-        timestamp,
-      }),
     ])
+    await this.reportStatusRepository.add({
+      configHash: this.configHash,
+      timestamp,
+    })
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
 }
