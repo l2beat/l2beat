@@ -43,6 +43,12 @@ export class AggregateReportRepository extends BaseRepository {
   async addOrUpdateMany(reports: AggregateReportRecord[]) {
     const rows = reports.map(toRow)
     const knex = await this.knex()
+    const timestampsMatch = reports.every((r) =>
+      r.timestamp.equals(reports[0].timestamp),
+    )
+    if (!timestampsMatch) {
+      throw new Error('Programmer error: Timestamps must match')
+    }
     await knex.transaction(async (trx) => {
       await trx('aggregate_reports')
         .where('unix_timestamp', rows[0].unix_timestamp)

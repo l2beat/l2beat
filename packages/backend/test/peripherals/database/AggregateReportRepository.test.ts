@@ -46,59 +46,46 @@ describe(AggregateReportRepository.name, () => {
   })
 
   describe(AggregateReportRepository.prototype.addOrUpdateMany.name, () => {
-    it('add or update', async () => {
-      const REPORTS_1 = [
-        fakeAggregateReport({ timestamp: TIME_0 }),
-        fakeAggregateReport({ timestamp: TIME_1 }),
+    it('replaces existing records', async () => {
+      const REPORTS = [
+        fakeAggregateReport({
+          projectId: ProjectId('1'),
+          timestamp: TIME_1,
+          tvlUsd: 1n,
+        }),
+        fakeAggregateReport({
+          projectId: ProjectId('2'),
+          timestamp: TIME_1,
+          tvlUsd: 2n,
+        }),
+        fakeAggregateReport({
+          projectId: ProjectId('3'),
+          timestamp: TIME_1,
+          tvlUsd: 3n,
+        }),
+        fakeAggregateReport({
+          projectId: ProjectId('4'),
+          timestamp: TIME_1,
+          tvlUsd: 4n,
+        }),
       ]
-
-      const REPORTS_2 = [
-        fakeAggregateReport({ timestamp: TIME_1 }),
-        fakeAggregateReport({ timestamp: TIME_2 }),
-      ]
-      await repository.addOrUpdateMany(REPORTS_1)
-
-      await repository.addOrUpdateMany(REPORTS_2)
-
-      const result = await repository.getAll()
-
-      expect(result).toBeAnArrayWith(REPORTS_1[0], REPORTS_2[0], REPORTS_2[1])
-
-      expect(result).toBeAnArrayOfLength(3)
+      await repository.addOrUpdateMany(REPORTS.slice(0, 2))
+      expect(await repository.getAll()).toEqual(REPORTS.slice(0, 2))
+      await repository.addOrUpdateMany(REPORTS.slice(2))
+      expect(await repository.getAll()).toEqual(REPORTS.slice(2))
     })
 
-    it('empty array', async () => {
+    it('handles empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
 
-    it('prunes old reports', async () => {
-      const REPORTS_1 = [
-        fakeAggregateReport({
-          projectId: ProjectId('arbitrum'),
-          timestamp: TIME_0,
-        }),
-        fakeAggregateReport({
-          projectId: ProjectId('optimism'),
-          timestamp: TIME_0,
-        }),
-      ]
-
-      const REPORTS_2 = [
-        fakeAggregateReport({
-          projectId: ProjectId('arbitrum'),
-          timestamp: TIME_0,
-        }),
-        fakeAggregateReport({
-          projectId: ProjectId('dydx'),
-          timestamp: TIME_0,
-        }),
-      ]
-
-      await repository.addOrUpdateMany(REPORTS_1)
-      await repository.addOrUpdateMany(REPORTS_2)
-
-      const result = await repository.getAll()
-      expect(result).toEqual(REPORTS_2)
+    it('throws if timestamps do not match', async () => {
+      await expect(
+        repository.addOrUpdateMany([
+          fakeAggregateReport({ timestamp: TIME_1 }),
+          fakeAggregateReport({ timestamp: TIME_2 }),
+        ]),
+      ).toBeRejected('Programmer error: Timestamps must match')
     })
   })
 

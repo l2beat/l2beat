@@ -13,7 +13,6 @@ describe(ReportRepository.name, () => {
 
   const TIME_0 = UnixTime.now().toStartOf('day')
   const TIME_1 = TIME_0.add(1, 'hours')
-  const TIME_2 = TIME_0.add(2, 'hours')
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -49,47 +48,44 @@ describe(ReportRepository.name, () => {
   })
 
   describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
-    it('add or update', async () => {
+    it('replaces existing records', async () => {
       const REPORTS_1 = [
-        fakeReport({ timestamp: TIME_0 }),
-        fakeReport({ timestamp: TIME_1 }),
-      ]
-
-      const REPORTS_2 = [
-        fakeReport({ timestamp: TIME_1 }),
-        fakeReport({ timestamp: TIME_2 }),
+        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, balance: 1n }),
+        fakeReport({ asset: AssetId.ETH, timestamp: TIME_1, balance: 1n }),
+        fakeReport({
+          projectId: ProjectId('arbitrum'),
+          asset: AssetId.ETH,
+          timestamp: TIME_1,
+          balance: 1n,
+        }),
       ]
       await reportsRepository.addOrUpdateMany(REPORTS_1)
-
+      expect(await reportsRepository.getAll()).toEqual(REPORTS_1)
+      const REPORTS_2 = [
+        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, balance: 2n }),
+        fakeReport({
+          projectId: ProjectId('dydx'),
+          asset: AssetId.ETH,
+          timestamp: TIME_1,
+          balance: 2n,
+        }),
+      ]
       await reportsRepository.addOrUpdateMany(REPORTS_2)
-
-      const result = await reportsRepository.getAll()
-
-      expect(result).toBeAnArrayWith(REPORTS_1[0], REPORTS_2[0], REPORTS_2[1])
-
-      expect(result).toBeAnArrayOfLength(3)
+      expect(await reportsRepository.getAll()).toEqual(REPORTS_2)
     })
 
-    it('empty array', async () => {
+    it('handles empty array', async () => {
       await expect(reportsRepository.addOrUpdateMany([])).not.toBeRejected()
     })
 
-    it('prunes old reports', async () => {
-      const REPORTS_1 = [
-        fakeReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
-        fakeReport({ projectId: ProjectId('optimism'), timestamp: TIME_0 }),
-      ]
-
-      const REPORTS_2 = [
-        fakeReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
-        fakeReport({ projectId: ProjectId('dydx'), timestamp: TIME_0 }),
-      ]
-
-      await reportsRepository.addOrUpdateMany(REPORTS_1)
-      await reportsRepository.addOrUpdateMany(REPORTS_2)
-
-      const result = await reportsRepository.getAll()
-      expect(result).toEqual(REPORTS_2)
+    it('throws if timestamps do not match', async () => {
+      await expect(
+        reportsRepository.addOrUpdateMany([
+          fakeReport({ projectId: ProjectId('arbitrum'), timestamp: TIME_0 }),
+          fakeReport({ projectId: ProjectId('zksync'), timestamp: TIME_0 }),
+          fakeReport({ projectId: ProjectId('optimism'), timestamp: TIME_1 }),
+        ]),
+      ).toBeRejected('Programmer error: Timestamps must match')
     })
   })
 
