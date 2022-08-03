@@ -1,4 +1,4 @@
-import { AssetId, UnixTime } from '@l2beat/common'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import {
@@ -55,9 +55,28 @@ describe(addOpTokenReport.name, () => {
       projectId: OPTIMISM_PROJECT_ID,
       timestamp,
     }
-    const reports: ReportRecord[] = [opReport]
+    const otherReports: ReportRecord[] = [
+      {
+        asset: AssetId.DAI,
+        balance: 1n,
+        balanceEth: 1n,
+        balanceUsd: 1n,
+        projectId: ProjectId('arbitrum'),
+        timestamp,
+      },
+      {
+        asset: AssetId.ETH,
+        balance: 2n,
+        balanceEth: 2n,
+        balanceUsd: 2n,
+        projectId: ProjectId('arbitrum'),
+        timestamp,
+      },
+    ]
+    const reports: ReportRecord[] = [...otherReports, opReport]
     addOpTokenReport(reports, prices, timestamp)
     expect(reports).toEqual([
+      ...otherReports,
       {
         ...opReport,
         balance: 214748364000000000000000000n,
