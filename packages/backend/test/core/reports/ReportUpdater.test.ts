@@ -8,6 +8,10 @@ import { getConfigHash } from '../../../src/core/getConfigHash'
 import { PriceUpdater } from '../../../src/core/PriceUpdater'
 import { aggregateReports } from '../../../src/core/reports/aggregateReports'
 import { createReports } from '../../../src/core/reports/createReports'
+import {
+  OP_TOKEN_ID,
+  OPTIMISM_PROJECT_ID,
+} from '../../../src/core/reports/optimism'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
 import { AggregateReportRepository } from '../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
@@ -19,6 +23,11 @@ describe(ReportUpdater.name, () => {
     ...price,
     timestamp: NOW.add(1, 'hours'),
   }))
+  FUTURE_PRICES.push({
+    priceUsd: 1000,
+    assetId: OP_TOKEN_ID,
+    timestamp: NOW.add(1, 'hours'),
+  })
   const FUTURE_BALANCES = BALANCES.map((balance) => ({
     ...balance,
     timestamp: NOW.add(1, 'hours'),
@@ -69,21 +78,26 @@ describe(ReportUpdater.name, () => {
         [{ configHash, timestamp: NOW }],
       ])
 
+      const futureReports = [
+        ...createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
+        {
+          asset: OP_TOKEN_ID,
+          balance: 214748364000000000000000000n,
+          balanceEth: 214748364000000n,
+          balanceUsd: 21474836400000n,
+          timestamp: NOW.add(1, 'hours'),
+          projectId: OPTIMISM_PROJECT_ID,
+        },
+      ]
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-        [createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)],
+        [futureReports],
         [createReports(PRICES, BALANCES, PROJECTS)],
       ])
 
       expect(
         aggregateReportRepository.addOrUpdateMany,
       ).toHaveBeenCalledExactlyWith([
-        [
-          aggregateReports(
-            createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
-            PROJECTS,
-            NOW.add(1, 'hours'),
-          ),
-        ],
+        [aggregateReports(futureReports, PROJECTS, NOW.add(1, 'hours'))],
         [
           aggregateReports(
             createReports(PRICES, BALANCES, PROJECTS),

@@ -10,6 +10,7 @@ import { getConfigHash } from '../getConfigHash'
 import { PriceUpdater } from '../PriceUpdater'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
+import { addOpTokenReport } from './optimism'
 
 export class ReportUpdater {
   private configHash: string
@@ -52,6 +53,7 @@ export class ReportUpdater {
     ])
     this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
+    addOpTokenReport(reports, prices, timestamp)
     const aggregatedReports = aggregateReports(
       reports,
       this.projects,

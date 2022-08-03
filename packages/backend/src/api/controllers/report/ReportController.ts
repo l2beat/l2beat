@@ -9,11 +9,6 @@ import {
 } from '@l2beat/common'
 
 import { addMissingDailyTimestamps } from '../../../core/reports/charts'
-import {
-  addOpTokenToReports,
-  getOpTokenDailyChartData,
-  OP_TOKEN_ID,
-} from '../../../core/reports/optimism'
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
 import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
@@ -68,24 +63,11 @@ export class ReportController {
       return undefined
     }
     const dailyTimestamp = timestamp.toStartOf('day')
-    const [aggregateReports, latestReports, ethPrices, opPrices] =
-      await Promise.all([
-        this.aggregateReportRepository.getDaily(),
-        this.reportRepository.getByTimestamp(dailyTimestamp),
-        this.priceRepository.getByToken(AssetId.ETH),
-        this.priceRepository.getByToken(OP_TOKEN_ID),
-      ])
-
-    addOpTokenToReports(
-      aggregateReports,
-      latestReports,
-      opPrices,
-      ethPrices,
-      dailyTimestamp,
-    )
-
+    const [aggregateReports, latestReports] = await Promise.all([
+      this.aggregateReportRepository.getDaily(),
+      this.reportRepository.getByTimestamp(dailyTimestamp),
+    ])
     const apiMain = generateMain(aggregateReports, latestReports, this.projects)
-
     return apiMain
   }
 
@@ -109,19 +91,11 @@ export class ReportController {
     return generateReportOutput(dailyEntries, this.projects)
   }
 
-  private async getOpTokenChartData() {
-    const prices = await this.priceRepository.getByToken(OP_TOKEN_ID)
-    return getOpTokenDailyChartData(prices)
-  }
-
   private async getChartData(asset: Token, projectId: ProjectId) {
-    const data =
-      asset.id === OP_TOKEN_ID
-        ? await this.getOpTokenChartData()
-        : await this.reportRepository.getDailyByProjectAndAsset(
-            projectId,
-            asset.id,
-          )
+    const data = await this.reportRepository.getDailyByProjectAndAsset(
+      projectId,
+      asset.id,
+    )
     const points: ChartPoint[] = data.map((d) => [
       d.timestamp.add(-1, 'days').toStartOf('day'),
       +asNumber(d.balance, asset.decimals).toFixed(6),
