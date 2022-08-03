@@ -98,7 +98,7 @@ export const dydx: Project = {
             name: 'GpsStatementVerifier',
             address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
             description:
-              'STARK Verifier. In contrast to Sorare, ImmutableX, DeversiFi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
+              'STARK Verifier. In contrast to Sorare, ImmutableX, rhino.fi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
             upgradeability: {
               type: 'StarkWare',
               implementation: '0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2',
@@ -164,19 +164,9 @@ export const dydx: Project = {
     },
     news: [
       {
-        date: '2021-08-24',
-        name: 'EOS is now live',
-        link: 'https://dydx.exchange/blog/markets-17',
-      },
-      {
-        date: '2021-08-12',
-        name: 'dYdX Market Maker Debate',
-        link: 'https://dydx.exchange/blog/debate-recap-cms-mgnr-wintermute',
-      },
-      {
-        date: '2021-08-03',
-        name: 'Introducing the dYdX Foundation',
-        link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+        date: '2022-06-22',
+        name: 'Announcing dYdX Chain',
+        link: 'https://dydx.exchange/blog/dydx-chain',
       },
     ],
   },

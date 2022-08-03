@@ -6,3 +6,4 @@
 /projects/fuel              /projects/fuelv1
 /projects/zkswapv2          /projects/zkspace
 /api/projects/:project/tvl/assets/:asset          https://api.l2beat.com/api/projects/:project/tvl/assets/:asset
+/projects/deversifi         /projects/rhinofi
