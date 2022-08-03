@@ -15,6 +15,9 @@ describe(AggregateReportRepository.name, () => {
   const TIME_1 = TIME_0.add(1, 'hours')
   const TIME_2 = TIME_0.add(2, 'hours')
 
+  const PROJECT_A = ProjectId('project-a')
+  const PROJECT_B = ProjectId('project-b')
+
   beforeEach(async () => {
     await repository.deleteAll()
   })
@@ -22,14 +25,12 @@ describe(AggregateReportRepository.name, () => {
   describe(AggregateReportRepository.prototype.getDaily.name, () => {
     it('filters data to get only full days', async () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0 })
+      await repository.addOrUpdateMany([REPORT])
       await repository.addOrUpdateMany([
-        REPORT,
         fakeAggregateReport({ timestamp: TIME_1 }),
       ])
       const result = await repository.getDaily()
-
-      expect(result).toBeAnArrayWith(REPORT)
-      expect(result).toBeAnArrayOfLength(1)
+      expect(result).toEqual([REPORT])
     })
 
     it('returns sorted data', async () => {
@@ -38,9 +39,10 @@ describe(AggregateReportRepository.name, () => {
         fakeAggregateReport({ timestamp: TIME_0.add(-1, 'days') }),
         fakeAggregateReport({ timestamp: TIME_0 }),
       ]
-      await repository.addOrUpdateMany(REPORTS)
+      await repository.addOrUpdateMany([REPORTS[0]])
+      await repository.addOrUpdateMany([REPORTS[1]])
+      await repository.addOrUpdateMany([REPORTS[2]])
       const result = await repository.getDaily()
-
       expect(result).toEqual(REPORTS)
     })
   })
@@ -89,41 +91,40 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  it(AggregateReportRepository.prototype.getAll.name, async () => {
-    const reports = [
-      fakeAggregateReport({ timestamp: TIME_0 }),
-      fakeAggregateReport({ timestamp: TIME_1 }),
-    ]
-    await repository.addOrUpdateMany(reports)
-
-    const results = await repository.getAll()
-
-    expect(results).toBeAnArrayWith(reports[0], reports[1])
-    expect(results).toBeAnArrayOfLength(2)
+  describe(AggregateReportRepository.prototype.getAll.name, () => {
+    it('returns all records', async () => {
+      const reports = [
+        fakeAggregateReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
+        fakeAggregateReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+      ]
+      await repository.addOrUpdateMany(reports)
+      const results = await repository.getAll()
+      expect(results).toEqual(reports)
+    })
   })
 
-  it(AggregateReportRepository.prototype.deleteAll.name, async () => {
-    await repository.addOrUpdateMany([
-      fakeAggregateReport({ timestamp: TIME_0 }),
-      fakeAggregateReport({ timestamp: TIME_1 }),
-    ])
-
-    await repository.deleteAll()
-
-    const results = await repository.getAll()
-
-    expect(results).toBeAnArrayOfLength(0)
+  describe(AggregateReportRepository.prototype.deleteAll.name, () => {
+    it('deletes all reports', async () => {
+      const reports = [
+        fakeAggregateReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
+        fakeAggregateReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+      ]
+      await repository.addOrUpdateMany(reports)
+      await repository.deleteAll()
+      const results = await repository.getAll()
+      expect(results).toEqual([])
+    })
   })
-
-  function fakeAggregateReport(
-    report?: Partial<AggregateReportRecord>,
-  ): AggregateReportRecord {
-    return {
-      timestamp: UnixTime.now(),
-      projectId: ProjectId('fake-project'),
-      tvlUsd: 1234n,
-      tvlEth: 1234n,
-      ...report,
-    }
-  }
 })
+
+function fakeAggregateReport(
+  report?: Partial<AggregateReportRecord>,
+): AggregateReportRecord {
+  return {
+    timestamp: UnixTime.now(),
+    projectId: ProjectId('fake-project'),
+    tvlUsd: 1234n,
+    tvlEth: 1234n,
+    ...report,
+  }
+}
