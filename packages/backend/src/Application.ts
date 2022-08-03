@@ -15,6 +15,7 @@ import { Clock } from './core/Clock'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
+import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
@@ -43,6 +44,10 @@ export class Application {
     const priceRepository = new PriceRepository(database, logger)
     const balanceRepository = new BalanceRepository(database, logger)
     const reportRepository = new ReportRepository(database, logger)
+    const aggregateReportRepository = new AggregateReportRepository(
+      database,
+      logger,
+    )
     const reportStatusRepository = new ReportStatusRepository(database, logger)
     const balanceStatusRepository = new BalanceStatusRepository(
       database,
@@ -108,6 +113,7 @@ export class Application {
       priceUpdater,
       balanceUpdater,
       reportRepository,
+      aggregateReportRepository,
       reportStatusRepository,
       clock,
       config.projects,
@@ -120,6 +126,8 @@ export class Application {
     const blocksController = new BlocksController(blockNumberRepository)
 
     const reportController = new ReportController(
+      reportStatusRepository,
+      aggregateReportRepository,
       reportRepository,
       cachedDataRepository,
       priceRepository,

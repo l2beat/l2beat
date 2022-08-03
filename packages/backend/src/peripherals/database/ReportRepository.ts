@@ -35,8 +35,16 @@ export class ReportRepository extends BaseRepository {
     const rows = await knex('reports')
       .where('is_daily', '=', true)
       .orderBy('unix_timestamp')
+    return rows.map(toRecord)
+  }
 
-    return rows.map((r) => toRecord(r))
+  async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('reports').where(
+      'unix_timestamp',
+      timestamp.toString(),
+    )
+    return rows.map(toRecord)
   }
 
   async getAll(): Promise<ReportRecord[]> {
@@ -48,10 +56,21 @@ export class ReportRepository extends BaseRepository {
   async addOrUpdateMany(reports: ReportRecord[]) {
     const rows = reports.map(toRow)
     const knex = await this.knex()
-    await knex('reports')
-      .insert(rows)
-      .onConflict(['unix_timestamp', 'project_id', 'asset_id'])
-      .merge()
+    const timestampsMatch = reports.every((r) =>
+      r.timestamp.equals(reports[0].timestamp),
+    )
+    if (!timestampsMatch) {
+      throw new Error('Programmer error: Timestamps must match')
+    }
+    await knex.transaction(async (trx) => {
+      await trx('reports')
+        .where('unix_timestamp', rows[0].unix_timestamp)
+        .delete()
+      await trx('reports')
+        .insert(rows)
+        .onConflict(['unix_timestamp', 'project_id', 'asset_id'])
+        .merge()
+    })
     return rows.length
   }
 

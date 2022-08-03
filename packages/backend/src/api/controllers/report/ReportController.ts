@@ -2,33 +2,37 @@ import {
   ApiMain,
   AssetId,
   Chart,
+  ChartPoint,
   Logger,
   ProjectId,
   TaskQueue,
 } from '@l2beat/common'
 
+import { addMissingDailyTimestamps } from '../../../core/reports/charts'
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
+import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
-import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
-import {
-  aggregateReportsDaily,
-  aggregateReportsDailyV2,
-} from './aggregateReportsDaily'
+import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import { addOptimismToken } from './addOptimismToken'
+import { aggregateReportsDaily } from './aggregateReportsDaily'
 import { asNumber } from './asNumber'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
-import { generateApiMain, generateReportOutput } from './generateReportOutput'
+import { generateMain } from './generateMain'
+import { generateReportOutput } from './generateReportOutput'
 
 export class ReportController {
   private taskQueue: TaskQueue<void>
 
   constructor(
+    private reportStatusRepository: ReportStatusRepository,
+    private aggregateReportRepository: AggregateReportRepository,
     private reportRepository: ReportRepository,
     private cacheRepository: CachedDataRepository,
     private priceRepository: PriceRepository,
@@ -53,15 +57,24 @@ export class ReportController {
     return this.cacheRepository.getData()
   }
 
-  async getMain() {
-    return this.cacheRepository.getMain()
+  async getMain(): Promise<ApiMain | undefined> {
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    if (!timestamp) {
+      return undefined
+    }
+    const dailyTimestamp = timestamp.toStartOf('day')
+    const [aggregateReports, latestReports] = await Promise.all([
+      this.aggregateReportRepository.getDaily(),
+      this.reportRepository.getByTimestamp(dailyTimestamp),
+    ])
+    const apiMain = generateMain(aggregateReports, latestReports, this.projects)
+    return apiMain
   }
 
   async generateAndCache() {
     this.logger.info('Daily report started')
     const reports = await this.getReports()
     await this.cacheRepository.saveData(await this.generateDaily(reports))
-    await this.cacheRepository.saveMain(await this.generateMain(reports))
     this.logger.info('Daily report saved')
   }
 
@@ -78,10 +91,17 @@ export class ReportController {
     return generateReportOutput(dailyEntries, this.projects)
   }
 
-  async generateMain(reports: ReportRecord[]): Promise<ApiMain> {
-    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
-    await addOptimismTokenV2(dailyEntries, this.priceRepository)
-    return generateApiMain(dailyEntries, this.projects)
+  private async getChartData(asset: Token, projectId: ProjectId) {
+    const data = await this.reportRepository.getDailyByProjectAndAsset(
+      projectId,
+      asset.id,
+    )
+    const points: ChartPoint[] = data.map((d) => [
+      d.timestamp.add(-1, 'days').toStartOf('day'),
+      +asNumber(d.balance, asset.decimals).toFixed(6),
+      asNumber(d.balanceUsd, 2),
+    ])
+    return addMissingDailyTimestamps(points)
   }
 
   async getProjectAssetChart(
@@ -93,17 +113,10 @@ export class ReportController {
     if (!project || !asset) {
       return undefined
     }
-    const reports = await this.reportRepository.getDailyByProjectAndAsset(
-      projectId,
-      assetId,
-    )
+    const data = await this.getChartData(asset, projectId)
     return {
       types: ['timestamp', asset.symbol.toLowerCase(), 'usd'],
-      data: reports.map((r) => [
-        r.timestamp,
-        +asNumber(r.balance, asset.decimals).toFixed(6),
-        asNumber(r.balanceUsd, 2),
-      ]),
+      data,
     }
   }
 }

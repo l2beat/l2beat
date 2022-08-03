@@ -1,7 +1,8 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/common'
+import { Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
+import { fakeConfigHash } from './fakes'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(ReportStatusRepository.name, () => {
@@ -12,8 +13,8 @@ describe(ReportStatusRepository.name, () => {
     await repository.deleteAll()
   })
 
-  const HASH_ONE = Hash256.random()
-  const HASH_TWO = Hash256.random()
+  const HASH_ONE = fakeConfigHash()
+  const HASH_TWO = fakeConfigHash()
 
   const TIME_ONE = UnixTime.now().toStartOf('hour')
   const TIME_TWO = TIME_ONE.add(-1, 'hours')
@@ -41,7 +42,7 @@ describe(ReportStatusRepository.name, () => {
     expect(timestampsTwo).toBeAnArrayWith(TIME_ONE, TIME_TWO)
   })
 
-  it('can add the same value multiple times ', async () => {
+  it('can add the same value multiple times', async () => {
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
@@ -50,11 +51,19 @@ describe(ReportStatusRepository.name, () => {
     expect(timestamps).toEqual([TIME_ONE])
   })
 
-  it(ReportStatusRepository.prototype.getBetween.name, async () => {
+  it('gets statuses between timestamps', async () => {
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
     const result = await repository.getBetween(TIME_THREE, TIME_TWO)
     expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
+  })
+
+  it('finds latest timestamp', async () => {
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
+
+    const result = await repository.findLatestTimestamp()
+    expect(result).toEqual(TIME_ONE)
   })
 })

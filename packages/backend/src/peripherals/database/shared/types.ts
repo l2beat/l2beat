@@ -33,6 +33,14 @@ declare module 'knex/types/tables' {
     is_daily: boolean
   }
 
+  interface AggregateReportRow {
+    unix_timestamp: string
+    project_id: string
+    tvl_usd: string
+    tvl_eth: string
+    is_daily: boolean
+  }
+
   interface ReportStatusRow {
     config_hash: string
     unix_timestamp: string
@@ -55,6 +63,7 @@ declare module 'knex/types/tables' {
     asset_balances: BalanceRow
     balance_status: BalanceStatusRow
     reports: ReportRow
+    aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
     cached_data: CachedDataRow
   }
