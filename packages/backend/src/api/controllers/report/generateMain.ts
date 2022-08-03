@@ -11,31 +11,31 @@ export function generateMain(
   latestReports: ReportRecord[],
   projects: ProjectInfo[],
 ): ApiMain {
-  const apiMain: ApiMain = {
+  return {
     charts: {
       daily: {
         types: ['timestamp', 'usd', 'eth'],
         data: getProjectDailyChartData(aggregateReports, ProjectId.ALL),
       },
     },
-    projects: {},
-  }
-
-  for (const { name, projectId } of projects) {
-    apiMain.projects[name] = {
-      charts: {
-        daily: {
-          types: ['timestamp', 'usd', 'eth'],
-          data: getProjectDailyChartData(aggregateReports, projectId),
-        },
+    projects: projects.reduce<ApiMain['projects']>(
+      (acc, { name, projectId }) => {
+        acc[name] = {
+          charts: {
+            daily: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: getProjectDailyChartData(aggregateReports, projectId),
+            },
+          },
+          tokens: latestReports
+            .filter((r) => r.projectId === projectId)
+            .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
+        }
+        return acc
       },
-      tokens: latestReports
-        .filter((r) => r.projectId === projectId)
-        .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
-    }
+      {},
+    ),
   }
-
-  return apiMain
 }
 
 function getProjectDailyChartData(
