@@ -1,7 +1,7 @@
 import { projects as configProjects } from '@l2beat/config'
 
 import { createApi } from './api'
-import { getL2Data } from './L2Data'
+import { getApiMain } from './ApiMain'
 import { renderPages } from './pages'
 
 main().catch((e) => {
@@ -10,9 +10,10 @@ main().catch((e) => {
 })
 
 async function main() {
-  const apiUrl = process.env.API_URL ?? 'https://api.l2beat.com/api/data'
-  const l2Data = await getL2Data(apiUrl)
-  const projects = configProjects.filter((p) => !!l2Data.byProject[p.name])
-  createApi(projects, l2Data)
-  await renderPages(projects, l2Data)
+  const apiUrl = process.env.API_URL ?? 'https://api.l2beat.com'
+  const skipCache = !!process.env.SKIP_CACHE
+  const apiMain = await getApiMain(apiUrl, skipCache)
+  const projects = configProjects.filter((p) => !!apiMain.projects[p.name])
+  createApi(projects, apiMain)
+  await renderPages(projects, apiMain)
 }

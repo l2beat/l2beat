@@ -33,3 +33,7 @@ function toNiceDate(day: string, month: string, year?: string) {
     ? `${parseInt(day)} ${MONTHS[month]}`
     : `${parseInt(day)} ${MONTHS[month]} ${parseInt(year)}`
 }
+
+export function timestampToDateDays(timestamp: string) {
+  return new Date(+timestamp * 1000).toISOString().slice(0, 10)
+}

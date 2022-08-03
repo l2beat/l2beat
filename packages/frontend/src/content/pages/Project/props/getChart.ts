@@ -1,31 +1,24 @@
-import { Project, tokenList } from '@l2beat/config'
+import { ApiMain } from '@l2beat/common'
+import { getTokenByAssetId, Project } from '@l2beat/config'
 
 import { ChartProps } from '../../../common'
-import { L2Data } from '../../../L2Data'
 
-export function getChart(project: Project, l2Data: L2Data): ChartProps {
+export function getChart(project: Project, apiMain: ApiMain): ChartProps {
   return {
     endpoint: `/api/${project.slug}.json`,
-    tokens: getTokens(project, l2Data),
+    tokens: getTokens(project, apiMain),
   }
 }
 
-function getTokens(project: Project, l2Data: L2Data) {
-  return project.bridges
-    .flatMap((x) =>
-      x.tokens === '*' ? tokenList.map((x) => x.symbol) : x.tokens,
-    )
-    .filter((x, i, a) => a.indexOf(x) === i)
-    .filter((token) => !!l2Data.byProject[project.name]?.byToken[token])
-    .map((token) => ({
-      symbol: token,
-      endpoint: `/api/${project.slug}/${token.toLowerCase()}.json`,
-      tvl: getTVL(project, l2Data, token),
-    }))
+function getTokens(project: Project, apiMain: ApiMain) {
+  return apiMain.projects[project.name]?.tokens
+    .map(({ assetId, tvl }) => {
+      const symbol = getTokenByAssetId(assetId).symbol
+      return {
+        symbol,
+        endpoint: `/api/projects/${project.id.toString()}/tvl/assets/${assetId.toString()}`,
+        tvl,
+      }
+    })
     .sort((a, b) => b.tvl - a.tvl)
-}
-
-function getTVL(project: Project, l2Data: L2Data, token: string) {
-  const data = l2Data.byProject[project.name]?.byToken[token]?.data
-  return data?.[data.length - 1][2] ?? 0
 }

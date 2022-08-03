@@ -1,4 +1,4 @@
 export interface ChartInput {
-  types: ['date', string, string]
+  types: ['timestamp', string, string]
   data: [string, number, number][]
 }

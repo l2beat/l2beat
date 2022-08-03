@@ -1,4 +1,4 @@
-import { formatDate, toDateRange } from '../../../shared'
+import { formatDate, timestampToDateDays, toDateRange } from '../../../shared'
 import { ChartStateWithInput } from '../state'
 import { calculateTicks } from './calculateTicks'
 import { formatCurrency, formatCurrencyExact } from './format'
@@ -17,8 +17,8 @@ export function toUiState(state: ChartStateWithInput): UiState {
     }
   }
   const dateRange = toDateRange(
-    dataPoints[0][0],
-    dataPoints[dataPoints.length - 1][0],
+    timestampToDateDays(dataPoints[0][0]),
+    timestampToDateDays(dataPoints[dataPoints.length - 1][0]),
   )
 
   const description = state.token
@@ -35,10 +35,10 @@ export function toUiState(state: ChartStateWithInput): UiState {
 
   const getY = state.logScale ? getLogY(min, max) : getLinY(min, max)
 
-  const points = dataPoints.map(([date, valueA, valueB], i) => ({
+  const points = dataPoints.map(([timestamp, valueA, valueB], i) => ({
     x: i / (values.length - 1),
     y: getY(state.altCurrency ? valueB : valueA),
-    date: formatDate(date),
+    date: formatDate(timestampToDateDays(timestamp)),
     valueA: formatCurrencyExact(valueA, state.input.types[1]),
     valueB: formatCurrencyExact(valueB, state.input.types[2]),
   }))
