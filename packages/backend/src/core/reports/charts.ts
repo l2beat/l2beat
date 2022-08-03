@@ -1,26 +1,25 @@
-import { ChartPoint, UnixTime } from '@l2beat/common'
-
-export function getDailyTimestamps(min: UnixTime, max: UnixTime) {
-  const timestamps: UnixTime[] = []
-  for (let t = min; t.lte(max); t = t.add(1, 'days')) {
-    timestamps.push(t)
-  }
-  return timestamps
-}
+import { ChartPoint } from '@l2beat/common'
 
 export function addMissingDailyTimestamps(points: ChartPoint[]): ChartPoint[] {
   if (points.length === 0) return []
   const [min] = points[0]
   const [max] = points[points.length - 1]
-  const daily = getDailyTimestamps(min, max)
-
-  return daily.reduce((acc, timestamp, i) => {
-    const [currTimestamp] = acc[i]
-    if (currTimestamp.equals(timestamp)) {
-      return acc
-    }
-    const [, prev1, prev2] = acc[i - 1]
-    acc.splice(i, 0, [timestamp, prev1, prev2])
-    return acc
-  }, points)
+  const timestampValues = new Map(
+    points.map(([t, v1, v2]) => [t.toString(), [v1, v2]]),
+  )
+  const allPoints: ChartPoint[] = []
+  for (
+    let timestamp = min;
+    timestamp.lte(max);
+    timestamp = timestamp.add(1, 'days')
+  ) {
+    const existing = timestampValues.get(timestamp.toString())
+    const previous = allPoints[allPoints.length - 1]
+    allPoints.push([
+      timestamp,
+      existing?.[0] ?? previous[1],
+      existing?.[1] ?? previous[2],
+    ])
+  }
+  return allPoints
 }
