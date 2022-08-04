@@ -6,6 +6,7 @@ import { BlocksController } from './api/controllers/BlocksController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
+import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -149,6 +150,7 @@ export class Application {
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
+      createEventsRouter(ethereumClient, config.projects)
     ])
 
     // #endregion
