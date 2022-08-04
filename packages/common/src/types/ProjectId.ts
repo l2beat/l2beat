@@ -8,3 +8,5 @@ export function ProjectId(value: string) {
   }
   return value as unknown as ProjectId
 }
+
+ProjectId.ALL = ProjectId('l2beat-all')

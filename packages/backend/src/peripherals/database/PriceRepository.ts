@@ -27,6 +27,7 @@ export class PriceRepository extends BaseRepository {
     this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
     this.addMany = this.wrapAddMany(this.addMany)
     this.getLatestByTokenBetween = this.wrapAny(this.getLatestByTokenBetween)
+    this.findByTimestampAndToken = this.wrapFind(this.findByTimestampAndToken)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -63,6 +64,17 @@ export class PriceRepository extends BaseRepository {
       amount: rows.length,
     })
     return rows.map(toRecord)
+  }
+
+  async findByTimestampAndToken(timestamp: UnixTime, assetId: AssetId) {
+    const knex = await this.knex()
+    const row = await knex('coingecko_prices')
+      .where({
+        asset_id: assetId.toString(),
+        unix_timestamp: timestamp.toString(),
+      })
+      .first()
+    return row ? toRecord(row) : undefined
   }
 
   async addMany(prices: PriceRecord[]) {

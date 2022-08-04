@@ -1,22 +1,26 @@
-import { Hash256, Logger, TaskQueue, UnixTime } from '@l2beat/common'
+import { Logger, TaskQueue, UnixTime } from '@l2beat/common'
 
 import { ProjectInfo } from '../../model'
+import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { BalanceUpdater } from '../BalanceUpdater'
 import { Clock } from '../Clock'
 import { getConfigHash } from '../getConfigHash'
 import { PriceUpdater } from '../PriceUpdater'
+import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
+import { addOpTokenReport } from './optimism'
 
 export class ReportUpdater {
-  private configHash: Hash256
+  private configHash: string
   private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
   constructor(
     private priceUpdater: PriceUpdater,
     private balanceUpdater: BalanceUpdater,
     private reportRepository: ReportRepository,
+    private aggregateReportsRepository: AggregateReportRepository,
     private reportStatusRepository: ReportStatusRepository,
     private clock: Clock,
     private projects: ProjectInfo[],
@@ -49,7 +53,16 @@ export class ReportUpdater {
     ])
     this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
-    await this.reportRepository.addOrUpdateMany(reports)
+    addOpTokenReport(reports, prices, timestamp)
+    const aggregatedReports = aggregateReports(
+      reports,
+      this.projects,
+      timestamp,
+    )
+    await Promise.all([
+      this.reportRepository.addOrUpdateMany(reports),
+      this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports),
+    ])
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,

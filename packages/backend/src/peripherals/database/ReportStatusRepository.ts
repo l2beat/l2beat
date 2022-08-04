@@ -1,10 +1,10 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/common'
+import { Logger, UnixTime } from '@l2beat/common'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface ReportStatusRecord {
-  configHash: Hash256
+  configHash: string
   timestamp: UnixTime
 }
 
@@ -18,11 +18,12 @@ export class ReportStatusRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getBetween = this.wrapGet(this.getBetween)
+    this.findLatestTimestamp = this.wrapFind(this.findLatestTimestamp)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {
+  async getByConfigHash(configHash: string): Promise<UnixTime[]> {
     const knex = await this.knex()
     const rows = await knex('report_status')
       .where({ config_hash: configHash.toString() })
@@ -32,9 +33,9 @@ export class ReportStatusRepository extends BaseRepository {
   }
 
   async add(record: {
-    configHash: Hash256
+    configHash: string
     timestamp: UnixTime
-  }): Promise<Hash256> {
+  }): Promise<string> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
       await trx('report_status')
@@ -67,7 +68,16 @@ export class ReportStatusRepository extends BaseRepository {
 
     return rows.map((r) => ({
       timestamp: new UnixTime(+r.unix_timestamp),
-      configHash: Hash256(r.config_hash),
+      configHash: r.config_hash,
     }))
+  }
+
+  async findLatestTimestamp(): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = await knex('report_status').max('unix_timestamp').first()
+    if (!row) {
+      return undefined
+    }
+    return new UnixTime(+row.max)
   }
 }
