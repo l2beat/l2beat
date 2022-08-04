@@ -16,12 +16,10 @@ export class AggregateReportRepository extends BaseRepository {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
-
     this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -30,7 +28,32 @@ export class AggregateReportRepository extends BaseRepository {
     const rows = await knex('aggregate_reports')
       .where('is_daily', true)
       .orderBy('unix_timestamp')
+    return rows.map(toRecord)
+  }
 
+  async getSixHourly(): Promise<AggregateReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('aggregate_reports')
+      .where('is_six_hourly', true)
+      .andWhere(
+        'unix_timestamp',
+        '>=',
+        UnixTime.now().add(-90, 'days').toString(),
+      )
+      .orderBy('unix_timestamp')
+    return rows.map(toRecord)
+  }
+
+  async getHourly(): Promise<AggregateReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('aggregate_reports')
+      .where('is_six_hourly', true)
+      .andWhere(
+        'unix_timestamp',
+        '>=',
+        UnixTime.now().add(-7, 'days').toString(),
+      )
+      .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
 
@@ -74,6 +97,7 @@ function toRow(record: AggregateReportRecord): AggregateReportRow {
     tvl_usd: record.tvlUsd.toString(),
     tvl_eth: record.tvlEth.toString(),
     is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
+    is_six_hourly: record.timestamp.toNumber() % 21600 === 0 ? true : false,
   }
 }
 

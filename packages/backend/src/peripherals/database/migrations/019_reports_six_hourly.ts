@@ -14,17 +14,16 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.createTable('aggregate_reports', function (table) {
-    table.bigInteger('unix_timestamp').notNullable()
-    table.string('project_id').notNullable()
-    table.decimal('tvl_usd', 80, 0).notNullable()
-    table.decimal('tvl_eth', 80, 0).notNullable()
-    table.boolean('is_daily').notNullable().index()
-    table.boolean('is_six_hourly').notNullable().index()
-    table.primary(['unix_timestamp', 'project_id'])
+  await knex.schema.alterTable('reports', function (table) {
+    table.boolean('is_six_hourly').defaultTo(false).index()
   })
+  await knex('reports')
+    .update({ is_six_hourly: true })
+    .whereRaw('unix_timestamp % 21600 = 0')
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.dropTable('aggregate_reports')
+  await knex.schema.alterTable('reports', function (table) {
+    table.dropColumn('is_six_hourly')
+  })
 }

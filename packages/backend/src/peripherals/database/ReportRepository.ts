@@ -1,4 +1,5 @@
 import { AssetId, Logger, ProjectId, UnixTime } from '@l2beat/common'
+import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
 import { BaseRepository } from './shared/BaseRepository'
@@ -79,16 +80,59 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
+  private getByProjectAndAssetQuery(
+    knex: Knex,
+    projectId: ProjectId,
+    assetId: AssetId,
+  ) {
+    return knex('reports')
+      .where('asset_id', assetId.toString())
+      .andWhere('project_id', projectId.toString())
+      .orderBy('unix_timestamp')
+  }
+
   async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('reports')
-      .where('asset_id', assetId.toString())
-      .andWhere('project_id', projectId.toString())
-      .andWhere('is_daily', true)
-      .orderBy('unix_timestamp', 'asc')
+    const rows = await this.getByProjectAndAssetQuery(
+      knex,
+      projectId,
+      assetId,
+    ).andWhere('is_daily', true)
+    return rows.map(toRecord)
+  }
+
+  async getHourlyByProjectAndAsset(
+    projectId: ProjectId,
+    assetId: AssetId,
+  ): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await this.getByProjectAndAssetQuery(
+      knex,
+      projectId,
+      assetId,
+    ).andWhere(
+      'unix_timestamp',
+      '>=',
+      UnixTime.now().add(-7, 'days').toString(),
+    )
+    return rows.map(toRecord)
+  }
+
+  async getSixHourlyByProjectAndAsset(
+    projectId: ProjectId,
+    assetId: AssetId,
+  ): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
+      .andWhere('is_six_hourly', true)
+      .andWhere(
+        'unix_timestamp',
+        '>=',
+        UnixTime.now().add(-90, 'days').toString(),
+      )
     return rows.map(toRecord)
   }
 }
@@ -102,6 +146,7 @@ function toRow(record: ReportRecord): ReportRow {
     balance_usd: record.balanceUsd.toString(),
     balance_eth: record.balanceEth.toString(),
     is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
+    is_six_hourly: record.timestamp.toNumber() % 21600 === 0 ? true : false,
   }
 }
 

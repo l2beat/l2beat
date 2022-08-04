@@ -31,6 +31,7 @@ declare module 'knex/types/tables' {
     balance_usd: string
     balance_eth: string
     is_daily: boolean
+    is_six_hourly: boolean
   }
 
   interface AggregateReportRow {
@@ -39,6 +40,7 @@ declare module 'knex/types/tables' {
     tvl_usd: string
     tvl_eth: string
     is_daily: boolean
+    is_six_hourly: boolean
   }
 
   interface ReportStatusRow {

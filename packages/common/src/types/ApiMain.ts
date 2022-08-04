@@ -18,8 +18,8 @@ const Chart = z.object({
 export type Chart = z.infer<typeof Chart>
 
 export const Charts = z.object({
-  // hourly: Chart,
-  // sixHourly: Chart,
+  hourly: Chart,
+  sixHourly: Chart,
   daily: Chart,
 })
 export type Charts = z.infer<typeof Charts>

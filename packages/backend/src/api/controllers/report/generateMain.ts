@@ -1,32 +1,34 @@
-import { ApiMain, ChartPoint, ProjectId } from '@l2beat/common'
+import { ApiMain, Chart, ChartPoint, Charts, ProjectId } from '@l2beat/common'
 
-import { addMissingDailyTimestamps } from '../../../core/reports/charts'
 import { ProjectInfo } from '../../../model'
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
+import { getChartPoints } from './charts'
 
 export function generateMain(
-  aggregateReports: AggregateReportRecord[],
+  hourlyReports: AggregateReportRecord[],
+  sixHourlyReports: AggregateReportRecord[],
+  dailyReports: AggregateReportRecord[],
   latestReports: ReportRecord[],
   projects: ProjectInfo[],
 ): ApiMain {
   return {
-    charts: {
-      daily: {
-        types: ['timestamp', 'usd', 'eth'],
-        data: getProjectDailyChartData(aggregateReports, ProjectId.ALL),
-      },
-    },
+    charts: getProjectCharts(
+      hourlyReports,
+      sixHourlyReports,
+      dailyReports,
+      ProjectId.ALL,
+    ),
     projects: projects.reduce<ApiMain['projects']>(
       (acc, { name, projectId }) => {
         acc[name] = {
-          charts: {
-            daily: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: getProjectDailyChartData(aggregateReports, projectId),
-            },
-          },
+          charts: getProjectCharts(
+            hourlyReports,
+            sixHourlyReports,
+            dailyReports,
+            projectId,
+          ),
           tokens: latestReports
             .filter((r) => r.projectId === projectId)
             .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
@@ -38,17 +40,40 @@ export function generateMain(
   }
 }
 
-function getProjectDailyChartData(
+function getProjectCharts(
+  hourlyReports: AggregateReportRecord[],
+  sixHourlyReports: AggregateReportRecord[],
+  dailyReports: AggregateReportRecord[],
+  projectId: ProjectId,
+): Charts {
+  const types: Chart['types'] = ['timestamp', 'usd', 'eth']
+  return {
+    hourly: {
+      types,
+      data: getProjectChartData(hourlyReports, projectId, 1),
+    },
+    sixHourly: {
+      types,
+      data: getProjectChartData(sixHourlyReports, projectId, 6),
+    },
+    daily: {
+      types: types,
+      data: getProjectChartData(dailyReports, projectId, 24),
+    },
+  }
+}
+
+function getProjectChartData(
   reports: AggregateReportRecord[],
   projectId: ProjectId,
+  hours: number,
 ): ChartPoint[] {
-  const existing: ChartPoint[] = reports
+  const balances = reports
     .filter((r) => r.projectId === projectId)
-    .map((r) => [
-      // we subtract a day so that the date represents the end of that day
-      r.timestamp.add(-1, 'days').toStartOf('day'),
-      asNumber(r.tvlUsd, 2),
-      asNumber(r.tvlEth, 6),
-    ])
-  return addMissingDailyTimestamps(existing)
+    .map((r) => ({
+      timestamp: r.timestamp,
+      usd: r.tvlUsd,
+      asset: r.tvlEth,
+    }))
+  return getChartPoints(balances, hours, 6, true)
 }

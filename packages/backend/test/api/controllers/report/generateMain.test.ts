@@ -1,5 +1,6 @@
 import {
   AssetId,
+  ChartPoint,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
@@ -14,9 +15,7 @@ import { AggregateReportRecord } from '../../../../src/peripherals/database/Aggr
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
 const now = UnixTime.now().toStartOf('day')
-const twoDaysAgo = now.add(-2, 'days').toStartOf('day')
-const yesterday = now.add(-1, 'days').toStartOf('day')
-const tomorrow = now.add(1, 'days').toStartOf('day')
+const tomorrow = now.add(1, 'days')
 
 function mockToken(assetId: AssetId, symbol: string): TokenInfo {
   return {
@@ -65,100 +64,152 @@ const projects: ProjectInfo[] = [
   },
 ]
 
+function fakeReportsAndCharts(hours: number): {
+  reports: AggregateReportRecord[]
+  mainPoints: ChartPoint[]
+  projectPoints: ChartPoint[]
+} {
+  const earliest = now.add(-2 * hours, 'hours')
+  const before = now.add(-1 * hours, 'hours')
+  const after = now.add(hours, 'hours')
+
+  const reports = [
+    {
+      projectId: optimismId,
+      timestamp: before,
+      tvlEth: 1_000n,
+      tvlUsd: 1_000n,
+    },
+    {
+      projectId: arbitrumId,
+      timestamp: before,
+      tvlEth: 1_000n,
+      tvlUsd: 1_000n,
+    },
+    {
+      projectId: ProjectId.ALL,
+      timestamp: before,
+      tvlEth: 2_000n,
+      tvlUsd: 2_000n,
+    },
+    {
+      projectId: optimismId,
+      timestamp: after,
+      tvlEth: 2_000n,
+      tvlUsd: 2_000n,
+    },
+    {
+      projectId: arbitrumId,
+      timestamp: after,
+      tvlEth: 2_000n,
+      tvlUsd: 2_000n,
+    },
+    {
+      projectId: ProjectId.ALL,
+      timestamp: after,
+      tvlEth: 3_000n,
+      tvlUsd: 3_000n,
+    },
+  ]
+
+  const mainPoints: ChartPoint[] = [
+    [earliest, 20, 0.002],
+    [before, 20, 0.002],
+    [now, 30, 0.003],
+  ]
+
+  const projectPoints: ChartPoint[] = [
+    [earliest, 10, 0.001],
+    [before, 10, 0.001],
+    [now, 20, 0.002],
+  ]
+
+  return {
+    reports,
+    mainPoints,
+    projectPoints,
+  }
+}
+
+const hourly = fakeReportsAndCharts(1)
+const sixHourly = fakeReportsAndCharts(6)
+const daily = fakeReportsAndCharts(24)
+
+const tokenBreakdown: ReportRecord[] = [
+  {
+    asset: AssetId.DAI,
+    projectId: arbitrumId,
+    balance: 1_000n,
+    balanceEth: 1_000n,
+    balanceUsd: 1_000n,
+    timestamp: tomorrow,
+  },
+  {
+    asset: AssetId.DAI,
+    projectId: optimismId,
+    balance: 1_000n,
+    balanceEth: 1_000n,
+    balanceUsd: 1_000n,
+    timestamp: tomorrow,
+  },
+]
+
 describe(generateMain.name, () => {
   it('returns main', () => {
-    const aggregateReports: AggregateReportRecord[] = [
-      {
-        projectId: optimismId,
-        timestamp: yesterday,
-        tvlEth: 1_000n,
-        tvlUsd: 1_000n,
-      },
-      {
-        projectId: arbitrumId,
-        timestamp: yesterday,
-        tvlEth: 1_000n,
-        tvlUsd: 1_000n,
-      },
-      {
-        projectId: ProjectId.ALL,
-        timestamp: yesterday,
-        tvlEth: 2_000n,
-        tvlUsd: 2_000n,
-      },
-      {
-        projectId: optimismId,
-        timestamp: tomorrow,
-        tvlEth: 2_000n,
-        tvlUsd: 2_000n,
-      },
-      {
-        projectId: arbitrumId,
-        timestamp: tomorrow,
-        tvlEth: 2_000n,
-        tvlUsd: 2_000n,
-      },
-      {
-        projectId: ProjectId.ALL,
-        timestamp: tomorrow,
-        tvlEth: 3_000n,
-        tvlUsd: 3_000n,
-      },
-    ]
-
-    const tokenBreakdown: ReportRecord[] = [
-      {
-        asset: AssetId.DAI,
-        projectId: arbitrumId,
-        balance: 1_000n,
-        balanceEth: 1_000n,
-        balanceUsd: 1_000n,
-        timestamp: tomorrow,
-      },
-      {
-        asset: AssetId.DAI,
-        projectId: optimismId,
-        balance: 1_000n,
-        balanceEth: 1_000n,
-        balanceUsd: 1_000n,
-        timestamp: tomorrow,
-      },
-    ]
-
-    expect(generateMain(aggregateReports, tokenBreakdown, projects)).toEqual({
+    expect(
+      generateMain(
+        hourly.reports,
+        sixHourly.reports,
+        daily.reports,
+        tokenBreakdown,
+        projects,
+      ),
+    ).toEqual({
       charts: {
+        hourly: {
+          types: ['timestamp', 'usd', 'eth'],
+          data: hourly.mainPoints,
+        },
+        sixHourly: {
+          types: ['timestamp', 'usd', 'eth'],
+          data: sixHourly.mainPoints,
+        },
         daily: {
           types: ['timestamp', 'usd', 'eth'],
-          data: [
-            [twoDaysAgo, 20, 0.002],
-            [yesterday, 20, 0.002],
-            [now, 30, 0.003],
-          ],
+          data: daily.mainPoints,
         },
       },
       projects: {
         Arbitrum: {
           charts: {
+            hourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: hourly.projectPoints,
+            },
+            sixHourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: sixHourly.projectPoints,
+            },
             daily: {
               types: ['timestamp', 'usd', 'eth'],
-              data: [
-                [twoDaysAgo, 10, 0.001],
-                [yesterday, 10, 0.001],
-                [now, 20, 0.002],
-              ],
+              data: daily.projectPoints,
             },
           },
           tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
         },
         Optimism: {
           charts: {
+            hourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: hourly.projectPoints,
+            },
+            sixHourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: sixHourly.projectPoints,
+            },
             daily: {
               types: ['timestamp', 'usd', 'eth'],
-              data: [
-                [twoDaysAgo, 10, 0.001],
-                [yesterday, 10, 0.001],
-                [now, 20, 0.002],
-              ],
+              data: daily.projectPoints,
             },
           },
           tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
