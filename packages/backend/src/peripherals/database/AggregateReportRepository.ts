@@ -47,7 +47,6 @@ export class AggregateReportRepository extends BaseRepository {
   async getHourly(): Promise<AggregateReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports')
-      .where('is_six_hourly', true)
       .andWhere(
         'unix_timestamp',
         '>=',
