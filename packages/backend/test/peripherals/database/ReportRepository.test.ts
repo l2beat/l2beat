@@ -23,7 +23,7 @@ describe(ReportRepository.name, () => {
   })
 
   describe(ReportRepository.prototype.getDaily.name, () => {
-    it('filters data to get only full days', async () => {
+    it('returns only full days', async () => {
       const dailyReport = fakeReport({ timestamp: TIME_0 })
       await repository.addOrUpdateMany([dailyReport])
       await repository.addOrUpdateMany([
@@ -131,6 +131,81 @@ describe(ReportRepository.name, () => {
         fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
       ])
       const result = await repository.getDailyByProjectAndAsset(
+        PROJECT_A,
+        asset,
+      )
+      expect(result).toEqual([report])
+    })
+  })
+
+  describe(
+    ReportRepository.prototype.getSixHourlyByProjectAndAsset.name,
+    () => {
+      it('returns six hourly reports for a given asset and project', async () => {
+        const asset = AssetId('my-asset')
+        const report = fakeReport({
+          projectId: PROJECT_A,
+          asset,
+          timestamp: TIME_0.add(6, 'hours'),
+        })
+        await repository.addOrUpdateMany([
+          report,
+          fakeReport({
+            projectId: PROJECT_B,
+            timestamp: TIME_0.add(6, 'hours'),
+          }),
+        ])
+        await repository.addOrUpdateMany([
+          fakeReport({
+            projectId: PROJECT_A,
+            timestamp: TIME_0.add(16, 'hours'),
+          }),
+          fakeReport({
+            projectId: PROJECT_B,
+            timestamp: TIME_0.add(16, 'hours'),
+          }),
+        ])
+        await repository.addOrUpdateMany([
+          { ...report, timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes') },
+        ])
+        const result = await repository.getSixHourlyByProjectAndAsset(
+          PROJECT_A,
+          asset,
+        )
+        expect(result).toEqual([report])
+      })
+    },
+  )
+
+  describe(ReportRepository.prototype.getHourlyByProjectAndAsset.name, () => {
+    it('returns hourly reports for a given asset and project', async () => {
+      const asset = AssetId('my-asset')
+      const report = fakeReport({
+        projectId: PROJECT_A,
+        asset,
+        timestamp: TIME_0.add(1, 'hours'),
+      })
+      await repository.addOrUpdateMany([
+        report,
+        fakeReport({
+          projectId: PROJECT_B,
+          timestamp: TIME_0.add(1, 'hours'),
+        }),
+      ])
+      await repository.addOrUpdateMany([
+        fakeReport({
+          projectId: PROJECT_A,
+          timestamp: TIME_0.add(3, 'hours'),
+        }),
+        fakeReport({
+          projectId: PROJECT_B,
+          timestamp: TIME_0.add(3, 'hours'),
+        }),
+      ])
+      await repository.addOrUpdateMany([
+        { ...report, timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes') },
+      ])
+      const result = await repository.getHourlyByProjectAndAsset(
         PROJECT_A,
         asset,
       )

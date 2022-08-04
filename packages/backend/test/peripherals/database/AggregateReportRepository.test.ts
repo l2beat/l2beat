@@ -23,7 +23,7 @@ describe(AggregateReportRepository.name, () => {
   })
 
   describe(AggregateReportRepository.prototype.getDaily.name, () => {
-    it('filters data to get only full days', async () => {
+    it('returns only full days', async () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0 })
       await repository.addOrUpdateMany([REPORT])
       await repository.addOrUpdateMany([
@@ -43,6 +43,63 @@ describe(AggregateReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
       const result = await repository.getDaily()
+      expect(result).toEqual(REPORTS)
+    })
+  })
+
+  describe(AggregateReportRepository.prototype.getSixHourly.name, () => {
+    it('returns only six hourly reports', async () => {
+      const REPORT = fakeAggregateReport({ timestamp: TIME_0.add(-6, 'hours') })
+      await repository.addOrUpdateMany([REPORT])
+      await repository.addOrUpdateMany([
+        fakeAggregateReport({ timestamp: TIME_0.add(-8, 'hours') }),
+      ])
+      await repository.addOrUpdateMany([
+        fakeAggregateReport({
+          timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes'),
+        }),
+      ])
+      const result = await repository.getSixHourly()
+      expect(result).toEqual([REPORT])
+    })
+
+    it('returns sorted data', async () => {
+      const REPORTS = [
+        fakeAggregateReport({ timestamp: TIME_0.add(-12, 'hours') }),
+        fakeAggregateReport({ timestamp: TIME_0.add(-6, 'hours') }),
+        fakeAggregateReport({ timestamp: TIME_0 }),
+      ]
+      await repository.addOrUpdateMany([REPORTS[0]])
+      await repository.addOrUpdateMany([REPORTS[1]])
+      await repository.addOrUpdateMany([REPORTS[2]])
+      const result = await repository.getSixHourly()
+      expect(result).toEqual(REPORTS)
+    })
+  })
+
+  describe(AggregateReportRepository.prototype.getHourly.name, () => {
+    it('returns only last 7 days', async () => {
+      const REPORT = fakeAggregateReport({ timestamp: TIME_0 })
+      await repository.addOrUpdateMany([REPORT])
+      await repository.addOrUpdateMany([
+        fakeAggregateReport({
+          timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes'),
+        }),
+      ])
+      const result = await repository.getHourly()
+      expect(result).toEqual([REPORT])
+    })
+
+    it('returns sorted data', async () => {
+      const REPORTS = [
+        fakeAggregateReport({ timestamp: TIME_0.add(-2, 'days') }),
+        fakeAggregateReport({ timestamp: TIME_0.add(-1, 'days') }),
+        fakeAggregateReport({ timestamp: TIME_0 }),
+      ]
+      await repository.addOrUpdateMany([REPORTS[0]])
+      await repository.addOrUpdateMany([REPORTS[1]])
+      await repository.addOrUpdateMany([REPORTS[2]])
+      const result = await repository.getHourly()
       expect(result).toEqual(REPORTS)
     })
   })
