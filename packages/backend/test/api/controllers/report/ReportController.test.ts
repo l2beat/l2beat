@@ -1,5 +1,6 @@
 import {
   AssetId,
+  Chart,
   CoingeckoId,
   EthereumAddress,
   Logger,
@@ -16,7 +17,10 @@ import { ProjectInfo } from '../../../../src/model/ProjectInfo'
 import { AggregateReportRepository } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { CachedDataRepository } from '../../../../src/peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../../src/peripherals/database/PriceRepository'
-import { ReportRepository } from '../../../../src/peripherals/database/ReportRepository'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../../../src/peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../../src/peripherals/database/ReportStatusRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
@@ -80,17 +84,20 @@ describe(ReportController.name, () => {
     })
     const reportStatusRepository = mock<ReportStatusRepository>()
     const aggregateReportRepository = mock<AggregateReportRepository>()
+
     it('happy case', async () => {
       const reportRepository = mock<ReportRepository>({
         getDaily: mockFn().returns([
-          mockReport(ARBITRUM, AssetId.DAI, -1),
-          mockReport(ARBITRUM, AssetId.DAI, 0),
-
-          mockReport(ARBITRUM, AssetId.WETH, -1),
-          mockReport(ARBITRUM, AssetId.WETH, 0),
-
-          mockReport(OPTIMISM, AssetId.DAI, -1),
-          mockReport(OPTIMISM, AssetId.DAI, 0),
+          mockReport({ projectId: ARBITRUM, timestamp: START.add(-1, 'days') }),
+          mockReport({ projectId: ARBITRUM }),
+          mockReport({
+            projectId: ARBITRUM,
+            asset: AssetId.WETH,
+            timestamp: START.add(-1, 'days'),
+          }),
+          mockReport({ projectId: ARBITRUM, asset: AssetId.WETH }),
+          mockReport({ projectId: OPTIMISM, timestamp: START.add(-1, 'days') }),
+          mockReport({ projectId: OPTIMISM }),
         ]),
       })
 
@@ -213,88 +220,130 @@ describe(ReportController.name, () => {
     })
   })
 
-  // describe.skip(ReportController.prototype.getProjectAssetChart.name, () => {
-  //   it('returns undefined if project does not exist', async () => {
-  //     const controller = new ReportController(
-  //       mock<ReportStatusRepository>(),
-  //       mock<AggregateReportRepository>(),
-  //       mock<ReportRepository>(),
-  //       mock<CachedDataRepository>(),
-  //       mock<PriceRepository>(),
-  //       [],
-  //       [],
-  //       Logger.SILENT,
-  //     )
-  //     const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
-  //     expect(chart).toEqual(undefined)
-  //   })
+  describe(ReportController.prototype.getProjectAssetChart.name, () => {
+    it('returns undefined if project does not exist', async () => {
+      const controller = new ReportController(
+        mock<ReportStatusRepository>(),
+        mock<AggregateReportRepository>(),
+        mock<ReportRepository>(),
+        mock<CachedDataRepository>(),
+        mock<PriceRepository>(),
+        [],
+        [],
+        Logger.SILENT,
+      )
+      const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
+      expect(chart).toEqual(undefined)
+    })
 
-  //   it('returns undefined if asset does not exist', async () => {
-  //     const controller = new ReportController(
-  //       mock<ReportStatusRepository>(),
-  //       mock<AggregateReportRepository>(),
-  //       mock<ReportRepository>(),
+    it('returns undefined if asset does not exist', async () => {
+      const controller = new ReportController(
+        mock<ReportStatusRepository>(),
+        mock<AggregateReportRepository>(),
+        mock<ReportRepository>(),
 
-  //       mock<CachedDataRepository>(),
-  //       mock<PriceRepository>(),
-  //       [
-  //         {
-  //           projectId: OPTIMISM,
-  //           name: 'Optimism',
-  //           bridges: [
-  //             {
-  //               address: OPTIMISM_ADDRESS,
-  //               sinceTimestamp: new UnixTime(0),
-  //               tokens: [mockToken(AssetId.DAI, 'DAI')],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       [],
-  //       Logger.SILENT,
-  //     )
-  //     const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
-  //     expect(chart).toEqual(undefined)
-  //   })
+        mock<CachedDataRepository>(),
+        mock<PriceRepository>(),
+        [
+          {
+            projectId: OPTIMISM,
+            name: 'Optimism',
+            bridges: [
+              {
+                address: OPTIMISM_ADDRESS,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [mockToken(AssetId.DAI, 'DAI')],
+              },
+            ],
+          },
+        ],
+        [],
+        Logger.SILENT,
+      )
+      const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
+      expect(chart).toEqual(undefined)
+    })
 
-  //   it('returns reports', async () => {
-  //     const controller = new ReportController(
-  //       mock<ReportStatusRepository>(),
-  //       mock<AggregateReportRepository>(),
-  //       mock<ReportRepository>({
-  //         getDailyByProjectAndAsset: async () => [
-  //           mockReport(OPTIMISM, AssetId.DAI, 0),
-  //           mockReport(OPTIMISM, AssetId.DAI, 1),
-  //         ],
-  //       }),
-  //       mock<CachedDataRepository>(),
-  //       mock<PriceRepository>(),
-  //       [
-  //         {
-  //           projectId: OPTIMISM,
-  //           name: 'Optimism',
-  //           bridges: [
-  //             {
-  //               address: OPTIMISM_ADDRESS,
-  //               sinceTimestamp: new UnixTime(0),
-  //               tokens: [mockToken(AssetId.DAI, 'DAI')],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       [mockToken(AssetId.DAI, 'DAI')],
-  //       Logger.SILENT,
-  //     )
-  //     const chart = await controller.getProjectAssetChart(OPTIMISM, AssetId.DAI)
-  //     expect(chart).toEqual({
-  //       types: ['timestamp', 'dai', 'usd'],
-  //       data: [
-  //         [new UnixTime(1653868800), 111.1111, 1000.11],
-  //         [new UnixTime(1653955200), 111.1111, 1000.11],
-  //       ],
-  //     })
-  //   })
-  // })
+    it('returns reports', async () => {
+      const controller = new ReportController(
+        mock<ReportStatusRepository>(),
+        mock<AggregateReportRepository>(),
+        mock<ReportRepository>({
+          getHourlyByProjectAndAsset: async () => [
+            mockReport({ projectId: OPTIMISM, asset: AssetId.DAI }),
+            mockReport({
+              projectId: OPTIMISM,
+              asset: AssetId.DAI,
+              timestamp: START.add(1, 'hours'),
+            }),
+          ],
+          getSixHourlyByProjectAndAsset: async () => [
+            mockReport({ projectId: OPTIMISM, asset: AssetId.DAI }),
+            mockReport({
+              projectId: OPTIMISM,
+              asset: AssetId.DAI,
+              timestamp: START.add(6, 'hours'),
+            }),
+          ],
+          getDailyByProjectAndAsset: async () => [
+            mockReport({ projectId: OPTIMISM, asset: AssetId.DAI }),
+            mockReport({
+              projectId: OPTIMISM,
+              asset: AssetId.DAI,
+              timestamp: START.add(1, 'days'),
+            }),
+          ],
+        }),
+        mock<CachedDataRepository>(),
+        mock<PriceRepository>(),
+        [
+          {
+            projectId: OPTIMISM,
+            name: 'Optimism',
+            bridges: [
+              {
+                address: OPTIMISM_ADDRESS,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [mockToken(AssetId.DAI, 'DAI')],
+              },
+            ],
+          },
+        ],
+        [mockToken(AssetId.DAI, 'DAI')],
+        Logger.SILENT,
+      )
+      const types: Chart['types'] = ['timestamp', 'dai', 'usd']
+      const balanceDai = 111.1111
+      const balanceUsd = 1000.11
+      const charts = await controller.getProjectAssetChart(
+        OPTIMISM,
+        AssetId.DAI,
+      )
+      expect(charts).toEqual({
+        hourly: {
+          types,
+          data: [
+            [START.add(-1, 'hours'), balanceDai, balanceUsd],
+            [START, balanceDai, balanceUsd],
+          ],
+        },
+        sixHourly: {
+          types,
+          data: [
+            [START.add(-6, 'hours'), balanceDai, balanceUsd],
+            [START, balanceDai, balanceUsd],
+          ],
+        },
+        daily: {
+          types,
+          data: [
+            [START.add(-1, 'days'), balanceDai, balanceUsd],
+            [START, balanceDai, balanceUsd],
+          ],
+        },
+      })
+    })
+  })
 })
 
 function mockToken(assetId: AssetId, symbol: string): TokenInfo {
@@ -310,15 +359,15 @@ function mockToken(assetId: AssetId, symbol: string): TokenInfo {
   }
 }
 
-function mockReport(projectId: ProjectId, asset: AssetId, offset: number) {
+function mockReport(report: Partial<ReportRecord>): ReportRecord {
   return {
-    timestamp: START.add(offset, 'days'),
-    projectId,
-    asset,
-    blockNumber: 0n,
     balanceUsd: USD,
     balanceEth: ETH,
     balance: BALANCE,
+    timestamp: START,
+    asset: AssetId.DAI,
+    projectId: ProjectId('fake'),
+    ...report,
   }
 }
 
