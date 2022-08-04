@@ -23,7 +23,7 @@ export function MetaImage(props: MetaImageProps) {
           tvl={props.tvl}
           sevenDayChange={props.sevenDayChange}
         />
-        <Chart endpoint={props.apiEndpoint} days={30} />
+        <Chart endpoint={props.apiEndpoint} days={7} />
         <Logo />
       </div>
     </Page>

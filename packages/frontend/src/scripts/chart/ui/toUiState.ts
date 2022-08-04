@@ -1,13 +1,14 @@
-import { formatDate, timestampToDateDays, toDateRange } from '../../../shared'
+import { formatRange, formatTimestamp } from '../../../shared'
 import { ChartStateWithInput } from '../state'
 import { calculateTicks } from './calculateTicks'
 import { formatCurrency, formatCurrencyExact } from './format'
 import { UiState } from './UiState'
 
 export function toUiState(state: ChartStateWithInput): UiState {
-  const dataPoints = state.input.data.filter(
-    (_, i, a) => a.length - 1 - i < state.days,
-  )
+  const isDaily = state.days > 90
+  const dataPoints = isDaily
+    ? state.input.data.filter((_, i, a) => a.length - 1 - i < state.days)
+    : state.input.data
   if (dataPoints.length === 0) {
     return {
       dateRange: 'No data',
@@ -16,9 +17,10 @@ export function toUiState(state: ChartStateWithInput): UiState {
       points: [],
     }
   }
-  const dateRange = toDateRange(
-    timestampToDateDays(dataPoints[0][0]),
-    timestampToDateDays(dataPoints[dataPoints.length - 1][0]),
+  const dateRange = formatRange(
+    dataPoints[0][0],
+    dataPoints[dataPoints.length - 1][0],
+    !isDaily,
   )
 
   const description = state.token
@@ -38,7 +40,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
   const points = dataPoints.map(([timestamp, valueA, valueB], i) => ({
     x: i / (values.length - 1),
     y: getY(state.altCurrency ? valueB : valueA),
-    date: formatDate(timestampToDateDays(timestamp)),
+    date: formatTimestamp(timestamp, !isDaily),
     valueA: formatCurrencyExact(valueA, state.input.types[1]),
     valueB: formatCurrencyExact(valueB, state.input.types[2]),
   }))

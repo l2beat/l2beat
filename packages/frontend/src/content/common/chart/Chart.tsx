@@ -8,7 +8,7 @@ import { ChartLoader } from './ChartLoader'
 export interface ChartProps {
   endpoint: string
   tokens?: { symbol: string; endpoint: string }[]
-  days?: 30 | 90
+  days?: 7 | 90
 }
 
 export function Chart({ endpoint, tokens, days = 90 }: ChartProps) {
@@ -16,7 +16,8 @@ export function Chart({ endpoint, tokens, days = 90 }: ChartProps) {
     <section className="Chart" data-endpoint={endpoint}>
       <p className="Chart-Range">...</p>
       <div className="Chart-RangeControls">
-        <ChartButton checked={days === 30} name="range" value="30D" />
+        <ChartButton checked={days === 7} name="range" value="7D" />
+        <ChartButton name="range" value="30D" />
         <ChartButton checked={days === 90} name="range" value="90D" />
         <ChartButton name="range" value="180D" />
         <ChartButton name="range" value="1Y" />
