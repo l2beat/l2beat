@@ -42,7 +42,7 @@ export function generateReportOutput(
 
   for (const entry of entries) {
     // we subtract a day so that the date represents the end of that day
-    const date = entry.timestamp.add(-1, 'days').toDateDays()
+    const date = entry.timestamp.add(-1, 'days').toYYYYMMDD()
     report.aggregate.data.push([
       date,
       asNumber(entry.value.usd, 2),

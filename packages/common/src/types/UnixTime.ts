@@ -106,7 +106,7 @@ export class UnixTime {
     return this.timestamp
   }
 
-  toDateDays() {
+  toYYYYMMDD() {
     return this.toDate().toISOString().slice(0, 10)
   }
 }
