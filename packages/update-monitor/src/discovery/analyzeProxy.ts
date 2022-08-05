@@ -7,13 +7,23 @@ import { constants, Contract, providers } from 'ethers'
 
 import { bytes32ToAddress } from '../common/address'
 import { getEip1967Admin, getEip1967Implementation } from '../common/eip1967'
+import { getStarkWare2019Implementation } from '../common/starkWareProxy'
 
-export type ProxyAnalysis = EIP1967Analysis | GnosisSafeAnalysis
+export type ProxyAnalysis =
+  | EIP1967Analysis
+  | StarkWare2019Analysis
+  | GnosisSafeAnalysis
 
 export interface EIP1967Analysis {
   type: 'eip1967'
   eip1967Admin: string
   eip1967Implementation: string
+  implementationAnalysis: AnalyzedAddress
+}
+
+export interface StarkWare2019Analysis {
+  type: 'starkWare2019'
+  starkWare2019Implementation: string
   implementationAnalysis: AnalyzedAddress
 }
 
@@ -27,9 +37,16 @@ export async function analyzeProxy(
   addressAnalyzer: AddressAnalyzer,
   proxyAddress: string,
 ): Promise<ProxyAnalysis | undefined> {
-  const [implementation, admin, slot0, masterCopy] = await Promise.all([
+  const [
+    eip1967Implementation,
+    eip1967Admin,
+    starkWare2019Implementation,
+    slot0,
+    masterCopy,
+  ] = await Promise.all([
     getEip1967Implementation(provider, proxyAddress),
     getEip1967Admin(provider, proxyAddress),
+    getStarkWare2019Implementation(provider, proxyAddress),
     getSlot0(provider, proxyAddress),
     getMasterCopy(provider, proxyAddress),
   ])
@@ -44,18 +61,27 @@ export async function analyzeProxy(
     }
   }
 
-  if (implementation === constants.AddressZero) {
-    return undefined
+  if (starkWare2019Implementation !== constants.AddressZero) {
+    const implementationAnalysis = await addressAnalyzer.analyze(
+      EthereumAddress(starkWare2019Implementation),
+    )
+    return {
+      type: 'starkWare2019',
+      starkWare2019Implementation,
+      implementationAnalysis,
+    }
   }
 
-  const implementationAnalysis = await addressAnalyzer.analyze(
-    EthereumAddress(implementation),
-  )
-  return {
-    type: 'eip1967',
-    eip1967Admin: admin,
-    eip1967Implementation: implementation,
-    implementationAnalysis,
+  if (eip1967Implementation !== constants.AddressZero) {
+    const implementationAnalysis = await addressAnalyzer.analyze(
+      EthereumAddress(eip1967Implementation),
+    )
+    return {
+      type: 'eip1967',
+      eip1967Admin: eip1967Admin,
+      eip1967Implementation,
+      implementationAnalysis,
+    }
   }
 }
 
