@@ -3,7 +3,12 @@ import { createHash } from 'crypto'
 
 import { ProjectInfo } from '../model'
 
-export function getConfigHash(projects: ProjectInfo[]): Hash256 {
+const FORCED_RESYNC_ID = 0
+
+export function getConfigHash(
+  projects: ProjectInfo[],
+  forcedResyncId = FORCED_RESYNC_ID,
+): string {
   const entries = []
   for (const { projectId, bridges } of projects) {
     for (const { tokens, address, sinceTimestamp } of bridges) {
@@ -19,5 +24,6 @@ export function getConfigHash(projects: ProjectInfo[]): Hash256 {
     }
   }
   const string = JSON.stringify(entries.map((x) => JSON.stringify(x)).sort())
-  return Hash256('0x' + createHash('sha256').update(string).digest('hex'))
+  const hash = Hash256('0x' + createHash('sha256').update(string).digest('hex'))
+  return `${hash.toString()}-${forcedResyncId}`
 }

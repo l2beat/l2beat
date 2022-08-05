@@ -1,7 +1,8 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/common'
+import { Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { BalanceStatusRepository } from '../../../src/peripherals/database/BalanceStatusRepository'
+import { fakeConfigHash } from './fakes'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(BalanceStatusRepository.name, () => {
@@ -12,8 +13,8 @@ describe(BalanceStatusRepository.name, () => {
     await repository.deleteAll()
   })
 
-  const HASH_ONE = Hash256.random()
-  const HASH_TWO = Hash256.random()
+  const HASH_ONE = fakeConfigHash()
+  const HASH_TWO = fakeConfigHash()
 
   const TIME_ONE = UnixTime.now().toStartOf('hour')
   const TIME_TWO = TIME_ONE.add(-1, 'hours')

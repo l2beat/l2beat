@@ -1,7 +1,6 @@
 import {
   AssetId,
   EthereumAddress,
-  Hash256,
   Logger,
   TaskQueue,
   UnixTime,
@@ -26,7 +25,7 @@ interface HeldAsset {
 }
 
 export class BalanceUpdater {
-  private configHash: Hash256
+  private configHash: string
   private knownSet = new Set<number>()
   private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 

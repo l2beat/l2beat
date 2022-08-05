@@ -1,4 +1,4 @@
-import { getTimestamps, Hash256, UnixTime } from '@l2beat/common'
+import { getTimestamps, UnixTime } from '@l2beat/common'
 
 import { Clock } from '../../../core/Clock'
 import { getConfigHash } from '../../../core/getConfigHash'
@@ -110,7 +110,7 @@ export class StatusController {
 function isSynced(
   statuses: BalanceStatusRecord[],
   timestamp: UnixTime,
-  configHash: Hash256,
+  configHash: string,
 ): boolean {
   return (
     statuses.find((s) => s.timestamp.toString() === timestamp.toString())

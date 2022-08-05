@@ -2,6 +2,7 @@ import {
   ApiMain,
   AssetId,
   Chart,
+  Charts,
   Logger,
   ProjectId,
   TaskQueue,
@@ -9,26 +10,32 @@ import {
 
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'
+import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
 import { CachedDataRepository } from '../../../peripherals/database/CachedDataRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
-import { addOptimismToken, addOptimismTokenV2 } from './addOptimismToken'
+import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import { addOptimismToken } from './addOptimismToken'
+import { aggregateReportsDaily } from './aggregateReportsDaily'
 import {
-  aggregateReportsDaily,
-  aggregateReportsDailyV2,
-} from './aggregateReportsDaily'
-import { asNumber } from './asNumber'
+  getChartPoints,
+  getHourlyMinTimestamp,
+  getSixHourlyMinTimestamp,
+} from './charts'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
-import { generateApiMain, generateReportOutput } from './generateReportOutput'
+import { generateMain } from './generateMain'
+import { generateReportOutput } from './generateReportOutput'
 
 export class ReportController {
   private taskQueue: TaskQueue<void>
 
   constructor(
+    private reportStatusRepository: ReportStatusRepository,
+    private aggregateReportRepository: AggregateReportRepository,
     private reportRepository: ReportRepository,
     private cacheRepository: CachedDataRepository,
     private priceRepository: PriceRepository,
@@ -53,15 +60,37 @@ export class ReportController {
     return this.cacheRepository.getData()
   }
 
-  async getMain() {
-    return this.cacheRepository.getMain()
+  async getMain(): Promise<ApiMain | undefined> {
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    if (!timestamp) {
+      return undefined
+    }
+    const dailyTimestamp = timestamp.toStartOf('day')
+    const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
+      await Promise.all([
+        this.aggregateReportRepository.getHourly(
+          getHourlyMinTimestamp(timestamp),
+        ),
+        this.aggregateReportRepository.getSixHourly(
+          getSixHourlyMinTimestamp(timestamp),
+        ),
+        this.aggregateReportRepository.getDaily(),
+        this.reportRepository.getByTimestamp(dailyTimestamp),
+      ])
+    const apiMain = generateMain(
+      hourlyReports,
+      sixHourlyReports,
+      dailyReports,
+      latestReports,
+      this.projects,
+    )
+    return apiMain
   }
 
   async generateAndCache() {
     this.logger.info('Daily report started')
     const reports = await this.getReports()
     await this.cacheRepository.saveData(await this.generateDaily(reports))
-    await this.cacheRepository.saveMain(await this.generateMain(reports))
     this.logger.info('Daily report saved')
   }
 
@@ -78,32 +107,63 @@ export class ReportController {
     return generateReportOutput(dailyEntries, this.projects)
   }
 
-  async generateMain(reports: ReportRecord[]): Promise<ApiMain> {
-    const dailyEntries = aggregateReportsDailyV2(reports, this.projects)
-    await addOptimismTokenV2(dailyEntries, this.priceRepository)
-    return generateApiMain(dailyEntries, this.projects)
+  private getChartData(
+    reports: ReportRecord[],
+    decimals: number,
+    hours: number,
+  ) {
+    const balances = reports.map((r) => ({
+      timestamp: r.timestamp,
+      usd: r.balanceUsd,
+      asset: r.balance,
+    }))
+    return getChartPoints(balances, hours, decimals)
   }
 
   async getProjectAssetChart(
     projectId: ProjectId,
     assetId: AssetId,
-  ): Promise<Chart | undefined> {
+  ): Promise<Charts | undefined> {
     const project = this.projects.find((p) => p.projectId === projectId)
     const asset = this.tokens.find((t) => t.id === assetId)
     if (!project || !asset) {
       return undefined
     }
-    const reports = await this.reportRepository.getDailyByProjectAndAsset(
-      projectId,
-      assetId,
-    )
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    if (!timestamp) {
+      return undefined
+    }
+    const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
+      this.reportRepository.getHourlyByProjectAndAsset(
+        projectId,
+        assetId,
+        getHourlyMinTimestamp(timestamp),
+      ),
+      this.reportRepository.getSixHourlyByProjectAndAsset(
+        projectId,
+        assetId,
+        getSixHourlyMinTimestamp(timestamp),
+      ),
+      this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
+    ])
+    const types: Chart['types'] = [
+      'timestamp',
+      asset.symbol.toLowerCase(),
+      'usd',
+    ]
     return {
-      types: ['timestamp', asset.symbol.toLowerCase(), 'usd'],
-      data: reports.map((r) => [
-        r.timestamp,
-        +asNumber(r.balance, asset.decimals).toFixed(6),
-        asNumber(r.balanceUsd, 2),
-      ]),
+      hourly: {
+        types,
+        data: this.getChartData(hourlyReports, asset.decimals, 1),
+      },
+      sixHourly: {
+        types,
+        data: this.getChartData(sixHourlyReports, asset.decimals, 6),
+      },
+      daily: {
+        types,
+        data: this.getChartData(dailyReports, asset.decimals, 24),
+      },
     }
   }
 }

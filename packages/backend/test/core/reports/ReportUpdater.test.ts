@@ -6,8 +6,14 @@ import { BalanceUpdater } from '../../../src/core/BalanceUpdater'
 import { Clock } from '../../../src/core/Clock'
 import { getConfigHash } from '../../../src/core/getConfigHash'
 import { PriceUpdater } from '../../../src/core/PriceUpdater'
+import { aggregateReports } from '../../../src/core/reports/aggregateReports'
 import { createReports } from '../../../src/core/reports/createReports'
+import {
+  OP_TOKEN_ID,
+  OPTIMISM_PROJECT_ID,
+} from '../../../src/core/reports/optimism'
 import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
+import { AggregateReportRepository } from '../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
 import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
@@ -17,10 +23,33 @@ describe(ReportUpdater.name, () => {
     ...price,
     timestamp: NOW.add(1, 'hours'),
   }))
+  FUTURE_PRICES.push({
+    priceUsd: 1000,
+    assetId: OP_TOKEN_ID,
+    timestamp: NOW.add(1, 'hours'),
+  })
   const FUTURE_BALANCES = BALANCES.map((balance) => ({
     ...balance,
     timestamp: NOW.add(1, 'hours'),
   }))
+  const REPORTS = createReports(PRICES, BALANCES, PROJECTS)
+  const FUTURE_REPORTS = [
+    ...createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
+    {
+      asset: OP_TOKEN_ID,
+      balance: 214748364000000000000000000n,
+      balanceEth: 214748364000000n,
+      balanceUsd: 21474836400000n,
+      timestamp: NOW.add(1, 'hours'),
+      projectId: OPTIMISM_PROJECT_ID,
+    },
+  ]
+  const AGGREGATE_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
+  const FUTURE_AGGREGATE_REPORTS = aggregateReports(
+    FUTURE_REPORTS,
+    PROJECTS,
+    NOW.add(1, 'hours'),
+  )
 
   describe(ReportUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
@@ -38,6 +67,10 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
+      const aggregateReportRepository = mock<AggregateReportRepository>({
+        addOrUpdateMany: async () => 0,
+      })
+
       const reportStatusRepository = mock<ReportStatusRepository>({
         getByConfigHash: async () => [],
         add: async ({ configHash }) => configHash,
@@ -47,6 +80,7 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
+        aggregateReportRepository,
         reportStatusRepository,
         mock<Clock>(),
         PROJECTS,
@@ -61,10 +95,15 @@ describe(ReportUpdater.name, () => {
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
         [{ configHash, timestamp: NOW }],
       ])
-
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-        [createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)],
-        [createReports(PRICES, BALANCES, PROJECTS)],
+        [FUTURE_REPORTS],
+        [REPORTS],
+      ])
+      expect(
+        aggregateReportRepository.addOrUpdateMany,
+      ).toHaveBeenCalledExactlyWith([
+        [FUTURE_AGGREGATE_REPORTS],
+        [AGGREGATE_REPORTS],
       ])
     })
   })
@@ -82,6 +121,10 @@ describe(ReportUpdater.name, () => {
           .returnsOnce(BALANCES),
       })
       const reportRepository = mock<ReportRepository>({
+        addOrUpdateMany: async () => 0,
+      })
+
+      const aggregateReportRepository = mock<AggregateReportRepository>({
         addOrUpdateMany: async () => 0,
       })
 
@@ -107,6 +150,7 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
+        aggregateReportRepository,
         reportStatusRepository,
         clock,
         PROJECTS,
@@ -123,8 +167,15 @@ describe(ReportUpdater.name, () => {
         ])
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-          [createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)],
-          [createReports(PRICES, BALANCES, PROJECTS)],
+          [FUTURE_REPORTS],
+          [REPORTS],
+        ])
+
+        expect(
+          aggregateReportRepository.addOrUpdateMany,
+        ).toHaveBeenCalledExactlyWith([
+          [FUTURE_AGGREGATE_REPORTS],
+          [AGGREGATE_REPORTS],
         ])
       })
     })
