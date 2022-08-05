@@ -8,13 +8,13 @@ import { getPageMetadata } from './getPageMetadata'
 import { getRiskView } from './getRiskView'
 
 export function getProps(projects: Project[], apiMain: ApiMain): HomePageProps {
-  const tvl = getFromEnd(apiMain.charts.daily.data, 0)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(apiMain.charts.daily.data, 7)?.[1] ?? 0
+  const tvl = getFromEnd(apiMain.charts.hourly.data, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = apiMain.charts.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const getTvl = (project: Project) =>
     getFromEnd(
-      apiMain.projects[project.name]?.charts.daily.data ?? [],
+      apiMain.projects[project.name]?.charts.hourly.data ?? [],
       0,
     )?.[1] ?? 0
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
