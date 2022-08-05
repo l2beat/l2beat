@@ -18,6 +18,8 @@ export async function getStarkNetParameters(
       getStarkNet(provider),
       getEthBridge(provider),
       getSimpleStarkWare2019Proxy(provider, addresses.wbtcBridge, 'WbtcBridge'),
+      getSimpleStarkWare2019Proxy(provider, addresses.usdcBridge, 'UsdcBridge'),
+      getSimpleStarkWare2019Proxy(provider, addresses.usdtBridge, 'UsdtBridge'),
     ]),
   }
 }

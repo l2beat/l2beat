@@ -35,6 +35,24 @@
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
       },
       "values": {}
+    },
+    {
+      "name": "UsdcBridge",
+      "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      },
+      "values": {}
+    },
+    {
+      "name": "UsdtBridge",
+      "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      },
+      "values": {}
     }
   ]
 }

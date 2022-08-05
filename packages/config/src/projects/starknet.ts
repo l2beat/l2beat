@@ -125,7 +125,7 @@ export const starknet: Project = {
             address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b',
+              implementation: '0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8',
               upgradeDelay: 0,
               isFinal: false,
             },
