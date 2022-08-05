@@ -33,6 +33,16 @@
       }
     },
     {
+      "name": "GpsStatementVerifier",
+      "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "upgradeability": {
+        "type": "call proxy",
+        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "callProxyImplementation": "0xa739B175325cCA7b71fcB51C3032935Ef7Ac338F"
+      },
+      "values": {}
+    },
+    {
       "name": "WbtcBridge",
       "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
       "upgradeability": {

@@ -5,6 +5,7 @@ import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 import { getEthBridge } from './contracts/ethBridge'
+import { getGps } from './contracts/gps'
 import { getStarkNet } from './contracts/starknet'
 
 export const STARK_NET_NAME = 'starkNet'
@@ -17,6 +18,7 @@ export async function getStarkNetParameters(
     contracts: await Promise.all([
       getStarkNet(provider),
       getEthBridge(provider),
+      getGps(provider),
       getSimpleStarkWare2019Proxy(provider, addresses.wbtcBridge, 'WbtcBridge'),
       getSimpleStarkWare2019Proxy(provider, addresses.usdcBridge, 'UsdcBridge'),
       getSimpleStarkWare2019Proxy(provider, addresses.usdtBridge, 'UsdtBridge'),
@@ -29,5 +31,6 @@ export async function discoverStarkNet(discoveryEngine: DiscoveryEngine) {
     addresses.starkNet,
     addresses.ethBridge,
     addresses.wbtcBridge,
+    addresses.gpsStatementVerifier,
   ])
 }
