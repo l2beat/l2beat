@@ -59,7 +59,7 @@ describe(AggregateReportRepository.name, () => {
           timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes'),
         }),
       ])
-      const result = await repository.getSixHourly()
+      const result = await repository.getSixHourly(TIME_0.add(-1, 'days'))
       expect(result).toEqual([REPORT])
     })
 
@@ -72,7 +72,7 @@ describe(AggregateReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getSixHourly()
+      const result = await repository.getSixHourly(TIME_0.add(-1, 'days'))
       expect(result).toEqual(REPORTS)
     })
   })
@@ -86,7 +86,7 @@ describe(AggregateReportRepository.name, () => {
           timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes'),
         }),
       ])
-      const result = await repository.getHourly()
+      const result = await repository.getHourly(TIME_0.add(-1, 'days'))
       expect(result).toEqual([REPORT])
     })
 
@@ -99,7 +99,7 @@ describe(AggregateReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getHourly()
+      const result = await repository.getHourly(TIME_0.add(-7, 'days'))
       expect(result).toEqual(REPORTS)
     })
   })
