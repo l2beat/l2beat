@@ -16,7 +16,7 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('aggregate_reports', function (table) {
     table.bigInteger('unix_timestamp').notNullable()
-    table.string('project_id').notNullable()
+    table.string('project_id').notNullable().index()
     table.decimal('tvl_usd', 80, 0).notNullable()
     table.decimal('tvl_eth', 80, 0).notNullable()
     table.boolean('is_daily').notNullable().index()

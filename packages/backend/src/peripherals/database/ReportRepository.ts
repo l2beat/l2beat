@@ -107,32 +107,26 @@ export class ReportRepository extends BaseRepository {
   async getHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
+    from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await this.getByProjectAndAssetQuery(
       knex,
       projectId,
       assetId,
-    ).andWhere(
-      'unix_timestamp',
-      '>=',
-      UnixTime.now().add(-7, 'days').toString(),
-    )
+    ).andWhere('unix_timestamp', '>=', from.toString())
     return rows.map(toRecord)
   }
 
   async getSixHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
+    from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('is_six_hourly', true)
-      .andWhere(
-        'unix_timestamp',
-        '>=',
-        UnixTime.now().add(-90, 'days').toString(),
-      )
+      .andWhere('unix_timestamp', '>=', from.toString())
     return rows.map(toRecord)
   }
 }

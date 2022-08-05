@@ -266,7 +266,11 @@ describe(ReportController.name, () => {
 
     it('returns reports', async () => {
       const controller = new ReportController(
-        mock<ReportStatusRepository>(),
+        mock<ReportStatusRepository>({
+          async findLatestTimestamp() {
+            return START.add(-1, 'days')
+          },
+        }),
         mock<AggregateReportRepository>(),
         mock<ReportRepository>({
           getHourlyByProjectAndAsset: async () => [

@@ -31,27 +31,19 @@ export class AggregateReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getSixHourly(): Promise<AggregateReportRecord[]> {
+  async getSixHourly(from: UnixTime): Promise<AggregateReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports')
       .where('is_six_hourly', true)
-      .andWhere(
-        'unix_timestamp',
-        '>=',
-        UnixTime.now().add(-90, 'days').toString(),
-      )
+      .andWhere('unix_timestamp', '>=', from.toString())
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
 
-  async getHourly(): Promise<AggregateReportRecord[]> {
+  async getHourly(from: UnixTime): Promise<AggregateReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports')
-      .andWhere(
-        'unix_timestamp',
-        '>=',
-        UnixTime.now().add(-7, 'days').toString(),
-      )
+      .andWhere('unix_timestamp', '>=', from.toString())
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }

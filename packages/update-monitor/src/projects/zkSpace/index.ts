@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { getSimpleProxy } from '../../common/simpleProxy'
+import { getSimpleEip1967Proxy } from '../../common/getSimpleEip1967Proxy'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
@@ -20,9 +20,9 @@ export async function getZkSpaceParameters(
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
       getGovernance(provider),
-      getSimpleProxy(provider, addresses.verifier, 'Verifier'),
-      getSimpleProxy(provider, addresses.verifierExit, 'VerifierExit'),
-      getSimpleProxy(provider, addresses.pairManager, 'PairManager'),
+      getSimpleEip1967Proxy(provider, addresses.verifier, 'Verifier'),
+      getSimpleEip1967Proxy(provider, addresses.verifierExit, 'VerifierExit'),
+      getSimpleEip1967Proxy(provider, addresses.pairManager, 'PairManager'),
       getZKSeaNFT(provider),
     ]),
   }

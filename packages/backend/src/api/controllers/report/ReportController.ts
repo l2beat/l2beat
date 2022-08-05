@@ -20,7 +20,11 @@ import {
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { addOptimismToken } from './addOptimismToken'
 import { aggregateReportsDaily } from './aggregateReportsDaily'
-import { getChartPoints } from './charts'
+import {
+  getChartPoints,
+  getHourlyMinTimestamp,
+  getSixHourlyMinTimestamp,
+} from './charts'
 import { filterReportsByProjects } from './filter/filterReportsByProjects'
 import { getSufficientlySynced } from './filter/getSufficientlySynced'
 import { generateMain } from './generateMain'
@@ -64,8 +68,12 @@ export class ReportController {
     const dailyTimestamp = timestamp.toStartOf('day')
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
-        this.aggregateReportRepository.getHourly(),
-        this.aggregateReportRepository.getSixHourly(),
+        this.aggregateReportRepository.getHourly(
+          getHourlyMinTimestamp(timestamp),
+        ),
+        this.aggregateReportRepository.getSixHourly(
+          getSixHourlyMinTimestamp(timestamp),
+        ),
         this.aggregateReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(dailyTimestamp),
       ])
@@ -121,9 +129,21 @@ export class ReportController {
     if (!project || !asset) {
       return undefined
     }
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    if (!timestamp) {
+      return undefined
+    }
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
-      this.reportRepository.getHourlyByProjectAndAsset(projectId, assetId),
-      this.reportRepository.getSixHourlyByProjectAndAsset(projectId, assetId),
+      this.reportRepository.getHourlyByProjectAndAsset(
+        projectId,
+        assetId,
+        getHourlyMinTimestamp(timestamp),
+      ),
+      this.reportRepository.getSixHourlyByProjectAndAsset(
+        projectId,
+        assetId,
+        getSixHourlyMinTimestamp(timestamp),
+      ),
       this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
     ])
     const types: Chart['types'] = [

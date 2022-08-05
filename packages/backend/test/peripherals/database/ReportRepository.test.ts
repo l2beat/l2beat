@@ -171,6 +171,7 @@ describe(ReportRepository.name, () => {
         const result = await repository.getSixHourlyByProjectAndAsset(
           PROJECT_A,
           asset,
+          TIME_0.add(-1, 'days'),
         )
         expect(result).toEqual([report])
       })
@@ -208,6 +209,7 @@ describe(ReportRepository.name, () => {
       const result = await repository.getHourlyByProjectAndAsset(
         PROJECT_A,
         asset,
+        TIME_0.add(-1, 'days'),
       )
       expect(result).toEqual([report])
     })

@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
+import { getSimpleEip1967Proxy } from '../../common/getSimpleEip1967Proxy'
 import { getGnosisSafe } from '../../common/gnosisSafe'
-import { getSimpleProxy } from '../../common/simpleProxy'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
@@ -21,7 +21,7 @@ export async function getZkSyncParameters(
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
       getGovernance(provider),
-      getSimpleProxy(provider, addresses.verifier, 'Verifier'),
+      getSimpleEip1967Proxy(provider, addresses.verifier, 'Verifier'),
       getTokenGovernance(provider),
       getGnosisSafe(provider, addresses.multisig, 'Multisig'),
     ]),

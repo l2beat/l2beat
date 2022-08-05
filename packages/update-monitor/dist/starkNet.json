@@ -1,0 +1,40 @@
+{
+  "name": "starkNet",
+  "contracts": [
+    {
+      "name": "StarkNet",
+      "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"
+      },
+      "values": {
+        "upgradeActivationDelay": 0,
+        "configHash": "0x017c0bc29d31e9a7d14671610a7626264ce9ce8e3ed066a4775adf9b123de9dd",
+        "programHash": "0x0685cd631b8a3aab798fbada2cf5db713b6080d6fdc7f6cf6218f37ac48e857d"
+      }
+    },
+    {
+      "name": "EthBridge",
+      "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"
+      },
+      "values": {
+        "upgradeActivationDelay": 0,
+        "maxDeposit": "1500000000000000000",
+        "maxTotalBalance": "710000000000000000000"
+      }
+    },
+    {
+      "name": "WbtcBridge",
+      "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      },
+      "values": {}
+    }
+  ]
+}
