@@ -1,0 +1,4 @@
+export const addresses = {
+  starkNet: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+  ethBridge: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
+}
