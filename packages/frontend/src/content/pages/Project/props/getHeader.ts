@@ -5,9 +5,9 @@ import { HeaderProps } from '../../../common'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
 
 export function getHeader(project: Project, apiMain: ApiMain): HeaderProps {
-  const daily = apiMain.projects[project.name]?.charts.daily.data ?? []
-  const tvl = getFromEnd(daily, 0)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(daily, 7)?.[1] ?? 0
+  const hourly = apiMain.projects[project.name]?.charts.hourly.data ?? []
+  const tvl = getFromEnd(hourly, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {
