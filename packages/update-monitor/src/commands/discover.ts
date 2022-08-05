@@ -7,6 +7,7 @@ import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
+import { discoverStarkNet, STARK_NET_NAME } from '../projects/starknet'
 import { discoverZkSpace, ZK_SPACE_NAME } from '../projects/zkSpace'
 import { discoverZkSwap1, ZK_SWAP_1_NAME } from '../projects/zkSwap1'
 import { discoverZkSwap2, ZK_SWAP_2_NAME } from '../projects/zkSwap2'
@@ -39,6 +40,7 @@ export async function discover(args: string[]) {
     [ZK_SWAP_2_NAME, discoverZkSwap2],
     [ZK_SPACE_NAME, discoverZkSpace],
     [ARBITRUM_NAME, discoverArbitrum],
+    [STARK_NET_NAME, discoverStarkNet],
   ]
 
   const project = projects.find((x) => x[0] === args[0])
