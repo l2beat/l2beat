@@ -55,6 +55,11 @@ export async function analyzeItem(
       type: 'proxy',
       implementation: proxy.eip1967Implementation,
     }
+  } else if (proxy?.type === 'starkWare2019') {
+    upgradeability = {
+      type: 'proxy',
+      implementation: proxy.starkWare2019Implementation,
+    }
   } else if (proxy?.type === 'gnosis safe') {
     upgradeability = { type: 'gnosis safe' }
   }
