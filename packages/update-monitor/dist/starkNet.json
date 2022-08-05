@@ -26,6 +26,15 @@
         "maxDeposit": "1500000000000000000",
         "maxTotalBalance": "710000000000000000000"
       }
+    },
+    {
+      "name": "WbtcBridge",
+      "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      },
+      "values": {}
     }
   ]
 }
