@@ -30,19 +30,18 @@ export class ReportUpdater {
     this.configHash = getConfigHash(projects)
   }
 
-  start() {
+  async start() {
+    const known = await this.reportStatusRepository.getByConfigHash(
+      this.configHash,
+    )
+    const knownSet = new Set(known.map((x) => x.toNumber()))
+
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
-      this.reportStatusRepository
-        .find(this.configHash, timestamp)
-        .then((status) => {
-          if (status) {
-            return
-          }
-          // we add to front to sync from newest to oldest
-          this.taskQueue.addToFront(timestamp)
-        })
-        .catch((error) => this.logger.error(error))
+      if (!knownSet.has(timestamp.toNumber())) {
+        // we add to front to sync from newest to oldest
+        this.taskQueue.addToFront(timestamp)
+      }
     })
   }
 
