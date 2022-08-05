@@ -30,7 +30,7 @@ function getFinancialViewEntry(
   projectData: ApiProject | undefined,
   aggregateTvl: number,
 ): FinancialViewEntry {
-  const aggregate = projectData?.charts.daily.data ?? []
+  const aggregate = projectData?.charts.hourly.data ?? []
   const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
   const tvlOneDayAgo = getFromEnd(aggregate, 1)?.[1] ?? 0
   const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
