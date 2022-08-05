@@ -68,8 +68,12 @@ export class ReportController {
     const dailyTimestamp = timestamp.toStartOf('day')
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
-        this.aggregateReportRepository.getHourly(getHourlyMinTimestamp()),
-        this.aggregateReportRepository.getSixHourly(getSixHourlyMinTimestamp()),
+        this.aggregateReportRepository.getHourly(
+          getHourlyMinTimestamp(timestamp),
+        ),
+        this.aggregateReportRepository.getSixHourly(
+          getSixHourlyMinTimestamp(timestamp),
+        ),
         this.aggregateReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(dailyTimestamp),
       ])
@@ -125,16 +129,20 @@ export class ReportController {
     if (!project || !asset) {
       return undefined
     }
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    if (!timestamp) {
+      return undefined
+    }
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.reportRepository.getHourlyByProjectAndAsset(
         projectId,
         assetId,
-        getHourlyMinTimestamp(),
+        getHourlyMinTimestamp(timestamp),
       ),
       this.reportRepository.getSixHourlyByProjectAndAsset(
         projectId,
         assetId,
-        getSixHourlyMinTimestamp(),
+        getSixHourlyMinTimestamp(timestamp),
       ),
       this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
     ])
