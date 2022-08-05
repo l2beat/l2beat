@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
-import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
 import { getStarkWareNamedStorageAddress } from '../../../common/starkWareNamedStorage'
+import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
 import { StarkNet__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'

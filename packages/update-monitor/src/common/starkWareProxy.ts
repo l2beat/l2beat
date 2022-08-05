@@ -21,7 +21,7 @@ export async function getStarkWare2019Implementation(
   return bytes32ToAddress(value)
 }
 
-export async function getStarkWare2019CallProxyImplementation(
+export async function getStarkWare2020CallProxyImplementation(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
