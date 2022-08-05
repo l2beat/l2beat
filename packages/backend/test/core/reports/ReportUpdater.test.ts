@@ -129,10 +129,13 @@ describe(ReportUpdater.name, () => {
       })
 
       const reportStatusRepository = mock<ReportStatusRepository>({
-        getByConfigHash: async () => [
-          NOW.add(-1, 'hours'),
-          NOW.add(2, 'hours'),
-        ],
+        find: async (configHash, timestamp) => {
+          return [NOW.add(-1, 'hours'), NOW.add(2, 'hours')].find((t) =>
+            t.equals(timestamp),
+          )
+            ? { configHash, timestamp }
+            : undefined
+        },
         add: async ({ configHash }) => configHash,
       })
 
@@ -157,7 +160,7 @@ describe(ReportUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await reportUpdater.start()
+      reportUpdater.start()
 
       await waitForExpect(() => {
         const configHash = getConfigHash(PROJECTS)

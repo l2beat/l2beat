@@ -165,7 +165,7 @@ export class Application {
         priceUpdater.start()
         await blockNumberUpdater.start()
         await balanceUpdater.start()
-        await reportUpdater.start()
+        reportUpdater.start()
       }
     }
 

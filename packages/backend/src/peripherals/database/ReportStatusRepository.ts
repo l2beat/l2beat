@@ -19,6 +19,7 @@ export class ReportStatusRepository extends BaseRepository {
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getBetween = this.wrapGet(this.getBetween)
     this.findLatestTimestamp = this.wrapFind(this.findLatestTimestamp)
+    this.find = this.wrapFind(this.find)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -30,6 +31,15 @@ export class ReportStatusRepository extends BaseRepository {
       .select('unix_timestamp')
 
     return rows.map((r) => new UnixTime(+r.unix_timestamp))
+  }
+
+  async find(configHash: string, timestamp: UnixTime) {
+    const knex = await this.knex()
+    const row = await knex('report_status')
+      .where('config_hash', configHash)
+      .andWhere('unix_timestamp', timestamp.toString())
+      .first()
+    return row ? { configHash, timestamp } : undefined
   }
 
   async add(record: {
