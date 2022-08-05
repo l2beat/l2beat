@@ -24,7 +24,11 @@
       "values": {
         "upgradeActivationDelay": 0,
         "maxDeposit": "1500000000000000000",
-        "maxTotalBalance": "710000000000000000000"
+        "maxTotalBalance": "710000000000000000000",
+        "bridgedToken": "0x0000000000000000000000000000000000000000",
+        "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+        "depositorAddress": "0x0000000000000000000000000000000000000000"
       }
     },
     {
