@@ -11,7 +11,8 @@
       "values": {
         "upgradeActivationDelay": 0,
         "configHash": "0x017c0bc29d31e9a7d14671610a7626264ce9ce8e3ed066a4775adf9b123de9dd",
-        "programHash": "0x0685cd631b8a3aab798fbada2cf5db713b6080d6fdc7f6cf6218f37ac48e857d"
+        "programHash": "0x0685cd631b8a3aab798fbada2cf5db713b6080d6fdc7f6cf6218f37ac48e857d",
+        "verifierAddress": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       }
     },
     {

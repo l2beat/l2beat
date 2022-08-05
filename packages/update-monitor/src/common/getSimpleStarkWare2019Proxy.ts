@@ -1,7 +1,10 @@
 import { providers } from 'ethers'
 
 import { ContractParameters } from '../types'
-import { getStarkWare2019Implementation } from './starkWareProxy'
+import {
+  getStarkWare2019Implementation,
+  getStarkWare2019CallProxyImplementation,
+} from './starkWareProxy'
 
 export async function getSimpleStarkWare2019Proxy(
   provider: providers.JsonRpcProvider,
