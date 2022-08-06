@@ -11,7 +11,8 @@
       "values": {
         "upgradeActivationDelay": 0,
         "configHash": "0x017c0bc29d31e9a7d14671610a7626264ce9ce8e3ed066a4775adf9b123de9dd",
-        "programHash": "0x0685cd631b8a3aab798fbada2cf5db713b6080d6fdc7f6cf6218f37ac48e857d"
+        "programHash": "0x0685cd631b8a3aab798fbada2cf5db713b6080d6fdc7f6cf6218f37ac48e857d",
+        "verifierAddress": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       }
     },
     {
@@ -24,8 +25,22 @@
       "values": {
         "upgradeActivationDelay": 0,
         "maxDeposit": "1500000000000000000",
-        "maxTotalBalance": "710000000000000000000"
+        "maxTotalBalance": "710000000000000000000",
+        "bridgedToken": "0x0000000000000000000000000000000000000000",
+        "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+        "depositorAddress": "0x0000000000000000000000000000000000000000"
       }
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "upgradeability": {
+        "type": "call proxy",
+        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "callProxyImplementation": "0xa739B175325cCA7b71fcB51C3032935Ef7Ac338F"
+      },
+      "values": {}
     },
     {
       "name": "WbtcBridge",
@@ -34,7 +49,37 @@
         "type": "proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
       },
-      "values": {}
+      "values": {
+        "isFrozen": false,
+        "maxDeposit": 500000,
+        "maxTotalBalance": 500000000
+      }
+    },
+    {
+      "name": "UsdcBridge",
+      "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      },
+      "values": {
+        "isFrozen": false,
+        "maxDeposit": 2000000000,
+        "maxTotalBalance": 100000000000
+      }
+    },
+    {
+      "name": "UsdtBridge",
+      "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      },
+      "values": {
+        "isFrozen": false,
+        "maxDeposit": 2000000000,
+        "maxTotalBalance": 100000000000
+      }
     }
   ]
 }
