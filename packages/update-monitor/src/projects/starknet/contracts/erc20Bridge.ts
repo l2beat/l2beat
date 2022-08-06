@@ -1,10 +1,8 @@
 import { providers } from 'ethers'
 
-import { getStarkWareNamedStorageAddress } from '../../../common/starkWareNamedStorage'
 import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
 import { StarknetERC20Bridge__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
-import { addresses } from '../constants'
 
 export async function getErc20Bridge(
   provider: providers.JsonRpcProvider,
