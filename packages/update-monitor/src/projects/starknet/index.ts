@@ -1,10 +1,10 @@
 import { providers } from 'ethers'
 
-import { getSimpleStarkWare2019Proxy } from '../../common/getSimpleStarkWare2019Proxy'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 import { getEthBridge } from './contracts/ethBridge'
+import { getErc20Bridge } from './contracts/erc20Bridge'
 import { getGps } from './contracts/gps'
 import { getStarkNet } from './contracts/starknet'
 
@@ -19,9 +19,9 @@ export async function getStarkNetParameters(
       getStarkNet(provider),
       getEthBridge(provider),
       getGps(provider),
-      getSimpleStarkWare2019Proxy(provider, addresses.wbtcBridge, 'WbtcBridge'),
-      getSimpleStarkWare2019Proxy(provider, addresses.usdcBridge, 'UsdcBridge'),
-      getSimpleStarkWare2019Proxy(provider, addresses.usdtBridge, 'UsdtBridge'),
+      getErc20Bridge(provider, addresses.wbtcBridge, 'WbtcBridge'),
+      getErc20Bridge(provider, addresses.usdcBridge, 'UsdcBridge'),
+      getErc20Bridge(provider, addresses.usdtBridge, 'UsdtBridge'),
     ]),
   }
 }

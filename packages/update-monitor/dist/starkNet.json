@@ -49,7 +49,11 @@
         "type": "proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
       },
-      "values": {}
+      "values": {
+        "isFrozen": false,
+        "maxDeposit": 500000,
+        "maxTotalBalance": 500000000
+      }
     },
     {
       "name": "UsdcBridge",
@@ -58,7 +62,11 @@
         "type": "proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
       },
-      "values": {}
+      "values": {
+        "isFrozen": false,
+        "maxDeposit": 2000000000,
+        "maxTotalBalance": 100000000000
+      }
     },
     {
       "name": "UsdtBridge",
@@ -67,7 +75,11 @@
         "type": "proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
       },
-      "values": {}
+      "values": {
+        "isFrozen": false,
+        "maxDeposit": 2000000000,
+        "maxTotalBalance": 100000000000
+      }
     }
   ]
 }

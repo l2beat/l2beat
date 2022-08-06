@@ -24,3 +24,11 @@ export async function getGps(
     values: {},
   }
 }
+
+/*  Slots
+1 - 
+2 - MemoryPageFact Registry
+0xc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85b - CPU Friless Verifier (verifier[0])
+0xc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85c - CPU Friless Verifier (verifier[1])
+0xc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85d - CPU Friless Verifier (verifier[2])
+*/
