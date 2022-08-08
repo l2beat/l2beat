@@ -19,7 +19,9 @@ export async function up(knex: Knex) {
     table.bigInteger('unix_timestamp').notNullable()
     table.string('project_id').notNullable()
     table.string('event_name').notNullable()
+    table.string('type').notNullable()
     table.primary(['block_number', 'project_id', 'event_name'])
+    table.index(['type'])
   })
 }
 

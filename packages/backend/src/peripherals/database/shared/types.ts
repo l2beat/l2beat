@@ -59,6 +59,13 @@ declare module 'knex/types/tables' {
     data: ReportOutput | ApiMain
   }
 
+  interface EventRow {
+    block_number: number
+    unix_timestamp: string
+    project_id: string
+    event_name: string
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -68,5 +75,6 @@ declare module 'knex/types/tables' {
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
     cached_data: CachedDataRow
+    events: EventRow
   }
 }
