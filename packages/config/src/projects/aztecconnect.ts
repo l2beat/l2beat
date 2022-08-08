@@ -194,4 +194,6 @@ export const aztecconnect: Project = {
       },
     ],
   },
+
+  events: [],
 }

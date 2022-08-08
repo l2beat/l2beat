@@ -184,4 +184,6 @@ export const aztec: Project = {
       },
     ],
   },
+
+  events: [],
 }

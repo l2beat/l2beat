@@ -170,4 +170,6 @@ export const dydx: Project = {
       },
     ],
   },
+
+  events: [],
 }

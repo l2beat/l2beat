@@ -415,13 +415,14 @@ export const arbitrum: Project = {
     ],
   },
 
-  events: {
-    state: {
+  events: [
+    {
       abi: new utils.Interface([
         'event SequencerBatchDeliveredFromOrigin(uint256 firstMessageNum, bytes32 beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
       ]),
       name: 'SequencerBatchDeliveredFromOrigin',
       emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
+      type: 'state',
     },
-  },
+  ],
 }

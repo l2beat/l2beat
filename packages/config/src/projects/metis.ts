@@ -325,4 +325,6 @@ export const metis: Project = {
       },
     ],
   },
+
+  events: [],
 }

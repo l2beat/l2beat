@@ -144,4 +144,6 @@ export const omgnetwork: Project = {
       },
     ],
   },
+
+  events: [],
 }

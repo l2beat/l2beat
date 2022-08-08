@@ -306,4 +306,6 @@ export const loopring: Project = {
       },
     ],
   },
+
+  events: [],
 }

@@ -166,4 +166,6 @@ export const layer2financezk: Project = {
       },
     ],
   },
+
+  events: [],
 }

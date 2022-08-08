@@ -228,4 +228,6 @@ export const hermez: Project = {
       },
     ],
   },
+
+  events: [],
 }

@@ -207,4 +207,6 @@ export const gluon: Project = {
       },
     ],
   },
+
+  events: [],
 }

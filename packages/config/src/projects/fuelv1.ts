@@ -127,4 +127,6 @@ export const fuelv1: Project = {
       },
     ],
   },
+
+  events: [],
 }

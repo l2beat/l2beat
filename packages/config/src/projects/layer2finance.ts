@@ -193,4 +193,6 @@ export const layer2finance: Project = {
       },
     ],
   },
+
+  events: [],
 }

@@ -144,4 +144,6 @@ export const sorare: Project = {
       },
     ],
   },
+
+  events: [],
 }
