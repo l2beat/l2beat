@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 
+import { getStarkWareNamedStorageAddress } from '../../../common/starkWareNamedStorage'
 import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
 import { StarkNet__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
@@ -23,6 +24,11 @@ export async function getStarkNet(
       ).toNumber(),
       configHash: (await starkNet.configHash()).toHexString(),
       programHash: (await starkNet.programHash()).toHexString(),
+      verifierAddress: await getStarkWareNamedStorageAddress(
+        provider,
+        starkNet,
+        'STARKNET_1.0_INIT_VERIFIER_ADDRESS',
+      ),
     },
   }
 }

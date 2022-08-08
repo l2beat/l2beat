@@ -14,6 +14,7 @@ export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
   | ProxyUpgradeability
+  | CallProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -26,6 +27,12 @@ export interface GnosisSafeUpgradeability {
 export interface ProxyUpgradeability {
   type: 'proxy'
   implementation: string
+}
+
+export interface CallProxyUpgradeability {
+  type: 'call proxy'
+  implementation: string
+  callProxyImplementation: string
 }
 
 export type ContractValue =
