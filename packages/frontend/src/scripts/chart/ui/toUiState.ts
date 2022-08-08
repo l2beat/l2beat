@@ -23,7 +23,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
       points: [],
     }
   }
-  const withTime = state.days === 7
+  const withTime = state.days <= 90
   const dateRange = formatRange(
     dataPoints[0][0],
     dataPoints[dataPoints.length - 1][0],
