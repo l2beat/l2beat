@@ -13,6 +13,7 @@ import { Config } from './config'
 import { BalanceUpdater } from './core/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { Clock } from './core/Clock'
+import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
@@ -121,6 +122,13 @@ export class Application {
       logger,
     )
 
+    const eventUpdater = new EventUpdater(
+      etherscanClient,
+      ethereumClient,
+      config.projects,
+      logger,
+    )
+
     // #endregion
     // #region api
 
@@ -150,7 +158,7 @@ export class Application {
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
-      createEventsRouter(ethereumClient, config.projects)
+      createEventsRouter(eventUpdater),
     ])
 
     // #endregion

@@ -15,9 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/common": "*"
-  },
-  "devDependencies": {
+    "@l2beat/common": "*",
     "ethers": "^5.6.8"
   }
 }

@@ -1,37 +1,12 @@
 import Router from '@koa/router'
 
-import { ProjectInfo } from '../../model'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { EventUpdater } from '../../core/events/EventUpdater'
 
-export function createEventsRouter(
-  ethereum: EthereumClient,
-  projects: ProjectInfo[],
-) {
+export function createEventsRouter(eventUpdater: EventUpdater) {
   const router = new Router()
 
   router.get('/api/events', async (ctx) => {
-    const events = projects
-      .filter((p) => p.events)
-      .map((p) => p.events)
-      .flat()
-
-    const result = []
-
-    await Promise.allSettled(
-      events.map(async (event) => {
-        const res = await ethereum.getLogs(
-          event.emitter,
-          [event.abi.getEventTopic('SequencerBatchDeliveredFromOrigin')],
-          15265446,
-          15275446,
-        )
-
-        console.log(res.map((r) => r.blockNumber))
-        result.push(res.map((r) => r.blockNumber))
-      }),
-    )
-
-    ctx.body = JSON.stringify(result)
+    ctx.body = JSON.stringify(await eventUpdater.fetchStateUpdates())
   })
 
   return router

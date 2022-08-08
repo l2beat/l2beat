@@ -25,6 +25,10 @@ export class EthereumClient {
     })
   }
 
+  async getBlock(blockNumber: number) {
+    return await this.provider.getBlock(blockNumber)
+  }
+
   async call(parameters: CallParameters, blockTag: BlockTag) {
     const bytes = await this.provider.call(
       {
