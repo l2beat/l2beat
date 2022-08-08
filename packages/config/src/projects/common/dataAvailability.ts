@@ -50,9 +50,29 @@ const GENERIC_OFF_CHAIN: ProjectTechnologyChoice = {
     {
       category: 'Funds can be lost if',
       text: 'the external data becomes unavailable.',
+      isCritical: true,
     },
   ],
   references: [],
+}
+
+const ANYTRUST_OFF_CHAIN: ProjectTechnologyChoice = {
+  ...GENERIC_OFF_CHAIN,
+  description:
+    'Users transactions are not published on-chain, but rather sent to several well known and trusted parties, also known as committee members (DAC). New transaction batch needs a BLS signature with the required DAC quorum, for example 9/10. This signature is not verified by L1, however external Validators will skip the batch if BLS signature is not valid resulting. This will reslt in a fraud proof challenge if this batch is included in a consequitive state update. It is assumed that at least one honest DAC member that signed the batch will reveal tx data to the Validators if Sequencer decides to act maliciously and withhold the data.',
+  risks: [
+    ...GENERIC_OFF_CHAIN.risks,
+    {
+      category: 'Users can be censored if',
+      text: 'the committee restricts their access to the external data.',
+    },
+  ],
+  references: [
+    {
+      text: 'AnyTrust Chains - Arbitrum documentation',
+      href: 'https://developer.offchainlabs.com/docs/anytrust',
+    },
+  ],
 }
 
 const STARKEX_OFF_CHAIN: ProjectTechnologyChoice = {
@@ -91,5 +111,6 @@ export const DATA_AVAILABILITY = {
   STARKNET_ON_CHAIN,
   GENERIC_OFF_CHAIN,
   STARKEX_OFF_CHAIN,
+  ANYTRUST_OFF_CHAIN,
   PLASMA_OFF_CHAIN,
 }

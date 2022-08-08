@@ -11,13 +11,24 @@ import {
 import { Project } from './types'
 
 export const nova: Project = {
-  name: 'Nova',
+  name: 'Arbitrum Nova',
   slug: 'nova',
   id: ProjectId('nova'),
-  bridges: [],
+  bridges: [
+    {
+      address: '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
+      sinceTimestamp: new UnixTime(1656073623),
+      tokens: ['ETH'],
+    },
+    {
+      address: '0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
+      sinceTimestamp: new UnixTime(1656305583),
+      tokens: '*',
+    },
+  ],
   details: {
     description:
-      'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee',
+      'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
@@ -27,9 +38,7 @@ export const nova: Project = {
         'https://github.com/OffchainLabs/nitro/blob/master/docs/inside_anytrust.md',
       ],
       explorers: ['https://a4ba-explorer.arbitrum.io/'],
-      repositories: [
-        // TODO
-      ],
+      repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: [
         'https://twitter.com/OffchainLabs',
         'https://twitter.com/arbitrum',
@@ -62,7 +71,6 @@ export const nova: Project = {
             category: 'Funds can be stolen if',
             text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
             isCritical: true,
-            A,
           },
         ],
         references: [
@@ -76,15 +84,7 @@ export const nova: Project = {
           },
         ],
       },
-      dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
-        references: [
-          {
-            text: 'Submitting Transactions - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/rollup_basics#submitting-transactions',
-          },
-        ],
-      },
+      dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN,
       operator: {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -166,10 +166,10 @@ export const nova: Project = {
       contracts: {
         addresses: [
           {
-            address: '',
+            address: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
             name: 'ProxyAdmin',
             description:
-              'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
+              'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by EOA.',
           },
           {
             address: '0xFb209827c58283535b744575e11953DCC4bEAD88',
@@ -193,7 +193,7 @@ export const nova: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '',
-              implementation: '',
+              implementation: '0x2e3367cc9bd83959EF103AdF6fFea6200D0A15f0',
             },
           },
           {
@@ -203,8 +203,8 @@ export const nova: Project = {
               'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
+              implementation: '0xB46e8571760Da0CFaEB9c9689C449Eb7dD7cB3e7',
             },
           },
           {
@@ -214,8 +214,8 @@ export const nova: Project = {
               'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
+              implementation: '0xd4254a4d136203dAd7AE5Ee05D6BD65B8d13157d',
             },
           },
           {
@@ -223,27 +223,32 @@ export const nova: Project = {
             name: 'Outbox',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
+              implementation: '0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f',
             },
           },
           {
             address: '0xA59075221b50C598aED0Eae0bB9869639513af0D',
             name: 'ChallengeManager',
+            description:
+              'Contract managing an interactive fraud challenge process.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
+              implementation: '7a18bb9dbaf1202f3fc977e42e3c360d522e4566',
             },
           },
           {
             address: '0x7AdcA86896c4220f19B2f7f9746e7A99E57B0Fc5',
-            name: 'OneStepProver',
-            upgradeability: {
-              type: 'EIP1967',
-              admin: '',
-              implementation: '',
-            },
+            name: 'OneStepProofEntry',
+            description:
+              'Contract managing adjudication logic for EVM implementation in WASM used by the fraud proofs.',
+          },
+          {
+            address: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
+            name: 'ProxyAdmin (2)',
+            description:
+              'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
           },
           {
             address: '0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48',
@@ -251,8 +256,8 @@ export const nova: Project = {
             description: 'Router managing token <--> gateway mapping.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
+              implementation: '0xa9610559f1E5BB0Eab9a25e21137D39426fd477E',
             },
           },
           {
@@ -262,8 +267,8 @@ export const nova: Project = {
               'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
+              implementation: '0xf852de96aD5Ca30d54b40b9cE5c8C6DE56C0Ef4B',
             },
           },
           {
@@ -273,21 +278,9 @@ export const nova: Project = {
               'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
-              implementation: '',
+              admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
+              implementation: '0x97367486f5905c2B7EE7b58330Fb4EB52639db17',
             },
-          },
-          {
-            address: '',
-            name: 'L1DaiGateway',
-            description:
-              'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-          },
-          {
-            address: '',
-            name: 'L1Escrow',
-            description:
-              'DAI Vault for custom DAI Gateway managed by MakerDAO.',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
