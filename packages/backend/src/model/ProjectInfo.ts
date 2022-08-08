@@ -1,12 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
 import { getTokenBySymbol, Project, TokenInfo, tokenList } from '@l2beat/config'
-import { ProjectEvents } from '@l2beat/config/build/src/projects/types/ProjectEvents'
+import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
 
 export interface ProjectInfo {
   name: string
   projectId: ProjectId
   bridges: BridgeInfo[]
-  events?: ProjectEvents
+  events: ProjectEvent[]
 }
 
 export interface BridgeInfo {
