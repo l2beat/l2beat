@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-  # everyday at 2 am
+  # every hour
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 * * * *"
 
 jobs:
   deploy:
