@@ -178,7 +178,7 @@ export const nova: Project = {
               'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
             upgradeability: {
               type: 'Arbitrum',
-              admin: '',
+              admin: '0x9C040726F2A657226Ed95712245DeE84b650A1b5',
               implementations: {
                 admin: '', // TODO: double implementation
                 user: '',
@@ -192,7 +192,7 @@ export const nova: Project = {
               'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '',
+              admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
               implementation: '0x2e3367cc9bd83959EF103AdF6fFea6200D0A15f0',
             },
           },
@@ -235,7 +235,7 @@ export const nova: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-              implementation: '7a18bb9dbaf1202f3fc977e42e3c360d522e4566',
+              implementation: '0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566',
             },
           },
           {
