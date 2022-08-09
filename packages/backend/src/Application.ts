@@ -6,7 +6,6 @@ import { BlocksController } from './api/controllers/BlocksController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
-import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -22,6 +21,7 @@ import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
 import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
+import { EventRepository } from './peripherals/database/EventRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
@@ -56,6 +56,7 @@ export class Application {
       logger,
     )
     const cachedDataRepository = new CachedDataRepository(database, logger)
+    const eventRepository = new EventRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -124,6 +125,9 @@ export class Application {
 
     const eventUpdater = new EventUpdater(
       etherscanClient,
+      blockNumberUpdater,
+      eventRepository,
+      clock,
       config.projects,
       logger,
     )
@@ -157,7 +161,6 @@ export class Application {
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
-      createEventsRouter(eventUpdater),
     ])
 
     // #endregion
@@ -172,10 +175,11 @@ export class Application {
       if (config.syncEnabled) {
         reportController.start()
         priceUpdater.start()
-        await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
       }
+      await blockNumberUpdater.start()
+      eventUpdater.start()
     }
 
     // #endregion

@@ -32,8 +32,8 @@ export function parseEtherscanResponse(value: string): EtherscanResponse {
 
 export type EtherscanLogEntry = z.infer<typeof EtherscanLogEntry>
 const EtherscanLogEntry = z.object({
-  blockNumber: z.string().transform(x => BigInt(x)),
-  timeStamp: z.string().transform(x => new UnixTime(Number(x))),
+  blockNumber: z.string().transform((x) => BigInt(x)),
+  timeStamp: z.string().transform((x) => new UnixTime(Number(x))),
 })
 
 export const EtherscanLogResult = z.array(EtherscanLogEntry)

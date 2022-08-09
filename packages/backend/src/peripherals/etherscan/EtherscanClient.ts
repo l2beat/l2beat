@@ -8,7 +8,10 @@ import {
 
 import { stringAsBigInt } from '../../tools/types'
 import { HttpClient } from '../HttpClient'
-import { EtherscanLogResult, parseEtherscanResponse } from './parseEtherscanResponse'
+import {
+  EtherscanLogResult,
+  parseEtherscanResponse,
+} from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
 
@@ -32,16 +35,12 @@ export class EtherscanClient {
     fromBlock: string,
     toBlock: string,
   ) {
-    const result = await this.call(
-      'logs',
-      'getLogs',
-      {
-        address,
-        topic0,
-        fromBlock,
-        toBlock,
-      },
-    )
+    const result = await this.call('logs', 'getLogs', {
+      address,
+      topic0,
+      fromBlock,
+      toBlock,
+    })
 
     return EtherscanLogResult.parse(result)
   }
