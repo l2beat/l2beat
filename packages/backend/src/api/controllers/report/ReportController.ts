@@ -39,7 +39,6 @@ export class ReportController {
     if (!timestamp) {
       return undefined
     }
-    const dailyTimestamp = timestamp.toStartOf('day')
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregateReportRepository.getHourly(
@@ -49,7 +48,7 @@ export class ReportController {
           getSixHourlyMinTimestamp(timestamp),
         ),
         this.aggregateReportRepository.getDaily(),
-        this.reportRepository.getByTimestamp(dailyTimestamp),
+        this.reportRepository.getByTimestamp(timestamp),
       ])
     const apiMain = generateMain(
       hourlyReports,
