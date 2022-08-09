@@ -19,7 +19,6 @@ import { AggregateReportRepository } from './peripherals/database/AggregateRepor
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
-import { CachedDataRepository } from './peripherals/database/CachedDataRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
@@ -53,7 +52,6 @@ export class Application {
       database,
       logger,
     )
-    const cachedDataRepository = new CachedDataRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -129,8 +127,6 @@ export class Application {
       reportStatusRepository,
       aggregateReportRepository,
       reportRepository,
-      cachedDataRepository,
-      priceRepository,
       config.projects,
       config.tokens,
       logger,
@@ -161,7 +157,6 @@ export class Application {
       await database.migrateToLatest()
 
       if (config.syncEnabled) {
-        reportController.start()
         priceUpdater.start()
         await blockNumberUpdater.start()
         await balanceUpdater.start()
