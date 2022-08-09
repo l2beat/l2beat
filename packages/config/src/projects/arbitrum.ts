@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
-import { utils } from 'ethers'
 
 import {
   CONTRACTS,
@@ -417,10 +416,8 @@ export const arbitrum: Project = {
 
   events: [
     {
-      abi: new utils.Interface([
-        'event SequencerBatchDeliveredFromOrigin(uint256 firstMessageNum, bytes32 beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
-      ]),
       name: 'SequencerBatchDeliveredFromOrigin',
+      abi: 'event SequencerBatchDeliveredFromOrigin(uint256 firstMessageNum, bytes32 beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
       emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
       type: 'state',
     },
