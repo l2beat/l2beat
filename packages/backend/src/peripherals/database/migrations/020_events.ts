@@ -15,10 +15,11 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('events', function (table) {
-    table.integer('block_number').notNullable()
-    table.bigInteger('unix_timestamp').notNullable()
+    table.bigInteger('unix_timestamp').notNullable().index()
+    table.string('event_type').notNullable()
     table.string('project_id').notNullable()
-    table.string('event_name').notNullable()
+    table.integer('count').notNullable()
+    table.string('time_span').notNullable().index().checkIn(['hourly','sixHourly', 'daily'])
     table.primary(['block_number', 'project_id', 'event_name'])
   })
 }
