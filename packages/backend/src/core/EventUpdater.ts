@@ -5,6 +5,7 @@ import {
   TaskQueue,
   UnixTime,
 } from '@l2beat/common'
+import { utils } from 'ethers'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
@@ -41,7 +42,7 @@ export class EventUpdater {
       .map((project) =>
         project.events.map((event) => ({
           emitter: event.emitter,
-          abi: event.abi,
+          topic: new utils.Interface([event.abi]).getEventTopic(event.name),
           name: event.name,
           projectId: project.projectId,
         })),
@@ -50,15 +51,15 @@ export class EventUpdater {
   }
 
   start() {
-    //rethink
+    //rethink how to update it
     return this.clock.onEveryHour((timestamp) => {
-      this.taskQueue.addToFront(timestamp)
+      this.taskQueue.addToBack(timestamp)
     })
   }
 
   async update(timestamp: UnixTime) {
-    //? maybe getBlockNumbers only once
-    //cycle through all events
+    //? maybe getBlockNumbers from-to only once
+    //cycle through all this.events
     //save to DB
   }
 
@@ -95,7 +96,7 @@ export class EventUpdater {
       const aggregatedCount = await this.eventRepository.getAggregatedCount(
         event.projectId,
         event.name,
-        timestamp.add(-6, 'hours'),
+        timestamp.add(-5, 'hours'),
         timestamp.add(-1, 'hours'),
       )
       records.push({
@@ -111,7 +112,7 @@ export class EventUpdater {
       const aggregatedCount = await this.eventRepository.getAggregatedCount(
         event.projectId,
         event.name,
-        timestamp.add(-1, 'days'),
+        timestamp.add(-23, 'hours'),
         timestamp.add(-1, 'hours'),
       )
 
