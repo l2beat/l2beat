@@ -13,23 +13,53 @@ const MONTHS: Record<string, string> = {
   '12': 'Dec',
 }
 
-export function toDateRange(from: string, to: string) {
-  const [year1, month1, day1] = from.split('-')
-  const [year2, month2, day2] = to.split('-')
-
-  const first = toNiceDate(day1, month1, year1 !== year2 ? year1 : undefined)
-  const second = toNiceDate(day2, month2, year2)
-
-  return `${first} &ndash;\n${second}`
+function parseTimestamp(timestamp: number) {
+  const isoString = new Date(timestamp * 1000).toISOString()
+  const [year, month, day] = isoString.slice(0, 10).split('-')
+  const time = isoString.slice(11, 16)
+  return {
+    year,
+    month,
+    day,
+    time,
+  }
 }
 
-export function formatDate(date: string) {
-  const [year, month, day] = date.split('-')
-  return toNiceDate(day, month, year)
+function formatTimeAndDate(date: string, time?: string) {
+  return time === undefined ? date : `${time} ${date}`
 }
 
 function toNiceDate(day: string, month: string, year?: string) {
   return year === undefined
     ? `${parseInt(day)} ${MONTHS[month]}`
     : `${parseInt(day)} ${MONTHS[month]} ${parseInt(year)}`
+}
+
+export function formatRange(from: number, to: number, withTime = false) {
+  const parsedFrom = parseTimestamp(from)
+  const parsedTo = parseTimestamp(to)
+  const sameYear = parsedFrom.year === parsedTo.year
+  const fromDate = toNiceDate(
+    parsedFrom.day,
+    parsedFrom.month,
+    sameYear ? undefined : parsedFrom.year,
+  )
+  const toDate = toNiceDate(parsedTo.day, parsedTo.month, parsedTo.year)
+  const first = formatTimeAndDate(
+    fromDate,
+    withTime ? parsedFrom.time : undefined,
+  )
+  const second = formatTimeAndDate(toDate, withTime ? parsedTo.time : undefined)
+  return `${first} &ndash;\n${second}`
+}
+
+export function formatTimestamp(timestamp: number, withTime = false) {
+  const { year, month, day, time } = parseTimestamp(timestamp)
+  const date = toNiceDate(day, month, year)
+  return formatTimeAndDate(date, withTime ? time : undefined)
+}
+
+export function formatDate(date: string) {
+  const [year, month, day] = date.split('-')
+  return toNiceDate(day, month, year)
 }

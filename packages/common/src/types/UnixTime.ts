@@ -105,4 +105,8 @@ export class UnixTime {
   toJSON() {
     return this.timestamp
   }
+
+  toYYYYMMDD() {
+    return this.toDate().toISOString().slice(0, 10)
+  }
 }

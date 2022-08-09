@@ -1,6 +1,6 @@
 import { toDays } from '../toDays'
 import { apiGet } from './api'
-import { ChartInput } from './ChartInput'
+import { Charts } from './ChartInput'
 import { ChartState } from './ChartState'
 import { getControls } from './getControls'
 import { getEndpoint } from './getEndpoint'
@@ -27,7 +27,11 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
 
   onRadioChange(controls.range, (control) => {
     state.days = toDays(control.value)
-    onChange()
+    if (state.endpoint) {
+      updateInput(state.endpoint)
+    } else {
+      onChange()
+    }
   })
 
   onRadioChange(controls.currency, (control) => {
@@ -69,12 +73,18 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     state.endpoint = url
     state.input = undefined
     onChange()
-    apiGet<ChartInput>(url).then((result) => {
+    apiGet<Charts>(url).then((result) => {
       // prevent race conditions
-      if (state.endpoint === url) {
-        state.input = result
-        onChange()
+      if (state.endpoint !== url) {
+        return
       }
+      state.input =
+        state.days === 7
+          ? result.hourly
+          : state.days <= 90
+          ? result.sixHourly
+          : result.daily
+      onChange()
     }, console.error)
   }
 

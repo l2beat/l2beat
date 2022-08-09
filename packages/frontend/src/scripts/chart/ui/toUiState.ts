@@ -1,13 +1,20 @@
-import { formatDate, toDateRange } from '../../../shared'
+import { formatRange, formatTimestamp } from '../../../shared'
 import { ChartStateWithInput } from '../state'
+import { ChartInput } from '../state/ChartInput'
 import { calculateTicks } from './calculateTicks'
 import { formatCurrency, formatCurrencyExact } from './format'
 import { UiState } from './UiState'
 
+function getDataPoints(points: ChartInput['data'], days: number) {
+  return days === 7
+    ? points
+    : days <= 90
+    ? points.slice(-1 * 4 * days)
+    : points.slice(-1 * days)
+}
+
 export function toUiState(state: ChartStateWithInput): UiState {
-  const dataPoints = state.input.data.filter(
-    (_, i, a) => a.length - 1 - i < state.days,
-  )
+  const dataPoints = getDataPoints(state.input.data, state.days)
   if (dataPoints.length === 0) {
     return {
       dateRange: 'No data',
@@ -16,9 +23,11 @@ export function toUiState(state: ChartStateWithInput): UiState {
       points: [],
     }
   }
-  const dateRange = toDateRange(
+  const withTime = state.days <= 90
+  const dateRange = formatRange(
     dataPoints[0][0],
     dataPoints[dataPoints.length - 1][0],
+    withTime,
   )
 
   const description = state.token
@@ -35,10 +44,10 @@ export function toUiState(state: ChartStateWithInput): UiState {
 
   const getY = state.logScale ? getLogY(min, max) : getLinY(min, max)
 
-  const points = dataPoints.map(([date, valueA, valueB], i) => ({
+  const points = dataPoints.map(([timestamp, valueA, valueB], i) => ({
     x: i / (values.length - 1),
     y: getY(state.altCurrency ? valueB : valueA),
-    date: formatDate(date),
+    date: formatTimestamp(timestamp, withTime),
     valueA: formatCurrencyExact(valueA, state.input.types[1]),
     valueB: formatCurrencyExact(valueB, state.input.types[2]),
   }))

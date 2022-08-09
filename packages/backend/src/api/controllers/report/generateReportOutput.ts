@@ -1,5 +1,3 @@
-import { UnixTime } from '@l2beat/common'
-
 import { ProjectInfo } from '../../../model'
 import { OutputEntry } from './aggregateReportsDaily'
 import { asNumber } from './asNumber'
@@ -44,7 +42,7 @@ export function generateReportOutput(
 
   for (const entry of entries) {
     // we subtract a day so that the date represents the end of that day
-    const date = timestampToDate(entry.timestamp.add(-1, 'days'))
+    const date = entry.timestamp.add(-1, 'days').toYYYYMMDD()
     report.aggregate.data.push([
       date,
       asNumber(entry.value.usd, 2),
@@ -85,8 +83,4 @@ export function generateReportOutput(
   }
 
   return report
-}
-
-function timestampToDate(timestamp: UnixTime) {
-  return timestamp.toDate().toISOString().slice(0, 10)
 }

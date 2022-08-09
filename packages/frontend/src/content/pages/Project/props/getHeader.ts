@@ -1,13 +1,13 @@
+import { ApiMain } from '@l2beat/common'
 import { Project } from '@l2beat/config'
 
 import { HeaderProps } from '../../../common'
-import { L2Data } from '../../../L2Data'
 import { formatUSD, getFromEnd, getPercentageChange } from '../../../utils'
 
-export function getHeader(project: Project, l2Data: L2Data): HeaderProps {
-  const aggregate = l2Data.byProject[project.name]?.aggregate.data ?? []
-  const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
+export function getHeader(project: Project, apiMain: ApiMain): HeaderProps {
+  const hourly = apiMain.projects[project.name]?.charts.hourly.data ?? []
+  const tvl = getFromEnd(hourly, 0)?.[1] ?? 0
+  const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {

@@ -1,6 +1,6 @@
-import { getTokenBySymbol, Project } from '@l2beat/config'
+import { ApiMain, Project as ApiProject, Token } from '@l2beat/common'
+import { getTokenByAssetId, Project } from '@l2beat/config'
 
-import { ChartData, L2Data, ProjectData } from '../../../L2Data'
 import {
   formatPercent,
   formatUSD,
@@ -15,29 +15,29 @@ import { getTechnology } from './getTechnology'
 
 export function getFinancialView(
   projects: Project[],
-  l2Data: L2Data,
+  apiMain: ApiMain,
   tvl: number,
 ): FinancialViewProps {
   return {
     items: projects.map((x) =>
-      getFinancialViewEntry(x, l2Data.byProject[x.name], tvl),
+      getFinancialViewEntry(x, apiMain.projects[x.name], tvl),
     ),
   }
 }
 
 function getFinancialViewEntry(
   project: Project,
-  projectData: ProjectData | undefined,
+  projectData: ApiProject | undefined,
   aggregateTvl: number,
 ): FinancialViewEntry {
-  const aggregate = projectData?.aggregate.data ?? []
+  const aggregate = projectData?.charts.hourly.data ?? []
   const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
   const tvlOneDayAgo = getFromEnd(aggregate, 1)?.[1] ?? 0
   const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
 
   const tvlBreakdown = getTVLBreakdown(
     tvl,
-    projectData?.byToken ?? {},
+    projectData?.tokens ?? [],
     project.associatedTokens ?? [],
   )
 
@@ -77,7 +77,7 @@ function getFinancialViewEntry(
 
 function getTVLBreakdown(
   total: number,
-  byToken: Record<string, ChartData | undefined>,
+  tokens: Token[],
   associatedTokens: string[],
 ) {
   if (total === 0) {
@@ -94,10 +94,9 @@ function getTVLBreakdown(
   let ether = 0
   let stable = 0
   let other = 0
-  for (const [token, data] of Object.entries(byToken)) {
-    const tvl = getFromEnd(data?.data ?? [], 0)?.[2] ?? 0
-    const category = getTokenBySymbol(token).category
-    if (associatedTokens.includes(token)) {
+  for (const { assetId, tvl } of tokens) {
+    const { category, symbol } = getTokenByAssetId(assetId)
+    if (associatedTokens.includes(symbol)) {
       associated += tvl
     } else if (category === 'ether') {
       ether += tvl
