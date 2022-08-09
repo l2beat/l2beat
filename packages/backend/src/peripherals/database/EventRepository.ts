@@ -5,10 +5,11 @@ import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface EventRecord {
-  blockNumber: bigint
   timestamp: UnixTime
-  projectId: ProjectId
   name: string
+  projectId: ProjectId
+  count: number
+  timeSpan: 'hourly' | 'sixHourly' | 'daily'
 }
 
 export class EventRepository extends BaseRepository {
@@ -20,6 +21,7 @@ export class EventRepository extends BaseRepository {
     this.addMany = this.wrapAddMany(this.addMany)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.getByProjectAndName = this.wrapGet(this.getByProjectAndName)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -27,11 +29,13 @@ export class EventRepository extends BaseRepository {
   async getByProjectAndName(
     projectId: ProjectId,
     name: string,
+    timeSpan: 'hourly' | 'sixHourly' | 'daily',
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')
       .where('project_id', projectId.toString())
       .where('event_name', name)
+      .where('time_span', timeSpan)
       .select()
     return rows.map(toRecord)
   }
@@ -57,18 +61,20 @@ export class EventRepository extends BaseRepository {
 
 function toRow(record: EventRecord): EventRow {
   return {
-    block_number: Number(record.blockNumber),
     unix_timestamp: record.timestamp.toString(),
-    project_id: record.projectId.toString(),
     event_name: record.name,
+    project_id: record.projectId.toString(),
+    count: record.count,
+    time_span: record.timeSpan,
   }
 }
 
 function toRecord(row: EventRow): EventRecord {
   return {
-    blockNumber: BigInt(row.block_number),
     timestamp: new UnixTime(+row.unix_timestamp),
-    projectId: ProjectId(row.project_id),
     name: row.event_name,
+    projectId: ProjectId(row.project_id),
+    count: row.count,
+    timeSpan: row.time_span,
   }
 }

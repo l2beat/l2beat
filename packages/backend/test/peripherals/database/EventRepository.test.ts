@@ -5,13 +5,18 @@ import { EventRepository } from '../../../src/peripherals/database/EventReposito
 import { setupDatabaseTestSuite } from './shared/setup'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
-const START_BN = 100_000n
-const mockEvent = (offset: number, projectId: ProjectId, name: string) => {
+const mockEvent = (
+  offset: number,
+  projectId: ProjectId,
+  name: string,
+  timeSpan: 'hourly' | 'sixHourly' | 'daily',
+) => {
   return {
-    blockNumber: START_BN + BigInt(offset),
     timestamp: START.add(offset, 'days'),
-    projectId,
     name,
+    projectId,
+    count: 0,
+    timeSpan,
   }
 }
 
@@ -31,28 +36,29 @@ describe(EventRepository.name, () => {
 
   it(EventRepository.prototype.getByProjectAndName.name, async () => {
     const records = [
-      mockEvent(0, PROJECT_A, EVENT_A),
-      mockEvent(0, PROJECT_A, EVENT_B),
-      mockEvent(0, PROJECT_B, EVENT_A),
-      mockEvent(0, PROJECT_B, EVENT_B),
+      mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+      mockEvent(1, PROJECT_A, EVENT_A, 'hourly'),
 
-      mockEvent(1, PROJECT_A, EVENT_A),
-      mockEvent(1, PROJECT_A, EVENT_B),
-      mockEvent(1, PROJECT_B, EVENT_A),
-      mockEvent(1, PROJECT_B, EVENT_B),
+      mockEvent(0, PROJECT_A, EVENT_B, 'hourly'),
+      mockEvent(0, PROJECT_B, EVENT_A, 'hourly'),
+      mockEvent(0, PROJECT_A, EVENT_A, 'daily'),
     ]
 
     await repository.addMany(records)
 
-    const result = await repository.getByProjectAndName(PROJECT_A, EVENT_A)
+    const result = await repository.getByProjectAndName(
+      PROJECT_A,
+      EVENT_A,
+      'hourly',
+    )
 
-    expect(result).toEqual([records[0], records[4]])
+    expect(result).toEqual([records[0], records[1]])
   })
 
   it(EventRepository.prototype.addMany.name, async () => {
     const records = [
-      mockEvent(0, PROJECT_A, EVENT_A),
-      mockEvent(0, PROJECT_B, EVENT_B),
+      mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+      mockEvent(0, PROJECT_B, EVENT_B, 'hourly'),
     ]
 
     await repository.addMany(records)
@@ -64,8 +70,8 @@ describe(EventRepository.name, () => {
 
   it(EventRepository.prototype.deleteAll.name, async () => {
     const records = [
-      mockEvent(0, PROJECT_A, EVENT_A),
-      mockEvent(0, PROJECT_B, EVENT_B),
+      mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+      mockEvent(0, PROJECT_B, EVENT_B, 'hourly'),
     ]
 
     await repository.addMany(records)

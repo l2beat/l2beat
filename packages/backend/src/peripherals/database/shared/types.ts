@@ -60,10 +60,11 @@ declare module 'knex/types/tables' {
   }
 
   interface EventRow {
-    block_number: number
     unix_timestamp: string
-    project_id: string
     event_name: string
+    project_id: string
+    count: number
+    time_span: 'hourly' | 'sixHourly' | 'daily'
   }
 
   interface Tables {
