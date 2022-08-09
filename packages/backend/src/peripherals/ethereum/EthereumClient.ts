@@ -11,18 +11,20 @@ export class EthereumClient {
     return BigInt(result) // TODO: probably could be a simple number
   }
 
-  async getLogs(
+  async getLogsCount(
     address: EthereumAddress,
     topics: string[],
     fromBlock: number,
     toBlock: number,
   ) {
-    return await this.provider.getLogs({
+    const logs = await this.provider.getLogs({
       address: address.toString(),
       topics,
       fromBlock,
       toBlock,
     })
+
+    return logs.length
   }
 
   async getBlock(blockNumber: number) {

@@ -124,8 +124,8 @@ export class Application {
     )
 
     const eventUpdater = new EventUpdater(
-      etherscanClient,
-      blockNumberUpdater,
+      ethereumClient,
+      blockNumberRepository,
       eventRepository,
       clock,
       config.projects,

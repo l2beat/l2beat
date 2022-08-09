@@ -12,10 +12,10 @@ const mockEvent = (
   timeSpan: 'hourly' | 'sixHourly' | 'daily',
 ) => {
   return {
-    timestamp: START.add(offset, 'days'),
+    timestamp: START.add(offset, 'hours'),
     name,
     projectId,
-    count: 0,
+    count: 1,
     timeSpan,
   }
 }
@@ -53,6 +53,26 @@ describe(EventRepository.name, () => {
     )
 
     expect(result).toEqual([records[0], records[1]])
+  })
+
+  it(EventRepository.prototype.getAggregatedCount.name, async () => {
+    const records = [
+      mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+      mockEvent(1, PROJECT_A, EVENT_A, 'hourly'),
+      mockEvent(2, PROJECT_A, EVENT_A, 'hourly'),
+      mockEvent(3, PROJECT_A, EVENT_A, 'hourly'),
+    ]
+
+    await repository.addMany(records)
+
+    const result = await repository.getAggregatedCount(
+      PROJECT_A,
+      EVENT_A,
+      START,
+      START.add(3, 'hours'),
+    )
+
+    expect(result).toEqual(4)
   })
 
   it(EventRepository.prototype.addMany.name, async () => {

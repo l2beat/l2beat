@@ -5,20 +5,19 @@ import {
   TaskQueue,
   UnixTime,
 } from '@l2beat/common'
-import { utils } from 'ethers'
 
 import { ProjectInfo } from '../model/ProjectInfo'
+import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import {
   EventRecord,
   EventRepository,
 } from '../peripherals/database/EventRepository'
-import { EtherscanClient } from '../peripherals/etherscan/EtherscanClient'
-import { BlockNumberUpdater } from './BlockNumberUpdater'
+import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { Clock } from './Clock'
 
 interface EventDetail {
   emitter: EthereumAddress
-  abi: utils.Interface
+  topic: string
   name: string
   projectId: ProjectId
 }
@@ -29,13 +28,12 @@ export class EventUpdater {
   private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
   constructor(
-    private etherscanClient: EtherscanClient,
-    private blockNumberUpdater: BlockNumberUpdater,
+    private ethereum: EthereumClient,
+    private blockNumberRepository: BlockNumberRepository,
     private eventRepository: EventRepository,
     private clock: Clock,
     private projects: ProjectInfo[],
     private logger: Logger,
-    private minimumBlockNumber = 15265346,
   ) {
     this.logger = this.logger.for(this)
 
@@ -52,42 +50,80 @@ export class EventUpdater {
   }
 
   start() {
+    //rethink
     return this.clock.onEveryHour((timestamp) => {
       this.taskQueue.addToFront(timestamp)
     })
   }
 
   async update(timestamp: UnixTime) {
-    const latestBlockNumber =
-      await this.blockNumberUpdater.getBlockNumberWhenReady(timestamp)
-
-    const events = await this.fetchEvents(Number(latestBlockNumber))
-    this.minimumBlockNumber = Number(latestBlockNumber) + 1
-    await this.eventRepository.addMany(events)
+    //? maybe getBlockNumbers only once
+    //cycle through all events
+    //save to DB
   }
 
-  private async fetchEvents(toBlock: number) {
-    this.logger.info('fetching events', {from: this.minimumBlockNumber.toString(), to: toBlock.toString()})
+  async fetchRecords(
+    timestamp: UnixTime,
+    event: EventDetail,
+  ): Promise<EventRecord[]> {
+    const from = await this.blockNumberRepository.findByTimestamp(
+      timestamp.add(-1, 'hours'),
+    )
+    const to = await this.blockNumberRepository.findByTimestamp(timestamp)
 
-    const result: EventRecord[] = []
-    for (const { emitter, abi, name, projectId } of this.events) {
-      const logs = await this.etherscanClient.getLogs(
-        emitter.toString(),
-        abi.getEventTopic(name),
-        this.minimumBlockNumber.toString(),
-        toBlock.toString(),
+    const count = await this.ethereum.getLogsCount(
+      event.emitter,
+      [event.topic],
+      Number(from),
+      Number(to),
+    )
+
+    const records: EventRecord[] = [
+      {
+        timestamp,
+        name: event.name,
+        projectId: event.projectId,
+        count,
+        timeSpan: 'hourly',
+      },
+    ]
+
+    const DAY = 24 * 60 * 60
+    const SIX_HOURS = 6 * 60 * 60
+
+    if (timestamp.toNumber() % SIX_HOURS === 0) {
+      const aggregatedCount = await this.eventRepository.getAggregatedCount(
+        event.projectId,
+        event.name,
+        timestamp.add(-6, 'hours'),
+        timestamp.add(-1, 'hours'),
       )
-
-      logs.forEach((log) => {
-        result.push({
-          projectId,
-          name,
-          blockNumber: log.blockNumber,
-          timestamp: log.timeStamp,
-        })
+      records.push({
+        timestamp,
+        name: event.name,
+        projectId: event.projectId,
+        count: aggregatedCount + count,
+        timeSpan: 'sixHourly',
       })
     }
 
-    return result
+    if (timestamp.toNumber() % DAY === 0) {
+      const aggregatedCount = await this.eventRepository.getAggregatedCount(
+        event.projectId,
+        event.name,
+        timestamp.add(-1, 'days'),
+        timestamp.add(-1, 'hours'),
+      )
+
+      records.push({
+        timestamp,
+        name: event.name,
+        projectId: event.projectId,
+        count: aggregatedCount + count,
+        timeSpan: 'daily',
+      })
+    }
+
+    return records
   }
 }
