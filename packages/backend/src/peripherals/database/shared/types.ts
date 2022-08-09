@@ -1,7 +1,3 @@
-import { ApiMain } from '@l2beat/common'
-
-import { ReportOutput } from '../../../api/controllers/report/generateReportOutput'
-
 export {}
 
 declare module 'knex/types/tables' {
@@ -53,12 +49,6 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
-  interface CachedDataRow {
-    id: number
-    unix_timestamp: string
-    data: ReportOutput | ApiMain
-  }
-
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -67,6 +57,5 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    cached_data: CachedDataRow
   }
 }
