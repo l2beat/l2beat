@@ -174,7 +174,7 @@ export const nova: Project = {
             address: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
             name: 'ProxyAdmin',
             description:
-              'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by EOA.',
+              'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
           },
           {
             address: '0xFb209827c58283535b744575e11953DCC4bEAD88',
@@ -183,7 +183,7 @@ export const nova: Project = {
               'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
             upgradeability: {
               type: 'Arbitrum',
-              admin: '0x9C040726F2A657226Ed95712245DeE84b650A1b5',
+              admin: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
               adminImplementation: '0x309f49bD32B1098F4dF20a9DD51954e8680d77B1',
               userImplementation: '0xFb333bac71f639de467872aFE02F7896F22F368d',
             },
@@ -251,7 +251,7 @@ export const nova: Project = {
             address: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
             name: 'ProxyAdmin (2)',
             description:
-              'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
+              'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig.',
           },
           {
             address: '0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48',
@@ -260,7 +260,7 @@ export const nova: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-              implementation: '0xa9610559f1E5BB0Eab9a25e21137D39426fd477E',
+              implementation: '0x6D1c576Fe3e54313990450f5Fa322306B4cCB47B',
             },
           },
           {
@@ -271,7 +271,7 @@ export const nova: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-              implementation: '0xf852de96aD5Ca30d54b40b9cE5c8C6DE56C0Ef4B',
+              implementation: '0xb4299A1F5f26fF6a98B7BA35572290C359fde900',
             },
           },
           {
@@ -282,7 +282,7 @@ export const nova: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-              implementation: '0x97367486f5905c2B7EE7b58330Fb4EB52639db17',
+              implementation: '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
             },
           },
           {
