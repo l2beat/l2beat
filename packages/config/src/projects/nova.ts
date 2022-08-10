@@ -21,6 +21,11 @@ export const nova: Project = {
       tokens: ['ETH'],
     },
     {
+      address: '0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3',
+      sinceTimestamp: new UnixTime(1659620187),
+      tokens: ['DAI'],
+    },
+    {
       address: '0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
       sinceTimestamp: new UnixTime(1656305583),
       tokens: '*',
@@ -279,6 +284,18 @@ export const nova: Project = {
               admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
               implementation: '0x97367486f5905c2B7EE7b58330Fb4EB52639db17',
             },
+          },
+          {
+            address: '0x97f63339374fCe157Aa8Ee27830172d2AF76A786',
+            name: 'L1DaiGateway',
+            description:
+              'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+          },
+          {
+            address: '0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3',
+            name: 'L1Escrow',
+            description:
+              'DAI Vault for custom DAI Gateway managed by MakerDAO.',
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
