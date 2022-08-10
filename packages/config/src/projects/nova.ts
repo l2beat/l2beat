@@ -153,17 +153,17 @@ export const nova: Project = {
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
         description:
-          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+          'Arbitrum Nova uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
         risks: [
           {
             category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex AVM implementation.',
+            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
           },
         ],
         references: [
           {
-            text: 'AVM - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
+            text: 'Arbitrum Nitro Sneak Preview',
+            href: 'https://medium.com/offchainlabs/arbitrum-nitro-sneak-preview-44550d9054f5',
           },
         ],
       },
