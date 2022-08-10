@@ -179,10 +179,8 @@ export const nova: Project = {
             upgradeability: {
               type: 'Arbitrum',
               admin: '0x9C040726F2A657226Ed95712245DeE84b650A1b5',
-              implementations: {
-                admin: '', // TODO: double implementation
-                user: '',
-              },
+              adminImplementation: '0x309f49bD32B1098F4dF20a9DD51954e8680d77B1',
+              userImplementation: '0xFb333bac71f639de467872aFE02F7896F22F368d',
             },
           },
           {

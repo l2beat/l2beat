@@ -78,9 +78,8 @@ export interface ArbitrumProxy {
   type: 'Arbitrum'
   /** Address of the admin */
   admin: string
-  /** Addresses of the implementations */
-  implementations: {
-    admin: string
-    user: string
-  }
+  /** Address of the admin logic (regular) implementation */
+  adminImplementation: string
+  /** Address of the user logic (secondary) implementation */
+  userImplementation: string
 }
