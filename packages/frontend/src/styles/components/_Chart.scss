@@ -29,7 +29,7 @@
   align-items: center;
   justify-content: flex-end;
 
-  @media (max-width: 550px) {
+  @media (max-width: 560px) {
     .Chart-Button:nth-child(3),
     .Chart-Button:nth-child(4) {
       display: none;
