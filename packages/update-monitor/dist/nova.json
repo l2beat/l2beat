@@ -1,0 +1,17 @@
+{
+  "name": "nova",
+  "contracts": [
+    {
+      "name": "Rollup",
+      "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+      "upgradeability": {
+        "type": "arbitrum proxy",
+        "adminImplementation": "0x309f49bD32B1098F4dF20a9DD51954e8680d77B1",
+        "userImplementation": "0xFb333bac71f639de467872aFE02F7896F22F368d"
+      },
+      "values": {
+        "admin": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    }
+  ]
+}
