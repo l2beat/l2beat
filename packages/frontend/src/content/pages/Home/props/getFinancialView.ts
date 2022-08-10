@@ -32,8 +32,8 @@ function getFinancialViewEntry(
 ): FinancialViewEntry {
   const aggregate = projectData?.charts.hourly.data ?? []
   const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
-  const tvlOneDayAgo = getFromEnd(aggregate, 1)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(aggregate, 7)?.[1] ?? 0
+  const tvlOneDayAgo = getFromEnd(aggregate, 24)?.[1] ?? 0
+  const tvlSevenDaysAgo = aggregate[0]?.[1] ?? 0
 
   const tvlBreakdown = getTVLBreakdown(
     tvl,
