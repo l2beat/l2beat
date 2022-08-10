@@ -48,15 +48,15 @@ export class EventRepository extends BaseRepository {
   ): Promise<number> {
     const knex = await this.knex()
 
-    const count = await knex('events')
+    const [{ sum }] = await knex('events')
       .where('project_id', projectId.toString())
       .where('event_name', name)
       .where('time_span', 'hourly')
       .where('unix_timestamp', '>=', from.toString())
       .where('unix_timestamp', '<=', to.toString())
       .sum('count')
-
-    return Number(count[0].sum)
+    //todo rethink if we want to sum in db
+    return Number(sum)
   }
 
   async addMany(events: EventRecord[]) {

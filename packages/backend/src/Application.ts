@@ -125,7 +125,7 @@ export class Application {
 
     const eventUpdater = new EventUpdater(
       ethereumClient,
-      blockNumberRepository,
+      blockNumberUpdater,
       eventRepository,
       clock,
       config.projects,
