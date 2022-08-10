@@ -24,6 +24,7 @@ export type ProjectUpgradeability =
   | ZeppelinOsUpgradeability
   | NutBerryUpgradeability
   | ReferenceUpgradeability
+  | ArbitrumProxy
 
 export interface EIP1967Upgradeability {
   type: 'EIP1967'
@@ -71,4 +72,14 @@ export interface ReferenceUpgradeability {
   method: string
   /** Arguments to the method */
   args?: (string | boolean | number)[]
+}
+
+export interface ArbitrumProxy {
+  type: 'Arbitrum'
+  /** Address of the admin */
+  admin: string
+  /** Address of the admin logic (regular) implementation */
+  adminImplementation: string
+  /** Address of the user logic (secondary) implementation */
+  userImplementation: string
 }

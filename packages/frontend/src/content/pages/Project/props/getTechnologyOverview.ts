@@ -158,6 +158,21 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
       })
     }
 
+    if (item.upgradeability?.type === 'Arbitrum') {
+      links.push({
+        name: 'Admin',
+        href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+      })
+      links.push({
+        name: 'Admin logic (Upgradable)',
+        href: `https://etherscan.io/address/${item.upgradeability.adminImplementation}#code`,
+      })
+      links.push({
+        name: 'User logic (Upgradable)',
+        href: `https://etherscan.io/address/${item.upgradeability.userImplementation}#code`,
+      })
+    }
+
     const tokens = project.bridges.find(
       (x) => x.address === item.address,
     )?.tokens
