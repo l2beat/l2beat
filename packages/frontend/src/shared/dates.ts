@@ -26,7 +26,7 @@ function parseTimestamp(timestamp: number) {
 }
 
 function formatTimeAndDate(date: string, time?: string) {
-  return time === undefined ? date : `${time} ${date}`
+  return time === undefined ? date : `${time} ${date} (UTC)`
 }
 
 function toNiceDate(day: string, month: string, year?: string) {

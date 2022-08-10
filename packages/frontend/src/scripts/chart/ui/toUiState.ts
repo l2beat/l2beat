@@ -27,7 +27,6 @@ export function toUiState(state: ChartStateWithInput): UiState {
   const dateRange = formatRange(
     dataPoints[0][0],
     dataPoints[dataPoints.length - 1][0],
-    withTime,
   )
 
   const description = state.token
