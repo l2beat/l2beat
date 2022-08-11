@@ -22,31 +22,6 @@ describe(ReportRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(ReportRepository.prototype.getDaily.name, () => {
-    it('returns only full days', async () => {
-      const dailyReport = fakeReport({ timestamp: TIME_0 })
-      await repository.addOrUpdateMany([dailyReport])
-      await repository.addOrUpdateMany([
-        fakeReport({ timestamp: TIME_0.add(1, 'hours') }),
-      ])
-      const result = await repository.getDaily()
-      expect(result).toEqual([dailyReport])
-    })
-
-    it('returns sorted data', async () => {
-      const REPORTS = [
-        fakeReport({ timestamp: TIME_0.add(-2, 'days') }),
-        fakeReport({ timestamp: TIME_0.add(-1, 'days') }),
-        fakeReport({ timestamp: TIME_0 }),
-      ]
-      await repository.addOrUpdateMany([REPORTS[0]])
-      await repository.addOrUpdateMany([REPORTS[1]])
-      await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getDaily()
-      expect(result).toEqual(REPORTS)
-    })
-  })
-
   describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
     it('replaces existing records', async () => {
       const REPORTS_1 = [

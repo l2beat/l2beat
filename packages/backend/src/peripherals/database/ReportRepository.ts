@@ -20,7 +20,6 @@ export class ReportRepository extends BaseRepository {
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
-    this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
     this.getDailyByProjectAndAsset = this.wrapGet(
       this.getDailyByProjectAndAsset,
@@ -29,14 +28,6 @@ export class ReportRepository extends BaseRepository {
     this.deleteAll = this.wrapDelete(this.deleteAll)
 
     /* eslint-enable @typescript-eslint/unbound-method */
-  }
-
-  async getDaily(): Promise<ReportRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('reports')
-      .where('is_daily', '=', true)
-      .orderBy('unix_timestamp')
-    return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
