@@ -14,6 +14,9 @@ export interface ReportRecord {
   balance: bigint
 }
 
+export const DAY = 86400
+export const SIX_HOURS = DAY / 4
+
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -91,7 +94,8 @@ export class ReportRepository extends BaseRepository {
       knex,
       projectId,
       assetId,
-    ).andWhere('is_daily', true)
+    ).andWhereRaw(`unix_timestamp % ${DAY} = 0`)
+
     return rows.map(toRecord)
   }
 
@@ -116,7 +120,7 @@ export class ReportRepository extends BaseRepository {
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
-      .andWhere('is_six_hourly', true)
+      .andWhereRaw(`unix_timestamp % ${SIX_HOURS} = 0`)
       .andWhere('unix_timestamp', '>=', from.toString())
     return rows.map(toRecord)
   }
@@ -130,8 +134,8 @@ function toRow(record: ReportRecord): ReportRow {
     balance: record.balance.toString(),
     balance_usd: record.balanceUsd.toString(),
     balance_eth: record.balanceEth.toString(),
-    is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
-    is_six_hourly: record.timestamp.toNumber() % 21600 === 0 ? true : false,
+    is_daily: record.timestamp.toNumber() % DAY === 0 ? true : false,
+    is_six_hourly: record.timestamp.toNumber() % SIX_HOURS === 0 ? true : false,
   }
 }
 
