@@ -14,8 +14,7 @@ export interface ReportRecord {
   balance: bigint
 }
 
-export const DAY = 86400
-export const SIX_HOURS = DAY / 4
+export const SIX_HOURS = UnixTime.HOUR * 6
 
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -94,7 +93,7 @@ export class ReportRepository extends BaseRepository {
       knex,
       projectId,
       assetId,
-    ).andWhereRaw(`unix_timestamp % ${DAY} = 0`)
+    ).andWhereRaw(`unix_timestamp % ${UnixTime.DAY} = 0`)
 
     return rows.map(toRecord)
   }
@@ -134,7 +133,7 @@ function toRow(record: ReportRecord): ReportRow {
     balance: record.balance.toString(),
     balance_usd: record.balanceUsd.toString(),
     balance_eth: record.balanceEth.toString(),
-    is_daily: record.timestamp.toNumber() % DAY === 0 ? true : false,
+    is_daily: record.timestamp.toNumber() % UnixTime.DAY === 0 ? true : false,
     is_six_hourly: record.timestamp.toNumber() % SIX_HOURS === 0 ? true : false,
   }
 }
