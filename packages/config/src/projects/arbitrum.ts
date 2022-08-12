@@ -417,7 +417,7 @@ export const arbitrum: Project = {
   events: [
     {
       name: 'NodeConfirmed',
-      abi: 'event NodeCreated (uint256 indexed nodeNum, bytes32 indexed parentNodeHash, bytes32 nodeHash, bytes32 executionHash, uint256 inboxMaxCount, uint256 afterInboxBatchEndCount, bytes32 afterInboxBatchAcc, bytes32[3][2] assertionBytes32Fields, uint256[4][2] assertionIntFields)',
+      abi: 'event NodeConfirmed(uint256 indexed nodeNum, bytes32 afterSendAcc, uint256 afterSendCount, bytes32 afterLogAcc, uint256 afterLogCount)',
       emitter: EthereumAddress('0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A'),
       type: 'state',
     },

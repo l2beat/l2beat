@@ -351,7 +351,7 @@ export const optimism: Project = {
     },
     {
       name: 'StateBatchAppended',
-      abi: 'StateBatchAppended (uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
+      abi: 'event StateBatchAppended (uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
       emitter: EthereumAddress('0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19'),
       type: 'state',
     },
