@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -145,5 +145,12 @@ export const sorare: Project = {
     ],
   },
 
-  events: [],
+  events: [
+    {
+      name: 'LogStateTransitionFact',
+      abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
+      emitter: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
+      type: 'state',
+    },
+  ],
 }

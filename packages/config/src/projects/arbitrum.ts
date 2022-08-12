@@ -416,10 +416,16 @@ export const arbitrum: Project = {
 
   events: [
     {
-      name: 'SequencerBatchDeliveredFromOrigin',
-      abi: 'event SequencerBatchDeliveredFromOrigin(uint256 firstMessageNum, bytes32 beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
-      emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
+      name: 'NodeConfirmed',
+      abi: 'event NodeCreated (uint256 indexed nodeNum, bytes32 indexed parentNodeHash, bytes32 nodeHash, bytes32 executionHash, uint256 inboxMaxCount, uint256 afterInboxBatchEndCount, bytes32 afterInboxBatchAcc, bytes32[3][2] assertionBytes32Fields, uint256[4][2] assertionIntFields)',
+      emitter: EthereumAddress('0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A'),
       type: 'state',
+    },
+    {
+      name: 'SequencerBatchDeliveredFromOrigin',
+      abi: 'event SequencerBatchDeliveredFromOrigin (uint256 indexed firstMessageNum, bytes32 indexed beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
+      emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
+      type: 'data',
     },
   ],
 }
