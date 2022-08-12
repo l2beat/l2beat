@@ -2,10 +2,6 @@ const YEAR_3000_TIMESTAMP = Math.floor(
   new Date('3000-01-01T00:00:00.000Z').getTime() / 1000,
 )
 
-const SECONDS_PER_DAY = 86_400
-const SECONDS_PER_HOUR = 3_600
-const SECONDS_PER_MINUTE = 60
-
 export class UnixTime {
   constructor(private timestamp: number) {
     if (!Number.isInteger(timestamp)) {
@@ -14,6 +10,12 @@ export class UnixTime {
       throw new TypeError('timestamp must represent time in seconds')
     }
   }
+
+  static DAY = 86_400
+
+  static HOUR = 3_600
+
+  static MINUTE = 60
 
   static now() {
     return UnixTime.fromDate(new Date())
@@ -26,20 +28,20 @@ export class UnixTime {
   toStartOf(period: 'day' | 'hour' | 'minute') {
     const modulus =
       period === 'day'
-        ? SECONDS_PER_DAY
+        ? UnixTime.DAY
         : period === 'hour'
-        ? SECONDS_PER_HOUR
-        : SECONDS_PER_MINUTE
+        ? UnixTime.HOUR
+        : UnixTime.MINUTE
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
   }
 
   toNext(period: 'day' | 'hour' | 'minute') {
     const modulus =
       period === 'day'
-        ? SECONDS_PER_DAY
+        ? UnixTime.DAY
         : period === 'hour'
-        ? SECONDS_PER_HOUR
-        : SECONDS_PER_MINUTE
+        ? UnixTime.HOUR
+        : UnixTime.MINUTE
     const remaining = modulus - (this.timestamp % modulus)
     return new UnixTime(this.timestamp + remaining)
   }
@@ -47,10 +49,10 @@ export class UnixTime {
   isFull(period: 'day' | 'hour' | 'minute') {
     const modulus =
       period === 'day'
-        ? SECONDS_PER_DAY
+        ? UnixTime.DAY
         : period === 'hour'
-        ? SECONDS_PER_HOUR
-        : SECONDS_PER_MINUTE
+        ? UnixTime.HOUR
+        : UnixTime.MINUTE
     const isFull = this.timestamp % modulus ? false : true
     return isFull
   }
@@ -61,11 +63,11 @@ export class UnixTime {
     }
     const unit =
       period === 'days'
-        ? SECONDS_PER_DAY
+        ? UnixTime.DAY
         : period === 'hours'
-        ? SECONDS_PER_HOUR
+        ? UnixTime.HOUR
         : period === 'minutes'
-        ? SECONDS_PER_MINUTE
+        ? UnixTime.MINUTE
         : 1
     return new UnixTime(this.timestamp + value * unit)
   }

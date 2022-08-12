@@ -14,13 +14,14 @@ export interface ReportRecord {
   balance: bigint
 }
 
+export const SIX_HOURS = UnixTime.HOUR * 6
+
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
-    this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
     this.getDailyByProjectAndAsset = this.wrapGet(
       this.getDailyByProjectAndAsset,
@@ -29,14 +30,6 @@ export class ReportRepository extends BaseRepository {
     this.deleteAll = this.wrapDelete(this.deleteAll)
 
     /* eslint-enable @typescript-eslint/unbound-method */
-  }
-
-  async getDaily(): Promise<ReportRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('reports')
-      .where('is_daily', '=', true)
-      .orderBy('unix_timestamp')
-    return rows.map(toRecord)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
@@ -100,7 +93,8 @@ export class ReportRepository extends BaseRepository {
       knex,
       projectId,
       assetId,
-    ).andWhere('is_daily', true)
+    ).andWhereRaw(`unix_timestamp % ${UnixTime.DAY} = 0`)
+
     return rows.map(toRecord)
   }
 
@@ -125,7 +119,7 @@ export class ReportRepository extends BaseRepository {
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
-      .andWhere('is_six_hourly', true)
+      .andWhereRaw(`unix_timestamp % ${SIX_HOURS} = 0`)
       .andWhere('unix_timestamp', '>=', from.toString())
     return rows.map(toRecord)
   }
@@ -139,8 +133,8 @@ function toRow(record: ReportRecord): ReportRow {
     balance: record.balance.toString(),
     balance_usd: record.balanceUsd.toString(),
     balance_eth: record.balanceEth.toString(),
-    is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
-    is_six_hourly: record.timestamp.toNumber() % 21600 === 0 ? true : false,
+    is_daily: record.timestamp.toNumber() % UnixTime.DAY === 0 ? true : false,
+    is_six_hourly: record.timestamp.toNumber() % SIX_HOURS === 0 ? true : false,
   }
 }
 
