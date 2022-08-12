@@ -25,5 +25,6 @@ export function getTestConfig(): Config {
     tokens: [],
     projects: [],
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
+    freshStart: false,
   }
 }

@@ -31,5 +31,6 @@ export function getLocalConfig(): Config {
     })),
     projects: projects.map(projectToInfo),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
+    freshStart: getEnv.boolean('FRESH_START', false),
   }
 }

@@ -154,6 +154,7 @@ export class Application {
       logger.for(this).info('Starting')
 
       await apiServer.listen()
+      if (config.freshStart) await database.rollbackAll()
       await database.migrateToLatest()
 
       if (config.syncEnabled) {
