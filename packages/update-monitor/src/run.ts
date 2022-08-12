@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 
 import { analyze } from './commands/analyze'
 import { discover } from './commands/discover'
+import { history } from './commands/history'
 import { invert } from './commands/invert'
 import { printUsage } from './commands/usage'
 
@@ -21,6 +22,11 @@ export async function run() {
 
   if (args[0] === 'invert') {
     await invert(args.slice(1))
+    return
+  }
+
+  if (args[0] === 'history') {
+    await history(args.slice(1))
     return
   }
 

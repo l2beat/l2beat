@@ -8,8 +8,14 @@ const usage = `Usage:
     yarn start --help ..................................... display this message
 
 Environment variables:
+  analysis and discovery:
     ALCHEMY_API_KEY ......................... api key for https://alchemyapi.io/
     ETHERSCAN_API_KEY .................... api key for https://etherscan.io/apis
+  history:
+    SNOWFLAKE_ACCOUNT .................. snowflake account with TokenFlow access
+    SNOWFLAKE_USERNAME ...................................... snowflake username
+    SNOWFLAKE_PASSWORD ...................................... snowflake password
+    SNOWFLAKE_WAREHOUSE ......................... (optional) snowflake warehouse 
 
 Examples:
     yarn start zkSync zkSwap ......................... analyze zkSync and zkSwap

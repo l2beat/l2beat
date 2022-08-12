@@ -17,11 +17,13 @@
     "@l2beat/common": "*",
     "@types/lodash": "^4.14.182",
     "@types/mkdirp": "^1.0.2",
+    "@types/snowflake-sdk": "^1.6.7",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
     "lodash": "^4.17.21",
-    "mkdirp": "^1.0.4"
+    "mkdirp": "^1.0.4",
+    "snowflake-sdk": "^1.6.12"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^10.1.0",
