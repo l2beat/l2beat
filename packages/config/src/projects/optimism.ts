@@ -344,10 +344,10 @@ export const optimism: Project = {
 
   events: [
     {
-      name: 'SequencerBatchDeliveredFromOrigin',
-      abi: 'event SequencerBatchDeliveredFromOrigin(uint256 firstMessageNum, bytes32 beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
-      emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
-      type: 'state',
+      name: 'SequencerBatchAppended',
+      abi: 'event SequencerBatchAppended (uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)',
+      emitter: EthereumAddress('0x5E4e65926BA27467555EB562121fac00D24E9dD2'),
+      type: 'data',
     },
     {
       name: 'StateBatchAppended',

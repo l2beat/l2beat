@@ -75,6 +75,32 @@ describe(EventRepository.name, () => {
     expect(result).toEqual(4)
   })
 
+  describe(EventRepository.prototype.getDataBoundary.name, () => {
+    it('multiple records', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(1, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(2, PROJECT_A, EVENT_A, 'hourly'),
+      ]
+
+      await repository.addMany(records)
+
+      const result = await repository.getDataBoundary()
+
+      expect(result).toEqual(
+        new Map([
+          [
+            `${PROJECT_A.toString()}-${EVENT_A}`,
+            {
+              earliest: START,
+              latest: START.add(2, 'hours'),
+            },
+          ],
+        ]),
+      )
+    })
+  })
+
   it(EventRepository.prototype.addMany.name, async () => {
     const records = [
       mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),

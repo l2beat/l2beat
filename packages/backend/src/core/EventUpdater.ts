@@ -21,6 +21,8 @@ interface EventDetail {
   topic: string
   name: string
   projectId: ProjectId
+  earliest: UnixTime | undefined
+  latest: UnixTime | undefined
 }
 //TODO
 // merge repository PR
@@ -39,20 +41,29 @@ export class EventUpdater {
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+  }
+
+  async start() {
+    const boundaries = await this.eventRepository.getDataBoundary()
 
     this.events = this.projects
       .map((project) =>
-        project.events.map((event) => ({
-          emitter: event.emitter,
-          topic: new utils.Interface([event.abi]).getEventTopic(event.name),
-          name: event.name,
-          projectId: project.projectId,
-        })),
+        project.events.map((event) => {
+          const boundary = boundaries.get(
+            `${project.projectId.toString()}-${event.name}`,
+          )
+
+          return {
+            emitter: event.emitter,
+            topic: new utils.Interface([event.abi]).getEventTopic(event.name),
+            name: event.name,
+            projectId: project.projectId,
+            earliest: boundary?.earliest,
+            latest: boundary?.latest,
+          }
+        }),
       )
       .flat()
-  }
-
-  start() {
     //rethink how to update it
     return this.clock.onEveryHour((timestamp) => {
       this.taskQueue.addToFront(timestamp)
@@ -64,8 +75,18 @@ export class EventUpdater {
     const records: EventRecord[] = []
 
     for (const event of this.events) {
-      const record = await this.fetchRecords(timestamp, event)
-      records.push(...record)
+      if (
+        event.earliest === undefined ||
+        event.earliest.gt(timestamp) ||
+        event.latest?.lt(timestamp)
+      ) {
+        const record = await this.fetchRecords(timestamp, event)
+        records.push(...record)
+      }
+    }
+
+    if(records.length === 0) {
+      return
     }
 
     await this.eventRepository.addMany(records)
@@ -139,3 +160,6 @@ export class EventUpdater {
     return records
   }
 }
+
+// 1 2 3 4 5 6 7 8 9
+//       ^         ^

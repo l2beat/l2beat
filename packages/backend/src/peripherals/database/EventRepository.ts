@@ -26,6 +26,28 @@ export class EventRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
+  async getDataBoundary(): Promise<
+    Map<string, { earliest: UnixTime; latest: UnixTime }>
+  > {
+    const knex = await this.knex()
+    const rows = await knex('events')
+      .where('time_span', 'hourly')
+      .min('unix_timestamp')
+      .max('unix_timestamp')
+      .groupBy(['project_id', 'event_name'])
+      .select('project_id', 'event_name')
+
+    return new Map(
+      rows.map((row) => [
+        `${row.project_id}-${row.event_name}`,
+        {
+          earliest: new UnixTime(parseInt(row.min)),
+          latest: new UnixTime(parseInt(row.max)),
+        },
+      ]),
+    )
+  }
+
   async getByProjectAndName(
     projectId: ProjectId,
     name: string,

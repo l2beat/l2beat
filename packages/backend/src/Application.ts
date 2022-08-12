@@ -3,9 +3,11 @@ import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
+import { EventsController } from './api/controllers/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
+import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -157,10 +159,13 @@ export class Application {
       config.projects,
     )
 
+    const eventsController = new EventsController(eventRepository)
+
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
+      createEventsRouter(eventsController),
     ])
 
     // #endregion
@@ -179,7 +184,7 @@ export class Application {
         await reportUpdater.start()
       }
       await blockNumberUpdater.start()
-      eventUpdater.start()
+      await eventUpdater.start()
     }
 
     // #endregion
