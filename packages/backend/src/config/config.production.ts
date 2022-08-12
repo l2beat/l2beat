@@ -33,5 +33,6 @@ export function getProductionConfig(): Config {
     })),
     projects: projects.map(projectToInfo),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
+    freshStart: false,
   }
 }

@@ -55,6 +55,7 @@ export class Database {
     this.migrated = false
     this.version = null
     await this.knex.migrate.rollback(undefined, true)
+    this.logger.info('Migrations rollback completed')
   }
 
   async closeConnection() {

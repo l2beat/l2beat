@@ -21,4 +21,5 @@ export interface Config {
   tokens: Token[]
   projects: ProjectInfo[]
   syncEnabled: boolean
+  freshStart: boolean
 }
