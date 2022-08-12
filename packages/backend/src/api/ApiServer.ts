@@ -1,6 +1,8 @@
 import Router from '@koa/router'
 import { Logger } from '@l2beat/common'
 import Koa from 'koa'
+import conditional from 'koa-conditional-get'
+import etag from 'koa-etag'
 
 import { createApiLogger } from './ApiLogger'
 
@@ -12,6 +14,8 @@ export class ApiServer {
     this.app = new Koa()
 
     this.app.use(createApiLogger(this.logger))
+    this.app.use(conditional())
+    this.app.use(etag())
 
     const router = new Router()
 
