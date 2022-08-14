@@ -37,7 +37,7 @@ const STARKNET_ON_CHAIN: ProjectTechnologyChoice = {
   references: [
     {
       text: 'On-chain Data',
-      href: 'https://starknet.io/on-chain-data/',
+      href: 'https://docs.starknet.io/docs/Data%20Availabilty/on-chain-data/',
     },
   ],
 }
