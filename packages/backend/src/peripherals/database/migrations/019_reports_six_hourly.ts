@@ -18,6 +18,7 @@ export async function up(knex: Knex) {
     table.boolean('is_six_hourly').defaultTo(false).index()
   })
   await knex('reports')
+    // @ts-expect-error-next-line
     .update({ is_six_hourly: true })
     .whereRaw('unix_timestamp % 21600 = 0')
 }

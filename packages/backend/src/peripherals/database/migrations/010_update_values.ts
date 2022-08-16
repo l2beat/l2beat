@@ -19,11 +19,13 @@ export async function up(knex: Knex) {
   )
 
   await knex('reports')
+    // @ts-expect-error-next-line
     .update({ is_daily: true })
     .whereRaw('mod(reports.unix_timestamp,86400) = 0')
 }
 
 export async function down(knex: Knex) {
   await knex('reports').update({ balance: '0' })
+  // @ts-expect-error-next-line
   await knex('reports').update({ is_daily: false })
 }
