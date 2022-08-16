@@ -185,6 +185,7 @@ export const rhinofi: Project = {
       abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
       emitter: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
       type: 'state',
+      sinceTimestamp: new UnixTime(0),
     },
   ],
 }

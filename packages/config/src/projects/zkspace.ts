@@ -187,12 +187,14 @@ export const zkspace: Project = {
       abi: 'event BlockCommit(uint32 indexed blockNumber)',
       emitter: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
       type: 'data',
+      sinceTimestamp: new UnixTime(0),
     },
     {
       name: 'MultiblockVerification',
       abi: 'event  MultiblockVerification(uint32 indexed blockNumberFrom, uint32 indexed blockNumberTo)',
       emitter: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
       type: 'state',
+      sinceTimestamp: new UnixTime(0),
     },
   ],
 }

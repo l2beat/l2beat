@@ -191,6 +191,7 @@ export const aztec: Project = {
       abi: 'event RollupProcessed (uint256 indexed rollupId, bytes32 dataRoot, bytes32 nullRoot, bytes32 rootRoot, uint256 dataSize)',
       emitter: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
       type: 'data',
+      sinceTimestamp: new UnixTime(0),
     },
   ],
 }

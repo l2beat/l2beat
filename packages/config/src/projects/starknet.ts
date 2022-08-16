@@ -283,12 +283,14 @@ export const starknet: Project = {
       abi: 'event LogMemoryPageFactRegular (bytes32 factHash, uint256 memoryHash, uint256 prod)',
       emitter: EthereumAddress('0x96375087b2F6eFc59e5e0dd5111B4d090EBFDD8B'),
       type: 'data',
+      sinceTimestamp: new UnixTime(0),
     },
     {
       name: 'LogStateUpdate',
       abi: 'event LogStateUpdate(uint256 globalRoot, int256 blockNumber)',
       emitter: EthereumAddress('0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4'),
       type: 'state',
+      sinceTimestamp: new UnixTime(0),
     },
   ],
 }

@@ -177,6 +177,7 @@ export const immutablex: Project = {
       abi: ' event LogStateTransitionFact(bytes32 stateTransitionFact)',
       emitter: EthereumAddress('0x5fdcca53617f4d2b9134b29090c87d01058e27e9'),
       type: 'state',
+      sinceTimestamp: new UnixTime(0),
     },
   ],
 }
