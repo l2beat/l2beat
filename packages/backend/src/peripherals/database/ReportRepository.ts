@@ -133,8 +133,6 @@ function toRow(record: ReportRecord): ReportRow {
     balance: record.balance.toString(),
     balance_usd: record.balanceUsd.toString(),
     balance_eth: record.balanceEth.toString(),
-    is_daily: record.timestamp.toNumber() % UnixTime.DAY === 0 ? true : false,
-    is_six_hourly: record.timestamp.toNumber() % SIX_HOURS === 0 ? true : false,
   }
 }
 

@@ -15,16 +15,16 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('reports', function (table) {
-    table.boolean('is_six_hourly').defaultTo(false).index()
+    table.dropColumn('is_daily')
+    table.dropColumn('is_six_hourly')
   })
-  await knex('reports')
-    // @ts-expect-error-next-line
-    .update({ is_six_hourly: true })
-    .whereRaw('unix_timestamp % 21600 = 0')
 }
 
 export async function down(knex: Knex) {
   await knex.schema.alterTable('reports', function (table) {
-    table.dropColumn('is_six_hourly')
+    table.boolean('is_daily')
+    table.boolean('is_six_hourly')
+    table.index(['is_daily'])
+    table.index(['is_six_hourly'])
   })
 }
