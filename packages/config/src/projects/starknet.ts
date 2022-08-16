@@ -61,7 +61,7 @@ export const starknet: Project = {
         'https://starkware.co/ecosystem/',
         'https://community.starknet.io/',
       ],
-      documentation: ['https://https://starknet.io/what-is-starknet/'],
+      documentation: ['https://starknet.io/what-is-starknet/'],
       explorers: ['https://voyager.online/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
