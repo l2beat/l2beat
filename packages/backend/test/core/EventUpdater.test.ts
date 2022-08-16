@@ -9,7 +9,7 @@ import { expect } from 'earljs'
 import { mockFn } from 'earljs/dist/mocks'
 
 import { Clock } from '../../src/core/Clock'
-import { EventUpdater } from '../../src/core/EventUpdater'
+import { EventUpdater, generateRecords } from '../../src/core/EventUpdater'
 import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
 import { EventRepository } from '../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../src/peripherals/ethereum/EthereumClient'
@@ -138,6 +138,38 @@ describe(EventUpdater.name, () => {
           timeSpan: 'daily',
         },
       ])
+    })
+  })
+
+  describe(generateRecords.name, () => {
+    it('empty', () => {})
+
+    it('throw if first is not 1:00', () => {})
+
+    it('works', async () => {
+      const NOON = new UnixTime(1660608000)
+      const timestamps = [
+        { timestamp: NOON, blockNumber: 1n },
+        { timestamp: NOON.add(1, 'hours'), blockNumber: 100n },
+        { timestamp: NOON.add(2, 'hours'), blockNumber: 200n },
+        { timestamp: NOON.add(3, 'hours'), blockNumber: 300n },
+        { timestamp: NOON.add(4, 'hours'), blockNumber: 400n },
+        { timestamp: NOON.add(5, 'hours'), blockNumber: 500n },
+        { timestamp: NOON.add(6, 'hours'), blockNumber: 600n },
+      ]
+
+      const logs = [50n, 100n, 150n, 200n, 250n, 300n, 350n, 400n, 450n, 500n]
+
+      const result = await generateRecords(
+        {
+          name: 'X',
+          project: PROJECT_A,
+        },
+        logs,
+        timestamps,
+      )
+
+      expect(result).toEqual([])
     })
   })
 })

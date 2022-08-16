@@ -5,7 +5,7 @@ import {
   TaskQueue,
   UnixTime,
 } from '@l2beat/common'
-import { utils } from 'ethers'
+import { providers, utils } from 'ethers'
 
 import { ProjectInfo } from '../model/ProjectInfo'
 import {
@@ -21,16 +21,14 @@ interface EventDetail {
   topic: string
   name: string
   projectId: ProjectId
+  sinceTimestamp: UnixTime
   earliest: UnixTime | undefined
   latest: UnixTime | undefined
 }
-//TODO
-// merge repository PR
-// finish update logic and integrate updater in Application
-// add status to avoid additional work on the data
+
 export class EventUpdater {
   private events: EventDetail[] = []
-  private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
+  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
 
   constructor(
     private ethereum: EthereumClient,
@@ -58,34 +56,54 @@ export class EventUpdater {
             topic: new utils.Interface([event.abi]).getEventTopic(event.name),
             name: event.name,
             projectId: project.projectId,
+            sinceTimestamp: event.sinceTimestamp,
             earliest: boundary?.earliest,
             latest: boundary?.latest,
           }
         }),
       )
       .flat()
-    //rethink how to update it
-    return this.clock.onEveryHour((timestamp) => {
-      this.taskQueue.addToFront(timestamp)
+
+    this.taskQueue.addToFront()
+    this.logger.info('EventUpdater started!')
+    return this.clock.onNewHour(() => {
+      this.taskQueue.addToFront()
     })
   }
 
-  async update(timestamp: UnixTime) {
+  async update() {
     //? maybe getBlockNumbers from-to only once
     const records: EventRecord[] = []
 
+    const from = this.clock.getFirstHour()
+    const to = this.clock.getLastHour()
+
     for (const event of this.events) {
-      if (
-        event.earliest === undefined ||
-        event.earliest.gt(timestamp) ||
-        event.latest?.lt(timestamp)
-      ) {
-        const record = await this.fetchRecords(timestamp, event)
-        records.push(...record)
+      if (event.earliest === undefined && event.latest === undefined) {
+        const records = await this.fetchRecords(event.sinceTimestamp, to, event)
+        records.push(...records)
+      } else {
+        if (event.earliest?.gt(from)) {
+          const fromWrapped = event.sinceTimestamp.lt(from)
+            ? event.sinceTimestamp
+            : from
+
+          const records = await this.fetchRecords(
+            event.sinceTimestamp,
+            fromWrapped,
+            event,
+          )
+          records.push(...records)
+        }
+
+        if (event.latest?.lt(to)) {
+          const records = await this.fetchRecords(event.latest, to, event)
+          records.push(...records)
+        }
       }
     }
 
-    if(records.length === 0) {
+    if (records.length === 0) {
       return
     }
 
@@ -93,73 +111,65 @@ export class EventUpdater {
   }
 
   async fetchRecords(
-    timestamp: UnixTime,
+    from: UnixTime,
+    to: UnixTime,
     event: EventDetail,
   ): Promise<EventRecord[]> {
     //todo handle first timestamp
-    const from = await this.blockNumberRepository.getBlockNumberWhenReady(
-      timestamp.add(-1, 'hours'),
+    const fromBlock = await this.blockNumberRepository.getBlockNumberWhenReady(
+      from,
     )
-    const to = await this.blockNumberRepository.getBlockNumberWhenReady(
-      timestamp,
-    )
+    const toBlock = await this.blockNumberRepository.getBlockNumberWhenReady(to)
 
-    const count = await this.ethereum.getLogsCount(
+    const logs = this.getLogs(
       event.emitter,
-      [event.topic],
-      Number(from),
-      Number(to),
+      event.topic,
+      Number(fromBlock),
+      Number(toBlock),
     )
 
-    const records: EventRecord[] = [
-      {
-        timestamp,
-        name: event.name,
-        projectId: event.projectId,
-        count,
-        timeSpan: 'hourly',
-      },
-    ]
+    const timestamps = this.blockNumberRepository.getBlockRangeWhenReady(
+      from,
+      to,
+    )
 
-    //     const DAY = 24 * 60 * 60
-    //     const SIX_HOURS = 6 * 60 * 60
-
-    //     if (timestamp.toNumber() % SIX_HOURS === 0) {
-    //       const aggregatedCount = await this.eventRepository.getAggregatedCount(
-    //         event.projectId,
-    //         event.name,
-    //         timestamp.add(-5, 'hours'),
-    //         timestamp.add(-1, 'hours'),
-    //       )
-    //       records.push({
-    //         timestamp,
-    //         name: event.name,
-    //         projectId: event.projectId,
-    //         count: aggregatedCount + count,
-    //         timeSpan: 'sixHourly',
-    //       })
-    //     }
-    // //todo add to UnixTime isDaily()
-    //     if (timestamp.toNumber() % DAY === 0) {
-    //       const aggregatedCount = await this.eventRepository.getAggregatedCount(
-    //         event.projectId,
-    //         event.name,
-    //         timestamp.add(-23, 'hours'),
-    //         timestamp.add(-1, 'hours'),
-    //       )
-
-    //       records.push({
-    //         timestamp,
-    //         name: event.name,
-    //         projectId: event.projectId,
-    //         count: aggregatedCount + count,
-    //         timeSpan: 'daily',
-    //       })
-    //     }
+    const records = generateRecords(logs, timestamps)
 
     return records
   }
+
+  async getLogs(
+    address: EthereumAddress,
+    topic: string,
+    fromBlock: number,
+    toBlock: number,
+  ): Promise<providers.Log[]> {
+    try {
+      return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
+    } catch (e) {
+      if (
+        e instanceof Error &&
+        e.message.includes('Log response size exceeded')
+      ) {
+        console.log('BISECTION', fromBlock, toBlock)
+        // TODO: check that there are blocks in both ranges e.g not [1, 1], [1, 1]
+        const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
+        const [a, b] = await Promise.all([
+          this.getLogs(address, topic, fromBlock, midPoint),
+          this.getLogs(address, topic, midPoint + 1, toBlock),
+        ])
+        return a.concat(b)
+      } else {
+        throw e
+      }
+    }
+  }
 }
 
-// 1 2 3 4 5 6 7 8 9
-//       ^         ^
+export function generateRecords(
+  event: {name: string, project: ProjectId},
+  logs: bigint[],
+  timestamps: { timestamp: UnixTime; blockNumber: bigint }[],
+): Promise<EventRecord[]> {
+  throw new Error('Function not implemented.')
+}

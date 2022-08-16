@@ -29,6 +29,32 @@ export class BlockNumberUpdater {
     }
   }
 
+  async getBlockRangeWhenReady(from: UnixTime, to: UnixTime, refreshIntervalMs = 1000) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    while (true) {
+      const blocks = []
+      let noHoles = true
+      // TODO: figure out if to should be inclusive or not
+      for (let t = from; t.lte(to); t = from.add(1, 'hours')) {
+        const blockNumber = this.blocksByTimestamp.get(t.toNumber())
+        if (blockNumber !== undefined) {
+          blocks.push({
+            timestamp: t,
+            blockNumber
+          })
+        } else {
+          noHoles = false
+          break
+        }
+      }
+      if (noHoles) {
+        return blocks
+      } else {
+        await setTimeout(refreshIntervalMs)
+      }
+    }
+  }
+
   async start() {
     const known = await this.blockNumberRepository.getAll()
     for (const { timestamp, blockNumber } of known) {

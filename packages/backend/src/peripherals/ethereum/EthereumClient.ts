@@ -11,7 +11,7 @@ export class EthereumClient {
     return BigInt(result) // TODO: probably could be a simple number
   }
 
-  async getLogsCount(
+  async getLogs(
     address: EthereumAddress,
     topics: string[],
     fromBlock: number,
@@ -23,8 +23,7 @@ export class EthereumClient {
       fromBlock,
       toBlock,
     })
-
-    return logs.length
+    return logs
   }
 
   async getBlock(blockNumber: number) {
