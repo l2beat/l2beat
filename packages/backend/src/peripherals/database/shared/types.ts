@@ -26,8 +26,6 @@ declare module 'knex/types/tables' {
     balance: string
     balance_usd: string
     balance_eth: string
-    is_daily: boolean
-    is_six_hourly: boolean
   }
 
   interface AggregateReportRow {
