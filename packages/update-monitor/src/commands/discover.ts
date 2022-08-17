@@ -7,6 +7,7 @@ import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
+import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverStarkNet, STARK_NET_NAME } from '../projects/starknet'
 import { discoverZkSpace, ZK_SPACE_NAME } from '../projects/zkSpace'
@@ -43,6 +44,7 @@ export async function discover(args: string[]) {
     [ARBITRUM_NAME, discoverArbitrum],
     [STARK_NET_NAME, discoverStarkNet],
     [NOVA_NAME, discoverNova],
+    [DYDX_NAME, discoverDydx],
   ]
 
   const project = projects.find((x) => x[0] === args[0])

@@ -1,0 +1,21 @@
+{
+  "name": "dydx",
+  "contracts": [
+    {
+      "name": "StarkPerpetual",
+      "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3"
+      },
+      "values": {
+        "subContracts": [
+          "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
+          "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545",
+          "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0",
+          "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+        ]
+      }
+    }
+  ]
+}

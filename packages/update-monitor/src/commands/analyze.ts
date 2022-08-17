@@ -2,6 +2,7 @@ import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
 import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
+import { DYDX_NAME, getDydxParameters } from '../projects/dYdX'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
 import { getStarkNetParameters, STARK_NET_NAME } from '../projects/starknet'
 import { getZkSpaceParameters, ZK_SPACE_NAME } from '../projects/zkSpace'
@@ -30,6 +31,7 @@ export async function analyze(projects: string[]) {
     [ARBITRUM_NAME, getArbitrumParameters],
     [STARK_NET_NAME, getStarkNetParameters],
     [NOVA_NAME, getNovaParameters],
+    [DYDX_NAME, getDydxParameters],
   ]
 
   const unknownArguments = projects.filter(
