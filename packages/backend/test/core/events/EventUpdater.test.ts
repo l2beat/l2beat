@@ -8,12 +8,16 @@ import {
 import { expect } from 'earljs'
 import { mockFn } from 'earljs/dist/mocks'
 
-import { Clock } from '../../src/core/Clock'
-import { EventUpdater, generateRecords } from '../../src/core/EventUpdater'
-import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
-import { EventRepository } from '../../src/peripherals/database/EventRepository'
-import { EthereumClient } from '../../src/peripherals/ethereum/EthereumClient'
-import { setupDatabaseTestSuite } from '../peripherals/database/shared/setup'
+import { Clock } from '../../../src/core/Clock'
+import {
+  EventUpdater,
+  generateRecords,
+  getRanges,
+} from '../../../src/core/events/EventUpdater'
+import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
+import { EventRepository } from '../../../src/peripherals/database/EventRepository'
+import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
+import { setupDatabaseTestSuite } from '../../peripherals/database/shared/setup'
 
 const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
 const mockEvent = (
@@ -173,3 +177,5 @@ describe(EventUpdater.name, () => {
     })
   })
 })
+
+

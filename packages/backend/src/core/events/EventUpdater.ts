@@ -7,14 +7,14 @@ import {
 } from '@l2beat/common'
 import { providers, utils } from 'ethers'
 
-import { ProjectInfo } from '../model/ProjectInfo'
+import { ProjectInfo } from '../../model/ProjectInfo'
 import {
   EventRecord,
   EventRepository,
-} from '../peripherals/database/EventRepository'
-import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
-import { BlockNumberUpdater } from './BlockNumberUpdater'
-import { Clock } from './Clock'
+} from '../../peripherals/database/EventRepository'
+import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { BlockNumberUpdater } from '../BlockNumberUpdater'
+import { Clock } from '../Clock'
 
 interface EventDetail {
   emitter: EthereumAddress
@@ -79,12 +79,20 @@ export class EventUpdater {
     const to = this.clock.getLastHour()
 
     for (const event of this.events) {
+      const ranges: { from: UnixTime; to: UnixTime }[] = getRanges(
+        from,
+        to,
+        event.earliest,
+        event.latest,
+      )
+
       if (event.earliest === undefined && event.latest === undefined) {
         const records = await this.fetchRecords(event.sinceTimestamp, to, event)
         records.push(...records)
       } else {
         if (event.earliest?.gt(from)) {
-          const fromWrapped = event.sinceTimestamp.lt(from)
+          //jezeli from jest wczesniej niz sinceTimestamp to wez sinceTimestmap
+          const fromWrapped = event.sinceTimestamp.gt(from)
             ? event.sinceTimestamp
             : from
 
@@ -167,9 +175,34 @@ export class EventUpdater {
 }
 
 export function generateRecords(
-  event: {name: string, project: ProjectId},
+  event: { name: string; project: ProjectId },
   logs: bigint[],
   timestamps: { timestamp: UnixTime; blockNumber: bigint }[],
 ): Promise<EventRecord[]> {
   throw new Error('Function not implemented.')
+}
+export function getRanges(
+  from: UnixTime,
+  to: UnixTime,
+  earliest: UnixTime | undefined,
+  latest: UnixTime | undefined,
+  sinceTimestamp: UnixTime,
+): { from: UnixTime; to: UnixTime }[] {
+  const ranges: { from: UnixTime; to: UnixTime }[] = []
+
+  const fromAdjusted = sinceTimestamp.gt(from) ? sinceTimestamp : from
+
+  if (earliest === undefined && latest === undefined) {
+    return [{ from: fromAdjusted, to }]
+  }
+
+  if (earliest?.gt(fromAdjusted)) {
+    ranges.push({ from: fromAdjusted, to: earliest })
+  }
+
+  if (latest?.lt(to)) {
+    ranges.push({ from: latest, to })
+  }
+
+  return ranges
 }
