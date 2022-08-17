@@ -166,6 +166,30 @@ describe(UnixTime.name, () => {
     })
   })
 
+  describe(UnixTime.prototype.isDaily.name, () => {
+    it('daily', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
+      expect(time.isDaily()).toEqual(true)
+    })
+
+    it('not daily', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:01Z'))
+      expect(time.isDaily()).toEqual(false)
+    })
+  })
+
+  describe(UnixTime.prototype.isSixHourly.name, () => {
+    it('six hourly', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T06:00:00Z'))
+      expect(time.isSixHourly()).toEqual(true)
+    })
+
+    it('not six hourly', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-08T06:00:01Z'))
+      expect(time.isSixHourly()).toEqual(false)
+    })
+  })
+
   describe('comparison methods', () => {
     const testCases = [
       { a: 4, method: 'lt' as const, b: 3, result: false },

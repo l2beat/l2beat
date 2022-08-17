@@ -105,4 +105,12 @@ export class UnixTime {
   toJSON() {
     return this.timestamp
   }
+
+  isSixHourly() {
+    return this.timestamp % (SECONDS_PER_HOUR * 6) === 0
+  }
+
+  isDaily() {
+    return this.timestamp % SECONDS_PER_DAY === 0
+  }
 }
