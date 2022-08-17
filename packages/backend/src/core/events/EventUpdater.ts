@@ -84,6 +84,7 @@ export class EventUpdater {
         to,
         event.earliest,
         event.latest,
+        event.sinceTimestamp,
       )
 
       if (event.earliest === undefined && event.latest === undefined) {
@@ -181,28 +182,4 @@ export function generateRecords(
 ): Promise<EventRecord[]> {
   throw new Error('Function not implemented.')
 }
-export function getRanges(
-  from: UnixTime,
-  to: UnixTime,
-  earliest: UnixTime | undefined,
-  latest: UnixTime | undefined,
-  sinceTimestamp: UnixTime,
-): { from: UnixTime; to: UnixTime }[] {
-  const ranges: { from: UnixTime; to: UnixTime }[] = []
 
-  const fromAdjusted = sinceTimestamp.gt(from) ? sinceTimestamp : from
-
-  if (earliest === undefined && latest === undefined) {
-    return [{ from: fromAdjusted, to }]
-  }
-
-  if (earliest?.gt(fromAdjusted)) {
-    ranges.push({ from: fromAdjusted, to: earliest })
-  }
-
-  if (latest?.lt(to)) {
-    ranges.push({ from: latest, to })
-  }
-
-  return ranges
-}

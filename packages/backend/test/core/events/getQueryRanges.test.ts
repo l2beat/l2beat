@@ -1,67 +1,64 @@
 import { UnixTime } from '@l2beat/common'
 import { expect } from 'earljs'
 
-import { getRanges } from '../../../src/core/events/EventUpdater'
+import { getQueryRanges } from '../../../src/core/events/getQueryRanges'
 
-describe(getRanges.name, () => {
+describe(getQueryRanges.name, () => {
   const FROM = new UnixTime(1660608000)
   const TO = FROM.add(12, 'hours')
   const SINCE = FROM
 
   it('all synced', () => {
-    const earliest = FROM
-    const latest = TO
+    const dbStatus = { earliest: FROM, latest: TO }
 
-    const result = getRanges(FROM, TO, earliest, latest, SINCE)
+    const result = getQueryRanges(FROM, TO, dbStatus, SINCE)
 
     expect(result).toEqual([])
   })
 
   it('missing earlier', () => {
-    const earliest = FROM.add(2, 'hours')
-    const latest = TO
+    const dbStatus = { earliest: FROM.add(2, 'hours'), latest: TO }
 
-    const result = getRanges(FROM, TO, earliest, latest, SINCE)
+    const result = getQueryRanges(FROM, TO, dbStatus, SINCE)
 
-    expect(result).toEqual([{ from: FROM, to: earliest }])
+    expect(result).toEqual([{ from: FROM, to: dbStatus.earliest }])
   })
 
   it('missing later', () => {
-    const earliest = FROM
-    const latest = TO.add(-2, 'hours')
+    const dbStatus = { earliest: FROM, latest: TO.add(-2, 'hours') }
 
-    const result = getRanges(FROM, TO, earliest, latest, SINCE)
+    const result = getQueryRanges(FROM, TO, dbStatus, SINCE)
 
-    expect(result).toEqual([{ from: latest, to: TO }])
+    expect(result).toEqual([{ from: dbStatus.latest, to: TO }])
   })
 
   it('missing earlier and later', () => {
-    const earliest = FROM.add(2, 'hours')
-    const latest = TO.add(-2, 'hours')
+    const dbStatus = {
+      earliest: FROM.add(2, 'hours'),
+      latest: TO.add(-2, 'hours'),
+    }
 
-    const result = getRanges(FROM, TO, earliest, latest, SINCE)
+    const result = getQueryRanges(FROM, TO, dbStatus, SINCE)
 
     expect(result).toEqual([
-      { from: FROM, to: earliest },
-      { from: latest, to: TO },
+      { from: FROM, to: dbStatus.earliest },
+      { from: dbStatus.latest, to: TO },
     ])
   })
 
   it('no data in db', () => {
-    const earliest = undefined
-    const latest = undefined
+    const dbStatus = undefined
 
-    const result = getRanges(FROM, TO, earliest, latest, SINCE)
+    const result = getQueryRanges(FROM, TO, dbStatus, SINCE)
 
     expect(result).toEqual([{ from: FROM, to: TO }])
   })
 
   it('SINCE later than from', () => {
-    const earliest = undefined
-    const latest = undefined
-    const since = FROM.add(2, 'hours')
+    const dbStatus = undefined
 
-    const result = getRanges(FROM, TO, earliest, latest, since)
+    const since = FROM.add(2, 'hours')
+    const result = getQueryRanges(FROM, TO, dbStatus, since)
 
     expect(result).toEqual([{ from: since, to: TO }])
   })
