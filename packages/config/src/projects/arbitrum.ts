@@ -11,7 +11,7 @@ import {
 import { Project } from './types'
 
 export const arbitrum: Project = {
-  name: 'Arbitrum',
+  name: 'Arbitrum One',
   slug: 'arbitrum',
   id: ProjectId('arbitrum'),
   bridges: [
