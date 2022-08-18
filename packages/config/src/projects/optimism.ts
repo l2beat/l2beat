@@ -133,8 +133,8 @@ export const optimism: Project = {
           ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
-              text: ' Withdrawing back to L1 - Optimism documentation',
-              href: 'https://community.optimism.io/docs/users/withdrawal.html',
+              text: ' Withdrawing back to L1 - Optimism Help Center',
+              href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
             },
           ],
           risks: [
