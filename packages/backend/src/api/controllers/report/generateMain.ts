@@ -21,8 +21,8 @@ export function generateMain(
       ProjectId.ALL,
     ),
     projects: projects.reduce<ApiMain['projects']>(
-      (acc, { name, projectId }) => {
-        acc[name] = {
+      (acc, { projectId, name }) => {
+        const project = {
           charts: getProjectCharts(
             hourlyReports,
             sixHourlyReports,
@@ -33,6 +33,8 @@ export function generateMain(
             .filter((r) => r.projectId === projectId)
             .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
         }
+        acc[projectId.toString()] = project
+        acc[name] = project // TODO: remove once frontend is not depending on it
         return acc
       },
       {},
