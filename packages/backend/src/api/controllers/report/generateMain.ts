@@ -20,25 +20,20 @@ export function generateMain(
       dailyReports,
       ProjectId.ALL,
     ),
-    projects: projects.reduce<ApiMain['projects']>(
-      (acc, { projectId, name }) => {
-        const project = {
-          charts: getProjectCharts(
-            hourlyReports,
-            sixHourlyReports,
-            dailyReports,
-            projectId,
-          ),
-          tokens: latestReports
-            .filter((r) => r.projectId === projectId)
-            .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
-        }
-        acc[projectId.toString()] = project
-        acc[name] = project // TODO: remove once frontend is not depending on it
-        return acc
-      },
-      {},
-    ),
+    projects: projects.reduce<ApiMain['projects']>((acc, { projectId }) => {
+      acc[projectId.toString()] = {
+        charts: getProjectCharts(
+          hourlyReports,
+          sixHourlyReports,
+          dailyReports,
+          projectId,
+        ),
+        tokens: latestReports
+          .filter((r) => r.projectId === projectId)
+          .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
+      }
+      return acc
+    }, {}),
   }
 }
 
