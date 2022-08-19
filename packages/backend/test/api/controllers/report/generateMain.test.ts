@@ -214,6 +214,40 @@ describe(generateMain.name, () => {
           },
           tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
         },
+        arbitrum: {
+          charts: {
+            hourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: hourly.projectPoints,
+            },
+            sixHourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: sixHourly.projectPoints,
+            },
+            daily: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: daily.projectPoints,
+            },
+          },
+          tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
+        },
+        optimism: {
+          charts: {
+            hourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: hourly.projectPoints,
+            },
+            sixHourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: sixHourly.projectPoints,
+            },
+            daily: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: daily.projectPoints,
+            },
+          },
+          tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
+        },
       },
     })
   })
