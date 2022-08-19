@@ -11,7 +11,7 @@ export function getChart(project: Project, apiMain: ApiMain): ChartProps {
 }
 
 function getTokens(project: Project, apiMain: ApiMain) {
-  return apiMain.projects[project.name]?.tokens
+  return apiMain.projects[project.id.toString()]?.tokens
     .map(({ assetId, tvl }) => {
       const symbol = getTokenByAssetId(assetId).symbol
       return {
