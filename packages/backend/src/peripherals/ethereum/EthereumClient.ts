@@ -11,19 +11,19 @@ export class EthereumClient {
     return BigInt(result) // TODO: probably could be a simple number
   }
 
-  async getLogs(
+  async getLogBlockNumbers(
     address: EthereumAddress,
     topics: string[],
     fromBlock: number,
     toBlock: number,
-  ) {
+  ): Promise<bigint[]> {
     const logs = await this.provider.getLogs({
       address: address.toString(),
       topics,
       fromBlock,
       toBlock,
     })
-    return logs
+    return logs.map((l) => BigInt(l.blockNumber))
   }
 
   async getBlock(blockNumber: number) {

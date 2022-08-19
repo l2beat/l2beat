@@ -5,7 +5,7 @@ import {
   TaskQueue,
   UnixTime,
 } from '@l2beat/common'
-import { providers, utils } from 'ethers'
+import { utils } from 'ethers'
 
 import { ProjectInfo } from '../../model/ProjectInfo'
 import {
@@ -15,8 +15,9 @@ import {
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
+import { getQueryRanges } from './getQueryRanges'
 
-interface EventDetail {
+export interface EventDetail {
   emitter: EthereumAddress
   topic: string
   name: string
@@ -29,6 +30,7 @@ interface EventDetail {
 export class EventUpdater {
   private events: EventDetail[] = []
   private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private lastProcessed: UnixTime | undefined
 
   constructor(
     private ethereum: EthereumClient,
@@ -71,52 +73,52 @@ export class EventUpdater {
     })
   }
 
+  private getFirstHour() {
+    const firstHour = this.clock.getFirstHour().add(1, 'days')
+    return firstHour.isFull('day') ? firstHour : firstHour.toNext('day')
+  }
+
   async update() {
-    //? maybe getBlockNumbers from-to only once
-    const records: EventRecord[] = []
+    const events: EventRecord[] = []
 
-    const from = this.clock.getFirstHour()
-    const to = this.clock.getLastHour()
+    const firstHour = this.lastProcessed
+      ? this.lastProcessed.add(1, 'hours')
+      : this.getFirstHour()
 
-    for (const event of this.events) {
-      const ranges: { from: UnixTime; to: UnixTime }[] = getRanges(
-        from,
-        to,
-        event.earliest,
-        event.latest,
-        event.sinceTimestamp,
-      )
+    const lastHour = this.clock.getLastHour()
 
-      if (event.earliest === undefined && event.latest === undefined) {
-        const records = await this.fetchRecords(event.sinceTimestamp, to, event)
-        records.push(...records)
-      } else {
-        if (event.earliest?.gt(from)) {
-          //jezeli from jest wczesniej niz sinceTimestamp to wez sinceTimestmap
-          const fromWrapped = event.sinceTimestamp.gt(from)
-            ? event.sinceTimestamp
-            : from
-
-          const records = await this.fetchRecords(
-            event.sinceTimestamp,
-            fromWrapped,
-            event,
-          )
-          records.push(...records)
-        }
-
-        if (event.latest?.lt(to)) {
-          const records = await this.fetchRecords(event.latest, to, event)
-          records.push(...records)
-        }
-      }
-    }
-
-    if (records.length === 0) {
+    if (firstHour.equals(lastHour)) {
       return
     }
 
-    await this.eventRepository.addMany(records)
+    for (const event of this.events) {
+      const dbStatus =
+        event.earliest && event.latest
+          ? {
+              earliest: event.earliest,
+              latest: event.latest,
+            }
+          : undefined
+
+      const ranges: { from: UnixTime; to: UnixTime }[] = getQueryRanges(
+        firstHour,
+        lastHour,
+        dbStatus,
+        event.sinceTimestamp,
+      )
+
+      for (const { from, to } of ranges) {
+        const records = await this.fetchRecords(from, to, event)
+        events.push(...records)
+      }
+    }
+
+    if (events.length === 0) {
+      return
+    }
+
+    await this.eventRepository.addMany(events)
+    this.lastProcessed = lastHour
   }
 
   async fetchRecords(
@@ -124,48 +126,68 @@ export class EventUpdater {
     to: UnixTime,
     event: EventDetail,
   ): Promise<EventRecord[]> {
-    //todo handle first timestamp
+    // it is needed for sixHourly and daily
+    const fromAdjusted = from.add(-1, 'days').toStartOf('day').add(1, 'hours')
+
+    const eventBlockNumbers = await this.getEventsBlockNumbers(
+      fromAdjusted,
+      to,
+      event,
+    )
+
+    const timestamps = await this.blockNumberRepository.getBlockRangeWhenReady(
+      fromAdjusted,
+      to,
+    )
+
+    const records = generateRecords(event, eventBlockNumbers, timestamps)
+
+    return records.filter((r) => r.timestamp.gte(from))
+  }
+
+  private async getEventsBlockNumbers(
+    from: UnixTime,
+    to: UnixTime,
+    event: EventDetail,
+  ) {
     const fromBlock = await this.blockNumberRepository.getBlockNumberWhenReady(
-      from,
+      from.add(-1, 'hours'),
     )
     const toBlock = await this.blockNumberRepository.getBlockNumberWhenReady(to)
 
-    const logs = this.getLogs(
+    const logs = await this.getEventBlockNumbers(
       event.emitter,
       event.topic,
       Number(fromBlock),
       Number(toBlock),
     )
-
-    const timestamps = this.blockNumberRepository.getBlockRangeWhenReady(
-      from,
-      to,
-    )
-
-    const records = generateRecords(logs, timestamps)
-
-    return records
+    return logs
   }
 
-  async getLogs(
+  async getEventBlockNumbers(
     address: EthereumAddress,
     topic: string,
     fromBlock: number,
     toBlock: number,
-  ): Promise<providers.Log[]> {
+  ): Promise<bigint[]> {
     try {
-      return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
+      return await this.ethereum.getLogBlockNumbers(
+        address,
+        [topic],
+        fromBlock,
+        toBlock,
+      )
     } catch (e) {
       if (
         e instanceof Error &&
         e.message.includes('Log response size exceeded')
       ) {
-        console.log('BISECTION', fromBlock, toBlock)
+        this.logger.debug('BISECTION', { fromBlock, toBlock })
         // TODO: check that there are blocks in both ranges e.g not [1, 1], [1, 1]
         const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
         const [a, b] = await Promise.all([
-          this.getLogs(address, topic, fromBlock, midPoint),
-          this.getLogs(address, topic, midPoint + 1, toBlock),
+          this.getEventBlockNumbers(address, topic, fromBlock, midPoint),
+          this.getEventBlockNumbers(address, topic, midPoint + 1, toBlock),
         ])
         return a.concat(b)
       } else {
@@ -176,10 +198,61 @@ export class EventUpdater {
 }
 
 export function generateRecords(
-  event: { name: string; project: ProjectId },
+  { name, projectId }: EventDetail,
   logs: bigint[],
   timestamps: { timestamp: UnixTime; blockNumber: bigint }[],
-): Promise<EventRecord[]> {
-  throw new Error('Function not implemented.')
-}
+): EventRecord[] {
+  if (timestamps[0]?.timestamp.toNumber() % 86_400 !== 3_600) {
+    throw new Error('Algorithm works only if first timestamp is 01:00')
+  }
 
+  const sortedLogs = logs.sort((a, b) => Number(a - b))
+
+  let i = 0
+  const hourly: EventRecord[] = []
+  const sixHourly: EventRecord[] = []
+  const daily: EventRecord[] = []
+
+  for (const { timestamp, blockNumber } of timestamps) {
+    let count = 0
+    while (true) {
+      if (sortedLogs[i] < blockNumber) {
+        count++
+        i++
+      } else {
+        break
+      }
+    }
+    hourly.push({
+      timestamp: timestamp,
+      name,
+      projectId,
+      count,
+      timeSpan: 'hourly',
+    })
+    if (timestamp.isSixHourly()) {
+      let sum = 0
+      hourly.slice(hourly.length - 6).forEach((r) => (sum += r.count))
+      sixHourly.push({
+        timestamp: timestamp,
+        name,
+        projectId,
+        count: sum,
+        timeSpan: 'sixHourly',
+      })
+    }
+    if (timestamp.isDaily()) {
+      let sum = 0
+      hourly.slice(hourly.length - 24).forEach((r) => (sum += r.count))
+      daily.push({
+        timestamp: timestamp,
+        name,
+        projectId,
+        count: sum,
+        timeSpan: 'daily',
+      })
+    }
+  }
+
+  return hourly.concat(sixHourly).concat(daily)
+}
