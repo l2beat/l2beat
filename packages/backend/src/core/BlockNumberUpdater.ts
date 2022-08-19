@@ -25,22 +25,26 @@ export class BlockNumberUpdater {
       if (blockNumber !== undefined) {
         return blockNumber
       }
+      this.logger.debug('something is waiting for getBlockNumberWhenReady')
       await setTimeout(refreshIntervalMs)
     }
   }
 
-  async getBlockRangeWhenReady(from: UnixTime, to: UnixTime, refreshIntervalMs = 1000) {
+  async getBlockRangeWhenReady(
+    from: UnixTime,
+    to: UnixTime,
+    refreshIntervalMs = 1000,
+  ): Promise<{ timestamp: UnixTime; blockNumber: bigint }[]> {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
-      const blocks = []
+      const blocks: { timestamp: UnixTime; blockNumber: bigint }[] = []
       let noHoles = true
-      // TODO: figure out if to should be inclusive or not
-      for (let t = from; t.lte(to); t = from.add(1, 'hours')) {
+      for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
         const blockNumber = this.blocksByTimestamp.get(t.toNumber())
         if (blockNumber !== undefined) {
           blocks.push({
             timestamp: t,
-            blockNumber
+            blockNumber,
           })
         } else {
           noHoles = false
@@ -50,6 +54,7 @@ export class BlockNumberUpdater {
       if (noHoles) {
         return blocks
       } else {
+        this.logger.debug('something is waiting for getBlockRangeWhenReady')
         await setTimeout(refreshIntervalMs)
       }
     }
