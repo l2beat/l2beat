@@ -180,40 +180,6 @@ describe(generateMain.name, () => {
         },
       },
       projects: {
-        Arbitrum: {
-          charts: {
-            hourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: hourly.projectPoints,
-            },
-            sixHourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: sixHourly.projectPoints,
-            },
-            daily: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: daily.projectPoints,
-            },
-          },
-          tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
-        },
-        Optimism: {
-          charts: {
-            hourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: hourly.projectPoints,
-            },
-            sixHourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: sixHourly.projectPoints,
-            },
-            daily: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: daily.projectPoints,
-            },
-          },
-          tokens: [{ assetId: AssetId.DAI, tvl: 10 }],
-        },
         arbitrum: {
           charts: {
             hourly: {
