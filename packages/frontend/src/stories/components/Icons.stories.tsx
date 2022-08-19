@@ -32,6 +32,8 @@ export function SymbolIcons() {
       <Icons.GlobeIcon />
       <Icons.InfoIcon />
       <Icons.LinkIcon />
+      <Icons.MenuCloseIcon />
+      <Icons.MenuOpenIcon />
       <Icons.MoonIcon />
       <Icons.ShieldBadIcon />
       <Icons.ShieldGoodIcon />

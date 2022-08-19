@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 
-import { Navbar as NavbarComponent } from '../../components/Navbar'
+import { configureDarkThemeToggle } from '../../components/navbar/configureDarkThemeToggle'
+import { configureSidebarMenu } from '../../components/navbar/configureSidebarMenu'
+import { Navbar as NavbarComponent } from '../../components/navbar/Navbar'
 import { Page } from '../../components/Page'
-import { configureDarkMode } from '../../scripts/configureDarkMode'
 
 export default {
   title: 'Components/Navbar',
@@ -12,7 +13,8 @@ export default {
 
 export function Navbar() {
   useEffect(() => {
-    configureDarkMode()
+    configureDarkThemeToggle()
+    configureSidebarMenu()
   }, [])
   return (
     <Page>
