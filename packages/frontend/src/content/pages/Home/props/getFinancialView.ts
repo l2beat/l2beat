@@ -20,7 +20,7 @@ export function getFinancialView(
 ): FinancialViewProps {
   return {
     items: projects.map((x) =>
-      getFinancialViewEntry(x, apiMain.projects[x.name], tvl),
+      getFinancialViewEntry(x, apiMain.projects[x.id.toString()], tvl),
     ),
   }
 }

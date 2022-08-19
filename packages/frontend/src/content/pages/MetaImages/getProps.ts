@@ -15,7 +15,7 @@ export interface MetaImageProps {
 
 export function getProps(apiMain: ApiMain, project?: Project): MetaImageProps {
   const daily = project
-    ? apiMain.projects[project.name]?.charts.daily.data ?? []
+    ? apiMain.projects[project.id.toString()]?.charts.daily.data ?? []
     : apiMain.charts.daily.data
   const tvl = getFromEnd(daily, 0)?.[1] ?? 0
   const tvlSevenDaysAgo = getFromEnd(daily, 7)?.[1] ?? 0
