@@ -8,7 +8,7 @@ export function createApi(projects: Project[], apiMain: ApiMain) {
 
   urlCharts.set('tvl', apiMain.charts)
   for (const project of projects) {
-    const projectData = apiMain.projects[project.name]
+    const projectData = apiMain.projects[project.id.toString()]
     if (!projectData) {
       continue
     }
