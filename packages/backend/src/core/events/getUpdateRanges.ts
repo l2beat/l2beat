@@ -5,16 +5,12 @@ interface Range {
   to: UnixTime
 }
 
-export function getQueryRanges(
+export function getUpdateRanges(
   from: UnixTime,
   to: UnixTime,
   dbStatus: { earliest: UnixTime; latest: UnixTime } | undefined,
   sinceTimestamp: UnixTime,
 ): Range[] {
-  if (from.equals(to)) {
-    throw new Error('Programmer error')
-  }
-
   const ranges: { from: UnixTime; to: UnixTime }[] = []
 
   const fromAdjusted = sinceTimestamp.gt(from) ? sinceTimestamp : from

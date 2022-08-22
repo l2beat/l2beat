@@ -177,6 +177,7 @@ export class Application {
       await apiServer.listen()
       await database.migrateToLatest()
 
+      //todo move all to this condition
       if (config.syncEnabled) {
         reportController.start()
         priceUpdater.start()
