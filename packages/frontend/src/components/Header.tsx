@@ -7,6 +7,7 @@ import { PercentChange } from './PercentChange'
 export interface HeaderProps {
   title: string
   titleLength?: 'long' | 'very-long'
+  titleClassName?: string
   icon?: string
   tvl?: string
   sevenDayChange?: string
@@ -15,7 +16,9 @@ export interface HeaderProps {
 export function Header(props: HeaderProps) {
   return (
     <header className="Header">
-      <h1 className={cx('Header-Title', props.titleLength)}>
+      <h1
+        className={cx('Header-Title', props.titleLength, props.titleClassName)}
+      >
         {props.icon && (
           <img
             className="Header-Icon"

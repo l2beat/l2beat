@@ -33,12 +33,13 @@ body,
 
 .Meta.project {
   .Header-Title {
-    position: fixed;
+    position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
     font-size: 64px;
+    width: max-content;
   }
 
   .Header-Icon {
@@ -68,7 +69,7 @@ body,
 }
 
 .Chart-Range {
-  position: fixed;
+  position: absolute;
   bottom: 16px;
   left: 16px;
   font-size: var(--font-l);
@@ -103,7 +104,7 @@ body,
 
 .Meta.project {
   .Logo {
-    position: fixed;
+    position: absolute;
     top: 24px;
     left: 16px;
   }
@@ -111,36 +112,16 @@ body,
 
 .Meta.overview {
   .Logo {
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 250px;
     height: auto;
   }
-}
 
-.Meta.jobs {
-  height: 100%;
-  background-image: url('/meta-images/mountains.jpg');
-  background-size: cover;
-
-  .Logo {
-    position: fixed;
-    top: 48%;
-    left: 68%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: auto;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 56px;
-    position: fixed;
-    top: 51.5%;
-    left: 32%;
-    transform: translate(-50%, -50%);
+  .Header-Title {
+    font-size: 42px;
   }
 }
 

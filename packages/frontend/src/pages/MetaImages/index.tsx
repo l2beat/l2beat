@@ -3,22 +3,17 @@ import { ApiMain } from '@l2beat/types'
 import React from 'react'
 
 import { getProps } from './getProps'
-import { MetaImage } from './MetaImage'
-import { MetaJobsImage } from './MetaJobsImage'
+import { MetaImagePage } from './MetaImagePage'
 
 export function getMetaImagePages(projects: Project[], apiMain: ApiMain) {
   return [
     {
       slug: '/meta-images/overview',
-      page: <MetaImage {...getProps(apiMain)} />,
-    },
-    {
-      slug: '/meta-images/jobs',
-      page: <MetaJobsImage />,
+      page: <MetaImagePage {...getProps(apiMain)} />,
     },
     ...projects.map((project) => ({
       slug: `/meta-images/${project.slug}`,
-      page: <MetaImage {...getProps(apiMain, project)} />,
+      page: <MetaImagePage {...getProps(apiMain, project)} />,
     })),
   ]
 }
