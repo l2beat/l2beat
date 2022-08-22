@@ -20,7 +20,7 @@ export class EventUpdater {
 
   constructor(
     private ethereum: EthereumClient,
-    private blockNumberRepository: BlockNumberUpdater,
+    private blockNumberUpdater: BlockNumberUpdater,
     private eventRepository: EventRepository,
     private clock: Clock,
     private projects: ProjectInfo[],
@@ -51,8 +51,6 @@ export class EventUpdater {
       )
       .flat()
 
-    this.lastProcessed = this.getFirstHour()
-
     this.taskQueue.addToFront()
     this.logger.info('EventUpdater started!')
     return this.clock.onNewHour(() => {
@@ -60,20 +58,10 @@ export class EventUpdater {
     })
   }
 
-  private getFirstHour() {
-    //it is needed for sixHourly and daily
-    const firstHour = this.clock.getFirstHour().add(1, 'days')
-    return firstHour.isFull('day') ? firstHour : firstHour.toNext('day')
-  }
-
   async update() {
     const events: EventRecord[] = []
 
-    if (this.lastProcessed === undefined) {
-      throw new Error('Programmer error')
-    }
-
-    const firstHour = this.lastProcessed.add(1, 'hours')
+    const firstHour = this.getFirstHour()
     const lastHour = this.clock.getLastHour()
 
     for (const event of this.events) {
@@ -90,12 +78,20 @@ export class EventUpdater {
       }
     }
 
-    if (events.length === 0) {
-      return
-    }
-
     await this.eventRepository.addMany(events)
     this.lastProcessed = lastHour
+  }
+
+  private getFirstHour() {
+    if (this.lastProcessed) {
+      return this.lastProcessed.add(1, 'hours')
+    }
+    //it is needed for sixHourly and daily
+    //we want to avoid situation whe we ask for blockNumbers and there are no records
+    //it can happen because how logic works, it asks for multiple earlier records when needed
+    //e.g. you are at 00:00 so to calculate daily you need blockNumbers of 23 previous hourly
+    const firstHour = this.clock.getFirstHour().add(1, 'days')
+    return firstHour.isFull('day') ? firstHour : firstHour.toNext('day')
   }
 
   async fetchRecords(
@@ -104,6 +100,7 @@ export class EventUpdater {
     event: EventDetails,
   ): Promise<EventRecord[]> {
     // it is needed for sixHourly and daily
+    // generateEventRecords needs data in certain order
     const fromAdjusted = getAdjustedFrom(from)
 
     const eventOccurrences = await this.getEventOccurrences(
@@ -112,7 +109,7 @@ export class EventUpdater {
       event,
     )
 
-    const timestamps = await this.blockNumberRepository.getBlockRangeWhenReady(
+    const timestamps = await this.blockNumberUpdater.getBlockRangeWhenReady(
       fromAdjusted,
       to,
     )
@@ -122,15 +119,15 @@ export class EventUpdater {
     return records.filter((r) => r.timestamp.gte(from))
   }
 
-  private async getEventOccurrences(
+  async getEventOccurrences(
     from: UnixTime,
     to: UnixTime,
     event: EventDetails,
   ): Promise<bigint[]> {
-    const fromBlock = await this.blockNumberRepository.getBlockNumberWhenReady(
+    const fromBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(
       from.add(-1, 'hours'),
     )
-    const toBlock = await this.blockNumberRepository.getBlockNumberWhenReady(to)
+    const toBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(to)
 
     const logs = await this.getAllLogs(
       event.emitter,
@@ -147,6 +144,11 @@ export class EventUpdater {
     fromBlock: number,
     toBlock: number,
   ): Promise<providers.Log[]> {
+    // TODO: check that there are blocks in both ranges e.g not [1, 1], [1, 1]
+    if (fromBlock === toBlock) {
+      return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
+    }
+    
     try {
       return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
     } catch (e) {
@@ -154,8 +156,13 @@ export class EventUpdater {
         e instanceof Error &&
         e.message.includes('Log response size exceeded')
       ) {
-        this.logger.debug('BISECTION', { fromBlock, toBlock })
-        // TODO: check that there are blocks in both ranges e.g not [1, 1], [1, 1]
+        this.logger.debug('BISECTION', {
+          address: address.toString(),
+          topic,
+          fromBlock,
+          toBlock,
+        })
+
         const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
         const [a, b] = await Promise.all([
           this.getAllLogs(address, topic, fromBlock, midPoint),
@@ -169,7 +176,7 @@ export class EventUpdater {
   }
 }
 
-function getAdjustedFrom(from: UnixTime) {
+export function getAdjustedFrom(from: UnixTime) {
   return from.isDaily()
     ? from.add(-1, 'days').toStartOf('day').add(1, 'hours')
     : from.toStartOf('day').add(1, 'hours')

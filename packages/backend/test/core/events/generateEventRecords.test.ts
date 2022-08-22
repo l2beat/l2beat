@@ -15,7 +15,7 @@ const mockEvent = () => {
     name: EVENT_A,
     projectId: PROJECT_A,
     sinceTimestamp: UnixTime.now(),
-    dbStatus: undefined
+    dbStatus: undefined,
   }
 }
 
@@ -34,11 +34,15 @@ const mockEventRecord = (
 }
 
 describe(generateEventRecords.name, () => {
-  it('empty', () => {})
+  it('throw if first is not 1:00', () => {
+    const timestamps = [{ timestamp: NOON.add(2, 'hours'), blockNumber: 200n }]
 
-  it('throw if first is not 1:00', () => {})
+    expect(() => generateEventRecords(mockEvent(), [], timestamps)).toThrow(
+      'Algorithm works only if first timestamp is 01:00',
+    )
+  })
 
-  it('simlpe case', async () => {
+  it('only hourly', async () => {
     const timestamps = [
       { timestamp: NOON.add(1, 'hours'), blockNumber: 100n },
       { timestamp: NOON.add(2, 'hours'), blockNumber: 200n },
@@ -56,7 +60,7 @@ describe(generateEventRecords.name, () => {
     ])
   })
 
-  it('harder case', async () => {
+  it('hourly and sixHourly', async () => {
     const timestamps = [
       { timestamp: NOON.add(1, 'hours'), blockNumber: 100n },
       { timestamp: NOON.add(2, 'hours'), blockNumber: 200n },
@@ -94,11 +98,11 @@ describe(generateEventRecords.name, () => {
     ])
   })
 
-  it('harder case', async () => {
+  it('hourly, sixHourly and daily ', async () => {
     const timestamps = []
     const logs = []
 
-    for (let i = 1; i <= 24; i++) {
+    for (let i = 1; i <= 25; i++) {
       timestamps.push({
         timestamp: NOON.add(i, 'hours'),
         blockNumber: 100n * BigInt(i),
@@ -133,11 +137,36 @@ describe(generateEventRecords.name, () => {
       mockEventRecord(22, 2, 'hourly'),
       mockEventRecord(23, 2, 'hourly'),
       mockEventRecord(24, 2, 'hourly'),
+      mockEventRecord(25, 2, 'hourly'),
       mockEventRecord(6, 12, 'sixHourly'),
       mockEventRecord(12, 12, 'sixHourly'),
       mockEventRecord(18, 12, 'sixHourly'),
       mockEventRecord(24, 12, 'sixHourly'),
       mockEventRecord(24, 48, 'daily'),
     ])
+  })
+
+  it('empty logs', () => {
+    const timestamps = [
+      { timestamp: NOON.add(1, 'hours'), blockNumber: 100n },
+      { timestamp: NOON.add(2, 'hours'), blockNumber: 200n },
+      { timestamp: NOON.add(3, 'hours'), blockNumber: 300n },
+    ]
+
+    const result = generateEventRecords(mockEvent(), [], timestamps)
+
+    expect(result).toEqual([
+      mockEventRecord(1, 0, 'hourly'),
+      mockEventRecord(2, 0, 'hourly'),
+      mockEventRecord(3, 0, 'hourly'),
+    ])
+  })
+
+  it('empty timestamps', () => {
+    const logs: bigint[] = [100n]
+
+    const result = generateEventRecords(mockEvent(), logs, [])
+
+    expect(result).toEqual([])
   })
 })
