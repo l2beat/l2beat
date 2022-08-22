@@ -3,6 +3,10 @@ import { makeQuery } from './query'
 export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
 
+  if (!document.querySelector('.Tooltip-Popup')) {
+    return
+  }
+
   const elements = $$('.Tooltip[title]')
 
   const tooltip = $('.Tooltip-Popup')
