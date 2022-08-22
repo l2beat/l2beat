@@ -15,7 +15,7 @@ async function main() {
     const server = app.listen(1234, () => resolve(server))
   })
 
-  const slugs = projects.map((x) => x.slug).concat('overview', 'jobs')
+  const slugs = projects.map((x) => x.slug).concat('overview')
 
   const browser = await puppeteer.launch()
   await Promise.all(slugs.map(screenshot))
