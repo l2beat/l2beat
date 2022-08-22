@@ -17,12 +17,13 @@
     "test": "mocha",
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 --no-open",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@l2beat/common": "*",
     "@l2beat/config": "*",
+    "@l2beat/types": "*",
     "@types/express": "^4.17.13",
     "@types/fs-extra": "^9.0.13",
     "@types/markdown-it": "^12.2.3",

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { addMissingTimestamps } from '../../../../src/api/controllers/report/charts'

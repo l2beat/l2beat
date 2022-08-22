@@ -1,3 +1,5 @@
+const { mergeConfig } = require('vite')
+
 module.exports = {
   stories: ['../src/**/*.stories.tsx'],
   addons: [
@@ -12,5 +14,12 @@ module.exports = {
   features: {
     storyStoreV7: true,
   },
-  staticDirs: ['../src/static'],
+  staticDirs: ['../src/static', '../src/stories/static'],
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      optimizeDeps: {
+        include: ['@l2beat/config', '@l2beat/types'],
+      },
+    })
+  },
 }

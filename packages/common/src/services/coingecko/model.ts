@@ -1,6 +1,5 @@
+import { CoingeckoId } from '@l2beat/types'
 import { z } from 'zod'
-
-import { CoingeckoId } from '../../types'
 
 export type CoinListEntry = z.infer<typeof CoinListEntry>
 export const CoinListEntry = z.object({

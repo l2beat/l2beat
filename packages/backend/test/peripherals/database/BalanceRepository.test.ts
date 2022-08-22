@@ -1,4 +1,5 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/common'
+import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import {

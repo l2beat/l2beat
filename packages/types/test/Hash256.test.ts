@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { Hash256 } from '../../src/types'
+import { Hash256 } from '../src'
 
 describe(Hash256.name, () => {
   it('accepts lowercase hashes', () => {

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 

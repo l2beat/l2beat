@@ -1,4 +1,4 @@
-import { ChartPoint, UnixTime } from '@l2beat/common'
+import { ChartPoint, UnixTime } from '@l2beat/types'
 
 import { asNumber } from './asNumber'
 

@@ -3,8 +3,8 @@ import {
   Logger,
   RateLimiter,
   RequestTracker,
-  UnixTime,
 } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import { stringAsBigInt } from '../../tools/types'
 import { HttpClient } from '../HttpClient'

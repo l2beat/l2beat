@@ -1,5 +1,5 @@
-import { ApiMain, Charts } from '@l2beat/common'
 import { Project } from '@l2beat/config'
+import { ApiMain, Charts } from '@l2beat/types'
 
 import { outputCharts } from './output'
 

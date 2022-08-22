@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
 import { Project } from './types'

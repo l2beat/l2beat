@@ -1,4 +1,4 @@
-import { UnixTime } from '../types'
+import { UnixTime } from '@l2beat/types'
 
 type Granularity = 'daily' | 'hourly'
 

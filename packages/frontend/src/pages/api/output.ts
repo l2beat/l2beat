@@ -1,4 +1,4 @@
-import { Charts } from '@l2beat/common'
+import { Charts } from '@l2beat/types'
 import fsx from 'fs-extra'
 import path from 'path'
 

@@ -1,11 +1,5 @@
-import {
-  ApiMain,
-  AssetId,
-  Chart,
-  Charts,
-  Logger,
-  ProjectId,
-} from '@l2beat/common'
+import { Logger } from '@l2beat/common'
+import { ApiMain, AssetId, Chart, Charts, ProjectId } from '@l2beat/types'
 
 import { Token } from '../../../model'
 import { ProjectInfo } from '../../../model/ProjectInfo'

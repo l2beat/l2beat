@@ -1,4 +1,5 @@
-import { ApiMain, HttpClient } from '@l2beat/common'
+import { HttpClient } from '@l2beat/common'
+import { ApiMain } from '@l2beat/types'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 

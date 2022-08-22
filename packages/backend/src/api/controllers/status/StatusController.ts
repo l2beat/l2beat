@@ -1,4 +1,5 @@
-import { getTimestamps, UnixTime } from '@l2beat/common'
+import { getTimestamps } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import { Clock } from '../../../core/Clock'
 import { getConfigHash } from '../../../core/getConfigHash'

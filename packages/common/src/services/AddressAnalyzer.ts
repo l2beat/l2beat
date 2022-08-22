@@ -1,6 +1,6 @@
+import { EthereumAddress, json } from '@l2beat/types'
 import { providers } from 'ethers'
 
-import { EthereumAddress, json } from '../types'
 import { EtherscanClient } from './etherscan/EtherscanClient'
 
 interface EOAAddress {

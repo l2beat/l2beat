@@ -1,5 +1,6 @@
+import { CoingeckoId, UnixTime } from '@l2beat/types'
+
 import { RateLimiter } from '../../tools/RateLimiter'
-import { CoingeckoId, UnixTime } from '../../types'
 import { HttpClient } from '../HttpClient'
 import {
   CoinListEntry,

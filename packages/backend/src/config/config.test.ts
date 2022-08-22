@@ -1,4 +1,5 @@
-import { LogLevel, UnixTime } from '@l2beat/common'
+import { LogLevel } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { config as dotenv } from 'dotenv'
 
 import { Config } from './Config'

@@ -1,4 +1,4 @@
-import { Hash256 } from '@l2beat/common'
+import { Hash256 } from '@l2beat/types'
 import { createHash } from 'crypto'
 
 import { ProjectInfo } from '../model'

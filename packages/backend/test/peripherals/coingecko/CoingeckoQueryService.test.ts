@@ -1,12 +1,10 @@
 import {
   CoingeckoClient,
-  CoingeckoId,
-  EthereumAddress,
   getTimestamps,
   HttpClient,
   mock,
-  UnixTime,
 } from '@l2beat/common'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
 import {

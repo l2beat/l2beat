@@ -1,4 +1,4 @@
-import { ApiMain, Chart, ChartPoint, Charts, ProjectId } from '@l2beat/common'
+import { ApiMain, Chart, ChartPoint, Charts, ProjectId } from '@l2beat/types'
 
 import { ProjectInfo } from '../../../model'
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'

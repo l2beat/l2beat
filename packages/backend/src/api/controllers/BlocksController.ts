@@ -1,4 +1,4 @@
-import { json } from '@l2beat/common'
+import { json } from '@l2beat/types'
 
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
 

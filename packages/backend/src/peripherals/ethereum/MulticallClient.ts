@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/common'
+import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
 import { EthereumClient } from './EthereumClient'

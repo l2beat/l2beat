@@ -25,7 +25,7 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/types'
 
 export interface TokenInfo {
   /** Internal token id. Usually ticker-name */

@@ -1,4 +1,5 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'

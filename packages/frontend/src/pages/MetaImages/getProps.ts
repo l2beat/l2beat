@@ -1,5 +1,5 @@
-import { ApiMain } from '@l2beat/common'
 import { Project } from '@l2beat/config'
+import { ApiMain } from '@l2beat/types'
 
 import { formatUSD, getFromEnd, getPercentageChange } from '../../utils/utils'
 import { PageMetadata } from '../PageMetadata'

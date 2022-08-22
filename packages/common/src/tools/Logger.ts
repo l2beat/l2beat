@@ -1,7 +1,6 @@
+import { json } from '@l2beat/types'
 import chalk from 'chalk'
 import { inspect } from 'util'
-
-import { json } from '../types'
 
 export enum LogLevel {
   NONE = 0,

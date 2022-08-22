@@ -1,4 +1,5 @@
-import { AddressAnalyzer, EthereumAddress } from '@l2beat/common'
+import { AddressAnalyzer } from '@l2beat/common'
+import { EthereumAddress } from '@l2beat/types'
 import { Event, providers, utils } from 'ethers'
 
 import { BlockTimestampService } from './BlockTimestampService'

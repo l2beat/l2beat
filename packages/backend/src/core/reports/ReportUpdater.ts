@@ -1,4 +1,5 @@
-import { Logger, TaskQueue, UnixTime } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import { ProjectInfo } from '../../model'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'

@@ -11,7 +11,7 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
 import { SIX_HOURS } from '../ReportRepository'

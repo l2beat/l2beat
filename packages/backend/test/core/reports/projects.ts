@@ -1,11 +1,11 @@
+import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
   UnixTime,
-} from '@l2beat/common'
-import { TokenInfo } from '@l2beat/config'
+} from '@l2beat/types'
 
 import { ProjectInfo } from '../../../src/model'
 import { BalanceRecord } from '../../../src/peripherals/database/BalanceRepository'

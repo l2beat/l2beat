@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
+    "@l2beat/types": "*",
     "@types/node": "^17.0.41",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8"
