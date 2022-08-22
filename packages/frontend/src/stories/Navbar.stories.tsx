@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { Navbar as NavbarComponent } from '../content/common/Navbar'
+import { Navbar as NavbarComponent } from '../components/Navbar'
 import { StoryPage } from './utils/StoryPage'
 
 export default {
