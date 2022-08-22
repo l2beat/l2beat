@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 
 import { ProjectBridge } from './ProjectBridge'
 import { ProjectDetails } from './ProjectDetails'

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
+    "@l2beat/types": "*",
     "@types/node": "^17.0.41",
     "@types/node-fetch": "^2.6.2",
     "chalk": "^4.1.2",

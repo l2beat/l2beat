@@ -1,4 +1,5 @@
-import { Logger, TaskQueue, UnixTime } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'

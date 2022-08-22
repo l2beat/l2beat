@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'

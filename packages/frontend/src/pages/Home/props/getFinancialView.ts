@@ -1,5 +1,5 @@
-import { ApiMain, Project as ApiProject, Token } from '@l2beat/common'
 import { getTokenByAssetId, Project } from '@l2beat/config'
+import { ApiMain, Project as ApiProject, Token } from '@l2beat/types'
 
 import {
   formatPercent,

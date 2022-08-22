@@ -1,4 +1,4 @@
-import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/common'
+import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/types'
 
 export interface Token {
   id: AssetId

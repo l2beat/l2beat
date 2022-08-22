@@ -1,4 +1,5 @@
-import { AssetId, Logger, TaskQueue, UnixTime } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
+import { AssetId, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
 import { Token } from '../model'

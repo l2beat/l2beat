@@ -1,12 +1,8 @@
+import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { providers } from 'ethers'
 
-import {
-  AddressAnalyzer,
-  EthereumAddress,
-  EtherscanClient,
-  mock,
-} from '../../src'
+import { AddressAnalyzer, EtherscanClient, mock } from '../../src'
 
 describe(AddressAnalyzer.name, () => {
   it('can detect an EOA', async () => {

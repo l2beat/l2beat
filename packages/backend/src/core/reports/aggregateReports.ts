@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { ProjectInfo } from '../../model'
 import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'

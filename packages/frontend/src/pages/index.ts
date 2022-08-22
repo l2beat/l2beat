@@ -1,5 +1,5 @@
-import { ApiMain } from '@l2beat/common'
 import { Project as ProjectType } from '@l2beat/config'
+import { ApiMain } from '@l2beat/types'
 
 import { getDonatePage } from './Donate'
 import { getFaqPage } from './Faq'

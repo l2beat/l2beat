@@ -1,4 +1,4 @@
-import { Bytes } from '@l2beat/common'
+import { Bytes } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { BlockTag, CallParameters } from './types'

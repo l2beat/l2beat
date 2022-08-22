@@ -1,5 +1,6 @@
-import { LogLevel, UnixTime } from '@l2beat/common'
+import { LogLevel } from '@l2beat/common'
 import { projects, tokenList } from '@l2beat/config'
+import { UnixTime } from '@l2beat/types'
 
 import { projectToInfo } from '../model'
 import { Config } from './Config'

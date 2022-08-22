@@ -1,8 +1,5 @@
-import {
-  AddressAnalyzer,
-  AnalyzedAddress,
-  EthereumAddress,
-} from '@l2beat/common'
+import { AddressAnalyzer, AnalyzedAddress } from '@l2beat/common'
+import { EthereumAddress } from '@l2beat/types'
 import { Contract, providers } from 'ethers'
 
 import { ContractDescription, Contracts } from './config'

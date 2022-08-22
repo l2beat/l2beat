@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 export interface ProjectBridge {
   /** Address of the bridge. Use etherscan to verify its correctness. */

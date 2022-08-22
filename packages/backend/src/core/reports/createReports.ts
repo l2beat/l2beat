@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 
 import { ProjectInfo } from '../../model'
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'

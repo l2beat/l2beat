@@ -1,4 +1,5 @@
-import { mock, UnixTime } from '@l2beat/common'
+import { mock } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { BlocksController } from '../../../src/api/controllers/BlocksController'

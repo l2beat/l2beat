@@ -1,3 +1,4 @@
+import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   ChartPoint,
@@ -5,8 +6,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-} from '@l2beat/common'
-import { TokenInfo } from '@l2beat/config'
+} from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { generateMain } from '../../../../src/api/controllers/report/generateMain'

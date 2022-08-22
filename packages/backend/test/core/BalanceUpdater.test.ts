@@ -1,14 +1,13 @@
+import { Logger, mock } from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   Bytes,
   CoingeckoId,
   EthereumAddress,
-  Logger,
-  mock,
   ProjectId,
   UnixTime,
-} from '@l2beat/common'
-import { TokenInfo } from '@l2beat/config'
+} from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 

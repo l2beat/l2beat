@@ -1,12 +1,12 @@
+import { CoingeckoId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { CoingeckoClient, CoingeckoId, HttpClient, mock } from '../../../src'
+import { CoingeckoClient, HttpClient, mock } from '../../../src'
 import {
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
 } from '../../../src/services/coingecko/model'
-import { UnixTime } from '../../../src/types'
 
 //add names
 describe(CoingeckoClient.name, () => {

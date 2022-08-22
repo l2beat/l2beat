@@ -20,6 +20,7 @@
     "@koa/router": "^10.1.1",
     "@l2beat/common": "*",
     "@l2beat/config": "*",
+    "@l2beat/types": "*",
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.11",
     "@types/node-fetch": "^2.6.2",
