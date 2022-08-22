@@ -9,11 +9,12 @@ interface Props {
   preloadApi?: string
   includeMetaImageStyles?: boolean
   metadata: PageMetadata
+  htmlClassName?: string
 }
 
 export function Page(props: Props) {
   return (
-    <html lang="en">
+    <html lang="en" className={props.htmlClassName}>
       <Head
         {...props.metadata}
         preloadApi={props.preloadApi}

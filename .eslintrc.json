@@ -59,6 +59,13 @@
         "import/no-extraneous-dependencies": "off",
         "no-unused-expressions": "off"
       }
+    },
+    {
+      "files": ["src/stories/**/*.{ts,tsx}"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off",
+        "import/no-default-export": "off"
+      }
     }
   ]
 }

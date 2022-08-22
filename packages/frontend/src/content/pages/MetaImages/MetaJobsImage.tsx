@@ -6,6 +6,7 @@ import { Logo, Page } from '../../common'
 export function MetaJobsImage() {
   return (
     <Page
+      htmlClassName="light"
       metadata={{
         title: 'Meta Image',
         description: '-',
@@ -14,7 +15,6 @@ export function MetaJobsImage() {
       }}
       includeMetaImageStyles
     >
-      <script dangerouslySetInnerHTML={{ __html: '__DARK_MODE__ = true' }} />
       <div className={cx('Meta jobs')}>
         <Logo />
         <h1>Work at</h1>

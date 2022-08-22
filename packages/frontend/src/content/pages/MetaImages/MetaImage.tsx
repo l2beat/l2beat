@@ -8,11 +8,11 @@ import { MetaImageProps } from './getProps'
 export function MetaImage(props: MetaImageProps) {
   return (
     <Page
+      htmlClassName="light"
       metadata={props.metadata}
       preloadApi={props.apiEndpoint}
       includeMetaImageStyles
     >
-      <script dangerouslySetInnerHTML={{ __html: '__DARK_MODE__ = false' }} />
       <div className={cx('Meta', !props.name ? 'overview' : 'project')}>
         {config.showNewUpdateBanner && (
           <div className="Meta-Update">New Update Out Now!</div>

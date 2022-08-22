@@ -1,26 +1,30 @@
 export function configureDarkMode() {
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  let prefersDark: boolean | undefined
   const saved = localStorage.getItem('l2beat-theme')
-  const override: boolean | undefined = (window as { __DARK_MODE__?: boolean })
-    .__DARK_MODE__
 
-  let darkModeEnabled = saved ? saved === 'dark' : prefersDark
-  if (typeof override === 'boolean') {
-    darkModeEnabled = override
+  if (document.documentElement.classList.contains('light')) {
+    prefersDark = false
+  } else if (document.documentElement.classList.contains('dark')) {
+    prefersDark = true
+  } else if (saved === 'dark') {
+    prefersDark = true
+  } else if (saved === 'light') {
+    prefersDark = false
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    prefersDark = true
   }
 
-  updateTheme()
+  updateTheme(prefersDark ?? false)
 
   function toggleDarkMode() {
-    darkModeEnabled = !darkModeEnabled
-    updateTheme(true)
+    const isDark = !document.documentElement.classList.contains('dark')
+    updateTheme(isDark)
+    localStorage.setItem('l2beat-theme', isDark ? 'dark' : 'light')
   }
 
-  function updateTheme(save?: boolean) {
-    document.documentElement.classList.toggle('dark', darkModeEnabled)
-    if (save) {
-      localStorage.setItem('l2beat-theme', darkModeEnabled ? 'dark' : 'light')
-    }
+  function updateTheme(isDark: boolean) {
+    document.documentElement.classList.toggle('dark', isDark)
+    document.documentElement.classList.toggle('light', !isDark)
   }
 
   document
