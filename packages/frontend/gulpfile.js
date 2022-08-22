@@ -20,7 +20,7 @@ function buildScripts() {
 }
 
 function watchScripts() {
-  return gulp.watch(['src/scripts/**/*.ts', 'src/shared/**/*'], buildScripts)
+  return gulp.watch(['src/**/*.ts'], buildScripts)
 }
 
 function buildSass() {
@@ -54,7 +54,7 @@ function watchStatic() {
 }
 
 function buildContent() {
-  return exec(`node -r esbuild-register src/content/index.ts`)
+  return exec(`node -r esbuild-register src/build/buildPages.ts`)
 }
 
 function watchContent() {
@@ -62,7 +62,7 @@ function watchContent() {
 }
 
 function generateMetaImages() {
-  return exec('node -r esbuild-register src/meta-images')
+  return exec('node -r esbuild-register src/build/buildMetaImages.ts')
 }
 
 function serve() {

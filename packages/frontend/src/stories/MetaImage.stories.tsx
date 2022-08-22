@@ -3,7 +3,7 @@ import '../styles/meta-image.scss'
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { MetaImage as MetaImageComponent } from '../content/pages/MetaImages/MetaImage'
+import { MetaImage as MetaImageComponent } from '../pages/MetaImages/MetaImage'
 
 export default {
   title: 'Components/MetaImage',
