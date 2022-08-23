@@ -29,23 +29,16 @@ export class EventUpdater {
     this.logger = this.logger.for(this)
   }
 
-  async start() {
-    const boundaries = await this.eventRepository.getDataBoundary()
-
+  start() {
     this.events = this.projects
       .map((project) =>
         project.events.map((event) => {
-          const boundary = boundaries.get(
-            `${project.projectId.toString()}-${event.name}`,
-          )
-
           return {
             emitter: event.emitter,
             topic: new utils.Interface([event.abi]).getEventTopic(event.name),
             name: event.name,
             projectId: project.projectId,
             sinceTimestamp: event.sinceTimestamp,
-            dbStatus: boundary,
           }
         }),
       )
@@ -64,11 +57,16 @@ export class EventUpdater {
     const firstHour = this.getFirstHour()
     const lastHour = this.clock.getLastHour()
 
+    const boundaries = await this.eventRepository.getDataBoundary()
+
     for (const event of this.events) {
+      const boundary = boundaries.get(
+        `${event.projectId.toString()}-${event.name}`,
+      )
       const ranges: { from: UnixTime; to: UnixTime }[] = getUpdateRanges(
         firstHour,
         lastHour,
-        event.dbStatus,
+        boundary,
         event.sinceTimestamp,
       )
 
@@ -144,11 +142,10 @@ export class EventUpdater {
     fromBlock: number,
     toBlock: number,
   ): Promise<providers.Log[]> {
-    // TODO: check that there are blocks in both ranges e.g not [1, 1], [1, 1]
     if (fromBlock === toBlock) {
       return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
     }
-    
+
     try {
       return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
     } catch (e) {

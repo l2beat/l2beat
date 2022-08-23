@@ -15,7 +15,6 @@ const mockEvent = () => {
     name: EVENT_A,
     projectId: PROJECT_A,
     sinceTimestamp: UnixTime.now(),
-    dbStatus: undefined,
   }
 }
 
