@@ -23,6 +23,7 @@ import { nomadBridge } from './nomadBridge'
 import { nova } from './nova'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { orbiterBridge } from './orbiterBridge'
 import { polygonBridge } from './polygonBridge'
 import { rhinofi } from './rhinofi'
 import { roninBridge } from './roninBridge'
@@ -42,29 +43,29 @@ import { zksync } from './zksync'
 export * from './types'
 
 export const projects: Project[] = [
-  arbitrum,
-  aztec,
-  aztecconnect,
-  bobanetwork,
-  rhinofi,
-  dydx,
-  fuelv1,
-  gluon,
-  hermez,
-  immutablex,
-  layer2finance,
-  layer2financezk,
-  loopring,
-  metis,
-  nova,
-  omgnetwork,
-  optimism,
-  sorare,
-  starknet,
-  zkswap,
-  zkswap2,
-  zkspace,
-  zksync,
+  // arbitrum,
+  // aztec,
+  // aztecconnect,
+  // bobanetwork,
+  // rhinofi,
+  // dydx,
+  // fuelv1,
+  // gluon,
+  // hermez,
+  // immutablex,
+  // layer2finance,
+  // layer2financezk,
+  // loopring,
+  // metis,
+  // nova,
+  // omgnetwork,
+  // optimism,
+  // sorare,
+  // starknet,
+  // zkswap,
+  // zkswap2,
+  // zkspace,
+  // zksync,
   nearBridge,
   avalancheBridge,
   fantomBridge,
@@ -81,4 +82,5 @@ export const projects: Project[] = [
   hopBridge,
   cBridge,
   connextBridge,
+  orbiterBridge,
 ]
