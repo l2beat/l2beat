@@ -149,6 +149,23 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
+  describe(AggregateReportRepository.prototype.findLatest.name, () => {
+    it('finds latest report', async () => {
+      const reports = [
+        fakeAggregateReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
+        fakeAggregateReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+      ]
+      const expected = fakeAggregateReport({
+        projectId: PROJECT_A,
+        timestamp: TIME_1,
+      })
+      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany([expected])
+      const result = await repository.findLatest(PROJECT_A)
+      expect(result).toEqual(expected)
+    })
+  })
+
   describe(AggregateReportRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
       const reports = [
