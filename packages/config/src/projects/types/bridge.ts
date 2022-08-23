@@ -1,4 +1,5 @@
 import { ProjectId } from '@l2beat/types'
+
 import { RISK_VIEW } from '../common'
 import { Project } from './Project'
 import { ProjectBridge } from './ProjectBridge'
