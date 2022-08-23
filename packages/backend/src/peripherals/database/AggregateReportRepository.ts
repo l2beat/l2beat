@@ -20,6 +20,7 @@ export class AggregateReportRepository extends BaseRepository {
     this.getDaily = this.wrapGet(this.getDaily)
     this.getAll = this.wrapGet(this.getAll)
     this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
+    this.findLatest = this.wrapFind(this.findLatest)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -53,6 +54,19 @@ export class AggregateReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports').select()
     return rows.map(toRecord)
+  }
+
+  async findLatest(
+    projectId: ProjectId,
+  ): Promise<AggregateReportRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('aggregate_reports')
+      .select()
+      .where({ project_id: projectId.toString() })
+      .orderBy('unix_timestamp', 'desc')
+      .first()
+
+    return row ? toRecord(row) : undefined
   }
 
   async addOrUpdateMany(reports: AggregateReportRecord[]) {
