@@ -20,7 +20,6 @@ export const fantomBridge: Project = bridge({
         'DAI',
         'WETH',
         'FRAX',
-        'USDC',
         //'DOLA',
         'LINK',
         'YFI',
