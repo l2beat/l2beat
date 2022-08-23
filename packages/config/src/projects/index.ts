@@ -13,6 +13,7 @@ import { gravityBridge } from './gravityBridge'
 import { harmonyBridge } from './harmonyBridge'
 import { hermez } from './hermez'
 import { hopBridge } from './hopBridge'
+import { hyphenBridge } from './hyphenBridge'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -83,4 +84,5 @@ export const projects: Project[] = [
   cBridge,
   connextBridge,
   orbiterBridge,
+  hyphenBridge,
 ]
