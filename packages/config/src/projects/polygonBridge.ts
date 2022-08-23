@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -12,7 +14,7 @@ export const polygonBridge: Project = bridge({
   bridges: [
     {
       address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
-      sinceBlock: 10735445,
+      sinceTimestamp: new UnixTime(1598436664),
       tokens: [
         'USDC',
         'USDT',
@@ -36,12 +38,12 @@ export const polygonBridge: Project = bridge({
     },
     {
       address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
-      sinceBlock: 10735538,
+      sinceTimestamp: new UnixTime(1598437971),
       tokens: ['ETH'],
     },
     {
       address: '0x401F6c983eA34274ec46f84D70b31C151321188b',
-      sinceBlock: 10167767,
+      sinceTimestamp: new UnixTime(1590850640),
       tokens: ['MATIC', 'DAI'],
     },
   ],

@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -12,7 +14,7 @@ export const xDaiBridge: Project = bridge({
   bridges: [
     {
       address: '0x88ad09518695c6c3712AC10a214bE5109a655671',
-      sinceBlock: 10590093,
+      sinceTimestamp: new UnixTime(1596501090),
       tokens: [
         'GNO',
         //'NODE',
@@ -23,7 +25,7 @@ export const xDaiBridge: Project = bridge({
     },
     {
       address: '0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016',
-      sinceBlock: 10590093, // NOT FULL HISTORY
+      sinceTimestamp: new UnixTime(1596501090),
       tokens: ['cDAI', 'DAI'],
     },
   ],

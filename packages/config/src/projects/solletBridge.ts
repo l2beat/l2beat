@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -11,7 +13,7 @@ export const solletBridge: Project = bridge({
   bridges: [
     {
       address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
-      sinceBlock: 10838129,
+      sinceTimestamp: new UnixTime(1599794859),
       tokens: [
         'ETH',
         //'ALEPH',

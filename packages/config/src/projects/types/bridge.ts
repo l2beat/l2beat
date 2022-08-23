@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/types'
 import { RISK_VIEW } from '../common'
 import { Project } from './Project'
 import { ProjectBridge } from './ProjectBridge'
@@ -11,7 +12,7 @@ export interface BridgeDescription {
   associatedTokens?: string[]
   bridges: ProjectBridge[]
   connections: {
-    network: string,
+    network: string
     tokens: string[]
   }[]
 }
@@ -19,6 +20,7 @@ export interface BridgeDescription {
 export function bridge(bridge: BridgeDescription): Project {
   return {
     name: bridge.name,
+    id: ProjectId(bridge.slug),
     slug: bridge.slug,
     bridges: bridge.bridges,
     associatedTokens: bridge.associatedTokens,

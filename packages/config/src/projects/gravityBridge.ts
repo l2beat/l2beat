@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -11,7 +13,7 @@ export const gravityBridge: Project = bridge({
   bridges: [
     {
       address: '0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906',
-      sinceBlock: 13798211,
+      sinceTimestamp: new UnixTime(1639416372),
       tokens: ['USDC', 'WETH', 'DAI'],
     },
   ],

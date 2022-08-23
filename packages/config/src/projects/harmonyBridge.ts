@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -11,12 +13,12 @@ export const harmonyBridge: Project = bridge({
   bridges: [
     {
       address: '0xF9Fb1c508Ff49F78b60d3A96dea99Fa5d7F3A8A6',
-      sinceBlock: 11651416,
+      sinceTimestamp: new UnixTime(1610602801),
       tokens: ['ETH'],
     },
     {
       address: '0x2dCCDB493827E15a5dC8f8b72147E6c4A5620857',
-      sinceBlock: 11037057,
+      sinceTimestamp: new UnixTime(1602456188),
       tokens: [
         'USDC',
         'USDT',

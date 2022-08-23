@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -11,7 +13,7 @@ export const wormholeBridge: Project = bridge({
   bridges: [
     {
       address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
-      sinceBlock: 13217349,
+      sinceTimestamp: new UnixTime(1631535967),
       tokens: [
         'WETH',
         //'NEXM',
@@ -31,7 +33,7 @@ export const wormholeBridge: Project = bridge({
     },
     {
       address: '0xf92cD566Ea4864356C5491c177A430C222d7e678',
-      sinceBlock: 11687664,
+      sinceTimestamp: new UnixTime(1611084766),
       tokens: [
         //'FTT',
         'BUSD',

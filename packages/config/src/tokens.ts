@@ -184,7 +184,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x1aB43204a195a0fD37EdeC621482AFd3792ef90b'),
     coingeckoId: CoingeckoId('aurigami'),
     decimals: 18,
-    sinceBlock: 14559298,
+    sinceTimestamp: new UnixTime(1649612019),
     category: 'other',
   },
   {
@@ -1197,7 +1197,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0xF5cFBC74057C610c8EF151A439252680AC68c6DC'),
     coingeckoId: CoingeckoId('octopus-network'),
     decimals: 18,
-    sinceBlock: 14559298,
+    sinceTimestamp: new UnixTime(1649612019),
     category: 'other',
   },
   {

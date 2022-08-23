@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 import { Project } from './types'
 import { bridge } from './types/bridge'
 
@@ -11,7 +13,7 @@ export const cBridge: Project = bridge({
   bridges: [
     {
       address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
-      sinceBlock: 13719989,
+      sinceTimestamp: new UnixTime(1638346811),
       tokens: [
         'USDC',
         'WETH',
