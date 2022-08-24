@@ -6,12 +6,16 @@ import {
   getFromEnd,
   getPercentageChange,
 } from '../../../utils/utils'
+import { Wrapped } from '../../Page'
 import { HomePageProps } from '../view/HomePage'
 import { getFinancialView } from './getFinancialView'
 import { getPageMetadata } from './getPageMetadata'
 import { getRiskView } from './getRiskView'
 
-export function getProps(projects: Project[], apiMain: ApiMain): HomePageProps {
+export function getProps(
+  projects: Project[],
+  apiMain: ApiMain,
+): Wrapped<HomePageProps> {
   const tvl = getFromEnd(apiMain.charts.hourly.data, 0)?.[1] ?? 0
   const tvlSevenDaysAgo = apiMain.charts.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
@@ -24,11 +28,16 @@ export function getProps(projects: Project[], apiMain: ApiMain): HomePageProps {
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
 
   return {
-    tvl: formatUSD(tvl),
-    sevenDayChange,
-    apiEndpoint: '/api/tvl.json',
-    financialView: getFinancialView(ordering, apiMain, tvl),
-    riskView: getRiskView(ordering),
-    metadata: getPageMetadata(),
+    props: {
+      tvl: formatUSD(tvl),
+      sevenDayChange,
+      apiEndpoint: '/api/tvl.json',
+      financialView: getFinancialView(ordering, apiMain, tvl),
+      riskView: getRiskView(ordering),
+    },
+    wrapper: {
+      preloadApi: '/api/tvl.json',
+      metadata: getPageMetadata(),
+    },
   }
 }

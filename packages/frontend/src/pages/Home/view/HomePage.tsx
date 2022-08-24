@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Chart, Footer, Header, Navbar, Page } from '../../../components'
-import { PageMetadata } from '../../PageMetadata'
+import { Chart, Footer, Header, Navbar } from '../../../components'
 import { About } from './About'
 import { FinancialViewProps } from './FinancialView/FinancialView'
 import { OtherSites } from './OtherSites'
@@ -14,12 +13,11 @@ export interface HomePageProps {
   apiEndpoint: string
   financialView: FinancialViewProps
   riskView: RiskViewProps
-  metadata: PageMetadata
 }
 
 export function HomePage(props: HomePageProps) {
   return (
-    <Page metadata={props.metadata} preloadApi={props.apiEndpoint}>
+    <div className="Page leading-[1.15]">
       <Navbar />
       <Header
         title="Overview"
@@ -36,6 +34,6 @@ export function HomePage(props: HomePageProps) {
         <About />
       </main>
       <Footer />
-    </Page>
+    </div>
   )
 }

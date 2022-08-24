@@ -3,26 +3,25 @@ import fsx from 'fs-extra'
 import MarkdownIt from 'markdown-it'
 import path from 'path'
 
-import { PageMetadata } from '../PageMetadata'
+import { Wrapped } from '../Page'
+import { FaqPageProps } from './FaqPage'
 import { renderHeading } from './renderHeading'
 
-export interface FaqPageProps {
-  title: string
-  metadata: PageMetadata
-  content: string
-}
-
-export function getProps(): FaqPageProps {
+export function getProps(): Wrapped<FaqPageProps> {
   return {
-    title: 'Frequently Asked Questions',
-    metadata: {
-      title: 'L2BEAT – Frequently Asked Questions',
-      description:
-        'Frequently Asked Questions about L2BEAT – an analytics and research website about Ethereum layer 2 scaling.',
-      image: 'https://l2beat.com/meta-images/overview.png',
-      url: 'https://l2beat.com/faq/',
+    props: {
+      title: 'Frequently Asked Questions',
+      content: getHtml(),
     },
-    content: getHtml(),
+    wrapper: {
+      metadata: {
+        title: 'L2BEAT – Frequently Asked Questions',
+        description:
+          'Frequently Asked Questions about L2BEAT – an analytics and research website about Ethereum layer 2 scaling.',
+        image: 'https://l2beat.com/meta-images/overview.png',
+        url: 'https://l2beat.com/faq/',
+      },
+    },
   }
 }
 

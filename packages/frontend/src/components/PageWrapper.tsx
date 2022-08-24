@@ -1,22 +1,22 @@
 import React, { ReactNode } from 'react'
 
-import { PageMetadata } from '../pages/PageMetadata'
+import { PageMetadata } from '../pages/Page'
 import { Head } from './head'
 import { Tooltip } from './Tooltip'
 
-interface Props {
-  children: ReactNode
-  preloadApi?: string
-  metadata: PageMetadata
+export interface PageWrapperProps {
   htmlClassName?: string
+  metadata: PageMetadata
+  preloadApi?: string
+  children: ReactNode
 }
 
-export function Page(props: Props) {
+export function PageWrapper(props: PageWrapperProps) {
   return (
     <html lang="en" className={props.htmlClassName}>
       <Head {...props.metadata} preloadApi={props.preloadApi} />
-      <body className="leading-[1.15]">
-        <div className="Page">{props.children}</div>
+      <body>
+        {props.children}
         <Tooltip />
         <script src="/scripts/main.js" />
       </body>

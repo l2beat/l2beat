@@ -2,7 +2,7 @@ import React from 'react'
 
 export function Tooltip() {
   return (
-    <div className="Tooltip-Popup">
+    <div className="Tooltip-Popup leading-[1.15]">
       <span />
       <svg
         width="16"
