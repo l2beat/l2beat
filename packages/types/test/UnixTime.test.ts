@@ -164,29 +164,15 @@ describe(UnixTime.name, () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:10:01Z'))
       expect(time.isFull('minute')).toEqual(false)
     })
-  })
 
-  describe(UnixTime.prototype.isDaily.name, () => {
-    it('daily', () => {
-      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:00Z'))
-      expect(time.isDaily()).toEqual(true)
+    it('full sixHourly', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T06:00:00Z'))
+      expect(time.isFull('sixHourly')).toEqual(true)
     })
 
-    it('not daily', () => {
-      const time = UnixTime.fromDate(new Date('2021-09-08T00:00:01Z'))
-      expect(time.isDaily()).toEqual(false)
-    })
-  })
-
-  describe(UnixTime.prototype.isSixHourly.name, () => {
-    it('six hourly', () => {
-      const time = UnixTime.fromDate(new Date('2021-09-08T06:00:00Z'))
-      expect(time.isSixHourly()).toEqual(true)
-    })
-
-    it('not six hourly', () => {
-      const time = UnixTime.fromDate(new Date('2021-09-08T06:00:01Z'))
-      expect(time.isSixHourly()).toEqual(false)
+    it('not full sixHourly', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T06:01:01Z'))
+      expect(time.isFull('sixHourly')).toEqual(false)
     })
   })
 
