@@ -85,7 +85,7 @@ describe(BalanceUpdater.name, () => {
               ],
             },
           ],
-          events: []
+          events: [],
         },
       ]
 
@@ -152,7 +152,7 @@ describe(BalanceUpdater.name, () => {
               ],
             },
           ],
-          events: []
+          events: [],
         },
       ]
 
@@ -259,7 +259,7 @@ describe(BalanceUpdater.name, () => {
               tokens: [fakeTokenInfo(AssetId.ETH, new UnixTime(1000))],
             },
           ],
-          events: []
+          events: [],
         },
       ]
 
