@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -179,13 +179,5 @@ export const rhinofi: Project = {
     ],
   },
 
-  events: [
-    {
-      name: 'LogStateTransitionFact',
-      abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
-      emitter: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-      type: 'state',
-      sinceTimestamp: new UnixTime(0),
-    },
-  ],
+  events: [],
 }

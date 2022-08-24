@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -339,20 +339,5 @@ export const zksync: Project = {
     ],
   },
 
-  events: [
-    {
-      name: 'BlockVerification',
-      abi: 'event  BlockVerification(uint32 indexed blockNumber)',
-      emitter: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
-      type: 'state',
-      sinceTimestamp: new UnixTime(0),
-    },
-    {
-      name: 'BlockCommit',
-      abi: 'event BlockCommit(uint32 indexed blockNumber)',
-      emitter: EthereumAddress('0xabea9132b05a70803a4e85094fd0e1800777fbef'),
-      type: 'data',
-      sinceTimestamp: new UnixTime(0),
-    },
-  ],
+  events: [],
 }

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -307,13 +307,5 @@ export const loopring: Project = {
     ],
   },
 
-  events: [
-    {
-      name: 'BlockSubmitted',
-      abi: 'event BlockSubmitted (uint256 indexed blockIdx, bytes32 merkleRoot, bytes32 publicDataHash)',
-      emitter: EthereumAddress('0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4'),
-      type: 'state',
-      sinceTimestamp: new UnixTime(0),
-    },
-  ],
+  events: [],
 }

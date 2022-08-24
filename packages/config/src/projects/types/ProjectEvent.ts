@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/common'
+import { EthereumAddress, UnixTime } from '@l2beat/types'
 
 export interface ProjectEvent {
   name: string

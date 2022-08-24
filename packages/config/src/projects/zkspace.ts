@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
 import { Project } from './types'
@@ -181,20 +181,5 @@ export const zkspace: Project = {
     news: zkswap.details.news,
   },
 
-  events: [
-    {
-      name: 'BlockCommit',
-      abi: 'event BlockCommit(uint32 indexed blockNumber)',
-      emitter: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
-      type: 'data',
-      sinceTimestamp: new UnixTime(0),
-    },
-    {
-      name: 'MultiblockVerification',
-      abi: 'event  MultiblockVerification(uint32 indexed blockNumberFrom, uint32 indexed blockNumberTo)',
-      emitter: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
-      type: 'state',
-      sinceTimestamp: new UnixTime(0),
-    },
-  ],
+  events: [],
 }
