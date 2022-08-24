@@ -1,15 +1,15 @@
-import '../styles/meta-image.scss'
+import '../../styles/meta-image.scss'
 
 import { projects } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { MetaImage } from '../pages/MetaImages/MetaImage'
-import { configureChart } from '../scripts/chart'
+import { MetaImage } from '../../pages/MetaImages/MetaImage'
+import { configureChart } from '../../scripts/chart'
 
 export default {
-  title: 'Components/MetaImage',
+  title: 'Other/MetaImage',
   argTypes: {
     projectId: {
       control: 'select',
