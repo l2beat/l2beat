@@ -6,10 +6,9 @@ import { MetaImage, MetaImageProps } from './MetaImage'
 export function MetaImagePage(props: MetaImageProps) {
   return (
     <Page
-      htmlClassName="light"
+      htmlClassName="light meta"
       metadata={{ title: 'Meta Image', description: '', image: '', url: '' }}
       preloadApi={props.apiEndpoint}
-      includeMetaImageStyles
     >
       <MetaImage {...props} />
     </Page>

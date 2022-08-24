@@ -1,5 +1,3 @@
-import '../../styles/meta-image.scss'
-
 import { projects } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { Meta, Story } from '@storybook/react'
@@ -28,7 +26,7 @@ function Template({ projectId }: TemplateProps) {
   })
   const project = projects.find((x) => x.id === projectId)
   return (
-    <div className="flex items-center justify-center">
+    <div className="meta flex items-center justify-center">
       <div className="relative leading-[1.15] w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">
         <MetaImage
           tvl="$1.34 B"

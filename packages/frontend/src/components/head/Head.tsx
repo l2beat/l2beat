@@ -11,7 +11,6 @@ interface Props {
   image: string
   url: string
   preloadApi?: string
-  includeMetaImageStyles?: boolean
 }
 
 export function Head(props: Props) {
@@ -21,9 +20,6 @@ export function Head(props: Props) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="stylesheet" href="/styles/style.css" />
       <link rel="stylesheet" href="/styles/main.css" />
-      {props.includeMetaImageStyles && (
-        <link rel="stylesheet" href="/styles/meta-image.css" />
-      )}
       <Favicons />
       <Preload preloadApi={props.preloadApi} />
       <MetaTags

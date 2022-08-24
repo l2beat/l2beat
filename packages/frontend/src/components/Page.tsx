@@ -7,7 +7,6 @@ import { Tooltip } from './Tooltip'
 interface Props {
   children: ReactNode
   preloadApi?: string
-  includeMetaImageStyles?: boolean
   metadata: PageMetadata
   htmlClassName?: string
 }
@@ -15,11 +14,7 @@ interface Props {
 export function Page(props: Props) {
   return (
     <html lang="en" className={props.htmlClassName}>
-      <Head
-        {...props.metadata}
-        preloadApi={props.preloadApi}
-        includeMetaImageStyles={props.includeMetaImageStyles}
-      />
+      <Head {...props.metadata} preloadApi={props.preloadApi} />
       <body className="leading-[1.15]">
         <div className="Page">{props.children}</div>
         <Tooltip />

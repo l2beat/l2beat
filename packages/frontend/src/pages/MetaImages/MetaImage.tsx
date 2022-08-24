@@ -15,7 +15,7 @@ export function MetaImage(props: MetaImageProps) {
   const name = props.name ?? 'Overview'
 
   return (
-    <div className={cx('Meta', !props.name ? 'overview' : 'project')}>
+    <div className={cx('MetaImage', !props.name ? 'overview' : 'project')}>
       <Header
         title={name}
         titleClassName={name.length > 12 ? '!text-5xl' : undefined}
