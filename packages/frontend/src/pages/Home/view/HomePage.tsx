@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Chart, Footer, Header, Navbar } from '../../../components'
+import { Page } from '../../../components/Page'
 import { About } from './About'
 import { FinancialViewProps } from './FinancialView/FinancialView'
 import { OtherSites } from './OtherSites'
@@ -17,7 +18,7 @@ export interface HomePageProps {
 
 export function HomePage(props: HomePageProps) {
   return (
-    <div className="Page leading-[1.15]">
+    <Page>
       <Navbar />
       <Header
         title="Overview"
@@ -34,6 +35,6 @@ export function HomePage(props: HomePageProps) {
         <About />
       </main>
       <Footer />
-    </div>
+    </Page>
   )
 }

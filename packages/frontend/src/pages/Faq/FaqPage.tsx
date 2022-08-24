@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Footer, Navbar } from '../../components'
+import { Page } from '../../components/Page'
 
 export interface FaqPageProps {
   title: string
@@ -9,13 +10,13 @@ export interface FaqPageProps {
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <div className="Page leading-[1.15]">
+    <Page>
       <Navbar />
       <article
         className="Faq"
         dangerouslySetInnerHTML={{ __html: props.content }}
       />
       <Footer />
-    </div>
+    </Page>
   )
 }

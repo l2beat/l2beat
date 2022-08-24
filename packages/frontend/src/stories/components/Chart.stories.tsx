@@ -1,26 +1,22 @@
-import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { Chart as ChartComponent } from '../../components/chart/Chart'
+import { Page } from '../../components/Page'
 import { configureChart } from '../../scripts/chart'
-import { StoryPage } from '../utils/StoryPage'
 
 export default {
   title: 'Components/Chart',
+  controls: { hideNoControlsWarning: true },
+  layout: 'fullscreen',
 }
 
-function Template() {
+export function Chart() {
   useEffect(() => {
     configureChart()
   }, [])
   return (
-    <StoryPage>
+    <Page>
       <ChartComponent endpoint="/fakeTvl.json" />
-    </StoryPage>
+    </Page>
   )
-}
-export const Chart: Story = Template.bind({})
-Chart.parameters = {
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }

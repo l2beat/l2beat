@@ -8,6 +8,7 @@ import {
   HeaderProps,
   Navbar,
 } from '../../../components'
+import { Page } from '../../../components/Page'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
 export interface ProjectPageProps {
@@ -18,12 +19,12 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <div className="Page leading-[1.15]">
+    <Page>
       <Navbar />
       <Header {...props.header} />
       <Chart {...props.chart} />
       <ProjectDetails {...props.projectDetails} />
       <Footer />
-    </div>
+    </Page>
   )
 }

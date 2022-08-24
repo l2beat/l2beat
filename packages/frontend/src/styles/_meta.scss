@@ -1,15 +1,10 @@
 html.meta,
-.meta body,
-.meta .Page {
+.meta body {
   height: 100vh;
   overflow: hidden;
 }
 
 .meta {
-  .Page {
-    padding: 0;
-  }
-
   .Header {
     margin-top: 24px;
     padding: 0 16px;

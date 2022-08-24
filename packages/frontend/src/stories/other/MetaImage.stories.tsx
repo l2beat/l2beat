@@ -27,7 +27,7 @@ function Template({ projectId }: TemplateProps) {
   const project = projects.find((x) => x.id === projectId)
   return (
     <div className="meta flex items-center justify-center">
-      <div className="relative leading-[1.15] w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">
+      <div className="relative w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">
         <MetaImage
           tvl="$1.34 B"
           sevenDayChange="+3.45%"
