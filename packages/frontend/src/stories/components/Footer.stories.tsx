@@ -5,8 +5,6 @@ import { Page } from '../../components/Page'
 
 export default {
   title: 'Components/Footer',
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }
 
 export function Footer() {

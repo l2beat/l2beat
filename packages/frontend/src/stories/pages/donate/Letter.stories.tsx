@@ -5,8 +5,6 @@ import { DonateLetter } from '../../../pages/Donate/DonateLetter'
 
 export default {
   title: 'Pages/Donate/Letter',
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }
 
 export function Letter() {
