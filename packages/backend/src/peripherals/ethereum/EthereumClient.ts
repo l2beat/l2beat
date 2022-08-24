@@ -11,21 +11,6 @@ export class EthereumClient {
     return BigInt(result) // TODO: probably could be a simple number
   }
 
-  async getLogs(
-    address: EthereumAddress,
-    topics: string[],
-    fromBlock: number,
-    toBlock: number,
-  ): Promise<providers.Log[]> {
-    const logs = await this.provider.getLogs({
-      address: address.toString(),
-      topics,
-      fromBlock,
-      toBlock,
-    })
-    return logs
-  }
-
   async getBlock(blockNumber: number) {
     return await this.provider.getBlock(blockNumber)
   }
@@ -53,11 +38,20 @@ export class EthereumClient {
     toBlock: number,
   ): Promise<providers.Log[]> {
     if (fromBlock === toBlock) {
-      return await this.getLogs(address, [topic], fromBlock, toBlock)
+      return await this.provider.getLogs({
+        address: address.toString(),
+        topics: [topic],
+        fromBlock,
+        toBlock,
+      })
     }
-
     try {
-      return await this.getLogs(address, [topic], fromBlock, toBlock)
+      return await this.provider.getLogs({
+        address: address.toString(),
+        topics: [topic],
+        fromBlock,
+        toBlock,
+      })
     } catch (e) {
       if (
         e instanceof Error &&

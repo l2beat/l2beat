@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from "@l2beat/types";
 
 interface Range {
   from: UnixTime

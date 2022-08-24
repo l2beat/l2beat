@@ -1,6 +1,6 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
 import { getTokenBySymbol, Project, TokenInfo, tokenList } from '@l2beat/config'
 import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 export interface ProjectInfo {
   name: string

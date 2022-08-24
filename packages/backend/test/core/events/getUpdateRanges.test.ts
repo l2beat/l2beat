@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { getUpdateRanges } from '../../../src/core/events/getUpdateRanges'

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'

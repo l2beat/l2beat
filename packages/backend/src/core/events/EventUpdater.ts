@@ -1,5 +1,6 @@
-import { EthereumAddress, Logger, TaskQueue, UnixTime } from '@l2beat/common'
-import { providers, utils } from 'ethers'
+import { Logger, TaskQueue } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
+import { utils } from 'ethers'
 
 import { ProjectInfo } from '../../model/ProjectInfo'
 import {
@@ -19,7 +20,7 @@ export class EventUpdater {
   private lastProcessed: UnixTime | undefined
 
   constructor(
-    private ethereum: EthereumClient,
+    private ethereumClient: EthereumClient,
     private blockNumberUpdater: BlockNumberUpdater,
     private eventRepository: EventRepository,
     private clock: Clock,
@@ -84,10 +85,10 @@ export class EventUpdater {
     if (this.lastProcessed) {
       return this.lastProcessed.add(1, 'hours')
     }
-    //it is needed for sixHourly and daily
-    //we want to avoid situation whe we ask for blockNumbers and there are no records
-    //it can happen because how logic works, it asks for multiple earlier records when needed
-    //e.g. you are at 00:00 so to calculate daily you need blockNumbers of 23 previous hourly
+    // it is needed for sixHourly and daily
+    // we want to avoid situation whe we ask for blockNumbers and there are no records
+    // it can happen because how logic works, it asks for multiple earlier records when needed
+    // e.g. you are at 00:00 so to calculate daily you need blockNumbers of 23 previous hourly
     const firstHour = this.clock.getFirstHour().add(1, 'days')
     return firstHour.isFull('day') ? firstHour : firstHour.toNext('day')
   }
@@ -101,7 +102,7 @@ export class EventUpdater {
     // generateEventRecords needs data in certain order
     const fromAdjusted = getAdjustedFrom(from)
 
-    const eventOccurrences = await this.getEventOccurrences(
+    const eventBlockNumbers = await this.eventBlockNumbers(
       fromAdjusted,
       to,
       event,
@@ -112,12 +113,12 @@ export class EventUpdater {
       to,
     )
 
-    const records = generateEventRecords(event, eventOccurrences, timestamps)
+    const records = generateEventRecords(event, eventBlockNumbers, timestamps)
 
     return records.filter((r) => r.timestamp.gte(from))
   }
 
-  async getEventOccurrences(
+  async eventBlockNumbers(
     from: UnixTime,
     to: UnixTime,
     event: EventDetails,
@@ -127,7 +128,7 @@ export class EventUpdater {
     )
     const toBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(to)
 
-    const logs = await this.getAllLogs(
+    const logs = await this.ethereumClient.getLogsUsingBisection(
       event.emitter,
       event.topic,
       Number(fromBlock),
@@ -135,46 +136,10 @@ export class EventUpdater {
     )
     return logs.map((l) => BigInt(l.blockNumber))
   }
-
-  async getAllLogs(
-    address: EthereumAddress,
-    topic: string,
-    fromBlock: number,
-    toBlock: number,
-  ): Promise<providers.Log[]> {
-    if (fromBlock === toBlock) {
-      return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
-    }
-
-    try {
-      return await this.ethereum.getLogs(address, [topic], fromBlock, toBlock)
-    } catch (e) {
-      if (
-        e instanceof Error &&
-        e.message.includes('Log response size exceeded')
-      ) {
-        this.logger.debug('BISECTION', {
-          address: address.toString(),
-          topic,
-          fromBlock,
-          toBlock,
-        })
-
-        const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
-        const [a, b] = await Promise.all([
-          this.getAllLogs(address, topic, fromBlock, midPoint),
-          this.getAllLogs(address, topic, midPoint + 1, toBlock),
-        ])
-        return a.concat(b)
-      } else {
-        throw e
-      }
-    }
-  }
 }
 
 export function getAdjustedFrom(from: UnixTime) {
-  return from.isDaily()
+  return from.isFull('day')
     ? from.add(-1, 'days').toStartOf('day').add(1, 'hours')
     : from.toStartOf('day').add(1, 'hours')
 }

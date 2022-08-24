@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import { EventRecord } from '../../peripherals/database/EventRepository'
 import { EventDetails } from './types/EventDetails'
@@ -22,14 +22,19 @@ export function generateEventRecords(
   const sixHourly: EventRecord[] = []
   const daily: EventRecord[] = []
 
+  let hourlyCount = 0
+  let sixHourlyCount = 0
+  let dailyCount = 0
+
   for (const { timestamp, blockNumber } of timestamps) {
-    let count = 0
     while (true) {
       if (i >= sortedLogs.length) {
         break
       }
       if (sortedLogs[i] < blockNumber) {
-        count++
+        hourlyCount++
+        sixHourlyCount++
+        dailyCount++
         i++
       } else {
         break
@@ -39,30 +44,29 @@ export function generateEventRecords(
       timestamp: timestamp,
       name,
       projectId,
-      count,
+      count: hourlyCount,
       timeSpan: 'hourly',
     })
-    if (timestamp.isSixHourly()) {
-      let sum = 0
-      hourly.slice(hourly.length - 6).forEach((r) => (sum += r.count))
+    hourlyCount = 0
+    if (timestamp.isFull('sixHourly')) {
       sixHourly.push({
         timestamp: timestamp,
         name,
         projectId,
-        count: sum,
+        count: sixHourlyCount,
         timeSpan: 'sixHourly',
       })
+      sixHourlyCount = 0
     }
-    if (timestamp.isDaily()) {
-      let sum = 0
-      hourly.slice(hourly.length - 24).forEach((r) => (sum += r.count))
+    if (timestamp.isFull('day')) {
       daily.push({
         timestamp: timestamp,
         name,
         projectId,
-        count: sum,
+        count: dailyCount,
         timeSpan: 'daily',
       })
+      dailyCount = 0
     }
   }
 

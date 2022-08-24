@@ -1,10 +1,5 @@
-import {
-  EthereumAddress,
-  Logger,
-  mock,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/common'
+import { Logger, mock } from '@l2beat/common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
@@ -15,7 +10,6 @@ import {
 } from '../../../src/core/events/EventUpdater'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
-import { setupDatabaseTestSuite } from '../../peripherals/database/shared/setup'
 
 const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
 const EVENT_A = 'event-a'
@@ -60,7 +54,7 @@ describe(EventUpdater.name, () => {
   describe(EventUpdater.prototype.fetchRecords.name, () => {
     it('adjusts from and calls correctly', async () => {
       const ethereum = mock<EthereumClient>({
-        getLogs: mockFn().returnsOnce([]),
+        getLogsUsingBisection: mockFn().returnsOnce([]),
       })
 
       const blockNumberUpdater = mock<BlockNumberUpdater>({
@@ -97,7 +91,7 @@ describe(EventUpdater.name, () => {
 
     it('returns only from to', async () => {
       const ethereum = mock<EthereumClient>({
-        getLogs: mockFn().returnsOnce([
+        getLogsUsingBisection: mockFn().returnsOnce([
           mockLog(50),
           mockLog(100),
           mockLog(200),
@@ -135,10 +129,10 @@ describe(EventUpdater.name, () => {
     })
   })
 
-  describe(EventUpdater.prototype.getEventOccurrences.name, () => {
+  describe(EventUpdater.prototype.eventBlockNumbers.name, () => {
     it('ask for a block number of a 1 hour earlier', async () => {
       const ethereum = mock<EthereumClient>({
-        getLogs: mockFn().returnsOnce([]),
+        getLogsUsingBisection: mockFn().returnsOnce([]),
       })
 
       const blockNumberUpdater = mock<BlockNumberUpdater>({
@@ -153,7 +147,7 @@ describe(EventUpdater.name, () => {
         [],
         Logger.SILENT,
       )
-      await eventUpdater.getEventOccurrences(
+      await eventUpdater.eventBlockNumbers(
         START,
         START.add(1, 'hours'),
         MOCK_EVENT,
@@ -169,7 +163,7 @@ describe(EventUpdater.name, () => {
 
     it('returns only blockNumbers', async () => {
       const ethereum = mock<EthereumClient>({
-        getLogs: mockFn().returnsOnce([
+        getLogsUsingBisection: mockFn().returnsOnce([
           mockLog(100),
           mockLog(200),
           mockLog(300),
@@ -189,97 +183,13 @@ describe(EventUpdater.name, () => {
         Logger.SILENT,
       )
 
-      const result = await eventUpdater.getEventOccurrences(
+      const result = await eventUpdater.eventBlockNumbers(
         START,
         START.add(1, 'hours'),
         MOCK_EVENT,
       )
 
       expect(result).toEqual([100n, 200n, 300n])
-    })
-  })
-
-  describe(EventUpdater.prototype.getAllLogs.name, () => {
-    it('divides on two calls', async () => {
-      const ethereum = mock<EthereumClient>({
-        getLogs: mockFn()
-          .throwsOnce(new Error('Log response size exceeded'))
-          .returnsOnce([])
-          .returnsOnce([]),
-      })
-
-      const eventUpdater = new EventUpdater(
-        ethereum,
-        mock<BlockNumberUpdater>({}),
-        mock<EventRepository>({}),
-        mock<Clock>(),
-        [],
-        Logger.SILENT,
-      )
-      const address = EthereumAddress.random()
-      const topic = 'aaaa'
-      await eventUpdater.getAllLogs(address, topic, 1000, 2000)
-
-      expect(ethereum.getLogs).toHaveBeenCalledExactlyWith([
-        [address, [topic], 1000, 2000],
-        [address, [topic], 1000, 1500],
-        [address, [topic], 1501, 2000],
-      ])
-    })
-
-    it('correctly divides range of two', async () => {
-      const ethereum = mock<EthereumClient>({
-        getLogs: mockFn()
-          .throwsOnce(new Error('Log response size exceeded'))
-          .returnsOnce([])
-          .returnsOnce([]),
-      })
-
-      const eventUpdater = new EventUpdater(
-        ethereum,
-        mock<BlockNumberUpdater>({}),
-        mock<EventRepository>({}),
-        mock<Clock>(),
-        [],
-        Logger.SILENT,
-      )
-      const address = EthereumAddress.random()
-      const topic = 'aaaa'
-      await eventUpdater.getAllLogs(address, topic, 1, 2)
-
-      expect(ethereum.getLogs).toHaveBeenCalledExactlyWith([
-        [address, [topic], 1, 2],
-        [address, [topic], 1, 1],
-        [address, [topic], 2, 2],
-      ])
-    })
-
-    it('fromBlock === toBlock', async () => {
-      const ethereum = mock<EthereumClient>({
-        getLogs: mockFn()
-          .throwsOnce(new Error('Log response size exceeded'))
-          .throwsOnce(new Error('Log response size exceeded')),
-      })
-
-      const { database } = setupDatabaseTestSuite()
-      const eventsRepository = new EventRepository(database, Logger.SILENT)
-
-      const eventUpdater = new EventUpdater(
-        ethereum,
-        mock<BlockNumberUpdater>({}),
-        eventsRepository,
-        mock<Clock>(),
-        [],
-        Logger.SILENT,
-      )
-      const address = EthereumAddress.random()
-      const topic = 'aaaa'
-
-      await expect(eventUpdater.getAllLogs(address, topic, 1, 1)).toBeRejected()
-
-      expect(ethereum.getLogs).toHaveBeenCalledExactlyWith([
-        [address, [topic], 1, 1],
-      ])
     })
   })
 })
