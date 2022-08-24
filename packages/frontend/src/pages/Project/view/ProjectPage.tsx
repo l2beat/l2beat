@@ -7,13 +7,11 @@ import {
   Header,
   HeaderProps,
   Navbar,
-  Page,
 } from '../../../components'
-import { PageMetadata } from '../../PageMetadata'
+import { Page } from '../../../components/Page'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
 export interface ProjectPageProps {
-  metadata: PageMetadata
   header: HeaderProps
   chart: ChartProps
   projectDetails: ProjectDetailsProps
@@ -21,7 +19,7 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page metadata={props.metadata} preloadApi={props.chart.endpoint}>
+    <Page>
       <Navbar />
       <Header {...props.header} />
       <Chart {...props.chart} />

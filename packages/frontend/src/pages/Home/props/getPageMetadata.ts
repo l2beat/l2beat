@@ -1,4 +1,4 @@
-import { PageMetadata } from '../../PageMetadata'
+import { PageMetadata } from '../../Page'
 
 export function getPageMetadata(): PageMetadata {
   return {

@@ -1,11 +1,16 @@
 import React from 'react'
 
-import { Footer, Navbar, Page } from '../../components'
-import { FaqPageProps } from './getProps'
+import { Footer, Navbar } from '../../components'
+import { Page } from '../../components/Page'
+
+export interface FaqPageProps {
+  title: string
+  content: string
+}
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <Page metadata={props.metadata}>
+    <Page>
       <Navbar />
       <article
         className="Faq"

@@ -1,7 +1,7 @@
 import { projects as configProjects } from '@l2beat/config'
 
 import { renderPages } from '../pages'
-import { createApi } from '../pages/api'
+import { createApi } from './api'
 import { getApiMain } from './ApiMain'
 
 main().catch((e) => {

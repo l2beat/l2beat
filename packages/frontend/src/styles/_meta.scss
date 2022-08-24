@@ -1,0 +1,111 @@
+html.meta,
+.meta body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.meta {
+  .Header {
+    margin-top: 24px;
+    padding: 0 16px;
+    align-items: flex-start;
+  }
+
+  .MetaImage.project {
+    .Header-Title {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+      font-size: 64px;
+      width: max-content;
+    }
+
+    .Header-Icon {
+      height: 80px;
+    }
+  }
+
+  .Header-Right {
+    margin-left: auto;
+  }
+
+  .Chart {
+    margin-top: 8px;
+    row-gap: 8px;
+  }
+
+  .Chart-Loader,
+  .Chart-Watermark,
+  .Chart-RangeControls,
+  .Chart-CurrencyControls,
+  .Chart-ScaleControls,
+  .Chart-Line,
+  .Chart-Label,
+  .Chart-Description,
+  .ChartHover {
+    display: none;
+  }
+
+  .Chart-Range {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: var(--font-l);
+    z-index: 1000;
+  }
+
+  .Chart-View {
+    position: relative;
+    height: 262px;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 60px;
+      width: 100%;
+      background: linear-gradient(
+        to right,
+        var(--gradient-1),
+        var(--gradient-2),
+        var(--gradient-3)
+      );
+      opacity: 0.376;
+    }
+  }
+
+  .Chart-Canvas {
+    height: 202px;
+    bottom: unset;
+    top: 0;
+  }
+
+  .MetaImage.project {
+    .Logo {
+      position: absolute;
+      top: 24px;
+      left: 16px;
+    }
+  }
+
+  .MetaImage.overview {
+    .Logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 250px;
+      height: auto;
+    }
+
+    .Header-Title {
+      font-size: 42px;
+    }
+  }
+
+  .Logo-Animation {
+    animation: none;
+  }
+}
