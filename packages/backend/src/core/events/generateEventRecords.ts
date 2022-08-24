@@ -27,6 +27,7 @@ export function generateEventRecords(
   let dailyCount = 0
 
   for (const { timestamp, blockNumber } of timestamps) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       if (i >= sortedLogs.length) {
         break
