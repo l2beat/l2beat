@@ -46,6 +46,3 @@ Project.args = {
 }
 
 export const Overview: Story<TemplateProps> = Template.bind({})
-Overview.parameters = {
-  controls: { hideNoControlsWarning: true },
-}

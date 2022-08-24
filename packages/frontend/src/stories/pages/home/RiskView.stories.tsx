@@ -8,8 +8,6 @@ import { configureTooltips } from '../../../scripts/configureTooltips'
 
 export default {
   title: 'Pages/Home/RiskView',
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }
 
 export function RiskView() {

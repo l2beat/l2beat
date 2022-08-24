@@ -4,7 +4,6 @@ import * as Icons from '../../components/icons'
 
 export default {
   title: 'Components/Icons',
-  controls: { hideNoControlsWarning: true },
 }
 
 export function ProductIcons() {

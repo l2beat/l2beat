@@ -6,8 +6,6 @@ import { configureChart } from '../../scripts/chart'
 
 export default {
   title: 'Components/Chart',
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }
 
 export function Chart() {

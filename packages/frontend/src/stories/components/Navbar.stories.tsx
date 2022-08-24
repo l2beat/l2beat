@@ -7,8 +7,6 @@ import { Page } from '../../components/Page'
 
 export default {
   title: 'Components/Navbar',
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }
 
 export function Navbar() {
