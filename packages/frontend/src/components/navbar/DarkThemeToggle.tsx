@@ -9,8 +9,8 @@ export function DarkThemeToggle() {
       className="block"
       title="Change color scheme"
     >
-      <SunIcon className="block dark:hidden" aria-label="Toggle dark mode" />
-      <MoonIcon className="hidden dark:block" aria-label="Toggle light mode" />
+      <SunIcon className="hidden dark:block" aria-label="Toggle light mode" />
+      <MoonIcon className="block dark:hidden" aria-label="Toggle dark mode" />
     </button>
   )
 }
