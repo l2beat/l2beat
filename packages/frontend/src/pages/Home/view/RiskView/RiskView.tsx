@@ -1,4 +1,5 @@
 import { Project, ProjectRiskView } from '@l2beat/config'
+import classNames from 'classnames'
 import React from 'react'
 
 import { OptimismIcon, StarkWareIcon } from '../../../../components/icons'
@@ -8,6 +9,7 @@ import { RiskCell } from './RiskCell'
 
 export interface RiskViewProps {
   items: RiskViewEntry[]
+  className?: string
 }
 
 export interface RiskViewEntry extends ProjectRiskView {
@@ -16,7 +18,7 @@ export interface RiskViewEntry extends ProjectRiskView {
   provider?: Project['details']['provider']
 }
 
-export function RiskView({ items }: RiskViewProps) {
+export function RiskView({ items, className }: RiskViewProps) {
   const columns: Column<RiskViewEntry>[] = [
     {
       name: 'Name',
@@ -45,7 +47,7 @@ export function RiskView({ items }: RiskViewProps) {
   ]
 
   return (
-    <div className="RiskView">
+    <div className={classNames('RiskView', className)}>
       <TableView items={items} columns={columns} />
       <div className="RiskView-Symbols">
         <p>

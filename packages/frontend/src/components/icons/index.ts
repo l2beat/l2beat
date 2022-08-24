@@ -1,6 +1,7 @@
 export * from './ProductIcon'
 export * from './products/DiscordIcon'
 export * from './products/GithubIcon'
+export * from './products/InstagramIcon'
 export * from './products/LinkedInIcon'
 export * from './products/MediumIcon'
 export * from './products/OptimismIcon'
