@@ -47,6 +47,14 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
+  interface EventRow {
+    unix_timestamp: string
+    event_name: string
+    project_id: string
+    count: number
+    time_span: 'hourly' | 'sixHourly' | 'daily'
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -55,5 +63,6 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
+    events: EventRow
   }
 }

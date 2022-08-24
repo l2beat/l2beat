@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -166,4 +166,14 @@ export const layer2financezk: Project = {
       },
     ],
   },
+
+  events: [
+    {
+      name: 'LogStateTransitionFact',
+      abi: ' event LogStateTransitionFact(bytes32 stateTransitionFact)',
+      emitter: EthereumAddress('0x82123571C8a5e0910280C066bc634c4945FFcbC8'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(0),
+    },
+  ],
 }

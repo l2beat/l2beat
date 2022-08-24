@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   CONTRACTS,
@@ -341,4 +341,21 @@ export const optimism: Project = {
       },
     ],
   },
+
+  events: [
+    {
+      name: 'SequencerBatchAppended',
+      abi: 'event SequencerBatchAppended (uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)',
+      emitter: EthereumAddress('0x5E4e65926BA27467555EB562121fac00D24E9dD2'),
+      type: 'data',
+      sinceTimestamp: new UnixTime(0),
+    },
+    {
+      name: 'StateBatchAppended',
+      abi: 'event StateBatchAppended (uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
+      emitter: EthereumAddress('0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(0),
+    },
+  ],
 }

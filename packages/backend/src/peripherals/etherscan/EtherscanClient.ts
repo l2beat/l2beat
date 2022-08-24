@@ -8,7 +8,10 @@ import { UnixTime } from '@l2beat/types'
 
 import { stringAsBigInt } from '../../tools/types'
 import { HttpClient } from '../HttpClient'
-import { parseEtherscanResponse } from './parseEtherscanResponse'
+import {
+  EtherscanLogResult,
+  parseEtherscanResponse,
+} from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
 
@@ -24,6 +27,22 @@ export class EtherscanClient {
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+  }
+
+  async getLogs(
+    address: string,
+    topic0: string,
+    fromBlock: string,
+    toBlock: string,
+  ) {
+    const result = await this.call('logs', 'getLogs', {
+      address,
+      topic0,
+      fromBlock,
+      toBlock,
+    })
+
+    return EtherscanLogResult.parse(result)
   }
 
   getStatus() {
