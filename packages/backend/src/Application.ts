@@ -3,11 +3,9 @@ import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
-import { EventsController } from './api/controllers/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
-import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -177,7 +175,7 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
-        await eventUpdater.start()
+        eventUpdater.start()
       }
     }
 
