@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { Page } from '../../../components/Page'
 import { Tooltip } from '../../../components/Tooltip'
-import { FinancialView as FinancialViewComponent } from '../../../pages/Home/view/FinancialView/FinancialView'
+import { FinancialView as FinancialViewComponent } from '../../../pages/home/view/FinancialView/FinancialView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
 
