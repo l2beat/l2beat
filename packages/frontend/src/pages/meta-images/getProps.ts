@@ -1,7 +1,7 @@
 import { Project } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
-import { formatUSD, getFromEnd, getPercentageChange } from '../../utils/utils'
+import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
 import { MetaImageProps } from './MetaImage'
 
@@ -12,8 +12,8 @@ export function getProps(
   const daily = project
     ? apiMain.projects[project.id.toString()]?.charts.daily.data ?? []
     : apiMain.charts.daily.data
-  const tvl = getFromEnd(daily, 0)?.[1] ?? 0
-  const tvlSevenDaysAgo = getFromEnd(daily, 7)?.[1] ?? 0
+  const tvl = daily.at(-1)?.[1] ?? 0
+  const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const apiEndpoint = `/api/${project?.slug ?? 'tvl'}.json`

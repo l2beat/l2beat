@@ -2,16 +2,12 @@ import { Project } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { HeaderProps } from '../../../components'
-import {
-  formatUSD,
-  getFromEnd,
-  getPercentageChange,
-} from '../../../utils/utils'
+import { formatUSD, getPercentageChange } from '../../../utils/utils'
 
 export function getHeader(project: Project, apiMain: ApiMain): HeaderProps {
   const hourly =
     apiMain.projects[project.id.toString()]?.charts.hourly.data ?? []
-  const tvl = getFromEnd(hourly, 0)?.[1] ?? 0
+  const tvl = hourly.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
