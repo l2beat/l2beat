@@ -17,6 +17,8 @@ export class UnixTime {
 
   static MINUTE = 60
 
+  static SIX_HOURS = 6 * this.HOUR
+
   static now() {
     return UnixTime.fromDate(new Date())
   }
@@ -46,13 +48,15 @@ export class UnixTime {
     return new UnixTime(this.timestamp + remaining)
   }
 
-  isFull(period: 'day' | 'hour' | 'minute') {
+  isFull(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
         ? UnixTime.HOUR
-        : UnixTime.MINUTE
+        : period === 'minute'
+        ? UnixTime.MINUTE
+        : UnixTime.SIX_HOURS
     const isFull = this.timestamp % modulus ? false : true
     return isFull
   }

@@ -258,4 +258,6 @@ export const zkswap: Project = {
       },
     ],
   },
+
+  events: [],
 }

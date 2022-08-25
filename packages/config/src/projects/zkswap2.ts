@@ -166,4 +166,6 @@ export const zkswap2: Project = {
     },
     news: zkswap.details.news,
   },
+
+  events: [],
 }

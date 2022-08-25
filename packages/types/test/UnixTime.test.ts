@@ -164,6 +164,16 @@ describe(UnixTime.name, () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:10:01Z'))
       expect(time.isFull('minute')).toEqual(false)
     })
+
+    it('full sixHourly', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T06:00:00Z'))
+      expect(time.isFull('six hours')).toEqual(true)
+    })
+
+    it('not full sixHourly', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T06:01:01Z'))
+      expect(time.isFull('six hours')).toEqual(false)
+    })
   })
 
   describe('comparison methods', () => {

@@ -67,25 +67,6 @@ describe(TaskQueue.name, () => {
     })
   })
 
-  it('can add jobs to front', async () => {
-    const completed: number[] = []
-
-    async function execute(value: number) {
-      await setTimeout(1)
-      completed.push(value)
-    }
-
-    const queue = new TaskQueue(execute, Logger.SILENT)
-
-    for (let i = 0; i < 10; i++) {
-      queue.addToFront(i)
-    }
-
-    await waitForExpect(() => {
-      expect(completed).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
-    })
-  })
-
   it('can add jobs only if empty', async () => {
     const completed: number[] = []
 

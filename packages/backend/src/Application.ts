@@ -14,6 +14,7 @@ import { Config } from './config'
 import { BalanceUpdater } from './core/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { Clock } from './core/Clock'
+import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
@@ -21,6 +22,7 @@ import { AggregateReportRepository } from './peripherals/database/AggregateRepor
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
+import { EventRepository } from './peripherals/database/EventRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
@@ -54,6 +56,7 @@ export class Application {
       database,
       logger,
     )
+    const eventRepository = new EventRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -120,6 +123,15 @@ export class Application {
       logger,
     )
 
+    const eventUpdater = new EventUpdater(
+      ethereumClient,
+      blockNumberUpdater,
+      eventRepository,
+      clock,
+      config.projects,
+      logger,
+    )
+
     // #endregion
     // #region api
 
@@ -162,11 +174,13 @@ export class Application {
       if (config.freshStart) await database.rollbackAll()
       await database.migrateToLatest()
 
+      //todo move all to this condition
       if (config.syncEnabled) {
         priceUpdater.start()
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
+        eventUpdater.start()
       }
     }
 

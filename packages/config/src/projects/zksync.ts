@@ -339,4 +339,6 @@ export const zksync: Project = {
       },
     ],
   },
+
+  events: [],
 }

@@ -68,6 +68,7 @@ export const PROJECTS: ProjectInfo[] = [
         ],
       },
     ],
+    events: [],
   },
   {
     projectId: ProjectId('optimism'),
@@ -79,6 +80,7 @@ export const PROJECTS: ProjectInfo[] = [
         tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
       },
     ],
+    events: [],
   },
 ]
 
