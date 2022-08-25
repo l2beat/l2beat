@@ -170,4 +170,19 @@ export const dydx: Project = {
       },
     ],
   },
+
+  events: [
+    // {
+    //   name: '',
+    //   abi: '',
+    //   emitter: EthereumAddress(''),
+    //   type: '',
+    // },
+    // {
+    //   name: '',
+    //   abi: '',
+    //   emitter: EthereumAddress(''),
+    //   type: '',
+    // },
+  ],
 }

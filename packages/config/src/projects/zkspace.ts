@@ -180,4 +180,6 @@ export const zkspace: Project = {
     },
     news: zkswap.details.news,
   },
+
+  events: [],
 }

@@ -309,4 +309,6 @@ export const nova: Project = {
       },
     ],
   },
+
+  events: [],
 }

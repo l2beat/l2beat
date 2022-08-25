@@ -358,4 +358,6 @@ export const bobanetwork: Project = {
       },
     ],
   },
+
+  events: [],
 }

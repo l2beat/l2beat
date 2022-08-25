@@ -170,4 +170,6 @@ export const immutablex: Project = {
       },
     ],
   },
+
+  events: [],
 }

@@ -50,6 +50,7 @@ const projects: ProjectInfo[] = [
         tokens: [daiToken],
       },
     ],
+    events: [],
   },
   {
     projectId: optimismId,
@@ -61,6 +62,7 @@ const projects: ProjectInfo[] = [
         tokens: [mockToken(AssetId.DAI, 'DAI')],
       },
     ],
+    events: [],
   },
 ]
 

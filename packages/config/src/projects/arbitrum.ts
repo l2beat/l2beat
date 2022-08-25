@@ -413,4 +413,6 @@ export const arbitrum: Project = {
       },
     ],
   },
+
+  events: [],
 }
