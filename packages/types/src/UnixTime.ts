@@ -48,7 +48,7 @@ export class UnixTime {
     return new UnixTime(this.timestamp + remaining)
   }
 
-  isFull(period: 'day' | 'hour' | 'minute' | 'sixHourly') {
+  isFull(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'
         ? UnixTime.DAY

@@ -167,12 +167,12 @@ describe(UnixTime.name, () => {
 
     it('full sixHourly', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T06:00:00Z'))
-      expect(time.isFull('sixHourly')).toEqual(true)
+      expect(time.isFull('six hours')).toEqual(true)
     })
 
     it('not full sixHourly', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T06:01:01Z'))
-      expect(time.isFull('sixHourly')).toEqual(false)
+      expect(time.isFull('six hours')).toEqual(false)
     })
   })
 

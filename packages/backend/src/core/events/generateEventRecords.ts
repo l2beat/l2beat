@@ -49,7 +49,7 @@ export function generateEventRecords(
       timeSpan: 'hourly',
     })
     hourlyCount = 0
-    if (timestamp.isFull('sixHourly')) {
+    if (timestamp.isFull('six hours')) {
       sixHourly.push({
         timestamp: timestamp,
         name,
