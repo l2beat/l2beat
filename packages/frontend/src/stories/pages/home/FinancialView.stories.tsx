@@ -92,6 +92,7 @@ export function FinancialView() {
             },
             {
               name: 'zk.download',
+              provider: 'zkSync',
               slug: 'zksync',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {

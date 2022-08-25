@@ -37,6 +37,7 @@ export const zkswap2: Project = {
         'https://reddit.com/r/ZKSwap_Official/',
       ],
     },
+    provider: 'zkSync',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

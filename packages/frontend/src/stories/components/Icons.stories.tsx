@@ -14,12 +14,20 @@ export function ProductIcons() {
       <Icons.InstagramIcon />
       <Icons.LinkedInIcon />
       <Icons.MediumIcon />
-      <Icons.OptimismIcon />
       <Icons.RedditIcon />
-      <Icons.StarkWareIcon />
       <Icons.TelegramIcon />
       <Icons.TwitterIcon />
       <Icons.YouTubeIcon />
+    </div>
+  )
+}
+
+export function ProviderIcons() {
+  return (
+    <div className="mx-auto max-w-lg p-4 flex justify-center gap-2">
+      <Icons.OptimismIcon />
+      <Icons.StarkWareIcon />
+      <Icons.ZkSyncIcon />
     </div>
   )
 }

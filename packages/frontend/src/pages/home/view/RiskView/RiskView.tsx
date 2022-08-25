@@ -2,7 +2,11 @@ import { Project, ProjectRiskView } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon } from '../../../../components/icons'
+import {
+  OptimismIcon,
+  StarkWareIcon,
+  ZkSyncIcon,
+} from '../../../../components/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
 import { RiskCell } from './RiskCell'
@@ -59,6 +63,11 @@ export function RiskView({ items, className }: RiskViewProps) {
           <OptimismIcon />
           <span>&ndash;</span>
           <span>This project is based on Optimism&apos;s code base.</span>
+        </p>
+        <p>
+          <ZkSyncIcon />
+          <span>&ndash;</span>
+          <span>This project is based on zkSync&apos;s code base.</span>
         </p>
       </div>
     </div>
