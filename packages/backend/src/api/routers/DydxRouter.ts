@@ -12,6 +12,7 @@ export function createDydxRouter(dydxController: DydxController) {
       return
     }
     ctx.body = tvl
+    ctx.set('Access-Control-Allow-Origin', 'http://dydx.l2beat.com')
   })
 
   return router

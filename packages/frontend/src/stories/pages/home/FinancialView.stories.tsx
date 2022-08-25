@@ -8,8 +8,6 @@ import { formatLargeNumber } from '../../../utils'
 
 export default {
   title: 'Pages/Home/FinancialView',
-  controls: { hideNoControlsWarning: true },
-  layout: 'fullscreen',
 }
 
 export function FinancialView() {

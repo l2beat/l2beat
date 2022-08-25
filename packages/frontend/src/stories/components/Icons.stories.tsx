@@ -4,7 +4,6 @@ import * as Icons from '../../components/icons'
 
 export default {
   title: 'Components/Icons',
-  controls: { hideNoControlsWarning: true },
 }
 
 export function ProductIcons() {
@@ -32,6 +31,8 @@ export function SymbolIcons() {
       <Icons.GlobeIcon />
       <Icons.InfoIcon />
       <Icons.LinkIcon />
+      <Icons.MenuCloseIcon />
+      <Icons.MenuOpenIcon />
       <Icons.MoonIcon />
       <Icons.ShieldBadIcon />
       <Icons.ShieldGoodIcon />

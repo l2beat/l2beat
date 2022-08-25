@@ -1,9 +1,11 @@
+import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
+import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureChart } from './chart'
-import { configureDarkMode } from './configureDarkMode'
 import { configureRiskView } from './configureRiskView'
 import { configureTooltips } from './configureTooltips'
 
-configureDarkMode()
+configureDarkThemeToggle()
+configureSidebarMenu()
 configureTooltips()
 configureChart()
 configureRiskView()

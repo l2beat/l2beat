@@ -1,4 +1,4 @@
-export function configureDarkMode() {
+export function configureDarkThemeToggle() {
   let prefersDark: boolean | undefined
   const saved = localStorage.getItem('l2beat-theme')
 
@@ -28,6 +28,6 @@ export function configureDarkMode() {
   }
 
   document
-    .querySelector('.Navbar-Mode')
+    .querySelector('#dark-theme-toggle')
     ?.addEventListener('click', toggleDarkMode)
 }
