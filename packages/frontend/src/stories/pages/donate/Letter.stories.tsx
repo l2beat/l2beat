@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Page } from '../../../components/Page'
-import { DonateLetter } from '../../../pages/Donate/DonateLetter'
+import { DonateLetter } from '../../../pages/donate/DonateLetter'
 
 export default {
   title: 'Pages/Donate/Letter',
