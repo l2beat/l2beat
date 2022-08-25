@@ -51,6 +51,7 @@ export function RiskView() {
             },
             {
               name: 'zk.download',
+              provider: 'zkSync',
               slug: 'zksync',
               stateValidation: risk('medium', 'bad'),
               dataAvailability: risk('medium'),

@@ -6,6 +6,7 @@ import {
   OptimismIcon,
   StarkWareIcon,
   WarningIcon,
+  ZkSyncIcon,
 } from '../../../../components/icons'
 import { ProjectLink } from '../ProjectLink'
 import { Column, TableView } from '../TableView'
@@ -113,6 +114,11 @@ export function FinancialView({ items }: FinancialViewProps) {
           <OptimismIcon />
           <span>&ndash;</span>
           <span>This project is based on Optimism&apos;s code base.</span>
+        </p>
+        <p>
+          <ZkSyncIcon />
+          <span>&ndash;</span>
+          <span>This project is based on zkSync&apos;s code base.</span>
         </p>
       </div>
     </div>

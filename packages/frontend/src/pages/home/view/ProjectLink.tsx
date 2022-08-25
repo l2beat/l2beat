@@ -1,7 +1,11 @@
 import { Project } from '@l2beat/config'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon } from '../../../components/icons'
+import {
+  OptimismIcon,
+  StarkWareIcon,
+  ZkSyncIcon,
+} from '../../../components/icons'
 
 interface Props {
   project: {
@@ -36,6 +40,14 @@ export function ProjectLink({ project }: Props) {
           title="This project is based on Optimism's code base."
         >
           <OptimismIcon />
+        </span>
+      )}
+      {project.provider === 'zkSync' && (
+        <span
+          className="ProjectLink-Provider Tooltip"
+          title="This project is based on zkSync's code base."
+        >
+          <ZkSyncIcon />
         </span>
       )}
     </>

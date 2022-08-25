@@ -45,6 +45,7 @@ export const zkswap: Project = {
         'https://zks.org/en/blog',
       ],
     },
+    provider: 'zkSync',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

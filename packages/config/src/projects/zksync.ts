@@ -40,6 +40,7 @@ export const zksync: Project = {
         'https://twitter.com/zksync',
       ],
     },
+    provider: 'zkSync',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
