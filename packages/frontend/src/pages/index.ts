@@ -1,13 +1,13 @@
 import { Project as ProjectType } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
-import { getDonatePage } from './Donate'
-import { getFaqPage } from './Faq'
-import { getHomePage } from './Home'
-import { getMetaImagePages } from './MetaImages'
+import { getDonatePage } from './donate'
+import { getFaqPage } from './faq'
+import { getHomePage } from './home'
+import { getMetaImagePages } from './meta-images'
 import { outputPages } from './output'
 import { Page } from './Page'
-import { getProjectPages } from './Project'
+import { getProjectPages } from './projects'
 
 export async function renderPages(projects: ProjectType[], apiMain: ApiMain) {
   const pages: Page[] = []
