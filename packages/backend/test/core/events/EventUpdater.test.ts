@@ -11,27 +11,31 @@ import {
   getAdjustedFrom,
 } from '../../../src/core/events/EventUpdater'
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
+import { EventDetails } from '../../../src/core/events/types/EventDetails'
 import { ProjectInfo } from '../../../src/model'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
 const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
 const PROJECT_A = ProjectId('project-a')
+const PROJECT_B = ProjectId('project-b')
 
-const EVENT_A: ProjectEvent = {
-  name: 'A',
-  abi: 'event A()',
+const EVENT: ProjectEvent = {
+  name: 'Event',
+  abi: 'event Event()',
   emitter: EthereumAddress.random(),
   type: 'state',
-  sinceTimestamp: START.add(-365, 'days'),
+  sinceTimestamp: START,
 }
 
-const DETAILS_EVENT_A = {
-  emitter: EVENT_A.emitter,
-  topic: '0xf446c1d0ceceeffa77e664bc78fba57853bda372d626a510062480375fa80e90',
-  name: 'A',
-  projectId: PROJECT_A,
-  sinceTimestamp: EVENT_A.sinceTimestamp,
+const eventDetails = (projectId: ProjectId) => {
+  return {
+    emitter: EVENT.emitter,
+    name: EVENT.name,
+    topic: '0x57050ab73f6b9ebdd9f76b8d4997793f48cf956e965ee070551b9ca0bb71584e',
+    projectId,
+    sinceTimestamp: EVENT.sinceTimestamp,
+  }
 }
 
 const mockLog = (blockNumber: number) => {
@@ -80,23 +84,28 @@ describe(EventUpdater.name, () => {
   })
 
   describe(EventUpdater.prototype.update.name, () => {
-    it('correctly calls fetchRecords() ', async () => {
+    it('correctly offsets firstHour', async () => {
       const eventRepository = mock<EventRepository>({
         addMany: mockFn().returns([]),
         getDataBoundary: mockFn().returns(new Map([])),
       })
+
+      const eventBeforeFirstHour = {
+        ...EVENT,
+        sinceTimestamp: new UnixTime(0),
+      }
 
       const projects: ProjectInfo[] = [
         {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           bridges: [],
-          events: [EVENT_A],
+          events: [eventBeforeFirstHour],
         },
       ]
 
       const clock = mock<Clock>({
-        getFirstHour: mockFn().returns(START.add(-1, 'days')),
+        getFirstHour: mockFn().returns(START.add(-7, 'days')),
         getLastHour: mockFn().returns(START.add(2, 'hours')),
       })
 
@@ -117,13 +126,58 @@ describe(EventUpdater.name, () => {
       await eventUpdater.update()
 
       expect(fetchRecords).toHaveBeenCalledExactlyWith([
-        [START, START.add(2, 'hours'), DETAILS_EVENT_A],
+        [
+          START.add(-6, 'days'),
+          START.add(2, 'hours'),
+          { ...eventDetails(PROJECT_A), sinceTimestamp: new UnixTime(0) },
+        ],
+      ])
+    })
+
+    it('takes sinceTimestamp into consideration', async () => {
+      const eventRepository = mock<EventRepository>({
+        addMany: mockFn().returns([]),
+        getDataBoundary: mockFn().returns(new Map([])),
+      })
+
+      const projects: ProjectInfo[] = [
+        {
+          name: PROJECT_A.toString(),
+          projectId: PROJECT_A,
+          bridges: [],
+          events: [EVENT],
+        },
+      ]
+
+      const clock = mock<Clock>({
+        getFirstHour: mockFn().returns(START.add(-7, 'days')),
+        getLastHour: mockFn().returns(START.add(2, 'hours')),
+      })
+
+      const eventUpdater = new EventUpdater(
+        mock<EthereumClient>({}),
+        mock<BlockNumberUpdater>({}),
+        eventRepository,
+        clock,
+        projects,
+        Logger.SILENT,
+      )
+
+      const fetchRecords = mockFn<
+        typeof eventUpdater.fetchRecords
+      >().resolvesTo([])
+      eventUpdater.fetchRecords = fetchRecords
+
+      await eventUpdater.update()
+
+      expect(fetchRecords).toHaveBeenCalledExactlyWith([
+        [EVENT.sinceTimestamp, START.add(2, 'hours'), eventDetails(PROJECT_A)],
       ])
     })
 
     it('saves to db', async () => {
       const ethereumClient = mock<EthereumClient>({
-        getLogsUsingBisection: mockFn().returnsOnce([
+        getLogsUsingBisection: mockFn().returns([
           mockLog(50),
           mockLog(150),
           mockLog(250),
@@ -149,7 +203,13 @@ describe(EventUpdater.name, () => {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           bridges: [],
-          events: [EVENT_A],
+          events: [EVENT],
+        },
+        {
+          name: PROJECT_B.toString(),
+          projectId: PROJECT_B,
+          bridges: [],
+          events: [EVENT],
         },
       ]
 
@@ -170,7 +230,7 @@ describe(EventUpdater.name, () => {
       await eventUpdater.update()
 
       const records = generateEventRecords(
-        DETAILS_EVENT_A,
+        eventDetails(PROJECT_A),
         [50n, 150n, 250n],
         [
           { timestamp: START.add(1, 'hours'), blockNumber: 100n },
@@ -178,7 +238,9 @@ describe(EventUpdater.name, () => {
           { timestamp: START.add(3, 'hours'), blockNumber: 300n },
         ],
       )
-      expect(eventRepository.addMany).toHaveBeenCalledExactlyWith([[records]])
+      expect(eventRepository.addMany).toHaveBeenCalledExactlyWith([
+        [records.concat(records.map((r) => ({ ...r, projectId: PROJECT_B })))],
+      ])
     })
 
     it('updates lastProcessed timestamp', async () => {
@@ -192,7 +254,7 @@ describe(EventUpdater.name, () => {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           bridges: [],
-          events: [EVENT_A],
+          events: [EVENT],
         },
       ]
 
@@ -221,8 +283,8 @@ describe(EventUpdater.name, () => {
       await eventUpdater.update()
 
       expect(fetchRecords).toHaveBeenCalledExactlyWith([
-        [START, START.add(2, 'hours'), DETAILS_EVENT_A],
-        [START.add(3, 'hours'), START.add(3, 'hours'), DETAILS_EVENT_A],
+        [START, START.add(2, 'hours'), eventDetails(PROJECT_A)],
+        [START.add(3, 'hours'), START.add(3, 'hours'), eventDetails(PROJECT_A)],
       ])
     })
   })
@@ -252,7 +314,7 @@ describe(EventUpdater.name, () => {
       await eventUpdater.fetchRecords(
         START,
         START.add(1, 'hours'),
-        DETAILS_EVENT_A,
+        eventDetails(PROJECT_A),
       )
 
       expect(
@@ -299,7 +361,7 @@ describe(EventUpdater.name, () => {
       const result = await eventUpdater.fetchRecords(
         START.add(2, 'hours'),
         START.add(3, 'hours'),
-        DETAILS_EVENT_A,
+        eventDetails(PROJECT_A),
       )
 
       expect(result.map((r) => r.timestamp)).toEqual([
@@ -330,7 +392,7 @@ describe(EventUpdater.name, () => {
       await eventUpdater.eventBlockNumbers(
         START,
         START.add(1, 'hours'),
-        DETAILS_EVENT_A,
+        eventDetails(PROJECT_A),
       )
 
       expect(
@@ -366,7 +428,7 @@ describe(EventUpdater.name, () => {
       const result = await eventUpdater.eventBlockNumbers(
         START,
         START.add(1, 'hours'),
-        DETAILS_EVENT_A,
+        eventDetails(PROJECT_A),
       )
 
       expect(result).toEqual([100n, 200n, 300n])
