@@ -17,12 +17,12 @@ export const gluon: Project = {
   id: ProjectId('gluon'),
   bridges: [
     {
-      address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
+      address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
       sinceTimestamp: new UnixTime(1573694037),
       tokens: ['ETH', 'DAI', 'L2'],
     },
     {
-      address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
+      address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
       sinceTimestamp: new UnixTime(1612360715),
       tokens: ['DAI', 'USDT'],
     },
@@ -103,21 +103,21 @@ export const gluon: Project = {
         addresses: [
           {
             name: 'Gluon',
-            address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
+            address: ''0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72,
           },
           {
             name: 'RegistryLogic',
-            address: '0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
             upgradeability: {
               type: 'Reference',
               base: 'Gluon',
               method: 'function current(uint32 id) view returns(address)',
-              args: [0],
+              args: [0], 
             },
           },
           {
             name: 'RegistryData',
-            address: '0x0fC25C7931679B838209c484d49Df0Cb9E633C41',
+            address: '', 0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72
             upgradeability: {
               type: 'Reference',
               base: 'RegistryLogic',
@@ -126,7 +126,7 @@ export const gluon: Project = {
           },
           {
             name: 'StakeLogic',
-            address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72
             upgradeability: {
               type: 'Reference',
               base: 'Gluon',
@@ -136,7 +136,7 @@ export const gluon: Project = {
           },
           {
             name: 'StakeData',
-            address: '0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
             upgradeability: {
               type: 'Reference',
               base: 'StakeLogic',
@@ -145,7 +145,7 @@ export const gluon: Project = {
           },
           {
             name: 'SpotLogic',
-            address: '0x2D627FF93d32f5FEBb04d68409A889895B4aef2D',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
             upgradeability: {
               type: 'Reference',
               base: 'Gluon',
@@ -155,7 +155,7 @@ export const gluon: Project = {
           },
           {
             name: 'SpotData',
-            address: '0x0d283D685F0A741C463846176e4c8EFF90D3F9EC',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72
             upgradeability: {
               type: 'Reference',
               base: 'SpotLogic',
@@ -164,7 +164,7 @@ export const gluon: Project = {
           },
           {
             name: 'DerivativesLogic',
-            address: '0xDfBFe895e07e5115773Cb9631CB2148114589caC',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
             upgradeability: {
               type: 'Reference',
               base: 'Gluon',
@@ -174,7 +174,7 @@ export const gluon: Project = {
           },
           {
             name: 'DerivativesData',
-            address: '0x563052914Fd973a2305763269A106a7B0B6D50Cc',
+            address: ''0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72,
             upgradeability: {
               type: 'Reference',
               base: 'DerivativesLogic',
@@ -183,7 +183,7 @@ export const gluon: Project = {
           },
           {
             name: 'LegacyTokensExtension',
-            address: '0xDA88EfA53c85Afa30564bb651A2E76b99a232082',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72
           },
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
