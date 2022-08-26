@@ -19,7 +19,7 @@ export const rhinofi: Project = {
   id: ProjectId('deversifi'),
   bridges: [
     {
-      address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+      address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
       sinceTimestamp: new UnixTime(1590491810),
       tokens: '*',
     },
@@ -73,10 +73,10 @@ export const rhinofi: Project = {
         addresses: [
           {
             name: 'StarkExchange',
-            address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72,
             upgradeability: {
               type: 'StarkWare',
-              implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+              implementation: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72,
               useConstantDelay: true,
               // TODO: figure out the double proxy
               upgradeDelay: 1209600,
@@ -88,7 +88,7 @@ export const rhinofi: Project = {
             name: 'Committee',
             description:
               'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-            address: '0x28780349A33eEE56bb92241bAAB8095449e24306',
+            address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72
           },
           SHARP_VERIFIER_CONTRACT,
         ],
@@ -99,7 +99,7 @@ export const rhinofi: Project = {
           name: 'Governor',
           accounts: [
             {
-              address: '0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
           ],
@@ -110,31 +110,31 @@ export const rhinofi: Project = {
           name: 'Data Availability Committee',
           accounts: [
             {
-              address: '0x6a8ea587133c1aa4b3ba0417b6d8ae38e61fd1e',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
             {
-              address: '0x3bf2562178ea0cef6b3f66d971494d65561efd3',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
             {
-              address: '0xf872cf881873029b8955b582c29b66347f3f132',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
             {
-              address: '0x70eeaa8b7cbf7124e349e94eade6188ddd2d617',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72
               type: 'EOA',
             },
             {
-              address: '0x51abde72a4542500a7b1cb32b18b13fbe1f9ff2',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
             {
-              address: '0x2b6593fcfbfded663d7a6448d45b12c16df6b64',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
             {
-              address: '0xfbd7599fe0c3735b94c369adf0f0045d8d4f6cb9',
+              address: '',
               type: 'EOA',
             },
           ],
@@ -145,7 +145,7 @@ export const rhinofi: Project = {
           name: 'SHARP Verifier Governor',
           accounts: [
             {
-              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
           ],
@@ -156,7 +156,7 @@ export const rhinofi: Project = {
           name: 'Operator',
           accounts: [
             {
-              address: '0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5',
+              address: '0x8b5a0800dfc2c2a21cfe344e4188Ef7D48CC8e72',
               type: 'EOA',
             },
           ],
