@@ -26,10 +26,10 @@ export function SidebarMenu() {
             </a>
             <ul className="flex flex-col gap-4 mt-4 pl-4">
               <li>
-                <a href="/">Total Value Locked</a>
+                <a href="/scaling/tvl">Total Value Locked</a>
               </li>
               <li>
-                <a href="/?view=risk">Risks</a>
+                <a href="/scaling/risk">Risks</a>
               </li>
             </ul>
           </li>

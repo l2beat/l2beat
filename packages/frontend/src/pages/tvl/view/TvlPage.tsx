@@ -4,8 +4,8 @@ import { Chart, Footer, Header, Navbar } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { FinancialViewProps } from './FinancialView'
-import { Projects } from './Projects'
+import { PageSelection } from '../../../components/PageSelection'
+import { FinancialView, FinancialViewProps } from './FinancialView'
 
 export interface TvlPageProps {
   tvl: string
@@ -18,14 +18,20 @@ export function TvlPage(props: TvlPageProps) {
   return (
     <Page>
       <Navbar />
-      <Header
-        title="Overview"
-        tvl={props.tvl}
-        sevenDayChange={props.sevenDayChange}
+      <PageSelection
+        pages={[
+          { name: 'Total Value Locked', link: '/scaling/tvl', selected: true },
+          { name: 'Risk analysis', link: '/scaling/risk', selected: false },
+        ]}
       />
       <main>
+        <Header
+          title="Value locked"
+          tvl={props.tvl}
+          sevenDayChange={props.sevenDayChange}
+        />
         <Chart endpoint={props.apiEndpoint} />
-        <Projects financialView={props.financialView} />
+        <FinancialView {...props.financialView} />
         <OtherSites />
         <About />
       </main>

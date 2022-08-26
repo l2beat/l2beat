@@ -84,7 +84,7 @@ export function FinancialView({ items }: FinancialViewProps) {
   ]
 
   return (
-    <div className="FinancialView active">
+    <section className="FinancialView active">
       <TableView items={items} columns={columns} />
       <div className="FinancialView-Symbols">
         <p>
@@ -121,6 +121,6 @@ export function FinancialView({ items }: FinancialViewProps) {
           <span>This project is based on zkSync&apos;s code base.</span>
         </p>
       </div>
-    </div>
+    </section>
   )
 }
