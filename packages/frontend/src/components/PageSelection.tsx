@@ -19,7 +19,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
             className={classNames(
               'pb-2 relative',
               page.selected &&
-                'font-bold after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 after:bg-black',
+                'font-bold after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 after:bg-black dark:after:bg-white',
             )}
           >
             <a href={page.link}>{page.name}</a>
