@@ -1,4 +1,4 @@
-import { formatRange, formatTimestamp } from '../../../utils'
+import { formatRange, formatTimestamp } from '../../../../utils'
 import { ChartStateWithInput } from '../state'
 import { ChartInput } from '../state/ChartInput'
 import { calculateTicks } from './calculateTicks'

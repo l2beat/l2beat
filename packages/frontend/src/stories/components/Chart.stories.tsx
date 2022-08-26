@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 
 import { Chart as ChartComponent } from '../../components/chart/Chart'
+import { configureChart } from '../../components/chart/configure'
 import { Page } from '../../components/Page'
-import { configureChart } from '../../scripts/chart'
 
 export default {
   title: 'Components/Chart',

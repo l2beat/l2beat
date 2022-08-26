@@ -1,4 +1,4 @@
-import { makeQuery } from '../query'
+import { makeQuery } from '../../../scripts/query'
 
 export type Outputs = ReturnType<typeof getOutputs>
 
