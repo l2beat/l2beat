@@ -28,9 +28,7 @@ export class EventUpdater {
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-  }
 
-  start() {
     this.events = this.projects
       .map((project) =>
         project.events.map((event) => {
@@ -44,7 +42,9 @@ export class EventUpdater {
         }),
       )
       .flat()
+  }
 
+  start() {
     this.taskQueue.addToFront()
     this.logger.info('EventUpdater started!')
     return this.clock.onNewHour(() => {
