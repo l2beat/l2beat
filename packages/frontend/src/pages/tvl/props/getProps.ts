@@ -1,30 +1,22 @@
 import { Project } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
-import {
-  formatUSD,
-  getFromEnd,
-  getPercentageChange,
-} from '../../../utils/utils'
+import { formatUSD, getPercentageChange } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
-import { HomePageProps } from '../view/HomePage'
+import { TvlPageProps } from '../view/TvlPage'
 import { getFinancialView } from './getFinancialView'
 import { getPageMetadata } from './getPageMetadata'
-import { getRiskView } from './getRiskView'
 
 export function getProps(
   projects: Project[],
   apiMain: ApiMain,
-): Wrapped<HomePageProps> {
-  const tvl = getFromEnd(apiMain.charts.hourly.data, 0)?.[1] ?? 0
+): Wrapped<TvlPageProps> {
+  const tvl = apiMain.charts.hourly.data.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = apiMain.charts.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const getTvl = (project: Project) =>
-    getFromEnd(
-      apiMain.projects[project.id.toString()]?.charts.hourly.data ?? [],
-      0,
-    )?.[1] ?? 0
+    apiMain.projects[project.id.toString()]?.charts.hourly.data.at(-1)?.[1] ?? 0
   const ordering = [...projects].sort((a, b) => getTvl(b) - getTvl(a))
 
   return {
@@ -33,7 +25,6 @@ export function getProps(
       sevenDayChange,
       apiEndpoint: '/api/tvl.json',
       financialView: getFinancialView(ordering, apiMain, tvl),
-      riskView: getRiskView(ordering),
     },
     wrapper: {
       preloadApi: '/api/tvl.json',

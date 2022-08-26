@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { OutLink } from '../../../components'
+import { OutLink } from './OutLink'
 
 export function OtherSites() {
   return (

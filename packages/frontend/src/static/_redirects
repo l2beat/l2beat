@@ -1,9 +1,11 @@
-/project/layer2.finance     /projects/layer2finance
-/project/omg%20network      /projects/omgnetwork
-/project/leverj             /projects/gluon
-/project/*                  /projects/:splat
-/projects/leverj            /projects/gluon
-/projects/fuel              /projects/fuelv1
-/projects/zkswapv2          /projects/zkspace
-/projects/deversifi         /projects/rhinofi
+/                           /scaling/tvl
+/project/layer2.finance     /scaling/projects/layer2finance
+/project/omg%20network      /scaling/projects/omgnetwork
+/project/leverj             /scaling/projects/gluon
+/projects/leverj            /scaling/projects/gluon
+/projects/fuel              /scaling/projects/fuelv1
+/projects/zkswapv2          /scaling/projects/zkspace
+/projects/deversifi         /scaling/projects/rhinofi
+/project/*                  /scaling/projects/:splat
+/projects/*                 /scaling/projects/:splat
 /api/projects/:project/tvl/assets/:asset          https://api.l2beat.com/api/projects/:project/tvl/assets/:asset    200

@@ -4,13 +4,9 @@ import { ApiMain, Project as ApiProject, Token } from '@l2beat/types'
 import {
   formatPercent,
   formatUSD,
-  getFromEnd,
   getPercentageChange,
 } from '../../../utils/utils'
-import {
-  FinancialViewEntry,
-  FinancialViewProps,
-} from '../view/FinancialView/FinancialView'
+import { FinancialViewEntry, FinancialViewProps } from '../view/FinancialView'
 import { getTechnology } from './getTechnology'
 
 export function getFinancialView(
@@ -31,8 +27,8 @@ function getFinancialViewEntry(
   aggregateTvl: number,
 ): FinancialViewEntry {
   const aggregate = projectData?.charts.hourly.data ?? []
-  const tvl = getFromEnd(aggregate, 0)?.[1] ?? 0
-  const tvlOneDayAgo = getFromEnd(aggregate, 24)?.[1] ?? 0
+  const tvl = aggregate.at(-1)?.[1] ?? 0
+  const tvlOneDayAgo = aggregate.at(-25)?.[1] ?? 0
   const tvlSevenDaysAgo = aggregate[0]?.[1] ?? 0
 
   const tvlBreakdown = getTVLBreakdown(

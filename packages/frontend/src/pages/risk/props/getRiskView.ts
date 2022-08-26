@@ -1,6 +1,6 @@
 import { Project } from '@l2beat/config'
 
-import { RiskViewEntry, RiskViewProps } from '../view/RiskView/RiskView'
+import { RiskViewEntry, RiskViewProps } from '../view/RiskView'
 
 export function getRiskView(projects: Project[]): RiskViewProps {
   return { items: projects.map(getRiskViewEntry) }

@@ -269,7 +269,7 @@ function getTwitterLink(project: Project) {
   )
 
   const message = `Hey @${twitterAccount}. Your project overview on @l2beat would benefit from your help.`
-  const url = `https://l2beat.com/projects/${project.slug}`
+  const url = `https://l2beat.com/scaling/projects/${project.slug}`
 
   const options = [
     ['text', encodeURIComponent(message)],

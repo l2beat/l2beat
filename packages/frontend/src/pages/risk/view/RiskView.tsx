@@ -6,9 +6,9 @@ import {
   OptimismIcon,
   StarkWareIcon,
   ZkSyncIcon,
-} from '../../../../components/icons'
-import { ProjectLink } from '../ProjectLink'
-import { Column, TableView } from '../TableView'
+} from '../../../components/icons'
+import { ProjectLink } from '../../../components/ProjectLink'
+import { Column, TableView } from '../../../components/TableView'
 import { RiskCell } from './RiskCell'
 
 export interface RiskViewProps {
@@ -51,7 +51,7 @@ export function RiskView({ items, className }: RiskViewProps) {
   ]
 
   return (
-    <div className={classNames('RiskView', className)}>
+    <section className={classNames('RiskView', className)}>
       <TableView items={items} columns={columns} />
       <div className="RiskView-Symbols">
         <p>
@@ -70,6 +70,6 @@ export function RiskView({ items, className }: RiskViewProps) {
           <span>This project is based on zkSync&apos;s code base.</span>
         </p>
       </div>
-    </div>
+    </section>
   )
 }

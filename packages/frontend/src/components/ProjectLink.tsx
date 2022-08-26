@@ -1,11 +1,7 @@
 import { Project } from '@l2beat/config'
 import React from 'react'
 
-import {
-  OptimismIcon,
-  StarkWareIcon,
-  ZkSyncIcon,
-} from '../../../components/icons'
+import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
 
 interface Props {
   project: {
@@ -18,7 +14,7 @@ interface Props {
 export function ProjectLink({ project }: Props) {
   return (
     <>
-      <a className="ProjectLink" href={`/projects/${project.slug}`}>
+      <a className="ProjectLink" href={`/scaling/projects/${project.slug}`}>
         <img
           className="ProjectLink-Icon"
           src={`/icons/${project.slug}.png`}

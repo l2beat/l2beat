@@ -58,10 +58,7 @@ function buildContent() {
 }
 
 function watchContent() {
-  return gulp.watch(
-    ['src/build/**/*', 'src/components/**/*', 'src/pages/**/*'],
-    buildContent,
-  )
+  return gulp.watch(['src/**/*.{ts,tsx}'], buildContent)
 }
 
 function generateMetaImages() {
@@ -71,6 +68,9 @@ function generateMetaImages() {
 function serve() {
   const app = express()
   app.use(express.static('build'))
+  app.get('/', (req, res) => {
+    res.redirect('/scaling/tvl')
+  })
   app.use(
     '/api/projects',
     createProxyMiddleware({

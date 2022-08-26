@@ -4,15 +4,15 @@ import React from 'react'
 
 import { PageWrapper } from '../../components'
 import { getProps } from './props'
-import { HomePage } from './view/HomePage'
+import { TvlPage } from './view/TvlPage'
 
-export function getHomePage(projects: Project[], apiMain: ApiMain) {
+export function getTvlPage(projects: Project[], apiMain: ApiMain) {
   const { props, wrapper } = getProps(projects, apiMain)
   return {
-    slug: '/',
+    slug: '/scaling/tvl',
     page: (
       <PageWrapper {...wrapper}>
-        <HomePage {...props} />
+        <TvlPage {...props} />
       </PageWrapper>
     ),
   }

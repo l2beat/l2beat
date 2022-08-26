@@ -1,15 +1,15 @@
 import { Project } from '@l2beat/config'
 import React from 'react'
 
-import { PercentChange } from '../../../../components'
+import { PercentChange } from '../../../components'
 import {
   OptimismIcon,
   StarkWareIcon,
   WarningIcon,
   ZkSyncIcon,
-} from '../../../../components/icons'
-import { ProjectLink } from '../ProjectLink'
-import { Column, TableView } from '../TableView'
+} from '../../../components/icons'
+import { ProjectLink } from '../../../components/ProjectLink'
+import { Column, TableView } from '../../../components/TableView'
 import { FinancialCell } from './FinancialCell'
 import { TVLBreakdown, TVLBreakdownProps } from './TVLBreakdown'
 
@@ -84,7 +84,7 @@ export function FinancialView({ items }: FinancialViewProps) {
   ]
 
   return (
-    <div className="FinancialView active">
+    <section className="FinancialView active">
       <TableView items={items} columns={columns} />
       <div className="FinancialView-Symbols">
         <p>
@@ -121,6 +121,6 @@ export function FinancialView({ items }: FinancialViewProps) {
           <span>This project is based on zkSync&apos;s code base.</span>
         </p>
       </div>
-    </div>
+    </section>
   )
 }
