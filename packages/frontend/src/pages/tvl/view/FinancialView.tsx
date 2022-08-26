@@ -1,15 +1,15 @@
 import { Project } from '@l2beat/config'
 import React from 'react'
 
-import { PercentChange } from '../../../../components'
+import { PercentChange } from '../../../components'
 import {
   OptimismIcon,
   StarkWareIcon,
   WarningIcon,
   ZkSyncIcon,
-} from '../../../../components/icons'
-import { ProjectLink } from '../ProjectLink'
-import { Column, TableView } from '../TableView'
+} from '../../../components/icons'
+import { ProjectLink } from '../../../components/ProjectLink'
+import { Column, TableView } from '../../../components/TableView'
 import { FinancialCell } from './FinancialCell'
 import { TVLBreakdown, TVLBreakdownProps } from './TVLBreakdown'
 

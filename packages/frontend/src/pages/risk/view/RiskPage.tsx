@@ -1,22 +1,20 @@
 import React from 'react'
 
 import { Chart, Footer, Header, Navbar } from '../../../components'
+import { About } from '../../../components/About'
+import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { About } from './About'
-import { FinancialViewProps } from './FinancialView/FinancialView'
-import { OtherSites } from './OtherSites'
 import { Projects } from './Projects'
-import { RiskViewProps } from './RiskView/RiskView'
+import { RiskViewProps } from './RiskView'
 
-export interface HomePageProps {
+export interface RiskPageProps {
   tvl: string
   sevenDayChange: string
   apiEndpoint: string
-  financialView: FinancialViewProps
   riskView: RiskViewProps
 }
 
-export function HomePage(props: HomePageProps) {
+export function RiskPage(props: RiskPageProps) {
   return (
     <Page>
       <Navbar />
@@ -27,10 +25,7 @@ export function HomePage(props: HomePageProps) {
       />
       <main>
         <Chart endpoint={props.apiEndpoint} />
-        <Projects
-          financialView={props.financialView}
-          riskView={props.riskView}
-        />
+        <Projects riskView={props.riskView} />
         <OtherSites />
         <About />
       </main>

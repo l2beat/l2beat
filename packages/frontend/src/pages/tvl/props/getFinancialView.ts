@@ -6,10 +6,7 @@ import {
   formatUSD,
   getPercentageChange,
 } from '../../../utils/utils'
-import {
-  FinancialViewEntry,
-  FinancialViewProps,
-} from '../view/FinancialView/FinancialView'
+import { FinancialViewEntry, FinancialViewProps } from '../view/FinancialView'
 import { getTechnology } from './getTechnology'
 
 export function getFinancialView(

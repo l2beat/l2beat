@@ -6,9 +6,9 @@ import {
   OptimismIcon,
   StarkWareIcon,
   ZkSyncIcon,
-} from '../../../../components/icons'
-import { ProjectLink } from '../ProjectLink'
-import { Column, TableView } from '../TableView'
+} from '../../../components/icons'
+import { ProjectLink } from '../../../components/ProjectLink'
+import { Column, TableView } from '../../../components/TableView'
 import { RiskCell } from './RiskCell'
 
 export interface RiskViewProps {

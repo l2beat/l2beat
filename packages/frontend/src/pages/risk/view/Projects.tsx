@@ -2,14 +2,9 @@ import React from 'react'
 
 import { Heading } from '../../../components'
 import { FinanceIcon, ShieldWarnIcon } from '../../../components/icons'
-import {
-  FinancialView,
-  FinancialViewProps,
-} from './FinancialView/FinancialView'
-import { RiskView, RiskViewProps } from './RiskView/RiskView'
+import { RiskView, RiskViewProps } from './RiskView'
 
 interface Props {
-  financialView: FinancialViewProps
   riskView: RiskViewProps
 }
 
@@ -23,20 +18,19 @@ export function Projects(props: Props) {
         className="Projects-Title"
       />
       <div className="Projects-Buttons">
-        <button className="Projects-Button left active">
+        <a className="Projects-Button left" href="/scaling/tvl">
           <div className="Projects-ButtonInside">
             <FinanceIcon />
             Finances
           </div>
-        </button>
-        <button className="Projects-Button right">
+        </a>
+        <span className="Projects-Button right active">
           <div className="Projects-ButtonInside">
             <ShieldWarnIcon />
             Risks
           </div>
-        </button>
+        </span>
       </div>
-      <FinancialView {...props.financialView} />
       <RiskView {...props.riskView} />
     </section>
   )

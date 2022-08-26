@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Heading } from '../../../components'
+import { Heading } from './Heading'
 
 export function About() {
   return (

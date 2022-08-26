@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { ReactChild, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 interface Props<T> {
   className?: string
@@ -11,7 +11,7 @@ export interface Column<T> {
   name: ReactNode
   shortName?: ReactNode
   alignRight?: true
-  getValue: (value: T) => ReactChild
+  getValue: (value: T) => ReactNode
 }
 
 export function TableView<T>({ className, items, columns }: Props<T>) {
