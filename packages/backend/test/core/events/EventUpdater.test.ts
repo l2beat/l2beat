@@ -1,6 +1,7 @@
 import { Logger, mock } from '@l2beat/common'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
+import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
 import { Clock } from '../../../src/core/Clock'
@@ -8,17 +9,18 @@ import {
   EventUpdater,
   getAdjustedFrom,
 } from '../../../src/core/events/EventUpdater'
+import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
+import { ProjectInfo } from '../../../src/model'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
 const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
-const EVENT_A = 'event-a'
 const PROJECT_A = ProjectId('project-a')
 
-const MOCK_EVENT = {
+const EVENT_A = {
   emitter: EthereumAddress.random(),
   topic: '#',
-  name: EVENT_A,
+  name: 'A',
   projectId: PROJECT_A,
   sinceTimestamp: UnixTime.now(),
   dbStatus: undefined,
@@ -40,13 +42,115 @@ const mockLog = (blockNumber: number) => {
 
 describe(EventUpdater.name, () => {
   describe(EventUpdater.prototype.start.name, () => {
-    it('integration test', async () => {})
-    it('changes last processed', async () => {})
+    it('triggers update now and on every new hour', async () => {
+      const clock = mock<Clock>({
+        onNewHour(callback) {
+          callback(START.add(1, 'hours'))
+          callback(START.add(1, 'hours'))
+          return () => {}
+        },
+      })
+
+      const eventUpdater = new EventUpdater(
+        mock<EthereumClient>({}),
+        mock<BlockNumberUpdater>({}),
+        mock<EventRepository>({}),
+        clock,
+        [],
+        Logger.SILENT,
+      )
+
+      const update = mockFn<typeof eventUpdater.update>().resolvesTo(undefined)
+      eventUpdater.update = update
+
+      eventUpdater.start()
+
+      await waitForExpect(() => {
+        expect(update.calls.length).toEqual(3)
+      })
+    })
   })
 
   describe(EventUpdater.prototype.update.name, () => {
     //or maybe integration test
-    it('calls correctly from.add', async () => {})
+    it('calls correctly from.add', async () => {
+      const ethereumClient = mock<EthereumClient>({
+        getLogsUsingBisection: mockFn().returnsOnce([
+          mockLog(50),
+          mockLog(150),
+          mockLog(250),
+        ]),
+      })
+
+      const blockNumberUpdater = mock<BlockNumberUpdater>({
+        getBlockNumberWhenReady: mockFn().returns([]),
+        getBlockRangeWhenReady: mockFn().returns([
+          { timestamp: START.add(1, 'hours'), blockNumber: 100n },
+          { timestamp: START.add(2, 'hours'), blockNumber: 200n },
+          { timestamp: START.add(3, 'hours'), blockNumber: 300n },
+        ]),
+      })
+
+      const eventRepository = mock<EventRepository>({
+        addMany: mockFn().returns([]),
+        getDataBoundary: mockFn().returns(new Map([])),
+      })
+
+      const projects: ProjectInfo[] = [
+        {
+          name: PROJECT_A.toString(),
+          projectId: PROJECT_A,
+          bridges: [],
+          events: [
+            {
+              name: EVENT_A.name,
+              abi: 'event A()',
+              emitter: EVENT_A.emitter,
+              type: 'state',
+              sinceTimestamp: START,
+            },
+          ],
+        },
+      ]
+
+      const clock = mock<Clock>({
+        onNewHour(callback) {
+          callback(START.add(1, 'hours'))
+          return () => {}
+        },
+        getFirstHour: mockFn().returns(START.add(-1, 'days')),
+        getLastHour: mockFn().returns(START.add(2, 'hours')),
+      })
+
+      const eventUpdater = new EventUpdater(
+        ethereumClient,
+        blockNumberUpdater,
+        eventRepository,
+        clock,
+        projects,
+        Logger.SILENT,
+      )
+
+      const update = mockFn<typeof eventUpdater.update>().resolvesTo(undefined)
+      eventUpdater.update = update
+
+      eventUpdater.start()
+
+      const records = generateEventRecords(
+        EVENT_A,
+        [50n, 150n, 250n],
+        [
+          { timestamp: START.add(1, 'hours'), blockNumber: 100n },
+          { timestamp: START.add(2, 'hours'), blockNumber: 200n },
+          { timestamp: START.add(3, 'hours'), blockNumber: 300n },
+        ],
+      )
+
+      await waitForExpect(() => {
+        // expect(eventRepository.addMany).toHaveBeenCalledExactlyWith([[records]])
+        expect(update.calls.length).toEqual(3)
+      })
+    })
 
     it('calls correctly and saves to db', async () => {})
   })
@@ -73,7 +177,7 @@ describe(EventUpdater.name, () => {
 
       const START = UnixTime.fromDate(new Date('2022-08-09T02:00:00Z'))
 
-      await eventUpdater.fetchRecords(START, START.add(1, 'hours'), MOCK_EVENT)
+      await eventUpdater.fetchRecords(START, START.add(1, 'hours'), EVENT_A)
 
       expect(
         blockNumberUpdater.getBlockRangeWhenReady,
@@ -119,7 +223,7 @@ describe(EventUpdater.name, () => {
       const result = await eventUpdater.fetchRecords(
         START.add(2, 'hours'),
         START.add(3, 'hours'),
-        MOCK_EVENT,
+        EVENT_A,
       )
 
       expect(result.map((r) => r.timestamp)).toEqual([
@@ -150,7 +254,7 @@ describe(EventUpdater.name, () => {
       await eventUpdater.eventBlockNumbers(
         START,
         START.add(1, 'hours'),
-        MOCK_EVENT,
+        EVENT_A,
       )
 
       expect(
@@ -186,7 +290,7 @@ describe(EventUpdater.name, () => {
       const result = await eventUpdater.eventBlockNumbers(
         START,
         START.add(1, 'hours'),
-        MOCK_EVENT,
+        EVENT_A,
       )
 
       expect(result).toEqual([100n, 200n, 300n])
