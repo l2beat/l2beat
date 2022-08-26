@@ -180,6 +180,51 @@ describe(EventUpdater.name, () => {
       )
       expect(eventRepository.addMany).toHaveBeenCalledExactlyWith([[records]])
     })
+
+    it('updates lastProcessed timestamp', async () => {
+      const eventRepository = mock<EventRepository>({
+        addMany: mockFn().returns([]),
+        getDataBoundary: mockFn().returns(new Map([])),
+      })
+
+      const projects: ProjectInfo[] = [
+        {
+          name: PROJECT_A.toString(),
+          projectId: PROJECT_A,
+          bridges: [],
+          events: [EVENT_A],
+        },
+      ]
+
+      const clock = mock<Clock>({
+        getFirstHour: mockFn().returns(START.add(-1, 'days')),
+        getLastHour: mockFn()
+          .returnsOnce(START.add(2, 'hours'))
+          .returnsOnce(START.add(3, 'hours')),
+      })
+
+      const eventUpdater = new EventUpdater(
+        mock<EthereumClient>({}),
+        mock<BlockNumberUpdater>({}),
+        eventRepository,
+        clock,
+        projects,
+        Logger.SILENT,
+      )
+
+      const fetchRecords = mockFn<
+        typeof eventUpdater.fetchRecords
+      >().resolvesTo([])
+      eventUpdater.fetchRecords = fetchRecords
+
+      await eventUpdater.update()
+      await eventUpdater.update()
+
+      expect(fetchRecords).toHaveBeenCalledExactlyWith([
+        [START, START.add(2, 'hours'), DETAILS_EVENT_A],
+        [START.add(3, 'hours'), START.add(3, 'hours'), DETAILS_EVENT_A],
+      ])
+    })
   })
 
   describe(EventUpdater.prototype.fetchRecords.name, () => {
