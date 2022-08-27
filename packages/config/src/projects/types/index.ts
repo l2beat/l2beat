@@ -1,5 +1,6 @@
 export * from './News'
 export * from './Project'
+export * from './ProjectUptime'
 export * from './ProjectBridge'
 export * from './ProjectContracts'
 export * from './ProjectDetails'
