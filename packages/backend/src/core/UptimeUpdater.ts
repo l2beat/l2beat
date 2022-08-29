@@ -3,6 +3,7 @@ import { ProjectUptime } from '@l2beat/config'
 import { EthereumAddress } from '@l2beat/types'
 
 import { ProjectInfo } from '../model'
+import { ApiMonitor } from '../peripherals/uptime/ApiMonitor'
 import { RpcMonitor } from '../peripherals/uptime/RpcMonitor'
 import { Clock } from './Clock'
 
@@ -11,6 +12,7 @@ export class UptimeUpdater {
 
   constructor(
     private rpcMonitor: RpcMonitor,
+    private apiMonitor: ApiMonitor,
     private clock: Clock,
     private projects: ProjectInfo[],
     private logger: Logger,
@@ -52,6 +54,42 @@ export class UptimeUpdater {
         EthereumAddress(uptime.to),
         uptime.data,
       )
+    }
+
+    const maxSinceLastTrade = 3600 * 4 // TODO what is the longest we should wait since the last trade?
+
+    if (uptime.action === 'dydx_checkTrades') {
+      return this.apiMonitor.dydxCheckTrades(uptime.url, maxSinceLastTrade)
+    }
+
+    if (uptime.action === 'aztec_checkBlock') {
+      return this.apiMonitor.aztecCheckBlock(
+        uptime.url,
+        uptime.body,
+        maxSinceLastTrade,
+      )
+    }
+    if (uptime.action === 'immutableX_checkTrades') {
+      return this.apiMonitor.immutablexCheckTrades(
+        uptime.url,
+        maxSinceLastTrade,
+      )
+    }
+
+    if (uptime.action === 'loopring_checkTrades') {
+      return this.apiMonitor.loopringCheckTrades(uptime.url, maxSinceLastTrade)
+    }
+
+    if (uptime.action === 'starknet_checkBlock') {
+      return this.apiMonitor.starknetCheckBlock(uptime.url, maxSinceLastTrade)
+    }
+
+    if (uptime.action === 'zkspace_checkTrades') {
+      return this.apiMonitor.zkspaceCheckTrades(uptime.url, maxSinceLastTrade)
+    }
+
+    if (uptime.action === 'zksync_checkBlock') {
+      return this.apiMonitor.zksyncCheckBlock(uptime.url, maxSinceLastTrade)
     }
   }
 }

@@ -25,6 +25,10 @@ export class UnixTime {
     return new UnixTime(Math.floor(date.getTime() / 1000))
   }
 
+  static fromDateString(string: string) {
+    return new UnixTime(Math.floor(new Date(string).getTime() / 1000))
+  }
+
   toStartOf(period: 'day' | 'hour' | 'minute') {
     const modulus =
       period === 'day'

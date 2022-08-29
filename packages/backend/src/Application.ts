@@ -29,6 +29,7 @@ import { Database } from './peripherals/database/shared/Database'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
+import { ApiMonitor } from './peripherals/uptime/ApiMonitor'
 import { RpcMonitor } from './peripherals/uptime/RpcMonitor'
 
 export class Application {
@@ -79,6 +80,7 @@ export class Application {
     )
 
     const rpcMonitor = new RpcMonitor(http)
+    const apiMonitor = new ApiMonitor(http)
 
     // #endregion
     // #region core
@@ -126,6 +128,7 @@ export class Application {
 
     const uptimeUpdater = new UptimeUpdater(
       rpcMonitor,
+      apiMonitor,
       clock,
       config.projects,
       logger,

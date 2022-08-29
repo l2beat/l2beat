@@ -32,3 +32,17 @@ export function stringAs<T>(Brand: (s: string) => T) {
     })
     .transform(Brand)
 }
+
+export function numberAs<T>(Brand: (n: number) => T) {
+  return z
+    .number()
+    .refine((n) => {
+      try {
+        Brand(n)
+        return true
+      } catch {
+        return false
+      }
+    })
+    .transform(Brand)
+}
