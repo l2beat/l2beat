@@ -11,7 +11,6 @@ import {
   getAdjustedFrom,
 } from '../../../src/core/events/EventUpdater'
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
-import { EventDetails } from '../../../src/core/events/types/EventDetails'
 import { ProjectInfo } from '../../../src/model'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
