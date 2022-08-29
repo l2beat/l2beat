@@ -170,4 +170,10 @@ export const immutablex: Project = {
       },
     ],
   },
+  urls: [
+    {
+      action: 'immutableX_checkTrades',
+      url: 'https://api.x.immutable.com/v1/trades',
+    },
+  ],
 }

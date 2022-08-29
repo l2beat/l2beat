@@ -276,4 +276,10 @@ export const starknet: Project = {
       },
     ],
   },
+  urls: [
+    {
+      action: 'starknet_checkBlock',
+      url: 'https://alpha-mainnet.starknet.io/feeder_gateway/get_block?blockNumber=latest',
+    },
+  ],
 }

@@ -306,4 +306,10 @@ export const loopring: Project = {
       },
     ],
   },
+  urls: [
+    {
+      action: 'loopring_checkTrades',
+      url: 'https://api3.loopring.io/api/v3/trade?market=LRC-ETH',
+    },
+  ],
 }

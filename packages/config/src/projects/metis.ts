@@ -325,4 +325,12 @@ export const metis: Project = {
       },
     ],
   },
+  urls: [
+    {
+      action: 'rpc_getBalance',
+      url: 'https://arb1.arbitrum.io/rpc',
+      to: '0xEA32A96608495e54156Ae48931A7c20f0dcc1a21',
+      data: '0x70a08231000000000000000000000000F5988809ac97C65121e2c34f5D49558e3D12C253',
+    },
+  ],
 }

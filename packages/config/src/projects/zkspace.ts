@@ -180,4 +180,10 @@ export const zkspace: Project = {
     },
     news: zkswap.details.news,
   },
+  urls: [
+    {
+      action: 'zkspace_checkTrades',
+      url: 'https://api.zks.app/v3/1/txs?limit=1',
+    },
+  ],
 }

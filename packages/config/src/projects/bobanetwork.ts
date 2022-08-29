@@ -358,4 +358,12 @@ export const bobanetwork: Project = {
       },
     ],
   },
+  urls: [
+    {
+      action: 'rpc_getBalance',
+      url: 'https://mainnet.boba.network/',
+      to: '0x66a2A913e447d6b4BF33EFbec43aAeF87890FBbc',
+      data: '0x70a08231000000000000000000000000547b227A77813Ea70Aacf01212B39Db7b560fa1c',
+    },
+  ],
 }

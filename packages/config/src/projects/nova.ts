@@ -309,4 +309,12 @@ export const nova: Project = {
       },
     ],
   },
+  urls: [
+    {
+      action: 'rpc_getBalance',
+      url: 'https://nova.arbitrum.io/rpc',
+      to: '0x750ba8b76187092B0D1E87E28daaf484d1b5273b',
+      data: '0x70a0823100000000000000000000000026d96cfC6DF8262b1bb327a2df0eDE02FDfC8874',
+    },
+  ],
 }
