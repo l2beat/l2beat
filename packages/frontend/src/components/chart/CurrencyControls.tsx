@@ -6,7 +6,7 @@ export function CurrencyControls() {
   return (
     <div
       data-role="chart-currency-controls"
-      className="col-span-2 sm:col-span-1 flex items-center justify-start gap-2"
+      className="col-span-2 sm:col-span-1 flex items-center justify-start gap-4"
     >
       <ChartButton checked name="currency" value="USD" />
       <ChartButton name="currency" value="ETH">

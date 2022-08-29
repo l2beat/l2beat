@@ -13,7 +13,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
   return (
     <div
       data-role="chart-token-controls"
-      className="col-span-4 flex items-baseline justify-start flex-wrap gap-2"
+      className="col-span-4 flex items-baseline justify-start flex-wrap gap-x-4"
     >
       <span>Tokens:</span>
       {tokens.map((x, i) => (

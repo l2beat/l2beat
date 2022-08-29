@@ -22,7 +22,7 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
     <section
       data-role="chart"
       data-endpoint={endpoint}
-      className="grid grid-cols-[auto_auto_1fr_auto] sm:gap-y-2 gap-y-4 mt-2 sm:mt-4"
+      className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
     >
       <TimeRange />
       <RangeControls days={days} />
@@ -38,7 +38,7 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
         <Logo className="absolute bottom-2 right-2 z-10 w-[60px] h-[25px] opacity-40" />
         <canvas
           data-role="chart-canvas"
-          className="absolute bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
+          className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
         />
       </div>
       <CurrencyControls />

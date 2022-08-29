@@ -13,7 +13,10 @@ interface Props {
 export function ChartButton(props: Props) {
   return (
     <label
-      className={classNames('block relative select-none', props.className)}
+      className={classNames(
+        'block relative select-none cursor-pointer',
+        props.className,
+      )}
     >
       <input
         className="peer cursor-pointer block absolute top-0 left-0 w-full h-full opacity-0"
@@ -23,7 +26,7 @@ export function ChartButton(props: Props) {
         value={props.value}
         data-endpoint={props.endpoint}
       />
-      <span className="flex min-w-[53px] h-[27px] px-1 rounded-md font-bold justify-center items-center bg-bg-2 peer-checked:bg-bg-4 peer-focus-visible:outline-2 peer-focus-visible:outline outline-current">
+      <span className="block relative pb-1 after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 peer-checked:font-bold peer-checked:after:bg-current peer-focus-visible:outline-1 peer-focus-visible:outline-dotted outline-current">
         {props.children ?? props.value}
       </span>
     </label>

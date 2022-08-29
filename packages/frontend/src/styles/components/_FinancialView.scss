@@ -3,11 +3,6 @@
   &.active {
     display: block;
   }
-
-  margin-top: 16px;
-  @media (max-width: 550px) {
-    margin-top: 0px;
-  }
 }
 
 .FinancialView-Symbols {
