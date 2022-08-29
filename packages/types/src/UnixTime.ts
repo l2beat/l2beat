@@ -28,7 +28,7 @@ export class UnixTime {
   }
 
   static fromDateString(string: string) {
-    return new UnixTime(Math.floor(new Date(string).getTime() / 1000))
+    return this.fromDate(new Date(string))
   }
 
   toStartOf(period: 'day' | 'hour' | 'minute') {
