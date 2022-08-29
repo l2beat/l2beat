@@ -4,7 +4,9 @@ import { Logo } from '../Logo'
 import { ChartButton } from './ChartButton'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
+import { RangeControls } from './RangeControls'
 import { TokenControls } from './TokenControls'
+import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
   endpoint: string
@@ -14,50 +16,27 @@ export interface ChartProps {
 
 export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
   return (
-    <section data-role="chart" data-endpoint={endpoint} className="Chart">
-      <p data-role="chart-range" className="Chart-Range">
+    <section
+      data-role="chart"
+      data-endpoint={endpoint}
+      className="grid grid-cols-[auto_auto_1fr_auto] sm:gap-y-2 gap-y-4 mt-2 sm:mt-4"
+    >
+      <p
+        data-role="chart-range"
+        className="col-span-2 font-bold flex items-center whitespace-pre sm:whitespace-normal h-[37px] sm:h-auto"
+      >
         ...
       </p>
-      <div data-role="chart-range-controls" className="Chart-RangeControls">
-        <ChartButton checked={days === 7} name="range" value="7D" />
-        <ChartButton checked={days === 30} name="range" value="30D" />
-        <ChartButton name="range" value="90D" />
-        <ChartButton name="range" value="180D" />
-        <ChartButton name="range" value="1Y" />
-        <ChartButton name="range" value="MAX" />
-      </div>
+      <RangeControls days={days} />
       <div
         data-role="chart-view"
-        className="Chart-View"
+        className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
         role="img"
         aria-label="chart"
       >
         <ChartLoader />
         <ChartHover />
-        <div className="Chart-Lines">
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-        </div>
-        <div className="Chart-Labels">
-          <div data-role="chart-label" className="Chart-Label">
-            ...
-          </div>
-          <div data-role="chart-label" className="Chart-Label">
-            ...
-          </div>
-          <div data-role="chart-label" className="Chart-Label">
-            ...
-          </div>
-          <div data-role="chart-label" className="Chart-Label">
-            ...
-          </div>
-          <div data-role="chart-label" className="Chart-Label">
-            ...
-          </div>
-        </div>
+        <YAxisLabels />
         <Logo className="Chart-Watermark" />
         <canvas data-role="chart-canvas" className="Chart-Canvas" />
       </div>
