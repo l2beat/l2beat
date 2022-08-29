@@ -1,7 +1,6 @@
 import z from 'zod'
 
 import { branded } from './branded'
-import { ProjectId } from './ProjectId'
 import { UnixTime } from './UnixTime'
 
 const EventChart = z.object({
@@ -20,10 +19,6 @@ const EventCharts = z.object({
 export type EventCharts = z.infer<typeof EventCharts>
 
 const ApiEvents = z.object({
-  charts: EventCharts,
-  projects: z.record(
-    branded(z.string(), (p) => ProjectId(p)),
-    EventCharts.optional(),
-  ),
+  projects: z.record(z.string(), EventCharts.optional()),
 })
 export type ApiEvents = z.infer<typeof ApiEvents>
