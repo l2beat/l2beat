@@ -6,7 +6,7 @@ import { bobanetwork } from './bobanetwork'
 import { cBridge } from './cBridge'
 import { connextBridge } from './connextBridge'
 import { dydx } from './dydx'
-import { fantomBridge } from './fantomBridge'
+import { multichainBridge } from './multichainBridge'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { gravityBridge } from './gravityBridge'
@@ -69,7 +69,7 @@ export const projects: Project[] = [
   // zksync,
   nearBridge,
   avalancheBridge,
-  fantomBridge,
+  multichainBridge,
   polygonBridge,
   wormholeBridge,
   starGateBridge,
