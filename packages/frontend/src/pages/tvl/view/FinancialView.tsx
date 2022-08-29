@@ -84,7 +84,7 @@ export function FinancialView({ items }: FinancialViewProps) {
   ]
 
   return (
-    <section className="FinancialView active">
+    <section className="FinancialView active mt-4 sm:mt-8">
       <TableView items={items} columns={columns} />
       <div className="FinancialView-Symbols">
         <p>

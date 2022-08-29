@@ -1,4 +1,4 @@
-import { makeQuery } from '../query'
+import { makeQuery } from '../../../scripts/query'
 import { UiState } from './ui'
 
 export function initHover(chart: HTMLElement) {
@@ -79,13 +79,13 @@ function analyze(e: MouseEvent | Touch, rect: DOMRect) {
 function getHoverElements(chart: HTMLElement) {
   const { $ } = makeQuery(chart)
   return {
-    view: $('.Chart-View'),
-    hover: $('.ChartHover'),
-    line: $('.ChartHover-Line'),
-    circle: $('.ChartHover-Circle'),
-    contents: $('.ChartHover-Contents'),
-    date: $('.ChartHover-Date'),
-    valueA: $('.ChartHover-ValueA'),
-    valueB: $('.ChartHover-ValueB'),
+    view: $('[data-role="chart-view"]'),
+    hover: $('[data-role="chart-hover"'),
+    line: $('[data-role="chart-hover-line"]'),
+    circle: $('[data-role="chart-hover-circle"]'),
+    contents: $('[data-role="chart-hover-contents"]'),
+    date: $('[data-role="chart-hover-date"]'),
+    valueA: $('[data-role="chart-hover-value-a"]'),
+    valueB: $('[data-role="chart-hover-value-b"]'),
   }
 }

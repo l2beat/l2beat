@@ -26,25 +26,30 @@ function parseTimestamp(timestamp: number) {
 }
 
 function formatTimeAndDate(date: string, time?: string) {
-  return time === undefined ? date : `${time} ${date} (UTC)`
+  return time === undefined ? date : `${date} ${time} (UTC)`
 }
 
-function toNiceDate(day: string, month: string, year?: string) {
-  return year === undefined
-    ? `${parseInt(day)} ${MONTHS[month]}`
-    : `${parseInt(day)} ${MONTHS[month]} ${parseInt(year)}`
+function toNiceDate(day: string, month?: string, year?: string) {
+  if (month && year) {
+    return `${year} ${MONTHS[month]} ${day}`
+  }
+  if (month) {
+    return `${MONTHS[month]} ${day}`
+  }
+  return day
 }
 
 export function formatRange(from: number, to: number, withTime = false) {
   const parsedFrom = parseTimestamp(from)
   const parsedTo = parseTimestamp(to)
-  const sameYear = parsedFrom.year === parsedTo.year
-  const fromDate = toNiceDate(
-    parsedFrom.day,
-    parsedFrom.month,
-    sameYear ? undefined : parsedFrom.year,
+  const fromDate = toNiceDate(parsedFrom.day, parsedFrom.month, parsedFrom.year)
+  const toDate = toNiceDate(
+    parsedTo.day,
+    parsedFrom.month === parsedTo.month && parsedFrom.year === parsedTo.year
+      ? undefined
+      : parsedTo.month,
+    parsedFrom.year === parsedTo.year ? undefined : parsedTo.year,
   )
-  const toDate = toNiceDate(parsedTo.day, parsedTo.month, parsedTo.year)
   const first = formatTimeAndDate(
     fromDate,
     withTime ? parsedFrom.time : undefined,
