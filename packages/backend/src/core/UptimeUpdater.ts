@@ -5,7 +5,8 @@ import { EthereumAddress } from '@l2beat/types'
 import { ProjectInfo } from '../model'
 import { ApiMonitor } from '../peripherals/uptime/ApiMonitor'
 import { RpcMonitor } from '../peripherals/uptime/RpcMonitor'
-import { Clock } from './Clock'
+
+const FIVE_MINUTES = 1000 * 60 * 5
 
 export class UptimeUpdater {
   private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
@@ -13,7 +14,6 @@ export class UptimeUpdater {
   constructor(
     private rpcMonitor: RpcMonitor,
     private apiMonitor: ApiMonitor,
-    private clock: Clock,
     private projects: ProjectInfo[],
     private logger: Logger,
   ) {
@@ -22,9 +22,10 @@ export class UptimeUpdater {
 
   start() {
     this.logger.info('Started')
-    return this.clock.onNewMinute(() => {
+    const interval = setInterval(() => {
       this.taskQueue.addToFront()
-    })
+    }, FIVE_MINUTES)
+    return () => clearInterval(interval)
   }
 
   async update() {

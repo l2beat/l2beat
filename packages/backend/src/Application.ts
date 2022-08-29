@@ -141,7 +141,6 @@ export class Application {
     const uptimeUpdater = new UptimeUpdater(
       rpcMonitor,
       apiMonitor,
-      clock,
       config.projects,
       logger,
     )
