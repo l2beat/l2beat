@@ -29,6 +29,11 @@ export class EventsController {
         }
       }
       for (const event of project.events) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        main.projects[project.projectId.toString()]?.hourly.types[1]?.push(
+          event.name,
+        )
+
         const hourly = await this.eventsRepository.getByProjectAndName(
           project.projectId,
           event.name,
@@ -36,14 +41,27 @@ export class EventsController {
         )
 
         for (const hour of hourly) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-          main.projects[project.projectId.toString()]?.hourly.data.push([
-            hour.timestamp,
-            [hour.count],
-          ])
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const id = // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            main.projects[project.projectId.toString()]?.hourly.data.findIndex(
+              (h) =>
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+                h[0].equals(hour.timestamp),
+            )
+          if (id !== -1) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+            main.projects[project.projectId.toString()]?.hourly.data[
+              id as number
+            ][1].push(hour.count)
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+            main.projects[project.projectId.toString()]?.hourly.data.push([
+              hour.timestamp,
+              [hour.count],
+            ])
+          }
         }
       }
-
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
