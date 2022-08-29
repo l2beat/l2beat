@@ -10,7 +10,9 @@ Note: Timestamp is entered manually as all these accounts are EOAs
 export const multichainBridge: Project = bridge({
   name: 'Multichain Bridge',
   slug: 'multichainbridge',
-  purpose: 'Native Bridge',
+  purpose: 'Token Bridge with LN',
+  description:
+    'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
   links: {
     websites: ['https://multichain.xyz/'],
   },

@@ -9,6 +9,7 @@ export interface BridgeDescription {
   name: string
   slug: string
   purpose: string
+  description?: string
   links: Partial<ProjectLinks>
   associatedTokens?: string[]
   bridges: ProjectBridge[]
@@ -26,7 +27,7 @@ export function bridge(bridge: BridgeDescription): Project {
     bridges: bridge.bridges,
     associatedTokens: bridge.associatedTokens,
     details: {
-      description: '.',
+      description: bridge?.description ?? '.',
       purpose: bridge.purpose,
       links: {
         websites: [],
