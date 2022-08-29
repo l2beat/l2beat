@@ -66,7 +66,10 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
   })
 
   controls.moreTokens?.addEventListener('click', () => {
-    controls.moreTokens?.parentElement?.classList.add('more')
+    controls.moreTokens?.parentElement
+      ?.querySelectorAll('label')
+      .forEach((x) => x.classList.remove('hidden'))
+    controls.moreTokens?.classList.add('hidden')
   })
 
   function updateInput(url: string) {

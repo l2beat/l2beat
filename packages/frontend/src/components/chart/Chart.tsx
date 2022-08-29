@@ -4,6 +4,7 @@ import { Logo } from '../Logo'
 import { ChartButton } from './ChartButton'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
+import { TokenControls } from './TokenControls'
 
 export interface ChartProps {
   endpoint: string
@@ -76,22 +77,7 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
         <ChartButton name="scale" value="LOG" />
         <ChartButton checked name="scale" value="LIN" />
       </div>
-      {tokens && tokens.length > 0 && (
-        <div data-role="chart-token-controls" className="Chart-TokenControls">
-          <span className="Chart-TokenTitle">Tokens:</span>
-          {tokens.map((x) => (
-            <ChartButton
-              key={x.symbol}
-              name="token"
-              value={x.symbol}
-              endpoint={x.endpoint}
-            />
-          ))}
-          <button data-role="chart-more-tokens" className="Chart-MoreTokens">
-            More…
-          </button>
-        </div>
-      )}
+      <TokenControls tokens={tokens} />
     </section>
   )
 }
