@@ -3,6 +3,7 @@ import React from 'react'
 export function ChartLoader() {
   return (
     <svg
+      data-role="chart-loader"
       className="Chart-Loader hidden"
       width="50px"
       height="50px"

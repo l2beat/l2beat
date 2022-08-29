@@ -2,13 +2,13 @@ import React from 'react'
 
 export function ChartHover() {
   return (
-    <div className="ChartHover hidden">
-      <div className="ChartHover-Line" />
-      <div className="ChartHover-Circle" />
-      <div className="ChartHover-Contents">
-        <div className="ChartHover-Date" />
-        <div className="ChartHover-ValueA" />
-        <div className="ChartHover-ValueB" />
+    <div data-role="chart-hover" className="ChartHover hidden">
+      <div data-role="chart-hover-line" className="ChartHover-Line" />
+      <div data-role="chart-hover-circle" className="ChartHover-Circle" />
+      <div data-role="chart-hover-contents" className="ChartHover-Contents">
+        <div data-role="chart-hover-date" className="ChartHover-Date" />
+        <div data-role="chart-hover-value-a" className="ChartHover-ValueA" />
+        <div data-role="chart-hover-value-b" className="ChartHover-ValueB" />
       </div>
     </div>
   )

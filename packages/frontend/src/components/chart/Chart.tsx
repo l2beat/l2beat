@@ -13,9 +13,11 @@ export interface ChartProps {
 
 export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
   return (
-    <section className="Chart" data-endpoint={endpoint}>
-      <p className="Chart-Range">...</p>
-      <div className="Chart-RangeControls">
+    <section data-role="chart" data-endpoint={endpoint} className="Chart">
+      <p data-role="chart-range" className="Chart-Range">
+        ...
+      </p>
+      <div data-role="chart-range-controls" className="Chart-RangeControls">
         <ChartButton checked={days === 7} name="range" value="7D" />
         <ChartButton checked={days === 30} name="range" value="30D" />
         <ChartButton name="range" value="90D" />
@@ -23,7 +25,12 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
         <ChartButton name="range" value="1Y" />
         <ChartButton name="range" value="MAX" />
       </div>
-      <div className="Chart-View" role="img" aria-label="chart">
+      <div
+        data-role="chart-view"
+        className="Chart-View"
+        role="img"
+        aria-label="chart"
+      >
         <ChartLoader />
         <ChartHover />
         <div className="Chart-Lines">
@@ -34,28 +41,43 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
           <div className="Chart-Line" />
         </div>
         <div className="Chart-Labels">
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
+          <div data-role="chart-label" className="Chart-Label">
+            ...
+          </div>
+          <div data-role="chart-label" className="Chart-Label">
+            ...
+          </div>
+          <div data-role="chart-label" className="Chart-Label">
+            ...
+          </div>
+          <div data-role="chart-label" className="Chart-Label">
+            ...
+          </div>
+          <div data-role="chart-label" className="Chart-Label">
+            ...
+          </div>
         </div>
         <Logo className="Chart-Watermark" />
-        <canvas className="Chart-Canvas" />
+        <canvas data-role="chart-canvas" className="Chart-Canvas" />
       </div>
-      <div className="Chart-CurrencyControls">
+      <div
+        data-role="chart-currency-controls"
+        className="Chart-CurrencyControls"
+      >
         <ChartButton checked name="currency" value="USD" />
         <ChartButton name="currency" value="ETH">
           ETH<sup>*</sup>
         </ChartButton>
       </div>
-      <p className="Chart-Description">...</p>
-      <div className="Chart-ScaleControls">
+      <p data-role="chart-description" className="Chart-Description">
+        ...
+      </p>
+      <div data-role="chart-scale-controls" className="Chart-ScaleControls">
         <ChartButton name="scale" value="LOG" />
         <ChartButton checked name="scale" value="LIN" />
       </div>
       {tokens && tokens.length > 0 && (
-        <div className="Chart-TokenControls">
+        <div data-role="chart-token-controls" className="Chart-TokenControls">
           <span className="Chart-TokenTitle">Tokens:</span>
           {tokens.map((x) => (
             <ChartButton
@@ -65,7 +87,9 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
               endpoint={x.endpoint}
             />
           ))}
-          <button className="Chart-MoreTokens">More…</button>
+          <button data-role="chart-more-tokens" className="Chart-MoreTokens">
+            More…
+          </button>
         </div>
       )}
     </section>
