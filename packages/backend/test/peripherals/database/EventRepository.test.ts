@@ -35,6 +35,65 @@ describe(EventRepository.name, () => {
     await repository.deleteAll()
   })
 
+  describe(EventRepository.prototype.getByProject.name, () => {
+    it('return properly sorted', async () => {
+      const records = [
+        mockEvent(2, PROJECT_A, EVENT_B, 'hourly'),
+        mockEvent(2, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(1, PROJECT_A, EVENT_B, 'hourly'),
+        mockEvent(1, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(0, PROJECT_A, EVENT_B, 'hourly'),
+        mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+      ]
+      await repository.addMany(records)
+
+      const result = await repository.getByProject(PROJECT_A, 'hourly')
+
+      expect(result).toEqual([
+        mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(0, PROJECT_A, EVENT_B, 'hourly'),
+        mockEvent(1, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(1, PROJECT_A, EVENT_B, 'hourly'),
+        mockEvent(2, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(2, PROJECT_A, EVENT_B, 'hourly'),
+      ])
+    })
+
+    it('retrieves proper timespan', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(0, PROJECT_A, EVENT_A, 'sixHourly'),
+        mockEvent(0, PROJECT_A, EVENT_A, 'daily'),
+      ]
+      await repository.addMany(records)
+
+      const hourlyResult = await repository.getByProject(PROJECT_A, 'hourly')
+      const sixHourlyResult = await repository.getByProject(
+        PROJECT_A,
+        'sixHourly',
+      )
+      const dailyResult = await repository.getByProject(PROJECT_A, 'daily')
+
+      expect(hourlyResult).toEqual([records[0]])
+      expect(sixHourlyResult).toEqual([records[1]])
+      expect(dailyResult).toEqual([records[2]])
+
+    })
+
+    it('retrieves proper project', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(0, PROJECT_B, EVENT_A, 'hourly'),
+      ]
+      await repository.addMany(records)
+
+      const result = await repository.getByProject(PROJECT_A, 'hourly')
+
+      expect(result).toEqual([records[0]])
+
+    })
+  })
+
   it(EventRepository.prototype.getByProjectAndName.name, async () => {
     const records = [
       mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),

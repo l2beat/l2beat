@@ -23,6 +23,7 @@ export class EventRepository extends BaseRepository {
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getByProjectAndName = this.wrapGet(this.getByProjectAndName)
+    this.getByProject = this.wrapGet(this.getByProject)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -47,6 +48,19 @@ export class EventRepository extends BaseRepository {
         },
       ]),
     )
+  }
+
+  async getByProject(
+    projectId: ProjectId,
+    timeSpan: 'hourly' | 'sixHourly' | 'daily',
+  ): Promise<EventRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('events')
+      .where('project_id', projectId.toString())
+      .where('time_span', timeSpan)
+      .select()
+      .orderBy(['unix_timestamp', 'event_name'])
+    return rows.map(toRecord)
   }
 
   async getByProjectAndName(
