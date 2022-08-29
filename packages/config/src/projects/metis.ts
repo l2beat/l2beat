@@ -333,4 +333,5 @@ export const metis: Project = {
       data: '0x70a08231000000000000000000000000F5988809ac97C65121e2c34f5D49558e3D12C253',
     },
   ],
+  events: [],
 }

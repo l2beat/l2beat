@@ -178,4 +178,6 @@ export const rhinofi: Project = {
       },
     ],
   },
+
+  events: [],
 }

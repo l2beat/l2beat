@@ -312,4 +312,5 @@ export const loopring: Project = {
       url: 'https://api3.loopring.io/api/v3/trade?market=LRC-ETH',
     },
   ],
+  events: [],
 }

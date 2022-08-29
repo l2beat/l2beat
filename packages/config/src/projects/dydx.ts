@@ -176,4 +176,18 @@ export const dydx: Project = {
       url: 'https://api.dydx.exchange/v3/trades/BTC-USD',
     },
   ],
+  events: [
+    // {
+    //   name: '',
+    //   abi: '',
+    //   emitter: EthereumAddress(''),
+    //   type: '',
+    // },
+    // {
+    //   name: '',
+    //   abi: '',
+    //   emitter: EthereumAddress(''),
+    //   type: '',
+    // },
+  ],
 }

@@ -5,12 +5,14 @@ import {
   TokenInfo,
   tokenList,
 } from '@l2beat/config'
+import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 export interface ProjectInfo {
   name: string
   projectId: ProjectId
   bridges: BridgeInfo[]
+  events: ProjectEvent[]
   urls?: ProjectUptime[]
 }
 
@@ -30,6 +32,7 @@ export function projectToInfo(project: Project): ProjectInfo {
       tokens:
         bridge.tokens === '*' ? tokenList : bridge.tokens.map(getTokenBySymbol),
     })),
+    events: project.events,
     urls: project.urls,
   }
 }

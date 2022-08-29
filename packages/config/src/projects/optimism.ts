@@ -341,4 +341,6 @@ export const optimism: Project = {
       },
     ],
   },
+
+  events: [],
 }

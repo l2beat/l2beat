@@ -176,4 +176,5 @@ export const immutablex: Project = {
       url: 'https://api.x.immutable.com/v1/trades',
     },
   ],
+  events: [],
 }

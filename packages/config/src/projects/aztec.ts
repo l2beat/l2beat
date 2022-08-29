@@ -191,4 +191,5 @@ export const aztec: Project = {
       body: '{"operationName":"Blocks","variables":{"take":5,"skip":0},"query":"query Blocks($take: Int\u0021, $skip: Int\u0021) {\\n  blocks: rollups(take: $take, skip: $skip, order: {id: \\"DESC\\"}) {\\n    id\\n    hash\\n    numTxs\\n    ethTxHash\\n    created\\n    mined\\n    __typename\\n  }\\n}\\n"}',
     },
   ],
+  events: [],
 }

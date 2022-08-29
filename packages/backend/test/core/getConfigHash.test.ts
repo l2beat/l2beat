@@ -163,6 +163,7 @@ function fakeProject(id: string, bridges: BridgeInfo[]): ProjectInfo {
     name: id[0].toUpperCase() + id.slice(1),
     projectId: ProjectId(id),
     bridges,
+    events: [],
   }
 }
 

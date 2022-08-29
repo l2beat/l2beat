@@ -34,6 +34,7 @@ export const zkspace: Project = {
         'https://reddit.com/r/ZKSwap_Official/',
       ],
     },
+    provider: 'zkSync',
     riskView: {
       stateValidation: RISK_VIEW.STATE_ZKP_SN,
       dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -186,4 +187,5 @@ export const zkspace: Project = {
       url: 'https://api.zks.app/v3/1/txs?limit=1',
     },
   ],
+  events: [],
 }

@@ -2,6 +2,7 @@ import { ProjectId } from '@l2beat/types'
 
 import { ProjectBridge } from './ProjectBridge'
 import { ProjectDetails } from './ProjectDetails'
+import { ProjectEvent } from './ProjectEvent'
 import { ProjectUptime } from './ProjectUptime'
 
 export interface Project {
@@ -19,4 +20,6 @@ export interface Project {
   details: ProjectDetails
   /** List of project uptime monitoring strategies */
   urls?: ProjectUptime[]
+  /** Metadata about events emitted by the system */
+  events: ProjectEvent[]
 }

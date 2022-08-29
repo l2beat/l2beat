@@ -366,4 +366,5 @@ export const bobanetwork: Project = {
       data: '0x70a08231000000000000000000000000547b227A77813Ea70Aacf01212B39Db7b560fa1c',
     },
   ],
+  events: [],
 }

@@ -427,4 +427,5 @@ export const arbitrum: Project = {
       data: '0x70a0823100000000000000000000000017c14d2c404d167802b16c450d3c99f88f2c4f4d',
     },
   ],
+  events: [],
 }
