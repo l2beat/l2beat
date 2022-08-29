@@ -1,10 +1,13 @@
 import React from 'react'
 
 import { Logo } from '../Logo'
-import { ChartButton } from './ChartButton'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
+import { CurrencyControls } from './CurrencyControls'
+import { Description } from './Description'
 import { RangeControls } from './RangeControls'
+import { ScaleControls } from './ScaleControls'
+import { TimeRange } from './TimeRange'
 import { TokenControls } from './TokenControls'
 import { YAxisLabels } from './YAxisLabels'
 
@@ -21,12 +24,7 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
       data-endpoint={endpoint}
       className="grid grid-cols-[auto_auto_1fr_auto] sm:gap-y-2 gap-y-4 mt-2 sm:mt-4"
     >
-      <p
-        data-role="chart-range"
-        className="col-span-2 font-bold flex items-center whitespace-pre sm:whitespace-normal h-[37px] sm:h-auto"
-      >
-        ...
-      </p>
+      <TimeRange />
       <RangeControls days={days} />
       <div
         data-role="chart-view"
@@ -37,25 +35,15 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
         <ChartLoader />
         <ChartHover />
         <YAxisLabels />
-        <Logo className="Chart-Watermark" />
-        <canvas data-role="chart-canvas" className="Chart-Canvas" />
+        <Logo className="absolute bottom-2 right-2 z-10 w-[60px] h-[25px] opacity-40" />
+        <canvas
+          data-role="chart-canvas"
+          className="absolute bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
+        />
       </div>
-      <div
-        data-role="chart-currency-controls"
-        className="Chart-CurrencyControls"
-      >
-        <ChartButton checked name="currency" value="USD" />
-        <ChartButton name="currency" value="ETH">
-          ETH<sup>*</sup>
-        </ChartButton>
-      </div>
-      <p data-role="chart-description" className="Chart-Description">
-        ...
-      </p>
-      <div data-role="chart-scale-controls" className="Chart-ScaleControls">
-        <ChartButton name="scale" value="LOG" />
-        <ChartButton checked name="scale" value="LIN" />
-      </div>
+      <CurrencyControls />
+      <Description />
+      <ScaleControls />
       <TokenControls tokens={tokens} />
     </section>
   )
