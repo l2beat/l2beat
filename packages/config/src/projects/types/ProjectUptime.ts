@@ -1,5 +1,3 @@
-import { EthereumAddress } from '@l2beat/types'
-
 interface RpcEstimateGas {
   /** Estimate gas of sending 1 wei */
   action: 'rpc_estimateGas'
@@ -28,7 +26,7 @@ interface ApiCheck {
     | 'loopring_checkTrades'
     | 'zksync_checkBlock'
     | 'immutableX_checkTrades'
-    | 'zkSync_getTrades'
+    | 'zkspace_checkTrades'
     | 'starknet_checkBlock'
     | 'hermez_checkBatch'
   /** API url of a rollup operator */
@@ -41,4 +39,8 @@ interface ApiCheckWithBody {
   body: string
 }
 
-export type ProjectUptime = RpcEstimateGas | RpcGetBalance | ApiCheck | ApiCheckWithBody
+export type ProjectUptime =
+  | RpcEstimateGas
+  | RpcGetBalance
+  | ApiCheck
+  | ApiCheckWithBody

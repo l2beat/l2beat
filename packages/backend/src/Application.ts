@@ -16,6 +16,7 @@ import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { Clock } from './core/Clock'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
+import { UptimeUpdater } from './core/UptimeUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -28,6 +29,7 @@ import { Database } from './peripherals/database/shared/Database'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
+import { RpcMonitor } from './peripherals/uptime/RpcMonitor'
 
 export class Application {
   start: () => Promise<void>
@@ -76,6 +78,8 @@ export class Application {
       logger,
     )
 
+    const rpcMonitor = new RpcMonitor(http)
+
     // #endregion
     // #region core
 
@@ -115,6 +119,13 @@ export class Application {
       reportRepository,
       aggregateReportRepository,
       reportStatusRepository,
+      clock,
+      config.projects,
+      logger,
+    )
+
+    const uptimeUpdater = new UptimeUpdater(
+      rpcMonitor,
       clock,
       config.projects,
       logger,
@@ -167,6 +178,7 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
+        uptimeUpdater.start()
       }
     }
 
