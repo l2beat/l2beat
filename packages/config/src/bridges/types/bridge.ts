@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/types'
 
+import { ProjectRiskViewEntry } from '../../projects'
 import { RISK_VIEW } from '../../projects/common'
 import { Project } from '../../projects/types/Project'
 import { ProjectBridge } from '../../projects/types/ProjectBridge'
@@ -17,6 +18,11 @@ export interface BridgeDescription {
     network: string
     tokens: string[]
   }[]
+  risks?: {
+    foo: ProjectRiskViewEntry
+    bar: ProjectRiskViewEntry
+    baz: ProjectRiskViewEntry
+  }
 }
 
 export function bridge(bridge: BridgeDescription): Project {
