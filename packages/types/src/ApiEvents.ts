@@ -1,16 +1,21 @@
 import z from 'zod'
 
-import { branded } from './branded'
 import { UnixTime } from './UnixTime'
 
-const EventChartPoint = z.tuple([
-  branded(z.number(), (n) => new UnixTime(n)),
-  z.array(z.number()),
-])
+const EventChartPoint = z
+  .array(z.number().int())
+  .refine((arr) => arr.length > 0 && UnixTime.isNumberUnixTimestamp(arr[0]))
+  .transform(
+    ([first, ...rest]) =>
+      [new UnixTime(first), ...rest] as [UnixTime, ...number[]],
+  )
 export type EventChartPoint = z.infer<typeof EventChartPoint>
 
 const EventChart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.array(z.string())]),
+  types: z
+    .array(z.string())
+    .refine((arr) => arr.length > 0 && arr[0] === 'timestamp')
+    .transform((arr) => arr as ['timestamp', ...string[]]),
   data: z.array(EventChartPoint),
 })
 export type EventChart = z.infer<typeof EventChart>

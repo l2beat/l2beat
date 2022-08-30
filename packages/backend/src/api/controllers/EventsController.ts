@@ -69,12 +69,12 @@ export class EventsController {
     for (const key in entries) {
       data.push([
         new UnixTime(Number(key)),
-        eventNames.map((e) => entries[key]?.[e] ?? 0),
+        ...eventNames.map((e) => entries[key]?.[e] ?? 0),
       ])
     }
 
     return {
-      types: ['timestamp', eventNames],
+      types: ['timestamp', ...eventNames],
       data,
     }
   }
