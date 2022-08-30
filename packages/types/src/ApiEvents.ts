@@ -3,11 +3,15 @@ import z from 'zod'
 import { branded } from './branded'
 import { UnixTime } from './UnixTime'
 
+const EventChartPoint = z.tuple([
+  branded(z.number(), (n) => new UnixTime(n)),
+  z.array(z.number()),
+])
+export type EventChartPoint = z.infer<typeof EventChartPoint>
+
 const EventChart = z.object({
   types: z.tuple([z.literal('timestamp'), z.array(z.string())]),
-  data: z.array(
-    z.tuple([branded(z.number(), (n) => new UnixTime(n)), z.array(z.number())]),
-  ),
+  data: z.array(EventChartPoint),
 })
 export type EventChart = z.infer<typeof EventChart>
 

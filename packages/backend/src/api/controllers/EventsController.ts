@@ -1,13 +1,22 @@
 import { Logger } from '@l2beat/common'
-import { ApiEvents, UnixTime } from '@l2beat/types'
+import {
+  ApiEvents,
+  EventChart,
+  EventChartPoint,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/types'
 
 import { ProjectInfo } from '../../model'
-import { EventRepository } from '../../peripherals/database/EventRepository'
+import {
+  EventRecord,
+  EventRepository,
+} from '../../peripherals/database/EventRepository'
 
 interface ProjectEntry {
-  hourly: Record<number, Record<string,number>>
-  sixHourly: Record<number, number[]>
-  daily: Record<number, number[]>
+  hourly: Record<number, Record<string, number>>
+  sixHourly: Record<number, Record<string, number>>
+  daily: Record<number, Record<string, number>>
 }
 
 export class EventsController {
@@ -19,52 +28,87 @@ export class EventsController {
     this.logger = this.logger.for(this)
   }
 
-  //todo
-  //ensure data in config is sorted
-  //make a cleaner type for project entry and only at the end transpile it to EventCharts
-  //add 'from' to getter from repository
-  //reason about minimalFrom for  the hourly sixhourly and daily
   async getMain(): Promise<ApiEvents> {
     const main: ApiEvents = {
       projects: {},
     }
 
-    for (const project of this.projects) {
-      const eventNames = project.events.map((e) => e.name)
+    for (const { projectId, events } of this.projects) {
+      const eventNames = events.map((e) => e.name)
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const projectEntry: ProjectEntry = {
-        hourly: {},
-        sixHourly: {},
-        daily: {},
-      }
-
-      const hourly = await this.eventsRepository.getByProject(
-        project.projectId,
-        'hourly',
-      )
-
-      for (const { timestamp, name, count } of hourly) {
-        if(projectEntry.hourly[timestamp.toNumber()] === undefined) {
-          projectEntry.hourly[timestamp.toNumber()] = {}
-        }
-        projectEntry.hourly[timestamp.toNumber()][name] = count
-      }
-
-      const data: [UnixTime, number[]][] = []
-
-      for (const key in projectEntry.hourly) {
-        data.push([new UnixTime(Number(key)), eventNames.map(e => projectEntry.hourly[key][e])])
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      main.projects[project.projectId.toString()] = {
-        hourly: { types: ['timestamp', eventNames], data: data },
-        sixHourly: { types: ['timestamp', eventNames], data: [] },
-        daily: { types: ['timestamp', eventNames], data: [] },
+      main.projects[projectId.toString()] = {
+        hourly: await this.dbToData(
+          projectId,
+          'hourly',
+          getHourlyMinTimestamp(),
+          eventNames,
+        ),
+        sixHourly: await this.dbToData(
+          projectId,
+          'sixHourly',
+          getSixHourlyMinTimestamp(),
+          eventNames,
+        ),
+        daily: await this.dbToData(projectId, 'daily', undefined, eventNames),
       }
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return main
   }
+
+  async dbToData(
+    projectId: ProjectId,
+    granularity: 'hourly' | 'sixHourly' | 'daily',
+    minTimestamp: UnixTime | undefined,
+    eventNames: string[],
+  ): Promise<EventChart> {
+    const db = await this.eventsRepository.getByProject(
+      projectId,
+      granularity,
+      minTimestamp,
+    )
+
+    const entries = dbToEntries(db)
+
+    return entriesToData(entries, eventNames)
+  }
+}
+
+function dbToEntries(records: EventRecord[]) {
+  const entries: Record<number, Record<string, number>> = {}
+
+  for (const { timestamp, name, count } of records) {
+    if (entries[timestamp.toNumber()] === undefined) {
+      entries[timestamp.toNumber()] = {}
+    }
+    entries[timestamp.toNumber()][name] = count
+  }
+
+  return entries
+}
+
+function entriesToData(
+  entries: Record<number, Record<string, number>>,
+  eventNames: string[],
+): EventChart {
+  const data: EventChartPoint[] = []
+
+  for (const key in entries) {
+    data.push([
+      new UnixTime(Number(key)),
+      eventNames.map((e) => entries[key][e]),
+    ])
+  }
+
+  return {
+    types: ['timestamp', eventNames],
+    data,
+  }
+}
+
+export function getHourlyMinTimestamp(now?: UnixTime) {
+  return (now ?? UnixTime.now()).add(-7, 'days')
+}
+
+export function getSixHourlyMinTimestamp(now?: UnixTime) {
+  return (now ?? UnixTime.now()).add(-90, 'days')
 }
