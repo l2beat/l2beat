@@ -1,9 +1,8 @@
 import { UnixTime } from '@l2beat/types'
 
-import { Project } from './types'
-import { bridge } from './types/bridge'
+import { BridgeDescription } from './types/bridge'
 
-export const nomadBridge: Project = bridge({
+export const nomadBridge: BridgeDescription = {
   name: 'Nomad Bridge',
   slug: 'nomadbridge',
   purpose: 'Native Bridge',
@@ -28,4 +27,4 @@ export const nomadBridge: Project = bridge({
     },
   ],
   connections: [],
-})
+}

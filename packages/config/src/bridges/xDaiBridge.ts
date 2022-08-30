@@ -1,9 +1,8 @@
 import { UnixTime } from '@l2beat/types'
 
-import { Project } from './types'
-import { bridge } from './types/bridge'
+import { BridgeDescription } from './types/bridge'
 
-export const xDaiBridge: Project = bridge({
+export const xDaiBridge: BridgeDescription = {
   name: 'xDai Omni Bridge',
   slug: 'xdaibridge',
   purpose: 'Native Bridge',
@@ -30,4 +29,4 @@ export const xDaiBridge: Project = bridge({
     },
   ],
   connections: [],
-})
+}

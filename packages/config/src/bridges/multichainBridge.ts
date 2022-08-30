@@ -1,13 +1,12 @@
 import { UnixTime } from '@l2beat/types'
 
-import { Project } from './types'
-import { bridge } from './types/bridge'
+import { BridgeDescription } from './types/bridge'
 
 /* TODO: Get tokens from SwapOut entries
 Note: Timestamp is entered manually as all these accounts are EOAs
 */
 
-export const multichainBridge: Project = bridge({
+export const multichainBridge: BridgeDescription = {
   name: 'Multichain Bridge',
   slug: 'multichainbridge',
   purpose: 'Token Bridge with LN',
@@ -176,4 +175,4 @@ export const multichainBridge: Project = bridge({
     },
   ],
   connections: [],
-})
+}

@@ -1,9 +1,8 @@
 import { UnixTime } from '@l2beat/types'
 
-import { Project } from './types'
-import { bridge } from './types/bridge'
+import { BridgeDescription } from './types/bridge'
 
-export const hyphenBridge: Project = bridge({
+export const hyphenBridge: BridgeDescription = {
   name: 'Hyphen Bridge',
   slug: 'hyphenbridge',
   purpose: 'Swap Bridge',
@@ -19,4 +18,4 @@ export const hyphenBridge: Project = bridge({
     },
   ],
   connections: [],
-})
+}
