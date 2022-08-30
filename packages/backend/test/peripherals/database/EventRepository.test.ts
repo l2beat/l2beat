@@ -36,7 +36,7 @@ describe(EventRepository.name, () => {
   })
 
   describe(EventRepository.prototype.getByProject.name, () => {
-    it('return properly sorted', async () => {
+    it('returns properly sorted records', async () => {
       const records = [
         mockEvent(2, PROJECT_A, EVENT_B, 'hourly'),
         mockEvent(2, PROJECT_A, EVENT_A, 'hourly'),
@@ -59,7 +59,7 @@ describe(EventRepository.name, () => {
       ])
     })
 
-    it('retrieves proper timespan', async () => {
+    it('retrieves only given timeSpan', async () => {
       const records = [
         mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
         mockEvent(0, PROJECT_A, EVENT_A, 'sixHourly'),
@@ -77,10 +77,9 @@ describe(EventRepository.name, () => {
       expect(hourlyResult).toEqual([records[0]])
       expect(sixHourlyResult).toEqual([records[1]])
       expect(dailyResult).toEqual([records[2]])
-
     })
 
-    it('retrieves proper project', async () => {
+    it('retrieves only given project', async () => {
       const records = [
         mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
         mockEvent(0, PROJECT_B, EVENT_A, 'hourly'),
@@ -90,7 +89,26 @@ describe(EventRepository.name, () => {
       const result = await repository.getByProject(PROJECT_A, 'hourly')
 
       expect(result).toEqual([records[0]])
+    })
 
+    it('retrieves only records greater or equal a given timestamp', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(1, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(2, PROJECT_A, EVENT_A, 'hourly'),
+        mockEvent(3, PROJECT_A, EVENT_A, 'hourly'),
+      ]
+      await repository.addMany(records)
+
+      const allRecords = await repository.getByProject(PROJECT_A, 'hourly')
+      const onlyFrom = await repository.getByProject(
+        PROJECT_A,
+        'hourly',
+        START.add(2, 'hours'),
+      )
+
+      expect(allRecords).toEqual(records)
+      expect(onlyFrom).toEqual(records.slice(2))
     })
   })
 

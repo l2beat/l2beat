@@ -53,11 +53,13 @@ export class EventRepository extends BaseRepository {
   async getByProject(
     projectId: ProjectId,
     timeSpan: 'hourly' | 'sixHourly' | 'daily',
+    from: UnixTime = new UnixTime(0)
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')
       .where('project_id', projectId.toString())
       .where('time_span', timeSpan)
+      .where('unix_timestamp', '>=', from.toNumber())
       .select()
       .orderBy(['unix_timestamp', 'event_name'])
     return rows.map(toRecord)
