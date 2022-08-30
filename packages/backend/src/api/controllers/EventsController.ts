@@ -8,7 +8,10 @@ import {
 
 import { ProjectInfo } from '../../model'
 import { EventRepository } from '../../peripherals/database/EventRepository'
-import { getHourlyMinTimestamp, getSixHourlyMinTimestamp } from './report/charts'
+import {
+  getHourlyMinTimestamp,
+  getSixHourlyMinTimestamp,
+} from './report/charts'
 
 export class EventsController {
   constructor(
@@ -20,26 +23,38 @@ export class EventsController {
     const main: ApiEvents = {
       projects: {},
     }
-//promise.all
-    for (const { projectId, events } of this.projects) {
-      const eventNames = events.map((e) => e.name)
-//promise.all
-      main.projects[projectId.toString()] = {
-        hourly: await this.getEventChart(
-          projectId,
-          'hourly',
-          getHourlyMinTimestamp(),
-          eventNames,
-        ),
-        sixHourly: await this.getEventChart(
-          projectId,
-          'sixHourly',
-          getSixHourlyMinTimestamp(),
-          eventNames,
-        ),
-        daily: await this.getEventChart(projectId, 'daily', undefined, eventNames),
-      }
-    }
+
+    const config: {
+      granularity: 'hourly' | 'sixHourly' | 'daily'
+      timestamp: UnixTime | undefined
+    }[] = [
+      { granularity: 'hourly', timestamp: getHourlyMinTimestamp() },
+      { granularity: 'sixHourly', timestamp: getSixHourlyMinTimestamp() },
+      { granularity: 'hourly', timestamp: undefined },
+    ]
+
+    await Promise.all(
+      this.projects.map(async ({ projectId, events }) => {
+        const eventNames = events.map((e) => e.name)
+
+        const eventCharts = await Promise.all(
+          config.map((c) =>
+            this.getEventChart(
+              projectId,
+              c.granularity,
+              c.timestamp,
+              eventNames,
+            ),
+          ),
+        )
+
+        main.projects[projectId.toString()] = {
+          hourly: eventCharts[0],
+          sixHourly: eventCharts[1],
+          daily: eventCharts[2],
+        }
+      }),
+    )
     return main
   }
 
@@ -49,7 +64,7 @@ export class EventsController {
     minTimestamp: UnixTime | undefined,
     eventNames: string[],
   ): Promise<EventChart> {
-    const db = await this.eventsRepository.getByProject(
+    const records = await this.eventsRepository.getByProject(
       projectId,
       granularity,
       minTimestamp,
@@ -58,7 +73,7 @@ export class EventsController {
     //Record<timestamp, Record<eventName, count>>
     const entries: Record<number, Record<string, number> | undefined> = {}
 
-    for (const { timestamp, name, count } of db) {
+    for (const { timestamp, name, count } of records) {
       const entry = entries[timestamp.toNumber()] ?? {}
       entry[name] = count
       entries[timestamp.toNumber()] = entry
@@ -79,5 +94,3 @@ export class EventsController {
     }
   }
 }
-
-

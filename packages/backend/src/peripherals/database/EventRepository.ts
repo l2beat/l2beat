@@ -53,7 +53,7 @@ export class EventRepository extends BaseRepository {
   async getByProject(
     projectId: ProjectId,
     timeSpan: 'hourly' | 'sixHourly' | 'daily',
-    from: UnixTime = new UnixTime(0)
+    from: UnixTime = new UnixTime(0),
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')
