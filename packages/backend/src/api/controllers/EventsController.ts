@@ -5,7 +5,7 @@ import { ProjectInfo } from '../../model'
 import { EventRepository } from '../../peripherals/database/EventRepository'
 
 interface ProjectEntry {
-  hourly: Record<number, number[]>
+  hourly: Record<number, Record<string,number>>
   sixHourly: Record<number, number[]>
   daily: Record<number, number[]>
 }
@@ -44,18 +44,17 @@ export class EventsController {
         'hourly',
       )
 
-      for (const { timestamp, count } of hourly) {
-        if (projectEntry.hourly[timestamp.toNumber()]) {
-          projectEntry.hourly[timestamp.toNumber()].push(count)
-        } else {
-          projectEntry.hourly[timestamp.toNumber()] = [count]
+      for (const { timestamp, name, count } of hourly) {
+        if(projectEntry.hourly[timestamp.toNumber()] === undefined) {
+          projectEntry.hourly[timestamp.toNumber()] = {}
         }
+        projectEntry.hourly[timestamp.toNumber()][name] = count
       }
 
       const data: [UnixTime, number[]][] = []
 
       for (const key in projectEntry.hourly) {
-        data.push([new UnixTime(Number(key)), projectEntry.hourly[key]])
+        data.push([new UnixTime(Number(key)), eventNames.map(e => projectEntry.hourly[key][e])])
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
