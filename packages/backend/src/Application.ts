@@ -162,7 +162,6 @@ export class Application {
     const eventsController = new EventsController(
       eventRepository,
       config.projects,
-      logger,
     )
 
     const apiServer = new ApiServer(config.port, logger, [
