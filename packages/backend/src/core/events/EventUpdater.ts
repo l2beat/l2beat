@@ -136,6 +136,10 @@ export class EventUpdater {
     )
     return logs.map((l) => BigInt(l.blockNumber))
   }
+
+  getLastProcessed(): UnixTime | undefined {
+    return this.lastProcessed
+  }
 }
 
 export function getAdjustedFrom(from: UnixTime) {

@@ -161,6 +161,7 @@ export class Application {
 
     const eventsController = new EventsController(
       eventRepository,
+      eventUpdater,
       config.projects,
     )
 

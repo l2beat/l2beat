@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
+import { EventUpdater } from '../../core/events/EventUpdater'
 import { ProjectInfo } from '../../model'
 import { EventRepository } from '../../peripherals/database/EventRepository'
 import {
@@ -16,6 +17,7 @@ import {
 export class EventsController {
   constructor(
     private eventsRepository: EventRepository,
+    private eventUpdater: EventUpdater,
     private projects: ProjectInfo[],
   ) {}
 
@@ -24,12 +26,17 @@ export class EventsController {
       projects: {},
     }
 
+    const timestamp = this.eventUpdater.getLastProcessed()
+
     const config: {
       granularity: 'hourly' | 'sixHourly' | 'daily'
       timestamp: UnixTime | undefined
     }[] = [
-      { granularity: 'hourly', timestamp: getHourlyMinTimestamp() },
-      { granularity: 'sixHourly', timestamp: getSixHourlyMinTimestamp() },
+      { granularity: 'hourly', timestamp: getHourlyMinTimestamp(timestamp) },
+      {
+        granularity: 'sixHourly',
+        timestamp: getSixHourlyMinTimestamp(timestamp),
+      },
       { granularity: 'hourly', timestamp: undefined },
     ]
 
