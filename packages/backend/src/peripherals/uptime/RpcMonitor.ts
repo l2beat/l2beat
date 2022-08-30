@@ -29,25 +29,17 @@ export class RpcMonitor {
   }
 
   private async fetchAndParseRpc(url: string, body: string) {
-    try {
-      const { response, time } = await this.http.timedFetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body,
-      })
+    const { response, time } = await this.http.timedFetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+    })
 
-      await response.json().then((data) => rpcSchema.parse(data))
+    await response.json().then((data) => rpcSchema.parse(data))
 
-      return {
-        active: true,
-        time,
-      }
-    } catch (e) {
-      console.error(e)
-      return {
-        active: false,
-        // TODO: error
-      }
+    return {
+      active: true,
+      time,
     }
   }
 }
