@@ -5,9 +5,16 @@ export class HttpClient {
     return fetch(url, init)
   }
 
-  async timedFetch(url: string, init?: RequestInit) {
+  async timedFetch(url: string, init?: RequestInit, timeout = 10000) {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), timeout)
     const start = process.hrtime.bigint()
-    const response = await this.fetch(url, init)
+    const response = await this.fetch(url, {
+      /* @ts-expect-error @types/node and @types/node-fetch incompatibility */
+      signal: controller.signal,
+      ...init,
+    })
+    clearTimeout(timeoutId)
     const end = process.hrtime.bigint()
     return { response, time: end - start }
   }
