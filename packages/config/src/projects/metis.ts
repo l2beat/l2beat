@@ -327,6 +327,7 @@ export const metis: Project = {
   },
   uptimeActions: [
     {
+      actionId: 'metis_getBalance',
       type: 'rpc_getBalance',
       url: 'https://arb1.arbitrum.io/rpc',
       to: '0xEA32A96608495e54156Ae48931A7c20f0dcc1a21',

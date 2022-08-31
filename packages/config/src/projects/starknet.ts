@@ -278,6 +278,7 @@ export const starknet: Project = {
   },
   uptimeActions: [
     {
+      actionId: 'starknet_checkBlock',
       type: 'starknet_checkBlock',
       url: 'https://alpha-mainnet.starknet.io/feeder_gateway/get_block?blockNumber=latest',
     },

@@ -311,6 +311,7 @@ export const nova: Project = {
   },
   uptimeActions: [
     {
+      actionId: 'nova_getBalance',
       type: 'rpc_getBalance',
       url: 'https://nova.arbitrum.io/rpc',
       to: '0x750ba8b76187092B0D1E87E28daaf484d1b5273b',

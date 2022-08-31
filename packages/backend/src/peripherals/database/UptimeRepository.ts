@@ -8,7 +8,7 @@ import { Database } from './shared/Database'
 export interface UptimeRecord {
   timestamp: UnixTime
   projectId: ProjectId
-  strategyId: string // TODO: StrategyId
+  actionId: string
   active: boolean
   latency?: number
   error?: string
@@ -51,7 +51,7 @@ function toRow(record: UptimeRecord): UptimeRow {
   return {
     unix_timestamp: record.timestamp.toString(),
     project_id: record.projectId.toString(),
-    strategy_id: record.strategyId,
+    action_id: record.actionId,
     active: record.active,
     latency: record.latency ?? null,
     error: record.error ?? null,
@@ -62,7 +62,7 @@ function toRecord(row: UptimeRow): UptimeRecord {
   return {
     timestamp: new UnixTime(+row.unix_timestamp),
     projectId: ProjectId(row.project_id),
-    strategyId: row.strategy_id,
+    actionId: row.action_id,
     active: row.active,
     latency: row.latency ?? undefined,
     error: row.error ?? undefined,

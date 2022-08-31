@@ -17,7 +17,7 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('uptime', function (table) {
     table.bigInteger('unix_timestamp').notNullable()
     table.string('project_id').notNullable()
-    table.string('strategy_id').notNullable()
+    table.string('action_id').notNullable()
     table.boolean('active').notNullable()
     table.integer('latency')
     table.string('error')

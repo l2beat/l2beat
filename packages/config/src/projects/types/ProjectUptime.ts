@@ -39,8 +39,9 @@ export interface ApiCheckWithBody {
   body: string
 }
 
-export type UptimeAction =
+export type UptimeAction = (
   | RpcEstimateGas
   | RpcGetBalance
   | ApiCheck
   | ApiCheckWithBody
+) /** Unique action id */ & { actionId: string }

@@ -41,7 +41,7 @@ function fakeUptime(uptime?: Partial<UptimeRecord>): UptimeRecord {
   return {
     timestamp: UnixTime.now(),
     projectId: ProjectId('fake-project'),
-    strategyId: 'fake-project-1',
+    actionId: 'fake-project-1',
     active,
     error: active ? undefined : 'fake-error',
     latency: active ? Math.floor(Math.random() * 1000) : undefined,

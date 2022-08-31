@@ -360,6 +360,7 @@ export const bobanetwork: Project = {
   },
   uptimeActions: [
     {
+      actionId: 'boba_getBalance',
       type: 'rpc_getBalance',
       url: 'https://mainnet.boba.network/',
       to: '0x66a2A913e447d6b4BF33EFbec43aAeF87890FBbc',

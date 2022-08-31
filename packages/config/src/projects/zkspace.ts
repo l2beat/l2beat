@@ -183,6 +183,7 @@ export const zkspace: Project = {
   },
   uptimeActions: [
     {
+      actionId: 'zkspace_checkTrades',
       type: 'zkspace_checkTrades',
       url: 'https://api.zks.app/v3/1/txs?limit=1',
     },

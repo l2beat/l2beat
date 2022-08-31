@@ -172,6 +172,7 @@ export const immutablex: Project = {
   },
   uptimeActions: [
     {
+      actionId: 'immutablex_checkTrades',
       type: 'immutablex_checkTrades',
       url: 'https://api.x.immutable.com/v1/trades',
     },

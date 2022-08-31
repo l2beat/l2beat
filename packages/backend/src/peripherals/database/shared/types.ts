@@ -60,7 +60,7 @@ declare module 'knex/types/tables' {
   interface UptimeRow {
     unix_timestamp: string
     project_id: string
-    strategy_id: string
+    action_id: string
     active: boolean
     error: Nullable<string>
     latency: Nullable<number>
