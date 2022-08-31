@@ -298,16 +298,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    id: AssetId('btrfly-btrfly'),
-    name: 'BTRFLY',
-    coingeckoId: CoingeckoId('butterflydao'),
-    address: EthereumAddress('0xC0d4Ceb216B3BA9C3701B291766fDCbA977ceC3A'),
-    symbol: 'BTRFLY',
-    decimals: 9,
-    sinceTimestamp: new UnixTime(1639526491),
-    category: 'other',
-  },
-  {
     id: AssetId('ctsi-cartesi-token'),
     name: 'Cartesi Token',
     coingeckoId: CoingeckoId('cartesi'),
