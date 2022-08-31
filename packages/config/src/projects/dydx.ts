@@ -170,9 +170,9 @@ export const dydx: Project = {
       },
     ],
   },
-  urls: [
+  uptimeActions: [
     {
-      action: 'dydx_checkTrades',
+      type: 'dydx_checkTrades',
       url: 'https://api.dydx.exchange/v3/trades/BTC-USD',
     },
   ],

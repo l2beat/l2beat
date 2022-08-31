@@ -306,9 +306,9 @@ export const loopring: Project = {
       },
     ],
   },
-  urls: [
+  uptimeActions: [
     {
-      action: 'loopring_checkTrades',
+      type: 'loopring_checkTrades',
       url: 'https://api3.loopring.io/api/v3/trade?market=LRC-ETH',
     },
   ],

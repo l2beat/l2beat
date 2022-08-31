@@ -1,6 +1,6 @@
 export interface RpcEstimateGas {
   /** Estimate gas of sending 1 wei */
-  action: 'rpc_estimateGas'
+  type: 'rpc_estimateGas'
   /** RPC url of chain public node */
   url: string
   /** Address sending estimate gas transaction */
@@ -11,7 +11,7 @@ export interface RpcEstimateGas {
 
 export interface RpcGetBalance {
   /** Get balance of some token */
-  action: 'rpc_getBalance'
+  type: 'rpc_getBalance'
   /** RPC url of chain public node */
   url: string
   /** Token that we calculate balance of */
@@ -21,7 +21,7 @@ export interface RpcGetBalance {
 }
 
 export interface ApiCheck {
-  action:
+  type:
     | 'dydx_checkTrades'
     | 'loopring_checkTrades'
     | 'zksync_checkBlock'
@@ -34,12 +34,12 @@ export interface ApiCheck {
 }
 
 export interface ApiCheckWithBody {
-  action: 'aztec_checkBlock'
+  type: 'aztec_checkBlock'
   url: string
   body: string
 }
 
-export type ProjectUptime =
+export type UptimeAction =
   | RpcEstimateGas
   | RpcGetBalance
   | ApiCheck

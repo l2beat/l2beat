@@ -413,15 +413,15 @@ export const arbitrum: Project = {
       },
     ],
   },
-  urls: [
+  uptimeActions: [
     {
-      action: 'rpc_estimateGas',
+      type: 'rpc_estimateGas',
       url: 'https://arb1.arbitrum.io/rpc',
       from: '0x41626BA92c0C2a1aD38fC83920300434082B1870',
       to: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
     },
     {
-      action: 'rpc_getBalance',
+      type: 'rpc_getBalance',
       url: 'https://arb1.arbitrum.io/rpc',
       to: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
       data: '0x70a0823100000000000000000000000017c14d2c404d167802b16c450d3c99f88f2c4f4d',

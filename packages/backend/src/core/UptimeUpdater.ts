@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectUptime } from '@l2beat/config'
+import { UptimeAction } from '@l2beat/config'
 
 import { ProjectInfo } from '../model'
 import { UptimeHandlers } from '../peripherals/uptime/handler'
@@ -30,18 +30,20 @@ export class UptimeUpdater {
 
     await Promise.allSettled(
       this.projects
-        .flatMap(({ urls }) => urls?.map((url) => this.checkUptime(url)))
+        .flatMap(({ uptimeActions }) =>
+          uptimeActions?.map((action) => this.checkUptime(action)),
+        )
         .filter((x) => x),
     )
 
     this.logger.info('Update completed')
   }
 
-  async checkUptime(uptime: ProjectUptime) {
+  async checkUptime(action: UptimeAction) {
     try {
       for (const handler of this.handlers) {
-        if (handler.canHandle(uptime)) {
-          return await handler.handle(uptime)
+        if (handler.canHandle(action)) {
+          return await handler.handle(action)
         }
       }
     } catch {

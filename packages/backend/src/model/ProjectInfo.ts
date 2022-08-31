@@ -1,9 +1,9 @@
 import {
   getTokenBySymbol,
   Project,
-  ProjectUptime,
   TokenInfo,
   tokenList,
+  UptimeAction,
 } from '@l2beat/config'
 import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
@@ -13,7 +13,7 @@ export interface ProjectInfo {
   projectId: ProjectId
   bridges: BridgeInfo[]
   events: ProjectEvent[]
-  urls?: ProjectUptime[]
+  uptimeActions?: UptimeAction[]
 }
 
 export interface BridgeInfo {
@@ -33,6 +33,6 @@ export function projectToInfo(project: Project): ProjectInfo {
         bridge.tokens === '*' ? tokenList : bridge.tokens.map(getTokenBySymbol),
     })),
     events: project.events,
-    urls: project.urls,
+    uptimeActions: project.uptimeActions,
   }
 }

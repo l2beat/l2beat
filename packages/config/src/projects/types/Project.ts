@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/types'
 import { ProjectBridge } from './ProjectBridge'
 import { ProjectDetails } from './ProjectDetails'
 import { ProjectEvent } from './ProjectEvent'
-import { ProjectUptime } from './ProjectUptime'
+import { UptimeAction } from './ProjectUptime'
 
 export interface Project {
   /** Name of the project, will be used as a display name on the website */
@@ -19,7 +19,7 @@ export interface Project {
   /** Information displayed about the project on the frontend */
   details: ProjectDetails
   /** List of project uptime monitoring strategies */
-  urls?: ProjectUptime[]
+  uptimeActions?: UptimeAction[]
   /** Metadata about events emitted by the system */
   events: ProjectEvent[]
 }

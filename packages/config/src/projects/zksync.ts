@@ -339,9 +339,9 @@ export const zksync: Project = {
       },
     ],
   },
-  urls: [
+  uptimeActions: [
     {
-      action: 'zksync_checkBlock',
+      type: 'zksync_checkBlock',
       url: 'https://api.zksync.io/api/v0.2/blocks?from=latest&limit=1&direction=older',
     },
   ],
