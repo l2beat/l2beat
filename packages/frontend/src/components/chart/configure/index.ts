@@ -5,7 +5,7 @@ import { ChartStateWithInput, makeChartState } from './state'
 import { toUiState, UiState } from './ui'
 
 export function configureChart() {
-  const chart = document.querySelector<HTMLElement>('.Chart')
+  const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
   if (!chart) {
     return
   }

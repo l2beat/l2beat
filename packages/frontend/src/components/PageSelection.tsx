@@ -17,7 +17,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
           <li
             key={i}
             className={classNames(
-              'pb-2 relative',
+              'pb-1 relative',
               page.selected &&
                 'font-bold after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 after:bg-black dark:after:bg-white',
             )}
