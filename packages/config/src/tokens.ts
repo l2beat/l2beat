@@ -1893,6 +1893,10 @@ export function getTokenBySymbol(symbol: string) {
 
 const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
 
+export function safeGetTokenByAssetId(assetId: AssetId) {
+  return tokenMapByAssetId.get(assetId)
+}
+
 export function getTokenByAssetId(assetId: AssetId) {
   const token = tokenMapByAssetId.get(assetId)
   if (!token) {
