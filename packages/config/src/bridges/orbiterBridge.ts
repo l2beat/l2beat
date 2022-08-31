@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const orbiterBridge: BridgeDescription = {
   name: 'Orbiter Bridge',
   slug: 'orbiterbridge',
-  purpose: 'Swap Bridge',
+  purpose: 'Liquidity Network',
   links: {
     websites: ['https://orbiter.finance/'],
   },

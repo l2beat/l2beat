@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const nearBridge: BridgeDescription = {
   name: 'Near Rainbow Bridge',
   slug: 'nearbridge',
-  purpose: 'Native Bridge',
+  purpose: 'LC Token Bridge',
   links: {
     websites: ['https://near.org/bridge/'],
   },

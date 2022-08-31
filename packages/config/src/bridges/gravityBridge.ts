@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const gravityBridge: BridgeDescription = {
   name: 'Gravity Bridge',
   slug: 'gravitybridge',
-  purpose: 'Native Bridge',
+  purpose: 'Bridge',
   links: {
     websites: ['https://bridge.roninchain.com/'],
   },

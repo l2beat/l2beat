@@ -5,7 +5,9 @@ import { BridgeDescription } from './types/bridge'
 export const solletBridge: BridgeDescription = {
   name: 'Sollet Sol Bridge',
   slug: 'solletbridge',
-  purpose: 'Native Bridge',
+  description:
+    'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
+  purpose: 'EV Token Bridge',
   links: {
     websites: ['https://www.sollet.io/'],
   },
@@ -24,5 +26,5 @@ export const solletBridge: BridgeDescription = {
       ],
     },
   ],
-  connections: [],
+  connections: [{ network: 'Solana', tokens: ['*'] }],
 }

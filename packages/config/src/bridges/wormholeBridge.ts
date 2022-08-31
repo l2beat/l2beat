@@ -46,5 +46,5 @@ export const wormholeBridge: BridgeDescription = {
       ],
     },
   ],
-  connections: [],
+  connections: [{ network: 'Solana', tokens: ['*'] }],
 }

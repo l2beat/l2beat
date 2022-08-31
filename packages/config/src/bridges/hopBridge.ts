@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const hopBridge: BridgeDescription = {
   name: 'Hop Bridge',
   slug: 'hopbridge',
-  purpose: 'Native Bridge',
+  purpose: 'Liquidity Network',
   links: {
     websites: ['https://hop.exchange/'],
   },

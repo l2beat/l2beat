@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const nomadBridge: BridgeDescription = {
   name: 'Nomad Bridge',
   slug: 'nomadbridge',
-  purpose: 'Native Bridge',
+  purpose: 'Optimistic Bridge',
   links: {
     websites: ['https://app.nomad.xyz/'],
   },

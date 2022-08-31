@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const hyphenBridge: BridgeDescription = {
   name: 'Hyphen Bridge',
   slug: 'hyphenbridge',
-  purpose: 'Swap Bridge',
+  purpose: 'Liquidity Network',
   links: {
     websites: ['https://hyphen.biconomy.io/'],
   },

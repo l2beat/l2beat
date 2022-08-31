@@ -16,6 +16,7 @@ import { starGateBridge } from '../bridges/starGateBridge'
 import { synapseBridge } from '../bridges/synapseBridge'
 import { wormholeBridge } from '../bridges/wormholeBridge'
 import { xDaiBridge } from '../bridges/xDaiBridge'
+import { polynetworkBridge } from '../bridges/polynetworkBridge'
 import { BridgeDescription } from './types/bridge'
 
 export const bridges: BridgeDescription[] = [
@@ -37,4 +38,5 @@ export const bridges: BridgeDescription[] = [
   connextBridge,
   orbiterBridge,
   hyphenBridge,
+  polynetworkBridge,
 ]

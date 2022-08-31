@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const polygonBridge: BridgeDescription = {
   name: 'Polygon Bridge',
   slug: 'polygonbridge',
-  purpose: 'Native Bridge',
+  purpose: 'LC Token Bridge',
   links: {
     websites: ['https://wallet.polygon.technology/'],
   },

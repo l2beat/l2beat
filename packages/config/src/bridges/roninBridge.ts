@@ -5,7 +5,7 @@ import { BridgeDescription } from './types/bridge'
 export const roninBridge: BridgeDescription = {
   name: 'Ronin Bridge',
   slug: 'roninbridge',
-  purpose: 'Native Bridge',
+  purpose: 'EV Token Bridge',
   links: {
     websites: ['https://bridge.roninchain.com/'],
   },
