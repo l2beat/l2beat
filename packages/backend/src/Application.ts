@@ -138,9 +138,9 @@ export class Application {
       logger,
     )
 
+    const uptimeHandlers = rpcMonitor.handlers.concat(apiMonitor.handlers)
     const uptimeUpdater = new UptimeUpdater(
-      rpcMonitor,
-      apiMonitor,
+      uptimeHandlers,
       config.projects,
       logger,
     )

@@ -1,7 +1,9 @@
 import { HttpClient } from '@l2beat/common'
+import { ApiCheck, ApiCheckWithBody } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { z } from 'zod'
 
+import { makeHandler, UptimeHandlers } from './handler'
 import {
   aztecBlocksSchema,
   dydxTradesSchema,
@@ -13,9 +15,21 @@ import {
 } from './schemas'
 
 export class ApiMonitor {
-  constructor(private http: HttpClient) {}
+  handlers: UptimeHandlers = []
 
-  async aztecCheckBlock(url: string, body: string, maxSinceLastUpdate: number) {
+  constructor(private http: HttpClient) {
+    this.handlers = [
+      makeHandler('aztec_checkBlock', this.aztecCheckBlock),
+      makeHandler('dydx_checkTrades', this.dydxCheckTrades),
+      makeHandler('immutablex_checkTrades', this.immutablexCheckTrades),
+      makeHandler('loopring_checkTrades', this.loopringCheckTrades),
+      makeHandler('starknet_checkBlock', this.starknetCheckBlock),
+      makeHandler('zkspace_checkTrades', this.zkspaceCheckTrades),
+      makeHandler('zksync_checkBlock', this.zksyncCheckBlock),
+    ]
+  }
+
+  aztecCheckBlock = async ({ url, body }: ApiCheckWithBody) => {
     const { response, time } = await this.http.timedFetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -25,52 +39,51 @@ export class ApiMonitor {
       .json()
       .then((data) => aztecBlocksSchema.parse(data))
 
-    const active = isActive(data.data.blocks[0].created, maxSinceLastUpdate)
+    const active = isActive(data.data.blocks[0].created)
 
     return { active, time }
   }
 
-  async dydxCheckTrades(url: string, maxSinceLastUpdate: number) {
+  dydxCheckTrades = async ({ url }: ApiCheck) => {
     const { data, time } = await this.fetchAndParse(url, dydxTradesSchema)
-    const active = isActive(data.trades[0].createdAt, maxSinceLastUpdate)
+    const active = isActive(data.trades[0].createdAt)
 
     return { active, time }
   }
 
-  async immutablexCheckTrades(url: string, maxSinceLastUpdate: number) {
+  immutablexCheckTrades = async ({ url }: ApiCheck) => {
     const { data, time } = await this.fetchAndParse(url, immutablexTradesSchema)
-    const active = isActive(data.result[0].timestamp, maxSinceLastUpdate)
+    const active = isActive(data.result[0].timestamp)
 
     return { active, time }
   }
 
-  async loopringCheckTrades(url: string, maxSinceLastUpdate: number) {
+  loopringCheckTrades = async ({ url }: ApiCheck) => {
     const { data, time } = await this.fetchAndParse(url, loopringTradesSchema)
     const lastUpdate = new UnixTime(Math.floor(+data.trades[0][0] / 1000))
-    const active = isActive(lastUpdate, maxSinceLastUpdate)
+    const active = isActive(lastUpdate)
 
     return { active, time }
   }
 
-  async starknetCheckBlock(url: string, maxSinceLastUpdate: number) {
+  starknetCheckBlock = async ({ url }: ApiCheck) => {
     const { data, time } = await this.fetchAndParse(url, starknetBlockSchema)
-    const active = isActive(data.timestamp, maxSinceLastUpdate)
+    const active = isActive(data.timestamp)
 
     return { active, time }
   }
 
-  async zkspaceCheckTrades(url: string, maxSinceLastUpdate: number) {
+  zkspaceCheckTrades = async ({ url }: ApiCheck) => {
     const { data, time } = await this.fetchAndParse(url, zkspaceTradesSchema)
-    const active = isActive(data.data.data[0].created_at, maxSinceLastUpdate)
+    const active = isActive(data.data.data[0].created_at)
 
     return { active, time }
   }
 
-  async zksyncCheckBlock(url: string, maxSinceLastUpdate: number) {
+  zksyncCheckBlock = async ({ url }: ApiCheck) => {
     const { data, time } = await this.fetchAndParse(url, zksyncBlockSchema)
     const active =
-      data.status === 'success' &&
-      isActive(data.result.list[0].committedAt, maxSinceLastUpdate)
+      data.status === 'success' && isActive(data.result.list[0].committedAt)
 
     return { active, time }
   }
@@ -86,7 +99,9 @@ export class ApiMonitor {
   }
 }
 
-function isActive(lastUpdate: UnixTime, maxSinceLastUpdate: number) {
+const maxSinceLastUpdate = 3600 * 4 // TODO what is the longest we should wait since the last trade? This will be a fn argument
+
+function isActive(lastUpdate: UnixTime) {
   const now = UnixTime.now()
 
   const active = now.add(-maxSinceLastUpdate, 'seconds').lte(lastUpdate)

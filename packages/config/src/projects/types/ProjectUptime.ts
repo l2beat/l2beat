@@ -1,4 +1,4 @@
-interface RpcEstimateGas {
+export interface RpcEstimateGas {
   /** Estimate gas of sending 1 wei */
   action: 'rpc_estimateGas'
   /** RPC url of chain public node */
@@ -9,7 +9,7 @@ interface RpcEstimateGas {
   to: string
 }
 
-interface RpcGetBalance {
+export interface RpcGetBalance {
   /** Get balance of some token */
   action: 'rpc_getBalance'
   /** RPC url of chain public node */
@@ -20,12 +20,12 @@ interface RpcGetBalance {
   data: string
 }
 
-interface ApiCheck {
+export interface ApiCheck {
   action:
     | 'dydx_checkTrades'
     | 'loopring_checkTrades'
     | 'zksync_checkBlock'
-    | 'immutableX_checkTrades'
+    | 'immutablex_checkTrades'
     | 'zkspace_checkTrades'
     | 'starknet_checkBlock'
     | 'hermez_checkBatch'
@@ -33,7 +33,7 @@ interface ApiCheck {
   url: string
 }
 
-interface ApiCheckWithBody {
+export interface ApiCheckWithBody {
   action: 'aztec_checkBlock'
   url: string
   body: string
