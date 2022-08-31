@@ -1,3 +1,5 @@
+import { Nullable } from '../../../utils/Nullable'
+
 export {}
 
 declare module 'knex/types/tables' {
@@ -53,6 +55,15 @@ declare module 'knex/types/tables' {
     project_id: string
     count: number
     time_span: 'hourly' | 'sixHourly' | 'daily'
+  }
+
+  interface UptimeRow {
+    unix_timestamp: string
+    project_id: string
+    strategy_id: string
+    active: boolean
+    error: Nullable<string>
+    latency: Nullable<number>
   }
 
   interface Tables {
