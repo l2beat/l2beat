@@ -5,12 +5,12 @@ import { BridgeDescription } from './types/bridge'
 export const hyphenBridge: BridgeDescription = {
   name: 'Hyphen Bridge',
   slug: 'hyphenbridge',
-  purpose: 'Liquidity Network',
+  validation: 'Liquidity Network',
   links: {
     websites: ['https://hyphen.biconomy.io/'],
   },
   //associatedTokens: ['BICO'], TODO: add BICO token
-  bridges: [
+  escrows: [
     {
       address: '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
       sinceTimestamp: new UnixTime(1647128990),

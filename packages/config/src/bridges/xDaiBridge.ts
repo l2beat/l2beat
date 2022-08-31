@@ -5,12 +5,12 @@ import { BridgeDescription } from './types/bridge'
 export const xDaiBridge: BridgeDescription = {
   name: 'xDai Omni Bridge',
   slug: 'xdaibridge',
-  purpose: 'Native Bridge',
+  validation: 'Native Bridge',
   links: {
     websites: ['https://omni.xdaichain.com/bridge'],
   },
   associatedTokens: ['GNO'],
-  bridges: [
+  escrows: [
     {
       address: '0x88ad09518695c6c3712AC10a214bE5109a655671',
       sinceTimestamp: new UnixTime(1596501090),

@@ -5,12 +5,12 @@ import { BridgeDescription } from './types/bridge'
 export const harmonyBridge: BridgeDescription = {
   name: 'Harmony Bridge',
   slug: 'harmonybridge',
-  purpose: 'EV Bridge',
+  validation: 'EV Bridge',
   description: 'Externally Validated Token Bridge secured by a multisig.',
   links: {
     websites: ['https://bridge.harmony.one/erc20'],
   },
-  bridges: [
+  escrows: [
     {
       address: '0xF9Fb1c508Ff49F78b60d3A96dea99Fa5d7F3A8A6',
       sinceTimestamp: new UnixTime(1610602801),

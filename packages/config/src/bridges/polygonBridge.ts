@@ -5,12 +5,12 @@ import { BridgeDescription } from './types/bridge'
 export const polygonBridge: BridgeDescription = {
   name: 'Polygon Bridge',
   slug: 'polygonbridge',
-  purpose: 'LC Token Bridge',
+  validation: 'LC Token Bridge',
   links: {
     websites: ['https://wallet.polygon.technology/'],
   },
   associatedTokens: ['MATIC'],
-  bridges: [
+  escrows: [
     {
       address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
       sinceTimestamp: new UnixTime(1598436664),

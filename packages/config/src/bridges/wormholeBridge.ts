@@ -5,11 +5,11 @@ import { BridgeDescription } from './types/bridge'
 export const wormholeBridge: BridgeDescription = {
   name: 'Wormhole Bridge',
   slug: 'wormholebridge',
-  purpose: 'Native Bridge',
+  validation: 'Native Bridge',
   links: {
     websites: ['https://www.portalbridge.com/'],
   },
-  bridges: [
+  escrows: [
     {
       address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
       sinceTimestamp: new UnixTime(1631535967),

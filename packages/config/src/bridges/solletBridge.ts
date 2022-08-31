@@ -7,11 +7,11 @@ export const solletBridge: BridgeDescription = {
   slug: 'solletbridge',
   description:
     'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
-  purpose: 'EV Token Bridge',
+  validation: 'EV Token Bridge',
   links: {
     websites: ['https://www.sollet.io/'],
   },
-  bridges: [
+  escrows: [
     {
       address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
       sinceTimestamp: new UnixTime(1599794859),

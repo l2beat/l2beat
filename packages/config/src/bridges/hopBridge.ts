@@ -5,11 +5,11 @@ import { BridgeDescription } from './types/bridge'
 export const hopBridge: BridgeDescription = {
   name: 'Hop Bridge',
   slug: 'hopbridge',
-  purpose: 'Liquidity Network',
+  validation: 'Liquidity Network',
   links: {
     websites: ['https://hop.exchange/'],
   },
-  bridges: [
+  escrows: [
     {
       address: '0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a',
       sinceTimestamp: new UnixTime(1623907245),

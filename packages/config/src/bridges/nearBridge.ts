@@ -5,12 +5,12 @@ import { BridgeDescription } from './types/bridge'
 export const nearBridge: BridgeDescription = {
   name: 'Near Rainbow Bridge',
   slug: 'nearbridge',
-  purpose: 'LC Token Bridge',
+  validation: 'LC Token Bridge',
   links: {
     websites: ['https://near.org/bridge/'],
   },
   associatedTokens: ['AURORA'],
-  bridges: [
+  escrows: [
     {
       address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
       sinceTimestamp: new UnixTime(1615826693),

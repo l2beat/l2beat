@@ -9,13 +9,13 @@ Note: Timestamp is entered manually as all these accounts are EOAs
 export const multichainBridge: BridgeDescription = {
   name: 'Multichain Bridge',
   slug: 'multichainbridge',
-  purpose: 'EV Bridge and LN',
+  validation: 'EV Bridge and LN',
   description:
     'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
   links: {
     websites: ['https://multichain.xyz/'],
   },
-  bridges: [
+  escrows: [
     {
       address: '0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE', // Fantom
       sinceTimestamp: new UnixTime(1621464847),

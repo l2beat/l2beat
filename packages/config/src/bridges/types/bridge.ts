@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/types'
 
-import { ProjectRiskViewEntry } from '../../projects'
+import { News, ProjectRiskViewEntry } from '../../projects'
 import { RISK_VIEW } from '../../projects/common'
 import { Project } from '../../projects/types/Project'
 import { ProjectBridge } from '../../projects/types/ProjectBridge'
@@ -9,20 +9,22 @@ import { ProjectLinks } from '../../projects/types/ProjectLinks'
 export interface BridgeDescription {
   name: string
   slug: string
-  purpose: string
+  validation: string
   description?: string
   links: Partial<ProjectLinks>
   associatedTokens?: string[]
-  bridges: ProjectBridge[]
+  escrows: ProjectBridge[]
   connections: {
     network: string
     tokens: string[]
   }[]
   risks?: {
-    foo: ProjectRiskViewEntry
-    bar: ProjectRiskViewEntry
-    baz: ProjectRiskViewEntry
+    sourceOwnership: ProjectRiskViewEntry
+    sourceUpgradeability: ProjectRiskViewEntry
+    destinationOwnership: ProjectRiskViewEntry
+    destinationUpgradeability: ProjectRiskViewEntry
   }
+  news?: News[]
 }
 
 export function bridge(bridge: BridgeDescription): Project {
@@ -30,11 +32,11 @@ export function bridge(bridge: BridgeDescription): Project {
     name: bridge.name,
     id: ProjectId(bridge.slug),
     slug: bridge.slug,
-    bridges: bridge.bridges,
+    bridges: bridge.escrows,
     associatedTokens: bridge.associatedTokens,
     details: {
       description: bridge.description ?? '.',
-      purpose: bridge.purpose,
+      purpose: bridge.validation,
       links: {
         websites: [],
         apps: [],

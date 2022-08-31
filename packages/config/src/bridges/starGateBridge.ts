@@ -5,13 +5,13 @@ import { BridgeDescription } from './types/bridge'
 export const starGateBridge: BridgeDescription = {
   name: 'StarGate Bridge',
   slug: 'stargatebridge',
-  purpose: 'Liquidity Network',
+  validation: 'Liquidity Network',
   links: {
     websites: ['https://stargate.finance/'],
   },
   // In StarkGate these are pools, there is a separate Pool contract for each supported token. The list of all the pools can be obtained
   // from the pool factory: 0x06d538690af257da524f25d0cd52fd85b1c2173e. For Ether pool (SGETH) there is additinal Escrow contract
-  bridges: [
+  escrows: [
     {
       address: '0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56',
       sinceTimestamp: new UnixTime(1647511732),

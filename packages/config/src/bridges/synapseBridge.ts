@@ -5,12 +5,12 @@ import { BridgeDescription } from './types/bridge'
 export const synapseBridge: BridgeDescription = {
   name: 'Synapse Bridge',
   slug: 'synapsebridge',
-  purpose: 'Swap Bridge',
+  validation: 'Swap Bridge',
   links: {
     websites: ['https://near.org/bridge/'],
   },
   associatedTokens: ['AURORA'],
-  bridges: [
+  escrows: [
     {
       address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
       sinceTimestamp: new UnixTime(1629082107),
