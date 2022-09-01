@@ -82,10 +82,10 @@ export const myria: Project = {
       },
       permissions: [
         {
-          name: 'Governor', //TODO: check
+          name: 'Governor',
           accounts: [
             {
-              address: '',
+              address: '0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245',
               type: 'EOA',
             },
           ],
@@ -114,7 +114,34 @@ export const myria: Project = {
           description:
             'Allowed to update the state. When the Operator is down the state cannot be updated.',
         },
-      ], // TODO: Add committee
+        {
+          name: 'Data Availability Committee',
+          accounts: [
+            {
+              address: '0x30cf77fc391b4feba1ab31b01fed442bc759c0a8',
+              type: 'EOA',
+            },
+            {
+              address: '0x52e6ecb50d8c89fe9cbad2ef44ce962a430d8714',
+              type: 'EOA',
+            },
+            {
+              address: '0xc7544ad893710bd0bf780bf78de5547706da75c5',
+              type: 'EOA',
+            },
+            {
+              address: '0xf365cdb8c33849d3684acff5475e7b6f075f9f0f',
+              type: 'EOA',
+            },
+            {
+              address: '0xfba93b5f744c853648d62c1357532582f77ed394',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Validity proof must be signed by at least 2 of these 5 addresses to approve state update.',
+        },
+      ],
     },
     news: [
       {
