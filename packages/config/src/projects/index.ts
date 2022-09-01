@@ -11,6 +11,7 @@ import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { loopring } from './loopring'
 import { metis } from './metis'
+import { myria } from './myria'
 import { nova } from './nova'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
@@ -40,6 +41,7 @@ export const projects: Project[] = [
   layer2financezk,
   loopring,
   metis,
+  myria,
   nova,
   omgnetwork,
   optimism,
