@@ -1,9 +1,8 @@
 @import 'properties';
 @import 'global';
+@import 'meta';
 
 @import 'components/About';
-@import 'components/Chart';
-@import 'components/ChartHover';
 @import 'components/ContractsSection';
 @import 'components/DescriptionSection';
 @import 'components/DonateDetails';
@@ -18,21 +17,17 @@
 @import 'components/JobPosting';
 @import 'components/LinkSection';
 @import 'components/Logo';
-@import 'components/Navbar';
 @import 'components/NewsSection';
 @import 'components/OptimismIcon';
 @import 'components/OtherSites';
-@import 'components/Page';
 @import 'components/PercentChange';
 @import 'components/ProjectDetails';
 @import 'components/ProjectLink';
-@import 'components/Projects';
 @import 'components/ReferencesSection';
 @import 'components/RiskCell';
 @import 'components/RiskList';
 @import 'components/RiskSection';
 @import 'components/RiskView';
-@import 'components/SeasonalBanner';
 @import 'components/Section';
 @import 'components/StarkWareIcon';
 @import 'components/TableView';

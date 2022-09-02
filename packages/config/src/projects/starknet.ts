@@ -276,4 +276,6 @@ export const starknet: Project = {
       },
     ],
   },
+
+  events: [],
 }

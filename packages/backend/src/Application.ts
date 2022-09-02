@@ -3,15 +3,18 @@ import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
+import { DydxController } from './api/controllers/DydxController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
+import { createDydxRouter } from './api/routers/DydxRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
 import { BalanceUpdater } from './core/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { Clock } from './core/Clock'
+import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
@@ -19,6 +22,7 @@ import { AggregateReportRepository } from './peripherals/database/AggregateRepor
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
+import { EventRepository } from './peripherals/database/EventRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
@@ -52,6 +56,7 @@ export class Application {
       database,
       logger,
     )
+    const eventRepository = new EventRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -118,6 +123,15 @@ export class Application {
       logger,
     )
 
+    const eventUpdater = new EventUpdater(
+      ethereumClient,
+      blockNumberUpdater,
+      eventRepository,
+      clock,
+      config.projects,
+      logger,
+    )
+
     // #endregion
     // #region api
 
@@ -141,10 +155,13 @@ export class Application {
       config.projects,
     )
 
+    const dydxController = new DydxController(aggregateReportRepository)
+
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
+      createDydxRouter(dydxController),
     ])
 
     // #endregion
@@ -157,11 +174,13 @@ export class Application {
       if (config.freshStart) await database.rollbackAll()
       await database.migrateToLatest()
 
+      //todo move all to this condition
       if (config.syncEnabled) {
         priceUpdater.start()
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
+        eventUpdater.start()
       }
     }
 

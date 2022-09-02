@@ -1,12 +1,5 @@
 import { formatLargeNumber } from './formatLargeNumber'
 
-export function getFromEnd<T>(array: T[], n: number): T | undefined {
-  if (n >= array.length) {
-    return array[0]
-  }
-  return array[array.length - 1 - n]
-}
-
 export function getPercentageChange(now: number, then: number) {
   if (now === then) {
     return '+0.00%'

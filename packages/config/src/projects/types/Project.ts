@@ -2,6 +2,7 @@ import { ProjectId } from '@l2beat/types'
 
 import { ProjectBridge } from './ProjectBridge'
 import { ProjectDetails } from './ProjectDetails'
+import { ProjectEvent } from './ProjectEvent'
 
 export interface Project {
   /** Name of the project, will be used as a display name on the website */
@@ -16,4 +17,6 @@ export interface Project {
   bridges: ProjectBridge[]
   /** Information displayed about the project on the frontend */
   details: ProjectDetails
+  /** Metadata about events emitted by the system */
+  events: ProjectEvent[]
 }
