@@ -96,5 +96,6 @@ export function bridge(bridge: BridgeDescription): Project {
       },
       news: [],
     },
+    events: [],
   }
 }
