@@ -221,7 +221,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
     const file = path.join(
       __dirname,
-      `../../../../static/images/${project.slug}-architecture.png`,
+      `../../../static/images/${project.slug}-architecture.png`,
     )
     const architectureImage = existsSync(file)
       ? `/images/${project.slug}-architecture.png`
