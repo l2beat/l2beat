@@ -307,14 +307,14 @@ export const arbitrum: Project = {
             },
           },
           {
-            address: '0xfCEa474C6bD5Dd4eDF5f37EE6Bea5567F0B52A08',
+            address: '0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a',
             name: 'Bridge',
             description:
               'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x2f06e43D850Ac75926FA2866e40139475b58Cb16',
+              implementation: '0x1066cecc8880948fe55e427e94f1ff221d626591',
             },
           },
           {
