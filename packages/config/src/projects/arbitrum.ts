@@ -313,8 +313,8 @@ export const arbitrum: Project = {
               'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0x554723262467f125ac9e1cdfa9ce15cc53822dbd',
-              implementation: '0x1066cecc8880948fe55e427e94f1ff221d626591',
+              admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+              implementation: '0x1066CEcC8880948FE55e427E94F1FF221d626591',
             },
           },
           {
