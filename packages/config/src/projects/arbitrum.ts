@@ -16,6 +16,11 @@ export const arbitrum: Project = {
   id: ProjectId('arbitrum'),
   bridges: [
     {
+      address: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+      sinceTimestamp: new UnixTime(1661450734),
+      tokens: ['ETH'],
+    },
+    {
       address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
       sinceTimestamp: new UnixTime(1622243344),
       tokens: ['ETH'],
@@ -269,7 +274,7 @@ export const arbitrum: Project = {
               'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
           },
           {
-            address: '0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A',
+            address: '0x5eF0D09d1E6204141B4d37530808eD19f60FBa35',
             name: 'Rollup',
             description:
               'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
@@ -280,14 +285,14 @@ export const arbitrum: Project = {
             },
           },
           {
-            address: '0x4c6f947Ae67F572afa4ae0730947DE7C874F95Ef',
+            address: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
             name: 'SequencerInbox',
             description:
               'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x9685e7281Fb1507B6f141758d80B08752faF0c43',
+              implementation: '0xbe04Ab2728c924D678f9FC833E379688c6eFA317',
             },
           },
           {
@@ -298,11 +303,11 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x048cc108763de75E080Ad717bD284003aa49eA15',
+              implementation: '0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6',
             },
           },
           {
-            address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+            address: '0xfCEa474C6bD5Dd4eDF5f37EE6Bea5567F0B52A08',
             name: 'Bridge',
             description:
               'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
@@ -314,21 +319,20 @@ export const arbitrum: Project = {
           },
           {
             address: '0xc8C3194eD3BE7B2393fEfE811a2Cc39297442c0B',
-            name: 'RollupEventBridge',
+            name: 'Deprecated RollupEventBridge',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
               implementation: '0xb872Ea300eDba3872873fa1Aa33DB897c4D2cB66',
             },
           },
-
           {
-            address: '0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a',
+            address: '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
             name: 'Outbox',
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0xb91f4bE773F5a1b9b0dC1085663b3535A6EBeEE2',
+              implementation: '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
             },
           },
           {
