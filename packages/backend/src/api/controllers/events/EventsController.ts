@@ -6,13 +6,14 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
-import { EventUpdater } from '../../core/events/EventUpdater'
-import { ProjectInfo } from '../../model'
-import { EventRepository } from '../../peripherals/database/EventRepository'
+import { EventUpdater } from '../../../core/events/EventUpdater'
+import { ProjectInfo } from '../../../model'
+import { EventRepository } from '../../../peripherals/database/EventRepository'
 import {
   getHourlyMinTimestamp,
   getSixHourlyMinTimestamp,
-} from './report/charts'
+} from '../report/charts'
+import { renderShowcasePage } from './ShowcasePage'
 
 export class EventsController {
   constructor(
@@ -21,7 +22,7 @@ export class EventsController {
     private projects: ProjectInfo[],
   ) {}
 
-  async getMain(): Promise<ApiEvents> {
+  async getEvents(): Promise<ApiEvents> {
     const main: ApiEvents = {
       projects: {},
     }
@@ -37,7 +38,7 @@ export class EventsController {
         granularity: 'sixHourly',
         timestamp: getSixHourlyMinTimestamp(timestamp),
       },
-      { granularity: 'hourly', timestamp: undefined },
+      { granularity: 'daily', timestamp: undefined },
     ]
 
     await Promise.all(
@@ -99,5 +100,11 @@ export class EventsController {
       types: ['timestamp', ...eventNames],
       data,
     }
+  }
+
+  async getShowcase() {
+    const events = await this.getEvents()
+
+    return renderShowcasePage({events})
   }
 }
