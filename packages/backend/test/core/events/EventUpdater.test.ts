@@ -25,6 +25,7 @@ const EVENT: Layer2Event = {
   emitter: EthereumAddress.random(),
   type: 'state',
   sinceTimestamp: START,
+  untilTimestamp: undefined,
 }
 
 const eventDetails = (projectId: ProjectId) => {
@@ -34,6 +35,7 @@ const eventDetails = (projectId: ProjectId) => {
     topic: '0x57050ab73f6b9ebdd9f76b8d4997793f48cf956e965ee070551b9ca0bb71584e',
     projectId,
     sinceTimestamp: EVENT.sinceTimestamp,
+    untilTimestamp: EVENT.untilTimestamp,
   }
 }
 
