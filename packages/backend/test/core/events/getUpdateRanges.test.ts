@@ -104,6 +104,4 @@ describe(getUpdateRanges.name, () => {
       expect(result).toEqual([])
     })
   })
-
-
 })
