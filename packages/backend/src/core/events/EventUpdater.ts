@@ -38,6 +38,7 @@ export class EventUpdater {
             name: event.name,
             projectId: project.projectId,
             sinceTimestamp: event.sinceTimestamp,
+            untilTimestamp: event.untilTimestamp,
           }
         }),
       )
@@ -69,6 +70,7 @@ export class EventUpdater {
         lastHour,
         boundary,
         event.sinceTimestamp,
+        event.untilTimestamp,
       )
 
       for (const { from, to } of ranges) {

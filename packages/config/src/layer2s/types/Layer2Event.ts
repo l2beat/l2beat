@@ -6,4 +6,5 @@ export interface Layer2Event {
   emitter: EthereumAddress
   type: 'state' | 'data'
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }

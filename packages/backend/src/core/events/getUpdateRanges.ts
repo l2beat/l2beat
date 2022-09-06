@@ -10,13 +10,19 @@ export function getUpdateRanges(
   to: UnixTime,
   dbStatus: { earliest: UnixTime; latest: UnixTime } | undefined,
   sinceTimestamp: UnixTime,
+  untilTimestamp?: UnixTime,
 ): Range[] {
   const ranges: { from: UnixTime; to: UnixTime }[] = []
 
   const fromAdjusted = sinceTimestamp.gt(from) ? sinceTimestamp : from
+  const toAdjusted = untilTimestamp
+    ? untilTimestamp.lt(to)
+      ? untilTimestamp
+      : to
+    : to
 
   if (dbStatus === undefined) {
-    return [{ from: fromAdjusted, to }]
+    return [{ from: fromAdjusted, to: toAdjusted }]
   }
 
   const { earliest, latest } = dbStatus
@@ -25,8 +31,8 @@ export function getUpdateRanges(
     ranges.push({ from: fromAdjusted, to: earliest.add(-1, 'hours') })
   }
 
-  if (latest.lt(to)) {
-    ranges.push({ from: latest.add(1, 'hours'), to })
+  if (latest.lt(toAdjusted)) {
+    ranges.push({ from: latest.add(1, 'hours'), to: toAdjusted })
   }
 
   return ranges
