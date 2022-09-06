@@ -25,9 +25,9 @@ describe('projects', () => {
           expect(utils.getAddress(address)).toEqual(address)
         })
 
-      describe('bridges', () => {
-        const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
-        for (const address of bridges) {
+      describe('escrows', () => {
+        const escrows = projects.flatMap((x) => x.escrows.map((x) => x.address))
+        for (const address of escrows) {
           testAddress(address)
         }
       })
@@ -56,9 +56,9 @@ describe('projects', () => {
       })
     })
 
-    it('every bridge has a unique address', () => {
-      const bridges = projects.flatMap((x) => x.bridges.map((x) => x.address))
-      const everyUnique = bridges.every((x, i, a) => a.indexOf(x) === i)
+    it('every escrow has a unique address', () => {
+      const escrows = projects.flatMap((x) => x.escrows.map((x) => x.address))
+      const everyUnique = escrows.every((x, i, a) => a.indexOf(x) === i)
       expect(everyUnique).toEqual(true)
     })
   })
@@ -154,7 +154,7 @@ describe('projects', () => {
   describe('every token is valid', () => {
     const symbols = projects
       .flatMap((x) =>
-        x.bridges.filter((x) => x.tokens !== '*').flatMap((x) => x.tokens),
+        x.escrows.filter((x) => x.tokens !== '*').flatMap((x) => x.tokens),
       )
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {

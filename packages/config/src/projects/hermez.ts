@@ -16,7 +16,7 @@ export const hermez: Project = {
   name: 'Polygon Hermez',
   slug: 'hermez',
   id: ProjectId('hermez'),
-  bridges: [
+  escrows: [
     {
       address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
       sinceTimestamp: new UnixTime(1616482490),

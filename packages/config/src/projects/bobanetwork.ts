@@ -14,7 +14,7 @@ export const bobanetwork: Project = {
   name: 'Boba Network',
   slug: 'bobanetwork',
   id: ProjectId('bobanetwork'),
-  bridges: [
+  escrows: [
     {
       // Proxy__OVM_L1StandardBridge
       address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',

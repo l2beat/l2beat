@@ -15,7 +15,7 @@ export const aztecconnect: Project = {
   name: 'Aztec Connect',
   slug: 'aztecconnect',
   id: ProjectId('aztecconnect'),
-  bridges: [
+  escrows: [
     {
       address: '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
       sinceTimestamp: new UnixTime(1654587783),
