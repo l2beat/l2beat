@@ -95,7 +95,13 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
                   {event.hourly.map((d) => {
                     return (
                       <tr key={d}>
-                        <td style={{ '--size': d / event.maxHourly }}></td>
+                        <td
+                          style={
+                            {
+                              '--size': d / event.maxHourly,
+                            } as React.CSSProperties
+                          }
+                        ></td>
                       </tr>
                     )
                   })}
@@ -122,7 +128,13 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
                   {event.sixHourly.map((d) => {
                     return (
                       <tr key={d}>
-                        <td style={{ '--size': d / event.maxSixHourly }}></td>
+                        <td
+                          style={
+                            {
+                              '--size': d / event.maxSixHourly,
+                            } as React.CSSProperties
+                          }
+                        ></td>
                       </tr>
                     )
                   })}
@@ -149,7 +161,13 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
                   {event.daily.map((d) => {
                     return (
                       <tr key={d}>
-                        <td style={{ '--size': d / event.maxDaily }}></td>
+                        <td
+                          style={
+                            {
+                              '--size': d / event.maxDaily,
+                            } as React.CSSProperties
+                          }
+                        ></td>
                       </tr>
                     )
                   })}
