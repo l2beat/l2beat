@@ -125,16 +125,16 @@ export function getMissingData(
 
   const missing: HeldAsset[] = []
   for (const project of projects) {
-    for (const bridge of project.bridges) {
-      if (bridge.sinceTimestamp.gt(timestamp)) {
+    for (const escrow of project.escrows) {
+      if (escrow.sinceTimestamp.gt(timestamp)) {
         continue
       }
-      for (const token of bridge.tokens) {
+      for (const token of escrow.tokens) {
         if (token.sinceTimestamp.gt(timestamp)) {
           continue
         }
         const entry = {
-          holder: bridge.address,
+          holder: escrow.address,
           assetId: token.id,
         }
         if (
