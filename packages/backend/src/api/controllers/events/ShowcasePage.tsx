@@ -16,37 +16,43 @@ interface Event {
   hourly: number[]
   sixHourly: number[]
   daily: number[]
-  hourlyRange: [UnixTime, UnixTime]
-  sixHourlyRange: [UnixTime, UnixTime]
-  dailyRange: [UnixTime, UnixTime]
+  hourlyRange: [UnixTime | undefined, UnixTime | undefined]
+  sixHourlyRange: [UnixTime | undefined, UnixTime | undefined]
+  dailyRange: [UnixTime | undefined, UnixTime | undefined]
 }
 
 export function ShowcasePage({ events }: ShowcasePageProps) {
   const transformedEvents: Event[] = []
 
   Object.entries(events.projects).forEach(([key, value]) => {
-    const maxIndex = value?.hourly.types.length
+    const maxIndex = value?.hourly.types.length ?? 0
     for (let i = 1; i < maxIndex; i++) {
+      const hourly: number[] =
+        value?.hourly.data.map((d) => d[i] as number) ?? []
+      const sixHourly: number[] =
+        value?.sixHourly.data.map((d) => d[i] as number) ?? []
+      const daily: number[] = value?.daily.data.map((d) => d[i] as number) ?? []
+
       transformedEvents.push({
         project: key,
         name: value?.daily.types[i],
-        maxHourly: Math.max(...value?.hourly.data.map((d) => d[i])),
-        maxSixHourly: Math.max(...value?.sixHourly.data.map((d) => d[i])),
-        maxDaily: Math.max(...value?.daily.data.map((d) => d[i])),
-        hourly: value?.hourly.data.map((d) => d[i]),
-        sixHourly: value?.sixHourly.data.map((d) => d[i]),
-        daily: value?.daily.data.map((d) => d[i]),
+        maxHourly: Math.max(...hourly),
+        maxSixHourly: Math.max(...sixHourly),
+        maxDaily: Math.max(...daily),
+        hourly,
+        sixHourly,
+        daily,
         hourlyRange: [
           value?.hourly.data[0][0],
-          value?.hourly.data[value?.hourly.data.length - 1][0],
+          value?.hourly.data[value.hourly.data.length - 1][0],
         ],
         sixHourlyRange: [
           value?.sixHourly.data[0][0],
-          value?.sixHourly.data[value?.sixHourly.data.length - 1][0],
+          value?.sixHourly.data[value.sixHourly.data.length - 1][0],
         ],
         dailyRange: [
           value?.daily.data[0][0],
-          value?.daily.data[value?.daily.data.length - 1][0],
+          value?.daily.data[value.daily.data.length - 1][0],
         ],
       })
     }
@@ -72,8 +78,8 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
               <h2>Hourly</h2>
               <blockquote>
                 <div>
-                  FROM {event.hourlyRange[0].toYYYYMMDD()} - TO{' '}
-                  {event.hourlyRange[1].toYYYYMMDD()}
+                  FROM {event.hourlyRange[0]?.toYYYYMMDD()} - TO{' '}
+                  {event.hourlyRange[1]?.toYYYYMMDD()}
                 </div>
                 <div>
                   Average:
@@ -99,8 +105,8 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
               <h2>Six hourly</h2>
               <blockquote>
                 <div>
-                  FROM {event.sixHourlyRange[0].toYYYYMMDD()} - TO{' '}
-                  {event.sixHourlyRange[1].toYYYYMMDD()}
+                  FROM {event.sixHourlyRange[0]?.toYYYYMMDD()} - TO{' '}
+                  {event.sixHourlyRange[1]?.toYYYYMMDD()}
                 </div>
                 <div>
                   Average:
@@ -126,8 +132,8 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
               <h2>Daily</h2>
               <blockquote>
                 <div>
-                  FROM {event.dailyRange[0].toYYYYMMDD()} - TO{' '}
-                  {event.dailyRange[1].toYYYYMMDD()}
+                  FROM {event.dailyRange[0]?.toYYYYMMDD()} - TO{' '}
+                  {event.dailyRange[1]?.toYYYYMMDD()}
                 </div>
                 <div>
                   Average:

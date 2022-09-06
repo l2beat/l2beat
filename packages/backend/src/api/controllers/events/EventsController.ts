@@ -105,6 +105,6 @@ export class EventsController {
   async getShowcase() {
     const events = await this.getEvents()
 
-    return renderShowcasePage({events})
+    return renderShowcasePage({ events })
   }
 }

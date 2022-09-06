@@ -79,8 +79,7 @@ export class EventUpdater {
 
     await this.eventRepository.addMany(events)
     this.lastProcessed = lastHour
-    this.logger.info('Update completed', {timestamp: lastHour.toString()})
-
+    this.logger.info('Update completed', { timestamp: lastHour.toString() })
   }
 
   private getFirstHour() {
