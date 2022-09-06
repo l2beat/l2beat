@@ -1,9 +1,15 @@
 import React from 'react'
 
 import { Logo } from '../Logo'
-import { ChartButton } from './ChartButton'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
+import { CurrencyControls } from './CurrencyControls'
+import { Description } from './Description'
+import { RangeControls } from './RangeControls'
+import { ScaleControls } from './ScaleControls'
+import { TimeRange } from './TimeRange'
+import { TokenControls } from './TokenControls'
+import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
   endpoint: string
@@ -13,61 +19,32 @@ export interface ChartProps {
 
 export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
   return (
-    <section className="Chart" data-endpoint={endpoint}>
-      <p className="Chart-Range">...</p>
-      <div className="Chart-RangeControls">
-        <ChartButton checked={days === 7} name="range" value="7D" />
-        <ChartButton checked={days === 30} name="range" value="30D" />
-        <ChartButton name="range" value="90D" />
-        <ChartButton name="range" value="180D" />
-        <ChartButton name="range" value="1Y" />
-        <ChartButton name="range" value="MAX" />
-      </div>
-      <div className="Chart-View" role="img" aria-label="chart">
+    <section
+      data-role="chart"
+      data-endpoint={endpoint}
+      className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
+    >
+      <TimeRange />
+      <RangeControls days={days} />
+      <div
+        data-role="chart-view"
+        className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
+        role="img"
+        aria-label="chart"
+      >
         <ChartLoader />
         <ChartHover />
-        <div className="Chart-Lines">
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-          <div className="Chart-Line" />
-        </div>
-        <div className="Chart-Labels">
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-          <div className="Chart-Label">...</div>
-        </div>
-        <Logo className="Chart-Watermark" />
-        <canvas className="Chart-Canvas" />
+        <YAxisLabels />
+        <Logo className="absolute bottom-2 right-2 z-10 w-[60px] h-[25px] opacity-40" />
+        <canvas
+          data-role="chart-canvas"
+          className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
+        />
       </div>
-      <div className="Chart-CurrencyControls">
-        <ChartButton checked name="currency" value="USD" />
-        <ChartButton name="currency" value="ETH">
-          ETH<sup>*</sup>
-        </ChartButton>
-      </div>
-      <p className="Chart-Description">...</p>
-      <div className="Chart-ScaleControls">
-        <ChartButton name="scale" value="LOG" />
-        <ChartButton checked name="scale" value="LIN" />
-      </div>
-      {tokens && tokens.length > 0 && (
-        <div className="Chart-TokenControls">
-          <span className="Chart-TokenTitle">Tokens:</span>
-          {tokens.map((x) => (
-            <ChartButton
-              key={x.symbol}
-              name="token"
-              value={x.symbol}
-              endpoint={x.endpoint}
-            />
-          ))}
-          <button className="Chart-MoreTokens">More…</button>
-        </div>
-      )}
+      <CurrencyControls />
+      <Description />
+      <ScaleControls />
+      <TokenControls tokens={tokens} />
     </section>
   )
 }
