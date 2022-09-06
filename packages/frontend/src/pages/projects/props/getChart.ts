@@ -1,4 +1,4 @@
-import { getTokenByAssetId, Project } from '@l2beat/config'
+import { Project, safeGetTokenByAssetId } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { ChartProps } from '../../../components'
@@ -13,12 +13,19 @@ export function getChart(project: Project, apiMain: ApiMain): ChartProps {
 function getTokens(project: Project, apiMain: ApiMain) {
   return apiMain.projects[project.id.toString()]?.tokens
     .map(({ assetId, tvl }) => {
-      const symbol = getTokenByAssetId(assetId).symbol
-      return {
-        symbol,
-        endpoint: `/api/projects/${project.id.toString()}/tvl/assets/${assetId.toString()}`,
-        tvl,
+      const symbol = safeGetTokenByAssetId(assetId)?.symbol
+      if (symbol) {
+        return {
+          symbol,
+          endpoint: `/api/projects/${project.id.toString()}/tvl/assets/${assetId.toString()}`,
+          tvl,
+        }
       }
     })
+    .filter(notUndefined)
     .sort((a, b) => b.tvl - a.tvl)
+}
+
+function notUndefined<T>(x: T | undefined): x is T {
+  return x !== undefined
 }

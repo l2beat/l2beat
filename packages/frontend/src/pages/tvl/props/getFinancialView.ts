@@ -1,4 +1,4 @@
-import { getTokenByAssetId, Project } from '@l2beat/config'
+import { Project, safeGetTokenByAssetId } from '@l2beat/config'
 import { ApiMain, Project as ApiProject, Token } from '@l2beat/types'
 
 import {
@@ -91,12 +91,14 @@ function getTVLBreakdown(
   let stable = 0
   let other = 0
   for (const { assetId, tvl } of tokens) {
-    const { category, symbol } = getTokenByAssetId(assetId)
-    if (associatedTokens.includes(symbol)) {
+    const token = safeGetTokenByAssetId(assetId)
+    if (!token) {
+      other += tvl
+    } else if (associatedTokens.includes(token.symbol)) {
       associated += tvl
-    } else if (category === 'ether') {
+    } else if (token.category === 'ether') {
       ether += tvl
-    } else if (category === 'stablecoin') {
+    } else if (token.category === 'stablecoin') {
       stable += tvl
     } else {
       other += tvl
