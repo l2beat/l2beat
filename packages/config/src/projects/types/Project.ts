@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
-import { ProjectEscrow } from './ProjectBridge'
 import { ProjectDetails } from './ProjectDetails'
+import { ProjectEscrow } from './ProjectEscrow'
 import { ProjectEvent } from './ProjectEvent'
 
 export interface Project {
