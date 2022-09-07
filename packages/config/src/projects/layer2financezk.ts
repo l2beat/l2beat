@@ -17,7 +17,7 @@ export const layer2financezk: Project = {
   name: 'Layer2.Finance-zk',
   slug: 'layer2financezk',
   id: ProjectId('layer2financezk'),
-  bridges: [
+  escrows: [
     {
       address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
       sinceTimestamp: new UnixTime(1645130774),

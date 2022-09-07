@@ -9,7 +9,7 @@ export const zkspace: Project = {
   slug: 'zkspace',
   id: ProjectId('zkspace'),
   associatedTokens: ['ZKS'],
-  bridges: [
+  escrows: [
     {
       address: '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
       sinceTimestamp: new UnixTime(1639569183),

@@ -40,17 +40,17 @@ describe(createReports.name, () => {
 })
 
 describe(aggregateBalancesPerProject.name, () => {
-  it('skips balances before bridge sinceTimestamp', () => {
+  it('skips balances before escrow sinceTimestamp', () => {
     const result = aggregateBalancesPerProject(PROJECTS, [
       {
-        holderAddress: PROJECTS[0].bridges[0].address,
-        timestamp: PROJECTS[0].bridges[0].sinceTimestamp.add(-1, 'days'),
+        holderAddress: PROJECTS[0].escrows[0].address,
+        timestamp: PROJECTS[0].escrows[0].sinceTimestamp.add(-1, 'days'),
         assetId: AssetId.DAI,
         balance: 100n * 10n ** 18n,
       },
       {
-        holderAddress: PROJECTS[0].bridges[0].address,
-        timestamp: PROJECTS[0].bridges[0].tokens[0].sinceTimestamp.add(
+        holderAddress: PROJECTS[0].escrows[0].address,
+        timestamp: PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
           1,
           'days',
         ),
@@ -82,8 +82,8 @@ describe(aggregateBalancesPerProject.name, () => {
   it('discards balances before asset sinceTimestamp', () => {
     const result = aggregateBalancesPerProject(PROJECTS, [
       {
-        holderAddress: PROJECTS[0].bridges[0].address,
-        timestamp: PROJECTS[0].bridges[0].tokens[0].sinceTimestamp.add(
+        holderAddress: PROJECTS[0].escrows[0].address,
+        timestamp: PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
           -1,
           'days',
         ),
@@ -91,8 +91,8 @@ describe(aggregateBalancesPerProject.name, () => {
         balance: 100n * 10n ** 18n,
       },
       {
-        holderAddress: PROJECTS[0].bridges[0].address,
-        timestamp: PROJECTS[0].bridges[0].tokens[0].sinceTimestamp.add(
+        holderAddress: PROJECTS[0].escrows[0].address,
+        timestamp: PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
           1,
           'days',
         ),

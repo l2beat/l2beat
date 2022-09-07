@@ -14,7 +14,7 @@ export const nova: Project = {
   name: 'Arbitrum Nova',
   slug: 'nova',
   id: ProjectId('nova'),
-  bridges: [
+  escrows: [
     {
       address: '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
       sinceTimestamp: new UnixTime(1656073623),

@@ -17,7 +17,7 @@ export const rhinofi: Project = {
   name: 'rhino.fi',
   slug: 'rhinofi',
   id: ProjectId('deversifi'),
-  bridges: [
+  escrows: [
     {
       address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
       sinceTimestamp: new UnixTime(1590491810),

@@ -13,7 +13,7 @@ export const layer2finance: Project = {
   name: 'Layer2.Finance',
   slug: 'layer2finance',
   id: ProjectId('layer2finance'),
-  bridges: [
+  escrows: [
     {
       address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
       sinceTimestamp: new UnixTime(1619011215),

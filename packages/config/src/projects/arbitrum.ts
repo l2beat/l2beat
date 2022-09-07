@@ -14,7 +14,7 @@ export const arbitrum: Project = {
   name: 'Arbitrum One',
   slug: 'arbitrum',
   id: ProjectId('arbitrum'),
-  bridges: [
+  escrows: [
     {
       address: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
       sinceTimestamp: new UnixTime(1661450734),

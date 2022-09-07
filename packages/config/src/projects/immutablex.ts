@@ -17,7 +17,7 @@ export const immutablex: Project = {
   name: 'Immutable X',
   slug: 'immutablex',
   id: ProjectId('immutablex'),
-  bridges: [
+  escrows: [
     {
       address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
       sinceTimestamp: new UnixTime(1615389188),

@@ -9,7 +9,7 @@ export const zkswap2: Project = {
   slug: 'zkswap2',
   id: ProjectId('zkswap2'),
   associatedTokens: ['ZKS'],
-  bridges: [
+  escrows: [
     {
       address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
       sinceTimestamp: new UnixTime(1626059966),

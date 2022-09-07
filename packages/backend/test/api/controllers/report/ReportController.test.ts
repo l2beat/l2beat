@@ -49,7 +49,7 @@ describe(ReportController.name, () => {
           {
             projectId: OPTIMISM,
             name: 'Optimism',
-            bridges: [
+            escrows: [
               {
                 address: OPTIMISM_ADDRESS,
                 sinceTimestamp: new UnixTime(0),
@@ -104,7 +104,7 @@ describe(ReportController.name, () => {
           {
             projectId: OPTIMISM,
             name: 'Optimism',
-            bridges: [
+            escrows: [
               {
                 address: OPTIMISM_ADDRESS,
                 sinceTimestamp: new UnixTime(0),

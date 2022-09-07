@@ -15,7 +15,7 @@ export const gluon: Project = {
   name: 'Gluon',
   slug: 'gluon',
   id: ProjectId('gluon'),
-  bridges: [
+  escrows: [
     {
       address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
       sinceTimestamp: new UnixTime(1573694037),

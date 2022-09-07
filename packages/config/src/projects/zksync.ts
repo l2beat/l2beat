@@ -16,7 +16,7 @@ export const zksync: Project = {
   name: 'zkSync',
   slug: 'zksync',
   id: ProjectId('zksync'),
-  bridges: [
+  escrows: [
     {
       address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
       sinceTimestamp: new UnixTime(1592218707),

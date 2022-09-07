@@ -5,11 +5,11 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 export interface ProjectInfo {
   name: string
   projectId: ProjectId
-  bridges: BridgeInfo[]
+  escrows: EscrowInfo[]
   events: ProjectEvent[]
 }
 
-export interface BridgeInfo {
+export interface EscrowInfo {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   tokens: TokenInfo[]
@@ -19,11 +19,11 @@ export function projectToInfo(project: Project): ProjectInfo {
   return {
     name: project.name,
     projectId: project.id,
-    bridges: project.bridges.map((bridge) => ({
-      address: EthereumAddress(bridge.address),
-      sinceTimestamp: bridge.sinceTimestamp,
+    escrows: project.escrows.map((escrow) => ({
+      address: EthereumAddress(escrow.address),
+      sinceTimestamp: escrow.sinceTimestamp,
       tokens:
-        bridge.tokens === '*' ? tokenList : bridge.tokens.map(getTokenBySymbol),
+        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
     events: project.events,
   }
