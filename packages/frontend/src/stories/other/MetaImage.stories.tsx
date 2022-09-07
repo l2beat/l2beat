@@ -1,4 +1,4 @@
-import { projects } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
@@ -11,7 +11,7 @@ export default {
   argTypes: {
     projectId: {
       control: 'select',
-      options: projects.map((x) => x.id),
+      options: layer2s.map((x) => x.id),
     },
   },
 } as Meta
@@ -24,7 +24,7 @@ function Template({ projectId }: TemplateProps) {
   useEffect(() => {
     configureChart()
   })
-  const project = projects.find((x) => x.id === projectId)
+  const project = layer2s.find((x) => x.id === projectId)
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">

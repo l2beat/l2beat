@@ -1,5 +1,5 @@
 import { LogLevel } from '@l2beat/common'
-import { projects, tokenList } from '@l2beat/config'
+import { layer2s, tokenList } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 
 import { projectToInfo } from '../model'
@@ -32,7 +32,7 @@ export function getProductionConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
-    projects: projects.map(projectToInfo),
+    projects: layer2s.map(projectToInfo),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
   }

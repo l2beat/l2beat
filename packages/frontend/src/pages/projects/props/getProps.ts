@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { Wrapped } from '../../Page'
@@ -9,7 +9,7 @@ import { getPageMetadata } from './getPageMetadata'
 import { getProjectDetails } from './getProjectDetails'
 
 export function getProps(
-  project: Project,
+  project: Layer2,
   apiMain: ApiMain,
 ): Wrapped<ProjectPageProps> {
   const chart = getChart(project, apiMain)

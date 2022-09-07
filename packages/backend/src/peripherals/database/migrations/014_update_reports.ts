@@ -11,7 +11,7 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { projects } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -19,7 +19,7 @@ export async function up(knex: Knex) {
     table.string('project_id')
   })
   await Promise.all(
-    projects.flatMap(({ id, escrows }) =>
+    layer2s.flatMap(({ id, escrows }) =>
       escrows.map(async (escrow) => {
         await knex('reports')
           .update({ project_id: id.toString() })

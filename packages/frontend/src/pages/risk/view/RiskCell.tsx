@@ -1,9 +1,9 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { Layer2RiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
 interface Props {
-  item: ProjectRiskViewEntry
+  item: Layer2RiskViewEntry
 }
 
 export function RiskCell({ item }: Props) {
