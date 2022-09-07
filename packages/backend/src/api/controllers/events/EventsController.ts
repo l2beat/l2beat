@@ -1,10 +1,4 @@
-import {
-  ApiEvents,
-  EventChart,
-  EventChartPoint,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/types'
+import { ApiEvents, EventChart, EventChartPoint, UnixTime } from '@l2beat/types'
 
 import { EventUpdater } from '../../../core/events/EventUpdater'
 import { ProjectInfo } from '../../../model'

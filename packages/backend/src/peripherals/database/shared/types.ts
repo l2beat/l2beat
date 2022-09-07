@@ -1,4 +1,4 @@
-import { EventGranularity } from "../EventRepository"
+import { EventGranularity } from '../EventRepository'
 
 export {}
 
