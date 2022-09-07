@@ -425,6 +425,7 @@ export const arbitrum: Layer2 = {
       emitter: EthereumAddress('0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A'),
       type: 'state',
       sinceTimestamp: new UnixTime(1622243344),
+      untilTimestamp: new UnixTime(1661957100),
     },
     {
       name: 'SequencerBatchDeliveredFromOrigin',
@@ -432,6 +433,21 @@ export const arbitrum: Layer2 = {
       emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
       type: 'data',
       sinceTimestamp: new UnixTime(1622243344),
+      untilTimestamp: new UnixTime(1661956210),
+    },
+    {
+      name: 'SequencerBatchDelivered',
+      abi: 'event SequencerBatchDelivered(uint256 indexed batchSequenceNumber,bytes32 indexed beforeAcc,bytes32 indexed afterAcc,bytes32 delayedAcc,uint256 afterDelayedMessagesRead,tuple(uint64 minTimestamp,uint64 maxTimestamp,uint64 minBlockNumber, uint64 maxBlockNumber) timeBounds,uint8 dataLocation)',
+      emitter: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+      type: 'data',
+      sinceTimestamp: new UnixTime(1661457944),
+    },
+    {
+      name: 'NodeCreated',
+      abi: 'event NodeCreated(uint64 indexed nodeNum,bytes32 indexed parentNodeHash,bytes32 indexed nodeHash,bytes32 executionHash,tuple(tuple(tuple(bytes32[2] bytes32Vals,uint64[2] u64Vals) globalState, uint8 machineStatus) beforeState, tuple(tuple(bytes32[2] bytes32Vals,uint64[2] u64Vals) globalState, uint8 machineStatus) afterState, uint64 numBlocks),bytes32 afterInboxBatchAcc,bytes32 wasmModuleRoot,uint256 inboxMaxCount);',
+      emitter: EthereumAddress('0x5eF0D09d1E6204141B4d37530808eD19f60FBa35'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(1661457944),
     },
   ],
 }
