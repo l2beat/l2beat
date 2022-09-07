@@ -12,9 +12,9 @@ import { BalanceRecord } from '../../../src/peripherals/database/BalanceReposito
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
 
 export const NOW = UnixTime.now().toStartOf('hour')
-const ARBITRUM_BRIDGE_ONE = EthereumAddress.random()
-const ARBITRUM_BRIDGE_TWO = EthereumAddress.random()
-const OPTIMISM_BRIDGE = EthereumAddress.random()
+const ARBITRUM_ESCROW_ONE = EthereumAddress.random()
+const ARBITRUM_ESCROW_TWO = EthereumAddress.random()
+const OPTIMISM_ESCROW = EthereumAddress.random()
 
 export const PRICES: PriceRecord[] = [
   { priceUsd: 1, assetId: AssetId.DAI, timestamp: NOW },
@@ -25,25 +25,25 @@ export const BALANCES: BalanceRecord[] = [
   {
     timestamp: NOW,
     assetId: AssetId.DAI,
-    holderAddress: ARBITRUM_BRIDGE_ONE,
+    holderAddress: ARBITRUM_ESCROW_ONE,
     balance: 2_000n * 10n ** 18n,
   },
   {
     timestamp: NOW,
     assetId: AssetId.DAI,
-    holderAddress: ARBITRUM_BRIDGE_TWO,
+    holderAddress: ARBITRUM_ESCROW_TWO,
     balance: 3_000n * 10n ** 18n,
   },
   {
     timestamp: NOW,
     assetId: AssetId.ETH,
-    holderAddress: ARBITRUM_BRIDGE_TWO,
+    holderAddress: ARBITRUM_ESCROW_TWO,
     balance: 30n * 10n ** 18n,
   },
   {
     timestamp: NOW,
     assetId: AssetId.ETH,
-    holderAddress: OPTIMISM_BRIDGE,
+    holderAddress: OPTIMISM_ESCROW,
     balance: 20n * 10n ** 18n,
   },
 ]
@@ -53,14 +53,14 @@ export const PROJECTS: ProjectInfo[] = [
     projectId: ProjectId('arbitrum'),
     name: 'Arbitrum',
 
-    bridges: [
+    escrows: [
       {
-        address: ARBITRUM_BRIDGE_ONE,
+        address: ARBITRUM_ESCROW_ONE,
         sinceTimestamp: new UnixTime(0),
         tokens: [fakeTokenInfo({ id: AssetId.DAI, decimals: 18 })],
       },
       {
-        address: ARBITRUM_BRIDGE_TWO,
+        address: ARBITRUM_ESCROW_TWO,
         sinceTimestamp: new UnixTime(0),
         tokens: [
           fakeTokenInfo({ id: AssetId.DAI, decimals: 18 }),
@@ -73,9 +73,9 @@ export const PROJECTS: ProjectInfo[] = [
   {
     projectId: ProjectId('optimism'),
     name: 'Optimism',
-    bridges: [
+    escrows: [
       {
-        address: OPTIMISM_BRIDGE,
+        address: OPTIMISM_ESCROW,
         sinceTimestamp: new UnixTime(0),
         tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
       },

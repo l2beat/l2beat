@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
-import { ProjectBridge } from './ProjectBridge'
 import { ProjectDetails } from './ProjectDetails'
+import { ProjectEscrow } from './ProjectEscrow'
 import { ProjectEvent } from './ProjectEvent'
 
 export interface Project {
@@ -13,8 +13,8 @@ export interface Project {
   id: ProjectId
   /** Symbols of the tokens associated with this project */
   associatedTokens?: string[]
-  /** List of the contract in which L1 funds are locked */
-  bridges: ProjectBridge[]
+  /** List of contracts in which L1 funds are locked */
+  escrows: ProjectEscrow[]
   /** Information displayed about the project on the frontend */
   details: ProjectDetails
   /** Metadata about events emitted by the system */

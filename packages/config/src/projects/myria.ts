@@ -17,7 +17,7 @@ export const myria: Project = {
   name: 'Myria',
   slug: 'myria',
   id: ProjectId('myria'),
-  bridges: [
+  escrows: [
     {
       address: '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
       sinceTimestamp: new UnixTime(1659542607),

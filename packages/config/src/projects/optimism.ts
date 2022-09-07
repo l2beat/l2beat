@@ -14,7 +14,7 @@ export const optimism: Project = {
   name: 'Optimism',
   slug: 'optimism',
   id: ProjectId('optimism'),
-  bridges: [
+  escrows: [
     {
       // old snx bridge
       address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',

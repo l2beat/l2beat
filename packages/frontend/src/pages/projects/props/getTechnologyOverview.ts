@@ -173,7 +173,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
       })
     }
 
-    const tokens = project.bridges.find(
+    const tokens = project.escrows.find(
       (x) => x.address === item.address,
     )?.tokens
     let description = item.description

@@ -98,7 +98,7 @@ describe(EventUpdater.name, () => {
         {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          escrows: [],
           events: [eventBeforeFirstHour],
         },
       ]
@@ -143,7 +143,7 @@ describe(EventUpdater.name, () => {
         {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          escrows: [],
           events: [EVENT],
         },
       ]
@@ -201,13 +201,13 @@ describe(EventUpdater.name, () => {
         {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          escrows: [],
           events: [EVENT],
         },
         {
           name: PROJECT_B.toString(),
           projectId: PROJECT_B,
-          bridges: [],
+          escrows: [],
           events: [EVENT],
         },
       ]
@@ -252,7 +252,7 @@ describe(EventUpdater.name, () => {
         {
           name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          escrows: [],
           events: [EVENT],
         },
       ]

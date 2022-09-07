@@ -17,7 +17,7 @@ export const sorare: Project = {
   name: 'Sorare',
   slug: 'sorare',
   id: ProjectId('sorare'),
-  bridges: [
+  escrows: [
     {
       address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
       sinceTimestamp: new UnixTime(1626352527),

@@ -16,7 +16,7 @@ export const loopring: Project = {
   name: 'Loopring',
   slug: 'loopring',
   id: ProjectId('loopring'),
-  bridges: [
+  escrows: [
     {
       address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
       sinceTimestamp: new UnixTime(1603949642),

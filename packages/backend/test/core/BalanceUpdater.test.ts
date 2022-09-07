@@ -74,7 +74,7 @@ describe(BalanceUpdater.name, () => {
         {
           name: 'First',
           projectId: ProjectId('first'),
-          bridges: [
+          escrows: [
             {
               address: holderAddress,
               sinceTimestamp: new UnixTime(1000),
@@ -141,7 +141,7 @@ describe(BalanceUpdater.name, () => {
         {
           name: 'First',
           projectId: ProjectId('first'),
-          bridges: [
+          escrows: [
             {
               address: holderAddress,
               sinceTimestamp: new UnixTime(1000),
@@ -236,14 +236,14 @@ describe(BalanceUpdater.name, () => {
   describe(getMissingData.name, () => {
     it('returns queries to be made', () => {
       const timestamp = new UnixTime(2500)
-      const bridge = EthereumAddress.random()
+      const escrow = EthereumAddress.random()
       const projects: ProjectInfo[] = [
         {
           name: 'First',
           projectId: ProjectId('first'),
-          bridges: [
+          escrows: [
             {
-              address: bridge,
+              address: escrow,
               sinceTimestamp: new UnixTime(2000),
               tokens: [
                 fakeTokenInfo(AssetId.ETH, new UnixTime(1000)),
@@ -267,21 +267,21 @@ describe(BalanceUpdater.name, () => {
         {
           timestamp,
           assetId: AssetId('bar'),
-          holderAddress: bridge,
+          holderAddress: escrow,
           balance: 1n,
         },
         {
           timestamp,
           assetId: AssetId('baz'),
-          holderAddress: bridge,
+          holderAddress: escrow,
           balance: 1n,
         },
       ]
 
       const result = getMissingData(timestamp, known, projects)
       expect(result).toEqual([
-        { assetId: AssetId.ETH, holder: bridge },
-        { assetId: AssetId('foo'), holder: bridge },
+        { assetId: AssetId.ETH, holder: escrow },
+        { assetId: AssetId('foo'), holder: escrow },
       ])
     })
   })

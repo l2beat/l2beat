@@ -19,12 +19,12 @@ export async function up(knex: Knex) {
     table.string('project_id')
   })
   await Promise.all(
-    projects.flatMap(({ id, bridges }) =>
-      bridges.map(async (bridge) => {
+    projects.flatMap(({ id, escrows }) =>
+      escrows.map(async (escrow) => {
         await knex('reports')
           .update({ project_id: id.toString() })
           // @ts-expect-error bridge_address removed from knex module type
-          .where({ bridge_address: bridge.address })
+          .where({ bridge_address: escrow.address })
       }),
     ),
   )
