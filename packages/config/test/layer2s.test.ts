@@ -11,9 +11,9 @@ import { getTokenBySymbol } from '../src/tokens'
 
 describe('layer2s', () => {
   describe('every slug is valid', () => {
-    for (const project of layer2s) {
-      it(project.slug, () => {
-        expect(project.slug).toEqual(expect.stringMatching(/^[a-z\d]+$/))
+    for (const layer2 of layer2s) {
+      it(layer2.slug, () => {
+        expect(layer2.slug).toEqual(expect.stringMatching(/^[a-z\d]+$/))
       })
     }
   })
@@ -33,8 +33,8 @@ describe('layer2s', () => {
       })
 
       describe('contracts', () => {
-        for (const project of layer2s) {
-          const contracts = project.details.technology.contracts.addresses
+        for (const layer2 of layer2s) {
+          const contracts = layer2.details.technology.contracts.addresses
           for (const contract of contracts) {
             testAddress(contract.address)
             if (
@@ -65,17 +65,17 @@ describe('layer2s', () => {
 
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
-      for (const project of layer2s) {
-        it(project.name, () => {
-          expect(project.details.description.endsWith('.')).toEqual(true)
+      for (const layer2 of layer2s) {
+        it(layer2.name, () => {
+          expect(layer2.details.description.endsWith('.')).toEqual(true)
         })
       }
     })
 
     describe('technology', () => {
-      for (const project of layer2s) {
-        describe(project.name, () => {
-          const tech = project.details.technology
+      for (const layer2 of layer2s) {
+        describe(layer2.name, () => {
+          const tech = layer2.details.technology
 
           type Key = Exclude<
             keyof Layer2Technology,
@@ -165,10 +165,10 @@ describe('layer2s', () => {
   })
 
   describe('links', () => {
-    describe('every project has at least one website link', () => {
-      for (const project of layer2s) {
-        it(project.name, () => {
-          expect(project.details.links.websites.length).toBeGreaterThan(0)
+    describe('every layer2 has at least one website link', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.name, () => {
+          expect(layer2.details.links.websites.length).toBeGreaterThan(0)
         })
       }
     })

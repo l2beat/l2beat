@@ -1,7 +1,7 @@
 export interface Layer2Links {
   /** Links to marketing landing pages. */
   websites: string[]
-  /** Links to web apps connected to the project. */
+  /** Links to web apps connected to the layer2. */
   apps: string[]
   /** Links to documentation pages. */
   documentation: string[]

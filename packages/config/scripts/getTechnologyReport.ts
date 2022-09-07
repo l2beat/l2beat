@@ -20,8 +20,8 @@ for (const key of keys) {
   report += `------- ${uppercase} -------\n\n`
 
   const options = new Map<string, string[]>()
-  for (const project of layer2s) {
-    const item = project.details.technology?.[key]
+  for (const layer2 of layer2s) {
+    const item = layer2.details.technology?.[key]
     if (item) {
       const signature = JSON.stringify({
         name: item.name,
@@ -30,9 +30,9 @@ for (const key of keys) {
       })
       const existing = options.get(signature)
       if (existing) {
-        existing.push(project.name)
+        existing.push(layer2.name)
       } else {
-        options.set(signature, [project.name])
+        options.set(signature, [layer2.name])
       }
     }
   }

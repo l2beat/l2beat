@@ -4,18 +4,18 @@ import { Layer2TechnologyChoice } from './Layer2TechnologyChoice'
 
 export interface Layer2Technology {
   category: {
-    /** Name of the category the project belongs to */
+    /** Name of the category the layer2 belongs to */
     name: Layer2Category
     /** Additional details about the technology */
     details?: string
   }
-  /** What state correctness mechanism is used in the project */
+  /** What state correctness mechanism is used in the layer2 */
   stateCorrectness: Layer2TechnologyChoice
-  /** What is the new cryptography used in the project */
+  /** What is the new cryptography used in the layer2 */
   newCryptography?: Layer2TechnologyChoice
-  /** What is the data availability choice for the project */
+  /** What is the data availability choice for the layer2 */
   dataAvailability: Layer2TechnologyChoice
-  /** What are the details about project operator(s) */
+  /** What are the details about layer2 operator(s) */
   operator: Layer2TechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions: Layer2TechnologyChoice
@@ -29,7 +29,7 @@ export interface Layer2Technology {
   smartContracts?: Layer2TechnologyChoice
   /** List of permissioned addresses */
   permissions?: Layer2Permission[]
-  /** List of smart contracts used in the project */
+  /** List of smart contracts used in the layer2 */
   contracts: Layer2Contracts
 }
 
