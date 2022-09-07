@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -418,5 +418,20 @@ export const arbitrum: Layer2 = {
     ],
   },
 
-  events: [],
+  events: [
+    {
+      name: 'NodeConfirmed',
+      abi: 'event NodeConfirmed(uint256 indexed nodeNum, bytes32 afterSendAcc, uint256 afterSendCount, bytes32 afterLogAcc, uint256 afterLogCount)',
+      emitter: EthereumAddress('0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(1622243344),
+    },
+    {
+      name: 'SequencerBatchDeliveredFromOrigin',
+      abi: 'event SequencerBatchDeliveredFromOrigin (uint256 indexed firstMessageNum, bytes32 indexed beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
+      emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
+      type: 'data',
+      sinceTimestamp: new UnixTime(1622243344),
+    },
+  ],
 }
