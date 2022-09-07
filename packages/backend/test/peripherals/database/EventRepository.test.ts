@@ -13,14 +13,14 @@ const mockEvent = (
   offset: number,
   projectId: ProjectId,
   name: string,
-  timeSpan: EventGranularity,
+  granularity: EventGranularity,
 ) => {
   return {
     timestamp: START.add(offset, 'hours'),
     name,
     projectId,
     count: 1,
-    timeSpan,
+    granularity,
   }
 }
 
@@ -62,7 +62,7 @@ describe(EventRepository.name, () => {
       ])
     })
 
-    it('retrieves only given timeSpan', async () => {
+    it('retrieves only given granularity', async () => {
       const records = [
         mockEvent(0, PROJECT_A, EVENT_A, 'hourly'),
         mockEvent(0, PROJECT_A, EVENT_A, 'sixHourly'),

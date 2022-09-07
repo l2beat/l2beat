@@ -21,14 +21,14 @@ const mockEvent = () => {
 const mockEventRecord = (
   offset: number,
   count: number,
-  timeSpan: EventGranularity,
+  granularity: EventGranularity,
 ): EventRecord => {
   return {
     timestamp: NOON.add(offset, 'hours'),
     name: EVENT_A,
     projectId: PROJECT_A,
     count,
-    timeSpan,
+    granularity,
   }
 }
 

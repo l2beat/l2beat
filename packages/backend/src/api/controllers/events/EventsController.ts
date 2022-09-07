@@ -10,6 +10,7 @@ import { EventUpdater } from '../../../core/events/EventUpdater'
 import { ProjectInfo } from '../../../model'
 import {
   EventGranularity,
+  EventRecord,
   EventRepository,
 } from '../../../peripherals/database/EventRepository'
 import {
@@ -49,14 +50,14 @@ export class EventsController {
         const eventNames = events.map((e) => e.name)
 
         const eventCharts = await Promise.all(
-          config.map((c) =>
-            this.getEventChart(
+          config.map(async (c) => {
+            const records = await this.eventsRepository.getByProject(
               projectId,
               c.granularity,
               c.timestamp,
-              eventNames,
-            ),
-          ),
+            )
+            return getEventChart(records, eventNames)
+          }),
         )
 
         main.projects[projectId.toString()] = {
@@ -69,45 +70,37 @@ export class EventsController {
     return main
   }
 
-  async getEventChart(
-    projectId: ProjectId,
-    granularity: EventGranularity,
-    minTimestamp: UnixTime | undefined,
-    eventNames: string[],
-  ): Promise<EventChart> {
-    const records = await this.eventsRepository.getByProject(
-      projectId,
-      granularity,
-      minTimestamp,
-    )
-
-    //Record<timestamp, Record<eventName, count>>
-    const entries: Record<number, Record<string, number> | undefined> = {}
-
-    for (const { timestamp, name, count } of records) {
-      const entry = entries[timestamp.toNumber()] ?? {}
-      entry[name] = count
-      entries[timestamp.toNumber()] = entry
-    }
-
-    const data: EventChartPoint[] = []
-
-    for (const key in entries) {
-      data.push([
-        new UnixTime(Number(key)),
-        ...eventNames.map((e) => entries[key]?.[e] ?? 0),
-      ])
-    }
-
-    return {
-      types: ['timestamp', ...eventNames],
-      data,
-    }
-  }
-
   async getShowcase() {
     const events = await this.getEvents()
 
     return renderShowcasePage({ events })
+  }
+}
+
+function getEventChart(
+  records: EventRecord[],
+  eventNames: string[],
+): EventChart {
+  //Record<timestamp, Record<eventName, count>>
+  const entries: Record<number, Record<string, number> | undefined> = {}
+
+  for (const { timestamp, name, count } of records) {
+    const entry = entries[timestamp.toNumber()] ?? {}
+    entry[name] = count
+    entries[timestamp.toNumber()] = entry
+  }
+
+  const data: EventChartPoint[] = []
+
+  for (const key in entries) {
+    data.push([
+      new UnixTime(Number(key)),
+      ...eventNames.map((e) => entries[key]?.[e] ?? 0),
+    ])
+  }
+
+  return {
+    types: ['timestamp', ...eventNames],
+    data,
   }
 }

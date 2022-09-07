@@ -11,7 +11,7 @@ export interface EventRecord {
   name: string
   projectId: ProjectId
   count: number
-  timeSpan: EventGranularity
+  granularity: EventGranularity
 }
 
 export class EventRepository extends BaseRepository {
@@ -53,13 +53,13 @@ export class EventRepository extends BaseRepository {
 
   async getByProject(
     projectId: ProjectId,
-    timeSpan: EventGranularity,
+    granularity: EventGranularity,
     from: UnixTime = new UnixTime(0),
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')
       .where('project_id', projectId.toString())
-      .where('time_span', timeSpan)
+      .where('time_span', granularity)
       .where('unix_timestamp', '>=', from.toNumber())
       .select()
       .orderBy(['unix_timestamp', 'event_name'])
@@ -69,13 +69,13 @@ export class EventRepository extends BaseRepository {
   async getByProjectAndName(
     projectId: ProjectId,
     name: string,
-    timeSpan: EventGranularity,
+    granularity: EventGranularity,
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')
       .where('project_id', projectId.toString())
       .where('event_name', name)
-      .where('time_span', timeSpan)
+      .where('time_span', granularity)
       .select()
     return rows.map(toRecord)
   }
@@ -124,7 +124,7 @@ function toRow(record: EventRecord): EventRow {
     event_name: record.name,
     project_id: record.projectId.toString(),
     count: record.count,
-    time_span: record.timeSpan,
+    time_span: record.granularity,
   }
 }
 
@@ -134,6 +134,6 @@ function toRecord(row: EventRow): EventRecord {
     name: row.event_name,
     projectId: ProjectId(row.project_id),
     count: row.count,
-    timeSpan: row.time_span,
+    granularity: row.time_span,
   }
 }
