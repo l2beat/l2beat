@@ -2,7 +2,10 @@ import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { EventRepository } from '../../../src/peripherals/database/EventRepository'
+import {
+  EventGranularity,
+  EventRepository,
+} from '../../../src/peripherals/database/EventRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
@@ -10,7 +13,7 @@ const mockEvent = (
   offset: number,
   projectId: ProjectId,
   name: string,
-  timeSpan: 'hourly' | 'sixHourly' | 'daily',
+  timeSpan: EventGranularity,
 ) => {
   return {
     timestamp: START.add(offset, 'hours'),

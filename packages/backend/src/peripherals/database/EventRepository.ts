@@ -5,12 +5,13 @@ import { EventRow } from 'knex/types/tables'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
+export type EventGranularity = 'hourly' | 'sixHourly' | 'daily'
 export interface EventRecord {
   timestamp: UnixTime
   name: string
   projectId: ProjectId
   count: number
-  timeSpan: 'hourly' | 'sixHourly' | 'daily'
+  timeSpan: EventGranularity
 }
 
 export class EventRepository extends BaseRepository {
@@ -52,7 +53,7 @@ export class EventRepository extends BaseRepository {
 
   async getByProject(
     projectId: ProjectId,
-    timeSpan: 'hourly' | 'sixHourly' | 'daily',
+    timeSpan: EventGranularity,
     from: UnixTime = new UnixTime(0),
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
@@ -68,7 +69,7 @@ export class EventRepository extends BaseRepository {
   async getByProjectAndName(
     projectId: ProjectId,
     name: string,
-    timeSpan: 'hourly' | 'sixHourly' | 'daily',
+    timeSpan: EventGranularity,
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')

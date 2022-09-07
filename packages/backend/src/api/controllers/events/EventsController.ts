@@ -8,7 +8,10 @@ import {
 
 import { EventUpdater } from '../../../core/events/EventUpdater'
 import { ProjectInfo } from '../../../model'
-import { EventRepository } from '../../../peripherals/database/EventRepository'
+import {
+  EventGranularity,
+  EventRepository,
+} from '../../../peripherals/database/EventRepository'
 import {
   getHourlyMinTimestamp,
   getSixHourlyMinTimestamp,
@@ -30,7 +33,7 @@ export class EventsController {
     const timestamp = this.eventUpdater.getLastProcessed()
 
     const config: {
-      granularity: 'hourly' | 'sixHourly' | 'daily'
+      granularity: EventGranularity
       timestamp: UnixTime | undefined
     }[] = [
       { granularity: 'hourly', timestamp: getHourlyMinTimestamp(timestamp) },
@@ -68,7 +71,7 @@ export class EventsController {
 
   async getEventChart(
     projectId: ProjectId,
-    granularity: 'hourly' | 'sixHourly' | 'daily',
+    granularity: EventGranularity,
     minTimestamp: UnixTime | undefined,
     eventNames: string[],
   ): Promise<EventChart> {

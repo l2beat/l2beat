@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
-import { EventRecord } from '../../../src/peripherals/database/EventRepository'
+import { EventGranularity, EventRecord } from '../../../src/peripherals/database/EventRepository'
 
 const NOON = new UnixTime(1660608000)
 const EVENT_A = 'event-a'
@@ -21,7 +21,7 @@ const mockEvent = () => {
 const mockEventRecord = (
   offset: number,
   count: number,
-  timeSpan: 'hourly' | 'sixHourly' | 'daily',
+  timeSpan: EventGranularity,
 ): EventRecord => {
   return {
     timestamp: NOON.add(offset, 'hours'),
