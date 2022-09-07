@@ -1,9 +1,6 @@
 const YEAR_3000_TIMESTAMP = Math.floor(
   new Date('3000-01-01T00:00:00.000Z').getTime() / 1000,
 )
-const YEAR_2019_TIMESTAMP = Math.floor(
-  new Date('2019-01-01T00:00:00.000Z').getTime() / 1000,
-)
 
 export class UnixTime {
   constructor(private timestamp: number) {
@@ -119,14 +116,12 @@ export class UnixTime {
     return this.toDate().toISOString().slice(0, 10)
   }
 
-  static isNumberUnixTimestamp(timestamp: number): boolean {
-    if (
-      !Number.isInteger(timestamp) ||
-      timestamp > YEAR_3000_TIMESTAMP ||
-      timestamp < YEAR_2019_TIMESTAMP
-    ) {
+  static isSafeToCast(timestamp: number): boolean {
+    try {
+      new UnixTime(timestamp)
+      return true
+    } catch (e) {
       return false
     }
-    return true
   }
 }

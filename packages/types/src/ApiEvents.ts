@@ -4,7 +4,7 @@ import { UnixTime } from './UnixTime'
 
 const EventChartPoint = z
   .array(z.number().int())
-  .refine((arr) => arr.length > 0 && UnixTime.isNumberUnixTimestamp(arr[0]))
+  .refine((arr) => arr.length > 0 && UnixTime.isSafeToCast(arr[0]))
   .transform(
     ([first, ...rest]) =>
       [new UnixTime(first), ...rest] as [UnixTime, ...number[]],
