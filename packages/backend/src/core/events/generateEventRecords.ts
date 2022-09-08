@@ -46,7 +46,7 @@ export function generateEventRecords(
       name,
       projectId,
       count: hourlyCount,
-      timeSpan: 'hourly',
+      granularity: 'hourly',
     })
     hourlyCount = 0
     if (timestamp.isFull('six hours')) {
@@ -55,7 +55,7 @@ export function generateEventRecords(
         name,
         projectId,
         count: sixHourlyCount,
-        timeSpan: 'sixHourly',
+        granularity: 'sixHourly',
       })
       sixHourlyCount = 0
     }
@@ -65,7 +65,7 @@ export function generateEventRecords(
         name,
         projectId,
         count: dailyCount,
-        timeSpan: 'daily',
+        granularity: 'daily',
       })
       dailyCount = 0
     }

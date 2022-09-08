@@ -1,3 +1,5 @@
+import { EventGranularity } from '../EventRepository'
+
 export {}
 
 declare module 'knex/types/tables' {
@@ -52,7 +54,7 @@ declare module 'knex/types/tables' {
     event_name: string
     project_id: string
     count: number
-    time_span: 'hourly' | 'sixHourly' | 'daily'
+    time_span: EventGranularity
   }
 
   interface Tables {
