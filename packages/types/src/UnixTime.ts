@@ -115,4 +115,13 @@ export class UnixTime {
   toYYYYMMDD() {
     return this.toDate().toISOString().slice(0, 10)
   }
+
+  static isSafeToCast(timestamp: number): boolean {
+    try {
+      new UnixTime(timestamp)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
 }
