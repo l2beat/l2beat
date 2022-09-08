@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types/bridge'
+import { BridgeDescription } from './types'
 
 /* TODO: Get tokens from SwapOut entries
 Note: Timestamp is entered manually as all these accounts are EOAs
