@@ -1,9 +1,9 @@
 import {
-  Project,
-  ProjectContract,
-  ProjectReference,
-  ProjectTechnology,
-  ProjectTechnologyChoice,
+  Layer2,
+  Layer2Contract,
+  Layer2Reference,
+  Layer2Technology,
+  Layer2TechnologyChoice,
 } from '@l2beat/config'
 import { existsSync } from 'fs'
 import path from 'path'
@@ -32,11 +32,11 @@ interface TechnologyOverview {
   referencesSection: ReferencesSectionProps
 }
 
-export function getTechnologyOverview(project: Project): TechnologyOverview {
+export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   const tech = project.details.technology
   const references: TechnologyReference[] = []
 
-  function addReference(reference: ProjectReference) {
+  function addReference(reference: Layer2Reference) {
     const index = references.findIndex((x) => x.href === reference.href)
     if (index !== -1) {
       return index + 1
@@ -49,7 +49,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
 
   function makeTechnologyChoice(
     id: string,
-    item: ProjectTechnologyChoice,
+    item: Layer2TechnologyChoice,
   ): TechnologyChoice {
     const risks = item.risks.map((risk) => ({
       referenceIds: (risk.references ?? []).map(addReference),
@@ -71,7 +71,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     }
   }
 
-  function makeSections(tech: ProjectTechnology) {
+  function makeSections(tech: Layer2Technology) {
     const technology: TechnologySectionProps = {
       id: 'technology',
       title: 'Technology',
@@ -119,7 +119,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     )
   }
 
-  function makeTechnologyContract(item: ProjectContract): TechnologyContract {
+  function makeTechnologyContract(item: Layer2Contract): TechnologyContract {
     const links = []
 
     if (
@@ -197,7 +197,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     }
   }
 
-  function makePermissionsSection(tech: ProjectTechnology) {
+  function makePermissionsSection(tech: Layer2Technology) {
     if (!tech.permissions) {
       return undefined
     }
@@ -210,7 +210,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
     }
   }
 
-  function makeContractSection(tech: ProjectTechnology) {
+  function makeContractSection(tech: Layer2Technology) {
     const contracts = tech.contracts.addresses.map(makeTechnologyContract)
 
     const risks = tech.contracts.risks.map((risk) => ({
@@ -257,7 +257,7 @@ export function getTechnologyOverview(project: Project): TechnologyOverview {
   }
 }
 
-function getTwitterLink(project: Project) {
+function getTwitterLink(project: Layer2) {
   const twitterSocialMedia = project.details.links.socialMedia.find((x) =>
     x.includes('twitter'),
   )

@@ -1,4 +1,4 @@
-import { Project as ProjectType } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { getDonatePage } from './donate'
@@ -10,7 +10,7 @@ import { getProjectPages } from './projects'
 import { getRiskPage } from './risk'
 import { getTvlPage } from './tvl'
 
-export async function renderPages(projects: ProjectType[], apiMain: ApiMain) {
+export async function renderPages(projects: Layer2[], apiMain: ApiMain) {
   const pages: Page[] = []
 
   pages.push(getRiskPage(projects, apiMain))
