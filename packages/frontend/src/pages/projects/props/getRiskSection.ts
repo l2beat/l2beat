@@ -1,8 +1,8 @@
-import { Project, ProjectRisk, ProjectRiskCategory } from '@l2beat/config'
+import { Layer2, Layer2Risk, Layer2RiskCategory } from '@l2beat/config'
 
 import { RiskSectionProps } from '../view/RiskSection'
 
-export function getRiskSection(project: Project): RiskSectionProps {
+export function getRiskSection(project: Layer2): RiskSectionProps {
   const technology = project.details.technology
   const exits = technology.exitMechanisms.map((x, i) => ({
     id: `exit-mechanisms-${i + 1}`,
@@ -20,7 +20,7 @@ export function getRiskSection(project: Project): RiskSectionProps {
     ...exits,
   ]
 
-  const risks: (ProjectRisk & { referencedId: string })[] = []
+  const risks: (Layer2Risk & { referencedId: string })[] = []
   for (const { id, value } of sections) {
     if (value) {
       risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
@@ -30,7 +30,7 @@ export function getRiskSection(project: Project): RiskSectionProps {
     risks.push({ ...risk, referencedId: 'contracts' })
   }
 
-  const categories: ProjectRiskCategory[] = [
+  const categories: Layer2RiskCategory[] = [
     'Funds can be stolen if',
     'Funds can be lost if',
     'Funds can be frozen if',

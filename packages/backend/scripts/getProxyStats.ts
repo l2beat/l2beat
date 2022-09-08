@@ -1,4 +1,4 @@
-import { projects } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import chalk from 'chalk'
 import { config as dotenv } from 'dotenv'
 import { constants, providers } from 'ethers'
@@ -27,9 +27,9 @@ async function main() {
     'mainnet',
   )
 
-  for (const project of projects) {
-    console.log(chalk.blue(`--- Project: ${project.name} ---`))
-    const contracts = project.details.technology?.contracts.addresses ?? []
+  for (const layer2 of layer2s) {
+    console.log(chalk.blue(`--- Project: ${layer2.name} ---`))
+    const contracts = layer2.details.technology?.contracts.addresses ?? []
     for (const contract of contracts) {
       console.log(chalk.yellow(contract.name), contract.address)
       const upgradeability = contract.upgradeability

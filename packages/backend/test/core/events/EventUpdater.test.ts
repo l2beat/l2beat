@@ -1,5 +1,5 @@
 import { Logger, mock } from '@l2beat/common'
-import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
+import { Layer2Event } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
@@ -19,7 +19,7 @@ const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 
-const EVENT: ProjectEvent = {
+const EVENT: Layer2Event = {
   name: 'Event',
   abi: 'event Event()',
   emitter: EthereumAddress.random(),

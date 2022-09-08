@@ -1,8 +1,8 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 
 import { LinkSectionProps } from '../view/links/LinkSection'
 
-export function getLinkSection(project: Project): LinkSectionProps {
+export function getLinkSection(project: Layer2): LinkSectionProps {
   return {
     links: project.details.links,
     name: project.name,

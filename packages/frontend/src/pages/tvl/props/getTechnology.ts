@@ -1,6 +1,6 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 
-export function getTechnology(project: Project) {
+export function getTechnology(project: Layer2) {
   const name = project.details.technology.category.name
   switch (name) {
     case 'Optimistic Rollup':

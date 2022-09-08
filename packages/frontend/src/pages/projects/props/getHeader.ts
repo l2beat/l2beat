@@ -1,10 +1,10 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { HeaderProps } from '../../../components'
 import { formatUSD, getPercentageChange } from '../../../utils/utils'
 
-export function getHeader(project: Project, apiMain: ApiMain): HeaderProps {
+export function getHeader(project: Layer2, apiMain: ApiMain): HeaderProps {
   const hourly =
     apiMain.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0

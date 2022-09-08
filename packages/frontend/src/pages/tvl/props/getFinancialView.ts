@@ -1,4 +1,4 @@
-import { Project, safeGetTokenByAssetId } from '@l2beat/config'
+import { Layer2, safeGetTokenByAssetId } from '@l2beat/config'
 import { ApiMain, Project as ApiProject, Token } from '@l2beat/types'
 
 import {
@@ -10,7 +10,7 @@ import { FinancialViewEntry, FinancialViewProps } from '../view/FinancialView'
 import { getTechnology } from './getTechnology'
 
 export function getFinancialView(
-  projects: Project[],
+  projects: Layer2[],
   apiMain: ApiMain,
   tvl: number,
 ): FinancialViewProps {
@@ -22,7 +22,7 @@ export function getFinancialView(
 }
 
 function getFinancialViewEntry(
-  project: Project,
+  project: Layer2,
   projectData: ApiProject | undefined,
   aggregateTvl: number,
 ): FinancialViewEntry {
