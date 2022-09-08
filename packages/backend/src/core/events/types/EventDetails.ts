@@ -6,4 +6,5 @@ export interface EventDetails {
   name: string
   projectId: ProjectId
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }

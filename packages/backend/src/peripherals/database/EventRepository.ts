@@ -5,12 +5,13 @@ import { EventRow } from 'knex/types/tables'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
+export type EventGranularity = 'hourly' | 'sixHourly' | 'daily'
 export interface EventRecord {
   timestamp: UnixTime
   name: string
   projectId: ProjectId
   count: number
-  timeSpan: 'hourly' | 'sixHourly' | 'daily'
+  granularity: EventGranularity
 }
 
 export class EventRepository extends BaseRepository {
@@ -23,6 +24,7 @@ export class EventRepository extends BaseRepository {
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getByProjectAndName = this.wrapGet(this.getByProjectAndName)
+    this.getByProject = this.wrapGet(this.getByProject)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -49,16 +51,31 @@ export class EventRepository extends BaseRepository {
     )
   }
 
+  async getByProject(
+    projectId: ProjectId,
+    granularity: EventGranularity,
+    from: UnixTime = new UnixTime(0),
+  ): Promise<EventRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('events')
+      .where('project_id', projectId.toString())
+      .where('time_span', granularity)
+      .where('unix_timestamp', '>=', from.toNumber())
+      .select()
+      .orderBy(['unix_timestamp', 'event_name'])
+    return rows.map(toRecord)
+  }
+
   async getByProjectAndName(
     projectId: ProjectId,
     name: string,
-    timeSpan: 'hourly' | 'sixHourly' | 'daily',
+    granularity: EventGranularity,
   ): Promise<EventRecord[]> {
     const knex = await this.knex()
     const rows = await knex('events')
       .where('project_id', projectId.toString())
       .where('event_name', name)
-      .where('time_span', timeSpan)
+      .where('time_span', granularity)
       .select()
     return rows.map(toRecord)
   }
@@ -107,7 +124,7 @@ function toRow(record: EventRecord): EventRow {
     event_name: record.name,
     project_id: record.projectId.toString(),
     count: record.count,
-    time_span: record.timeSpan,
+    time_span: record.granularity,
   }
 }
 
@@ -117,6 +134,6 @@ function toRecord(row: EventRow): EventRecord {
     name: row.event_name,
     projectId: ProjectId(row.project_id),
     count: row.count,
-    timeSpan: row.time_span,
+    granularity: row.time_span,
   }
 }

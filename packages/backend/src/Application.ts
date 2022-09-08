@@ -4,10 +4,12 @@ import { providers } from 'ethers'
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
+import { EventsController } from './api/controllers/events/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
+import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -157,11 +159,18 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
+    const eventsController = new EventsController(
+      eventRepository,
+      eventUpdater,
+      config.projects,
+    )
+
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
+      createEventsRouter(eventsController),
     ])
 
     // #endregion
