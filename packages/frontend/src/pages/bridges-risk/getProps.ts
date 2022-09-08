@@ -8,16 +8,7 @@ export function getProps(
 ): Wrapped<BridgesRiskPageProps> {
   return {
     props: {
-      items: bridges.map((bridge) => ({
-        name: bridge.name,
-        sourceOwnership: bridge.risks?.sourceOwnership.description ?? '-',
-        sourceUpgradeability:
-          bridge.risks?.sourceUpgradeability.description ?? '-',
-        destinationOwnership:
-          bridge.risks?.destinationOwnership.description ?? '-',
-        destinationUpgradeability:
-          bridge.risks?.destinationUpgradeability.description ?? '-',
-      })),
+      items: bridges.map((bridge) => ({ name: bridge.name, ...bridge.risks })),
     },
     wrapper: {
       metadata: {
