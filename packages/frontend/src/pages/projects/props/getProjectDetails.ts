@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 
 import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
@@ -7,7 +7,7 @@ import { getNewsSection } from './getNewsSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
-export function getProjectDetails(project: Project): ProjectDetailsProps {
+export function getProjectDetails(project: Layer2): ProjectDetailsProps {
   return {
     newsSection: getNewsSection(project),
     linkSection: getLinkSection(project),

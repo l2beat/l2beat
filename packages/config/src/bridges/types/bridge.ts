@@ -1,38 +1,38 @@
 import { ProjectId } from '@l2beat/types'
 
-import { News, ProjectRiskViewEntry } from '../../projects'
-import { RISK_VIEW } from '../../projects/common'
-import { Project } from '../../projects/types/Project'
-import { ProjectBridge } from '../../projects/types/ProjectBridge'
-import { ProjectLinks } from '../../projects/types/ProjectLinks'
+import { Layer2RiskViewEntry, News } from '../../layer2s'
+import { RISK_VIEW } from '../../layer2s/common'
+import { Layer2 } from '../../layer2s/types/Layer2'
+import { Layer2Escrow } from '../../layer2s/types/Layer2Escrow'
+import { Layer2Links } from '../../layer2s/types/Layer2Links'
 
 export interface BridgeDescription {
   name: string
   slug: string
   validation: string
   description?: string
-  links: Partial<ProjectLinks>
+  links: Partial<Layer2Links>
   associatedTokens?: string[]
-  escrows: ProjectBridge[]
+  escrows: Layer2Escrow[]
   connections: {
     network: string
     tokens: string[]
   }[]
   risks?: {
-    sourceOwnership: ProjectRiskViewEntry
-    sourceUpgradeability: ProjectRiskViewEntry
-    destinationOwnership: ProjectRiskViewEntry
-    destinationUpgradeability: ProjectRiskViewEntry
+    sourceOwnership: Layer2RiskViewEntry
+    sourceUpgradeability: Layer2RiskViewEntry
+    destinationOwnership: Layer2RiskViewEntry
+    destinationUpgradeability: Layer2RiskViewEntry
   }
   news?: News[]
 }
 
-export function bridge(bridge: BridgeDescription): Project {
+export function bridge(bridge: BridgeDescription): Layer2 {
   return {
     name: bridge.name,
     id: ProjectId(bridge.slug),
     slug: bridge.slug,
-    bridges: bridge.escrows,
+    escrows: bridge.escrows,
     associatedTokens: bridge.associatedTokens,
     details: {
       description: bridge.description ?? '.',
@@ -55,7 +55,7 @@ export function bridge(bridge: BridgeDescription): Project {
       },
       technology: {
         category: {
-          name: 'Bridge',
+          name: 'ZK Rollup',
         },
         stateCorrectness: {
           name: '',

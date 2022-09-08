@@ -10,8 +10,8 @@ export function getConfigHash(
   forcedResyncId = FORCED_RESYNC_ID,
 ): string {
   const entries = []
-  for (const { projectId, bridges } of projects) {
-    for (const { tokens, address, sinceTimestamp } of bridges) {
+  for (const { projectId, escrows } of projects) {
+    for (const { tokens, address, sinceTimestamp } of escrows) {
       for (const token of tokens) {
         entries.push({
           projectId,

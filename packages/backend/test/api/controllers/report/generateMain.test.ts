@@ -38,7 +38,7 @@ const projects: ProjectInfo[] = [
   {
     projectId: arbitrumId,
     name: 'Arbitrum',
-    bridges: [
+    escrows: [
       {
         address: EthereumAddress.random(),
         sinceTimestamp: new UnixTime(0),
@@ -55,7 +55,7 @@ const projects: ProjectInfo[] = [
   {
     projectId: optimismId,
     name: 'Optimism',
-    bridges: [
+    escrows: [
       {
         address: EthereumAddress.random(),
         sinceTimestamp: new UnixTime(0),

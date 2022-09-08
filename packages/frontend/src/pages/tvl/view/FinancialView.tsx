@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
@@ -20,7 +20,7 @@ export interface FinancialViewProps {
 export interface FinancialViewEntry {
   name: string
   slug: string
-  provider?: Project['details']['provider']
+  provider?: Layer2['details']['provider']
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string

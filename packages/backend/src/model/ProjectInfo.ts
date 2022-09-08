@@ -1,30 +1,35 @@
-import { getTokenBySymbol, Project, TokenInfo, tokenList } from '@l2beat/config'
-import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
+import {
+  getTokenBySymbol,
+  Layer2,
+  Layer2Event,
+  TokenInfo,
+  tokenList,
+} from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 export interface ProjectInfo {
   name: string
   projectId: ProjectId
-  bridges: BridgeInfo[]
-  events: ProjectEvent[]
+  escrows: EscrowInfo[]
+  events: Layer2Event[]
 }
 
-export interface BridgeInfo {
+export interface EscrowInfo {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   tokens: TokenInfo[]
 }
 
-export function projectToInfo(project: Project): ProjectInfo {
+export function layer2ToProject(layer2: Layer2): ProjectInfo {
   return {
-    name: project.name,
-    projectId: project.id,
-    bridges: project.bridges.map((bridge) => ({
-      address: EthereumAddress(bridge.address),
-      sinceTimestamp: bridge.sinceTimestamp,
+    name: layer2.name,
+    projectId: layer2.id,
+    escrows: layer2.escrows.map((escrow) => ({
+      address: EthereumAddress(escrow.address),
+      sinceTimestamp: escrow.sinceTimestamp,
       tokens:
-        bridge.tokens === '*' ? tokenList : bridge.tokens.map(getTokenBySymbol),
+        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
-    events: project.events,
+    events: layer2.events,
   }
 }

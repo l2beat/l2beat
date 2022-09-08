@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { formatUSD, getPercentageChange } from '../../utils/utils'
@@ -7,7 +7,7 @@ import { MetaImageProps } from './MetaImage'
 
 export function getProps(
   apiMain: ApiMain,
-  project?: Project,
+  project?: Layer2,
 ): Wrapped<MetaImageProps> {
   const daily = project
     ? apiMain.projects[project.id.toString()]?.charts.daily.data ?? []
