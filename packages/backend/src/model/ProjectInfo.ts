@@ -20,7 +20,7 @@ export interface EscrowInfo {
   tokens: TokenInfo[]
 }
 
-export function projectToInfo(layer2: Layer2): ProjectInfo {
+export function layer2ToProject(layer2: Layer2): ProjectInfo {
   return {
     name: layer2.name,
     projectId: layer2.id,
