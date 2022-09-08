@@ -233,4 +233,19 @@ describe('layer2s', () => {
       }
     })
   })
+  describe('events', () => {
+    describe('sinceTimestamp cannot be greater than untilTimestamp', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.name, () => {
+          for (const event of layer2.events) {
+            if (event.untilTimestamp) {
+              expect(event.sinceTimestamp.lt(event.untilTimestamp)).toEqual(
+                true,
+              )
+            }
+          }
+        })
+      }
+    })
+  })
 })
