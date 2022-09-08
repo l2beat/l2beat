@@ -14,7 +14,15 @@ export const nearBridge: BridgeDescription = {
     {
       address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
       sinceTimestamp: new UnixTime(1615826693),
-      tokens: ['DAI', 'USDC', 'AURORA', 'USDT', 'WBTC', 'PLY', 'OCT'],
+      tokens: [
+        'DAI',
+        'USDC',
+        'AURORA',
+        'USDT',
+        'WBTC',
+        // PLY,
+        // OCT
+      ],
     },
   ],
   connections: [],

@@ -159,7 +159,7 @@ export const multichainBridge: BridgeDescription = {
         'PEOPLE',
         'REQ',
         'AMP',
-        'OCT',
+        // 'OCT',
         'ORBS',
       ],
     },
