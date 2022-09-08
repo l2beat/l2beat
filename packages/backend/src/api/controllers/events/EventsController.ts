@@ -1,16 +1,16 @@
-import { ApiEvents, EventChart, EventChartPoint, UnixTime } from '@l2beat/types'
+import { ApiEvents, UnixTime } from '@l2beat/types'
 
 import { EventUpdater } from '../../../core/events/EventUpdater'
 import { ProjectInfo } from '../../../model'
 import {
   EventGranularity,
-  EventRecord,
   EventRepository,
 } from '../../../peripherals/database/EventRepository'
 import {
   getHourlyMinTimestamp,
   getSixHourlyMinTimestamp,
 } from '../report/charts'
+import { getEventChart } from './getEventChart'
 import { renderShowcasePage } from './ShowcasePage'
 
 export class EventsController {
@@ -68,33 +68,5 @@ export class EventsController {
     const events = await this.getEvents()
 
     return renderShowcasePage({ events })
-  }
-}
-
-function getEventChart(
-  records: EventRecord[],
-  eventNames: string[],
-): EventChart {
-  //Record<timestamp, Record<eventName, count>>
-  const entries: Record<number, Record<string, number> | undefined> = {}
-
-  for (const { timestamp, name, count } of records) {
-    const entry = entries[timestamp.toNumber()] ?? {}
-    entry[name] = count
-    entries[timestamp.toNumber()] = entry
-  }
-
-  const data: EventChartPoint[] = []
-
-  for (const key in entries) {
-    data.push([
-      new UnixTime(Number(key)),
-      ...eventNames.map((e) => entries[key]?.[e] ?? 0),
-    ])
-  }
-
-  return {
-    types: ['timestamp', ...eventNames],
-    data,
   }
 }
