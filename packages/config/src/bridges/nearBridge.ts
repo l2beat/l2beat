@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types/bridge'
+import { BridgeDescription } from './types'
 
 export const nearBridge: BridgeDescription = {
   name: 'Near Rainbow Bridge',

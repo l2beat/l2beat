@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types/bridge'
+import { BridgeDescription } from './types'
 
 export const solletBridge: BridgeDescription = {
   name: 'Sollet Sol Bridge',
