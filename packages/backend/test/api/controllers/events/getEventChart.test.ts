@@ -55,24 +55,24 @@ describe(getEventChart.name, () => {
   })
   it('skips events not provided in eventNames', () => {
     const records: EventRecord[] = [
-        mockEvent(0, EVENT_A, 100),
-        mockEvent(1, EVENT_A, 100),
-        mockEvent(2, EVENT_A, 100),
-        mockEvent(0, EVENT_B, 200),
-        mockEvent(1, EVENT_B, 200),
-        mockEvent(2, EVENT_B, 200),
-      ]
-      const eventNames = [EVENT_A]
-  
-      const result = getEventChart(records, eventNames)
-  
-      expect(result).toEqual({
-        types: ['timestamp', EVENT_A],
-        data: [
-          [START, 100],
-          [START.add(1, 'hours'), 100],
-          [START.add(2, 'hours'), 100],
-        ],
-      })
+      mockEvent(0, EVENT_A, 100),
+      mockEvent(1, EVENT_A, 100),
+      mockEvent(2, EVENT_A, 100),
+      mockEvent(0, EVENT_B, 200),
+      mockEvent(1, EVENT_B, 200),
+      mockEvent(2, EVENT_B, 200),
+    ]
+    const eventNames = [EVENT_A]
+
+    const result = getEventChart(records, eventNames)
+
+    expect(result).toEqual({
+      types: ['timestamp', EVENT_A],
+      data: [
+        [START, 100],
+        [START.add(1, 'hours'), 100],
+        [START.add(2, 'hours'), 100],
+      ],
+    })
   })
 })

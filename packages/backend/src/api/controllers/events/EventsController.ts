@@ -13,7 +13,7 @@ import {
 import { getEventChart } from './getEventChart'
 import { renderShowcasePage } from './ShowcasePage'
 
-export class EventsController {
+export class EventController {
   constructor(
     private eventsRepository: EventRepository,
     private eventUpdater: EventUpdater,
@@ -21,23 +21,13 @@ export class EventsController {
   ) {}
 
   async getEvents(): Promise<ApiEvents> {
-    const main: ApiEvents = {
+    const apiEvents: ApiEvents = {
       projects: {},
     }
 
-    const timestamp = this.eventUpdater.getLastProcessed()
-
-    const config: {
-      granularity: EventGranularity
-      timestamp: UnixTime | undefined
-    }[] = [
-      { granularity: 'hourly', timestamp: getHourlyMinTimestamp(timestamp) },
-      {
-        granularity: 'sixHourly',
-        timestamp: getSixHourlyMinTimestamp(timestamp),
-      },
-      { granularity: 'daily', timestamp: undefined },
-    ]
+    //todo discuss whether it should be UnixTime.now()
+    const latestTimestamp = this.eventUpdater.getLastProcessed()
+    const config = getEndpointConfig(latestTimestamp)
 
     await Promise.all(
       this.projects.map(async ({ projectId, events }) => {
@@ -54,14 +44,14 @@ export class EventsController {
           }),
         )
 
-        main.projects[projectId.toString()] = {
+        apiEvents.projects[projectId.toString()] = {
           hourly: eventCharts[0],
           sixHourly: eventCharts[1],
           daily: eventCharts[2],
         }
       }),
     )
-    return main
+    return apiEvents
   }
 
   async getShowcase() {
@@ -69,4 +59,18 @@ export class EventsController {
 
     return renderShowcasePage({ events })
   }
+}
+
+export function getEndpointConfig(timestamp: UnixTime | undefined): {
+  granularity: EventGranularity
+  timestamp: UnixTime | undefined
+}[] {
+  return [
+    { granularity: 'hourly', timestamp: getHourlyMinTimestamp(timestamp) },
+    {
+      granularity: 'sixHourly',
+      timestamp: getSixHourlyMinTimestamp(timestamp),
+    },
+    { granularity: 'daily', timestamp: undefined },
+  ]
 }

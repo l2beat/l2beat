@@ -1,30 +1,31 @@
-import { EventChart, EventChartPoint, UnixTime } from '@l2beat/types';
+import { EventChart, EventChartPoint, UnixTime } from '@l2beat/types'
 
-import { EventRecord } from '../../../peripherals/database/EventRepository';
+import { EventRecord } from '../../../peripherals/database/EventRepository'
 
 export function getEventChart(
   records: EventRecord[],
-  eventNames: string[]): EventChart {
+  eventNames: string[],
+): EventChart {
   //Record<timestamp, Record<eventName, count>>
-  const entries: Record<number, Record<string, number> | undefined> = {};
+  const entries: Record<number, Record<string, number> | undefined> = {}
 
   for (const { timestamp, name, count } of records) {
-    const entry = entries[timestamp.toNumber()] ?? {};
-    entry[name] = count;
-    entries[timestamp.toNumber()] = entry;
+    const entry = entries[timestamp.toNumber()] ?? {}
+    entry[name] = count
+    entries[timestamp.toNumber()] = entry
   }
 
-  const data: EventChartPoint[] = [];
+  const data: EventChartPoint[] = []
 
   for (const key in entries) {
     data.push([
       new UnixTime(Number(key)),
       ...eventNames.map((e) => entries[key]?.[e] ?? 0),
-    ]);
+    ])
   }
 
   return {
     types: ['timestamp', ...eventNames],
     data,
-  };
+  }
 }

@@ -4,7 +4,7 @@ import { providers } from 'ethers'
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
-import { EventsController } from './api/controllers/events/EventsController'
+import { EventController } from './api/controllers/events/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
@@ -159,7 +159,7 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
-    const eventsController = new EventsController(
+    const eventsController = new EventController(
       eventRepository,
       eventUpdater,
       config.projects,
