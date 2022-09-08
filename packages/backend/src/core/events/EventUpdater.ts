@@ -38,6 +38,8 @@ export class EventUpdater {
             name: event.name,
             projectId: project.projectId,
             sinceTimestamp: event.sinceTimestamp,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            untilTimestamp: event.untilTimestamp,
           }
         }),
       )
@@ -69,6 +71,7 @@ export class EventUpdater {
         lastHour,
         boundary,
         event.sinceTimestamp,
+        event.untilTimestamp,
       )
 
       for (const { from, to } of ranges) {
