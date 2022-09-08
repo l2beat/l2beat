@@ -19,6 +19,8 @@ import { wormholeBridge } from '../bridges/wormholeBridge'
 import { xDaiBridge } from '../bridges/xDaiBridge'
 import { BridgeDescription } from './types/bridge'
 
+export * from './types/bridge'
+
 export const bridges: BridgeDescription[] = [
   nearBridge,
   avalancheBridge,
