@@ -1,9 +1,10 @@
 import { getTimestamps } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 
+import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { getConfigHash } from '../../../core/getConfigHash'
-import { ProjectInfo } from '../../../model'
+import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
+import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
 import {
   BalanceStatusRecord,
@@ -22,7 +23,7 @@ export class StatusController {
     private reportStatusRepository: ReportStatusRepository,
     private clock: Clock,
     private tokens: Token[],
-    private projects: ProjectInfo[],
+    private projects: Project[],
   ) {}
 
   async getPricesStatus(
@@ -63,7 +64,7 @@ export class StatusController {
       firstHour,
       lastHour,
     )
-    const configHash = getConfigHash(this.projects)
+    const configHash = getBalanceConfigHash(this.projects)
 
     const balances = timestamps.map((timestamp) => ({
       timestamp,
@@ -83,7 +84,7 @@ export class StatusController {
       firstHour,
       lastHour,
     )
-    const configHash = getConfigHash(this.projects)
+    const configHash = getReportConfigHash(this.projects)
 
     const reports = timestamps.map((timestamp) => ({
       timestamp,
@@ -111,7 +112,7 @@ export class StatusController {
 function isSynced(
   statuses: BalanceStatusRecord[],
   timestamp: UnixTime,
-  configHash: string,
+  configHash: Hash256,
 ): boolean {
   return (
     statuses.find((s) => s.timestamp.toString() === timestamp.toString())

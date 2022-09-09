@@ -2,7 +2,7 @@ import { LogLevel } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
-import { ProjectInfo, Token } from '../model'
+import { Project, Token } from '../model'
 export interface Config {
   name: string
   logger: {
@@ -20,7 +20,7 @@ export interface Config {
     safeTimeOffsetSeconds: number
   }
   tokens: Token[]
-  projects: ProjectInfo[]
+  projects: Project[]
   syncEnabled: boolean
   freshStart: boolean
 }

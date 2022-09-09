@@ -48,7 +48,7 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
-            name: 'Optimism',
+            type: 'layer2',
             escrows: [
               {
                 address: OPTIMISM_ADDRESS,
@@ -56,7 +56,6 @@ describe(ReportController.name, () => {
                 tokens: [mockToken(AssetId.DAI, 'DAI')],
               },
             ],
-            events: [],
           },
         ],
         [],
@@ -103,7 +102,7 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
-            name: 'Optimism',
+            type: 'layer2',
             escrows: [
               {
                 address: OPTIMISM_ADDRESS,
@@ -111,7 +110,6 @@ describe(ReportController.name, () => {
                 tokens: [mockToken(AssetId.DAI, 'DAI')],
               },
             ],
-            events: [],
           },
         ],
         [mockToken(AssetId.DAI, 'DAI')],

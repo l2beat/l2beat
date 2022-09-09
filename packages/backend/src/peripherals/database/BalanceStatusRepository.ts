@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface BalanceStatusRecord {
-  configHash: string
+  configHash: Hash256
   timestamp: UnixTime
 }
 
@@ -23,7 +23,7 @@ export class BalanceStatusRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async getByConfigHash(configHash: string): Promise<UnixTime[]> {
+  async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {
     const knex = await this.knex()
     const rows = await knex('balance_status')
       .where({ config_hash: configHash.toString() })
@@ -32,7 +32,7 @@ export class BalanceStatusRepository extends BaseRepository {
     return rows.map((r) => new UnixTime(+r.unix_timestamp))
   }
 
-  async add(record: BalanceStatusRecord): Promise<string> {
+  async add(record: BalanceStatusRecord): Promise<Hash256> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
       await trx('balance_status')
@@ -65,7 +65,7 @@ export class BalanceStatusRepository extends BaseRepository {
 
     return rows.map((r) => ({
       timestamp: new UnixTime(+r.unix_timestamp),
-      configHash: r.config_hash,
+      configHash: Hash256(r.config_hash),
     }))
   }
 }

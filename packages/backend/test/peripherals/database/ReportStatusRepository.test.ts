@@ -1,9 +1,8 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
-import { fakeConfigHash } from './fakes'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(ReportStatusRepository.name, () => {
@@ -14,8 +13,8 @@ describe(ReportStatusRepository.name, () => {
     await repository.deleteAll()
   })
 
-  const HASH_ONE = fakeConfigHash()
-  const HASH_TWO = fakeConfigHash()
+  const HASH_ONE = Hash256.random()
+  const HASH_TWO = Hash256.random()
 
   const TIME_ONE = UnixTime.now().toStartOf('hour')
   const TIME_TWO = TIME_ONE.add(-1, 'hours')
