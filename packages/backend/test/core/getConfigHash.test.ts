@@ -9,7 +9,7 @@ import {
 import { expect } from 'earljs'
 
 import { getConfigHash } from '../../src/core/getConfigHash'
-import { EscrowInfo, ProjectInfo } from '../../src/model'
+import { Project, ProjectEscrow } from '../../src/model'
 
 describe(getConfigHash.name, () => {
   it('hash changes if project added', () => {
@@ -159,7 +159,7 @@ describe(getConfigHash.name, () => {
   })
 })
 
-function fakeProject(id: string, escrows: EscrowInfo[]): ProjectInfo {
+function fakeProject(id: string, escrows: ProjectEscrow[]): Project {
   return {
     projectId: ProjectId(id),
     type: 'layer2',
@@ -172,7 +172,7 @@ function fakeEscrow(
   address: string,
   timestamp: number,
   tokens: TokenInfo[],
-): EscrowInfo {
+): ProjectEscrow {
   return {
     address: EthereumAddress('0x' + address + '0'.repeat(40 - address.length)),
     sinceTimestamp: new UnixTime(timestamp),

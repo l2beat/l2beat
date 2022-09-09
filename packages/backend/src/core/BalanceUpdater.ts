@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
-import { ProjectInfo } from '../model/ProjectInfo'
+import { Project } from '../model'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -30,7 +30,7 @@ export class BalanceUpdater {
     private balanceRepository: BalanceRepository,
     private balanceStatusRepository: BalanceStatusRepository,
     private clock: Clock,
-    private projects: ProjectInfo[],
+    private projects: Project[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -117,7 +117,7 @@ export class BalanceUpdater {
 export function getMissingData(
   timestamp: UnixTime,
   known: BalanceRecord[],
-  projects: ProjectInfo[],
+  projects: Project[],
 ): HeldAsset[] {
   const knownSet = new Set(
     known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),

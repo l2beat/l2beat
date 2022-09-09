@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/types'
 
 import { Clock } from '../../../core/Clock'
 import { getConfigHash } from '../../../core/getConfigHash'
-import { ProjectInfo } from '../../../model'
+import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
 import {
   BalanceStatusRecord,
@@ -22,7 +22,7 @@ export class StatusController {
     private reportStatusRepository: ReportStatusRepository,
     private clock: Clock,
     private tokens: Token[],
-    private projects: ProjectInfo[],
+    private projects: Project[],
   ) {}
 
   async getPricesStatus(

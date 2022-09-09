@@ -1,7 +1,7 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
-import { ProjectInfo } from '../../model'
+import { Project } from '../../model'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
@@ -24,7 +24,7 @@ export class ReportUpdater {
     private aggregateReportsRepository: AggregateReportRepository,
     private reportStatusRepository: ReportStatusRepository,
     private clock: Clock,
-    private projects: ProjectInfo[],
+    private projects: Project[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)

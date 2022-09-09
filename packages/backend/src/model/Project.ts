@@ -7,20 +7,20 @@ import {
 } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
-export interface ProjectInfo {
+export interface Project {
   projectId: ProjectId
   type: 'layer2' | 'bridge'
-  escrows: EscrowInfo[]
+  escrows: ProjectEscrow[]
   events: Layer2Event[]
 }
 
-export interface EscrowInfo {
+export interface ProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   tokens: TokenInfo[]
 }
 
-export function layer2ToProject(layer2: Layer2): ProjectInfo {
+export function layer2ToProject(layer2: Layer2): Project {
   return {
     projectId: layer2.id,
     type: 'layer2',

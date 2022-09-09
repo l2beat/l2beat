@@ -1,12 +1,12 @@
 import { Hash256 } from '@l2beat/types'
 import { createHash } from 'crypto'
 
-import { ProjectInfo } from '../model'
+import { Project } from '../model'
 
 const FORCED_RESYNC_ID = 0
 
 export function getConfigHash(
-  projects: ProjectInfo[],
+  projects: Project[],
   forcedResyncId = FORCED_RESYNC_ID,
 ): string {
   const entries = []

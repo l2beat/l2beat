@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
-import { ProjectInfo } from '../../../src/model'
+import { Project } from '../../../src/model'
 import { BalanceRecord } from '../../../src/peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
 
@@ -48,7 +48,7 @@ export const BALANCES: BalanceRecord[] = [
   },
 ]
 
-export const PROJECTS: ProjectInfo[] = [
+export const PROJECTS: Project[] = [
   {
     projectId: ProjectId('arbitrum'),
     type: 'layer2',
