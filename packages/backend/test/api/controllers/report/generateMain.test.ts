@@ -10,7 +10,7 @@ import {
 import { expect } from 'earljs'
 
 import { generateMain } from '../../../../src/api/controllers/report/generateMain'
-import { ProjectInfo } from '../../../../src/model'
+import { ReportProject } from '../../../../src/core/reports/ReportProject'
 import { AggregateReportRecord } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
@@ -34,11 +34,11 @@ const arbitrumId = ProjectId('arbitrum')
 const optimismId = ProjectId('optimism')
 const daiToken = mockToken(AssetId.DAI, 'DAI')
 const wethToken = mockToken(AssetId.WETH, 'WETH')
-const projects: ProjectInfo[] = [
+const projects: ReportProject[] = [
   {
     projectId: arbitrumId,
-    name: 'Arbitrum',
-    bridges: [
+    type: 'layer2',
+    escrows: [
       {
         address: EthereumAddress.random(),
         sinceTimestamp: new UnixTime(0),
@@ -50,19 +50,17 @@ const projects: ProjectInfo[] = [
         tokens: [daiToken],
       },
     ],
-    events: [],
   },
   {
     projectId: optimismId,
-    name: 'Optimism',
-    bridges: [
+    type: 'layer2',
+    escrows: [
       {
         address: EthereumAddress.random(),
         sinceTimestamp: new UnixTime(0),
         tokens: [mockToken(AssetId.DAI, 'DAI')],
       },
     ],
-    events: [],
   },
 ]
 

@@ -1,4 +1,4 @@
-import { ProjectPermission } from '@l2beat/config'
+import { Layer2Permission } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
@@ -9,7 +9,7 @@ import { Section } from './Section'
 export interface PermissionsSectionProps {
   editLink: string
   issueLink: string
-  permissions: ProjectPermission[]
+  permissions: Layer2Permission[]
 }
 
 export function PermissionsSection(props: PermissionsSectionProps) {

@@ -1,9 +1,9 @@
 import { LogLevel } from '@l2beat/common'
-import { projects, tokenList } from '@l2beat/config'
+import { layer2s, tokenList } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { config as dotenv } from 'dotenv'
 
-import { projectToInfo } from '../model'
+import { layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 
@@ -30,7 +30,7 @@ export function getLocalConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
-    projects: projects.map(projectToInfo),
+    projects: layer2s.map(layer2ToProject),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
   }

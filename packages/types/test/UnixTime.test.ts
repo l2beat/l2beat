@@ -176,6 +176,25 @@ describe(UnixTime.name, () => {
     })
   })
 
+  describe(UnixTime.isSafeToCast.name, () => {
+    it('correct timestamp', () => {
+      const timestamp = 1661873521
+      expect(UnixTime.isSafeToCast(timestamp)).toEqual(true)
+    })
+    it('too small number', () => {
+      const timestamp = new Date('3000-01-01T00:00:00.001Z').getTime()
+      expect(UnixTime.isSafeToCast(timestamp)).toEqual(false)
+    })
+    it('too big number', () => {
+      const timestamp = new Date('2018-12-31T23:59:59Z').getTime()
+      expect(UnixTime.isSafeToCast(timestamp)).toEqual(false)
+    })
+    it('not an integer', () => {
+      const timestamp = 1.1
+      expect(UnixTime.isSafeToCast(timestamp)).toEqual(false)
+    })
+  })
+
   describe('comparison methods', () => {
     const testCases = [
       { a: 4, method: 'lt' as const, b: 3, result: false },

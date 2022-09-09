@@ -48,15 +48,14 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
-            name: 'Optimism',
-            bridges: [
+            type: 'layer2',
+            escrows: [
               {
                 address: OPTIMISM_ADDRESS,
                 sinceTimestamp: new UnixTime(0),
                 tokens: [mockToken(AssetId.DAI, 'DAI')],
               },
             ],
-            events: [],
           },
         ],
         [],
@@ -103,15 +102,14 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
-            name: 'Optimism',
-            bridges: [
+            type: 'layer2',
+            escrows: [
               {
                 address: OPTIMISM_ADDRESS,
                 sinceTimestamp: new UnixTime(0),
                 tokens: [mockToken(AssetId.DAI, 'DAI')],
               },
             ],
-            events: [],
           },
         ],
         [mockToken(AssetId.DAI, 'DAI')],

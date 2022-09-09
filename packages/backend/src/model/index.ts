@@ -1,2 +1,2 @@
-export * from './ProjectInfo'
+export * from './Project'
 export * from './Token'

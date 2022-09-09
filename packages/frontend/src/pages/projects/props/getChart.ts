@@ -1,16 +1,16 @@
-import { Project, safeGetTokenByAssetId } from '@l2beat/config'
+import { Layer2, safeGetTokenByAssetId } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { ChartProps } from '../../../components'
 
-export function getChart(project: Project, apiMain: ApiMain): ChartProps {
+export function getChart(project: Layer2, apiMain: ApiMain): ChartProps {
   return {
     endpoint: `/api/${project.slug}.json`,
     tokens: getTokens(project, apiMain),
   }
 }
 
-function getTokens(project: Project, apiMain: ApiMain) {
+function getTokens(project: Layer2, apiMain: ApiMain) {
   return apiMain.projects[project.id.toString()]?.tokens
     .map(({ assetId, tvl }) => {
       const symbol = safeGetTokenByAssetId(assetId)?.symbol

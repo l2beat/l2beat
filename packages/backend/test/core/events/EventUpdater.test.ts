@@ -1,5 +1,5 @@
 import { Logger, mock } from '@l2beat/common'
-import { ProjectEvent } from '@l2beat/config/build/src/projects/types/ProjectEvent'
+import { Layer2Event } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
@@ -11,7 +11,7 @@ import {
   getAdjustedFrom,
 } from '../../../src/core/events/EventUpdater'
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
-import { ProjectInfo } from '../../../src/model'
+import { Project } from '../../../src/model'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
@@ -19,12 +19,13 @@ const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 
-const EVENT: ProjectEvent = {
+const EVENT: Layer2Event = {
   name: 'Event',
   abi: 'event Event()',
   emitter: EthereumAddress.random(),
   type: 'state',
   sinceTimestamp: START,
+  untilTimestamp: undefined,
 }
 
 const eventDetails = (projectId: ProjectId) => {
@@ -34,6 +35,7 @@ const eventDetails = (projectId: ProjectId) => {
     topic: '0x57050ab73f6b9ebdd9f76b8d4997793f48cf956e965ee070551b9ca0bb71584e',
     projectId,
     sinceTimestamp: EVENT.sinceTimestamp,
+    untilTimestamp: EVENT.untilTimestamp,
   }
 }
 
@@ -94,11 +96,11 @@ describe(EventUpdater.name, () => {
         sinceTimestamp: new UnixTime(0),
       }
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          type: 'layer2',
+          escrows: [],
           events: [eventBeforeFirstHour],
         },
       ]
@@ -139,11 +141,11 @@ describe(EventUpdater.name, () => {
         getDataBoundary: mockFn().returns(new Map([])),
       })
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          type: 'layer2',
+          escrows: [],
           events: [EVENT],
         },
       ]
@@ -197,17 +199,17 @@ describe(EventUpdater.name, () => {
         getDataBoundary: mockFn().returns(new Map([])),
       })
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          type: 'layer2',
+          escrows: [],
           events: [EVENT],
         },
         {
-          name: PROJECT_B.toString(),
           projectId: PROJECT_B,
-          bridges: [],
+          type: 'layer2',
+          escrows: [],
           events: [EVENT],
         },
       ]
@@ -248,11 +250,11 @@ describe(EventUpdater.name, () => {
         getDataBoundary: mockFn().returns(new Map([])),
       })
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
-          bridges: [],
+          type: 'layer2',
+          escrows: [],
           events: [EVENT],
         },
       ]

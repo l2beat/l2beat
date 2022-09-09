@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
 import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
@@ -7,7 +7,7 @@ interface Props {
   project: {
     name: string
     slug: string
-    provider?: Project['details']['provider']
+    provider?: Layer2['details']['provider']
   }
 }
 

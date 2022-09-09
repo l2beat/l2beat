@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { ProjectInfo } from '../../model/ProjectInfo'
+import { Project } from '../../model'
 import {
   EventRecord,
   EventRepository,
@@ -24,7 +24,7 @@ export class EventUpdater {
     private blockNumberUpdater: BlockNumberUpdater,
     private eventRepository: EventRepository,
     private clock: Clock,
-    private projects: ProjectInfo[],
+    private projects: Project[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -38,6 +38,8 @@ export class EventUpdater {
             name: event.name,
             projectId: project.projectId,
             sinceTimestamp: event.sinceTimestamp,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            untilTimestamp: event.untilTimestamp,
           }
         }),
       )
@@ -69,6 +71,7 @@ export class EventUpdater {
         lastHour,
         boundary,
         event.sinceTimestamp,
+        event.untilTimestamp,
       )
 
       for (const { from, to } of ranges) {
@@ -79,6 +82,7 @@ export class EventUpdater {
 
     await this.eventRepository.addMany(events)
     this.lastProcessed = lastHour
+    this.logger.info('Update completed', { timestamp: lastHour.toString() })
   }
 
   private getFirstHour() {
@@ -135,6 +139,10 @@ export class EventUpdater {
       Number(toBlock),
     )
     return logs.map((l) => BigInt(l.blockNumber))
+  }
+
+  getLastProcessed(): UnixTime | undefined {
+    return this.lastProcessed
   }
 }
 

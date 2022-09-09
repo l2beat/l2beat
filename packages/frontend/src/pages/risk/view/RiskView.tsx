@@ -1,4 +1,4 @@
-import { Project, ProjectRiskView } from '@l2beat/config'
+import { Layer2, Layer2RiskView } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
@@ -16,10 +16,10 @@ export interface RiskViewProps {
   className?: string
 }
 
-export interface RiskViewEntry extends ProjectRiskView {
+export interface RiskViewEntry extends Layer2RiskView {
   name: string
   slug: string
-  provider?: Project['details']['provider']
+  provider?: Layer2['details']['provider']
 }
 
 export function RiskView({ items, className }: RiskViewProps) {

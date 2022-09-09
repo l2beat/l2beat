@@ -10,10 +10,10 @@ visible benefits.
 Because of this we will enforce the following requirements for adding a token to
 this list:
 
-1. The token MUST be locked inside one of the projects found in `./projects` as
+1. The token MUST be locked inside one of the layer2s found in `./layer2s` as
    reported by etherscan.io
 2. The token MUST satisfy at least one of the following:
-  2.1. The token is associated with the project and added to `associatedTokens`
+  2.1. The token is associated with the layer2 and added to `associatedTokens`
   2.2. The token is in the top 300 of coins as reported by coingecko.com
 3. The token SHOULD be listed on Uniswap V2 or V3 with sufficient liquidity. If
    this is not satisfied getting the token price will be problematic. In the

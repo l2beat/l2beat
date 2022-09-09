@@ -1,4 +1,4 @@
-import { projects } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import express from 'express'
 import { Server } from 'http'
 import puppeteer from 'puppeteer'
@@ -15,7 +15,7 @@ async function main() {
     const server = app.listen(1234, () => resolve(server))
   })
 
-  const slugs = projects.map((x) => x.slug).concat('overview')
+  const slugs = layer2s.map((x) => x.slug).concat('overview')
 
   const browser = await puppeteer.launch()
   await Promise.all(slugs.map(screenshot))

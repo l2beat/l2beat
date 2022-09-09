@@ -46,6 +46,8 @@ Most L2 constructions are upgradable and until upgradability mechanism is either
 
 To trustlessly withdraw coins from L2, users need to prove ownership of the coins to L1 smart contract that holds all the funds. For that they need to have access to all L2's transactions or its current state. To not introduce any additional trust assumptions, L2 transactions can simply be recorded on L1 (as cheap calldata), or they may be stored with some external providers that will guarantee (cryptoeconomically or through some other mechanisms) data availability.
 
+For more details on data availability and its importance in security of scaling protocols, see Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).
+
 <h2 id="categories">Ok, so what are the main categories of L2s?</h2>
 
 Depending on whether Validity Proofs or Fraud Proofs are used and what is the mechanism for data availability we can broadly categories L2s into the following categories:
@@ -81,7 +83,7 @@ In the future we expect to see hybrid solution using a mix of the above techniqu
 
 ## How exactly do you calculate metrics like TVL?
 
-It varies from project to project but we generally track the amount of tokens locked in all token bridges for a given L2. Sometimes it's a single token bridge like for zkSync but sometimes these are multiple token bridges for a single L2 (Optimism).
+It varies from project to project but we generally track the amount of tokens locked in all token escrow contracts for a given L2. Sometimes it's a single token escrow like for zkSync but sometimes these are multiple token escrows for a single L2 (Optimism).
 
 For more details see our [project definitions](https://github.com/l2beat/l2beat/tree/master/packages/config/src/projects).
 
