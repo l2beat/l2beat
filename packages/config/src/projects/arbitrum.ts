@@ -21,6 +21,8 @@ export const arbitrum: Project = {
       tokens: ['ETH'],
     },
     {
+      // This bridge is inactive, but we keep it
+      // in case we have to gather historic data
       address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
       sinceTimestamp: new UnixTime(1622243344),
       tokens: ['ETH'],
@@ -171,7 +173,7 @@ export const arbitrum: Project = {
       smartContracts: {
         name: 'EVM compatible smart contracts are supported',
         description:
-          'Arbitrum uses the Arbitrum Virtual Machine (AVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+          'Arbitrum uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
         risks: [
           {
             category: 'Funds can be lost if',
@@ -232,7 +234,7 @@ export const arbitrum: Project = {
           name: 'Sequencer',
           accounts: [
             {
-              address: '0xcCe5c6cFF61C49b4d53dd6024f8295F3c5230513',
+              address: '0xa4b1E63Cb4901E327597bc35d36FE8a23e4C253f',
               type: 'EOA',
             },
           ],
@@ -268,10 +270,16 @@ export const arbitrum: Project = {
       contracts: {
         addresses: [
           {
-            address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-            name: 'ProxyAdmin',
+            address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+            name: 'ProxyAdmin (1)',
             description:
-              'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
+              'This contract is an admin of SequencerInbox, Bridge and Outbox contracts. It is owned by a 4-of-6 multisig.',
+          },
+          {
+            address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+            name: 'ProxyAdmin (2)',
+            description:
+              'This contract is an admin of Inbox contract. It is owned by a 4-of-6 multisig.',
           },
           {
             address: '0x5eF0D09d1E6204141B4d37530808eD19f60FBa35',
@@ -280,8 +288,8 @@ export const arbitrum: Project = {
               'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x637E1CD58Ad3f0071ceCb281395e1823A96a553F',
+              admin: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+              implementation: '0x75fc5465c4BaD74B367ac917f7298aD66c308Fb8',
             },
           },
           {
@@ -291,8 +299,8 @@ export const arbitrum: Project = {
               'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0xbe04Ab2728c924D678f9FC833E379688c6eFA317',
+              admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+              implementation: '0x16242595cAfA3a207E9354E3bdb000B59bA82875',
             },
           },
           {
@@ -303,7 +311,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-              implementation: '0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6',
+              implementation: '0x3E2198A77FC6B266082b92859092170763548730',
             },
           },
           {
@@ -331,13 +339,13 @@ export const arbitrum: Project = {
             name: 'Outbox',
             upgradeability: {
               type: 'EIP1967',
-              admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
+              admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
               implementation: '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
             },
           },
           {
             address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-            name: 'ProxyAdmin (2)',
+            name: 'ProxyAdmin (3)',
             description:
               'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
           },
@@ -348,7 +356,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-              implementation: '0x62285266B5ec3d5B8867c84B807b79B2c13892EC',
+              implementation: '0x6D1c576Fe3e54313990450f5Fa322306B4cCB47B',
             },
           },
           {
@@ -359,7 +367,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-              implementation: '0x0aCb04878B3675EF40b2e9392622CE3C1E9CC99E',
+              implementation: '0xb4299A1F5f26fF6a98B7BA35572290C359fde900',
             },
           },
           {
@@ -370,7 +378,7 @@ export const arbitrum: Project = {
             upgradeability: {
               type: 'EIP1967',
               admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-              implementation: '0x98659BDffa4fEF82cD37771CDBFF3ddDa21EE8e9',
+              implementation: '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
             },
           },
           {
