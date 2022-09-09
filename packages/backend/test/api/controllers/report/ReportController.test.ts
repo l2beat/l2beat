@@ -48,6 +48,7 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
+            type: 'layer2',
             escrows: [
               {
                 address: OPTIMISM_ADDRESS,
@@ -102,6 +103,7 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
+            type: 'layer2',
             escrows: [
               {
                 address: OPTIMISM_ADDRESS,

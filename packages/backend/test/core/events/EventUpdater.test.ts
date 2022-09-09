@@ -99,6 +99,7 @@ describe(EventUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [eventBeforeFirstHour],
         },
@@ -143,6 +144,7 @@ describe(EventUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },
@@ -200,11 +202,13 @@ describe(EventUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },
         {
           projectId: PROJECT_B,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },
@@ -249,6 +253,7 @@ describe(EventUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },

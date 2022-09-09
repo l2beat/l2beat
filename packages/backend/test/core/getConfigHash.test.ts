@@ -162,6 +162,7 @@ describe(getConfigHash.name, () => {
 function fakeProject(id: string, escrows: EscrowInfo[]): ProjectInfo {
   return {
     projectId: ProjectId(id),
+    type: 'layer2',
     escrows,
     events: [],
   }

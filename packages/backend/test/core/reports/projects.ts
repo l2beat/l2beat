@@ -51,6 +51,7 @@ export const BALANCES: BalanceRecord[] = [
 export const PROJECTS: ProjectInfo[] = [
   {
     projectId: ProjectId('arbitrum'),
+    type: 'layer2',
     escrows: [
       {
         address: ARBITRUM_ESCROW_ONE,
@@ -70,6 +71,7 @@ export const PROJECTS: ProjectInfo[] = [
   },
   {
     projectId: ProjectId('optimism'),
+    type: 'layer2',
     escrows: [
       {
         address: OPTIMISM_ESCROW,

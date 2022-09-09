@@ -73,6 +73,7 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: ProjectId('first'),
+          type: 'layer2',
           escrows: [
             {
               address: holderAddress,
@@ -139,6 +140,7 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: ProjectId('first'),
+          type: 'layer2',
           escrows: [
             {
               address: holderAddress,
@@ -238,6 +240,7 @@ describe(BalanceUpdater.name, () => {
       const projects: ProjectInfo[] = [
         {
           projectId: ProjectId('first'),
+          type: 'layer2',
           escrows: [
             {
               address: escrow,
