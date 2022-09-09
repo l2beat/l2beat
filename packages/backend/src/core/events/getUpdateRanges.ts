@@ -21,7 +21,7 @@ export function getUpdateRanges(
       : to
     : to
 
-  if(fromAdjusted.gt(toAdjusted)) {
+  if (fromAdjusted.gt(toAdjusted)) {
     return []
   }
 

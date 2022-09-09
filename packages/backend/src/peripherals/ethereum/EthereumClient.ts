@@ -31,7 +31,15 @@ export class EthereumClient {
     return Bytes.fromHex(bytes)
   }
 
-  async getLogsUsingBisection(
+  /**
+   * Handles large block ranges by split them to smaller ones when necessary
+   * @param address
+   * @param topic
+   * @param fromBlock
+   * @param toBlock
+   * @returns
+   */
+  async getAllLogs(
     address: EthereumAddress,
     topic: string,
     fromBlock: number,
@@ -59,8 +67,8 @@ export class EthereumClient {
       ) {
         const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
         const [a, b] = await Promise.all([
-          this.getLogsUsingBisection(address, topic, fromBlock, midPoint),
-          this.getLogsUsingBisection(address, topic, midPoint + 1, toBlock),
+          this.getAllLogs(address, topic, fromBlock, midPoint),
+          this.getAllLogs(address, topic, midPoint + 1, toBlock),
         ])
         return a.concat(b)
       } else {

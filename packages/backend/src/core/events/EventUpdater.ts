@@ -10,14 +10,13 @@ import {
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
-import { generateEventRecords } from './generateEventRecords'
+import { findCorrespondingBlocks } from './findCorrespondingBlocks'
 import { getUpdateRanges } from './getUpdateRanges'
 import { EventDetails } from './types/EventDetails'
 
 export class EventUpdater {
-  private events: EventDetails[] = []
+  private eventsToWatch: EventDetails[] = []
   private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private lastProcessed: UnixTime | undefined
 
   constructor(
     private ethereumClient: EthereumClient,
@@ -29,7 +28,7 @@ export class EventUpdater {
   ) {
     this.logger = this.logger.for(this)
 
-    this.events = this.projects
+    this.eventsToWatch = this.projects
       .map((project) =>
         project.events.map((event) => {
           return {
@@ -57,19 +56,18 @@ export class EventUpdater {
   async update() {
     const events: EventRecord[] = []
 
-    const firstHour = this.getFirstHour()
+    const firstHour = this.clock.getFirstHour()
     const lastHour = this.clock.getLastHour()
-
     const boundaries = await this.eventRepository.getDataBoundary()
 
-    for (const event of this.events) {
-      const boundary = boundaries.get(
+    for (const event of this.eventsToWatch) {
+      const synced = boundaries.get(
         `${event.projectId.toString()}-${event.name}`,
       )
       const ranges: { from: UnixTime; to: UnixTime }[] = getUpdateRanges(
         firstHour,
         lastHour,
-        boundary,
+        synced,
         event.sinceTimestamp,
         event.untilTimestamp,
       )
@@ -81,20 +79,7 @@ export class EventUpdater {
     }
 
     await this.eventRepository.addMany(events)
-    this.lastProcessed = lastHour
     this.logger.info('Update completed', { timestamp: lastHour.toString() })
-  }
-
-  private getFirstHour() {
-    if (this.lastProcessed) {
-      return this.lastProcessed.add(1, 'hours')
-    }
-    // it is needed for sixHourly and daily
-    // we want to avoid situation whe we ask for blockNumbers and there are no records
-    // it can happen because how logic works, it asks for multiple earlier records when needed
-    // e.g. you are at 00:00 so to calculate daily you need blockNumbers of 23 previous hourly
-    const firstHour = this.clock.getFirstHour().add(1, 'days')
-    return firstHour.isFull('day') ? firstHour : firstHour.toNext('day')
   }
 
   async fetchRecords(
@@ -102,52 +87,29 @@ export class EventUpdater {
     to: UnixTime,
     event: EventDetails,
   ): Promise<EventRecord[]> {
-    // it is needed for sixHourly and daily
-    // generateEventRecords needs data in certain order
-    const fromAdjusted = getAdjustedFrom(from)
-
-    const eventBlockNumbers = await this.eventBlockNumbers(
-      fromAdjusted,
-      to,
-      event,
-    )
-
-    const timestamps = await this.blockNumberUpdater.getBlockRangeWhenReady(
-      fromAdjusted,
-      to,
-    )
-
-    const records = generateEventRecords(event, eventBlockNumbers, timestamps)
-
-    return records.filter((r) => r.timestamp.gte(from))
-  }
-
-  async eventBlockNumbers(
-    from: UnixTime,
-    to: UnixTime,
-    event: EventDetails,
-  ): Promise<bigint[]> {
     const fromBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(
-      from.add(-1, 'hours'),
+      from,
     )
     const toBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(to)
-
-    const logs = await this.ethereumClient.getLogsUsingBisection(
+    const logs = await this.ethereumClient.getAllLogs(
       event.emitter,
       event.topic,
       Number(fromBlock),
       Number(toBlock),
     )
-    return logs.map((l) => BigInt(l.blockNumber))
-  }
 
-  getLastProcessed(): UnixTime | undefined {
-    return this.lastProcessed
-  }
-}
+    const blocks = await this.blockNumberUpdater.getBlockRangeWhenReady(
+      from,
+      to,
+    )
+    const logsWithCorrespondingBlocks = findCorrespondingBlocks(blocks, logs)
 
-export function getAdjustedFrom(from: UnixTime) {
-  return from.isFull('day')
-    ? from.add(-1, 'days').toStartOf('day').add(1, 'hours')
-    : from.toStartOf('day').add(1, 'hours')
+    const records: EventRecord[] = logsWithCorrespondingBlocks.map((l) => ({
+      name: event.name,
+      projectId: event.projectId,
+      timestamp: l.block.timestamp,
+    }))
+
+    return records
+  }
 }
