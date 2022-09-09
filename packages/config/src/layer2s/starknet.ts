@@ -135,7 +135,7 @@ export const starknet: Layer2 = {
             name: 'MemoryPageFactRegistry',
             description:
               'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
-            address: '0x96375087b2F6eFc59e5e0dd5111B4d090EBFDD8B',
+            address: '0x28067505E54b7Ac2A5F860b343340Be8E73edECD',
           },
           {
             name: 'Eth Bridge',
