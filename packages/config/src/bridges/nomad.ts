@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const nomadBridge: BridgeDescription = {
-  name: 'Nomad Bridge',
-  slug: 'nomadbridge',
+export const nomad: Bridge = {
+  id: ProjectId('nomad'),
+  name: 'Nomad',
+  slug: 'nomad',
   validation: 'Optimistic Bridge',
   links: {
     websites: ['https://app.nomad.xyz/'],

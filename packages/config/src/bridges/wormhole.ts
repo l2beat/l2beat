@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const wormholeBridge: BridgeDescription = {
-  name: 'Wormhole Bridge',
-  slug: 'wormholebridge',
+export const wormhole: Bridge = {
+  id: ProjectId('wormhole'),
+  name: 'Wormhole',
+  slug: 'wormhole',
   validation: 'Native Bridge',
   links: {
     websites: ['https://www.portalbridge.com/'],

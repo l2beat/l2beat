@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const xDaiBridge: BridgeDescription = {
-  name: 'xDai Omni Bridge',
-  slug: 'xdaibridge',
+export const omni: Bridge = {
+  id: ProjectId('omni'),
+  name: 'xDai Omni',
+  slug: 'omni',
   validation: 'Native Bridge',
   links: {
     websites: ['https://omni.xdaichain.com/bridge'],

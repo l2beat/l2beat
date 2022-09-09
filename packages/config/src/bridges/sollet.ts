@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const solletBridge: BridgeDescription = {
-  name: 'Sollet Sol Bridge',
-  slug: 'solletbridge',
+export const sollet: Bridge = {
+  id: ProjectId('sollet'),
+  name: 'Sollet Sol',
+  slug: 'sollet',
   description:
     'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
   validation: 'EV Token Bridge',

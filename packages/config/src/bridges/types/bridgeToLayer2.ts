@@ -2,9 +2,9 @@ import { ProjectId } from '@l2beat/types'
 
 import { RISK_VIEW } from '../../layer2s/common'
 import { Layer2 } from '../../layer2s/types/Layer2'
-import { BridgeDescription } from './BridgeDescription'
+import { Bridge } from './Bridge'
 
-export function bridgeToLayer2(bridge: BridgeDescription): Layer2 {
+export function bridgeToLayer2(bridge: Bridge): Layer2 {
   return {
     name: bridge.name,
     id: ProjectId(bridge.slug),
