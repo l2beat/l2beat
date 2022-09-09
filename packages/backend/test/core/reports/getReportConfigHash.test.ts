@@ -8,163 +8,193 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { getConfigHash } from '../../src/core/getConfigHash'
-import { Project, ProjectEscrow } from '../../src/model'
+import {
+  getReportConfigHash,
+  ReportProject,
+} from '../../../src/core/reports/getReportConfigHash'
+import { ProjectEscrow } from '../../../src/model'
 
-describe(getConfigHash.name, () => {
+describe(getReportConfigHash.name, () => {
   it('hash changes if project added', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
       ...projectsBefore,
-      fakeProject('optimism', [
+      project('optimism', 'layer2', [
         fakeEscrow('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
+
   it('hash changes if project is removed', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
-      fakeProject('optimism', [
+      project('optimism', 'layer2', [
         fakeEscrow('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [projectsBefore[0]]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
+
+  it('hash changes if project type changes', () => {
+    const projectsBefore = [
+      project('unknown', 'layer2', [
+        fakeEscrow('aa', 1000, [fakeToken('dai', 123)]),
+      ]),
+    ]
+    const projectsAfter = [
+      project('unknown', 'bridge', [
+        fakeEscrow('aa', 1000, [fakeToken('dai', 123)]),
+      ]),
+    ]
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
+    expect(hashBefore).not.toEqual(hashAfter)
+  })
+
   it('hash changes if token is added', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123), fakeToken('usdc', 456)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
+
   it('hash changes if token is removed', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
+
   it('hash changes if escrow sinceBlock changes', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
+
   it('hash changes if token sinceBlock changes', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 456)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
+
   it('hash stays the same if the project order changes', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
-      fakeProject('optimism', [
+      project('optimism', 'layer2', [
         fakeEscrow('cc', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [projectsBefore[1], projectsBefore[0]]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
+
   it('hash stays the same if the escrow order changes', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
+
   it('hash stays the same if the token order changes', () => {
     const projectsBefore = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
     const projectsAfter = [
-      fakeProject('arbitrum', [
+      project('arbitrum', 'layer2', [
         fakeEscrow('aa', 1000, [fakeToken('eth', 0), fakeToken('dai', 123)]),
         fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
       ]),
     ]
-    const hashBefore = getConfigHash(projectsBefore)
-    const hashAfter = getConfigHash(projectsAfter)
+    const hashBefore = getReportConfigHash(projectsBefore)
+    const hashAfter = getReportConfigHash(projectsAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
 })
 
-function fakeProject(id: string, escrows: ProjectEscrow[]): Project {
+function project(
+  id: string,
+  type: ReportProject['type'],
+  escrows: ProjectEscrow[],
+): ReportProject {
   return {
     projectId: ProjectId(id),
-    type: 'layer2',
+    type,
     escrows,
-    events: [],
   }
 }
 

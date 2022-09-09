@@ -1,15 +1,15 @@
 import { AssetId, UnixTime } from '@l2beat/types'
 
-import { Project } from '../../model'
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { BalancePerProject, createReport } from './createReport'
+import { ReportProject } from './getReportConfigHash'
 
 export function createReports(
   prices: PriceRecord[],
   balances: BalanceRecord[],
-  projects: Project[],
+  projects: ReportProject[],
 ): ReportRecord[] {
   const priceMap = new Map(prices.map((p) => [p.assetId, p]))
   const ethPrice = priceMap.get(AssetId.ETH)?.priceUsd
@@ -38,7 +38,7 @@ export interface TokenDetails {
 }
 
 export function aggregateBalancesPerProject(
-  projects: Project[],
+  projects: ReportProject[],
   balances: BalanceRecord[],
 ): BalancePerProject[] {
   const balancesPerProject = []

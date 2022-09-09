@@ -11,17 +11,20 @@ import {
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { BalanceUpdater, getMissingData } from '../../src/core/BalanceUpdater'
-import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
-import { Clock } from '../../src/core/Clock'
-import { getConfigHash } from '../../src/core/getConfigHash'
-import { Project } from '../../src/model'
+import {
+  BalanceUpdater,
+  getMissingData,
+} from '../../../src/core/balances/BalanceUpdater'
+import { getBalanceConfigHash } from '../../../src/core/balances/getBalanceConfigHash'
+import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
+import { Clock } from '../../../src/core/Clock'
+import { Project } from '../../../src/model'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../../src/peripherals/database/BalanceRepository'
-import { BalanceStatusRepository } from '../../src/peripherals/database/BalanceStatusRepository'
-import { MulticallClient } from '../../src/peripherals/ethereum/MulticallClient'
+} from '../../../src/peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../../../src/peripherals/database/BalanceStatusRepository'
+import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
 
 describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.start.name, () => {
@@ -60,8 +63,18 @@ describe(BalanceUpdater.name, () => {
 
       await waitForExpect(() => {
         expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-          [{ configHash: getConfigHash([]), timestamp: NOW.add(2, 'hours') }],
-          [{ configHash: getConfigHash([]), timestamp: NOW.add(-1, 'hours') }],
+          [
+            {
+              configHash: getBalanceConfigHash([]),
+              timestamp: NOW.add(2, 'hours'),
+            },
+          ],
+          [
+            {
+              configHash: getBalanceConfigHash([]),
+              timestamp: NOW.add(-1, 'hours'),
+            },
+          ],
         ])
       })
     })
@@ -131,7 +144,7 @@ describe(BalanceUpdater.name, () => {
         [balances],
       ])
       expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash: getConfigHash(projects), timestamp }],
+        [{ configHash: getBalanceConfigHash(projects), timestamp }],
       ])
     })
 
@@ -180,7 +193,7 @@ describe(BalanceUpdater.name, () => {
 
       await balanceUpdater.update(timestamp)
       expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash: getConfigHash(projects), timestamp }],
+        [{ configHash: getBalanceConfigHash(projects), timestamp }],
       ])
     })
   })

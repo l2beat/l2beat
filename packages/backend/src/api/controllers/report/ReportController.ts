@@ -1,8 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { ApiMain, AssetId, Chart, Charts, ProjectId } from '@l2beat/types'
 
-import { Token } from '../../../model'
-import { Project } from '../../../model'
+import { Project, Token } from '../../../model'
 import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
 import {
   ReportRecord,
