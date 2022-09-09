@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
-import { ReportProject } from './getReportConfigHash'
+import { ReportProject } from './ReportProject'
 
 export function aggregateReports(
   reports: ReportRecord[],

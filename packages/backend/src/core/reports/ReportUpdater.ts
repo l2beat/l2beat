@@ -9,8 +9,9 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
-import { getReportConfigHash, ReportProject } from './getReportConfigHash'
+import { getReportConfigHash } from './getReportConfigHash'
 import { addOpTokenReport } from './optimism'
+import { ReportProject } from './ReportProject'
 
 export class ReportUpdater {
   private configHash: Hash256

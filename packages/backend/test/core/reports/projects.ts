@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
-import { Project } from '../../../src/model'
+import { ReportProject } from '../../../src/core/reports/ReportProject'
 import { BalanceRecord } from '../../../src/peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
 
@@ -48,7 +48,7 @@ export const BALANCES: BalanceRecord[] = [
   },
 ]
 
-export const PROJECTS: Project[] = [
+export const PROJECTS: ReportProject[] = [
   {
     projectId: ProjectId('arbitrum'),
     type: 'layer2',
@@ -67,7 +67,6 @@ export const PROJECTS: Project[] = [
         ],
       },
     ],
-    events: [],
   },
   {
     projectId: ProjectId('optimism'),
@@ -79,7 +78,6 @@ export const PROJECTS: Project[] = [
         tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
       },
     ],
-    events: [],
   },
 ]
 

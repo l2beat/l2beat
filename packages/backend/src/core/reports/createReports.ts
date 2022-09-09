@@ -4,7 +4,7 @@ import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { BalancePerProject, createReport } from './createReport'
-import { ReportProject } from './getReportConfigHash'
+import { ReportProject } from './ReportProject'
 
 export function createReports(
   prices: PriceRecord[],

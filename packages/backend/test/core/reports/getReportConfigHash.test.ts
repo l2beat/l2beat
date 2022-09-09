@@ -8,10 +8,8 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import {
-  getReportConfigHash,
-  ReportProject,
-} from '../../../src/core/reports/getReportConfigHash'
+import { getReportConfigHash } from '../../../src/core/reports/getReportConfigHash'
+import { ReportProject } from '../../../src/core/reports/ReportProject'
 import { ProjectEscrow } from '../../../src/model'
 
 describe(getReportConfigHash.name, () => {

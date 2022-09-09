@@ -11,6 +11,7 @@ import {
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
+import { BalanceProject } from '../../../src/core/balances/BalanceProject'
 import {
   BalanceUpdater,
   getMissingData,
@@ -18,7 +19,6 @@ import {
 import { getBalanceConfigHash } from '../../../src/core/balances/getBalanceConfigHash'
 import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
 import { Clock } from '../../../src/core/Clock'
-import { Project } from '../../../src/model'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -83,10 +83,9 @@ describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.update.name, () => {
     it('fetches and saves missing datapoints', async () => {
       const holderAddress = EthereumAddress.random()
-      const projects: Project[] = [
+      const projects: BalanceProject[] = [
         {
           projectId: ProjectId('first'),
-          type: 'layer2',
           escrows: [
             {
               address: holderAddress,
@@ -98,7 +97,6 @@ describe(BalanceUpdater.name, () => {
               ],
             },
           ],
-          events: [],
         },
       ]
 
@@ -150,10 +148,9 @@ describe(BalanceUpdater.name, () => {
 
     it('skips work if everything is known', async () => {
       const holderAddress = EthereumAddress.random()
-      const projects: Project[] = [
+      const projects: BalanceProject[] = [
         {
           projectId: ProjectId('first'),
-          type: 'layer2',
           escrows: [
             {
               address: holderAddress,
@@ -165,7 +162,6 @@ describe(BalanceUpdater.name, () => {
               ],
             },
           ],
-          events: [],
         },
       ]
 
@@ -250,10 +246,9 @@ describe(BalanceUpdater.name, () => {
     it('returns queries to be made', () => {
       const timestamp = new UnixTime(2500)
       const escrow = EthereumAddress.random()
-      const projects: Project[] = [
+      const projects: BalanceProject[] = [
         {
           projectId: ProjectId('first'),
-          type: 'layer2',
           escrows: [
             {
               address: escrow,
@@ -272,7 +267,6 @@ describe(BalanceUpdater.name, () => {
               tokens: [fakeTokenInfo(AssetId.ETH, new UnixTime(1000))],
             },
           ],
-          events: [],
         },
       ]
 

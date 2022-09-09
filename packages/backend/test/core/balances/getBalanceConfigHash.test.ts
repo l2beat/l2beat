@@ -8,10 +8,8 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import {
-  BalanceProject,
-  getBalanceConfigHash,
-} from '../../../src/core/balances/getBalanceConfigHash'
+import { BalanceProject } from '../../../src/core/balances/BalanceProject'
+import { getBalanceConfigHash } from '../../../src/core/balances/getBalanceConfigHash'
 import { ProjectEscrow } from '../../../src/model'
 
 describe(getBalanceConfigHash.name, () => {

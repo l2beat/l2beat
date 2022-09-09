@@ -1,13 +1,11 @@
 import { sortBy } from 'lodash'
 
-import { Project } from '../../model'
 import { hashJson } from '../../tools/hashJson'
+import { BalanceProject } from './BalanceProject'
 
 // Increment this value to change the hash which in turn causes the system to
 // recalculate balances
 const BALANCE_LOGIC_VERSION = 0
-
-export type BalanceProject = Pick<Project, 'projectId' | 'escrows'>
 
 export function getBalanceConfigHash(projects: BalanceProject[]) {
   return hashJson([getEntries(projects), BALANCE_LOGIC_VERSION])

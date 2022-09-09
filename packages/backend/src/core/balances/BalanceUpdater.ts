@@ -11,7 +11,8 @@ import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
-import { BalanceProject, getBalanceConfigHash } from './getBalanceConfigHash'
+import { BalanceProject } from './BalanceProject'
+import { getBalanceConfigHash } from './getBalanceConfigHash'
 
 interface HeldAsset {
   holder: EthereumAddress
