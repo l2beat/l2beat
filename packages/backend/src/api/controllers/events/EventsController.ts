@@ -1,7 +1,7 @@
 import { ApiEvents, EventChart, EventChartPoint, UnixTime } from '@l2beat/types'
 
 import { EventUpdater } from '../../../core/events/EventUpdater'
-import { ProjectInfo } from '../../../model'
+import { Project } from '../../../model'
 import {
   EventGranularity,
   EventRecord,
@@ -17,7 +17,7 @@ export class EventsController {
   constructor(
     private eventsRepository: EventRepository,
     private eventUpdater: EventUpdater,
-    private projects: ProjectInfo[],
+    private projects: Project[],
   ) {}
 
   async getEvents(): Promise<ApiEvents> {

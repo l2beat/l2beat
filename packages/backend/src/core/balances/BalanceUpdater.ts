@@ -1,18 +1,18 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
+import { AssetId, EthereumAddress, Hash256, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
-import { ProjectInfo } from '../model/ProjectInfo'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../peripherals/database/BalanceRepository'
-import { BalanceStatusRepository } from '../peripherals/database/BalanceStatusRepository'
-import { BalanceCall } from '../peripherals/ethereum/calls/BalanceCall'
-import { MulticallClient } from '../peripherals/ethereum/MulticallClient'
-import { BlockNumberUpdater } from './BlockNumberUpdater'
-import { Clock } from './Clock'
-import { getConfigHash } from './getConfigHash'
+} from '../../peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
+import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
+import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { BlockNumberUpdater } from '../BlockNumberUpdater'
+import { Clock } from '../Clock'
+import { BalanceProject } from './BalanceProject'
+import { getBalanceConfigHash } from './getBalanceConfigHash'
 
 interface HeldAsset {
   holder: EthereumAddress
@@ -20,7 +20,7 @@ interface HeldAsset {
 }
 
 export class BalanceUpdater {
-  private configHash: string
+  private configHash: Hash256
   private knownSet = new Set<number>()
   private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
@@ -30,11 +30,11 @@ export class BalanceUpdater {
     private balanceRepository: BalanceRepository,
     private balanceStatusRepository: BalanceStatusRepository,
     private clock: Clock,
-    private projects: ProjectInfo[],
+    private projects: BalanceProject[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.configHash = getConfigHash(projects)
+    this.configHash = getBalanceConfigHash(projects)
   }
 
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
@@ -117,7 +117,7 @@ export class BalanceUpdater {
 export function getMissingData(
   timestamp: UnixTime,
   known: BalanceRecord[],
-  projects: ProjectInfo[],
+  projects: BalanceProject[],
 ): HeldAsset[] {
   const knownSet = new Set(
     known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),

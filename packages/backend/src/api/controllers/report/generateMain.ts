@@ -1,6 +1,6 @@
 import { ApiMain, Chart, ChartPoint, Charts, ProjectId } from '@l2beat/types'
 
-import { ProjectInfo } from '../../../model'
+import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
@@ -11,7 +11,7 @@ export function generateMain(
   sixHourlyReports: AggregateReportRecord[],
   dailyReports: AggregateReportRecord[],
   latestReports: ReportRecord[],
-  projects: ProjectInfo[],
+  projects: ReportProject[],
 ): ApiMain {
   return {
     charts: getProjectCharts(

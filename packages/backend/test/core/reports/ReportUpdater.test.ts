@@ -2,12 +2,12 @@ import { Logger, mock } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { BalanceUpdater } from '../../../src/core/BalanceUpdater'
+import { BalanceUpdater } from '../../../src/core/balances/BalanceUpdater'
 import { Clock } from '../../../src/core/Clock'
-import { getConfigHash } from '../../../src/core/getConfigHash'
 import { PriceUpdater } from '../../../src/core/PriceUpdater'
 import { aggregateReports } from '../../../src/core/reports/aggregateReports'
 import { createReports } from '../../../src/core/reports/createReports'
+import { getReportConfigHash } from '../../../src/core/reports/getReportConfigHash'
 import {
   OP_TOKEN_ID,
   OPTIMISM_PROJECT_ID,
@@ -90,7 +90,7 @@ describe(ReportUpdater.name, () => {
       await reportUpdater.update(NOW.add(1, 'hours'))
       await reportUpdater.update(NOW)
 
-      const configHash = getConfigHash(PROJECTS)
+      const configHash = getReportConfigHash(PROJECTS)
       expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
         [{ configHash, timestamp: NOW.add(1, 'hours') }],
         [{ configHash, timestamp: NOW }],
@@ -160,7 +160,7 @@ describe(ReportUpdater.name, () => {
       await reportUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getConfigHash(PROJECTS)
+        const configHash = getReportConfigHash(PROJECTS)
         expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
           [{ configHash, timestamp: NOW.add(1, 'hours') }],
           [{ configHash, timestamp: NOW }],
