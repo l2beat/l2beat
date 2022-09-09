@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const orbiterBridge: BridgeDescription = {
-  name: 'Orbiter Bridge',
-  slug: 'orbiterbridge',
+export const orbiter: Bridge = {
+  id: ProjectId('orbiter'),
+  name: 'Orbiter',
+  slug: 'orbiter',
   validation: 'Liquidity Network',
   links: {
     websites: ['https://orbiter.finance/'],

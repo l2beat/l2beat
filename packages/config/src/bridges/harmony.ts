@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const harmonyBridge: BridgeDescription = {
-  name: 'Harmony Bridge',
-  slug: 'harmonybridge',
+export const harmony: Bridge = {
+  id: ProjectId('harmony'),
+  name: 'Harmony',
+  slug: 'harmony',
   validation: 'EV Bridge',
   description: 'Externally Validated Token Bridge secured by a multisig.',
   links: {

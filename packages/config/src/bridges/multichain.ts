@@ -1,14 +1,15 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
 /* TODO: Get tokens from SwapOut entries
 Note: Timestamp is entered manually as all these accounts are EOAs
 */
 
-export const multichainBridge: BridgeDescription = {
-  name: 'Multichain Bridge',
-  slug: 'multichainbridge',
+export const multichain: Bridge = {
+  id: ProjectId('multichain'),
+  name: 'Multichain',
+  slug: 'multichain',
   validation: 'EV Bridge and LN',
   description:
     'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',

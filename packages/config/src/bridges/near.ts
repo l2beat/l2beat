@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const nearBridge: BridgeDescription = {
+export const near: Bridge = {
+  id: ProjectId('near'),
   name: 'Near Rainbow Bridge',
-  slug: 'nearbridge',
+  slug: 'near',
   validation: 'LC Token Bridge',
   links: {
     websites: ['https://near.org/bridge/'],

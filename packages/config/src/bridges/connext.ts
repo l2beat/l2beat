@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const connextBridge: BridgeDescription = {
-  name: 'Connext Bridge',
-  slug: 'connextbridge',
+export const connext: Bridge = {
+  id: ProjectId('connext'),
+  name: 'Connext',
+  slug: 'connext',
   validation: 'Native Bridge',
   links: {
     websites: ['https://bridge.connext.network/'],

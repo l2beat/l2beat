@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const hyphenBridge: BridgeDescription = {
-  name: 'Hyphen Bridge',
-  slug: 'hyphenbridge',
+export const hyphen: Bridge = {
+  id: ProjectId('hyphen'),
+  name: 'Hyphen',
+  slug: 'hyphen',
   validation: 'Liquidity Network',
   links: {
     websites: ['https://hyphen.biconomy.io/'],

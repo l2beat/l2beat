@@ -1,2 +1,2 @@
-export * from './bridge'
-export * from './BridgeDescription'
+export * from './Bridge'
+export * from './bridgeToLayer2'

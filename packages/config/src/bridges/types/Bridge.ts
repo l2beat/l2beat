@@ -1,8 +1,11 @@
+import { ProjectId } from '@l2beat/types'
+
 import { Layer2RiskViewEntry, News } from '../../layer2s'
 import { Layer2Escrow } from '../../layer2s/types/Layer2Escrow'
 import { Layer2Links } from '../../layer2s/types/Layer2Links'
 
-export interface BridgeDescription {
+export interface Bridge {
+  id: ProjectId
   name: string
   slug: string
   validation: string

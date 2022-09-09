@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const avalancheBridge: BridgeDescription = {
-  name: 'Avalanche Bridge',
-  slug: 'avalanchebridge',
+export const avalanche: Bridge = {
+  id: ProjectId('avalanche'),
+  name: 'Avalanche',
+  slug: 'avalanche',
   description:
     'Avalanche Bridge is an externally validated bridge. It uses a set of Wardens using secure SGX Enclave to sign tansfers. On Ethereum side it uses periodically rotated EOA address for an Escdrow. In the announcement, 3 out of 4 Warden signatures are required, however the exact number is impossible to verify for an external observer.',
   validation: 'EV Bridge',

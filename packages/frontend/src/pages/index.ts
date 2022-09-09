@@ -1,4 +1,4 @@
-import { BridgeDescription, Layer2 } from '@l2beat/config'
+import { Bridge, Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { getBridgesRiskPage } from './bridges-risk'
@@ -14,7 +14,7 @@ import { getTvlPage } from './tvl'
 
 export async function renderPages(
   projects: Layer2[],
-  bridges: BridgeDescription[],
+  bridges: Bridge[],
   apiMain: ApiMain,
 ) {
   const pages: Page[] = []

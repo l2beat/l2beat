@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const gravityBridge: BridgeDescription = {
-  name: 'Gravity Bridge',
-  slug: 'gravitybridge',
+export const gravity: Bridge = {
+  id: ProjectId('gravity'),
+  name: 'Gravity',
+  slug: 'gravity',
   validation: 'Bridge',
   links: {
     websites: ['https://bridge.roninchain.com/'],

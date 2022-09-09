@@ -1,10 +1,11 @@
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { BridgeDescription } from './types'
+import { Bridge } from './types'
 
-export const polynetworkBridge: BridgeDescription = {
-  name: 'Polynetwork Bridge',
-  slug: 'polynetworkbridge',
+export const polynetwork: Bridge = {
+  id: ProjectId('polynetwork'),
+  name: 'Polynetwork',
+  slug: 'polynetwork',
   validation: 'LC Token Bridge',
   links: {
     websites: ['https://poly.network/'],
