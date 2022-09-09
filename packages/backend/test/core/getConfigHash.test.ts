@@ -158,9 +158,9 @@ describe(getConfigHash.name, () => {
     expect(hashBefore).toEqual(hashAfter)
   })
 })
+
 function fakeProject(id: string, escrows: EscrowInfo[]): ProjectInfo {
   return {
-    name: id[0].toUpperCase() + id.slice(1),
     projectId: ProjectId(id),
     escrows,
     events: [],

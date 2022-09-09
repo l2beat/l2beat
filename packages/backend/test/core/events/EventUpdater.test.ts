@@ -98,7 +98,6 @@ describe(EventUpdater.name, () => {
 
       const projects: ProjectInfo[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           escrows: [],
           events: [eventBeforeFirstHour],
@@ -143,7 +142,6 @@ describe(EventUpdater.name, () => {
 
       const projects: ProjectInfo[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           escrows: [],
           events: [EVENT],
@@ -201,13 +199,11 @@ describe(EventUpdater.name, () => {
 
       const projects: ProjectInfo[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           escrows: [],
           events: [EVENT],
         },
         {
-          name: PROJECT_B.toString(),
           projectId: PROJECT_B,
           escrows: [],
           events: [EVENT],
@@ -252,7 +248,6 @@ describe(EventUpdater.name, () => {
 
       const projects: ProjectInfo[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
           escrows: [],
           events: [EVENT],

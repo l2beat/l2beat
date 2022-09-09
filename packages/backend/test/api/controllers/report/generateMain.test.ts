@@ -37,7 +37,6 @@ const wethToken = mockToken(AssetId.WETH, 'WETH')
 const projects: ProjectInfo[] = [
   {
     projectId: arbitrumId,
-    name: 'Arbitrum',
     escrows: [
       {
         address: EthereumAddress.random(),
@@ -54,7 +53,6 @@ const projects: ProjectInfo[] = [
   },
   {
     projectId: optimismId,
-    name: 'Optimism',
     escrows: [
       {
         address: EthereumAddress.random(),

@@ -51,8 +51,6 @@ export const BALANCES: BalanceRecord[] = [
 export const PROJECTS: ProjectInfo[] = [
   {
     projectId: ProjectId('arbitrum'),
-    name: 'Arbitrum',
-
     escrows: [
       {
         address: ARBITRUM_ESCROW_ONE,
@@ -72,7 +70,6 @@ export const PROJECTS: ProjectInfo[] = [
   },
   {
     projectId: ProjectId('optimism'),
-    name: 'Optimism',
     escrows: [
       {
         address: OPTIMISM_ESCROW,

@@ -8,7 +8,6 @@ import {
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 export interface ProjectInfo {
-  name: string
   projectId: ProjectId
   escrows: EscrowInfo[]
   events: Layer2Event[]
@@ -22,7 +21,6 @@ export interface EscrowInfo {
 
 export function layer2ToProject(layer2: Layer2): ProjectInfo {
   return {
-    name: layer2.name,
     projectId: layer2.id,
     escrows: layer2.escrows.map((escrow) => ({
       address: EthereumAddress(escrow.address),

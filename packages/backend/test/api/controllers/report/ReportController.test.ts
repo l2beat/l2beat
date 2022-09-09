@@ -48,7 +48,6 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
-            name: 'Optimism',
             escrows: [
               {
                 address: OPTIMISM_ADDRESS,
@@ -103,7 +102,6 @@ describe(ReportController.name, () => {
         [
           {
             projectId: OPTIMISM,
-            name: 'Optimism',
             escrows: [
               {
                 address: OPTIMISM_ADDRESS,

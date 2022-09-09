@@ -72,7 +72,6 @@ describe(BalanceUpdater.name, () => {
       const holderAddress = EthereumAddress.random()
       const projects: ProjectInfo[] = [
         {
-          name: 'First',
           projectId: ProjectId('first'),
           escrows: [
             {
@@ -139,7 +138,6 @@ describe(BalanceUpdater.name, () => {
       const holderAddress = EthereumAddress.random()
       const projects: ProjectInfo[] = [
         {
-          name: 'First',
           projectId: ProjectId('first'),
           escrows: [
             {
@@ -239,7 +237,6 @@ describe(BalanceUpdater.name, () => {
       const escrow = EthereumAddress.random()
       const projects: ProjectInfo[] = [
         {
-          name: 'First',
           projectId: ProjectId('first'),
           escrows: [
             {
