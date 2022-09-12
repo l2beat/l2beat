@@ -29,8 +29,8 @@ import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
-import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
+import { RpcClient } from './peripherals/ethereum/RpcClient'
 import { EtherscanClient } from './peripherals/etherscan'
 
 export class Application {
@@ -62,12 +62,12 @@ export class Application {
 
     const http = new HttpClient()
 
-    const provider = new providers.AlchemyProvider(
+    const ethereumProvider = new providers.AlchemyProvider(
       'mainnet',
       config.alchemyApiKey,
     )
 
-    const ethereumClient = new EthereumClient(provider)
+    const ethereumClient = new RpcClient(ethereumProvider)
 
     const multicall = new MulticallClient(ethereumClient)
 

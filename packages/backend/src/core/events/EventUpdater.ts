@@ -7,7 +7,7 @@ import {
   EventRecord,
   EventRepository,
 } from '../../peripherals/database/EventRepository'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { RpcClient } from '../../peripherals/ethereum/RpcClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { generateEventRecords } from './generateEventRecords'
@@ -20,7 +20,7 @@ export class EventUpdater {
   private lastProcessed: UnixTime | undefined
 
   constructor(
-    private ethereumClient: EthereumClient,
+    private rpcClient: RpcClient,
     private blockNumberUpdater: BlockNumberUpdater,
     private eventRepository: EventRepository,
     private clock: Clock,
@@ -132,7 +132,7 @@ export class EventUpdater {
     )
     const toBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(to)
 
-    const logs = await this.ethereumClient.getLogsUsingBisection(
+    const logs = await this.rpcClient.getLogsUsingBisection(
       event.emitter,
       event.topic,
       Number(fromBlock),
