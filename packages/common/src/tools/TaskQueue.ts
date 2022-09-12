@@ -4,6 +4,7 @@ import { Logger } from './Logger'
 
 export class TaskQueue<T> {
   private queue: T[] = []
+  private busyWorkers = 0
 
   constructor(
     private executeTask: (task: T) => Promise<void>,
@@ -16,14 +17,19 @@ export class TaskQueue<T> {
     )
   }
 
+  private get isEmpty() {
+    return this.queue.length === 0 && this.busyWorkers === 0
+  }
+
   private get allWorkersBusy() {
-    return this.workers === 0
+    return this.busyWorkers === this.workers
   }
 
   addIfEmpty(task: T) {
-    if (this.queue.length === 0 && !this.allWorkersBusy) {
-      this.addToBack(task)
+    if (!this.isEmpty) {
+      return
     }
+    this.addToBack(task)
   }
 
   addToFront(task: T) {
@@ -46,7 +52,7 @@ export class TaskQueue<T> {
     if (this.allWorkersBusy || this.queue.length === 0) {
       return
     }
-    this.workers--
+    this.busyWorkers++
     const task = this.queue.shift() as T
     try {
       await this.executeTask(task)
@@ -54,7 +60,7 @@ export class TaskQueue<T> {
       this.logger.error(error)
       this.queue.unshift(task)
     } finally {
-      this.workers++
+      this.busyWorkers--
       setTimeout(() => this.execute())
     }
   }
