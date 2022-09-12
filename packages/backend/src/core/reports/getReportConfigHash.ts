@@ -5,7 +5,7 @@ import { ReportProject } from './ReportProject'
 
 // Increment this value to change the hash which in turn causes the system to
 // recalculate reports
-const REPORT_LOGIC_VERSION = 0
+const REPORT_LOGIC_VERSION = 1
 
 export function getReportConfigHash(projects: ReportProject[]) {
   return hashJson([getEntries(projects), REPORT_LOGIC_VERSION])
