@@ -1,16 +1,27 @@
+import assert from 'assert'
+
 import { Logger } from './Logger'
 
 export class TaskQueue<T> {
   private queue: T[] = []
-  private isExecuting = false
 
   constructor(
     private executeTask: (task: T) => Promise<void>,
     private logger: Logger,
-  ) {}
+    private workers = 1,
+  ) {
+    assert(
+      workers > 0 && Number.isInteger(workers),
+      'workers needs to be a positive integer',
+    )
+  }
+
+  private get allWorkersBusy() {
+    return this.workers === 0
+  }
 
   addIfEmpty(task: T) {
-    if (this.queue.length === 0 && !this.isExecuting) {
+    if (this.queue.length === 0 && !this.allWorkersBusy) {
       this.addToBack(task)
     }
   }
@@ -32,18 +43,18 @@ export class TaskQueue<T> {
   }
 
   private async executeUnchecked() {
-    if (this.isExecuting || this.queue.length === 0) {
+    if (this.allWorkersBusy || this.queue.length === 0) {
       return
     }
+    this.workers--
     const task = this.queue.shift() as T
-    this.isExecuting = true
     try {
       await this.executeTask(task)
     } catch (error) {
       this.logger.error(error)
       this.queue.unshift(task)
     } finally {
-      this.isExecuting = false
+      this.workers++
       setTimeout(() => this.execute())
     }
   }
