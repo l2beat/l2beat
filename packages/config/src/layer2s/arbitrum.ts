@@ -273,7 +273,7 @@ export const arbitrum: Layer2 = {
             address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
             name: 'ProxyAdmin (1)',
             description:
-              'This contract is an admin of SequencerInbox, Bridge and Outbox contracts. It is owned by a 4-of-6 multisig.',
+              'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
           },
           {
             address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
@@ -287,9 +287,10 @@ export const arbitrum: Layer2 = {
             description:
               'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
             upgradeability: {
-              type: 'EIP1967',
+              type: 'Arbitrum',
               admin: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-              implementation: '0x75fc5465c4BaD74B367ac917f7298aD66c308Fb8',
+              adminImplementation: '0x75fc5465c4BaD74B367ac917f7298aD66c308Fb8',
+              userImplementation: '0x4C5960936f1635765e37Ff1a220D7344b27D7046',
             },
           },
           {
