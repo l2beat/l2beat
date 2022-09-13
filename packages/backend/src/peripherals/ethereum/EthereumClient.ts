@@ -3,7 +3,7 @@ import { providers } from 'ethers'
 
 import { BlockTag, CallParameters } from './types'
 
-export class RpcClient {
+export class EthereumClient {
   constructor(private provider: providers.Provider) {}
 
   async getBlockNumber() {

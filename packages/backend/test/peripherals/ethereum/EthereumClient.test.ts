@@ -3,9 +3,9 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
 
-import { RpcClient } from '../../../src/peripherals/ethereum/RpcClient'
+import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
-describe(RpcClient.name, () => {
+describe(EthereumClient.name, () => {
   it('divides on two calls', async () => {
     const provider = mock<providers.Provider>({
       getLogs: mockFn()
@@ -14,7 +14,7 @@ describe(RpcClient.name, () => {
         .returnsOnce([]),
     })
 
-    const ethereumClient = new RpcClient(provider)
+    const ethereumClient = new EthereumClient(provider)
 
     const address = EthereumAddress.random()
     const topic = 'aaaa'
@@ -56,7 +56,7 @@ describe(RpcClient.name, () => {
         .returnsOnce([]),
     })
 
-    const ethereumClient = new RpcClient(provider)
+    const ethereumClient = new EthereumClient(provider)
 
     const address = EthereumAddress.random()
     const topic = 'aaaa'
@@ -95,7 +95,7 @@ describe(RpcClient.name, () => {
       getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),
     })
 
-    const ethereumClient = new RpcClient(provider)
+    const ethereumClient = new EthereumClient(provider)
 
     const address = EthereumAddress.random()
     const topic = 'aaaa'

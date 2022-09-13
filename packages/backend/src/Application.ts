@@ -32,8 +32,8 @@ import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
 import { TxCountRepository } from './peripherals/database/TxCountRepository'
+import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
-import { RpcClient } from './peripherals/ethereum/RpcClient'
 import { EtherscanClient } from './peripherals/etherscan'
 
 export class Application {
@@ -75,8 +75,8 @@ export class Application {
       config.alchemyApiKey,
     )
 
-    const ethereumClient = new RpcClient(ethereumProvider)
-    const optimismClient = new RpcClient(optimismProvider)
+    const ethereumClient = new EthereumClient(ethereumProvider)
+    const optimismClient = new EthereumClient(optimismProvider)
 
     const multicall = new MulticallClient(ethereumClient)
 

@@ -1,7 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { RpcClient } from './RpcClient'
+import { EthereumClient } from './EthereumClient'
 
 export const MULTICALL_BATCH_SIZE = 150
 export const MULTICALL_V1_BLOCK = 7929876n
@@ -24,7 +24,7 @@ export interface MulticallResponse {
 }
 
 export class MulticallClient {
-  constructor(private rpcClient: RpcClient) {}
+  constructor(private ethereumClient: EthereumClient) {}
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,
@@ -58,7 +58,7 @@ export class MulticallClient {
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
       requests.map((request) =>
-        this.rpcClient.call(
+        this.ethereumClient.call(
           {
             to: request.address,
             data: request.data,
@@ -81,7 +81,7 @@ export class MulticallClient {
   ): Promise<MulticallResponse[]> {
     if (blockNumber < MULTICALL_V2_BLOCK) {
       const encoded = encodeMulticallV1(requests)
-      const result = await this.rpcClient.call(
+      const result = await this.ethereumClient.call(
         {
           to: MULTICALL_V1_ADDRESS,
           data: encoded,
@@ -91,7 +91,7 @@ export class MulticallClient {
       return decodeMulticallV1(result)
     } else {
       const encoded = encodeMulticallV2(requests)
-      const result = await this.rpcClient.call(
+      const result = await this.ethereumClient.call(
         {
           to: MULTICALL_V2_ADDRESS,
           data: encoded,

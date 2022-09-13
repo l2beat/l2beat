@@ -13,7 +13,7 @@ import {
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
 import { Project } from '../../../src/model'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
-import { RpcClient } from '../../../src/peripherals/ethereum/RpcClient'
+import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
 const START = UnixTime.fromDate(new Date('2022-08-09T00:00:00Z'))
 const PROJECT_A = ProjectId('project-a')
@@ -65,7 +65,7 @@ describe(EventUpdater.name, () => {
       })
 
       const eventUpdater = new EventUpdater(
-        mock<RpcClient>({}),
+        mock<EthereumClient>({}),
         mock<BlockNumberUpdater>({}),
         mock<EventRepository>({}),
         clock,
@@ -111,7 +111,7 @@ describe(EventUpdater.name, () => {
       })
 
       const eventUpdater = new EventUpdater(
-        mock<RpcClient>({}),
+        mock<EthereumClient>({}),
         mock<BlockNumberUpdater>({}),
         eventRepository,
         clock,
@@ -156,7 +156,7 @@ describe(EventUpdater.name, () => {
       })
 
       const eventUpdater = new EventUpdater(
-        mock<RpcClient>({}),
+        mock<EthereumClient>({}),
         mock<BlockNumberUpdater>({}),
         eventRepository,
         clock,
@@ -177,7 +177,7 @@ describe(EventUpdater.name, () => {
     })
 
     it('saves to db', async () => {
-      const ethereumClient = mock<RpcClient>({
+      const ethereumClient = mock<EthereumClient>({
         getLogsUsingBisection: mockFn().returns([
           mockLog(50),
           mockLog(150),
@@ -267,7 +267,7 @@ describe(EventUpdater.name, () => {
       })
 
       const eventUpdater = new EventUpdater(
-        mock<RpcClient>({}),
+        mock<EthereumClient>({}),
         mock<BlockNumberUpdater>({}),
         eventRepository,
         clock,
@@ -292,7 +292,7 @@ describe(EventUpdater.name, () => {
 
   describe(EventUpdater.prototype.fetchRecords.name, () => {
     it('adjusts from and calls correctly', async () => {
-      const ethereum = mock<RpcClient>({
+      const ethereum = mock<EthereumClient>({
         getLogsUsingBisection: mockFn().returnsOnce([]),
       })
 
@@ -333,7 +333,7 @@ describe(EventUpdater.name, () => {
     })
 
     it('returns only from to', async () => {
-      const ethereum = mock<RpcClient>({
+      const ethereum = mock<EthereumClient>({
         getLogsUsingBisection: mockFn().returnsOnce([
           mockLog(50),
           mockLog(100),
@@ -374,7 +374,7 @@ describe(EventUpdater.name, () => {
 
   describe(EventUpdater.prototype.eventBlockNumbers.name, () => {
     it('ask for a block number of a 1 hour earlier', async () => {
-      const ethereum = mock<RpcClient>({
+      const ethereum = mock<EthereumClient>({
         getLogsUsingBisection: mockFn().returnsOnce([]),
       })
 
@@ -405,7 +405,7 @@ describe(EventUpdater.name, () => {
     })
 
     it('returns only blockNumbers', async () => {
-      const ethereum = mock<RpcClient>({
+      const ethereum = mock<EthereumClient>({
         getLogsUsingBisection: mockFn().returnsOnce([
           mockLog(100),
           mockLog(200),
