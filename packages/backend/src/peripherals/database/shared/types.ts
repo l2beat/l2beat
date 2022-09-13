@@ -57,6 +57,13 @@ declare module 'knex/types/tables' {
     time_span: EventGranularity
   }
 
+  interface TxCountRow {
+    unix_timestamp: string
+    project_id: string
+    block_number: number
+    count: number
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -66,5 +73,6 @@ declare module 'knex/types/tables' {
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
     events: EventRow
+    tx_count: TxCountRow
   }
 }
