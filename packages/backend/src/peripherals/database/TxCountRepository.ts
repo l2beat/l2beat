@@ -5,11 +5,15 @@ import { TxCountRow } from 'knex/types/tables'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
-interface TxCountRecord {
+export interface TxCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   blockNumber: number
   count: number
+}
+
+interface MissingNumber {
+  i: number
 }
 
 export class TxCountRepository extends BaseRepository {
@@ -47,6 +51,35 @@ export class TxCountRepository extends BaseRepository {
       .first()
 
     return row ? toRecord(row) : undefined
+  }
+
+  async getMissingByProject(projectId: ProjectId) {
+    const knex = await this.knex()
+    const maxBlockNumber = await this.findLatestByProject(projectId)
+    if (!maxBlockNumber) {
+      return []
+    }
+
+    const rows = (await knex
+      .select('s.i')
+      .from(
+        knex.raw(
+          'generate_series(0,(?)) s(i)',
+          knex('tx_count')
+            .where('project_id', projectId.toString())
+            .orderBy('block_number', 'desc')
+            .first()
+            .select('block_number'),
+        ),
+      )
+      .leftOuterJoin(
+        knex('tx_count').where('project_id', projectId.toString()).as('t1'),
+        't1.block_number',
+        's.i',
+      )
+      .whereNull('t1.block_number')) as MissingNumber[]
+
+    return rows.map(({ i }) => i)
   }
 
   async getBlockNumbersByProject(projectId: ProjectId) {

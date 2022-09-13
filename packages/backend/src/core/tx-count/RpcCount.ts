@@ -29,14 +29,29 @@ export class RpcCount {
 
     await this.txCountRepository.add({
       projectId: this.projectId,
-      timestamp: new UnixTime(block.timestamp),
+      timestamp,
       blockNumber: block.number,
       count: block.transactions.length,
     })
   }
 
+  start() {
+    this.logger.info('Started')
+    return this.clock.onEveryHour(() => {
+      this.taskQueue.addIfEmpty()
+    })
+  }
+
   async update() {
     this.logger.info('Update started')
+
+    const missingBlocks = await this.txCountRepository.getMissingByProject(
+      this.projectId,
+    )
+    for (const block of missingBlocks) {
+      this.blockQueue.addToBack(block)
+    }
+
     const lastBlock = await this.txCountRepository.findLatestByProject(
       this.projectId,
     )
@@ -48,12 +63,5 @@ export class RpcCount {
       lastBlockNumber++
     }
     this.logger.info('Update completed')
-  }
-
-  start() {
-    this.logger.info('Started')
-    return this.clock.onEveryHour(() => {
-      this.taskQueue.addIfEmpty()
-    })
   }
 }
