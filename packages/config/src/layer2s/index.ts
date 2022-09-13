@@ -23,7 +23,6 @@ import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
 import { zksync } from './zksync'
-
 export * from './types'
 
 export const layer2s: Layer2[] = [

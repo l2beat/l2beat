@@ -1,20 +1,20 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 
-import { ProjectInfo } from '../../model'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { BalanceUpdater } from '../BalanceUpdater'
+import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
-import { getConfigHash } from '../getConfigHash'
 import { PriceUpdater } from '../PriceUpdater'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
+import { getReportConfigHash } from './getReportConfigHash'
 import { addOpTokenReport } from './optimism'
+import { ReportProject } from './ReportProject'
 
 export class ReportUpdater {
-  private configHash: string
+  private configHash: Hash256
   private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
 
   constructor(
@@ -24,11 +24,11 @@ export class ReportUpdater {
     private aggregateReportsRepository: AggregateReportRepository,
     private reportStatusRepository: ReportStatusRepository,
     private clock: Clock,
-    private projects: ProjectInfo[],
+    private projects: ReportProject[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.configHash = getConfigHash(projects)
+    this.configHash = getReportConfigHash(projects)
   }
 
   async start() {

@@ -1,10 +1,15 @@
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { providers } from 'ethers'
 
+import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
 
 export class EthereumClient {
-  constructor(private provider: providers.Provider) {}
+  private provider: RateLimitedProvider
+
+  constructor(provider: providers.Provider, callsPerMinute = Infinity) {
+    this.provider = new RateLimitedProvider(provider, callsPerMinute)
+  }
 
   async getBlockNumber() {
     const result = await this.provider.getBlockNumber()

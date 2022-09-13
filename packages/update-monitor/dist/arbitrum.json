@@ -1,4 +1,153 @@
 {
   "name": "arbitrum",
-  "contracts": []
+  "contracts": [
+    {
+      "name": "Multisig",
+      "address": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
+      "upgradeability": {
+        "type": "gnosis safe"
+      },
+      "values": {
+        "owners": [
+          "0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e",
+          "0x68aF7F698aA20A1B804833654E82D8d7b6816e12",
+          "0x80420B3216E87e4ed25489ef392901Aafc10951B",
+          "0xf7FAf474aB8c503CF1786FfE708c861b438A59c6",
+          "0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972",
+          "0xc73b82AC141ce46D8987135E57D0ead1BFB35075"
+        ],
+        "threshold": 4
+      }
+    },
+    {
+      "name": "Rollup",
+      "address": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+      "upgradeability": {
+        "type": "arbitrum proxy",
+        "adminImplementation": "0x75fc5465c4BaD74B367ac917f7298aD66c308Fb8",
+        "userImplementation": "0x4C5960936f1635765e37Ff1a220D7344b27D7046"
+      },
+      "values": {
+        "admin": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "ProxyAdmin1",
+      "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "ProxyAdmin2",
+      "address": "0x171a2624302775eF943f4f62E76fd22A6813d7c4",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "ProxyAdmin3",
+      "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "Bridge",
+      "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591"
+      },
+      "values": {
+        "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      }
+    },
+    {
+      "name": "ChallengeManager",
+      "address": "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445"
+      },
+      "values": {
+        "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      }
+    },
+    {
+      "name": "Inbox",
+      "address": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x3E2198A77FC6B266082b92859092170763548730"
+      },
+      "values": {
+        "admin": "0x171a2624302775eF943f4f62E76fd22A6813d7c4"
+      }
+    },
+    {
+      "name": "SequencerInbox",
+      "address": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x16242595cAfA3a207E9354E3bdb000B59bA82875"
+      },
+      "values": {
+        "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      }
+    },
+    {
+      "name": "Outbox",
+      "address": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x0eA7372338a589e7f0b00E463a53AA464ef04e17"
+      },
+      "values": {
+        "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      }
+    },
+    {
+      "name": "L1CustomGateway",
+      "address": "0xcEe284F754E854890e311e3280b767F80797180d",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"
+      },
+      "values": {
+        "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      }
+    },
+    {
+      "name": "L1ERC20Gateway",
+      "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900"
+      },
+      "values": {
+        "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      }
+    },
+    {
+      "name": "L1GatewayRouter",
+      "address": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+      "upgradeability": {
+        "type": "proxy",
+        "implementation": "0x6D1c576Fe3e54313990450f5Fa322306B4cCB47B"
+      },
+      "values": {
+        "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      }
+    }
+  ]
 }
