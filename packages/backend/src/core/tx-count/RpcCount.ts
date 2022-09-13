@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { TxCountRepository } from '../../peripherals/database/TxCountRepository'
-import { RpcClient } from '../../peripherals/ethereum/RpcClient'
+import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
 export class RpcCount {
@@ -10,7 +10,7 @@ export class RpcCount {
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
   constructor(
-    private rpcClient: RpcClient,
+    private etheteumClient: EthereumClient,
     private txCountRepository: TxCountRepository,
     private clock: Clock,
     private logger: Logger,
@@ -20,7 +20,7 @@ export class RpcCount {
   }
 
   async getBlock(number: number) {
-    const block = await this.rpcClient.getBlock(number)
+    const block = await this.etheteumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
     if (timestamp.gt(this.clock.getLastHour())) {
@@ -40,7 +40,7 @@ export class RpcCount {
     const lastBlock = await this.txCountRepository.findLatestByProject(
       this.projectId,
     )
-    const latestBlock = await this.rpcClient.getBlockNumber()
+    const latestBlock = await this.etheteumClient.getBlockNumber()
     let lastBlockNumber = lastBlock ? lastBlock.blockNumber : 0
 
     while (lastBlockNumber < Number(latestBlock)) {
