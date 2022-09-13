@@ -7,8 +7,7 @@ import { Clock } from '../Clock'
 
 export class RpcCount {
   private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger)
-  private unsafeBlockReached = false
+  private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
   constructor(
     private rpcClient: RpcClient,
@@ -25,7 +24,6 @@ export class RpcCount {
     const timestamp = new UnixTime(block.timestamp)
 
     if (timestamp.gt(this.clock.getLastHour())) {
-      this.unsafeBlockReached = true
       return
     }
 
@@ -45,7 +43,7 @@ export class RpcCount {
     const latestBlock = await this.rpcClient.getBlockNumber()
     let lastBlockNumber = lastBlock ? lastBlock.blockNumber : 0
 
-    while (!this.unsafeBlockReached && lastBlockNumber < Number(latestBlock)) {
+    while (lastBlockNumber < Number(latestBlock)) {
       this.blockQueue.addToBack(lastBlockNumber)
       lastBlockNumber++
     }
@@ -55,7 +53,6 @@ export class RpcCount {
   start() {
     this.logger.info('Started')
     return this.clock.onEveryHour(() => {
-      this.unsafeBlockReached = false
       this.taskQueue.addIfEmpty()
     })
   }
