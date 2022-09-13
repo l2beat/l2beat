@@ -10,10 +10,11 @@ export interface BridgesRiskViewProps {
 
 export interface BridgesRiskViewEntry {
   name: string
-  sourceOwnership?: Layer2RiskViewEntry
+  destination: { value: string; description?: string }
+  validation?: Layer2RiskViewEntry
+  type: string
   sourceUpgradeability?: Layer2RiskViewEntry
-  destinationOwnership?: Layer2RiskViewEntry
-  destinationUpgradeability?: Layer2RiskViewEntry
+  destinationToken?: Layer2RiskViewEntry
 }
 
 export function RiskView({ items }: BridgesRiskViewProps) {
@@ -23,21 +24,25 @@ export function RiskView({ items }: BridgesRiskViewProps) {
       getValue: (entry) => <strong>{entry.name}</strong>,
     },
     {
-      name: 'S. Own.',
-      getValue: (entry) => <RiskCell item={entry.sourceOwnership} />,
+      name: 'Destination',
+      getValue: (entry) => <span>{entry.destination.value}</span>,
     },
     {
-      name: 'S. Upgrd.',
+      name: 'Validation',
+      getValue: (entry) => <RiskCell item={entry.validation} />,
+    },
+    {
+      name: 'Type',
+      getValue: (entry) => <span>{entry.type}</span>,
+    },
+    {
+      name: 'Upgradability',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
     },
     {
-      name: 'D. Own.',
-      getValue: (entry) => <RiskCell item={entry.destinationOwnership} />,
-    },
-    {
-      name: 'D. Upgrd.',
-      getValue: (entry) => <RiskCell item={entry.destinationUpgradeability} />,
-    },
+      name: 'Destination Token',
+      getValue: (entry) => <RiskCell item={entry.destinationToken} />,
+    }
   ]
 
   return (

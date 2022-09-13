@@ -6,6 +6,9 @@ export const hyphen: Bridge = {
   id: ProjectId('hyphen'),
   name: 'Hyphen',
   slug: 'hyphen',
+  type: 'Lock-Mint',
+  destination: { value: 'Multichain' },
+
   validation: 'Liquidity Network',
   links: {
     websites: ['https://hyphen.biconomy.io/'],
