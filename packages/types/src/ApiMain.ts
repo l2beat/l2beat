@@ -37,7 +37,11 @@ export const Project = z.object({
 export type Project = z.infer<typeof Project>
 
 export const ApiMain = z.object({
+  // deprecated, alias for layer2s
   charts: Charts,
+  bridges: Charts,
+  layers2s: Charts,
+  combined: Charts,
   projects: z.record(z.string(), Project.optional()),
 })
 export type ApiMain = z.infer<typeof ApiMain>

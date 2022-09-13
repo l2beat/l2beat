@@ -1,6 +1,5 @@
 import { ApiMain, Chart, ChartPoint, Charts, ProjectId } from '@l2beat/types'
 
-import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
@@ -11,23 +10,17 @@ export function generateMain(
   sixHourlyReports: AggregateReportRecord[],
   dailyReports: AggregateReportRecord[],
   latestReports: ReportRecord[],
-  projects: ReportProject[],
+  projectIds: ProjectId[],
 ): ApiMain {
+  const reports = [hourlyReports, sixHourlyReports, dailyReports] as const
   return {
-    charts: getProjectCharts(
-      hourlyReports,
-      sixHourlyReports,
-      dailyReports,
-      ProjectId.ALL,
-    ),
-    projects: projects.reduce<ApiMain['projects']>((acc, { projectId }) => {
+    charts: getProjectCharts(...reports, ProjectId.LAYER2S),
+    layers2s: getProjectCharts(...reports, ProjectId.LAYER2S),
+    bridges: getProjectCharts(...reports, ProjectId.BRIDGES),
+    combined: getProjectCharts(...reports, ProjectId.ALL),
+    projects: projectIds.reduce<ApiMain['projects']>((acc, projectId) => {
       acc[projectId.toString()] = {
-        charts: getProjectCharts(
-          hourlyReports,
-          sixHourlyReports,
-          dailyReports,
-          projectId,
-        ),
+        charts: getProjectCharts(...reports, projectId),
         tokens: latestReports
           .filter((r) => r.projectId === projectId)
           .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
