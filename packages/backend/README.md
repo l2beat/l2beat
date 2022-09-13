@@ -49,8 +49,9 @@ environment variables. One variable per line `KEY=value`.
 - `COINGECKO_API_KEY` - (Optional) Api key for Coingecko
 - `LOG_LEVEL` - (Optional) Integer specifying the log level. `0` - none, `1` - error, `2` - info, `3` - debug
 - `PORT` - (Optional) The port on which the application exposes the api
-- `DISABLE_SYNC` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
+- `SYNC_DISABLED` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
+- `EXPERIMENTAL_ENABLED` (default `false`) - Functionality "behind" this flag will not run on production. Allows for faster code integration than to straight on develop a production ready feature.
 
 Example:
 
