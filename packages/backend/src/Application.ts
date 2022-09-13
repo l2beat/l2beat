@@ -188,10 +188,9 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
-      }
-
-      if (config.experimentalEnabled) {
-        eventUpdater.start()
+        if (config.eventsSyncEnabled) {
+          eventUpdater.start()
+        }
       }
     }
 

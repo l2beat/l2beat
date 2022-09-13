@@ -23,5 +23,5 @@ export interface Config {
   projects: ProjectInfo[]
   syncEnabled: boolean
   freshStart: boolean
-  experimentalEnabled: boolean
+  eventsSyncEnabled: boolean
 }

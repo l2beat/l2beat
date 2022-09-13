@@ -35,6 +35,6 @@ export function getProductionConfig(): Config {
     projects: layer2s.map(layer2ToProject),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
-    experimentalEnabled: false,
+    eventsSyncEnabled: false,
   }
 }
