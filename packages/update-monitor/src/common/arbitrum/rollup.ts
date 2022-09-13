@@ -1,32 +1,26 @@
 import { Contract, providers } from 'ethers'
 
-import { bytes32ToAddress } from '../../../common/address'
-import {
-  getEip1967Admin,
-  getEip1967Implementation,
-} from '../../../common/eip1967'
-import { ContractParameters } from '../../../types'
-import { addresses } from '../constants'
+import { ContractParameters } from '../../types'
+import { bytes32ToAddress } from '../address'
+import { getEip1967Admin, getEip1967Implementation } from '../eip1967'
 
 export async function getRollup(
   provider: providers.JsonRpcProvider,
+  address: string,
 ): Promise<ContractParameters> {
   return {
     name: 'Rollup',
-    address: addresses.rollup,
+    address,
     upgradeability: {
       type: 'arbitrum proxy',
-      adminImplementation: await getEip1967Implementation(
-        provider,
-        addresses.rollup,
-      ),
+      adminImplementation: await getEip1967Implementation(provider, address),
       userImplementation: await getArbitrumSecondaryImplementation(
         provider,
-        addresses.rollup,
+        address,
       ),
     },
     values: {
-      admin: await getEip1967Admin(provider, addresses.rollup),
+      admin: await getEip1967Admin(provider, address),
     },
   }
 }

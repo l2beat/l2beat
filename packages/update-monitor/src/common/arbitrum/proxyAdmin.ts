@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
-import { NovaProxyAdmin__factory } from '../../../typechain'
-import { ContractParameters } from '../../../types'
+import { NovaProxyAdmin__factory } from '../../typechain'
+import { ContractParameters } from '../../types'
 
 export async function getProxyAdmin(
   provider: providers.JsonRpcProvider,
