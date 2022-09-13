@@ -4,7 +4,7 @@ export interface Job<T> {
   executeAfter?: number
 }
 
-export type ShouldRetry<T> = (job: {
-  task: T
-  attempts: number
-}) => boolean | number
+export type ShouldRetry<T> = (job: { task: T; attempts: number }) => {
+  retry: boolean
+  executeAfter?: number
+}

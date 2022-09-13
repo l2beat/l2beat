@@ -64,13 +64,11 @@ export class TaskQueue<T> {
   }
 
   private handleFailure(job: Job<T>) {
-    const retry = this.shouldRetry(job)
-    if (typeof retry === 'boolean' && !retry) {
+    const result = this.shouldRetry(job)
+    if (!result.retry) {
       return
     }
-    if (typeof retry === 'number') {
-      job.executeAfter = retry
-    }
+    job.executeAfter = result.executeAfter
     job.attempts++
     this.queue.unshift(job)
   }
