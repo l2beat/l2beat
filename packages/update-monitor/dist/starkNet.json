@@ -6,12 +6,12 @@
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "upgradeability": {
         "type": "proxy",
-        "implementation": "0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"
+        "implementation": "0xE267213B0749Bb94c575F6170812c887330d9cE3"
       },
       "values": {
         "upgradeActivationDelay": 0,
         "configHash": "0x017c0bc29d31e9a7d14671610a7626264ce9ce8e3ed066a4775adf9b123de9dd",
-        "programHash": "0x0685cd631b8a3aab798fbada2cf5db713b6080d6fdc7f6cf6218f37ac48e857d",
+        "programHash": "0x03695a2473fbe96955d7f2070389e0ea2d57fc0271fb1fc8391c77ef9a9cf55d",
         "verifierAddress": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       }
     },
@@ -25,7 +25,7 @@
       "values": {
         "upgradeActivationDelay": 0,
         "maxDeposit": "1500000000000000000",
-        "maxTotalBalance": "710000000000000000000",
+        "maxTotalBalance": "800000000000000000000",
         "bridgedToken": "0x0000000000000000000000000000000000000000",
         "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
@@ -38,7 +38,7 @@
       "upgradeability": {
         "type": "call proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callProxyImplementation": "0xa739B175325cCA7b71fcB51C3032935Ef7Ac338F"
+        "callProxyImplementation": "0x522B2871c3918B92c165115d862e50e440905068"
       },
       "values": {}
     },
