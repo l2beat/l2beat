@@ -3,7 +3,7 @@ import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
 import { Logger } from '../../src/tools/Logger'
-import { TaskQueue } from '../../src/tools/TaskQueue'
+import { TaskQueue } from '../../src/tools/queue/TaskQueue'
 
 describe(TaskQueue.name, () => {
   it('executes all jobs', async () => {
@@ -89,10 +89,10 @@ describe(TaskQueue.name, () => {
 
   it('can accept only positive integers for workers', async () => {
     expect(() => {
-      new TaskQueue(Promise.resolve, Logger.SILENT, 1.5)
+      new TaskQueue(Promise.resolve, Logger.SILENT, { workers: 1.5 })
     }).toThrow('workers needs to be a positive integer')
     expect(() => {
-      new TaskQueue(Promise.resolve, Logger.SILENT, -1)
+      new TaskQueue(Promise.resolve, Logger.SILENT, { workers: -1 })
     }).toThrow('workers needs to be a positive integer')
   })
 
@@ -104,7 +104,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, 3)
+    const queue = new TaskQueue(execute, Logger.SILENT, { workers: 3 })
 
     queue.addToBack(1)
     queue.addToBack(3)
