@@ -296,7 +296,7 @@ export const zksync: Layer2 = {
           name: 'Active validator',
           accounts: [
             {
-              address: '0x18c208921F7a741510a7fc0CfA51E941735DAE54',
+              address: '0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e',
               type: 'EOA',
             },
           ],

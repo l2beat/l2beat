@@ -67,7 +67,7 @@
       "address": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
       "upgradeability": {
         "type": "proxy",
-        "implementation": "0x2e3367cc9bd83959EF103AdF6fFea6200D0A15f0"
+        "implementation": "0x16242595cAfA3a207E9354E3bdb000B59bA82875"
       },
       "values": {
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
@@ -89,7 +89,7 @@
       "address": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
       "upgradeability": {
         "type": "proxy",
-        "implementation": "0xd4254a4d136203dAd7AE5Ee05D6BD65B8d13157d"
+        "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591"
       },
       "values": {
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
