@@ -51,7 +51,6 @@ environment variables. One variable per line `KEY=value`.
 - `PORT` - (Optional) The port on which the application exposes the api
 - `SYNC_DISABLED` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
-- `EXPERIMENTAL_ENABLED` (default `false`) - Functionality "behind" this flag will not run on production. Allows for faster code integration than to straight on develop a production ready feature.
 
 Example:
 
