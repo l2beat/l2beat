@@ -1,12 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { ProjectInfo } from '../../model'
 import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
+import { ReportProject } from './ReportProject'
 
 export function aggregateReports(
   reports: ReportRecord[],
-  projects: ProjectInfo[],
+  projects: ReportProject[],
   timestamp: UnixTime,
 ): AggregateReportRecord[] {
   const aggregateReports: AggregateReportRecord[] = []

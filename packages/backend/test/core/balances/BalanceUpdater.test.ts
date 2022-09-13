@@ -11,17 +11,20 @@ import {
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { BalanceUpdater, getMissingData } from '../../src/core/BalanceUpdater'
-import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
-import { Clock } from '../../src/core/Clock'
-import { getConfigHash } from '../../src/core/getConfigHash'
-import { ProjectInfo } from '../../src/model'
+import { BalanceProject } from '../../../src/core/balances/BalanceProject'
+import {
+  BalanceUpdater,
+  getMissingData,
+} from '../../../src/core/balances/BalanceUpdater'
+import { getBalanceConfigHash } from '../../../src/core/balances/getBalanceConfigHash'
+import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
+import { Clock } from '../../../src/core/Clock'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../../src/peripherals/database/BalanceRepository'
-import { BalanceStatusRepository } from '../../src/peripherals/database/BalanceStatusRepository'
-import { MulticallClient } from '../../src/peripherals/ethereum/MulticallClient'
+} from '../../../src/peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../../../src/peripherals/database/BalanceStatusRepository'
+import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
 
 describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.start.name, () => {
@@ -60,8 +63,18 @@ describe(BalanceUpdater.name, () => {
 
       await waitForExpect(() => {
         expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-          [{ configHash: getConfigHash([]), timestamp: NOW.add(2, 'hours') }],
-          [{ configHash: getConfigHash([]), timestamp: NOW.add(-1, 'hours') }],
+          [
+            {
+              configHash: getBalanceConfigHash([]),
+              timestamp: NOW.add(2, 'hours'),
+            },
+          ],
+          [
+            {
+              configHash: getBalanceConfigHash([]),
+              timestamp: NOW.add(-1, 'hours'),
+            },
+          ],
         ])
       })
     })
@@ -70,9 +83,8 @@ describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.update.name, () => {
     it('fetches and saves missing datapoints', async () => {
       const holderAddress = EthereumAddress.random()
-      const projects: ProjectInfo[] = [
+      const projects: BalanceProject[] = [
         {
-          name: 'First',
           projectId: ProjectId('first'),
           escrows: [
             {
@@ -85,7 +97,6 @@ describe(BalanceUpdater.name, () => {
               ],
             },
           ],
-          events: [],
         },
       ]
 
@@ -131,15 +142,14 @@ describe(BalanceUpdater.name, () => {
         [balances],
       ])
       expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash: getConfigHash(projects), timestamp }],
+        [{ configHash: getBalanceConfigHash(projects), timestamp }],
       ])
     })
 
     it('skips work if everything is known', async () => {
       const holderAddress = EthereumAddress.random()
-      const projects: ProjectInfo[] = [
+      const projects: BalanceProject[] = [
         {
-          name: 'First',
           projectId: ProjectId('first'),
           escrows: [
             {
@@ -152,7 +162,6 @@ describe(BalanceUpdater.name, () => {
               ],
             },
           ],
-          events: [],
         },
       ]
 
@@ -180,7 +189,7 @@ describe(BalanceUpdater.name, () => {
 
       await balanceUpdater.update(timestamp)
       expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash: getConfigHash(projects), timestamp }],
+        [{ configHash: getBalanceConfigHash(projects), timestamp }],
       ])
     })
   })
@@ -237,9 +246,8 @@ describe(BalanceUpdater.name, () => {
     it('returns queries to be made', () => {
       const timestamp = new UnixTime(2500)
       const escrow = EthereumAddress.random()
-      const projects: ProjectInfo[] = [
+      const projects: BalanceProject[] = [
         {
-          name: 'First',
           projectId: ProjectId('first'),
           escrows: [
             {
@@ -259,7 +267,6 @@ describe(BalanceUpdater.name, () => {
               tokens: [fakeTokenInfo(AssetId.ETH, new UnixTime(1000))],
             },
           ],
-          events: [],
         },
       ]
 

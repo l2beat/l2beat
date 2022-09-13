@@ -1,4 +1,4 @@
-import { layer2s } from '@l2beat/config'
+import { bridges, layer2s } from '@l2beat/config'
 
 import { renderPages } from '../pages'
 import { createApi } from './api'
@@ -17,5 +17,5 @@ async function main() {
     (p) => !!apiMain.projects[p.id.toString()],
   )
   createApi(projects, apiMain)
-  await renderPages(projects, apiMain)
+  await renderPages(projects, bridges, apiMain)
 }

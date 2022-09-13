@@ -86,4 +86,34 @@ describe(TaskQueue.name, () => {
       expect(completed).toEqual([0, 420])
     })
   })
+
+  it('can accept only positive integers for workers', async () => {
+    expect(() => {
+      new TaskQueue(Promise.resolve, Logger.SILENT, 1.5)
+    }).toThrow('workers needs to be a positive integer')
+    expect(() => {
+      new TaskQueue(Promise.resolve, Logger.SILENT, -1)
+    }).toThrow('workers needs to be a positive integer')
+  })
+
+  it('can execute tasks asynchronously', async () => {
+    const completed: number[] = []
+
+    async function execute(value: number) {
+      await setTimeout(value * 10)
+      completed.push(value)
+    }
+
+    const queue = new TaskQueue(execute, Logger.SILENT, 3)
+
+    queue.addToBack(1)
+    queue.addToBack(3)
+    queue.addToBack(5)
+    queue.addToBack(1)
+    queue.addToBack(2)
+
+    await waitForExpect(() => {
+      expect(completed).toEqual([1, 1, 3, 2, 5])
+    })
+  })
 })

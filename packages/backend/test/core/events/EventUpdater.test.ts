@@ -11,7 +11,7 @@ import {
   getAdjustedFrom,
 } from '../../../src/core/events/EventUpdater'
 import { generateEventRecords } from '../../../src/core/events/generateEventRecords'
-import { ProjectInfo } from '../../../src/model'
+import { Project } from '../../../src/model'
 import { EventRepository } from '../../../src/peripherals/database/EventRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
@@ -96,10 +96,10 @@ describe(EventUpdater.name, () => {
         sinceTimestamp: new UnixTime(0),
       }
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [eventBeforeFirstHour],
         },
@@ -141,10 +141,10 @@ describe(EventUpdater.name, () => {
         getDataBoundary: mockFn().returns(new Map([])),
       })
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },
@@ -199,16 +199,16 @@ describe(EventUpdater.name, () => {
         getDataBoundary: mockFn().returns(new Map([])),
       })
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },
         {
-          name: PROJECT_B.toString(),
           projectId: PROJECT_B,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },
@@ -250,10 +250,10 @@ describe(EventUpdater.name, () => {
         getDataBoundary: mockFn().returns(new Map([])),
       })
 
-      const projects: ProjectInfo[] = [
+      const projects: Project[] = [
         {
-          name: PROJECT_A.toString(),
           projectId: PROJECT_A,
+          type: 'layer2',
           escrows: [],
           events: [EVENT],
         },

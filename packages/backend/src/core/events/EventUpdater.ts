@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { ProjectInfo } from '../../model/ProjectInfo'
+import { Project } from '../../model'
 import {
   EventRecord,
   EventRepository,
@@ -24,7 +24,7 @@ export class EventUpdater {
     private blockNumberUpdater: BlockNumberUpdater,
     private eventRepository: EventRepository,
     private clock: Clock,
-    private projects: ProjectInfo[],
+    private projects: Project[],
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
