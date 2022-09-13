@@ -77,12 +77,12 @@ export class TaskQueue<T> {
     if (this.allWorkersBusy || this.queue.length === 0) {
       return
     }
-    this.busyWorkers++
     const jobIndex = this.queue.findIndex((job) => this.shouldExecute(job))
     if (jobIndex === -1) {
       setTimeout(() => this.execute())
       return
     }
+    this.busyWorkers++
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
       await this.executeTask(job.task)
