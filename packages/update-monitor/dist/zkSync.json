@@ -56,7 +56,7 @@
       "values": {
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "validators": [
-          "0x18c208921F7a741510a7fc0CfA51E941735DAE54"
+          "0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
         ],
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86"
