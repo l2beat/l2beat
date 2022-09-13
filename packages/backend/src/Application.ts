@@ -20,7 +20,7 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { RpcCount } from './core/tx-count/RpcCount'
+import { RpcBlockDownloader } from './core/tx-count/RpcBlockDownloader'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -143,8 +143,8 @@ export class Application {
       logger,
     )
 
-    // TODO rename
-    const rpcCounter = new RpcCount(
+    // TODO buildUpdaterForAll
+    const optimismBlockDownloader = new RpcBlockDownloader(
       optimismClient,
       txCountRepository,
       clock,
@@ -208,7 +208,7 @@ export class Application {
         await balanceUpdater.start()
         await reportUpdater.start()
         eventUpdater.start()
-        rpcCounter.start()
+        optimismBlockDownloader.start()
       }
     }
 
