@@ -10,11 +10,15 @@ export class RateLimitedProvider {
 
   constructor(private provider: providers.Provider, callsPerMinute: number) {
     this.rateLimiter = new RateLimiter({ callsPerMinute })
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.call = this.rateLimiter.wrap(this.provider.call)
-    this.getBlock = this.rateLimiter.wrap(this.provider.getBlock)
-    this.getBlockNumber = this.rateLimiter.wrap(this.provider.getBlockNumber)
-    this.getLogs = this.rateLimiter.wrap(this.provider.getLogs)
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.call = this.rateLimiter.wrap(this.provider.call.bind(this.provider))
+    this.getBlock = this.rateLimiter.wrap(
+      this.provider.getBlock.bind(this.provider),
+    )
+    this.getBlockNumber = this.rateLimiter.wrap(
+      this.provider.getBlockNumber.bind(this.provider),
+    )
+    this.getLogs = this.rateLimiter.wrap(
+      this.provider.getLogs.bind(this.provider),
+    )
   }
 }
