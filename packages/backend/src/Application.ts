@@ -1,4 +1,5 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
@@ -19,6 +20,7 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
+import { RpcCount } from './core/tx-count/RpcCount'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -29,6 +31,7 @@ import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
+import { TxCountRepository } from './peripherals/database/TxCountRepository'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { RpcClient } from './peripherals/ethereum/RpcClient'
 import { EtherscanClient } from './peripherals/etherscan'
@@ -59,6 +62,7 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
+    const txCountRepository = new TxCountRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -66,8 +70,13 @@ export class Application {
       'mainnet',
       config.alchemyApiKey,
     )
+    const optimismProvider = new providers.AlchemyProvider(
+      'optimism',
+      config.alchemyApiKey,
+    )
 
     const ethereumClient = new RpcClient(ethereumProvider)
+    const optimismClient = new RpcClient(optimismProvider)
 
     const multicall = new MulticallClient(ethereumClient)
 
@@ -134,6 +143,15 @@ export class Application {
       logger,
     )
 
+    // TODO rename
+    const rpcCounter = new RpcCount(
+      optimismClient,
+      txCountRepository,
+      clock,
+      logger,
+      ProjectId('optimism'),
+    )
+
     // #endregion
     // #region api
 
@@ -190,6 +208,7 @@ export class Application {
         await balanceUpdater.start()
         await reportUpdater.start()
         eventUpdater.start()
+        rpcCounter.start()
       }
     }
 
