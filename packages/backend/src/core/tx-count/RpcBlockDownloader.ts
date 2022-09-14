@@ -10,7 +10,7 @@ export class RpcBlockDownloader {
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
   constructor(
-    private etheteumClient: EthereumClient,
+    private ethereumClient: EthereumClient,
     private txCountRepository: TxCountRepository,
     private clock: Clock,
     private logger: Logger,
@@ -20,7 +20,7 @@ export class RpcBlockDownloader {
   }
 
   async getBlock(number: number) {
-    const block = await this.etheteumClient.getBlock(number)
+    const block = await this.ethereumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
     // We download all the blocks, but discard those that are more recent
