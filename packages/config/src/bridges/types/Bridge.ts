@@ -10,7 +10,7 @@ export interface Bridge {
   slug: string
   validation: string
   type: string
-  canonical?: Boolean
+  canonical?: boolean
   description?: string
   destination: string[]
   links: Partial<Layer2Links>
