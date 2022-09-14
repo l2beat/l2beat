@@ -58,7 +58,7 @@ declare module 'knex/types/tables' {
   }
 
   interface TxCountRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     project_id: string
     block_number: number
     count: number
