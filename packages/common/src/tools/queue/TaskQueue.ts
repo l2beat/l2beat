@@ -75,13 +75,24 @@ export class TaskQueue<T> {
     this.queue.unshift(job)
   }
 
+  private earliestScheduledExecution() {
+    return this.queue
+      .filter((j) => j.executeAfter !== undefined)
+      .map((j) => j.executeAfter)
+      .sort()[0]
+  }
+
   private async executeUnchecked() {
-    if (this.allWorkersBusy || this.queue.length === 0) {
+    if (this.allWorkersBusy) {
       return
     }
     const jobIndex = this.queue.findIndex((job) => this.shouldExecute(job))
     if (jobIndex === -1) {
-      setTimeout(() => this.execute())
+      const nextTimestamp = this.earliestScheduledExecution()
+      if (!nextTimestamp) {
+        return
+      }
+      setTimeout(() => this.execute(), nextTimestamp - Date.now())
       return
     }
     this.busyWorkers++
