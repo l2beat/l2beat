@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -171,5 +171,13 @@ export const immutablex: Layer2 = {
     ],
   },
 
-  events: [],
+  events: [
+    {
+      name: 'LogStateTransitionFact',
+      abi: ' event LogStateTransitionFact(bytes32 stateTransitionFact)',
+      emitter: EthereumAddress('0x5fdcca53617f4d2b9134b29090c87d01058e27e9'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(1615389188),
+    },
+  ],
 }

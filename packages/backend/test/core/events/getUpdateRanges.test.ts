@@ -103,5 +103,19 @@ describe(getUpdateRanges.name, () => {
 
       expect(result).toEqual([])
     })
+
+    it('from is bigger than untilTimestamp', () => {
+      const dbStatus = undefined
+
+      const result = getUpdateRanges(
+        FROM.add(4, 'hours'),
+        TO,
+        dbStatus,
+        FROM,
+        FROM.add(3, 'hours'),
+      )
+
+      expect(result).toEqual([])
+    })
   })
 })
