@@ -3,6 +3,7 @@ import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
 import { Logger } from '../../../src/tools/Logger'
+import { Retries } from '../../../src/tools/queue/Retries'
 import { TaskQueue } from '../../../src/tools/queue/TaskQueue'
 
 describe(TaskQueue.name, () => {
@@ -38,7 +39,9 @@ describe(TaskQueue.name, () => {
       completed.push(i)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT)
+    const queue = new TaskQueue(execute, Logger.SILENT, {
+      shouldRetry: Retries.always,
+    })
     for (let i = 0; i < 10; i++) {
       queue.addToBack(i)
     }
