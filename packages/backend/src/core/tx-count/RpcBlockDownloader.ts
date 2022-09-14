@@ -10,7 +10,7 @@ interface L2Client {
   client: EthereumClient
 }
 export class RpcBlockDownloader {
-  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
   private l2Clients = new Map<ProjectId, EthereumClient>()
@@ -41,6 +41,8 @@ export class RpcBlockDownloader {
     const block = await ethereumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
+    // We download all the blocks, but discard those that are more recent
+    // than clock.getLastHour() to avoid dealing with potential reorgs
     if (timestamp.gt(this.clock.getLastHour())) {
       return
     }
@@ -56,7 +58,7 @@ export class RpcBlockDownloader {
   start() {
     this.logger.info('Started')
     return this.clock.onEveryHour(() => {
-      this.taskQueue.addIfEmpty()
+      this.updateQueue.addIfEmpty()
     })
   }
 

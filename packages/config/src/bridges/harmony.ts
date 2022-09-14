@@ -6,10 +6,29 @@ export const harmony: Bridge = {
   id: ProjectId('harmony'),
   name: 'Harmony',
   slug: 'harmony',
+  type: 'Lock-Mint',
+  destination: ['Harmony'],
+
   validation: 'EV Bridge',
   description: 'Externally Validated Token Bridge secured by a multisig.',
   links: {
     websites: ['https://bridge.harmony.one/erc20'],
+  },
+  risks: {
+    validation: {
+      value: 'External',
+      description: '2/5 MultiSig',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'No',
+      description: '',
+    },
+    destinationToken: {
+      value: 'BridgedToken',
+      description:
+        'BridgedTokens cannot be upgraded. They can be minted by approved Minters.',
+    },
   },
   escrows: [
     {

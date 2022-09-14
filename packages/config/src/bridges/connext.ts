@@ -6,7 +6,10 @@ export const connext: Bridge = {
   id: ProjectId('connext'),
   name: 'Connext',
   slug: 'connext',
+  type: 'Atomic Swap',
   validation: 'Native Bridge',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   links: {
     websites: ['https://bridge.connext.network/'],
   },

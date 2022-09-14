@@ -16,7 +16,7 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('tx_count', function (table) {
     table.string('project_id').notNullable()
-    table.bigInteger('unix_timestamp').notNullable()
+    table.dateTime('unix_timestamp').notNullable()
     table.integer('count').notNullable()
     table.integer('block_number')
   })
