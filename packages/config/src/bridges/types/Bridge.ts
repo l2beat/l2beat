@@ -9,7 +9,10 @@ export interface Bridge {
   name: string
   slug: string
   validation: string
+  type: string
+  canonical?: boolean
   description?: string
+  destination: string[]
   links: Partial<Layer2Links>
   associatedTokens?: string[]
   escrows: Layer2Escrow[]
@@ -18,10 +21,9 @@ export interface Bridge {
     tokens: string[]
   }[]
   risks?: {
-    sourceOwnership: Layer2RiskViewEntry
+    validation: Layer2RiskViewEntry
     sourceUpgradeability: Layer2RiskViewEntry
-    destinationOwnership: Layer2RiskViewEntry
-    destinationUpgradeability: Layer2RiskViewEntry
+    destinationToken: Layer2RiskViewEntry
   }
   news?: News[]
 }

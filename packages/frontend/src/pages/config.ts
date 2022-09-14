@@ -9,5 +9,5 @@ export const config = {
   showBanner: Date.now() < new Date('2022-09-23').getTime(),
   showGitcoinOption: true,
   showPermissionedAccounts: true,
-  showBridgePages: false,
+  showBridgePages: true,
 }

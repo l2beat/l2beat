@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { Bridge } from './types'
 
-export const wormhole: Bridge = {
-  id: ProjectId('wormhole'),
-  name: 'Wormhole V2',
-  slug: 'wormhole',
+export const wormholeV1: Bridge = {
+  id: ProjectId('wormholeV1'),
+  name: 'Wormhole V1',
+  slug: 'wormholev1',
   type: 'Lock-Mint',
   destination: ['TODO', 'TODO', 'TODO'],
   canonical: true,
@@ -15,23 +15,18 @@ export const wormhole: Bridge = {
   },
   escrows: [
     {
-      address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585', // Escrows to various chains
-      sinceTimestamp: new UnixTime(1631535967),
+      address: '0xf92cD566Ea4864356C5491c177A430C222d7e678', // Escrow to Solana ?
+      sinceTimestamp: new UnixTime(1611084766),
       tokens: [
-        'WETH',
-        //'NEXM',
-        //'XCN',
-        'USDT',
-        'USDC',
-        'HUSD',
+        //'FTT',
         'BUSD',
-        'LINK',
-        'SRM',
-        'SUSHI',
-        'UNI',
-        'LDO',
+        'HBTC',
+        'HUSD',
         'DAI',
-        //'stETH',
+        'SRM',
+        'WETH',
+        'FRAX',
+        'WBTC',
       ],
     },
   ],
@@ -43,9 +38,8 @@ export const wormhole: Bridge = {
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'YES',
-      description: 'The bridge can be upgraded by ???',
-      sentiment: 'bad',
+      value: 'No',
+      description: '',
     },
     destinationToken: {
       value: 'WrappedToken ',

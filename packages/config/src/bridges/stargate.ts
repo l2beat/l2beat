@@ -6,7 +6,10 @@ export const stargate: Bridge = {
   id: ProjectId('stargate'),
   name: 'StarGate',
   slug: 'stargate',
+  type: 'Lock-Mint OR Swap',
   validation: 'Liquidity Network',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   links: {
     websites: ['https://stargate.finance/'],
   },
