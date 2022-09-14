@@ -4,10 +4,18 @@ function always() {
   return { retry: true }
 }
 
+interface ExponentialBackOffOpts {
+  maxAttempts?: number
+  maxDistance?: number
+}
+
 function exponentialBackOff<T>(
   stepMs: number,
-  maxAttempts = Infinity,
+  opts?: ExponentialBackOffOpts,
 ): ShouldRetry<T> {
+  const maxAttempts = opts?.maxAttempts ?? Infinity
+  const maxDistance = opts?.maxDistance ?? Infinity
+
   return ({ attempts }) => {
     if (attempts === maxAttempts) {
       return {
@@ -17,7 +25,7 @@ function exponentialBackOff<T>(
     const distance = Math.pow(2, attempts) * stepMs
     return {
       retry: true,
-      executeAfter: Date.now() + distance,
+      executeAfter: Date.now() + Math.min(distance, maxDistance),
     }
   }
 }
