@@ -8,8 +8,7 @@ export const cBridge: Bridge = {
   slug: 'cbridge',
   type: 'Lock-Mint',
   validation: 'Native Bridge',
-  destination: { value: 'Multichain' },
-
+  destination: ['TODO', 'TODO', 'TODO'],
   links: {
     websites: ['https://hop.exchange/'],
   },

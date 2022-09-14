@@ -7,7 +7,7 @@ export const harmony: Bridge = {
   name: 'Harmony',
   slug: 'harmony',
   type: 'Lock-Mint',
-  destination: { value: 'Harmony' },
+  destination: ['Harmony'],
 
   validation: 'EV Bridge',
   description: 'Externally Validated Token Bridge secured by a multisig.',

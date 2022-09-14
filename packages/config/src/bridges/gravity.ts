@@ -7,7 +7,7 @@ export const gravity: Bridge = {
   name: 'Gravity',
   slug: 'gravity',
   type: 'Lock-Mint',
-  destination: { value: 'Cosmos' },
+  destination: ['Cosmos'],
 
   validation: 'Bridge',
   links: {

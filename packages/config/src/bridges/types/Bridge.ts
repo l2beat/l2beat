@@ -12,7 +12,7 @@ export interface Bridge {
   type: string
   canonical?: Boolean
   description?: string
-  destination?: { value: string; description?: string }
+  destination: string[]
   links: Partial<Layer2Links>
   associatedTokens?: string[]
   escrows: Layer2Escrow[]

@@ -7,7 +7,7 @@ export const hop: Bridge = {
   name: 'Hop',
   slug: 'hop',
   type: 'AMM Swap',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   validation: 'Liquidity Network',
   links: {

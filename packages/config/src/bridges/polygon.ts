@@ -6,7 +6,7 @@ export const polygon: Bridge = {
   id: ProjectId('polygon'),
   name: 'Polygon PoS',
   slug: 'polygon',
-  destination: { value: 'Polygon' },
+  destination: ['Polygon'],
   canonical: true,
   type: 'Lock-Mint',
   validation: 'LC Token Bridge',

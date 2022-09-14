@@ -11,7 +11,7 @@ export const avalanche: Bridge = {
   validation: 'EV Bridge',
   canonical: true,
   type: 'Lock-Mint',
-  destination: { value: 'Avalanche' },
+  destination: ['Avalanche'],
   links: {
     websites: ['https://bridge.avax.network/'],
   },

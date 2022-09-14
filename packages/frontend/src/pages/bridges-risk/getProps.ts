@@ -1,4 +1,4 @@
-import { Bridge } from '@l2beat/config'
+import { Bridge, Layer2RiskViewEntry } from '@l2beat/config'
 
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
@@ -10,11 +10,9 @@ export function getProps(bridges: Bridge[]): Wrapped<BridgesRiskPageProps> {
       items: bridges.map(
         (bridge): BridgesRiskViewEntry => ({
           name: bridge.name,
-          validation: bridge.validation,
           type: bridge.type,
-          destination: bridge.destination,
-          sourceUpgradeability: bridge.risks?.sourceUpgradeability,
-          destinationToken: bridge.risks?.destinationToken,
+          destination: getDestination(bridge.destination),
+          ...bridge.risks,
         }),
       ),
     },
@@ -27,4 +25,17 @@ export function getProps(bridges: Bridge[]): Wrapped<BridgesRiskPageProps> {
       },
     },
   }
+}
+
+function getDestination(destinations: string[]): Layer2RiskViewEntry {
+  if (destinations.length === 0) {
+    throw new Error('Invalid destination')
+  }
+  if (destinations.length === 1) {
+    return { value: destinations[0], description: '' }
+  }
+  if (destinations.length === 2) {
+    return { value: destinations.join(', '), description: '' }
+  }
+  return { value: 'Multichain', description: destinations.join(', ') }
 }

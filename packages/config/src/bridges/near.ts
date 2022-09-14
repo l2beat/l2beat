@@ -9,7 +9,7 @@ export const near: Bridge = {
   canonical: true,
   type: 'Lock-Mint',
   validation: 'LC Token Bridge',
-  destination: { value: 'Near, Aurora' },
+  destination: ['Near', 'Aurora'],
   links: {
     websites: ['https://near.org/bridge/'],
   },

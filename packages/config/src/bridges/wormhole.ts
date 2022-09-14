@@ -7,7 +7,7 @@ export const wormhole: Bridge = {
   name: 'Wormhole V2',
   slug: 'wormhole',
   type: 'Lock-Mint',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
   canonical: true,
   validation: 'Native Bridge',
   links: {

@@ -8,7 +8,7 @@ export const connext: Bridge = {
   slug: 'connext',
   type: 'Atomic Swap',
   validation: 'Native Bridge',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   links: {
     websites: ['https://bridge.connext.network/'],

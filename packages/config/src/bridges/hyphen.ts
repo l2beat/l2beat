@@ -7,7 +7,7 @@ export const hyphen: Bridge = {
   name: 'Hyphen',
   slug: 'hyphen',
   type: 'Lock-Mint',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   validation: 'Liquidity Network',
   links: {

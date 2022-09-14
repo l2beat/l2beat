@@ -10,9 +10,9 @@ export interface BridgesRiskViewProps {
 
 export interface BridgesRiskViewEntry {
   name: string
-  destination?: { value: string; description?: string }
-  validation?: string
   type: string
+  destination: Layer2RiskViewEntry
+  validation?: Layer2RiskViewEntry
   sourceUpgradeability?: Layer2RiskViewEntry
   destinationToken?: Layer2RiskViewEntry
 }
@@ -25,11 +25,11 @@ export function RiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Destination',
-      getValue: (entry) => <span>{entry.destination?.value ?? '-'}</span>,
+      getValue: (entry) => <RiskCell item={entry.destination} />,
     },
     {
       name: 'Validation',
-      getValue: (entry) => <span>{entry.validation}</span>,
+      getValue: (entry) => <RiskCell item={entry.validation} />,
     },
     {
       name: 'Type',

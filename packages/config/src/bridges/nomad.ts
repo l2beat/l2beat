@@ -8,7 +8,7 @@ export const nomad: Bridge = {
   slug: 'nomad',
   type: 'Lock-Mint',
   validation: 'Optimistic Bridge',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   links: {
     websites: ['https://app.nomad.xyz/'],

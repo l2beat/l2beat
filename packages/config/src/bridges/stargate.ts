@@ -8,7 +8,7 @@ export const stargate: Bridge = {
   slug: 'stargate',
   type: 'Lock-Mint OR Swap',
   validation: 'Liquidity Network',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   links: {
     websites: ['https://stargate.finance/'],

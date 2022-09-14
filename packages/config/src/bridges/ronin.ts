@@ -8,7 +8,7 @@ export const ronin: Bridge = {
   slug: 'ronin',
   type: 'Lock-Mint',
   validation: 'EV Token Bridge',
-  destination: { value: 'Axie Infinity Chain' },
+  destination: ['Axie Infinity Chain'],
   risks: {
     validation: {
       value: 'External',

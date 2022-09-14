@@ -8,7 +8,7 @@ export const orbiter: Bridge = {
   slug: 'orbiter',
   type: 'Lock-Mint',
   validation: 'Liquidity Network',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   links: {
     websites: ['https://orbiter.finance/'],

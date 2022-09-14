@@ -8,7 +8,7 @@ export const omni: Bridge = {
   slug: 'omni',
   type: 'Lock-Mint',
   validation: 'Native Bridge',
-  destination: { value: 'Gnosis Chain' },
+  destination: ['Gnosis Chain'],
 
   links: {
     websites: ['https://omni.xdaichain.com/bridge'],

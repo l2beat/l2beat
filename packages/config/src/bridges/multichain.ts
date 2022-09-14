@@ -12,7 +12,7 @@ export const multichain: Bridge = {
   slug: 'multichain',
   type: 'Lock-Mint OR Swap',
   validation: 'EV Bridge and LN',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   description:
     'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',

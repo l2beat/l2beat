@@ -8,7 +8,7 @@ export const polynetwork: Bridge = {
   slug: 'polynetwork',
   type: 'Lock-Mint OR Swap',
   validation: 'LC Token Bridge',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   links: {
     websites: ['https://poly.network/'],

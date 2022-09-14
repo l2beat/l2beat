@@ -8,7 +8,7 @@ export const synapse: Bridge = {
   slug: 'synapse',
   type: 'Lock-Mint OR Swap',
   validation: 'Swap Bridge',
-  destination: { value: 'Multichain' },
+  destination: ['TODO', 'TODO', 'TODO'],
 
   links: {
     websites: ['https://synapseprotocol.com/'],

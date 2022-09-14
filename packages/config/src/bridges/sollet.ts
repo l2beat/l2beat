@@ -7,7 +7,7 @@ export const sollet: Bridge = {
   name: 'Sollet Sol',
   slug: 'sollet',
   type: 'Lock-Mint',
-  destination: { value: 'Solana' },
+  destination: ['Solana'],
 
   description:
     'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
