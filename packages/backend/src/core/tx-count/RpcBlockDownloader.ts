@@ -23,6 +23,8 @@ export class RpcBlockDownloader {
     const block = await this.etheteumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
+    // We download all the blocks, but discard those that are more recent
+    // than clock.getLastHour() to avoid dealing with potential reorgs
     if (timestamp.gt(this.clock.getLastHour())) {
       return
     }
