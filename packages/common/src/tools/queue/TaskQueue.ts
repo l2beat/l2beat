@@ -67,18 +67,9 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job)
     if (!result.retry) {
-      this.logger.debug('Task should not be retried - removing from queue', {
-        task: String(job.task),
-        attempts: job.attempts,
-      })
       return
     }
     job.executeAfter = result.executeAfter ?? Date.now()
-    this.logger.debug('Retrying task', {
-      task: String(job.task),
-      attempts: job.attempts,
-      executeAfter: job.executeAfter,
-    })
     this.queue.unshift(job)
   }
 
