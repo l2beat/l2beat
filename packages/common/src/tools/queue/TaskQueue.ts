@@ -25,9 +25,7 @@ export class TaskQueue<T> {
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry =
-      opts?.shouldRetry ??
-      Retries.exponentialBackOff(100, { maxAttempts: 10, maxDistance: 10_000 })
+    this.shouldRetry = opts?.shouldRetry ?? Retries.always
   }
 
   private get isEmpty() {
