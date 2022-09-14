@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -326,5 +326,20 @@ export const metis: Layer2 = {
     ],
   },
 
-  events: [],
+  events: [
+    {
+      name: 'StateBatchAppended',
+      abi: 'event StateBatchAppended (uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
+      emitter: EthereumAddress('0xf209815E595Cdf3ed0aAF9665b1772e608AB9380'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(1637071157),
+    },
+    {
+      name: 'TransactionBatchAppended',
+      abi: 'event TransactionBatchAppended (uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
+      emitter: EthereumAddress('0x56a76bcc92361f6df8d75476fed8843edc70e1c9'),
+      type: 'data',
+      sinceTimestamp: new UnixTime(1637070766),
+    },
+  ],
 }

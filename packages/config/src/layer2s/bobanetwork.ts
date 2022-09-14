@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -359,5 +359,20 @@ export const bobanetwork: Layer2 = {
     ],
   },
 
-  events: [],
+  events: [
+    {
+      name: 'StateBatchAppended',
+      abi: 'event StateBatchAppended (uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
+      emitter: EthereumAddress('0xdE7355C971A5B733fe2133753Abd7e5441d441Ec'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(1635386294),
+    },
+    {
+      name: 'SequencerBatchAppended',
+      abi: 'event  SequencerBatchAppended (uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)',
+      emitter: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
+      type: 'data',
+      sinceTimestamp: new UnixTime(1635386025),
+    },
+  ],
 }
