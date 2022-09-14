@@ -5,7 +5,7 @@ import { TxCountRepository } from '../../peripherals/database/TxCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
-export class RpcBlockDownloader {
+export class BlockTxCountUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
