@@ -1,5 +1,4 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
@@ -21,6 +20,7 @@ import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { RpcBlockDownloader } from './core/tx-count/RpcBlockDownloader'
+import { Project } from './model'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -70,13 +70,41 @@ export class Application {
       'mainnet',
       config.alchemyApiKey,
     )
-    const optimismProvider = new providers.AlchemyProvider(
-      'optimism',
-      config.alchemyApiKey,
-    )
 
     const ethereumClient = new EthereumClient(ethereumProvider)
-    const optimismClient = new EthereumClient(optimismProvider)
+    const l2Clients = config.projects
+      .filter((project) => project.url)
+      .map((project) => {
+        function getL2Provider(project: Project) {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (project.url && project.url.type === 'rpc') {
+            // TODO: remove this if (url should be required)
+            switch (project.url.provider) {
+              case 'alchemy':
+                return new providers.AlchemyProvider(
+                  project.url.slug,
+                  config.alchemyApiKey,
+                )
+
+              case 'jsonRpc':
+                return new providers.JsonRpcProvider(project.url.url)
+
+              default:
+                throw new Error('Unknown provider')
+            }
+          } else {
+            throw new Error('TODO: remove this case')
+          }
+        }
+
+        return {
+          projectId: project.projectId,
+          client: new EthereumClient(
+            getL2Provider(project),
+            project.url?.callsPerMinute,
+          ),
+        }
+      })
 
     const multicall = new MulticallClient(ethereumClient)
 
@@ -145,11 +173,10 @@ export class Application {
 
     // TODO buildUpdaterForAll
     const optimismBlockDownloader = new RpcBlockDownloader(
-      optimismClient,
+      l2Clients,
       txCountRepository,
       clock,
       logger,
-      ProjectId('optimism'),
     )
 
     // #endregion

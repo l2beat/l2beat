@@ -327,4 +327,9 @@ export const metis: Layer2 = {
   },
 
   events: [],
+  url: {
+    type: 'rpc',
+    provider: 'jsonRpc',
+    url: 'https://andromeda.metis.io/',
+  },
 }

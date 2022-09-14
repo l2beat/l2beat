@@ -428,4 +428,9 @@ export const arbitrum: Layer2 = {
   },
 
   events: [],
+  url: {
+    type: 'rpc',
+    provider: 'alchemy',
+    slug: 'arbitrum',
+  },
 }

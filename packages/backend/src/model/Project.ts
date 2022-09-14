@@ -5,6 +5,7 @@ import {
   TokenInfo,
   tokenList,
 } from '@l2beat/config'
+import { Layer2Url } from '@l2beat/config/build/src/layer2s/types/Layer2Url'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 export interface Project {
@@ -12,6 +13,7 @@ export interface Project {
   type: 'layer2' | 'bridge'
   escrows: ProjectEscrow[]
   events: Layer2Event[]
+  url?: Layer2Url
 }
 
 export interface ProjectEscrow {
@@ -31,5 +33,6 @@ export function layer2ToProject(layer2: Layer2): Project {
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
     events: layer2.events,
+    url: layer2.url,
   }
 }
