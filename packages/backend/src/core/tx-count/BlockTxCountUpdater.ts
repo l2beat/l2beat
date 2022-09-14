@@ -61,9 +61,10 @@ export class BlockTxCountUpdater {
     let lastBlockNumber = lastBlock ? lastBlock.blockNumber : 0
 
     while (lastBlockNumber < Number(latestBlock)) {
-      this.blockQueue.addToBack(lastBlockNumber)
       lastBlockNumber++
+      this.blockQueue.addToBack(lastBlockNumber)
     }
+
     this.logger.info('Update completed')
   }
 }

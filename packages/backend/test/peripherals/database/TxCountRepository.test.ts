@@ -96,7 +96,7 @@ describe(TxCountRepository.name, () => {
   })
 })
 
-function fakeTxCount(txCount?: Partial<TxCountRecord>): TxCountRecord {
+export function fakeTxCount(txCount?: Partial<TxCountRecord>): TxCountRecord {
   return {
     projectId: ProjectId('fake-project'),
     timestamp: new UnixTime(0),
