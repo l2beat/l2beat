@@ -6,7 +6,7 @@ import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
 export class RpcBlockDownloader {
-  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
   constructor(
@@ -38,7 +38,7 @@ export class RpcBlockDownloader {
   start() {
     this.logger.info('Started')
     return this.clock.onEveryHour(() => {
-      this.taskQueue.addIfEmpty()
+      this.updateQueue.addIfEmpty()
     })
   }
 
