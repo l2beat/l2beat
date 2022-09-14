@@ -23,7 +23,6 @@ export function toUiState(state: ChartStateWithInput): UiState {
       points: [],
     }
   }
-  const withTime = state.days <= 90
   const dateRange = formatRange(
     dataPoints[0][0],
     dataPoints[dataPoints.length - 1][0],
@@ -46,7 +45,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
   const points = dataPoints.map(([timestamp, valueA, valueB], i) => ({
     x: i / (values.length - 1),
     y: getY(state.altCurrency ? valueB : valueA),
-    date: formatTimestamp(timestamp, withTime),
+    date: formatTimestamp(timestamp, true),
     valueA: formatCurrencyExact(valueA, state.input.types[1]),
     valueB: formatCurrencyExact(valueB, state.input.types[2]),
   }))

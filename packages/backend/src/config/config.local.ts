@@ -1,9 +1,9 @@
 import { LogLevel } from '@l2beat/common'
-import { layer2s, tokenList } from '@l2beat/config'
+import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { config as dotenv } from 'dotenv'
 
-import { layer2ToProject } from '../model'
+import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 
@@ -30,7 +30,7 @@ export function getLocalConfig(): Config {
       ...token,
       priceStrategy: { type: 'market' },
     })),
-    projects: layer2s.map(layer2ToProject),
+    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
     eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
