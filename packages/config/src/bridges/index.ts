@@ -18,6 +18,7 @@ import { stargate } from './stargate'
 import { synapse } from './synapse'
 import { Bridge } from './types'
 import { wormhole } from './wormhole'
+import { wormholeV1 } from './wormholeV1'
 
 export * from './types'
 
@@ -41,4 +42,5 @@ export const bridges: Bridge[] = [
   stargate,
   synapse,
   wormhole,
+  wormholeV1,
 ]

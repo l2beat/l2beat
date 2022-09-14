@@ -6,6 +6,9 @@ export const hop: Bridge = {
   id: ProjectId('hop'),
   name: 'Hop',
   slug: 'hop',
+  type: 'AMM Swap',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   validation: 'Liquidity Network',
   links: {
     websites: ['https://hop.exchange/'],
@@ -42,5 +45,23 @@ export const hop: Bridge = {
       tokens: ['WBTC'],
     },
   ],
+  risks: {
+    validation: {
+      value: 'Native',
+      description:
+        'Validation depends on the destination chain as its native bridge is used.',
+      sentiment: 'warning',
+    },
+    sourceUpgradeability: {
+      value: '???',
+      description: 'Info not available yet',
+      sentiment: 'warning',
+    },
+    destinationToken: {
+      value: 'hToken',
+      description:
+        'hToken is minted for Liquidity Providers. It will be converted for canonical tokens at the destination.',
+    },
+  },
   connections: [],
 }
