@@ -4,8 +4,16 @@ function always() {
   return { retry: true }
 }
 
-function exponentialBackOff<T>(stepMs: number): ShouldRetry<T> {
+function exponentialBackOff<T>(
+  stepMs: number,
+  maxAttempts = Infinity,
+): ShouldRetry<T> {
   return ({ attempts }) => {
+    if (attempts === maxAttempts) {
+      return {
+        retry: false,
+      }
+    }
     const distance = Math.pow(2, attempts) * stepMs
     return {
       retry: true,
