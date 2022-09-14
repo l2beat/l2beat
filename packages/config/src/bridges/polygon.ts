@@ -4,8 +4,11 @@ import { Bridge } from './types'
 
 export const polygon: Bridge = {
   id: ProjectId('polygon'),
-  name: 'Polygon',
+  name: 'Polygon PoS',
   slug: 'polygon',
+  destination: ['Polygon'],
+  canonical: true,
+  type: 'Lock-Mint',
   validation: 'LC Token Bridge',
   links: {
     websites: ['https://wallet.polygon.technology/'],
@@ -47,5 +50,23 @@ export const polygon: Bridge = {
       tokens: ['MATIC', 'DAI'],
     },
   ],
+  risks: {
+    validation: {
+      value: 'Light Client',
+      description:
+        'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
+      sentiment: 'warning',
+    },
+    sourceUpgradeability: {
+      value: '2 day delay',
+      description: 'The bridge can be upgraded by x/y MSig after 2 day delay',
+      sentiment: 'warning',
+    },
+    destinationToken: {
+      value: 'UChildERC20Proxy',
+      description: 'This token can be upgraded if Proxy owner is not set to 0x',
+      sentiment: 'bad',
+    },
+  },
   connections: [],
 }

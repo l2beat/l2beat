@@ -6,6 +6,9 @@ export const gravity: Bridge = {
   id: ProjectId('gravity'),
   name: 'Gravity',
   slug: 'gravity',
+  type: 'Lock-Mint',
+  destination: ['Cosmos'],
+
   validation: 'Bridge',
   links: {
     websites: ['https://bridge.roninchain.com/'],
