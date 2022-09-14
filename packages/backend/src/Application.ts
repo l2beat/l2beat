@@ -183,13 +183,14 @@ export class Application {
       if (config.freshStart) await database.rollbackAll()
       await database.migrateToLatest()
 
-      //todo move all to this condition
       if (config.syncEnabled) {
         priceUpdater.start()
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
-        eventUpdater.start()
+        if (config.eventsSyncEnabled) {
+          eventUpdater.start()
+        }
       }
     }
 

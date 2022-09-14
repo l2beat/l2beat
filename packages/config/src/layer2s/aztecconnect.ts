@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
@@ -195,5 +195,20 @@ export const aztecconnect: Layer2 = {
     ],
   },
 
-  events: [],
+  events: [
+    {
+      name: 'RollupProcessed',
+      abi: 'event RollupProcessed (uint256 indexed rollupId, bytes32[] nextExpectedDefiHashes, address sender)',
+      emitter: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
+      type: 'state',
+      sinceTimestamp: new UnixTime(1654638194),
+    },
+    {
+      name: 'OffchainData',
+      abi: 'event OffchainData(uint256 indexed rollupId, uint256 chunk, uint256 totalChunks, address sender)',
+      emitter: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
+      type: 'data',
+      sinceTimestamp: new UnixTime(1654638194),
+    },
+  ],
 }

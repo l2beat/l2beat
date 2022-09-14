@@ -6,7 +6,10 @@ export const omni: Bridge = {
   id: ProjectId('omni'),
   name: 'xDai Omni',
   slug: 'omni',
+  type: 'Lock-Mint',
   validation: 'Native Bridge',
+  destination: ['Gnosis Chain'],
+
   links: {
     websites: ['https://omni.xdaichain.com/bridge'],
   },

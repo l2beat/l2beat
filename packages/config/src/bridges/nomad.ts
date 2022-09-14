@@ -6,7 +6,10 @@ export const nomad: Bridge = {
   id: ProjectId('nomad'),
   name: 'Nomad',
   slug: 'nomad',
+  type: 'Lock-Mint',
   validation: 'Optimistic Bridge',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   links: {
     websites: ['https://app.nomad.xyz/'],
   },

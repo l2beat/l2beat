@@ -6,7 +6,26 @@ export const ronin: Bridge = {
   id: ProjectId('ronin'),
   name: 'Ronin',
   slug: 'ronin',
+  type: 'Lock-Mint',
   validation: 'EV Token Bridge',
+  destination: ['Axie Infinity Chain'],
+  risks: {
+    validation: {
+      value: 'External',
+      description: '5/9 MultiSig',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'YES',
+      description: 'Gateway Proxy can be upgraded by a single EOA address.',
+      sentiment: 'bad',
+    },
+    destinationToken: {
+      value: '???',
+      description: 'Info not available yet',
+      sentiment: 'warning',
+    },
+  },
   links: {
     websites: ['https://bridge.roninchain.com/'],
   },

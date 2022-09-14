@@ -33,5 +33,6 @@ export function getLocalConfig(): Config {
     projects: layer2s.map(layer2ToProject),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
+    eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
   }
 }
