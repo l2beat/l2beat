@@ -19,6 +19,7 @@ import { synapse } from './synapse'
 import { Bridge } from './types'
 import { wormhole } from './wormhole'
 import { wormholeV1 } from './wormholeV1'
+import { orbit } from './orbit'
 
 export * from './types'
 
@@ -34,6 +35,7 @@ export const bridges: Bridge[] = [
   near,
   nomad,
   omni,
+  orbit,
   orbiter,
   polygon,
   polynetwork,
