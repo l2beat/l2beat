@@ -57,7 +57,7 @@ export class RpcBlockDownloader {
     const lastBlock = await this.txCountRepository.findLatestByProject(
       this.projectId,
     )
-    const latestBlock = await this.etheteumClient.getBlockNumber()
+    const latestBlock = await this.ethereumClient.getBlockNumber()
     let lastBlockNumber = lastBlock ? lastBlock.blockNumber : 0
 
     while (lastBlockNumber < Number(latestBlock)) {
