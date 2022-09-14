@@ -46,12 +46,12 @@ export class TaskQueue<T> {
   }
 
   addToFront(task: T) {
-    this.queue.unshift({ task, attempts: 0 })
+    this.queue.unshift({ task, attempts: 0, executeAfter: Date.now() })
     setTimeout(() => this.execute())
   }
 
   addToBack(task: T) {
-    this.queue.push({ task, attempts: 0 })
+    this.queue.push({ task, attempts: 0, executeAfter: Date.now() })
     setTimeout(() => this.execute())
   }
 
@@ -62,7 +62,7 @@ export class TaskQueue<T> {
   }
 
   private shouldExecute(job: Job<T>): boolean {
-    return job.executeAfter === undefined || Date.now() >= job.executeAfter
+    return Date.now() >= job.executeAfter
   }
 
   private handleFailure(job: Job<T>) {
@@ -75,32 +75,26 @@ export class TaskQueue<T> {
       })
       return
     }
-    job.executeAfter = result.executeAfter
+    job.executeAfter = result.executeAfter ?? Date.now()
     this.logger.debug('Retrying task', {
       task: String(job.task),
       attempts: job.attempts,
-      executeAfter: job.executeAfter ?? null,
+      executeAfter: job.executeAfter,
     })
     this.queue.unshift(job)
   }
 
   private earliestScheduledExecution() {
-    return this.queue
-      .filter((j) => j.executeAfter !== undefined)
-      .map((j) => j.executeAfter)
-      .sort()[0]
+    return this.queue.map((j) => j.executeAfter).sort()[0]
   }
 
   private async executeUnchecked() {
-    if (this.allWorkersBusy) {
+    if (this.allWorkersBusy || this.queue.length === 0) {
       return
     }
     const jobIndex = this.queue.findIndex((job) => this.shouldExecute(job))
     if (jobIndex === -1) {
       const nextTimestamp = this.earliestScheduledExecution()
-      if (!nextTimestamp) {
-        return
-      }
       setTimeout(() => this.execute(), nextTimestamp - Date.now())
       return
     }
