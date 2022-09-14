@@ -2,8 +2,8 @@ import { expect } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { Logger } from '../../src/tools/Logger'
-import { TaskQueue } from '../../src/tools/queue/TaskQueue'
+import { Logger } from '../../../src/tools/Logger'
+import { TaskQueue } from '../../../src/tools/queue/TaskQueue'
 
 describe(TaskQueue.name, () => {
   it('executes all jobs', async () => {
