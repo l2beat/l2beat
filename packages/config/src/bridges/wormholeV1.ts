@@ -5,7 +5,7 @@ import { Bridge } from './types'
 export const wormholeV1: Bridge = {
   id: ProjectId('wormholeV1'),
   name: 'Wormhole V1',
-  slug: 'wormholeV1',
+  slug: 'wormholev1',
   type: 'Lock-Mint',
   destination: ['TODO', 'TODO', 'TODO'],
   canonical: true,
