@@ -6,7 +6,10 @@ export const polynetwork: Bridge = {
   id: ProjectId('polynetwork'),
   name: 'Polynetwork',
   slug: 'polynetwork',
+  type: 'Lock-Mint OR Swap',
   validation: 'LC Token Bridge',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   links: {
     websites: ['https://poly.network/'],
   },

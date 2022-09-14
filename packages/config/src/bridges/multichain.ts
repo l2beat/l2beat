@@ -10,7 +10,10 @@ export const multichain: Bridge = {
   id: ProjectId('multichain'),
   name: 'Multichain',
   slug: 'multichain',
+  type: 'Lock-Mint OR Swap',
   validation: 'EV Bridge and LN',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   description:
     'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
   links: {
@@ -175,5 +178,22 @@ export const multichain: Bridge = {
       tokens: ['FRAX', 'FXS', 'AMP', 'ORBS', 'CRV', 'ANKR'],
     },
   ],
+  risks: {
+    validation: {
+      value: 'External',
+      description: '2/3rd of MPC.',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: '???',
+      description: 'Info not available yet',
+      sentiment: 'warning',
+    },
+    destinationToken: {
+      value: 'Custom Multichain or anyToken',
+      description:
+        'Depending on the router configuration either Multichain tokens or anyToken is minted.',
+    },
+  },
   connections: [],
 }

@@ -6,7 +6,10 @@ export const orbiter: Bridge = {
   id: ProjectId('orbiter'),
   name: 'Orbiter',
   slug: 'orbiter',
+  type: 'Lock-Mint',
   validation: 'Liquidity Network',
+  destination: ['TODO', 'TODO', 'TODO'],
+
   links: {
     websites: ['https://orbiter.finance/'],
   },

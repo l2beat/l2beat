@@ -6,7 +6,9 @@ export const cBridge: Bridge = {
   id: ProjectId('cbridge'),
   name: 'Celer V2 cBridge',
   slug: 'cbridge',
+  type: 'Lock-Mint',
   validation: 'Native Bridge',
+  destination: ['TODO', 'TODO', 'TODO'],
   links: {
     websites: ['https://hop.exchange/'],
   },
