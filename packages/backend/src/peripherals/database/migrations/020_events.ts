@@ -28,5 +28,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.dropTableIfExists('events')
+  await knex.schema.dropTable('events')
 }

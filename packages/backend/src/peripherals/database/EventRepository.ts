@@ -72,24 +72,6 @@ export class EventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  // async getAggregatedCount(
-  //   projectId: ProjectId,
-  //   name: string,
-  //   from: UnixTime,
-  //   to: UnixTime,
-  // ): Promise<number> {
-  //   const knex = await this.knex()
-
-  //   const [{ sum }] = await knex('events')
-  //     .where('project_id', projectId.toString())
-  //     .where('event_name', name)
-  //     .where('unix_timestamp', '>=', from.toString())
-  //     .where('unix_timestamp', '<=', to.toString())
-  //     .sum('count')
-  //   //todo rethink if we want to sum in db
-  //   return Number(sum)
-  // }
-
   async addMany(events: EventRecord[]) {
     const rows = events.map(toRow)
     const knex = await this.knex()

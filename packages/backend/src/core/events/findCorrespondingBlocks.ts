@@ -7,21 +7,24 @@ interface BlockInfo {
 }
 
 export function findCorrespondingBlocks<T extends { blockNumber: number }>(
-  _blocks: BlockInfo[],
-  _logs: T[],
+  blocks: BlockInfo[],
+  logs: T[],
 ): { block: BlockInfo; value: T }[] {
-  const blocks = sortBy(_blocks, 'blockNumber')
-  const logs = sortBy(_logs, 'blockNumber')
+  const sortedBlocks = sortBy(blocks, 'blockNumber')
+  const sortedLogs = sortBy(logs, 'blockNumber')
 
-  if (logs.length > 0 && logs[0].blockNumber < blocks[0].blockNumber) {
+  if (
+    sortedLogs.length > 0 &&
+    sortedLogs[0].blockNumber < sortedBlocks[0].blockNumber
+  ) {
     throw new Error('Programmer error')
   }
 
   let blockIndex = 0
-  const result = logs.map((log) => {
-    for (; blockIndex < blocks.length; blockIndex++) {
-      const curr = blocks[blockIndex]
-      const next = blocks[blockIndex + 1] as BlockInfo | undefined
+  const result = sortedLogs.map((log) => {
+    for (; blockIndex < sortedBlocks.length; blockIndex++) {
+      const curr = sortedBlocks[blockIndex]
+      const next = sortedBlocks[blockIndex + 1] as BlockInfo | undefined
 
       if (!next) {
         if (log.blockNumber < curr.blockNumber) {

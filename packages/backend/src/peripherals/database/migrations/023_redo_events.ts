@@ -25,4 +25,15 @@ export async function up(knex: Knex) {
 
 export async function down(knex: Knex) {
   await knex.schema.dropTable('events')
+  await knex.schema.createTable('events', function (table) {
+    table.bigInteger('unix_timestamp').notNullable()
+    table.string('event_name').notNullable()
+    table.string('project_id').notNullable()
+    table.integer('count').notNullable()
+    table
+      .string('time_span')
+      .checkIn(['hourly', 'sixHourly', 'daily'])
+      .notNullable()
+    table.primary(['unix_timestamp', 'project_id', 'event_name', 'time_span'])
+  })
 }

@@ -38,11 +38,6 @@ export class EthereumClient {
 
   /**
    * Handles large block ranges by split them to smaller ones when necessary
-   * @param address
-   * @param topic
-   * @param fromBlock
-   * @param toBlock
-   * @returns
    */
   async getAllLogs(
     address: EthereumAddress,
