@@ -13,16 +13,19 @@ export function findCorrespondingBlocks<T extends { blockNumber: number }>(
   const blocks = sortBy(_blocks, 'blockNumber')
   const logs = sortBy(_logs, 'blockNumber')
 
+  if (logs.length > 0 && logs[0].blockNumber < blocks[0].blockNumber) {
+    throw new Error('Programmer error')
+  }
+
   let blockIndex = 0
   const result = logs.map((log) => {
     for (; blockIndex < blocks.length; blockIndex++) {
       const curr = blocks[blockIndex]
-      const next =
-        blockIndex < blocks.length - 1 ? blocks[blockIndex + 1] : undefined
+      const next = blocks[blockIndex + 1] as BlockInfo | undefined
 
       if (!next) {
         if (log.blockNumber < curr.blockNumber) {
-          throw new Error('Invalid blocks range')
+          throw new Error('Programmer error')
         }
         return {
           block: curr,
@@ -38,7 +41,7 @@ export function findCorrespondingBlocks<T extends { blockNumber: number }>(
       }
     }
 
-    throw new Error('Invalid blocks range')
+    throw new Error('Programmer error')
   })
 
   return result
