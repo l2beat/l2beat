@@ -1,10 +1,14 @@
 import { Bridge, Layer2RiskViewEntry } from '@l2beat/config'
+import { ApiMain } from '@l2beat/types'
 
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
 import { BridgesRiskViewEntry } from './BridgesRiskView'
 
-export function getProps(bridges: Bridge[]): Wrapped<BridgesRiskPageProps> {
+export function getProps(
+  bridges: Bridge[],
+  apiMain: ApiMain,
+): Wrapped<BridgesRiskPageProps> {
   return {
     props: {
       items: bridges.map(
