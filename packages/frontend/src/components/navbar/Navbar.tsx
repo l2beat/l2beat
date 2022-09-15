@@ -12,6 +12,7 @@ export function Navbar() {
   return (
     <>
       <SidebarMenu />
+      <Banner />
       <nav className="relative flex justify-between items-center h-[68px] py-2">
         <button id="sidebar-menu-open" className="block md:hidden">
           <MenuOpenIcon className="block" aria-label="Open menu" />
@@ -32,7 +33,6 @@ export function Navbar() {
           <DarkThemeToggle />
         </div>
       </nav>
-      <Banner />
     </>
   )
 }
