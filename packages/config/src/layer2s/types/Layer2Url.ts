@@ -8,7 +8,7 @@ interface JsonRpcProvider {
   url: string
 }
 
-type Layer2Rpc = (AlchemyProvider | JsonRpcProvider) & {
+export type Layer2Rpc = (AlchemyProvider | JsonRpcProvider) & {
   type: 'rpc'
   callsPerMinute?: number
 }

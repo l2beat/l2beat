@@ -20,7 +20,7 @@ import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { BlockTxCountUpdater } from './core/tx-count/BlockTxCountUpdater'
-import { Project } from './model'
+import { createL2Clients } from './createL2Clients'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -72,39 +72,7 @@ export class Application {
     )
 
     const ethereumClient = new EthereumClient(ethereumProvider)
-    const l2Clients = config.projects
-      .filter((project) => project.url)
-      .map((project) => {
-        function getL2Provider(project: Project) {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          if (project.url && project.url.type === 'rpc') {
-            // TODO: remove this if (url should be required)
-            switch (project.url.provider) {
-              case 'alchemy':
-                return new providers.AlchemyProvider(
-                  project.url.slug,
-                  config.alchemyApiKey,
-                )
-
-              case 'jsonRpc':
-                return new providers.JsonRpcProvider(project.url.url)
-
-              default:
-                throw new Error('Unknown provider')
-            }
-          } else {
-            throw new Error('TODO: remove this case')
-          }
-        }
-
-        return {
-          projectId: project.projectId,
-          client: new EthereumClient(
-            getL2Provider(project),
-            project.url?.callsPerMinute,
-          ),
-        }
-      })
+    const l2Clients = createL2Clients(config)
 
     const multicall = new MulticallClient(ethereumClient)
 
@@ -172,7 +140,7 @@ export class Application {
     )
 
     // TODO buildUpdaterForAll
-    const optimismBlockTxCountUpdater = new BlockTxCountUpdater(
+    const blockTxCountUpdater = new BlockTxCountUpdater(
       l2Clients,
       txCountRepository,
       clock,
@@ -233,7 +201,7 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
-        optimismBlockTxCountUpdater.start()
+        blockTxCountUpdater.start()
 
         if (config.eventsSyncEnabled) {
           eventUpdater.start()
