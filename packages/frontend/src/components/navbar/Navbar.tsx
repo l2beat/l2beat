@@ -30,7 +30,7 @@ export function Navbar() {
           <ul className="hidden md:flex gap-6 items-center">
             <OtherLinks />
           </ul>
-          <div className="w-[1px] h-[32px] bg-white bg-opacity-20"></div>
+          <div className="w-[1px] h-[32px] bg-bg-3"></div>
           <DarkThemeToggle />
         </div>
       </nav>
