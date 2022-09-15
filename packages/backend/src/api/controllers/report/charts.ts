@@ -38,8 +38,7 @@ export function getChartPoints(
   const existing: ChartPoint[] = balances.map((b) => {
     const usd = asNumber(b.usd, 2)
     const asset = asNumber(b.asset, decimals)
-    const timestamp = b.timestamp.add(-1 * hours, 'hours')
-    return usdFirst ? [timestamp, usd, asset] : [timestamp, asset, usd]
+    return usdFirst ? [b.timestamp, usd, asset] : [b.timestamp, asset, usd]
   })
   return addMissingTimestamps(existing, hours)
 }
