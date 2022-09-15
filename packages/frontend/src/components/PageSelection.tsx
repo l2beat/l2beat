@@ -45,7 +45,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
                 page.selected && 'dark:bg-[#32102A] bg-opacity-50 bg-white',
               )}
             >
-              {page.icon} {page.content}
+              <div className="hidden sm:block">{page.icon}</div> {page.content}
             </a>
           </li>
         ))}
