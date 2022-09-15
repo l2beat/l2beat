@@ -44,12 +44,12 @@ export class TaskQueue<T> {
   }
 
   addToFront(task: T) {
-    this.queue.unshift({ task, attempts: 0, executeAfter: Date.now() })
+    this.queue.unshift({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
   }
 
   addToBack(task: T) {
-    this.queue.push({ task, attempts: 0, executeAfter: Date.now() })
+    this.queue.push({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
   }
 
@@ -60,7 +60,7 @@ export class TaskQueue<T> {
   }
 
   private shouldExecute(job: Job<T>): boolean {
-    return Date.now() >= job.executeAfter
+    return Date.now() >= job.executeAt
   }
 
   private handleFailure(job: Job<T>) {
@@ -69,12 +69,12 @@ export class TaskQueue<T> {
     if (!result.retry) {
       return
     }
-    job.executeAfter = result.executeAfter ?? Date.now()
+    job.executeAt = Date.now() + (result.executeAfter ?? 0)
     this.queue.unshift(job)
   }
 
   private earliestScheduledExecution() {
-    return this.queue.map((j) => j.executeAfter).sort()[0]
+    return this.queue.map((j) => j.executeAt).sort()[0]
   }
 
   private async executeUnchecked() {

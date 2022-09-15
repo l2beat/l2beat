@@ -1,7 +1,7 @@
 export interface Job<T> {
   task: T
   attempts: number
-  executeAfter: number
+  executeAt: number
 }
 
 export type ShouldRetry<T> = (job: { task: T; attempts: number }) => {

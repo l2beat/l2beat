@@ -7,7 +7,6 @@ function always() {
 interface ExponentialBackOffOpts {
   maxAttempts?: number
   maxDistance?: number
-  now?: typeof Date['now']
 }
 
 export function exponentialBackOff(
@@ -16,7 +15,6 @@ export function exponentialBackOff(
 ) {
   const maxAttempts = opts?.maxAttempts ?? Infinity
   const maxDistance = opts?.maxDistance ?? Infinity
-  const now = opts?.now ?? Date.now
 
   return ({ attempts }: { attempts: number }) => {
     if (attempts === maxAttempts) {
@@ -27,7 +25,7 @@ export function exponentialBackOff(
     const distance = Math.pow(2, attempts) * stepMs
     return {
       retry: true,
-      executeAfter: now() + Math.min(distance, maxDistance),
+      executeAfter: Math.min(distance, maxDistance),
     }
   }
 }

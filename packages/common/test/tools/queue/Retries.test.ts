@@ -14,7 +14,6 @@ describe('Retries', () => {
     it('can respect max distance', () => {
       const result = exponentialBackOff(100, {
         maxDistance: 200,
-        now: () => 0,
       })({
         attempts: 1,
       })
@@ -22,8 +21,7 @@ describe('Retries', () => {
     })
 
     it('can calculate distance properly', () => {
-      const now = () => 0
-      const shouldRetry = exponentialBackOff(1, { now })
+      const shouldRetry = exponentialBackOff(1)
       const results = [1, 2, 3, 4]
         .map((attempts) => shouldRetry({ attempts }))
         .map((r) => r.executeAfter)
