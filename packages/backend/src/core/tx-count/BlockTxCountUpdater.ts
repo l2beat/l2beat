@@ -7,7 +7,9 @@ import { Clock } from '../Clock'
 
 export class BlockTxCountUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
+  private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, {
+    workers: 100,
+  })
 
   constructor(
     private ethereumClient: EthereumClient,
