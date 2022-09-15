@@ -14,6 +14,7 @@
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
     "start": "gulp watch",
     "start:local": "API_URL=http://localhost:3000 SKIP_CACHE=true gulp watch",
+    "start:staging": "API_URL=https://staging.l2beat.com SKIP_CACHE=true gulp watch",
     "test": "mocha",
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
