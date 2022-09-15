@@ -13,11 +13,11 @@ export function Navbar() {
     <>
       <SidebarMenu />
       <Banner />
-      <nav className="relative flex justify-between items-center h-[68px] py-2">
+      <nav className="relative flex justify-between items-center h-[62px] py-2 px-12 border-b-bg-2 border-b-[1px]">
         <button id="sidebar-menu-open" className="block md:hidden">
           <MenuOpenIcon className="block" aria-label="Open menu" />
         </button>
-        <ul className="hidden md:flex gap-4 items-center">
+        <ul className="hidden md:flex gap-5 items-center">
           <SocialLinks />
         </ul>
         <a
@@ -26,10 +26,11 @@ export function Navbar() {
         >
           <Logo />
         </a>
-        <div className="flex gap-4 items-center">
-          <ul className="hidden md:flex gap-4 items-center">
+        <div className="flex gap-6 items-center">
+          <ul className="hidden md:flex gap-6 items-center">
             <OtherLinks />
           </ul>
+          <div className="w-[1px] h-[32px] bg-white bg-opacity-20"></div>
           <DarkThemeToggle />
         </div>
       </nav>
