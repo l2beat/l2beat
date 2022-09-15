@@ -11,7 +11,7 @@ export interface PageSelectionProps {
 
 export function PageSelection({ pages }: PageSelectionProps) {
   return (
-    <nav className="md:mt-4 mb-4">
+    <nav className="mt-4 mb-4">
       <ul className="flex w-full justify-center gap-4">
         {pages.map((page, i) => (
           <li

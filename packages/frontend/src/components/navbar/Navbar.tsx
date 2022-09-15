@@ -13,7 +13,7 @@ export function Navbar() {
     <>
       <SidebarMenu />
       <Banner />
-      <nav className="relative flex justify-between items-center h-[62px] py-2 px-12 border-b-bg-2 border-b-[1px]">
+      <nav className="relative flex justify-between items-center h-[62px] py-2 px-4 md:px-12 border-b-bg-2 border-b-[1px]">
         <button id="sidebar-menu-open" className="block md:hidden">
           <MenuOpenIcon className="block" aria-label="Open menu" />
         </button>
@@ -30,7 +30,7 @@ export function Navbar() {
           <ul className="hidden md:flex gap-6 items-center">
             <OtherLinks />
           </ul>
-          <div className="w-[1px] h-[32px] bg-bg-3"></div>
+          <div className="w-[1px] h-[32px] bg-bg-3 hidden md:block"></div>
           <DarkThemeToggle />
         </div>
       </nav>
