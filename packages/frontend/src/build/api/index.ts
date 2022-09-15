@@ -6,7 +6,7 @@ import { outputCharts } from './output'
 export function createApi(projects: Layer2[], apiMain: ApiMain) {
   const urlCharts = new Map<string, Charts>()
 
-  urlCharts.set('tvl', apiMain.charts)
+  urlCharts.set('tvl', apiMain.layers2s)
   for (const project of projects) {
     const projectData = apiMain.projects[project.id.toString()]
     if (!projectData) {

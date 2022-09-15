@@ -12,8 +12,8 @@ export function getProps(
   projects: Layer2[],
   apiMain: ApiMain,
 ): Wrapped<TvlPageProps> {
-  const tvl = apiMain.charts.hourly.data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = apiMain.charts.hourly.data[0]?.[1] ?? 0
+  const tvl = apiMain.layers2s.hourly.data.at(-1)?.[1] ?? 0
+  const tvlSevenDaysAgo = apiMain.layers2s.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const ordering = orderByTvl(projects, apiMain)
