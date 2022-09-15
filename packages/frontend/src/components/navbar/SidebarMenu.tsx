@@ -11,7 +11,7 @@ export function SidebarMenu() {
       <div
         id="sidebar-menu"
         className={classNames(
-          'hidden fixed top-0 left-0 z-50',
+          'hidden fixed top-[32px] left-0 z-50',
           'w-3/4 min-w-[240px] h-full',
           'p-4 pt-[22px] bg-white dark:bg-black',
         )}
