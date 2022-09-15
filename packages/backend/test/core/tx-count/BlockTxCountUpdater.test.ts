@@ -12,8 +12,22 @@ import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient
 import { fakeTxCount } from '../../peripherals/database/TxCountRepository.test'
 
 describe(BlockTxCountUpdater.name, () => {
-  const PROJECT = ProjectId('fake-project')
+  const PROJECT_A = ProjectId('fake-project-a')
+  const PROJECT_B = ProjectId('fake-project-b')
   describe(BlockTxCountUpdater.prototype.start.name, () => {
+    const txCountRepository = mock<TxCountRepository>({
+      findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
+      getMissingByProject: async () => [2],
+      add: async () => '',
+    })
+    const clock = mock<Clock>({
+      onEveryHour: (callback) => {
+        callback(UnixTime.now())
+        return () => {}
+      },
+      getLastHour: () => UnixTime.now(),
+    })
+
     it('skips known blocks', async () => {
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
@@ -22,21 +36,9 @@ describe(BlockTxCountUpdater.name, () => {
       const l2Clients = [
         {
           client: ethereumClient,
-          projectId: PROJECT,
+          projectId: PROJECT_A,
         },
       ]
-      const txCountRepository = mock<TxCountRepository>({
-        findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
-        getMissingByProject: async () => [2],
-        add: async () => '',
-      })
-      const clock = mock<Clock>({
-        onEveryHour: (callback) => {
-          callback(UnixTime.now())
-          return () => {}
-        },
-        getLastHour: () => UnixTime.now(),
-      })
       const blockTxCountUpdater = new BlockTxCountUpdater(
         l2Clients,
         txCountRepository,
@@ -47,6 +49,40 @@ describe(BlockTxCountUpdater.name, () => {
 
       await waitForExpect(() => {
         expect(ethereumClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
+      })
+    })
+
+    it('works for many projects', async () => {
+      const clientA = mock<EthereumClient>({
+        getBlock: async () => fakeBlock(),
+        getBlockNumber: async () => 5n,
+      })
+      const clientB = mock<EthereumClient>({
+        getBlock: async () => fakeBlock(),
+        getBlockNumber: async () => 6n,
+      })
+      const l2Clients = [
+        {
+          client: clientA,
+          projectId: PROJECT_A,
+        },
+        {
+          client: clientB,
+          projectId: PROJECT_B,
+        },
+      ]
+
+      const blockTxCountUpdater = new BlockTxCountUpdater(
+        l2Clients,
+        txCountRepository,
+        clock,
+        Logger.SILENT,
+      )
+      blockTxCountUpdater.start()
+
+      await waitForExpect(() => {
+        expect(clientA.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
+        expect(clientB.getBlock).toHaveBeenCalledExactlyWith([[2], [5], [6]])
       })
     })
   })
@@ -76,7 +112,7 @@ describe(BlockTxCountUpdater.name, () => {
       const l2Clients = [
         {
           client: ethereumClient,
-          projectId: PROJECT,
+          projectId: PROJECT_A,
         },
       ]
       const txCountRepository = mock<TxCountRepository>({
@@ -92,15 +128,21 @@ describe(BlockTxCountUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await blockTxCountUpdater.getBlock({ blockNumber: 1, projectId: PROJECT })
-      await blockTxCountUpdater.getBlock({ blockNumber: 2, projectId: PROJECT })
+      await blockTxCountUpdater.getBlock({
+        blockNumber: 1,
+        projectId: PROJECT_A,
+      })
+      await blockTxCountUpdater.getBlock({
+        blockNumber: 2,
+        projectId: PROJECT_A,
+      })
 
       expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             timestamp: TIME_0,
             blockNumber: 1,
-            projectId: PROJECT,
+            projectId: PROJECT_A,
             count: 2,
           },
         ],
@@ -108,7 +150,7 @@ describe(BlockTxCountUpdater.name, () => {
           {
             timestamp: TIME_1,
             blockNumber: 2,
-            projectId: PROJECT,
+            projectId: PROJECT_A,
             count: 3,
           },
         ],
