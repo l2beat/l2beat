@@ -10,6 +10,11 @@ interface L2Client {
   client: EthereumClient
 }
 
+interface GetBlockArgs {
+  blockNumber: number
+  projectId: ProjectId
+}
+
 export class BlockTxCountUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
@@ -28,18 +33,16 @@ export class BlockTxCountUpdater {
     }
   }
 
-  async getBlock({
-    number,
-    projectId,
-  }: {
-    number: number
-    projectId: ProjectId
-  }) {
+  async getBlock({ blockNumber, projectId }: GetBlockArgs) {
     const ethereumClient = this.l2Clients.get(projectId)
+
     if (!ethereumClient) {
-      throw new Error('')
+      throw new Error(
+        `Programmer error: no ethereumClient for ${projectId.toString()}`,
+      )
     }
-    const block = await ethereumClient.getBlock(number)
+
+    const block = await ethereumClient.getBlock(blockNumber)
     const timestamp = new UnixTime(block.timestamp)
 
     // We download all the blocks, but discard those that are more recent
@@ -71,7 +74,7 @@ export class BlockTxCountUpdater {
         projectId,
       )
       for (const block of missingBlocks) {
-        this.blockQueue.addToBack({ number: block, projectId })
+        this.blockQueue.addToBack({ blockNumber: block, projectId })
       }
 
       const lastBlock = await this.txCountRepository.findLatestByProject(
@@ -82,7 +85,7 @@ export class BlockTxCountUpdater {
 
       while (lastBlockNumber < Number(latestBlock)) {
         lastBlockNumber++
-        this.blockQueue.addToBack({ number: lastBlockNumber, projectId })
+        this.blockQueue.addToBack({ blockNumber: lastBlockNumber, projectId })
       }
     }
 
