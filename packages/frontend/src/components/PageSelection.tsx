@@ -3,11 +3,25 @@ import React from 'react'
 
 export interface PageSelectionProps {
   pages: {
-    name: string
+    content: React.ReactNode
+    icon?: React.ReactNode
     link: string
     selected: boolean
   }[]
 }
+
+const gradientBorder = [
+  'before:absolute',
+  'before:-z-10',
+  'before:-top-0.5',
+  'before:-left-0.5',
+  'before:-right-0.5',
+  'before:-bottom-0.5',
+  'before:bg-gradient-to-r',
+  'before:from-[#7E41CC]',
+  'before:to-[#FF46C0]',
+  'before:rounded-lg',
+]
 
 export function PageSelection({ pages }: PageSelectionProps) {
   return (
@@ -17,19 +31,21 @@ export function PageSelection({ pages }: PageSelectionProps) {
           <li
             key={i}
             className={classNames(
-              'pb-1 relative w-full border-bg-2 border border-r-0 font-[600] h-[64px] text-text-muted z-0',
-              page.selected && 'text-text z-10 -mx-0.5',
-              (page.selected || i === pages.length - 1) &&
-                'border-r rounded-r-lg',
-              (page.selected || i === 0) && 'rounded-l-lg',
-              page.selected && 'border-2 border-r-2 h-[68px] border-blue-600',
+              'relative w-full border-bg-2 border border-r-0 font-[600] h-[64px] z-0 opacity-70',
+              i === pages.length - 1 && 'border-r rounded-r-lg',
+              i === 0 && 'rounded-l-lg',
+              page.selected && 'border-0 opacity-100 z-10',
+              page.selected && gradientBorder,
             )}
           >
             <a
               href={page.link}
-              className="w-full h-full flex justify-center items-center "
+              className={classNames(
+                'w-full h-full flex justify-center items-center gap-4 z-10 rounded-lg',
+                page.selected && 'dark:bg-[#32102A] bg-opacity-50 bg-white',
+              )}
             >
-              {page.name}
+              {page.icon} {page.content}
             </a>
           </li>
         ))}
