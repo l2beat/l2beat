@@ -1,4 +1,4 @@
-import { Timer } from './types'
+import { Timeout, Timer } from './types'
 
 interface Callback {
   when: number
@@ -18,11 +18,11 @@ export class InMemoryTimer implements Timer {
   setTimeout(callback: Callback['run'], timeMs: number) {
     this.callbacks.set(++this.id, { run: callback, when: this._now + timeMs })
     this.onTick()
-    return this.id
+    return this.id as unknown as Timeout
   }
 
-  clearTimeout(timeout: number) {
-    this.callbacks.delete(timeout)
+  clearTimeout(timeout: Timeout) {
+    this.callbacks.delete(+timeout)
   }
 
   tick(step = 1) {
