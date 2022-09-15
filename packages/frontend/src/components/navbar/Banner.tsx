@@ -9,10 +9,10 @@ export function Banner() {
   }
   return (
     <OutLink
-      className="block text-center bg-[#048104] text-white font-bold px-4 py-1 -mx-4 lg:mx-0 mb-4"
-      href="https://gitcoin.co/grants/3857/l2beat"
+      className="block text-center bg-[#2a363b] text-white font-bold px-4 py-1 -mx-4 lg:mx-0 mb-4"
+      href="https://twitter.com/VitalikButerin/status/1570306185391378434"
     >
-      Gitcoin round 15 is live! Support L2BEAT by donating!
+      🎉 Ethereum 🐼 Merge is DONE! 🎉
     </OutLink>
   )
 }
