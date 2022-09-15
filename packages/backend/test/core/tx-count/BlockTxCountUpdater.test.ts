@@ -12,12 +12,19 @@ import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient
 import { fakeTxCount } from '../../peripherals/database/TxCountRepository.test'
 
 describe(BlockTxCountUpdater.name, () => {
+  const PROJECT = ProjectId('fake-project')
   describe(BlockTxCountUpdater.prototype.start.name, () => {
     it('skips known blocks', async () => {
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
       })
+      const l2Clients = [
+        {
+          client: ethereumClient,
+          projectId: PROJECT,
+        },
+      ]
       const txCountRepository = mock<TxCountRepository>({
         findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
         getMissingByProject: async () => [2],
@@ -31,11 +38,10 @@ describe(BlockTxCountUpdater.name, () => {
         getLastHour: () => UnixTime.now(),
       })
       const blockTxCountUpdater = new BlockTxCountUpdater(
-        ethereumClient,
+        l2Clients,
         txCountRepository,
         clock,
         Logger.SILENT,
-        ProjectId('fake-project'),
       )
       blockTxCountUpdater.start()
 
@@ -67,6 +73,12 @@ describe(BlockTxCountUpdater.name, () => {
           ),
         getBlockNumber: async () => 5n,
       })
+      const l2Clients = [
+        {
+          client: ethereumClient,
+          projectId: PROJECT,
+        },
+      ]
       const txCountRepository = mock<TxCountRepository>({
         add: async () => '',
       })
@@ -74,22 +86,21 @@ describe(BlockTxCountUpdater.name, () => {
         getLastHour: () => UnixTime.now(),
       })
       const blockTxCountUpdater = new BlockTxCountUpdater(
-        ethereumClient,
+        l2Clients,
         txCountRepository,
         clock,
         Logger.SILENT,
-        ProjectId('fake-project'),
       )
 
-      await blockTxCountUpdater.getBlock(1)
-      await blockTxCountUpdater.getBlock(2)
+      await blockTxCountUpdater.getBlock({ blockNumber: 1, projectId: PROJECT })
+      await blockTxCountUpdater.getBlock({ blockNumber: 2, projectId: PROJECT })
 
       expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             timestamp: TIME_0,
             blockNumber: 1,
-            projectId: ProjectId('fake-project'),
+            projectId: PROJECT,
             count: 2,
           },
         ],
@@ -97,7 +108,7 @@ describe(BlockTxCountUpdater.name, () => {
           {
             timestamp: TIME_1,
             blockNumber: 2,
-            projectId: ProjectId('fake-project'),
+            projectId: PROJECT,
             count: 3,
           },
         ],
