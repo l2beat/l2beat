@@ -9,7 +9,8 @@ interface L2Client {
   projectId: ProjectId
   client: EthereumClient
 }
-export class RpcBlockDownloader {
+
+export class BlockTxCountUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, 100)
 
@@ -79,9 +80,9 @@ export class RpcBlockDownloader {
       const latestBlock = await client.getBlockNumber()
       let lastBlockNumber = lastBlock ? lastBlock.blockNumber : 0
 
-      while (lastBlockNumber < 1000) {
-        this.blockQueue.addToBack({ number: lastBlockNumber, projectId })
+      while (lastBlockNumber < Number(latestBlock)) {
         lastBlockNumber++
+        this.blockQueue.addToBack({ number: lastBlockNumber, projectId })
       }
     }
 

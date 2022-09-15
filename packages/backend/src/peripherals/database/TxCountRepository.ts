@@ -99,7 +99,7 @@ export class TxCountRepository extends BaseRepository {
 
 function toRow(record: TxCountRecord): TxCountRow {
   return {
-    unix_timestamp: record.timestamp.toString(),
+    unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     block_number: record.blockNumber,
     count: record.count,
@@ -108,7 +108,7 @@ function toRow(record: TxCountRecord): TxCountRow {
 
 function toRecord(row: TxCountRow): TxCountRecord {
   return {
-    timestamp: new UnixTime(+row.unix_timestamp),
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     blockNumber: row.block_number,
     count: row.count,

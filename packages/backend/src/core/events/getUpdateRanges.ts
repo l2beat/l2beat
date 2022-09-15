@@ -21,6 +21,10 @@ export function getUpdateRanges(
       : to
     : to
 
+  if (fromAdjusted.gt(toAdjusted)) {
+    return []
+  }
+
   if (dbStatus === undefined) {
     return [{ from: fromAdjusted, to: toAdjusted }]
   }
