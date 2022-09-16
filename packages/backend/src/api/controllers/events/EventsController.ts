@@ -3,12 +3,10 @@ import { ApiEvents, EventChart, EventChartPoint, UnixTime } from '@l2beat/types'
 import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
 import {
-  EventRecord,
+  EventRecordAggregated,
   EventRepository,
 } from '../../../peripherals/database/EventRepository'
-import {
-  getHourlyMinTimestamp,
-} from '../report/charts'
+import { getHourlyMinTimestamp } from '../report/charts'
 import { renderShowcasePage } from './ShowcasePage'
 
 export class EventController {
@@ -24,22 +22,31 @@ export class EventController {
     }
 
     const timestamp = this.clock.getLastHour()
+    const minHourlyTimestamp = getHourlyMinTimestamp(timestamp)
 
     await Promise.all(
       this.projects.map(async ({ projectId, events }) => {
         const eventNames = events.map((e) => e.name)
 
-        const hourlyTimestamp = getHourlyMinTimestamp(timestamp)
-        const records = await this.eventRepository.getAggregatedByProjectAndGranularity(
-          projectId,
-          hourlyTimestamp,
-        )
-        const eventChart = getEventChart(records, eventNames)
+        const hourlyRecords =
+          await this.eventRepository.getAggregatedByProjectAndGranularity(
+            projectId,
+            'hour',
+            minHourlyTimestamp,
+          )
+        const hourly = getEventChart(hourlyRecords, eventNames)
+
+        const dailyRecords =
+          await this.eventRepository.getAggregatedByProjectAndGranularity(
+            projectId,
+            'day',
+          )
+        const daily = getEventChart(dailyRecords, eventNames)
 
         main.projects[projectId.toString()] = {
-          hourly: eventChart,
+          hourly,
           sixHourly: getEventChart([], []),
-          daily: getEventChart([], []),
+          daily,
         }
       }),
     )
@@ -54,7 +61,7 @@ export class EventController {
 }
 
 function getEventChart(
-  records: EventRecord[],
+  records: EventRecordAggregated[],
   eventNames: string[],
 ): EventChart {
   //Record<timestamp, Record<eventName, count>>
