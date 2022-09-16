@@ -46,10 +46,7 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
           value?.hourly.data[0][0],
           value?.hourly.data[value.hourly.data.length - 1][0],
         ],
-        sixHourlyRange: [
-          value?.sixHourly.data[0][0],
-          value?.sixHourly.data[value.sixHourly.data.length - 1][0],
-        ],
+        sixHourlyRange: [undefined, undefined],
         dailyRange: [
           value?.daily.data[0][0],
           value?.daily.data[value.daily.data.length - 1][0],

@@ -9,6 +9,7 @@ import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
+import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -182,6 +183,7 @@ export class Application {
       createReportRouter(reportController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
+      createEventsRouter(eventController),
     ])
 
     // #endregion

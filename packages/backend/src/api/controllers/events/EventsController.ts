@@ -6,7 +6,7 @@ import {
   EventRecordAggregated,
   EventRepository,
 } from '../../../peripherals/database/EventRepository'
-import { getHourlyMinTimestamp } from '../report/charts'
+import { getHourlyMinTimestamp } from "../utils/getHourlyMinTimestamp"
 import { renderShowcasePage } from './ShowcasePage'
 
 export class EventController {
