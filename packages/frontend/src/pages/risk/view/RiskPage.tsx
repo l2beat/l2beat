@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Footer, Header, Navbar } from '../../../components'
+import { Footer, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -14,7 +14,6 @@ export interface RiskPageProps {
 export function RiskPage(props: RiskPageProps) {
   return (
     <Page>
-      <Navbar />
       <ScalingPageSelection selected="risk" />
       <main>
         <Header title="Risk Analysis" />

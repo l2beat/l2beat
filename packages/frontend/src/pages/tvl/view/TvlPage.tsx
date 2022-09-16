@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Chart, Footer, Header, Navbar } from '../../../components'
+import { Chart, Footer, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -17,7 +17,6 @@ export interface TvlPageProps {
 export function TvlPage(props: TvlPageProps) {
   return (
     <Page>
-      <Navbar />
       <ScalingPageSelection selected="tvl" />
       <main>
         <Header

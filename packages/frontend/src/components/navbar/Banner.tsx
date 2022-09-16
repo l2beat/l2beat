@@ -9,7 +9,7 @@ export function Banner() {
   }
   return (
     <OutLink
-      className="block text-center bg-[#2a363b] text-white font-bold px-4 py-1 -mx-4 lg:mx-0 mb-4"
+      className="block text-center bg-[#2a363b] text-white text-sm font-bold px-4 py-1.5"
       href="https://twitter.com/VitalikButerin/status/1570306185391378434"
     >
       🎉 Ethereum 🐼 Merge is DONE! 🎉
