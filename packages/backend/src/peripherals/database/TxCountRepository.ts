@@ -53,7 +53,7 @@ export class TxCountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getMissingByProject(projectId: ProjectId, fromBlock: number) {
+  async getMissingByProject(projectId: ProjectId) {
     const knex = await this.knex()
     const maxBlockNumber = await this.findLatestByProject(projectId)
     if (!maxBlockNumber) {
@@ -64,7 +64,7 @@ export class TxCountRepository extends BaseRepository {
       .select('s.i')
       .from(
         knex.raw(
-          `generate_series(${fromBlock},(?)) s(i)`,
+          'generate_series(0,(?)) s(i)',
           knex('tx_count')
             .where('project_id', projectId.toString())
             .orderBy('block_number', 'desc')
