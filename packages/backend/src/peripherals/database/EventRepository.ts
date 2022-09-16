@@ -82,7 +82,7 @@ export class EventRepository extends BaseRepository {
     from: UnixTime = new UnixTime(0),
   ): Promise<EventRecordAggregated[]> {
     const knex = await this.knex()
-    const rows = await knex('events')
+    const rows = (await knex('events')
       .where('project_id', projectId.toString())
       .where('unix_timestamp', '>=', from.toDate())
       .select(
@@ -98,7 +98,13 @@ export class EventRepository extends BaseRepository {
         'project_id',
         knex.raw(`date_trunc('${granularity}', unix_timestamp)`),
       )
-      .orderBy(['unix_timestamp', 'event_name'])
+      //todo fix typing
+      .orderBy(['unix_timestamp', 'event_name'])) as unknown as {
+      unix_timestamp: Date
+      event_name: string
+      project_id: string
+      count: number
+    }[]
     return rows.map(toRecordAggregated)
   }
 
