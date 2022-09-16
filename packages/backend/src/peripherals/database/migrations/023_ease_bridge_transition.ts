@@ -25,6 +25,6 @@ export async function up(knex: Knex) {
   }
 }
 
-export async function down(knex: Knex) {
+export async function down() {
   // intentionally empty as resync actually will fix it automatically
 }
