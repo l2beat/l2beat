@@ -31,7 +31,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
           <li
             key={i}
             className={classNames(
-              'relative w-full border-bg-2 border border-r-0 font-[600] h-[64px] z-0 opacity-70',
+              'relative w-full border-bg-4 border border-r-0 font-[600] h-[48px] text-sm sm:text-lg sm:h-[64px] z-0 opacity-70',
               i === pages.length - 1 && 'border-r rounded-r-lg',
               i === 0 && 'rounded-l-lg',
               page.selected && 'border-0 opacity-100 z-10',
@@ -42,7 +42,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
               href={page.link}
               className={classNames(
                 'w-full h-full flex justify-center items-center gap-4 z-10 rounded-lg',
-                page.selected && 'dark:bg-[#32102A] bg-opacity-50 bg-white',
+                page.selected && 'dark:bg-[#32102A] bg-opacity-90 bg-white',
               )}
             >
               <div className="hidden sm:block">{page.icon}</div> {page.content}
