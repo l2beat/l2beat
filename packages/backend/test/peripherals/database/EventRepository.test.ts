@@ -106,6 +106,60 @@ describe(EventRepository.name, () => {
     expect(result).toEqual([records[0], records[1]])
   })
 
+  describe(EventRepository.prototype.getHourlyByProject.name,  () => {
+    it('retrieves only given project', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A),
+        mockEvent(0, PROJECT_B, EVENT_A),
+      ]
+      await repository.addMany(records)
+
+      const result = await repository.getHourlyByProject(PROJECT_A)
+
+      expect(result).toEqual([records[0]])
+    })
+    it('retrieves only records older or equal than given timestamp', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A),
+        mockEvent(1, PROJECT_A, EVENT_A),
+        mockEvent(2, PROJECT_A, EVENT_A),
+        mockEvent(3, PROJECT_A, EVENT_A),
+      ]
+      await repository.addMany(records)
+      const allRecords = await repository.getByProject(PROJECT_A)
+      const onlyFrom = await repository.getByProject(
+        PROJECT_A,
+        START.add(2, 'hours'),
+      )
+
+      expect(allRecords).toEqual(records)
+      expect(onlyFrom).toEqual(records.slice(2))
+    })
+
+    it('returns sorted records', async () => {
+      const records = [
+        mockEvent(2, PROJECT_A, EVENT_B),
+        mockEvent(2, PROJECT_A, EVENT_A),
+        mockEvent(1, PROJECT_A, EVENT_B),
+        mockEvent(1, PROJECT_A, EVENT_A),
+        mockEvent(0, PROJECT_A, EVENT_B),
+        mockEvent(0, PROJECT_A, EVENT_A),
+      ]
+      await repository.addMany(records)
+
+      const result = await repository.getHourlyByProject(PROJECT_A)
+
+      expect(result).toEqual([
+        mockEvent(0, PROJECT_A, EVENT_A),
+        mockEvent(0, PROJECT_A, EVENT_B),
+        mockEvent(1, PROJECT_A, EVENT_A),
+        mockEvent(1, PROJECT_A, EVENT_B),
+        mockEvent(2, PROJECT_A, EVENT_A),
+        mockEvent(2, PROJECT_A, EVENT_B),
+      ])
+    })
+  })
+
   describe(EventRepository.prototype.getDataBoundary.name, () => {
     it('multiple records', async () => {
       const records = [
