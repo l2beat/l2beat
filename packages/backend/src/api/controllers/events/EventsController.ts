@@ -45,7 +45,7 @@ export class EventController {
 
         main.projects[projectId.toString()] = {
           hourly,
-          sixHourly: getEventChart([], []),
+          sixHourly: getEventChart([], eventNames),
           daily,
         }
       }),
