@@ -11,6 +11,10 @@ export interface EventRecord {
   projectId: ProjectId
 }
 
+export interface EventRecordAggregated extends EventRecord {
+  count: number
+}
+
 export class EventRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -75,14 +79,20 @@ export class EventRepository extends BaseRepository {
   async getHourlyByProject(
     projectId: ProjectId,
     from: UnixTime = new UnixTime(0),
-  ): Promise<EventRecord[]> {
+  ): Promise<EventRecordAggregated[]> {
     const knex = await this.knex()
     const rows = await knex('events')
       .where('project_id', projectId.toString())
       .where('unix_timestamp', '>=', from.toDate())
-      .select()
+      .select(
+        knex.raw("date_trunc('hour', unix_timestamp) AS unix_timestamp"),
+        'event_name',
+        'project_id',
+        knex.raw('COUNT(*) as count'),
+      )
+      .groupBy('event_name', 'project_id', 'unix_timestamp')
       .orderBy(['unix_timestamp', 'event_name'])
-    return rows.map(toRecord)
+    return rows.map(toRecordAggregated)
   }
 
   async addMany(events: EventRecord[]) {
@@ -117,5 +127,19 @@ function toRecord(row: EventRow): EventRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     name: row.event_name,
     projectId: ProjectId(row.project_id),
+  }
+}
+
+function toRecordAggregated(rowWithCount: {
+  unix_timestamp: Date
+  event_name: string
+  project_id: string
+  count: number
+}): EventRecordAggregated {
+  return {
+    timestamp: UnixTime.fromDate(rowWithCount.unix_timestamp),
+    name: rowWithCount.event_name,
+    projectId: ProjectId(rowWithCount.project_id),
+    count: +rowWithCount.count,
   }
 }

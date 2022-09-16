@@ -4,6 +4,7 @@ import { providers } from 'ethers'
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
+import { EventController } from './api/controllers/events/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
@@ -165,6 +166,12 @@ export class Application {
       reportStatusRepository,
       clock,
       config.tokens,
+      config.projects,
+    )
+
+    const eventController = new EventController(
+      eventRepository,
+      clock,
       config.projects,
     )
 
