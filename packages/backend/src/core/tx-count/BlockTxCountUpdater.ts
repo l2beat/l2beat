@@ -41,7 +41,8 @@ export class BlockTxCountUpdater {
 
   start() {
     this.logger.info('Started')
-    return this.clock.onEveryHour(() => {
+    this.updateQueue.addIfEmpty()
+    return this.clock.onNewHour(() => {
       this.updateQueue.addIfEmpty()
     })
   }
