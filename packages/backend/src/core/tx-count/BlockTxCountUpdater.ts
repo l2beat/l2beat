@@ -10,6 +10,7 @@ export class BlockTxCountUpdater {
   private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, {
     workers: 100,
   })
+  private queuedBlocks = new Set<number>()
 
   constructor(
     private ethereumClient: EthereumClient,
@@ -22,6 +23,7 @@ export class BlockTxCountUpdater {
   }
 
   async getBlock(number: number) {
+    this.queuedBlocks.delete(number)
     const block = await this.ethereumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
@@ -54,7 +56,7 @@ export class BlockTxCountUpdater {
       this.projectId,
     )
     for (const block of missingBlocks) {
-      this.blockQueue.addToBack(block)
+      this.queueBlock(block)
     }
 
     const lastBlock = await this.txCountRepository.findLatestByProject(
@@ -65,9 +67,16 @@ export class BlockTxCountUpdater {
 
     while (lastBlockNumber < Number(latestBlock)) {
       lastBlockNumber++
-      this.blockQueue.addToBack(lastBlockNumber)
+      this.queueBlock(lastBlockNumber)
     }
 
-    this.logger.info('Update completed')
+    this.logger.info('Update queued')
+  }
+
+  private queueBlock(number: number) {
+    if (!this.queuedBlocks.has(number)) {
+      this.blockQueue.addToBack(number)
+      this.queuedBlocks.add(number)
+    }
   }
 }
