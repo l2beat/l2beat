@@ -106,14 +106,21 @@ describe(EventRepository.name, () => {
           mockEvent(3, PROJECT_A, EVENT_A),
         ]
         await repository.addMany(records)
-        const allRecords = await repository.getByProject(PROJECT_A)
-        const onlyFrom = await repository.getByProject(
+        const allRecords =
+          await repository.getAggregatedByProjectAndGranularity(
+            PROJECT_A,
+            GRANULARITY,
+          )
+        const onlyFrom = await repository.getAggregatedByProjectAndGranularity(
           PROJECT_A,
+          GRANULARITY,
           START.add(2, 'hours'),
         )
 
-        expect(allRecords).toEqual(records)
-        expect(onlyFrom).toEqual(records.slice(2))
+        expect(allRecords).toEqual(records.map((r) => ({ ...r, count: 1 })))
+        expect(onlyFrom).toEqual(
+          records.slice(2).map((r) => ({ ...r, count: 1 })),
+        )
       })
 
       it('returns sorted records', async () => {

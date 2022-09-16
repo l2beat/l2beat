@@ -21,11 +21,13 @@ export class EventRepository extends BaseRepository {
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
+    this.getDataBoundary = this.wrapAny(this.getDataBoundary)
+    this.getAggregatedByProjectAndGranularity = this.wrapGet(
+      this.getAggregatedByProjectAndGranularity,
+    )
     this.addMany = this.wrapAddMany(this.addMany)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getByProjectAndName = this.wrapGet(this.getByProjectAndName)
-    this.getByProject = this.wrapGet(this.getByProject)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -49,31 +51,6 @@ export class EventRepository extends BaseRepository {
         },
       ]),
     )
-  }
-
-  async getByProject(
-    projectId: ProjectId,
-    from: UnixTime = new UnixTime(0),
-  ): Promise<EventRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('events')
-      .where('project_id', projectId.toString())
-      .where('unix_timestamp', '>=', from.toDate())
-      .select()
-      .orderBy(['unix_timestamp', 'event_name'])
-    return rows.map(toRecord)
-  }
-
-  async getByProjectAndName(
-    projectId: ProjectId,
-    name: string,
-  ): Promise<EventRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('events')
-      .where('project_id', projectId.toString())
-      .where('event_name', name)
-      .select()
-    return rows.map(toRecord)
   }
 
   async getAggregatedByProjectAndGranularity(
