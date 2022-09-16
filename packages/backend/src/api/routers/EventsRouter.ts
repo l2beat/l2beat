@@ -2,7 +2,6 @@ import Router from '@koa/router'
 
 import { EventController } from '../controllers/events/EventsController'
 
-
 export function createEventsRouter(eventController: EventController) {
   const router = new Router()
 
