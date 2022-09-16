@@ -24,7 +24,7 @@ describe(BlockTxCountUpdater.name, () => {
         add: async () => '',
       })
       const clock = mock<Clock>({
-        onEveryHour: (callback) => {
+        onNewHour: (callback) => {
           callback(UnixTime.now())
           return () => {}
         },
