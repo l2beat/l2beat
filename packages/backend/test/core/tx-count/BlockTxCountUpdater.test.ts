@@ -45,6 +45,40 @@ describe(BlockTxCountUpdater.name, () => {
     })
   })
 
+  describe(BlockTxCountUpdater.prototype.update.name, () => {
+    it('does not query the same blocks multiple times', async () => {
+      const ethereumClient = mock<EthereumClient>({
+        getBlock: async () => fakeBlock(),
+        getBlockNumber: async () => 5n,
+      })
+      const txCountRepository = mock<TxCountRepository>({
+        findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
+        getMissingByProject: mockFn().resolvesToOnce([2]).resolvesToOnce([]),
+        add: async () => '',
+      })
+      const clock = mock<Clock>({
+        onNewHour: (callback) => {
+          callback(UnixTime.now())
+          return () => {}
+        },
+        getLastHour: () => UnixTime.now(),
+      })
+      const blockTxCountUpdater = new BlockTxCountUpdater(
+        ethereumClient,
+        txCountRepository,
+        clock,
+        Logger.SILENT,
+        ProjectId('fake-project'),
+      )
+      await blockTxCountUpdater.update()
+      await blockTxCountUpdater.update()
+
+      await waitForExpect(() => {
+        expect(ethereumClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
+      })
+    })
+  })
+
   describe(BlockTxCountUpdater.prototype.getBlock.name, () => {
     it('downloads and saves a block to DB', async () => {
       const TIME_0 = UnixTime.now().add(-1, 'days').toStartOf('day')
