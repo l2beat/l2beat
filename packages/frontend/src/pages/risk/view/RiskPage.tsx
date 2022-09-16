@@ -4,7 +4,7 @@ import { Footer, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { PageSelection } from '../../../components/PageSelection'
+import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { RiskView, RiskViewProps } from './RiskView'
 
 export interface RiskPageProps {
@@ -14,12 +14,7 @@ export interface RiskPageProps {
 export function RiskPage(props: RiskPageProps) {
   return (
     <Page>
-      <PageSelection
-        pages={[
-          { name: 'Total Value Locked', link: '/scaling/tvl', selected: false },
-          { name: 'Risk analysis', link: '/scaling/risk', selected: true },
-        ]}
-      />
+      <ScalingPageSelection selected="risk" />
       <main>
         <Header title="Risk Analysis" />
         <RiskView {...props.riskView} />

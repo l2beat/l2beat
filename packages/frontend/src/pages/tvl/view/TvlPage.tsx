@@ -4,7 +4,7 @@ import { Chart, Footer, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { PageSelection } from '../../../components/PageSelection'
+import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { FinancialView, FinancialViewProps } from './FinancialView'
 
 export interface TvlPageProps {
@@ -17,12 +17,7 @@ export interface TvlPageProps {
 export function TvlPage(props: TvlPageProps) {
   return (
     <Page>
-      <PageSelection
-        pages={[
-          { name: 'Total Value Locked', link: '/scaling/tvl', selected: true },
-          { name: 'Risk analysis', link: '/scaling/risk', selected: false },
-        ]}
-      />
+      <ScalingPageSelection selected="tvl" />
       <main>
         <Header
           title="Value locked"
