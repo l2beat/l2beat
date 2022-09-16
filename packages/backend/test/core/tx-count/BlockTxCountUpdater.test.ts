@@ -53,7 +53,7 @@ describe(BlockTxCountUpdater.name, () => {
       })
       const txCountRepository = mock<TxCountRepository>({
         findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
-        getMissingByProject: mockFn().resolvesToOnce([2]).resolvesToOnce([]),
+        getMissingByProject: async () => [2],
         add: async () => '',
       })
       const clock = mock<Clock>({
