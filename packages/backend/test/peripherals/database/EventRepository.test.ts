@@ -27,6 +27,8 @@ const PROJECT_B = ProjectId('project-b')
 const EVENT_A = 'event-a'
 const EVENT_B = 'event-b'
 
+const GRANULARITY = 'hour'
+
 describe(EventRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new EventRepository(database, Logger.SILENT)
@@ -35,8 +37,8 @@ describe(EventRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(EventRepository.prototype.getHourlyByProject.name, () => {
-    it('return aggregated data', async () => {
+  describe(EventRepository.prototype.getAggregatedByProjectAndGranularity.name, () => {
+    it('returns aggregated data', async () => {
       const records = [
         mockEvent(0, PROJECT_A, EVENT_A),
         mockEvent(0, PROJECT_A, EVENT_A),
@@ -47,7 +49,7 @@ describe(EventRepository.name, () => {
       ]
       await repository.addMany(records)
 
-      const result = await repository.getHourlyByProject(PROJECT_A)
+      const result = await repository.getAggregatedByProjectAndGranularity(PROJECT_A, GRANULARITY)
 
       expect(result).toEqual([
         { ...mockEvent(0, PROJECT_A, EVENT_A), count: 2 },
@@ -57,6 +59,24 @@ describe(EventRepository.name, () => {
       ])
     })
 
+    it('returns data with proper granularity', async () => {
+      const records = [
+        mockEvent(0, PROJECT_A, EVENT_A),
+        mockEvent(0, PROJECT_A, EVENT_A),
+        mockEvent(1, PROJECT_A, EVENT_A),
+        mockEvent(1, PROJECT_A, EVENT_A),
+      ]
+      await repository.addMany(records)
+
+      const result = await repository.getAggregatedByProjectAndGranularity(PROJECT_A, 'day')
+
+      expect(result).toEqual([
+        { ...mockEvent(0, PROJECT_A, EVENT_A), count: 4 },
+
+      ])
+
+    })
+
     it('retrieves only given project', async () => {
       const records = [
         mockEvent(0, PROJECT_A, EVENT_A),
@@ -64,10 +84,11 @@ describe(EventRepository.name, () => {
       ]
       await repository.addMany(records)
 
-      const result = await repository.getHourlyByProject(PROJECT_A)
+      const result = await repository.getAggregatedByProjectAndGranularity(PROJECT_A, GRANULARITY)
 
       expect(result).toEqual([{ ...records[0], count: 1 }])
     })
+
     it('retrieves only records older or equal than given timestamp', async () => {
       const records = [
         mockEvent(0, PROJECT_A, EVENT_A),
@@ -95,7 +116,7 @@ describe(EventRepository.name, () => {
       ]
       await repository.addMany(records)
 
-      const result = await repository.getHourlyByProject(PROJECT_A)
+      const result = await repository.getAggregatedByProjectAndGranularity(PROJECT_A, GRANULARITY)
 
       expect(result).toEqual(
         [

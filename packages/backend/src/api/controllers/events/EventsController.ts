@@ -30,7 +30,7 @@ export class EventController {
         const eventNames = events.map((e) => e.name)
 
         const hourlyTimestamp = getHourlyMinTimestamp(timestamp)
-        const records = await this.eventRepository.getHourlyByProject(
+        const records = await this.eventRepository.getAggregatedByProjectAndGranularity(
           projectId,
           hourlyTimestamp,
         )

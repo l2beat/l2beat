@@ -76,8 +76,9 @@ export class EventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getHourlyByProject(
+  async getAggregatedByProjectAndGranularity(
     projectId: ProjectId,
+    granularity: 'hour' | 'day',
     from: UnixTime = new UnixTime(0),
   ): Promise<EventRecordAggregated[]> {
     const knex = await this.knex()
@@ -85,12 +86,18 @@ export class EventRepository extends BaseRepository {
       .where('project_id', projectId.toString())
       .where('unix_timestamp', '>=', from.toDate())
       .select(
-        knex.raw("date_trunc('hour', unix_timestamp) AS unix_timestamp"),
+        knex.raw(
+          `date_trunc('${granularity}', unix_timestamp) AS unix_timestamp`,
+        ),
         'event_name',
         'project_id',
         knex.raw('COUNT(*) as count'),
       )
-      .groupBy('event_name', 'project_id', 'unix_timestamp')
+      .groupBy(
+        'event_name',
+        'project_id',
+        knex.raw(`date_trunc('${granularity}', unix_timestamp)`),
+      )
       .orderBy(['unix_timestamp', 'event_name'])
     return rows.map(toRecordAggregated)
   }
