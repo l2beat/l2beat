@@ -66,9 +66,9 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
         <title>{'s'}</title>
       </head>
       <body>
-        {transformedEvents.map((event) => {
+        {transformedEvents.map((event, i) => {
           return (
-            <div>
+            <div key={i.toString()}>
               <h1>
                 {event.project} - {event.name}
               </h1>
@@ -89,9 +89,9 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
               <table className="charts-css column show-labels show-heading show-primary-axis show-4-secondary-axes">
                 <caption>Hourly [0-{event.maxHourly}]</caption>
                 <tbody style={{ height: 100 }}>
-                  {event.hourly.map((d) => {
+                  {event.hourly.map((d, id) => {
                     return (
-                      <tr key={d}>
+                      <tr key={id.toString()}>
                         <td
                           style={
                             {
@@ -122,9 +122,9 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
               <table className="charts-css column show-labels show-heading show-primary-axis show-4-secondary-axes">
                 <caption>Six hourly [0-{event.maxSixHourly}]</caption>
                 <tbody style={{ height: 100 }}>
-                  {event.sixHourly.map((d) => {
+                  {event.sixHourly.map((d, id) => {
                     return (
-                      <tr key={d}>
+                      <tr key={id.toString()}>
                         <td
                           style={
                             {
@@ -155,9 +155,9 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
               <table className="charts-css column show-labels show-heading show-primary-axis show-4-secondary-axes">
                 <caption>Daily [0-{event.maxDaily}]</caption>
                 <tbody style={{ height: 100 }}>
-                  {event.daily.map((d) => {
+                  {event.daily.map((d, id) => {
                     return (
-                      <tr key={d}>
+                      <tr key={id.toString()}>
                         <td
                           style={
                             {
