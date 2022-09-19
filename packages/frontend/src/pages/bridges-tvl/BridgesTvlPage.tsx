@@ -12,7 +12,7 @@ export type BridgesTvlPageProps = BridgesTvlViewProps
 export function BridgesTvlPage(props: BridgesTvlPageProps) {
   return (
     <Page>
-      <BridgesPageSelection selected="risk" />
+      <BridgesPageSelection selected="tvl" />
       <main>
         <Header title="Value locked" />
         <TvlView {...props} />
