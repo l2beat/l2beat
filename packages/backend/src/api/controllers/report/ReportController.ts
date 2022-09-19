@@ -49,7 +49,7 @@ export class ReportController {
       sixHourlyReports,
       dailyReports,
       latestReports,
-      this.projects,
+      this.projects.map((x) => x.projectId),
     )
     return apiMain
   }

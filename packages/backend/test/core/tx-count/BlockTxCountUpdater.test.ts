@@ -15,74 +15,69 @@ describe(BlockTxCountUpdater.name, () => {
   const PROJECT_A = ProjectId('fake-project-a')
   const PROJECT_B = ProjectId('fake-project-b')
   describe(BlockTxCountUpdater.prototype.start.name, () => {
-    const txCountRepository = mock<TxCountRepository>({
-      findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
-      getMissingByProject: async () => [2],
-      add: async () => '',
-    })
-    const clock = mock<Clock>({
-      onEveryHour: (callback) => {
-        callback(UnixTime.now())
-        return () => {}
-      },
-      getLastHour: () => UnixTime.now(),
-    })
-
     it('skips known blocks', async () => {
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
       })
-      const l2Clients = [
-        {
-          client: ethereumClient,
-          projectId: PROJECT_A,
+      const txCountRepository = mock<TxCountRepository>({
+        findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
+        getMissingRangeByProject: async () => [[1, 3]],
+        add: async () => '',
+      })
+      const clock = mock<Clock>({
+        onNewHour: (callback) => {
+          callback(UnixTime.now())
+          return () => {}
         },
-      ]
+        getLastHour: () => UnixTime.now(),
+      })
       const blockTxCountUpdater = new BlockTxCountUpdater(
-        l2Clients,
+        ethereumClient,
         txCountRepository,
         clock,
         Logger.SILENT,
+        ProjectId('fake-project'),
       )
-      blockTxCountUpdater.start()
+      await blockTxCountUpdater.update()
+      await blockTxCountUpdater.update()
 
       await waitForExpect(() => {
         expect(ethereumClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
       })
     })
+  })
 
-    it('works for many projects', async () => {
-      const clientA = mock<EthereumClient>({
+  describe(BlockTxCountUpdater.prototype.update.name, () => {
+    it('does not query the same blocks multiple times', async () => {
+      const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
       })
-      const clientB = mock<EthereumClient>({
-        getBlock: async () => fakeBlock(),
-        getBlockNumber: async () => 6n,
+      const txCountRepository = mock<TxCountRepository>({
+        findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
+        getMissingRangeByProject: async () => [[1, 3]],
+        add: async () => '',
       })
-      const l2Clients = [
-        {
-          client: clientA,
-          projectId: PROJECT_A,
+      const clock = mock<Clock>({
+        onNewHour: (callback) => {
+          callback(UnixTime.now())
+          return () => {}
         },
-        {
-          client: clientB,
-          projectId: PROJECT_B,
-        },
-      ]
-
+        getLastHour: () => UnixTime.now(),
+      })
       const blockTxCountUpdater = new BlockTxCountUpdater(
-        l2Clients,
+        ethereumClient,
         txCountRepository,
         clock,
         Logger.SILENT,
+        ProjectId('fake-project'),
       )
-      blockTxCountUpdater.start()
+      await blockTxCountUpdater.update()
+      await blockTxCountUpdater.update()
 
       await waitForExpect(() => {
-        expect(clientA.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
-        expect(clientB.getBlock).toHaveBeenCalledExactlyWith([[2], [5], [6]])
+        expect(ethereumClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
       })
     })
   })

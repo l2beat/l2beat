@@ -9,6 +9,7 @@ import { multichain } from './multichain'
 import { near } from './near'
 import { nomad } from './nomad'
 import { omni } from './omni'
+import { orbit } from './orbit'
 import { orbiter } from './orbiter'
 import { polygon } from './polygon'
 import { polynetwork } from './polynetwork'
@@ -34,6 +35,7 @@ export const bridges: Bridge[] = [
   near,
   nomad,
   omni,
+  orbit,
   orbiter,
   polygon,
   polynetwork,
