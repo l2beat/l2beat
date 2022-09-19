@@ -139,12 +139,15 @@ export class Application {
       logger,
     )
 
-    // TODO buildUpdaterForAll
-    const blockTxCountUpdater = new BlockTxCountUpdater(
-      l2Clients,
-      txCountRepository,
-      clock,
-      logger,
+    const blockTxCountUpdaters = l2Clients.map(
+      (l2Client) =>
+        new BlockTxCountUpdater(
+          l2Client.client,
+          txCountRepository,
+          clock,
+          logger,
+          l2Client.projectId,
+        ),
     )
 
     // #endregion
@@ -201,7 +204,9 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
-        blockTxCountUpdater.start()
+        blockTxCountUpdaters.forEach((updater) => {
+          updater.start()
+        })
 
         if (config.eventsSyncEnabled) {
           eventUpdater.start()
