@@ -13,10 +13,6 @@ export interface TxCountRecord {
   count: number
 }
 
-interface MissingNumber {
-  i: number
-}
-
 export class TxCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
