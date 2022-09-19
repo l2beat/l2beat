@@ -3,26 +3,50 @@ import React from 'react'
 
 export interface PageSelectionProps {
   pages: {
-    name: string
+    content: React.ReactNode
+    icon?: React.ReactNode
     link: string
     selected: boolean
   }[]
 }
 
+const gradientBorder = [
+  'before:absolute',
+  'before:-z-10',
+  'before:-top-0.5',
+  'before:-left-0.5',
+  'before:-right-0.5',
+  'before:-bottom-0.5',
+  'before:bg-gradient-to-r',
+  'before:from-[#7E41CC]',
+  'before:to-[#FF46C0]',
+  'before:rounded-lg',
+]
+
 export function PageSelection({ pages }: PageSelectionProps) {
   return (
-    <nav className="md:mt-4 mb-4">
-      <ul className="flex w-full justify-center gap-4">
+    <nav className="mt-4 mb-4 md:mb-10 md:mt-10">
+      <ul className="flex w-full justify-around items-center">
         {pages.map((page, i) => (
           <li
             key={i}
             className={classNames(
-              'pb-1 relative',
-              page.selected &&
-                'font-bold after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 after:bg-black dark:after:bg-white',
+              'relative w-full border-bg-4 border border-r-0 font-[600] h-[48px] text-sm sm:text-lg sm:h-[64px] z-0 opacity-70',
+              i === pages.length - 1 && 'border-r rounded-r-lg',
+              i === 0 && 'rounded-l-lg',
+              page.selected && 'border-0 opacity-100 z-10',
+              page.selected && gradientBorder,
             )}
           >
-            <a href={page.link}>{page.name}</a>
+            <a
+              href={page.link}
+              className={classNames(
+                'w-full h-full flex justify-center items-center gap-4 z-10 rounded-lg',
+                page.selected && 'dark:bg-[#32102A] bg-opacity-90 bg-white',
+              )}
+            >
+              <div className="hidden sm:block">{page.icon}</div> {page.content}
+            </a>
           </li>
         ))}
       </ul>

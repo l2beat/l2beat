@@ -7,19 +7,13 @@ export function OtherLinks() {
   return (
     <>
       <li>
-        <OutLink className="font-bold" href={config.forumLink}>
-          Forum
-        </OutLink>
+        <OutLink href={config.forumLink}>Forum</OutLink>
       </li>
       <li>
-        <a className="font-bold" href="/donate">
-          Donate
-        </a>
+        <a href="/donate">Donate</a>
       </li>
       <li>
-        <a className="font-bold" href="/faq">
-          FAQ
-        </a>
+        <a href="/faq">FAQ</a>
       </li>
     </>
   )

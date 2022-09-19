@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Footer, Navbar } from '../../components'
+import { Footer } from '../../components'
 import { Page } from '../../components/Page'
 
 export interface FaqPageProps {
@@ -11,7 +11,6 @@ export interface FaqPageProps {
 export function FaqPage(props: FaqPageProps) {
   return (
     <Page>
-      <Navbar />
       <article
         className="Faq"
         dangerouslySetInnerHTML={{ __html: props.content }}
