@@ -1,4 +1,5 @@
 import {
+  Bridge,
   getTokenBySymbol,
   Layer2,
   Layer2Event,
@@ -31,5 +32,19 @@ export function layer2ToProject(layer2: Layer2): Project {
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
     events: layer2.events,
+  }
+}
+
+export function bridgeToProject(bridge: Bridge): Project {
+  return {
+    projectId: bridge.id,
+    type: 'bridge',
+    escrows: bridge.escrows.map((escrow) => ({
+      address: EthereumAddress(escrow.address),
+      sinceTimestamp: escrow.sinceTimestamp,
+      tokens:
+        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
+    })),
+    events: [],
   }
 }

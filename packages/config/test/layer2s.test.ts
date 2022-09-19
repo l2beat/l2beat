@@ -55,12 +55,6 @@ describe('layer2s', () => {
         }
       })
     })
-
-    it('every escrow has a unique address', () => {
-      const escrows = layer2s.flatMap((x) => x.escrows.map((x) => x.address))
-      const everyUnique = escrows.every((x, i, a) => a.indexOf(x) === i)
-      expect(everyUnique).toEqual(true)
-    })
   })
 
   describe('sentences', () => {
