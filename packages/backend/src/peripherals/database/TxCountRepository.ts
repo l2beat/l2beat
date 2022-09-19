@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { TxCountRow } from 'knex/types/tables'
+import _ from 'lodash'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
@@ -53,33 +54,59 @@ export class TxCountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getMissingByProject(projectId: ProjectId) {
+  async getMissingRangeByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    const maxBlockNumber = await this.findLatestByProject(projectId)
-    if (!maxBlockNumber) {
+    const maxBlock = await this.findLatestByProject(projectId)
+    if (!maxBlock) {
       return []
     }
 
-    const rows = (await knex
-      .select('s.i')
-      .from(
-        knex.raw(
-          'generate_series(0,(?)) s(i)',
-          knex('tx_count')
-            .where('project_id', projectId.toString())
-            .orderBy('block_number', 'desc')
-            .first()
-            .select('block_number'),
-        ),
-      )
-      .leftOuterJoin(
-        knex('tx_count').where('project_id', projectId.toString()).as('t1'),
-        't1.block_number',
-        's.i',
-      )
-      .whereNull('t1.block_number')) as MissingNumber[]
+    const noNextBlockQuery = knex
+      .select('t1.block_number')
+      .with('t1', (qb) => {
+        void qb
+          .select('block_number')
+          .from('tx_count')
+          .where('project_id', projectId.toString())
+      })
+      .from('t1')
+      .leftJoin('t1 as t2', knex.raw('t1.block_number = t2.block_number - 1'))
+      .whereNull('t2.block_number')
+      .andWhereNot('t1.block_number', maxBlock.blockNumber)
 
-    return rows.map(({ i }) => i)
+    const noPrevBlockQuery = knex
+      .select('t1.block_number')
+      .with('t1', (qb) => {
+        void qb
+          .select('block_number')
+          .from('tx_count')
+          .where('project_id', projectId.toString())
+      })
+      .from('t1')
+      .leftJoin('t1 as t2', knex.raw('t1.block_number = t2.block_number + 1 '))
+      .whereNull('t2.block_number')
+      .andWhereNot('t1.block_number', 0)
+
+    const noNext = await knex
+      .select()
+      .with(
+        'no_next',
+        knex.raw('? EXCEPT ?', [noNextBlockQuery, noPrevBlockQuery]),
+      )
+      .from('no_next')
+
+    const noPrev = await knex
+      .select()
+      .with(
+        'no_prev',
+        knex.raw('? EXCEPT ?', [noPrevBlockQuery, noNextBlockQuery]),
+      )
+      .from('no_prev')
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const ranges: [TxCountRow, TxCountRow][] = _.zip(noNext, noPrev)
+
+    return ranges.map((range) => range.map((row) => row.block_number))
   }
 
   async getBlockNumbersByProject(projectId: ProjectId) {

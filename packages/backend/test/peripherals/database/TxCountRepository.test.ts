@@ -69,7 +69,7 @@ describe(TxCountRepository.name, () => {
     })
   })
 
-  describe(TxCountRepository.prototype.getMissingByProject.name, () => {
+  describe(TxCountRepository.prototype.getMissingRangeByProject.name, () => {
     it('finds holes', async () => {
       await repository.addMany([
         fakeTxCount({ blockNumber: 0, projectId: PROJECT_A }),
@@ -77,7 +77,9 @@ describe(TxCountRepository.name, () => {
         fakeTxCount({ blockNumber: 3, projectId: PROJECT_A }),
       ])
 
-      expect(await repository.getMissingByProject(PROJECT_A)).toEqual([2])
+      expect(await repository.getMissingRangeByProject(PROJECT_A)).toEqual([
+        [1, 3],
+      ])
     })
     it('finds holes with multiple projects', async () => {
       await repository.addMany([
@@ -85,13 +87,15 @@ describe(TxCountRepository.name, () => {
         fakeTxCount({ blockNumber: 1, projectId: PROJECT_A }),
         fakeTxCount({ blockNumber: 3, projectId: PROJECT_A }),
         fakeTxCount({ blockNumber: 0, projectId: PROJECT_B }),
-        fakeTxCount({ blockNumber: 1, projectId: PROJECT_B }),
-        fakeTxCount({ blockNumber: 2, projectId: PROJECT_B }),
         fakeTxCount({ blockNumber: 4, projectId: PROJECT_B }),
       ])
 
-      expect(await repository.getMissingByProject(PROJECT_A)).toEqual([2])
-      expect(await repository.getMissingByProject(PROJECT_B)).toEqual([3])
+      expect(await repository.getMissingRangeByProject(PROJECT_A)).toEqual([
+        [1, 3],
+      ])
+      expect(await repository.getMissingRangeByProject(PROJECT_B)).toEqual([
+        [0, 4],
+      ])
     })
   })
 })

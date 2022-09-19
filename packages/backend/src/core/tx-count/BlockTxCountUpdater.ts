@@ -52,11 +52,14 @@ export class BlockTxCountUpdater {
   async update() {
     this.logger.info('Update started')
 
-    const missingBlocks = await this.txCountRepository.getMissingByProject(
+    const missingRange = await this.txCountRepository.getMissingRangeByProject(
       this.projectId,
     )
-    for (const block of missingBlocks) {
-      this.queueBlock(block)
+    for (const range of missingRange) {
+      // Adding one as range is an open interval
+      for (let i = range[0] + 1; i < range[1]; i++) {
+        this.queueBlock(i)
+      }
     }
 
     const lastBlock = await this.txCountRepository.findLatestByProject(
