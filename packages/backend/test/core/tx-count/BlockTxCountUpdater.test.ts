@@ -37,8 +37,7 @@ describe(BlockTxCountUpdater.name, () => {
         Logger.SILENT,
         ProjectId('fake-project'),
       )
-      await blockTxCountUpdater.update()
-      await blockTxCountUpdater.update()
+      blockTxCountUpdater.start()
 
       await waitForExpect(() => {
         expect(ethereumClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
