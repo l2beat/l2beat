@@ -12,6 +12,11 @@ export interface TxCountRecord {
   blockNumber: number
   count: number
 }
+interface RawBlockNumberQueryResult {
+  rows: {
+    block_number: number
+  }[]
+}
 
 export class TxCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -50,59 +55,51 @@ export class TxCountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getMissingRangeByProject(projectId: ProjectId) {
+  // Returns an array of half open intervals [) that include all missing block numbers
+  async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    const maxBlock = await this.findLatestByProject(projectId)
-    if (!maxBlock) {
-      return []
-    }
-
-    const noNextBlockQuery = knex
-      .select('t1.block_number')
-      .with('t1', (qb) => {
-        void qb
-          .select('block_number')
-          .from('tx_count')
-          .where('project_id', projectId.toString())
-      })
-      .from('t1')
-      .leftJoin('t1 as t2', knex.raw('t1.block_number = t2.block_number - 1'))
-      .whereNull('t2.block_number')
-      .andWhereNot('t1.block_number', maxBlock.blockNumber)
-
-    const noPrevBlockQuery = knex
-      .select('t1.block_number')
-      .with('t1', (qb) => {
-        void qb
-          .select('block_number')
-          .from('tx_count')
-          .where('project_id', projectId.toString())
-      })
-      .from('t1')
-      .leftJoin('t1 as t2', knex.raw('t1.block_number = t2.block_number + 1 '))
-      .whereNull('t2.block_number')
-      .andWhereNot('t1.block_number', 0)
-
-    const noNext = await knex
-      .select()
-      .with(
-        'no_next',
-        knex.raw('? EXCEPT ?', [noNextBlockQuery, noPrevBlockQuery]),
-      )
-      .from('no_next')
-
-    const noPrev = await knex
-      .select()
-      .with(
-        'no_prev',
-        knex.raw('? EXCEPT ?', [noPrevBlockQuery, noNextBlockQuery]),
-      )
-      .from('no_prev')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const ranges: [TxCountRow, TxCountRow][] = _.zip(noNext, noPrev)
+    const noNext = (await knex.raw(`
+      WITH 
+        project_blocks AS (
+          SELECT * FROM tx_count WHERE project_id='${projectId.toString()}'
+        )
+      SELECT * 
+      FROM (
+        SELECT project_blocks.block_number 
+        FROM project_blocks 
+        LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
+        WHERE b2.block_number IS NULL) AS no_next
+      ORDER BY block_number ASC
+    `)) as unknown as RawBlockNumberQueryResult
 
-    return ranges.map((range) => range.map((row) => row.block_number))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const noPrev = (await knex.raw(`
+      WITH 
+          project_blocks AS (
+            SELECT * FROM tx_count WHERE project_id='${projectId.toString()}'
+          )
+        SELECT * 
+        FROM (
+          SELECT project_blocks.block_number 
+          FROM project_blocks 
+          LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
+          WHERE b2.block_number IS NULL) AS no_prev
+        ORDER BY block_number ASC
+    `)) as unknown as RawBlockNumberQueryResult
+
+    const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
+    const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
+
+    noPrevBlockNumbers.push(Infinity)
+    noNextBlockNumbers.unshift(-Infinity)
+
+    if (noNextBlockNumbers.length !== noPrevBlockNumbers.length) {
+      throw new Error('Arrays length should be the same')
+    }
+
+    return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
   async getBlockNumbersByProject(projectId: ProjectId) {

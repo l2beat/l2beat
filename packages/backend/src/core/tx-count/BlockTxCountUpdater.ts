@@ -52,7 +52,7 @@ export class BlockTxCountUpdater {
   async update() {
     this.logger.info('Update started')
 
-    const missingRange = await this.txCountRepository.getMissingRangeByProject(
+    const missingRange = await this.txCountRepository.getMissingRangesByProject(
       this.projectId,
     )
     for (const range of missingRange) {

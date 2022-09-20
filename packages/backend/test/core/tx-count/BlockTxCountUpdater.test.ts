@@ -20,7 +20,7 @@ describe(BlockTxCountUpdater.name, () => {
       })
       const txCountRepository = mock<TxCountRepository>({
         findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
-        getMissingRangeByProject: async () => [[1, 3]],
+        getMissingRangesByProject: async () => [[1, 3]],
         add: async () => '',
       })
       const clock = mock<Clock>({
@@ -53,7 +53,7 @@ describe(BlockTxCountUpdater.name, () => {
       })
       const txCountRepository = mock<TxCountRepository>({
         findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
-        getMissingRangeByProject: async () => [[1, 3]],
+        getMissingRangesByProject: async () => [[1, 3]],
         add: async () => '',
       })
       const clock = mock<Clock>({
