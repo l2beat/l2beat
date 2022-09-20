@@ -32,7 +32,6 @@ describe(generateMain.name, () => {
       [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
     )
     expect(result).toEqual({
-      charts: charts(reports, ProjectId.LAYER2S),
       layers2s: charts(reports, ProjectId.LAYER2S),
       bridges: charts(reports, ProjectId.BRIDGES),
       combined: charts(reports, ProjectId.ALL),

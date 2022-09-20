@@ -1,13 +1,19 @@
 import { Bridge, Layer2RiskViewEntry } from '@l2beat/config'
+import { ApiMain } from '@l2beat/types'
 
+import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
 import { BridgesRiskViewEntry } from './BridgesRiskView'
 
-export function getProps(bridges: Bridge[]): Wrapped<BridgesRiskPageProps> {
+export function getProps(
+  bridges: Bridge[],
+  apiMain: ApiMain,
+): Wrapped<BridgesRiskPageProps> {
+  const ordering = orderByTvl(bridges, apiMain)
   return {
     props: {
-      items: bridges.map(
+      items: ordering.map(
         (bridge): BridgesRiskViewEntry => ({
           name: bridge.name,
           type: bridge.type,

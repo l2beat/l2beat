@@ -5,17 +5,17 @@ import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
-import { BridgesRiskViewProps, RiskView } from './BridgesRiskView'
+import { BridgesTvlViewProps, TvlView } from './BridgesTvlView'
 
-export type BridgesRiskPageProps = BridgesRiskViewProps
+export type BridgesTvlPageProps = BridgesTvlViewProps
 
-export function BridgesRiskPage(props: BridgesRiskPageProps) {
+export function BridgesTvlPage(props: BridgesTvlPageProps) {
   return (
     <Page>
-      <BridgesPageSelection selected="risk" />
+      <BridgesPageSelection selected="tvl" />
       <main>
-        <Header title="Risk Analysis" />
-        <RiskView {...props} />
+        <Header title="Value locked" />
+        <TvlView {...props} />
         <OtherSites />
         <About />
       </main>
