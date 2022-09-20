@@ -14,7 +14,6 @@ export function generateMain(
 ): ApiMain {
   const reports = { hourly, sixHourly, daily }
   return {
-    charts: getProjectCharts(reports, ProjectId.LAYER2S),
     layers2s: getProjectCharts(reports, ProjectId.LAYER2S),
     bridges: getProjectCharts(reports, ProjectId.BRIDGES),
     combined: getProjectCharts(reports, ProjectId.ALL),
