@@ -144,18 +144,12 @@ export const arbitrum: Layer2 = {
               text: 'Rules for Confirming or Rejecting Rollup Blocks - Arbitrum documentation',
               href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
             },
-          ],
-          risks: [
             {
-              ...EXITS.RISK_CENTRALIZED_VALIDATOR,
-              references: [
-                {
-                  text: 'Mainnet for everyone - Arbitrum Blog',
-                  href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
-                },
-              ],
+              text: 'Mainnet for everyone - Arbitrum Blog',
+              href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
             },
           ],
+          risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
         {
           name: 'Tradeable Bridge Exit',
