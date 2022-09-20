@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers'
 import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
-import { RpcTransactionUpdater } from '../../../src/core/tx-count/RpcTransactionUpdater'
+import { RpcTransactionUpdater } from '../../../src/core/transaction-count/RpcTransactionUpdater'
 import { TransactionCountRepository } from '../../../src/peripherals/database/TransactionCountRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
