@@ -19,7 +19,7 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { RpcTransactionUpdater } from './core/tx-count/RpcTransactionUpdater'
+import { RpcTransactionUpdater } from './core/transaction-count/RpcTransactionUpdater'
 import { createL2Clients } from './createL2Clients'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
@@ -62,7 +62,10 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
-    const txCountRepository = new TransactionCountRepository(database, logger)
+    const transactionCountRepository = new TransactionCountRepository(
+      database,
+      logger,
+    )
 
     const http = new HttpClient()
 
