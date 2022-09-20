@@ -7,8 +7,6 @@ import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
 export interface ContractsSectionProps {
-  editLink: string
-  issueLink: string
   contracts: TechnologyContract[]
   risks: TechnologyRisk[]
   references: TechnologyReference[]
@@ -31,8 +29,6 @@ export function ContractsSection(props: ContractsSectionProps) {
       title="Smart Contracts"
       id="contracts"
       className="ContractsSection"
-      editLink={props.editLink}
-      issueLink={props.issueLink}
     >
       {props.architectureImage && (
         <figure className="ContractsSection-Architecture">

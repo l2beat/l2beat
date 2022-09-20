@@ -17,7 +17,7 @@ import {
   TechnologyChoice,
   TechnologySectionProps,
 } from '../view/TechnologySection'
-import { getEditLink, getIssueLink } from './links'
+import { getEditLink } from './links'
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
@@ -38,13 +38,9 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       isCritical: !!risk.isCritical,
     }))
 
-    const issueTitle = `Problem: ${project.name} - ${item.name}`
-
     return {
       id,
       name: item.name,
-      editLink: getEditLink(project),
-      issueLink: getIssueLink(issueTitle),
       description: item.description,
       isIncomplete: !!item.isIncomplete,
       references: item.references,
@@ -183,10 +179,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       return undefined
     }
     return {
-      editLink: getEditLink(project),
-      issueLink: getIssueLink(
-        `Problem: ${project.name} - PermissionedAddresses`,
-      ),
       permissions: tech.permissions,
     }
   }
@@ -208,8 +200,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       : undefined
 
     return {
-      editLink: getEditLink(project),
-      issueLink: getIssueLink(`Problem: ${project.name} - Contracts`),
       contracts,
       risks,
       architectureImage,

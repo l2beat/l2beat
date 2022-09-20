@@ -7,8 +7,6 @@ import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
 export interface PermissionsSectionProps {
-  editLink: string
-  issueLink: string
   permissions: Layer2Permission[]
 }
 
@@ -21,8 +19,6 @@ export function PermissionsSection(props: PermissionsSectionProps) {
       title="Permissioned Addresses"
       id="permissionedAddresses"
       className="PermissinedAddressesSection"
-      editLink={props.editLink}
-      issueLink={props.issueLink}
     >
       <p className="mt-4">
         The system uses the following set of permissioned addresses:
