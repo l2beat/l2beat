@@ -1,5 +1,3 @@
-import { EventGranularity } from '../EventRepository'
-
 export {}
 
 declare module 'knex/types/tables' {
@@ -50,11 +48,9 @@ declare module 'knex/types/tables' {
   }
 
   interface EventRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     event_name: string
     project_id: string
-    count: number
-    time_span: EventGranularity
   }
 
   interface TransactionCountRow {
