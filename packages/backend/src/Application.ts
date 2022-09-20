@@ -19,7 +19,7 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { BlockTxCountUpdater } from './core/tx-count/BlockTxCountUpdater'
+import { RpcTransactionUpdater } from './core/tx-count/RpcTransactionUpdater'
 import { createL2Clients } from './createL2Clients'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
@@ -31,7 +31,7 @@ import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
-import { TxCountRepository } from './peripherals/database/TxCountRepository'
+import { TransactionCountRepository } from './peripherals/database/TransactionCountRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
@@ -62,7 +62,7 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
-    const txCountRepository = new TxCountRepository(database, logger)
+    const txCountRepository = new TransactionCountRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -139,9 +139,9 @@ export class Application {
       logger,
     )
 
-    const blockTxCountUpdaters = l2Clients.map(
+    const rpcTransactionUpdaters = l2Clients.map(
       (l2Client) =>
-        new BlockTxCountUpdater(
+        new RpcTransactionUpdater(
           l2Client.client,
           txCountRepository,
           clock,
@@ -204,9 +204,11 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
-        blockTxCountUpdaters.forEach((updater) => {
-          updater.start()
-        })
+        if (config.transactionCountSyncEnabled) {
+          rpcTransactionUpdaters.forEach((updater) => {
+            updater.start()
+          })
+        }
 
         if (config.eventsSyncEnabled) {
           eventUpdater.start()

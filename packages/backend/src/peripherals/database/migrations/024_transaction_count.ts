@@ -14,7 +14,7 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.createTable('tx_count', function (table) {
+  await knex.schema.createTable('transaction_count', function (table) {
     table.string('project_id').notNullable()
     table.dateTime('unix_timestamp').notNullable()
     table.integer('count').notNullable()
@@ -23,5 +23,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.dropTable('tx_count')
+  await knex.schema.dropTable('transaction_count')
 }

@@ -34,7 +34,16 @@ export const orbit: Bridge = {
     {
       address: '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
       sinceTimestamp: new UnixTime(1603950507),
-      tokens: ['ETH', 'USDT', 'ORC', 'DAI', 'USDC', 'WBTC', 'HANDY', 'MATIC'], // TODO: there are more tokens
+      tokens: [
+        'ETH',
+        'USDT',
+        // 'ORC',
+        'DAI',
+        'USDC',
+        'WBTC',
+        // 'HANDY',
+        'MATIC',
+      ],
     },
   ],
 

@@ -3,16 +3,16 @@ import { ApiMain } from '@l2beat/types'
 import React from 'react'
 
 import { PageWrapper } from '../../components'
-import { BridgesRiskPage } from './BridgesRiskPage'
+import { BridgesTvlPage } from './BridgesTvlPage'
 import { getProps } from './getProps'
 
-export function getBridgesRiskPage(bridges: Bridge[], apiMain: ApiMain) {
+export function getBridgesTvlPage(bridges: Bridge[], apiMain: ApiMain) {
   const { props, wrapper } = getProps(bridges, apiMain)
   return {
-    slug: '/bridges/risk',
+    slug: '/bridges/Tvl',
     page: (
       <PageWrapper {...wrapper}>
-        <BridgesRiskPage {...props} />
+        <BridgesTvlPage {...props} />
       </PageWrapper>
     ),
   }

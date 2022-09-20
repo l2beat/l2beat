@@ -11,7 +11,7 @@ export function getProps(
 ): Wrapped<MetaImageProps> {
   const daily = project
     ? apiMain.projects[project.id.toString()]?.charts.daily.data ?? []
-    : apiMain.charts.daily.data
+    : apiMain.layers2s.daily.data
   const tvl = daily.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
