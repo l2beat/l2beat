@@ -146,7 +146,7 @@ export class Application {
       (l2Client) =>
         new RpcTransactionUpdater(
           l2Client.client,
-          txCountRepository,
+          transactionCountRepository,
           clock,
           logger,
           l2Client.projectId,
