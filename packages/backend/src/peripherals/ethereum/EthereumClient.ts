@@ -37,7 +37,7 @@ export class EthereumClient {
   }
 
   /**
-   * Handles large block ranges by split them to smaller ones when necessary
+   * Handles large block ranges by splitting them into smaller ones when necessary
    */
   async getAllLogs(
     address: EthereumAddress,

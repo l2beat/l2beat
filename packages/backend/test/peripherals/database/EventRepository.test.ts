@@ -106,26 +106,6 @@ describe(EventRepository.name, () => {
     expect(result).toEqual([records[0], records[1]])
   })
 
-  // it(EventRepository.prototype.getAggregatedCount.name, async () => {
-  //   const records = [
-  //     mockEvent(0, PROJECT_A, EVENT_A),
-  //     mockEvent(1, PROJECT_A, EVENT_A),
-  //     mockEvent(2, PROJECT_A, EVENT_A),
-  //     mockEvent(3, PROJECT_A, EVENT_A),
-  //   ]
-
-  //   await repository.addMany(records)
-
-  //   const result = await repository.getAggregatedCount(
-  //     PROJECT_A,
-  //     EVENT_A,
-  //     START,
-  //     START.add(3, 'hours'),
-  //   )
-
-  //   expect(result).toEqual(4)
-  // })
-
   describe(EventRepository.prototype.getDataBoundary.name, () => {
     it('multiple records', async () => {
       const records = [
