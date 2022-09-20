@@ -11,7 +11,6 @@ import {
   PermissionsSection,
   PermissionsSectionProps,
 } from './PermissionsSection'
-import { ReferencesSection, ReferencesSectionProps } from './ReferencesSection'
 import { RiskSection, RiskSectionProps } from './RiskSection'
 import {
   TechnologyIncomplete,
@@ -28,7 +27,6 @@ export interface ProjectDetailsProps {
   sections: TechnologySectionProps[]
   permissionsSection?: PermissionsSectionProps
   contractsSection: ContractsSectionProps
-  referencesSection: ReferencesSectionProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -48,7 +46,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         )}
         <ContractsSection {...props.contractsSection} />
       </div>
-      <ReferencesSection {...props.referencesSection} />
     </main>
   )
 }

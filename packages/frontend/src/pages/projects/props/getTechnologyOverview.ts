@@ -1,7 +1,6 @@
 import {
   Layer2,
   Layer2Contract,
-  Layer2Reference,
   Layer2Technology,
   Layer2TechnologyChoice,
 } from '@l2beat/config'
@@ -13,10 +12,6 @@ import {
   TechnologyContract,
 } from '../view/ContractsSection'
 import { PermissionsSectionProps } from '../view/PermissionsSection'
-import {
-  ReferencesSectionProps,
-  TechnologyReference,
-} from '../view/ReferencesSection'
 import { TechnologyIncompleteProps } from '../view/TechnologyIncomplete'
 import {
   TechnologyChoice,
@@ -29,23 +24,10 @@ interface TechnologyOverview {
   sections: TechnologySectionProps[]
   permissionsSection?: PermissionsSectionProps
   contractsSection: ContractsSectionProps
-  referencesSection: ReferencesSectionProps
 }
 
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   const tech = project.details.technology
-  const references: TechnologyReference[] = []
-
-  function addReference(reference: Layer2Reference) {
-    const index = references.findIndex((x) => x.href === reference.href)
-    if (index !== -1) {
-      return index + 1
-    } else {
-      const id = references.length + 1
-      references.push({ id, text: reference.text, href: reference.href })
-      return id
-    }
-  }
 
   function makeTechnologyChoice(
     id: string,
@@ -65,7 +47,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       issueLink: getIssueLink(issueTitle),
       description: item.description,
       isIncomplete: !!item.isIncomplete,
-      referenceIds: item.references.map(addReference),
+      references: item.references,
       risks,
     }
   }
@@ -231,14 +213,12 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       contracts,
       risks,
       architectureImage,
-      referenceIds: tech.contracts.references?.map(addReference) ?? [],
+      references: tech.contracts.references ?? [],
     }
   }
 
   const sections = makeSections(tech)
-  const isIncomplete = sections.some((x) =>
-    x.items.some((x) => x.isIncomplete || x.referenceIds.length === 0),
-  )
+  const isIncomplete = sections.some((x) => x.items.some((x) => x.isIncomplete))
 
   const incomplete = isIncomplete
     ? {
@@ -252,7 +232,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     sections,
     permissionsSection: makePermissionsSection(tech),
     contractsSection: makeContractSection(tech),
-    referencesSection: { items: references },
   }
 }
 

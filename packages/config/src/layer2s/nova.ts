@@ -84,7 +84,7 @@ export const nova: Layer2 = {
             href: 'https://developer.offchainlabs.com/docs/rollup_basics#executing-and-securing-the-chain',
           },
           {
-            text: 'Note: onlyValidator modifier',
+            text: 'RollupUserFacet.sol#L281 - Etherscan source code, onlyValidator modifier',
             href: 'https://etherscan.io/address/0x00c51f63a2d906510cb2c802c0a30589ba75d942#code#F1#L281',
           },
         ],

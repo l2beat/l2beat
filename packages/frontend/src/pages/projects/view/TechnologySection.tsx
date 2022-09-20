@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Heading } from '../../../components'
-import { InlineReferences } from './InlineReferences'
+import { ReferencesList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
@@ -18,8 +18,8 @@ export interface TechnologyChoice {
   issueLink: string
   description: string
   isIncomplete: boolean
-  referenceIds: number[]
   risks: TechnologyRisk[]
+  references: TechnologyReference[]
 }
 
 export function TechnologySection({
@@ -46,14 +46,9 @@ export function TechnologySection({
               might not present accurate information.
             </div>
           )}
-          <p>
-            {item.description}
-            <InlineReferences
-              ids={item.referenceIds}
-              citationNeededLink={'#incomplete'}
-            />
-          </p>
+          <p>{item.description}</p>
           <RiskList risks={item.risks} />
+          <ReferencesList references={item.references} />
         </div>
       ))}
     </Section>
