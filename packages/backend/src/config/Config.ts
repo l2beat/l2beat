@@ -24,4 +24,5 @@ export interface Config {
   syncEnabled: boolean
   freshStart: boolean
   eventsSyncEnabled: boolean
+  transactionCountSyncEnabled: boolean
 }

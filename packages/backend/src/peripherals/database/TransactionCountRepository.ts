@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { TxCountRow } from 'knex/types/tables'
+import { TransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
-export interface TxCountRecord {
+export interface TransactionCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   blockNumber: number
@@ -18,7 +18,7 @@ interface RawBlockNumberQueryResult {
   }[]
 }
 
-export class TxCountRepository extends BaseRepository {
+export class TransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -31,23 +31,23 @@ export class TxCountRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async add(record: TxCountRecord) {
+  async add(record: TransactionCountRecord) {
     const knex = await this.knex()
     const row = toRow(record)
-    await knex('tx_count').insert(row)
+    await knex('transaction_count').insert(row)
     return `${row.project_id}-${row.block_number}`
   }
 
-  async addMany(records: TxCountRecord[]) {
+  async addMany(records: TransactionCountRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex('tx_count').insert(rows)
+    await knex('transaction_count').insert(rows)
     return rows.length
   }
 
   async findLatestByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    const row = await knex('tx_count')
+    const row = await knex('transaction_count')
       .where('project_id', projectId.toString())
       .orderBy('block_number', 'desc')
       .first()
@@ -63,7 +63,7 @@ export class TxCountRepository extends BaseRepository {
     const noNext = (await knex.raw(`
       WITH 
         project_blocks AS (
-          SELECT * FROM tx_count WHERE project_id='${projectId.toString()}'
+          SELECT * FROM transaction_count WHERE project_id='${projectId.toString()}'
         )
       SELECT * 
       FROM (
@@ -78,7 +78,7 @@ export class TxCountRepository extends BaseRepository {
     const noPrev = (await knex.raw(`
       WITH 
           project_blocks AS (
-            SELECT * FROM tx_count WHERE project_id='${projectId.toString()}'
+            SELECT * FROM transaction_count WHERE project_id='${projectId.toString()}'
           )
         SELECT * 
         FROM (
@@ -104,7 +104,7 @@ export class TxCountRepository extends BaseRepository {
 
   async getBlockNumbersByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    const rows = await knex('tx_count')
+    const rows = await knex('transaction_count')
       .where('project_id', projectId.toString())
       .select('block_number')
       .orderBy('block_number', 'desc')
@@ -113,11 +113,11 @@ export class TxCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('tx_count').delete()
+    return await knex('transaction_count').delete()
   }
 }
 
-function toRow(record: TxCountRecord): TxCountRow {
+function toRow(record: TransactionCountRecord): TransactionCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
@@ -126,7 +126,7 @@ function toRow(record: TxCountRecord): TxCountRow {
   }
 }
 
-function toRecord(row: TxCountRow): TxCountRecord {
+function toRecord(row: TransactionCountRow): TransactionCountRecord {
   return {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),

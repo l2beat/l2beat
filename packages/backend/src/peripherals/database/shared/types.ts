@@ -57,7 +57,7 @@ declare module 'knex/types/tables' {
     time_span: EventGranularity
   }
 
-  interface TxCountRow {
+  interface TransactionCountRow {
     unix_timestamp: Date
     project_id: string
     block_number: number
@@ -73,6 +73,6 @@ declare module 'knex/types/tables' {
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
     events: EventRow
-    tx_count: TxCountRow
+    transaction_count: TransactionCountRow
   }
 }

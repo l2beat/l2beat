@@ -1,20 +1,20 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { TxCountRepository } from '../../peripherals/database/TxCountRepository'
+import { TransactionCountRepository } from '../../peripherals/database/TransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
-export class BlockTxCountUpdater {
+export class RpcTransactionUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new TaskQueue(this.getBlock.bind(this), this.logger, {
+  private blockQueue = new TaskQueue(this.updateBlock.bind(this), this.logger, {
     workers: 100,
   })
   private queuedBlocks = new Set<number>()
 
   constructor(
     private ethereumClient: EthereumClient,
-    private txCountRepository: TxCountRepository,
+    private txCountRepository: TransactionCountRepository,
     private clock: Clock,
     private logger: Logger,
     private projectId: ProjectId,
@@ -22,7 +22,15 @@ export class BlockTxCountUpdater {
     this.logger = logger.for(this)
   }
 
-  async getBlock(number: number) {
+  start() {
+    this.logger.info('Started')
+    this.updateQueue.addIfEmpty()
+    return this.clock.onNewHour(() => {
+      this.updateQueue.addIfEmpty()
+    })
+  }
+
+  async updateBlock(number: number) {
     this.queuedBlocks.delete(number)
     const block = await this.ethereumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
@@ -41,42 +49,27 @@ export class BlockTxCountUpdater {
     })
   }
 
-  start() {
-    this.logger.info('Started')
-    this.updateQueue.addIfEmpty()
-    return this.clock.onNewHour(() => {
-      this.updateQueue.addIfEmpty()
-    })
-  }
-
   async update() {
     this.logger.info('Update started')
 
-    const missingRange = await this.txCountRepository.getMissingRangesByProject(
-      this.projectId,
-    )
-    for (const range of missingRange) {
-      // Adding one as range is an open interval
-      for (let i = range[0] + 1; i < range[1]; i++) {
-        this.queueBlock(i)
+    const missingRanges =
+      await this.txCountRepository.getMissingRangesByProject(this.projectId)
+    const latestBlock = await this.ethereumClient.getBlockNumber()
+
+    for (const [start, end] of missingRanges) {
+      for (
+        let i = Math.max(start, 0);
+        i < Math.min(end, Number(latestBlock) + 1);
+        i++
+      ) {
+        this.enqueueBlock(i)
       }
     }
 
-    const lastBlock = await this.txCountRepository.findLatestByProject(
-      this.projectId,
-    )
-    const latestBlock = await this.ethereumClient.getBlockNumber()
-    let lastBlockNumber = lastBlock ? lastBlock.blockNumber : 0
-
-    while (lastBlockNumber < Number(latestBlock)) {
-      lastBlockNumber++
-      this.queueBlock(lastBlockNumber)
-    }
-
-    this.logger.info('Update queued')
+    this.logger.info('Update enqueued')
   }
 
-  private queueBlock(number: number) {
+  private enqueueBlock(number: number) {
     if (!this.queuedBlocks.has(number)) {
       this.blockQueue.addToBack(number)
       this.queuedBlocks.add(number)
