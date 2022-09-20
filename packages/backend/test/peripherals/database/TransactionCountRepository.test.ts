@@ -22,6 +22,12 @@ describe(TransactionCountRepository.name, () => {
   describe(
     TransactionCountRepository.prototype.getMissingRangesByProject.name,
     () => {
+      it('works with an empty repository', async () => {
+        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
+          [-Infinity, Infinity],
+        ])
+      })
+
       it('finds holes', async () => {
         await repository.addMany([
           fakeTxCount({ blockNumber: 0, projectId: PROJECT_A }),
