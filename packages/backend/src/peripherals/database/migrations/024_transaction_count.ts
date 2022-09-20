@@ -18,7 +18,8 @@ export async function up(knex: Knex) {
     table.string('project_id').notNullable()
     table.dateTime('unix_timestamp').notNullable()
     table.integer('count').notNullable()
-    table.integer('block_number')
+    table.integer('block_number').notNullable()
+    table.primary(['project_id', 'block_number'])
   })
 }
 

@@ -9,7 +9,6 @@ import { Clock } from '../../../src/core/Clock'
 import { RpcTransactionUpdater } from '../../../src/core/tx-count/RpcTransactionUpdater'
 import { TransactionCountRepository } from '../../../src/peripherals/database/TransactionCountRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
-import { fakeTxCount } from '../../peripherals/database/TransactionCountRepository.test'
 
 describe(RpcTransactionUpdater.name, () => {
   describe(RpcTransactionUpdater.prototype.start.name, () => {
@@ -19,7 +18,6 @@ describe(RpcTransactionUpdater.name, () => {
         getBlockNumber: async () => 5n,
       })
       const txCountRepository = mock<TransactionCountRepository>({
-        findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
         getMissingRangesByProject: async () => [
           [-Infinity, -1],
           [2, 3],
@@ -56,7 +54,6 @@ describe(RpcTransactionUpdater.name, () => {
         getBlockNumber: async () => 5n,
       })
       const txCountRepository = mock<TransactionCountRepository>({
-        findLatestByProject: async () => fakeTxCount({ blockNumber: 4 }),
         getMissingRangesByProject: async () => [
           [-Infinity, -1],
           [2, 3],
