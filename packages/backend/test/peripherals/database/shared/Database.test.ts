@@ -31,7 +31,7 @@ describe(Database.name, () => {
   it('migrations have consecutive numbering except for 20', () => {
     const migrationsDirectory = path.resolve(
       __dirname,
-      '../../../src/peripherals/database/migrations',
+      '../../../../src/peripherals/database/migrations',
     )
     const fileNames = readdirSync(migrationsDirectory).sort()
     for (const [i, fileName] of fileNames.entries()) {
