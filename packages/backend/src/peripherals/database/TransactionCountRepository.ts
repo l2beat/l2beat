@@ -60,10 +60,11 @@ export class TransactionCountRepository extends BaseRepository {
     const knex = await this.knex()
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const noNext = (await knex.raw(`
+    const noNext = (await knex.raw(
+      `
       WITH 
         project_blocks AS (
-          SELECT * FROM transaction_count WHERE project_id='${projectId.toString()}'
+          SELECT * FROM transaction_count WHERE project_id=?
         )
       SELECT * 
       FROM (
@@ -72,13 +73,16 @@ export class TransactionCountRepository extends BaseRepository {
         LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
         WHERE b2.block_number IS NULL) AS no_next
       ORDER BY block_number ASC
-    `)) as unknown as RawBlockNumberQueryResult
+    `,
+      projectId.toString(),
+    )) as unknown as RawBlockNumberQueryResult
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const noPrev = (await knex.raw(`
+    const noPrev = (await knex.raw(
+      `
       WITH 
           project_blocks AS (
-            SELECT * FROM transaction_count WHERE project_id='${projectId.toString()}'
+            SELECT * FROM transaction_count WHERE project_id=?
           )
         SELECT * 
         FROM (
@@ -87,7 +91,9 @@ export class TransactionCountRepository extends BaseRepository {
           LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
           WHERE b2.block_number IS NULL) AS no_prev
         ORDER BY block_number ASC
-    `)) as unknown as RawBlockNumberQueryResult
+    `,
+      projectId.toString(),
+    )) as unknown as RawBlockNumberQueryResult
 
     const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
     const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
