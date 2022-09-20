@@ -1,4 +1,5 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
@@ -19,6 +20,7 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
+import { RpcTransactionUpdater } from './core/transaction-count/RpcTransactionUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -29,6 +31,7 @@ import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
+import { TransactionCountRepository } from './peripherals/database/TransactionCountRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
@@ -59,15 +62,24 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
+    const transactionCountRepository = new TransactionCountRepository(
+      database,
+      logger,
+    )
 
     const http = new HttpClient()
 
-    const provider = new providers.AlchemyProvider(
+    const ethereumProvider = new providers.AlchemyProvider(
       'mainnet',
       config.alchemyApiKey,
     )
+    const optimismProvider = new providers.AlchemyProvider(
+      'optimism',
+      config.alchemyApiKey,
+    )
 
-    const ethereumClient = new EthereumClient(provider)
+    const ethereumClient = new EthereumClient(ethereumProvider)
+    const optimismClient = new EthereumClient(optimismProvider)
 
     const multicall = new MulticallClient(ethereumClient)
 
@@ -134,6 +146,15 @@ export class Application {
       logger,
     )
 
+    // TODO buildUpdaterForAll
+    const optimismRpcTransactionUpdater = new RpcTransactionUpdater(
+      optimismClient,
+      transactionCountRepository,
+      clock,
+      logger,
+      ProjectId('optimism'),
+    )
+
     // #endregion
     // #region api
 
@@ -188,6 +209,10 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
+        if (config.transactionCountSyncEnabled) {
+          optimismRpcTransactionUpdater.start()
+        }
+
         if (config.eventsSyncEnabled) {
           eventUpdater.start()
         }
