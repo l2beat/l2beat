@@ -28,5 +28,6 @@ export function getTestConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     eventsSyncEnabled: false,
+    transactionCountSyncEnabled: false,
   }
 }

@@ -34,5 +34,9 @@ export function getLocalConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
     eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
+    transactionCountSyncEnabled: getEnv.boolean(
+      'TRANSACTION_COUNT_ENABLED',
+      false,
+    ),
   }
 }

@@ -53,6 +53,13 @@ declare module 'knex/types/tables' {
     project_id: string
   }
 
+  interface TransactionCountRow {
+    unix_timestamp: Date
+    project_id: string
+    block_number: number
+    count: number
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -62,5 +69,6 @@ declare module 'knex/types/tables' {
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
     events: EventRow
+    transaction_count: TransactionCountRow
   }
 }

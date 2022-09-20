@@ -36,5 +36,6 @@ export function getProductionConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     eventsSyncEnabled: false,
+    transactionCountSyncEnabled: false,
   }
 }
