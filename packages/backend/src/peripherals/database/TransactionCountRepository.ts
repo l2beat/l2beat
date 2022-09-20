@@ -59,7 +59,6 @@ export class TransactionCountRepository extends BaseRepository {
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const noNext = (await knex.raw(
       `
       WITH 
@@ -77,7 +76,6 @@ export class TransactionCountRepository extends BaseRepository {
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const noPrev = (await knex.raw(
       `
       WITH 
