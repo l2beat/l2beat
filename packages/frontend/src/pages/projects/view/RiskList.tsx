@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { ShieldBadIcon, ShieldWarnIcon } from '../../../components/icons'
-import { InlineReferences } from './InlineReferences'
 
 export interface RiskList {
   risks: TechnologyRisk[]
@@ -9,7 +8,6 @@ export interface RiskList {
 
 export interface TechnologyRisk {
   text: string
-  referenceIds: number[]
   isCritical: boolean
 }
 
@@ -30,7 +28,6 @@ export function RiskList({ risks }: RiskList) {
               {risk.text}
             </>
           )}
-          <InlineReferences ids={risk.referenceIds} />
         </li>
       ))}
     </ul>

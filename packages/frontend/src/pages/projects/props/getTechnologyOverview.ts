@@ -52,7 +52,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     item: Layer2TechnologyChoice,
   ): TechnologyChoice {
     const risks = item.risks.map((risk) => ({
-      referenceIds: (risk.references ?? []).map(addReference),
       text: `${risk.category} ${risk.text}`,
       isCritical: !!risk.isCritical,
     }))
@@ -214,7 +213,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const contracts = tech.contracts.addresses.map(makeTechnologyContract)
 
     const risks = tech.contracts.risks.map((risk) => ({
-      referenceIds: (risk.references ?? []).map(addReference),
       text: `${risk.category} ${risk.text}`,
       isCritical: !!risk.isCritical,
     }))
@@ -233,6 +231,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       contracts,
       risks,
       architectureImage,
+      referenceIds: tech.contracts.references?.map(addReference) ?? [],
     }
   }
 

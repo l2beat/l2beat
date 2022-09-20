@@ -2,6 +2,7 @@ import React from 'react'
 
 import { OutLink } from '../../../components'
 import { EtherscanLink } from './EtherscanLink'
+import { InlineReferences } from './InlineReferences'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
@@ -10,6 +11,7 @@ export interface ContractsSectionProps {
   issueLink: string
   contracts: TechnologyContract[]
   risks: TechnologyRisk[]
+  referenceIds: number[]
   architectureImage?: string
 }
 
@@ -42,7 +44,10 @@ export function ContractsSection(props: ContractsSectionProps) {
           <figcaption>A diagram of the smart contract architecture</figcaption>
         </figure>
       )}
-      <p>The system consists of the following smart contracts:</p>
+      <p>
+        The system consists of the following smart contracts:
+        <InlineReferences ids={props.referenceIds} />
+      </p>
       <ul className="ContractsSection-Contracts">
         {props.contracts.map((contract, i) => (
           <li key={i}>
