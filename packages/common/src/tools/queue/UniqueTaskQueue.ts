@@ -18,15 +18,15 @@ export class UniqueTaskQueue<T extends string | number> extends TaskQueue<T> {
     super(wrappedExecute, logger, opts)
   }
 
-  addIfEmpty(task: T): void {
+  override addIfEmpty(task: T): void {
     this.addUnique(task, super.addIfEmpty.bind(this))
   }
 
-  addToBack(task: T): void {
+  override addToBack(task: T): void {
     this.addUnique(task, super.addToBack.bind(this))
   }
 
-  addToFront(task: T): void {
+  override addToFront(task: T): void {
     this.addUnique(task, super.addToFront.bind(this))
   }
 
