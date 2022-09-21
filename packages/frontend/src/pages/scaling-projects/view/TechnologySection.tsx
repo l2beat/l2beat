@@ -5,8 +5,8 @@ import {
   ReferenceList,
   TechnologyReference,
 } from '../../../components/project/ReferenceList'
+import { RiskList, TechnologyRisk } from '../../../components/project/RiskList'
 import { Section } from '../../../components/project/Section'
-import { RiskList, TechnologyRisk } from './RiskList'
 
 export interface TechnologySectionProps {
   id: string

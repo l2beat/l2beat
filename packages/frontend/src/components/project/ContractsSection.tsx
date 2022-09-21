@@ -1,12 +1,9 @@
 import React from 'react'
 
-import {
-  RiskList,
-  TechnologyRisk,
-} from '../../pages/scaling-projects/view/RiskList'
 import { OutLink } from '../OutLink'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
+import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
 export interface ContractsSectionProps {
