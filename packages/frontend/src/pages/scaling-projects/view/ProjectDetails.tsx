@@ -17,6 +17,10 @@ import {
   NewsSectionProps,
 } from '../../../components/project/NewsSection'
 import {
+  PermissionsSection,
+  PermissionsSectionProps,
+} from '../../../components/project/PermissionsSection'
+import {
   RiskSection,
   RiskSectionProps,
 } from '../../../components/project/RiskSection'
@@ -24,10 +28,6 @@ import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
 } from '../../../components/project/TechnologyIncomplete'
-import {
-  PermissionsSection,
-  PermissionsSectionProps,
-} from './PermissionsSection'
 import { TechnologySection, TechnologySectionProps } from './TechnologySection'
 
 export interface ProjectDetailsProps {
