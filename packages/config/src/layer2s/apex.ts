@@ -36,8 +36,6 @@ export const apex: Layer2 = {
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: [
         'https://twitter.com/OfficialApeXdex',
-        'https://discord.com/invite/366Puqavwx',
-        'https://t.me/apexdex',
       ],
     },
     provider: 'StarkEx',
