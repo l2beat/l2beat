@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { TransactionCountRepository } from '../../peripherals/database/TransactionCountRepository'
@@ -7,10 +7,13 @@ import { Clock } from '../Clock'
 
 export class RpcTransactionUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new TaskQueue(this.updateBlock.bind(this), this.logger, {
-    workers: 100,
-  })
-  private queuedBlocks = new Set<number>()
+  private blockQueue = new UniqueTaskQueue(
+    this.updateBlock.bind(this),
+    this.logger,
+    {
+      workers: 100,
+    },
+  )
 
   constructor(
     private ethereumClient: EthereumClient,
@@ -31,7 +34,6 @@ export class RpcTransactionUpdater {
   }
 
   async updateBlock(number: number) {
-    this.queuedBlocks.delete(number)
     const block = await this.ethereumClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
@@ -62,17 +64,10 @@ export class RpcTransactionUpdater {
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
-        this.enqueueBlock(i)
+        this.blockQueue.addToBack(i)
       }
     }
 
     this.logger.info('Update enqueued')
-  }
-
-  private enqueueBlock(number: number) {
-    if (!this.queuedBlocks.has(number)) {
-      this.blockQueue.addToBack(number)
-      this.queuedBlocks.add(number)
-    }
   }
 }

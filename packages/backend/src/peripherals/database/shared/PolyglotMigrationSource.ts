@@ -34,11 +34,11 @@ export class PolyglotMigrationSource
     )
   }
 
-  async getMigrations(): Promise<unknown[]> {
+  override async getMigrations(): Promise<unknown[]> {
     return this.fsSource.getMigrations(this.loadExtensions)
   }
 
-  getMigration(migration: unknown): Promise<Knex.Migration> {
+  override getMigration(migration: unknown): Promise<Knex.Migration> {
     return this.fsSource.getMigration(migration)
   }
 
