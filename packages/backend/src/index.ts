@@ -7,7 +7,9 @@ main().catch((e) => {
 })
 
 async function main() {
-  const env = process.env.NODE_ENV === 'production' ? 'production' : 'local'
+  const env =
+    process.env.DEPLOYMENT_ENV ??
+    (process.env.NODE_ENV === 'production' ? 'production' : 'local')
   const config = getConfig(env)
   const app = new Application(config)
   await app.start()
