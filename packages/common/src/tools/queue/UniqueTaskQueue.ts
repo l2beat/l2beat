@@ -1,7 +1,21 @@
-import { TaskQueue } from './TaskQueue'
+import { Logger } from '../Logger'
+import { TaskQueue, TaskQueueOpts } from './TaskQueue'
 
 export class UniqueTaskQueue<T extends string | number> extends TaskQueue<T> {
   private taskSet: Set<T> = new Set()
+
+  constructor(
+    executeTask: (task: T) => Promise<void>,
+    logger: Logger,
+    opts?: TaskQueueOpts<T>,
+  ) {
+    const wrappedExecute = async (task: T) => {
+      await executeTask(task)
+      this.taskSet.delete(task)
+    }
+
+    super(wrappedExecute, logger, opts)
+  }
 
   addIfEmpty(task: T): void {
     this.addUnique(task, super.addIfEmpty.bind(this))

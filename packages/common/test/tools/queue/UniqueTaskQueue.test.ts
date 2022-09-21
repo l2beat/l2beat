@@ -24,6 +24,29 @@ describe(UniqueTaskQueue.name, () => {
     })
   })
 
+  it('removes task from memory after the execution', async () => {
+    const completed: number[] = []
+
+    async function execute(value: number) {
+      await setTimeout(1)
+      completed.push(value)
+    }
+
+    const queue = new UniqueTaskQueue(execute, Logger.SILENT)
+
+    queue.addToBack(1)
+
+    await waitForExpect(() => {
+      expect(completed).toEqual([1])
+    })
+
+    queue.addToBack(1)
+
+    await waitForExpect(() => {
+      expect(completed).toEqual([1, 1])
+    })
+  })
+
   it('adds only unique tasks with bigger set', async () => {
     const completed: number[] = []
 
