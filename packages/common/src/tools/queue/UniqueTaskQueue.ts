@@ -1,6 +1,6 @@
 import { TaskQueue } from './TaskQueue'
 
-export class UniqueTaskQueue<T> extends TaskQueue<T> {
+export class UniqueTaskQueue<T extends string | number> extends TaskQueue<T> {
   private taskSet: Set<T> = new Set()
 
   addIfEmpty(task: T): void {
