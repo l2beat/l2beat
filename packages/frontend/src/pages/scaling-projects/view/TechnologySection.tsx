@@ -1,8 +1,11 @@
 import React from 'react'
 
 import { Heading } from '../../../components'
+import {
+  ReferenceList,
+  TechnologyReference,
+} from '../../../components/project/ReferenceList'
 import { Section } from '../../../components/project/Section'
-import { ReferencesList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 
 export interface TechnologySectionProps {
@@ -38,7 +41,7 @@ export function TechnologySection({
           )}
           <p>{item.description}</p>
           <RiskList risks={item.risks} />
-          <ReferencesList references={item.references} />
+          <ReferenceList references={item.references} />
         </div>
       ))}
     </Section>

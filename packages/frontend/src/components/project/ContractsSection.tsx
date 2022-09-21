@@ -1,10 +1,13 @@
 import React from 'react'
 
-import { OutLink } from '../../../components'
-import { Section } from '../../../components/project/Section'
+import {
+  RiskList,
+  TechnologyRisk,
+} from '../../pages/scaling-projects/view/RiskList'
+import { OutLink } from '../OutLink'
 import { EtherscanLink } from './EtherscanLink'
-import { ReferencesList, TechnologyReference } from './ReferenceList'
-import { RiskList, TechnologyRisk } from './RiskList'
+import { ReferenceList, TechnologyReference } from './ReferenceList'
+import { Section } from './Section'
 
 export interface ContractsSectionProps {
   contracts: TechnologyContract[]
@@ -70,7 +73,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <RiskList risks={props.risks} />
         </>
       )}
-      <ReferencesList references={props.references} />
+      <ReferenceList references={props.references} />
     </Section>
   )
 }

@@ -10,7 +10,7 @@ import path from 'path'
 import {
   ContractsSectionProps,
   TechnologyContract,
-} from '../view/ContractsSection'
+} from '../../../components/project/ContractsSection'
 import { PermissionsSectionProps } from '../view/PermissionsSection'
 import { TechnologyIncompleteProps } from '../view/TechnologyIncomplete'
 import {
