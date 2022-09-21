@@ -15,6 +15,15 @@ export interface EventRecordAggregated extends EventRecord {
   count: number
 }
 
+interface AggregatedQueryResult {
+  rows: {
+    unix_timestamp: Date
+    event_name: string
+    project_id: string
+    count: number
+  }[]
+}
+
 export class EventRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -59,30 +68,23 @@ export class EventRepository extends BaseRepository {
     from: UnixTime = new UnixTime(0),
   ): Promise<EventRecordAggregated[]> {
     const knex = await this.knex()
-    const rows = (await knex('events')
-      .where('project_id', projectId.toString())
-      .where('unix_timestamp', '>=', from.toDate())
-      .select(
-        knex.raw(
-          `date_trunc('${granularity}', unix_timestamp) AS unix_timestamp`,
-        ),
-        'event_name',
-        'project_id',
-        knex.raw('COUNT(*) as count'),
-      )
-      .groupBy(
-        'event_name',
-        'project_id',
-        knex.raw(`date_trunc('${granularity}', unix_timestamp)`),
-      )
-      //todo fix typing
-      .orderBy(['unix_timestamp', 'event_name'])) as unknown as {
-      unix_timestamp: Date
-      event_name: string
-      project_id: string
-      count: number
-    }[]
-    return rows.map(toRecordAggregated)
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (granularity !== 'hour' && granularity !== 'day') {
+      throw new Error('Programmer error or SQL injection')
+    }
+
+    const query =
+      granularity === 'hour'
+        ? getAggregatedQueryBody('hour')
+        : getAggregatedQueryBody('day')
+
+    const raw = (await knex.raw(query, {
+      projectId: projectId.toString(),
+      from: from.toDate(),
+    })) as unknown as AggregatedQueryResult
+
+    return raw.rows.map(toRecordAggregated)
   }
 
   async addMany(events: EventRecord[]) {
@@ -132,4 +134,23 @@ function toRecordAggregated(rowWithCount: {
     projectId: ProjectId(rowWithCount.project_id),
     count: +rowWithCount.count,
   }
+}
+
+const getAggregatedQueryBody = (granularity: 'hour' | 'day') => {
+  return `
+  SELECT
+    date_trunc('${granularity}', unix_timestamp) AS unix_timestamp,
+    event_name,
+    project_id,
+    COUNT(*) as count
+  FROM
+    public.events
+  WHERE
+    project_id = :projectId AND unix_timestamp >= :from
+  GROUP BY 
+    event_name,
+    project_id,
+    date_trunc('${granularity}', unix_timestamp)
+  ORDER BY
+    date_trunc('${granularity}', unix_timestamp), event_name`
 }

@@ -73,13 +73,23 @@ describe(EventRepository.name, () => {
         ]
         await repository.addMany(records)
 
-        const result = await repository.getAggregatedByProjectAndGranularity(
-          PROJECT_A,
-          'day',
-        )
-
-        expect(result).toEqual([
+        const resultDaily =
+          await repository.getAggregatedByProjectAndGranularity(
+            PROJECT_A,
+            'day',
+          )
+        expect(resultDaily).toEqual([
           { ...mockEvent(0, PROJECT_A, EVENT_A), count: 4 },
+        ])
+
+        const resultHourly =
+          await repository.getAggregatedByProjectAndGranularity(
+            PROJECT_A,
+            'hour',
+          )
+        expect(resultHourly).toEqual([
+          { ...mockEvent(0, PROJECT_A, EVENT_A), count: 2 },
+          { ...mockEvent(1, PROJECT_A, EVENT_A), count: 2 },
         ])
       })
 
