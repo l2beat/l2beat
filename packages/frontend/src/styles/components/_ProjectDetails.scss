@@ -2,12 +2,14 @@
   line-height: 1.5;
   display: grid;
   grid-template-columns: 1fr 320px;
-  grid-template-areas: 'tech links' 'tech news' 'references news';
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 'tech links' 'tech news';
   column-gap: 16px;
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
-    grid-template-areas: 'links' 'tech' 'news' 'references';
+    grid-template-rows: unset;
+    grid-template-areas: 'links' 'tech' 'news';
   }
 
   .LinkSection {
@@ -20,9 +22,5 @@
 
   .NewsSection {
     grid-area: news;
-  }
-
-  .ReferencesSection {
-    grid-area: references;
   }
 }

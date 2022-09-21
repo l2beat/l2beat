@@ -7,7 +7,7 @@ export function getDescriptionSection(
   project: Layer2,
 ): DescriptionSectionProps {
   return {
-    issueLink: getIssueLink(`Problem: ${project.name} - Description`),
+    issueLink: getIssueLink(`Problem: ${project.name} project page`),
     editLink: getEditLink(project),
     warning: project.details.warning,
     description: project.details.description,

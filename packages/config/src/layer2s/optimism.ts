@@ -133,21 +133,15 @@ export const optimism: Layer2 = {
           ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
-              text: ' Withdrawing back to L1 - Optimism Help Center',
+              text: 'Withdrawing back to L1 - Optimism Help Center',
               href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
             },
-          ],
-          risks: [
             {
-              ...EXITS.RISK_CENTRALIZED_VALIDATOR,
-              references: [
-                {
-                  text: 'mockOVM_BondManager.sol#L71 - Etherscan source code',
-                  href: 'https://etherscan.io/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057#code#F6#L71',
-                },
-              ],
+              text: 'mockOVM_BondManager.sol#L71 - Etherscan source code',
+              href: 'https://etherscan.io/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057#code#F6#L71',
             },
           ],
+          risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
       ],
       permissions: [
