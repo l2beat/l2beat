@@ -3,11 +3,11 @@ import React, { useEffect } from 'react'
 
 import { Page } from '../../../components/Page'
 import { Tooltip } from '../../../components/Tooltip'
-import { RiskView as RiskViewComponent } from '../../../pages/risk/view/RiskView'
+import { RiskView as RiskViewComponent } from '../../../pages/scaling-risk/view/RiskView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 
 export default {
-  title: 'Pages/Home/RiskView',
+  title: 'Pages/Scaling/RiskView',
 }
 
 export function RiskView() {
