@@ -1,16 +1,15 @@
 interface AlchemyProvider {
-  provider: 'alchemy'
-  slug: string
-}
-
-interface JsonRpcProvider {
-  provider: 'jsonRpc'
-  url: string
-}
-
-export type Layer2Rpc = (AlchemyProvider | JsonRpcProvider) & {
   type: 'rpc'
+  provider: 'alchemy'
+  networkName: string
   callsPerMinute?: number
 }
 
-export type Layer2Url = Layer2Rpc
+interface JsonRpcProvider {
+  type: 'rpc'
+  provider: 'jsonRpc'
+  url: string
+  callsPerMinute?: number
+}
+
+export type Layer2TransactionApi = AlchemyProvider | JsonRpcProvider

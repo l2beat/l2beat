@@ -342,7 +342,7 @@ export const metis: Layer2 = {
       sinceTimestamp: new UnixTime(1637070766),
     },
   ],
-  url: {
+  transactionApi: {
     type: 'rpc',
     provider: 'jsonRpc',
     url: 'https://andromeda.metis.io/',
