@@ -1,5 +1,6 @@
 import { Logger } from '../Logger'
-import { TaskQueue, TaskQueueOpts } from './TaskQueue'
+import { TaskQueue } from './TaskQueue'
+import { TaskQueueOpts } from './types'
 
 export class UniqueTaskQueue<T extends string | number> extends TaskQueue<T> {
   private taskSet: Set<T> = new Set()
