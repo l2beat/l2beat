@@ -11,8 +11,8 @@ import {
   ContractsSectionProps,
   TechnologyContract,
 } from '../../../components/project/ContractsSection'
+import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { PermissionsSectionProps } from '../view/PermissionsSection'
-import { TechnologyIncompleteProps } from '../view/TechnologyIncomplete'
 import {
   TechnologyChoice,
   TechnologySectionProps,
