@@ -16,7 +16,7 @@ import { TechnologyIncompleteProps } from '../../../components/project/Technolog
 import {
   TechnologyChoice,
   TechnologySectionProps,
-} from '../view/TechnologySection'
+} from '../../../components/project/TechnologySection'
 import { getEditLink } from './links'
 
 interface TechnologyOverview {

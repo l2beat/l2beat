@@ -28,7 +28,10 @@ import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
 } from '../../../components/project/TechnologyIncomplete'
-import { TechnologySection, TechnologySectionProps } from './TechnologySection'
+import {
+  TechnologySection,
+  TechnologySectionProps,
+} from '../../../components/project/TechnologySection'
 
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps
