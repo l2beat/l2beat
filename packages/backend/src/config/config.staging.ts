@@ -1,15 +1,18 @@
+import { Knex } from 'knex'
+
 import { Config } from './Config'
 import { getProductionConfig } from './config.production'
 
 export function getStagingConfig(): Config {
   const name = 'Backend/Staging'
-  const prodConfig = getProductionConfig()
+  const productionConfig = getProductionConfig()
+
   return {
-    ...prodConfig,
+    ...productionConfig,
 
     name,
     databaseConnection: {
-      ...prodConfig,
+      ...(productionConfig.databaseConnection as Knex.PgConnectionConfig),
       application_name: name,
     },
     eventsSyncEnabled: true,
