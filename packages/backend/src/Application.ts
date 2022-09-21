@@ -17,8 +17,6 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { RpcTransactionUpdater } from './core/transaction-count/RpcTransactionUpdater'
-import { createL2Clients } from './createL2Clients'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -33,6 +31,7 @@ import { TransactionCountRepository } from './peripherals/database/TransactionCo
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
+import { createRpcTransactionUpdaters } from './setup/createRpcTransactionUpdaters'
 
 export class Application {
   start: () => Promise<void>
@@ -73,7 +72,6 @@ export class Application {
     )
 
     const ethereumClient = new EthereumClient(ethereumProvider)
-    const l2Clients = createL2Clients(config)
 
     const multicall = new MulticallClient(ethereumClient)
 
@@ -140,15 +138,11 @@ export class Application {
       logger,
     )
 
-    const rpcTransactionUpdaters = l2Clients.map(
-      (l2Client) =>
-        new RpcTransactionUpdater(
-          l2Client.client,
-          transactionCountRepository,
-          clock,
-          logger,
-          l2Client.projectId,
-        ),
+    const rpcTransactionUpdaters = createRpcTransactionUpdaters(
+      config,
+      transactionCountRepository,
+      clock,
+      logger,
     )
 
     // #endregion
@@ -198,10 +192,11 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
+
         if (config.transactionCountSyncEnabled) {
-          rpcTransactionUpdaters.forEach((updater) => {
+          for (const updater of rpcTransactionUpdaters) {
             updater.start()
-          })
+          }
         }
 
         if (config.eventsSyncEnabled) {
