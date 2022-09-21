@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { OutLink } from '../../../components'
 import { ShieldWarnIcon } from '../../../components/icons'
 import { Section } from './Section'
 
@@ -16,8 +17,6 @@ export function DescriptionSection(props: DescriptionSectionProps) {
       title="Description"
       id="description"
       className="DescriptionSection"
-      editLink={props.editLink}
-      issueLink={props.issueLink}
     >
       {props.warning && (
         <div className="DescriptionSection-Warning">
@@ -26,6 +25,17 @@ export function DescriptionSection(props: DescriptionSectionProps) {
         </div>
       )}
       <p className="DescriptionSection-Text">{props.description}</p>
+      <p className="mt-4">
+        If you find something wrong on this page you can{' '}
+        <OutLink className="text-link underline" href={props.issueLink}>
+          submit an issue
+        </OutLink>
+        {' or '}
+        <OutLink className="text-link underline" href={props.editLink}>
+          edit the information
+        </OutLink>
+        .
+      </p>
     </Section>
   )
 }

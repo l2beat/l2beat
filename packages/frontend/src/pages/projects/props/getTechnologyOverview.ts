@@ -1,7 +1,6 @@
 import {
   Layer2,
   Layer2Contract,
-  Layer2Reference,
   Layer2Technology,
   Layer2TechnologyChoice,
 } from '@l2beat/config'
@@ -13,60 +12,38 @@ import {
   TechnologyContract,
 } from '../view/ContractsSection'
 import { PermissionsSectionProps } from '../view/PermissionsSection'
-import {
-  ReferencesSectionProps,
-  TechnologyReference,
-} from '../view/ReferencesSection'
 import { TechnologyIncompleteProps } from '../view/TechnologyIncomplete'
 import {
   TechnologyChoice,
   TechnologySectionProps,
 } from '../view/TechnologySection'
-import { getEditLink, getIssueLink } from './links'
+import { getEditLink } from './links'
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
   sections: TechnologySectionProps[]
   permissionsSection?: PermissionsSectionProps
   contractsSection: ContractsSectionProps
-  referencesSection: ReferencesSectionProps
 }
 
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   const tech = project.details.technology
-  const references: TechnologyReference[] = []
-
-  function addReference(reference: Layer2Reference) {
-    const index = references.findIndex((x) => x.href === reference.href)
-    if (index !== -1) {
-      return index + 1
-    } else {
-      const id = references.length + 1
-      references.push({ id, text: reference.text, href: reference.href })
-      return id
-    }
-  }
 
   function makeTechnologyChoice(
     id: string,
     item: Layer2TechnologyChoice,
   ): TechnologyChoice {
     const risks = item.risks.map((risk) => ({
-      referenceIds: (risk.references ?? []).map(addReference),
       text: `${risk.category} ${risk.text}`,
       isCritical: !!risk.isCritical,
     }))
 
-    const issueTitle = `Problem: ${project.name} - ${item.name}`
-
     return {
       id,
       name: item.name,
-      editLink: getEditLink(project),
-      issueLink: getIssueLink(issueTitle),
       description: item.description,
       isIncomplete: !!item.isIncomplete,
-      referenceIds: item.references.map(addReference),
+      references: item.references,
       risks,
     }
   }
@@ -202,10 +179,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       return undefined
     }
     return {
-      editLink: getEditLink(project),
-      issueLink: getIssueLink(
-        `Problem: ${project.name} - PermissionedAddresses`,
-      ),
       permissions: tech.permissions,
     }
   }
@@ -214,7 +187,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const contracts = tech.contracts.addresses.map(makeTechnologyContract)
 
     const risks = tech.contracts.risks.map((risk) => ({
-      referenceIds: (risk.references ?? []).map(addReference),
       text: `${risk.category} ${risk.text}`,
       isCritical: !!risk.isCritical,
     }))
@@ -228,18 +200,15 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       : undefined
 
     return {
-      editLink: getEditLink(project),
-      issueLink: getIssueLink(`Problem: ${project.name} - Contracts`),
       contracts,
       risks,
       architectureImage,
+      references: tech.contracts.references ?? [],
     }
   }
 
   const sections = makeSections(tech)
-  const isIncomplete = sections.some((x) =>
-    x.items.some((x) => x.isIncomplete || x.referenceIds.length === 0),
-  )
+  const isIncomplete = sections.some((x) => x.items.some((x) => x.isIncomplete))
 
   const incomplete = isIncomplete
     ? {
@@ -253,7 +222,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     sections,
     permissionsSection: makePermissionsSection(tech),
     contractsSection: makeContractSection(tech),
-    referencesSection: { items: references },
   }
 }
 
