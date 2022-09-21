@@ -54,7 +54,3 @@ function createL2Provider(rpc: Layer2TransactionApi, alchemyApiKey: string) {
       throw new Error('Unknown provider')
   }
 }
-
-function noUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
-}
