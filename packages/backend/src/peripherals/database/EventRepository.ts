@@ -17,7 +17,7 @@ export interface EventRecordAggregated extends EventRecord {
 
 interface AggregatedQueryResult {
   rows: {
-    unix_timestamp: Date
+    unix_timestamp_aggregated: Date
     event_name: string
     project_id: string
     count: number
@@ -69,20 +69,30 @@ export class EventRepository extends BaseRepository {
   ): Promise<EventRecordAggregated[]> {
     const knex = await this.knex()
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (granularity !== 'hour' && granularity !== 'day') {
-      throw new Error('Programmer error or SQL injection')
-    }
-
-    const query =
-      granularity === 'hour'
-        ? getAggregatedQueryBody('hour')
-        : getAggregatedQueryBody('day')
-
-    const raw = (await knex.raw(query, {
-      projectId: projectId.toString(),
-      from: from.toDate(),
-    })) as unknown as AggregatedQueryResult
+    const raw = (await knex.raw(
+      `
+      SELECT
+        date_trunc(:granularity, unix_timestamp) AS unix_timestamp_aggregated,
+        event_name,
+        project_id,
+        COUNT(*) as count
+      FROM
+        events
+      WHERE
+        project_id = :projectId AND unix_timestamp >= :from
+      GROUP BY
+        event_name,
+        project_id,
+        unix_timestamp_aggregated
+      ORDER BY
+        unix_timestamp_aggregated, event_name
+      `,
+      {
+        granularity,
+        projectId: projectId.toString(),
+        from: from.toDate(),
+      },
+    )) as unknown as AggregatedQueryResult
 
     return raw.rows.map(toRecordAggregated)
   }
@@ -123,34 +133,15 @@ function toRecord(row: EventRow): EventRecord {
 }
 
 function toRecordAggregated(rowWithCount: {
-  unix_timestamp: Date
+  unix_timestamp_aggregated: Date
   event_name: string
   project_id: string
   count: number
 }): EventRecordAggregated {
   return {
-    timestamp: UnixTime.fromDate(rowWithCount.unix_timestamp),
+    timestamp: UnixTime.fromDate(rowWithCount.unix_timestamp_aggregated),
     name: rowWithCount.event_name,
     projectId: ProjectId(rowWithCount.project_id),
     count: +rowWithCount.count,
   }
-}
-
-const getAggregatedQueryBody = (granularity: 'hour' | 'day') => {
-  return `
-  SELECT
-    date_trunc('${granularity}', unix_timestamp) AS unix_timestamp,
-    event_name,
-    project_id,
-    COUNT(*) as count
-  FROM
-    public.events
-  WHERE
-    project_id = :projectId AND unix_timestamp >= :from
-  GROUP BY 
-    event_name,
-    project_id,
-    date_trunc('${granularity}', unix_timestamp)
-  ORDER BY
-    date_trunc('${granularity}', unix_timestamp), event_name`
 }
