@@ -1,11 +1,14 @@
 import React from 'react'
 
+import {
+  LinkSection,
+  LinkSectionProps,
+} from '../../../components/project/links/LinkSection'
 import { ContractsSection, ContractsSectionProps } from './ContractsSection'
 import {
   DescriptionSection,
   DescriptionSectionProps,
 } from './DescriptionSection'
-import { LinkSection, LinkSectionProps } from './links/LinkSection'
 import { NewsSection, NewsSectionProps } from './NewsSection'
 import {
   PermissionsSection,
