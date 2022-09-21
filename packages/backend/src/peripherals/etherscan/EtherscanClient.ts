@@ -1,9 +1,4 @@
-import {
-  getErrorMessage,
-  Logger,
-  RateLimiter,
-  RequestTracker,
-} from '@l2beat/common'
+import { getErrorMessage, Logger, RateLimiter } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
 import { stringAsBigInt } from '../../tools/types'
@@ -13,7 +8,6 @@ import { parseEtherscanResponse } from './parseEtherscanResponse'
 export class EtherscanError extends Error {}
 
 export class EtherscanClient {
-  private requestTracker = new RequestTracker(20)
   private rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -24,10 +18,6 @@ export class EtherscanClient {
     private logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-  }
-
-  getStatus() {
-    return this.requestTracker.getStats()
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<bigint> {
@@ -91,13 +81,8 @@ export class EtherscanClient {
       throw new EtherscanError(etherscanResponse.result)
     }
 
-    this.recordSuccess(module, action, timeMs)
-    return etherscanResponse.result
-  }
-
-  private recordSuccess(module: string, action: string, timeMs: number) {
-    this.requestTracker.add(timeMs, true)
     this.logger.debug({ type: 'success', timeMs, module, action })
+    return etherscanResponse.result
   }
 
   private recordError(
@@ -106,7 +91,6 @@ export class EtherscanClient {
     timeMs: number,
     message: string,
   ) {
-    this.requestTracker.add(timeMs, false)
     this.logger.debug({ type: 'error', message, timeMs, module, action })
   }
 }
