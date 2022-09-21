@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Heading } from '../../../components'
+import { Section } from '../../../components/project/Section'
 import { ReferencesList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { Section } from './Section'
 
 export interface TechnologySectionProps {
   id: string

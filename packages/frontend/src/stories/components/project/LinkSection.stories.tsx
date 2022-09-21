@@ -8,7 +8,7 @@ export default {
 
 export function LinkSection() {
   return (
-    <div className="leading-normal">
+    <div className="leading-normal p-4">
       <LinkSectionComponent
         name="Arbitrum One"
         icon="/icons/arbitrum.png"

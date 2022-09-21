@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { OutLink } from '../../../components'
+import { Section } from '../../../components/project/Section'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferencesList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { Section } from './Section'
 
 export interface ContractsSectionProps {
   contracts: TechnologyContract[]

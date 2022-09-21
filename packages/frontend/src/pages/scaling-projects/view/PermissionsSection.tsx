@@ -2,9 +2,9 @@ import { Layer2Permission } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
+import { Section } from '../../../components/project/Section'
 import { config } from '../../config'
 import { EtherscanLink } from './EtherscanLink'
-import { Section } from './Section'
 
 export interface PermissionsSectionProps {
   permissions: Layer2Permission[]
