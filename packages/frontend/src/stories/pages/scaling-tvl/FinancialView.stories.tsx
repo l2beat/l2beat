@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 
 import { Page } from '../../../components/Page'
 import { Tooltip } from '../../../components/Tooltip'
-import { FinancialView as FinancialViewComponent } from '../../../pages/tvl/view/FinancialView'
+import { FinancialView as FinancialViewComponent } from '../../../pages/scaling-tvl/view/FinancialView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
 
 export default {
-  title: 'Pages/Home/FinancialView',
+  title: 'Pages/Scaling/FinancialView',
 }
 
 export function FinancialView() {

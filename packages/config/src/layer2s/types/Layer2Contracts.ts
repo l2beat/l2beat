@@ -1,3 +1,4 @@
+import { Layer2Reference } from './Layer2Reference'
 import { Layer2Risk } from './Layer2Risk'
 
 export interface Layer2Contracts {
@@ -5,6 +6,8 @@ export interface Layer2Contracts {
   addresses: Layer2Contract[]
   /** List of risks associated with the contracts */
   risks: Layer2Risk[]
+  /** List of references backing up the claim */
+  references?: Layer2Reference[]
 }
 
 export interface Layer2Contract {

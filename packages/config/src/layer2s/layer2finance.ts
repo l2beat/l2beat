@@ -164,13 +164,13 @@ export const layer2finance: Layer2 = {
           {
             category: 'Funds can be stolen if',
             text: 'the owner calls owner-only functions that pause the contract and drain funds.',
-            references: [
-              {
-                text: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
-                href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
-              },
-            ],
             isCritical: true,
+          },
+        ],
+        references: [
+          {
+            text: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
+            href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
           },
         ],
       },
