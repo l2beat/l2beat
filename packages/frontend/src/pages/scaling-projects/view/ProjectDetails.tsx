@@ -12,7 +12,10 @@ import {
   LinkSection,
   LinkSectionProps,
 } from '../../../components/project/links/LinkSection'
-import { NewsSection, NewsSectionProps } from './NewsSection'
+import {
+  NewsSection,
+  NewsSectionProps,
+} from '../../../components/project/NewsSection'
 import {
   PermissionsSection,
   PermissionsSectionProps,
