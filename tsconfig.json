@@ -11,6 +11,7 @@
     "isolatedModules": true,
     "jsx": "react",
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "noImplicitOverride": true
   }
 }
