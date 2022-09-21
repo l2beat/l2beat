@@ -3,6 +3,7 @@ import {
   getTokenBySymbol,
   Layer2,
   Layer2Event,
+  Layer2TransactionApi,
   TokenInfo,
   tokenList,
 } from '@l2beat/config'
@@ -13,6 +14,7 @@ export interface Project {
   type: 'layer2' | 'bridge'
   escrows: ProjectEscrow[]
   events: Layer2Event[]
+  transactionApi?: Layer2TransactionApi
 }
 
 export interface ProjectEscrow {
@@ -32,6 +34,7 @@ export function layer2ToProject(layer2: Layer2): Project {
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
     events: layer2.events,
+    transactionApi: layer2.transactionApi,
   }
 }
 

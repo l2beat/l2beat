@@ -453,4 +453,9 @@ export const arbitrum: Layer2 = {
       sinceTimestamp: new UnixTime(1661457944),
     },
   ],
+  transactionApi: {
+    type: 'rpc',
+    provider: 'alchemy',
+    networkName: 'arbitrum',
+  },
 }
