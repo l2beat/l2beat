@@ -1,7 +1,7 @@
 import { Layer2RiskCategory } from '@l2beat/config'
 import React from 'react'
 
-import { Section } from '../../../components/project/Section'
+import { Section } from './Section'
 
 export interface RiskSectionProps {
   riskGroups: RiskGroup[]
