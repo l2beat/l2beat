@@ -31,8 +31,8 @@ function Template({ projectId }: TemplateProps) {
         <MetaImage
           tvl="$1.34 B"
           sevenDayChange="+3.45%"
-          name={project?.name}
-          icon={project?.slug && `/icons/${project.slug}.png`}
+          name={project?.display.name}
+          icon={project?.display.slug && `/icons/${project.display.slug}.png`}
           apiEndpoint="/fakeTvl.json"
         />
       </div>

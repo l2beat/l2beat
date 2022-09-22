@@ -5,7 +5,7 @@ import { ChartProps } from '../../../components'
 
 export function getChart(project: Layer2, apiMain: ApiMain): ChartProps {
   return {
-    endpoint: `/api/${project.slug}.json`,
+    endpoint: `/api/${project.display.slug}.json`,
     tokens: getTokens(project, apiMain),
   }
 }

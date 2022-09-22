@@ -3,7 +3,7 @@ import { Layer2, Layer2Risk, Layer2RiskCategory } from '@l2beat/config'
 import { RiskSectionProps } from '../../../components/project/RiskSection'
 
 export function getRiskSection(project: Layer2): RiskSectionProps {
-  const technology = project.details.technology
+  const technology = project.technology
   const exits = technology.exitMechanisms.map((x, i) => ({
     id: `exit-mechanisms-${i + 1}`,
     value: x,
@@ -26,7 +26,7 @@ export function getRiskSection(project: Layer2): RiskSectionProps {
       risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
     }
   }
-  for (const risk of technology.contracts.risks) {
+  for (const risk of project.contracts.risks) {
     risks.push({ ...risk, referencedId: 'contracts' })
   }
 

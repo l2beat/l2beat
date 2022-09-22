@@ -12,7 +12,7 @@ export function createApi(projects: Layer2[], apiMain: ApiMain) {
     if (!projectData) {
       continue
     }
-    urlCharts.set(project.slug, projectData.charts)
+    urlCharts.set(project.display.slug, projectData.charts)
   }
 
   outputCharts(urlCharts)
