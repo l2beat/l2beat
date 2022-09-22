@@ -10,6 +10,8 @@ async function main() {
   const env =
     process.env.DEPLOYMENT_ENV ??
     (process.env.NODE_ENV === 'production' ? 'production' : 'local')
+
+  console.log('Loading config for ', env)
   const config = getConfig(env)
   const app = new Application(config)
   await app.start()

@@ -1,10 +1,10 @@
 import { Layer2 } from '@l2beat/config'
 
+import { NewsSectionProps } from '../../../components/project/NewsSection'
 import { formatDate } from '../../../utils'
-import { NewsSectionProps } from '../view/NewsSection'
 
 export function getNewsSection(project: Layer2): NewsSectionProps {
-  const news = project.details.news.map((x) => ({
+  const news = project.news.map((x) => ({
     title: x.name,
     href: x.link,
     date: formatDate(x.date),

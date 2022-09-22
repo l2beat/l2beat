@@ -1,22 +1,37 @@
 import React from 'react'
 
-import { ContractsSection, ContractsSectionProps } from './ContractsSection'
+import {
+  ContractsSection,
+  ContractsSectionProps,
+} from '../../../components/project/ContractsSection'
 import {
   DescriptionSection,
   DescriptionSectionProps,
-} from './DescriptionSection'
-import { LinkSection, LinkSectionProps } from './links/LinkSection'
-import { NewsSection, NewsSectionProps } from './NewsSection'
+} from '../../../components/project/DescriptionSection'
+import {
+  LinkSection,
+  LinkSectionProps,
+} from '../../../components/project/links/LinkSection'
+import {
+  NewsSection,
+  NewsSectionProps,
+} from '../../../components/project/NewsSection'
 import {
   PermissionsSection,
   PermissionsSectionProps,
-} from './PermissionsSection'
-import { RiskSection, RiskSectionProps } from './RiskSection'
+} from '../../../components/project/PermissionsSection'
+import {
+  RiskSection,
+  RiskSectionProps,
+} from '../../../components/project/RiskSection'
 import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
-} from './TechnologyIncomplete'
-import { TechnologySection, TechnologySectionProps } from './TechnologySection'
+} from '../../../components/project/TechnologyIncomplete'
+import {
+  TechnologySection,
+  TechnologySectionProps,
+} from '../../../components/project/TechnologySection'
 
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps

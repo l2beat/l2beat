@@ -19,7 +19,7 @@ export async function up(knex: Knex) {
     table.string('project_id')
   })
   await Promise.all(
-    layer2s.flatMap(({ id, escrows }) =>
+    layer2s.flatMap(({ id, config: { escrows } }) =>
       escrows.map(async (escrow) => {
         await knex('reports')
           .update({ project_id: id.toString() })

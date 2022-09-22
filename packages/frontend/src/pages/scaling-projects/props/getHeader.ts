@@ -12,9 +12,9 @@ export function getHeader(project: Layer2, apiMain: ApiMain): HeaderProps {
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {
-    icon: `/icons/${project.slug}.png`,
-    title: project.name,
-    titleLength: getTitleLength(project.name),
+    icon: `/icons/${project.display.slug}.png`,
+    title: project.display.name,
+    titleLength: getTitleLength(project.display.name),
     tvl: formatUSD(tvl),
     sevenDayChange,
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { OutLink } from '../../../components'
-import { ShieldWarnIcon } from '../../../components/icons'
+import { ShieldWarnIcon } from '../icons'
+import { OutLink } from '../OutLink'
 import { Section } from './Section'
 
 export interface DescriptionSectionProps {

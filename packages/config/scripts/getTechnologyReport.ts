@@ -21,7 +21,7 @@ for (const key of keys) {
 
   const options = new Map<string, string[]>()
   for (const layer2 of layer2s) {
-    const item = layer2.details.technology?.[key]
+    const item = layer2.technology?.[key]
     if (item) {
       const signature = JSON.stringify({
         name: item.name,
@@ -30,9 +30,9 @@ for (const key of keys) {
       })
       const existing = options.get(signature)
       if (existing) {
-        existing.push(layer2.name)
+        existing.push(layer2.display.name)
       } else {
-        options.set(signature, [layer2.name])
+        options.set(signature, [layer2.display.name])
       }
     }
   }

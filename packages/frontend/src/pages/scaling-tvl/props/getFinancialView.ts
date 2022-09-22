@@ -34,29 +34,29 @@ function getFinancialViewEntry(
   const tvlBreakdown = getTVLBreakdown(
     tvl,
     projectData?.tokens ?? [],
-    project.associatedTokens ?? [],
+    project.config.associatedTokens ?? [],
   )
 
   let tvlWarning =
     tvlBreakdown.associated > 0.1
       ? toWarning(
-          project.name,
+          project.display.name,
           tvlBreakdown.associated,
-          project.associatedTokens ?? [],
+          project.config.associatedTokens ?? [],
         )
       : undefined
   let warningSeverity: 'bad' | 'warning' | 'info' =
     tvlBreakdown.associated > 0.9 ? 'bad' : 'warning'
-  if (project.name === 'Layer2.Finance') {
+  if (project.display.name === 'Layer2.Finance') {
     tvlWarning =
       'The TVL is calculated incorrectly because it does not account for the assets locked in DeFi.'
     warningSeverity = 'info'
   }
 
   return {
-    name: project.name,
-    slug: project.slug,
-    provider: project.details.provider,
+    name: project.display.name,
+    slug: project.display.slug,
+    provider: project.technology.provider,
     tvl: formatUSD(tvl),
     tvlBreakdown: {
       ...tvlBreakdown,
@@ -66,7 +66,7 @@ function getFinancialViewEntry(
     oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
     sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
     marketShare: formatPercent(tvl / aggregateTvl),
-    purpose: project.details.purpose,
+    purpose: project.display.purpose,
     technology: getTechnology(project),
   }
 }

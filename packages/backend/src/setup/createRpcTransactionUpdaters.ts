@@ -24,6 +24,7 @@ export function createRpcTransactionUpdaters(
 
       const ethereumClient = new EthereumClient(
         l2Provider,
+        logger,
         project.transactionApi.callsPerMinute,
       )
 

@@ -19,7 +19,7 @@ export interface RiskViewProps {
 export interface RiskViewEntry extends Layer2RiskView {
   name: string
   slug: string
-  provider?: Layer2['details']['provider']
+  provider?: Layer2['technology']['provider']
 }
 
 export function RiskView({ items, className }: RiskViewProps) {
