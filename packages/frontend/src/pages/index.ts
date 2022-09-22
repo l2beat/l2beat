@@ -9,9 +9,9 @@ import { getFaqPage } from './faq'
 import { getMetaImagePages } from './meta-images'
 import { outputPages } from './output'
 import { Page } from './Page'
-import { getProjectPages } from './projects'
-import { getRiskPage } from './risk'
-import { getTvlPage } from './tvl'
+import { getProjectPages } from './scaling-projects'
+import { getRiskPage } from './scaling-risk'
+import { getTvlPage } from './scaling-tvl'
 
 export async function renderPages(
   projects: Layer2[],

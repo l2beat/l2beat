@@ -3,6 +3,7 @@ import { ProjectId } from '@l2beat/types'
 import { Layer2Details } from './Layer2Details'
 import { Layer2Escrow } from './Layer2Escrow'
 import { Layer2Event } from './Layer2Event'
+import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
   /** Name of the layer2, will be used as a display name on the website */
@@ -19,4 +20,6 @@ export interface Layer2 {
   details: Layer2Details
   /** Metadata about events emitted by the system */
   events: Layer2Event[]
+  /** RPC or API url used to get transaction count */
+  transactionApi?: Layer2TransactionApi
 }

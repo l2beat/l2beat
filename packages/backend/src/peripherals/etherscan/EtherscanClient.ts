@@ -1,8 +1,12 @@
-import { getErrorMessage, Logger, RateLimiter } from '@l2beat/common'
+import {
+  getErrorMessage,
+  HttpClient,
+  Logger,
+  RateLimiter,
+} from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
 import { stringAsBigInt } from '../../tools/types'
-import { HttpClient } from '../HttpClient'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
