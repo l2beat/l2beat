@@ -42,11 +42,3 @@ export function getChartPoints(
   })
   return addMissingTimestamps(existing, hours)
 }
-
-export function getHourlyMinTimestamp(now?: UnixTime) {
-  return (now ?? UnixTime.now()).add(-7, 'days')
-}
-
-export function getSixHourlyMinTimestamp(now?: UnixTime) {
-  return (now ?? UnixTime.now()).add(-90, 'days')
-}
