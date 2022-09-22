@@ -1,6 +1,7 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
+import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
 import { config } from './config'
@@ -29,6 +30,7 @@ export async function renderPages(
   if (config.showBridgePages) {
     pages.push(getBridgesTvlPage(bridges, apiMain))
     pages.push(getBridgesRiskPage(bridges, apiMain))
+    pages.push(...getBridgeProjectPages(bridges, apiMain))
   }
 
   outputPages(pages)
