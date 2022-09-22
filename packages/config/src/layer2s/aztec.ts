@@ -12,17 +12,10 @@ import {
 import { Layer2 } from './types'
 
 export const aztec: Layer2 = {
-  name: 'Aztec',
-  slug: 'aztec',
   id: ProjectId('aztec'),
-  escrows: [
-    {
-      address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
-      sinceTimestamp: new UnixTime(1614799636),
-      tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
-    },
-  ],
-  details: {
+  display: {
+    name: 'Aztec',
+    slug: 'aztec',
     warning:
       'A new version of the protocol, Aztec Connect is available and users are encouraged to move their assets there.',
     description:
@@ -42,156 +35,164 @@ export const aztec: Layer2 = {
         'https://plonk.cafe/',
       ],
     },
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_SN,
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-      upgradeability: {
-        value: 'Yes',
-        description: '1/2 MSig can change Validator.',
-        sentiment: 'bad',
-      },
-      sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-      validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
-    },
-    technology: {
-      category: {
-        name: 'ZK Rollup',
-      },
-      stateCorrectness: {
-        ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-        references: [
-          {
-            text: 'RollupProcessor.sol#L395 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
-          },
-        ],
-      },
-      newCryptography: {
-        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-        references: [
-          {
-            text: 'TurboVerifier.sol#L37 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x3937f965e824fe4e7885b8662669821966d3f293#code#F1#L37',
-          },
-        ],
-      },
-      dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN,
-        references: [
-          {
-            text: 'RollupProcessor.sol#L359 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
-          },
-        ],
-      },
-      operator: {
-        ...OPERATOR.CENTRALIZED_OPERATOR,
-        description:
-          'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
-        references: [
-          {
-            text: 'RollupProcessor.sol#L97 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L97',
-          },
-          {
-            text: 'RollupProcessor.sol#L369 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L369',
-          },
-        ],
-      },
-      forceTransactions: {
-        ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
-        description:
-          FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-          ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
-        references: [
-          {
-            text: 'RollupProcessor.sol#L347 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
-          },
-        ],
-      },
-      exitMechanisms: [
-        {
-          name: 'Regular withdraw',
-          description:
-            'The user initiates the withdrawal by submitting a transaction on L2. When the block containing that transaction is proven on L1 the assets are automatically withdrawn to the user.',
-          risks: [],
-          references: [
-            {
-              text: 'RollupProcessor.sol#LL396 - Etherscan source code',
-              href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L396',
-            },
-          ],
-        },
-      ],
-      additionalPrivacy: {
-        name: 'Payments are private',
-        description:
-          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
-        risks: [],
-        references: [
-          {
-            text: 'Fast Privacy, Now - Aztec Medium Blog',
-            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
-          },
-        ],
-      },
-      contracts: {
-        addresses: [
-          {
-            address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
-            description:
-              'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-            name: 'RollupProcessor',
-          },
-          {
-            address: '0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734',
-            description:
-              'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
-            name: 'AztecFeeDistributor',
-          },
-          {
-            address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
-            description:
-              'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-            name: 'TurboVerifier',
-          },
-          {
-            address: '0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530',
-            description: 'Verification Keys for the Verifier.',
-            name: 'VerificationKeys',
-          },
-        ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-      },
-    },
-    news: [
+  },
+  config: {
+    escrows: [
       {
-        date: '2021-07-01',
-        name: 'Introducing private Bitcoin',
-        link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
+        address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+        sinceTimestamp: new UnixTime(1614799636),
+        tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
+    ],
+    events: [
       {
-        date: '2021-04-30',
-        name: 'Introducing zkDAI into the Aztec Private Rollup',
-        link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
-      },
-      {
-        date: '2021-03-15',
-        name: 'Launching Aztec 2.0 Rollup',
-        link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+        name: 'RollupProcessed',
+        abi: 'event RollupProcessed (uint256 indexed rollupId, bytes32 dataRoot, bytes32 nullRoot, bytes32 rootRoot, uint256 dataSize)',
+        emitter: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
+        type: 'data',
+        sinceTimestamp: new UnixTime(1614799636),
       },
     ],
   },
-
-  events: [
+  riskView: {
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    upgradeability: {
+      value: 'Yes',
+      description: '1/2 MSig can change Validator.',
+      sentiment: 'bad',
+    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
+    validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
+  },
+  technology: {
+    category: {
+      name: 'ZK Rollup',
+    },
+    stateCorrectness: {
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [
+        {
+          text: 'RollupProcessor.sol#L395 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
+        },
+      ],
+    },
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+      references: [
+        {
+          text: 'TurboVerifier.sol#L37 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x3937f965e824fe4e7885b8662669821966d3f293#code#F1#L37',
+        },
+      ],
+    },
+    dataAvailability: {
+      ...DATA_AVAILABILITY.ON_CHAIN,
+      references: [
+        {
+          text: 'RollupProcessor.sol#L359 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
+        },
+      ],
+    },
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      description:
+        'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
+      references: [
+        {
+          text: 'RollupProcessor.sol#L97 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L97',
+        },
+        {
+          text: 'RollupProcessor.sol#L369 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L369',
+        },
+      ],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
+      description:
+        FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
+        ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
+      references: [
+        {
+          text: 'RollupProcessor.sol#L347 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
+        },
+      ],
+    },
+    exitMechanisms: [
+      {
+        name: 'Regular withdraw',
+        description:
+          'The user initiates the withdrawal by submitting a transaction on L2. When the block containing that transaction is proven on L1 the assets are automatically withdrawn to the user.',
+        risks: [],
+        references: [
+          {
+            text: 'RollupProcessor.sol#LL396 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L396',
+          },
+        ],
+      },
+    ],
+    additionalPrivacy: {
+      name: 'Payments are private',
+      description:
+        'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
+      risks: [],
+      references: [
+        {
+          text: 'Fast Privacy, Now - Aztec Medium Blog',
+          href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+        },
+      ],
+    },
+  },
+  contracts: {
+    addresses: [
+      {
+        address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+        description:
+          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+        name: 'RollupProcessor',
+      },
+      {
+        address: '0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734',
+        description:
+          'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
+        name: 'AztecFeeDistributor',
+      },
+      {
+        address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
+        description:
+          'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
+        name: 'TurboVerifier',
+      },
+      {
+        address: '0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530',
+        description: 'Verification Keys for the Verifier.',
+        name: 'VerificationKeys',
+      },
+    ],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  news: [
     {
-      name: 'RollupProcessed',
-      abi: 'event RollupProcessed (uint256 indexed rollupId, bytes32 dataRoot, bytes32 nullRoot, bytes32 rootRoot, uint256 dataSize)',
-      emitter: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
-      type: 'data',
-      sinceTimestamp: new UnixTime(1614799636),
+      date: '2021-07-01',
+      name: 'Introducing private Bitcoin',
+      link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
+    },
+    {
+      date: '2021-04-30',
+      name: 'Introducing zkDAI into the Aztec Private Rollup',
+      link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
+    },
+    {
+      date: '2021-03-15',
+      name: 'Launching Aztec 2.0 Rollup',
+      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
     },
   ],
 }
