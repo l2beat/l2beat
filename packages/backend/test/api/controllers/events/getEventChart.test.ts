@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { getEventChart } from '../../../../src/api/controllers/events/getEventChart'
-import { EventRecordAggregated } from '../../../../src/peripherals/database/EventRepository'
+import { AggregatedEventRecord } from '../../../../src/peripherals/database/EventRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const EVENT_A = 'event-a'
@@ -11,7 +11,7 @@ const mockEvent = (
   offset: number,
   name: string,
   count: number,
-): EventRecordAggregated => {
+): AggregatedEventRecord => {
   return {
     timestamp: START.add(offset, 'hours'),
     name,
@@ -31,7 +31,7 @@ describe(getEventChart.name, () => {
   })
 
   it('correctly constructs chart data', () => {
-    const records: EventRecordAggregated[] = [
+    const records: AggregatedEventRecord[] = [
       mockEvent(0, EVENT_A, 100),
       mockEvent(1, EVENT_A, 100),
       mockEvent(2, EVENT_A, 100),
@@ -52,8 +52,9 @@ describe(getEventChart.name, () => {
       ],
     })
   })
+
   it('skips events not provided in eventNames', () => {
-    const records: EventRecordAggregated[] = [
+    const records: AggregatedEventRecord[] = [
       mockEvent(0, EVENT_A, 100),
       mockEvent(1, EVENT_A, 100),
       mockEvent(2, EVENT_A, 100),

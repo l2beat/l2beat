@@ -11,13 +11,10 @@ interface Event {
   project: string
   name: string | undefined
   maxHourly: number
-  maxSixHourly: number
   maxDaily: number
   hourly: number[]
-  sixHourly: number[]
   daily: number[]
   hourlyRange: [UnixTime | undefined, UnixTime | undefined]
-  sixHourlyRange: [UnixTime | undefined, UnixTime | undefined]
   dailyRange: [UnixTime | undefined, UnixTime | undefined]
 }
 
@@ -29,24 +26,19 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
     for (let i = 1; i < maxIndex; i++) {
       const hourly: number[] =
         value?.hourly.data.map((d) => d[i] as number) ?? []
-      const sixHourly: number[] =
-        value?.sixHourly.data.map((d) => d[i] as number) ?? []
       const daily: number[] = value?.daily.data.map((d) => d[i] as number) ?? []
 
       transformedEvents.push({
         project: key,
         name: value?.daily.types[i],
         maxHourly: Math.max(...hourly),
-        maxSixHourly: Math.max(...sixHourly),
         maxDaily: Math.max(...daily),
         hourly,
-        sixHourly,
         daily,
         hourlyRange: [
           value?.hourly.data[0][0],
           value?.hourly.data[value.hourly.data.length - 1][0],
         ],
-        sixHourlyRange: [undefined, undefined],
         dailyRange: [
           value?.daily.data[0][0],
           value?.daily.data[value.daily.data.length - 1][0],
@@ -96,39 +88,6 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
                           style={
                             {
                               '--size': d / event.maxHourly,
-                            } as React.CSSProperties
-                          }
-                        ></td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-
-              <h2>Six hourly</h2>
-              <blockquote>
-                <div>
-                  FROM {event.sixHourlyRange[0]?.toYYYYMMDD()} - TO{' '}
-                  {event.sixHourlyRange[1]?.toYYYYMMDD()}
-                </div>
-                <div>
-                  Average:
-                  {Math.floor(
-                    event.sixHourly.reduce((a, b) => a + b, 0) /
-                      event.sixHourly.filter((h) => h != 0).length,
-                  )}
-                </div>
-              </blockquote>
-              <table className="charts-css column show-labels show-heading show-primary-axis show-4-secondary-axes">
-                <caption>Six hourly [0-{event.maxSixHourly}]</caption>
-                <tbody style={{ height: 100 }}>
-                  {event.sixHourly.map((d, id) => {
-                    return (
-                      <tr key={id.toString()}>
-                        <td
-                          style={
-                            {
-                              '--size': d / event.maxSixHourly,
                             } as React.CSSProperties
                           }
                         ></td>

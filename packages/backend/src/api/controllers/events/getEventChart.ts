@@ -1,9 +1,9 @@
 import { EventChart, EventChartPoint, UnixTime } from '@l2beat/types'
 
-import { EventRecordAggregated } from '../../../peripherals/database/EventRepository'
+import { AggregatedEventRecord } from '../../../peripherals/database/EventRepository'
 
 export function getEventChart(
-  records: EventRecordAggregated[],
+  records: AggregatedEventRecord[],
   eventNames: string[],
 ): EventChart {
   //Record<timestamp, Record<eventName, count>>

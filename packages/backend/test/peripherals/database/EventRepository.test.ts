@@ -27,8 +27,6 @@ const PROJECT_B = ProjectId('project-b')
 const EVENT_A = 'event-a'
 const EVENT_B = 'event-b'
 
-const GRANULARITY = 'hour'
-
 describe(EventRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new EventRepository(database, Logger.SILENT)
@@ -53,7 +51,7 @@ describe(EventRepository.name, () => {
 
         const result = await repository.getAggregatedByProjectAndGranularity(
           PROJECT_A,
-          GRANULARITY,
+          'hour',
         )
 
         expect(result).toEqual([
@@ -102,7 +100,7 @@ describe(EventRepository.name, () => {
 
         const result = await repository.getAggregatedByProjectAndGranularity(
           PROJECT_A,
-          GRANULARITY,
+          'hour',
         )
 
         expect(result).toEqual([{ ...records[0], count: 1 }])
@@ -119,11 +117,11 @@ describe(EventRepository.name, () => {
         const allRecords =
           await repository.getAggregatedByProjectAndGranularity(
             PROJECT_A,
-            GRANULARITY,
+            'hour',
           )
         const onlyFrom = await repository.getAggregatedByProjectAndGranularity(
           PROJECT_A,
-          GRANULARITY,
+          'hour',
           START.add(2, 'hours'),
         )
 
@@ -144,7 +142,7 @@ describe(EventRepository.name, () => {
 
         const result = await repository.getAggregatedByProjectAndGranularity(
           PROJECT_A,
-          GRANULARITY,
+          'hour',
         )
 
         expect(result).toEqual(

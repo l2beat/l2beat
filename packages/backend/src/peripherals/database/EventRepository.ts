@@ -11,7 +11,7 @@ export interface EventRecord {
   projectId: ProjectId
 }
 
-export interface EventRecordAggregated extends EventRecord {
+export interface AggregatedEventRecord extends EventRecord {
   count: number
 }
 
@@ -66,7 +66,7 @@ export class EventRepository extends BaseRepository {
     projectId: ProjectId,
     granularity: 'hour' | 'day',
     from: UnixTime = new UnixTime(0),
-  ): Promise<EventRecordAggregated[]> {
+  ): Promise<AggregatedEventRecord[]> {
     const knex = await this.knex()
 
     const raw = (await knex.raw(
@@ -137,7 +137,7 @@ function toRecordAggregated(rowWithCount: {
   event_name: string
   project_id: string
   count: number
-}): EventRecordAggregated {
+}): AggregatedEventRecord {
   return {
     timestamp: UnixTime.fromDate(rowWithCount.unix_timestamp_aggregated),
     name: rowWithCount.event_name,

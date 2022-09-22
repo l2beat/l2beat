@@ -66,7 +66,6 @@ describe(EventController.name, () => {
               types: ['timestamp', EVENT_A],
               data: [[START, 3]],
             },
-            sixHourly: { types: ['timestamp', EVENT_A], data: [] },
             daily: {
               types: ['timestamp', EVENT_A],
               data: [
@@ -80,7 +79,6 @@ describe(EventController.name, () => {
               types: ['timestamp', EVENT_B],
               data: [[START, 2]],
             },
-            sixHourly: { types: ['timestamp', EVENT_B], data: [] },
             daily: {
               types: ['timestamp', EVENT_B],
               data: [

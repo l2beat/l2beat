@@ -43,7 +43,6 @@ export class EventController {
 
         main.projects[projectId.toString()] = {
           hourly,
-          sixHourly: getEventChart([], eventNames),
           daily,
         }
       }),
