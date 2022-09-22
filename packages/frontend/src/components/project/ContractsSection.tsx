@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { OutLink } from '../../../components'
+import { OutLink } from '../OutLink'
 import { EtherscanLink } from './EtherscanLink'
-import { ReferencesList, TechnologyReference } from './ReferenceList'
+import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
 
@@ -70,7 +70,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <RiskList risks={props.risks} />
         </>
       )}
-      <ReferencesList references={props.references} />
+      <ReferenceList references={props.references} />
     </Section>
   )
 }

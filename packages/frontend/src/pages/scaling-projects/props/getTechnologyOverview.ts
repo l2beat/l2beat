@@ -10,13 +10,13 @@ import path from 'path'
 import {
   ContractsSectionProps,
   TechnologyContract,
-} from '../view/ContractsSection'
-import { PermissionsSectionProps } from '../view/PermissionsSection'
-import { TechnologyIncompleteProps } from '../view/TechnologyIncomplete'
+} from '../../../components/project/ContractsSection'
+import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
+import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import {
   TechnologyChoice,
   TechnologySectionProps,
-} from '../view/TechnologySection'
+} from '../../../components/project/TechnologySection'
 import { getEditLink } from './links'
 
 interface TechnologyOverview {

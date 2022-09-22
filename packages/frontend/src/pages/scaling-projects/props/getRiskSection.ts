@@ -1,6 +1,6 @@
 import { Layer2, Layer2Risk, Layer2RiskCategory } from '@l2beat/config'
 
-import { RiskSectionProps } from '../view/RiskSection'
+import { RiskSectionProps } from '../../../components/project/RiskSection'
 
 export function getRiskSection(project: Layer2): RiskSectionProps {
   const technology = project.details.technology

@@ -2,7 +2,7 @@ import { Layer2Permission } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
-import { config } from '../../config'
+import { config } from '../../pages/config'
 import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
