@@ -1,9 +1,4 @@
-import {
-  Layer2,
-  Layer2Contract,
-  Layer2Technology,
-  Layer2TechnologyChoice,
-} from '@l2beat/config'
+import { Layer2, Layer2Contract, Layer2TechnologyChoice } from '@l2beat/config'
 import { existsSync } from 'fs'
 import path from 'path'
 
@@ -27,8 +22,6 @@ interface TechnologyOverview {
 }
 
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
-  const tech = project.details.technology
-
   function makeTechnologyChoice(
     id: string,
     item: Layer2TechnologyChoice,
@@ -48,15 +41,24 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     }
   }
 
-  function makeSections(tech: Layer2Technology) {
+  function makeSections() {
     const technology: TechnologySectionProps = {
       id: 'technology',
       title: 'Technology',
       items: [
-        makeTechnologyChoice('state-correctness', tech.stateCorrectness),
-        tech.newCryptography &&
-          makeTechnologyChoice('new-cryptography', tech.newCryptography),
-        makeTechnologyChoice('data-availability', tech.dataAvailability),
+        makeTechnologyChoice(
+          'state-correctness',
+          project.technology.stateCorrectness,
+        ),
+        project.technology.newCryptography &&
+          makeTechnologyChoice(
+            'new-cryptography',
+            project.technology.newCryptography,
+          ),
+        makeTechnologyChoice(
+          'data-availability',
+          project.technology.dataAvailability,
+        ),
       ].filter(noUndefined),
     }
 
@@ -64,8 +66,11 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       id: 'operator',
       title: 'Operator',
       items: [
-        makeTechnologyChoice('operator', tech.operator),
-        makeTechnologyChoice('force-transactions', tech.forceTransactions),
+        makeTechnologyChoice('operator', project.technology.operator),
+        makeTechnologyChoice(
+          'force-transactions',
+          project.technology.forceTransactions,
+        ),
       ],
     }
 
@@ -73,10 +78,11 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       id: 'withdrawals',
       title: 'Withdrawals',
       items: [
-        ...tech.exitMechanisms.map((x, i) =>
+        ...project.technology.exitMechanisms.map((x, i) =>
           makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x),
         ),
-        tech.massExit && makeTechnologyChoice('mass-exit', tech.massExit),
+        project.technology.massExit &&
+          makeTechnologyChoice('mass-exit', project.technology.massExit),
       ].filter(noUndefined),
     }
 
@@ -84,10 +90,16 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       id: 'other-considerations',
       title: 'Other considerations',
       items: [
-        tech.additionalPrivacy &&
-          makeTechnologyChoice('additional-privacy', tech.additionalPrivacy),
-        tech.smartContracts &&
-          makeTechnologyChoice('smart-contracts', tech.smartContracts),
+        project.technology.additionalPrivacy &&
+          makeTechnologyChoice(
+            'additional-privacy',
+            project.technology.additionalPrivacy,
+          ),
+        project.technology.smartContracts &&
+          makeTechnologyChoice(
+            'smart-contracts',
+            project.technology.smartContracts,
+          ),
       ].filter(noUndefined),
     }
 
@@ -150,7 +162,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       })
     }
 
-    const tokens = project.escrows.find(
+    const tokens = project.config.escrows.find(
       (x) => x.address === item.address,
     )?.tokens
     let description = item.description
@@ -174,40 +186,40 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     }
   }
 
-  function makePermissionsSection(tech: Layer2Technology) {
-    if (!tech.permissions) {
+  function makePermissionsSection() {
+    if (!project.permissions) {
       return undefined
     }
     return {
-      permissions: tech.permissions,
+      permissions: project.permissions,
     }
   }
 
-  function makeContractSection(tech: Layer2Technology) {
-    const contracts = tech.contracts.addresses.map(makeTechnologyContract)
+  function makeContractSection() {
+    const contracts = project.contracts.addresses.map(makeTechnologyContract)
 
-    const risks = tech.contracts.risks.map((risk) => ({
+    const risks = project.contracts.risks.map((risk) => ({
       text: `${risk.category} ${risk.text}`,
       isCritical: !!risk.isCritical,
     }))
 
     const file = path.join(
       __dirname,
-      `../../../static/images/${project.slug}-architecture.png`,
+      `../../../static/images/${project.display.slug}-architecture.png`,
     )
     const architectureImage = existsSync(file)
-      ? `/images/${project.slug}-architecture.png`
+      ? `/images/${project.display.slug}-architecture.png`
       : undefined
 
     return {
       contracts,
       risks,
       architectureImage,
-      references: tech.contracts.references ?? [],
+      references: project.contracts.references ?? [],
     }
   }
 
-  const sections = makeSections(tech)
+  const sections = makeSections()
   const isIncomplete = sections.some((x) => x.items.some((x) => x.isIncomplete))
 
   const incomplete = isIncomplete
@@ -220,13 +232,13 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   return {
     incomplete,
     sections,
-    permissionsSection: makePermissionsSection(tech),
-    contractsSection: makeContractSection(tech),
+    permissionsSection: makePermissionsSection(),
+    contractsSection: makeContractSection(),
   }
 }
 
 function getTwitterLink(project: Layer2) {
-  const twitterSocialMedia = project.details.links.socialMedia.find((x) =>
+  const twitterSocialMedia = project.display.links.socialMedia.find((x) =>
     x.includes('twitter'),
   )
   if (!twitterSocialMedia) {
@@ -237,7 +249,7 @@ function getTwitterLink(project: Layer2) {
   )
 
   const message = `Hey @${twitterAccount}. Your project overview on @l2beat would benefit from your help.`
-  const url = `https://l2beat.com/scaling/projects/${project.slug}`
+  const url = `https://l2beat.com/scaling/projects/${project.display.slug}`
 
   const options = [
     ['text', encodeURIComponent(message)],

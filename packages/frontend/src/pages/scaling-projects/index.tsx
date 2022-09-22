@@ -10,7 +10,7 @@ export function getProjectPages(projects: Layer2[], apiMain: ApiMain) {
   return projects.map((project) => {
     const { wrapper, props } = getProps(project, apiMain)
     return {
-      slug: `/scaling/projects/${project.slug}`,
+      slug: `/scaling/projects/${project.display.slug}`,
       page: (
         <PageWrapper {...wrapper}>
           <ProjectPage {...props} />

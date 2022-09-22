@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 
 export function getTechnology(project: Layer2) {
-  const name = project.details.technology.category.name
+  const name = project.technology.category.name
   switch (name) {
     case 'Optimistic Rollup':
       return { abbreviation: 'ORU', name }
