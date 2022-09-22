@@ -26,6 +26,12 @@ describe(StarkexTransactionCountRepository.name, () => {
   describe(
     StarkexTransactionCountRepository.prototype.getMissingRangesByProject.name,
     () => {
+      it('works with an empty repository', async () => {
+        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
+          [-Infinity, Infinity],
+        ])
+      })
+
       it('finds holes', async () => {
         const record = fakeStarkexTransactionCount({
           projectId: PROJECT_A,

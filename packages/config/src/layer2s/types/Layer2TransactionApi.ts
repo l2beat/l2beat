@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/types'
+
 interface AlchemyProvider {
   type: 'rpc'
   provider: 'alchemy'
@@ -12,4 +14,18 @@ interface JsonRpcProvider {
   callsPerMinute?: number
 }
 
-export type Layer2TransactionApi = AlchemyProvider | JsonRpcProvider
+export type RpcTransactionApi = AlchemyProvider | JsonRpcProvider
+
+export type StarkexProduct =
+  | 'dydx'
+  | 'sorare'
+  | 'immutable'
+  | 'myria'
+  | 'diversify'
+interface StarkexApi {
+  type: 'starkex'
+  product: StarkexProduct
+  sinceTimestamp: UnixTime
+}
+
+export type Layer2TransactionApi = RpcTransactionApi | StarkexApi

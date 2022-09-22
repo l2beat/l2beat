@@ -1,8 +1,9 @@
 import { HttpClient, Logger, mock } from '@l2beat/common'
+import { StarkexProduct } from '@l2beat/config'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { StarkexClient, starkexProduct } from '../../../src/peripherals/starkex'
+import { StarkexClient } from '../../../src/peripherals/starkex'
 
 describe(StarkexClient.name, () => {
   const API_URL = 'xXStarkexApiUrlXx'
@@ -51,7 +52,7 @@ describe(StarkexClient.name, () => {
   describe(StarkexClient.prototype.getDailyCount.name, () => {
     it('constructs the correct body', async () => {
       const day = Math.floor(Math.random() * 10000)
-      const product: starkexProduct = 'dydx'
+      const product: StarkexProduct = 'dydx'
 
       const body = {
         day_start: day,

@@ -1,8 +1,9 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
-import { StarkexClient, starkexProduct } from '../../peripherals/starkex'
+import { StarkexClient } from '../../peripherals/starkex'
 import { Clock } from '../Clock'
 
 export class StarkexTransactionCountUpdater {
@@ -18,7 +19,7 @@ export class StarkexTransactionCountUpdater {
     private starkexClient: StarkexClient,
     private clock: Clock,
     private logger: Logger,
-    private product: starkexProduct,
+    private product: StarkexProduct,
     private projectId: ProjectId,
     startTimestamp: UnixTime,
   ) {
@@ -40,6 +41,12 @@ export class StarkexTransactionCountUpdater {
     await this.starkexTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp: UnixTime.fromDays(day),
+      count,
+    })
+
+    this.logger.info('Day updated', {
+      projectId: this.projectId.toString(),
+      day,
       count,
     })
   }

@@ -1,14 +1,8 @@
 import { getErrorMessage, HttpClient, Logger } from '@l2beat/common'
+import { StarkexProduct } from '@l2beat/config'
 import { json } from '@l2beat/types'
 
 import { parseStarkexApiResponse } from './parseStarkexApiResponse'
-
-export type starkexProduct =
-  | 'dydx'
-  | 'sorare'
-  | 'immutable'
-  | 'myria'
-  | 'diversify'
 
 export class StarkexClient {
   constructor(
@@ -22,7 +16,7 @@ export class StarkexClient {
   // Rate limit?
 
   // TODO: create BaseClient for this and EtherscanClient to avoid duplication
-  async getDailyCount(day: number, product: starkexProduct): Promise<number> {
+  async getDailyCount(day: number, product: StarkexProduct): Promise<number> {
     const body = {
       day_start: day,
       day_end: day + 1,
