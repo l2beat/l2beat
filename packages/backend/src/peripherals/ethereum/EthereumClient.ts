@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { providers } from 'ethers'
 
@@ -7,7 +8,12 @@ import { BlockTag, CallParameters } from './types'
 export class EthereumClient {
   private provider: RateLimitedProvider
 
-  constructor(provider: providers.Provider, callsPerMinute = Infinity) {
+  constructor(
+    provider: providers.Provider,
+    private logger: Logger,
+    callsPerMinute = Infinity,
+  ) {
+    this.logger = this.logger.for(this)
     this.provider = new RateLimitedProvider(provider, callsPerMinute)
   }
 
@@ -45,6 +51,13 @@ export class EthereumClient {
     fromBlock: number,
     toBlock: number,
   ): Promise<providers.Log[]> {
+    this.logger.debug('Getting all logs', {
+      address: address.toString(),
+      topic,
+      fromBlock,
+      toBlock,
+    })
+
     if (fromBlock === toBlock) {
       return await this.provider.getLogs({
         address: address.toString(),

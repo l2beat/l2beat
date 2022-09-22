@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/common'
+import { Logger, mock } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
@@ -15,7 +15,7 @@ describe(EthereumClient.name, () => {
           .returnsOnce([]),
       })
 
-      const ethereumClient = new EthereumClient(provider)
+      const ethereumClient = new EthereumClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
@@ -57,7 +57,7 @@ describe(EthereumClient.name, () => {
           .returnsOnce([]),
       })
 
-      const ethereumClient = new EthereumClient(provider)
+      const ethereumClient = new EthereumClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
@@ -96,7 +96,7 @@ describe(EthereumClient.name, () => {
         getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),
       })
 
-      const ethereumClient = new EthereumClient(provider)
+      const ethereumClient = new EthereumClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'

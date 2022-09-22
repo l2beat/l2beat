@@ -87,6 +87,13 @@ export class EventUpdater {
     to: UnixTime,
     event: EventDetails,
   ): Promise<EventRecord[]> {
+    this.logger.debug('Fetching records', {
+      projectId: event.projectId.toString(),
+      eventName: event.name,
+      to: to.toString(),
+      from: from.toString(),
+    })
+
     const fromBlock = await this.blockNumberUpdater.getBlockNumberWhenReady(
       from,
     )

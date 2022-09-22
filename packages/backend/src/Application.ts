@@ -71,7 +71,7 @@ export class Application {
       config.alchemyApiKey,
     )
 
-    const ethereumClient = new EthereumClient(ethereumProvider)
+    const ethereumClient = new EthereumClient(ethereumProvider, logger)
 
     const multicall = new MulticallClient(ethereumClient)
 
