@@ -6,24 +6,36 @@ import { Layer2Links } from '../../layer2s/types/Layer2Links'
 
 export interface Bridge {
   id: ProjectId
-  name: string
-  slug: string
-  validation: string
-  type: string
-  canonical?: boolean
-  description?: string
-  destination: string[]
-  links: Partial<Layer2Links>
-  associatedTokens?: string[]
-  escrows: Layer2Escrow[]
-  connections: {
-    network: string
-    tokens: string[]
-  }[]
-  risks?: {
+  display: BridgeDisplay
+  config: BridgeConfig
+  technology: BridgeTechnology
+  riskView?: {
     validation: Layer2RiskViewEntry
     sourceUpgradeability: Layer2RiskViewEntry
     destinationToken: Layer2RiskViewEntry
   }
   news?: News[]
+}
+
+export interface BridgeDisplay {
+  name: string
+  slug: string
+  description?: string
+  links: Partial<Layer2Links>
+}
+
+export interface BridgeConfig {
+  associatedTokens?: string[]
+  escrows: Layer2Escrow[]
+}
+
+export interface BridgeTechnology {
+  canonical?: boolean
+  validation: string
+  type: string
+  destination: string[]
+  connections: {
+    network: string
+    tokens: string[]
+  }[]
 }
