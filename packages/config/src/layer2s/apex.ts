@@ -78,7 +78,29 @@ export const apex: Layer2 = {
         ],
         risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       },
-      permissions: [],
+      permissions: [
+        {
+          name: 'Governor',
+          accounts: [
+            {
+              address: '0x5751a83170BeA11fE7CdA5D599B04153C021f21A',
+              type: 'EOA',
+            },
+          ],
+          description: 'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+        {
+          name: 'SHARP Verifier Governor',
+          accounts: [
+            {
+              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        },
+      ],
     },
     news: [
       {
