@@ -27,6 +27,8 @@ export const apex: Layer2 = {
   details: {
     description:
       'ApeX Pro is a non-custodial trading platform that delivers limitless cross-margined perpetual contracts trading.',
+    warning:
+      'Smart Contracts on L1 do not enforce at the moment availability of data in DAC.',
     purpose: 'Exchange',
     links: {
       websites: ['https://apex.exchange/'],
