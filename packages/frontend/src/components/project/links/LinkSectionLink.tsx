@@ -1,11 +1,7 @@
 import React from 'react'
 
-import { OutLink } from '../../../../components'
-import {
-  GlobeIcon,
-  ProductIcon,
-  ProductIconType,
-} from '../../../../components/icons'
+import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
+import { OutLink } from '../../OutLink'
 
 interface Props {
   href: string

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 
-import { OutLink } from '../../../components'
+import { OutLink } from '../OutLink'
 
 interface EtherscanLinkProps {
   address: string

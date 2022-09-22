@@ -1,6 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 
-import { DescriptionSectionProps } from '../view/DescriptionSection'
+import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
 import { getEditLink, getIssueLink } from './links'
 
 export function getDescriptionSection(

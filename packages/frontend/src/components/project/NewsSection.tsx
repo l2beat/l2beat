@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { OutLink } from '../../../components'
-import { LinkIcon } from '../../../components/icons'
+import { LinkIcon } from '../icons'
+import { OutLink } from '../OutLink'
 import { Section } from './Section'
 
 export interface NewsSectionProps {

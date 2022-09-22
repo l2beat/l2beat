@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { OutLink } from '../../../components'
+import { OutLink } from '../OutLink'
 
-export interface ReferencesListProps {
+export interface ReferenceListProps {
   references: TechnologyReference[]
 }
 
@@ -11,7 +11,7 @@ export interface TechnologyReference {
   href: string
 }
 
-export function ReferencesList({ references }: ReferencesListProps) {
+export function ReferenceList({ references }: ReferenceListProps) {
   if (references.length === 0) {
     return null
   }
