@@ -18,10 +18,15 @@ async function main() {
   printApiInfo(apiMain)
   sanityCheck(apiMain)
 
-  const projects = layer2s.filter((p) => !!apiMain.projects[p.id.toString()])
-  createApi(projects, apiMain)
+  const includedLayer2s = layer2s.filter(
+    (p) => !!apiMain.projects[p.id.toString()],
+  )
+  const includedBridges = bridges.filter(
+    (p) => !!apiMain.projects[p.id.toString()],
+  )
+  createApi([...includedLayer2s, ...includedBridges], apiMain)
 
-  await renderPages(projects, bridges, apiMain)
+  await renderPages(includedLayer2s, bridges, apiMain)
 }
 
 function printApiInfo(apiMain: ApiMain) {

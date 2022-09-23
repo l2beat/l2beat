@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Bridge } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { getChart } from '../../../utils/project/getChart'
@@ -9,19 +9,19 @@ import { getPageMetadata } from './getPageMetadata'
 import { getProjectDetails } from './getProjectDetails'
 
 export function getProps(
-  project: Layer2,
+  bridge: Bridge,
   apiMain: ApiMain,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(project, apiMain)
+  const chart = getChart(bridge, apiMain)
   return {
     props: {
-      header: getHeader(project, apiMain),
+      header: getHeader(bridge, apiMain),
       chart,
-      projectDetails: getProjectDetails(project),
+      projectDetails: getProjectDetails(bridge),
     },
     wrapper: {
       preloadApi: chart.endpoint,
-      metadata: getPageMetadata(project),
+      metadata: getPageMetadata(bridge),
     },
   }
 }

@@ -1,9 +1,9 @@
-import { Layer2 } from '@l2beat/config'
+import { Bridge, Layer2 } from '@l2beat/config'
 import { ApiMain, Charts } from '@l2beat/types'
 
 import { outputCharts } from './output'
 
-export function createApi(projects: Layer2[], apiMain: ApiMain) {
+export function createApi(projects: (Layer2 | Bridge)[], apiMain: ApiMain) {
   const urlCharts = new Map<string, Charts>()
 
   urlCharts.set('tvl', apiMain.layers2s)
