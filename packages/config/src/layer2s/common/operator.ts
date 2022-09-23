@@ -1,6 +1,7 @@
-import { Layer2Risk, Layer2TechnologyChoice } from '../types'
+import { ProjectRisk } from '../../common'
+import { Layer2TechnologyChoice } from '../types'
 
-const FRONTRUNNING_RISK: Layer2Risk = {
+const FRONTRUNNING_RISK: ProjectRisk = {
   category: 'MEV can be extracted if',
   text: 'the operator exploits their centralized position and frontruns user transactions.',
 }

@@ -1,6 +1,7 @@
-import { Layer2Risk, Layer2TechnologyChoice } from '../types'
+import { ProjectRisk } from '../../common'
+import { Layer2TechnologyChoice } from '../types'
 
-const EXIT_CENSORSHIP: Layer2Risk = {
+const EXIT_CENSORSHIP: ProjectRisk = {
   category: 'Users can be censored if',
   text: 'the operator refuses to include their transactions. They can still exit the system.',
 }

@@ -1,8 +1,8 @@
 import { expect } from 'earljs'
 import { utils } from 'ethers'
+import { ProjectRisk } from '../src/common'
 
 import {
-  Layer2Risk,
   layer2s,
   Layer2Technology,
   Layer2TechnologyChoice,
@@ -95,7 +95,7 @@ describe('layer2s', () => {
             })
           }
 
-          function checkRisk(risk: Layer2Risk, name: string) {
+          function checkRisk(risk: ProjectRisk, name: string) {
             it(`${name} is correctly formatted`, () => {
               expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
             })

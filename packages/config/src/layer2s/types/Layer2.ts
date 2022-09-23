@@ -1,14 +1,12 @@
 import { ProjectId } from '@l2beat/types'
 
+import { News, ProjectEscrow, ProjectLinks } from '../../common'
 import { Layer2Contracts } from './Layer2Contracts'
-import { Layer2Escrow } from './Layer2Escrow'
 import { Layer2Event } from './Layer2Event'
-import { Layer2Links } from './Layer2Links'
 import { Layer2Permission } from './Layer2Permission'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
-import { News } from './News'
 
 export interface Layer2 {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
@@ -41,14 +39,14 @@ export interface Layer2Display {
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** List of links */
-  links: Layer2Links
+  links: ProjectLinks
 }
 
 export interface Layer2Config {
   /** Symbols of the tokens associated with this layer2 */
   associatedTokens?: string[]
   /** List of contracts in which L1 funds are locked */
-  escrows: Layer2Escrow[]
+  escrows: ProjectEscrow[]
   /** Metadata about events emitted by the system */
   events: Layer2Event[]
   /** RPC or API url used to get transaction count */

@@ -1,4 +1,5 @@
-import { Layer2Risk, Layer2TechnologyChoice } from '../types'
+import { ProjectRisk } from '../../common'
+import { Layer2TechnologyChoice } from '../types'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
@@ -30,7 +31,7 @@ function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof',
 ): Layer2TechnologyChoice {
-  const risks: Layer2Risk[] =
+  const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'
       ? [
           {
@@ -106,7 +107,7 @@ const STARKEX_EMERGENCY: Layer2TechnologyChoice = {
   ],
 }
 
-const OPERATOR_CENSORS_WITHDRAWAL: Layer2Risk = {
+const OPERATOR_CENSORS_WITHDRAWAL: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the operator censors withdrawal transaction.',
 }
@@ -147,7 +148,7 @@ const PLASMA: Layer2TechnologyChoice = {
   references: [],
 }
 
-export const RISK_CENTRALIZED_VALIDATOR: Layer2Risk = {
+export const RISK_CENTRALIZED_VALIDATOR: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the centralized validator goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
   isCritical: true,

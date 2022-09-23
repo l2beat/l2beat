@@ -1,4 +1,4 @@
-import { Layer2Links } from '@l2beat/config'
+import { ProjectLinks } from '@l2beat/config'
 import React from 'react'
 
 import { LinkSectionLinks } from './LinkSectionLinks'
@@ -6,7 +6,7 @@ import { LinkSectionLinks } from './LinkSectionLinks'
 export interface LinkSectionProps {
   icon: string
   name: string
-  links: Layer2Links
+  links: ProjectLinks
 }
 
 export function LinkSection(props: LinkSectionProps) {
