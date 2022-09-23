@@ -81,7 +81,7 @@ describe(StarkexClient.name, () => {
       await starkexClient.getDailyCount(day, product)
     })
 
-    it('returns the block number', async () => {
+    it('returns the count', async () => {
       const httpClient = mock<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify({ count: 0x45 }))
