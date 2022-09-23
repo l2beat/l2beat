@@ -22,7 +22,6 @@ export type EventChart = z.infer<typeof EventChart>
 
 const EventCharts = z.object({
   hourly: EventChart,
-  sixHourly: EventChart,
   daily: EventChart,
 })
 export type EventCharts = z.infer<typeof EventCharts>

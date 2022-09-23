@@ -10,14 +10,6 @@ import {
 import { getTokenBySymbol } from '../src/tokens'
 
 describe('layer2s', () => {
-  describe('every slug is valid', () => {
-    for (const layer2 of layer2s) {
-      it(layer2.slug, () => {
-        expect(layer2.slug).toEqual(expect.stringMatching(/^[a-z\d]+$/))
-      })
-    }
-  })
-
   describe('addresses', () => {
     describe('every addresses is valid and formatted', () => {
       const testAddress = (address: string) =>
@@ -26,7 +18,9 @@ describe('layer2s', () => {
         })
 
       describe('escrows', () => {
-        const escrows = layer2s.flatMap((x) => x.escrows.map((x) => x.address))
+        const escrows = layer2s.flatMap((x) =>
+          x.config.escrows.map((x) => x.address),
+        )
         for (const address of escrows) {
           testAddress(address)
         }
@@ -34,7 +28,7 @@ describe('layer2s', () => {
 
       describe('contracts', () => {
         for (const layer2 of layer2s) {
-          const contracts = layer2.details.technology.contracts.addresses
+          const contracts = layer2.contracts.addresses
           for (const contract of contracts) {
             testAddress(contract.address)
             if (
@@ -60,24 +54,22 @@ describe('layer2s', () => {
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
-        it(layer2.name, () => {
-          expect(layer2.details.description.endsWith('.')).toEqual(true)
+        it(layer2.display.name, () => {
+          expect(layer2.display.description.endsWith('.')).toEqual(true)
         })
       }
     })
 
     describe('technology', () => {
       for (const layer2 of layer2s) {
-        describe(layer2.name, () => {
-          const tech = layer2.details.technology
-
+        describe(layer2.display.name, () => {
           type Key = Exclude<
             keyof Layer2Technology,
-            'category' | 'contracts' | 'permissions' //TODO: Add test for permissions
+            'category' | 'provider' //TODO: Add test for permissions
           >
 
           function check(key: Key) {
-            const item = tech[key]
+            const item = layer2.technology[key]
             if (Array.isArray(item)) {
               for (const [i, x] of item.entries()) {
                 checkChoice(x, `${key}[${i}]`)
@@ -118,26 +110,32 @@ describe('layer2s', () => {
           check('massExit')
           check('additionalPrivacy')
           check('smartContracts')
-
-          for (const [i, contract] of tech.contracts.addresses.entries()) {
-            const description = contract.description
-            if (description) {
-              it(`contracts[${i}].description ends with a dot`, () => {
-                expect(description.endsWith('.')).toEqual(true)
-              })
-            }
-          }
-
-          for (const [i, risk] of tech.contracts.risks.entries()) {
-            checkRisk(risk, `contracts.risks[${i}]`)
-          }
         })
       }
     })
   })
 
+  describe('contracts', () => {
+    for (const layer2 of layer2s) {
+      for (const [i, contract] of layer2.contracts.addresses.entries()) {
+        const description = contract.description
+        if (description) {
+          it(`contracts[${i}].description ends with a dot`, () => {
+            expect(description.endsWith('.')).toEqual(true)
+          })
+        }
+      }
+
+      for (const [i, risk] of layer2.contracts.risks.entries()) {
+        it(`contracts.risks[${i}] is correctly formatted`, () => {
+          expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
+        })
+      }
+    }
+  })
+
   describe('every purpose is short', () => {
-    const purposes = layer2s.map((x) => x.details.purpose)
+    const purposes = layer2s.map((x) => x.display.purpose)
     for (const purpose of purposes) {
       it(purpose, () => {
         expect(purpose.length).toBeLessThanOrEqualTo(20)
@@ -148,7 +146,9 @@ describe('layer2s', () => {
   describe('every token is valid', () => {
     const symbols = layer2s
       .flatMap((x) =>
-        x.escrows.filter((x) => x.tokens !== '*').flatMap((x) => x.tokens),
+        x.config.escrows
+          .filter((x) => x.tokens !== '*')
+          .flatMap((x) => x.tokens),
       )
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {
@@ -161,15 +161,15 @@ describe('layer2s', () => {
   describe('links', () => {
     describe('every layer2 has at least one website link', () => {
       for (const layer2 of layer2s) {
-        it(layer2.name, () => {
-          expect(layer2.details.links.websites.length).toBeGreaterThan(0)
+        it(layer2.display.name, () => {
+          expect(layer2.display.links.websites.length).toBeGreaterThan(0)
         })
       }
     })
 
     describe('every link is https', () => {
       const links = layer2s.flatMap((x) =>
-        (Object.values(x.details.links) as string[]).flat(),
+        (Object.values(x.display.links) as string[]).flat(),
       )
       for (const link of links) {
         it(link, () => {
@@ -179,7 +179,7 @@ describe('layer2s', () => {
     })
 
     describe('social media links are properly formatted', () => {
-      const links = layer2s.flatMap((x) => x.details.links.socialMedia)
+      const links = layer2s.flatMap((x) => x.display.links.socialMedia)
       for (const link of links) {
         it(link, () => {
           if (link.includes('discord')) {

@@ -7,7 +7,7 @@ interface Props {
   project: {
     name: string
     slug: string
-    provider?: Layer2['details']['provider']
+    provider?: Layer2['technology']['provider']
   }
 }
 

@@ -28,8 +28,8 @@ async function main() {
   )
 
   for (const layer2 of layer2s) {
-    console.log(chalk.blue(`--- Project: ${layer2.name} ---`))
-    const contracts = layer2.details.technology?.contracts.addresses ?? []
+    console.log(chalk.blue(`--- Project: ${layer2.display.name} ---`))
+    const contracts = layer2.contracts.addresses ?? []
     for (const contract of contracts) {
       console.log(chalk.yellow(contract.name), contract.address)
       const upgradeability = contract.upgradeability

@@ -1,14 +1,15 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
+import { EventController } from './api/controllers/events/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
+import { createEventsRouter } from './api/routers/EventsRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -18,7 +19,6 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { RpcTransactionUpdater } from './core/transaction-count/RpcTransactionUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -33,6 +33,7 @@ import { TransactionCountRepository } from './peripherals/database/TransactionCo
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
+import { createRpcTransactionUpdaters } from './setup/createRpcTransactionUpdaters'
 
 export class Application {
   start: () => Promise<void>
@@ -71,13 +72,8 @@ export class Application {
       'mainnet',
       config.alchemyApiKey,
     )
-    const optimismProvider = new providers.AlchemyProvider(
-      'optimism',
-      config.alchemyApiKey,
-    )
 
-    const ethereumClient = new EthereumClient(ethereumProvider)
-    const optimismClient = new EthereumClient(optimismProvider)
+    const ethereumClient = new EthereumClient(ethereumProvider, logger)
 
     const multicall = new MulticallClient(ethereumClient)
 
@@ -144,13 +140,11 @@ export class Application {
       logger,
     )
 
-    // TODO buildUpdaterForAll
-    const optimismRpcTransactionUpdater = new RpcTransactionUpdater(
-      optimismClient,
+    const rpcTransactionUpdaters = createRpcTransactionUpdaters(
+      config,
       transactionCountRepository,
       clock,
       logger,
-      ProjectId('optimism'),
     )
 
     // #endregion
@@ -176,6 +170,12 @@ export class Application {
       config.projects,
     )
 
+    const eventController = new EventController(
+      eventRepository,
+      clock,
+      config.projects,
+    )
+
     const dydxController = new DydxController(aggregateReportRepository)
 
     const apiServer = new ApiServer(config.port, logger, [
@@ -183,6 +183,7 @@ export class Application {
       createReportRouter(reportController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
+      createEventsRouter(eventController),
     ])
 
     // #endregion
@@ -200,8 +201,11 @@ export class Application {
         await blockNumberUpdater.start()
         await balanceUpdater.start()
         await reportUpdater.start()
+
         if (config.transactionCountSyncEnabled) {
-          optimismRpcTransactionUpdater.start()
+          for (const updater of rpcTransactionUpdaters) {
+            updater.start()
+          }
         }
 
         if (config.eventsSyncEnabled) {

@@ -35,76 +35,127 @@ describe(EventRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(EventRepository.prototype.getByProject.name, () => {
-    it('returns properly sorted records', async () => {
-      const records = [
-        mockEvent(2, PROJECT_A, EVENT_B),
-        mockEvent(2, PROJECT_A, EVENT_A),
-        mockEvent(1, PROJECT_A, EVENT_B),
-        mockEvent(1, PROJECT_A, EVENT_A),
-        mockEvent(0, PROJECT_A, EVENT_B),
-        mockEvent(0, PROJECT_A, EVENT_A),
-      ]
-      await repository.addMany(records)
+  describe(
+    EventRepository.prototype.getAggregatedByProjectAndGranularity.name,
+    () => {
+      it('returns aggregated data', async () => {
+        const records = [
+          mockEvent(0, PROJECT_A, EVENT_A),
+          mockEvent(0, PROJECT_A, EVENT_A),
+          mockEvent(0, PROJECT_A, EVENT_B),
+          mockEvent(1, PROJECT_A, EVENT_A),
+          mockEvent(1, PROJECT_A, EVENT_A),
+          mockEvent(1, PROJECT_A, EVENT_B),
+        ]
+        await repository.addMany(records)
 
-      const result = await repository.getByProject(PROJECT_A)
+        const result = await repository.getAggregatedByProjectAndGranularity(
+          PROJECT_A,
+          'hour',
+        )
 
-      expect(result).toEqual([
-        mockEvent(0, PROJECT_A, EVENT_A),
-        mockEvent(0, PROJECT_A, EVENT_B),
-        mockEvent(1, PROJECT_A, EVENT_A),
-        mockEvent(1, PROJECT_A, EVENT_B),
-        mockEvent(2, PROJECT_A, EVENT_A),
-        mockEvent(2, PROJECT_A, EVENT_B),
-      ])
-    })
+        expect(result).toEqual([
+          { ...mockEvent(0, PROJECT_A, EVENT_A), count: 2 },
+          { ...mockEvent(0, PROJECT_A, EVENT_B), count: 1 },
+          { ...mockEvent(1, PROJECT_A, EVENT_A), count: 2 },
+          { ...mockEvent(1, PROJECT_A, EVENT_B), count: 1 },
+        ])
+      })
 
-    it('retrieves only given project', async () => {
-      const records = [
-        mockEvent(0, PROJECT_A, EVENT_A),
-        mockEvent(0, PROJECT_B, EVENT_A),
-      ]
-      await repository.addMany(records)
+      it('returns data with proper granularity', async () => {
+        const records = [
+          mockEvent(0, PROJECT_A, EVENT_A),
+          mockEvent(0, PROJECT_A, EVENT_A),
+          mockEvent(1, PROJECT_A, EVENT_A),
+          mockEvent(1, PROJECT_A, EVENT_A),
+        ]
+        await repository.addMany(records)
 
-      const result = await repository.getByProject(PROJECT_A)
+        const resultDaily =
+          await repository.getAggregatedByProjectAndGranularity(
+            PROJECT_A,
+            'day',
+          )
+        expect(resultDaily).toEqual([
+          { ...mockEvent(0, PROJECT_A, EVENT_A), count: 4 },
+        ])
 
-      expect(result).toEqual([records[0]])
-    })
+        const resultHourly =
+          await repository.getAggregatedByProjectAndGranularity(
+            PROJECT_A,
+            'hour',
+          )
+        expect(resultHourly).toEqual([
+          { ...mockEvent(0, PROJECT_A, EVENT_A), count: 2 },
+          { ...mockEvent(1, PROJECT_A, EVENT_A), count: 2 },
+        ])
+      })
 
-    it('retrieves only records greater or equal a given timestamp', async () => {
-      const records = [
-        mockEvent(0, PROJECT_A, EVENT_A),
-        mockEvent(1, PROJECT_A, EVENT_A),
-        mockEvent(2, PROJECT_A, EVENT_A),
-        mockEvent(3, PROJECT_A, EVENT_A),
-      ]
-      await repository.addMany(records)
-      const allRecords = await repository.getByProject(PROJECT_A)
-      const onlyFrom = await repository.getByProject(
-        PROJECT_A,
-        START.add(2, 'hours'),
-      )
+      it('retrieves only given project', async () => {
+        const records = [
+          mockEvent(0, PROJECT_A, EVENT_A),
+          mockEvent(0, PROJECT_B, EVENT_A),
+        ]
+        await repository.addMany(records)
 
-      expect(allRecords).toEqual(records)
-      expect(onlyFrom).toEqual(records.slice(2))
-    })
-  })
+        const result = await repository.getAggregatedByProjectAndGranularity(
+          PROJECT_A,
+          'hour',
+        )
 
-  it(EventRepository.prototype.getByProjectAndName.name, async () => {
-    const records = [
-      mockEvent(0, PROJECT_A, EVENT_A),
-      mockEvent(1, PROJECT_A, EVENT_A),
+        expect(result).toEqual([{ ...records[0], count: 1 }])
+      })
 
-      mockEvent(0, PROJECT_A, EVENT_B),
-      mockEvent(0, PROJECT_B, EVENT_A),
-    ]
+      it('retrieves only records older or equal than given timestamp', async () => {
+        const records = [
+          mockEvent(0, PROJECT_A, EVENT_A),
+          mockEvent(1, PROJECT_A, EVENT_A),
+          mockEvent(2, PROJECT_A, EVENT_A),
+          mockEvent(3, PROJECT_A, EVENT_A),
+        ]
+        await repository.addMany(records)
+        const allRecords =
+          await repository.getAggregatedByProjectAndGranularity(
+            PROJECT_A,
+            'hour',
+          )
+        const onlyFrom = await repository.getAggregatedByProjectAndGranularity(
+          PROJECT_A,
+          'hour',
+          START.add(2, 'hours'),
+        )
 
-    await repository.addMany(records)
+        expect(allRecords).toEqual(records.map((r) => ({ ...r, count: 1 })))
+        expect(onlyFrom).toEqual(
+          records.slice(2).map((r) => ({ ...r, count: 1 })),
+        )
+      })
 
-    const result = await repository.getByProjectAndName(PROJECT_A, EVENT_A)
+      it('returns sorted records', async () => {
+        const records = [
+          mockEvent(1, PROJECT_A, EVENT_B),
+          mockEvent(1, PROJECT_A, EVENT_A),
+          mockEvent(0, PROJECT_A, EVENT_B),
+          mockEvent(0, PROJECT_A, EVENT_A),
+        ]
+        await repository.addMany(records)
 
-    expect(result).toEqual([records[0], records[1]])
-  })
+        const result = await repository.getAggregatedByProjectAndGranularity(
+          PROJECT_A,
+          'hour',
+        )
+
+        expect(result).toEqual(
+          [
+            mockEvent(0, PROJECT_A, EVENT_A),
+            mockEvent(0, PROJECT_A, EVENT_B),
+            mockEvent(1, PROJECT_A, EVENT_A),
+            mockEvent(1, PROJECT_A, EVENT_B),
+          ].map((e) => ({ ...e, count: 1 })),
+        )
+      })
+    },
+  )
 
   describe(EventRepository.prototype.getDataBoundary.name, () => {
     it('multiple records', async () => {

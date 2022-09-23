@@ -2,12 +2,7 @@ import assert from 'assert'
 
 import { Logger } from '../Logger'
 import { Retries } from './Retries'
-import { Job, ShouldRetry } from './types'
-
-interface TaskQueueOpts<T> {
-  workers?: number
-  shouldRetry?: ShouldRetry<T>
-}
+import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 export class TaskQueue<T> {
   private queue: Job<T>[] = []
