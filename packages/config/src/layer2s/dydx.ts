@@ -63,6 +63,11 @@ export const dydx: Layer2 = {
         sinceTimestamp: new UnixTime(1613033682),
       },
     ],
+    transactionApi: {
+      type: 'starkex',
+      product: 'dydx',
+      sinceTimestamp: new UnixTime(1613033682),
+    },
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -191,10 +196,4 @@ export const dydx: Layer2 = {
       link: 'https://dydx.exchange/blog/the-merge',
     },
   ],
-
-  transactionApi: {
-    type: 'starkex',
-    product: 'dydx',
-    sinceTimestamp: new UnixTime(1613033682),
-  },
 }
