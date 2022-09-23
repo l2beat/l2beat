@@ -14,17 +14,10 @@ import {
 import { Layer2 } from './types'
 
 export const apex: Layer2 = {
-  name: 'ApeX',
-  slug: 'apex',
   id: ProjectId('apex'),
-  escrows: [
-    {
-      address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
-      sinceTimestamp: new UnixTime(1660252039),
-      tokens: ['USDC'],
-    },
-  ],
-  details: {
+  display: {
+    name: 'ApeX',
+    slug: 'apex',
     description:
       'ApeX Pro is a non-custodial trading platform that delivers limitless cross-margined perpetual contracts trading.',
     warning:
@@ -38,104 +31,112 @@ export const apex: Layer2 = {
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: ['https://twitter.com/OfficialApeXdex'],
     },
-    provider: 'StarkEx',
-    riskView: {
-      stateValidation: RISK_VIEW.STATE_ZKP_ST,
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
-      upgradeability: RISK_VIEW.UPGRADABLE_YES,
-      sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
-      validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-    },
-    technology: {
-      category: {
-        name: 'Validium',
-        details:
-          'StarkEx deployment in Validium mode without DAC. Proceed with caution.',
-      },
-      stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-      newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-      dataAvailability: {
-        ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
-      },
-      operator: OPERATOR.STARKEX_OPERATOR,
-      forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
-      exitMechanisms: EXITS.STARKEX,
-      contracts: {
-        addresses: [
-          {
-            name: 'StarkPerpetual',
-            address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
-            description:
-              'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-            upgradeability: {
-              type: 'StarkWare',
-              implementation: '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
-              upgradeDelay: 0,
-              isFinal: false,
-            },
-          },
-          {
-            name: 'MultiSigPool',
-            address: '0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE',
-            description:
-              'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
-          },
-          SHARP_VERIFIER_CONTRACT,
-        ],
-        risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-      },
-      permissions: [
-        {
-          name: 'Governor',
-          accounts: [
-            {
-              address: '0x5751a83170BeA11fE7CdA5D599B04153C021f21A',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
-        },
-        {
-          name: 'SHARP Verifier Governor',
-          accounts: [
-            {
-              address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
-        },
-        {
-          name: 'Allowed signers',
-          accounts: [
-            {
-              address: '0x015155D9f7bb601FbF25084C106531c759c05379',
-              type: 'EOA',
-            },
-            {
-              address: '0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92',
-              type: 'EOA',
-            },
-            {
-              address: '0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81',
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can approve fast withdrawal from the bridge. At least 2 signatures are needed in order for the withdrawal to be valid.',
-        },
-      ],
-    },
-    news: [
+  },
+  config: {
+    escrows: [
       {
-        date: '2022-09-01',
-        name: 'Introducing ApeXPro',
-        link: 'https://twitter.com/OfficialApeXdex/status/1565282539463270400',
+        address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
+        sinceTimestamp: new UnixTime(1660252039),
+        tokens: ['USDC'],
       },
     ],
+    events: [],
   },
-
-  events: [],
+  riskView: {
+    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
+    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
+  },
+  technology: {
+    provider: 'StarkEx',
+    category: {
+      name: 'Validium',
+      details:
+        'StarkEx deployment in Validium mode without DAC. Proceed with caution.',
+    },
+    stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
+    dataAvailability: {
+      ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+    },
+    operator: OPERATOR.STARKEX_OPERATOR,
+    forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
+    exitMechanisms: EXITS.STARKEX,
+  },
+  contracts: {
+    addresses: [
+      {
+        name: 'StarkPerpetual',
+        address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
+        description:
+          'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+        upgradeability: {
+          type: 'StarkWare',
+          implementation: '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
+          upgradeDelay: 0,
+          isFinal: false,
+        },
+      },
+      {
+        name: 'MultiSigPool',
+        address: '0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE',
+        description:
+          'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
+      },
+      SHARP_VERIFIER_CONTRACT,
+    ],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  permissions: [
+    {
+      name: 'Governor',
+      accounts: [
+        {
+          address: '0x5751a83170BeA11fE7CdA5D599B04153C021f21A',
+          type: 'EOA',
+        },
+      ],
+      description:
+        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+    },
+    {
+      name: 'SHARP Verifier Governor',
+      accounts: [
+        {
+          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          type: 'EOA',
+        },
+      ],
+      description:
+        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+    },
+    {
+      name: 'Allowed signers',
+      accounts: [
+        {
+          address: '0x015155D9f7bb601FbF25084C106531c759c05379',
+          type: 'EOA',
+        },
+        {
+          address: '0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92',
+          type: 'EOA',
+        },
+        {
+          address: '0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81',
+          type: 'EOA',
+        },
+      ],
+      description:
+        'Can approve fast withdrawal from the bridge. At least 2 signatures are needed in order for the withdrawal to be valid.',
+    },
+  ],
+  news: [
+    {
+      date: '2022-09-01',
+      name: 'Introducing ApeXPro',
+      link: 'https://twitter.com/OfficialApeXdex/status/1565282539463270400',
+    },
+  ],
 }
