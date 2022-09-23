@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { ZksyncTransactionRow } from 'knex/types/tables'
+import _ from 'lodash'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
@@ -9,6 +10,12 @@ export interface ZksyncTransactionRecord {
   blockNumber: number
   blockIndex: number
   timestamp: UnixTime
+}
+
+interface RawBlockNumberQueryResult {
+  rows: {
+    block_number: number
+  }[]
 }
 
 export class ZksyncTransactionsRepository extends BaseRepository {
@@ -36,6 +43,43 @@ export class ZksyncTransactionsRepository extends BaseRepository {
     const rows = records.map(toRow)
     await knex('transactions.zksync').insert(rows)
     return rows.length
+  }
+
+  // Returns an array of half open intervals [) that include all missing block numbers
+  async getMissingRanges() {
+    const knex = await this.knex()
+
+    const noNext = (await knex.raw(
+      `
+      SELECT transactions.zksync.block_number 
+      FROM  transactions.zksync
+      LEFT JOIN transactions.zksync z2 ON transactions.zksync.block_number  = z2.block_number - 1
+      WHERE z2.block_number IS NULL
+      ORDER BY block_number ASC
+    `,
+    )) as unknown as RawBlockNumberQueryResult
+
+    const noPrev = (await knex.raw(
+      `
+      SELECT transactions.zksync.block_number 
+      FROM  transactions.zksync
+      LEFT JOIN transactions.zksync z2 ON transactions.zksync.block_number  = z2.block_number + 1
+      WHERE z2.block_number IS NULL
+      ORDER BY block_number ASC
+    `,
+    )) as unknown as RawBlockNumberQueryResult
+
+    const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
+    const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
+
+    noPrevBlockNumbers.push(Infinity)
+    noNextBlockNumbers.unshift(-Infinity)
+
+    if (noNextBlockNumbers.length !== noPrevBlockNumbers.length) {
+      throw new Error('Arrays length should be the same')
+    }
+
+    return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
   async getAll() {
