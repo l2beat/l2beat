@@ -1,10 +1,9 @@
-import { ProjectRisk } from '../../common'
-import { Layer2TechnologyChoice } from '../types'
+import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
   proof: 'no proof' | 'merkle proof',
-): Layer2TechnologyChoice {
+): ProjectTechnologyChoice {
   const finalized = type === 'zk' ? 'proven' : 'finalized'
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
   const time =
@@ -19,7 +18,7 @@ function REGULAR(
   }
 }
 
-const FORCED: Layer2TechnologyChoice = {
+const FORCED: ProjectTechnologyChoice = {
   name: 'Forced exit',
   description:
     'If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation follows the flow of a regular exit.',
@@ -30,7 +29,7 @@ const FORCED: Layer2TechnologyChoice = {
 function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof',
-): Layer2TechnologyChoice {
+): ProjectTechnologyChoice {
   const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'
       ? [
@@ -48,7 +47,7 @@ function EMERGENCY(
   }
 }
 
-const STARKEX_REGULAR: Layer2TechnologyChoice = {
+const STARKEX_REGULAR: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   references: [
     {
@@ -58,7 +57,7 @@ const STARKEX_REGULAR: Layer2TechnologyChoice = {
   ],
 }
 
-const STARKEX_REGULAR_NFT: Layer2TechnologyChoice = {
+const STARKEX_REGULAR_NFT: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   description:
     REGULAR('zk', 'no proof').description +
@@ -71,7 +70,7 @@ const STARKEX_REGULAR_NFT: Layer2TechnologyChoice = {
   ],
 }
 
-const STARKEX_FORCED: Layer2TechnologyChoice = {
+const STARKEX_FORCED: ProjectTechnologyChoice = {
   ...FORCED,
   references: [
     {
@@ -89,7 +88,7 @@ const STARKEX_FORCED: Layer2TechnologyChoice = {
   ],
 }
 
-const STARKEX_EMERGENCY: Layer2TechnologyChoice = {
+const STARKEX_EMERGENCY: ProjectTechnologyChoice = {
   ...EMERGENCY('a frozen state', 'merkle proof'),
   references: [
     {
@@ -112,7 +111,7 @@ const OPERATOR_CENSORS_WITHDRAWAL: ProjectRisk = {
   text: 'the operator censors withdrawal transaction.',
 }
 
-const STARKNET_REGULAR: Layer2TechnologyChoice = {
+const STARKNET_REGULAR: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   description:
     REGULAR('zk', 'no proof').description +
@@ -126,7 +125,7 @@ const STARKNET_REGULAR: Layer2TechnologyChoice = {
   risks: [OPERATOR_CENSORS_WITHDRAWAL],
 }
 
-const STARKNET_EMERGENCY: Layer2TechnologyChoice = {
+const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
   name: 'Emergency exit',
   risks: [],
   description:
@@ -140,7 +139,7 @@ const STARKNET_EMERGENCY: Layer2TechnologyChoice = {
   ],
 }
 
-const PLASMA: Layer2TechnologyChoice = {
+const PLASMA: ProjectTechnologyChoice = {
   name: 'Regular exit',
   description:
     'The user executes the withdrawal by submitting a transaction on L1 that requires a merkle proof of funds.',

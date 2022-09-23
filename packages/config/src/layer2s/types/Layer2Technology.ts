@@ -1,4 +1,4 @@
-import { Layer2TechnologyChoice } from './Layer2TechnologyChoice'
+import { ProjectTechnologyChoice } from '../../common/ProjectTechnologyChoice'
 
 export interface Layer2Technology {
   /** Technology provider */
@@ -10,23 +10,23 @@ export interface Layer2Technology {
     details?: string
   }
   /** What state correctness mechanism is used in the layer2 */
-  stateCorrectness: Layer2TechnologyChoice
+  stateCorrectness: ProjectTechnologyChoice
   /** What is the new cryptography used in the layer2 */
-  newCryptography?: Layer2TechnologyChoice
+  newCryptography?: ProjectTechnologyChoice
   /** What is the data availability choice for the layer2 */
-  dataAvailability: Layer2TechnologyChoice
+  dataAvailability: ProjectTechnologyChoice
   /** What are the details about layer2 operator(s) */
-  operator: Layer2TechnologyChoice
+  operator: ProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
-  forceTransactions: Layer2TechnologyChoice
+  forceTransactions: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
-  exitMechanisms: Layer2TechnologyChoice[]
+  exitMechanisms: ProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
-  massExit?: Layer2TechnologyChoice
+  massExit?: ProjectTechnologyChoice
   /** What is the additional privacy offered */
-  additionalPrivacy?: Layer2TechnologyChoice
+  additionalPrivacy?: ProjectTechnologyChoice
   /** What are the smart contract capabilities */
-  smartContracts?: Layer2TechnologyChoice
+  smartContracts?: ProjectTechnologyChoice
 }
 
 export type Layer2Category =

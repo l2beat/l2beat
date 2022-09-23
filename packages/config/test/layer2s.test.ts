@@ -1,12 +1,8 @@
 import { expect } from 'earljs'
 import { utils } from 'ethers'
-import { ProjectRisk } from '../src/common'
 
-import {
-  layer2s,
-  Layer2Technology,
-  Layer2TechnologyChoice,
-} from '../src/layer2s'
+import { ProjectRisk, ProjectTechnologyChoice } from '../src/common'
+import { layer2s, Layer2Technology } from '../src/layer2s'
 import { getTokenBySymbol } from '../src/tokens'
 
 describe('layer2s', () => {
@@ -79,7 +75,7 @@ describe('layer2s', () => {
             }
           }
 
-          function checkChoice(choice: Layer2TechnologyChoice, name: string) {
+          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
             it(`${name}.name doesn't end with a dot`, () => {
               expect(choice.name.endsWith('.')).toEqual(false)
             })

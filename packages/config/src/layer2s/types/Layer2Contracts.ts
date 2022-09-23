@@ -1,5 +1,4 @@
-import { ProjectRisk } from '../../common'
-import { Layer2Reference } from './Layer2Reference'
+import { ProjectReference, ProjectRisk } from '../../common'
 
 export interface Layer2Contracts {
   /** List of the contracts */
@@ -7,7 +6,7 @@ export interface Layer2Contracts {
   /** List of risks associated with the contracts */
   risks: ProjectRisk[]
   /** List of references backing up the claim */
-  references?: Layer2Reference[]
+  references?: ProjectReference[]
 }
 
 export interface Layer2Contract {
