@@ -22,7 +22,7 @@ const ZksyncErrorResponse = z.object({
 })
 
 export const ZksyncBlocksResultSchema = z.object({
-  list: z.array(z.object({ blockNumber: z.number() })),
+  blockNumber: z.number(),
 })
 
 export const ZksyncTransactionResultSchema = z.object({

@@ -13,7 +13,7 @@ describe(ZksyncClient.name, () => {
             JSON.stringify({
               status: 'success',
               error: null,
-              result: { list: [{ blockNumber: 42 }] },
+              result: { blockNumber: 42 },
             }),
           ),
       })

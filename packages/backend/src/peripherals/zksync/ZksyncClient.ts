@@ -12,19 +12,11 @@ export class ZksyncClient {
   }
 
   async getLatestBlock() {
-    const result = await this.call('/blocks', {
-      from: 'latest',
-      limit: '1',
-      direction: 'older',
-    })
+    const result = await this.call('/blocks/lastFinalized')
 
     const parsed = ZksyncBlocksResultSchema.parse(result)
 
-    if (parsed.list.length === 0) {
-      throw new Error('Block list empty!')
-    }
-
-    return parsed.list[0].blockNumber
+    return parsed.blockNumber
   }
 
   async getTransactionsInBlock(blockNumber: number) {
@@ -45,7 +37,7 @@ export class ZksyncClient {
     return parsed.list
   }
 
-  async call(path: string, params: Record<string, string>) {
+  async call(path: string, params?: Record<string, string>) {
     const query = new URLSearchParams(params)
     const url = `https://api.zksync.io/api/v0.2/${path}?${query.toString()}`
 
