@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { ProjectLink } from '../../components/ProjectLink'
 import { Column, TableView } from '../../components/TableView'
 import { formatLargeNumber } from '../../utils'
 
@@ -9,6 +10,7 @@ export interface BridgesTvlViewProps {
 
 export interface BridgesTvlViewEntry {
   name: string
+  slug: string
   type: string
   tvl: number
 }
@@ -17,7 +19,7 @@ export function TvlView({ items }: BridgesTvlViewProps) {
   const columns: Column<BridgesTvlViewEntry>[] = [
     {
       name: 'Name',
-      getValue: (entry) => <strong>{entry.name}</strong>,
+      getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
     },
     {
       name: 'Type',

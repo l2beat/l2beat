@@ -26,7 +26,7 @@ export function RiskView({ items, className }: RiskViewProps) {
   const columns: Column<RiskViewEntry>[] = [
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink project={project} />,
+      getValue: (project) => <ProjectLink type="layer2" project={project} />,
     },
     {
       name: 'State validation',

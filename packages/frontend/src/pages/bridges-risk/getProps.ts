@@ -16,6 +16,7 @@ export function getProps(
       items: ordering.map(
         (bridge): BridgesRiskViewEntry => ({
           name: bridge.display.name,
+          slug: bridge.display.slug,
           type: bridge.technology.type,
           destination: getDestination(bridge.technology.destination),
           ...bridge.riskView,
