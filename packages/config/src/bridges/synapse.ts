@@ -4,30 +4,35 @@ import { Bridge } from './types'
 
 export const synapse: Bridge = {
   id: ProjectId('synapse'),
-  name: 'Synapse',
-  slug: 'synapse',
-  type: 'Lock-Mint OR Swap',
-  validation: 'Swap Bridge',
-  destination: ['TODO', 'TODO', 'TODO'],
-
-  links: {
-    websites: ['https://synapseprotocol.com/'],
-  },
-
-  escrows: [
-    {
-      address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
-      sinceTimestamp: new UnixTime(1629082107),
-      tokens: [
-        'ETH',
-        'WETH',
-        //'gOHM',
-        //'HIGH',
-        'FRAX',
-      ],
+  display: {
+    name: 'Synapse',
+    slug: 'synapse',
+    links: {
+      websites: ['https://synapseprotocol.com/'],
     },
-  ],
-  risks: {
+  },
+  config: {
+    escrows: [
+      {
+        address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
+        sinceTimestamp: new UnixTime(1629082107),
+        tokens: [
+          'ETH',
+          'WETH',
+          //'gOHM',
+          //'HIGH',
+          'FRAX',
+        ],
+      },
+    ],
+  },
+  technology: {
+    type: 'Lock-Mint OR Swap',
+    validation: 'Swap Bridge',
+    destination: ['TODO', 'TODO', 'TODO'],
+    connections: [],
+  },
+  riskView: {
     validation: {
       value: 'External',
       description: 'Transfers out of the bridge are validated by EOA.',
@@ -45,5 +50,4 @@ export const synapse: Bridge = {
       sentiment: 'warning',
     },
   },
-  connections: [],
 }

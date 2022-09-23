@@ -2,7 +2,7 @@ export interface ProjectId extends String {
   _ProjectIdBrand: string
 }
 
-export function ProjectId(value: string) {
+export function ProjectId(value: string): ProjectId {
   if (value === '') {
     throw new TypeError('Invalid ProjectId')
   }

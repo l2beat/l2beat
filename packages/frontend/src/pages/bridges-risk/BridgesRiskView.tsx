@@ -1,6 +1,7 @@
 import { Layer2RiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { ProjectLink } from '../../components/ProjectLink'
 import { Column, TableView } from '../../components/TableView'
 import { RiskCell } from './RiskCell'
 
@@ -10,6 +11,7 @@ export interface BridgesRiskViewProps {
 
 export interface BridgesRiskViewEntry {
   name: string
+  slug: string
   type: string
   destination: Layer2RiskViewEntry
   validation?: Layer2RiskViewEntry
@@ -21,7 +23,7 @@ export function RiskView({ items }: BridgesRiskViewProps) {
   const columns: Column<BridgesRiskViewEntry>[] = [
     {
       name: 'Name',
-      getValue: (entry) => <strong>{entry.name}</strong>,
+      getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
     },
     {
       name: 'Destination',

@@ -1,0 +1,75 @@
+import { Layer2, Layer2RiskView } from '@l2beat/config'
+import classNames from 'classnames'
+import React from 'react'
+
+import {
+  OptimismIcon,
+  StarkWareIcon,
+  ZkSyncIcon,
+} from '../../../components/icons'
+import { ProjectLink } from '../../../components/ProjectLink'
+import { Column, TableView } from '../../../components/TableView'
+import { RiskCell } from './RiskCell'
+
+export interface RiskViewProps {
+  items: RiskViewEntry[]
+  className?: string
+}
+
+export interface RiskViewEntry extends Layer2RiskView {
+  name: string
+  slug: string
+  provider?: Layer2['technology']['provider']
+}
+
+export function RiskView({ items, className }: RiskViewProps) {
+  const columns: Column<RiskViewEntry>[] = [
+    {
+      name: 'Name',
+      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+    },
+    {
+      name: 'State validation',
+      getValue: (project) => <RiskCell item={project.stateValidation} />,
+    },
+    {
+      name: 'Data availability',
+      getValue: (project) => <RiskCell item={project.dataAvailability} />,
+    },
+    {
+      name: 'Upgradeability',
+      getValue: (project) => <RiskCell item={project.upgradeability} />,
+    },
+    {
+      name: 'Sequencer failure',
+      getValue: (project) => <RiskCell item={project.sequencerFailure} />,
+    },
+    {
+      name: 'Validator failure',
+      getValue: (project) => <RiskCell item={project.validatorFailure} />,
+    },
+  ]
+
+  return (
+    <section className={classNames('RiskView', className)}>
+      <TableView items={items} columns={columns} />
+      <div className="RiskView-Symbols">
+        <p>
+          <StarkWareIcon />
+          <span>&ndash;</span>
+          <span>This project is built using StarkEx.</span>
+        </p>
+        <p>
+          <OptimismIcon />
+          <span>&ndash;</span>
+          <span>This project is based on Optimism&apos;s code base.</span>
+        </p>
+        <p>
+          <ZkSyncIcon />
+          <span>&ndash;</span>
+          <span>This project is based on zkSync&apos;s code base.</span>
+        </p>
+      </div>
+    </section>
+  )
+}

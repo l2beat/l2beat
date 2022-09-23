@@ -4,33 +4,40 @@ import { Bridge } from './types'
 
 export const wormholeV1: Bridge = {
   id: ProjectId('wormholeV1'),
-  name: 'Wormhole V1',
-  slug: 'wormholev1',
-  type: 'Lock-Mint',
-  destination: ['TODO', 'TODO', 'TODO'],
-  canonical: true,
-  validation: 'Native Bridge',
-  links: {
-    websites: ['https://wormhole.com/'],
-  },
-  escrows: [
-    {
-      address: '0xf92cD566Ea4864356C5491c177A430C222d7e678', // Escrow to Solana ?
-      sinceTimestamp: new UnixTime(1611084766),
-      tokens: [
-        //'FTT',
-        'BUSD',
-        'HBTC',
-        'HUSD',
-        'DAI',
-        'SRM',
-        'WETH',
-        'FRAX',
-        'WBTC',
-      ],
+  display: {
+    name: 'Wormhole V1',
+    slug: 'wormholev1',
+    links: {
+      websites: ['https://wormhole.com/'],
     },
-  ],
-  risks: {
+  },
+  config: {
+    escrows: [
+      {
+        address: '0xf92cD566Ea4864356C5491c177A430C222d7e678', // Escrow to Solana ?
+        sinceTimestamp: new UnixTime(1611084766),
+        tokens: [
+          //'FTT',
+          'BUSD',
+          'HBTC',
+          'HUSD',
+          'DAI',
+          'SRM',
+          'WETH',
+          'FRAX',
+          'WBTC',
+        ],
+      },
+    ],
+  },
+  technology: {
+    type: 'Lock-Mint',
+    destination: ['TODO', 'TODO', 'TODO'],
+    canonical: true,
+    validation: 'Native Bridge',
+    connections: [{ network: 'Solana', tokens: ['*'] }],
+  },
+  riskView: {
     validation: {
       value: 'External',
       description:
@@ -48,5 +55,4 @@ export const wormholeV1: Bridge = {
       sentiment: 'bad',
     },
   },
-  connections: [{ network: 'Solana', tokens: ['*'] }],
 }

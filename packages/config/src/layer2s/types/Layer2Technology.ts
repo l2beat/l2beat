@@ -1,8 +1,8 @@
-import { Layer2Contracts } from './Layer2Contracts'
-import { Layer2Permission } from './Layer2Permission'
 import { Layer2TechnologyChoice } from './Layer2TechnologyChoice'
 
 export interface Layer2Technology {
+  /** Technology provider */
+  provider?: 'StarkEx' | 'Optimism' | 'zkSync'
   category: {
     /** Name of the category the layer2 belongs to */
     name: Layer2Category
@@ -27,10 +27,6 @@ export interface Layer2Technology {
   additionalPrivacy?: Layer2TechnologyChoice
   /** What are the smart contract capabilities */
   smartContracts?: Layer2TechnologyChoice
-  /** List of permissioned addresses */
-  permissions?: Layer2Permission[]
-  /** List of smart contracts used in the layer2 */
-  contracts: Layer2Contracts
 }
 
 export type Layer2Category =

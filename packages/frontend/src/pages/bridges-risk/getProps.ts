@@ -15,10 +15,11 @@ export function getProps(
     props: {
       items: ordering.map(
         (bridge): BridgesRiskViewEntry => ({
-          name: bridge.name,
-          type: bridge.type,
-          destination: getDestination(bridge.destination),
-          ...bridge.risks,
+          name: bridge.display.name,
+          slug: bridge.display.slug,
+          type: bridge.technology.type,
+          destination: getDestination(bridge.technology.destination),
+          ...bridge.riskView,
         }),
       ),
     },

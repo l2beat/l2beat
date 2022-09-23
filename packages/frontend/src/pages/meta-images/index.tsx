@@ -20,7 +20,7 @@ export function getMetaImagePages(projects: Layer2[], apiMain: ApiMain) {
     ...projects.map((project) => {
       const { props, wrapper } = getProps(apiMain, project)
       return {
-        slug: `/meta-images/${project.slug}`,
+        slug: `/meta-images/${project.display.slug}`,
         page: (
           <PageWrapper {...wrapper}>
             <MetaImage {...props} />
