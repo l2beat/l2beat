@@ -1,3 +1,4 @@
+import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
@@ -26,6 +27,7 @@ import { zksync } from './zksync'
 export * from './types'
 
 export const layer2s: Layer2[] = [
+  apex,
   arbitrum,
   aztec,
   aztecconnect,
