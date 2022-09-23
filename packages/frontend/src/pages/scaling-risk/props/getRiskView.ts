@@ -8,9 +8,9 @@ export function getRiskView(projects: Layer2[]): RiskViewProps {
 
 export function getRiskViewEntry(project: Layer2): RiskViewEntry {
   return {
-    name: project.name,
-    slug: project.slug,
-    provider: project.details.provider,
-    ...project.details.riskView,
+    name: project.display.name,
+    slug: project.display.slug,
+    provider: project.technology.provider,
+    ...project.riskView,
   }
 }

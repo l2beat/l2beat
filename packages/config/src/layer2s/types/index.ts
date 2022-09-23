@@ -1,6 +1,5 @@
 export * from './Layer2'
 export * from './Layer2Contracts'
-export * from './Layer2Details'
 export * from './Layer2Escrow'
 export * from './Layer2Event'
 export * from './Layer2Links'

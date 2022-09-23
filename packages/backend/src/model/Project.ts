@@ -27,14 +27,14 @@ export function layer2ToProject(layer2: Layer2): Project {
   return {
     projectId: layer2.id,
     type: 'layer2',
-    escrows: layer2.escrows.map((escrow) => ({
+    escrows: layer2.config.escrows.map((escrow) => ({
       address: EthereumAddress(escrow.address),
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
-    events: layer2.events,
-    transactionApi: layer2.transactionApi,
+    events: layer2.config.events,
+    transactionApi: layer2.config.transactionApi,
   }
 }
 
@@ -42,7 +42,7 @@ export function bridgeToProject(bridge: Bridge): Project {
   return {
     projectId: bridge.id,
     type: 'bridge',
-    escrows: bridge.escrows.map((escrow) => ({
+    escrows: bridge.config.escrows.map((escrow) => ({
       address: EthereumAddress(escrow.address),
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:

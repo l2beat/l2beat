@@ -20,7 +20,7 @@ export interface FinancialViewProps {
 export interface FinancialViewEntry {
   name: string
   slug: string
-  provider?: Layer2['details']['provider']
+  provider?: Layer2['technology']['provider']
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string

@@ -11,17 +11,32 @@ export interface EventRecord {
   projectId: ProjectId
 }
 
+export interface AggregatedEventRecord extends EventRecord {
+  count: number
+}
+
+interface AggregatedQueryResult {
+  rows: {
+    unix_timestamp_aggregated: Date
+    event_name: string
+    project_id: string
+    count: number
+  }[]
+}
+
 export class EventRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
+    this.getDataBoundary = this.wrapAny(this.getDataBoundary)
+    this.getAggregatedByProjectAndGranularity = this.wrapGet(
+      this.getAggregatedByProjectAndGranularity,
+    )
     this.addMany = this.wrapAddMany(this.addMany)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getByProjectAndName = this.wrapGet(this.getByProjectAndName)
-    this.getByProject = this.wrapGet(this.getByProject)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -47,29 +62,39 @@ export class EventRepository extends BaseRepository {
     )
   }
 
-  async getByProject(
+  async getAggregatedByProjectAndGranularity(
     projectId: ProjectId,
+    granularity: 'hour' | 'day',
     from: UnixTime = new UnixTime(0),
-  ): Promise<EventRecord[]> {
+  ): Promise<AggregatedEventRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('events')
-      .where('project_id', projectId.toString())
-      .where('unix_timestamp', '>=', from.toDate())
-      .select()
-      .orderBy(['unix_timestamp', 'event_name'])
-    return rows.map(toRecord)
-  }
 
-  async getByProjectAndName(
-    projectId: ProjectId,
-    name: string,
-  ): Promise<EventRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('events')
-      .where('project_id', projectId.toString())
-      .where('event_name', name)
-      .select()
-    return rows.map(toRecord)
+    const raw = (await knex.raw(
+      `
+      SELECT
+        date_trunc(:granularity, unix_timestamp) AS unix_timestamp_aggregated,
+        event_name,
+        project_id,
+        COUNT(*) as count
+      FROM
+        events
+      WHERE
+        project_id = :projectId AND unix_timestamp >= :from
+      GROUP BY
+        event_name,
+        project_id,
+        unix_timestamp_aggregated
+      ORDER BY
+        unix_timestamp_aggregated, event_name
+      `,
+      {
+        granularity,
+        projectId: projectId.toString(),
+        from: from.toDate(),
+      },
+    )) as unknown as AggregatedQueryResult
+
+    return raw.rows.map(toRecordAggregated)
   }
 
   async addMany(events: EventRecord[]) {
@@ -104,5 +129,19 @@ function toRecord(row: EventRow): EventRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     name: row.event_name,
     projectId: ProjectId(row.project_id),
+  }
+}
+
+function toRecordAggregated(rowWithCount: {
+  unix_timestamp_aggregated: Date
+  event_name: string
+  project_id: string
+  count: number
+}): AggregatedEventRecord {
+  return {
+    timestamp: UnixTime.fromDate(rowWithCount.unix_timestamp_aggregated),
+    name: rowWithCount.event_name,
+    projectId: ProjectId(rowWithCount.project_id),
+    count: +rowWithCount.count,
   }
 }

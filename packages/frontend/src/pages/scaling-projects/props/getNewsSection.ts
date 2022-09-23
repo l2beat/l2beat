@@ -4,7 +4,7 @@ import { NewsSectionProps } from '../../../components/project/NewsSection'
 import { formatDate } from '../../../utils'
 
 export function getNewsSection(project: Layer2): NewsSectionProps {
-  const news = project.details.news.map((x) => ({
+  const news = project.news.map((x) => ({
     title: x.name,
     href: x.link,
     date: formatDate(x.date),

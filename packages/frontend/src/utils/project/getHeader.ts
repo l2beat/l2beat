@@ -1,10 +1,13 @@
-import { Layer2 } from '@l2beat/config'
+import { Bridge, Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
-import { HeaderProps } from '../../../components'
-import { formatUSD, getPercentageChange } from '../../../utils/utils'
+import { HeaderProps } from '../../components'
+import { formatUSD, getPercentageChange } from '../utils'
 
-export function getHeader(project: Layer2, apiMain: ApiMain): HeaderProps {
+export function getHeader(
+  project: Layer2 | Bridge,
+  apiMain: ApiMain,
+): HeaderProps {
   const hourly =
     apiMain.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0
@@ -12,9 +15,9 @@ export function getHeader(project: Layer2, apiMain: ApiMain): HeaderProps {
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {
-    icon: `/icons/${project.slug}.png`,
-    title: project.name,
-    titleLength: getTitleLength(project.name),
+    icon: `/icons/${project.display.slug}.png`,
+    title: project.display.name,
+    titleLength: getTitleLength(project.display.name),
     tvl: formatUSD(tvl),
     sevenDayChange,
   }

@@ -4,32 +4,39 @@ import { Bridge } from './types'
 
 export const near: Bridge = {
   id: ProjectId('near'),
-  name: 'Rainbow Bridge',
-  slug: 'near',
-  canonical: true,
-  type: 'Lock-Mint',
-  validation: 'LC Token Bridge',
-  destination: ['Near', 'Aurora'],
-  links: {
-    websites: ['https://near.org/bridge/'],
-  },
-  associatedTokens: ['AURORA'],
-  escrows: [
-    {
-      address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
-      sinceTimestamp: new UnixTime(1615826693),
-      tokens: [
-        'DAI',
-        'USDC',
-        'AURORA',
-        'USDT',
-        'WBTC',
-        // PLY,
-        // OCT
-      ],
+  display: {
+    name: 'Rainbow Bridge',
+    slug: 'near',
+    links: {
+      websites: ['https://near.org/bridge/'],
     },
-  ],
-  risks: {
+  },
+  config: {
+    associatedTokens: ['AURORA'],
+    escrows: [
+      {
+        address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
+        sinceTimestamp: new UnixTime(1615826693),
+        tokens: [
+          'DAI',
+          'USDC',
+          'AURORA',
+          'USDT',
+          'WBTC',
+          // PLY,
+          // OCT
+        ],
+      },
+    ],
+  },
+  technology: {
+    canonical: true,
+    type: 'Lock-Mint',
+    validation: 'LC Token Bridge',
+    destination: ['Near', 'Aurora'],
+    connections: [],
+  },
+  riskView: {
     validation: {
       value: 'Light Client',
       description:
@@ -48,5 +55,4 @@ export const near: Bridge = {
       sentiment: 'warning',
     },
   },
-  connections: [],
 }

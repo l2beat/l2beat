@@ -4,12 +4,30 @@ import { Bridge } from './types'
 
 export const ronin: Bridge = {
   id: ProjectId('ronin'),
-  name: 'Ronin',
-  slug: 'ronin',
-  type: 'Lock-Mint',
-  validation: 'EV Token Bridge',
-  destination: ['Axie Infinity Chain'],
-  risks: {
+  display: {
+    name: 'Ronin',
+    slug: 'ronin',
+    links: {
+      websites: ['https://bridge.roninchain.com/'],
+    },
+  },
+  config: {
+    associatedTokens: ['AXS'],
+    escrows: [
+      {
+        address: '0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2',
+        sinceTimestamp: new UnixTime(1611575595),
+        tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
+      },
+    ],
+  },
+  technology: {
+    type: 'Lock-Mint',
+    validation: 'EV Token Bridge',
+    destination: ['Axie Infinity Chain'],
+    connections: [],
+  },
+  riskView: {
     validation: {
       value: 'External',
       description: '5/9 MultiSig',
@@ -26,16 +44,4 @@ export const ronin: Bridge = {
       sentiment: 'warning',
     },
   },
-  links: {
-    websites: ['https://bridge.roninchain.com/'],
-  },
-  associatedTokens: ['AXS'],
-  escrows: [
-    {
-      address: '0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2',
-      sinceTimestamp: new UnixTime(1611575595),
-      tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
-    },
-  ],
-  connections: [],
 }

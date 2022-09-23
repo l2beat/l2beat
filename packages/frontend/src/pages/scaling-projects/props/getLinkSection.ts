@@ -4,8 +4,8 @@ import { LinkSectionProps } from '../../../components/project/links/LinkSection'
 
 export function getLinkSection(project: Layer2): LinkSectionProps {
   return {
-    links: project.details.links,
-    name: project.name,
-    icon: `/icons/${project.slug}.png`,
+    links: project.display.links,
+    name: project.display.name,
+    icon: `/icons/${project.display.slug}.png`,
   }
 }
