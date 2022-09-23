@@ -270,34 +270,19 @@ export const starknet: Layer2 = {
   ],
   news: [
     {
-      date: '2022-07-13',
-      name: 'Part 3: StarkNet Token Design',
-      link: 'https://medium.com/starkware/part-3-starknet-token-design-5cc17af066c6',
+      date: '2022-09-12',
+      name: 'Cairo 1.0',
+      link: 'https://medium.com/starkware/cairo-1-0-aa96eefb19a0',
     },
     {
-      date: '2022-07-13',
-      name: 'Part 2: A Decentralization and Governance Proposal for StarkNet',
-      link: 'https://medium.com/starkware/part-2-a-decentralization-and-governance-proposal-for-starknet-23e335645778',
+      date: '2022-08-11',
+      name: 'Recursive STARKs',
+      link: 'https://medium.com/starkware/recursive-starks-78f8dd401025',
     },
     {
-      date: '2022-07-13',
-      name: 'Part 1: StarkNet Sovereignty: A Decentralization Proposal',
-      link: 'https://medium.com/starkware/part-1-starknet-sovereignty-a-decentralization-proposal-bca3e98a01ef',
-    },
-    {
-      date: '2022-07-04',
-      name: 'Regenesis: StarkNet’s No-Sweat State Reset',
-      link: 'https://medium.com/starkware/regenesis-starknets-no-sweat-state-reset-e296b12b80ae',
-    },
-    {
-      date: '2022-06-06',
-      name: 'StarkNet Alpha 0.9.0',
-      link: 'https://medium.com/starkware/starknet-alpha-0-9-0-dce43cf13490',
-    },
-    {
-      date: '2022-05-09',
-      name: 'StarkGate Alpha is live on Mainnet',
-      link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      date: '2022-09-05',
+      name: 'StarkNet Alpha 0.10.0',
+      link: 'https://medium.com/starkware/starknet-alpha-0-10-0-923007290470',
     },
   ],
 }

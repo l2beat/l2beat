@@ -433,29 +433,19 @@ export const arbitrum: Layer2 = {
   },
   news: [
     {
-      date: '2022-06-29',
-      name: 'Arbitrum Odyssey paused',
-      link: 'https://twitter.com/arbitrum/status/1542159105946787840',
+      date: '2022-08-31',
+      name: 'Arbitrum One is now running on Nitro',
+      link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
     },
     {
-      date: '2022-06-24',
-      name: 'Norwegian Government using is Arbitrum',
-      link: 'https://twitter.com/arbitrum/status/1540441771485831169',
+      date: '2022-08-09',
+      name: 'The gates of Arbitrum Nova are now open',
+      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
     },
     {
-      date: '2022-06-11',
-      name: 'Arbitrum Nova Introduced',
-      link: 'https://medium.com/offchainlabs/introducing-nova-arbitrum-anytrust-mainnet-is-open-for-developers-9a54692f345e',
-    },
-    {
-      date: '2022-04-12',
-      name: 'The Arbitrum Odyssey',
-      link: 'https://medium.com/offchainlabs/the-arbitrum-odyssey-87d6e11171d5',
-    },
-    {
-      date: '2022-03-01',
-      name: 'Arbitrum AnyTrust Introduced',
-      link: 'https://medium.com/offchainlabs/introducing-anytrust-chains-cheaper-faster-l2-chains-with-minimal-trust-assumptions-31def59eb8d7',
+      date: '2022-08-05',
+      name: 'Arbitrum One is migrating to Nitro on August 31st',
+      link: 'https://medium.com/offchainlabs/prepare-your-engines-nitro-is-imminent-a46af99b9e60',
     },
   ],
 }

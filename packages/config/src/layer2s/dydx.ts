@@ -176,9 +176,19 @@ export const dydx: Layer2 = {
   ],
   news: [
     {
-      date: '2022-06-22',
-      name: 'Announcing dYdX Chain',
-      link: 'https://dydx.exchange/blog/dydx-chain',
+      date: '2022-09-09',
+      name: 'Testnet migration from Ropsten to Goerli',
+      link: 'https://dydx.exchange/blog/staging-testnet-migration-to-goerli',
+    },
+    {
+      date: '2022-09-09',
+      name: 'Trading Leagues update',
+      link: 'https://dydx.exchange/blog/trading-leagues-update',
+    },
+    {
+      date: '2022-09-07',
+      name: 'No disruption to trading during The Merge',
+      link: 'https://dydx.exchange/blog/the-merge',
     },
   ],
 }
