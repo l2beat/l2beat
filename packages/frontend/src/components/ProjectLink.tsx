@@ -9,12 +9,17 @@ interface Props {
     slug: string
     provider?: Layer2['technology']['provider']
   }
+  type: 'layer2' | 'bridge'
 }
 
-export function ProjectLink({ project }: Props) {
+export function ProjectLink({ project, type }: Props) {
+  const href =
+    type === 'layer2'
+      ? `/scaling/projects/${project.slug}`
+      : `/bridges/projects/${project.slug}`
   return (
     <>
-      <a className="ProjectLink" href={`/scaling/projects/${project.slug}`}>
+      <a className="ProjectLink" href={href}>
         <img
           className="ProjectLink-Icon"
           src={`/icons/${project.slug}.png`}

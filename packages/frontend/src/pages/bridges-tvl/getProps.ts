@@ -16,6 +16,7 @@ export function getProps(
       items: ordering.map(
         (bridge): BridgesTvlViewEntry => ({
           name: bridge.display.name,
+          slug: bridge.display.slug,
           type: bridge.technology.type,
           tvl:
             apiMain.projects[bridge.id.toString()]?.charts.hourly.data.at(
