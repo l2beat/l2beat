@@ -60,6 +60,12 @@ declare module 'knex/types/tables' {
     count: number
   }
 
+  interface StarkexTransactionCountRow {
+    unix_timestamp: Date
+    project_id: string
+    count: number
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -70,5 +76,6 @@ declare module 'knex/types/tables' {
     report_status: ReportStatusRow
     events: EventRow
     transaction_count: TransactionCountRow
+    starkex_transaction_count: StarkexTransactionCountRow
   }
 }

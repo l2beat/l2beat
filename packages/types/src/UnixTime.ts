@@ -27,6 +27,10 @@ export class UnixTime {
     return new UnixTime(Math.floor(date.getTime() / 1000))
   }
 
+  static fromDays(days: number) {
+    return new UnixTime(days * UnixTime.DAY)
+  }
+
   toStartOf(period: 'day' | 'hour' | 'minute') {
     const modulus =
       period === 'day'
@@ -114,6 +118,14 @@ export class UnixTime {
 
   toYYYYMMDD() {
     return this.toDate().toISOString().slice(0, 10)
+  }
+
+  toDays() {
+    if (this.timestamp % UnixTime.DAY !== 0) {
+      throw new Error('Timestamp must be a full day')
+    }
+
+    return this.timestamp / UnixTime.DAY
   }
 
   static isSafeToCast(timestamp: number): boolean {

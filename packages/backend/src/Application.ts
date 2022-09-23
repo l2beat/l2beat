@@ -29,11 +29,14 @@ import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
 import { Database } from './peripherals/database/shared/Database'
+import { StarkexTransactionCountRepository } from './peripherals/database/StarkexTransactionCountRepository'
 import { TransactionCountRepository } from './peripherals/database/TransactionCountRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
+import { StarkexClient } from './peripherals/starkex'
 import { createRpcTransactionUpdaters } from './setup/createRpcTransactionUpdaters'
+import { createStarkexTransactionUpdaters } from './setup/createStarkexTransactionUpdaters'
 
 export class Application {
   start: () => Promise<void>
@@ -65,6 +68,8 @@ export class Application {
       database,
       logger,
     )
+    const starkexTransactionCountRepository =
+      new StarkexTransactionCountRepository(database, logger)
 
     const http = new HttpClient()
 
@@ -83,6 +88,13 @@ export class Application {
 
     const etherscanClient = new EtherscanClient(
       config.etherscanApiKey,
+      http,
+      logger,
+    )
+
+    const starkexClient = new StarkexClient(
+      config.starkexApiUrl,
+      config.starkexApiKey,
       http,
       logger,
     )
@@ -147,6 +159,14 @@ export class Application {
       logger,
     )
 
+    const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
+      config,
+      starkexTransactionCountRepository,
+      starkexClient,
+      clock,
+      logger,
+    )
+
     // #endregion
     // #region api
 
@@ -204,6 +224,9 @@ export class Application {
 
         if (config.transactionCountSyncEnabled) {
           for (const updater of rpcTransactionUpdaters) {
+            updater.start()
+          }
+          for (const updater of starkexTransactionUpdaters) {
             updater.start()
           }
         }

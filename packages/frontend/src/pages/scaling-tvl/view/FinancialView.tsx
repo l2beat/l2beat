@@ -37,7 +37,7 @@ export function FinancialView({ items }: FinancialViewProps) {
   const columns: Column<FinancialViewEntry>[] = [
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink project={project} />,
+      getValue: (project) => <ProjectLink type="layer2" project={project} />,
     },
     {
       name: 'TVL',
