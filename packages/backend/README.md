@@ -46,6 +46,8 @@ environment variables. One variable per line `KEY=value`.
 - `DATABASE_URL` - Database url used in production deployment
 - `LOCAL_DB_URL` - Database url used in `yarn start`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_local`
 - `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgresql://postgres:password@localhost:5432/l2beat_test`
+- `STARKEX_API_URL` - Starkex api url, used while counting transactions from strakex based systems.
+- `STARKEX_API_KEY` - Starkex api key
 - `COINGECKO_API_KEY` - (Optional) Api key for Coingecko
 - `LOG_LEVEL` - (Optional) Integer specifying the log level. `0` - none, `1` - error, `2` - info, `3` - debug
 - `PORT` - (Optional) The port on which the application exposes the api

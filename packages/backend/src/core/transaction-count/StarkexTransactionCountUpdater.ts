@@ -1,0 +1,78 @@
+import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { StarkexProduct } from '@l2beat/config'
+import { ProjectId, UnixTime } from '@l2beat/types'
+
+import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
+import { StarkexClient } from '../../peripherals/starkex'
+import { Clock } from '../Clock'
+
+export class StarkexTransactionCountUpdater {
+  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private daysQueue = new UniqueTaskQueue(
+    this.updateDay.bind(this),
+    this.logger,
+  )
+  private startDay: number
+
+  constructor(
+    private starkexTransactionCountRepository: StarkexTransactionCountRepository,
+    private starkexClient: StarkexClient,
+    private clock: Clock,
+    private logger: Logger,
+    private product: StarkexProduct,
+    private projectId: ProjectId,
+    startTimestamp: UnixTime,
+  ) {
+    this.logger = logger.for(this)
+    this.startDay = startTimestamp.toStartOf('day').toDays()
+  }
+
+  start() {
+    this.logger.info('Started')
+    this.updateQueue.addIfEmpty()
+    return this.clock.onNewHour(() => {
+      this.updateQueue.addIfEmpty()
+    })
+  }
+
+  async updateDay(day: number) {
+    const count = await this.starkexClient.getDailyCount(day, this.product)
+
+    await this.starkexTransactionCountRepository.add({
+      projectId: this.projectId,
+      timestamp: UnixTime.fromDays(day),
+      count,
+    })
+
+    this.logger.info('Day updated', {
+      projectId: this.projectId.toString(),
+      day,
+      count,
+    })
+  }
+
+  async update() {
+    this.logger.info('Update started')
+
+    const missingRanges =
+      await this.starkexTransactionCountRepository.getMissingRangesByProject(
+        this.projectId,
+      )
+
+    // Because starkex API operates on days (unix_timestamp / 86400)
+    // it is easier to loop through all days we want to update.
+    const today = this.clock.getLastHour().toStartOf('day').toDays()
+
+    for (const [start, end] of missingRanges) {
+      for (
+        let i = Math.max(start, this.startDay);
+        i < Math.min(end, today);
+        i++
+      ) {
+        this.daysQueue.addToBack(i)
+      }
+    }
+
+    this.logger.info('Update enqueued')
+  }
+}

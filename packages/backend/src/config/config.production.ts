@@ -18,6 +18,8 @@ export function getProductionConfig(): Config {
     coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+    starkexApiUrl: getEnv('STARKEX_API_URL'),
+    starkexApiKey: getEnv('STARKEX_API_KEY'),
     databaseConnection: {
       connectionString: getEnv('DATABASE_URL'),
       ssl: { rejectUnauthorized: false },
