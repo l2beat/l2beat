@@ -10,7 +10,7 @@ import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 
 export function createRpcTransactionUpdaters(
   config: Config,
-  transactionCountRepository: RpcTransactionCountRepository,
+  rpcTransactionCountRepository: RpcTransactionCountRepository,
   clock: Clock,
   logger: Logger,
 ) {
@@ -30,7 +30,7 @@ export function createRpcTransactionUpdaters(
 
       const transactionUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        transactionCountRepository,
+        rpcTransactionCountRepository,
         clock,
         logger,
         project.projectId,

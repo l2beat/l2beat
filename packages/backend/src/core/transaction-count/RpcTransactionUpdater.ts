@@ -17,7 +17,7 @@ export class RpcTransactionUpdater {
 
   constructor(
     private ethereumClient: EthereumClient,
-    private txCountRepository: RpcTransactionCountRepository,
+    private rpcTransactionCountRepository: RpcTransactionCountRepository,
     private clock: Clock,
     private logger: Logger,
     private projectId: ProjectId,
@@ -43,7 +43,7 @@ export class RpcTransactionUpdater {
       return
     }
 
-    await this.txCountRepository.add({
+    await this.rpcTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
@@ -55,7 +55,9 @@ export class RpcTransactionUpdater {
     this.logger.info('Update started')
 
     const missingRanges =
-      await this.txCountRepository.getMissingRangesByProject(this.projectId)
+      await this.rpcTransactionCountRepository.getMissingRangesByProject(
+        this.projectId,
+      )
     const latestBlock = await this.ethereumClient.getBlockNumber()
 
     for (const [start, end] of missingRanges) {

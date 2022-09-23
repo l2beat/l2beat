@@ -64,7 +64,7 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
-    const transactionCountRepository = new RpcTransactionCountRepository(
+    const rpcTransactionCountRepository = new RpcTransactionCountRepository(
       database,
       logger,
     )
@@ -154,7 +154,7 @@ export class Application {
 
     const rpcTransactionUpdaters = createRpcTransactionUpdaters(
       config,
-      transactionCountRepository,
+      rpcTransactionCountRepository,
       clock,
       logger,
     )
