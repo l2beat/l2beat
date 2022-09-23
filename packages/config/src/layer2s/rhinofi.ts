@@ -179,14 +179,19 @@ export const rhinofi: Layer2 = {
   ],
   news: [
     {
-      date: '2022-07-14',
-      name: 'Today DeversiFi becomes rhino.fi: the first multi-chain platform to bring you all the best DeFi opportunities in one place.',
-      link: 'https://rhino.fi/blog/beat-the-stampede-with-our-breaking-news-and-win-a-share-of-5k/',
+      date: '2022-09-14',
+      name: 'Merge Bonus, Earn an extra 2% yield on stETH',
+      link: 'https://rhino.fi/blog/the-ethereum-merge-our-special-yield-boost/',
     },
     {
-      date: '2022-07-20',
-      name: "Noah's Ark moment for DeFi",
-      link: 'https://rhino.fi/blog/noahs-ark-moment-defi/',
+      date: '2022-09-09',
+      name: 'The Ethereum Merge, 6 Biggest Questions Answered',
+      link: 'https://rhino.fi/blog/the-ethereum-merge-the-six-biggest-questions-answered/',
+    },
+    {
+      date: '2022-08-31',
+      name: 'The first fully trustless AMM pools on StarkEx L2',
+      link: 'https://rhino.fi/blog/a-new-chapter-for-amms-the-first-fully-trustless-pools-on-starkex-layer-2-are-live-on-rhino-fi/',
     },
   ],
 }

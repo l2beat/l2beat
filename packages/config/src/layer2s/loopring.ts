@@ -307,14 +307,19 @@ export const loopring: Layer2 = {
   },
   news: [
     {
-      date: '2022-06-20',
-      name: 'Force Withdrawal UI is now available',
-      link: 'https://twitter.com/loopringorg/status/1549831131868045342',
+      date: '2022-09-16',
+      name: 'Loophead Drop #4: NFT Marketplace Challenge',
+      link: 'https://medium.loopring.io/loophead-drop-4-nft-marketplace-challenge-a122f96aa3b5',
     },
     {
-      date: '2022-03-23',
-      name: 'GameStop NFT Marketplace, powered by Loopring L2',
-      link: 'https://medium.loopring.io/gamestop-nft-marketplace-powered-by-loopring-l2-6cdb9289d937',
+      date: '2022-08-25',
+      name: 'Lido Staked ETH on Loopring L2',
+      link: 'https://medium.loopring.io/lido-staked-eth-on-loopring-l2-6b23b1e56212',
+    },
+    {
+      date: '2022-08-17',
+      name: 'Introducing DAO Voting',
+      link: 'https://medium.loopring.io/introducing-dao-voting-46a210c373bc',
     },
   ],
 }

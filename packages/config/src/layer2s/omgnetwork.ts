@@ -132,19 +132,19 @@ export const omgnetwork: Layer2 = {
   },
   news: [
     {
-      date: '2021-02-22',
-      name: 'Enya x OMG Community Response ft. Hashcast Demo',
-      link: 'https://omg.network/enya-hashcast-demo/',
+      date: '2021-04-13',
+      name: 'OMG Labs Update #03: The Road Ahead For Layer-2s',
+      link: 'https://omg.network/omg-labs-update-03-the-road-ahead-for-layer-2s/',
     },
     {
-      date: '2021-02-03',
-      name: 'Enya Joins OMG Network As Strategic Partner',
-      link: 'https://omg.network/enya-omg-network-partner/',
+      date: '2021-04-06',
+      name: 'The Bigger Picture: Varna, Hashcast, and Quasar',
+      link: 'https://omg.network/bigger-picture-varna-hashcast-quasar/',
     },
     {
-      date: '2020-10-01',
-      name: 'OMG Network 2020: Plasma Blockchain & Loyalty Points',
-      link: 'https://omg.network/omg-network-update-plasma-blockchain-loyalty-points/',
+      date: '2021-03-19',
+      name: 'OMG Labs: Engineering Update #02 (ft. Varna!)',
+      link: 'https://omg.network/omg-labs-engineering-update-02-ft-varna/',
     },
   ],
 }

@@ -149,14 +149,19 @@ export const myria: Layer2 = {
   ],
   news: [
     {
-      date: '2022-08-26',
-      name: 'Myria’s Layer 2 launch has arrived',
-      link: 'https://medium.com/@myriagames/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      date: '2022-09-22',
+      name: 'Coinary and Myria team up',
+      link: 'https://medium.com/@myriagames/myrias-layer-2-breathes-fire-into-dragonary-through-new-blockchain-partnership-7e945af90f97',
     },
     {
-      date: '2021-12-17',
-      name: 'Welcome to Myria',
-      link: 'https://medium.com/@myriagames/myria-is-born-4c4a05018c2',
+      date: '2022-09-16',
+      name: 'Carnage Carnival builds on Myria. Here’s why',
+      link: 'https://medium.com/@myriagames/carnage-carnival-builds-on-myria-heres-why-bbb57d813a79',
+    },
+    {
+      date: '2022-09-16',
+      name: 'Meta Nomads — why they chose Myria',
+      link: 'https://medium.com/@myriagames/meta-nomads-why-they-chose-myria-7a86c534e5ed',
     },
   ],
 }

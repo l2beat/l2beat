@@ -180,19 +180,19 @@ export const aztec: Layer2 = {
   },
   news: [
     {
-      date: '2021-07-01',
-      name: 'Introducing private Bitcoin',
-      link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
+      date: '2022-09-20',
+      name: 'Explaining the “Network” in Aztec Network',
+      link: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
     },
     {
-      date: '2021-04-30',
-      name: 'Introducing zkDAI into the Aztec Private Rollup',
-      link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
+      date: '2022-09-15',
+      name: 'Proof Compression using zk-SNARKs',
+      link: 'https://medium.com/aztec-protocol/proof-compression-a318f478d575',
     },
     {
-      date: '2021-03-15',
-      name: 'Launching Aztec 2.0 Rollup',
-      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      date: '2022-07-07',
+      name: 'Aztec Connect is live on mainnet',
+      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
     },
   ],
 }

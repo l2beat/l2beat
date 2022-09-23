@@ -321,59 +321,19 @@ export const bobanetwork: Layer2 = {
   ],
   news: [
     {
-      date: '2021-09-20',
-      name: 'Boba Network Announces Public Mainnet Launch',
-      link: 'https://www.enya.ai/press/public-mainnet',
+      date: '2022-09-21',
+      name: 'Boba Network is launching on Avalanche',
+      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
     },
     {
-      date: '2021-09-14',
-      name: 'Boba Network Partners with Witnet',
-      link: 'https://www.enya.ai/press/witnet',
+      date: '2022-09-09',
+      name: 'Boba Network’s veTokenomics Campaign',
+      link: 'https://boba.network/vetokenomics-boba-101/',
     },
     {
-      date: '2021-09-13',
-      name: 'Boba Network Integrates with MyEtherWallet',
-      link: 'https://www.enya.ai/press/mew',
-    },
-    {
-      date: '2021-09-10',
-      name: 'Boba Network Partners with Band Protocol',
-      link: 'https://www.enya.ai/press/band-protocol',
-    },
-    {
-      date: '2021-09-08',
-      name: 'Boba Network Partners with API3',
-      link: 'https://www.enya.ai/press/api3',
-    },
-    {
-      date: '2021-09-07',
-      name: 'Boba Network Partners with Frax Finance',
-      link: 'https://www.enya.ai/press/frax',
-    },
-    {
-      date: '2021-09-02',
-      name: 'Boba Network Partners with SAKE',
-      link: 'https://www.enya.ai/press/sake',
-    },
-    {
-      date: '2021-08-31',
-      name: 'Boba Network Partners with Anyswap',
-      link: 'https://www.enya.ai/press/anyswap',
-    },
-    {
-      date: '2021-08-26',
-      name: 'Boba Network Partners with Coin98',
-      link: 'https://www.enya.ai/press/coin98',
-    },
-    {
-      date: '2021-08-24',
-      name: 'Boba Network Partners with DODO',
-      link: 'https://www.enya.ai/press/dodo',
-    },
-    {
-      date: '2021-08-19',
-      name: 'Enya Launches Mainnet Beta of Boba Network',
-      link: 'https://www.enya.ai/press/bobanetwork',
+      date: '2022-09-06',
+      name: 'Sushi is coming to Boba Network',
+      link: 'https://boba.network/sushi-coming-to-boba-network/',
     },
   ],
 }

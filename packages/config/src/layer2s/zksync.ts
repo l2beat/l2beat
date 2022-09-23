@@ -337,24 +337,19 @@ export const zksync: Layer2 = {
   ],
   news: [
     {
-      date: '2022-07-20',
-      name: '100 days to Mainnet',
-      link: 'https://matterlabs.medium.com/100-days-to-mainnet-6f230893bd73',
+      date: '2022-09-21',
+      name: 'Accessible DeFi with Hashflow',
+      link: 'https://blog.matter-labs.io/accessible-defi-with-hashflow-32e28f22f443',
     },
     {
-      date: '2022-06-22',
-      name: 'Introducing Account Abstraction, L2 → L1 Messaging, and more.',
-      link: 'https://matterlabs.medium.com/introducing-account-abstraction-l2-l1-messaging-and-more-760282cb31a7',
+      date: '2022-09-14',
+      name: 'Peace of Mind With Nexus Mutual',
+      link: 'https://blog.matter-labs.io/peace-of-mind-with-nexus-mutual-250365d0cf9e',
     },
     {
-      date: '2022-02-22',
-      name: 'zkEVM testnet is live',
-      link: 'https://blog.matter-labs.io/zksync-2-0-public-testnet-is-live-de870ba9632a',
-    },
-    {
-      date: '2022-01-14',
-      name: 'On Managing Secure Upgradeability',
-      link: 'https://blog.matter-labs.io/upgradability3-934db4433b0c',
+      date: '2022-09-07',
+      name: 'Web3 Cybersecurity Auditing With Hacken',
+      link: 'https://blog.matter-labs.io/web3-cybersecurity-auditing-with-hacken-3d19a365607c',
     },
   ],
 }

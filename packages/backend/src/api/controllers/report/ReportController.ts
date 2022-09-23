@@ -9,11 +9,9 @@ import {
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
-import {
-  getChartPoints,
-  getHourlyMinTimestamp,
-  getSixHourlyMinTimestamp,
-} from './charts'
+import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
+import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
+import { getChartPoints } from './charts'
 import { generateMain } from './generateMain'
 
 export class ReportController {
