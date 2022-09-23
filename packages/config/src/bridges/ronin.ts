@@ -21,7 +21,7 @@ export const ronin: Bridge = {
       },
       {
         address: '0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08', // new bridge
-        sinceTimestamp: new UnixTime(1611575595),
+        sinceTimestamp: new UnixTime(1655883630),
         tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
       },
     ],
