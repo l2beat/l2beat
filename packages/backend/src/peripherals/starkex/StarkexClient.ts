@@ -13,9 +13,7 @@ export class StarkexClient {
   ) {
     this.logger = this.logger.for(this)
   }
-  // Rate limit?
 
-  // TODO: create BaseClient for this and EtherscanClient to avoid duplication
   async getDailyCount(day: number, product: StarkexProduct): Promise<number> {
     const body = {
       day_start: day,
