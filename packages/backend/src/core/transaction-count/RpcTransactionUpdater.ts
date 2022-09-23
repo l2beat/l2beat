@@ -1,7 +1,7 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { TransactionCountRepository } from '../../peripherals/database/TransactionCountRepository'
+import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
@@ -17,7 +17,7 @@ export class RpcTransactionUpdater {
 
   constructor(
     private ethereumClient: EthereumClient,
-    private txCountRepository: TransactionCountRepository,
+    private txCountRepository: RpcTransactionCountRepository,
     private clock: Clock,
     private logger: Logger,
     private projectId: ProjectId,

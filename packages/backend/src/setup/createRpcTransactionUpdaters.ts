@@ -5,12 +5,12 @@ import { providers } from 'ethers'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
-import { TransactionCountRepository } from '../peripherals/database/TransactionCountRepository'
+import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 
 export function createRpcTransactionUpdaters(
   config: Config,
-  transactionCountRepository: TransactionCountRepository,
+  transactionCountRepository: RpcTransactionCountRepository,
   clock: Clock,
   logger: Logger,
 ) {

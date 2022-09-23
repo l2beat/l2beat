@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { TransactionCountRow } from 'knex/types/tables'
+import { RpcTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
-export interface TransactionCountRecord {
+export interface RpcTransactionCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   blockNumber: number
@@ -18,7 +18,7 @@ interface RawBlockNumberQueryResult {
   }[]
 }
 
-export class TransactionCountRepository extends BaseRepository {
+export class RpcTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -31,17 +31,17 @@ export class TransactionCountRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async add(record: TransactionCountRecord) {
+  async add(record: RpcTransactionCountRecord) {
     const knex = await this.knex()
     const row = toRow(record)
-    await knex('transaction_count').insert(row)
+    await knex('transactions.rpc').insert(row)
     return `${row.project_id}-${row.block_number}`
   }
 
-  async addMany(records: TransactionCountRecord[]) {
+  async addMany(records: RpcTransactionCountRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex('transaction_count').insert(rows)
+    await knex('transactions.rpc').insert(rows)
     return rows.length
   }
 
@@ -53,7 +53,7 @@ export class TransactionCountRepository extends BaseRepository {
       `
       WITH 
         project_blocks AS (
-          SELECT * FROM transaction_count WHERE project_id=?
+          SELECT * FROM transactions.rpc WHERE project_id=?
         )
       SELECT * 
       FROM (
@@ -70,7 +70,7 @@ export class TransactionCountRepository extends BaseRepository {
       `
       WITH 
           project_blocks AS (
-            SELECT * FROM transaction_count WHERE project_id=?
+            SELECT * FROM transactions.rpc WHERE project_id=?
           )
         SELECT * 
         FROM (
@@ -98,11 +98,11 @@ export class TransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transaction_count').delete()
+    return await knex('transactions.rpc').delete()
   }
 }
 
-function toRow(record: TransactionCountRecord): TransactionCountRow {
+function toRow(record: RpcTransactionCountRecord): RpcTransactionCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
