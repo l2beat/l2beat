@@ -1,4 +1,8 @@
-import { Layer2, Layer2Contract, ProjectTechnologyChoice } from '@l2beat/config'
+import {
+  Layer2,
+  ProjectContract,
+  ProjectTechnologyChoice,
+} from '@l2beat/config'
 import { existsSync } from 'fs'
 import path from 'path'
 
@@ -108,7 +112,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     )
   }
 
-  function makeTechnologyContract(item: Layer2Contract): TechnologyContract {
+  function makeTechnologyContract(item: ProjectContract): TechnologyContract {
     const links = []
 
     if (

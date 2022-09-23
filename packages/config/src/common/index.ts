@@ -1,4 +1,5 @@
 export * from './News'
+export * from './ProjectContracts'
 export * from './ProjectEscrow'
 export * from './ProjectLinks'
 export * from './ProjectReference'

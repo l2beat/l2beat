@@ -1,5 +1,4 @@
-import { ProjectRisk } from '../../common'
-import { Layer2Contract } from '../types'
+import { ProjectContract, ProjectRisk } from '../../common'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -23,7 +22,7 @@ function UPGRADE_WITH_DELAY_RISK(delay: string): ProjectRisk {
   }
 }
 
-export const SHARP_VERIFIER_CONTRACT: Layer2Contract = {
+export const SHARP_VERIFIER_CONTRACT: ProjectContract = {
   name: 'GpsStatementVerifier',
   description:
     'Starkware SHARP verifier used collectively by StarkNet, Sorare, Immutable X and rhino.fi. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these four Programs including correctly computed L2 state root which is part of the Program Output.',

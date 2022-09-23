@@ -1,7 +1,11 @@
 import { ProjectId } from '@l2beat/types'
 
-import { News, ProjectEscrow, ProjectLinks } from '../../common'
-import { Layer2Contracts } from './Layer2Contracts'
+import {
+  News,
+  ProjectContracts,
+  ProjectEscrow,
+  ProjectLinks,
+} from '../../common'
 import { Layer2Event } from './Layer2Event'
 import { Layer2Permission } from './Layer2Permission'
 import { Layer2RiskView } from './Layer2RiskView'
@@ -20,7 +24,7 @@ export interface Layer2 {
   /** Deep dive into layer2 technology */
   technology: Layer2Technology
   /** List of smart contracts used in the layer2 */
-  contracts: Layer2Contracts
+  contracts: ProjectContracts
   /** List of permissioned addresses */
   permissions?: Layer2Permission[]
   /** Links to recent developments */
