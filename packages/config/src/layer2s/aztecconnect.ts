@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
+import { aztec } from './aztec'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -190,26 +191,5 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2021-07-01',
-      name: 'Introducing private Bitcoin',
-      link: 'https://medium.com/aztec-protocol/introducing-private-bitcoin-1cd9d895c770',
-    },
-    {
-      date: '2021-04-30',
-      name: 'Introducing zkDAI into the Aztec Private Rollup',
-      link: 'https://medium.com/aztec-protocol/introducing-zkdai-into-the-aztec-private-rollup-203bd1b5164c',
-    },
-    {
-      date: '2021-03-15',
-      name: 'Launching Aztec 2.0 Rollup',
-      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
-    },
-    {
-      date: '2022-07-09',
-      name: 'Aztec Network Launches First Ever Private DeFi Solution for Ethereum',
-      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
-    },
-  ],
+  news: aztec.news,
 }

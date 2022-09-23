@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { arbitrum } from './arbitrum'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -297,11 +298,5 @@ export const nova: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2022-06-29',
-      name: 'Arbitrum Nova open for Developers',
-      link: 'https://medium.com/offchainlabs/introducing-nova-arbitrum-anytrust-mainnet-is-open-for-developers-9a54692f345e',
-    },
-  ],
+  news: arbitrum.news,
 }

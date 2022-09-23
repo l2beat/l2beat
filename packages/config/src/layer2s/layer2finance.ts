@@ -181,6 +181,11 @@ export const layer2finance: Layer2 = {
   },
   news: [
     {
+      date: '2022-04-27',
+      name: 'Celer’s Layer2.finance Launches in ZK Proofs Mode Built with StarkEx from StarkWare',
+      link: 'https://blog.celer.network/2022/04/27/celers-layer2-finance-launches-in-zk-proofs-mode-built-with-starkex-from-starkware/',
+    },
+    {
       date: '2021-07-06',
       name: 'layer2.finance v1.0 Testnet Launches with $20,000 Reward',
       link: 'https://blog.celer.network/2021/07/06/layer2-finance-v1-0-testnet-launches-with-20000-reward/',
@@ -189,11 +194,6 @@ export const layer2finance: Layer2 = {
       date: '2021-04-22',
       name: 'The layer2.finance v0.1 Mainnet Launches: Democratize DeFi, Simple and Zero Fees',
       link: 'https://blog.celer.network/2021/04/22/the-layer2-finance-v0-1-mainnet-launches-democratize-defi-simple-and-zero-fees/',
-    },
-    {
-      date: '2021-04-02',
-      name: 'ELI5 Layer2.Finance: The Modern Subway of the DeFi City',
-      link: 'https://blog.celer.network/2021/04/02/eli5-layer2-finance-the-modern-subway-of-the-defi-city/',
     },
   ],
 }

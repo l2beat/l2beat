@@ -240,24 +240,19 @@ export const zkswap: Layer2 = {
   ],
   news: [
     {
-      date: '2021-120-20',
-      name: 'L2 Labs Launches All-in-One Layer2 Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments',
-      link: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      date: '2022-09-13',
+      name: 'How does ZKSpace face the Ethereum Merge',
+      link: 'https://medium.com/zkswap/how-does-zkspace-face-the-ethereum-merge-8b4a29c432f9',
     },
     {
-      date: '2021-08-25',
-      name: 'ZKSwap Announces Deployment of V2 on BSC Mainnet',
-      link: 'https://medium.com/zkswap/zkswap-announces-deployment-of-v2-on-bsc-mainnet-53395c15a856',
+      date: '2022-09-09',
+      name: 'The evolution and current progress of Layer-1 public blockchains',
+      link: 'https://medium.com/zkswap/the-evolution-and-current-progress-of-layer-1-public-blockchains-29533780af23',
     },
     {
-      date: '2021-08-23',
-      name: 'PoS Mining is Back',
-      link: 'https://medium.com/zkswap/pos-mining-is-back-5732c3975f5c',
-    },
-    {
-      date: '2021-08-23',
-      name: 'ZKSwap Tech Review: SKALE — An Elastic, Decentralized Sidechain Network',
-      link: 'https://medium.com/zkswap/zkswap-tech-review-skale-an-elastic-decentralized-sidechain-network-978a6e7167e3',
+      date: '2022-09-01',
+      name: 'ZNS is Coming! — The First Layer 2 Domain Name System',
+      link: 'https://medium.com/zkswap/zns-is-coming-the-first-layer-2-domain-name-system-c115c1358fa5',
     },
   ],
 }

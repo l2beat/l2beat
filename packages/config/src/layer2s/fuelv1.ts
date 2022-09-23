@@ -115,19 +115,19 @@ export const fuelv1: Layer2 = {
   },
   news: [
     {
-      date: '2020-11-09',
-      name: 'The Future of L1 Ethereum',
-      link: 'https://fuellabs.medium.com/the-future-of-l1-ethereum-5ec5d9a01c10',
+      date: '2020-09-15',
+      name: 'Inside Fuel — Summer 2022',
+      link: 'https://fuel-labs.ghost.io/introducing-beta-1-testnet/',
     },
     {
-      date: '2020-03-30',
-      name: 'Burner Wallet + Fuel = 🔥',
-      link: 'https://fuellabs.medium.com/burner-wallet-fuel-7b8ce8e54aff',
+      date: '2020-09-08',
+      name: 'Launch of the new Fuel "Beta-1" testnet',
+      link: 'https://fuel-labs.ghost.io/introducing-beta-1-testnet/',
     },
     {
-      date: '2020-03-24',
-      name: 'Introducing: Yul+ — A new low-level language for Ethereum',
-      link: 'https://fuellabs.medium.com/introducing-yul-a-new-low-level-language-for-ethereum-aa64ce89512f',
+      date: '2022-09-06',
+      name: 'Fuel Labs Announces $80 Million of Support',
+      link: 'https://fuel-labs.ghost.io/fuel-labs-announces-80-million-of-support-for-the-fastest-modular-execution-layer/',
     },
   ],
 }

@@ -221,7 +221,7 @@ export const hermez: Layer2 = {
       link: 'https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/',
     },
     {
-      date: '2022-03-13',
+      date: '2022-05-13',
       name: 'Polygon Hermez 2.0',
       link: 'https://blog.polygon.technology/zkverse-deep-dive-into-polygon-hermez-2-0/',
     },

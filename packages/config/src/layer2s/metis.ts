@@ -332,19 +332,19 @@ export const metis: Layer2 = {
   },
   news: [
     {
-      date: '2022-04-12',
-      name: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
-      link: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
+      date: '2022-09-14',
+      name: 'What does The Merge mean for Metis Andromeda',
+      link: 'https://metisdao.medium.com/what-is-the-ethereum-merge-and-what-does-it-mean-for-metis-andromeda-b6f96809bdd3',
     },
     {
-      date: '2021-11-03',
-      name: 'Metis to Launch Andromeda, Honoring Our Commitment to Decentralization',
-      link: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
+      date: '2022-09-06',
+      name: 'Relay Chain will be joining the Metis marathon',
+      link: 'https://metisdao.medium.com/relay-chain-becomes-joins-the-metis-marathon-as-a-bridge-21fcd2e9b3e8',
     },
     {
-      date: '2021-11-23',
-      name: 'Metis DAC Staking Starts Nov 26',
-      link: 'https://metisdao.medium.com/metis-dac-staking-starts-nov-26-heres-everything-you-need-to-know-53220bfb4874',
+      date: '2022-09-06',
+      name: 'QiDAO has joined the Metis Marathon',
+      link: 'https://metisdao.medium.com/qidao-has-oficially-joined-the-metis-marathon-d41a385d9fcb',
     },
   ],
 }

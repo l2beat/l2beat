@@ -166,19 +166,19 @@ export const immutablex: Layer2 = {
   ],
   news: [
     {
-      date: '2021-08-19',
-      name: 'Immutable X is Making NFTs Carbon Neutral on Ethereum',
-      link: 'https://immutablex.medium.com/immutable-x-is-making-nfts-carbon-neutral-on-ethereum-620dd0be08ae',
+      date: '2022-09-19',
+      name: 'Automated Metadata Refresh is live',
+      link: 'https://immutablex.medium.com/automated-metadata-refresh-is-live-on-immutable-x-aa630097db32',
     },
     {
-      date: '2021-08-17',
-      name: 'Immutable X Community AMA with James Ferguson — August 2021',
-      link: 'https://immutablex.medium.com/immutable-x-community-ama-with-james-ferguson-august-2021-4e61b4e1c4d5',
+      date: '2022-09-13',
+      name: 'Immutable’s Tokenomics and Staking Principles',
+      link: 'https://immutablex.medium.com/immutables-tokenomics-and-staking-principles-5b42f1c66f83',
     },
     {
-      date: '2021-08-16',
-      name: 'Important Announcement: IMX Alpha Rewards Update',
-      link: 'https://immutablex.medium.com/important-announcement-imx-alpha-rewards-update-929f7bc89513',
+      date: '2022-09-07',
+      name: 'Immutable & The Merge',
+      link: 'https://immutablex.medium.com/immutable-the-merge-51c88bdae656',
     },
   ],
 }
