@@ -13,6 +13,8 @@ export interface Config {
   coingeckoApiKey: string | undefined
   alchemyApiKey: string
   etherscanApiKey: string
+  starkexApiUrl: string
+  starkexApiKey: string
   databaseConnection: Knex.Config['connection']
   core: {
     minBlockTimestamp: UnixTime

@@ -17,6 +17,8 @@ export function getTestConfig(): Config {
     coingeckoApiKey: undefined,
     alchemyApiKey: 'xXTestAlchemyKeyXx',
     etherscanApiKey: 'xXTestEtherscanKeyXx',
+    starkexApiUrl: 'xXTestStarkexApiUrlXx',
+    starkexApiKey: 'xXTestStarkexApiKeyXx',
     databaseConnection: getEnv('TEST_DB_URL', 'xXTestDatabaseUrlXx'),
     core: {
       minBlockTimestamp: new UnixTime(0),

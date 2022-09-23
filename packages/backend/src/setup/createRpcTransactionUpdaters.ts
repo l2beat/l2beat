@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/common'
-import { Layer2TransactionApi } from '@l2beat/config'
+import { RpcTransactionApi } from '@l2beat/config'
 import { providers } from 'ethers'
 
 import { Config } from '../config'
@@ -43,7 +43,7 @@ export function createRpcTransactionUpdaters(
   return rpcUpdaters
 }
 
-function createL2Provider(rpc: Layer2TransactionApi, alchemyApiKey: string) {
+function createL2Provider(rpc: RpcTransactionApi, alchemyApiKey: string) {
   switch (rpc.provider) {
     case 'alchemy':
       return new providers.AlchemyProvider(rpc.networkName, alchemyApiKey)
