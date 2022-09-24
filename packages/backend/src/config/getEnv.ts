@@ -1,4 +1,4 @@
-export function getEnv(name: string, fallback?: string) {
+export function getEnv(name: string, fallback?: string): string {
   const value = process.env[name]
   if (value !== undefined) {
     return value
@@ -9,7 +9,7 @@ export function getEnv(name: string, fallback?: string) {
   throw new Error(`Missing environment variable ${name}!`)
 }
 
-getEnv.integer = function integer(name: string, fallback?: number) {
+getEnv.integer = function integer(name: string, fallback?: number): number {
   const value = process.env[name]
   if (value !== undefined) {
     const result = parseInt(value)
@@ -24,7 +24,10 @@ getEnv.integer = function integer(name: string, fallback?: number) {
   throw new Error(`Missing environment variable ${name}!`)
 }
 
-getEnv.boolean = function getBooleanFromEnv(name: string, fallback?: boolean) {
+getEnv.boolean = function getBooleanFromEnv(
+  name: string,
+  fallback?: boolean,
+): boolean {
   const value = process.env[name]
 
   if (value !== undefined) {
