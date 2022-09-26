@@ -16,6 +16,7 @@ export function Navbar() {
   return (
     <NavbarComponent
       showBanner={false}
+      forumLink="#"
       socialLinks={{
         discordLink: '#',
         githubLink: '#',

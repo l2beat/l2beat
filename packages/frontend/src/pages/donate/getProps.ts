@@ -1,8 +1,7 @@
 import { toDataURL } from 'qrcode'
 
 import { Config } from '../../build/config'
-import { getFooterProps } from '../../components'
-import { getSocialLinksProps } from '../../components/navbar/SocialLinks'
+import { getFooterProps, getNavbarProps } from '../../components'
 import { Wrapped } from '../Page'
 import { DonatePageProps } from './DonatePage'
 
@@ -12,10 +11,7 @@ export async function getProps(
   const address = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
   return {
     props: {
-      navbar: {
-        showBanner: config.features.banner,
-        socialLinks: getSocialLinksProps(config),
-      },
+      navbar: getNavbarProps(config),
       title: 'Donate',
       details: {
         ethereumAddress: address,

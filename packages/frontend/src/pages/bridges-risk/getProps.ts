@@ -2,8 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { Config } from '../../build/config'
-import { getFooterProps } from '../../components'
-import { getSocialLinksProps } from '../../components/navbar/SocialLinks'
+import { getFooterProps, getNavbarProps } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
@@ -18,10 +17,7 @@ export function getProps(
   const ordering = orderByTvl(included, apiMain)
   return {
     props: {
-      navbar: {
-        showBanner: config.features.banner,
-        socialLinks: getSocialLinksProps(config),
-      },
+      navbar: getNavbarProps(config),
       riskView: {
         items: ordering.map(
           (bridge): BridgesRiskViewEntry => ({

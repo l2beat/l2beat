@@ -1,16 +1,30 @@
 import React from 'react'
 
+import { Config } from '../../build/config'
 import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
 import { Logo } from '../Logo'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { OtherLinks } from './OtherLinks'
 import { SidebarMenu } from './SidebarMenu'
-import { SocialLinks, SocialLinksProps } from './SocialLinks'
+import {
+  getSocialLinksProps,
+  SocialLinks,
+  SocialLinksProps,
+} from './SocialLinks'
 
 export interface NavbarProps {
   showBanner: boolean
+  forumLink: string
   socialLinks: SocialLinksProps
+}
+
+export function getNavbarProps(config: Config): NavbarProps {
+  return {
+    showBanner: config.features.banner,
+    forumLink: config.links.forum,
+    socialLinks: getSocialLinksProps(config),
+  }
 }
 
 export function Navbar(props: NavbarProps) {
@@ -18,6 +32,7 @@ export function Navbar(props: NavbarProps) {
     <>
       <SidebarMenu
         showBanner={props.showBanner}
+        forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
       {props.showBanner && <Banner />}
@@ -36,7 +51,7 @@ export function Navbar(props: NavbarProps) {
         </a>
         <div className="flex gap-6 items-center">
           <ul className="hidden md:flex gap-6 items-center">
-            <OtherLinks />
+            <OtherLinks forumLink={props.forumLink} />
           </ul>
           <div className="w-[1px] h-[32px] bg-bg-3 hidden md:block"></div>
           <DarkThemeToggle />

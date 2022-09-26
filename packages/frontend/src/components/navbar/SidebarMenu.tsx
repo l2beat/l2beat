@@ -7,6 +7,7 @@ import { SocialLinks, SocialLinksProps } from './SocialLinks'
 
 export interface SidebarMenuProps {
   showBanner: boolean
+  forumLink: string
   socialLinks: SocialLinksProps
 }
 
@@ -39,7 +40,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </li>
             </ul>
           </li>
-          <OtherLinks />
+          <OtherLinks forumLink={props.forumLink} />
           <li>
             <ul className="flex gap-4">
               <SocialLinks {...props.socialLinks} />

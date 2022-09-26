@@ -27,6 +27,3 @@ export function getConfig() {
     tokens: tokenList,
   }
 }
-
-/** @deprecated */
-export const config = getConfig()
