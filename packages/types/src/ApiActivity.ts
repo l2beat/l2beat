@@ -10,7 +10,7 @@ const ChartPoint = z.tuple([
 export type ChartPoint = z.infer<typeof ChartPoint>
 
 const Chart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.string()]),
+  types: z.tuple([z.literal('timestamp'), z.literal('daily tx count')]),
   data: z.array(ChartPoint),
 })
 export type Chart = z.infer<typeof Chart>
