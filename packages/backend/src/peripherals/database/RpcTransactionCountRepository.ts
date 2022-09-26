@@ -27,6 +27,7 @@ export class RpcTransactionCountRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.getDailyTransactionCount = this.wrapGet(this.getDailyTransactionCount)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -94,6 +95,34 @@ export class RpcTransactionCountRepository extends BaseRepository {
     }
 
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
+  }
+
+  async getDailyTransactionCount(
+    projectId: ProjectId,
+  ): Promise<Pick<RpcTransactionCountRecord, 'count' | 'timestamp'>[]> {
+    const knex = await this.knex()
+    const { rows } = (await knex.raw(
+      `
+      SELECT
+        date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
+        sum(count) as count
+      FROM
+        transactions.rpc
+      WHERE
+        project_id = ?
+      GROUP BY
+        project_id,
+        date_trunc('day', unix_timestamp, 'UTC')
+    `,
+      projectId.toString(),
+    )) as unknown as {
+      rows: Pick<RpcTransactionCountRow, 'unix_timestamp' | 'count'>[]
+    }
+
+    return rows.map((r) => ({
+      timestamp: UnixTime.fromDate(r.unix_timestamp),
+      count: Number(r.count),
+    }))
   }
 
   async deleteAll() {

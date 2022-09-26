@@ -26,7 +26,7 @@ async function main() {
   )
   createApi([...includedLayer2s, ...includedBridges], apiMain)
 
-  await renderPages(includedLayer2s, bridges, apiMain)
+  await renderPages(includedLayer2s, includedBridges, apiMain)
 }
 
 function printApiInfo(apiMain: ApiMain) {
