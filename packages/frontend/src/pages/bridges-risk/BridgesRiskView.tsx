@@ -1,4 +1,4 @@
-import { Layer2RiskViewEntry } from '@l2beat/config'
+import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ProjectLink } from '../../components/ProjectLink'
@@ -13,10 +13,10 @@ export interface BridgesRiskViewEntry {
   name: string
   slug: string
   type: string
-  destination: Layer2RiskViewEntry
-  validation?: Layer2RiskViewEntry
-  sourceUpgradeability?: Layer2RiskViewEntry
-  destinationToken?: Layer2RiskViewEntry
+  destination: ProjectRiskViewEntry
+  validation?: ProjectRiskViewEntry
+  sourceUpgradeability?: ProjectRiskViewEntry
+  destinationToken?: ProjectRiskViewEntry
 }
 
 export function RiskView({ items }: BridgesRiskViewProps) {

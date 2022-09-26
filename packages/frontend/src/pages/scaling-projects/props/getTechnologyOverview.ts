@@ -1,4 +1,8 @@
-import { Layer2, Layer2Contract, Layer2TechnologyChoice } from '@l2beat/config'
+import {
+  Layer2,
+  ProjectContract,
+  ProjectTechnologyChoice,
+} from '@l2beat/config'
 import { existsSync } from 'fs'
 import path from 'path'
 
@@ -24,7 +28,7 @@ interface TechnologyOverview {
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   function makeTechnologyChoice(
     id: string,
-    item: Layer2TechnologyChoice,
+    item: ProjectTechnologyChoice,
   ): TechnologyChoice {
     const risks = item.risks.map((risk) => ({
       text: `${risk.category} ${risk.text}`,
@@ -108,7 +112,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     )
   }
 
-  function makeTechnologyContract(item: Layer2Contract): TechnologyContract {
+  function makeTechnologyContract(item: ProjectContract): TechnologyContract {
     const links = []
 
     if (

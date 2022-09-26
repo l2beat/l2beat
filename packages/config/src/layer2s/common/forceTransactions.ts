@@ -1,11 +1,11 @@
-import { Layer2Risk, Layer2TechnologyChoice } from '../types'
+import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
 
-const EXIT_CENSORSHIP: Layer2Risk = {
+const EXIT_CENSORSHIP: ProjectRisk = {
   category: 'Users can be censored if',
   text: 'the operator refuses to include their transactions. They can still exit the system.',
 }
 
-const WITHDRAW: Layer2TechnologyChoice = {
+const WITHDRAW: ProjectTechnologyChoice = {
   name: 'Users can independently exit the system',
   description:
     'Independent exit allows the users to escape censorship by withdrawing their funds. The system allows users to  withdraw their funds by submitting a transaction directly to the contract on-chain.',
@@ -13,7 +13,7 @@ const WITHDRAW: Layer2TechnologyChoice = {
   references: [],
 }
 
-const WITHDRAW_OR_HALT: Layer2TechnologyChoice = {
+const WITHDRAW_OR_HALT: ProjectTechnologyChoice = {
   name: 'Users can force exit the system',
   description:
     'Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract on-chain.  The request must be served within a defined time period. If this does not happen, the system will halt regular operation and permit trustless withdrawal of funds.',
@@ -21,7 +21,7 @@ const WITHDRAW_OR_HALT: Layer2TechnologyChoice = {
   references: [],
 }
 
-const STARKEX_SPOT_WITHDRAW: Layer2TechnologyChoice = {
+const STARKEX_SPOT_WITHDRAW: ProjectTechnologyChoice = {
   ...WITHDRAW_OR_HALT,
   references: [
     {
@@ -31,7 +31,7 @@ const STARKEX_SPOT_WITHDRAW: Layer2TechnologyChoice = {
   ],
 }
 
-const STARKEX_PERPETUAL_WITHDRAW: Layer2TechnologyChoice = {
+const STARKEX_PERPETUAL_WITHDRAW: ProjectTechnologyChoice = {
   ...WITHDRAW_OR_HALT,
   description:
     WITHDRAW_OR_HALT.description +
@@ -55,7 +55,7 @@ const STARKEX_PERPETUAL_WITHDRAW: Layer2TechnologyChoice = {
   ],
 }
 
-const CANONICAL_ORDERING: Layer2TechnologyChoice = {
+const CANONICAL_ORDERING: ProjectTechnologyChoice = {
   name: 'Users can force any transaction',
   description:
     'Because the state of the system is based on transactions submitted on-chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
@@ -63,7 +63,7 @@ const CANONICAL_ORDERING: Layer2TechnologyChoice = {
   references: [],
 }
 
-const PROPOSE_OWN_BLOCKS: Layer2TechnologyChoice = {
+const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
   name: 'Users can force any transaction',
   description:
     'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
@@ -76,7 +76,7 @@ const PROPOSE_OWN_BLOCKS: Layer2TechnologyChoice = {
   references: [],
 }
 
-const NO_MECHANISM: Layer2TechnologyChoice = {
+const NO_MECHANISM: ProjectTechnologyChoice = {
   name: "Users can't force any transaction",
   description:
     'There is no general mechanism to force the sequencer to include the transaction.',
