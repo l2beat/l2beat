@@ -1,7 +1,6 @@
-import { Bridge, Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
-import { config } from '../build/config'
+import { Config } from '../build/config'
 import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
@@ -15,12 +14,15 @@ import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
 
-export async function renderPages(
-  projects: Layer2[],
-  bridges: Bridge[],
-  apiMain: ApiMain,
-) {
+export async function renderPages(config: Config, apiMain: ApiMain) {
   const pages: Page[] = []
+
+  const projects = config.layer2s.filter(
+    (x) => !!apiMain.projects[x.id.toString()],
+  )
+  const bridges = config.bridges.filter(
+    (x) => !!apiMain.projects[x.id.toString()],
+  )
 
   pages.push(getRiskPage(projects, apiMain))
   pages.push(getTvlPage(projects, apiMain))
