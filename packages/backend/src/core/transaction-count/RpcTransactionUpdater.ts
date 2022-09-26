@@ -26,7 +26,7 @@ export class RpcTransactionUpdater {
   }
 
   start() {
-    this.logger.info('Started')
+    this.logger.info('Started', { project: this.projectId.toString() })
     this.updateQueue.addIfEmpty()
     return this.clock.onNewHour(() => {
       this.updateQueue.addIfEmpty()
@@ -49,10 +49,15 @@ export class RpcTransactionUpdater {
       blockNumber: block.number,
       count: block.transactions.length,
     })
+
+    this.logger.info('Block updated', {
+      project: this.projectId.toString(),
+      blockNumber: block.number,
+    })
   }
 
   async update() {
-    this.logger.info('Update started')
+    this.logger.info('Update started', { project: this.projectId.toString() })
 
     const missingRanges =
       await this.rpcTransactionCountRepository.getMissingRangesByProject(
@@ -70,6 +75,6 @@ export class RpcTransactionUpdater {
       }
     }
 
-    this.logger.info('Update enqueued')
+    this.logger.info('Update enqueued', { project: this.projectId.toString() })
   }
 }

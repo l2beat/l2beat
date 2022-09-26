@@ -1,4 +1,4 @@
-export interface Layer2Links {
+export interface ProjectLinks {
   /** Links to marketing landing pages. */
   websites: string[]
   /** Links to web apps connected to the layer2. */
