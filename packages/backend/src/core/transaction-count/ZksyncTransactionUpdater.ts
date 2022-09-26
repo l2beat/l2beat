@@ -65,6 +65,10 @@ export class ZksyncTransactionUpdater {
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
+        // Skip block 427, as it has a duplicated blockIndex
+        if (i === 427) {
+          continue
+        }
         this.blockQueue.addToBack(i)
       }
     }
