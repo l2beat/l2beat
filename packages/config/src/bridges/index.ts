@@ -14,6 +14,7 @@ import { orbiter } from './orbiter'
 import { polygon } from './polygon'
 import { polynetwork } from './polynetwork'
 import { ronin } from './ronin'
+import { satellite } from './satellite'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { synapse } from './synapse'
@@ -40,6 +41,7 @@ export const bridges: Bridge[] = [
   polygon,
   polynetwork,
   ronin,
+  satellite,
   sollet,
   stargate,
   synapse,
