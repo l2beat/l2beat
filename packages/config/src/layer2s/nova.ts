@@ -58,7 +58,7 @@ export const nova: Layer2 = {
     transactionApi: {
       type: 'rpc',
       provider: 'jsonRpc',
-      url: 'https://andromeda.metis.io/?owner=1088',
+      url: 'https://nova.arbitrum.io/rpc',
     },
   },
   riskView: {
