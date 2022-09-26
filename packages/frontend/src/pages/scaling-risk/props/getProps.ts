@@ -21,6 +21,7 @@ export function getProps(
       navbar: getNavbarProps(config),
       riskView: getRiskView(ordering),
       footer: getFooterProps(config),
+      showActivity: config.features.activity,
     },
     wrapper: {
       preloadApi: '/api/tvl.json',

@@ -11,12 +11,13 @@ export interface RiskPageProps {
   riskView: RiskViewProps
   navbar: NavbarProps
   footer: FooterProps
+  showActivity: boolean
 }
 
 export function RiskPage(props: RiskPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <ScalingPageSelection selected="risk" />
+      <ScalingPageSelection showActivity={props.showActivity} selected="risk" />
       <main>
         <Header title="Risk Analysis" />
         <RiskView {...props.riskView} />

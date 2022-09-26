@@ -20,12 +20,13 @@ export interface TvlPageProps {
   financialView: FinancialViewProps
   navbar: NavbarProps
   footer: FooterProps
+  showActivity: boolean
 }
 
 export function TvlPage(props: TvlPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <ScalingPageSelection selected="tvl" />
+      <ScalingPageSelection showActivity={props.showActivity} selected="tvl" />
       <main>
         <Header
           title="Value locked"

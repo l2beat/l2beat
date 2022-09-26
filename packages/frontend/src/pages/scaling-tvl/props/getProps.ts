@@ -29,6 +29,7 @@ export function getProps(
       apiEndpoint: '/api/tvl.json',
       financialView: getFinancialView(ordering, apiMain, tvl),
       footer: getFooterProps(config),
+      showActivity: config.features.activity,
     },
     wrapper: {
       preloadApi: '/api/tvl.json',
