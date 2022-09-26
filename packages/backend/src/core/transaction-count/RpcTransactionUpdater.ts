@@ -1,7 +1,7 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { TransactionCountRepository } from '../../peripherals/database/TransactionCountRepository'
+import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
@@ -21,7 +21,7 @@ export class RpcTransactionUpdater {
 
   constructor(
     private ethereumClient: EthereumClient,
-    private txCountRepository: TransactionCountRepository,
+    private rpcTransactionCountRepository: RpcTransactionCountRepository,
     private clock: Clock,
     private logger: Logger,
     private projectId: ProjectId,
@@ -47,7 +47,7 @@ export class RpcTransactionUpdater {
       return
     }
 
-    await this.txCountRepository.add({
+    await this.rpcTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
@@ -64,7 +64,9 @@ export class RpcTransactionUpdater {
     this.logger.info('Update started', { project: this.projectId.toString() })
 
     const missingRanges =
-      await this.txCountRepository.getMissingRangesByProject(this.projectId)
+      await this.rpcTransactionCountRepository.getMissingRangesByProject(
+        this.projectId,
+      )
     const latestBlock = await this.ethereumClient.getBlockNumber()
 
     enqueueBlockLoop: for (const [start, end] of missingRanges) {
