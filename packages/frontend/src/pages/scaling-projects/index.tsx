@@ -1,13 +1,15 @@
-import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 import React from 'react'
 
+import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
+import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
-export function getProjectPages(projects: Layer2[], apiMain: ApiMain) {
-  return projects.map((project) => {
+export function getProjectPages(config: Config, apiMain: ApiMain) {
+  const included = getIncludedProjects(config.layer2s, apiMain)
+  return included.map((project) => {
     const { wrapper, props } = getProps(project, apiMain)
     return {
       slug: `/scaling/projects/${project.display.slug}`,

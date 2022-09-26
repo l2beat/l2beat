@@ -1,16 +1,19 @@
-import { Bridge, ProjectRiskViewEntry } from '@l2beat/config'
+import { ProjectRiskViewEntry } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
+import { Config } from '../../build/config'
+import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
 import { BridgesRiskViewEntry } from './BridgesRiskView'
 
 export function getProps(
-  bridges: Bridge[],
+  config: Config,
   apiMain: ApiMain,
 ): Wrapped<BridgesRiskPageProps> {
-  const ordering = orderByTvl(bridges, apiMain)
+  const included = getIncludedProjects(config.bridges, apiMain)
+  const ordering = orderByTvl(included, apiMain)
   return {
     props: {
       items: ordering.map(

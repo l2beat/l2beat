@@ -1,6 +1,7 @@
-import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
+import { Config } from '../../../build/config'
+import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { Wrapped } from '../../Page'
 import { RiskPageProps } from '../view/RiskPage'
@@ -8,10 +9,12 @@ import { getPageMetadata } from './getPageMetadata'
 import { getRiskView } from './getRiskView'
 
 export function getProps(
-  projects: Layer2[],
+  config: Config,
   apiMain: ApiMain,
 ): Wrapped<RiskPageProps> {
-  const ordering = orderByTvl(projects, apiMain)
+  const included = getIncludedProjects(config.layer2s, apiMain)
+  const ordering = orderByTvl(included, apiMain)
+
   return {
     props: {
       riskView: getRiskView(ordering),
