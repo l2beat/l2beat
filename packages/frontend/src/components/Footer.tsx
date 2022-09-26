@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { config } from '../pages/config'
+import { config } from '../build/config'
 import { OutLink } from './OutLink'
 
 export function Footer() {
@@ -18,17 +18,17 @@ export function Footer() {
       </p>
       <ul className="Footer-Links">
         <li className="Footer-Link">
-          <OutLink className="text-link underline" href={config.twitterLink}>
+          <OutLink className="text-link underline" href={config.links.twitter}>
             Twitter
           </OutLink>
         </li>
         <li className="Footer-Link">
-          <OutLink className="text-link underline" href={config.discordLink}>
+          <OutLink className="text-link underline" href={config.links.discord}>
             Discord
           </OutLink>
         </li>
         <li className="Footer-Link">
-          <OutLink className="text-link underline" href={config.githubLink}>
+          <OutLink className="text-link underline" href={config.links.github}>
             Github
           </OutLink>
         </li>

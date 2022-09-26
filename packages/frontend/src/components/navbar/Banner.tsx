@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { config } from '../../pages/config'
+import { config } from '../../build/config'
 import { OutLink } from '../OutLink'
 
 export function Banner() {
-  if (!config.showBanner) {
+  if (!config.features.banner) {
     return null
   }
   return (

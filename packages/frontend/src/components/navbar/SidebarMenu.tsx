@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import { config } from '../../pages/config'
+import { config } from '../../build/config'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OtherLinks } from './OtherLinks'
 import { SocialLinks } from './SocialLinks'
@@ -13,7 +13,7 @@ export function SidebarMenu() {
         id="sidebar-menu"
         className={classNames(
           'hidden fixed left-0 z-50',
-          config.showBanner ? 'top-8' : 'top-0',
+          config.features.banner ? 'top-8' : 'top-0',
           'w-3/4 min-w-[240px] h-full',
           'p-4 pt-[22px] bg-white dark:bg-black',
         )}

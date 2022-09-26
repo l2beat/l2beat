@@ -1,10 +1,10 @@
 import React from 'react'
 
+import { config } from '../../build/config'
 import { OutLink } from '../../components'
-import { config } from '../config'
 
 export function GitcoinButton() {
-  if (!config.showGitcoinOption) {
+  if (!config.features.gitcoinOption) {
     return null
   }
   return (

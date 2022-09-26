@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { config } from '../../pages/config'
+import { config } from '../../build/config'
 import { OutLink } from '../OutLink'
 
 export function OtherLinks() {
   return (
     <>
       <li>
-        <OutLink href={config.forumLink}>Forum</OutLink>
+        <OutLink href={config.links.forum}>Forum</OutLink>
       </li>
       <li>
         <a href="/donate">Donate</a>

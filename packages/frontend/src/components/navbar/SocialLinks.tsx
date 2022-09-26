@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { config } from '../../pages/config'
+import { config } from '../../build/config'
 import {
   DiscordIcon,
   GithubIcon,
@@ -14,27 +14,27 @@ export function SocialLinks() {
   return (
     <>
       <li>
-        <OutLink href={config.twitterLink} title="Twitter">
+        <OutLink href={config.links.twitter} title="Twitter">
           <TwitterIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.discordLink} title="Discord">
+        <OutLink href={config.links.discord} title="Discord">
           <DiscordIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.githubLink} title="Github">
+        <OutLink href={config.links.github} title="Github">
           <GithubIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.youTubeLink} title="YouTube">
+        <OutLink href={config.links.youTube} title="YouTube">
           <YouTubeIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.mediumLink} title="Medium">
+        <OutLink href={config.links.medium} title="Medium">
           <MediumIcon />
         </OutLink>
       </li>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { config } from '../pages/config'
+import { config } from '../build/config'
 import { ActivityIcon } from './icons/symbols/ActivityIcon'
 import { RiskIcon } from './icons/symbols/RiskIcon'
 import { TvlIcon } from './icons/symbols/TvlIcon'
@@ -25,7 +25,7 @@ export function ScalingPageSelection(props: ScalingPageSelectionProps) {
       selected: props.selected === 'risk',
     },
   ]
-  if (config.showActivity) {
+  if (config.features.activity) {
     pages.push({
       content: 'Activity',
       icon: <ActivityIcon />,
