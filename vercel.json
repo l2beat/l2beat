@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "scaling/tvl",
+      "permanent": true
+    }
+  ]
+}
