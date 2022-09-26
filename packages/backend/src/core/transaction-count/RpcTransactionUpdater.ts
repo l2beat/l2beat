@@ -5,6 +5,10 @@ import { TransactionCountRepository } from '../../peripherals/database/Transacti
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 
+// We want to avoid adding too much tasks to the block queue
+// This constraint will be here only to sync transactions on stage
+const BLOCK_QUEUE_LIMIT = 200_000
+
 export class RpcTransactionUpdater {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new UniqueTaskQueue(
@@ -63,12 +67,15 @@ export class RpcTransactionUpdater {
       await this.txCountRepository.getMissingRangesByProject(this.projectId)
     const latestBlock = await this.ethereumClient.getBlockNumber()
 
-    for (const [start, end] of missingRanges) {
+    enqueueBlockLoop: for (const [start, end] of missingRanges) {
       for (
         let i = Math.max(start, 0);
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
+        if (this.blockQueue.length >= BLOCK_QUEUE_LIMIT) {
+          break enqueueBlockLoop
+        }
         this.blockQueue.addToBack(i)
       }
     }
