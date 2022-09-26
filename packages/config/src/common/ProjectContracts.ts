@@ -1,16 +1,16 @@
-import { Layer2Reference } from './Layer2Reference'
-import { Layer2Risk } from './Layer2Risk'
+import { ProjectReference } from './ProjectReference'
+import { ProjectRisk } from './ProjectRisk'
 
-export interface Layer2Contracts {
+export interface ProjectContracts {
   /** List of the contracts */
-  addresses: Layer2Contract[]
+  addresses: ProjectContract[]
   /** List of risks associated with the contracts */
-  risks: Layer2Risk[]
+  risks: ProjectRisk[]
   /** List of references backing up the claim */
-  references?: Layer2Reference[]
+  references?: ProjectReference[]
 }
 
-export interface Layer2Contract {
+export interface ProjectContract {
   /** Address of the contract */
   address: string
   /** Solidity name of the contract */
@@ -18,10 +18,10 @@ export interface Layer2Contract {
   /** Description of the contract's role in the system */
   description?: string
   /** Details about upgradeability */
-  upgradeability?: Layer2Upgradeability
+  upgradeability?: ProjectUpgradeability
 }
 
-export type Layer2Upgradeability =
+export type ProjectUpgradeability =
   | EIP1967Upgradeability
   | StarkWareUpgradeability
   | ZeppelinOsUpgradeability

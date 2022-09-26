@@ -1,4 +1,4 @@
-import { Layer2RiskViewEntry } from '@l2beat/config'
+import { ProjectRiskViewEntry } from '@l2beat/config'
 import React, { useEffect } from 'react'
 
 import { Page } from '../../../components/Page'
@@ -70,7 +70,7 @@ export function RiskView() {
 function risk(
   length: 'short' | 'medium' | 'long',
   sentiment?: 'warning' | 'bad',
-): Layer2RiskViewEntry {
+): ProjectRiskViewEntry {
   return {
     value:
       length === 'short'

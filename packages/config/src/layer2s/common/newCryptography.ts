@@ -1,6 +1,6 @@
-import { Layer2TechnologyChoice } from '../types'
+import { ProjectTechnologyChoice } from '../../common'
 
-const ZK_SNARKS: Layer2TechnologyChoice = {
+const ZK_SNARKS: ProjectTechnologyChoice = {
   name: 'Zero knowledge SNARK cryptography is used',
   description:
     'Despite their production use ZK-SNARKs are still new and experimental cryptography. Cryptography has made a lot of advancements in the recent years but all cryptographic solutions rely on time to prove their security. In addition ZK-SNARKs require a trusted setup to operate.',
@@ -13,7 +13,7 @@ const ZK_SNARKS: Layer2TechnologyChoice = {
   references: [],
 }
 
-const ZK_STARKS: Layer2TechnologyChoice = {
+const ZK_STARKS: ProjectTechnologyChoice = {
   name: 'Zero knowledge STARK cryptography is used',
   description:
     'Despite their production use ZK-STARKs proof systems are still relatively new, complex and they rely on the proper implementation of the polynomial constraints used to check validity of the Execution Trace.',
