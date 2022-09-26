@@ -4,19 +4,19 @@ import { expect } from 'earljs'
 
 import {
   ZksyncTransactionRecord,
-  ZksyncTransactionsRepository,
-} from '../../../src/peripherals/database/ZksyncTransactionsRepository'
+  ZksyncTransactionRepository,
+} from '../../../src/peripherals/database/ZksyncTransactionRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
-describe(ZksyncTransactionsRepository.name, () => {
+describe(ZksyncTransactionRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new ZksyncTransactionsRepository(database, Logger.SILENT)
+  const repository = new ZksyncTransactionRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(ZksyncTransactionsRepository.prototype.getAll.name, () => {
+  describe(ZksyncTransactionRepository.prototype.getAll.name, () => {
     it('gets one record', async () => {
       const record = fakeRecord()
       await repository.add(record)
@@ -32,7 +32,7 @@ describe(ZksyncTransactionsRepository.name, () => {
     })
   })
 
-  describe(ZksyncTransactionsRepository.prototype.getMissingRanges.name, () => {
+  describe(ZksyncTransactionRepository.prototype.getMissingRanges.name, () => {
     it('works with an empty repository', async () => {
       expect(await repository.getMissingRanges()).toEqual([
         [-Infinity, Infinity],

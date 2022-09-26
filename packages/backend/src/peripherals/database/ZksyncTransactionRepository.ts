@@ -18,7 +18,7 @@ interface RawBlockNumberQueryResult {
   }[]
 }
 
-export class ZksyncTransactionsRepository extends BaseRepository {
+export class ZksyncTransactionRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 

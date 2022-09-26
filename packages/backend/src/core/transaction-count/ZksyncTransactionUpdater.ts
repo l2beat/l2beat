@@ -2,8 +2,8 @@ import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 
 import {
   ZksyncTransactionRecord,
-  ZksyncTransactionsRepository,
-} from '../../peripherals/database/ZksyncTransactionsRepository'
+  ZksyncTransactionRepository,
+} from '../../peripherals/database/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../peripherals/zksync'
 import { Clock } from '../Clock'
 
@@ -19,7 +19,7 @@ export class ZksyncTransactionUpdater {
 
   constructor(
     private zksyncClient: ZksyncClient,
-    private zksyncTransactionRepository: ZksyncTransactionsRepository,
+    private zksyncTransactionRepository: ZksyncTransactionRepository,
     private clock: Clock,
     private logger: Logger,
   ) {

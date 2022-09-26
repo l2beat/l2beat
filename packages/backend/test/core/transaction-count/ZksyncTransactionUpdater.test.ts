@@ -5,7 +5,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
 import { ZksyncTransactionUpdater } from '../../../src/core/transaction-count/ZksyncTransactionUpdater'
-import { ZksyncTransactionsRepository } from '../../../src/peripherals/database/ZksyncTransactionsRepository'
+import { ZksyncTransactionRepository } from '../../../src/peripherals/database/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../../src/peripherals/zksync'
 
 describe(ZksyncTransactionUpdater.name, () => {
@@ -15,7 +15,7 @@ describe(ZksyncTransactionUpdater.name, () => {
         getLatestBlock: async () => 5,
         getTransactionsInBlock: async () => [],
       })
-      const zksyncTransactionRepository = mock<ZksyncTransactionsRepository>({
+      const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
         getMissingRanges: async () => [
           [-Infinity, -1],
           [2, 3],
@@ -51,7 +51,7 @@ describe(ZksyncTransactionUpdater.name, () => {
         getTransactionsInBlock: async () => [],
         getLatestBlock: async () => 5,
       })
-      const zksyncTransactionsRepository = mock<ZksyncTransactionsRepository>({
+      const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
         getMissingRanges: async () => [
           [-Infinity, -1],
           [2, 3],
@@ -67,7 +67,7 @@ describe(ZksyncTransactionUpdater.name, () => {
       })
       const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
         zksyncClient,
-        zksyncTransactionsRepository,
+        zksyncTransactionRepository,
         clock,
         Logger.SILENT,
       )
@@ -94,13 +94,13 @@ describe(ZksyncTransactionUpdater.name, () => {
           .resolvesToOnce(transactions1)
           .resolvesToOnce(transactions2),
       })
-      const zksyncTransactionsRepository = mock<ZksyncTransactionsRepository>({
+      const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
         addMany: async () => 0,
       })
       const clock = mock<Clock>()
       const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
         zksyncClient,
-        zksyncTransactionsRepository,
+        zksyncTransactionRepository,
         clock,
         Logger.SILENT,
       )
@@ -108,7 +108,7 @@ describe(ZksyncTransactionUpdater.name, () => {
       await zksyncTransactionUpdater.updateBlock(1)
       await zksyncTransactionUpdater.updateBlock(2)
 
-      expect(zksyncTransactionsRepository.addMany).toHaveBeenCalledExactlyWith([
+      expect(zksyncTransactionRepository.addMany).toHaveBeenCalledExactlyWith([
         [
           transactions1.map((transaction) => ({
             blockIndex: transaction.blockIndex,
