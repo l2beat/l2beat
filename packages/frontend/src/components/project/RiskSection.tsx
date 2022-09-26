@@ -1,4 +1,4 @@
-import { Layer2RiskCategory } from '@l2beat/config'
+import { ProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
 import { Section } from './Section'
@@ -9,7 +9,7 @@ export interface RiskSectionProps {
 
 export interface RiskGroup {
   start: number
-  name: Layer2RiskCategory
+  name: ProjectRiskCategory
   items: RiskItem[]
 }
 

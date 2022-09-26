@@ -1,4 +1,4 @@
-import { Bridge, Layer2RiskViewEntry } from '@l2beat/config'
+import { Bridge, ProjectRiskViewEntry } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { orderByTvl } from '../../utils/orderByTvl'
@@ -34,7 +34,7 @@ export function getProps(
   }
 }
 
-function getDestination(destinations: string[]): Layer2RiskViewEntry {
+function getDestination(destinations: string[]): ProjectRiskViewEntry {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }
