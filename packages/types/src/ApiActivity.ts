@@ -15,15 +15,8 @@ const Chart = z.object({
 })
 export type Chart = z.infer<typeof Chart>
 
-export const Charts = z.object({
-  hourly: Chart,
-  sixHourly: Chart,
-  daily: Chart,
-})
-export type Charts = z.infer<typeof Charts>
-
 export const ApiActivity = z.object({
-  combined: Charts,
-  projects: z.record(z.string(), Charts),
+  combined: Chart,
+  projects: z.record(z.string(), Chart),
 })
 export type ApiActivity = z.infer<typeof ApiActivity>
