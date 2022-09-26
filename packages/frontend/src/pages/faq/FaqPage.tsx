@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { Footer } from '../../components'
+import { Footer, FooterProps } from '../../components'
 import { Page } from '../../components/Page'
 
 export interface FaqPageProps {
   title: string
   content: string
+  footer: FooterProps
 }
 
 export function FaqPage(props: FaqPageProps) {
@@ -15,7 +16,7 @@ export function FaqPage(props: FaqPageProps) {
         className="Faq"
         dangerouslySetInnerHTML={{ __html: props.content }}
       />
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

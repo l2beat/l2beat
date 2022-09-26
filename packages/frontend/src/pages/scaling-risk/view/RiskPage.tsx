@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Footer, Header } from '../../../components'
+import { Footer, FooterProps, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -9,6 +9,7 @@ import { RiskView, RiskViewProps } from './RiskView'
 
 export interface RiskPageProps {
   riskView: RiskViewProps
+  footer: FooterProps
 }
 
 export function RiskPage(props: RiskPageProps) {
@@ -21,7 +22,7 @@ export function RiskPage(props: RiskPageProps) {
         <OtherSites />
         <About />
       </main>
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

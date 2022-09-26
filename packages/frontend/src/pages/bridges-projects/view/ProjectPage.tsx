@@ -4,6 +4,7 @@ import {
   Chart,
   ChartProps,
   Footer,
+  FooterProps,
   Header,
   HeaderProps,
 } from '../../../components'
@@ -14,6 +15,7 @@ export interface ProjectPageProps {
   header: HeaderProps
   chart: ChartProps
   projectDetails: ProjectDetailsProps
+  footer: FooterProps
 }
 
 export function ProjectPage(props: ProjectPageProps) {
@@ -22,7 +24,7 @@ export function ProjectPage(props: ProjectPageProps) {
       <Header {...props.header} />
       <Chart {...props.chart} />
       <ProjectDetails {...props.projectDetails} />
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

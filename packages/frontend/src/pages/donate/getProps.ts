@@ -1,23 +1,13 @@
 import { toDataURL } from 'qrcode'
 
+import { Config } from '../../build/config'
+import { getFooterProps } from '../../components'
 import { Wrapped } from '../Page'
+import { DonatePageProps } from './DonatePage'
 
-export interface DonatePageProps {
-  title: string
-  details: DonationDetailsProps
-}
-
-export interface DonationDetailsProps {
-  ethereumAddress: string
-  qrLightURL: string
-  qrDarkURL: string
-  networks: {
-    name: string
-    linkURL: string
-  }[]
-}
-
-export async function getProps(): Promise<Wrapped<DonatePageProps>> {
+export async function getProps(
+  config: Config,
+): Promise<Wrapped<DonatePageProps>> {
   const address = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
   return {
     props: {
@@ -60,6 +50,7 @@ export async function getProps(): Promise<Wrapped<DonatePageProps>> {
           },
         ],
       },
+      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {

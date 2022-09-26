@@ -1,9 +1,23 @@
 import React from 'react'
 
-import { config } from '../build/config'
+import { Config } from '../build/config'
 import { OutLink } from './OutLink'
 
-export function Footer() {
+export interface FooterProps {
+  twitterLink: string
+  discordLink: string
+  githubLink: string
+}
+
+export function getFooterProps(config: Config): FooterProps {
+  return {
+    twitterLink: config.links.twitter,
+    discordLink: config.links.discord,
+    githubLink: config.links.github,
+  }
+}
+
+export function Footer(props: FooterProps) {
   return (
     <footer className="Footer">
       <p className="Footer-Text">
@@ -18,17 +32,17 @@ export function Footer() {
       </p>
       <ul className="Footer-Links">
         <li className="Footer-Link">
-          <OutLink className="text-link underline" href={config.links.twitter}>
+          <OutLink className="text-link underline" href={props.twitterLink}>
             Twitter
           </OutLink>
         </li>
         <li className="Footer-Link">
-          <OutLink className="text-link underline" href={config.links.discord}>
+          <OutLink className="text-link underline" href={props.discordLink}>
             Discord
           </OutLink>
         </li>
         <li className="Footer-Link">
-          <OutLink className="text-link underline" href={config.links.github}>
+          <OutLink className="text-link underline" href={props.githubLink}>
             Github
           </OutLink>
         </li>

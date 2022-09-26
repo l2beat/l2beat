@@ -1,6 +1,7 @@
 import { ApiMain } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
+import { getFooterProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { Wrapped } from '../../Page'
@@ -18,6 +19,7 @@ export function getProps(
   return {
     props: {
       riskView: getRiskView(ordering),
+      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApi: '/api/tvl.json',

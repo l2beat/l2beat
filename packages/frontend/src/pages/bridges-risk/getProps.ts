@@ -2,6 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { Config } from '../../build/config'
+import { getFooterProps } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
@@ -16,15 +17,18 @@ export function getProps(
   const ordering = orderByTvl(included, apiMain)
   return {
     props: {
-      items: ordering.map(
-        (bridge): BridgesRiskViewEntry => ({
-          name: bridge.display.name,
-          slug: bridge.display.slug,
-          type: bridge.technology.type,
-          destination: getDestination(bridge.technology.destination),
-          ...bridge.riskView,
-        }),
-      ),
+      riskView: {
+        items: ordering.map(
+          (bridge): BridgesRiskViewEntry => ({
+            name: bridge.display.name,
+            slug: bridge.display.slug,
+            type: bridge.technology.type,
+            destination: getDestination(bridge.technology.destination),
+            ...bridge.riskView,
+          }),
+        ),
+      },
+      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {

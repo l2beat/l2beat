@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Chart, Footer, Header } from '../../../components'
+import { Chart, Footer, FooterProps, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -12,6 +12,7 @@ export interface TvlPageProps {
   sevenDayChange: string
   apiEndpoint: string
   financialView: FinancialViewProps
+  footer: FooterProps
 }
 
 export function TvlPage(props: TvlPageProps) {
@@ -29,7 +30,7 @@ export function TvlPage(props: TvlPageProps) {
         <OtherSites />
         <About />
       </main>
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

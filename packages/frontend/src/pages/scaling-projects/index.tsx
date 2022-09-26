@@ -10,7 +10,7 @@ import { ProjectPage } from './view/ProjectPage'
 export function getProjectPages(config: Config, apiMain: ApiMain) {
   const included = getIncludedProjects(config.layer2s, apiMain)
   return included.map((project) => {
-    const { wrapper, props } = getProps(project, apiMain)
+    const { wrapper, props } = getProps(project, config, apiMain)
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (

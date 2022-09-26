@@ -3,15 +3,18 @@ import fsx from 'fs-extra'
 import MarkdownIt from 'markdown-it'
 import path from 'path'
 
+import { Config } from '../../build/config'
+import { getFooterProps } from '../../components'
 import { Wrapped } from '../Page'
 import { FaqPageProps } from './FaqPage'
 import { renderHeading } from './renderHeading'
 
-export function getProps(): Wrapped<FaqPageProps> {
+export function getProps(config: Config): Wrapped<FaqPageProps> {
   return {
     props: {
       title: 'Frequently Asked Questions',
       content: getHtml(),
+      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {

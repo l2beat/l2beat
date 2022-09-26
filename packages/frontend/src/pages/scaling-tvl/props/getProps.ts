@@ -1,6 +1,7 @@
 import { ApiMain } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
+import { getFooterProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { formatUSD, getPercentageChange } from '../../../utils/utils'
@@ -26,6 +27,7 @@ export function getProps(
       sevenDayChange,
       apiEndpoint: '/api/tvl.json',
       financialView: getFinancialView(ordering, apiMain, tvl),
+      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApi: '/api/tvl.json',

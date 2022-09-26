@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Footer, Header } from '../../../components'
+import { Footer, FooterProps, Header } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -9,6 +9,7 @@ import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
   activityView: ActivityViewProps
+  footer: FooterProps
 }
 
 export function ActivityPage(props: ActivityPageProps) {
@@ -21,7 +22,7 @@ export function ActivityPage(props: ActivityPageProps) {
         <OtherSites />
         <About />
       </main>
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

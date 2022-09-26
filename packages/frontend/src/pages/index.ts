@@ -19,9 +19,9 @@ export async function renderPages(config: Config, apiMain: ApiMain) {
 
   pages.push(getRiskPage(config, apiMain))
   pages.push(getTvlPage(config, apiMain))
-  pages.push(getActivityPage())
-  pages.push(getFaqPage())
-  pages.push(await getDonatePage())
+  pages.push(getActivityPage(config))
+  pages.push(getFaqPage(config))
+  pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, apiMain))
   pages.push(...getMetaImagePages(config, apiMain))
   if (config.features.bridges) {

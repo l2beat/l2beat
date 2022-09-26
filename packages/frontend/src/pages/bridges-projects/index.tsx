@@ -10,7 +10,7 @@ import { ProjectPage } from './view/ProjectPage'
 export function getBridgeProjectPages(config: Config, apiMain: ApiMain) {
   const included = getIncludedProjects(config.bridges, apiMain)
   return included.map((bridge) => {
-    const { wrapper, props } = getProps(bridge, apiMain)
+    const { wrapper, props } = getProps(bridge, config, apiMain)
     return {
       slug: `/bridges/projects/${bridge.display.slug}`,
       page: (
