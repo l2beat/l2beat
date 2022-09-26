@@ -12,7 +12,7 @@ export class ZksyncClient {
   }
 
   async getLatestBlock() {
-    const result = await this.call('/blocks/lastFinalized')
+    const result = await this.call('blocks/lastFinalized')
 
     const parsed = ZksyncBlocksResultSchema.parse(result)
 
@@ -20,7 +20,7 @@ export class ZksyncClient {
   }
 
   async getTransactionsInBlock(blockNumber: number) {
-    const result = await this.call(`/blocks/${blockNumber}/transactions`, {
+    const result = await this.call(`blocks/${blockNumber}/transactions`, {
       from: 'latest',
       limit: '100',
       direction: 'older',
