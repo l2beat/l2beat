@@ -1,10 +1,73 @@
 import { HttpClient, Logger, mock } from '@l2beat/common'
-import { expect } from 'earljs'
+import { UnixTime } from '@l2beat/types'
+import { expect, mockFn } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { ZksyncClient } from '../../../src/peripherals/zksync'
 
 describe(ZksyncClient.name, () => {
+  describe(ZksyncClient.prototype.getTransactionsInBlock.name, () => {
+    it('returns transactions array', async () => {
+      const transactions = Array.from({ length: 69 }, () => fakeTransaction())
+
+      const httpClient = mock<HttpClient>({
+        fetch: async () =>
+          new Response(
+            JSON.stringify({
+              status: 'success',
+              error: null,
+              result: { list: transactions, pagination: { count: 69 } },
+            }),
+          ),
+      })
+      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const expected = transactions.map((tx) => ({
+        ...tx,
+        createdAt: UnixTime.fromDate(tx.createdAt),
+      }))
+
+      expect(await zksyncClient.getTransactionsInBlock(42)).toEqual(expected)
+    })
+
+    it('can paginate', async () => {
+      const transactions1 = Array.from({ length: 100 }, () => fakeTransaction())
+      const transactions2 = Array.from({ length: 69 }, () => fakeTransaction())
+
+      const httpClient = mock<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: 'success',
+                error: null,
+                result: { list: transactions1, pagination: { count: 169 } },
+              }),
+            ),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: 'success',
+                error: null,
+                result: {
+                  list: [transactions1[0], ...transactions2],
+                  pagination: { count: 169 },
+                },
+              }),
+            ),
+          ),
+      })
+
+      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+
+      const result = await zksyncClient.getTransactionsInBlock(42)
+      const expected = transactions1
+        .concat(transactions2)
+        .map((tx) => ({ ...tx, createdAt: UnixTime.fromDate(tx.createdAt) }))
+      expect(result).toEqual(expected)
+    })
+  })
+
   describe(ZksyncClient.prototype.getLatestBlock.name, () => {
     it('gets latest block', async () => {
       const httpClient = mock<HttpClient>({
@@ -71,3 +134,18 @@ describe(ZksyncClient.name, () => {
     })
   })
 })
+
+interface Transaction {
+  txHash: string
+  blockIndex: number
+  createdAt: Date
+}
+
+function fakeTransaction(transaction?: Partial<Transaction>): Transaction {
+  return {
+    txHash: 'tx-hash',
+    blockIndex: Math.floor(Math.random() * 1000),
+    createdAt: new Date(0),
+    ...transaction,
+  }
+}

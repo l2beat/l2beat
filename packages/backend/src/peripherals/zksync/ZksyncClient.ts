@@ -31,10 +31,28 @@ export class ZksyncClient {
     if (parsed.list.length === 0) {
       throw new Error('Transactions list empty!')
     }
+    let transactions = parsed.list
 
-    // TODO: pagination
+    let count = parsed.pagination.count
+    while (count > 100) {
+      const lastTx = transactions.at(-1)
+      if (!lastTx) {
+        throw new Error('Programmer error: Transactions list empty!')
+      }
 
-    return parsed.list
+      const nextPage = await this.call(`blocks/${blockNumber}/transactions`, {
+        from: lastTx.txHash,
+        limit: '100',
+        direction: 'older',
+      })
+
+      const parsedNextPage = ZksyncTransactionResultSchema.parse(nextPage)
+      transactions = transactions.concat(parsedNextPage.list.slice(1))
+
+      count -= 99
+    }
+
+    return transactions
   }
 
   async call(path: string, params?: Record<string, string>) {

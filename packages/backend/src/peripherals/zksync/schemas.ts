@@ -28,10 +28,12 @@ export const ZksyncBlocksResultSchema = z.object({
 export const ZksyncTransactionResultSchema = z.object({
   list: z.array(
     z.object({
+      txHash: z.string(),
       blockIndex: z.number(),
       createdAt: stringAs((s) => UnixTime.fromDate(new Date(s))),
     }),
   ),
+  pagination: z.object({ count: z.number() }),
 })
 
 export type ZksyncResponse = z.infer<typeof ZksyncResponse>
