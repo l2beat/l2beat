@@ -30,11 +30,11 @@ describe(RpcTransactionCountRepository.name, () => {
 
       it('finds holes', async () => {
         await repository.addMany([
-          fakeTxCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 6, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 7, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 10, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 7, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 10, projectId: PROJECT_A }),
         ])
 
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
@@ -47,7 +47,7 @@ describe(RpcTransactionCountRepository.name, () => {
 
       it('finds holes when block 0 is missing', async () => {
         await repository.addMany([
-          fakeTxCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
         ])
 
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
@@ -58,11 +58,11 @@ describe(RpcTransactionCountRepository.name, () => {
 
       it('finds holes with multiple projects', async () => {
         await repository.addMany([
-          fakeTxCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 3, projectId: PROJECT_A }),
-          fakeTxCount({ blockNumber: 0, projectId: PROJECT_B }),
-          fakeTxCount({ blockNumber: 4, projectId: PROJECT_B }),
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_B }),
+          fakeTransactionCount({ blockNumber: 4, projectId: PROJECT_B }),
         ])
 
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
@@ -84,7 +84,7 @@ describe(RpcTransactionCountRepository.name, () => {
 
         await repository.addMany(
           numbers.map((number) =>
-            fakeTxCount({ blockNumber: number, projectId: PROJECT_A }),
+            fakeTransactionCount({ blockNumber: number, projectId: PROJECT_A }),
           ),
         )
 
@@ -119,20 +119,20 @@ describe(RpcTransactionCountRepository.name, () => {
       it('counts only for requested project', async () => {
         const start = UnixTime.now().toStartOf('day')
         const aCounts = [
-          fakeTxCount({
+          fakeTransactionCount({
             blockNumber: 1,
             timestamp: start.add(1, 'hours'),
             projectId: PROJECT_A,
           }),
-          fakeTxCount({
+          fakeTransactionCount({
             blockNumber: 2,
             timestamp: start.add(2, 'hours'),
             projectId: PROJECT_A,
           }),
         ]
         const bCounts = [
-          fakeTxCount({ blockNumber: 1, projectId: PROJECT_B }),
-          fakeTxCount({ blockNumber: 2, projectId: PROJECT_B }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_B }),
+          fakeTransactionCount({ blockNumber: 2, projectId: PROJECT_B }),
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
@@ -148,25 +148,25 @@ describe(RpcTransactionCountRepository.name, () => {
         const today = UnixTime.now().toStartOf('day')
 
         await repository.addMany([
-          fakeTxCount({
+          fakeTransactionCount({
             blockNumber: 1,
             timestamp: today.add(1, 'hours'),
             projectId: PROJECT_A,
             count: 1,
           }),
-          fakeTxCount({
+          fakeTransactionCount({
             blockNumber: 2,
             timestamp: today.add(1, 'days').add(-1, 'seconds'),
             projectId: PROJECT_A,
             count: 2,
           }),
-          fakeTxCount({
+          fakeTransactionCount({
             blockNumber: 3,
             timestamp: today.add(1, 'days').add(1, 'hours'),
             projectId: PROJECT_A,
             count: 3,
           }),
-          fakeTxCount({
+          fakeTransactionCount({
             blockNumber: 4,
             timestamp: today.add(2, 'days'),
             projectId: PROJECT_A,
@@ -193,7 +193,7 @@ describe(RpcTransactionCountRepository.name, () => {
   )
 })
 
-export function fakeTxCount(
+export function fakeTransactionCount(
   txCount?: Partial<RpcTransactionCountRecord>,
 ): RpcTransactionCountRecord {
   return {
