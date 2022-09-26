@@ -108,6 +108,89 @@ describe(RpcTransactionCountRepository.name, () => {
       })
     },
   )
+
+  describe(
+    RpcTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    () => {
+      it('works with empty repository', async () => {
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
+      })
+
+      it('counts only for requested project', async () => {
+        const start = UnixTime.now().toStartOf('day')
+        const aCounts = [
+          fakeTxCount({
+            blockNumber: 1,
+            timestamp: start.add(1, 'hours'),
+            projectId: PROJECT_A,
+          }),
+          fakeTxCount({
+            blockNumber: 2,
+            timestamp: start.add(2, 'hours'),
+            projectId: PROJECT_A,
+          }),
+        ]
+        const bCounts = [
+          fakeTxCount({ blockNumber: 1, projectId: PROJECT_B }),
+          fakeTxCount({ blockNumber: 2, projectId: PROJECT_B }),
+        ]
+        await repository.addMany([...aCounts, ...bCounts])
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            timestamp: start,
+            count: aCounts.reduce((acc, record) => acc + record.count, 0),
+          },
+        ])
+      })
+
+      it('groups by day', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeTxCount({
+            blockNumber: 1,
+            timestamp: today.add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 1,
+          }),
+          fakeTxCount({
+            blockNumber: 2,
+            timestamp: today.add(1, 'days').add(-1, 'seconds'),
+            projectId: PROJECT_A,
+            count: 2,
+          }),
+          fakeTxCount({
+            blockNumber: 3,
+            timestamp: today.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 3,
+          }),
+          fakeTxCount({
+            blockNumber: 4,
+            timestamp: today.add(2, 'days'),
+            projectId: PROJECT_A,
+            count: 4,
+          }),
+        ])
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            count: 3,
+            timestamp: today,
+          },
+          {
+            count: 3,
+            timestamp: today.add(1, 'days'),
+          },
+          {
+            count: 4,
+            timestamp: today.add(2, 'days'),
+          },
+        ])
+      })
+    },
+  )
 })
 
 export function fakeTxCount(
