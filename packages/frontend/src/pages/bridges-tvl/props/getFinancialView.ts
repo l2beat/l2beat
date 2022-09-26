@@ -1,26 +1,23 @@
-import { Layer2 } from '@l2beat/config'
+import { Bridge } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
-import { FinancialViewEntry, FinancialViewProps } from '../view/FinancialView'
-import { getTechnology } from './getTechnology'
+import { BridgesTvlViewEntry } from '../BridgesTvlView'
 
-export function getFinancialView(
-  projects: Layer2[],
+export function getBridgesTvlView(
+  projects: Bridge[],
   apiMain: ApiMain,
   tvl: number,
-): FinancialViewProps {
-  return {
-    items: projects.map((x) => getFinancialViewEntry(x, apiMain, tvl)),
-  }
+): BridgesTvlViewEntry[] {
+  return projects.map((x) => getBridgesTvlViewEntry(x, apiMain, tvl))
 }
 
-function getFinancialViewEntry(
-  project: Layer2,
+function getBridgesTvlViewEntry(
+  project: Bridge,
   apiMain: ApiMain,
   aggregateTvl: number,
-): FinancialViewEntry {
+): BridgesTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = apiMain.projects[project.id.toString()]
   if (!apiProject) {
@@ -31,13 +28,11 @@ function getFinancialViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    provider: project.technology.provider,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,
     oneDayChange: stats.oneDayChange,
     sevenDayChange: stats.sevenDayChange,
     marketShare: formatPercent(stats.tvl / aggregateTvl),
-    purpose: project.display.purpose,
-    technology: getTechnology(project),
+    type: project.technology.type,
   }
 }
