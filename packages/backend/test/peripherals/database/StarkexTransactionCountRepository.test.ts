@@ -33,7 +33,7 @@ describe(StarkexTransactionCountRepository.name, () => {
       })
 
       it('finds holes', async () => {
-        const record = fakeStarkexTransactionCount({
+        const record = fakeTransactionCount({
           projectId: PROJECT_A,
           timestamp: UnixTime.fromDays(10),
         })
@@ -49,23 +49,23 @@ describe(StarkexTransactionCountRepository.name, () => {
 
       it('finds holes with multiple projects', async () => {
         const records = [
-          fakeStarkexTransactionCount({
+          fakeTransactionCount({
             projectId: PROJECT_A,
             timestamp: UnixTime.fromDays(0),
           }),
-          fakeStarkexTransactionCount({
+          fakeTransactionCount({
             projectId: PROJECT_A,
             timestamp: UnixTime.fromDays(10),
           }),
-          fakeStarkexTransactionCount({
+          fakeTransactionCount({
             projectId: PROJECT_A,
             timestamp: UnixTime.fromDays(11),
           }),
-          fakeStarkexTransactionCount({
+          fakeTransactionCount({
             projectId: PROJECT_B,
             timestamp: UnixTime.fromDays(100),
           }),
-          fakeStarkexTransactionCount({
+          fakeTransactionCount({
             projectId: PROJECT_B,
             timestamp: TODAY,
           }),
@@ -92,7 +92,7 @@ describe(StarkexTransactionCountRepository.name, () => {
 
         await repository.addMany(
           numbers.map((number) =>
-            fakeStarkexTransactionCount({
+            fakeTransactionCount({
               timestamp: UnixTime.fromDays(number),
               projectId: PROJECT_A,
             }),
@@ -119,9 +119,93 @@ describe(StarkexTransactionCountRepository.name, () => {
       })
     },
   )
+
+  describe(
+    StarkexTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    () => {
+      it('works with empty repository', async () => {
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
+      })
+
+      it('counts only for requested project', async () => {
+        const start = UnixTime.now().toStartOf('day')
+        const aCounts = [
+          fakeTransactionCount({
+            timestamp: start.add(1, 'hours'),
+            projectId: PROJECT_A,
+          }),
+          fakeTransactionCount({
+            timestamp: start.add(2, 'hours'),
+            projectId: PROJECT_A,
+          }),
+        ]
+        const bCounts = [
+          fakeTransactionCount({
+            timestamp: start.add(1, 'hours'),
+
+            projectId: PROJECT_B,
+          }),
+          fakeTransactionCount({
+            timestamp: start.add(3, 'hours'),
+            projectId: PROJECT_B,
+          }),
+        ]
+        await repository.addMany([...aCounts, ...bCounts])
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            timestamp: start,
+            count: aCounts.reduce((acc, record) => acc + record.count, 0),
+          },
+        ])
+      })
+
+      it('groups by day', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeTransactionCount({
+            timestamp: today.add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 1,
+          }),
+          fakeTransactionCount({
+            timestamp: today.add(1, 'days').add(-1, 'seconds'),
+            projectId: PROJECT_A,
+            count: 2,
+          }),
+          fakeTransactionCount({
+            timestamp: today.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 3,
+          }),
+          fakeTransactionCount({
+            timestamp: today.add(2, 'days'),
+            projectId: PROJECT_A,
+            count: 4,
+          }),
+        ])
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            count: 3,
+            timestamp: today,
+          },
+          {
+            count: 3,
+            timestamp: today.add(1, 'days'),
+          },
+          {
+            count: 4,
+            timestamp: today.add(2, 'days'),
+          },
+        ])
+      })
+    },
+  )
 })
 
-function fakeStarkexTransactionCount(
+function fakeTransactionCount(
   record?: Partial<StarkexTransactionCountRecord>,
 ): StarkexTransactionCountRecord {
   return {
