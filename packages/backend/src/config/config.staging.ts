@@ -16,6 +16,5 @@ export function getStagingConfig(): Config {
       application_name: name,
     },
     eventsSyncEnabled: true,
-    transactionCountSyncEnabled: true,
   }
 }
