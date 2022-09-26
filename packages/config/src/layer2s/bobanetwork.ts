@@ -67,6 +67,11 @@ export const bobanetwork: Layer2 = {
         sinceTimestamp: new UnixTime(1635386025),
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      provider: 'jsonRpc',
+      url: 'https://mainnet.boba.network/',
+    },
   },
   riskView: {
     stateValidation: {

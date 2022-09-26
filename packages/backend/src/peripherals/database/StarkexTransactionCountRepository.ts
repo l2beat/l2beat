@@ -33,14 +33,14 @@ export class StarkexTransactionCountRepository extends BaseRepository {
   async add(record: StarkexTransactionCountRecord) {
     const knex = await this.knex()
     const row = toRow(record)
-    await knex('starkex_transaction_count').insert(row)
+    await knex('transactions.starkex').insert(row)
     return `${row.project_id}-${row.unix_timestamp.toDateString()}`
   }
 
   async addMany(records: StarkexTransactionCountRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex('starkex_transaction_count').insert(rows)
+    await knex('transactions.starkex').insert(rows)
     return rows.length
   }
 
@@ -53,7 +53,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
       `
       WITH 
         project_days AS (
-          SELECT * FROM starkex_transaction_count WHERE project_id=?
+          SELECT * FROM transactions.starkex WHERE project_id=?
         )
       SELECT * 
       FROM (
@@ -70,7 +70,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
       `
       WITH 
           project_days AS (
-            SELECT * FROM starkex_transaction_count WHERE project_id=?
+            SELECT * FROM transactions.starkex WHERE project_id=?
           )
         SELECT * 
         FROM (
@@ -102,7 +102,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('starkex_transaction_count').delete()
+    return await knex('transactions.starkex').delete()
   }
 }
 

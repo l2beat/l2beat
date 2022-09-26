@@ -3,14 +3,14 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import {
-  TransactionCountRecord,
-  TransactionCountRepository,
-} from '../../../src/peripherals/database/TransactionCountRepository'
+  RpcTransactionCountRecord,
+  RpcTransactionCountRepository,
+} from '../../../src/peripherals/database/RpcTransactionCountRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
-describe(TransactionCountRepository.name, () => {
+describe(RpcTransactionCountRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new TransactionCountRepository(database, Logger.SILENT)
+  const repository = new RpcTransactionCountRepository(database, Logger.SILENT)
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -20,7 +20,7 @@ describe(TransactionCountRepository.name, () => {
   })
 
   describe(
-    TransactionCountRepository.prototype.getMissingRangesByProject.name,
+    RpcTransactionCountRepository.prototype.getMissingRangesByProject.name,
     () => {
       it('works with an empty repository', async () => {
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
@@ -111,8 +111,8 @@ describe(TransactionCountRepository.name, () => {
 })
 
 export function fakeTxCount(
-  txCount?: Partial<TransactionCountRecord>,
-): TransactionCountRecord {
+  txCount?: Partial<RpcTransactionCountRecord>,
+): RpcTransactionCountRecord {
   return {
     projectId: ProjectId('fake-project'),
     timestamp: new UnixTime(0),
