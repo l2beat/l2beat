@@ -1,17 +1,18 @@
 import React from 'react'
 
-import { Footer, FooterProps } from '../../components'
+import { Footer, FooterProps, NavbarProps } from '../../components'
 import { Page } from '../../components/Page'
 
 export interface FaqPageProps {
   title: string
   content: string
   footer: FooterProps
+  navbar: NavbarProps
 }
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <Page>
+    <Page navbar={props.navbar}>
       <article
         className="Faq"
         dangerouslySetInnerHTML={{ __html: props.content }}

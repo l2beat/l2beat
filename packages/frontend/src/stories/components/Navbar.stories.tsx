@@ -13,5 +13,16 @@ export function Navbar() {
     configureDarkThemeToggle()
     configureSidebarMenu()
   }, [])
-  return <NavbarComponent />
+  return (
+    <NavbarComponent
+      showBanner={false}
+      socialLinks={{
+        discordLink: '#',
+        githubLink: '#',
+        mediumLink: '#',
+        twitterLink: '#',
+        youTubeLink: '#',
+      }}
+    />
+  )
 }

@@ -5,6 +5,7 @@ import path from 'path'
 
 import { Config } from '../../build/config'
 import { getFooterProps } from '../../components'
+import { getSocialLinksProps } from '../../components/navbar/SocialLinks'
 import { Wrapped } from '../Page'
 import { FaqPageProps } from './FaqPage'
 import { renderHeading } from './renderHeading'
@@ -12,6 +13,10 @@ import { renderHeading } from './renderHeading'
 export function getProps(config: Config): Wrapped<FaqPageProps> {
   return {
     props: {
+      navbar: {
+        showBanner: config.features.banner,
+        socialLinks: getSocialLinksProps(config),
+      },
       title: 'Frequently Asked Questions',
       content: getHtml(),
       footer: getFooterProps(config),

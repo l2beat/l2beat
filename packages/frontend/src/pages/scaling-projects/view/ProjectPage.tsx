@@ -7,11 +7,13 @@ import {
   FooterProps,
   Header,
   HeaderProps,
+  NavbarProps,
 } from '../../../components'
 import { Page } from '../../../components/Page'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
 export interface ProjectPageProps {
+  navbar: NavbarProps
   header: HeaderProps
   chart: ChartProps
   projectDetails: ProjectDetailsProps
@@ -20,7 +22,7 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page>
+    <Page navbar={props.navbar}>
       <Header {...props.header} />
       <Chart {...props.chart} />
       <ProjectDetails {...props.projectDetails} />

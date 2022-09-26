@@ -3,6 +3,7 @@ import { ApiMain } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps } from '../../../components'
+import { getSocialLinksProps } from '../../../components/navbar/SocialLinks'
 import { getChart } from '../../../utils/project/getChart'
 import { getHeader } from '../../../utils/project/getHeader'
 import { Wrapped } from '../../Page'
@@ -18,6 +19,10 @@ export function getProps(
   const chart = getChart(project, apiMain)
   return {
     props: {
+      navbar: {
+        showBanner: config.features.banner,
+        socialLinks: getSocialLinksProps(config),
+      },
       header: getHeader(project, apiMain),
       chart,
       projectDetails: getProjectDetails(project),

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Footer, FooterProps, Header } from '../../components'
+import { Footer, FooterProps, Header, NavbarProps } from '../../components'
 import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { OtherSites } from '../../components/OtherSites'
@@ -10,11 +10,12 @@ import { BridgesRiskViewProps, RiskView } from './BridgesRiskView'
 export interface BridgesRiskPageProps {
   riskView: BridgesRiskViewProps
   footer: FooterProps
+  navbar: NavbarProps
 }
 
 export function BridgesRiskPage(props: BridgesRiskPageProps) {
   return (
-    <Page>
+    <Page navbar={props.navbar}>
       <BridgesPageSelection selected="risk" />
       <main>
         <Header title="Risk Analysis" />

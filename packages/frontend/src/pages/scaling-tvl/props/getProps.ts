@@ -2,6 +2,7 @@ import { ApiMain } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps } from '../../../components'
+import { getSocialLinksProps } from '../../../components/navbar/SocialLinks'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { formatUSD, getPercentageChange } from '../../../utils/utils'
@@ -23,6 +24,10 @@ export function getProps(
 
   return {
     props: {
+      navbar: {
+        showBanner: config.features.banner,
+        socialLinks: getSocialLinksProps(config),
+      },
       tvl: formatUSD(tvl),
       sevenDayChange,
       apiEndpoint: '/api/tvl.json',

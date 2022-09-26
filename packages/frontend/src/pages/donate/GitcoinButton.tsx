@@ -1,12 +1,8 @@
 import React from 'react'
 
-import { config } from '../../build/config'
 import { OutLink } from '../../components'
 
 export function GitcoinButton() {
-  if (!config.features.gitcoinOption) {
-    return null
-  }
   return (
     <OutLink
       className="GitcoinButton"

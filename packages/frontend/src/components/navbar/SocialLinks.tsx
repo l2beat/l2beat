@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { config } from '../../build/config'
+import { Config } from '../../build/config'
 import {
   DiscordIcon,
   GithubIcon,
@@ -10,31 +10,49 @@ import {
 } from '../icons'
 import { OutLink } from '../OutLink'
 
-export function SocialLinks() {
+export interface SocialLinksProps {
+  twitterLink: string
+  discordLink: string
+  githubLink: string
+  youTubeLink: string
+  mediumLink: string
+}
+
+export function getSocialLinksProps(config: Config) {
+  return {
+    twitterLink: config.links.twitter,
+    discordLink: config.links.discord,
+    githubLink: config.links.github,
+    youTubeLink: config.links.youTube,
+    mediumLink: config.links.medium,
+  }
+}
+
+export function SocialLinks(props: SocialLinksProps) {
   return (
     <>
       <li>
-        <OutLink href={config.links.twitter} title="Twitter">
+        <OutLink href={props.twitterLink} title="Twitter">
           <TwitterIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.links.discord} title="Discord">
+        <OutLink href={props.discordLink} title="Discord">
           <DiscordIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.links.github} title="Github">
+        <OutLink href={props.githubLink} title="Github">
           <GithubIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.links.youTube} title="YouTube">
+        <OutLink href={props.youTubeLink} title="YouTube">
           <YouTubeIcon />
         </OutLink>
       </li>
       <li>
-        <OutLink href={config.links.medium} title="Medium">
+        <OutLink href={props.mediumLink} title="Medium">
           <MediumIcon />
         </OutLink>
       </li>
