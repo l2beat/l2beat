@@ -51,20 +51,32 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
     const noNext = (await knex.raw(
       `
-      SELECT transactions.zksync.block_number 
-      FROM  transactions.zksync
-      LEFT JOIN transactions.zksync z2 ON transactions.zksync.block_number  = z2.block_number - 1
-      WHERE z2.block_number IS NULL
+      WITH 
+        blocks AS (
+          SELECT DISTINCT block_number FROM transactions.zksync 
+        )
+      SELECT * 
+      FROM (
+        SELECT blocks.block_number 
+        FROM blocks 
+        LEFT JOIN blocks b2 ON blocks.block_number  = b2.block_number - 1
+        WHERE b2.block_number IS NULL) AS no_next
       ORDER BY block_number ASC
     `,
     )) as unknown as RawBlockNumberQueryResult
 
     const noPrev = (await knex.raw(
       `
-      SELECT transactions.zksync.block_number 
-      FROM  transactions.zksync
-      LEFT JOIN transactions.zksync z2 ON transactions.zksync.block_number  = z2.block_number + 1
-      WHERE z2.block_number IS NULL
+      WITH 
+        blocks AS (
+          SELECT DISTINCT block_number FROM transactions.zksync 
+        )
+      SELECT * 
+      FROM (
+        SELECT blocks.block_number 
+        FROM blocks 
+        LEFT JOIN blocks b2 ON blocks.block_number  = b2.block_number + 1
+        WHERE b2.block_number IS NULL) AS no_next
       ORDER BY block_number ASC
     `,
     )) as unknown as RawBlockNumberQueryResult

@@ -65,13 +65,34 @@ describe(ZksyncTransactionRepository.name, () => {
       ])
     })
 
+    it('finds holes with multiple records with the same block number', async () => {
+      await repository.addMany([
+        fakeRecord({ blockNumber: 1, blockIndex: 0 }),
+        fakeRecord({ blockNumber: 1, blockIndex: 1 }),
+        fakeRecord({ blockNumber: 2, blockIndex: 0 }),
+      ])
+
+      expect(await repository.getMissingRanges()).toEqual([
+        [-Infinity, 1],
+        [3, Infinity],
+      ])
+    })
+
     it('finds holes on a big set', async () => {
       const numbers = Array.from({ length: 200 }, () =>
         Math.floor(Math.random() * 1000),
       ).filter((x, i, a) => a.indexOf(x) === i)
 
       await repository.addMany(
-        numbers.map((number) => fakeRecord({ blockNumber: number })),
+        numbers.flatMap((number) => {
+          if (Math.random() > 0.2) {
+            return [
+              fakeRecord({ blockNumber: number, blockIndex: 1 }),
+              fakeRecord({ blockNumber: number, blockIndex: 2 }),
+            ]
+          }
+          return [fakeRecord({ blockNumber: number })]
+        }),
       )
 
       const ranges = await repository.getMissingRanges()
