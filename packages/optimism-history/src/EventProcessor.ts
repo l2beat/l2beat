@@ -52,7 +52,7 @@ export class EventProcessor {
   }
 
   wordToAddress(word: string) {
-    return utils.getAddress('0x' + word.slice(26, 40))
+    return utils.getAddress('0x' + word.slice(26))
   }
 }
 
