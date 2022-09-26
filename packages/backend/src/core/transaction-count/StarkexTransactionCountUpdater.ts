@@ -28,7 +28,7 @@ export class StarkexTransactionCountUpdater {
   }
 
   start() {
-    this.logger.info('Started')
+    this.logger.info('Started', { project: this.projectId.toString() })
     this.updateQueue.addIfEmpty()
     return this.clock.onNewHour(() => {
       this.updateQueue.addIfEmpty()
@@ -52,7 +52,7 @@ export class StarkexTransactionCountUpdater {
   }
 
   async update() {
-    this.logger.info('Update started')
+    this.logger.info('Update started', { project: this.projectId.toString() })
 
     const missingRanges =
       await this.starkexTransactionCountRepository.getMissingRangesByProject(
@@ -73,6 +73,6 @@ export class StarkexTransactionCountUpdater {
       }
     }
 
-    this.logger.info('Update enqueued')
+    this.logger.info('Update enqueued', { project: this.projectId.toString() })
   }
 }

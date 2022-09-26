@@ -1,15 +1,21 @@
-export interface Layer2Risk {
+export interface ProjectRisk {
   /** Category of this risk */
-  category: Layer2RiskCategory
+  category: ProjectRiskCategory
   /** Description of te risk. Should form a sentence with the category */
   text: string
   /** If the risk is particularly bad */
   isCritical?: boolean
 }
 
-export type Layer2RiskCategory =
+export type ProjectRiskCategory =
   | 'Funds can be stolen if'
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
   | 'Users can be censored if'
   | 'MEV can be extracted if'
+
+export interface ProjectRiskViewEntry {
+  value: string
+  description: string
+  sentiment?: 'warning' | 'bad' | 'unknown'
+}
