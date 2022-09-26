@@ -1,4 +1,4 @@
-import { layer2s, Layer2TechnologyChoice } from '../src'
+import { layer2s, ProjectTechnologyChoice } from '../src'
 import fs from 'fs'
 import path from 'path'
 
@@ -38,7 +38,7 @@ for (const key of keys) {
   }
 
   for (const [signature, names] of options.entries()) {
-    const decoded: Omit<Layer2TechnologyChoice, 'references'> =
+    const decoded: Omit<ProjectTechnologyChoice, 'references'> =
       JSON.parse(signature)
     report += `  [${names.join(', ')}]\n`
     report += `    ${decoded.name}\n\n`

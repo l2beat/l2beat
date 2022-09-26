@@ -1,6 +1,6 @@
-import { Layer2TechnologyChoice } from '../types'
+import { ProjectTechnologyChoice } from '../../common'
 
-const FRAUD_PROOFS: Layer2TechnologyChoice = {
+const FRAUD_PROOFS: ProjectTechnologyChoice = {
   name: 'Fraud proofs ensure state correctness',
   description:
     'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week anyone can submit a fraud proof that shows that the state was incorrect.',
@@ -13,7 +13,7 @@ const FRAUD_PROOFS: Layer2TechnologyChoice = {
   references: [],
 }
 
-const VALIDITY_PROOFS: Layer2TechnologyChoice = {
+const VALIDITY_PROOFS: ProjectTechnologyChoice = {
   name: 'Validity proofs ensure state correctness',
   description:
     'Each update to the system state must be accompanied by a ZK Proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. Once the proof is processed on the Ethereum blockchain the L2 block is instantly finalized.',
@@ -21,7 +21,7 @@ const VALIDITY_PROOFS: Layer2TechnologyChoice = {
   references: [],
 }
 
-const STARKEX_VALIDITY_PROOFS: Layer2TechnologyChoice = {
+const STARKEX_VALIDITY_PROOFS: ProjectTechnologyChoice = {
   ...VALIDITY_PROOFS,
   description:
     VALIDITY_PROOFS.description +
@@ -34,7 +34,7 @@ const STARKEX_VALIDITY_PROOFS: Layer2TechnologyChoice = {
   ],
 }
 
-const EXIT_FRAUD_PROOFS: Layer2TechnologyChoice = {
+const EXIT_FRAUD_PROOFS: ProjectTechnologyChoice = {
   name: 'Fraud proofs apply to exits only',
   description:
     'The internal system state is not subject to any checks. Only exits from the system can be challenged. This places a much higher burden on potential validators, as they have to monitor all user activity and not only the single state.',
