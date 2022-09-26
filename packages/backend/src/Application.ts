@@ -28,9 +28,9 @@ import { EventRepository } from './peripherals/database/EventRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
+import { RpcTransactionCountRepository } from './peripherals/database/RpcTransactionCountRepository'
 import { Database } from './peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from './peripherals/database/StarkexTransactionCountRepository'
-import { TransactionCountRepository } from './peripherals/database/TransactionCountRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
@@ -64,7 +64,7 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
-    const transactionCountRepository = new TransactionCountRepository(
+    const rpcTransactionCountRepository = new RpcTransactionCountRepository(
       database,
       logger,
     )
@@ -154,7 +154,7 @@ export class Application {
 
     const rpcTransactionUpdaters = createRpcTransactionUpdaters(
       config,
-      transactionCountRepository,
+      rpcTransactionCountRepository,
       clock,
       logger,
     )
