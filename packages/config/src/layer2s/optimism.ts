@@ -84,6 +84,11 @@ export const optimism: Layer2 = {
         sinceTimestamp: new UnixTime(1636654763),
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      provider: 'alchemy',
+      networkName: 'optimism',
+    },
   },
   riskView: {
     stateValidation: {
