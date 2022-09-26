@@ -10,4 +10,5 @@ export const config = {
   showGitcoinOption: true,
   showPermissionedAccounts: true,
   showBridgePages: false,
+  showActivity: false,
 }

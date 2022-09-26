@@ -10,6 +10,7 @@ import { getFaqPage } from './faq'
 import { getMetaImagePages } from './meta-images'
 import { outputPages } from './output'
 import { Page } from './Page'
+import { getActivityPage } from './scaling-activity'
 import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
@@ -23,6 +24,7 @@ export async function renderPages(
 
   pages.push(getRiskPage(projects, apiMain))
   pages.push(getTvlPage(projects, apiMain))
+  pages.push(getActivityPage())
   pages.push(getFaqPage())
   pages.push(await getDonatePage())
   pages.push(...getProjectPages(projects, apiMain))
