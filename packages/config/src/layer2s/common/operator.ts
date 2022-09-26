@@ -1,11 +1,11 @@
-import { Layer2Risk, Layer2TechnologyChoice } from '../types'
+import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
 
-const FRONTRUNNING_RISK: Layer2Risk = {
+const FRONTRUNNING_RISK: ProjectRisk = {
   category: 'MEV can be extracted if',
   text: 'the operator exploits their centralized position and frontruns user transactions.',
 }
 
-const CENTRALIZED_OPERATOR: Layer2TechnologyChoice = {
+const CENTRALIZED_OPERATOR: ProjectTechnologyChoice = {
   name: 'The system has a centralized operator',
   description:
     'The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.',
@@ -13,7 +13,7 @@ const CENTRALIZED_OPERATOR: Layer2TechnologyChoice = {
   references: [],
 }
 
-const CENTRALIZED_SEQUENCER: Layer2TechnologyChoice = {
+const CENTRALIZED_SEQUENCER: ProjectTechnologyChoice = {
   name: 'The system has a centralized sequencer',
   description:
     'While proposing blocks is open to anyone the system employs a privileged sequencer that has priority for submitting transaction batches and ordering transactions.',
@@ -21,7 +21,7 @@ const CENTRALIZED_SEQUENCER: Layer2TechnologyChoice = {
   references: [],
 }
 
-const STARKEX_OPERATOR: Layer2TechnologyChoice = {
+const STARKEX_OPERATOR: ProjectTechnologyChoice = {
   ...CENTRALIZED_OPERATOR,
   description:
     CENTRALIZED_OPERATOR.description +
@@ -34,7 +34,7 @@ const STARKEX_OPERATOR: Layer2TechnologyChoice = {
   ],
 }
 
-const DECENTRALIZED_OPERATOR: Layer2TechnologyChoice = {
+const DECENTRALIZED_OPERATOR: ProjectTechnologyChoice = {
   name: 'There is no central operator',
   description:
     'There is no privileged entity that sequences transactions or produces blocks. This activity is permissionless and open to anyone.',
