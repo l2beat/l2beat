@@ -31,6 +31,10 @@ export class TaskQueue<T> {
     return this.busyWorkers === this.workers
   }
 
+  get length() {
+    return this.queue.length
+  }
+
   addIfEmpty(task: T) {
     if (!this.isEmpty) {
       return
