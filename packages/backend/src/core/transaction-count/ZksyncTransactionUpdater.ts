@@ -61,7 +61,7 @@ export class ZksyncTransactionUpdater {
 
     for (const [start, end] of missingRanges) {
       for (
-        let i = Math.max(start, 0);
+        let i = Math.max(start, 1);
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
