@@ -55,6 +55,11 @@ export const nova: Layer2 = {
       },
     ],
     events: [],
+    transactionApi: {
+      type: 'rpc',
+      provider: 'jsonRpc',
+      url: 'https://nova.arbitrum.io/rpc',
+    },
   },
   riskView: {
     stateValidation: {
