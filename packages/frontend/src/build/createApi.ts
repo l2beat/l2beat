@@ -7,7 +7,8 @@ import { Config } from './config'
 export function createApi(config: Config, apiMain: ApiMain) {
   const urlCharts = new Map<string, Charts>()
 
-  urlCharts.set('tvl', apiMain.layers2s)
+  urlCharts.set('scaling-tvl', apiMain.layers2s)
+  urlCharts.set('bridges-tvl', apiMain.bridges)
   for (const project of [...config.layer2s, ...config.bridges]) {
     const projectData = apiMain.projects[project.id.toString()]
     if (!projectData) {

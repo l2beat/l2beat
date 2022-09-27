@@ -24,7 +24,6 @@ export function getProps(
       showActivity: config.features.activity,
     },
     wrapper: {
-      preloadApi: '/api/tvl.json',
       metadata: getPageMetadata(),
     },
   }

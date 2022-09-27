@@ -9,17 +9,17 @@ import {
 } from '../view/ScalingTvlView'
 import { getTechnology } from './getTechnology'
 
-export function getFinancialView(
+export function getScalingTvlView(
   projects: Layer2[],
   apiMain: ApiMain,
   tvl: number,
 ): ScalingTvlViewProps {
   return {
-    items: projects.map((x) => getFinancialViewEntry(x, apiMain, tvl)),
+    items: projects.map((x) => getScalingTvlViewEntry(x, apiMain, tvl)),
   }
 }
 
-function getFinancialViewEntry(
+function getScalingTvlViewEntry(
   project: Layer2,
   apiMain: ApiMain,
   aggregateTvl: number,
