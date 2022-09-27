@@ -1,4 +1,9 @@
-import { getErrorMessage, HttpClient, Logger } from '@l2beat/common'
+import {
+  getErrorMessage,
+  HttpClient,
+  Logger,
+  RateLimiter,
+} from '@l2beat/common'
 
 import {
   ZksyncBlocksResultSchema,
@@ -9,6 +14,10 @@ import {
 export class ZksyncClient {
   constructor(private httpClient: HttpClient, private logger: Logger) {
     this.logger = logger.for(this)
+    const rateLimiter = new RateLimiter({
+      callsPerMinute: 3000,
+    })
+    this.call = rateLimiter.wrap(this.call.bind(this))
   }
 
   async getLatestBlock() {
