@@ -1,5 +1,6 @@
 import React from 'react'
 
+<<<<<<< HEAD
 import {
   Chart,
   Footer,
@@ -7,6 +8,9 @@ import {
   Header,
   NavbarProps,
 } from '../../../components'
+=======
+import { Chart, Footer, FooterProps, Header, NavbarProps } from '../../../components'
+>>>>>>> 7fed2772 (fix post merge errors)
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'

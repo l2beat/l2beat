@@ -12,12 +12,18 @@ export function getProps(
   config: Config,
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityPageProps> {
+<<<<<<< HEAD
   const SECONDS_IN_A_DAY = 24 * 60 * 60
   const tps =
     (activityApiResponse.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const tpsSevenDaysAgo =
     (activityApiResponse.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
+=======
+  const txCount = apiActivity.combined.data.at(-1)?.[1] ?? 0
+  const txCountSevenDaysAgo = apiActivity.combined.data.at(-7)?.[1] ?? 0
+  const sevenDayChange = getPercentageChange(txCount, txCountSevenDaysAgo)
+>>>>>>> 7fed2772 (fix post merge errors)
 
   return {
     props: {
