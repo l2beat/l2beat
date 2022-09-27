@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Footer, FooterProps, Header, NavbarProps } from '../../../components'
+import { Chart, Footer, FooterProps, Header, NavbarProps } from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'

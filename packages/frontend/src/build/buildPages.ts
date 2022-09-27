@@ -18,13 +18,13 @@ async function main() {
     config.backend.apiUrl,
     config.backend.skipCache,
   )
-  const apiActivity = await getApiActivity(apiUrl)
+  const apiActivity = await getApiActivity(config.backend.apiUrl)
 
   printApiInfo(apiMain)
   sanityCheck(apiMain)
 
-  createApi(config, apiMain)
-  await renderPages(config, apiMain)
+  createApi(config, apiMain, apiActivity)
+  await renderPages(config, apiMain, apiActivity)
 }
 
 function printApiInfo(apiMain: ApiMain) {

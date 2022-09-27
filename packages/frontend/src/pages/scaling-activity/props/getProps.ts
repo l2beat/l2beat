@@ -1,12 +1,21 @@
 import { ApiActivity } from '@l2beat/types'
 
+import { Config } from '../../../build/config'
+import { getFooterProps, getNavbarProps } from '../../../components'
 import { getPercentageChange } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
 import { ActivityPageProps } from '../view/ActivityPage'
 import { getActivityView } from './getActivityView'
 import { getPageMetadata } from './getPageMetadata'
 
-export function getProps(config: Config): Wrapped<ActivityPageProps> {
+export function getProps(
+  config: Config,
+  apiActivity: ApiActivity,
+): Wrapped<ActivityPageProps> {
+  const txCount = apiActivity.combined.data.at(-1)?.[1] ?? 0
+  const txCountSevenDaysAgo = apiActivity.combined.data.at(-7)?.[1] ?? 0
+  const sevenDayChange = getPercentageChange(txCount, txCountSevenDaysAgo)
+
   return {
     props: {
       navbar: getNavbarProps(config),
