@@ -1,12 +1,14 @@
-import { Layer2 } from '@l2beat/config'
 import { ApiMain } from '@l2beat/types'
 import React from 'react'
 
+import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
+import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { getProps } from './getProps'
 import { MetaImage } from './MetaImage'
 
-export function getMetaImagePages(projects: Layer2[], apiMain: ApiMain) {
+export function getMetaImagePages(config: Config, apiMain: ApiMain) {
+  const included = getIncludedProjects(config.layer2s, apiMain)
   const main = getProps(apiMain)
   return [
     {
@@ -17,7 +19,7 @@ export function getMetaImagePages(projects: Layer2[], apiMain: ApiMain) {
         </PageWrapper>
       ),
     },
-    ...projects.map((project) => {
+    ...included.map((project) => {
       const { props, wrapper } = getProps(apiMain, project)
       return {
         slug: `/meta-images/${project.display.slug}`,

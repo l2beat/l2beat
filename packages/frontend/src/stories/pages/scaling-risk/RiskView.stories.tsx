@@ -1,7 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React, { useEffect } from 'react'
 
-import { Page } from '../../../components/Page'
+import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
 import { RiskView as RiskViewComponent } from '../../../pages/scaling-risk/view/RiskView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
@@ -16,7 +16,7 @@ export function RiskView() {
   }, [])
   return (
     <>
-      <Page>
+      <PageContent>
         <RiskViewComponent
           className="!block"
           items={[
@@ -61,7 +61,7 @@ export function RiskView() {
             },
           ]}
         />
-      </Page>
+      </PageContent>
       <Tooltip />
     </>
   )

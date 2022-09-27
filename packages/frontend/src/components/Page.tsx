@@ -1,18 +1,18 @@
 import React, { ReactNode } from 'react'
 
-import { Navbar } from './navbar/Navbar'
+import { Navbar, NavbarProps } from './navbar/Navbar'
+import { PageContent } from './PageContent'
 
 export interface PageProps {
   children: ReactNode
+  navbar: NavbarProps
 }
 
-export function Page({ children }: PageProps) {
+export function Page({ children, navbar }: PageProps) {
   return (
     <>
-      <Navbar />
-      <div className="max-w-[1000px] h-full px-4 mx-auto leading-[1.15]">
-        {children}
-      </div>
+      <Navbar {...navbar} />
+      <PageContent>{children}</PageContent>
     </>
   )
 }
