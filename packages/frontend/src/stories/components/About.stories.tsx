@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { About as AboutComponent } from '../../components/About'
-import { Page } from '../../components/Page'
+import { PageContent } from '../../components/PageContent'
 
 export default {
   title: 'Components/About',
@@ -9,8 +9,8 @@ export default {
 
 export function About() {
   return (
-    <Page>
+    <PageContent>
       <AboutComponent />
-    </Page>
+    </PageContent>
   )
 }

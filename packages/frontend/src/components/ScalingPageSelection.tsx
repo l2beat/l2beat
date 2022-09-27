@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { config } from '../pages/config'
 import { ActivityIcon } from './icons/symbols/ActivityIcon'
 import { RiskIcon } from './icons/symbols/RiskIcon'
 import { TvlIcon } from './icons/symbols/TvlIcon'
@@ -8,6 +7,7 @@ import { PageSelection } from './PageSelection'
 
 interface ScalingPageSelectionProps {
   selected: 'tvl' | 'risk' | 'activity'
+  showActivity: boolean
 }
 
 export function ScalingPageSelection(props: ScalingPageSelectionProps) {
@@ -25,7 +25,7 @@ export function ScalingPageSelection(props: ScalingPageSelectionProps) {
       selected: props.selected === 'risk',
     },
   ]
-  if (config.showActivity) {
+  if (props.showActivity) {
     pages.push({
       content: 'Activity',
       icon: <ActivityIcon />,

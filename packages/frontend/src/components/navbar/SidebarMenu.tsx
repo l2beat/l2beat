@@ -1,19 +1,24 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import { config } from '../../pages/config'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OtherLinks } from './OtherLinks'
-import { SocialLinks } from './SocialLinks'
+import { SocialLinks, SocialLinksProps } from './SocialLinks'
 
-export function SidebarMenu() {
+export interface SidebarMenuProps {
+  showBanner: boolean
+  forumLink: string
+  socialLinks: SocialLinksProps
+}
+
+export function SidebarMenu(props: SidebarMenuProps) {
   return (
     <>
       <div
         id="sidebar-menu"
         className={classNames(
           'hidden fixed left-0 z-50',
-          config.showBanner ? 'top-8' : 'top-0',
+          props.showBanner ? 'top-8' : 'top-0',
           'w-3/4 min-w-[240px] h-full',
           'p-4 pt-[22px] bg-white dark:bg-black',
         )}
@@ -35,10 +40,10 @@ export function SidebarMenu() {
               </li>
             </ul>
           </li>
-          <OtherLinks />
+          <OtherLinks forumLink={props.forumLink} />
           <li>
             <ul className="flex gap-4">
-              <SocialLinks />
+              <SocialLinks {...props.socialLinks} />
             </ul>
           </li>
         </ul>
