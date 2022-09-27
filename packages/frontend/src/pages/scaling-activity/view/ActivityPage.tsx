@@ -33,10 +33,10 @@ export function ActivityPage(props: ActivityPageProps) {
       <main>
         <Header
           title="Activity"
-          txCount={props.txCount}
-          sevenDayChangeTxCount={props.sevenDayChangeTxCount}
+          transactionCount={props.txCount}
+          transactionCountWeeklyChange={props.sevenDayChangeTxCount}
         />
-        <Chart endpoint={props.apiEndpoint} isPrototype={true}></Chart>
+        <Chart endpoint={props.apiEndpoint} hideControls={true}></Chart>
         <ActivityView {...props.activityView} />
         <OtherSites />
         <About />

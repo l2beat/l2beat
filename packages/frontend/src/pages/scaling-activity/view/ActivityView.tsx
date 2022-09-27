@@ -2,7 +2,13 @@ import classNames from 'classnames'
 import React from 'react'
 
 export interface ActivityViewProps {
+  items: ActivityViewEntry[]
   className?: string
+}
+
+export interface ActivityViewEntry {
+  name: string
+  slug: string
 }
 
 export function ActivityView({ className }: ActivityViewProps) {
