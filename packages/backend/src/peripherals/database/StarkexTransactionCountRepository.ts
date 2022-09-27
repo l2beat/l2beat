@@ -102,7 +102,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
   async getDailyTransactionCount(
     projectId: ProjectId,
-  ): Promise<Pick<StarkexTransactionCountRecord, 'count' | 'timestamp'>[]> {
+  ): Promise<{ count: number; timestamp: UnixTime }[]> {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
       `
