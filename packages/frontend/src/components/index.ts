@@ -1,5 +1,4 @@
 export * from './chart/Chart'
-export * from './chart/GenericChart'
 export * from './Footer'
 export * from './head'
 export * from './Header'
