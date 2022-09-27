@@ -1,5 +1,6 @@
-import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
+import { ApiActivity } from '@l2beat/types'
+
+import { getPercentageChange } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
 import { ActivityPageProps } from '../view/ActivityPage'
 import { getActivityView } from './getActivityView'
@@ -9,8 +10,8 @@ export function getProps(config: Config): Wrapped<ActivityPageProps> {
   return {
     props: {
       navbar: getNavbarProps(config),
-      txCount: '100000',
-      sevenDayChangeTxCount: '+12%',
+      txCount: txCount.toString(),
+      sevenDayChangeTxCount: sevenDayChange,
       apiEndpoint: '/api/activity.json',
       activityView: getActivityView(),
       footer: getFooterProps(config),

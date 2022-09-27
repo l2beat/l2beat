@@ -1,3 +1,4 @@
+import { ApiActivity } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
