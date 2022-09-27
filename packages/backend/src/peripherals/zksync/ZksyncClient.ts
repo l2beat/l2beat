@@ -42,8 +42,8 @@ export class ZksyncClient {
     }
     let transactions = parsed.list
 
-    let count = parsed.pagination.count
-    while (count > 100) {
+    const count = parsed.pagination.count
+    while (count - transactions.length > 0) {
       const lastTx = transactions.at(-1)
       if (!lastTx) {
         throw new Error('Programmer error: Transactions list empty!')
@@ -57,8 +57,6 @@ export class ZksyncClient {
 
       const parsedNextPage = ZksyncTransactionResultSchema.parse(nextPage)
       transactions = transactions.concat(parsedNextPage.list.slice(1))
-
-      count -= 99
     }
 
     return transactions
