@@ -11,8 +11,8 @@ export interface HeaderProps {
   icon?: string
   tvl?: string
   tvlWeeklyChange?: string
-  transactionCount?: string
-  transactionCountWeeklyChange?: string
+  tpsDaily?: string
+  tpsWeeklyChange?: string
 }
 
 export function Header(props: HeaderProps) {
@@ -42,14 +42,14 @@ export function Header(props: HeaderProps) {
         </div>
       )}
 
-      {props.transactionCount && props.transactionCountWeeklyChange && (
+      {props.tpsDaily && props.tpsWeeklyChange && (
         <div className="Header-Right">
           <p className="Header-Tvl">
-            Tx count:{' '}
-            <span className="Header-TvlValue">{props.transactionCount}</span>
+            TPS{' '}
+            <span className="Header-TvlValue">{props.tpsDaily}</span>
           </p>
           <p className="Header-Change">
-            <PercentChange value={props.transactionCountWeeklyChange} /> / 7
+            <PercentChange value={props.tpsWeeklyChange} /> / 7
             days
           </p>
         </div>

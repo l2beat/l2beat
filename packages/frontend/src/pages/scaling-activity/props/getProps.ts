@@ -12,15 +12,17 @@ export function getProps(
   config: Config,
   apiActivity: ApiActivity,
 ): Wrapped<ActivityPageProps> {
-  const txCount = apiActivity.combined.data.at(-1)?.[1] ?? 0
-  const txCountSevenDaysAgo = apiActivity.combined.data.at(-7)?.[1] ?? 0
-  const sevenDayChange = getPercentageChange(txCount, txCountSevenDaysAgo)
+  const SECONDS_IN_A_DAY = 24 * 60 * 60
+  const tps = (apiActivity.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
+  const tpsSevenDaysAgo =
+    (apiActivity.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
+  const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
 
   return {
     props: {
       navbar: getNavbarProps(config),
-      transactionCount: txCount.toString(),
-      transactionCountWeeklyChange: sevenDayChange,
+      tpsDaily: tps.toFixed(2).toString(),
+      tpsWeeklyChange: sevenDayChange,
       apiEndpoint: '/api/scaling-activity.json',
       activityView: getActivityView(),
       footer: getFooterProps(config),

@@ -14,8 +14,8 @@ import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
-  transactionCount: string
-  transactionCountWeeklyChange: string
+  tpsDaily: string
+  tpsWeeklyChange: string
   apiEndpoint: string
   activityView: ActivityViewProps
   footer: FooterProps
@@ -33,8 +33,8 @@ export function ActivityPage(props: ActivityPageProps) {
       <main>
         <Header
           title="Activity"
-          transactionCount={props.transactionCount}
-          transactionCountWeeklyChange={props.transactionCountWeeklyChange}
+          tpsDaily={props.tpsDaily}
+          tpsWeeklyChange={props.tpsWeeklyChange}
         />
         <Chart endpoint={props.apiEndpoint} hideControls={true}></Chart>
         <ActivityView {...props.activityView} />
