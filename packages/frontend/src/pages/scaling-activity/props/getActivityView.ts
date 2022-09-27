@@ -21,12 +21,15 @@ export function getActivityViewEntry(
 ): ActivityViewEntry {
   const SECONDS_IN_A_DAY = 24 * 60 * 60
   const transactionsWeeklyCount =
-    apiActivity.projects[project.id.toString()].data.at(-1)?.[1] ?? 0
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    apiActivity.projects[project.id.toString()]?.data.at(-1)?.[1] ?? 0
   const tps =
-    (apiActivity.projects[project.id.toString()].data.at(-1)?.[1] ?? 0) /
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    (apiActivity.projects[project.id.toString()]?.data.at(-1)?.[1] ?? 0) /
     SECONDS_IN_A_DAY
   const tpsSevenDaysAgo =
-    (apiActivity.projects[project.id.toString()].data.at(-7)?.[1] ?? 0) /
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    (apiActivity.projects[project.id.toString()]?.data.at(-7)?.[1] ?? 0) /
     SECONDS_IN_A_DAY
   const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
 
