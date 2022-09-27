@@ -1,7 +1,16 @@
 import React from 'react'
 
 import { OutLink } from '../../components'
-import { DonationDetailsProps } from './getProps'
+
+export interface DonationDetailsProps {
+  ethereumAddress: string
+  qrLightURL: string
+  qrDarkURL: string
+  networks: {
+    name: string
+    linkURL: string
+  }[]
+}
 
 export function DonateDetails(props: DonationDetailsProps) {
   return (

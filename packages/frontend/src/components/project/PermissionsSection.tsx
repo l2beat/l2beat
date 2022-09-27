@@ -2,7 +2,6 @@ import { Layer2Permission } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
-import { config } from '../../pages/config'
 import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
@@ -11,9 +10,6 @@ export interface PermissionsSectionProps {
 }
 
 export function PermissionsSection(props: PermissionsSectionProps) {
-  if (!config.showPermissionedAccounts) {
-    return null
-  }
   return (
     <Section
       title="Permissioned Addresses"

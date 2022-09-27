@@ -1,13 +1,16 @@
 import React from 'react'
 
-import { config } from '../../pages/config'
 import { OutLink } from '../OutLink'
 
-export function OtherLinks() {
+export interface OtherLinksProps {
+  forumLink: string
+}
+
+export function OtherLinks(props: OtherLinksProps) {
   return (
     <>
       <li>
-        <OutLink href={config.forumLink}>Forum</OutLink>
+        <OutLink href={props.forumLink}>Forum</OutLink>
       </li>
       <li>
         <a href="/donate">Donate</a>

@@ -1,25 +1,29 @@
 import React from 'react'
 
-import { Footer, Header } from '../../components'
+import { Footer, FooterProps, Header, NavbarProps } from '../../components'
 import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
 import { BridgesRiskViewProps, RiskView } from './BridgesRiskView'
 
-export type BridgesRiskPageProps = BridgesRiskViewProps
+export interface BridgesRiskPageProps {
+  riskView: BridgesRiskViewProps
+  footer: FooterProps
+  navbar: NavbarProps
+}
 
 export function BridgesRiskPage(props: BridgesRiskPageProps) {
   return (
-    <Page>
+    <Page navbar={props.navbar}>
       <BridgesPageSelection selected="risk" />
       <main>
         <Header title="Risk Analysis" />
-        <RiskView {...props} />
+        <RiskView {...props.riskView} />
         <OtherSites />
         <About />
       </main>
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "scaling/tvl",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/projects/:project/tvl/assets/:asset",
+      "destination": "https://l2beat-staging.herokuapp.com/api/projects/:project/tvl/assets/:asset"
+    }
+  ]
+}
