@@ -9,9 +9,14 @@ type ProjectsCounts = {
   counts: { timestamp: UnixTime; count: number }[]
 }[]
 
+type TransactionApiProjects = Pick<
+  Config['projects'][number],
+  'projectId' | 'transactionApi'
+>[]
+
 export class ActivityController {
   constructor(
-    private projects: Config['projects'],
+    private projects: TransactionApiProjects,
     private rpcRepository: RpcTransactionCountRepository,
     private starkexRepository: StarkexTransactionCountRepository,
   ) {}
