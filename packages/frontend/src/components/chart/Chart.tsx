@@ -15,9 +15,15 @@ export interface ChartProps {
   endpoint: string
   tokens?: { symbol: string; endpoint: string }[]
   days?: 7 | 30
+  isPrototype?: boolean
 }
 
-export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
+export function Chart({
+  endpoint,
+  tokens,
+  days = 7,
+  isPrototype = false,
+}: ChartProps) {
   return (
     <section
       data-role="chart"
@@ -25,7 +31,7 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
       className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
     >
       <TimeRange />
-      <RangeControls days={days} />
+      {!isPrototype && <RangeControls days={days} />}
       <div
         data-role="chart-view"
         className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
@@ -41,10 +47,10 @@ export function Chart({ endpoint, tokens, days = 7 }: ChartProps) {
           className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
         />
       </div>
-      <CurrencyControls />
-      <Description />
-      <ScaleControls />
-      <TokenControls tokens={tokens} />
+      {!isPrototype && <CurrencyControls />}
+      <Description hidden={isPrototype} />
+      {!isPrototype && <ScaleControls />}
+      {!isPrototype && <TokenControls tokens={tokens} />}
     </section>
   )
 }
