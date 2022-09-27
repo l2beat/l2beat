@@ -13,8 +13,8 @@ export function getProps(
   config: Config,
   apiMain: ApiMain,
 ): Wrapped<BridgesTvlPageProps> {
-  const tvl = apiMain.layers2s.hourly.data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = apiMain.layers2s.hourly.data[0]?.[1] ?? 0
+  const tvl = apiMain.bridges.hourly.data.at(-1)?.[1] ?? 0
+  const tvlSevenDaysAgo = apiMain.bridges.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const included = getIncludedProjects(config.bridges, apiMain)
