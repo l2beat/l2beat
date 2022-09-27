@@ -5,5 +5,11 @@
       "destination": "scaling/tvl",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/projects/:project/tvl/assets/:asset",
+      "destination": "$API_URL/api/projects/:project/tvl/assets/:asset"
+    }
   ]
 }
