@@ -1,8 +1,8 @@
 import { getErrorMessage, HttpClient, Logger } from '@l2beat/common'
 
-import { parseZksyncResponse } from './parseZksyncResponse'
 import {
   ZksyncBlocksResultSchema,
+  ZksyncResponse,
   ZksyncTransactionResultSchema,
 } from './schemas'
 
@@ -75,38 +75,32 @@ export class ZksyncClient {
     }
 
     const text = await httpResponse.text()
-    const zksyncResponse = tryParseZksyncResponse(text)
 
     if (!httpResponse.ok) {
       this.recordError(path, timeMs, text)
       throw new Error(`Http error ${httpResponse.status}: ${text}`)
     }
 
-    if (!zksyncResponse) {
+    const json: unknown = JSON.parse(text)
+    const zksyncResponse = ZksyncResponse.safeParse(json)
+
+    if (!zksyncResponse.success) {
       const message = 'Invalid Zksync response.'
       this.recordError(path, timeMs, message)
       throw new TypeError(message)
     }
 
-    if (zksyncResponse.status !== 'success') {
-      this.recordError(path, timeMs, zksyncResponse.error.message)
-      throw new Error(zksyncResponse.error.message)
+    if (zksyncResponse.data.status !== 'success') {
+      this.recordError(path, timeMs, zksyncResponse.data.error.message)
+      throw new Error(zksyncResponse.data.error.message)
     }
 
     this.logger.debug({ type: 'success', timeMs, path })
 
-    return zksyncResponse.result
+    return zksyncResponse.data.result
   }
 
   private recordError(path: string, timeMs: number, message: string) {
     this.logger.debug({ type: 'error', message, timeMs, path })
-  }
-}
-
-function tryParseZksyncResponse(text: string) {
-  try {
-    return parseZksyncResponse(text)
-  } catch {
-    return undefined
   }
 }
