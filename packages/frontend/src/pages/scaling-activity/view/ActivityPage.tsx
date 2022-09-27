@@ -8,6 +8,9 @@ import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
+  txCount: string
+  sevenDayChangeTxCount: string
+  apiEndpoint: string
   activityView: ActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -22,7 +25,12 @@ export function ActivityPage(props: ActivityPageProps) {
         selected="activity"
       />
       <main>
-        <Header title="Activity" />
+        <Header
+          title="Activity"
+          txCount={props.txCount}
+          sevenDayChangeTxCount={props.sevenDayChangeTxCount}
+        />
+        <GenericChart endpoint={props.apiEndpoint}></GenericChart>
         <ActivityView {...props.activityView} />
         <OtherSites />
         <About />
