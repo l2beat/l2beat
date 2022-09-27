@@ -11,7 +11,7 @@ export function getProps(config: Config): Wrapped<ActivityPageProps> {
       navbar: getNavbarProps(config),
       txCount: '100000',
       sevenDayChangeTxCount: '+12%',
-      apiEndpoint: '/api/tvl.json',
+      apiEndpoint: '/api/activity.json',
       activityView: getActivityView(),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
