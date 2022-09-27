@@ -21,7 +21,7 @@ export function getProps(
       navbar: getNavbarProps(config),
       txCount: txCount.toString(),
       sevenDayChangeTxCount: sevenDayChange,
-      apiEndpoint: '/api/activity.json',
+      apiEndpoint: '/api/scaling-activity.json',
       activityView: getActivityView(),
       footer: getFooterProps(config),
       showActivity: config.features.activity,

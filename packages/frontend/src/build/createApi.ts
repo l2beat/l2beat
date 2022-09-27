@@ -20,7 +20,7 @@ export function createApi(
     }
     urlCharts.set(project.display.slug, projectData.charts)
   }
-  urlCharts.set('activity', getCompatibleApi(apiActivity))
+  urlCharts.set('scaling-activity', getCompatibleApi(apiActivity))
 
   outputCharts(urlCharts)
 }
