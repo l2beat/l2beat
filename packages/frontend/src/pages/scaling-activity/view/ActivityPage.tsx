@@ -1,6 +1,5 @@
 import React from 'react'
 
-<<<<<<< HEAD
 import {
   Chart,
   Footer,
@@ -8,9 +7,6 @@ import {
   Header,
   NavbarProps,
 } from '../../../components'
-=======
-import { Chart, Footer, FooterProps, Header, NavbarProps } from '../../../components'
->>>>>>> 7fed2772 (fix post merge errors)
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -40,10 +36,7 @@ export function ActivityPage(props: ActivityPageProps) {
           tpsDaily={props.tpsDaily}
           tpsWeeklyChange={props.tpsWeeklyChange}
         />
-<<<<<<< HEAD
-        <Chart endpoint={props.apiEndpoint} hideControls></Chart>
-=======
-        <Chart endpoint={props.apiEndpoint} isPrototype={true}></Chart>
+        <Chart endpoint={props.apiEndpoint} hideControls={true}></Chart>
         <ActivityView {...props.activityView} />
         <OtherSites />
         <About />

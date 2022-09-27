@@ -15,11 +15,7 @@ export interface ChartProps {
   endpoint: string
   tokens?: { symbol: string; endpoint: string }[]
   days?: 7 | 30
-<<<<<<< HEAD
   hideControls?: boolean
-=======
-  isPrototype?: boolean
->>>>>>> 6d32d83f (hide part of chart UI)
 }
 
 export function Chart({
@@ -27,10 +23,14 @@ export function Chart({
   tokens,
   days = 7,
 <<<<<<< HEAD
+<<<<<<< HEAD
   hideControls = false,
 =======
   isPrototype = false,
 >>>>>>> 6d32d83f (hide part of chart UI)
+=======
+  hideControls = false,
+>>>>>>> de4973f5 (add requested changes)
 }: ChartProps) {
   return (
     <section
@@ -39,11 +39,7 @@ export function Chart({
       className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
     >
       <TimeRange />
-<<<<<<< HEAD
       {!hideControls && <RangeControls days={days} />}
-=======
-      {!isPrototype && <RangeControls days={days} />}
->>>>>>> 6d32d83f (hide part of chart UI)
       <div
         data-role="chart-view"
         className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
@@ -59,17 +55,10 @@ export function Chart({
           className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
         />
       </div>
-<<<<<<< HEAD
       {!hideControls && <CurrencyControls />}
       <Description hidden={hideControls} />
       {!hideControls && <ScaleControls />}
       {!hideControls && <TokenControls tokens={tokens} />}
-=======
-      {!isPrototype && <CurrencyControls />}
-      <Description hidden={isPrototype} />
-      {!isPrototype && <ScaleControls />}
-      {!isPrototype && <TokenControls tokens={tokens} />}
->>>>>>> 6d32d83f (hide part of chart UI)
     </section>
   )
 }
