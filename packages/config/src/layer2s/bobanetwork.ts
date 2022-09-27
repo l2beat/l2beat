@@ -71,6 +71,7 @@ export const bobanetwork: Layer2 = {
       type: 'rpc',
       provider: 'jsonRpc',
       url: 'https://mainnet.boba.network/',
+      callsPerMinute: 400,
     },
   },
   riskView: {
