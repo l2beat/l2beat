@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Footer as FooterComponent } from '../../components/Footer'
-import { Page } from '../../components/Page'
+import { PageContent } from '../../components/PageContent'
 
 export default {
   title: 'Components/Footer',
@@ -9,8 +9,8 @@ export default {
 
 export function Footer() {
   return (
-    <Page>
-      <FooterComponent />
-    </Page>
+    <PageContent>
+      <FooterComponent twitterLink="#" discordLink="#" githubLink="#" />
+    </PageContent>
   )
 }

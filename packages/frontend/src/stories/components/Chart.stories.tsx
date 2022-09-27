@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { Chart as ChartComponent } from '../../components/chart/Chart'
 import { configureChart } from '../../components/chart/configure'
-import { Page } from '../../components/Page'
+import { PageContent } from '../../components/PageContent'
 
 export default {
   title: 'Components/Chart',
@@ -31,12 +31,12 @@ function Template({ tokenCount }: TemplateProps) {
   }, [])
 
   return (
-    <Page>
+    <PageContent>
       <ChartComponent
         endpoint="/fakeTvl.json"
         tokens={tokens.slice(0, tokenCount)}
       />
-    </Page>
+    </PageContent>
   )
 }
 
