@@ -13,6 +13,7 @@ export function getProps(
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityPageProps> {
 <<<<<<< HEAD
+<<<<<<< HEAD
   const SECONDS_IN_A_DAY = 24 * 60 * 60
   const tps =
     (activityApiResponse.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
@@ -20,6 +21,8 @@ export function getProps(
     (activityApiResponse.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
 =======
+=======
+>>>>>>> 108b9244 (refactor)
   const txCount = apiActivity.combined.data.at(-1)?.[1] ?? 0
   const txCountSevenDaysAgo = apiActivity.combined.data.at(-7)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(txCount, txCountSevenDaysAgo)
