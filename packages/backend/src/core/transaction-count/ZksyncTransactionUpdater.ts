@@ -54,7 +54,7 @@ export class ZksyncTransactionUpdater {
     )
 
     await this.zksyncTransactionRepository.addMany(records)
-    this.logger.info('Block updated', {
+    this.logger.debug('Block updated', {
       blockNumber,
       transactionCount: records.length,
     })
