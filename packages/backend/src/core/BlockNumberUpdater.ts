@@ -26,7 +26,9 @@ export class BlockNumberUpdater {
       if (blockNumber !== undefined) {
         return blockNumber
       }
-      this.logger.debug('something is waiting for getBlockNumberWhenReady')
+      this.logger.debug('Something is waiting for getBlockNumberWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
   }
@@ -55,7 +57,10 @@ export class BlockNumberUpdater {
       if (noHoles) {
         return blocks
       } else {
-        this.logger.debug('something is waiting for getBlockRangeWhenReady')
+        this.logger.debug('Something is waiting for getBlockRangeWhenReady', {
+          from: from.toString(),
+          to: to.toString(),
+        })
         await setTimeout(refreshIntervalMs)
       }
     }
