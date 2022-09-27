@@ -5,22 +5,22 @@ import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
 import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
-import { RiskView, RiskViewProps } from './RiskView'
+import { ScalingRiskView, ScalingRiskViewProps } from './ScalingRiskView'
 
-export interface RiskPageProps {
-  riskView: RiskViewProps
+export interface ScalingRiskPageProps {
+  riskView: ScalingRiskViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
 }
 
-export function RiskPage(props: RiskPageProps) {
+export function ScalingRiskPage(props: ScalingRiskPageProps) {
   return (
     <Page navbar={props.navbar}>
       <ScalingPageSelection showActivity={props.showActivity} selected="risk" />
       <main>
         <Header title="Risk Analysis" />
-        <RiskView {...props.riskView} />
+        <ScalingRiskView {...props.riskView} />
         <OtherSites />
         <About />
       </main>

@@ -15,6 +15,7 @@ import {
 
 export interface NavbarProps {
   showBanner: boolean
+  uglyBridgesScalingSwitch: boolean
   forumLink: string
   socialLinks: SocialLinksProps
 }
@@ -23,6 +24,7 @@ export function getNavbarProps(config: Config): NavbarProps {
   return {
     showBanner: config.features.banner,
     forumLink: config.links.forum,
+    uglyBridgesScalingSwitch: config.features.bridges,
     socialLinks: getSocialLinksProps(config),
   }
 }
@@ -51,6 +53,20 @@ export function Navbar(props: NavbarProps) {
         </a>
         <div className="flex gap-6 items-center">
           <ul className="hidden md:flex gap-6 items-center">
+            {props.uglyBridgesScalingSwitch && (
+              <>
+                <li>
+                  <a href="/scaling/tvl" className="opacity-50">
+                    Scaling
+                  </a>
+                </li>
+                <li>
+                  <a href="/bridges/tvl" className="opacity-50">
+                    Bridges
+                  </a>
+                </li>
+              </>
+            )}
             <OtherLinks forumLink={props.forumLink} />
           </ul>
           <div className="w-[1px] h-[32px] bg-bg-3 hidden md:block"></div>

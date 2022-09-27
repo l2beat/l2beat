@@ -6,9 +6,9 @@ import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { formatUSD, getPercentageChange } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
-import { TvlPageProps } from '../view/TvlPage'
-import { getFinancialView } from './getFinancialView'
+import { TvlPageProps } from '../view/ScalingTvlPage'
 import { getPageMetadata } from './getPageMetadata'
+import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
@@ -26,13 +26,13 @@ export function getProps(
       navbar: getNavbarProps(config),
       tvl: formatUSD(tvl),
       sevenDayChange,
-      apiEndpoint: '/api/tvl.json',
-      financialView: getFinancialView(ordering, apiMain, tvl),
+      apiEndpoint: '/api/scaling-tvl.json',
+      tvlView: getScalingTvlView(ordering, apiMain, tvl),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },
     wrapper: {
-      preloadApi: '/api/tvl.json',
+      preloadApi: '/api/scaling-tvl.json',
       metadata: getPageMetadata(),
     },
   }

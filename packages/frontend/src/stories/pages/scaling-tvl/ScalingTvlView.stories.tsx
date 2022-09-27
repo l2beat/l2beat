@@ -2,22 +2,22 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
-import { FinancialView as FinancialViewComponent } from '../../../pages/scaling-tvl/view/FinancialView'
+import { ScalingTvlView } from '../../../pages/scaling-tvl/view/ScalingTvlView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
 
 export default {
-  title: 'Pages/Scaling/FinancialView',
+  title: 'Pages/Scaling/TvlView',
 }
 
-export function FinancialView() {
+export function TvlView() {
   useEffect(() => {
     configureTooltips()
   }, [])
   return (
     <>
       <PageContent>
-        <FinancialViewComponent
+        <ScalingTvlView
           items={[
             {
               name: 'Forktimism',

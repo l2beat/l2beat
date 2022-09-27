@@ -4,7 +4,7 @@ import React from 'react'
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getProps } from './props'
-import { TvlPage } from './view/TvlPage'
+import { ScalingTvlPage } from './view/ScalingTvlPage'
 
 export function getTvlPage(config: Config, apiMain: ApiMain) {
   const { props, wrapper } = getProps(config, apiMain)
@@ -12,7 +12,7 @@ export function getTvlPage(config: Config, apiMain: ApiMain) {
     slug: '/scaling/tvl',
     page: (
       <PageWrapper {...wrapper}>
-        <TvlPage {...props} />
+        <ScalingTvlPage {...props} />
       </PageWrapper>
     ),
   }

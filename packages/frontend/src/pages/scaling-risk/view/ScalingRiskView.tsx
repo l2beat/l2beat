@@ -11,19 +11,19 @@ import { ProjectLink } from '../../../components/ProjectLink'
 import { Column, TableView } from '../../../components/TableView'
 import { RiskCell } from './RiskCell'
 
-export interface RiskViewProps {
-  items: RiskViewEntry[]
+export interface ScalingRiskViewProps {
+  items: ScalingRiskViewEntry[]
   className?: string
 }
 
-export interface RiskViewEntry extends Layer2RiskView {
+export interface ScalingRiskViewEntry extends Layer2RiskView {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
 }
 
-export function RiskView({ items, className }: RiskViewProps) {
-  const columns: Column<RiskViewEntry>[] = [
+export function ScalingRiskView({ items, className }: ScalingRiskViewProps) {
+  const columns: Column<ScalingRiskViewEntry>[] = [
     {
       name: 'Name',
       getValue: (project) => <ProjectLink type="layer2" project={project} />,

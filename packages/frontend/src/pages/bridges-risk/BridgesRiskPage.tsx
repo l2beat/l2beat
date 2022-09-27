@@ -5,7 +5,7 @@ import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
-import { BridgesRiskViewProps, RiskView } from './BridgesRiskView'
+import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
 
 export interface BridgesRiskPageProps {
   riskView: BridgesRiskViewProps
@@ -19,7 +19,7 @@ export function BridgesRiskPage(props: BridgesRiskPageProps) {
       <BridgesPageSelection selected="risk" />
       <main>
         <Header title="Risk Analysis" />
-        <RiskView {...props.riskView} />
+        <BridgesRiskView {...props.riskView} />
         <OtherSites />
         <About />
       </main>

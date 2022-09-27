@@ -5,14 +5,14 @@ import { getFooterProps, getNavbarProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { Wrapped } from '../../Page'
-import { RiskPageProps } from '../view/RiskPage'
+import { ScalingRiskPageProps } from '../view/ScalingRiskPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getRiskView } from './getRiskView'
 
 export function getProps(
   config: Config,
   apiMain: ApiMain,
-): Wrapped<RiskPageProps> {
+): Wrapped<ScalingRiskPageProps> {
   const included = getIncludedProjects(config.layer2s, apiMain)
   const ordering = orderByTvl(included, apiMain)
 
@@ -24,7 +24,6 @@ export function getProps(
       showActivity: config.features.activity,
     },
     wrapper: {
-      preloadApi: '/api/tvl.json',
       metadata: getPageMetadata(),
     },
   }
