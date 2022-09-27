@@ -18,6 +18,7 @@ async function main() {
     config.backend.apiUrl,
     config.backend.skipCache,
   )
+  const apiActivity = await getApiActivity(apiUrl)
 
   printApiInfo(apiMain)
   sanityCheck(apiMain)
