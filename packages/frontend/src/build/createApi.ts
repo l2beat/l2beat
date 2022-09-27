@@ -1,7 +1,8 @@
 import { ApiMain, Charts } from '@l2beat/types'
+import fsx from 'fs-extra'
+import path from 'path'
 
-import { Config } from '../config'
-import { outputCharts } from './output'
+import { Config } from './config'
 
 export function createApi(config: Config, apiMain: ApiMain) {
   const urlCharts = new Map<string, Charts>()
@@ -16,4 +17,14 @@ export function createApi(config: Config, apiMain: ApiMain) {
   }
 
   outputCharts(urlCharts)
+}
+
+export function outputCharts(urlCharts: Map<string, Charts>) {
+  for (const [url, charts] of urlCharts) {
+    fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
+    fsx.writeFileSync(
+      path.join('build/api', `${url}.json`),
+      JSON.stringify(charts),
+    )
+  }
 }
