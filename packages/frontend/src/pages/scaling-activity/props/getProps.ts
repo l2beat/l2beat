@@ -19,8 +19,8 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config),
-      txCount: txCount.toString(),
-      sevenDayChangeTxCount: sevenDayChange,
+      transactionCount: txCount.toString(),
+      transactionCountWeeklyChange: sevenDayChange,
       apiEndpoint: '/api/scaling-activity.json',
       activityView: getActivityView(),
       footer: getFooterProps(config),
