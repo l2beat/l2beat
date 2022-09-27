@@ -86,8 +86,8 @@ export const optimism: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      provider: 'alchemy',
-      networkName: 'optimism',
+      provider: 'jsonRpc',
+      url: 'https://mainnet.optimism.io/',
     },
   },
   riskView: {
