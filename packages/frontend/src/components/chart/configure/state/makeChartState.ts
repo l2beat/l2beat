@@ -83,15 +83,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
       }
       state.input =
         state.days === 7
-          ? {
-              types: ['timestamp', 'tx count', 'a'],
-              data: [
-                [1664251200, 10000, 0],
-                [1664254800, 10300, 0],
-                [1664258400, 11000, 0],
-                [1664262000, 12000, 0],
-              ],
-            }
+          ? result.hourly
           : state.days <= 90
           ? result.sixHourly
           : result.daily
