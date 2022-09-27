@@ -4,42 +4,42 @@ import { AssetId } from './AssetId'
 import { branded } from './branded'
 import { UnixTime } from './UnixTime'
 
-const ChartPoint = z.tuple([
+const MainChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
   z.number(),
   z.number(),
 ])
-export type ChartPoint = z.infer<typeof ChartPoint>
+export type MainChartPoint = z.infer<typeof MainChartPoint>
 
-const Chart = z.object({
+const MainChart = z.object({
   types: z.tuple([z.literal('timestamp'), z.string(), z.string()]),
-  data: z.array(ChartPoint),
+  data: z.array(MainChartPoint),
 })
-export type Chart = z.infer<typeof Chart>
+export type MainChart = z.infer<typeof MainChart>
 
-export const Charts = z.object({
-  hourly: Chart,
-  sixHourly: Chart,
-  daily: Chart,
+export const MainCharts = z.object({
+  hourly: MainChart,
+  sixHourly: MainChart,
+  daily: MainChart,
 })
-export type Charts = z.infer<typeof Charts>
+export type MainCharts = z.infer<typeof MainCharts>
 
-export const Token = z.object({
+export const MainToken = z.object({
   assetId: branded(z.string(), AssetId),
   tvl: z.number(),
 })
-export type Token = z.infer<typeof Token>
+export type MainToken = z.infer<typeof MainToken>
 
-export const Project = z.object({
-  tokens: z.array(Token),
-  charts: Charts,
+export const MainProject = z.object({
+  tokens: z.array(MainToken),
+  charts: MainCharts,
 })
-export type Project = z.infer<typeof Project>
+export type MainProject = z.infer<typeof MainProject>
 
 export const ApiMain = z.object({
-  bridges: Charts,
-  layers2s: Charts,
-  combined: Charts,
-  projects: z.record(z.string(), Project.optional()),
+  bridges: MainCharts,
+  layers2s: MainCharts,
+  combined: MainCharts,
+  projects: z.record(z.string(), MainProject.optional()),
 })
 export type ApiMain = z.infer<typeof ApiMain>

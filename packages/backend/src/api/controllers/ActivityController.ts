@@ -1,4 +1,9 @@
-import { ApiActivity, ProjectId, UnixTime } from '@l2beat/types'
+import {
+  ActivityChartPoint,
+  ApiActivity,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/types'
 
 import { Config } from '../../config'
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
@@ -55,18 +60,15 @@ export class ActivityController {
         .map((p) => p.counts)
         .flat()
         .sort((a, b) => +a.timestamp - +b.timestamp)
-        .reduce<ApiActivity['combined']['data']>(
-          (acc, { count, timestamp }) => {
-            const current = acc.at(-1)
-            if (!current?.[0].equals(timestamp)) {
-              acc.push([timestamp, count])
-            } else {
-              current[1] = current[1] + count
-            }
-            return acc
-          },
-          [],
-        ),
+        .reduce<ActivityChartPoint[]>((acc, { count, timestamp }) => {
+          const current = acc.at(-1)
+          if (!current?.[0].equals(timestamp)) {
+            acc.push([timestamp, count])
+          } else {
+            current[1] = current[1] + count
+          }
+          return acc
+        }, []),
     }
   }
 

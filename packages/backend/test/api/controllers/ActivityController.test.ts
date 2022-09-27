@@ -1,5 +1,10 @@
 import { mock } from '@l2beat/common'
-import { ApiActivity, ProjectId, UnixTime } from '@l2beat/types'
+import {
+  ActivityChartPoint,
+  ApiActivity,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { ActivityController } from '../../../src/api/controllers/ActivityController'
@@ -109,14 +114,12 @@ describe(ActivityController.name, () => {
   })
 })
 
-type Data = ApiActivity['combined']['data']
-
 function formatActivity({
   combined,
   projects,
 }: {
-  combined: Data
-  projects: Record<string, Data>
+  combined: ActivityChartPoint[]
+  projects: Record<string, ActivityChartPoint[]>
 }): ApiActivity {
   return {
     combined: {

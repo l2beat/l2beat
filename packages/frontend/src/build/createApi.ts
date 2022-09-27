@@ -1,11 +1,11 @@
-import { ApiMain, Charts } from '@l2beat/types'
+import { ApiMain, MainCharts } from '@l2beat/types'
 import fsx from 'fs-extra'
 import path from 'path'
 
 import { Config } from './config'
 
 export function createApi(config: Config, apiMain: ApiMain) {
-  const urlCharts = new Map<string, Charts>()
+  const urlCharts = new Map<string, MainCharts>()
 
   urlCharts.set('scaling-tvl', apiMain.layers2s)
   urlCharts.set('bridges-tvl', apiMain.bridges)
@@ -20,7 +20,7 @@ export function createApi(config: Config, apiMain: ApiMain) {
   outputCharts(urlCharts)
 }
 
-export function outputCharts(urlCharts: Map<string, Charts>) {
+export function outputCharts(urlCharts: Map<string, MainCharts>) {
   for (const [url, charts] of urlCharts) {
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(
