@@ -2,6 +2,7 @@ import { bridges, layer2s } from '@l2beat/config'
 import { ApiMain, ProjectId } from '@l2beat/types'
 
 import { renderPages } from '../pages'
+import { getApiActivity } from './ApiActivity'
 import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchApiMain } from './fetchApiMain'
