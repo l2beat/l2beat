@@ -38,22 +38,34 @@ export function outputCharts(urlCharts: Map<string, Charts>) {
 function getCompatibleApi(apiActivity: ApiActivity): Charts {
   return {
     hourly: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      types: [...apiActivity.combined.types, ''],
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      data: apiActivity.combined.data.map((d) => [...d, 0]),
+      types: ['timestamp', 'tps', ''],
+      data: apiActivity.combined.data.map((d: number[]) => [
+        d[0],
+        getTps(d[1]),
+        0,
+      ]),
     },
     sixHourly: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      types: [...apiActivity.combined.types, ''],
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      data: apiActivity.combined.data.map((d) => [...d, 0]),
+      types: ['timestamp', 'tps', ''],
+      data: apiActivity.combined.data.map((d: number[]) => [
+        d[0],
+        getTps(d[1]),
+        0,
+      ]),
     },
     daily: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      types: [...apiActivity.combined.types, ''],
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      data: apiActivity.combined.data.map((d) => [...d, 0]),
+      types: ['timestamp', 'tps', ''],
+      data: apiActivity.combined.data.map((d: number[]) => [
+        d[0],
+        getTps(d[1]),
+        0,
+      ]),
     },
   }
+}
+
+function getTps(txCount: number): number {
+  const SECONDS_IN_A_DAY = 24 * 60 * 60
+
+  return +(txCount / SECONDS_IN_A_DAY).toFixed(2)
 }

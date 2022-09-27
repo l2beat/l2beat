@@ -45,12 +45,10 @@ export function Header(props: HeaderProps) {
       {props.tpsDaily && props.tpsWeeklyChange && (
         <div className="Header-Right">
           <p className="Header-Tvl">
-            TPS{' '}
-            <span className="Header-TvlValue">{props.tpsDaily}</span>
+            TPS: <span className="Header-TvlValue">{props.tpsDaily}</span>
           </p>
           <p className="Header-Change">
-            <PercentChange value={props.tpsWeeklyChange} /> / 7
-            days
+            <PercentChange value={props.tpsWeeklyChange} /> / 7 days
           </p>
         </div>
       )}
