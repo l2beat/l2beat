@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
-import { RiskView as RiskViewComponent } from '../../../pages/scaling-risk/view/RiskView'
+import { ScalingRiskView } from '../../../pages/scaling-risk/view/ScalingRiskView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 
 export default {
@@ -17,7 +17,7 @@ export function RiskView() {
   return (
     <>
       <PageContent>
-        <RiskViewComponent
+        <ScalingRiskView
           className="!block"
           items={[
             {

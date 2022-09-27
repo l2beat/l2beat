@@ -3,14 +3,17 @@ import { ApiMain } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
-import { FinancialViewEntry, FinancialViewProps } from '../view/FinancialView'
+import {
+  ScalingTvlViewEntry,
+  ScalingTvlViewProps,
+} from '../view/ScalingTvlView'
 import { getTechnology } from './getTechnology'
 
 export function getFinancialView(
   projects: Layer2[],
   apiMain: ApiMain,
   tvl: number,
-): FinancialViewProps {
+): ScalingTvlViewProps {
   return {
     items: projects.map((x) => getFinancialViewEntry(x, apiMain, tvl)),
   }
@@ -20,7 +23,7 @@ function getFinancialViewEntry(
   project: Layer2,
   apiMain: ApiMain,
   aggregateTvl: number,
-): FinancialViewEntry {
+): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = apiMain.projects[project.id.toString()]
   if (!apiProject) {

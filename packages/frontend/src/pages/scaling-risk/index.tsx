@@ -4,7 +4,7 @@ import React from 'react'
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getProps } from './props'
-import { RiskPage } from './view/RiskPage'
+import { ScalingRiskPage } from './view/ScalingRiskPage'
 
 export function getRiskPage(config: Config, apiMain: ApiMain) {
   const { props, wrapper } = getProps(config, apiMain)
@@ -12,7 +12,7 @@ export function getRiskPage(config: Config, apiMain: ApiMain) {
     slug: '/scaling/risk',
     page: (
       <PageWrapper {...wrapper}>
-        <RiskPage {...props} />
+        <ScalingRiskPage {...props} />
       </PageWrapper>
     ),
   }

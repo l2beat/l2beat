@@ -5,7 +5,7 @@ import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
-import { BridgesTvlViewProps, TvlView } from './BridgesTvlView'
+import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
 
 export interface BridgesTvlPageProps {
   tvlView: BridgesTvlViewProps
@@ -19,7 +19,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
       <BridgesPageSelection selected="tvl" />
       <main>
         <Header title="Value locked" />
-        <TvlView {...props.tvlView} />
+        <BridgesTvlView {...props.tvlView} />
         <OtherSites />
         <About />
       </main>

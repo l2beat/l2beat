@@ -19,7 +19,7 @@ export interface BridgesRiskViewEntry {
   destinationToken?: ProjectRiskViewEntry
 }
 
-export function RiskView({ items }: BridgesRiskViewProps) {
+export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   const columns: Column<BridgesRiskViewEntry>[] = [
     {
       name: 'Name',

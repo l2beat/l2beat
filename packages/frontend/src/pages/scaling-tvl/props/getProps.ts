@@ -6,7 +6,7 @@ import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { formatUSD, getPercentageChange } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
-import { TvlPageProps } from '../view/TvlPage'
+import { TvlPageProps } from '../view/ScalingTvlPage'
 import { getFinancialView } from './getFinancialView'
 import { getPageMetadata } from './getPageMetadata'
 
@@ -27,7 +27,7 @@ export function getProps(
       tvl: formatUSD(tvl),
       sevenDayChange,
       apiEndpoint: '/api/tvl.json',
-      financialView: getFinancialView(ordering, apiMain, tvl),
+      tvlView: getFinancialView(ordering, apiMain, tvl),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

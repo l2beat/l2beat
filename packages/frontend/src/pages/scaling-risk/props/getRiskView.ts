@@ -1,12 +1,15 @@
 import { Layer2 } from '@l2beat/config'
 
-import { RiskViewEntry, RiskViewProps } from '../view/RiskView'
+import {
+  ScalingRiskViewEntry,
+  ScalingRiskViewProps,
+} from '../view/ScalingRiskView'
 
-export function getRiskView(projects: Layer2[]): RiskViewProps {
+export function getRiskView(projects: Layer2[]): ScalingRiskViewProps {
   return { items: projects.map(getRiskViewEntry) }
 }
 
-export function getRiskViewEntry(project: Layer2): RiskViewEntry {
+export function getRiskViewEntry(project: Layer2): ScalingRiskViewEntry {
   return {
     name: project.display.name,
     slug: project.display.slug,
