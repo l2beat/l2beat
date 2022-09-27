@@ -49,7 +49,10 @@ function createL2Provider(rpc: RpcTransactionApi, alchemyApiKey: string) {
       return new providers.AlchemyProvider(rpc.networkName, alchemyApiKey)
 
     case 'jsonRpc':
-      return new providers.JsonRpcProvider(rpc.url)
+      return new providers.JsonRpcProvider({
+        url: rpc.url,
+        timeout: 10000,
+      })
 
     default:
       throw new Error('Unknown provider')
