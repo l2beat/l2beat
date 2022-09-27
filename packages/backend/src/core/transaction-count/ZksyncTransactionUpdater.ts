@@ -34,20 +34,22 @@ export class ZksyncTransactionUpdater {
     })
   }
 
-  async updateBlock(number: number) {
-    const transactions = await this.zksyncClient.getTransactionsInBlock(number)
+  async updateBlock(blockNumber: number) {
+    const transactions = await this.zksyncClient.getTransactionsInBlock(
+      blockNumber,
+    )
 
     const records: ZksyncTransactionRecord[] = transactions.map(
       (transaction) => ({
+        blockNumber,
         blockIndex: transaction.blockIndex,
-        blockNumber: number,
         timestamp: transaction.createdAt,
       }),
     )
 
     await this.zksyncTransactionRepository.addMany(records)
     this.logger.info('Block updated', {
-      blockNumber: number,
+      blockNumber,
       transactionCount: records.length,
     })
   }
