@@ -3,7 +3,7 @@ import { ApiMain } from '@l2beat/types'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
-export async function getApiMain(
+export async function fetchApiMain(
   apiUrl: string,
   skipCache = false,
 ): Promise<ApiMain> {
