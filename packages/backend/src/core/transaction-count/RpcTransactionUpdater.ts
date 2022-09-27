@@ -14,6 +14,9 @@ export class RpcTransactionUpdater {
   private blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
+    {
+      workers: 100,
+    },
   )
 
   constructor(
