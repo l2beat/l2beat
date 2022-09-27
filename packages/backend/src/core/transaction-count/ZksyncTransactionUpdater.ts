@@ -39,6 +39,12 @@ export class ZksyncTransactionUpdater {
       blockNumber,
     )
 
+    // Block 427 has a duplicated blockIndex
+    // so I fixed it
+    if (blockNumber === 427) {
+      transactions[1].blockIndex = transactions[1].blockIndex + 1
+    }
+
     const records: ZksyncTransactionRecord[] = transactions.map(
       (transaction) => ({
         blockNumber,
@@ -67,10 +73,6 @@ export class ZksyncTransactionUpdater {
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
-        // Skip block 427, as it has a duplicated blockIndex
-        if (i === 427) {
-          continue
-        }
         this.blockQueue.addToBack(i)
       }
     }
