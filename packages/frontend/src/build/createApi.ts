@@ -61,3 +61,9 @@ function getTps(txCount: number): number {
 
   return +(txCount / SECONDS_IN_A_DAY).toFixed(2)
 }
+
+function getTps(txCount: number): number {
+  const SECONDS_IN_A_DAY = 24 * 60 * 60
+
+  return +(txCount / SECONDS_IN_A_DAY).toFixed(2)
+}
