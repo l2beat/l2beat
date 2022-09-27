@@ -101,6 +101,7 @@ export const arbitrum: Layer2 = {
       type: 'rpc',
       provider: 'alchemy',
       networkName: 'arbitrum',
+      callsPerMinute: 400,
     },
   },
   riskView: {
