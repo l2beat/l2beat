@@ -24,7 +24,7 @@ export function getProps(
       tpsDaily: tps.toFixed(2).toString(),
       tpsWeeklyChange: sevenDayChange,
       apiEndpoint: '/api/scaling-activity.json',
-      activityView: getActivityView(),
+      activityView: getActivityView(config.layer2s, apiActivity),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },
