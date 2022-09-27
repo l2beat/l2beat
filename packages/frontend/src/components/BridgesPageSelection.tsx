@@ -20,7 +20,7 @@ export function BridgesPageSelection(props: BridgesPageSelectionProps) {
         },
         {
           icon: <RiskIcon />,
-          content: 'Rissk analysis',
+          content: 'Risk analysis',
           link: '/bridges/risk',
           selected: props.selected === 'risk',
         },

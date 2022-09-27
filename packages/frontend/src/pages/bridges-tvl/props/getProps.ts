@@ -5,27 +5,31 @@ import { getFooterProps, getNavbarProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { Wrapped } from '../../Page'
-import { RiskPageProps } from '../view/RiskPage'
-import { getPageMetadata } from './getPageMetadata'
-import { getRiskView } from './getRiskView'
+import { BridgesTvlPageProps } from '../BridgesTvlPage'
+import { getBridgesTvlView } from './getFinancialView'
 
 export function getProps(
   config: Config,
   apiMain: ApiMain,
-): Wrapped<RiskPageProps> {
-  const included = getIncludedProjects(config.layer2s, apiMain)
+): Wrapped<BridgesTvlPageProps> {
+  const included = getIncludedProjects(config.bridges, apiMain)
   const ordering = orderByTvl(included, apiMain)
-
+  const tvl = apiMain.bridges.hourly.data.at(-1)?.[1] ?? 0
   return {
     props: {
       navbar: getNavbarProps(config),
-      riskView: getRiskView(ordering),
+      tvlView: {
+        items: getBridgesTvlView(ordering, apiMain, tvl),
+      },
       footer: getFooterProps(config),
-      showActivity: config.features.activity,
     },
     wrapper: {
-      preloadApi: '/api/tvl.json',
-      metadata: getPageMetadata(),
+      metadata: {
+        description: '',
+        image: '',
+        title: '',
+        url: '',
+      },
     },
   }
 }

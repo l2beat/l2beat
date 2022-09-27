@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Page } from '../../../components/Page'
+import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
 import { FinancialView as FinancialViewComponent } from '../../../pages/scaling-tvl/view/FinancialView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
@@ -16,7 +16,7 @@ export function FinancialView() {
   }, [])
   return (
     <>
-      <Page>
+      <PageContent>
         <FinancialViewComponent
           items={[
             {
@@ -116,7 +116,7 @@ export function FinancialView() {
             },
           ]}
         />
-      </Page>
+      </PageContent>
       <Tooltip />
     </>
   )

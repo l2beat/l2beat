@@ -1,12 +1,8 @@
 import React from 'react'
 
-import { config } from '../../pages/config'
 import { OutLink } from '../OutLink'
 
 export function Banner() {
-  if (!config.showBanner) {
-    return null
-  }
   return (
     <OutLink
       className="block text-center bg-[#048104] text-white text-sm font-bold px-4 py-1.5"

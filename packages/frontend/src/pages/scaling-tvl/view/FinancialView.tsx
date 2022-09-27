@@ -10,8 +10,11 @@ import {
 } from '../../../components/icons'
 import { ProjectLink } from '../../../components/ProjectLink'
 import { Column, TableView } from '../../../components/TableView'
+import {
+  TVLBreakdown,
+  TVLBreakdownProps,
+} from '../../../components/TVLBreakdown'
 import { FinancialCell } from './FinancialCell'
-import { TVLBreakdown, TVLBreakdownProps } from './TVLBreakdown'
 
 export interface FinancialViewProps {
   items: FinancialViewEntry[]

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { InfoIcon, WarningIcon } from '../../../components/icons'
+import { InfoIcon, WarningIcon } from './icons'
 
 export interface TVLBreakdownProps {
   warning?: string

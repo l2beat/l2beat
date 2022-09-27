@@ -100,6 +100,34 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     return _.zip(noNextDay, noPrevDay) as [number, number][]
   }
 
+  async getDailyTransactionCount(
+    projectId: ProjectId,
+  ): Promise<Pick<StarkexTransactionCountRecord, 'count' | 'timestamp'>[]> {
+    const knex = await this.knex()
+    const { rows } = (await knex.raw(
+      `
+      SELECT
+        date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
+        sum(count) as count
+      FROM
+        transactions.starkex
+      WHERE
+        project_id = ?
+      GROUP BY
+        project_id,
+        date_trunc('day', unix_timestamp, 'UTC')
+    `,
+      projectId.toString(),
+    )) as unknown as {
+      rows: Pick<StarkexTransactionCountRow, 'unix_timestamp' | 'count'>[]
+    }
+
+    return rows.map((r) => ({
+      timestamp: UnixTime.fromDate(r.unix_timestamp),
+      count: Number(r.count),
+    }))
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return await knex('transactions.starkex').delete()
