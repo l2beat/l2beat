@@ -23,7 +23,6 @@ export function getProps(
   const txCount = apiActivity.combined.data.at(-1)?.[1] ?? 0
   const txCountSevenDaysAgo = apiActivity.combined.data.at(-7)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(txCount, txCountSevenDaysAgo)
->>>>>>> 7fed2772 (fix post merge errors)
 
   return {
     props: {
