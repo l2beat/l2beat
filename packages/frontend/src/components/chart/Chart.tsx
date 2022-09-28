@@ -22,15 +22,7 @@ export function Chart({
   endpoint,
   tokens,
   days = 7,
-<<<<<<< HEAD
-<<<<<<< HEAD
   hideControls = false,
-=======
-  isPrototype = false,
->>>>>>> 6d32d83f (hide part of chart UI)
-=======
-  hideControls = false,
->>>>>>> de4973f5 (add requested changes)
 }: ChartProps) {
   return (
     <section
