@@ -73,9 +73,7 @@ export const aztecconnect: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
   },
   technology: {
-    category: {
-      name: 'ZK Rollup',
-    },
+    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

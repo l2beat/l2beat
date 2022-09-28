@@ -78,10 +78,7 @@ export const dydx: Layer2 = {
   },
   technology: {
     provider: 'StarkEx',
-    category: {
-      name: 'ZK Rollup',
-      details: "Powered by StarkWare's StarkEx",
-    },
+    category: 'ZK Rollup',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: {

@@ -57,9 +57,7 @@ export const omgnetwork: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,
   },
   technology: {
-    category: {
-      name: 'Plasma',
-    },
+    category: 'Plasma',
     stateCorrectness: {
       ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,
       isIncomplete: true,

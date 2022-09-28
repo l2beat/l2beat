@@ -66,10 +66,7 @@ export const gluon: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
   },
   technology: {
-    category: {
-      name: 'Plasma',
-      details: 'Gluon',
-    },
+    category: 'Plasma',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       isIncomplete: true,
