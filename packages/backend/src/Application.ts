@@ -1,5 +1,6 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
 import { providers } from 'ethers'
+import { compact } from 'lodash'
 
 import { ApiServer } from './api/ApiServer'
 import { ActivityController } from './api/controllers/ActivityController'
@@ -224,20 +225,27 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
-    const activityController = new ActivityController([
-      ...rpcTransactionUpdaters,
-      ...starkexTransactionUpdaters,
-      zksyncTransactionUpdater,
-    ])
+    const activityController =
+      config.transactionCountSync &&
+      new ActivityController([
+        ...rpcTransactionUpdaters!,
+        ...starkexTransactionUpdaters!,
+        zksyncTransactionUpdater!,
+      ])
 
-    const apiServer = new ApiServer(config.port, logger, [
-      createBlocksRouter(blocksController),
-      createReportRouter(reportController),
-      createStatusRouter(statusController),
-      createDydxRouter(dydxController),
-      createEventRouter(eventController),
-      createActivityRouter(activityController),
-    ])
+    const apiServer = new ApiServer(
+      config.port,
+      logger,
+      compact([
+        createBlocksRouter(blocksController),
+        createReportRouter(reportController),
+        createStatusRouter(statusController),
+        createDydxRouter(dydxController),
+        createEventRouter(eventController),
+        config.transactionCountSync &&
+          createActivityRouter(activityController!),
+      ]),
+    )
 
     // #endregion
     // #region start
