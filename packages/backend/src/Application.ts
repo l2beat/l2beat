@@ -5,7 +5,7 @@ import { ApiServer } from './api/ApiServer'
 import { ActivityController } from './api/controllers/ActivityController'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
-import { EventController } from './api/controllers/events/EventsController'
+import { EventsController } from './api/controllers/events/EventsController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createActivityRouter } from './api/routers/ActivityRouter'
@@ -192,7 +192,7 @@ export class Application {
       config.projects,
     )
 
-    const eventController = new EventController(
+    const eventController = new EventsController(
       eventRepository,
       clock,
       config.projects,

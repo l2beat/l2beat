@@ -3,7 +3,7 @@ import { Layer2Event } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
-import { EventController } from '../../../../src/api/controllers/events/EventsController'
+import { EventsController } from '../../../../src/api/controllers/events/EventsController'
 import { Clock } from '../../../../src/core/Clock'
 import { Project } from '../../../../src/model'
 import {
@@ -19,7 +19,7 @@ const EVENT_B = 'EventB'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 
-describe(EventController.name, () => {
+describe(EventsController.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new EventRepository(database, Logger.SILENT)
 
@@ -27,7 +27,7 @@ describe(EventController.name, () => {
     await repository.deleteAll()
   })
 
-  describe(EventController.prototype.getEvents.name, () => {
+  describe(EventsController.prototype.getEventsResponse.name, () => {
     it('gets data from db, transforms and returns', async () => {
       const records = [
         mockEventRecord(-14 * 24, PROJECT_A, EVENT_A),
@@ -55,9 +55,9 @@ describe(EventController.name, () => {
         getLastHour: mockFn().returns(START),
       })
 
-      const eventController = new EventController(repository, clock, projects)
+      const eventController = new EventsController(repository, clock, projects)
 
-      const result = await eventController.getEvents()
+      const result = await eventController.getEventsResponse()
 
       expect(result).toEqual({
         projects: {

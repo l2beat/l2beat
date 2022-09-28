@@ -7,15 +7,15 @@ import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getEventChart } from './getEventChart'
 import { renderShowcasePage } from './ShowcasePage'
 
-export class EventController {
+export class EventsController {
   constructor(
     private eventRepository: EventRepository,
     private clock: Clock,
     private projects: Project[],
   ) {}
 
-  async getEvents(): Promise<EventsApiResponse> {
-    const main: EventsApiResponse = {
+  async getEventsResponse(): Promise<EventsApiResponse> {
+    const response: EventsApiResponse = {
       projects: {},
     }
 
@@ -41,17 +41,17 @@ export class EventController {
           )
         const daily = getEventChart(dailyRecords, eventNames)
 
-        main.projects[projectId.toString()] = {
+        response.projects[projectId.toString()] = {
           hourly,
           daily,
         }
       }),
     )
-    return main
+    return response
   }
 
   async getShowcase() {
-    const events = await this.getEvents()
+    const events = await this.getEventsResponse()
 
     return renderShowcasePage({ events })
   }
