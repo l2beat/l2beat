@@ -20,7 +20,7 @@ import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getChartPoints } from './charts'
 import { generateTvlResponse } from './generateTvlResponse'
 
-export class ReportController {
+export class TvlController {
   constructor(
     private reportStatusRepository: ReportStatusRepository,
     private aggregateReportRepository: AggregateReportRepository,

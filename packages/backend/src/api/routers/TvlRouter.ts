@@ -2,10 +2,10 @@ import Router from '@koa/router'
 import { AssetId, branded, ProjectId } from '@l2beat/types'
 import { z } from 'zod'
 
-import { ReportController } from '../controllers/report/ReportController'
+import { TvlController } from '../controllers/tvl/TvlController'
 import { withTypedContext } from './types'
 
-export function createReportRouter(reportController: ReportController) {
+export function createTvlRouter(reportController: TvlController) {
   const router = new Router()
 
   router.get('/api/main', async (ctx) => {

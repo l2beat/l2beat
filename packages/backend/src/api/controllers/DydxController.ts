@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
-import { asNumber } from './report/asNumber'
+import { asNumber } from './tvl/asNumber'
 
 export class DydxController {
   constructor(private aggregateReportsRepository: AggregateReportRepository) {}
