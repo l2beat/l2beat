@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  lint_build_test:
+  test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -26,11 +26,44 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16.x
+          cache: "yarn"
       - run: yarn --frozen-lockfile
-      - run: yarn build
-      - run: yarn typecheck:ci
-      - run: yarn format
-      - run: yarn lint
+      - run: yarn build:dependencies
       - run: yarn test
         env:
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
+      - run: yarn build:dependencies
+      - run: yarn lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
+      - run: yarn build
+      - run: yarn typecheck:ci
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
+      - run: yarn format
