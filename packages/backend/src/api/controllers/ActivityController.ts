@@ -1,66 +1,21 @@
-import { Layer2TransactionApi } from '@l2beat/config'
+import { ActivityChartPoint, ApiActivity } from '@l2beat/types'
+
 import {
-  ActivityChartPoint,
-  ApiActivity,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/types'
-
-import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
-import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
-import { TransactionCountRepository } from '../../peripherals/database/TransactionCountRepository'
-
-interface ProjectCounts {
-  projectId: ProjectId
-  counts: { timestamp: UnixTime; count: number }[]
-}
-
-interface Project {
-  projectId: ProjectId
-  transactionApi?: Layer2TransactionApi
-}
+  ProjectCounts,
+  TransactionCounter,
+} from '../../core/transaction-count/TransactionCounter'
 
 export class ActivityController {
-  constructor(
-    private projects: Project[],
-    private rpcRepository: RpcTransactionCountRepository,
-    private starkexRepository: StarkexTransactionCountRepository,
-  ) {}
+  constructor(private transactionCounters: TransactionCounter[]) {}
 
   async getTransactionActivity(): Promise<ApiActivity> {
-    const projectsCounts = await this.getProjectsCounts()
+    const projectsCounts = await Promise.all(
+      this.transactionCounters.map((c) => c.getDailyTransactionCounts()),
+    )
 
     return {
       combined: this.toCombinedActivity(projectsCounts),
       projects: this.toProjectsActivity(projectsCounts),
-    }
-  }
-
-  private async getProjectsCounts(): Promise<ProjectCounts[]> {
-    const projectPromises = this.projects
-      .filter((p): p is Required<Project> => !!p.transactionApi)
-      .map(async (p) => {
-        const repository = this.getTransactionCountRepository(p.transactionApi)
-        return {
-          projectId: p.projectId,
-          counts: await repository.getDailyTransactionCount(p.projectId),
-        }
-      })
-    return Promise.all(projectPromises)
-  }
-
-  private getTransactionCountRepository(
-    transactionApi: Layer2TransactionApi,
-  ): TransactionCountRepository {
-    switch (transactionApi.type) {
-      case 'rpc':
-        return this.rpcRepository
-      case 'starkex':
-        return this.starkexRepository
-      default:
-        throw new Error(
-          `Programmer error: could not detect repository for transaction api type`,
-        )
     }
   }
 
