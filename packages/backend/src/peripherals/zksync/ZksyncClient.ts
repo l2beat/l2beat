@@ -30,9 +30,13 @@ export class ZksyncClient {
   async getLatestBlock() {
     const result = await this.call('blocks/lastFinalized')
 
-    const parsed = ZksyncBlocksResultSchema.parse(result)
+    const parsed = ZksyncBlocksResultSchema.safeParse(result)
 
-    return parsed.blockNumber
+    if (!parsed.success) {
+      throw new TypeError('Invalid zksync block schema')
+    }
+
+    return parsed.data.blockNumber
   }
 
   async getTransactionsInBlock(blockNumber: number) {
@@ -42,14 +46,18 @@ export class ZksyncClient {
       direction: 'older',
     })
 
-    const parsed = ZksyncTransactionResultSchema.parse(result)
+    const parsed = ZksyncTransactionResultSchema.safeParse(result)
 
-    if (parsed.list.length === 0) {
+    if (!parsed.success) {
+      throw new TypeError('Invalid zksync transactions response')
+    }
+
+    if (parsed.data.list.length === 0) {
       throw new Error('Transactions list empty!')
     }
-    let transactions = parsed.list
+    let transactions = parsed.data.list
 
-    const count = parsed.pagination.count
+    const count = parsed.data.pagination.count
     while (count - transactions.length > 0) {
       const lastTx = transactions.at(-1)
       if (!lastTx) {
@@ -62,8 +70,13 @@ export class ZksyncClient {
         direction: 'older',
       })
 
-      const parsedNextPage = ZksyncTransactionResultSchema.parse(nextPage)
-      transactions = transactions.concat(parsedNextPage.list.slice(1))
+      const parsedNextPage = ZksyncTransactionResultSchema.safeParse(nextPage)
+
+      if (!parsedNextPage.success) {
+        throw new TypeError('Invalid zksync transactions schema')
+      }
+
+      transactions = transactions.concat(parsedNextPage.data.list.slice(1))
     }
 
     const filteredTransactions = transactions.filter(
