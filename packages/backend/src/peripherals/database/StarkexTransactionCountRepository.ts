@@ -5,7 +5,6 @@ import _ from 'lodash'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
-import { TransactionCountRepository } from './TransactionCountRepository'
 
 export interface StarkexTransactionCountRecord {
   timestamp: UnixTime
@@ -18,10 +17,7 @@ interface RawBlockNumberQueryResult {
   }[]
 }
 
-export class StarkexTransactionCountRepository
-  extends BaseRepository
-  implements TransactionCountRepository
-{
+export class StarkexTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -104,7 +100,9 @@ export class StarkexTransactionCountRepository
     return _.zip(noNextDay, noPrevDay) as [number, number][]
   }
 
-  async getDailyTransactionCount(projectId: ProjectId) {
+  async getDailyTransactionCount(
+    projectId: ProjectId,
+  ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
       `

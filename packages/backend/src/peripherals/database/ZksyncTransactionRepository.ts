@@ -94,6 +94,29 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
+  async getDailyTransactionCount() {
+    const knex = await this.knex()
+    const { rows } = (await knex.raw(
+      `
+      SELECT
+        date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
+        count(*) as count
+      FROM
+        transactions.zksync
+      GROUP BY
+        date_trunc('day', unix_timestamp, 'UTC')
+      ORDER BY unix_timestamp
+    `,
+    )) as unknown as {
+      rows: { unix_timestamp: Date; count: string }[]
+    }
+
+    return rows.map((r) => ({
+      timestamp: UnixTime.fromDate(r.unix_timestamp),
+      count: Number(r.count),
+    }))
+  }
+
   async getAll() {
     const knex = await this.knex()
     const rows = await knex('transactions.zksync').select()

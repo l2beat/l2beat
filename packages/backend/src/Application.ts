@@ -216,11 +216,11 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
-    const activityController = new ActivityController(
-      config.projects,
-      rpcTransactionCountRepository,
-      starkexTransactionCountRepository,
-    )
+    const activityController = new ActivityController([
+      ...rpcTransactionUpdaters,
+      ...starkexTransactionUpdaters,
+      zksyncTransactionUpdater,
+    ])
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
