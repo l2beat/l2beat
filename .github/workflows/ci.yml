@@ -28,7 +28,7 @@ jobs:
           node-version: 16.x
           cache: "yarn"
       - run: yarn --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:dependencies
       - run: yarn test
         env:
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
@@ -42,7 +42,7 @@ jobs:
           node-version: 16.x
           cache: "yarn"
       - run: yarn --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:dependencies
       - run: yarn format
       - run: yarn lint
 
