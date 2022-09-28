@@ -10,7 +10,9 @@ export interface HeaderProps {
   titleClassName?: string
   icon?: string
   tvl?: string
-  sevenDayChange?: string
+  tvlWeeklyChange?: string
+  tpsDaily?: string
+  tpsWeeklyChange?: string
 }
 
 export function Header(props: HeaderProps) {
@@ -29,13 +31,24 @@ export function Header(props: HeaderProps) {
         {props.title}
         {!props.title && <Logo />}
       </h1>
-      {props.tvl && props.sevenDayChange && (
+      {props.tvl && props.tvlWeeklyChange && (
         <div className="Header-Right">
           <p className="Header-Tvl">
             TVL: <span className="Header-TvlValue">{props.tvl}</span>
           </p>
           <p className="Header-Change">
-            <PercentChange value={props.sevenDayChange} /> / 7 days
+            <PercentChange value={props.tvlWeeklyChange} /> / 7 days
+          </p>
+        </div>
+      )}
+
+      {props.tpsDaily && props.tpsWeeklyChange && (
+        <div className="Header-Right">
+          <p className="Header-Tvl">
+            TPS: <span className="Header-TvlValue">{props.tpsDaily}</span>
+          </p>
+          <p className="Header-Change">
+            <PercentChange value={props.tpsWeeklyChange} /> / 7 days
           </p>
         </div>
       )}

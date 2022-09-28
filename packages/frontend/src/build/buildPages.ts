@@ -2,6 +2,7 @@ import { bridges, layer2s } from '@l2beat/config'
 import { ApiMain, ProjectId } from '@l2beat/types'
 
 import { renderPages } from '../pages'
+import { fetchApiActivity } from './ApiActivity'
 import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchApiMain } from './fetchApiMain'
@@ -18,12 +19,13 @@ async function main() {
     config.backend.apiUrl,
     config.backend.skipCache,
   )
+  const apiActivity = await fetchApiActivity(config.backend.apiUrl)
 
   printApiInfo(apiMain)
   sanityCheck(apiMain)
 
-  createApi(config, apiMain)
-  await renderPages(config, apiMain)
+  createApi(config, apiMain, apiActivity)
+  await renderPages(config, apiMain, apiActivity)
 }
 
 function printApiInfo(apiMain: ApiMain) {

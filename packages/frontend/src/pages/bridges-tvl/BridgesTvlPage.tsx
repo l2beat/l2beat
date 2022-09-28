@@ -30,7 +30,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
         <Header
           title="Value locked"
           tvl={props.tvl}
-          sevenDayChange={props.sevenDayChange}
+          tvlWeeklyChange={props.sevenDayChange}
         />
         <Chart endpoint={props.apiEndpoint} />
         <BridgesTvlView {...props.tvlView} />

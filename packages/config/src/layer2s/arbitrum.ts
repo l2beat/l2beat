@@ -99,8 +99,9 @@ export const arbitrum: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      provider: 'jsonRpc',
-      url: 'https://arb1.arbitrum.io/rpc',
+      provider: 'alchemy',
+      networkName: 'arbitrum',
+      callsPerMinute: 1200,
     },
   },
   riskView: {
