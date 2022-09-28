@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
-import { Config } from '../../config'
+import { Project } from '../../model'
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
 
@@ -14,10 +14,7 @@ type ProjectsCounts = {
   counts: { timestamp: UnixTime; count: number }[]
 }[]
 
-type TransactionApiProjects = Pick<
-  Config['projects'][number],
-  'projectId' | 'transactionApi'
->[]
+type TransactionApiProjects = Pick<Project, 'projectId' | 'transactionApi'>[]
 
 export class ActivityController {
   constructor(
