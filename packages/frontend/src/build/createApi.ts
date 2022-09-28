@@ -1,4 +1,8 @@
-import { ApiActivity, ApiMain, MainCharts } from '@l2beat/types'
+import {
+  ActivityApiResponse,
+  TvlApiCharts,
+  TvlApiResponse,
+} from '@l2beat/types'
 import fsx from 'fs-extra'
 import path from 'path'
 
@@ -6,26 +10,26 @@ import { Config } from './config'
 
 export function createApi(
   config: Config,
-  apiMain: ApiMain,
-  apiActivity: ApiActivity,
+  tvlApiResponse: TvlApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ) {
-  const urlCharts = new Map<string, MainCharts>()
+  const urlCharts = new Map<string, TvlApiCharts>()
 
-  urlCharts.set('scaling-tvl', apiMain.layers2s)
-  urlCharts.set('bridges-tvl', apiMain.bridges)
+  urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
+  urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
   for (const project of [...config.layer2s, ...config.bridges]) {
-    const projectData = apiMain.projects[project.id.toString()]
+    const projectData = tvlApiResponse.projects[project.id.toString()]
     if (!projectData) {
       continue
     }
     urlCharts.set(project.display.slug, projectData.charts)
   }
-  urlCharts.set('scaling-activity', getCompatibleApi(apiActivity))
+  urlCharts.set('scaling-activity', getCompatibleApi(activityApiResponse))
 
   outputCharts(urlCharts)
 }
 
-export function outputCharts(urlCharts: Map<string, MainCharts>) {
+export function outputCharts(urlCharts: Map<string, TvlApiCharts>) {
   for (const [url, charts] of urlCharts) {
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(
@@ -35,7 +39,7 @@ export function outputCharts(urlCharts: Map<string, MainCharts>) {
   }
 }
 
-function getCompatibleApi(apiActivity: ApiActivity): MainCharts {
+function getCompatibleApi(apiActivity: ActivityApiResponse): TvlApiCharts {
   return {
     hourly: {
       types: ['timestamp', 'tps', ''],

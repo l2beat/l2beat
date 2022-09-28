@@ -1,20 +1,20 @@
 import {
   AssetId,
-  MainChart,
-  MainChartPoint,
-  MainCharts,
-  MainToken,
   ProjectId,
+  TvlApiChart,
+  TvlApiChartPoint,
+  TvlApiCharts,
+  TvlApiToken,
   UnixTime,
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { asNumber } from '../../../../src/api/controllers/report/asNumber'
-import { generateMain } from '../../../../src/api/controllers/report/generateMain'
+import { generateTvlApiResponse } from '../../../../src/api/controllers/report/generateTvlApiResponse'
 import { AggregateReportRecord } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
-describe(generateMain.name, () => {
+describe(generateTvlApiResponse.name, () => {
   it('returns the correct groupings', () => {
     const reports = fakeReports([
       ProjectId('arbitrum'),
@@ -24,7 +24,7 @@ describe(generateMain.name, () => {
       ProjectId.BRIDGES,
       ProjectId.LAYER2S,
     ])
-    const result = generateMain(
+    const result = generateTvlApiResponse(
       reports.hourly.all,
       reports.sixHourly.all,
       reports.daily.all,
@@ -55,8 +55,8 @@ describe(generateMain.name, () => {
   function charts(
     reports: ReturnType<typeof fakeReports>,
     projectId: ProjectId,
-  ): MainCharts {
-    const types: MainChart['types'] = ['timestamp', 'usd', 'eth']
+  ): TvlApiCharts {
+    const types: TvlApiChart['types'] = ['timestamp', 'usd', 'eth']
     return {
       hourly: {
         types,
@@ -90,7 +90,7 @@ describe(generateMain.name, () => {
     count: number,
     projectIds: ProjectId[],
   ) {
-    const result: Record<string, MainChartPoint[]> & {
+    const result: Record<string, TvlApiChartPoint[]> & {
       all: AggregateReportRecord[]
     } = {
       all: [],
@@ -116,7 +116,7 @@ describe(generateMain.name, () => {
 
   function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
     const assets = [AssetId.ETH, AssetId.DAI]
-    const result: Record<string, MainToken[]> & { all: ReportRecord[] } = {
+    const result: Record<string, TvlApiToken[]> & { all: ReportRecord[] } = {
       all: [],
     }
     for (const projectId of projectIds) {

@@ -1,4 +1,4 @@
-import { ApiActivity } from '@l2beat/types'
+import { ActivityApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -10,12 +10,13 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  apiActivity: ApiActivity,
+  activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityPageProps> {
   const SECONDS_IN_A_DAY = 24 * 60 * 60
-  const tps = (apiActivity.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
+  const tps =
+    (activityApiResponse.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const tpsSevenDaysAgo =
-    (apiActivity.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
+    (activityApiResponse.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
 
   return {

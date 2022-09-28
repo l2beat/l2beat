@@ -1,5 +1,5 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
@@ -11,10 +11,10 @@ import { BridgesRiskViewEntry } from './BridgesRiskView'
 
 export function getProps(
   config: Config,
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<BridgesRiskPageProps> {
-  const included = getIncludedProjects(config.bridges, apiMain)
-  const ordering = orderByTvl(included, apiMain)
+  const included = getIncludedProjects(config.bridges, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config),

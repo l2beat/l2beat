@@ -3,8 +3,8 @@ import { tokenList } from '@l2beat/config'
 import {
   AssetId,
   EthereumAddress,
-  MainChart,
   ProjectId,
+  TvlApiChart,
   UnixTime,
 } from '@l2beat/types'
 import { expect } from 'earljs'
@@ -101,7 +101,7 @@ describe(ReportController.name, () => {
         [DAI],
         Logger.SILENT,
       )
-      const types: MainChart['types'] = ['timestamp', 'dai', 'usd']
+      const types: TvlApiChart['types'] = ['timestamp', 'dai', 'usd']
       const charts = await controller.getProjectAssetChart(
         OPTIMISM.projectId,
         AssetId.DAI,

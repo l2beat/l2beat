@@ -1,7 +1,7 @@
 import { mock } from '@l2beat/common'
 import {
-  ActivityChartPoint,
-  ApiActivity,
+  ActivityApiChartPoint,
+  ActivityApiResponse,
   ProjectId,
   UnixTime,
 } from '@l2beat/types'
@@ -95,9 +95,9 @@ function formatActivity({
   combined,
   projects,
 }: {
-  combined: ActivityChartPoint[]
-  projects: Record<string, ActivityChartPoint[]>
-}): ApiActivity {
+  combined: ActivityApiChartPoint[]
+  projects: Record<string, ActivityApiChartPoint[]>
+}): ActivityApiResponse {
   return {
     combined: {
       types: ['timestamp', 'daily tx count'],

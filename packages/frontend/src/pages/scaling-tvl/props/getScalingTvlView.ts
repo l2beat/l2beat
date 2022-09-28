@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -10,21 +10,21 @@ import {
 
 export function getScalingTvlView(
   projects: Layer2[],
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
   tvl: number,
 ): ScalingTvlViewProps {
   return {
-    items: projects.map((x) => getScalingTvlViewEntry(x, apiMain, tvl)),
+    items: projects.map((x) => getScalingTvlViewEntry(x, tvlApiResponse, tvl)),
   }
 }
 
 function getScalingTvlViewEntry(
   project: Layer2,
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
-  const apiProject = apiMain.projects[project.id.toString()]
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
   if (!apiProject) {
     throw new Error(`Project ${project.display.name} is missing in api`)
   }

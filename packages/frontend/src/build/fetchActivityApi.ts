@@ -1,7 +1,9 @@
 import { HttpClient } from '@l2beat/common'
-import { ApiActivity, UnixTime } from '@l2beat/types'
+import { ActivityApiChart, ActivityApiResponse, UnixTime } from '@l2beat/types'
 
-export async function fetchApiActivity(apiUrl: string): Promise<ApiActivity> {
+export async function fetchActivityApi(
+  apiUrl: string,
+): Promise<ActivityApiResponse> {
   const url = apiUrl + '/api/activity'
 
   const http = new HttpClient()
@@ -10,13 +12,13 @@ export async function fetchApiActivity(apiUrl: string): Promise<ApiActivity> {
     return getMockData()
   }
   const json: unknown = await response.json()
-  const data = ApiActivity.parse(json)
+  const data = ActivityApiResponse.parse(json)
 
   return data
 }
 
-const getMockData = (): ApiActivity => {
-  const data = []
+const getMockData = (): ActivityApiResponse => {
+  const data: ActivityApiChart['data'] = []
 
   const HOW_MANY_DAYS = 14
   const START = UnixTime.now().toStartOf('day').add(-HOW_MANY_DAYS, 'days')
@@ -27,8 +29,8 @@ const getMockData = (): ApiActivity => {
 
   return {
     combined: {
-      types: ['timestamp', 'daily tx count'] as ['timestamp', 'daily tx count'],
-      data: data as [UnixTime, number][],
+      types: ['timestamp', 'daily tx count'],
+      data,
     },
     projects: {},
   }

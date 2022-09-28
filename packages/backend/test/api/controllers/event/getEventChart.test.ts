@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { getEventChart } from '../../../../src/api/controllers/events/getEventChart'
+import { getEventChart } from '../../../../src/api/controllers/event/getEventChart'
 import { AggregatedEventRecord } from '../../../../src/peripherals/database/EventRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
