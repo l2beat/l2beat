@@ -6,20 +6,22 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
-import { Project } from '../../model'
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
 
-type ProjectsCounts = {
+interface ProjectActivity {
   projectId: ProjectId
   counts: { timestamp: UnixTime; count: number }[]
-}[]
+}
 
-type TransactionApiProjects = Pick<Project, 'projectId' | 'transactionApi'>[]
+interface Project {
+  projectId: ProjectId
+  transactionApi?: Layer2TransactionApi
+}
 
 export class ActivityController {
   constructor(
-    private projects: TransactionApiProjects,
+    private projects: Project[],
     private rpcRepository: RpcTransactionCountRepository,
     private starkexRepository: StarkexTransactionCountRepository,
   ) {}
@@ -33,9 +35,9 @@ export class ActivityController {
     }
   }
 
-  private async getProjectsCounts(): Promise<ProjectsCounts> {
+  private async getProjectsCounts(): Promise<ProjectActivity[]> {
     const projectPromises = this.projects
-      .filter((p) => !!p.transactionApi)
+      .filter((p): p is Required<Project> => !!p.transactionApi)
       .map(async (p) => {
         const repository = this.getTransactionCountRepository(p.transactionApi)
         return {
@@ -60,7 +62,7 @@ export class ActivityController {
   }
 
   private toCombinedActivity(
-    projectsCounts: ProjectsCounts,
+    projectsCounts: ProjectActivity[],
   ): ApiActivity['combined'] {
     return {
       types: ['timestamp', 'daily tx count'],
@@ -81,7 +83,7 @@ export class ActivityController {
   }
 
   private toProjectsActivity(
-    projectsCounts: ProjectsCounts,
+    projectsCounts: ProjectActivity[],
   ): Record<
     string,
     { data: [UnixTime, number][]; types: ['timestamp', 'daily tx count'] }
