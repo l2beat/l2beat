@@ -4,12 +4,13 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
+import { TransactionCounter } from './TransactionCounter'
 
 // We want to avoid adding too much tasks to the block queue
 // This constraint will be here only to sync transactions on stage
 const BLOCK_QUEUE_LIMIT = 200_000
 
-export class RpcTransactionUpdater {
+export class RpcTransactionUpdater implements TransactionCounter {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
@@ -83,5 +84,16 @@ export class RpcTransactionUpdater {
     }
 
     this.logger.info('Update enqueued', { project: this.projectId.toString() })
+  }
+
+  async getDailyTransactionCounts() {
+    const counts =
+      await this.rpcTransactionCountRepository.getDailyTransactionCount(
+        this.projectId,
+      )
+    return {
+      projectId: this.projectId,
+      counts,
+    }
   }
 }

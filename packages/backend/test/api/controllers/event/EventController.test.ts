@@ -3,7 +3,7 @@ import { Layer2Event } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
-import { EventController } from '../../../../src/api/controllers/events/EventsController'
+import { EventController } from '../../../../src/api/controllers/event/EventController'
 import { Clock } from '../../../../src/core/Clock'
 import { Project } from '../../../../src/model'
 import {
@@ -27,7 +27,7 @@ describe(EventController.name, () => {
     await repository.deleteAll()
   })
 
-  describe(EventController.prototype.getEvents.name, () => {
+  describe(EventController.prototype.getEventApiResponse.name, () => {
     it('gets data from db, transforms and returns', async () => {
       const records = [
         mockEventRecord(-14 * 24, PROJECT_A, EVENT_A),
@@ -57,7 +57,7 @@ describe(EventController.name, () => {
 
       const eventController = new EventController(repository, clock, projects)
 
-      const result = await eventController.getEvents()
+      const result = await eventController.getEventApiResponse()
 
       expect(result).toEqual({
         projects: {

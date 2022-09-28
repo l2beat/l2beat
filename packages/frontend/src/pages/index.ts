@@ -1,4 +1,4 @@
-import { ApiActivity, ApiMain } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../build/config'
 import { getBridgeProjectPages } from './bridges-projects'
@@ -16,22 +16,22 @@ import { getTvlPage } from './scaling-tvl'
 
 export async function renderPages(
   config: Config,
-  apiMain: ApiMain,
-  apiActivity: ApiActivity,
+  tvlApiResponse: TvlApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ) {
   const pages: Page[] = []
 
-  pages.push(getRiskPage(config, apiMain))
-  pages.push(getTvlPage(config, apiMain))
-  pages.push(getActivityPage(config, apiActivity))
+  pages.push(getRiskPage(config, tvlApiResponse))
+  pages.push(getTvlPage(config, tvlApiResponse))
+  pages.push(getActivityPage(config, activityApiResponse))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
-  pages.push(...getProjectPages(config, apiMain))
-  pages.push(...getMetaImagePages(config, apiMain))
+  pages.push(...getProjectPages(config, tvlApiResponse))
+  pages.push(...getMetaImagePages(config, tvlApiResponse))
   if (config.features.bridges) {
-    pages.push(getBridgesTvlPage(config, apiMain))
-    pages.push(getBridgesRiskPage(config, apiMain))
-    pages.push(...getBridgeProjectPages(config, apiMain))
+    pages.push(getBridgesTvlPage(config, tvlApiResponse))
+    pages.push(getBridgesRiskPage(config, tvlApiResponse))
+    pages.push(...getBridgeProjectPages(config, tvlApiResponse))
   }
 
   outputPages(pages)

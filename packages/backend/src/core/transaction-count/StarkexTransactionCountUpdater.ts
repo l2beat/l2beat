@@ -5,8 +5,9 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
 import { StarkexClient } from '../../peripherals/starkex'
 import { Clock } from '../Clock'
+import { TransactionCounter } from './TransactionCounter'
 
-export class StarkexTransactionCountUpdater {
+export class StarkexTransactionCountUpdater implements TransactionCounter {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private daysQueue = new UniqueTaskQueue(
     this.updateDay.bind(this),
@@ -74,5 +75,16 @@ export class StarkexTransactionCountUpdater {
     }
 
     this.logger.info('Update enqueued', { project: this.projectId.toString() })
+  }
+
+  async getDailyTransactionCounts() {
+    const counts =
+      await this.starkexTransactionCountRepository.getDailyTransactionCount(
+        this.projectId,
+      )
+    return {
+      projectId: this.projectId,
+      counts,
+    }
   }
 }

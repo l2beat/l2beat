@@ -1,12 +1,12 @@
 import { HttpClient } from '@l2beat/common'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
-export async function fetchApiMain(
+export async function fetchTvlApi(
   apiUrl: string,
   skipCache = false,
-): Promise<ApiMain> {
+): Promise<TvlApiResponse> {
   const url = apiUrl + '/api/main'
 
   if (!skipCache) {
@@ -24,7 +24,7 @@ export async function fetchApiMain(
     )
   }
   const json: unknown = await response.json()
-  const data = ApiMain.parse(json)
+  const data = TvlApiResponse.parse(json)
   if (!skipCache) {
     await writeCachedData(url, data)
   }
@@ -32,7 +32,9 @@ export async function fetchApiMain(
 }
 
 const TEN_MINUTES_IN_MS = 10 * 60 * 1000
-async function readCachedData(url: string): Promise<ApiMain | undefined> {
+async function readCachedData(
+  url: string,
+): Promise<TvlApiResponse | undefined> {
   const hash = getUrlHash(url)
   const now = Date.now()
   try {
@@ -46,14 +48,14 @@ async function readCachedData(url: string): Promise<ApiMain | undefined> {
       const timestamp = Number(file.slice(9, -5))
       if (now - timestamp <= TEN_MINUTES_IN_MS) {
         const contents = await readFile(`cache/${file}`, 'utf-8')
-        return ApiMain.parse(JSON.parse(contents))
+        return TvlApiResponse.parse(JSON.parse(contents))
       }
     }
   }
   return undefined
 }
 
-async function writeCachedData(url: string, data: ApiMain) {
+async function writeCachedData(url: string, data: TvlApiResponse) {
   const hash = getUrlHash(url)
   const now = Date.now()
   await writeFile(`cache/${hash}-${now}.json`, JSON.stringify(data))

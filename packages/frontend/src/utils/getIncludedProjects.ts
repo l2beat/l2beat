@@ -1,8 +1,8 @@
-import { ApiMain, ProjectId } from '@l2beat/types'
+import { ProjectId, TvlApiResponse } from '@l2beat/types'
 
 export function getIncludedProjects<T extends { id: ProjectId }>(
   projects: T[],
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
 ) {
-  return projects.filter((x) => !!apiMain.projects[x.id.toString()])
+  return projects.filter((x) => !!tvlApiResponse.projects[x.id.toString()])
 }

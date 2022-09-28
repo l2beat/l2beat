@@ -1,5 +1,5 @@
 import { Bridge } from '@l2beat/config'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -7,19 +7,19 @@ import { BridgesTvlViewEntry } from '../BridgesTvlView'
 
 export function getBridgesTvlView(
   projects: Bridge[],
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
   tvl: number,
 ): BridgesTvlViewEntry[] {
-  return projects.map((x) => getBridgesTvlViewEntry(x, apiMain, tvl))
+  return projects.map((x) => getBridgesTvlViewEntry(x, tvlApiResponse, tvl))
 }
 
 function getBridgesTvlViewEntry(
   project: Bridge,
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
 ): BridgesTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
-  const apiProject = apiMain.projects[project.id.toString()]
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
   if (!apiProject) {
     throw new Error(`Project ${project.display.name} is missing in api`)
   }

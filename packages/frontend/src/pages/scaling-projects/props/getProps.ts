@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -13,13 +13,13 @@ import { getProjectDetails } from './getProjectDetails'
 export function getProps(
   project: Layer2,
   config: Config,
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(project, apiMain)
+  const chart = getChart(project, tvlApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config),
-      header: getHeader(project, apiMain),
+      header: getHeader(project, tvlApiResponse),
       chart,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),

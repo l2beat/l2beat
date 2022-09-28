@@ -1,6 +1,4 @@
-export * from './ApiActivity'
-export * from './ApiEvents'
-export * from './ApiMain'
+export * from './api'
 export * from './AssetId'
 export * from './branded'
 export * from './Bytes'

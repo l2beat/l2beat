@@ -1,9 +1,9 @@
 import {
-  ApiMain,
-  MainChart,
-  MainChartPoint,
-  MainCharts,
   ProjectId,
+  TvlApiChart,
+  TvlApiChartPoint,
+  TvlApiCharts,
+  TvlApiResponse,
 } from '@l2beat/types'
 
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
@@ -11,27 +11,30 @@ import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 import { getChartPoints } from './charts'
 
-export function generateMain(
+export function generateTvlApiResponse(
   hourly: AggregateReportRecord[],
   sixHourly: AggregateReportRecord[],
   daily: AggregateReportRecord[],
   latestReports: ReportRecord[],
   projectIds: ProjectId[],
-): ApiMain {
+): TvlApiResponse {
   const reports = { hourly, sixHourly, daily }
   return {
     layers2s: getProjectCharts(reports, ProjectId.LAYER2S),
     bridges: getProjectCharts(reports, ProjectId.BRIDGES),
     combined: getProjectCharts(reports, ProjectId.ALL),
-    projects: projectIds.reduce<ApiMain['projects']>((acc, projectId) => {
-      acc[projectId.toString()] = {
-        charts: getProjectCharts(reports, projectId),
-        tokens: latestReports
-          .filter((r) => r.projectId === projectId)
-          .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
-      }
-      return acc
-    }, {}),
+    projects: projectIds.reduce<TvlApiResponse['projects']>(
+      (acc, projectId) => {
+        acc[projectId.toString()] = {
+          charts: getProjectCharts(reports, projectId),
+          tokens: latestReports
+            .filter((r) => r.projectId === projectId)
+            .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
+        }
+        return acc
+      },
+      {},
+    ),
   }
 }
 
@@ -42,8 +45,8 @@ function getProjectCharts(
     daily: AggregateReportRecord[]
   },
   projectId: ProjectId,
-): MainCharts {
-  const types: MainChart['types'] = ['timestamp', 'usd', 'eth']
+): TvlApiCharts {
+  const types: TvlApiChart['types'] = ['timestamp', 'usd', 'eth']
   return {
     hourly: {
       types,
@@ -64,7 +67,7 @@ function getProjectChartData(
   reports: AggregateReportRecord[],
   projectId: ProjectId,
   hours: number,
-): MainChartPoint[] {
+): TvlApiChartPoint[] {
   const balances = reports
     .filter((r) => r.projectId === projectId)
     .map((r) => ({

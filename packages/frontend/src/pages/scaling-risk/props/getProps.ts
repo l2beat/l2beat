@@ -1,4 +1,4 @@
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -11,10 +11,10 @@ import { getRiskView } from './getRiskView'
 
 export function getProps(
   config: Config,
-  apiMain: ApiMain,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<ScalingRiskPageProps> {
-  const included = getIncludedProjects(config.layer2s, apiMain)
-  const ordering = orderByTvl(included, apiMain)
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
 
   return {
     props: {

@@ -114,6 +114,48 @@ describe(ZksyncTransactionRepository.name, () => {
       expect(result.sort()).toEqual(expected.sort())
     })
   })
+
+  describe(
+    ZksyncTransactionRepository.prototype.getDailyTransactionCount.name,
+    () => {
+      it('works with empty repository', async () => {
+        expect(await repository.getDailyTransactionCount()).toEqual([])
+      })
+
+      it('groups by day', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeRecord({
+            timestamp: today.add(1, 'hours'),
+          }),
+          fakeRecord({
+            timestamp: today.add(2, 'hours'),
+          }),
+          fakeRecord({
+            timestamp: today.add(3, 'hours'),
+          }),
+          fakeRecord({
+            timestamp: today.add(1, 'days'),
+          }),
+          fakeRecord({
+            timestamp: today.add(1, 'days').add(1, 'hours'),
+          }),
+        ])
+
+        expect(await repository.getDailyTransactionCount()).toEqual([
+          {
+            count: 3,
+            timestamp: today,
+          },
+          {
+            count: 2,
+            timestamp: today.add(1, 'days'),
+          },
+        ])
+      })
+    },
+  )
 })
 
 function fakeRecord(

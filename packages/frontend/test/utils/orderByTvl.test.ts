@@ -1,4 +1,4 @@
-import { MainProject, ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId, TvlApiProject, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { orderByTvl } from '../../src/utils/orderByTvl'
@@ -11,7 +11,7 @@ describe(orderByTvl.name, () => {
       { id: ProjectId('third') },
     ]
 
-    const projectWithHourlyUsd = (values: number[]): MainProject => ({
+    const projectWithHourlyUsd = (values: number[]): TvlApiProject => ({
       tokens: [],
       charts: {
         daily: { types: ['timestamp', 'usd', 'eth'], data: [] },

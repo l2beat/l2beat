@@ -5,13 +5,13 @@ import { ApiServer } from './api/ApiServer'
 import { ActivityController } from './api/controllers/ActivityController'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
-import { EventController } from './api/controllers/events/EventsController'
+import { EventController } from './api/controllers/event/EventController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { createActivityRouter } from './api/routers/ActivityRouter'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
-import { createEventsRouter } from './api/routers/EventsRouter'
+import { createEventRouter } from './api/routers/EventRouter'
 import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { Config } from './config'
@@ -224,18 +224,18 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
-    const activityController = new ActivityController(
-      config.projects,
-      rpcTransactionCountRepository,
-      starkexTransactionCountRepository,
-    )
+    const activityController = new ActivityController([
+      ...rpcTransactionUpdaters,
+      ...starkexTransactionUpdaters,
+      zksyncTransactionUpdater,
+    ])
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
       createReportRouter(reportController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
-      createEventsRouter(eventController),
+      createEventRouter(eventController),
       createActivityRouter(activityController),
     ])
 

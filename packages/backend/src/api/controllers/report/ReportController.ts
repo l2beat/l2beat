@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/common'
 import {
-  ApiMain,
   AssetId,
-  MainChart,
-  MainCharts,
   ProjectId,
+  TvlApiChart,
+  TvlApiCharts,
+  TvlApiResponse,
 } from '@l2beat/types'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -18,7 +18,7 @@ import { ReportStatusRepository } from '../../../peripherals/database/ReportStat
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getChartPoints } from './charts'
-import { generateMain } from './generateMain'
+import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 export class ReportController {
   constructor(
@@ -32,7 +32,7 @@ export class ReportController {
     this.logger = this.logger.for(this)
   }
 
-  async getMain(): Promise<ApiMain | undefined> {
+  async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
     const timestamp = await this.reportStatusRepository.findLatestTimestamp()
     if (!timestamp) {
       return undefined
@@ -48,7 +48,7 @@ export class ReportController {
         this.aggregateReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(timestamp),
       ])
-    const apiMain = generateMain(
+    const apiMain = generateTvlApiResponse(
       hourlyReports,
       sixHourlyReports,
       dailyReports,
@@ -74,7 +74,7 @@ export class ReportController {
   async getProjectAssetChart(
     projectId: ProjectId,
     assetId: AssetId,
-  ): Promise<MainCharts | undefined> {
+  ): Promise<TvlApiCharts | undefined> {
     const project = this.projects.find((p) => p.projectId === projectId)
     const asset = this.tokens.find((t) => t.id === assetId)
     if (!project || !asset) {
@@ -97,7 +97,7 @@ export class ReportController {
       ),
       this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
     ])
-    const types: MainChart['types'] = [
+    const types: TvlApiChart['types'] = [
       'timestamp',
       asset.symbol.toLowerCase(),
       'usd',

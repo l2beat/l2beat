@@ -5,7 +5,6 @@ import _ from 'lodash'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
-import { TransactionCountRepository } from './TransactionCountRepository'
 
 export interface RpcTransactionCountRecord {
   timestamp: UnixTime
@@ -19,10 +18,7 @@ interface RawBlockNumberQueryResult {
   }[]
 }
 
-export class RpcTransactionCountRepository
-  extends BaseRepository
-  implements TransactionCountRepository
-{
+export class RpcTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -101,7 +97,9 @@ export class RpcTransactionCountRepository
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async getDailyTransactionCount(projectId: ProjectId) {
+  async getDailyTransactionCount(
+    projectId: ProjectId,
+  ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
       `

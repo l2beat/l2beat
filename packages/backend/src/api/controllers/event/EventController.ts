@@ -1,4 +1,4 @@
-import { ApiEvents } from '@l2beat/types'
+import { EventApiResponse } from '@l2beat/types'
 
 import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
@@ -14,8 +14,8 @@ export class EventController {
     private projects: Project[],
   ) {}
 
-  async getEvents(): Promise<ApiEvents> {
-    const main: ApiEvents = {
+  async getEventApiResponse(): Promise<EventApiResponse> {
+    const response: EventApiResponse = {
       projects: {},
     }
 
@@ -41,17 +41,17 @@ export class EventController {
           )
         const daily = getEventChart(dailyRecords, eventNames)
 
-        main.projects[projectId.toString()] = {
+        response.projects[projectId.toString()] = {
           hourly,
           daily,
         }
       }),
     )
-    return main
+    return response
   }
 
   async getShowcase() {
-    const events = await this.getEvents()
+    const events = await this.getEventApiResponse()
 
     return renderShowcasePage({ events })
   }

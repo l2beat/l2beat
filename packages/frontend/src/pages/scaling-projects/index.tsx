@@ -1,4 +1,4 @@
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
@@ -7,10 +7,13 @@ import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
-export function getProjectPages(config: Config, apiMain: ApiMain) {
-  const included = getIncludedProjects(config.layer2s, apiMain)
+export function getProjectPages(
+  config: Config,
+  tvlApiResponse: TvlApiResponse,
+) {
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   return included.map((project) => {
-    const { wrapper, props } = getProps(project, config, apiMain)
+    const { wrapper, props } = getProps(project, config, tvlApiResponse)
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (
