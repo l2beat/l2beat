@@ -1,5 +1,5 @@
 import { Bridge } from '@l2beat/config'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -13,13 +13,13 @@ import { getProjectDetails } from './getProjectDetails'
 export function getProps(
   bridge: Bridge,
   config: Config,
-  apiMain: ApiMain,
+  tvlResponse: TvlApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(bridge, apiMain)
+  const chart = getChart(bridge, tvlResponse)
   return {
     props: {
       navbar: getNavbarProps(config),
-      header: getHeader(bridge, apiMain),
+      header: getHeader(bridge, tvlResponse),
       chart,
       projectDetails: getProjectDetails(bridge),
       footer: getFooterProps(config),

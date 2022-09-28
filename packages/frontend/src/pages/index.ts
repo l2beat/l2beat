@@ -1,4 +1,4 @@
-import { ApiActivity, ApiMain } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../build/config'
 import { getBridgeProjectPages } from './bridges-projects'
@@ -16,8 +16,8 @@ import { getTvlPage } from './scaling-tvl'
 
 export async function renderPages(
   config: Config,
-  apiMain: ApiMain,
-  apiActivity: ApiActivity,
+  apiMain: TvlApiResponse,
+  apiActivity: ActivityApiResponse,
 ) {
   const pages: Page[] = []
 

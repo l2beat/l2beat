@@ -1,11 +1,11 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { ApiMain, ProjectId } from '@l2beat/types'
+import { ProjectId, TvlApiResponse } from '@l2beat/types'
 
 import { renderPages } from '../pages'
-import { fetchApiActivity } from './ApiActivity'
 import { getConfig } from './config'
 import { createApi } from './createApi'
-import { fetchApiMain } from './fetchApiMain'
+import { fetchApiActivity } from './fetchApiActivity'
+import { fetchTvlApi } from './fetchTvlApi'
 
 main().catch((e) => {
   console.error(e)
@@ -15,7 +15,7 @@ main().catch((e) => {
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'production'
   const config = getConfig(env)
-  const apiMain = await fetchApiMain(
+  const apiMain = await fetchTvlApi(
     config.backend.apiUrl,
     config.backend.skipCache,
   )
@@ -28,7 +28,7 @@ async function main() {
   await renderPages(config, apiMain, apiActivity)
 }
 
-function printApiInfo(apiMain: ApiMain) {
+function printApiInfo(apiMain: TvlApiResponse) {
   print('combined', apiMain.combined)
   print('layer2s', apiMain.layers2s)
   print('bridges', apiMain.bridges)
@@ -41,7 +41,7 @@ function printApiInfo(apiMain: ApiMain) {
     }
   }
 
-  function print(label: string, charts: ApiMain['combined']) {
+  function print(label: string, charts: TvlApiResponse['combined']) {
     const tvl = (charts.hourly.data.at(-1)?.[1] ?? 0).toFixed(2)
     const hourly = charts.hourly.data.length.toString()
     const sixHourly = charts.sixHourly.data.length.toString()
@@ -57,7 +57,7 @@ function printApiInfo(apiMain: ApiMain) {
   }
 }
 
-function sanityCheck(apiMain: ApiMain) {
+function sanityCheck(apiMain: TvlApiResponse) {
   const projectsInApi = Object.keys(apiMain.projects).map(ProjectId)
 
   const bridgesInApi = bridges.filter((x) => projectsInApi.includes(x.id))

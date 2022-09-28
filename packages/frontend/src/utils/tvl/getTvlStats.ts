@@ -1,4 +1,4 @@
-import { MainProject } from '@l2beat/types'
+import { TvlApiProject } from '@l2beat/types'
 
 import { getPercentageChange } from '../utils'
 import { getTvlBreakdown } from './getTVLBreakdown'
@@ -6,11 +6,11 @@ import { getTvlBreakdown } from './getTVLBreakdown'
 export type TvlStats = ReturnType<typeof getTvlStats>
 
 export function getTvlStats(
-  apiProject: MainProject,
+  tvlProject: TvlApiProject,
   name: string,
   associatedTokens: string[],
 ) {
-  const aggregate = apiProject.charts.hourly.data
+  const aggregate = tvlProject.charts.hourly.data
   const tvl = aggregate.at(-1)?.[1] ?? 0
   const tvlOneDayAgo = aggregate.at(-25)?.[1] ?? 0
   // This assumes that hourly data spans exactly 7 days
@@ -22,7 +22,7 @@ export function getTvlStats(
       name,
       associatedTokens,
       tvl,
-      apiProject.tokens,
+      tvlProject.tokens,
     ),
     oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
     sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),

@@ -1,5 +1,5 @@
 import { Bridge } from '@l2beat/config'
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -7,15 +7,15 @@ import { BridgesTvlViewEntry } from '../BridgesTvlView'
 
 export function getBridgesTvlView(
   projects: Bridge[],
-  apiMain: ApiMain,
+  tvlResponse: TvlApiResponse,
   tvl: number,
 ): BridgesTvlViewEntry[] {
-  return projects.map((x) => getBridgesTvlViewEntry(x, apiMain, tvl))
+  return projects.map((x) => getBridgesTvlViewEntry(x, tvlResponse, tvl))
 }
 
 function getBridgesTvlViewEntry(
   project: Bridge,
-  apiMain: ApiMain,
+  apiMain: TvlApiResponse,
   aggregateTvl: number,
 ): BridgesTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []

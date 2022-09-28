@@ -1,4 +1,4 @@
-import { ApiMain } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
@@ -6,8 +6,11 @@ import { PageWrapper } from '../../components'
 import { BridgesRiskPage } from './BridgesRiskPage'
 import { getProps } from './getProps'
 
-export function getBridgesRiskPage(config: Config, apiMain: ApiMain) {
-  const { props, wrapper } = getProps(config, apiMain)
+export function getBridgesRiskPage(
+  config: Config,
+  tvlResponse: TvlApiResponse,
+) {
+  const { props, wrapper } = getProps(config, tvlResponse)
   return {
     slug: '/bridges/risk',
     page: (

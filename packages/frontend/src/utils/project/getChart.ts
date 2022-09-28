@@ -1,20 +1,20 @@
 import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
-import { ApiMain, ProjectId } from '@l2beat/types'
+import { ProjectId, TvlApiResponse } from '@l2beat/types'
 
 import { ChartProps } from '../../components'
 
 export function getChart(
   project: Layer2 | Bridge,
-  apiMain: ApiMain,
+  tvlResponse: TvlApiResponse,
 ): ChartProps {
   return {
     endpoint: `/api/${project.display.slug}.json`,
-    tokens: getTokens(project.id, apiMain),
+    tokens: getTokens(project.id, tvlResponse),
   }
 }
 
-function getTokens(projectId: ProjectId, apiMain: ApiMain) {
-  return apiMain.projects[projectId.toString()]?.tokens
+function getTokens(projectId: ProjectId, tvlResponse: TvlApiResponse) {
+  return tvlResponse.projects[projectId.toString()]?.tokens
     .map(({ assetId, tvl }) => {
       const symbol = safeGetTokenByAssetId(assetId)?.symbol
       if (symbol) {
