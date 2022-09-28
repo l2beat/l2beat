@@ -29,7 +29,7 @@ export const ZksyncTransactionResultSchema = z.object({
   list: z.array(
     z.object({
       txHash: z.string(),
-      blockIndex: z.number(),
+      blockIndex: z.nullable(z.number()),
       createdAt: stringAs((s) => UnixTime.fromDate(new Date(s))),
     }),
   ),

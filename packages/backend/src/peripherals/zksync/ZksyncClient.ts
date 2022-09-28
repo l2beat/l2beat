@@ -4,12 +4,19 @@ import {
   Logger,
   RateLimiter,
 } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import {
   ZksyncBlocksResultSchema,
   ZksyncResponse,
   ZksyncTransactionResultSchema,
 } from './schemas'
+
+interface Transaction {
+  txHash: string
+  blockIndex: number
+  createdAt: UnixTime
+}
 
 export class ZksyncClient {
   constructor(private httpClient: HttpClient, private logger: Logger) {
@@ -59,7 +66,11 @@ export class ZksyncClient {
       transactions = transactions.concat(parsedNextPage.list.slice(1))
     }
 
-    return transactions
+    const filteredTransactions = transactions.filter(
+      (t): t is Transaction => t.blockIndex !== null,
+    )
+
+    return filteredTransactions
   }
 
   async call(path: string, params?: Record<string, string>) {
