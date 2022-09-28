@@ -1,3 +1,4 @@
+import { Layer2TransactionApi } from '@l2beat/config'
 import {
   ActivityChartPoint,
   ApiActivity,
@@ -36,16 +37,26 @@ export class ActivityController {
     const projectPromises = this.projects
       .filter((p) => !!p.transactionApi)
       .map(async (p) => {
-        const repository =
-          p.transactionApi?.type === 'rpc'
-            ? this.rpcRepository
-            : this.starkexRepository
+        const repository = this.getTransactionCountRepository(p.transactionApi)
         return {
           projectId: p.projectId,
           counts: await repository.getDailyTransactionCount(p.projectId),
         }
       })
     return Promise.all(projectPromises)
+  }
+
+  private getTransactionCountRepository(transactionApi: Layer2TransactionApi) {
+    switch (transactionApi.type) {
+      case 'rpc':
+        return this.rpcRepository
+      case 'starkex':
+        return this.starkexRepository
+      default:
+        throw new Error(
+          `Programmer error: could not detect repository for transaction api type`,
+        )
+    }
   }
 
   private toCombinedActivity(
