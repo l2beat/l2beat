@@ -1,5 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 
+import { getContractSection } from '../../../utils/project/getContractSection'
+import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getLinkSection } from './getLinkSection'
@@ -13,6 +15,8 @@ export function getProjectDetails(project: Layer2): ProjectDetailsProps {
     linkSection: getLinkSection(project),
     descriptionSection: getDescriptionSection(project),
     riskSection: getRiskSection(project),
+    permissionsSection: getPermissionsSection(project),
+    contractsSection: getContractSection(project),
     ...getTechnologyOverview(project),
   }
 }

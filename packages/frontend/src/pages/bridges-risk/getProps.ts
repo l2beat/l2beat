@@ -52,5 +52,5 @@ function getDestination(destinations: string[]): ProjectRiskViewEntry {
   if (destinations.length === 2) {
     return { value: destinations.join(', '), description: '' }
   }
-  return { value: 'Multichain', description: destinations.join(', ') }
+  return { value: 'Various', description: destinations.join(',\n') }
 }

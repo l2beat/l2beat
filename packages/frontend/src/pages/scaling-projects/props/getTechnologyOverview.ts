@@ -1,50 +1,17 @@
-import {
-  Layer2,
-  ProjectContract,
-  ProjectTechnologyChoice,
-} from '@l2beat/config'
-import { existsSync } from 'fs'
-import path from 'path'
+import { Layer2 } from '@l2beat/config'
 
-import {
-  ContractsSectionProps,
-  TechnologyContract,
-} from '../../../components/project/ContractsSection'
-import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
-import {
-  TechnologyChoice,
-  TechnologySectionProps,
-} from '../../../components/project/TechnologySection'
+import { TechnologySectionProps } from '../../../components/project/TechnologySection'
+import { getTwitterLink } from '../../../utils/project/getTwitterLink'
+import { makeTechnologyChoice } from '../../../utils/project/makeTechnologyChoice'
 import { getEditLink } from './links'
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
   sections: TechnologySectionProps[]
-  permissionsSection?: PermissionsSectionProps
-  contractsSection: ContractsSectionProps
 }
 
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
-  function makeTechnologyChoice(
-    id: string,
-    item: ProjectTechnologyChoice,
-  ): TechnologyChoice {
-    const risks = item.risks.map((risk) => ({
-      text: `${risk.category} ${risk.text}`,
-      isCritical: !!risk.isCritical,
-    }))
-
-    return {
-      id,
-      name: item.name,
-      description: item.description,
-      isIncomplete: !!item.isIncomplete,
-      references: item.references,
-      risks,
-    }
-  }
-
   function makeSections() {
     const technology: TechnologySectionProps = {
       id: 'technology',
@@ -112,117 +79,6 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     )
   }
 
-  function makeTechnologyContract(item: ProjectContract): TechnologyContract {
-    const links = []
-
-    if (
-      item.upgradeability?.type === 'EIP1967' ||
-      item.upgradeability?.type === 'NutBerry' ||
-      item.upgradeability?.type === 'ZeppelinOs'
-    ) {
-      links.push({
-        name: 'Implementation (Upgradable)',
-        href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
-      })
-      links.push({
-        name: 'Admin',
-        href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
-      })
-    }
-
-    if (item.upgradeability?.type === 'StarkWare') {
-      const delay = item.upgradeability.upgradeDelay !== 0
-      const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
-      const implementation =
-        item.upgradeability.callImplementation ??
-        item.upgradeability.implementation
-      links.push({
-        name: `Implementation (Upgradable${
-          delay ? ` ${days} days delay` : ''
-        })`,
-        href: `https://etherscan.io/address/${implementation}#code`,
-      })
-    }
-
-    if (item.upgradeability?.type === 'Reference') {
-      links.push({
-        name: 'Code (Upgradable)',
-        href: `https://etherscan.io/address/${item.address}#code`,
-      })
-    }
-
-    if (item.upgradeability?.type === 'Arbitrum') {
-      links.push({
-        name: 'Admin',
-        href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
-      })
-      links.push({
-        name: 'Admin logic (Upgradable)',
-        href: `https://etherscan.io/address/${item.upgradeability.adminImplementation}#code`,
-      })
-      links.push({
-        name: 'User logic (Upgradable)',
-        href: `https://etherscan.io/address/${item.upgradeability.userImplementation}#code`,
-      })
-    }
-
-    const tokens = project.config.escrows.find(
-      (x) => x.address === item.address,
-    )?.tokens
-    let description = item.description
-    if (tokens) {
-      const tokenText =
-        tokens === '*'
-          ? 'This contract can store any token'
-          : `This contract stores the following tokens: ${tokens.join(', ')}.`
-      if (!description) {
-        description = tokenText
-      } else {
-        description += ' ' + tokenText
-      }
-    }
-
-    return {
-      name: item.name,
-      address: item.address,
-      description,
-      links,
-    }
-  }
-
-  function makePermissionsSection() {
-    if (!project.permissions) {
-      return undefined
-    }
-    return {
-      permissions: project.permissions,
-    }
-  }
-
-  function makeContractSection() {
-    const contracts = project.contracts.addresses.map(makeTechnologyContract)
-
-    const risks = project.contracts.risks.map((risk) => ({
-      text: `${risk.category} ${risk.text}`,
-      isCritical: !!risk.isCritical,
-    }))
-
-    const file = path.join(
-      __dirname,
-      `../../../static/images/${project.display.slug}-architecture.png`,
-    )
-    const architectureImage = existsSync(file)
-      ? `/images/${project.display.slug}-architecture.png`
-      : undefined
-
-    return {
-      contracts,
-      risks,
-      architectureImage,
-      references: project.contracts.references ?? [],
-    }
-  }
-
   const sections = makeSections()
   const isIncomplete = sections.some((x) => x.items.some((x) => x.isIncomplete))
 
@@ -236,33 +92,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   return {
     incomplete,
     sections,
-    permissionsSection: makePermissionsSection(),
-    contractsSection: makeContractSection(),
   }
-}
-
-function getTwitterLink(project: Layer2) {
-  const twitterSocialMedia = project.display.links.socialMedia.find((x) =>
-    x.includes('twitter'),
-  )
-  if (!twitterSocialMedia) {
-    return
-  }
-  const twitterAccount = twitterSocialMedia.substring(
-    'https://twitter.com/'.length,
-  )
-
-  const message = `Hey @${twitterAccount}. Your project overview on @l2beat would benefit from your help.`
-  const url = `https://l2beat.com/scaling/projects/${project.display.slug}`
-
-  const options = [
-    ['text', encodeURIComponent(message)],
-    ['url', encodeURIComponent(url)],
-  ]
-    .map((x) => `${x[0]}=${x[1]}`)
-    .join('&')
-
-  return `https://twitter.com/intent/tweet?${options}`
 }
 
 function noUndefined<T>(x: T | undefined): x is T {

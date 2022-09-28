@@ -21,6 +21,7 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
+import { ZksyncTransactionUpdater } from './core/transaction-count/ZksyncTransactionUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -33,10 +34,12 @@ import { ReportStatusRepository } from './peripherals/database/ReportStatusRepos
 import { RpcTransactionCountRepository } from './peripherals/database/RpcTransactionCountRepository'
 import { Database } from './peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from './peripherals/database/StarkexTransactionCountRepository'
+import { ZksyncTransactionRepository } from './peripherals/database/ZksyncTransactionRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
 import { StarkexClient } from './peripherals/starkex'
+import { ZksyncClient } from './peripherals/zksync'
 import { createRpcTransactionUpdaters } from './setup/createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './setup/createStarkexTransactionUpdaters'
 
@@ -72,6 +75,10 @@ export class Application {
     )
     const starkexTransactionCountRepository =
       new StarkexTransactionCountRepository(database, logger)
+    const zksyncTransactionRepository = new ZksyncTransactionRepository(
+      database,
+      logger,
+    )
 
     const http = new HttpClient()
 
@@ -100,6 +107,8 @@ export class Application {
       http,
       logger,
     )
+
+    const zksyncClient = new ZksyncClient(http, logger)
 
     // #endregion
     // #region core
@@ -165,6 +174,13 @@ export class Application {
       config,
       starkexTransactionCountRepository,
       starkexClient,
+      clock,
+      logger,
+    )
+
+    const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
+      zksyncClient,
+      zksyncTransactionRepository,
       clock,
       logger,
     )
@@ -238,6 +254,7 @@ export class Application {
           for (const updater of starkexTransactionUpdaters) {
             updater.start()
           }
+          zksyncTransactionUpdater.start()
         }
 
         if (config.eventsSyncEnabled) {
