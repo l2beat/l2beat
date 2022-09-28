@@ -29,8 +29,8 @@ export interface Config {
     | {
         starkexApiUrl: string
         starkexApiKey: string
+        arbitrumAlchemyApiKey: string
+        optimismAlchemyApiKey: string
       }
     | undefined
-  arbitrumAlchemyApiKey: string
-  optimismAlchemyApiKey: string
 }

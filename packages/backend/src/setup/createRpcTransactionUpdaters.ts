@@ -59,10 +59,10 @@ function createL2Provider(
 
   let apiKey = ''
   if (projectId === ProjectId('arbitrum')) {
-    apiKey = config.arbitrumAlchemyApiKey
+    apiKey = config.transactionCountSync!.arbitrumAlchemyApiKey
   }
   if (projectId === ProjectId('optimism')) {
-    apiKey = config.optimismAlchemyApiKey
+    apiKey = config.transactionCountSync!.optimismAlchemyApiKey
   }
   if (!apiKey) {
     throw new Error('Please provide alchemy api key')

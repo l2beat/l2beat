@@ -37,8 +37,8 @@ export function getLocalConfig(): Config {
     transactionCountSync: getEnv.featureFlag('TRANSACTION_COUNT_ENABLED') && {
       starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
+      arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+      optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
     },
-    arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
-    optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
   }
 }

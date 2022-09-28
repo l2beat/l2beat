@@ -36,7 +36,5 @@ export function getProductionConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     eventsSyncEnabled: false,
-    arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
-    optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
   }
 }
