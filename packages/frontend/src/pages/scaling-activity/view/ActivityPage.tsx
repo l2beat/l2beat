@@ -36,7 +36,7 @@ export function ActivityPage(props: ActivityPageProps) {
           tpsDaily={props.tpsDaily}
           tpsWeeklyChange={props.tpsWeeklyChange}
         />
-        <Chart endpoint={props.apiEndpoint} hideControls={true}></Chart>
+        <Chart endpoint={props.apiEndpoint} hideControls></Chart>
         <ActivityView {...props.activityView} />
         <OtherSites />
         <About />
