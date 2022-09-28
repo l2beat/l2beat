@@ -7,7 +7,7 @@ export async function fetchTvlApi(
   apiUrl: string,
   skipCache = false,
 ): Promise<TvlApiResponse> {
-  const url = apiUrl + '/api/tvl'
+  const url = apiUrl + '/api/main' // change to /api/tvl once backend can serve that
 
   if (!skipCache) {
     const cached = await readCachedData(url)
