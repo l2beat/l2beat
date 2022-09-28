@@ -1,4 +1,4 @@
-import { ApiActivity, ApiMain, Charts } from '@l2beat/types'
+import { ApiActivity, ApiMain, MainCharts } from '@l2beat/types'
 import fsx from 'fs-extra'
 import path from 'path'
 
@@ -9,7 +9,7 @@ export function createApi(
   apiMain: ApiMain,
   apiActivity: ApiActivity,
 ) {
-  const urlCharts = new Map<string, Charts>()
+  const urlCharts = new Map<string, MainCharts>()
 
   urlCharts.set('scaling-tvl', apiMain.layers2s)
   urlCharts.set('bridges-tvl', apiMain.bridges)
@@ -25,7 +25,7 @@ export function createApi(
   outputCharts(urlCharts)
 }
 
-export function outputCharts(urlCharts: Map<string, Charts>) {
+export function outputCharts(urlCharts: Map<string, MainCharts>) {
   for (const [url, charts] of urlCharts) {
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(
@@ -35,7 +35,7 @@ export function outputCharts(urlCharts: Map<string, Charts>) {
   }
 }
 
-function getCompatibleApi(apiActivity: ApiActivity): Charts {
+function getCompatibleApi(apiActivity: ApiActivity): MainCharts {
   return {
     hourly: {
       types: ['timestamp', 'tps', ''],

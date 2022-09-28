@@ -1,10 +1,10 @@
 import {
   AssetId,
-  Chart,
-  ChartPoint,
-  Charts,
+  MainChart,
+  MainChartPoint,
+  MainCharts,
+  MainToken,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/types'
 import { expect } from 'earljs'
@@ -55,8 +55,8 @@ describe(generateMain.name, () => {
   function charts(
     reports: ReturnType<typeof fakeReports>,
     projectId: ProjectId,
-  ): Charts {
-    const types: Chart['types'] = ['timestamp', 'usd', 'eth']
+  ): MainCharts {
+    const types: MainChart['types'] = ['timestamp', 'usd', 'eth']
     return {
       hourly: {
         types,
@@ -90,7 +90,7 @@ describe(generateMain.name, () => {
     count: number,
     projectIds: ProjectId[],
   ) {
-    const result: Record<string, ChartPoint[]> & {
+    const result: Record<string, MainChartPoint[]> & {
       all: AggregateReportRecord[]
     } = {
       all: [],
@@ -116,7 +116,7 @@ describe(generateMain.name, () => {
 
   function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
     const assets = [AssetId.ETH, AssetId.DAI]
-    const result: Record<string, Token[]> & { all: ReportRecord[] } = {
+    const result: Record<string, MainToken[]> & { all: ReportRecord[] } = {
       all: [],
     }
     for (const projectId of projectIds) {

@@ -1,4 +1,10 @@
-import { ApiMain, Chart, ChartPoint, Charts, ProjectId } from '@l2beat/types'
+import {
+  ApiMain,
+  MainChart,
+  MainChartPoint,
+  MainCharts,
+  ProjectId,
+} from '@l2beat/types'
 
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
@@ -36,8 +42,8 @@ function getProjectCharts(
     daily: AggregateReportRecord[]
   },
   projectId: ProjectId,
-): Charts {
-  const types: Chart['types'] = ['timestamp', 'usd', 'eth']
+): MainCharts {
+  const types: MainChart['types'] = ['timestamp', 'usd', 'eth']
   return {
     hourly: {
       types,
@@ -58,7 +64,7 @@ function getProjectChartData(
   reports: AggregateReportRecord[],
   projectId: ProjectId,
   hours: number,
-): ChartPoint[] {
+): MainChartPoint[] {
   const balances = reports
     .filter((r) => r.projectId === projectId)
     .map((r) => ({

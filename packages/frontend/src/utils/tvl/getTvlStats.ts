@@ -1,4 +1,4 @@
-import { Project } from '@l2beat/types'
+import { MainProject } from '@l2beat/types'
 
 import { getPercentageChange } from '../utils'
 import { getTvlBreakdown } from './getTVLBreakdown'
@@ -6,7 +6,7 @@ import { getTvlBreakdown } from './getTVLBreakdown'
 export type TvlStats = ReturnType<typeof getTvlStats>
 
 export function getTvlStats(
-  apiProject: Project,
+  apiProject: MainProject,
   name: string,
   associatedTokens: string[],
 ) {

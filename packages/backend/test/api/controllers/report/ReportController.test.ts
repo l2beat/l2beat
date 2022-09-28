@@ -2,8 +2,8 @@ import { Logger, mock } from '@l2beat/common'
 import { tokenList } from '@l2beat/config'
 import {
   AssetId,
-  Chart,
   EthereumAddress,
+  MainChart,
   ProjectId,
   UnixTime,
 } from '@l2beat/types'
@@ -101,7 +101,7 @@ describe(ReportController.name, () => {
         [DAI],
         Logger.SILENT,
       )
-      const types: Chart['types'] = ['timestamp', 'dai', 'usd']
+      const types: MainChart['types'] = ['timestamp', 'dai', 'usd']
       const charts = await controller.getProjectAssetChart(
         OPTIMISM.projectId,
         AssetId.DAI,

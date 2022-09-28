@@ -1,18 +1,18 @@
-import { ChartPoint, UnixTime } from '@l2beat/types'
+import { MainChartPoint, UnixTime } from '@l2beat/types'
 
 import { asNumber } from './asNumber'
 
 export function addMissingTimestamps(
-  points: ChartPoint[],
+  points: MainChartPoint[],
   hours: number,
-): ChartPoint[] {
+): MainChartPoint[] {
   if (points.length === 0) return []
   const [min] = points[0]
   const [max] = points[points.length - 1]
   const timestampValues = new Map(
     points.map(([t, v1, v2]) => [t.toString(), [v1, v2]]),
   )
-  const allPoints: ChartPoint[] = []
+  const allPoints: MainChartPoint[] = []
   for (
     let timestamp = min;
     timestamp.lte(max);
@@ -34,8 +34,8 @@ export function getChartPoints(
   hours: number,
   decimals: number,
   usdFirst = false,
-): ChartPoint[] {
-  const existing: ChartPoint[] = balances.map((b) => {
+): MainChartPoint[] {
+  const existing: MainChartPoint[] = balances.map((b) => {
     const usd = asNumber(b.usd, 2)
     const asset = asNumber(b.asset, decimals)
     return usdFirst ? [b.timestamp, usd, asset] : [b.timestamp, asset, usd]
