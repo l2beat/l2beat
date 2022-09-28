@@ -7,7 +7,7 @@ import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getEventChart } from './getEventChart'
 import { renderShowcasePage } from './ShowcasePage'
 
-export class EventsController {
+export class EventController {
   constructor(
     private eventRepository: EventRepository,
     private clock: Clock,

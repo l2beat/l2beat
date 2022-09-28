@@ -5,13 +5,13 @@ import { ApiServer } from './api/ApiServer'
 import { ActivityController } from './api/controllers/ActivityController'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
-import { EventsController } from './api/controllers/events/EventsController'
+import { EventController } from './api/controllers/events/EventController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { TvlController } from './api/controllers/tvl/TvlController'
 import { createActivityRouter } from './api/routers/ActivityRouter'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
-import { createEventsRouter } from './api/routers/EventsRouter'
+import { createEventRouter } from './api/routers/EventRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { createTvlRouter } from './api/routers/TvlRouter'
 import { Config } from './config'
@@ -192,7 +192,7 @@ export class Application {
       config.projects,
     )
 
-    const eventController = new EventsController(
+    const eventController = new EventController(
       eventRepository,
       clock,
       config.projects,
@@ -211,7 +211,7 @@ export class Application {
       createTvlRouter(tvlController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
-      createEventsRouter(eventController),
+      createEventRouter(eventController),
       createActivityRouter(activityController),
     ])
 
