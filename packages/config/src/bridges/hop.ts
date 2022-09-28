@@ -48,8 +48,6 @@ export const hop: Bridge = {
   technology: {
     type: 'AMM Swap',
     destination: ['TODO', 'TODO', 'TODO'],
-    validation: 'Liquidity Network',
-    connections: [],
   },
   riskView: {
     validation: {

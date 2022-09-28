@@ -13,9 +13,9 @@ export interface Bridge {
   config: BridgeConfig
   technology: BridgeTechnology
   riskView?: {
-    validation: ProjectRiskViewEntry
-    sourceUpgradeability: ProjectRiskViewEntry
-    destinationToken: ProjectRiskViewEntry
+    validation?: ProjectRiskViewEntry
+    sourceUpgradeability?: ProjectRiskViewEntry
+    destinationToken?: ProjectRiskViewEntry
   }
   news?: News[]
 }
@@ -34,11 +34,6 @@ export interface BridgeConfig {
 
 export interface BridgeTechnology {
   canonical?: boolean
-  validation: string
   type: string
   destination: string[]
-  connections: {
-    network: string
-    tokens: string[]
-  }[]
 }

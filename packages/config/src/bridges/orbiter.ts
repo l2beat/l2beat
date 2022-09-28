@@ -28,8 +28,12 @@ export const orbiter: Bridge = {
   },
   technology: {
     type: 'Lock-Mint',
-    validation: 'Liquidity Network',
     destination: ['TODO', 'TODO', 'TODO'],
-    connections: [],
+  },
+  riskView: {
+    validation: {
+      value: 'Liquidity Network',
+      description: 'TODO',
+    },
   },
 }

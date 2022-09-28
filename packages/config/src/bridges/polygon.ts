@@ -54,8 +54,6 @@ export const polygon: Bridge = {
     destination: ['Polygon'],
     canonical: true,
     type: 'Lock-Mint',
-    validation: 'LC Token Bridge',
-    connections: [],
   },
   riskView: {
     validation: {

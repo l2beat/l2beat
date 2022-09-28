@@ -32,8 +32,12 @@ export const nomad: Bridge = {
   },
   technology: {
     type: 'Lock-Mint',
-    validation: 'Optimistic Bridge',
     destination: ['TODO', 'TODO', 'TODO'],
-    connections: [],
+  },
+  riskView: {
+    validation: {
+      value: 'Optimistic Bridge',
+      description: 'TODO',
+    },
   },
 }

@@ -47,8 +47,6 @@ export const harmony: Bridge = {
   technology: {
     type: 'Lock-Mint',
     destination: ['Harmony'],
-    validation: 'EV Bridge',
-    connections: [{ network: 'Harmony One', tokens: ['*'] }],
   },
   riskView: {
     validation: {
