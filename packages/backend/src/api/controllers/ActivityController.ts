@@ -1,7 +1,7 @@
 import { Layer2TransactionApi } from '@l2beat/config'
 import {
-  ActivityChartPoint,
-  ApiActivity,
+  ActivityApiChartPoint,
+  ActivityApiResponse,
   ProjectId,
   UnixTime,
 } from '@l2beat/types'
@@ -27,7 +27,7 @@ export class ActivityController {
     private starkexRepository: StarkexTransactionCountRepository,
   ) {}
 
-  async getTransactionActivity(): Promise<ApiActivity> {
+  async getTransactionActivity(): Promise<ActivityApiResponse> {
     const projectsCounts = await this.getProjectsCounts()
 
     return {
@@ -66,14 +66,14 @@ export class ActivityController {
 
   private toCombinedActivity(
     projectsCounts: ProjectCounts[],
-  ): ApiActivity['combined'] {
+  ): ActivityApiResponse['combined'] {
     return {
       types: ['timestamp', 'daily tx count'],
       data: projectsCounts
         .map((p) => p.counts)
         .flat()
         .sort((a, b) => +a.timestamp - +b.timestamp)
-        .reduce<ActivityChartPoint[]>((acc, { count, timestamp }) => {
+        .reduce<ActivityApiChartPoint[]>((acc, { count, timestamp }) => {
           const current = acc.at(-1)
           if (!current?.[0].equals(timestamp)) {
             acc.push([timestamp, count])
@@ -87,8 +87,8 @@ export class ActivityController {
 
   private toProjectsActivity(
     projectActivities: ProjectCounts[],
-  ): ApiActivity['projects'] {
-    const projects: ApiActivity['projects'] = {}
+  ): ActivityApiResponse['projects'] {
+    const projects: ActivityApiResponse['projects'] = {}
     for (const { projectId, counts } of projectActivities) {
       projects[projectId.toString()] = {
         data: counts.map((c) => [c.timestamp, c.count]),

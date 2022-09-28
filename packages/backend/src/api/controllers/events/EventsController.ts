@@ -1,4 +1,4 @@
-import { ApiEvents } from '@l2beat/types'
+import { EventsApiResponse } from '@l2beat/types'
 
 import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
@@ -14,8 +14,8 @@ export class EventController {
     private projects: Project[],
   ) {}
 
-  async getEvents(): Promise<ApiEvents> {
-    const main: ApiEvents = {
+  async getEvents(): Promise<EventsApiResponse> {
+    const main: EventsApiResponse = {
       projects: {},
     }
 

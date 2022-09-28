@@ -1,10 +1,10 @@
-import { ApiEvents, UnixTime } from '@l2beat/types'
+import { EventsApiResponse, UnixTime } from '@l2beat/types'
 import React from 'react'
 
 import { reactToHtml } from '../status/view/reactToHtml'
 
 interface ShowcasePageProps {
-  events: ApiEvents
+  events: EventsApiResponse
 }
 
 interface Event {

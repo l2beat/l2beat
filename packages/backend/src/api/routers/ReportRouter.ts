@@ -9,7 +9,7 @@ export function createReportRouter(reportController: ReportController) {
   const router = new Router()
 
   router.get('/api/main', async (ctx) => {
-    const data = await reportController.getMain()
+    const data = await reportController.getTvlResponse()
     if (!data) {
       ctx.status = 404
       return
