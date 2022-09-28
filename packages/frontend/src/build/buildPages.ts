@@ -4,7 +4,7 @@ import { ProjectId, TvlApiResponse } from '@l2beat/types'
 import { renderPages } from '../pages'
 import { getConfig } from './config'
 import { createApi } from './createApi'
-import { fetchApiActivity } from './fetchApiActivity'
+import { fetchActivityApi } from './fetchActivityApi'
 import { fetchTvlApi } from './fetchTvlApi'
 
 main().catch((e) => {
