@@ -8,8 +8,9 @@ import {
 
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
+import { TransactionCountRepository } from '../../peripherals/database/TransactionCountRepository'
 
-interface ProjectActivity {
+interface ProjectCounts {
   projectId: ProjectId
   counts: { timestamp: UnixTime; count: number }[]
 }
@@ -35,7 +36,7 @@ export class ActivityController {
     }
   }
 
-  private async getProjectsCounts(): Promise<ProjectActivity[]> {
+  private async getProjectsCounts(): Promise<ProjectCounts[]> {
     const projectPromises = this.projects
       .filter((p): p is Required<Project> => !!p.transactionApi)
       .map(async (p) => {
@@ -48,7 +49,9 @@ export class ActivityController {
     return Promise.all(projectPromises)
   }
 
-  private getTransactionCountRepository(transactionApi: Layer2TransactionApi) {
+  private getTransactionCountRepository(
+    transactionApi: Layer2TransactionApi,
+  ): TransactionCountRepository {
     switch (transactionApi.type) {
       case 'rpc':
         return this.rpcRepository
@@ -62,7 +65,7 @@ export class ActivityController {
   }
 
   private toCombinedActivity(
-    projectsCounts: ProjectActivity[],
+    projectsCounts: ProjectCounts[],
   ): ApiActivity['combined'] {
     return {
       types: ['timestamp', 'daily tx count'],
@@ -83,7 +86,7 @@ export class ActivityController {
   }
 
   private toProjectsActivity(
-    projectActivities: ProjectActivity[],
+    projectActivities: ProjectCounts[],
   ): ApiActivity['projects'] {
     const projects: ApiActivity['projects'] = {}
     for (const { projectId, counts } of projectActivities) {
