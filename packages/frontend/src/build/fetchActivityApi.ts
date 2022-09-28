@@ -36,5 +36,19 @@ const getMockData = (): ActivityApiResponse => {
       types: ['timestamp', 'daily tx count'],
       data,
     },
+    projects: {
+      arbitrum: {
+        types: ['timestamp', 'daily tx count'],
+        data: arbitrumData,
+      },
+      optimism: {
+        types: ['timestamp', 'daily tx count'],
+        data: optimismData,
+      },
+      dydx: {
+        types: ['timestamp', 'daily tx count'],
+        data: dydxData,
+      },
+    },
   }
 }
