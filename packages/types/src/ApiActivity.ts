@@ -3,13 +3,13 @@ import z from 'zod'
 import { branded } from './branded'
 import { UnixTime } from './UnixTime'
 
-const ActivityChartPoint = z.tuple([
+export const ActivityChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
   z.number().int(),
 ])
 export type ActivityChartPoint = z.infer<typeof ActivityChartPoint>
 
-const ActivityChart = z.object({
+export const ActivityChart = z.object({
   types: z.tuple([z.literal('timestamp'), z.literal('daily tx count')]),
   data: z.array(ActivityChartPoint),
 })
