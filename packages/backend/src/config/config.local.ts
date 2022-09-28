@@ -40,5 +40,7 @@ export function getLocalConfig(): Config {
       'TRANSACTION_COUNT_ENABLED',
       false,
     ),
+    arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+    optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
   }
 }

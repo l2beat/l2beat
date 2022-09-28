@@ -27,4 +27,6 @@ export interface Config {
   freshStart: boolean
   eventsSyncEnabled: boolean
   transactionCountSyncEnabled: boolean
+  arbitrumAlchemyApiKey: string
+  optimismAlchemyApiKey: string
 }

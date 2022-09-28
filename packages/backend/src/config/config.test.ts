@@ -31,5 +31,7 @@ export function getTestConfig(): Config {
     freshStart: false,
     eventsSyncEnabled: false,
     transactionCountSyncEnabled: false,
+    arbitrumAlchemyApiKey: 'xXTestAlchemyKeyXx',
+    optimismAlchemyApiKey: 'xXTestAlchemyKeyXx',
   }
 }
