@@ -39,27 +39,15 @@ function getCompatibleApi(apiActivity: ApiActivity): Charts {
   return {
     hourly: {
       types: ['timestamp', 'tps', ''],
-      data: apiActivity.combined.data.map((d: number[]) => [
-        d[0],
-        getTps(d[1]),
-        0,
-      ]),
+      data: apiActivity.combined.data.map((d) => [d[0], getTps(d[1]), 0]),
     },
     sixHourly: {
       types: ['timestamp', 'tps', ''],
-      data: apiActivity.combined.data.map((d: number[]) => [
-        d[0],
-        getTps(d[1]),
-        0,
-      ]),
+      data: apiActivity.combined.data.map((d) => [d[0], getTps(d[1]), 0]),
     },
     daily: {
       types: ['timestamp', 'tps', ''],
-      data: apiActivity.combined.data.map((d: number[]) => [
-        d[0],
-        getTps(d[1]),
-        0,
-      ]),
+      data: apiActivity.combined.data.map((d) => [d[0], getTps(d[1]), 0]),
     },
   }
 }
