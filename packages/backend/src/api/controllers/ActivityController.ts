@@ -83,20 +83,15 @@ export class ActivityController {
   }
 
   private toProjectsActivity(
-    projectsCounts: ProjectActivity[],
-  ): Record<
-    string,
-    { data: [UnixTime, number][]; types: ['timestamp', 'daily tx count'] }
-  > {
-    return projectsCounts.reduce<ApiActivity['projects']>(
-      (acc, { projectId, counts }) => {
-        acc[projectId.toString()] = {
-          types: ['timestamp', 'daily tx count'],
-          data: counts.map((c) => [c.timestamp, c.count]),
-        }
-        return acc
-      },
-      {},
-    )
+    projectActivities: ProjectActivity[],
+  ): ApiActivity['projects'] {
+    const projects: ApiActivity['projects'] = {}
+    for (const { projectId, counts } of projectActivities) {
+      projects[projectId.toString()] = {
+        data: counts.map((c) => [c.timestamp, c.count]),
+        types: ['timestamp', 'daily tx count'],
+      }
+    }
+    return projects
   }
 }
