@@ -1,8 +1,8 @@
 import Router from '@koa/router'
 
-import { EventController } from '../controllers/events/EventController'
+import { EventsController } from '../controllers/events/EventsController'
 
-export function createEventRouter(eventController: EventController) {
+export function createEventsRouter(eventController: EventsController) {
   const router = new Router()
 
   router.get('/api/events', async (ctx) => {
