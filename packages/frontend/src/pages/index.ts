@@ -1,4 +1,4 @@
-import { ApiMain } from '@l2beat/types'
+import { ApiActivity, ApiMain } from '@l2beat/types'
 
 import { Config } from '../build/config'
 import { getBridgeProjectPages } from './bridges-projects'
@@ -14,12 +14,16 @@ import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
 
-export async function renderPages(config: Config, apiMain: ApiMain) {
+export async function renderPages(
+  config: Config,
+  apiMain: ApiMain,
+  apiActivity: ApiActivity,
+) {
   const pages: Page[] = []
 
   pages.push(getRiskPage(config, apiMain))
   pages.push(getTvlPage(config, apiMain))
-  pages.push(getActivityPage(config))
+  pages.push(getActivityPage(config, apiActivity))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, apiMain))

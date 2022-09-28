@@ -1,6 +1,12 @@
 import React from 'react'
 
-import { Footer, FooterProps, Header, NavbarProps } from '../../../components'
+import {
+  Chart,
+  Footer,
+  FooterProps,
+  Header,
+  NavbarProps,
+} from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -8,6 +14,9 @@ import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
+  tpsDaily: string
+  tpsWeeklyChange: string
+  apiEndpoint: string
   activityView: ActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -22,7 +31,12 @@ export function ActivityPage(props: ActivityPageProps) {
         selected="activity"
       />
       <main>
-        <Header title="Activity" />
+        <Header
+          title="Activity"
+          tpsDaily={props.tpsDaily}
+          tpsWeeklyChange={props.tpsWeeklyChange}
+        />
+        <Chart endpoint={props.apiEndpoint} hideControls></Chart>
         <ActivityView {...props.activityView} />
         <OtherSites />
         <About />
