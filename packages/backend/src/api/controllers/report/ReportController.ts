@@ -1,5 +1,11 @@
 import { Logger } from '@l2beat/common'
-import { ApiMain, AssetId, Chart, Charts, ProjectId } from '@l2beat/types'
+import {
+  ApiMain,
+  AssetId,
+  MainChart,
+  MainCharts,
+  ProjectId,
+} from '@l2beat/types'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { Token } from '../../../model'
@@ -68,7 +74,7 @@ export class ReportController {
   async getProjectAssetChart(
     projectId: ProjectId,
     assetId: AssetId,
-  ): Promise<Charts | undefined> {
+  ): Promise<MainCharts | undefined> {
     const project = this.projects.find((p) => p.projectId === projectId)
     const asset = this.tokens.find((t) => t.id === assetId)
     if (!project || !asset) {
@@ -91,7 +97,7 @@ export class ReportController {
       ),
       this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
     ])
-    const types: Chart['types'] = [
+    const types: MainChart['types'] = [
       'timestamp',
       asset.symbol.toLowerCase(),
       'usd',

@@ -62,10 +62,7 @@ export const sorare: Layer2 = {
   },
   technology: {
     provider: 'StarkEx',
-    category: {
-      name: 'Validium',
-      details: "Powered by StarkWare's StarkEx",
-    },
+    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

@@ -48,10 +48,7 @@ export const fuelv1: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS,
   },
   technology: {
-    category: {
-      name: 'Optimistic Rollup',
-      details: 'UTXO based',
-    },
+    category: 'Optimistic Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       references: [

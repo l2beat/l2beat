@@ -31,7 +31,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
         <Header
           title="Value locked"
           tvl={props.tvl}
-          sevenDayChange={props.sevenDayChange}
+          tvlWeeklyChange={props.sevenDayChange}
         />
         <Chart endpoint={props.apiEndpoint} />
         <ScalingTvlView {...props.tvlView} />

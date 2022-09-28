@@ -24,7 +24,11 @@ export const hyphen: Bridge = {
   technology: {
     type: 'Lock-Mint',
     destination: ['TODO', 'TODO', 'TODO'],
-    validation: 'Liquidity Network',
-    connections: [],
+  },
+  riskView: {
+    validation: {
+      value: 'Liquidity Network',
+      description: 'TODO',
+    },
   },
 }

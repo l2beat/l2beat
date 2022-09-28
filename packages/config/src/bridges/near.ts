@@ -32,9 +32,7 @@ export const near: Bridge = {
   technology: {
     canonical: true,
     type: 'Lock-Mint',
-    validation: 'LC Token Bridge',
     destination: ['Near', 'Aurora'],
-    connections: [],
   },
   riskView: {
     validation: {

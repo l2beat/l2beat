@@ -39,8 +39,12 @@ export const stargate: Bridge = {
   },
   technology: {
     type: 'Lock-Mint OR Swap',
-    validation: 'Liquidity Network',
     destination: ['TODO', 'TODO', 'TODO'],
-    connections: [],
+  },
+  riskView: {
+    validation: {
+      value: 'Liquidity Network',
+      description: 'TODO',
+    },
   },
 }

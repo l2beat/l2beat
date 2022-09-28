@@ -58,9 +58,7 @@ export const zkswap: Layer2 = {
   },
   technology: {
     provider: 'zkSync',
-    category: {
-      name: 'ZK Rollup',
-    },
+    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

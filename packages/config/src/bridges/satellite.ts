@@ -32,11 +32,9 @@ export const satellite: Bridge = {
     ],
   },
   technology: {
-    validation: 'EV Bridge',
     canonical: true,
     type: 'Lock-Mint OR Swap',
     destination: ['Multichain'],
-    connections: [{ network: 'Multichain', tokens: ['*'] }],
   },
   riskView: {
     validation: {

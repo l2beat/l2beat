@@ -52,9 +52,7 @@ export const layer2finance: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_NO_MECHANISM,
   },
   technology: {
-    category: {
-      name: 'Optimistic Rollup',
-    },
+    category: 'Optimistic Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       description:

@@ -23,7 +23,5 @@ export const gravity: Bridge = {
   technology: {
     type: 'Lock-Mint',
     destination: ['Cosmos'],
-    validation: 'Bridge',
-    connections: [],
   },
 }

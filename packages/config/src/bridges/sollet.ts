@@ -33,7 +33,11 @@ export const sollet: Bridge = {
   technology: {
     type: 'Lock-Mint',
     destination: ['Solana'],
-    validation: 'EV Token Bridge',
-    connections: [{ network: 'Solana', tokens: ['*'] }],
+  },
+  riskView: {
+    validation: {
+      value: 'External',
+      description: 'TODO',
+    },
   },
 }

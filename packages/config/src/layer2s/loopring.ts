@@ -67,9 +67,7 @@ export const loopring: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
   },
   technology: {
-    category: {
-      name: 'ZK Rollup',
-    },
+    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

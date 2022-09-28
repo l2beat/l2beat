@@ -26,7 +26,7 @@ export function MetaImage(props: MetaImageProps) {
         titleClassName={name.length > 12 ? '!text-5xl' : undefined}
         icon={props.icon}
         tvl={props.tvl}
-        sevenDayChange={props.sevenDayChange}
+        tvlWeeklyChange={props.sevenDayChange}
       />
       <Chart endpoint={props.apiEndpoint} days={30} />
       <Logo />

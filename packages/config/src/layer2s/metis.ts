@@ -83,9 +83,7 @@ export const metis: Layer2 = {
   },
   technology: {
     provider: 'Optimism',
-    category: {
-      name: 'Optimistic Chain',
-    },
+    category: 'Optimistic Chain',
     stateCorrectness: {
       name: 'No automatic on-chain fraud proof system',
       description:

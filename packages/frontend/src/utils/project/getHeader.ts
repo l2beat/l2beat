@@ -12,14 +12,14 @@ export function getHeader(
     apiMain.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
-  const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
+  const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
     titleLength: getTitleLength(project.display.name),
     tvl: formatUSD(tvl),
-    sevenDayChange,
+    tvlWeeklyChange,
   }
 }
 
