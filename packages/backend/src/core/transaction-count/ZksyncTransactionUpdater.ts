@@ -86,7 +86,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     const counts =
       await this.zksyncTransactionRepository.getDailyTransactionCount()
     return {
-      projectId: ProjectId('zksync'), // TODO: take from config
+      projectId: ProjectId.ZKSYNC,
       counts,
     }
   }
