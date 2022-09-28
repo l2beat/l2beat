@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/common'
 import { RpcTransactionApi } from '@l2beat/config'
+import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { Config } from '../config'
@@ -19,7 +20,8 @@ export function createRpcTransactionUpdaters(
     if (project.transactionApi?.type === 'rpc') {
       const l2Provider = createL2Provider(
         project.transactionApi,
-        config.alchemyApiKey,
+        project.projectId,
+        config,
       )
 
       const ethereumClient = new EthereumClient(
@@ -43,18 +45,28 @@ export function createRpcTransactionUpdaters(
   return rpcUpdaters
 }
 
-function createL2Provider(rpc: RpcTransactionApi, alchemyApiKey: string) {
-  switch (rpc.provider) {
-    case 'alchemy':
-      return new providers.AlchemyProvider(rpc.networkName, alchemyApiKey)
-
-    case 'jsonRpc':
-      return new providers.JsonRpcProvider({
-        url: rpc.url,
-        timeout: 10000,
-      })
-
-    default:
-      throw new Error('Unknown provider')
+function createL2Provider(
+  rpc: RpcTransactionApi,
+  projectId: ProjectId,
+  config: Config,
+) {
+  if (rpc.provider === 'jsonRpc') {
+    return new providers.JsonRpcProvider({
+      url: rpc.url,
+      timeout: 10000,
+    })
   }
+
+  let apiKey = ''
+  if (projectId === ProjectId('arbitrum')) {
+    apiKey = config.arbitrumAlchemyApiKey
+  }
+  if (projectId === ProjectId('optimism')) {
+    apiKey = config.optimismAlchemyApiKey
+  }
+  if (!apiKey) {
+    throw new Error('Please provide alchemy api key')
+  }
+
+  return new providers.AlchemyProvider(rpc.networkName, apiKey)
 }
