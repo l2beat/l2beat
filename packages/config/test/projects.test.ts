@@ -1,9 +1,66 @@
 import { EthereumAddress, ProjectId } from '@l2beat/types'
 import { expect } from 'earljs'
+import { utils } from 'ethers'
 
-import { bridges, layer2s } from '../src'
+import { bridges, getTokenBySymbol, layer2s } from '../src'
 
 describe('projects', () => {
+  describe('addresses', () => {
+    describe('every addresses is valid and formatted', () => {
+      const testAddress = (address: string) =>
+        it(address, () => {
+          expect(utils.getAddress(address)).toEqual(address)
+        })
+
+      describe('escrows', () => {
+        const escrows = [...layer2s, ...bridges].flatMap((x) =>
+          x.config.escrows.map((x) => x.address),
+        )
+        for (const address of escrows) {
+          testAddress(address)
+        }
+      })
+
+      describe('contracts', () => {
+        for (const project of [...layer2s, ...bridges]) {
+          const contracts = project.contracts?.addresses ?? []
+          for (const contract of contracts) {
+            testAddress(contract.address)
+            if (
+              contract.upgradeability?.type === 'EIP1967' ||
+              contract.upgradeability?.type === 'NutBerry' ||
+              contract.upgradeability?.type === 'ZeppelinOs'
+            ) {
+              testAddress(contract.upgradeability.admin)
+              testAddress(contract.upgradeability.implementation)
+            }
+            if (contract.upgradeability?.type === 'StarkWare') {
+              testAddress(contract.upgradeability.implementation)
+              if (contract.upgradeability.callImplementation) {
+                testAddress(contract.upgradeability.callImplementation)
+              }
+            }
+          }
+        }
+      })
+    })
+  })
+
+  describe('every token is valid', () => {
+    const symbols = [...layer2s, ...bridges]
+      .flatMap((x) =>
+        x.config.escrows
+          .filter((x) => x.tokens !== '*')
+          .flatMap((x) => x.tokens),
+      )
+      .filter((x, i, a) => a.indexOf(x) === i)
+    for (const symbol of symbols) {
+      it(symbol, () => {
+        expect(() => getTokenBySymbol(symbol)).not.toThrow()
+      })
+    }
+  })
+
   describe('every slug is valid', () => {
     for (const project of [...layer2s, ...bridges]) {
       it(project.display.slug, () => {
@@ -47,5 +104,101 @@ describe('projects', () => {
         })
       }
     }
+  })
+
+  describe('contracts', () => {
+    for (const project of [...layer2s, ...bridges]) {
+      describe(project.display.name, () => {
+        for (const [i, contract] of project.contracts?.addresses.entries() ??
+          []) {
+          const description = contract.description
+          if (description) {
+            it(`contracts[${i}].description ends with a dot`, () => {
+              expect(description.endsWith('.')).toEqual(true)
+            })
+          }
+        }
+
+        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
+          it(`contracts.risks[${i}] is correctly formatted`, () => {
+            expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
+          })
+        }
+      })
+    }
+  })
+
+  describe('links', () => {
+    describe('every project has at least one website link', () => {
+      for (const project of [...layer2s, ...bridges]) {
+        if (project.display.links.websites) {
+          it(project.display.name, () => {
+            expect(project.display.links.websites?.length).toBeGreaterThan(0)
+          })
+        }
+      }
+    })
+
+    describe('every link is https', () => {
+      const links = [...layer2s, ...bridges].flatMap((x) =>
+        (Object.values(x.display.links) as string[]).flat(),
+      )
+      for (const link of links) {
+        it(link, () => {
+          expect(link).toEqual(expect.stringMatching(/^https:\/\//))
+        })
+      }
+    })
+
+    describe('social media links are properly formatted', () => {
+      const links = [...layer2s, ...bridges].flatMap(
+        (x) => x.display.links.socialMedia ?? [],
+      )
+      for (const link of links) {
+        it(link, () => {
+          if (link.includes('discord')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/discord\.gg\/\w+$/),
+            )
+          } else if (link.includes('t.me')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/t\.me\/\w+$/),
+            )
+          } else if (link.includes('medium')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/medium\.com\/[@\w-]+$/),
+            )
+          } else if (link.includes('twitter')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/twitter\.com\/[\w-]+$/),
+            )
+          } else if (link.includes('reddit')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/),
+            )
+          } else if (link.includes('youtube')) {
+            if (!link.includes('playlist')) {
+              expect(link).toEqual(
+                expect.stringMatching(
+                  /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/,
+                ),
+              )
+            }
+          } else if (link.includes('twitch')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/twitch\.tv\/[\w-]+$/),
+            )
+          } else if (link.includes('gitter')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/gitter\.im\/[\w-/]+$/),
+            )
+          } else if (link.includes('instagram')) {
+            expect(link).toEqual(
+              expect.stringMatching(/^https:\/\/instagram\.com\/[\w-/]+$/),
+            )
+          }
+        })
+      }
+    })
   })
 })

@@ -33,8 +33,12 @@ export const polynetwork: Bridge = {
   },
   technology: {
     type: 'Lock-Mint OR Swap',
-    validation: 'LC Token Bridge',
     destination: ['TODO', 'TODO', 'TODO'],
-    connections: [],
+  },
+  riskView: {
+    validation: {
+      value: 'LC Token Bridge',
+      description: 'TODO',
+    },
   },
 }

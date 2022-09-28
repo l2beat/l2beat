@@ -31,10 +31,8 @@ export const orbit: Bridge = {
   },
   technology: {
     type: 'Lock-Mint',
-    validation: 'Liquidity Network',
     //TODO: Originally for KLAYTN, Orbit Bridge now supports multiple chains and has Liquidity Network
     destination: ['KLAYTN'], //TODO: add more chains
-    connections: [],
   },
   riskView: {
     validation: {

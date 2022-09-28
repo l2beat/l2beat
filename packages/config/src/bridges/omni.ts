@@ -34,8 +34,12 @@ export const omni: Bridge = {
   },
   technology: {
     type: 'Lock-Mint',
-    validation: 'Native Bridge',
     destination: ['Gnosis Chain'],
-    connections: [],
+  },
+  riskView: {
+    validation: {
+      value: 'Native Bridge',
+      description: 'TODO',
+    },
   },
 }

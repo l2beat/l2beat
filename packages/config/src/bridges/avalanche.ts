@@ -62,11 +62,9 @@ export const avalanche: Bridge = {
     ],
   },
   technology: {
-    validation: 'EV Bridge',
     canonical: true,
     type: 'Lock-Mint',
     destination: ['Avalanche'],
-    connections: [{ network: 'Avalanche', tokens: ['*'] }],
   },
   riskView: {
     validation: {

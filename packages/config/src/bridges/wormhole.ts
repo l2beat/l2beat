@@ -39,8 +39,6 @@ export const wormhole: Bridge = {
     type: 'Lock-Mint',
     destination: ['TODO', 'TODO', 'TODO'],
     canonical: true,
-    validation: 'Native Bridge',
-    connections: [{ network: 'Solana', tokens: ['*'] }],
   },
   riskView: {
     validation: {
