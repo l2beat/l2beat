@@ -8,7 +8,9 @@ import { withTypedContext } from './types'
 export function createTvlRouter(reportController: TvlController) {
   const router = new Router()
 
-  router.get('/api/main', async (ctx) => {
+  // /api/main is here for backwards-compatibility
+  // remove once frontend builder is not using /api/main anymore
+  router.get(['/api/main', '/api/tvl'], async (ctx) => {
     const data = await reportController.getTvlResponse()
     if (!data) {
       ctx.status = 404
