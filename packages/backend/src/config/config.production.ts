@@ -39,5 +39,7 @@ export function getProductionConfig(): Config {
     freshStart: false,
     eventsSyncEnabled: false,
     transactionCountSyncEnabled: false,
+    arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+    optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
   }
 }
