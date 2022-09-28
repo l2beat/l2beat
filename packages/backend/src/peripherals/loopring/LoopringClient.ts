@@ -1,0 +1,69 @@
+import {
+  getErrorMessage,
+  HttpClient,
+  Logger,
+  RateLimiter,
+} from '@l2beat/common'
+
+import { LoopringResponse } from './schemas'
+
+type Block = number | 'finalized'
+
+export class LoopringClient {
+  constructor(private httpClient: HttpClient, private logger: Logger) {
+    this.logger = logger.for(this)
+    const rateLimiter = new RateLimiter({
+      callsPerMinute: 3000,
+    })
+    this.getBlock = rateLimiter.wrap(this.getBlock.bind(this))
+  }
+
+  async getBlock(block: Block) {
+    const query = new URLSearchParams({ id: block.toString() })
+    const url = `https://api3.loopring.io/api/v3/block/getBlock?${query.toString()}`
+
+    const start = Date.now()
+    const { httpResponse, error } = await this.httpClient
+      .fetch(url, { timeout: 10_000 })
+      .then(
+        (httpResponse) => ({ httpResponse, error: undefined }),
+        (error: unknown) => ({ httpResponse: undefined, error }),
+      )
+    const timeMs = Date.now() - start
+
+    if (!httpResponse) {
+      const message = getErrorMessage(error)
+      this.recordError(block, timeMs, message)
+      throw error
+    }
+
+    const text = await httpResponse.text()
+
+    if (!httpResponse.ok) {
+      this.recordError(block, timeMs, text)
+      throw new Error(`Http error ${httpResponse.status}: ${text}`)
+    }
+
+    const json: unknown = JSON.parse(text)
+    const loopringResponse = LoopringResponse.safeParse(json)
+
+    if (!loopringResponse.success) {
+      const message = 'Invalid Loopring response.'
+      this.recordError(block, timeMs, message)
+      throw new TypeError(message)
+    }
+
+    this.logger.debug({ type: 'success', timeMs, block: block.toString() })
+
+    return loopringResponse.data
+  }
+
+  private recordError(block: Block, timeMs: number, message: string) {
+    this.logger.debug({
+      type: 'error',
+      message,
+      timeMs,
+      block: block.toString(),
+    })
+  }
+}
