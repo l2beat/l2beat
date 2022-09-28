@@ -19,21 +19,21 @@ async function main() {
     config.backend.apiUrl,
     config.backend.skipCache,
   )
-  const apiActivity = await fetchApiActivity(config.backend.apiUrl)
+  const activityApiResponse = await fetchApiActivity(config.backend.apiUrl)
 
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
 
-  createApi(config, tvlApiResponse, apiActivity)
-  await renderPages(config, tvlApiResponse, apiActivity)
+  createApi(config, tvlApiResponse, activityApiResponse)
+  await renderPages(config, tvlApiResponse, activityApiResponse)
 }
 
-function printApiInfo(apiMain: TvlApiResponse) {
-  print('combined', apiMain.combined)
-  print('layer2s', apiMain.layers2s)
-  print('bridges', apiMain.bridges)
+function printApiInfo(tvlApiResponse: TvlApiResponse) {
+  print('combined', tvlApiResponse.combined)
+  print('layer2s', tvlApiResponse.layers2s)
+  print('bridges', tvlApiResponse.bridges)
   for (const project of [...layer2s, ...bridges]) {
-    const charts = apiMain.projects[project.id.toString()]?.charts
+    const charts = tvlApiResponse.projects[project.id.toString()]?.charts
     if (charts) {
       print(project.id.toString(), charts)
     } else {
@@ -57,8 +57,8 @@ function printApiInfo(apiMain: TvlApiResponse) {
   }
 }
 
-function sanityCheck(apiMain: TvlApiResponse) {
-  const projectsInApi = Object.keys(apiMain.projects).map(ProjectId)
+function sanityCheck(tvlApiResponse: TvlApiResponse) {
+  const projectsInApi = Object.keys(tvlApiResponse.projects).map(ProjectId)
 
   const bridgesInApi = bridges.filter((x) => projectsInApi.includes(x.id))
   const layer2sInApi = layer2s.filter((x) => projectsInApi.includes(x.id))
@@ -72,10 +72,10 @@ function sanityCheck(apiMain: TvlApiResponse) {
   }
 
   const emptyChartsExist = [
-    apiMain.bridges,
-    apiMain.layers2s,
-    apiMain.combined,
-    ...Object.values(apiMain.projects).map((x) => x?.charts),
+    tvlApiResponse.bridges,
+    tvlApiResponse.layers2s,
+    tvlApiResponse.combined,
+    ...Object.values(tvlApiResponse.projects).map((x) => x?.charts),
   ]
     .flatMap((x) => [x?.daily, x?.sixHourly, x?.hourly])
     .some((x) => x?.data.length === 0)

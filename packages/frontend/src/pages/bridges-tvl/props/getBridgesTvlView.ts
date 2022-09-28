@@ -15,11 +15,11 @@ export function getBridgesTvlView(
 
 function getBridgesTvlViewEntry(
   project: Bridge,
-  apiMain: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
 ): BridgesTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
-  const apiProject = apiMain.projects[project.id.toString()]
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
   if (!apiProject) {
     throw new Error(`Project ${project.display.name} is missing in api`)
   }

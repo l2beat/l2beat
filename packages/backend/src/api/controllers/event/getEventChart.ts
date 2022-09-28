@@ -1,11 +1,11 @@
-import { EventsApiChart, EventsApiChartPoint, UnixTime } from '@l2beat/types'
+import { EventApiChart, EventApiChartPoint, UnixTime } from '@l2beat/types'
 
 import { AggregatedEventRecord } from '../../../peripherals/database/EventRepository'
 
 export function getEventChart(
   records: AggregatedEventRecord[],
   eventNames: string[],
-): EventsApiChart {
+): EventApiChart {
   const entries: Record<number, Record<string, number> | undefined> = {}
 
   for (const { timestamp, name, count } of records) {
@@ -14,7 +14,7 @@ export function getEventChart(
     entries[timestamp.toNumber()] = entry
   }
 
-  const data: EventsApiChartPoint[] = []
+  const data: EventApiChartPoint[] = []
 
   for (const key in entries) {
     data.push([

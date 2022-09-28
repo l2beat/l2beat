@@ -1,3 +1,3 @@
 export * from './ActivityApi'
-export * from './EventsApi'
+export * from './EventApi'
 export * from './TvlApi'
