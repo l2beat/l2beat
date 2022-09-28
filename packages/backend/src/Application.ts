@@ -101,12 +101,14 @@ export class Application {
       logger,
     )
 
-    const starkexClient = new StarkexClient(
-      config.starkexApiUrl,
-      config.starkexApiKey,
-      http,
-      logger,
-    )
+    const starkexClient =
+      config.transactionCountSync &&
+      new StarkexClient(
+        config.transactionCountSync.starkexApiUrl,
+        config.transactionCountSync.starkexApiKey,
+        http,
+        logger,
+      )
 
     const zksyncClient = new ZksyncClient(http, logger)
 
@@ -163,27 +165,33 @@ export class Application {
       logger,
     )
 
-    const rpcTransactionUpdaters = createRpcTransactionUpdaters(
-      config,
-      rpcTransactionCountRepository,
-      clock,
-      logger,
-    )
+    const rpcTransactionUpdaters =
+      config.transactionCountSync &&
+      createRpcTransactionUpdaters(
+        config,
+        rpcTransactionCountRepository,
+        clock,
+        logger,
+      )
 
-    const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
-      config,
-      starkexTransactionCountRepository,
-      starkexClient,
-      clock,
-      logger,
-    )
+    const starkexTransactionUpdaters =
+      config.transactionCountSync &&
+      createStarkexTransactionUpdaters(
+        config,
+        starkexTransactionCountRepository,
+        starkexClient!,
+        clock,
+        logger,
+      )
 
-    const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-      zksyncClient,
-      zksyncTransactionRepository,
-      clock,
-      logger,
-    )
+    const zksyncTransactionUpdater =
+      config.transactionCountSync &&
+      new ZksyncTransactionUpdater(
+        zksyncClient,
+        zksyncTransactionRepository,
+        clock,
+        logger,
+      )
 
     // #endregion
     // #region api
@@ -247,14 +255,14 @@ export class Application {
         await balanceUpdater.start()
         await reportUpdater.start()
 
-        if (config.transactionCountSyncEnabled) {
-          for (const updater of rpcTransactionUpdaters) {
+        if (config.transactionCountSync) {
+          for (const updater of rpcTransactionUpdaters!) {
             updater.start()
           }
-          for (const updater of starkexTransactionUpdaters) {
+          for (const updater of starkexTransactionUpdaters!) {
             updater.start()
           }
-          zksyncTransactionUpdater.start()
+          zksyncTransactionUpdater!.start()
         }
 
         if (config.eventsSyncEnabled) {

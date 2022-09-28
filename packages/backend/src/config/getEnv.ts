@@ -49,3 +49,9 @@ getEnv.boolean = function getBooleanFromEnv(
   }
   throw new Error(`Missing environment variable ${name}!`)
 }
+
+getEnv.featureFlag = function getFeatureFlagFromEnv(
+  name: string,
+): true | undefined {
+  return getEnv.boolean(name, false) || undefined
+}
