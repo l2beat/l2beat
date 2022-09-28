@@ -2,8 +2,9 @@ import { bridges, layer2s } from '@l2beat/config'
 import { ApiMain, ProjectId } from '@l2beat/types'
 
 import { renderPages } from '../pages'
-import { createApi } from './api'
-import { getApiMain } from './ApiMain'
+import { getConfig } from './config'
+import { createApi } from './createApi'
+import { fetchApiMain } from './fetchApiMain'
 
 main().catch((e) => {
   console.error(e)
@@ -11,22 +12,18 @@ main().catch((e) => {
 })
 
 async function main() {
-  const apiUrl = process.env.API_URL ?? 'https://api.l2beat.com'
-  const skipCache = !!process.env.SKIP_CACHE
-  const apiMain = await getApiMain(apiUrl, skipCache)
+  const env = process.env.DEPLOYMENT_ENV ?? 'production'
+  const config = getConfig(env)
+  const apiMain = await fetchApiMain(
+    config.backend.apiUrl,
+    config.backend.skipCache,
+  )
 
   printApiInfo(apiMain)
   sanityCheck(apiMain)
 
-  const includedLayer2s = layer2s.filter(
-    (p) => !!apiMain.projects[p.id.toString()],
-  )
-  const includedBridges = bridges.filter(
-    (p) => !!apiMain.projects[p.id.toString()],
-  )
-  createApi([...includedLayer2s, ...includedBridges], apiMain)
-
-  await renderPages(includedLayer2s, includedBridges, apiMain)
+  createApi(config, apiMain)
+  await renderPages(config, apiMain)
 }
 
 function printApiInfo(apiMain: ApiMain) {

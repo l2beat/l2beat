@@ -20,11 +20,11 @@ export interface BridgesTvlViewEntry {
   type: string
 }
 
-export function TvlView({ items }: BridgesTvlViewProps) {
+export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const columns: Column<BridgesTvlViewEntry>[] = [
     {
       name: 'Name',
-      getValue: (entry) => <ProjectLink type="layer2" project={entry} />,
+      getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
     },
     {
       name: 'TVL',

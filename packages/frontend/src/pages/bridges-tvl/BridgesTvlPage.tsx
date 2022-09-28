@@ -1,25 +1,43 @@
 import React from 'react'
 
-import { Footer, Header } from '../../components'
+import {
+  Chart,
+  Footer,
+  FooterProps,
+  Header,
+  NavbarProps,
+} from '../../components'
 import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
-import { BridgesTvlViewProps, TvlView } from './BridgesTvlView'
+import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
 
-export type BridgesTvlPageProps = BridgesTvlViewProps
+export interface BridgesTvlPageProps {
+  tvl: string
+  sevenDayChange: string
+  apiEndpoint: string
+  tvlView: BridgesTvlViewProps
+  footer: FooterProps
+  navbar: NavbarProps
+}
 
 export function BridgesTvlPage(props: BridgesTvlPageProps) {
   return (
-    <Page>
+    <Page navbar={props.navbar}>
       <BridgesPageSelection selected="tvl" />
       <main>
-        <Header title="Value locked" />
-        <TvlView {...props} />
+        <Header
+          title="Value locked"
+          tvl={props.tvl}
+          sevenDayChange={props.sevenDayChange}
+        />
+        <Chart endpoint={props.apiEndpoint} />
+        <BridgesTvlView {...props.tvlView} />
         <OtherSites />
         <About />
       </main>
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

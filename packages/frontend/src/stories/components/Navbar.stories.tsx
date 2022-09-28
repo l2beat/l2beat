@@ -13,5 +13,18 @@ export function Navbar() {
     configureDarkThemeToggle()
     configureSidebarMenu()
   }, [])
-  return <NavbarComponent />
+  return (
+    <NavbarComponent
+      showBanner={false}
+      forumLink="#"
+      uglyBridgesScalingSwitch={false}
+      socialLinks={{
+        discordLink: '#',
+        githubLink: '#',
+        mediumLink: '#',
+        twitterLink: '#',
+        youTubeLink: '#',
+      }}
+    />
+  )
 }

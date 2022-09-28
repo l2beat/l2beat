@@ -17,7 +17,9 @@ async function main() {
 
   const slugs = layer2s.map((x) => x.display.slug).concat('overview')
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox'],
+  })
   await Promise.all(slugs.map(screenshot))
 
   async function screenshot(slug: string) {

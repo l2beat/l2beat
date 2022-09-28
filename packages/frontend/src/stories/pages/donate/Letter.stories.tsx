@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Page } from '../../../components/Page'
+import { PageContent } from '../../../components/PageContent'
 import { DonateLetter } from '../../../pages/donate/DonateLetter'
 
 export default {
@@ -9,8 +9,8 @@ export default {
 
 export function Letter() {
   return (
-    <Page>
+    <PageContent>
       <DonateLetter />
-    </Page>
+    </PageContent>
   )
 }

@@ -54,7 +54,7 @@ export class RpcTransactionUpdater {
       count: block.transactions.length,
     })
 
-    this.logger.info('Block updated', {
+    this.logger.debug('Block updated', {
       project: this.projectId.toString(),
       blockNumber: block.number,
     })

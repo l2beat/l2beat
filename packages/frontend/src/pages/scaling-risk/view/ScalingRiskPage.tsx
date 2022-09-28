@@ -5,25 +5,22 @@ import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
 import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
-import { ActivityView, ActivityViewProps } from './ActivityView'
+import { ScalingRiskView, ScalingRiskViewProps } from './ScalingRiskView'
 
-export interface ActivityPageProps {
-  activityView: ActivityViewProps
-  footer: FooterProps
+export interface ScalingRiskPageProps {
+  riskView: ScalingRiskViewProps
   navbar: NavbarProps
+  footer: FooterProps
   showActivity: boolean
 }
 
-export function ActivityPage(props: ActivityPageProps) {
+export function ScalingRiskPage(props: ScalingRiskPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <ScalingPageSelection
-        showActivity={props.showActivity}
-        selected="activity"
-      />
+      <ScalingPageSelection showActivity={props.showActivity} selected="risk" />
       <main>
-        <Header title="Activity" />
-        <ActivityView {...props.activityView} />
+        <Header title="Risk Analysis" />
+        <ScalingRiskView {...props.riskView} />
         <OtherSites />
         <About />
       </main>

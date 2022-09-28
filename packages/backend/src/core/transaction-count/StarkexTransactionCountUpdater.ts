@@ -44,7 +44,7 @@ export class StarkexTransactionCountUpdater {
       count,
     })
 
-    this.logger.info('Day updated', {
+    this.logger.debug('Day updated', {
       projectId: this.projectId.toString(),
       day,
       count,

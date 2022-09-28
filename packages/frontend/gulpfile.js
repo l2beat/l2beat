@@ -74,7 +74,12 @@ function serve() {
   app.use(
     '/api/projects',
     createProxyMiddleware({
-      target: process.env.API_URL ?? 'https://api.l2beat.com',
+      target:
+        process.env.DEPLOYMENT_ENV === 'local'
+          ? 'http://localhost:3000'
+          : process.env.DEPLOYMENT_ENV === 'staging'
+          ? 'https://staging.l2beat.com'
+          : 'https://api.l2beat.com',
       changeOrigin: true,
     }),
   )

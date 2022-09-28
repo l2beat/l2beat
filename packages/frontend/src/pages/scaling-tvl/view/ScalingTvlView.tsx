@@ -16,11 +16,11 @@ import {
 } from '../../../components/TVLBreakdown'
 import { FinancialCell } from './FinancialCell'
 
-export interface FinancialViewProps {
-  items: FinancialViewEntry[]
+export interface ScalingTvlViewProps {
+  items: ScalingTvlViewEntry[]
 }
 
-export interface FinancialViewEntry {
+export interface ScalingTvlViewEntry {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
@@ -36,8 +36,8 @@ export interface FinancialViewEntry {
   }
 }
 
-export function FinancialView({ items }: FinancialViewProps) {
-  const columns: Column<FinancialViewEntry>[] = [
+export function ScalingTvlView({ items }: ScalingTvlViewProps) {
+  const columns: Column<ScalingTvlViewEntry>[] = [
     {
       name: 'Name',
       getValue: (project) => <ProjectLink type="layer2" project={project} />,

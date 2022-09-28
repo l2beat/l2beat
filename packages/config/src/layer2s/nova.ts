@@ -59,6 +59,7 @@ export const nova: Layer2 = {
       type: 'rpc',
       provider: 'jsonRpc',
       url: 'https://nova.arbitrum.io/rpc',
+      callsPerMinute: 200,
     },
   },
   riskView: {

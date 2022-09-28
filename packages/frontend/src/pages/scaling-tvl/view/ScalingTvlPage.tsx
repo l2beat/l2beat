@@ -1,23 +1,32 @@
 import React from 'react'
 
-import { Chart, Footer, Header } from '../../../components'
+import {
+  Chart,
+  Footer,
+  FooterProps,
+  Header,
+  NavbarProps,
+} from '../../../components'
 import { About } from '../../../components/About'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
 import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
-import { FinancialView, FinancialViewProps } from './FinancialView'
+import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
   tvl: string
   sevenDayChange: string
   apiEndpoint: string
-  financialView: FinancialViewProps
+  tvlView: ScalingTvlViewProps
+  navbar: NavbarProps
+  footer: FooterProps
+  showActivity: boolean
 }
 
-export function TvlPage(props: TvlPageProps) {
+export function ScalingTvlPage(props: TvlPageProps) {
   return (
-    <Page>
-      <ScalingPageSelection selected="tvl" />
+    <Page navbar={props.navbar}>
+      <ScalingPageSelection showActivity={props.showActivity} selected="tvl" />
       <main>
         <Header
           title="Value locked"
@@ -25,11 +34,11 @@ export function TvlPage(props: TvlPageProps) {
           sevenDayChange={props.sevenDayChange}
         />
         <Chart endpoint={props.apiEndpoint} />
-        <FinancialView {...props.financialView} />
+        <ScalingTvlView {...props.tvlView} />
         <OtherSites />
         <About />
       </main>
-      <Footer />
+      <Footer {...props.footer} />
     </Page>
   )
 }

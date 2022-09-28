@@ -15,7 +15,6 @@ export function getStagingConfig(): Config {
       ...(productionConfig.databaseConnection as Knex.PgConnectionConfig),
       application_name: name,
     },
-    eventsSyncEnabled: true,
     transactionCountSyncEnabled: true,
   }
 }
