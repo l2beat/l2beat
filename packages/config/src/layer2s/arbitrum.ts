@@ -117,9 +117,7 @@ export const arbitrum: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
   },
   technology: {
-    category: {
-      name: 'Optimistic Rollup',
-    },
+    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:

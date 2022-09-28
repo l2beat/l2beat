@@ -75,9 +75,7 @@ export const nova: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
   },
   technology: {
-    category: {
-      name: 'Optimistic Chain',
-    },
+    category: 'Optimistic Chain',
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
