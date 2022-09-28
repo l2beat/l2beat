@@ -30,6 +30,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getPageMetadata(),
+      preloadApi: '/api/scaling-activity.json',
     },
   }
 }

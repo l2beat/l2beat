@@ -17,6 +17,6 @@ export type ActivityChart = z.infer<typeof ActivityChart>
 
 export const ApiActivity = z.object({
   combined: ActivityChart,
-  projects: z.record(z.string(), ActivityChart),
+  projects: z.record(z.string(), z.optional(ActivityChart)),
 })
 export type ApiActivity = z.infer<typeof ApiActivity>

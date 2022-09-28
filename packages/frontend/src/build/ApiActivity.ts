@@ -1,7 +1,7 @@
 import { HttpClient } from '@l2beat/common'
 import { ApiActivity, UnixTime } from '@l2beat/types'
 
-export async function getApiActivity(apiUrl: string): Promise<ApiActivity> {
+export async function fetchApiActivity(apiUrl: string): Promise<ApiActivity> {
   const url = apiUrl + '/api/activity'
 
   const http = new HttpClient()
