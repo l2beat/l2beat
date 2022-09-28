@@ -174,7 +174,7 @@ export class Application {
 
     const blocksController = new BlocksController(blockNumberRepository)
 
-    const reportController = new TvlController(
+    const tvlController = new TvlController(
       reportStatusRepository,
       aggregateReportRepository,
       reportRepository,
@@ -208,7 +208,7 @@ export class Application {
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
-      createTvlRouter(reportController),
+      createTvlRouter(tvlController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
       createEventsRouter(eventController),
