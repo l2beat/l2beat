@@ -8,94 +8,66 @@ import {
 import { expect } from 'earljs'
 
 import { ActivityController } from '../../../src/api/controllers/ActivityController'
-import { Project } from '../../../src/model'
-import { RpcTransactionCountRepository } from '../../../src/peripherals/database/RpcTransactionCountRepository'
-import { StarkexTransactionCountRepository } from '../../../src/peripherals/database/StarkexTransactionCountRepository'
-
-const DYDX: Pick<Project, 'projectId' | 'transactionApi'> = {
-  projectId: ProjectId('dydx'),
-  transactionApi: {
-    type: 'starkex',
-    product: 'dydx',
-    sinceTimestamp: new UnixTime(0),
-  },
-}
+import { RpcTransactionUpdater } from '../../../src/core/transaction-count/RpcTransactionUpdater'
+import { StarkexTransactionCountUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
+import { ZksyncTransactionUpdater } from '../../../src/core/transaction-count/ZksyncTransactionUpdater'
 
 describe(ActivityController.name, () => {
   it('returns empty if no projects track activity', async () => {
-    const controller = new ActivityController(
-      [],
-      mock<RpcTransactionCountRepository>(),
-      mock<StarkexTransactionCountRepository>(),
-    )
+    const controller = new ActivityController([])
     expect(await controller.getTransactionActivity()).toEqual(
       formatActivity({ combined: [], projects: {} }),
     )
   })
 
-  it('favors config over database', async () => {
-    const controller = new ActivityController(
-      [DYDX],
-      mock<RpcTransactionCountRepository>({
-        async getDailyTransactionCount(_projectId) {
-          return [{ count: 1, timestamp: new UnixTime(0) }]
-        },
-      }),
-      mock<StarkexTransactionCountRepository>({
-        async getDailyTransactionCount(_projectId) {
-          return [{ count: 1, timestamp: new UnixTime(0) }]
-        },
-      }),
-    )
-    expect(await controller.getTransactionActivity()).toEqual(
-      formatActivity({
-        combined: [[new UnixTime(0), 1]],
-        projects: { dydx: [[new UnixTime(0), 1]] },
-      }),
-    )
-  })
-
   it('groups data', async () => {
-    const controller = new ActivityController(
-      [
-        DYDX,
-        {
-          projectId: ProjectId('optimism'),
-          transactionApi: {
-            type: 'rpc',
-            provider: 'jsonRpc',
-            url: '',
-            callsPerMinute: 100,
-          },
-        },
-      ],
-      mock<RpcTransactionCountRepository>({
-        async getDailyTransactionCount(_projectId) {
-          return [
-            { count: 1, timestamp: new UnixTime(0).add(1, 'days') },
-            { count: 2, timestamp: new UnixTime(0).add(2, 'days') },
-            { count: 3, timestamp: new UnixTime(0).add(3, 'days') },
-          ]
+    const controller = new ActivityController([
+      mock<RpcTransactionUpdater>({
+        async getDailyTransactionCounts() {
+          return {
+            projectId: ProjectId('optimism'),
+            counts: [
+              { count: 1, timestamp: new UnixTime(0).add(1, 'days') },
+              { count: 2, timestamp: new UnixTime(0).add(2, 'days') },
+              { count: 3, timestamp: new UnixTime(0).add(3, 'days') },
+            ],
+          }
         },
       }),
-      mock<StarkexTransactionCountRepository>({
-        async getDailyTransactionCount(_projectId) {
-          return [
-            { count: 4, timestamp: new UnixTime(0) },
-            { count: 5, timestamp: new UnixTime(0).add(1, 'days') },
-            { count: 6, timestamp: new UnixTime(0).add(2, 'days') },
-          ]
+      mock<StarkexTransactionCountUpdater>({
+        async getDailyTransactionCounts() {
+          return {
+            projectId: ProjectId('dydx'),
+            counts: [
+              { count: 4, timestamp: new UnixTime(0) },
+              { count: 5, timestamp: new UnixTime(0).add(1, 'days') },
+              { count: 6, timestamp: new UnixTime(0).add(2, 'days') },
+            ],
+          }
         },
       }),
-    )
+      mock<ZksyncTransactionUpdater>({
+        async getDailyTransactionCounts() {
+          return {
+            projectId: ProjectId('zksync'),
+            counts: [
+              { count: 7, timestamp: new UnixTime(0).add(2, 'days') },
+              { count: 8, timestamp: new UnixTime(0).add(3, 'days') },
+              { count: 9, timestamp: new UnixTime(0).add(4, 'days') },
+            ],
+          }
+        },
+      }),
+    ])
 
     expect(await controller.getTransactionActivity()).toEqual(
       formatActivity({
         combined: [
           [new UnixTime(0), 4],
           [new UnixTime(0).add(1, 'days'), 6],
-          [new UnixTime(0).add(2, 'days'), 8],
-          [new UnixTime(0).add(3, 'days'), 3],
+          [new UnixTime(0).add(2, 'days'), 15],
+          [new UnixTime(0).add(3, 'days'), 11],
+          [new UnixTime(0).add(4, 'days'), 9],
         ],
         projects: {
           dydx: [
@@ -107,6 +79,11 @@ describe(ActivityController.name, () => {
             [new UnixTime(0).add(1, 'days'), 1],
             [new UnixTime(0).add(2, 'days'), 2],
             [new UnixTime(0).add(3, 'days'), 3],
+          ],
+          zksync: [
+            [new UnixTime(0).add(2, 'days'), 7],
+            [new UnixTime(0).add(3, 'days'), 8],
+            [new UnixTime(0).add(4, 'days'), 9],
           ],
         },
       }),

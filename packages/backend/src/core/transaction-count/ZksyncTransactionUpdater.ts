@@ -1,4 +1,5 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 
 import {
   ZksyncTransactionRecord,
@@ -6,8 +7,9 @@ import {
 } from '../../peripherals/database/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../peripherals/zksync'
 import { Clock } from '../Clock'
+import { TransactionCounter } from './TransactionCounter'
 
-export class ZksyncTransactionUpdater {
+export class ZksyncTransactionUpdater implements TransactionCounter {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
@@ -78,5 +80,14 @@ export class ZksyncTransactionUpdater {
     }
 
     this.logger.info('Update enqueued')
+  }
+
+  async getDailyTransactionCounts() {
+    const counts =
+      await this.zksyncTransactionRepository.getDailyTransactionCount()
+    return {
+      projectId: ProjectId.ZKSYNC,
+      counts,
+    }
   }
 }
