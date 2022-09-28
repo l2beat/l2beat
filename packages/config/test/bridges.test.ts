@@ -1,5 +1,11 @@
 import { expect } from 'earljs'
-import { bridges, BridgeTechnology, ProjectRisk, ProjectTechnologyChoice } from '../src'
+
+import {
+  bridges,
+  BridgeTechnology,
+  ProjectRisk,
+  ProjectTechnologyChoice,
+} from '../src'
 
 describe('bridges', () => {
   describe('technology', () => {
@@ -12,11 +18,7 @@ describe('bridges', () => {
 
         function check(key: Key) {
           const item = bridge.technology[key]
-          if (Array.isArray(item)) {
-            for (const [i, x] of item.entries()) {
-              checkChoice(x, `${key}[${i}]`)
-            }
-          } else if (item) {
+          if (item) {
             checkChoice(item, key)
           }
         }
