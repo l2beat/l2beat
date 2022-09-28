@@ -59,7 +59,7 @@ function createL2Provider(
 
   let apiKey = ''
   if (projectId === ProjectId('arbitrum')) {
-    apiKey = config.optimismAlchemyApiKey
+    apiKey = config.arbitrumAlchemyApiKey
   }
   if (projectId === ProjectId('optimism')) {
     apiKey = config.optimismAlchemyApiKey
