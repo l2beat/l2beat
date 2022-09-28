@@ -28,9 +28,7 @@ export const ronin: Bridge = {
   },
   technology: {
     type: 'Lock-Mint',
-    validation: 'EV Token Bridge',
     destination: ['Axie Infinity Chain'],
-    connections: [],
   },
   riskView: {
     validation: {

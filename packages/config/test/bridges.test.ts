@@ -1,39 +1,53 @@
 import { expect } from 'earljs'
-import { utils } from 'ethers'
 
-import { bridges } from '../src/bridges'
-import { getTokenBySymbol } from '../src/tokens'
+import {
+  bridges,
+  BridgeTechnology,
+  ProjectRisk,
+  ProjectTechnologyChoice,
+} from '../src'
 
 describe('bridges', () => {
-  describe('addresses', () => {
-    describe('every addresses is valid and formatted', () => {
-      const testAddress = (address: string) =>
-        it(address, () => {
-          expect(utils.getAddress(address)).toEqual(address)
-        })
+  describe('technology', () => {
+    for (const bridge of bridges) {
+      describe(bridge.display.name, () => {
+        type Key = Exclude<
+          keyof BridgeTechnology,
+          'canonical' | 'type' | 'destination'
+        >
 
-      describe('escrows', () => {
-        const escrows = bridges.flatMap((x) =>
-          x.config.escrows.map((x) => x.address),
-        )
-        for (const address of escrows) {
-          testAddress(address)
+        function check(key: Key) {
+          const item = bridge.technology[key]
+          if (item) {
+            checkChoice(item, key)
+          }
         }
-      })
-    })
-  })
 
-  describe('every token is valid', () => {
-    const symbols = bridges
-      .flatMap((x) =>
-        x.config.escrows
-          .filter((x) => x.tokens !== '*')
-          .flatMap((x) => x.tokens),
-      )
-      .filter((x, i, a) => a.indexOf(x) === i)
-    for (const symbol of symbols) {
-      it(symbol, () => {
-        expect(() => getTokenBySymbol(symbol)).not.toThrow()
+        function checkChoice(choice: ProjectTechnologyChoice, name: string) {
+          it(`${name}.name doesn't end with a dot`, () => {
+            expect(choice.name.endsWith('.')).toEqual(false)
+          })
+
+          it(`${name}.description ends with a dot`, () => {
+            expect(choice.description.endsWith('.')).toEqual(true)
+          })
+
+          describe('risks', () => {
+            for (const [i, risk] of choice.risks.entries()) {
+              checkRisk(risk, `${name}.risks[${i}]`)
+            }
+          })
+        }
+
+        function checkRisk(risk: ProjectRisk, name: string) {
+          it(`${name} is correctly formatted`, () => {
+            expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
+          })
+        }
+
+        check('principleOfOperation')
+        check('validation')
+        check('destinationToken')
       })
     }
   })

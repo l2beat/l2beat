@@ -50,13 +50,6 @@ export const polygon: Bridge = {
       },
     ],
   },
-  technology: {
-    destination: ['Polygon'],
-    canonical: true,
-    type: 'Lock-Mint',
-    validation: 'LC Token Bridge',
-    connections: [],
-  },
   riskView: {
     validation: {
       value: 'Light Client',
@@ -75,4 +68,70 @@ export const polygon: Bridge = {
       sentiment: 'bad',
     },
   },
+  technology: {
+    destination: ['Polygon'],
+    canonical: true,
+    type: 'Lock-Mint',
+    principleOfOperation: {
+      // TODO: this is a temporary entry
+      name: 'Principle of operation',
+      description:
+        'How the bridge works. Who sends money where. Maybe we want an image in this section.',
+      references: [],
+      risks: [],
+      isIncomplete: true,
+    },
+    validation: {
+      // TODO: this is a temporary entry
+      name: 'Transfers are verified by a light client',
+      description:
+        'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
+      references: [],
+      risks: [],
+      isIncomplete: true,
+    },
+    destinationToken: {
+      // TODO: this is a temporary entry
+      name: 'Destination tokens are upgradeable',
+      description:
+        'This token can be upgraded if Proxy owner is not set to 0x.',
+      references: [],
+      risks: [],
+      isIncomplete: true,
+    },
+  },
+  contracts: {
+    // TODO: this is a temporary entry
+    addresses: [
+      {
+        address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
+        name: 'Escrow for all tokens',
+        description: 'All random tokens go here.',
+      },
+      {
+        address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
+        name: 'Escrow for ether',
+        description: 'All ether goes here.',
+      },
+      {
+        address: '0x401F6c983eA34274ec46f84D70b31C151321188b',
+        name: 'Escrow for MATIC and DAI',
+        description: 'All MATIC and DAI go here.',
+      },
+    ],
+    risks: [],
+  },
+  permissions: [
+    // TODO: this is a temporary entry
+    {
+      name: 'Mint tokens',
+      description: 'All tokens come from this address',
+      accounts: [
+        {
+          address: '0x0000000000000000000000000000000000000000',
+          type: 'EOA',
+        },
+      ],
+    },
+  ],
 }

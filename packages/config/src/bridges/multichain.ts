@@ -180,9 +180,7 @@ export const multichain: Bridge = {
   },
   technology: {
     type: 'Lock-Mint OR Swap',
-    validation: 'EV Bridge and LN',
     destination: ['TODO', 'TODO', 'TODO'],
-    connections: [],
   },
   riskView: {
     validation: {
