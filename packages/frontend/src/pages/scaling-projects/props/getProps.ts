@@ -13,13 +13,13 @@ import { getProjectDetails } from './getProjectDetails'
 export function getProps(
   project: Layer2,
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(project, tvlResponse)
+  const chart = getChart(project, tvlApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config),
-      header: getHeader(project, tvlResponse),
+      header: getHeader(project, tvlApiResponse),
       chart,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),

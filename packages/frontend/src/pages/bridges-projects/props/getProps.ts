@@ -13,13 +13,13 @@ import { getProjectDetails } from './getProjectDetails'
 export function getProps(
   bridge: Bridge,
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(bridge, tvlResponse)
+  const chart = getChart(bridge, tvlApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config),
-      header: getHeader(bridge, tvlResponse),
+      header: getHeader(bridge, tvlApiResponse),
       chart,
       projectDetails: getProjectDetails(bridge),
       footer: getFooterProps(config),

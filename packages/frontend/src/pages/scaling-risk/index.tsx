@@ -6,8 +6,8 @@ import { PageWrapper } from '../../components'
 import { getProps } from './props'
 import { ScalingRiskPage } from './view/ScalingRiskPage'
 
-export function getRiskPage(config: Config, tvlResponse: TvlApiResponse) {
-  const { props, wrapper } = getProps(config, tvlResponse)
+export function getRiskPage(config: Config, tvlApiResponse: TvlApiResponse) {
+  const { props, wrapper } = getProps(config, tvlApiResponse)
   return {
     slug: '/scaling/risk',
     page: (

@@ -11,10 +11,10 @@ import { getRiskView } from './getRiskView'
 
 export function getProps(
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<ScalingRiskPageProps> {
-  const included = getIncludedProjects(config.layer2s, tvlResponse)
-  const ordering = orderByTvl(included, tvlResponse)
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
 
   return {
     props: {

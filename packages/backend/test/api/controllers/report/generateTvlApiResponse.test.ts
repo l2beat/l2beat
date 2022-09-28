@@ -10,11 +10,11 @@ import {
 import { expect } from 'earljs'
 
 import { asNumber } from '../../../../src/api/controllers/report/asNumber'
-import { generateTvlResponse } from '../../../../src/api/controllers/report/generateTvlResponse'
+import { generateTvlApiResponse } from '../../../../src/api/controllers/report/generateTvlApiResponse'
 import { AggregateReportRecord } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
-describe(generateTvlResponse.name, () => {
+describe(generateTvlApiResponse.name, () => {
   it('returns the correct groupings', () => {
     const reports = fakeReports([
       ProjectId('arbitrum'),
@@ -24,7 +24,7 @@ describe(generateTvlResponse.name, () => {
       ProjectId.BRIDGES,
       ProjectId.LAYER2S,
     ])
-    const result = generateTvlResponse(
+    const result = generateTvlApiResponse(
       reports.hourly.all,
       reports.sixHourly.all,
       reports.daily.all,

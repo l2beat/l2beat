@@ -10,21 +10,21 @@ import {
 
 export function getScalingTvlView(
   projects: Layer2[],
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   tvl: number,
 ): ScalingTvlViewProps {
   return {
-    items: projects.map((x) => getScalingTvlViewEntry(x, tvlResponse, tvl)),
+    items: projects.map((x) => getScalingTvlViewEntry(x, tvlApiResponse, tvl)),
   }
 }
 
 function getScalingTvlViewEntry(
   project: Layer2,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
-  const apiProject = tvlResponse.projects[project.id.toString()]
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
   if (!apiProject) {
     throw new Error(`Project ${project.display.name} is missing in api`)
   }

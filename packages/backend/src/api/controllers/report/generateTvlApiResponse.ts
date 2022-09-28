@@ -11,7 +11,7 @@ import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 import { getChartPoints } from './charts'
 
-export function generateTvlResponse(
+export function generateTvlApiResponse(
   hourly: AggregateReportRecord[],
   sixHourly: AggregateReportRecord[],
   daily: AggregateReportRecord[],

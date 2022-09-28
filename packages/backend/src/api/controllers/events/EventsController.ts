@@ -14,7 +14,7 @@ export class EventController {
     private projects: Project[],
   ) {}
 
-  async getEvents(): Promise<EventsApiResponse> {
+  async getEventsApiResponse(): Promise<EventsApiResponse> {
     const main: EventsApiResponse = {
       projects: {},
     }
@@ -51,7 +51,7 @@ export class EventController {
   }
 
   async getShowcase() {
-    const events = await this.getEvents()
+    const events = await this.getEventsApiResponse()
 
     return renderShowcasePage({ events })
   }

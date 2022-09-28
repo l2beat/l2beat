@@ -27,7 +27,7 @@ describe(EventController.name, () => {
     await repository.deleteAll()
   })
 
-  describe(EventController.prototype.getEvents.name, () => {
+  describe(EventController.prototype.getEventsApiResponse.name, () => {
     it('gets data from db, transforms and returns', async () => {
       const records = [
         mockEventRecord(-14 * 24, PROJECT_A, EVENT_A),
@@ -57,7 +57,7 @@ describe(EventController.name, () => {
 
       const eventController = new EventController(repository, clock, projects)
 
-      const result = await eventController.getEvents()
+      const result = await eventController.getEventsApiResponse()
 
       expect(result).toEqual({
         projects: {

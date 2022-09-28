@@ -9,11 +9,11 @@ import { ProjectPage } from './view/ProjectPage'
 
 export function getBridgeProjectPages(
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ) {
-  const included = getIncludedProjects(config.bridges, tvlResponse)
+  const included = getIncludedProjects(config.bridges, tvlApiResponse)
   return included.map((bridge) => {
-    const { wrapper, props } = getProps(bridge, config, tvlResponse)
+    const { wrapper, props } = getProps(bridge, config, tvlApiResponse)
     return {
       slug: `/bridges/projects/${bridge.display.slug}`,
       page: (

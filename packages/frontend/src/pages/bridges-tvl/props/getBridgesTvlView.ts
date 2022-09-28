@@ -7,10 +7,10 @@ import { BridgesTvlViewEntry } from '../BridgesTvlView'
 
 export function getBridgesTvlView(
   projects: Bridge[],
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   tvl: number,
 ): BridgesTvlViewEntry[] {
-  return projects.map((x) => getBridgesTvlViewEntry(x, tvlResponse, tvl))
+  return projects.map((x) => getBridgesTvlViewEntry(x, tvlApiResponse, tvl))
 }
 
 function getBridgesTvlViewEntry(

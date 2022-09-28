@@ -7,10 +7,13 @@ import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
-export function getProjectPages(config: Config, tvlResponse: TvlApiResponse) {
-  const included = getIncludedProjects(config.layer2s, tvlResponse)
+export function getProjectPages(
+  config: Config,
+  tvlApiResponse: TvlApiResponse,
+) {
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   return included.map((project) => {
-    const { wrapper, props } = getProps(project, config, tvlResponse)
+    const { wrapper, props } = getProps(project, config, tvlApiResponse)
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (

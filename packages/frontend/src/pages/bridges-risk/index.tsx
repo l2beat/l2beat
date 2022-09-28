@@ -8,9 +8,9 @@ import { getProps } from './getProps'
 
 export function getBridgesRiskPage(
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ) {
-  const { props, wrapper } = getProps(config, tvlResponse)
+  const { props, wrapper } = getProps(config, tvlApiResponse)
   return {
     slug: '/bridges/risk',
     page: (

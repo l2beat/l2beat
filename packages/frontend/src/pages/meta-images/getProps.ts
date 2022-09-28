@@ -6,12 +6,12 @@ import { Wrapped } from '../Page'
 import { MetaImageProps } from './MetaImage'
 
 export function getProps(
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   project?: Layer2,
 ): Wrapped<MetaImageProps> {
   const daily = project
-    ? tvlResponse.projects[project.id.toString()]?.charts.daily.data ?? []
-    : tvlResponse.layers2s.daily.data
+    ? tvlApiResponse.projects[project.id.toString()]?.charts.daily.data ?? []
+    : tvlApiResponse.layers2s.daily.data
   const tvl = daily.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)

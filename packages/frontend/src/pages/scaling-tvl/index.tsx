@@ -6,8 +6,8 @@ import { PageWrapper } from '../../components'
 import { getProps } from './props'
 import { ScalingTvlPage } from './view/ScalingTvlPage'
 
-export function getTvlPage(config: Config, tvlResponse: TvlApiResponse) {
-  const { props, wrapper } = getProps(config, tvlResponse)
+export function getTvlPage(config: Config, tvlApiResponse: TvlApiResponse) {
+  const { props, wrapper } = getProps(config, tvlApiResponse)
   return {
     slug: '/scaling/tvl',
     page: (

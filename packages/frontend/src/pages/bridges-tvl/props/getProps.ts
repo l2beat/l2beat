@@ -11,14 +11,14 @@ import { getBridgesTvlView } from './getBridgesTvlView'
 
 export function getProps(
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<BridgesTvlPageProps> {
-  const tvl = tvlResponse.bridges.hourly.data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = tvlResponse.bridges.hourly.data[0]?.[1] ?? 0
+  const tvl = tvlApiResponse.bridges.hourly.data.at(-1)?.[1] ?? 0
+  const tvlSevenDaysAgo = tvlApiResponse.bridges.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const included = getIncludedProjects(config.bridges, tvlResponse)
-  const ordering = orderByTvl(included, tvlResponse)
+  const included = getIncludedProjects(config.bridges, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
 
   return {
     props: {
@@ -27,7 +27,7 @@ export function getProps(
       sevenDayChange,
       apiEndpoint: '/api/bridges-tvl.json',
       tvlView: {
-        items: getBridgesTvlView(ordering, tvlResponse, tvl),
+        items: getBridgesTvlView(ordering, tvlApiResponse, tvl),
       },
       footer: getFooterProps(config),
     },

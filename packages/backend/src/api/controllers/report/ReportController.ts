@@ -18,7 +18,7 @@ import { ReportStatusRepository } from '../../../peripherals/database/ReportStat
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getChartPoints } from './charts'
-import { generateTvlResponse } from './generateTvlResponse'
+import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 export class ReportController {
   constructor(
@@ -32,7 +32,7 @@ export class ReportController {
     this.logger = this.logger.for(this)
   }
 
-  async getTvlResponse(): Promise<TvlApiResponse | undefined> {
+  async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
     const timestamp = await this.reportStatusRepository.findLatestTimestamp()
     if (!timestamp) {
       return undefined
@@ -48,7 +48,7 @@ export class ReportController {
         this.aggregateReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(timestamp),
       ])
-    const apiMain = generateTvlResponse(
+    const apiMain = generateTvlApiResponse(
       hourlyReports,
       sixHourlyReports,
       dailyReports,

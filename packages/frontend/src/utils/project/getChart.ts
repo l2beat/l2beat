@@ -5,16 +5,16 @@ import { ChartProps } from '../../components'
 
 export function getChart(
   project: Layer2 | Bridge,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): ChartProps {
   return {
     endpoint: `/api/${project.display.slug}.json`,
-    tokens: getTokens(project.id, tvlResponse),
+    tokens: getTokens(project.id, tvlApiResponse),
   }
 }
 
-function getTokens(projectId: ProjectId, tvlResponse: TvlApiResponse) {
-  return tvlResponse.projects[projectId.toString()]?.tokens
+function getTokens(projectId: ProjectId, tvlApiResponse: TvlApiResponse) {
+  return tvlApiResponse.projects[projectId.toString()]?.tokens
     .map(({ assetId, tvl }) => {
       const symbol = safeGetTokenByAssetId(assetId)?.symbol
       if (symbol) {

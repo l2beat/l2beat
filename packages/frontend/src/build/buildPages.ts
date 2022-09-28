@@ -15,17 +15,17 @@ main().catch((e) => {
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'production'
   const config = getConfig(env)
-  const apiMain = await fetchTvlApi(
+  const tvlApiResponse = await fetchTvlApi(
     config.backend.apiUrl,
     config.backend.skipCache,
   )
   const apiActivity = await fetchApiActivity(config.backend.apiUrl)
 
-  printApiInfo(apiMain)
-  sanityCheck(apiMain)
+  printApiInfo(tvlApiResponse)
+  sanityCheck(tvlApiResponse)
 
-  createApi(config, apiMain, apiActivity)
-  await renderPages(config, apiMain, apiActivity)
+  createApi(config, tvlApiResponse, apiActivity)
+  await renderPages(config, tvlApiResponse, apiActivity)
 }
 
 function printApiInfo(apiMain: TvlApiResponse) {

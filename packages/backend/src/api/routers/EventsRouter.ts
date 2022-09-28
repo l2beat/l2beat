@@ -6,7 +6,7 @@ export function createEventsRouter(eventController: EventController) {
   const router = new Router()
 
   router.get('/api/events', async (ctx) => {
-    const data = await eventController.getEvents()
+    const data = await eventController.getEventsApiResponse()
 
     ctx.body = data
   })

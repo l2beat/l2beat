@@ -10,21 +10,21 @@ import { Config } from './config'
 
 export function createApi(
   config: Config,
-  tvlResponse: TvlApiResponse,
-  activityResponse: ActivityApiResponse,
+  tvlApiResponse: TvlApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ) {
   const urlCharts = new Map<string, TvlApiCharts>()
 
-  urlCharts.set('scaling-tvl', tvlResponse.layers2s)
-  urlCharts.set('bridges-tvl', tvlResponse.bridges)
+  urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
+  urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
   for (const project of [...config.layer2s, ...config.bridges]) {
-    const projectData = tvlResponse.projects[project.id.toString()]
+    const projectData = tvlApiResponse.projects[project.id.toString()]
     if (!projectData) {
       continue
     }
     urlCharts.set(project.display.slug, projectData.charts)
   }
-  urlCharts.set('scaling-activity', getCompatibleApi(activityResponse))
+  urlCharts.set('scaling-activity', getCompatibleApi(activityApiResponse))
 
   outputCharts(urlCharts)
 }

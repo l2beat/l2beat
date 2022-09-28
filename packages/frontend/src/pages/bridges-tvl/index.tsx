@@ -6,8 +6,11 @@ import { PageWrapper } from '../../components'
 import { BridgesTvlPage } from './BridgesTvlPage'
 import { getProps } from './props'
 
-export function getBridgesTvlPage(config: Config, tvlResponse: TvlApiResponse) {
-  const { props, wrapper } = getProps(config, tvlResponse)
+export function getBridgesTvlPage(
+  config: Config,
+  tvlApiResponse: TvlApiResponse,
+) {
+  const { props, wrapper } = getProps(config, tvlApiResponse)
   return {
     slug: '/bridges/tvl',
     page: (

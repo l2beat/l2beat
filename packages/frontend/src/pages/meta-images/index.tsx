@@ -7,9 +7,12 @@ import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { getProps } from './getProps'
 import { MetaImage } from './MetaImage'
 
-export function getMetaImagePages(config: Config, tvlResponse: TvlApiResponse) {
-  const included = getIncludedProjects(config.layer2s, tvlResponse)
-  const main = getProps(tvlResponse)
+export function getMetaImagePages(
+  config: Config,
+  tvlApiResponse: TvlApiResponse,
+) {
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
+  const main = getProps(tvlApiResponse)
   return [
     {
       slug: '/meta-images/overview',
@@ -20,7 +23,7 @@ export function getMetaImagePages(config: Config, tvlResponse: TvlApiResponse) {
       ),
     },
     ...included.map((project) => {
-      const { props, wrapper } = getProps(tvlResponse, project)
+      const { props, wrapper } = getProps(tvlApiResponse, project)
       return {
         slug: `/meta-images/${project.display.slug}`,
         page: (

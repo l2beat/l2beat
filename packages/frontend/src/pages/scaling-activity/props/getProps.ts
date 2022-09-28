@@ -10,13 +10,13 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  activityResponse: ActivityApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityPageProps> {
   const SECONDS_IN_A_DAY = 24 * 60 * 60
   const tps =
-    (activityResponse.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
+    (activityApiResponse.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const tpsSevenDaysAgo =
-    (activityResponse.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
+    (activityApiResponse.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
   const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
 
   return {

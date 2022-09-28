@@ -12,14 +12,14 @@ import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<TvlPageProps> {
-  const tvl = tvlResponse.layers2s.hourly.data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = tvlResponse.layers2s.hourly.data[0]?.[1] ?? 0
+  const tvl = tvlApiResponse.layers2s.hourly.data.at(-1)?.[1] ?? 0
+  const tvlSevenDaysAgo = tvlApiResponse.layers2s.hourly.data[0]?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const included = getIncludedProjects(config.layer2s, tvlResponse)
-  const ordering = orderByTvl(included, tvlResponse)
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
 
   return {
     props: {
@@ -27,7 +27,7 @@ export function getProps(
       tvl: formatUSD(tvl),
       sevenDayChange,
       apiEndpoint: '/api/scaling-tvl.json',
-      tvlView: getScalingTvlView(ordering, tvlResponse, tvl),
+      tvlView: getScalingTvlView(ordering, tvlApiResponse, tvl),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

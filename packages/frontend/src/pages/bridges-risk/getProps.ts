@@ -11,10 +11,10 @@ import { BridgesRiskViewEntry } from './BridgesRiskView'
 
 export function getProps(
   config: Config,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): Wrapped<BridgesRiskPageProps> {
-  const included = getIncludedProjects(config.bridges, tvlResponse)
-  const ordering = orderByTvl(included, tvlResponse)
+  const included = getIncludedProjects(config.bridges, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config),

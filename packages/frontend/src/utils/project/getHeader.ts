@@ -6,10 +6,10 @@ import { formatUSD, getPercentageChange } from '../utils'
 
 export function getHeader(
   project: Layer2 | Bridge,
-  tvlResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
 ): HeaderProps {
   const hourly =
-    tvlResponse.projects[project.id.toString()]?.charts.hourly.data ?? []
+    tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
