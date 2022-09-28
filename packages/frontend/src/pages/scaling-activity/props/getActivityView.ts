@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { ApiActivity } from '@l2beat/types'
+import { ApiActivity, ProjectId } from '@l2beat/types'
 
 import { getPercentageChange } from '../../../utils/utils'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
@@ -20,9 +20,7 @@ export function getActivityViewEntry(
   apiActivity: ApiActivity,
 ): ActivityViewEntry {
   const SECONDS_IN_A_DAY = 24 * 60 * 60
-  const transactionsWeeklyCount =
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    apiActivity.projects[project.id.toString()]?.data.at(-1)?.[1] ?? 0
+  const transactionsWeeklyCount = getWeeklyCount(apiActivity, project.id)
   const tps =
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     (apiActivity.projects[project.id.toString()]?.data.at(-1)?.[1] ?? 0) /
@@ -40,4 +38,18 @@ export function getActivityViewEntry(
     tpsWeeklyChange: sevenDayChange,
     transactionsWeeklyCount: transactionsWeeklyCount.toString(),
   }
+}
+
+function getWeeklyCount(
+  apiActivity: ApiActivity,
+  projectId: ProjectId,
+): number {
+  const lastSevenDays =
+    apiActivity.projects[projectId.toString()]?.data.slice(-7)
+
+  if (lastSevenDays === undefined) {
+    return 0
+  }
+
+  return lastSevenDays.reduce((prev, curr) => prev[1] + curr[1], 0)
 }
