@@ -18,6 +18,8 @@ interface Transaction {
   createdAt: UnixTime
 }
 
+const PAGE_LIMIT = 100
+
 export class ZksyncClient {
   constructor(private httpClient: HttpClient, private logger: Logger) {
     this.logger = logger.for(this)
@@ -40,9 +42,43 @@ export class ZksyncClient {
   }
 
   async getTransactionsInBlock(blockNumber: number) {
+    const firstPage = await this.getTransactionsPage(blockNumber, 'latest')
+
+    if (firstPage.list.length === 0) {
+      throw new Error('Transactions list empty!')
+    }
+
+    let transactions = firstPage.list
+    const count = firstPage.pagination.count
+    while (count - transactions.length > 0) {
+      const lastTx = transactions.at(-1)
+      if (!lastTx) {
+        throw new Error('Programmer error: Transactions list empty!')
+      }
+
+      const nextPage = await this.getTransactionsPage(
+        blockNumber,
+        lastTx.txHash,
+      )
+
+      if (nextPage.list[0].txHash !== lastTx.txHash) {
+        throw new Error('Invalid Zksync first transaction')
+      }
+
+      transactions = transactions.concat(nextPage.list.slice(1))
+    }
+
+    const filteredTransactions = transactions.filter(
+      (t): t is Transaction => t.blockIndex !== null,
+    )
+
+    return filteredTransactions
+  }
+
+  private async getTransactionsPage(blockNumber: number, from: string) {
     const result = await this.call(`blocks/${blockNumber}/transactions`, {
-      from: 'latest',
-      limit: '100',
+      from,
+      limit: PAGE_LIMIT.toString(),
       direction: 'older',
     })
 
@@ -52,42 +88,7 @@ export class ZksyncClient {
       throw new TypeError('Invalid Zksync transactions schema')
     }
 
-    if (parsed.data.list.length === 0) {
-      throw new Error('Transactions list empty!')
-    }
-    let transactions = parsed.data.list
-
-    const count = parsed.data.pagination.count
-    while (count - transactions.length > 0) {
-      const lastTx = transactions.at(-1)
-      if (!lastTx) {
-        throw new Error('Programmer error: Transactions list empty!')
-      }
-
-      const nextPage = await this.call(`blocks/${blockNumber}/transactions`, {
-        from: lastTx.txHash,
-        limit: '100',
-        direction: 'older',
-      })
-
-      const parsedNextPage = ZksyncTransactionResultSchema.safeParse(nextPage)
-
-      if (!parsedNextPage.success) {
-        throw new TypeError('Invalid Zksync transactions schema')
-      }
-
-      if (parsedNextPage.data.list[0].txHash !== lastTx.txHash) {
-        throw new Error('Invalid Zksync first transaction')
-      }
-
-      transactions = transactions.concat(parsedNextPage.data.list.slice(1))
-    }
-
-    const filteredTransactions = transactions.filter(
-      (t): t is Transaction => t.blockIndex !== null,
-    )
-
-    return filteredTransactions
+    return parsed.data
   }
 
   async call(path: string, params?: Record<string, string>) {
