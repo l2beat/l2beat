@@ -29,6 +29,25 @@ describe(ZksyncClient.name, () => {
       expect(await zksyncClient.getTransactionsInBlock(42)).toEqual(expected)
     })
 
+    it('throws for invalid schema', async () => {
+      const httpClient = mock<HttpClient>({
+        fetch: async () =>
+          new Response(
+            JSON.stringify({
+              status: 'success',
+              error: null,
+              result: { foo: 'bar' },
+            }),
+          ),
+      })
+      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+
+      await expect(zksyncClient.getTransactionsInBlock(42)).toBeRejected(
+        TypeError,
+        'Invalid Zksync transactions schema',
+      )
+    })
+
     it('can paginate', async () => {
       const transactions1 = Array.from({ length: 100 }, () => fakeTransaction())
       const transactions2 = Array.from({ length: 69 }, () => fakeTransaction())
@@ -66,6 +85,44 @@ describe(ZksyncClient.name, () => {
         .map((tx) => ({ ...tx, createdAt: UnixTime.fromDate(tx.createdAt) }))
       expect(result).toEqual(expected)
     })
+
+    it('throws for transaction mismatch', async () => {
+      const transactions1 = Array.from({ length: 100 }, () => fakeTransaction())
+      const transactions2 = Array.from({ length: 68 }, () => fakeTransaction())
+      transactions2.unshift(fakeTransaction({ txHash: 'not-tx-hash' }))
+
+      const httpClient = mock<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: 'success',
+                error: null,
+                result: { list: transactions1, pagination: { count: 169 } },
+              }),
+            ),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: 'success',
+                error: null,
+                result: {
+                  list: transactions2,
+                  pagination: { count: 169 },
+                },
+              }),
+            ),
+          ),
+      })
+
+      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+
+      await expect(zksyncClient.getTransactionsInBlock(42)).toBeRejected(
+        Error,
+        'Invalid Zksync first transaction',
+      )
+    })
   })
 
   describe(ZksyncClient.prototype.getLatestBlock.name, () => {
@@ -84,6 +141,25 @@ describe(ZksyncClient.name, () => {
 
       const result = await zksyncClient.getLatestBlock()
       expect(result).toEqual(42)
+    })
+
+    it('throws for invalid schema', async () => {
+      const httpClient = mock<HttpClient>({
+        fetch: async () =>
+          new Response(
+            JSON.stringify({
+              status: 'success',
+              error: null,
+              result: { foo: 'bar' },
+            }),
+          ),
+      })
+      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+
+      await expect(zksyncClient.getLatestBlock()).toBeRejected(
+        TypeError,
+        'Invalid Zksync block schema',
+      )
     })
   })
 
@@ -145,7 +221,7 @@ function fakeTransaction(transaction?: Partial<Transaction>): Transaction {
   return {
     txHash: 'tx-hash',
     blockIndex: Math.floor(Math.random() * 1000),
-    createdAt: new Date(0),
+    createdAt: new Date(),
     ...transaction,
   }
 }

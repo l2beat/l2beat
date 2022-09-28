@@ -33,7 +33,7 @@ export class ZksyncClient {
     const parsed = ZksyncBlocksResultSchema.safeParse(result)
 
     if (!parsed.success) {
-      throw new TypeError('Invalid zksync block schema')
+      throw new TypeError('Invalid Zksync block schema')
     }
 
     return parsed.data.blockNumber
@@ -49,7 +49,7 @@ export class ZksyncClient {
     const parsed = ZksyncTransactionResultSchema.safeParse(result)
 
     if (!parsed.success) {
-      throw new TypeError('Invalid zksync transactions response')
+      throw new TypeError('Invalid Zksync transactions schema')
     }
 
     if (parsed.data.list.length === 0) {
@@ -73,7 +73,11 @@ export class ZksyncClient {
       const parsedNextPage = ZksyncTransactionResultSchema.safeParse(nextPage)
 
       if (!parsedNextPage.success) {
-        throw new TypeError('Invalid zksync transactions schema')
+        throw new TypeError('Invalid Zksync transactions schema')
+      }
+
+      if (parsedNextPage.data.list[0].txHash !== lastTx.txHash) {
+        throw new Error('Invalid Zksync first transaction')
       }
 
       transactions = transactions.concat(parsedNextPage.data.list.slice(1))
