@@ -30,10 +30,7 @@ export interface ScalingTvlViewEntry {
   sevenDayChange: string
   marketShare: string
   purpose: string
-  technology: {
-    abbreviation: string
-    name: string
-  }
+  technology: string
 }
 
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
@@ -74,13 +71,13 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       getValue: (project) => (
         <FinancialCell
           className={
-            project.technology.name === 'ZK Rollup' ||
-            project.technology.name === 'Optimistic Rollup'
+            project.technology === 'ZK Rollup' ||
+            project.technology === 'Optimistic Rollup'
               ? 'rollup'
               : undefined
           }
         >
-          {project.technology.name}
+          {project.technology}
         </FinancialCell>
       ),
     },

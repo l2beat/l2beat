@@ -105,10 +105,7 @@ export const starknet: Layer2 = {
     validatorFailure: RISK_VIEW.PROVER_DOWN,
   },
   technology: {
-    // provider: 'StarkNet',
-    category: {
-      name: 'ZK Rollup',
-    },
+    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

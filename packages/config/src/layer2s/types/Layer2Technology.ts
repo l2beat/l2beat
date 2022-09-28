@@ -3,12 +3,8 @@ import { ProjectTechnologyChoice } from '../../common/ProjectTechnologyChoice'
 export interface Layer2Technology {
   /** Technology provider */
   provider?: 'StarkEx' | 'Optimism' | 'zkSync'
-  category: {
-    /** Name of the category the layer2 belongs to */
-    name: Layer2Category
-    /** Additional details about the technology */
-    details?: string
-  }
+  /** Name of the category the layer2 belongs to */
+  category: Layer2Category
   /** What state correctness mechanism is used in the layer2 */
   stateCorrectness: ProjectTechnologyChoice
   /** What is the new cryptography used in the layer2 */

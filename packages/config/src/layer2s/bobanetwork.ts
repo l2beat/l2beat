@@ -88,9 +88,7 @@ export const bobanetwork: Layer2 = {
   },
   technology: {
     provider: 'Optimism',
-    category: {
-      name: 'Optimistic Rollup',
-    },
+    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:

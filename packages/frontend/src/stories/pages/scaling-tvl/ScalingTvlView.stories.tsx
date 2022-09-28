@@ -38,10 +38,7 @@ export function TvlView() {
               sevenDayChange: '-54.2%',
               marketShare: '50.42%',
               purpose: 'Universal',
-              technology: {
-                abbreviation: 'ORU',
-                name: 'Optimistic Rollup',
-              },
+              technology: 'Optimistic Rollup',
             },
             {
               name: 'Arbitrage',
@@ -61,10 +58,7 @@ export function TvlView() {
               sevenDayChange: '-54.2%',
               marketShare: '50.42%',
               purpose: 'Universal',
-              technology: {
-                abbreviation: 'ORU',
-                name: 'Optimistic Rollup',
-              },
+              technology: 'Optimistic Rollup',
             },
             {
               name: 'StorkCommerce',
@@ -85,10 +79,7 @@ export function TvlView() {
               sevenDayChange: '-54.2%',
               marketShare: '50.42%',
               purpose: 'Universal',
-              technology: {
-                abbreviation: 'ORU',
-                name: 'Optimistic Rollup',
-              },
+              technology: 'Optimistic Rollup',
             },
             {
               name: 'zk.download',
@@ -109,10 +100,7 @@ export function TvlView() {
               sevenDayChange: '-54.2%',
               marketShare: '50.42%',
               purpose: 'Universal',
-              technology: {
-                abbreviation: 'ORU',
-                name: 'Optimistic Rollup',
-              },
+              technology: 'Optimistic Rollup',
             },
           ]}
         />

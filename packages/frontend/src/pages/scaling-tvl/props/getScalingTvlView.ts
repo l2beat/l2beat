@@ -7,7 +7,6 @@ import {
   ScalingTvlViewEntry,
   ScalingTvlViewProps,
 } from '../view/ScalingTvlView'
-import { getTechnology } from './getTechnology'
 
 export function getScalingTvlView(
   projects: Layer2[],
@@ -41,6 +40,6 @@ function getScalingTvlViewEntry(
     sevenDayChange: stats.sevenDayChange,
     marketShare: formatPercent(stats.tvl / aggregateTvl),
     purpose: project.display.purpose,
-    technology: getTechnology(project),
+    technology: project.technology.category,
   }
 }
