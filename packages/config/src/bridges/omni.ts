@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const omni: Bridge = {
+  type: 'bridge',
   id: ProjectId('omni'),
   display: {
     name: 'xDai Omni',

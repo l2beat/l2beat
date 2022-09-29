@@ -11,6 +11,7 @@ import {
 import { Layer2Permission } from '../../layer2s'
 
 export interface Bridge {
+  type: 'bridge'
   id: ProjectId
   display: BridgeDisplay
   config: BridgeConfig

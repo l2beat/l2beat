@@ -14,6 +14,7 @@ import {
 import { Layer2 } from './types'
 
 export const rhinofi: Layer2 = {
+  type: 'layer2',
   id: ProjectId('deversifi'),
   display: {
     name: 'rhino.fi',

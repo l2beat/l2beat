@@ -12,6 +12,7 @@ import {
 import { Layer2 } from './types'
 
 export const nova: Layer2 = {
+  type: 'layer2',
   id: ProjectId('nova'),
   display: {
     name: 'Arbitrum Nova',

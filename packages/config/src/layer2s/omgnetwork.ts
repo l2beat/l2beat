@@ -12,6 +12,7 @@ import {
 import { Layer2 } from './types'
 
 export const omgnetwork: Layer2 = {
+  type: 'layer2',
   id: ProjectId('omgnetwork'),
   display: {
     name: 'OMG Network',

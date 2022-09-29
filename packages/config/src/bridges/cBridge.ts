@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const cBridge: Bridge = {
+  type: 'bridge',
   id: ProjectId('cbridge'),
   display: {
     name: 'Celer V2 cBridge',
