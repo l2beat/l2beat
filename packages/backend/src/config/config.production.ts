@@ -18,8 +18,6 @@ export function getProductionConfig(): Config {
     coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-    starkexApiUrl: getEnv('STARKEX_API_URL'),
-    starkexApiKey: getEnv('STARKEX_API_KEY'),
     databaseConnection: {
       connectionString: getEnv('DATABASE_URL'),
       ssl: { rejectUnauthorized: false },
@@ -38,8 +36,6 @@ export function getProductionConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     eventsSyncEnabled: false,
-    transactionCountSyncEnabled: false,
-    arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
-    optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
+    transactionCountSync: false,
   }
 }

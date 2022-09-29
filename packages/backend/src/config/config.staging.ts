@@ -2,6 +2,7 @@ import { Knex } from 'knex'
 
 import { Config } from './Config'
 import { getProductionConfig } from './config.production'
+import { getEnv } from './getEnv'
 
 export function getStagingConfig(): Config {
   const name = 'Backend/Staging'
@@ -15,6 +16,11 @@ export function getStagingConfig(): Config {
       ...(productionConfig.databaseConnection as Knex.PgConnectionConfig),
       application_name: name,
     },
-    transactionCountSyncEnabled: true,
+    transactionCountSync: {
+      starkexApiUrl: getEnv('STARKEX_API_URL'),
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+      optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
+    },
   }
 }

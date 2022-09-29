@@ -19,8 +19,6 @@ export function getLocalConfig(): Config {
     coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-    starkexApiUrl: getEnv('STARKEX_API_URL'),
-    starkexApiKey: getEnv('STARKEX_API_KEY'),
     databaseConnection: getEnv('LOCAL_DB_URL'),
     core: {
       // TODO: This should probably be configurable
@@ -36,11 +34,14 @@ export function getLocalConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
     eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
-    transactionCountSyncEnabled: getEnv.boolean(
+    transactionCountSync: getEnv.boolean(
       'TRANSACTION_COUNT_ENABLED',
       false,
-    ),
-    arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
-    optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
+    ) && {
+      starkexApiUrl: getEnv('STARKEX_API_URL'),
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+      optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
+    },
   }
 }
