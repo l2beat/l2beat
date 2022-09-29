@@ -1,14 +1,17 @@
 import { HttpClient, Logger } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 
 import { ActivityController } from '../api/controllers/ActivityController'
 import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
+import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
 import { BlockTransactionRepository } from '../peripherals/database/BlockTransactionRepository'
 import { Database } from '../peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
+import { LoopringClient } from '../peripherals/loopring'
 import { StarkexClient } from '../peripherals/starkex'
 import { ZksyncClient } from '../peripherals/zksync'
 import { createRpcTransactionUpdaters } from './createRpcTransactionUpdaters'
@@ -33,6 +36,8 @@ export function getActivityModule(
   )
 
   const zksyncClient = new ZksyncClient(http, logger)
+
+  const loopringClient = new LoopringClient(http, logger)
 
   const blockTransactionRepository = new BlockTransactionRepository(
     database,
@@ -67,10 +72,19 @@ export function getActivityModule(
     logger,
   )
 
+  const loopringTransactionUpdater = new LoopringTransactionUpdater(
+    loopringClient,
+    blockTransactionRepository,
+    clock,
+    logger,
+    ProjectId('loopring'),
+  )
+
   const activityController = new ActivityController([
     ...rpcTransactionUpdaters,
     ...starkexTransactionUpdaters,
     zksyncTransactionUpdater,
+    loopringTransactionUpdater,
   ])
 
   const router = createActivityRouter(activityController)
@@ -85,6 +99,7 @@ export function getActivityModule(
       updater.start()
     }
     zksyncTransactionUpdater.start()
+    loopringTransactionUpdater.start()
   }
 
   return {
