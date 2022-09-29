@@ -22,7 +22,7 @@ export function getActivityModule(
   clock: Clock,
 ) {
   if (!config.transactionCountSync) {
-    return {}
+    return undefined
   }
 
   const starkexClient = new StarkexClient(

@@ -31,10 +31,13 @@ export function getLocalConfig(): Config {
       priceStrategy: { type: 'market' },
     })),
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    syncEnabled: !getEnv.featureFlag('SYNC_DISABLED'),
-    freshStart: getEnv.featureFlag('FRESH_START'),
-    eventsSyncEnabled: getEnv.featureFlag('EVENTS_ENABLED'),
-    transactionCountSync: getEnv.featureFlag('TRANSACTION_COUNT_ENABLED') && {
+    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
+    freshStart: getEnv.boolean('FRESH_START', false),
+    eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
+    transactionCountSync: getEnv.boolean(
+      'TRANSACTION_COUNT_ENABLED',
+      false,
+    ) && {
       starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),

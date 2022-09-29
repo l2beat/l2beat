@@ -183,7 +183,7 @@ export class Application {
         createStatusRouter(statusController),
         createDydxRouter(dydxController),
         createEventRouter(eventController),
-        activityModule.router,
+        activityModule?.router,
       ]),
     )
 
@@ -203,9 +203,7 @@ export class Application {
         await balanceUpdater.start()
         await reportUpdater.start()
 
-        if (activityModule.start) {
-          activityModule.start()
-        }
+        activityModule?.start()
 
         if (config.eventsSyncEnabled) {
           eventUpdater.start()
