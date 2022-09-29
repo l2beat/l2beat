@@ -52,13 +52,26 @@ export class RpcTransactionUpdater implements TransactionCounter {
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
-      count: block.transactions.length,
+      count: this.calcTransactionCount(number, block.transactions),
     })
 
     this.logger.debug('Block updated', {
       project: this.projectId.toString(),
       blockNumber: block.number,
     })
+  }
+
+  // We need to subtract the one system transaction that appear in each Nitro block
+  private calcTransactionCount(blockNumber: number, transactions: string[]) {
+    if (this.projectId === ProjectId('nova')) {
+      return transactions.length - 1
+    }
+
+    if (this.projectId === ProjectId('arbitrum') && blockNumber >= 22207818) {
+      return transactions.length - 1
+    }
+
+    return transactions.length
   }
 
   async update() {

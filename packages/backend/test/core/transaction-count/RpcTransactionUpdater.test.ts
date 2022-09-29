@@ -142,6 +142,70 @@ describe(RpcTransactionUpdater.name, () => {
         ],
       ])
     })
+
+    it('subtracts Nitro system transactions', async () => {
+      const TIME_0 = new UnixTime(0)
+      const ethereumClient = mock<EthereumClient>({
+        getBlock: async () =>
+          fakeBlock({
+            number: 1,
+            timestamp: TIME_0.toNumber(),
+            transactions: ['t0', 't1'],
+          }),
+      })
+      const txCountRepository = mock<RpcTransactionCountRepository>({
+        add: async () => '',
+      })
+      const clock = mock<Clock>({
+        getLastHour: () => UnixTime.now(),
+      })
+
+      const novaTxCountUpdater = new RpcTransactionUpdater(
+        ethereumClient,
+        txCountRepository,
+        clock,
+        Logger.SILENT,
+        ProjectId('nova'),
+      )
+      const arbitrumTxCountUpdater = new RpcTransactionUpdater(
+        ethereumClient,
+        txCountRepository,
+        clock,
+        Logger.SILENT,
+        ProjectId('arbitrum'),
+      )
+
+      await novaTxCountUpdater.updateBlock(1)
+      await arbitrumTxCountUpdater.updateBlock(1)
+      await arbitrumTxCountUpdater.updateBlock(22207818)
+
+      expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
+        [
+          {
+            timestamp: TIME_0,
+            blockNumber: 1,
+            projectId: ProjectId('nova'),
+            count: 1,
+          },
+        ],
+        [
+          {
+            timestamp: TIME_0,
+            blockNumber: 1,
+            projectId: ProjectId('arbitrum'),
+            count: 2,
+          },
+        ],
+        [
+          {
+            timestamp: TIME_0,
+            blockNumber: 1,
+            projectId: ProjectId('arbitrum'),
+            count: 1,
+          },
+        ],
+      ])
+    })
   })
 })
 
