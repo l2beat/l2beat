@@ -143,12 +143,12 @@ describe(RpcTransactionUpdater.name, () => {
       ])
     })
 
-    it('subtracts Nitro system transactions', async () => {
+    it('allows assessing count', async () => {
       const TIME_0 = new UnixTime(0)
       const ethereumClient = mock<EthereumClient>({
-        getBlock: async () =>
+        getBlock: async (blockNumber) =>
           fakeBlock({
-            number: 1,
+            number: blockNumber,
             timestamp: TIME_0.toNumber(),
             transactions: ['t0', 't1'],
           }),
@@ -160,47 +160,23 @@ describe(RpcTransactionUpdater.name, () => {
         getLastHour: () => UnixTime.now(),
       })
 
-      const novaTxCountUpdater = new RpcTransactionUpdater(
+      const rpcTransactionUpdater = new RpcTransactionUpdater(
         ethereumClient,
         txCountRepository,
         clock,
         Logger.SILENT,
-        ProjectId('nova'),
-      )
-      const arbitrumTxCountUpdater = new RpcTransactionUpdater(
-        ethereumClient,
-        txCountRepository,
-        clock,
-        Logger.SILENT,
-        ProjectId('arbitrum'),
+        ProjectId('fake-project'),
+        (count) => count - 1,
       )
 
-      await novaTxCountUpdater.updateBlock(1)
-      await arbitrumTxCountUpdater.updateBlock(1)
-      await arbitrumTxCountUpdater.updateBlock(22207818)
+      await rpcTransactionUpdater.updateBlock(1)
 
       expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             timestamp: TIME_0,
             blockNumber: 1,
-            projectId: ProjectId('nova'),
-            count: 1,
-          },
-        ],
-        [
-          {
-            timestamp: TIME_0,
-            blockNumber: 1,
-            projectId: ProjectId('arbitrum'),
-            count: 2,
-          },
-        ],
-        [
-          {
-            timestamp: TIME_0,
-            blockNumber: 1,
-            projectId: ProjectId('arbitrum'),
+            projectId: ProjectId('fake-project'),
             count: 1,
           },
         ],
