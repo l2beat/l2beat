@@ -2,14 +2,14 @@ import Router from '@koa/router'
 import { AssetId, branded, ProjectId } from '@l2beat/types'
 import { z } from 'zod'
 
-import { ReportController } from '../controllers/report/ReportController'
+import { TvlController } from '../controllers/tvl/TvlController'
 import { withTypedContext } from './types'
 
-export function createReportRouter(reportController: ReportController) {
+export function createTvlRouter(tvlController: TvlController) {
   const router = new Router()
 
-  router.get('/api/main', async (ctx) => {
-    const data = await reportController.getTvlApiResponse()
+  router.get(['/api/main', '/api/tvl'], async (ctx) => {
+    const data = await tvlController.getTvlApiResponse()
     if (!data) {
       ctx.status = 404
       return
@@ -28,7 +28,7 @@ export function createReportRouter(reportController: ReportController) {
       }),
       async (ctx) => {
         const { projectId, assetId } = ctx.params
-        const chart = await reportController.getProjectAssetChart(
+        const chart = await tvlController.getProjectAssetChart(
           projectId,
           assetId,
         )

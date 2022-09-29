@@ -9,8 +9,8 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { asNumber } from '../../../../src/api/controllers/report/asNumber'
-import { generateTvlApiResponse } from '../../../../src/api/controllers/report/generateTvlApiResponse'
+import { asNumber } from '../../../../src/api/controllers/tvl/asNumber'
+import { generateTvlApiResponse } from '../../../../src/api/controllers/tvl/generateTvlApiResponse'
 import { AggregateReportRecord } from '../../../../src/peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../../src/peripherals/database/ReportRepository'
 
