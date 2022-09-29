@@ -31,6 +31,6 @@ export function getActivityViewEntry(
     slug: project.display.slug,
     tpsDaily: tpsDaily?.toString() ?? '',
     tpsWeeklyChange,
-    transactionsWeeklyCount,
+    transactionsWeeklyCount: transactionsWeeklyCount?.toString() ?? '',
   }
 }

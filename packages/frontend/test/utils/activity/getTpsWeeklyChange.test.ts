@@ -29,7 +29,7 @@ describe(getTpsWeeklyChange.name, () => {
     expect(result).toEqual('')
   })
   it('returns empty string if data array is too short', () => {
-    const result = getTpsWeeklyChange([])
+    const result = getTpsWeeklyChange([[new UnixTime(1), ONE_TPS]])
 
     expect(result).toEqual('')
   })

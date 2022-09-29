@@ -20,7 +20,7 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config),
-      tpsDaily: tpsDaily?.toString() ?? '' ,
+      tpsDaily: tpsDaily?.toString() ?? '',
       tpsWeeklyChange,
       apiEndpoint: '/api/scaling-activity.json',
       activityView: getActivityView(config.layer2s, activityApiResponse),
