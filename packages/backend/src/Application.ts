@@ -1,3 +1,4 @@
+import Router from '@koa/router'
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
 import { providers } from 'ethers'
 import { compact } from 'lodash'
@@ -70,16 +71,6 @@ export class Application {
       logger,
     )
     const eventRepository = new EventRepository(database, logger)
-    const rpcTransactionCountRepository = new RpcTransactionCountRepository(
-      database,
-      logger,
-    )
-    const starkexTransactionCountRepository =
-      new StarkexTransactionCountRepository(database, logger)
-    const zksyncTransactionRepository = new ZksyncTransactionRepository(
-      database,
-      logger,
-    )
 
     const http = new HttpClient()
 
@@ -101,17 +92,6 @@ export class Application {
       http,
       logger,
     )
-
-    const starkexClient =
-      config.transactionCountSync &&
-      new StarkexClient(
-        config.transactionCountSync.starkexApiUrl,
-        config.transactionCountSync.starkexApiKey,
-        http,
-        logger,
-      )
-
-    const zksyncClient = new ZksyncClient(http, logger)
 
     // #endregion
     // #region core
@@ -165,35 +145,6 @@ export class Application {
       config.projects,
       logger,
     )
-
-    const rpcTransactionUpdaters =
-      config.transactionCountSync &&
-      createRpcTransactionUpdaters(
-        config,
-        rpcTransactionCountRepository,
-        clock,
-        logger,
-      )
-
-    const starkexTransactionUpdaters =
-      config.transactionCountSync &&
-      createStarkexTransactionUpdaters(
-        config,
-        starkexTransactionCountRepository,
-        starkexClient!,
-        clock,
-        logger,
-      )
-
-    const zksyncTransactionUpdater =
-      config.transactionCountSync &&
-      new ZksyncTransactionUpdater(
-        zksyncClient,
-        zksyncTransactionRepository,
-        clock,
-        logger,
-      )
-
     // #endregion
     // #region api
 
@@ -225,13 +176,13 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
-    const activityController =
-      config.transactionCountSync &&
-      new ActivityController([
-        ...rpcTransactionUpdaters!,
-        ...starkexTransactionUpdaters!,
-        zksyncTransactionUpdater!,
-      ])
+    const activityModule = getActivityModule(
+      config,
+      logger,
+      http,
+      database,
+      clock,
+    )
 
     const apiServer = new ApiServer(
       config.port,
@@ -242,8 +193,7 @@ export class Application {
         createStatusRouter(statusController),
         createDydxRouter(dydxController),
         createEventRouter(eventController),
-        config.transactionCountSync &&
-          createActivityRouter(activityController!),
+        activityModule.router,
       ]),
     )
 
@@ -263,14 +213,8 @@ export class Application {
         await balanceUpdater.start()
         await reportUpdater.start()
 
-        if (config.transactionCountSync) {
-          for (const updater of rpcTransactionUpdaters!) {
-            updater.start()
-          }
-          for (const updater of starkexTransactionUpdaters!) {
-            updater.start()
-          }
-          zksyncTransactionUpdater!.start()
+        if (activityModule.start) {
+          activityModule.start()
         }
 
         if (config.eventsSyncEnabled) {
@@ -281,4 +225,86 @@ export class Application {
 
     // #endregion
   }
+}
+
+function getActivityModule(
+  config: Config,
+  logger: Logger,
+  http: HttpClient,
+  database: Database,
+  clock: Clock,
+): AppModule {
+  if (!config.transactionCountSync) {
+    return {}
+  }
+
+  const starkexClient = new StarkexClient(
+    config.transactionCountSync.starkexApiUrl,
+    config.transactionCountSync.starkexApiKey,
+    http,
+    logger,
+  )
+
+  const zksyncClient = new ZksyncClient(http, logger)
+
+  const rpcTransactionCountRepository = new RpcTransactionCountRepository(
+    database,
+    logger,
+  )
+  const starkexTransactionCountRepository =
+    new StarkexTransactionCountRepository(database, logger)
+  const zksyncTransactionRepository = new ZksyncTransactionRepository(
+    database,
+    logger,
+  )
+
+  const rpcTransactionUpdaters = createRpcTransactionUpdaters(
+    config,
+    rpcTransactionCountRepository,
+    clock,
+    logger,
+  )
+
+  const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
+    config,
+    starkexTransactionCountRepository,
+    starkexClient,
+    clock,
+    logger,
+  )
+
+  const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
+    zksyncClient,
+    zksyncTransactionRepository,
+    clock,
+    logger,
+  )
+
+  const activityController = new ActivityController([
+    ...rpcTransactionUpdaters,
+    ...starkexTransactionUpdaters,
+    zksyncTransactionUpdater,
+  ])
+
+  const router = createActivityRouter(activityController)
+
+  const start = () => {
+    for (const updater of rpcTransactionUpdaters) {
+      updater.start()
+    }
+    for (const updater of starkexTransactionUpdaters) {
+      updater.start()
+    }
+    zksyncTransactionUpdater.start()
+  }
+
+  return {
+    router,
+    start,
+  }
+}
+
+interface AppModule {
+  start?: () => void
+  router?: Router
 }
