@@ -3,14 +3,14 @@ import { expect } from 'earljs'
 
 import { getTpsDaily } from '../../../src/utils/activity/getTpsDaily'
 
-const SECONDS_IN_A_DAY = 24 * 60 * 60
+const ONE_TPS = 24 * 60 * 60
 
 describe(getTpsDaily.name, () => {
   it('calculates correctly', () => {
     const data: ActivityApiChartPoint[] = [
       [new UnixTime(0), 0],
       [new UnixTime(1), 1],
-      [new UnixTime(2), SECONDS_IN_A_DAY],
+      [new UnixTime(2), ONE_TPS],
     ]
 
     const result = getTpsDaily(data)
@@ -33,7 +33,7 @@ describe(getTpsDaily.name, () => {
     const data: ActivityApiChartPoint[] = [
       [new UnixTime(0), 0],
       [new UnixTime(1), 1],
-      [new UnixTime(2), SECONDS_IN_A_DAY * 1.456],
+      [new UnixTime(2), ONE_TPS * 1.456],
     ]
 
     const result = getTpsDaily(data)
