@@ -4,13 +4,13 @@ export function getTransactionWeeklyCount(
   data: ActivityApiChartPoint[] | undefined,
 ): string {
   if (data === undefined) {
-    return '-'
+    return ''
   }
 
   const lastSevenDays = data.slice(-7)
 
   if (lastSevenDays === undefined) {
-    return '-'
+    return ''
   }
 
   return lastSevenDays

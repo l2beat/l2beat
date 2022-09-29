@@ -1,13 +1,13 @@
 import { ActivityApiChartPoint } from '@l2beat/types'
 
-
-export function getTpsDaily(data: ActivityApiChartPoint[] | undefined): string {
+export function getTpsDaily(
+  data: ActivityApiChartPoint[] | undefined,
+): number | undefined {
   if (data === undefined) {
-    return ''
+    return undefined
   }
 
-const SECONDS_IN_A_DAY = 24 * 60 * 60
+  const SECONDS_IN_A_DAY = 24 * 60 * 60
 
-return ((data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY).toFixed(2)
-
+  return Math.round(((data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY) * 100) / 100
 }
