@@ -14,8 +14,10 @@ import { Page } from '../../components/Page'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
 
 export interface BridgesTvlPageProps {
-  tvl: string
-  sevenDayChange: string
+  bridgesTvl: string
+  bridgesTvlSevenDayChange: string
+  combinedTvl: string
+  combinedTvlSevenDayChange: string
   apiEndpoint: string
   tvlView: BridgesTvlViewProps
   footer: FooterProps
@@ -27,11 +29,24 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
     <Page navbar={props.navbar}>
       <BridgesPageSelection selected="tvl" />
       <main>
-        <Header
-          title="Value locked"
-          tvl={props.tvl}
-          tvlWeeklyChange={props.sevenDayChange}
-        />
+        <label>
+          <input id="combined-bridges" type="checkbox" />{' '}
+          <span>Include Layer2s as bridges</span>
+        </label>
+        <div data-bridges-only>
+          <Header
+            title="Value locked"
+            tvl={props.bridgesTvl}
+            tvlWeeklyChange={props.bridgesTvlSevenDayChange}
+          />
+        </div>
+        <div data-combined-only className="hidden">
+          <Header
+            title="Value locked"
+            tvl={props.combinedTvl}
+            tvlWeeklyChange={props.combinedTvlSevenDayChange}
+          />
+        </div>
         <Chart endpoint={props.apiEndpoint} />
         <BridgesTvlView {...props.tvlView} />
         <OtherSites />

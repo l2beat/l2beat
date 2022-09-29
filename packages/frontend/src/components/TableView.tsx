@@ -1,20 +1,25 @@
 import cx from 'classnames'
-import React, { ReactNode } from 'react'
+import React, { HTMLAttributes, ReactNode } from 'react'
 
 interface Props<T> {
   className?: string
   items: T[]
-  columns: Column<T>[]
+  columns: ColumnConfig<T>[]
+  rows?: RowConfig<T>
 }
 
-export interface Column<T> {
+export interface ColumnConfig<T> {
   name: ReactNode
   shortName?: ReactNode
   alignRight?: true
   getValue: (value: T, index: number) => ReactNode
 }
 
-export function TableView<T>({ className, items, columns }: Props<T>) {
+export interface RowConfig<T> {
+  getProps: (value: T, index: number) => HTMLAttributes<HTMLTableRowElement>
+}
+
+export function TableView<T>({ className, items, columns, rows }: Props<T>) {
   return (
     <div className={cx('TableView', className)}>
       <table className="TableView-Table">
@@ -34,7 +39,7 @@ export function TableView<T>({ className, items, columns }: Props<T>) {
         </thead>
         <tbody className="TableView-Body">
           {items.map((item, i) => (
-            <tr key={i}>
+            <tr key={i} {...rows?.getProps(item, i)}>
               {columns.map((column, j) => (
                 <td key={j} className={column.alignRight ? 'right' : undefined}>
                   {column.getValue(item, i)}
