@@ -1,10 +1,13 @@
 import { UnixTime } from '@l2beat/types'
 
+export type AssessCount = (count: number, blockNumber: number) => number
+
 interface AlchemyProvider {
   type: 'rpc'
   provider: 'alchemy'
   networkName: string
   callsPerMinute?: number
+  assessCount?: AssessCount
 }
 
 interface JsonRpcProvider {
@@ -12,6 +15,7 @@ interface JsonRpcProvider {
   provider: 'jsonRpc'
   url: string
   callsPerMinute?: number
+  assessCount?: AssessCount
 }
 
 export type RpcTransactionApi = AlchemyProvider | JsonRpcProvider

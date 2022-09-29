@@ -1,4 +1,5 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
@@ -10,6 +11,8 @@ import { TransactionCounter } from './TransactionCounter'
 // This constraint will be here only to sync transactions on stage
 const BLOCK_QUEUE_LIMIT = 200_000
 
+const identity = (x: number) => x
+
 export class RpcTransactionUpdater implements TransactionCounter {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new UniqueTaskQueue(
@@ -19,6 +22,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       workers: 100,
     },
   )
+  private assessCount: AssessCount
 
   constructor(
     private ethereumClient: EthereumClient,
@@ -26,8 +30,10 @@ export class RpcTransactionUpdater implements TransactionCounter {
     private clock: Clock,
     private logger: Logger,
     private projectId: ProjectId,
+    assessCount?: AssessCount,
   ) {
     this.logger = logger.for(this)
+    this.assessCount = assessCount ?? identity
   }
 
   start() {
@@ -48,30 +54,19 @@ export class RpcTransactionUpdater implements TransactionCounter {
       return
     }
 
+    const count = block.transactions.length
+
     await this.rpcTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
-      count: this.calcTransactionCount(number, block.transactions),
+      count: this.assessCount(count, number),
     })
 
     this.logger.debug('Block updated', {
       project: this.projectId.toString(),
       blockNumber: block.number,
     })
-  }
-
-  // We need to subtract the one system transaction that appear in each Nitro block
-  private calcTransactionCount(blockNumber: number, transactions: string[]) {
-    if (this.projectId === ProjectId('nova')) {
-      return transactions.length - 1
-    }
-
-    if (this.projectId === ProjectId('arbitrum') && blockNumber >= 22207818) {
-      return transactions.length - 1
-    }
-
-    return transactions.length
   }
 
   async update() {
