@@ -27,11 +27,28 @@ const getMockData = (): ActivityApiResponse => {
     data.push([START.add(i, 'days'), 100_000 + i * 10_000])
   }
 
+  const arbitrumData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 0.6])
+  const optimismData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 0.3])
+  const dydxData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 0.1])
+
   return {
     combined: {
       types: ['timestamp', 'daily tx count'],
       data,
     },
-    projects: {},
+    projects: {
+      arbitrum: {
+        types: ['timestamp', 'daily tx count'],
+        data: arbitrumData,
+      },
+      optimism: {
+        types: ['timestamp', 'daily tx count'],
+        data: optimismData,
+      },
+      dydx: {
+        types: ['timestamp', 'daily tx count'],
+        data: dydxData,
+      },
+    },
   }
 }

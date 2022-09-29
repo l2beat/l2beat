@@ -2,7 +2,8 @@ import { ActivityApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
-import { getPercentageChange } from '../../../utils/utils'
+import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
+import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { Wrapped } from '../../Page'
 import { ActivityPageProps } from '../view/ActivityPage'
 import { getActivityView } from './getActivityView'
@@ -12,20 +13,17 @@ export function getProps(
   config: Config,
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityPageProps> {
-  const SECONDS_IN_A_DAY = 24 * 60 * 60
-  const tps =
-    (activityApiResponse.combined.data.at(-1)?.[1] ?? 0) / SECONDS_IN_A_DAY
-  const tpsSevenDaysAgo =
-    (activityApiResponse.combined.data.at(-7)?.[1] ?? 0) / SECONDS_IN_A_DAY
-  const sevenDayChange = getPercentageChange(tps, tpsSevenDaysAgo)
+  const data = activityApiResponse.combined.data
+  const tpsDaily = getTpsDaily(data)
+  const tpsWeeklyChange = getTpsWeeklyChange(data)
 
   return {
     props: {
       navbar: getNavbarProps(config),
-      tpsDaily: tps.toFixed(2).toString(),
-      tpsWeeklyChange: sevenDayChange,
+      tpsDaily: tpsDaily?.toString() ?? '',
+      tpsWeeklyChange,
       apiEndpoint: '/api/scaling-activity.json',
-      activityView: getActivityView(),
+      activityView: getActivityView(config.layer2s, activityApiResponse),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },
