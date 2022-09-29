@@ -6,6 +6,7 @@ import {
 } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
+import { assert } from '../../tools/assert'
 import {
   ZksyncBlocksResultSchema,
   ZksyncResponse,
@@ -52,9 +53,7 @@ export class ZksyncClient {
     const count = firstPage.pagination.count
     while (count - transactions.length > 0) {
       const lastTx = transactions.at(-1)
-      if (!lastTx) {
-        throw new Error('Programmer error: Transactions list empty!')
-      }
+      assert(lastTx, 'Transactions list empty!')
 
       const nextPage = await this.getTransactionsPage(
         blockNumber,

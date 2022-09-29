@@ -3,6 +3,7 @@ import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
+import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -54,9 +55,8 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
-    if (!timestampsMatch) {
-      throw new Error('Programmer error: Timestamps must match')
-    }
+    assert(timestampsMatch, 'Timestamps must match')
+
     await knex.transaction(async (trx) => {
       await trx('reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
