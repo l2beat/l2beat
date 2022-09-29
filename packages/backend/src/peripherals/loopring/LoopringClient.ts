@@ -15,10 +15,19 @@ export class LoopringClient {
     const rateLimiter = new RateLimiter({
       callsPerMinute: 3000,
     })
-    this.getBlock = rateLimiter.wrap(this.getBlock.bind(this))
+    this.call = rateLimiter.wrap(this.call.bind(this))
   }
 
-  async getBlock(block: Block) {
+  async getFinalizedBlockNumber() {
+    const block = await this.call('finalized')
+    return block.blockId
+  }
+
+  async getBlock(blockNumber: number) {
+    return await this.call(blockNumber)
+  }
+
+  private async call(block: Block) {
     const query = new URLSearchParams({ id: block.toString() })
     const url = `https://api3.loopring.io/api/v3/block/getBlock?${query.toString()}`
 
