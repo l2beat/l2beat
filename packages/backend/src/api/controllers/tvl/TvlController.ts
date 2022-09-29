@@ -20,7 +20,7 @@ import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getChartPoints } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
 
-export class ReportController {
+export class TvlController {
   constructor(
     private reportStatusRepository: ReportStatusRepository,
     private aggregateReportRepository: AggregateReportRepository,
@@ -48,14 +48,14 @@ export class ReportController {
         this.aggregateReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(timestamp),
       ])
-    const apiMain = generateTvlApiResponse(
+    const tvlApiResponse = generateTvlApiResponse(
       hourlyReports,
       sixHourlyReports,
       dailyReports,
       latestReports,
       this.projects.map((x) => x.projectId),
     )
-    return apiMain
+    return tvlApiResponse
   }
 
   private getChartData(

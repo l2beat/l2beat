@@ -9,7 +9,7 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { ReportController } from '../../../../src/api/controllers/report/ReportController'
+import { TvlController } from '../../../../src/api/controllers/tvl/TvlController'
 import { ReportProject } from '../../../../src/core/reports/ReportProject'
 import { AggregateReportRepository } from '../../../../src/peripherals/database/AggregateReportRepository'
 import {
@@ -33,10 +33,10 @@ const OPTIMISM: ReportProject = {
   ],
 }
 
-describe(ReportController.name, () => {
-  describe(ReportController.prototype.getProjectAssetChart.name, () => {
+describe(TvlController.name, () => {
+  describe(TvlController.prototype.getProjectAssetChart.name, () => {
     it('returns undefined if project does not exist', async () => {
-      const controller = new ReportController(
+      const controller = new TvlController(
         mock<ReportStatusRepository>(),
         mock<AggregateReportRepository>(),
         mock<ReportRepository>(),
@@ -52,7 +52,7 @@ describe(ReportController.name, () => {
     })
 
     it('returns undefined if asset does not exist', async () => {
-      const controller = new ReportController(
+      const controller = new TvlController(
         mock<ReportStatusRepository>(),
         mock<AggregateReportRepository>(),
         mock<ReportRepository>(),
@@ -76,7 +76,7 @@ describe(ReportController.name, () => {
         projectId: OPTIMISM.projectId,
       }
 
-      const controller = new ReportController(
+      const controller = new TvlController(
         mock<ReportStatusRepository>({
           async findLatestTimestamp() {
             return START
