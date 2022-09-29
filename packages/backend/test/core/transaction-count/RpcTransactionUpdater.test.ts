@@ -7,7 +7,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
 import { RpcTransactionUpdater } from '../../../src/core/transaction-count/RpcTransactionUpdater'
-import { RpcTransactionCountRepository } from '../../../src/peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionRepository } from '../../../src/peripherals/database/BlockTransactionRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
 describe(RpcTransactionUpdater.name, () => {
@@ -17,7 +17,7 @@ describe(RpcTransactionUpdater.name, () => {
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
       })
-      const txCountRepository = mock<RpcTransactionCountRepository>({
+      const blockTransactionRepository = mock<BlockTransactionRepository>({
         getMissingRangesByProject: async () => [
           [-Infinity, -1],
           [2, 3],
@@ -34,7 +34,7 @@ describe(RpcTransactionUpdater.name, () => {
       })
       const blockTxCountUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        txCountRepository,
+        blockTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -53,7 +53,7 @@ describe(RpcTransactionUpdater.name, () => {
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
       })
-      const txCountRepository = mock<RpcTransactionCountRepository>({
+      const blockTransactionRepository = mock<BlockTransactionRepository>({
         getMissingRangesByProject: async () => [
           [-Infinity, -1],
           [2, 3],
@@ -70,7 +70,7 @@ describe(RpcTransactionUpdater.name, () => {
       })
       const blockTxCountUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        txCountRepository,
+        blockTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -106,7 +106,7 @@ describe(RpcTransactionUpdater.name, () => {
           ),
         getBlockNumber: async () => 5n,
       })
-      const txCountRepository = mock<RpcTransactionCountRepository>({
+      const blockTransactionRepository = mock<BlockTransactionRepository>({
         add: async () => '',
       })
       const clock = mock<Clock>({
@@ -114,7 +114,7 @@ describe(RpcTransactionUpdater.name, () => {
       })
       const blockTxCountUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        txCountRepository,
+        blockTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -123,7 +123,7 @@ describe(RpcTransactionUpdater.name, () => {
       await blockTxCountUpdater.updateBlock(1)
       await blockTxCountUpdater.updateBlock(2)
 
-      expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
+      expect(blockTransactionRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             timestamp: TIME_0,
@@ -153,7 +153,7 @@ describe(RpcTransactionUpdater.name, () => {
             transactions: ['t0', 't1'],
           }),
       })
-      const txCountRepository = mock<RpcTransactionCountRepository>({
+      const blockTransactionRepository = mock<BlockTransactionRepository>({
         add: async () => '',
       })
       const clock = mock<Clock>({
@@ -162,7 +162,7 @@ describe(RpcTransactionUpdater.name, () => {
 
       const rpcTransactionUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        txCountRepository,
+        blockTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -171,7 +171,7 @@ describe(RpcTransactionUpdater.name, () => {
 
       await rpcTransactionUpdater.updateBlock(1)
 
-      expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
+      expect(blockTransactionRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             timestamp: TIME_0,

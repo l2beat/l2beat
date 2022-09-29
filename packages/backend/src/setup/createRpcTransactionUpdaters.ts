@@ -6,13 +6,13 @@ import { providers } from 'ethers'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
-import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionRepository } from '../peripherals/database/BlockTransactionRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { assert } from '../tools/assert'
 
 export function createRpcTransactionUpdaters(
   config: Config,
-  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  blockTransactionRepository: BlockTransactionRepository,
   clock: Clock,
   logger: Logger,
 ) {
@@ -33,7 +33,7 @@ export function createRpcTransactionUpdaters(
 
       const transactionUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        rpcTransactionCountRepository,
+        blockTransactionRepository,
         clock,
         logger,
         project.projectId,

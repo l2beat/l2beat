@@ -3,14 +3,14 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import {
-  RpcTransactionCountRecord,
-  RpcTransactionCountRepository,
-} from '../../../src/peripherals/database/RpcTransactionCountRepository'
+  BlockTransactionRecord,
+  BlockTransactionRepository,
+} from '../../../src/peripherals/database/BlockTransactionRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
-describe(RpcTransactionCountRepository.name, () => {
+describe(BlockTransactionRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new RpcTransactionCountRepository(database, Logger.SILENT)
+  const repository = new BlockTransactionRepository(database, Logger.SILENT)
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -20,7 +20,7 @@ describe(RpcTransactionCountRepository.name, () => {
   })
 
   describe(
-    RpcTransactionCountRepository.prototype.getMissingRangesByProject.name,
+    BlockTransactionRepository.prototype.getMissingRangesByProject.name,
     () => {
       it('works with an empty repository', async () => {
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
@@ -110,7 +110,7 @@ describe(RpcTransactionCountRepository.name, () => {
   )
 
   describe(
-    RpcTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    BlockTransactionRepository.prototype.getDailyTransactionCount.name,
     () => {
       it('works with empty repository', async () => {
         expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
@@ -194,8 +194,8 @@ describe(RpcTransactionCountRepository.name, () => {
 })
 
 export function fakeTransactionCount(
-  txCount?: Partial<RpcTransactionCountRecord>,
-): RpcTransactionCountRecord {
+  txCount?: Partial<BlockTransactionRecord>,
+): BlockTransactionRecord {
   return {
     projectId: ProjectId('fake-project'),
     timestamp: new UnixTime(0),

@@ -5,7 +5,7 @@ import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
-import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionRepository } from '../peripherals/database/BlockTransactionRepository'
 import { Database } from '../peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
@@ -34,7 +34,7 @@ export function getActivityModule(
 
   const zksyncClient = new ZksyncClient(http, logger)
 
-  const rpcTransactionCountRepository = new RpcTransactionCountRepository(
+  const blockTransactionRepository = new BlockTransactionRepository(
     database,
     logger,
   )
@@ -47,7 +47,7 @@ export function getActivityModule(
 
   const rpcTransactionUpdaters = createRpcTransactionUpdaters(
     config,
-    rpcTransactionCountRepository,
+    blockTransactionRepository,
     clock,
     logger,
   )
