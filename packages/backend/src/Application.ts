@@ -40,7 +40,10 @@ import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
 import { StarkexClient } from './peripherals/starkex'
 import { ZksyncClient } from './peripherals/zksync'
-import { createRpcTransactionUpdaters } from './setup/createRpcTransactionUpdaters'
+import {
+  createEthereumTransactionUpdater,
+  createLayer2RpcTransactionUpdaters,
+} from './setup/createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './setup/createStarkexTransactionUpdaters'
 
 export class Application {
@@ -163,7 +166,7 @@ export class Application {
       logger,
     )
 
-    const rpcTransactionUpdaters = createRpcTransactionUpdaters(
+    const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
       config,
       rpcTransactionCountRepository,
       clock,
@@ -181,6 +184,12 @@ export class Application {
     const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
       zksyncClient,
       zksyncTransactionRepository,
+      clock,
+      logger,
+    )
+
+    const ethereumTransactionUpdater = createEthereumTransactionUpdater(
+      rpcTransactionCountRepository,
       clock,
       logger,
     )
@@ -216,11 +225,14 @@ export class Application {
 
     const dydxController = new DydxController(aggregateReportRepository)
 
-    const activityController = new ActivityController([
-      ...rpcTransactionUpdaters,
-      ...starkexTransactionUpdaters,
-      zksyncTransactionUpdater,
-    ])
+    const activityController = new ActivityController(
+      [
+        ...layer2RpcTransactionUpdaters,
+        ...starkexTransactionUpdaters,
+        zksyncTransactionUpdater,
+      ],
+      ethereumTransactionUpdater,
+    )
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
@@ -248,13 +260,14 @@ export class Application {
         await reportUpdater.start()
 
         if (config.transactionCountSyncEnabled) {
-          for (const updater of rpcTransactionUpdaters) {
+          for (const updater of layer2RpcTransactionUpdaters) {
             updater.start()
           }
           for (const updater of starkexTransactionUpdaters) {
             updater.start()
           }
           zksyncTransactionUpdater.start()
+          ethereumTransactionUpdater.start()
         }
 
         if (config.eventsSyncEnabled) {

@@ -21,7 +21,7 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     private clock: Clock,
     private logger: Logger,
     private product: StarkexProduct,
-    private projectId: ProjectId,
+    readonly projectId: ProjectId,
     startTimestamp: UnixTime,
   ) {
     this.logger = logger.for(this)
@@ -78,13 +78,8 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    const counts =
-      await this.starkexTransactionCountRepository.getDailyTransactionCount(
-        this.projectId,
-      )
-    return {
-      projectId: this.projectId,
-      counts,
-    }
+    return this.starkexTransactionCountRepository.getDailyTransactionCount(
+      this.projectId,
+    )
   }
 }

@@ -1,37 +1,52 @@
 import {
+  ActivityApiChart,
   ActivityApiChartPoint,
   ActivityApiResponse,
   ProjectId,
-  UnixTime,
 } from '@l2beat/types'
 
-import { TransactionCounter } from '../../core/transaction-count/TransactionCounter'
+import {
+  DailyTransactionCount,
+  TransactionCounter,
+} from '../../core/transaction-count/TransactionCounter'
 
-interface ProjectCounts {
+interface Layer2Counts {
   projectId: ProjectId
-  counts: { timestamp: UnixTime; count: number }[]
+  counts: DailyTransactionCount[]
 }
-
 export class ActivityController {
-  constructor(private transactionCounters: TransactionCounter[]) {}
+  constructor(
+    private layer2Counters: TransactionCounter[],
+    private ethereumCounter: TransactionCounter,
+  ) {}
 
   async getTransactionActivity(): Promise<ActivityApiResponse> {
-    const projectsCounts = await Promise.all(
-      this.transactionCounters.map((c) => c.getDailyTransactionCounts()),
-    )
+    const [layer2Counts, ethereumCounts] = await Promise.all([
+      this.getLayer2Counts(),
+      this.ethereumCounter.getDailyTransactionCounts(),
+    ])
 
     return {
-      combined: this.toCombinedActivity(projectsCounts),
-      projects: this.toProjectsActivity(projectsCounts),
+      combined: this.toCombinedActivity(layer2Counts),
+      projects: this.toProjectsActivity(layer2Counts),
+      ethereum: this.countsToChart(ethereumCounts),
     }
   }
 
+  private async getLayer2Counts(): Promise<Layer2Counts[]> {
+    return Promise.all(
+      this.layer2Counters.map(async (c) => ({
+        projectId: c.projectId,
+        counts: await c.getDailyTransactionCounts(),
+      })),
+    )
+  }
+
   private toCombinedActivity(
-    projectsCounts: ProjectCounts[],
+    layer2Counts: Layer2Counts[],
   ): ActivityApiResponse['combined'] {
-    return {
-      types: ['timestamp', 'daily tx count'],
-      data: projectsCounts
+    return this.formatChart(
+      layer2Counts
         .map((p) => p.counts)
         .flat()
         .sort((a, b) => +a.timestamp - +b.timestamp)
@@ -44,19 +59,27 @@ export class ActivityController {
           }
           return acc
         }, []),
-    }
+    )
   }
 
   private toProjectsActivity(
-    projectActivities: ProjectCounts[],
+    layer2Counts: Layer2Counts[],
   ): ActivityApiResponse['projects'] {
     const projects: ActivityApiResponse['projects'] = {}
-    for (const { projectId, counts } of projectActivities) {
-      projects[projectId.toString()] = {
-        data: counts.map((c) => [c.timestamp, c.count]),
-        types: ['timestamp', 'daily tx count'],
-      }
+    for (const { projectId, counts } of layer2Counts) {
+      projects[projectId.toString()] = this.countsToChart(counts)
     }
     return projects
+  }
+
+  private countsToChart(counts: DailyTransactionCount[]) {
+    return this.formatChart(counts.map((c) => [c.timestamp, c.count]))
+  }
+
+  private formatChart(data: ActivityApiChartPoint[]): ActivityApiChart {
+    return {
+      types: ['timestamp', 'daily tx count'],
+      data,
+    }
   }
 }

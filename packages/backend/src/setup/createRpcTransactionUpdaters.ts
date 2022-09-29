@@ -9,13 +9,14 @@ import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionU
 import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 
-export function createRpcTransactionUpdaters(
+export function createLayer2RpcTransactionUpdaters(
   config: Config,
   rpcTransactionCountRepository: RpcTransactionCountRepository,
   clock: Clock,
   logger: Logger,
 ) {
   const rpcUpdaters: RpcTransactionUpdater[] = []
+
   for (const project of config.projects) {
     if (project.transactionApi?.type === 'rpc') {
       const l2Provider = createL2Provider(
@@ -43,6 +44,23 @@ export function createRpcTransactionUpdaters(
   }
 
   return rpcUpdaters
+}
+
+export function createEthereumTransactionUpdater(
+  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  clock: Clock,
+  logger: Logger,
+) {
+  const provider = providers.getDefaultProvider()
+  const client = new EthereumClient(provider, logger)
+  const updater = new RpcTransactionUpdater(
+    client,
+    rpcTransactionCountRepository,
+    clock,
+    logger,
+    ProjectId('ethereum'),
+  )
+  return updater
 }
 
 function createL2Provider(
