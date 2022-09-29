@@ -36,6 +36,10 @@ export interface ScalingTvlViewEntry {
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const columns: Column<ScalingTvlViewEntry>[] = [
     {
+      name: 'No.',
+      getValue: (entry, index) => `${index + 1}.`,
+    },
+    {
       name: 'Name',
       getValue: (project) => <ProjectLink type="layer2" project={project} />,
     },

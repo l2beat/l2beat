@@ -22,6 +22,10 @@ export interface BridgesRiskViewEntry {
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   const columns: Column<BridgesRiskViewEntry>[] = [
     {
+      name: 'No.',
+      getValue: (entry, index) => `${index + 1}.`,
+    },
+    {
       name: 'Name',
       getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
     },

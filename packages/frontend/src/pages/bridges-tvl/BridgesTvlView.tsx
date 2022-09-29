@@ -23,6 +23,10 @@ export interface BridgesTvlViewEntry {
 export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const columns: Column<BridgesTvlViewEntry>[] = [
     {
+      name: 'No.',
+      getValue: (entry, index) => `${index + 1}.`,
+    },
+    {
       name: 'Name',
       getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
     },

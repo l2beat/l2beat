@@ -11,7 +11,7 @@ export interface Column<T> {
   name: ReactNode
   shortName?: ReactNode
   alignRight?: true
-  getValue: (value: T) => ReactNode
+  getValue: (value: T, index: number) => ReactNode
 }
 
 export function TableView<T>({ className, items, columns }: Props<T>) {
@@ -20,7 +20,6 @@ export function TableView<T>({ className, items, columns }: Props<T>) {
       <table className="TableView-Table">
         <thead className="TableView-Header">
           <tr>
-            <th>No.</th>
             {columns.map((column, i) => (
               <th key={i} className={column.alignRight ? 'right' : undefined}>
                 <span data-wide={column.shortName ? true : undefined}>
@@ -36,10 +35,9 @@ export function TableView<T>({ className, items, columns }: Props<T>) {
         <tbody className="TableView-Body">
           {items.map((item, i) => (
             <tr key={i}>
-              <td>{i + 1}.</td>
               {columns.map((column, j) => (
                 <td key={j} className={column.alignRight ? 'right' : undefined}>
-                  {column.getValue(item)}
+                  {column.getValue(item, i)}
                 </td>
               ))}
             </tr>
