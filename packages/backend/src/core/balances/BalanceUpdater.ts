@@ -9,6 +9,7 @@ import {
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { assert } from '../../tools/assert'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { BalanceProject } from './BalanceProject'
@@ -92,9 +93,7 @@ export class BalanceUpdater {
     const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
       timestamp,
     )
-    if (!blockNumber) {
-      throw new Error('Programmer error: No timestamp for this block number')
-    }
+    assert(blockNumber, 'No timestamp for this block number')
 
     const calls = missingData.map((m) =>
       BalanceCall.encode(m.holder, m.assetId),
