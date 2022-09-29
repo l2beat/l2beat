@@ -13,7 +13,7 @@ export class LoopringClient {
   constructor(private httpClient: HttpClient, private logger: Logger) {
     this.logger = logger.for(this)
     const rateLimiter = new RateLimiter({
-      callsPerMinute: 3000,
+      callsPerMinute: 400,
     })
     this.call = rateLimiter.wrap(this.call.bind(this))
   }
