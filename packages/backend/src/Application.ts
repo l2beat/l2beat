@@ -1,16 +1,13 @@
-import Router from '@koa/router'
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
 import { providers } from 'ethers'
 import { compact } from 'lodash'
 
 import { ApiServer } from './api/ApiServer'
-import { ActivityController } from './api/controllers/ActivityController'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
 import { EventController } from './api/controllers/event/EventController'
 import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
-import { createActivityRouter } from './api/routers/ActivityRouter'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
 import { createEventRouter } from './api/routers/EventRouter'
@@ -23,7 +20,6 @@ import { Clock } from './core/Clock'
 import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
-import { ZksyncTransactionUpdater } from './core/transaction-count/ZksyncTransactionUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from './peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
@@ -33,17 +29,11 @@ import { EventRepository } from './peripherals/database/EventRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
-import { RpcTransactionCountRepository } from './peripherals/database/RpcTransactionCountRepository'
 import { Database } from './peripherals/database/shared/Database'
-import { StarkexTransactionCountRepository } from './peripherals/database/StarkexTransactionCountRepository'
-import { ZksyncTransactionRepository } from './peripherals/database/ZksyncTransactionRepository'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
-import { StarkexClient } from './peripherals/starkex'
-import { ZksyncClient } from './peripherals/zksync'
-import { createRpcTransactionUpdaters } from './setup/createRpcTransactionUpdaters'
-import { createStarkexTransactionUpdaters } from './setup/createStarkexTransactionUpdaters'
+import { getActivityModule } from './setup/modules'
 
 export class Application {
   start: () => Promise<void>
@@ -225,86 +215,4 @@ export class Application {
 
     // #endregion
   }
-}
-
-function getActivityModule(
-  config: Config,
-  logger: Logger,
-  http: HttpClient,
-  database: Database,
-  clock: Clock,
-): AppModule {
-  if (!config.transactionCountSync) {
-    return {}
-  }
-
-  const starkexClient = new StarkexClient(
-    config.transactionCountSync.starkexApiUrl,
-    config.transactionCountSync.starkexApiKey,
-    http,
-    logger,
-  )
-
-  const zksyncClient = new ZksyncClient(http, logger)
-
-  const rpcTransactionCountRepository = new RpcTransactionCountRepository(
-    database,
-    logger,
-  )
-  const starkexTransactionCountRepository =
-    new StarkexTransactionCountRepository(database, logger)
-  const zksyncTransactionRepository = new ZksyncTransactionRepository(
-    database,
-    logger,
-  )
-
-  const rpcTransactionUpdaters = createRpcTransactionUpdaters(
-    config,
-    rpcTransactionCountRepository,
-    clock,
-    logger,
-  )
-
-  const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
-    config,
-    starkexTransactionCountRepository,
-    starkexClient,
-    clock,
-    logger,
-  )
-
-  const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-    zksyncClient,
-    zksyncTransactionRepository,
-    clock,
-    logger,
-  )
-
-  const activityController = new ActivityController([
-    ...rpcTransactionUpdaters,
-    ...starkexTransactionUpdaters,
-    zksyncTransactionUpdater,
-  ])
-
-  const router = createActivityRouter(activityController)
-
-  const start = () => {
-    for (const updater of rpcTransactionUpdaters) {
-      updater.start()
-    }
-    for (const updater of starkexTransactionUpdaters) {
-      updater.start()
-    }
-    zksyncTransactionUpdater.start()
-  }
-
-  return {
-    router,
-    start,
-  }
-}
-
-interface AppModule {
-  start?: () => void
-  router?: Router
 }
