@@ -17,8 +17,6 @@ export function getTestConfig(): Config {
     coingeckoApiKey: undefined,
     alchemyApiKey: 'xXTestAlchemyKeyXx',
     etherscanApiKey: 'xXTestEtherscanKeyXx',
-    starkexApiUrl: 'xXTestStarkexApiUrlXx',
-    starkexApiKey: 'xXTestStarkexApiKeyXx',
     databaseConnection: getEnv('TEST_DB_URL', 'xXTestDatabaseUrlXx'),
     core: {
       minBlockTimestamp: new UnixTime(0),
@@ -30,8 +28,6 @@ export function getTestConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     eventsSyncEnabled: false,
-    transactionCountSyncEnabled: false,
-    arbitrumAlchemyApiKey: 'xXTestAlchemyKeyXx',
-    optimismAlchemyApiKey: 'xXTestAlchemyKeyXx',
+    transactionCountSync: false,
   }
 }

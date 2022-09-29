@@ -8,6 +8,7 @@ import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
 import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
+import { assert } from '../tools/assert'
 
 export function createRpcTransactionUpdaters(
   config: Config,
@@ -50,6 +51,8 @@ function createL2Provider(
   projectId: ProjectId,
   config: Config,
 ) {
+  assert(config.transactionCountSync)
+
   if (rpc.provider === 'jsonRpc') {
     return new providers.JsonRpcProvider({
       url: rpc.url,
@@ -59,10 +62,10 @@ function createL2Provider(
 
   let apiKey = ''
   if (projectId === ProjectId('arbitrum')) {
-    apiKey = config.arbitrumAlchemyApiKey
+    apiKey = config.transactionCountSync.arbitrumAlchemyApiKey
   }
   if (projectId === ProjectId('optimism')) {
-    apiKey = config.optimismAlchemyApiKey
+    apiKey = config.transactionCountSync.optimismAlchemyApiKey
   }
   if (!apiKey) {
     throw new Error('Please provide alchemy api key')
