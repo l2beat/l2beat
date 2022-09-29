@@ -6,14 +6,14 @@ import { ActivityController } from './api/controllers/ActivityController'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
 import { EventController } from './api/controllers/event/EventController'
-import { ReportController } from './api/controllers/report/ReportController'
 import { StatusController } from './api/controllers/status/StatusController'
+import { TvlController } from './api/controllers/tvl/TvlController'
 import { createActivityRouter } from './api/routers/ActivityRouter'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
 import { createEventRouter } from './api/routers/EventRouter'
-import { createReportRouter } from './api/routers/ReportRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
+import { createTvlRouter } from './api/routers/TvlRouter'
 import { Config } from './config'
 import { BalanceUpdater } from './core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
@@ -190,7 +190,7 @@ export class Application {
 
     const blocksController = new BlocksController(blockNumberRepository)
 
-    const reportController = new ReportController(
+    const tvlController = new TvlController(
       reportStatusRepository,
       aggregateReportRepository,
       reportRepository,
@@ -224,7 +224,7 @@ export class Application {
 
     const apiServer = new ApiServer(config.port, logger, [
       createBlocksRouter(blocksController),
-      createReportRouter(reportController),
+      createTvlRouter(tvlController),
       createStatusRouter(statusController),
       createDydxRouter(dydxController),
       createEventRouter(eventController),
