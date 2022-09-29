@@ -33,7 +33,7 @@ import { Database } from './peripherals/database/shared/Database'
 import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
-import { getActivityModule } from './setup/modules'
+import { getActivityModule } from './setup/ActivityModule'
 
 export class Application {
   start: () => Promise<void>

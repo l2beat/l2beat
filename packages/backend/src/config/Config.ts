@@ -25,12 +25,12 @@ export interface Config {
   syncEnabled: boolean
   freshStart: boolean
   eventsSyncEnabled: boolean
-  transactionCountSync?:
+  transactionCountSync:
     | {
         starkexApiUrl: string
         starkexApiKey: string
         arbitrumAlchemyApiKey: string
         optimismAlchemyApiKey: string
       }
-    | undefined
+    | false
 }

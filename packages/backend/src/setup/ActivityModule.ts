@@ -1,4 +1,3 @@
-import Router from '@koa/router'
 import { HttpClient, Logger } from '@l2beat/common'
 
 import { ActivityController } from '../api/controllers/ActivityController'
@@ -15,18 +14,13 @@ import { ZksyncClient } from '../peripherals/zksync'
 import { createRpcTransactionUpdaters } from './createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './createStarkexTransactionUpdaters'
 
-interface AppModule {
-  start?: () => void
-  router?: Router
-}
-
 export function getActivityModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
   database: Database,
   clock: Clock,
-): AppModule {
+) {
   if (!config.transactionCountSync) {
     return {}
   }
@@ -82,6 +76,8 @@ export function getActivityModule(
   const router = createActivityRouter(activityController)
 
   const start = () => {
+    logger.info('Starting Activity Module')
+
     for (const updater of rpcTransactionUpdaters) {
       updater.start()
     }

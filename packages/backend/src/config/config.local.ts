@@ -31,9 +31,9 @@ export function getLocalConfig(): Config {
       priceStrategy: { type: 'market' },
     })),
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
-    freshStart: getEnv.boolean('FRESH_START', false),
-    eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
+    syncEnabled: !getEnv.featureFlag('SYNC_DISABLED'),
+    freshStart: getEnv.featureFlag('FRESH_START'),
+    eventsSyncEnabled: getEnv.featureFlag('EVENTS_ENABLED'),
     transactionCountSync: getEnv.featureFlag('TRANSACTION_COUNT_ENABLED') && {
       starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
