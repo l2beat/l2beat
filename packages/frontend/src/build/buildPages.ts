@@ -1,7 +1,9 @@
+import { HttpClient } from '@l2beat/common'
 import { bridges, layer2s } from '@l2beat/config'
 import { ProjectId, TvlApiResponse } from '@l2beat/types'
 
 import { renderPages } from '../pages'
+import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchActivityApi } from './fetchActivityApi'
@@ -15,11 +17,18 @@ main().catch((e) => {
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'production'
   const config = getConfig(env)
-  const tvlApiResponse = await fetchTvlApi(
-    config.backend.apiUrl,
+
+  const http: JsonHttpClient = new JsonHttpClient(
+    new HttpClient(),
     config.backend.skipCache,
   )
-  const activityApiResponse = await fetchActivityApi(config.backend.apiUrl)
+
+  const tvlApiResponse = await fetchTvlApi(config.backend.apiUrl, http)
+
+  const activityApiResponse = await fetchActivityApi(
+    config.backend.apiUrl,
+    http,
+  )
 
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
