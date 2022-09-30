@@ -5,24 +5,20 @@ import {
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
+  ProjectPermission,
   ProjectRiskViewEntry,
   ProjectTechnologyChoice,
 } from '../../common'
-import { Layer2Permission } from '../../layer2s'
 
 export interface Bridge {
   type: 'bridge'
   id: ProjectId
   display: BridgeDisplay
   config: BridgeConfig
-  riskView?: {
-    validation?: ProjectRiskViewEntry
-    sourceUpgradeability?: ProjectRiskViewEntry
-    destinationToken?: ProjectRiskViewEntry
-  }
+  riskView?: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
-  permissions?: Layer2Permission[]
+  permissions?: ProjectPermission[]
   news?: News[]
 }
 
@@ -38,9 +34,15 @@ export interface BridgeConfig {
   escrows: ProjectEscrow[]
 }
 
+export interface BridgeRiskView {
+  validation?: ProjectRiskViewEntry
+  sourceUpgradeability?: ProjectRiskViewEntry
+  destinationToken?: ProjectRiskViewEntry
+}
+
 export interface BridgeTechnology {
   canonical?: boolean
-  type: string
+  category: string
   destination: string[]
   // TODO: replace them with actual values
   principleOfOperation?: ProjectTechnologyChoice

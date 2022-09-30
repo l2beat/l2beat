@@ -34,7 +34,7 @@ export const omni: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Gnosis Chain'],
   },
   riskView: {

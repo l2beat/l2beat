@@ -13,19 +13,30 @@ export function getProps(
   config: Config,
   tvlApiResponse: TvlApiResponse,
 ): Wrapped<BridgesRiskPageProps> {
-  const included = getIncludedProjects(config.bridges, tvlApiResponse)
+  const included = getIncludedProjects(
+    [...config.bridges, ...config.layer2s],
+    tvlApiResponse,
+  )
   const ordering = orderByTvl(included, tvlApiResponse)
+
   return {
     props: {
       navbar: getNavbarProps(config),
       riskView: {
         items: ordering.map(
-          (bridge): BridgesRiskViewEntry => ({
-            name: bridge.display.name,
-            slug: bridge.display.slug,
-            type: bridge.technology.type,
-            destination: getDestination(bridge.technology.destination),
-            ...bridge.riskView,
+          (project): BridgesRiskViewEntry => ({
+            type: project.type,
+            name: project.display.name,
+            slug: project.display.slug,
+            category: project.technology.category,
+            destination: getDestination(
+              project.type === 'bridge'
+                ? project.technology.destination
+                : [project.display.name],
+            ),
+            ...(project.type === 'bridge'
+              ? project.riskView
+              : project.riskView.bridge),
           }),
         ),
       },
