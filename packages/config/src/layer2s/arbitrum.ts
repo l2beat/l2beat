@@ -120,6 +120,12 @@ export const arbitrum: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    bridge: {
+      validation: {
+        value: 'Rollup',
+        description: 'Rollups are the safest bridges',
+      },
+    },
   },
   technology: {
     category: 'Optimistic Rollup',

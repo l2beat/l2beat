@@ -11,7 +11,10 @@ import { StarkexTransactionCountRepository } from '../peripherals/database/Stark
 import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
 import { StarkexClient } from '../peripherals/starkex'
 import { ZksyncClient } from '../peripherals/zksync'
-import { createRpcTransactionUpdaters } from './createRpcTransactionUpdaters'
+import {
+  createEthereumTransactionUpdater,
+  createLayer2RpcTransactionUpdaters,
+} from './createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './createStarkexTransactionUpdaters'
 
 export function getActivityModule(
@@ -45,8 +48,14 @@ export function getActivityModule(
     logger,
   )
 
-  const rpcTransactionUpdaters = createRpcTransactionUpdaters(
+  const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
+    rpcTransactionCountRepository,
+    clock,
+    logger,
+  )
+
+  const ethereumTransactionUpdater = createEthereumTransactionUpdater(
     rpcTransactionCountRepository,
     clock,
     logger,
@@ -67,24 +76,28 @@ export function getActivityModule(
     logger,
   )
 
-  const activityController = new ActivityController([
-    ...rpcTransactionUpdaters,
-    ...starkexTransactionUpdaters,
-    zksyncTransactionUpdater,
-  ])
+  const activityController = new ActivityController(
+    [
+      ...layer2RpcTransactionUpdaters,
+      ...starkexTransactionUpdaters,
+      zksyncTransactionUpdater,
+    ],
+    ethereumTransactionUpdater,
+  )
 
   const router = createActivityRouter(activityController)
 
   const start = () => {
     logger.info('Starting Activity Module')
 
-    for (const updater of rpcTransactionUpdaters) {
+    for (const updater of layer2RpcTransactionUpdaters) {
       updater.start()
     }
     for (const updater of starkexTransactionUpdaters) {
       updater.start()
     }
     zksyncTransactionUpdater.start()
+    ethereumTransactionUpdater.start()
   }
 
   return {

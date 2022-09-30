@@ -28,7 +28,7 @@ export const orbiter: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

@@ -29,7 +29,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     private rpcTransactionCountRepository: RpcTransactionCountRepository,
     private clock: Clock,
     private logger: Logger,
-    private projectId: ProjectId,
+    readonly projectId: ProjectId,
     assessCount?: AssessCount,
   ) {
     this.logger = logger.for(this)
@@ -95,13 +95,8 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    const counts =
-      await this.rpcTransactionCountRepository.getDailyTransactionCount(
-        this.projectId,
-      )
-    return {
-      projectId: this.projectId,
-      counts,
-    }
+    return this.rpcTransactionCountRepository.getDailyTransactionCount(
+      this.projectId,
+    )
   }
 }

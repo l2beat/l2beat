@@ -18,5 +18,6 @@ export type ActivityApiChart = z.infer<typeof ActivityApiChart>
 export const ActivityApiResponse = z.object({
   combined: ActivityApiChart,
   projects: z.record(z.string(), z.optional(ActivityApiChart)),
+  ethereum: z.optional(ActivityApiChart), // TODO: make required once backend is deployed
 })
 export type ActivityApiResponse = z.infer<typeof ActivityApiResponse>

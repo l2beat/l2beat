@@ -37,7 +37,7 @@ export const wormhole: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['TODO', 'TODO', 'TODO'],
     canonical: true,
   },
