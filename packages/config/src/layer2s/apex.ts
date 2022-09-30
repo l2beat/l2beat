@@ -14,6 +14,7 @@ import {
 import { Layer2 } from './types'
 
 export const apex: Layer2 = {
+  type: 'layer2',
   id: ProjectId('apex'),
   display: {
     name: 'ApeX',

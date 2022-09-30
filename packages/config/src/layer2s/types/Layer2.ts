@@ -13,6 +13,7 @@ import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
+  type: 'layer2'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
   /** Information displayed about the layer2 on the frontend */

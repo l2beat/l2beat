@@ -13,6 +13,7 @@ import {
 import { Layer2 } from './types'
 
 export const zkswap: Layer2 = {
+  type: 'layer2',
   id: ProjectId('zkswap'),
   display: {
     name: 'ZKSwap 1.0',

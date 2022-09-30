@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const wormhole: Bridge = {
+  type: 'bridge',
   id: ProjectId('wormhole'),
   display: {
     name: 'Wormhole V2',

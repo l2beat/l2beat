@@ -11,6 +11,7 @@ import {
 import { Layer2 } from './types'
 
 export const arbitrum: Layer2 = {
+  type: 'layer2',
   id: ProjectId('arbitrum'),
   display: {
     name: 'Arbitrum One',

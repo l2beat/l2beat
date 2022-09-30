@@ -11,6 +11,7 @@ import {
 import { Layer2 } from './types'
 
 export const optimism: Layer2 = {
+  type: 'layer2',
   id: ProjectId('optimism'),
   display: {
     name: 'Optimism',

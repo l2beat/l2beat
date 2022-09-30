@@ -9,7 +9,7 @@ import {
   ZkSyncIcon,
 } from '../../../components/icons'
 import { ProjectLink } from '../../../components/ProjectLink'
-import { Column, TableView } from '../../../components/TableView'
+import { ColumnConfig, TableView } from '../../../components/TableView'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -34,7 +34,11 @@ export interface ScalingTvlViewEntry {
 }
 
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
-  const columns: Column<ScalingTvlViewEntry>[] = [
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    {
+      name: 'No.',
+      getValue: (entry, index) => `${index + 1}.`,
+    },
     {
       name: 'Name',
       getValue: (project) => <ProjectLink type="layer2" project={project} />,

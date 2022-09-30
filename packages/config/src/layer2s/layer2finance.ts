@@ -10,6 +10,7 @@ import {
 import { Layer2 } from './types'
 
 export const layer2finance: Layer2 = {
+  type: 'layer2',
   id: ProjectId('layer2finance'),
   display: {
     name: 'Layer2.Finance',

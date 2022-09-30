@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const polynetwork: Bridge = {
+  type: 'bridge',
   id: ProjectId('polynetwork'),
   display: {
     name: 'Polynetwork',

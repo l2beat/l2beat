@@ -13,6 +13,7 @@ import {
 import { Layer2 } from './types'
 
 export const zksync: Layer2 = {
+  type: 'layer2',
   id: ProjectId('zksync'),
   display: {
     name: 'zkSync',

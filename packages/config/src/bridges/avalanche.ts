@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const avalanche: Bridge = {
+  type: 'bridge',
   id: ProjectId('avalanche'),
   display: {
     name: 'Avalanche Bridge',
