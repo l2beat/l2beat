@@ -4,7 +4,6 @@ import { ActivityApiChart, ActivityApiResponse, UnixTime } from '@l2beat/types'
 export async function fetchActivityApi(
   apiUrl: string,
 ): Promise<ActivityApiResponse> {
-  return getMockData()
   const url = apiUrl + '/api/activity'
 
   const http = new HttpClient()
