@@ -31,6 +31,7 @@
     "@types/qrcode": "^1.4.2",
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "@types/node-fetch": "^2.6.2",
     "cheerio": "^1.0.0-rc.11",
     "classnames": "^2.3.1",
     "express": "^4.18.1",
@@ -40,7 +41,8 @@
     "qrcode": "^1.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",

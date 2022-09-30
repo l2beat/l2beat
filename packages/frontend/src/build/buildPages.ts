@@ -1,7 +1,9 @@
+import { HttpClient } from '@l2beat/common'
 import { bridges, layer2s } from '@l2beat/config'
 import { ProjectId, TvlApiResponse } from '@l2beat/types'
 
 import { renderPages } from '../pages'
+import { CachedHttpClient } from './caching/CachedHttpClient'
 import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchActivityApi } from './fetchActivityApi'
@@ -15,13 +17,16 @@ main().catch((e) => {
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'production'
   const config = getConfig(env)
-  const tvlApiResponse = await fetchTvlApi(
-    config.backend.apiUrl,
-    config.backend.skipCache,
-  )
+
+  const http: HttpClient = config.backend.skipCache
+    ? new HttpClient()
+    : new CachedHttpClient()
+
+  const tvlApiResponse = await fetchTvlApi(config.backend.apiUrl, http)
+
   const activityApiResponse = await fetchActivityApi(
     config.backend.apiUrl,
-    config.backend.skipCache,
+    http,
   )
 
   printApiInfo(tvlApiResponse)
