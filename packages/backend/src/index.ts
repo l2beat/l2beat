@@ -1,8 +1,11 @@
 import { Application } from './Application'
 import { getConfig } from './config'
+import { reportError } from './tools/ErrorReporter'
 
 main().catch((e) => {
   console.error(e)
+  reportError(e)
+
   process.exit(1)
 })
 
