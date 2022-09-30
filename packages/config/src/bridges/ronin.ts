@@ -28,7 +28,7 @@ export const ronin: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Axie Infinity Chain'],
   },
   riskView: {

@@ -32,7 +32,7 @@ export const near: Bridge = {
   },
   technology: {
     canonical: true,
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Near', 'Aurora'],
   },
   riskView: {

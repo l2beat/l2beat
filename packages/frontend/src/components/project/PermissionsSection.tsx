@@ -1,4 +1,4 @@
-import { Layer2Permission } from '@l2beat/config'
+import { ProjectPermission } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
@@ -6,16 +6,12 @@ import { EtherscanLink } from './EtherscanLink'
 import { Section } from './Section'
 
 export interface PermissionsSectionProps {
-  permissions: Layer2Permission[]
+  permissions: ProjectPermission[]
 }
 
 export function PermissionsSection(props: PermissionsSectionProps) {
   return (
-    <Section
-      title="Permissioned Addresses"
-      id="permissionedAddresses"
-      className="PermissinedAddressesSection"
-    >
+    <Section title="Permissioned Addresses" id="permissionedAddresses">
       <p className="mt-4">
         The system uses the following set of permissioned addresses:
       </p>

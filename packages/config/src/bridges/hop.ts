@@ -47,7 +47,7 @@ export const hop: Bridge = {
     ],
   },
   technology: {
-    type: 'AMM Swap',
+    category: 'AMM Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

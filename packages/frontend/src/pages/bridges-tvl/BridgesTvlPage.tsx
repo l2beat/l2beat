@@ -9,6 +9,7 @@ import {
 } from '../../components'
 import { About } from '../../components/About'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
+import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
@@ -29,10 +30,6 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
     <Page navbar={props.navbar}>
       <BridgesPageSelection selected="tvl" />
       <main>
-        <label>
-          <input id="combined-bridges" type="checkbox" />{' '}
-          <span>Include Layer2s as bridges</span>
-        </label>
         <div data-bridges-only>
           <Header
             title="Value locked"
@@ -48,6 +45,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
           />
         </div>
         <Chart endpoint={props.apiEndpoint} />
+        <IncludeLayer2sCheckbox />
         <BridgesTvlView {...props.tvlView} />
         <OtherSites />
         <About />

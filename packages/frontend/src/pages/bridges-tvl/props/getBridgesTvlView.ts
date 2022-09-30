@@ -39,9 +39,6 @@ function getBridgesTvlViewEntry(
     sevenDayChange: stats.sevenDayChange,
     bridgesMarketShare: formatPercent(stats.tvl / bridgesTvl),
     combinedMarketShare: formatPercent(stats.tvl / combinedTvl),
-    category:
-      project.type === 'bridge'
-        ? project.technology.type
-        : project.technology.category,
+    category: project.technology.category,
   }
 }
