@@ -30,7 +30,11 @@ export class Logger {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   for(object: {}) {
-    return this.configure({ service: object.constructor.name })
+    return this.configure({
+      service: this.options.service
+        ? `${this.options.service}.${object.constructor.name}`
+        : object.constructor.name,
+    })
   }
 
   error(error: unknown): void

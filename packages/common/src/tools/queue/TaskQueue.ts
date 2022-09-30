@@ -15,7 +15,9 @@ export class TaskQueue<T> {
     private logger: Logger,
     opts?: TaskQueueOpts<T>,
   ) {
-    this.logger = this.logger.for(opts?.id ? `TaskQueue<${opts?.id}>` : this)
+    this.logger = opts?.id
+      ? this.logger.configure({ service: `TaskQueue<${opts.id}>` })
+      : this.logger.for(this)
     this.workers = opts?.workers ?? 1
     assert(
       this.workers > 0 && Number.isInteger(this.workers),
@@ -94,12 +96,13 @@ export class TaskQueue<T> {
     this.busyWorkers++
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
+      this.logger.info('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
     } catch (error) {
       this.logger.error(
         {
           message: 'Error during executing task',
-          task: JSON.stringify(job.task),
+          job: JSON.stringify(job),
         },
         error,
       )

@@ -8,7 +8,9 @@ import { Clock } from './Clock'
 
 export class BlockNumberUpdater {
   private blocksByTimestamp = new Map<number, bigint>()
-  private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
+  private taskQueue = new TaskQueue(this.update.bind(this), this.logger, {
+    id: 'BlockNumberUpdater.taskQueue',
+  })
 
   constructor(
     private etherscanClient: EtherscanClient,

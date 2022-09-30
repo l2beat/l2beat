@@ -14,7 +14,9 @@ import { Clock } from './Clock'
 
 export class PriceUpdater {
   private knownSet = new Set<number>()
-  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger, {
+    id: 'PriceUpdater.taskQueue',
+  })
 
   constructor(
     private coingeckoQueryService: CoingeckoQueryService,

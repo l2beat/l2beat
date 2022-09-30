@@ -23,7 +23,9 @@ interface HeldAsset {
 export class BalanceUpdater {
   private configHash: Hash256
   private knownSet = new Set<number>()
-  private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
+  private taskQueue = new TaskQueue(this.update.bind(this), this.logger, {
+    id: 'test',
+  })
 
   constructor(
     private multicall: MulticallClient,
