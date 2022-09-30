@@ -37,6 +37,7 @@ export function createRpcTransactionUpdaters(
         clock,
         logger,
         project.projectId,
+        project.transactionApi.assessCount,
       )
 
       rpcUpdaters.push(transactionUpdater)

@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { RpcTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
+import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -90,9 +91,7 @@ export class RpcTransactionCountRepository extends BaseRepository {
     noPrevBlockNumbers.push(Infinity)
     noNextBlockNumbers.unshift(-Infinity)
 
-    if (noNextBlockNumbers.length !== noPrevBlockNumbers.length) {
-      throw new Error('Arrays length should be the same')
-    }
+    assert(noNextBlockNumbers.length === noPrevBlockNumbers.length)
 
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }

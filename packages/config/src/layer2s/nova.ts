@@ -61,6 +61,8 @@ export const nova: Layer2 = {
       provider: 'jsonRpc',
       url: 'https://nova.arbitrum.io/rpc',
       callsPerMinute: 200,
+      // We need to subtract the Nitro system transaction
+      assessCount: (count: number) => count - 1,
     },
   },
   riskView: {

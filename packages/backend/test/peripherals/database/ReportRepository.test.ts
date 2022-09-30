@@ -61,7 +61,7 @@ describe(ReportRepository.name, () => {
           fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
           fakeReport({ projectId: PROJECT_C, timestamp: TIME_1 }),
         ]),
-      ).toBeRejected('Programmer error: Timestamps must match')
+      ).toBeRejected('Assertion Error: Timestamps must match')
     })
   })
 
