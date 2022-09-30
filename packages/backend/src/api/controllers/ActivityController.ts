@@ -42,6 +42,19 @@ export class ActivityController {
     )
   }
 
+  async getStatus() {
+    return Promise.all([
+      ...this.layer2Counters.map(async (c) => ({
+        projectId: c.projectId,
+        status: await c.getStatus(),
+      })),
+      {
+        projectId: ProjectId.ETHEREUM,
+        status: await this.ethereumCounter.getStatus(),
+      },
+    ])
+  }
+
   private toCombinedActivity(
     layer2Counts: Layer2Counts[],
   ): ActivityApiResponse['combined'] {

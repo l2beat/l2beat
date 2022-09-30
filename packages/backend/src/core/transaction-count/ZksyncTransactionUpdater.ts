@@ -87,4 +87,11 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return this.zksyncTransactionRepository.getDailyTransactionCount()
   }
+
+  async getStatus() {
+    return {
+      queuedJobsCount: this.blockQueue.length,
+      missingRanges: await this.zksyncTransactionRepository.getMissingRanges(),
+    }
+  }
 }

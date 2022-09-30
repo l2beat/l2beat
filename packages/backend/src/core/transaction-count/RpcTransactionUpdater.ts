@@ -106,4 +106,15 @@ export class RpcTransactionUpdater implements TransactionCounter {
       this.projectId,
     )
   }
+
+  async getStatus() {
+    return {
+      queuedJobsCount: this.blockQueue.length,
+      missingRanges:
+        await this.rpcTransactionCountRepository.getMissingRangesByProject(
+          this.projectId,
+        ),
+      startBlock: this.startBlock,
+    }
+  }
 }
