@@ -38,7 +38,7 @@ export function createLayer2RpcTransactionUpdaters(
         clock,
         logger,
         project.projectId,
-        project.transactionApi.assessCount,
+        { assessCount: project.transactionApi.assessCount },
       )
 
       rpcUpdaters.push(transactionUpdater)
@@ -52,15 +52,17 @@ export function createEthereumTransactionUpdater(
   rpcTransactionCountRepository: RpcTransactionCountRepository,
   clock: Clock,
   logger: Logger,
+  apiKey: string,
 ) {
-  const provider = providers.getDefaultProvider()
+  const provider = new providers.AlchemyProvider('mainnet', apiKey)
   const client = new EthereumClient(provider, logger)
   const updater = new RpcTransactionUpdater(
     client,
     rpcTransactionCountRepository,
     clock,
     logger,
-    ProjectId('ethereum'),
+    ProjectId.ETHEREUM,
+    { startBlock: 8929324 }, // TODO: make it cleaner, we already have a min timestamp in config
   )
   return updater
 }
