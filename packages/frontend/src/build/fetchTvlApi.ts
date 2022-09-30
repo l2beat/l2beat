@@ -1,6 +1,6 @@
 import { TvlApiResponse } from '@l2beat/types'
 
-import { fetchWithCache } from './caching/getCacheOrFetch'
+import { fetchWithCache } from './caching/fetchWithCache'
 
 export async function fetchTvlApi(
   apiUrl: string,

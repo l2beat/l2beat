@@ -1,6 +1,6 @@
 import { ActivityApiResponse } from '@l2beat/types'
 
-import { fetchWithCache } from './caching/getCacheOrFetch'
+import { fetchWithCache } from './caching/fetchWithCache'
 
 export async function fetchActivityApi(
   apiUrl: string,
