@@ -13,7 +13,7 @@ export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
   format: 'pretty' | 'json'
-  reportError?: (error: unknown) => void
+  reportError?: (...args: unknown[]) => void
 }
 
 export type LoggerParameters = Record<string, json>
@@ -30,25 +30,22 @@ export class Logger {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   for(object: {}) {
-    return this.configure({
-      service: this.options.service
-        ? `${this.options.service}.${object.constructor.name}`
-        : object.constructor.name,
-    })
+    return this.configure({ service: object.constructor.name })
   }
 
   error(error: unknown): void
-  error(annotation: string, error: unknown): void
-  error(...args: [unknown] | [string, unknown]): void {
+  error(parameters: LoggerParameters, error: unknown): void
+  error(...args: [unknown] | [LoggerParameters, unknown]): void {
     if (this.options.logLevel >= LogLevel.ERROR) {
-      const [annotation, error] = args.length === 1 ? ['', args[0]] : args
+      const [parameters, error] = args.length === 1 ? [{}, args[0]] : args
 
-      const message = [annotation, getErrorMessage(error)]
-        .filter(Boolean)
-        .join(' ')
+      const message = { ...parameters, error: getErrorMessage(error) }
 
       this.print('error', { message })
-      this.options.reportError?.(error)
+      this.options.reportError?.(error, {
+        ...parameters,
+        service: this.options.service,
+      })
     }
   }
 
@@ -126,7 +123,7 @@ export function getErrorMessage(error: unknown) {
 function combine(
   message: string | LoggerParameters,
   parameters?: LoggerParameters,
-) {
+): LoggerParameters {
   if (typeof message === 'string') {
     return { message, ...parameters }
   } else {
