@@ -9,7 +9,7 @@ export class JsonHttpClient {
     if (!this.skipCache) {
       const cached = await read(url)
       if (cached) {
-        return cached
+        return JSON.parse(cached) as unknown
       }
     }
 
