@@ -31,6 +31,7 @@ export interface Config {
         starkexApiKey: string
         arbitrumAlchemyApiKey: string
         optimismAlchemyApiKey: string
+        ethereumAlchemyApiKey: string
       }
     | false
 }

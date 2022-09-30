@@ -42,6 +42,7 @@ export function getLocalConfig(): Config {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
       optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
+      ethereumAlchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     },
   }
 }

@@ -59,6 +59,7 @@ export function getActivityModule(
     rpcTransactionCountRepository,
     clock,
     logger,
+    config.transactionCountSync.ethereumAlchemyApiKey,
   )
 
   const starkexTransactionUpdaters = createStarkexTransactionUpdaters(

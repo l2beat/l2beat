@@ -13,6 +13,11 @@ const BLOCK_QUEUE_LIMIT = 200_000
 
 const identity = (x: number) => x
 
+interface RpcTransactionUpdaterOpts {
+  assessCount?: AssessCount
+  startBlock?: number
+}
+
 export class RpcTransactionUpdater implements TransactionCounter {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new UniqueTaskQueue(
@@ -23,6 +28,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     },
   )
   private assessCount: AssessCount
+  private startBlock: number
 
   constructor(
     private ethereumClient: EthereumClient,
@@ -30,10 +36,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
     private clock: Clock,
     private logger: Logger,
     readonly projectId: ProjectId,
-    assessCount?: AssessCount,
+    opts?: RpcTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
-    this.assessCount = assessCount ?? identity
+    this.assessCount = opts?.assessCount ?? identity
+    this.startBlock = opts?.startBlock ?? 0
   }
 
   start() {
@@ -80,7 +87,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     enqueueBlockLoop: for (const [start, end] of missingRanges) {
       for (
-        let i = Math.max(start, 0);
+        let i = Math.max(start, this.startBlock);
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
