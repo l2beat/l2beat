@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 import { Logger } from '@l2beat/common'
-import Koa from 'koa'
+import Koa, { Context } from 'koa'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 
@@ -9,7 +9,12 @@ import { createApiLogger } from './ApiLogger'
 export class ApiServer {
   private app: Koa
 
-  constructor(private port: number, private logger: Logger, routers: Router[]) {
+  constructor(
+    private port: number,
+    private logger: Logger,
+    routers: Router[],
+    handleServerError?: (error: Error, ctx: Context) => void,
+  ) {
     this.logger = this.logger.for(this)
     this.app = new Koa()
 
@@ -25,6 +30,10 @@ export class ApiServer {
 
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())
+
+    if (handleServerError) {
+      this.app.on('error', handleServerError)
+    }
   }
 
   listen() {
