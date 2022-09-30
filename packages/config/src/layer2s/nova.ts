@@ -12,6 +12,7 @@ import {
 import { Layer2 } from './types'
 
 export const nova: Layer2 = {
+  type: 'layer2',
   id: ProjectId('nova'),
   display: {
     name: 'Arbitrum Nova',
@@ -60,6 +61,8 @@ export const nova: Layer2 = {
       provider: 'jsonRpc',
       url: 'https://nova.arbitrum.io/rpc',
       callsPerMinute: 200,
+      // We need to subtract the Nitro system transaction
+      assessCount: (count: number) => count - 1,
     },
   },
   riskView: {

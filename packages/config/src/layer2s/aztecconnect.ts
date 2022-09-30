@@ -13,6 +13,7 @@ import {
 import { Layer2 } from './types'
 
 export const aztecconnect: Layer2 = {
+  type: 'layer2',
   id: ProjectId('aztecconnect'),
   display: {
     name: 'Aztec Connect',

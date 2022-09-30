@@ -145,7 +145,7 @@ describe(AggregateReportRepository.name, () => {
           fakeAggregateReport({ timestamp: TIME_1 }),
           fakeAggregateReport({ timestamp: TIME_2 }),
         ]),
-      ).toBeRejected('Programmer error: Timestamps must match')
+      ).toBeRejected('Assertion Error: Timestamps must match')
     })
   })
 

@@ -10,6 +10,7 @@ import {
 import { Layer2 } from './types'
 
 export const metis: Layer2 = {
+  type: 'layer2',
   id: ProjectId('metis'),
   display: {
     name: 'Metis Andromeda',

@@ -11,6 +11,7 @@ import {
 import { Layer2 } from './types'
 
 export const arbitrum: Layer2 = {
+  type: 'layer2',
   id: ProjectId('arbitrum'),
   display: {
     name: 'Arbitrum One',
@@ -102,6 +103,10 @@ export const arbitrum: Layer2 = {
       provider: 'alchemy',
       networkName: 'arbitrum',
       callsPerMinute: 1200,
+      // We need to subtract the Nitro system transactions
+      // after the block of the update
+      assessCount: (count: number, blockNumber: number) =>
+        blockNumber >= 22207818 ? count - 1 : count,
     },
   },
   riskView: {

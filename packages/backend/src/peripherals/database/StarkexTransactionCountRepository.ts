@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
+import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -93,9 +94,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     noPrevDay.push(Infinity)
     noNextDay.unshift(-Infinity)
 
-    if (noNextDay.length !== noPrevDay.length) {
-      throw new Error('Arrays length should be the same')
-    }
+    assert(noNextDay.length === noPrevDay.length)
 
     return _.zip(noNextDay, noPrevDay) as [number, number][]
   }

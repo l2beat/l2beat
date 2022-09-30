@@ -2,7 +2,7 @@ import React from 'react'
 
 import { PercentChange } from '../../components'
 import { ProjectLink } from '../../components/ProjectLink'
-import { Column, TableView } from '../../components/TableView'
+import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
 import { TVLBreakdown, TVLBreakdownProps } from '../../components/TVLBreakdown'
 
 export interface BridgesTvlViewProps {
@@ -10,18 +10,33 @@ export interface BridgesTvlViewProps {
 }
 
 export interface BridgesTvlViewEntry {
+  type: 'bridge' | 'layer2'
   name: string
   slug: string
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
   sevenDayChange: string
-  marketShare: string
-  type: string
+  bridgesMarketShare: string
+  combinedMarketShare: string
+  category: string
 }
 
 export function BridgesTvlView({ items }: BridgesTvlViewProps) {
-  const columns: Column<BridgesTvlViewEntry>[] = [
+  const onlyBridges = items.filter((x) => x.type === 'bridge')
+
+  const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
+    {
+      name: 'No.',
+      getValue: (entry, index) => (
+        <>
+          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}.</span>
+          <span data-combined-only className="hidden">
+            {index + 1}.
+          </span>
+        </>
+      ),
+    },
     {
       name: 'Name',
       getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
@@ -44,12 +59,19 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     {
       name: 'Market share',
       alignRight: true,
-      getValue: (entry) => entry.marketShare,
+      getValue: (entry) => (
+        <>
+          <span data-bridges-only>{entry.bridgesMarketShare}</span>
+          <span data-combined-only className="hidden">
+            {entry.combinedMarketShare}
+          </span>
+        </>
+      ),
     },
     {
       name: 'Validation',
       alignRight: true,
-      getValue: (entry) => entry.type,
+      getValue: (entry) => entry.category,
     },
     {
       name: 'Type',
@@ -58,9 +80,19 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
   ]
 
+  const rows: RowConfig<BridgesTvlViewEntry> = {
+    getProps: (entry) =>
+      entry.type === 'bridge'
+        ? {}
+        : {
+            ['data-combined-only']: true,
+            className: 'hidden',
+          },
+  }
+
   return (
     <section className="mt-4">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
     </section>
   )
 }

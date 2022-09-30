@@ -13,6 +13,7 @@ import {
 import { Layer2 } from './types'
 
 export const loopring: Layer2 = {
+  type: 'layer2',
   id: ProjectId('loopring'),
   display: {
     name: 'Loopring',

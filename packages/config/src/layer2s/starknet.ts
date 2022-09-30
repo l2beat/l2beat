@@ -14,6 +14,7 @@ import {
 import { Layer2 } from './types'
 
 export const starknet: Layer2 = {
+  type: 'layer2',
   id: ProjectId('starknet'),
   display: {
     name: 'StarkNet',

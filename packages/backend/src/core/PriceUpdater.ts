@@ -9,6 +9,7 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
+import { assert } from '../tools/assert'
 import { Clock } from './Clock'
 
 export class PriceUpdater {
@@ -100,9 +101,8 @@ export class PriceUpdater {
     const coingeckoId = this.tokens.find(
       (token) => token.id === assetId,
     )?.coingeckoId
-    if (!coingeckoId) {
-      throw new Error('Programmer error: incorrect asset ID')
-    }
+    assert(coingeckoId, 'Incorrect asset ID')
+
     return coingeckoId
   }
 

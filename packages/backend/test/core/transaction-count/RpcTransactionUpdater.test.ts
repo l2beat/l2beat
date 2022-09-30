@@ -142,6 +142,46 @@ describe(RpcTransactionUpdater.name, () => {
         ],
       ])
     })
+
+    it('allows assessing count', async () => {
+      const TIME_0 = new UnixTime(0)
+      const ethereumClient = mock<EthereumClient>({
+        getBlock: async (blockNumber) =>
+          fakeBlock({
+            number: blockNumber,
+            timestamp: TIME_0.toNumber(),
+            transactions: ['t0', 't1'],
+          }),
+      })
+      const txCountRepository = mock<RpcTransactionCountRepository>({
+        add: async () => '',
+      })
+      const clock = mock<Clock>({
+        getLastHour: () => UnixTime.now(),
+      })
+
+      const rpcTransactionUpdater = new RpcTransactionUpdater(
+        ethereumClient,
+        txCountRepository,
+        clock,
+        Logger.SILENT,
+        ProjectId('fake-project'),
+        (count) => count - 1,
+      )
+
+      await rpcTransactionUpdater.updateBlock(1)
+
+      expect(txCountRepository.add).toHaveBeenCalledExactlyWith([
+        [
+          {
+            timestamp: TIME_0,
+            blockNumber: 1,
+            projectId: ProjectId('fake-project'),
+            count: 1,
+          },
+        ],
+      ])
+    })
   })
 })
 

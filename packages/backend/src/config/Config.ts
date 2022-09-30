@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
 import { Project, Token } from '../model'
+
 export interface Config {
   name: string
   logger: {
@@ -13,8 +14,6 @@ export interface Config {
   coingeckoApiKey: string | undefined
   alchemyApiKey: string
   etherscanApiKey: string
-  starkexApiUrl: string
-  starkexApiKey: string
   databaseConnection: Knex.Config['connection']
   core: {
     minBlockTimestamp: UnixTime
@@ -26,7 +25,12 @@ export interface Config {
   syncEnabled: boolean
   freshStart: boolean
   eventsSyncEnabled: boolean
-  transactionCountSyncEnabled: boolean
-  arbitrumAlchemyApiKey: string
-  optimismAlchemyApiKey: string
+  transactionCountSync:
+    | {
+        starkexApiUrl: string
+        starkexApiKey: string
+        arbitrumAlchemyApiKey: string
+        optimismAlchemyApiKey: string
+      }
+    | false
 }
