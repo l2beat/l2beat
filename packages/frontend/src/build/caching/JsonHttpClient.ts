@@ -3,10 +3,10 @@ import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
 export class JsonHttpClient {
-  constructor(private http: HttpClient, private skipConfig: boolean) {}
+  constructor(private http: HttpClient, private skipCache: boolean) {}
 
   async fetchJson(url: string): Promise<unknown> {
-    if (!this.skipConfig) {
+    if (!this.skipCache) {
       const cached = await read(url)
       if (cached) {
         return cached
@@ -21,7 +21,7 @@ export class JsonHttpClient {
     }
     const json: unknown = await response.json()
 
-    if (!this.skipConfig) {
+    if (!this.skipCache) {
       await write(url, JSON.stringify(json))
     }
 
