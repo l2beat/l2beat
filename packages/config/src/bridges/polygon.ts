@@ -72,7 +72,7 @@ export const polygon: Bridge = {
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     principleOfOperation: {
       // TODO: this is a temporary entry
       name: 'Principle of operation',

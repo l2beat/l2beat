@@ -46,7 +46,7 @@ export const harmony: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Harmony'],
   },
   riskView: {

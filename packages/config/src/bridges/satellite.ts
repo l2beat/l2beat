@@ -34,7 +34,7 @@ export const satellite: Bridge = {
   },
   technology: {
     canonical: true,
-    type: 'Lock-Mint OR Swap',
+    category: 'Lock-Mint OR Swap',
     destination: ['Multichain'],
   },
   riskView: {

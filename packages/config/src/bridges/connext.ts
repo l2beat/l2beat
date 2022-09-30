@@ -22,7 +22,7 @@ export const connext: Bridge = {
     ],
   },
   technology: {
-    type: 'Atomic Swap',
+    category: 'Atomic Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

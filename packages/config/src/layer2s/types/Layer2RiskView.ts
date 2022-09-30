@@ -1,3 +1,4 @@
+import { BridgeRiskView } from '../../bridges'
 import { ProjectRiskViewEntry } from '../../common'
 
 export interface Layer2RiskView {
@@ -6,4 +7,5 @@ export interface Layer2RiskView {
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   validatorFailure: ProjectRiskViewEntry
+  bridge?: Partial<BridgeRiskView>
 }

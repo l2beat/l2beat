@@ -64,7 +64,7 @@ export const avalanche: Bridge = {
   },
   technology: {
     canonical: true,
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Avalanche'],
   },
   riskView: {
