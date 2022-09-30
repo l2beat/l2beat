@@ -19,7 +19,10 @@ async function main() {
     config.backend.apiUrl,
     config.backend.skipCache,
   )
-  const activityApiResponse = await fetchActivityApi(config.backend.apiUrl)
+  const activityApiResponse = await fetchActivityApi(
+    config.backend.apiUrl,
+    config.backend.skipCache,
+  )
 
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
