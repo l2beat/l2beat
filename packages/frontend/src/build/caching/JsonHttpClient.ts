@@ -1,21 +1,19 @@
 import { HttpClient } from '@l2beat/common'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
-import fetch, { RequestInit, Response } from 'node-fetch'
 
-export class CachedHttpClient {
-  fetch(url: string, init?: RequestInit): Promise<Response> {
-    return fetch(url, init)
-  }
+export class JsonHttpClient {
+  constructor(private http: HttpClient, private skipConfig: boolean) {}
 
-  async fetchJson(url: string): Promise<string> {
-    const cached = await read(url)
-    if (cached) {
-      return cached
+  async fetchJson(url: string): Promise<unknown> {
+    if (!this.skipConfig) {
+      const cached = await read(url)
+      if (cached) {
+        return cached
+      }
     }
 
-    const http = new HttpClient()
-    const response = await http.fetch(url)
+    const response = await this.http.fetch(url)
     if (!response.ok) {
       throw new Error(
         `Could not get data from api (received status ${response.status})`,
@@ -23,9 +21,11 @@ export class CachedHttpClient {
     }
     const json: unknown = await response.json()
 
-    await write(url, JSON.stringify(json))
+    if (!this.skipConfig) {
+      await write(url, JSON.stringify(json))
+    }
 
-    return JSON.stringify(json)
+    return json
   }
 }
 

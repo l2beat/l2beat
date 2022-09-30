@@ -1,13 +1,14 @@
-import { HttpClient } from '@l2beat/common'
 import { TvlApiResponse } from '@l2beat/types'
+
+import { JsonHttpClient } from './caching/JsonHttpClient'
 
 export async function fetchTvlApi(
   apiUrl: string,
-  http: HttpClient,
+  http: JsonHttpClient,
 ): Promise<TvlApiResponse> {
   const url = apiUrl + '/api/main'
 
   const json = await http.fetchJson(url)
 
-  return TvlApiResponse.parse(JSON.parse(json))
+  return TvlApiResponse.parse(json)
 }
