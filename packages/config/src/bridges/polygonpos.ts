@@ -2,18 +2,19 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { Bridge } from './types'
 
-export const polygon: Bridge = {
+export const polygonpos: Bridge = {
   type: 'bridge',
-  id: ProjectId('polygon'),
+  id: ProjectId('polygon-pos'),
   display: {
     name: 'Polygon PoS',
     slug: 'polygon',
     links: {
       websites: ['https://wallet.polygon.technology/'],
     },
+    description:
+      'Polygon PoS it the official bridge provided by the Polygon team to bridge assets from Ethereum to Polygon chain. The bridge is validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },
   config: {
-    associatedTokens: ['MATIC'],
     escrows: [
       {
         address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
@@ -43,11 +44,6 @@ export const polygon: Bridge = {
         address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
         sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
-      },
-      {
-        address: '0x401F6c983eA34274ec46f84D70b31C151321188b',
-        sinceTimestamp: new UnixTime(1590850640),
-        tokens: ['MATIC', 'DAI'],
       },
     ],
   },
