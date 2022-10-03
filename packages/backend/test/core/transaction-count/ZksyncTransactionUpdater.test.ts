@@ -3,8 +3,6 @@ import { UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { getConfig } from '../../../src/config'
-import { TransactionCountSyncConfig } from '../../../src/config/Config'
 import { Clock } from '../../../src/core/Clock'
 import { ZksyncTransactionUpdater } from '../../../src/core/transaction-count/ZksyncTransactionUpdater'
 import { ZksyncTransactionRepository } from '../../../src/peripherals/database/ZksyncTransactionRepository'
@@ -12,7 +10,6 @@ import { ZksyncClient } from '../../../src/peripherals/zksync'
 
 describe(ZksyncTransactionUpdater.name, () => {
   describe(ZksyncTransactionUpdater.prototype.start.name, () => {
-    const config = getConfig('test')
     it('skips known blocks', async () => {
       const zksyncClient = mock<ZksyncClient>({
         getLatestBlock: async () => 5,
@@ -33,7 +30,6 @@ describe(ZksyncTransactionUpdater.name, () => {
         },
       })
       const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-        config.transactionCountSync as TransactionCountSyncConfig,
         zksyncClient,
         zksyncTransactionRepository,
         clock,
@@ -51,7 +47,6 @@ describe(ZksyncTransactionUpdater.name, () => {
 
   describe(ZksyncTransactionUpdater.prototype.update.name, () => {
     it('does not query the same blocks multiple times', async () => {
-      const config = getConfig('test')
       const zksyncClient = mock<ZksyncClient>({
         getTransactionsInBlock: async () => [],
         getLatestBlock: async () => 5,
@@ -71,7 +66,6 @@ describe(ZksyncTransactionUpdater.name, () => {
         },
       })
       const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-        config.transactionCountSync as TransactionCountSyncConfig,
         zksyncClient,
         zksyncTransactionRepository,
         clock,
@@ -90,7 +84,6 @@ describe(ZksyncTransactionUpdater.name, () => {
 
   describe(ZksyncTransactionUpdater.prototype.updateBlock.name, () => {
     it('downloads and saves transactions to DB', async () => {
-      const config = getConfig('test')
       const transactions1 = [{ blockIndex: 0, createdAt: new UnixTime(0) }]
       const transactions2 = [
         { blockIndex: 1, createdAt: new UnixTime(2) },
@@ -106,7 +99,6 @@ describe(ZksyncTransactionUpdater.name, () => {
       })
       const clock = mock<Clock>()
       const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-        config.transactionCountSync as TransactionCountSyncConfig,
         zksyncClient,
         zksyncTransactionRepository,
         clock,

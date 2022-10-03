@@ -3,8 +3,6 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { getConfig } from '../../../src/config'
-import { TransactionCountSyncConfig } from '../../../src/config/Config'
 import { Clock } from '../../../src/core/Clock'
 import { StarkexTransactionCountUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
 import { StarkexTransactionCountRepository } from '../../../src/peripherals/database/StarkexTransactionCountRepository'
@@ -12,7 +10,6 @@ import { StarkexClient } from '../../../src/peripherals/starkex'
 
 describe(StarkexTransactionCountUpdater.name, () => {
   describe(StarkexTransactionCountUpdater.prototype.start.name, () => {
-    const config = getConfig('test')
     it('skips known blocks', async () => {
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
@@ -34,7 +31,6 @@ describe(StarkexTransactionCountUpdater.name, () => {
         getLastHour: () => UnixTime.fromDays(7),
       })
       const updater = new StarkexTransactionCountUpdater(
-        config.transactionCountSync as TransactionCountSyncConfig,
         starkexTransactionCountRepository,
         starkexClient,
         clock,
@@ -57,7 +53,6 @@ describe(StarkexTransactionCountUpdater.name, () => {
 
   describe(StarkexTransactionCountUpdater.prototype.updateDay.name, () => {
     it('queries a day and adds to a DB', async () => {
-      const config = getConfig('test')
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
           add: async () => '',
@@ -68,7 +63,6 @@ describe(StarkexTransactionCountUpdater.name, () => {
       const clock = mock<Clock>()
 
       const updater = new StarkexTransactionCountUpdater(
-        config.transactionCountSync as TransactionCountSyncConfig,
         starkexTransactionCountRepository,
         starkexClient,
         clock,

@@ -2,7 +2,6 @@ import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { TransactionCountSyncConfig } from '../../config/Config'
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
@@ -13,6 +12,8 @@ const identity = (x: number) => x
 interface RpcTransactionUpdaterOpts {
   assessCount?: AssessCount
   startBlock?: number
+  workQueueWorkers?: number
+  workQueueSizeLimit?: number
 }
 
 export class RpcTransactionUpdater implements TransactionCounter {
@@ -23,25 +24,26 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.updateBlock.bind(this),
     this.logger,
     {
-      workers: this.config.rpcWorkQueueWorkers,
+      workers: this.opts?.workQueueSizeLimit,
       id: 'RpcTransactionUpdater.blockQueue',
     },
   )
   private readonly assessCount: AssessCount
   private readonly startBlock: number
+  private readonly workQueueSizeLimit: number
 
   constructor(
-    private readonly config: TransactionCountSyncConfig,
     private readonly ethereumClient: EthereumClient,
     private readonly rpcTransactionCountRepository: RpcTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     readonly projectId: ProjectId,
-    opts?: RpcTransactionUpdaterOpts,
+    private readonly opts?: RpcTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
     this.assessCount = opts?.assessCount ?? identity
     this.startBlock = opts?.startBlock ?? 0
+    this.workQueueSizeLimit = opts?.workQueueSizeLimit ?? 200_000
   }
 
   start() {
@@ -92,7 +94,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
-        if (this.blockQueue.length >= this.config.rpcWorkQueueLimit) {
+        if (this.blockQueue.length >= this.workQueueSizeLimit) {
           break enqueueBlockLoop
         }
         this.blockQueue.addToBack(i)

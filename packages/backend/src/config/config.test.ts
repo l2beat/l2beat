@@ -29,16 +29,6 @@ export function getTestConfig(): Config {
     freshStart: false,
     tvlReportSync: true,
     eventsSync: false,
-    transactionCountSync: {
-      starkexApiUrl: 'xXTestStarkexApiUrlXx',
-      starkexApiKey: 'xXTestStarkexApiKeyXx',
-      arbitrumAlchemyApiKey: 'xXTestArbitrumAlchemyApiKeyXx',
-      optimismAlchemyApiKey: 'xXTestOptimismAlchemyApiKeyXx',
-      ethereumAlchemyApiKey: 'xXTestEthereumAlchemyApiKeyXx',
-      rpcWorkQueueLimit: 200_000,
-      rpcWorkQueueWorkers: 1,
-      zkSyncWorkQueueWorkers: 1,
-      starkexWorkQueueWorkers: 1,
-    },
+    transactionCountSync: false,
   }
 }

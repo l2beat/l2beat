@@ -20,7 +20,6 @@ export function createStarkexTransactionUpdaters(
   for (const project of config.projects) {
     if (project.transactionApi?.type === 'starkex') {
       const transactionUpdater = new StarkexTransactionCountUpdater(
-        config.transactionCountSync,
         starkexTransactionCountRepository,
         starkexClient,
         clock,
@@ -28,6 +27,9 @@ export function createStarkexTransactionUpdaters(
         project.transactionApi.product,
         project.projectId,
         project.transactionApi.sinceTimestamp,
+        {
+          workQueueWorkers: config.transactionCountSync.starkexWorkQueueWorkers,
+        },
       )
 
       starkexUpdaters.push(transactionUpdater)

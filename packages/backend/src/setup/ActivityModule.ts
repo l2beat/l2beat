@@ -72,11 +72,11 @@ export function getActivityModule(
   )
 
   const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-    config.transactionCountSync,
     zksyncClient,
     zksyncTransactionRepository,
     clock,
     logger,
+    { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
   )
 
   const activityController = new ActivityController(

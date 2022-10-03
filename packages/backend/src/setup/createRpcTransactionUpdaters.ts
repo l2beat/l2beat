@@ -35,13 +35,16 @@ export function createLayer2RpcTransactionUpdaters(
       )
 
       const transactionUpdater = new RpcTransactionUpdater(
-        config.transactionCountSync,
         ethereumClient,
         rpcTransactionCountRepository,
         clock,
         logger,
         project.projectId,
-        { assessCount: project.transactionApi.assessCount },
+        {
+          assessCount: project.transactionApi.assessCount,
+          workQueueSizeLimit: config.transactionCountSync.rpcWorkQueueLimit,
+          workQueueWorkers: config.transactionCountSync.rpcWorkQueueWorkers,
+        },
       )
 
       rpcUpdaters.push(transactionUpdater)
@@ -61,13 +64,16 @@ export function createEthereumTransactionUpdater(
   const provider = new providers.AlchemyProvider('mainnet', apiKey)
   const client = new EthereumClient(provider, logger)
   const updater = new RpcTransactionUpdater(
-    config,
     client,
     rpcTransactionCountRepository,
     clock,
     logger,
     ProjectId.ETHEREUM,
-    { startBlock: 8929324 }, // TODO: make it cleaner, we already have a min timestamp in config
+    {
+      startBlock: 8929324,
+      workQueueSizeLimit: config.rpcWorkQueueLimit,
+      workQueueWorkers: config.rpcWorkQueueWorkers,
+    }, // TODO: make it cleaner, we already have a min timestamp in config
   )
   return updater
 }
