@@ -27,7 +27,7 @@ export function getTestConfig(): Config {
     projects: [],
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
-    eventsSyncEnabled: false,
+    eventsSync: false,
     transactionCountSync: false,
   }
 }

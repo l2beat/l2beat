@@ -1,6 +1,7 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
+import { TransactionCountSyncConfig } from '../../config/Config'
 import {
   ZksyncTransactionRecord,
   ZksyncTransactionRepository,
@@ -17,15 +18,16 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     this.updateBlock.bind(this),
     this.logger,
     {
-      workers: 100,
+      workers: this.config.zkSyncWorkQueueWorkers,
     },
   )
 
   constructor(
-    private zksyncClient: ZksyncClient,
-    private zksyncTransactionRepository: ZksyncTransactionRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly zksyncClient: ZksyncClient,
+    private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
+    private readonly config: TransactionCountSyncConfig,
   ) {
     this.logger = logger.for(this)
   }

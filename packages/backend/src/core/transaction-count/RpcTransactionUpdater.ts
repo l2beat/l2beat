@@ -2,14 +2,11 @@ import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { TransactionCountSyncConfig } from '../../config/Config'
 import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
-
-// We want to avoid adding too much tasks to the block queue
-// This constraint will be here only to sync transactions on stage
-const BLOCK_QUEUE_LIMIT = 200_000
 
 const identity = (x: number) => x
 
@@ -26,19 +23,20 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.updateBlock.bind(this),
     this.logger,
     {
-      workers: 100,
+      workers: this.config.rpcWorkQueueWorkers,
       id: 'RpcTransactionUpdater.blockQueue',
     },
   )
-  private assessCount: AssessCount
-  private startBlock: number
+  private readonly assessCount: AssessCount
+  private readonly startBlock: number
 
   constructor(
-    private ethereumClient: EthereumClient,
-    private rpcTransactionCountRepository: RpcTransactionCountRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly ethereumClient: EthereumClient,
+    private readonly rpcTransactionCountRepository: RpcTransactionCountRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
     readonly projectId: ProjectId,
+    private readonly config: TransactionCountSyncConfig,
     opts?: RpcTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
@@ -94,7 +92,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
-        if (this.blockQueue.length >= BLOCK_QUEUE_LIMIT) {
+        if (this.blockQueue.length >= this.config.rpcWorkQueueLimit) {
           break enqueueBlockLoop
         }
         this.blockQueue.addToBack(i)
