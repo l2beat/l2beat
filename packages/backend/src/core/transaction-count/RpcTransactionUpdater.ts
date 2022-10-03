@@ -24,7 +24,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.updateBlock.bind(this),
     this.logger,
     {
-      workers: this.opts?.workQueueSizeLimit,
+      workers: this.opts?.workQueueWorkers,
       id: 'RpcTransactionUpdater.blockQueue',
     },
   )
