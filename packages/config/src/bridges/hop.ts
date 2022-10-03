@@ -57,11 +57,6 @@ export const hop: Bridge = {
         'Validation depends on the destination chain as its native bridge is used.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: '???',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
     destinationToken: {
       value: 'hToken',
       description:

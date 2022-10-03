@@ -17,5 +17,5 @@ export type ProjectRiskCategory =
 export interface ProjectRiskViewEntry {
   value: string
   description: string
-  sentiment?: 'warning' | 'bad' | 'unknown'
+  sentiment?: 'warning' | 'bad'
 }

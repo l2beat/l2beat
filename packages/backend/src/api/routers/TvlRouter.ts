@@ -8,7 +8,7 @@ import { withTypedContext } from './types'
 export function createTvlRouter(tvlController: TvlController) {
   const router = new Router()
 
-  router.get(['/api/main', '/api/tvl'], async (ctx) => {
+  router.get('/api/tvl', async (ctx) => {
     const data = await tvlController.getTvlApiResponse()
     if (!data) {
       ctx.status = 404
