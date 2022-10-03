@@ -15,6 +15,9 @@ export class TaskQueue<T> {
     private logger: Logger,
     opts?: TaskQueueOpts<T>,
   ) {
+    this.logger = opts?.id
+      ? this.logger.configure({ service: `TaskQueue<${opts.id}>` })
+      : this.logger.for(this)
     this.workers = opts?.workers ?? 1
     assert(
       this.workers > 0 && Number.isInteger(this.workers),
@@ -54,7 +57,11 @@ export class TaskQueue<T> {
 
   private execute() {
     this.executeUnchecked().catch((e) => {
-      this.logger.error(e)
+      // this should never happen
+      this.logger.error(
+        { message: '[CRITICAL] Error during executeUnchecked' },
+        e,
+      )
     })
   }
 
@@ -89,9 +96,16 @@ export class TaskQueue<T> {
     this.busyWorkers++
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
+      this.logger.info('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
     } catch (error) {
-      this.logger.error(error)
+      this.logger.error(
+        {
+          message: 'Error during executing task',
+          job: JSON.stringify(job),
+        },
+        error,
+      )
       this.handleFailure(job)
     } finally {
       this.busyWorkers--

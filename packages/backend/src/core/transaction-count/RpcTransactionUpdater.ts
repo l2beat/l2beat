@@ -19,12 +19,15 @@ interface RpcTransactionUpdaterOpts {
 }
 
 export class RpcTransactionUpdater implements TransactionCounter {
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger, {
+    id: 'RpcTransactionUpdater.updateQueue',
+  })
   private blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
       workers: 100,
+      id: 'RpcTransactionUpdater.blockQueue',
     },
   )
   private assessCount: AssessCount
