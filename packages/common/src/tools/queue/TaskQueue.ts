@@ -7,7 +7,7 @@ import { Job, ShouldRetry, TaskQueueOpts } from './types'
 export class TaskQueue<T> {
   private queue: Job<T>[] = []
   private busyWorkers = 0
-  private workers: number
+  readonly workers: number
   private shouldRetry: ShouldRetry<T>
 
   constructor(
@@ -33,6 +33,10 @@ export class TaskQueue<T> {
 
   get length() {
     return this.queue.length
+  }
+
+  getBusyWorkers() {
+    return this.busyWorkers
   }
 
   addIfEmpty(task: T) {

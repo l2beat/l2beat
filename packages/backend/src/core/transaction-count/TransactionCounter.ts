@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { json, ProjectId, UnixTime } from '@l2beat/types'
 
 export interface DailyTransactionCount {
   timestamp: UnixTime
@@ -8,4 +8,5 @@ export interface DailyTransactionCount {
 export interface TransactionCounter {
   readonly projectId: ProjectId
   getDailyTransactionCounts(): Promise<DailyTransactionCount[]>
+  getStatus(): Promise<json>
 }
