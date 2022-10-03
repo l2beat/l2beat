@@ -33,6 +33,7 @@ export function getLocalConfig(): Config {
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
+    tvlReportSync: true,
     eventsSync: getEnv.boolean('EVENTS_ENABLED', false),
     transactionCountSync: getEnv.boolean(
       'TRANSACTION_COUNT_ENABLED',
@@ -46,6 +47,7 @@ export function getLocalConfig(): Config {
       rpcWorkQueueLimit: 200_000,
       rpcWorkQueueWorkers: 100,
       zkSyncWorkQueueWorkers: 100,
+      starkexWorkQueueWorkers: 1,
     },
   }
 }

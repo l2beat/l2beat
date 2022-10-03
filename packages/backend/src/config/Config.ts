@@ -37,6 +37,7 @@ export interface Config {
         rpcWorkQueueLimit: number
         rpcWorkQueueWorkers: number
         zkSyncWorkQueueWorkers: number
+        starkexWorkQueueWorkers: number
       }
     | false
 }

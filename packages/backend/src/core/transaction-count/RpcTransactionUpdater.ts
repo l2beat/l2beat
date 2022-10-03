@@ -31,12 +31,12 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly startBlock: number
 
   constructor(
+    private readonly config: TransactionCountSyncConfig,
     private readonly ethereumClient: EthereumClient,
     private readonly rpcTransactionCountRepository: RpcTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     readonly projectId: ProjectId,
-    private readonly config: TransactionCountSyncConfig,
     opts?: RpcTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)

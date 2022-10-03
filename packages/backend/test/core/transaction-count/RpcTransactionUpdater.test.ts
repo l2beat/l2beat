@@ -5,6 +5,8 @@ import { expect, mockFn } from 'earljs'
 import { BigNumber } from 'ethers'
 import waitForExpect from 'wait-for-expect'
 
+import { getConfig } from '../../../src/config'
+import { TransactionCountSyncConfig } from '../../../src/config/Config'
 import { Clock } from '../../../src/core/Clock'
 import { RpcTransactionUpdater } from '../../../src/core/transaction-count/RpcTransactionUpdater'
 import { RpcTransactionCountRepository } from '../../../src/peripherals/database/RpcTransactionCountRepository'
@@ -13,6 +15,7 @@ import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient
 describe(RpcTransactionUpdater.name, () => {
   describe(RpcTransactionUpdater.prototype.start.name, () => {
     it('skips known blocks', async () => {
+      const config = getConfig('test')
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
@@ -33,6 +36,7 @@ describe(RpcTransactionUpdater.name, () => {
         getLastHour: () => UnixTime.now(),
       })
       const blockTxCountUpdater = new RpcTransactionUpdater(
+        config.transactionCountSync as TransactionCountSyncConfig,
         ethereumClient,
         txCountRepository,
         clock,
@@ -49,6 +53,7 @@ describe(RpcTransactionUpdater.name, () => {
 
   describe(RpcTransactionUpdater.prototype.update.name, () => {
     it('does not query the same blocks multiple times', async () => {
+      const config = getConfig('test')
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
         getBlockNumber: async () => 5n,
@@ -69,6 +74,7 @@ describe(RpcTransactionUpdater.name, () => {
         getLastHour: () => UnixTime.now(),
       })
       const blockTxCountUpdater = new RpcTransactionUpdater(
+        config.transactionCountSync as TransactionCountSyncConfig,
         ethereumClient,
         txCountRepository,
         clock,
@@ -86,6 +92,7 @@ describe(RpcTransactionUpdater.name, () => {
 
   describe(RpcTransactionUpdater.prototype.updateBlock.name, () => {
     it('downloads and saves a block to DB', async () => {
+      const config = getConfig('test')
       const TIME_0 = UnixTime.now().add(-1, 'days').toStartOf('day')
       const TIME_1 = TIME_0.add(1, 'hours')
       const ethereumClient = mock<EthereumClient>({
@@ -113,6 +120,7 @@ describe(RpcTransactionUpdater.name, () => {
         getLastHour: () => UnixTime.now(),
       })
       const blockTxCountUpdater = new RpcTransactionUpdater(
+        config.transactionCountSync as TransactionCountSyncConfig,
         ethereumClient,
         txCountRepository,
         clock,
@@ -144,6 +152,7 @@ describe(RpcTransactionUpdater.name, () => {
     })
 
     it('allows assessing count', async () => {
+      const config = getConfig('test')
       const TIME_0 = new UnixTime(0)
       const ethereumClient = mock<EthereumClient>({
         getBlock: async (blockNumber) =>
@@ -161,6 +170,7 @@ describe(RpcTransactionUpdater.name, () => {
       })
 
       const rpcTransactionUpdater = new RpcTransactionUpdater(
+        config.transactionCountSync as TransactionCountSyncConfig,
         ethereumClient,
         txCountRepository,
         clock,

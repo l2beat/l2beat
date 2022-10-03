@@ -23,11 +23,11 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   )
 
   constructor(
+    private readonly config: TransactionCountSyncConfig,
     private readonly zksyncClient: ZksyncClient,
     private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
-    private readonly config: TransactionCountSyncConfig,
   ) {
     this.logger = logger.for(this)
   }

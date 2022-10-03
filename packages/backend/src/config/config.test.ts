@@ -27,7 +27,18 @@ export function getTestConfig(): Config {
     projects: [],
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
+    tvlReportSync: true,
     eventsSync: false,
-    transactionCountSync: false,
+    transactionCountSync: {
+      starkexApiUrl: 'xXTestStarkexApiUrlXx',
+      starkexApiKey: 'xXTestStarkexApiKeyXx',
+      arbitrumAlchemyApiKey: 'xXTestArbitrumAlchemyApiKeyXx',
+      optimismAlchemyApiKey: 'xXTestOptimismAlchemyApiKeyXx',
+      ethereumAlchemyApiKey: 'xXTestEthereumAlchemyApiKeyXx',
+      rpcWorkQueueLimit: 200_000,
+      rpcWorkQueueWorkers: 1,
+      zkSyncWorkQueueWorkers: 1,
+      starkexWorkQueueWorkers: 1,
+    },
   }
 }

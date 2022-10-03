@@ -2,6 +2,7 @@ import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { TransactionCountSyncConfig } from '../../config/Config'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
 import { StarkexClient } from '../../peripherals/starkex'
 import { Clock } from '../Clock'
@@ -12,10 +13,12 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
   private daysQueue = new UniqueTaskQueue(
     this.updateDay.bind(this),
     this.logger,
+    { workers: this.config.starkexWorkQueueWorkers },
   )
   private startDay: number
 
   constructor(
+    private readonly config: TransactionCountSyncConfig,
     private starkexTransactionCountRepository: StarkexTransactionCountRepository,
     private starkexClient: StarkexClient,
     private clock: Clock,

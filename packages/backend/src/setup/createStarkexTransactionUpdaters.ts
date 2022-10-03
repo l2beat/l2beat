@@ -5,6 +5,7 @@ import { Clock } from '../core/Clock'
 import { StarkexTransactionCountUpdater } from '../core/transaction-count/StarkexTransactionCountUpdater'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
 import { StarkexClient } from '../peripherals/starkex'
+import { assert } from '../tools/assert'
 
 export function createStarkexTransactionUpdaters(
   config: Config,
@@ -13,10 +14,13 @@ export function createStarkexTransactionUpdaters(
   clock: Clock,
   logger: Logger,
 ) {
+  assert(config.transactionCountSync)
+
   const starkexUpdaters = []
   for (const project of config.projects) {
     if (project.transactionApi?.type === 'starkex') {
       const transactionUpdater = new StarkexTransactionCountUpdater(
+        config.transactionCountSync,
         starkexTransactionCountRepository,
         starkexClient,
         clock,

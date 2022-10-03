@@ -56,6 +56,7 @@ export function getActivityModule(
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
+    config.transactionCountSync,
     rpcTransactionCountRepository,
     clock,
     logger,
@@ -71,6 +72,7 @@ export function getActivityModule(
   )
 
   const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
+    config.transactionCountSync,
     zksyncClient,
     zksyncTransactionRepository,
     clock,
