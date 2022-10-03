@@ -48,10 +48,5 @@ export const near: Bridge = {
         'Bridge cannot be upgraded but 3/6 Admin Multisig can move all funds out of the bridge via admin functions with no warning.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: '???',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
   },
 }

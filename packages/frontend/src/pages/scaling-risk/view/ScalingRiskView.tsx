@@ -8,8 +8,8 @@ import {
   ZkSyncIcon,
 } from '../../../components/icons'
 import { ProjectLink } from '../../../components/ProjectLink'
+import { RiskCell } from '../../../components/RiskCell'
 import { ColumnConfig, TableView } from '../../../components/TableView'
-import { RiskCell } from './RiskCell'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
