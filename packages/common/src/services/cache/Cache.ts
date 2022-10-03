@@ -12,10 +12,10 @@ type WithAsyncMethod<K extends string> = {
 
 export class Cache {
   private cache = new NestedDict({})
-  private promises = new NestedDict<Promise<unknown>>({})
+  private readonly promises = new NestedDict<Promise<unknown>>({})
   private initialized = false
 
-  constructor(private backend: CacheBackend) {}
+  constructor(private readonly backend: CacheBackend) {}
 
   init() {
     if (this.initialized) {
@@ -83,7 +83,7 @@ export class Cache {
     object[method] = this.wrap(module, object[method].bind(object))
   }
 
-  private flush = debounce(this.save.bind(this))
+  private readonly flush = debounce(this.save.bind(this))
 
   private save() {
     this.backend.write(this.cache)

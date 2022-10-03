@@ -3,7 +3,7 @@ import { json } from '@l2beat/types'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
 
 export class BlocksController {
-  constructor(private blockNumberRepository: BlockNumberRepository) {}
+  constructor(private readonly blockNumberRepository: BlockNumberRepository) {}
 
   async getAllBlocks(): Promise<json> {
     const all = await this.blockNumberRepository.getAll()

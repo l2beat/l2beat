@@ -17,8 +17,8 @@ interface Layer2Counts {
 }
 export class ActivityController {
   constructor(
-    private layer2Counters: TransactionCounter[],
-    private ethereumCounter: TransactionCounter,
+    private readonly layer2Counters: TransactionCounter[],
+    private readonly ethereumCounter: TransactionCounter,
   ) {}
 
   async getTransactionActivity(): Promise<ActivityApiResponse> {
