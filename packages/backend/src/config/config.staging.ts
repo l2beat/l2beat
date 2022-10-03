@@ -16,12 +16,17 @@ export function getStagingConfig(): Config {
       ...(productionConfig.databaseConnection as Knex.PgConnectionConfig),
       application_name: name,
     },
+    tvlReportSync: false,
     transactionCountSync: {
       starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
       optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
       ethereumAlchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      rpcWorkQueueLimit: 200_000,
+      rpcWorkQueueWorkers: 1,
+      zkSyncWorkQueueWorkers: 1,
+      starkexWorkQueueWorkers: 1,
     },
   }
 }

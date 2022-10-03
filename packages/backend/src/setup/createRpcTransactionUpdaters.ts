@@ -4,6 +4,7 @@ import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { Config } from '../config'
+import { TransactionCountSyncConfig } from '../config/Config'
 import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
 import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
@@ -16,14 +17,15 @@ export function createLayer2RpcTransactionUpdaters(
   clock: Clock,
   logger: Logger,
 ) {
+  assert(config.transactionCountSync)
   const rpcUpdaters: RpcTransactionUpdater[] = []
 
   for (const project of config.projects) {
     if (project.transactionApi?.type === 'rpc') {
       const l2Provider = createL2Provider(
+        config.transactionCountSync,
         project.transactionApi,
         project.projectId,
-        config,
       )
 
       const ethereumClient = new EthereumClient(
@@ -38,7 +40,11 @@ export function createLayer2RpcTransactionUpdaters(
         clock,
         logger,
         project.projectId,
-        { assessCount: project.transactionApi.assessCount },
+        {
+          assessCount: project.transactionApi.assessCount,
+          workQueueSizeLimit: config.transactionCountSync.rpcWorkQueueLimit,
+          workQueueWorkers: config.transactionCountSync.rpcWorkQueueWorkers,
+        },
       )
 
       rpcUpdaters.push(transactionUpdater)
@@ -49,6 +55,7 @@ export function createLayer2RpcTransactionUpdaters(
 }
 
 export function createEthereumTransactionUpdater(
+  config: TransactionCountSyncConfig,
   rpcTransactionCountRepository: RpcTransactionCountRepository,
   clock: Clock,
   logger: Logger,
@@ -62,18 +69,20 @@ export function createEthereumTransactionUpdater(
     clock,
     logger,
     ProjectId.ETHEREUM,
-    { startBlock: 8929324 }, // TODO: make it cleaner, we already have a min timestamp in config
+    {
+      startBlock: 8929324,
+      workQueueSizeLimit: config.rpcWorkQueueLimit,
+      workQueueWorkers: config.rpcWorkQueueWorkers,
+    }, // TODO: make it cleaner, we already have a min timestamp in config
   )
   return updater
 }
 
 function createL2Provider(
+  config: TransactionCountSyncConfig,
   rpc: RpcTransactionApi,
   projectId: ProjectId,
-  config: Config,
 ) {
-  assert(config.transactionCountSync)
-
   if (rpc.provider === 'jsonRpc') {
     return new providers.JsonRpcProvider({
       url: rpc.url,
@@ -83,10 +92,10 @@ function createL2Provider(
 
   let apiKey = ''
   if (projectId === ProjectId('arbitrum')) {
-    apiKey = config.transactionCountSync.arbitrumAlchemyApiKey
+    apiKey = config.arbitrumAlchemyApiKey
   }
   if (projectId === ProjectId('optimism')) {
-    apiKey = config.transactionCountSync.optimismAlchemyApiKey
+    apiKey = config.optimismAlchemyApiKey
   }
   if (!apiKey) {
     throw new Error('Please provide alchemy api key')

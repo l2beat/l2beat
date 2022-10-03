@@ -7,11 +7,16 @@ import { StarkexClient } from '../../peripherals/starkex'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
+interface StarkexTransactionCountUpdaterOpts {
+  workQueueWorkers?: number
+}
+
 export class StarkexTransactionCountUpdater implements TransactionCounter {
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private daysQueue = new UniqueTaskQueue(
     this.updateDay.bind(this),
     this.logger,
+    { workers: this.opts?.workQueueWorkers },
   )
   private startDay: number
 
@@ -23,6 +28,7 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     private product: StarkexProduct,
     readonly projectId: ProjectId,
     startTimestamp: UnixTime,
+    private opts?: StarkexTransactionCountUpdaterOpts,
   ) {
     this.logger = logger.for(this)
     this.startDay = startTimestamp.toStartOf('day').toDays()

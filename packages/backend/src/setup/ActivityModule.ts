@@ -56,6 +56,7 @@ export function getActivityModule(
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
+    config.transactionCountSync,
     rpcTransactionCountRepository,
     clock,
     logger,
@@ -75,6 +76,7 @@ export function getActivityModule(
     zksyncTransactionRepository,
     clock,
     logger,
+    { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
   )
 
   const activityController = new ActivityController(

@@ -9,6 +9,10 @@ import { ZksyncClient } from '../../peripherals/zksync'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
+interface ZksyncTransactionUpdaterOpts {
+  workQueueWorkers?: number
+}
+
 export class ZksyncTransactionUpdater implements TransactionCounter {
   readonly projectId = ProjectId.ZKSYNC
 
@@ -17,15 +21,16 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     this.updateBlock.bind(this),
     this.logger,
     {
-      workers: 100,
+      workers: this.opts?.workQueueWorkers,
     },
   )
 
   constructor(
-    private zksyncClient: ZksyncClient,
-    private zksyncTransactionRepository: ZksyncTransactionRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly zksyncClient: ZksyncClient,
+    private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
+    private readonly opts?: ZksyncTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
   }
