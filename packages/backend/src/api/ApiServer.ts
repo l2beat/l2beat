@@ -7,11 +7,11 @@ import etag from 'koa-etag'
 import { createApiLogger } from './ApiLogger'
 
 export class ApiServer {
-  private app: Koa
+  private readonly app: Koa
 
   constructor(
-    private port: number,
-    private logger: Logger,
+    private readonly port: number,
+    private readonly logger: Logger,
     routers: Router[],
     handleServerError?: (error: Error, ctx: Context) => void,
   ) {

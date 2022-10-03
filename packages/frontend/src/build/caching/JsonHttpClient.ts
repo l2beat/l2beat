@@ -3,7 +3,10 @@ import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 
 export class JsonHttpClient {
-  constructor(private http: HttpClient, private skipCache: boolean) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly skipCache: boolean,
+  ) {}
 
   async fetchJson(url: string): Promise<unknown> {
     if (!this.skipCache) {

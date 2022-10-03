@@ -15,16 +15,19 @@ import { getUpdateRanges } from './getUpdateRanges'
 import { EventDetails } from './types/EventDetails'
 
 export class EventUpdater {
-  private eventsToWatch: EventDetails[] = []
-  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger)
+  private readonly eventsToWatch: EventDetails[] = []
+  private readonly taskQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
 
   constructor(
-    private ethereumClient: EthereumClient,
-    private blockNumberUpdater: BlockNumberUpdater,
-    private eventRepository: EventRepository,
-    private clock: Clock,
-    private projects: Project[],
-    private logger: Logger,
+    private readonly ethereumClient: EthereumClient,
+    private readonly blockNumberUpdater: BlockNumberUpdater,
+    private readonly eventRepository: EventRepository,
+    private readonly clock: Clock,
+    private readonly projects: Project[],
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
 

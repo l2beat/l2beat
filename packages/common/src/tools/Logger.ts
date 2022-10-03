@@ -19,7 +19,7 @@ export interface LoggerOptions {
 export type LoggerParameters = Record<string, json>
 
 export class Logger {
-  constructor(private options: LoggerOptions) {}
+  constructor(private readonly options: LoggerOptions) {}
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
   static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })

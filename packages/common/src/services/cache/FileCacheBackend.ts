@@ -6,7 +6,7 @@ import { CacheBackend } from './Cache'
 import { NestedDict } from './NestedDict'
 
 export class FileCacheBackend implements CacheBackend {
-  private filename = `.cache/cache.json`
+  private readonly filename: string = `.cache/cache.json`
 
   constructor(filename?: string) {
     if (filename) {

@@ -22,12 +22,12 @@ import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 export class TvlController {
   constructor(
-    private reportStatusRepository: ReportStatusRepository,
-    private aggregateReportRepository: AggregateReportRepository,
-    private reportRepository: ReportRepository,
-    private projects: ReportProject[],
-    private tokens: Token[],
-    private logger: Logger,
+    private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly aggregateReportRepository: AggregateReportRepository,
+    private readonly reportRepository: ReportRepository,
+    private readonly projects: ReportProject[],
+    private readonly tokens: Token[],
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }

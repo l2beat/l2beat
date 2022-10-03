@@ -4,7 +4,9 @@ import { AggregateReportRepository } from '../../peripherals/database/AggregateR
 import { asNumber } from './tvl/asNumber'
 
 export class DydxController {
-  constructor(private aggregateReportsRepository: AggregateReportRepository) {}
+  constructor(
+    private readonly aggregateReportsRepository: AggregateReportRepository,
+  ) {}
 
   async getTvl(): Promise<number | undefined> {
     const report = await this.aggregateReportsRepository.findLatest(

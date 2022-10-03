@@ -2,9 +2,9 @@ import { UnixTime } from '@l2beat/types'
 
 export class Clock {
   constructor(
-    private minTimestamp: UnixTime,
-    private delayInSeconds: number,
-    private refreshIntervalMs = 1000,
+    private readonly minTimestamp: UnixTime,
+    private readonly delayInSeconds: number,
+    private readonly refreshIntervalMs = 1000,
   ) {
     if (!this.minTimestamp.isFull('hour')) {
       this.minTimestamp = this.minTimestamp.toNext('hour')

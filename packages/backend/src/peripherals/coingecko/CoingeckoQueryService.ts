@@ -14,7 +14,7 @@ export interface PriceHistoryPoint {
 }
 
 export class CoingeckoQueryService {
-  constructor(private coingeckoClient: CoingeckoClient) {}
+  constructor(private readonly coingeckoClient: CoingeckoClient) {}
 
   async getUsdPriceHistory(
     coingeckoId: CoingeckoId,

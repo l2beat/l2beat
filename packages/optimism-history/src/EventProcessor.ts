@@ -7,10 +7,10 @@ import { OptimismNameService } from './OptimismNameService'
 
 export class EventProcessor {
   constructor(
-    private provider: providers.Provider,
-    private blockTimestampService: BlockTimestampService,
-    private optimismNameService: OptimismNameService,
-    private addressAnalyzer: AddressAnalyzer,
+    private readonly provider: providers.Provider,
+    private readonly blockTimestampService: BlockTimestampService,
+    private readonly optimismNameService: OptimismNameService,
+    private readonly addressAnalyzer: AddressAnalyzer,
   ) {}
 
   async processEvent(event: Event) {

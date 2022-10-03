@@ -1,7 +1,7 @@
 export class ByteReader {
   private position = 0
 
-  constructor(private value: string) {
+  constructor(private readonly value: string) {
     if (value.startsWith('0x')) {
       this.value = value.slice(2)
     }

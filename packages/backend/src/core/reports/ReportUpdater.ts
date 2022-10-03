@@ -14,18 +14,21 @@ import { addOpTokenReport } from './optimism'
 import { ReportProject } from './ReportProject'
 
 export class ReportUpdater {
-  private configHash: Hash256
-  private taskQueue = new TaskQueue(this.update.bind(this), this.logger)
+  private readonly configHash: Hash256
+  private readonly taskQueue = new TaskQueue(
+    this.update.bind(this),
+    this.logger,
+  )
 
   constructor(
-    private priceUpdater: PriceUpdater,
-    private balanceUpdater: BalanceUpdater,
-    private reportRepository: ReportRepository,
-    private aggregateReportsRepository: AggregateReportRepository,
-    private reportStatusRepository: ReportStatusRepository,
-    private clock: Clock,
-    private projects: ReportProject[],
-    private logger: Logger,
+    private readonly priceUpdater: PriceUpdater,
+    private readonly balanceUpdater: BalanceUpdater,
+    private readonly reportRepository: ReportRepository,
+    private readonly aggregateReportsRepository: AggregateReportRepository,
+    private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly clock: Clock,
+    private readonly projects: ReportProject[],
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getReportConfigHash(projects)
