@@ -55,15 +55,14 @@ export class RpcTransactionCountRepository extends BaseRepository {
       `
       WITH 
         project_blocks AS (
-          SELECT * FROM transactions.rpc WHERE project_id = ?
+          SELECT * FROM transactions.rpc WHERE project_id=?
         )
       SELECT * 
       FROM (
         SELECT project_blocks.block_number 
         FROM project_blocks 
-        LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number - 1
-        WHERE b2.block_number IS NULL
-      ) AS no_next
+        LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
+        WHERE b2.block_number IS NULL) AS no_next
       ORDER BY block_number ASC
     `,
       projectId.toString(),
@@ -72,17 +71,16 @@ export class RpcTransactionCountRepository extends BaseRepository {
     const noPrev = (await knex.raw(
       `
       WITH 
-        project_blocks AS (
-          SELECT * FROM transactions.rpc WHERE project_id = ?
-        )
-      SELECT * 
-      FROM (
-        SELECT project_blocks.block_number 
-        FROM project_blocks 
-        LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
-        WHERE b2.block_number IS NULL
-      ) AS no_prev
-      ORDER BY block_number ASC
+          project_blocks AS (
+            SELECT * FROM transactions.rpc WHERE project_id=?
+          )
+        SELECT * 
+        FROM (
+          SELECT project_blocks.block_number 
+          FROM project_blocks 
+          LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
+          WHERE b2.block_number IS NULL) AS no_prev
+        ORDER BY block_number ASC
     `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
@@ -93,10 +91,7 @@ export class RpcTransactionCountRepository extends BaseRepository {
     noPrevBlockNumbers.push(Infinity)
     noNextBlockNumbers.unshift(-Infinity)
 
-    assert(
-      noNextBlockNumbers.length === noPrevBlockNumbers.length,
-      `Missing ranges not equal. ProjectId: ${projectId.toString()}, prev: ${noPrevBlockNumbers.toString()}, next: ${noNextBlockNumbers.toString()}`,
-    )
+    assert(noNextBlockNumbers.length === noPrevBlockNumbers.length)
 
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
