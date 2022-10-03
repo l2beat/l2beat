@@ -72,6 +72,11 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     controls.moreTokens?.classList.add('hidden')
   })
 
+  controls.combined?.addEventListener('change', () => {
+    const checked = !!controls.combined?.checked
+    updateInput(!checked ? mainEndpoint : '/api/combined-tvl.json')
+  })
+
   function updateInput(url: string) {
     state.endpoint = url
     state.input = undefined
