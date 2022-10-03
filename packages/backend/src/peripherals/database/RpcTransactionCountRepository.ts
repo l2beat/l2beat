@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
+import { Knex } from 'knex'
 import { RpcTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
@@ -51,8 +52,9 @@ export class RpcTransactionCountRepository extends BaseRepository {
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
 
-    const noNext = (await knex.raw(
-      `
+    const noNextQuery = (tx: Knex.Transaction) =>
+      tx.raw(
+        `
       WITH 
         project_blocks AS (
           SELECT * FROM transactions.rpc WHERE project_id=?
@@ -63,13 +65,14 @@ export class RpcTransactionCountRepository extends BaseRepository {
         FROM project_blocks 
         LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
         WHERE b2.block_number IS NULL) AS no_next
-      ORDER BY block_number ASC
+        ORDER BY block_number ASC
     `,
-      projectId.toString(),
-    )) as unknown as RawBlockNumberQueryResult
+        projectId.toString(),
+      )
 
-    const noPrev = (await knex.raw(
-      `
+    const noPrevQuery = (tx: Knex.Transaction) =>
+      tx.raw(
+        `
       WITH 
           project_blocks AS (
             SELECT * FROM transactions.rpc WHERE project_id=?
@@ -80,10 +83,20 @@ export class RpcTransactionCountRepository extends BaseRepository {
           FROM project_blocks 
           LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
           WHERE b2.block_number IS NULL) AS no_prev
-        ORDER BY block_number ASC
+          ORDER BY block_number ASC
     `,
-      projectId.toString(),
-    )) as unknown as RawBlockNumberQueryResult
+        projectId.toString(),
+      )
+
+    const { noNext, noPrev } = await knex.transaction(async (tx) => {
+      const noNext = (await noNextQuery(
+        tx,
+      )) as unknown as RawBlockNumberQueryResult
+      const noPrev = (await noPrevQuery(
+        tx,
+      )) as unknown as RawBlockNumberQueryResult
+      return { noNext, noPrev }
+    })
 
     const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
     const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
