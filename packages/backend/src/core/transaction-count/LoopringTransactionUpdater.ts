@@ -87,4 +87,15 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       this.projectId,
     )
   }
+
+  async getStatus() {
+    return {
+      queuedJobsCount: this.blockQueue.length,
+      missingRanges:
+        await this.blockTransactionCountRepository.getMissingRangesByProject(
+          this.projectId,
+        ),
+      busyWorkers: this.blockQueue.getBusyWorkers(),
+    }
+  }
 }
