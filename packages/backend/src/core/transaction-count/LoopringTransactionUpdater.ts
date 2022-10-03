@@ -1,14 +1,17 @@
 import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import { BlockTransactionRepository } from '../../peripherals/database/BlockTransactionRepository'
+import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
 export class LoopringTransactionUpdater implements TransactionCounter {
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
+  private readonly blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
@@ -17,10 +20,10 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   )
 
   constructor(
-    private loopringClient: LoopringClient,
-    private blockTransactionRepository: BlockTransactionRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly loopringClient: LoopringClient,
+    private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
     readonly projectId: ProjectId,
   ) {
     this.logger = logger.for(this)
@@ -43,7 +46,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       return
     }
 
-    await this.blockTransactionRepository.add({
+    await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp: block.createdAt,
       blockNumber,
@@ -60,7 +63,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     this.logger.info('Update started')
 
     const missingRanges =
-      await this.blockTransactionRepository.getMissingRangesByProject(
+      await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
 
@@ -80,7 +83,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return await this.blockTransactionRepository.getDailyTransactionCount(
+    return await this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
     )
   }

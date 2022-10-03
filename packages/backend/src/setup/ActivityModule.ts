@@ -7,7 +7,7 @@ import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
-import { BlockTransactionRepository } from '../peripherals/database/BlockTransactionRepository'
+import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
@@ -42,7 +42,7 @@ export function getActivityModule(
 
   const loopringClient = new LoopringClient(http, logger)
 
-  const blockTransactionRepository = new BlockTransactionRepository(
+  const blockTransactionCountRepository = new BlockTransactionCountRepository(
     database,
     logger,
   )
@@ -55,13 +55,13 @@ export function getActivityModule(
 
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
-    blockTransactionRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
-    blockTransactionRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
     config.transactionCountSync.ethereumAlchemyApiKey,
@@ -84,7 +84,7 @@ export function getActivityModule(
 
   const loopringTransactionUpdater = new LoopringTransactionUpdater(
     loopringClient,
-    blockTransactionRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
     ProjectId.LOOPRING,

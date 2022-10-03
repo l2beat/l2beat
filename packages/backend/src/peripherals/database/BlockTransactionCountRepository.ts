@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { BlockTransactionRow } from 'knex/types/tables'
+import { BlockTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
 import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
-export interface BlockTransactionRecord {
+export interface BlockTransactionCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   blockNumber: number
@@ -19,7 +19,7 @@ interface RawBlockNumberQueryResult {
   }[]
 }
 
-export class BlockTransactionRepository extends BaseRepository {
+export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -33,14 +33,14 @@ export class BlockTransactionRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async add(record: BlockTransactionRecord) {
+  async add(record: BlockTransactionCountRecord) {
     const knex = await this.knex()
     const row = toRow(record)
     await knex('transactions.block').insert(row)
     return `${row.project_id}-${row.block_number}`
   }
 
-  async addMany(records: BlockTransactionRecord[]) {
+  async addMany(records: BlockTransactionCountRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
     await knex('transactions.block').insert(rows)
@@ -115,7 +115,7 @@ export class BlockTransactionRepository extends BaseRepository {
     `,
       projectId.toString(),
     )) as unknown as {
-      rows: Pick<BlockTransactionRow, 'unix_timestamp' | 'count'>[]
+      rows: Pick<BlockTransactionCountRow, 'unix_timestamp' | 'count'>[]
     }
 
     return rows.map((r) => ({
@@ -130,7 +130,7 @@ export class BlockTransactionRepository extends BaseRepository {
   }
 }
 
-function toRow(record: BlockTransactionRecord): BlockTransactionRow {
+function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),

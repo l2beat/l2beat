@@ -5,7 +5,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
 import { LoopringTransactionUpdater } from '../../../src/core/transaction-count/LoopringTransactionUpdater'
-import { BlockTransactionRepository } from '../../../src/peripherals/database/BlockTransactionRepository'
+import { BlockTransactionCountRepository } from '../../../src/peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../../src/peripherals/loopring/LoopringClient'
 
 describe(LoopringTransactionUpdater.name, () => {
@@ -21,14 +21,15 @@ describe(LoopringTransactionUpdater.name, () => {
         }),
         getFinalizedBlockNumber: async () => 5,
       })
-      const blockTransactionRepository = mock<BlockTransactionRepository>({
-        getMissingRangesByProject: async () => [
-          [-Infinity, -1],
-          [2, 3],
-          [5, Infinity],
-        ],
-        add: async () => '',
-      })
+      const blockCountTransactionRepository =
+        mock<BlockTransactionCountRepository>({
+          getMissingRangesByProject: async () => [
+            [-Infinity, -1],
+            [2, 3],
+            [5, Infinity],
+          ],
+          add: async () => '',
+        })
       const clock = mock<Clock>({
         onNewHour: (callback) => {
           callback(UnixTime.now())
@@ -38,7 +39,7 @@ describe(LoopringTransactionUpdater.name, () => {
       })
       const blockTxCountUpdater = new LoopringTransactionUpdater(
         loopringClient,
-        blockTransactionRepository,
+        blockCountTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -61,15 +62,16 @@ describe(LoopringTransactionUpdater.name, () => {
           transactions: 13,
         }),
       })
-      const blockTransactionRepository = mock<BlockTransactionRepository>({
-        add: async () => '',
-      })
+      const blockCountTransactionRepository =
+        mock<BlockTransactionCountRepository>({
+          add: async () => '',
+        })
       const clock = mock<Clock>({
         getLastHour: () => UnixTime.now(),
       })
       const blockTxCountUpdater = new LoopringTransactionUpdater(
         LoopringClient,
-        blockTransactionRepository,
+        blockCountTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -78,7 +80,7 @@ describe(LoopringTransactionUpdater.name, () => {
       await blockTxCountUpdater.updateBlock(1)
       await blockTxCountUpdater.updateBlock(2)
 
-      expect(blockTransactionRepository.add).toHaveBeenCalledExactlyWith([
+      expect(blockCountTransactionRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             timestamp: TIME_0,
@@ -111,15 +113,16 @@ describe(LoopringTransactionUpdater.name, () => {
           transactions: 11,
         }),
       })
-      const blockTransactionRepository = mock<BlockTransactionRepository>({
-        add: async () => '',
-      })
+      const blockCountTransactionRepository =
+        mock<BlockTransactionCountRepository>({
+          add: async () => '',
+        })
       const clock = mock<Clock>({
         getLastHour: () => TIME_0.add(1, 'hours'),
       })
       const blockTxCountUpdater = new LoopringTransactionUpdater(
         LoopringClient,
-        blockTransactionRepository,
+        blockCountTransactionRepository,
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
@@ -128,7 +131,7 @@ describe(LoopringTransactionUpdater.name, () => {
       await blockTxCountUpdater.updateBlock(1)
       await blockTxCountUpdater.updateBlock(2)
 
-      expect(blockTransactionRepository.add).toHaveBeenCalledExactlyWith([
+      expect(blockCountTransactionRepository.add).toHaveBeenCalledExactlyWith([
         [
           {
             projectId: ProjectId('fake-project'),
