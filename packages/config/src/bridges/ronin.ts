@@ -42,10 +42,5 @@ export const ronin: Bridge = {
       description: 'Gateway Proxy can be upgraded by a single EOA address.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: '???',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
   },
 }
