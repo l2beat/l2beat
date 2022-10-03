@@ -2,6 +2,7 @@ import {
   ActivityApiChart,
   ActivityApiChartPoint,
   ActivityApiResponse,
+  json,
   ProjectId,
 } from '@l2beat/types'
 
@@ -42,14 +43,14 @@ export class ActivityController {
     )
   }
 
-  async getStatus() {
+  async getStatus(): Promise<json> {
     return Promise.all([
       ...this.layer2Counters.map(async (c) => ({
-        projectId: c.projectId,
+        projectId: c.projectId.toString(),
         status: await c.getStatus(),
       })),
       {
-        projectId: ProjectId.ETHEREUM,
+        projectId: ProjectId.ETHEREUM.toString(),
         status: await this.ethereumCounter.getStatus(),
       },
     ])
