@@ -105,9 +105,9 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.rpcTransactionCountRepository.getDailyTransactionCount(
+    return await this.blockTransactionRepository.getDailyTransactionCount(
       this.projectId,
-    )sssssssssssssssssssssssssssssssssssssss
+    )
   }
 
   async getStatus() {

@@ -21,7 +21,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     private blockTransactionRepository: BlockTransactionRepository,
     private clock: Clock,
     private logger: Logger,
-    private projectId: ProjectId,
+    readonly projectId: ProjectId,
   ) {
     this.logger = logger.for(this)
   }
@@ -80,13 +80,8 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    const counts =
-      await this.blockTransactionRepository.getDailyTransactionCount(
-        this.projectId,
-      )
-    return {
-      projectId: ProjectId.ZKSYNC,
-      counts,
-    }
+    return await this.blockTransactionRepository.getDailyTransactionCount(
+      this.projectId,
+    )
   }
 }

@@ -61,7 +61,7 @@ export function getActivityModule(
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
-    rpcTransactionCountRepository,
+    blockTransactionRepository,
     clock,
     logger,
     config.transactionCountSync.ethereumAlchemyApiKey,
@@ -92,7 +92,7 @@ export function getActivityModule(
 
   const activityController = new ActivityController(
     [
-      ...rpcTransactionUpdaters,
+      ...layer2RpcTransactionUpdaters,
       ...starkexTransactionUpdaters,
       zksyncTransactionUpdater,
       loopringTransactionUpdater,
