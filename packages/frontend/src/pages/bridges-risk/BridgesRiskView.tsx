@@ -2,8 +2,8 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ProjectLink } from '../../components/ProjectLink'
+import { RiskCell } from '../../components/RiskCell'
 import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
-import { RiskCell } from './RiskCell'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
@@ -49,7 +49,9 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Type',
-      getValue: (entry) => <span>{entry.category}</span>,
+      getValue: (entry) => (
+        <span className="sm:text-sm md:text-base">{entry.category}</span>
+      ),
     },
     {
       name: 'Upgradeability',

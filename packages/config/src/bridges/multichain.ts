@@ -189,11 +189,6 @@ export const multichain: Bridge = {
       description: '2/3rd of MPC.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: '???',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
     destinationToken: {
       value: 'Custom Multichain or anyToken',
       description:
