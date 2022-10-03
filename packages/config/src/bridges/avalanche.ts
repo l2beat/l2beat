@@ -78,10 +78,5 @@ export const avalanche: Bridge = {
       description: 'Avalanche Bridge uses EOA for Escrow',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: '???',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
   },
 }

@@ -21,20 +21,24 @@ interface HeldAsset {
 }
 
 export class BalanceUpdater {
-  private configHash: Hash256
-  private knownSet = new Set<number>()
-  private taskQueue = new TaskQueue(this.update.bind(this), this.logger, {
-    id: 'test',
-  })
+  private readonly configHash: Hash256
+  private readonly knownSet = new Set<number>()
+  private readonly taskQueue = new TaskQueue(
+    this.update.bind(this),
+    this.logger,
+    {
+      id: 'BalanceUpdater.taskQueue',
+    },
+  )
 
   constructor(
-    private multicall: MulticallClient,
-    private blockNumberUpdater: BlockNumberUpdater,
-    private balanceRepository: BalanceRepository,
-    private balanceStatusRepository: BalanceStatusRepository,
-    private clock: Clock,
-    private projects: BalanceProject[],
-    private logger: Logger,
+    private readonly multicall: MulticallClient,
+    private readonly blockNumberUpdater: BlockNumberUpdater,
+    private readonly balanceRepository: BalanceRepository,
+    private readonly balanceStatusRepository: BalanceStatusRepository,
+    private readonly clock: Clock,
+    private readonly projects: BalanceProject[],
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getBalanceConfigHash(projects)

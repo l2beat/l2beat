@@ -13,17 +13,21 @@ import { assert } from '../tools/assert'
 import { Clock } from './Clock'
 
 export class PriceUpdater {
-  private knownSet = new Set<number>()
-  private taskQueue = new TaskQueue<void>(() => this.update(), this.logger, {
-    id: 'PriceUpdater.taskQueue',
-  })
+  private readonly knownSet = new Set<number>()
+  private readonly taskQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+    {
+      id: 'PriceUpdater.taskQueue',
+    },
+  )
 
   constructor(
-    private coingeckoQueryService: CoingeckoQueryService,
-    private priceRepository: PriceRepository,
-    private clock: Clock,
-    private tokens: Token[],
-    private logger: Logger,
+    private readonly coingeckoQueryService: CoingeckoQueryService,
+    private readonly priceRepository: PriceRepository,
+    private readonly clock: Clock,
+    private readonly tokens: Token[],
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }

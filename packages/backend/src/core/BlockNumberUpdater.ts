@@ -7,16 +7,20 @@ import { EtherscanClient } from '../peripherals/etherscan'
 import { Clock } from './Clock'
 
 export class BlockNumberUpdater {
-  private blocksByTimestamp = new Map<number, bigint>()
-  private taskQueue = new TaskQueue(this.update.bind(this), this.logger, {
-    id: 'BlockNumberUpdater.taskQueue',
-  })
+  private readonly blocksByTimestamp = new Map<number, bigint>()
+  private readonly taskQueue = new TaskQueue(
+    this.update.bind(this),
+    this.logger,
+    {
+      id: 'BlockNumberUpdater.taskQueue',
+    },
+  )
 
   constructor(
-    private etherscanClient: EtherscanClient,
-    private blockNumberRepository: BlockNumberRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly etherscanClient: EtherscanClient,
+    private readonly blockNumberRepository: BlockNumberRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }

@@ -9,9 +9,9 @@ import { renderShowcasePage } from './ShowcasePage'
 
 export class EventController {
   constructor(
-    private eventRepository: EventRepository,
-    private clock: Clock,
-    private projects: Project[],
+    private readonly eventRepository: EventRepository,
+    private readonly clock: Clock,
+    private readonly projects: Project[],
   ) {}
 
   async getEventApiResponse(): Promise<EventApiResponse> {

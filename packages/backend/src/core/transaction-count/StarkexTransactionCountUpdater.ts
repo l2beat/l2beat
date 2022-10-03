@@ -12,23 +12,26 @@ interface StarkexTransactionCountUpdaterOpts {
 }
 
 export class StarkexTransactionCountUpdater implements TransactionCounter {
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private daysQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
+  private readonly daysQueue = new UniqueTaskQueue(
     this.updateDay.bind(this),
     this.logger,
     { workers: this.opts?.workQueueWorkers },
   )
-  private startDay: number
+  private readonly startDay: number
 
   constructor(
-    private starkexTransactionCountRepository: StarkexTransactionCountRepository,
-    private starkexClient: StarkexClient,
-    private clock: Clock,
-    private logger: Logger,
-    private product: StarkexProduct,
+    private readonly starkexTransactionCountRepository: StarkexTransactionCountRepository,
+    private readonly starkexClient: StarkexClient,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
+    private readonly product: StarkexProduct,
     readonly projectId: ProjectId,
     startTimestamp: UnixTime,
-    private opts?: StarkexTransactionCountUpdaterOpts,
+    private readonly opts?: StarkexTransactionCountUpdaterOpts,
   ) {
     this.logger = logger.for(this)
     this.startDay = startTimestamp.toStartOf('day').toDays()
@@ -87,5 +90,16 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     return this.starkexTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
     )
+  }
+
+  async getStatus() {
+    return {
+      queuedJobsCount: this.daysQueue.length,
+      missingRanges:
+        await this.starkexTransactionCountRepository.getMissingRangesByProject(
+          this.projectId,
+        ),
+      busyWorkers: this.daysQueue.getBusyWorkers(),
+    }
   }
 }

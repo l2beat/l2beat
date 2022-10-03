@@ -15,11 +15,11 @@ const API_URL = 'https://api.coingecko.com/api/v3'
 const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
 export class CoingeckoClient {
-  private timeoutMs = 10_000
+  private readonly timeoutMs = 10_000
 
   constructor(
-    private httpClient: HttpClient,
-    private apiKey: string | undefined,
+    private readonly httpClient: HttpClient,
+    private readonly apiKey: string | undefined,
   ) {
     const rateLimiter = new RateLimiter({
       callsPerMinute: apiKey ? 450 : 35,

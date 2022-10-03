@@ -14,7 +14,7 @@ export class PolyglotMigrationSource
   constructor(
     migrationsDirectory: string,
     sortDirsSeparately = false,
-    private loadExtensions = ['.js', '.ts'],
+    private readonly loadExtensions = ['.js', '.ts'],
   ) {
     const migrationsDirContents = readdirSync(migrationsDirectory)
     // If there is a built .js file in migrations directory,

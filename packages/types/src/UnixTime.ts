@@ -3,7 +3,7 @@ const YEAR_3000_TIMESTAMP = Math.floor(
 )
 
 export class UnixTime {
-  constructor(private timestamp: number) {
+  constructor(private readonly timestamp: number) {
     if (!Number.isInteger(timestamp)) {
       throw new TypeError('timestamp must be an integer')
     } else if (timestamp > YEAR_3000_TIMESTAMP) {

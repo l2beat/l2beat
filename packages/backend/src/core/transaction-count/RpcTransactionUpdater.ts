@@ -17,10 +17,14 @@ interface RpcTransactionUpdaterOpts {
 }
 
 export class RpcTransactionUpdater implements TransactionCounter {
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger, {
-    id: 'RpcTransactionUpdater.updateQueue',
-  })
-  private blockQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+    {
+      id: 'RpcTransactionUpdater.updateQueue',
+    },
+  )
+  private readonly blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
@@ -108,5 +112,17 @@ export class RpcTransactionUpdater implements TransactionCounter {
     return this.rpcTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
     )
+  }
+
+  async getStatus() {
+    return {
+      queuedJobsCount: this.blockQueue.length,
+      missingRanges:
+        await this.rpcTransactionCountRepository.getMissingRangesByProject(
+          this.projectId,
+        ),
+      startBlock: this.startBlock,
+      busyWorkers: this.blockQueue.getBusyWorkers(),
+    }
   }
 }

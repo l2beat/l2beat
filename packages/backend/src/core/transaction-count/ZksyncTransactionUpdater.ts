@@ -16,8 +16,11 @@ interface ZksyncTransactionUpdaterOpts {
 export class ZksyncTransactionUpdater implements TransactionCounter {
   readonly projectId = ProjectId.ZKSYNC
 
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
+  private readonly blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
@@ -91,5 +94,13 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async getDailyTransactionCounts() {
     return this.zksyncTransactionRepository.getDailyTransactionCount()
+  }
+
+  async getStatus() {
+    return {
+      queuedJobsCount: this.blockQueue.length,
+      missingRanges: await this.zksyncTransactionRepository.getMissingRanges(),
+      busyWorkers: this.blockQueue.getBusyWorkers(),
+    }
   }
 }

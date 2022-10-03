@@ -48,10 +48,5 @@ export const satellite: Bridge = {
       description: '', //TODO: fill
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: '???',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
   },
 }

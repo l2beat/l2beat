@@ -29,7 +29,7 @@ export class Cache<T> {
     this.flush()
   }
 
-  private flush = debounce(this.save.bind(this))
+  private readonly flush = debounce(this.save.bind(this))
 
   private save() {
     if (!fs.existsSync('.cache')) {

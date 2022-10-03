@@ -9,8 +9,8 @@ import { DiscoveryOptions } from './DiscoveryOptions'
 
 export class DiscoveryEngine {
   constructor(
-    private provider: providers.Provider,
-    private addressAnalyzer: AddressAnalyzer,
+    private readonly provider: providers.Provider,
+    private readonly addressAnalyzer: AddressAnalyzer,
   ) {}
 
   async discover(
