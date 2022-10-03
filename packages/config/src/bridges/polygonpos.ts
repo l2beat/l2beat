@@ -74,8 +74,9 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     destinationToken: {
-      value: 'UChildERC20Proxy',
-      description: 'This token can be upgraded if Proxy owner is not set to 0x',
+      value: 'Wrapped, upgradable',
+      description:
+        'Tokens transferred end up as wrapped ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
       sentiment: 'bad',
     },
   },
@@ -84,30 +85,48 @@ export const polygonpos: Bridge = {
     canonical: true,
     category: 'Lock-Mint',
     principleOfOperation: {
-      // TODO: this is a temporary entry
       name: 'Principle of operation',
       description:
-        'How the bridge works. Who sends money where. Maybe we want an image in this section.',
+        'This is a very typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
-      isIncomplete: true,
     },
     validation: {
-      // TODO: this is a temporary entry
-      name: 'Transfers are verified by a light client',
+      name: 'Outbound transfers are externally verified, inbound require merkle proof',
       description:
-        'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
+        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+          isCritical: true,
+        },
+      ],
       isIncomplete: true,
     },
     destinationToken: {
-      // TODO: this is a temporary entry
       name: 'Destination tokens are upgradeable',
       description:
-        'This token can be upgraded if Proxy owner is not set to 0x.',
+        'Tokens transferred end up as wrapped ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'destination token contract is maliciously upgraded.',
+          isCritical: true,
+        },
+      ],
       isIncomplete: true,
     },
   },
