@@ -24,7 +24,7 @@ export interface MulticallResponse {
 }
 
 export class MulticallClient {
-  constructor(private ethereumClient: EthereumClient) {}
+  constructor(private readonly ethereumClient: EthereumClient) {}
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,

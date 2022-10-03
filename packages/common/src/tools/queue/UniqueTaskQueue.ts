@@ -3,7 +3,7 @@ import { TaskQueue } from './TaskQueue'
 import { TaskQueueOpts } from './types'
 
 export class UniqueTaskQueue<T extends string | number> extends TaskQueue<T> {
-  private taskSet = new Set<T>()
+  private readonly taskSet = new Set<T>()
 
   constructor(
     executeTask: (task: T) => Promise<void>,

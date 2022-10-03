@@ -12,14 +12,14 @@ import { parseEtherscanResponse } from './parseEtherscanResponse'
 export class EtherscanError extends Error {}
 
 export class EtherscanClient {
-  private rateLimiter = new RateLimiter({
+  private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
 
   constructor(
-    private etherscanApiKey: string,
-    private httpClient: HttpClient,
-    private logger: Logger,
+    private readonly etherscanApiKey: string,
+    private readonly httpClient: HttpClient,
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }

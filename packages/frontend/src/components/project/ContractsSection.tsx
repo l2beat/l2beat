@@ -11,6 +11,7 @@ export interface ContractsSectionProps {
   risks: TechnologyRisk[]
   references: TechnologyReference[]
   architectureImage?: string
+  isIncomplete?: boolean
 }
 
 export interface TechnologyContract {
@@ -30,6 +31,12 @@ export function ContractsSection(props: ContractsSectionProps) {
       id="contracts"
       className="ContractsSection"
     >
+      {props.isIncomplete && (
+        <div className="TechnologySection-Incomplete">
+          <strong>Note:</strong> This section requires more research and might
+          not present accurate information.
+        </div>
+      )}
       {props.architectureImage && (
         <figure className="ContractsSection-Architecture">
           <img

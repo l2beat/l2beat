@@ -8,6 +8,8 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   /** List of references backing up the claim */
   references?: ProjectReference[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
 }
 
 export interface ProjectContract {
@@ -23,11 +25,20 @@ export interface ProjectContract {
 
 export type ProjectUpgradeability =
   | EIP1967Upgradeability
+  | CustomUpgradeability
   | StarkWareUpgradeability
   | ZeppelinOsUpgradeability
   | NutBerryUpgradeability
   | ReferenceUpgradeability
   | ArbitrumProxy
+
+export interface CustomUpgradeability {
+  type: 'Custom'
+  /** Address of the admin */
+  admin: string
+  /** Address of the implementation */
+  implementation: string
+}
 
 export interface EIP1967Upgradeability {
   type: 'EIP1967'

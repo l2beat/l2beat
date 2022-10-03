@@ -6,11 +6,11 @@ import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
 
 export class EthereumClient {
-  private provider: RateLimitedProvider
+  private readonly provider: RateLimitedProvider
 
   constructor(
     provider: providers.Provider,
-    private logger: Logger,
+    private readonly logger: Logger,
     callsPerMinute = Infinity,
   ) {
     this.logger = this.logger.for(this)

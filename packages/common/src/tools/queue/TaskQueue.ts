@@ -5,14 +5,14 @@ import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 export class TaskQueue<T> {
-  private queue: Job<T>[] = []
+  private readonly queue: Job<T>[] = []
   private busyWorkers = 0
-  private workers: number
-  private shouldRetry: ShouldRetry<T>
+  private readonly workers: number
+  private readonly shouldRetry: ShouldRetry<T>
 
   constructor(
-    private executeTask: (task: T) => Promise<void>,
-    private logger: Logger,
+    private readonly executeTask: (task: T) => Promise<void>,
+    private readonly logger: Logger,
     opts?: TaskQueueOpts<T>,
   ) {
     this.workers = opts?.workers ?? 1
@@ -33,6 +33,10 @@ export class TaskQueue<T> {
 
   get length() {
     return this.queue.length
+  }
+
+  getBusyWorkers() {
+    return this.busyWorkers
   }
 
   addIfEmpty(task: T) {

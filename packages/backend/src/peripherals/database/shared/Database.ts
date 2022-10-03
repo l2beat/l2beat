@@ -5,15 +5,18 @@ import path from 'path'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
 
 export class Database {
-  private knex: Knex
+  private readonly knex: Knex
   private migrated = false
   private version: string | null = null
   private onMigrationsComplete: () => void = () => {}
-  private migrationsComplete = new Promise<void>((resolve) => {
+  private readonly migrationsComplete = new Promise<void>((resolve) => {
     this.onMigrationsComplete = resolve
   })
 
-  constructor(connection: Knex.Config['connection'], private logger: Logger) {
+  constructor(
+    connection: Knex.Config['connection'],
+    private readonly logger: Logger,
+  ) {
     this.logger = this.logger.for(this)
     this.knex = KnexConstructor({
       client: 'pg',

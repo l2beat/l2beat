@@ -1,49 +1,21 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
 
-export const polygon: Bridge = {
+export const polygonplasma: Bridge = {
   type: 'bridge',
-  id: ProjectId('polygon'),
+  id: ProjectId('polygon-plasma'),
   display: {
-    name: 'Polygon PoS',
-    slug: 'polygon',
-    links: {
-      websites: ['https://wallet.polygon.technology/'],
-    },
+    name: 'Polygon "Plasma"',
+    slug: 'polygon-plasma',
+    links: polygonpos.display.links,
+    description:
+      'Polygon PoS it the official bridge provided by the Polygon team to bridge assets from Ethereum to Polygon chain. The bridge is validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },
   config: {
     associatedTokens: ['MATIC'],
     escrows: [
-      {
-        address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
-        sinceTimestamp: new UnixTime(1598436664),
-        tokens: [
-          'USDC',
-          'USDT',
-          'WBTC',
-          'SAND',
-          //'ALTA',
-          //'QUICK',
-          'DAI',
-          //'GHST',
-          'AAVE',
-          'LINK',
-          //'BAL',
-          'CRV',
-          'MANA',
-          'CEL',
-          //'DG',
-          //'xDG',
-          //'BZRX',
-          //'AWX',
-        ],
-      },
-      {
-        address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
-        sinceTimestamp: new UnixTime(1598437971),
-        tokens: ['ETH'],
-      },
       {
         address: '0x401F6c983eA34274ec46f84D70b31C151321188b',
         sinceTimestamp: new UnixTime(1590850640),
@@ -104,16 +76,6 @@ export const polygon: Bridge = {
   contracts: {
     // TODO: this is a temporary entry
     addresses: [
-      {
-        address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
-        name: 'Escrow for all tokens',
-        description: 'All random tokens go here.',
-      },
-      {
-        address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
-        name: 'Escrow for ether',
-        description: 'All ether goes here.',
-      },
       {
         address: '0x401F6c983eA34274ec46f84D70b31C151321188b',
         name: 'Escrow for MATIC and DAI',

@@ -22,7 +22,10 @@ interface Transaction {
 const PAGE_LIMIT = 100
 
 export class ZksyncClient {
-  constructor(private httpClient: HttpClient, private logger: Logger) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly logger: Logger,
+  ) {
     this.logger = logger.for(this)
     const rateLimiter = new RateLimiter({
       callsPerMinute: 3000,

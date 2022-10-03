@@ -122,7 +122,7 @@ export const arbitrum: Layer2 = {
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     bridge: {
       validation: {
-        value: 'Rollup',
+        value: 'Native',
         description: 'Rollups are the safest bridges',
       },
     },

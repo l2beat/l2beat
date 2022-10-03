@@ -65,7 +65,7 @@ describe('projects', () => {
     for (const project of [...layer2s, ...bridges]) {
       it(project.display.slug, () => {
         expect(project.display.slug).toEqual(
-          expect.stringMatching(/^[a-z\d]+$/),
+          expect.stringMatching(/^[a-z\-\d]+$/),
         )
       })
     }

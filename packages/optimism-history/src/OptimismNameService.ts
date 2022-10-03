@@ -6,7 +6,10 @@ const coder = new utils.Interface([
 ])
 
 export class OptimismNameService {
-  constructor(private provider: providers.Provider, private cache: Cache) {}
+  constructor(
+    private readonly provider: providers.Provider,
+    private readonly cache: Cache,
+  ) {}
 
   async getOptimismName(nameHash: string, transactionHash: string) {
     if (!this.cache.has('transactions', transactionHash)) {

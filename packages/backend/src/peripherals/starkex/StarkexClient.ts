@@ -6,10 +6,10 @@ import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 
 export class StarkexClient {
   constructor(
-    private starkexApiUrl: string,
-    private starkexApiKey: string,
-    private httpClient: HttpClient,
-    private logger: Logger,
+    private readonly starkexApiUrl: string,
+    private readonly starkexApiKey: string,
+    private readonly httpClient: HttpClient,
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
