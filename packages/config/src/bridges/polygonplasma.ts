@@ -77,16 +77,6 @@ export const polygonplasma: Bridge = {
     // TODO: this is a temporary entry
     addresses: [
       {
-        address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
-        name: 'Escrow for all tokens',
-        description: 'All random tokens go here.',
-      },
-      {
-        address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
-        name: 'Escrow for ether',
-        description: 'All ether goes here.',
-      },
-      {
         address: '0x401F6c983eA34274ec46f84D70b31C151321188b',
         name: 'Escrow for MATIC and DAI',
         description: 'All MATIC and DAI go here.',

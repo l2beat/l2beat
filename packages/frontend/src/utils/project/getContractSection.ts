@@ -32,6 +32,7 @@ export function getContractSection(
     risks: risks ?? [],
     architectureImage,
     references: project.contracts?.references ?? [],
+    isIncomplete: project.contracts?.isIncomplete,
   }
 }
 
@@ -43,6 +44,7 @@ function makeTechnologyContract(
 
   if (
     item.upgradeability?.type === 'EIP1967' ||
+    item.upgradeability?.type === 'Custom' ||
     item.upgradeability?.type === 'NutBerry' ||
     item.upgradeability?.type === 'ZeppelinOs'
   ) {
