@@ -19,11 +19,14 @@ export function stringAsBigInt(fallback?: bigint) {
   }, z.bigint())
 }
 
-export function stringAs<T>(Brand: (s: string) => T) {
-  return z
-    .string()
+function branded<T extends z.ZodTypeAny, B>(
+  schema: T,
+  Brand: (t: z.TypeOf<T>) => B,
+) {
+  return schema
     .refine((s) => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         Brand(s)
         return true
       } catch {
@@ -33,16 +36,10 @@ export function stringAs<T>(Brand: (s: string) => T) {
     .transform(Brand)
 }
 
+export function stringAs<T>(Brand: (s: string) => T) {
+  return branded(z.string(), Brand)
+}
+
 export function numberAs<T>(Brand: (n: number) => T) {
-  return z
-    .number()
-    .refine((s) => {
-      try {
-        Brand(s)
-        return true
-      } catch {
-        return false
-      }
-    })
-    .transform(Brand)
+  return branded(z.number(), Brand)
 }
