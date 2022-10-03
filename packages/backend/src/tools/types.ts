@@ -24,9 +24,8 @@ function branded<T extends z.ZodTypeAny, B>(
   Brand: (t: z.TypeOf<T>) => B,
 ) {
   return schema
-    .refine((s) => {
+    .refine((s: T) => {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         Brand(s)
         return true
       } catch {
