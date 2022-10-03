@@ -5,7 +5,7 @@ import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
-import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
@@ -37,7 +37,7 @@ export function getActivityModule(
 
   const zksyncClient = new ZksyncClient(http, logger)
 
-  const rpcTransactionCountRepository = new RpcTransactionCountRepository(
+  const blockTransactionCountRepository = new BlockTransactionCountRepository(
     database,
     logger,
   )
@@ -50,14 +50,14 @@ export function getActivityModule(
 
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
-    rpcTransactionCountRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
     config.transactionCountSync,
-    rpcTransactionCountRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
     config.transactionCountSync.ethereumAlchemyApiKey,

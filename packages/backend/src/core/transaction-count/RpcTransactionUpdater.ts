@@ -2,7 +2,7 @@ import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
@@ -38,7 +38,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
   constructor(
     private readonly ethereumClient: EthereumClient,
-    private readonly rpcTransactionCountRepository: RpcTransactionCountRepository,
+    private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     readonly projectId: ProjectId,
@@ -70,7 +70,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     const count = block.transactions.length
 
-    await this.rpcTransactionCountRepository.add({
+    await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
@@ -87,7 +87,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.logger.info('Update started', { project: this.projectId.toString() })
 
     const missingRanges =
-      await this.rpcTransactionCountRepository.getMissingRangesByProject(
+      await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
     const latestBlock = await this.ethereumClient.getBlockNumber()
@@ -109,7 +109,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.rpcTransactionCountRepository.getDailyTransactionCount(
+    return this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
     )
   }
@@ -118,7 +118,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     return {
       queuedJobsCount: this.blockQueue.length,
       missingRanges:
-        await this.rpcTransactionCountRepository.getMissingRangesByProject(
+        await this.blockTransactionCountRepository.getMissingRangesByProject(
           this.projectId,
         ),
       startBlock: this.startBlock,
