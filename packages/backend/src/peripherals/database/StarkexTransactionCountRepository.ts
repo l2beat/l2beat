@@ -80,6 +80,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
         NULL as no_prev_day, 
         no_next.unix_timestamp as no_next_day
       FROM no_next
+      ORDER BY no_prev_day, no_next_day ASC
     `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult

@@ -79,7 +79,8 @@ export class ZksyncTransactionRepository extends BaseRepository {
       SELECT 
         NULL as no_prev_block_number, 
         no_next.block_number as no_next_block_number
-      FROM no_prev  
+      FROM no_next
+      ORDER BY no_prev_block_number, no_next_block_number ASC
   `,
     )) as unknown as RawBlockNumberQueryResult
 
