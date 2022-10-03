@@ -15,7 +15,8 @@ export interface RpcTransactionCountRecord {
 }
 interface RawBlockNumberQueryResult {
   rows: {
-    block_number: number
+    no_next_block_number: number
+    no_prev_block_number: number
   }[]
 }
 
@@ -51,42 +52,49 @@ export class RpcTransactionCountRepository extends BaseRepository {
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
 
-    const noNext = (await knex.raw(
+    const blockNumbers = (await knex.raw(
       `
       WITH 
         project_blocks AS (
           SELECT * FROM transactions.rpc WHERE project_id=?
-        )
-      SELECT * 
-      FROM (
-        SELECT project_blocks.block_number 
-        FROM project_blocks 
-        LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
-        WHERE b2.block_number IS NULL) AS no_next
-      ORDER BY block_number ASC
-    `,
-      projectId.toString(),
-    )) as unknown as RawBlockNumberQueryResult
-
-    const noPrev = (await knex.raw(
-      `
-      WITH 
-          project_blocks AS (
-            SELECT * FROM transactions.rpc WHERE project_id=?
-          )
-        SELECT * 
-        FROM (
-          SELECT project_blocks.block_number 
+        ),
+        no_next AS (
+          SELECT 
+            project_blocks.block_number, 
+            row_number() 
+              OVER (ORDER BY project_blocks.block_number) 
+              AS row_num
+          FROM project_blocks 
+          LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
+          WHERE b2.block_number IS NULL
+        ),
+        no_prev AS (
+          SELECT 
+            project_blocks.block_number,
+            row_number() 
+              OVER (ORDER BY project_blocks.block_number) 
+              AS row_num
           FROM project_blocks 
           LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
-          WHERE b2.block_number IS NULL) AS no_prev
-        ORDER BY block_number ASC
+          WHERE b2.block_number IS NULL
+        )
+      SELECT 
+        no_prev.block_number as no_prev_block_number, 
+        no_next.block_number as no_next_block_number
+      FROM no_prev 
+      JOIN no_next 
+      ON no_prev.row_num = no_next.row_num
     `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
 
-    const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
-    const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
+    const noPrevBlockNumbers = blockNumbers.rows.map(
+      (row) => row.no_prev_block_number,
+    )
+
+    const noNextBlockNumbers = blockNumbers.rows.map(
+      (row) => row.no_next_block_number + 1,
+    )
 
     noPrevBlockNumbers.push(Infinity)
     noNextBlockNumbers.unshift(-Infinity)
