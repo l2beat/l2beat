@@ -11,7 +11,8 @@ import { nomad } from './nomad'
 import { omni } from './omni'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
-import { polygon } from './polygon'
+import { polygonplasma } from './polygonplasma'
+import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
@@ -38,7 +39,8 @@ export const bridges: Bridge[] = [
   omni,
   orbit,
   orbiter,
-  polygon,
+  polygonplasma,
+  polygonpos,
   polynetwork,
   ronin,
   satellite,

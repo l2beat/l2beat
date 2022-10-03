@@ -19,6 +19,7 @@ export interface BridgesTvlViewEntry {
   sevenDayChange: string
   bridgesMarketShare: string
   combinedMarketShare: string
+  validation: string
   category: string
 }
 
@@ -71,12 +72,12 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     {
       name: 'Validation',
       alignRight: true,
-      getValue: (entry) => entry.category,
+      getValue: (entry) => entry.validation,
     },
     {
       name: 'Type',
       alignRight: true,
-      getValue: () => '-',
+      getValue: (entry) => entry.category,
     },
   ]
 
