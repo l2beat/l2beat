@@ -3,7 +3,12 @@ import React from 'react'
 export function IncludeLayer2sCheckbox() {
   return (
     <label>
-      <input id="combined-bridges" type="checkbox" />{' '}
+      <input
+        data-role="chart-combined"
+        id="combined-bridges"
+        type="checkbox"
+        autoComplete="off"
+      />{' '}
       <span>Include Layer2s as bridges</span>
     </label>
   )

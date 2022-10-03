@@ -9,7 +9,7 @@ export function getStagingConfig() {
       activity: true,
     },
     backend: {
-      apiUrl: 'https://staging.l2beat.com',
+      apiUrl: 'https://l2beat-activity.herokuapp.com',
       skipCache: false,
     },
   }

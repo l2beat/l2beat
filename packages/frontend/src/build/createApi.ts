@@ -17,6 +17,7 @@ export function createApi(
 
   urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
   urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
+  urlCharts.set('combined-tvl', tvlApiResponse.combined)
   for (const project of [...config.layer2s, ...config.bridges]) {
     const projectData = tvlApiResponse.projects[project.id.toString()]
     if (!projectData) {
