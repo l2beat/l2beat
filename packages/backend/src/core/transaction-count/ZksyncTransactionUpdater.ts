@@ -12,8 +12,11 @@ import { TransactionCounter } from './TransactionCounter'
 export class ZksyncTransactionUpdater implements TransactionCounter {
   readonly projectId = ProjectId.ZKSYNC
 
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
+  private readonly blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
@@ -22,10 +25,10 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   )
 
   constructor(
-    private zksyncClient: ZksyncClient,
-    private zksyncTransactionRepository: ZksyncTransactionRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly zksyncClient: ZksyncClient,
+    private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
   }

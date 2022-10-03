@@ -19,22 +19,25 @@ interface RpcTransactionUpdaterOpts {
 }
 
 export class RpcTransactionUpdater implements TransactionCounter {
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private blockQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
+  private readonly blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
       workers: 100,
     },
   )
-  private assessCount: AssessCount
-  private startBlock: number
+  private readonly assessCount: AssessCount
+  private readonly startBlock: number
 
   constructor(
-    private ethereumClient: EthereumClient,
-    private rpcTransactionCountRepository: RpcTransactionCountRepository,
-    private clock: Clock,
-    private logger: Logger,
+    private readonly ethereumClient: EthereumClient,
+    private readonly rpcTransactionCountRepository: RpcTransactionCountRepository,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
     readonly projectId: ProjectId,
     opts?: RpcTransactionUpdaterOpts,
   ) {

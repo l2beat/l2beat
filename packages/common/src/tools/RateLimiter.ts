@@ -14,7 +14,7 @@ export class RateLimiter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
-  private minTimeElapsed = 0
+  private readonly minTimeElapsed: number
 
   constructor(options: RateLimiterOptions) {
     this.minTimeElapsed = MS_PER_MINUTE / options.callsPerMinute

@@ -11,7 +11,7 @@ interface FourBytesResult {
 }
 
 export class FourBytesApi {
-  private cache = new Cache<string | null>()
+  private readonly cache = new Cache<string | null>()
 
   async getMethodSignature(identifier: string) {
     if (identifier.length != 10) return undefined

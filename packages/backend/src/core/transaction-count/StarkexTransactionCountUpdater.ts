@@ -8,19 +8,22 @@ import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
 export class StarkexTransactionCountUpdater implements TransactionCounter {
-  private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
-  private daysQueue = new UniqueTaskQueue(
+  private readonly updateQueue = new TaskQueue<void>(
+    () => this.update(),
+    this.logger,
+  )
+  private readonly daysQueue = new UniqueTaskQueue(
     this.updateDay.bind(this),
     this.logger,
   )
-  private startDay: number
+  private readonly startDay: number
 
   constructor(
-    private starkexTransactionCountRepository: StarkexTransactionCountRepository,
-    private starkexClient: StarkexClient,
-    private clock: Clock,
-    private logger: Logger,
-    private product: StarkexProduct,
+    private readonly starkexTransactionCountRepository: StarkexTransactionCountRepository,
+    private readonly starkexClient: StarkexClient,
+    private readonly clock: Clock,
+    private readonly logger: Logger,
+    private readonly product: StarkexProduct,
     readonly projectId: ProjectId,
     startTimestamp: UnixTime,
   ) {

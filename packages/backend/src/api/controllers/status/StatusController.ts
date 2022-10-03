@@ -18,12 +18,12 @@ import { renderReportsPage } from './view/ReportsPage'
 
 export class StatusController {
   constructor(
-    private priceRepository: PriceRepository,
-    private balanceStatusRepository: BalanceStatusRepository,
-    private reportStatusRepository: ReportStatusRepository,
-    private clock: Clock,
-    private tokens: Token[],
-    private projects: Project[],
+    private readonly priceRepository: PriceRepository,
+    private readonly balanceStatusRepository: BalanceStatusRepository,
+    private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly clock: Clock,
+    private readonly tokens: Token[],
+    private readonly projects: Project[],
   ) {}
 
   async getPricesStatus(

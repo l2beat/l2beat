@@ -5,15 +5,15 @@ import { HttpClient } from '../HttpClient'
 import { ContractSourceResult, EtherscanResponse } from './model'
 
 export class EtherscanClient {
-  private rateLimiter = new RateLimiter({
+  private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 120,
   })
-  private timeoutMs = 10_000
+  private readonly timeoutMs = 10_000
 
   constructor(
-    private httpClient: HttpClient,
-    private url: string,
-    private apiKey: string,
+    private readonly httpClient: HttpClient,
+    private readonly url: string,
+    private readonly apiKey: string,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }

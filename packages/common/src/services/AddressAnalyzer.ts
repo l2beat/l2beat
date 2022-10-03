@@ -25,8 +25,8 @@ export type AnalyzedAddress = EOAAddress | UnverifiedContract | VerifiedContract
 
 export class AddressAnalyzer {
   constructor(
-    private provider: providers.Provider,
-    private etherscanClient: EtherscanClient,
+    private readonly provider: providers.Provider,
+    private readonly etherscanClient: EtherscanClient,
   ) {}
 
   async getName(address: EthereumAddress) {

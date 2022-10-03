@@ -6,9 +6,9 @@ import { BlockTimestampService } from './BlockTimestampService'
 
 export class EventProcessor {
   constructor(
-    private blockTimestampService: BlockTimestampService,
-    private addressAnalyzer: AddressAnalyzer,
-    private provider: providers.Provider,
+    private readonly blockTimestampService: BlockTimestampService,
+    private readonly addressAnalyzer: AddressAnalyzer,
+    private readonly provider: providers.Provider,
   ) {}
 
   //TODO: Add cache !

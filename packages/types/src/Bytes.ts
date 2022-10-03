@@ -1,5 +1,5 @@
 export class Bytes {
-  private constructor(private value: string) {}
+  private constructor(private readonly value: string) {}
 
   static EMPTY = new Bytes('')
 
