@@ -14,8 +14,8 @@ export interface StarkexTransactionCountRecord {
 }
 interface RawBlockNumberQueryResult {
   rows: {
-    no_prev_day: Date
-    no_next_day: Date
+    no_prev_day: Date | null
+    no_next_day: Date | null
   }[]
 }
 
@@ -59,40 +59,44 @@ export class StarkexTransactionCountRepository extends BaseRepository {
         ),
         no_next AS (
           SELECT 
-            project_days.unix_timestamp, 
-            row_number() 
-              OVER (ORDER BY project_days.unix_timestamp) 
-              AS row_num
+            project_days.unix_timestamp
           FROM project_days 
           LEFT JOIN project_days b2 ON project_days.unix_timestamp  = b2.unix_timestamp - INTERVAL '1 DAY'
           WHERE b2.unix_timestamp IS NULL
         ),
         no_prev AS (
           SELECT 
-            project_days.unix_timestamp,
-            row_number() 
-              OVER (ORDER BY project_days.unix_timestamp) 
-              AS row_num
+            project_days.unix_timestamp
           FROM project_days
           LEFT JOIN project_days b2 ON project_days.unix_timestamp = b2.unix_timestamp + INTERVAL '1 DAY'
           WHERE b2.unix_timestamp IS NULL
         )
-      SELECT 
+      SELECT
         no_prev.unix_timestamp as no_prev_day, 
-        no_next.unix_timestamp as no_next_day
+        NULL as no_next_day
       FROM no_prev 
-      JOIN no_next 
-      ON no_prev.row_num = no_next.row_num
+      UNION
+      SELECT
+        NULL as no_prev_day, 
+        no_next.unix_timestamp as no_next_day
+      FROM no_next
     `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
 
-    const noPrevDay = days.rows.map((row) =>
-      UnixTime.fromDate(row.no_prev_day).toDays(),
-    )
-    const noNextDay = days.rows.map((row) =>
-      UnixTime.fromDate(row.no_next_day).add(1, 'days').toDays(),
-    )
+    const noPrevDay = days.rows.reduce<number[]>((acc, row) => {
+      if (row.no_prev_day !== null) {
+        acc.push(UnixTime.fromDate(row.no_prev_day).toDays())
+      }
+      return acc
+    }, [])
+
+    const noNextDay = days.rows.reduce<number[]>((acc, row) => {
+      if (row.no_next_day !== null) {
+        acc.push(UnixTime.fromDate(row.no_next_day).add(1, 'days').toDays())
+      }
+      return acc
+    }, [])
 
     noPrevDay.push(Infinity)
     noNextDay.unshift(-Infinity)

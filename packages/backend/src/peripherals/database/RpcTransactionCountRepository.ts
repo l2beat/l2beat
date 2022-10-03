@@ -15,8 +15,8 @@ export interface RpcTransactionCountRecord {
 }
 interface RawBlockNumberQueryResult {
   rows: {
-    no_next_block_number: number
-    no_prev_block_number: number
+    no_next_block_number: number | null
+    no_prev_block_number: number | null
   }[]
 }
 
@@ -60,40 +60,46 @@ export class RpcTransactionCountRepository extends BaseRepository {
         ),
         no_next AS (
           SELECT 
-            project_blocks.block_number, 
-            row_number() 
-              OVER (ORDER BY project_blocks.block_number) 
-              AS row_num
+            project_blocks.block_number
           FROM project_blocks 
           LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
           WHERE b2.block_number IS NULL
         ),
         no_prev AS (
           SELECT 
-            project_blocks.block_number,
-            row_number() 
-              OVER (ORDER BY project_blocks.block_number) 
-              AS row_num
+            project_blocks.block_number 
           FROM project_blocks 
           LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
           WHERE b2.block_number IS NULL
         )
-      SELECT 
-        no_prev.block_number as no_prev_block_number, 
-        no_next.block_number as no_next_block_number
+      SELECT no_prev.block_number as no_prev_block_number, NULL as no_next_block_number
       FROM no_prev 
-      JOIN no_next 
-      ON no_prev.row_num = no_next.row_num
-    `,
+      UNION
+      SELECT NULL as no_prev_block_number, no_next.block_number as no_next_block_number
+      FROM no_next
+      ORDER BY no_prev_block_number, no_next_block_number ASC
+      `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
 
-    const noPrevBlockNumbers = blockNumbers.rows.map(
-      (row) => row.no_prev_block_number,
+    const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
+      (acc, row) => {
+        if (row.no_prev_block_number !== null) {
+          acc.push(row.no_prev_block_number)
+        }
+        return acc
+      },
+      [],
     )
 
-    const noNextBlockNumbers = blockNumbers.rows.map(
-      (row) => row.no_next_block_number + 1,
+    const noNextBlockNumbers = blockNumbers.rows.reduce<number[]>(
+      (acc, row) => {
+        if (row.no_next_block_number !== null) {
+          acc.push(row.no_next_block_number + 1)
+        }
+        return acc
+      },
+      [],
     )
 
     noPrevBlockNumbers.push(Infinity)
