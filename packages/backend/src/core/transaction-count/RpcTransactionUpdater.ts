@@ -115,6 +115,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
           this.projectId,
         ),
       startBlock: this.startBlock,
+      busyWorkers: this.blockQueue.getBusyWorkers(),
     }
   }
 }

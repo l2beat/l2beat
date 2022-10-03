@@ -92,6 +92,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     return {
       queuedJobsCount: this.blockQueue.length,
       missingRanges: await this.zksyncTransactionRepository.getMissingRanges(),
+      busyWorkers: this.blockQueue.getBusyWorkers(),
     }
   }
 }

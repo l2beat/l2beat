@@ -6,7 +6,7 @@ import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 export class TaskQueue<T> {
   private queue: Job<T>[] = []
-  private _busyWorkers = 0
+  private busyWorkers = 0
   readonly workers: number
   private shouldRetry: ShouldRetry<T>
 
@@ -24,19 +24,19 @@ export class TaskQueue<T> {
   }
 
   private get isEmpty() {
-    return this.queue.length === 0 && this._busyWorkers === 0
+    return this.queue.length === 0 && this.busyWorkers === 0
   }
 
   private get allWorkersBusy() {
-    return this._busyWorkers === this.workers
+    return this.busyWorkers === this.workers
   }
 
   get length() {
     return this.queue.length
   }
 
-  get busyWorkers() {
-    return this._busyWorkers
+  getBusyWorkers() {
+    return this.busyWorkers
   }
 
   addIfEmpty(task: T) {
@@ -90,7 +90,7 @@ export class TaskQueue<T> {
       setTimeout(() => this.execute(), nextTimestamp - Date.now())
       return
     }
-    this._busyWorkers++
+    this.busyWorkers++
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
       await this.executeTask(job.task)
@@ -98,7 +98,7 @@ export class TaskQueue<T> {
       this.logger.error(error)
       this.handleFailure(job)
     } finally {
-      this._busyWorkers--
+      this.busyWorkers--
       setTimeout(() => this.execute())
     }
   }

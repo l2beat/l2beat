@@ -90,6 +90,7 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
         await this.starkexTransactionCountRepository.getMissingRangesByProject(
           this.projectId,
         ),
+      busyWorkers: this.daysQueue.getBusyWorkers(),
     }
   }
 }
