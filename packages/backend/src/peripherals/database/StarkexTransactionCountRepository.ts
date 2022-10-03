@@ -14,7 +14,8 @@ export interface StarkexTransactionCountRecord {
 }
 interface RawBlockNumberQueryResult {
   rows: {
-    unix_timestamp: Date
+    no_prev_day: Date
+    no_next_day: Date
   }[]
 }
 
@@ -50,45 +51,47 @@ export class StarkexTransactionCountRepository extends BaseRepository {
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
 
-    const noNext = (await knex.raw(
+    const days = (await knex.raw(
       `
       WITH 
         project_days AS (
           SELECT * FROM transactions.starkex WHERE project_id=?
-        )
-      SELECT * 
-      FROM (
-        SELECT project_days.unix_timestamp 
-        FROM project_days 
-        LEFT JOIN project_days b2 ON project_days.unix_timestamp  = b2.unix_timestamp - INTERVAL '1 DAY'
-        WHERE b2.unix_timestamp IS NULL) AS no_next
-      ORDER BY unix_timestamp ASC
-    `,
-      projectId.toString(),
-    )) as unknown as RawBlockNumberQueryResult
-
-    const noPrev = (await knex.raw(
-      `
-      WITH 
-          project_days AS (
-            SELECT * FROM transactions.starkex WHERE project_id=?
-          )
-        SELECT * 
-        FROM (
-          SELECT project_days.unix_timestamp 
+        ),
+        no_next AS (
+          SELECT 
+            project_days.unix_timestamp, 
+            row_number() 
+              OVER (ORDER BY project_days.unix_timestamp) 
+              AS row_num
           FROM project_days 
+          LEFT JOIN project_days b2 ON project_days.unix_timestamp  = b2.unix_timestamp - INTERVAL '1 DAY'
+          WHERE b2.unix_timestamp IS NULL
+        ),
+        no_prev AS (
+          SELECT 
+            project_days.unix_timestamp,
+            row_number() 
+              OVER (ORDER BY project_days.unix_timestamp) 
+              AS row_num
+          FROM project_days
           LEFT JOIN project_days b2 ON project_days.unix_timestamp = b2.unix_timestamp + INTERVAL '1 DAY'
-          WHERE b2.unix_timestamp IS NULL) AS no_prev
-        ORDER BY unix_timestamp ASC
+          WHERE b2.unix_timestamp IS NULL
+        )
+      SELECT 
+        no_prev.unix_timestamp as no_prev_day, 
+        no_next.unix_timestamp as no_next_day
+      FROM no_prev 
+      JOIN no_next 
+      ON no_prev.row_num = no_next.row_num
     `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
 
-    const noPrevDay = noPrev.rows.map((row) =>
-      UnixTime.fromDate(row.unix_timestamp).toDays(),
+    const noPrevDay = days.rows.map((row) =>
+      UnixTime.fromDate(row.no_prev_day).toDays(),
     )
-    const noNextDay = noNext.rows.map((row) =>
-      UnixTime.fromDate(row.unix_timestamp).add(1, 'days').toDays(),
+    const noNextDay = days.rows.map((row) =>
+      UnixTime.fromDate(row.no_next_day).add(1, 'days').toDays(),
     )
 
     noPrevDay.push(Infinity)
