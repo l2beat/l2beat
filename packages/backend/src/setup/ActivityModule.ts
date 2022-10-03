@@ -87,7 +87,7 @@ export function getActivityModule(
     blockTransactionRepository,
     clock,
     logger,
-    ProjectId('loopring'),
+    ProjectId.LOOPRING,
   )
 
   const activityController = new ActivityController(
