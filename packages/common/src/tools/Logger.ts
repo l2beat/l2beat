@@ -13,6 +13,7 @@ export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
   format: 'pretty' | 'json'
+  reportError?: (error: unknown) => void
 }
 
 export type LoggerParameters = Record<string, json>
@@ -21,6 +22,7 @@ export class Logger {
   constructor(private options: LoggerOptions) {}
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
+  static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
 
   configure(options: Partial<LoggerOptions>) {
     return new Logger({ ...this.options, ...options })
@@ -28,13 +30,25 @@ export class Logger {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   for(object: {}) {
-    return this.configure({ service: object.constructor.name })
+    return this.configure({
+      service: this.options.service
+        ? `${this.options.service}.${object.constructor.name}`
+        : object.constructor.name,
+    })
   }
 
-  error(error: unknown) {
+  error(error: unknown): void
+  error(annotation: string, error: unknown): void
+  error(...args: [unknown] | [string, unknown]): void {
     if (this.options.logLevel >= LogLevel.ERROR) {
-      const message = getErrorMessage(error)
+      const [annotation, error] = args.length === 1 ? ['', args[0]] : args
+
+      const message = [annotation, getErrorMessage(error)]
+        .filter(Boolean)
+        .join(' ')
+
       this.print('error', { message })
+      this.options.reportError?.(error)
     }
   }
 

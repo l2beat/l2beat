@@ -10,13 +10,14 @@ import { BlockTransactionRepository } from '../peripherals/database/BlockTransac
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { assert } from '../tools/assert'
 
-export function createRpcTransactionUpdaters(
+export function createLayer2RpcTransactionUpdaters(
   config: Config,
   blockTransactionRepository: BlockTransactionRepository,
   clock: Clock,
   logger: Logger,
 ) {
   const rpcUpdaters: RpcTransactionUpdater[] = []
+
   for (const project of config.projects) {
     if (project.transactionApi?.type === 'rpc') {
       const l2Provider = createL2Provider(
@@ -37,7 +38,7 @@ export function createRpcTransactionUpdaters(
         clock,
         logger,
         project.projectId,
-        project.transactionApi.assessCount,
+        { assessCount: project.transactionApi.assessCount },
       )
 
       rpcUpdaters.push(transactionUpdater)
@@ -45,6 +46,25 @@ export function createRpcTransactionUpdaters(
   }
 
   return rpcUpdaters
+}
+
+export function createEthereumTransactionUpdater(
+  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  clock: Clock,
+  logger: Logger,
+  apiKey: string,
+) {
+  const provider = new providers.AlchemyProvider('mainnet', apiKey)
+  const client = new EthereumClient(provider, logger)
+  const updater = new RpcTransactionUpdater(
+    client,
+    rpcTransactionCountRepository,
+    clock,
+    logger,
+    ProjectId.ETHEREUM,
+    { startBlock: 8929324 }, // TODO: make it cleaner, we already have a min timestamp in config
+  )
+  return updater
 }
 
 function createL2Provider(

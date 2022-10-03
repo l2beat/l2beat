@@ -10,6 +10,8 @@ import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
 export class ZksyncTransactionUpdater implements TransactionCounter {
+  readonly projectId = ProjectId.ZKSYNC
+
   private updateQueue = new TaskQueue<void>(() => this.update(), this.logger)
   private blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
@@ -83,11 +85,6 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    const counts =
-      await this.zksyncTransactionRepository.getDailyTransactionCount()
-    return {
-      projectId: ProjectId.ZKSYNC,
-      counts,
-    }
+    return this.zksyncTransactionRepository.getDailyTransactionCount()
   }
 }

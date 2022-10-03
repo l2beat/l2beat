@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const sollet: Bridge = {
+  type: 'bridge',
   id: ProjectId('sollet'),
   display: {
     name: 'Sollet Sol',
@@ -31,7 +32,7 @@ export const sollet: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Solana'],
   },
   riskView: {

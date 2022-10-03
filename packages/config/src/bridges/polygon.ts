@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const polygon: Bridge = {
+  type: 'bridge',
   id: ProjectId('polygon'),
   display: {
     name: 'Polygon PoS',
@@ -71,7 +72,7 @@ export const polygon: Bridge = {
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     principleOfOperation: {
       // TODO: this is a temporary entry
       name: 'Principle of operation',

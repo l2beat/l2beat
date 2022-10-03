@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const satellite: Bridge = {
+  type: 'bridge',
   id: ProjectId('satellite'),
   display: {
     name: 'Satellite Bridge',
@@ -33,7 +34,7 @@ export const satellite: Bridge = {
   },
   technology: {
     canonical: true,
-    type: 'Lock-Mint OR Swap',
+    category: 'Lock-Mint OR Swap',
     destination: ['Multichain'],
   },
   riskView: {

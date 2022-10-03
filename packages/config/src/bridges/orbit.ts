@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const orbit: Bridge = {
+  type: 'bridge',
   id: ProjectId('orbit'),
   display: {
     name: 'Orbit Bridge',
@@ -30,7 +31,7 @@ export const orbit: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     //TODO: Originally for KLAYTN, Orbit Bridge now supports multiple chains and has Liquidity Network
     destination: ['KLAYTN'], //TODO: add more chains
   },

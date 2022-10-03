@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const ronin: Bridge = {
+  type: 'bridge',
   id: ProjectId('ronin'),
   display: {
     name: 'Ronin',
@@ -27,7 +28,7 @@ export const ronin: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Axie Infinity Chain'],
   },
   riskView: {

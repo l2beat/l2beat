@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const omni: Bridge = {
+  type: 'bridge',
   id: ProjectId('omni'),
   display: {
     name: 'xDai Omni',
@@ -33,7 +34,7 @@ export const omni: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Gnosis Chain'],
   },
   riskView: {

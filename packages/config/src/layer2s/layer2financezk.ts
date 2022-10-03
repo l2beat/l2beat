@@ -15,6 +15,7 @@ import { layer2finance } from './layer2finance'
 import { Layer2 } from './types'
 
 export const layer2financezk: Layer2 = {
+  type: 'layer2',
   id: ProjectId('layer2financezk'),
   display: {
     name: 'Layer2.Finance-zk',

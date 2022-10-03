@@ -7,6 +7,7 @@ Note: Timestamp is entered manually as all these accounts are EOAs
 */
 
 export const multichain: Bridge = {
+  type: 'bridge',
   id: ProjectId('multichain'),
   display: {
     name: 'Multichain',
@@ -179,7 +180,7 @@ export const multichain: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint OR Swap',
+    category: 'Lock-Mint OR Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const hop: Bridge = {
+  type: 'bridge',
   id: ProjectId('hop'),
   display: {
     name: 'Hop',
@@ -46,7 +47,7 @@ export const hop: Bridge = {
     ],
   },
   technology: {
-    type: 'AMM Swap',
+    category: 'AMM Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

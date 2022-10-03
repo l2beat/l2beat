@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const stargate: Bridge = {
+  type: 'bridge',
   id: ProjectId('stargate'),
   display: {
     name: 'StarGate',
@@ -38,7 +39,7 @@ export const stargate: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint OR Swap',
+    category: 'Lock-Mint OR Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

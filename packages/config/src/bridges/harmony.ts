@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const harmony: Bridge = {
+  type: 'bridge',
   id: ProjectId('harmony'),
   display: {
     name: 'Harmony',
@@ -45,7 +46,7 @@ export const harmony: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['Harmony'],
   },
   riskView: {

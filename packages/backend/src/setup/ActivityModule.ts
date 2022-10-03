@@ -14,7 +14,10 @@ import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTrans
 import { LoopringClient } from '../peripherals/loopring'
 import { StarkexClient } from '../peripherals/starkex'
 import { ZksyncClient } from '../peripherals/zksync'
-import { createRpcTransactionUpdaters } from './createRpcTransactionUpdaters'
+import {
+  createEthereumTransactionUpdater,
+  createLayer2RpcTransactionUpdaters,
+} from './createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './createStarkexTransactionUpdaters'
 
 export function getActivityModule(
@@ -50,11 +53,18 @@ export function getActivityModule(
     logger,
   )
 
-  const rpcTransactionUpdaters = createRpcTransactionUpdaters(
+  const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
     blockTransactionRepository,
     clock,
     logger,
+  )
+
+  const ethereumTransactionUpdater = createEthereumTransactionUpdater(
+    rpcTransactionCountRepository,
+    clock,
+    logger,
+    config.transactionCountSync.ethereumAlchemyApiKey,
   )
 
   const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
@@ -80,19 +90,22 @@ export function getActivityModule(
     ProjectId('loopring'),
   )
 
-  const activityController = new ActivityController([
-    ...rpcTransactionUpdaters,
-    ...starkexTransactionUpdaters,
-    zksyncTransactionUpdater,
-    loopringTransactionUpdater,
-  ])
+  const activityController = new ActivityController(
+    [
+      ...rpcTransactionUpdaters,
+      ...starkexTransactionUpdaters,
+      zksyncTransactionUpdater,
+      loopringTransactionUpdater,
+    ],
+    ethereumTransactionUpdater,
+  )
 
   const router = createActivityRouter(activityController)
 
   const start = () => {
     logger.info('Starting Activity Module')
 
-    for (const updater of rpcTransactionUpdaters) {
+    for (const updater of layer2RpcTransactionUpdaters) {
       updater.start()
     }
     for (const updater of starkexTransactionUpdaters) {
@@ -100,6 +113,7 @@ export function getActivityModule(
     }
     zksyncTransactionUpdater.start()
     loopringTransactionUpdater.start()
+    ethereumTransactionUpdater.start()
   }
 
   return {

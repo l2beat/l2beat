@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const polynetwork: Bridge = {
+  type: 'bridge',
   id: ProjectId('polynetwork'),
   display: {
     name: 'Polynetwork',
@@ -32,7 +33,7 @@ export const polynetwork: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint OR Swap',
+    category: 'Lock-Mint OR Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

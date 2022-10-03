@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const synapse: Bridge = {
+  type: 'bridge',
   id: ProjectId('synapse'),
   display: {
     name: 'Synapse',
@@ -27,7 +28,7 @@ export const synapse: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint OR Swap',
+    category: 'Lock-Mint OR Swap',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

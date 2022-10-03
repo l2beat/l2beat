@@ -1,20 +1,19 @@
-import { HttpClient } from '@l2beat/common'
 import { ActivityApiChart, ActivityApiResponse, UnixTime } from '@l2beat/types'
+
+import { JsonHttpClient } from './caching/JsonHttpClient'
 
 export async function fetchActivityApi(
   apiUrl: string,
+  http: JsonHttpClient,
 ): Promise<ActivityApiResponse> {
   const url = apiUrl + '/api/activity'
 
-  const http = new HttpClient()
-  const response = await http.fetch(url)
-  if (!response.ok) {
+  try {
+    const json = await http.fetchJson(url)
+    return ActivityApiResponse.parse(json)
+  } catch (e) {
     return getMockData()
   }
-  const json: unknown = await response.json()
-  const data = ActivityApiResponse.parse(json)
-
-  return data
 }
 
 const getMockData = (): ActivityApiResponse => {

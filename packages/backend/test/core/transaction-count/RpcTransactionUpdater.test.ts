@@ -166,7 +166,7 @@ describe(RpcTransactionUpdater.name, () => {
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
-        (count) => count - 1,
+        { assessCount: (count) => count - 1 },
       )
 
       await rpcTransactionUpdater.updateBlock(1)

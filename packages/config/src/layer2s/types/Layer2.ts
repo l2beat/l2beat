@@ -5,14 +5,15 @@ import {
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
+  ProjectPermission,
 } from '../../common'
 import { Layer2Event } from './Layer2Event'
-import { Layer2Permission } from './Layer2Permission'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
+  type: 'layer2'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
   /** Information displayed about the layer2 on the frontend */
@@ -26,7 +27,7 @@ export interface Layer2 {
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses */
-  permissions?: Layer2Permission[]
+  permissions?: ProjectPermission[]
   /** Links to recent developments */
   news: News[]
 }

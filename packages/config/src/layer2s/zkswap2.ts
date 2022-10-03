@@ -5,6 +5,7 @@ import { Layer2 } from './types'
 import { zkswap } from './zkswap'
 
 export const zkswap2: Layer2 = {
+  type: 'layer2',
   id: ProjectId('zkswap2'),
   display: {
     name: 'ZKSwap 2.0',

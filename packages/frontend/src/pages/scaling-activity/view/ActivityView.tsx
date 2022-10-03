@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
-import { Column, TableView } from '../../../components/TableView'
+import { ColumnConfig, TableView } from '../../../components/TableView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -18,7 +18,11 @@ export interface ActivityViewEntry {
 }
 
 export function ActivityView({ items, className }: ActivityViewProps) {
-  const columns: Column<ActivityViewEntry>[] = [
+  const columns: ColumnConfig<ActivityViewEntry>[] = [
+    {
+      name: 'No.',
+      getValue: (entry, index) => `${index + 1}.`,
+    },
     {
       name: 'Name',
       getValue: (project) => project.name,

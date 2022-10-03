@@ -8,7 +8,7 @@ import {
   ZkSyncIcon,
 } from '../../../components/icons'
 import { ProjectLink } from '../../../components/ProjectLink'
-import { Column, TableView } from '../../../components/TableView'
+import { ColumnConfig, TableView } from '../../../components/TableView'
 import { RiskCell } from './RiskCell'
 
 export interface ScalingRiskViewProps {
@@ -23,7 +23,11 @@ export interface ScalingRiskViewEntry extends Layer2RiskView {
 }
 
 export function ScalingRiskView({ items, className }: ScalingRiskViewProps) {
-  const columns: Column<ScalingRiskViewEntry>[] = [
+  const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
+    {
+      name: 'No.',
+      getValue: (entry, index) => `${index + 1}.`,
+    },
     {
       name: 'Name',
       getValue: (project) => <ProjectLink type="layer2" project={project} />,

@@ -2,7 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ProjectLink } from '../../components/ProjectLink'
-import { Column, TableView } from '../../components/TableView'
+import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
 import { RiskCell } from './RiskCell'
 
 export interface BridgesRiskViewProps {
@@ -12,7 +12,8 @@ export interface BridgesRiskViewProps {
 export interface BridgesRiskViewEntry {
   name: string
   slug: string
-  type: string
+  type: 'layer2' | 'bridge'
+  category: string
   destination: ProjectRiskViewEntry
   validation?: ProjectRiskViewEntry
   sourceUpgradeability?: ProjectRiskViewEntry
@@ -20,7 +21,20 @@ export interface BridgesRiskViewEntry {
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
-  const columns: Column<BridgesRiskViewEntry>[] = [
+  const onlyBridges = items.filter((x) => x.type === 'bridge')
+
+  const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
+    {
+      name: 'No.',
+      getValue: (entry, index) => (
+        <>
+          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}.</span>
+          <span data-combined-only className="hidden">
+            {index + 1}.
+          </span>
+        </>
+      ),
+    },
     {
       name: 'Name',
       getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
@@ -35,7 +49,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Type',
-      getValue: (entry) => <span>{entry.type}</span>,
+      getValue: (entry) => <span>{entry.category}</span>,
     },
     {
       name: 'Upgradeability',
@@ -47,9 +61,19 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
   ]
 
+  const rows: RowConfig<BridgesRiskViewEntry> = {
+    getProps: (entry) =>
+      entry.type === 'bridge'
+        ? {}
+        : {
+            ['data-combined-only']: true,
+            className: 'hidden',
+          },
+  }
+
   return (
     <section className="mt-4">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
     </section>
   )
 }

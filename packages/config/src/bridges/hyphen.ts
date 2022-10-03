@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Bridge } from './types'
 
 export const hyphen: Bridge = {
+  type: 'bridge',
   id: ProjectId('hyphen'),
   display: {
     name: 'Hyphen',
@@ -22,7 +23,7 @@ export const hyphen: Bridge = {
     ],
   },
   technology: {
-    type: 'Lock-Mint',
+    category: 'Lock-Mint',
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {

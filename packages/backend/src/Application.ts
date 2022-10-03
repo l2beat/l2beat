@@ -34,6 +34,7 @@ import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
 import { getActivityModule } from './setup/ActivityModule'
+import { handleServerError, reportError } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
@@ -41,7 +42,7 @@ export class Application {
   constructor(config: Config) {
     // #region tools
 
-    const logger = new Logger(config.logger)
+    const logger = new Logger({ ...config.logger, reportError })
 
     // #endregion
     // #region peripherals
@@ -185,6 +186,7 @@ export class Application {
         createEventRouter(eventController),
         activityModule?.router,
       ]),
+      handleServerError,
     )
 
     // #endregion

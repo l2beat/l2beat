@@ -14,6 +14,7 @@ import {
 import { Layer2 } from './types'
 
 export const sorare: Layer2 = {
+  type: 'layer2',
   id: ProjectId('sorare'),
   display: {
     name: 'Sorare',
