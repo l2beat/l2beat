@@ -8,7 +8,7 @@ export const polygonpos: Bridge = {
   id: ProjectId('polygon-pos'),
   display: {
     name: 'Polygon PoS',
-    slug: 'polygon',
+    slug: 'polygon-pos',
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
