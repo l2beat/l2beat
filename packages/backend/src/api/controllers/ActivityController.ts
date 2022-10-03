@@ -2,6 +2,7 @@ import {
   ActivityApiChart,
   ActivityApiChartPoint,
   ActivityApiResponse,
+  json,
   ProjectId,
 } from '@l2beat/types'
 
@@ -40,6 +41,19 @@ export class ActivityController {
         counts: await c.getDailyTransactionCounts(),
       })),
     )
+  }
+
+  async getStatus(): Promise<json> {
+    return Promise.all([
+      ...this.layer2Counters.map(async (c) => ({
+        projectId: c.projectId.toString(),
+        status: await c.getStatus(),
+      })),
+      {
+        projectId: ProjectId.ETHEREUM.toString(),
+        status: await this.ethereumCounter.getStatus(),
+      },
+    ])
   }
 
   private toCombinedActivity(
