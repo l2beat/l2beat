@@ -209,7 +209,7 @@ export const tokenList: TokenInfo[] = [
   },
   {
     id: AssetId('balancer-token'),
-    name: 'Balancer Token',
+    name: 'Balancer',
     coingeckoId: CoingeckoId('balancer'),
     address: EthereumAddress('0xba100000625a3754423978a60c9317c58a424e3D'),
     symbol: 'BAL',
