@@ -12,5 +12,4 @@ export type ShouldRetry<T> = (job: { task: T; attempts: number }) => {
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
-  id?: string
 }

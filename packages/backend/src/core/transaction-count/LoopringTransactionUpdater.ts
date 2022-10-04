@@ -11,21 +11,8 @@ interface LoopringTransactionUpdaterOpts {
 }
 
 export class LoopringTransactionUpdater implements TransactionCounter {
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-    {
-      id: 'LoopringTransactionUpdater.updateQueue',
-    },
-  )
-  private readonly blockQueue = new TaskQueue(
-    this.updateBlock.bind(this),
-    this.logger,
-    {
-      workers: this.opts?.workQueueWorkers,
-      id: 'LoopringTransactionUpdater.blockQueue',
-    },
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly blockQueue: TaskQueue<string | number>
 
   constructor(
     private readonly loopringClient: LoopringClient,
@@ -36,6 +23,15 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     private readonly opts?: LoopringTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
+    this.updateQueue = new TaskQueue<void>(
+      this.update.bind(this),
+      this.logger.for('updateQueue'),
+    )
+    this.blockQueue = new TaskQueue(
+      this.updateBlock.bind(this),
+      this.logger.for('blockQueue'),
+      { workers: this.opts?.workQueueWorkers },
+    )
   }
 
   start() {

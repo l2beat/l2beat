@@ -8,13 +8,7 @@ import { Clock } from './Clock'
 
 export class BlockNumberUpdater {
   private readonly blocksByTimestamp = new Map<number, bigint>()
-  private readonly taskQueue = new TaskQueue(
-    this.update.bind(this),
-    this.logger,
-    {
-      id: 'BlockNumberUpdater.taskQueue',
-    },
-  )
+  private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
     private readonly etherscanClient: EtherscanClient,
@@ -23,6 +17,10 @@ export class BlockNumberUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+    this.taskQueue = new TaskQueue(
+      this.update.bind(this),
+      this.logger.for('taskQueue'),
+    )
   }
 
   async getBlockNumberWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {

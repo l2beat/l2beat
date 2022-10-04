@@ -12,21 +12,8 @@ interface StarkexTransactionCountUpdaterOpts {
 }
 
 export class StarkexTransactionCountUpdater implements TransactionCounter {
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-    {
-      id: `StarkexTransactionCountUpdater.updateQueue[${this.projectId.toString()}]`,
-    },
-  )
-  private readonly daysQueue = new TaskQueue(
-    this.updateDay.bind(this),
-    this.logger,
-    {
-      workers: this.opts?.workQueueWorkers,
-      id: `StarkexTransactionCountUpdater.daysQueue[${this.projectId.toString()}]`,
-    },
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly daysQueue: TaskQueue<number>
   private readonly startDay: number
 
   constructor(
@@ -39,7 +26,18 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     startTimestamp: UnixTime,
     private readonly opts?: StarkexTransactionCountUpdaterOpts,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(
+      `${StarkexTransactionCountUpdater.name}[${projectId.toString()}]`,
+    )
+    this.updateQueue = new TaskQueue<void>(
+      this.update.bind(this),
+      this.logger.for('updateQueue'),
+    )
+    this.daysQueue = new TaskQueue(
+      this.updateDay.bind(this),
+      this.logger.for('daysQueue'),
+      { workers: this.opts?.workQueueWorkers },
+    )
     this.startDay = startTimestamp.toStartOf('day').toDays()
   }
 
