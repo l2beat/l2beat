@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { ActivityIcon } from './pages/ActivityIcon'
+import { RiskIcon } from './pages/RiskIcon'
+import { TvlIcon } from './pages/TvlIcon'
 import { DiscordIcon } from './products/DiscordIcon'
 import { GithubIcon } from './products/GithubIcon'
 import { InstagramIcon } from './products/InstagramIcon'
@@ -70,6 +73,16 @@ export function SymbolIcons() {
       <ShieldWarnIcon />
       <SunIcon />
       <WarningIcon />
+    </div>
+  )
+}
+
+export function PageIcons() {
+  return (
+    <div className="mx-auto max-w-lg p-4 flex justify-center gap-2">
+      <TvlIcon />
+      <RiskIcon />
+      <ActivityIcon />
     </div>
   )
 }

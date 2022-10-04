@@ -1,3 +1,6 @@
+export * from './pages/ActivityIcon'
+export * from './pages/RiskIcon'
+export * from './pages/TvlIcon'
 export * from './ProductIcon'
 export * from './products/DiscordIcon'
 export * from './products/GithubIcon'

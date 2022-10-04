@@ -5,11 +5,11 @@ export function ChartHover() {
     <div data-role="chart-hover" className="ChartHover hidden">
       <div
         data-role="chart-hover-line"
-        className="absolute block top-0 h-full w-0.5 bg-current z-40"
+        className="absolute block top-0 h-full w-0.5 bg-current z-30"
       />
       <div
         data-role="chart-hover-circle"
-        className="absolute block w-2 h-2 rounded-full border-2 border-current bg-white dark:bg-black z-50"
+        className="absolute block w-2 h-2 rounded-full border-2 border-current bg-white dark:bg-black z-40"
       />
       <div
         data-role="chart-hover-contents"
