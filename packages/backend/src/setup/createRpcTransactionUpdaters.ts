@@ -7,13 +7,13 @@ import { Config } from '../config'
 import { TransactionCountSyncConfig } from '../config/Config'
 import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
-import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { assert } from '../tools/assert'
 
 export function createLayer2RpcTransactionUpdaters(
   config: Config,
-  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
   logger: Logger,
 ) {
@@ -36,7 +36,7 @@ export function createLayer2RpcTransactionUpdaters(
 
       const transactionUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        rpcTransactionCountRepository,
+        blockTransactionCountRepository,
         clock,
         logger,
         project.projectId,
@@ -56,7 +56,7 @@ export function createLayer2RpcTransactionUpdaters(
 
 export function createEthereumTransactionUpdater(
   config: TransactionCountSyncConfig,
-  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
   logger: Logger,
   apiKey: string,
@@ -65,7 +65,7 @@ export function createEthereumTransactionUpdater(
   const client = new EthereumClient(provider, logger)
   const updater = new RpcTransactionUpdater(
     client,
-    rpcTransactionCountRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
     ProjectId.ETHEREUM,

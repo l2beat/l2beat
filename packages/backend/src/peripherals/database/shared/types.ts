@@ -53,7 +53,7 @@ declare module 'knex/types/tables' {
     project_id: string
   }
 
-  interface RpcTransactionCountRow {
+  interface BlockTransactionCountRow {
     unix_timestamp: Date
     project_id: string
     block_number: number
@@ -82,7 +82,7 @@ declare module 'knex/types/tables' {
     report_status: ReportStatusRow
     events: EventRow
     transactions: {
-      rpc: RpcTransactionCountRow
+      block: BlockTransactionCountRow
       starkex: StarkexTransactionCountRow
       zksync: ZksyncTransactionRow
     }
