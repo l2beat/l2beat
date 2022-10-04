@@ -147,7 +147,7 @@ export const polygonpos: Bridge = {
       {
         address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
         name: 'EtherPredicate',
-        description: 'All ether goes here.',
+        description: 'Escrow contract for ETH.',
         upgradeability: {
           type: 'Custom',
           implementation: '0x54006763154c764da4AF42a8c3cfc25Ea29765D5',
