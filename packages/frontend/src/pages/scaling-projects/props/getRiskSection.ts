@@ -1,6 +1,7 @@
-import { Layer2, ProjectRisk, ProjectRiskCategory } from '@l2beat/config'
+import { Layer2, ProjectRisk } from '@l2beat/config'
 
 import { RiskSectionProps } from '../../../components/project/RiskSection'
+import { groupRisks } from '../../../utils/project/groupRisks'
 
 export function getRiskSection(project: Layer2): RiskSectionProps {
   const technology = project.technology
@@ -30,29 +31,5 @@ export function getRiskSection(project: Layer2): RiskSectionProps {
     risks.push({ ...risk, referencedId: 'contracts' })
   }
 
-  const categories: ProjectRiskCategory[] = [
-    'Funds can be stolen if',
-    'Funds can be lost if',
-    'Funds can be frozen if',
-    'Users can be censored if',
-    'MEV can be extracted if',
-  ]
-
-  let nextStart = 1
-  const riskGroups = categories
-    .map((name) => {
-      const start = nextStart
-      const items = risks
-        .filter((x) => x.category === name)
-        .map((x, i, a) => ({
-          text: i !== a.length - 1 ? x.text.slice(0, -1) + ',' : x.text,
-          referencedId: x.referencedId,
-          isCritical: !!x.isCritical,
-        }))
-      nextStart += items.length
-      return { start, name, items }
-    })
-    .filter((x) => x.items.length > 0)
-
-  return { riskGroups }
+  return { riskGroups: groupRisks(risks) }
 }
