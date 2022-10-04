@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
-import { ScalingTvlView } from '../../../pages/scaling-tvl/view/ScalingTvlView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
+import { ScalingTvlView } from './ScalingTvlView'
 
 export default {
   title: 'Pages/Scaling/TvlView',

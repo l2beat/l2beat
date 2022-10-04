@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TechnologySection as TechnologySectionComponent } from '../../../components/project/TechnologySection'
+import { TechnologySection as TechnologySectionComponent } from './TechnologySection'
 
 export default {
   title: 'Components/Project/TechnologySection',

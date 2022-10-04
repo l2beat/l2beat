@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PermissionsSection as PermissionsSectionComponent } from '../../../components/project/PermissionsSection'
+import { PermissionsSection as PermissionsSectionComponent } from './PermissionsSection'
 
 export default {
   title: 'Components/Project/PermissionsSection',

@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
-import { ScalingRiskView } from '../../../pages/scaling-risk/view/ScalingRiskView'
 import { configureTooltips } from '../../../scripts/configureTooltips'
+import { ScalingRiskView } from './ScalingRiskView'
 
 export default {
   title: 'Pages/Scaling/RiskView',

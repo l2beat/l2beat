@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { RiskList as RiskListComponent } from '../../../components/project/RiskList'
+import { RiskList as RiskListComponent } from './RiskList'
 
 export default {
   title: 'Components/Project/RiskList',

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { About as AboutComponent } from '../../components/About'
-import { PageContent } from '../../components/PageContent'
+import { About as AboutComponent } from './About'
+import { PageContent } from './PageContent'
 
 export default {
   title: 'Components/About',
