@@ -27,6 +27,7 @@ export function getStagingConfig(): Config {
       rpcWorkQueueWorkers: 1,
       zkSyncWorkQueueWorkers: 1,
       starkexWorkQueueWorkers: 1,
+      loopringWorkQueueWorkers: 1,
     },
   }
 }

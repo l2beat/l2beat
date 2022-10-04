@@ -38,6 +38,7 @@ export interface Config {
         rpcWorkQueueWorkers: number
         zkSyncWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
+        loopringWorkQueueWorkers: number
       }
     | false
 }

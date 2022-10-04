@@ -6,16 +6,24 @@ import { LoopringClient } from '../../peripherals/loopring'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
+interface LoopringTransactionUpdaterOpts {
+  workQueueWorkers?: number
+}
+
 export class LoopringTransactionUpdater implements TransactionCounter {
   private readonly updateQueue = new TaskQueue<void>(
     () => this.update(),
     this.logger,
+    {
+      id: 'LoopringTransactionUpdater.updateQueue',
+    },
   )
   private readonly blockQueue = new UniqueTaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
-      workers: 100,
+      workers: this.opts?.workQueueWorkers,
+      id: 'LoopringTransactionUpdater.blockQueue',
     },
   )
 
@@ -25,6 +33,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     private readonly clock: Clock,
     private readonly logger: Logger,
     readonly projectId: ProjectId,
+    private readonly opts?: LoopringTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
   }

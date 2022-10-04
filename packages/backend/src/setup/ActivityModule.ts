@@ -89,6 +89,7 @@ export function getActivityModule(
     clock,
     logger,
     ProjectId.LOOPRING,
+    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
   )
 
   const activityController = new ActivityController(
