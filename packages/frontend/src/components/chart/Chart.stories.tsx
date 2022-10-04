@@ -1,9 +1,9 @@
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { Chart as ChartComponent } from '../../components/chart/Chart'
-import { configureChart } from '../../components/chart/configure'
-import { PageContent } from '../../components/PageContent'
+import { Chart as ChartComponent } from './Chart'
+import { configureChart } from './configure'
+import { PageContent } from '../PageContent'
 
 export default {
   title: 'Components/Chart',

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TechnologyIncomplete as TechnologyIncompleteComponent } from '../../../components/project/TechnologyIncomplete'
+import { TechnologyIncomplete as TechnologyIncompleteComponent } from './TechnologyIncomplete'
 
 export default {
   title: 'Components/Project/TechnologyIncomplete',

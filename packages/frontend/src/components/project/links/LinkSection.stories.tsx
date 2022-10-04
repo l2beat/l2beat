@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { LinkSection as LinkSectionComponent } from '../../../components/project/links/LinkSection'
+import { LinkSection as LinkSectionComponent } from './LinkSection'
 
 export default {
   title: 'Components/Project/LinkSection',

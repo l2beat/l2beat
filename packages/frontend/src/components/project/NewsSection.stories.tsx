@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { NewsSection as NewsSectionComponent } from '../../../components/project/NewsSection'
+import { NewsSection as NewsSectionComponent } from './NewsSection'
 
 export default {
   title: 'Components/Project/NewsSection',

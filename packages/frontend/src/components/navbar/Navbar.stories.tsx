@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 
-import { configureDarkThemeToggle } from '../../components/navbar/configureDarkThemeToggle'
-import { configureSidebarMenu } from '../../components/navbar/configureSidebarMenu'
-import { Navbar as NavbarComponent } from '../../components/navbar/Navbar'
+import { configureDarkThemeToggle } from './configureDarkThemeToggle'
+import { configureSidebarMenu } from './configureSidebarMenu'
+import { Navbar as NavbarComponent } from './Navbar'
 
 export default {
   title: 'Components/Navbar',
