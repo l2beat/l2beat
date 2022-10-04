@@ -1,4 +1,4 @@
-import { ActivityApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -11,6 +11,7 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
+  tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityPageProps> {
   const data = activityApiResponse.combined.data
@@ -23,7 +24,11 @@ export function getProps(
       tpsDaily: tpsDaily?.toString() ?? '',
       tpsWeeklyChange,
       apiEndpoint: '/api/scaling-activity.json',
-      activityView: getActivityView(config.layer2s, activityApiResponse),
+      activityView: getActivityView(
+        config.layer2s,
+        tvlApiResponse,
+        activityApiResponse,
+      ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },
