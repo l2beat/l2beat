@@ -90,6 +90,8 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
 
+    await this.blockQueue.waitTilEmpty()
+
     const missingRanges =
       await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,

@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { setTimeout as wait } from 'timers/promises'
 
 import { Logger } from '../Logger'
 import { Retries } from './Retries'
@@ -57,6 +58,12 @@ export class TaskQueue<T> {
   addToBack(task: T) {
     this.queue.push({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
+  }
+
+  async waitTilEmpty() {
+    while (!this.isEmpty) {
+      await wait(100)
+    }
   }
 
   private execute() {
