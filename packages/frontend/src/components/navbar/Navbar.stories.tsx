@@ -16,7 +16,6 @@ export default {
 } as Meta
 
 interface TemplateProps {
-  showBridges: boolean
   showBanner: boolean
   selectedPage: NavbarPage
 }
@@ -30,7 +29,8 @@ function Template(props: TemplateProps) {
     <Navbar
       showBanner={props.showBanner}
       forumLink="#"
-      showBridges={props.showBridges}
+      showBridges
+      showActivity
       selectedPage={props.selectedPage}
       socialLinks={{
         discordLink: '#',
@@ -45,28 +45,24 @@ function Template(props: TemplateProps) {
 
 export const NoBannerScaling: Story<TemplateProps> = Template.bind({})
 NoBannerScaling.args = {
-  showBridges: true,
   showBanner: false,
   selectedPage: 'scaling',
 }
 
 export const NoBannerBridges: Story<TemplateProps> = Template.bind({})
 NoBannerBridges.args = {
-  showBridges: true,
   showBanner: false,
   selectedPage: 'bridges',
 }
 
 export const NoBannerDonate: Story<TemplateProps> = Template.bind({})
 NoBannerDonate.args = {
-  showBridges: true,
   showBanner: false,
   selectedPage: 'donate',
 }
 
 export const BannerScaling: Story<TemplateProps> = Template.bind({})
 BannerScaling.args = {
-  showBridges: true,
   showBanner: true,
   selectedPage: 'scaling',
 }

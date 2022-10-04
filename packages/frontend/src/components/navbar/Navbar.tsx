@@ -20,6 +20,7 @@ export type NavbarPage = 'scaling' | 'bridges' | 'donate' | 'faq'
 
 export interface NavbarProps {
   showBanner: boolean
+  showActivity: boolean
   showBridges: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -34,6 +35,7 @@ export function getNavbarProps(
     showBanner: config.features.banner,
     forumLink: config.links.forum,
     showBridges: config.features.bridges,
+    showActivity: config.features.activity,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -44,6 +46,8 @@ export function Navbar(props: NavbarProps) {
     <>
       <SidebarMenu
         showBanner={props.showBanner}
+        showActivity={props.showActivity}
+        showBridges={props.showBridges}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
@@ -93,10 +97,15 @@ export function Navbar(props: NavbarProps) {
           )}
         </ul>
         <div className="h-full hidden md:flex gap-5 items-center">
-          <ul className="flex gap-4 items-center">
+          <ul
+            className={classNames(
+              'flex gap-4 items-center',
+              !props.showBridges && 'absolute left-4 md:left-12',
+            )}
+          >
             <SocialLinks {...props.socialLinks} />
           </ul>
-          <VerticalBar />
+          {props.showBridges && <VerticalBar />}
           <ul className="h-full flex items-center">
             <li className="h-full">
               <OutLink

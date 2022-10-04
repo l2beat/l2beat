@@ -28,6 +28,6 @@ export function configureDarkThemeToggle() {
   }
 
   document
-    .querySelector('#dark-theme-toggle')
-    ?.addEventListener('click', toggleDarkMode)
+    .querySelectorAll('[data-role="dark-theme-toggle"]')
+    .forEach((e) => e.addEventListener('click', toggleDarkMode))
 }
