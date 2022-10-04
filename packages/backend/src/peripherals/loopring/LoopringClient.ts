@@ -13,13 +13,15 @@ export class LoopringClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
-    callsPerMinute: number,
+    callsPerMinute?: number,
   ) {
     this.logger = logger.for(this)
-    const rateLimiter = new RateLimiter({
-      callsPerMinute,
-    })
-    this.call = rateLimiter.wrap(this.call.bind(this))
+    if (callsPerMinute) {
+      const rateLimiter = new RateLimiter({
+        callsPerMinute,
+      })
+      this.call = rateLimiter.wrap(this.call.bind(this))
+    }
   }
 
   async getFinalizedBlockNumber() {
