@@ -15,20 +15,20 @@ export const stargate: Bridge = {
         'https://github.com/LayerZero-Labs/LayerZero',
       ],
       socialMedia: [
-        'https://stargate.finance/discord',
+        'https://discord.gg/agEXvDB',
         'https://t.me/joinchat/LEM0ELklmO1kODdh',
         'https://medium.com/stargate-official',
         'https://twitter.com/StargateFinance',
       ],
     },
     description:
-      'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle anr relayer for cross-chain security for the protocol.',
+      'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle and relayer for cross-chain security for the protocol.',
   },
   riskView: {
     validation: {
       value: 'External',
       description:
-        'Transfers need to be independently confirmed by Oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
+        'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -60,20 +60,20 @@ export const stargate: Bridge = {
       risks: [],
     },
     validation: {
-      name: 'Oracles and Relayers',
+      name: 'Oracles and relayers',
       description:
-        'StarGate is built on top of LayerZero protocol. LayerZero relies on Oracles to periodically submit source chain block hashes to the destination chain.\
-        Once block hash is submitted, Relayers can provide the merkle proof for the transfers / swaps.',
+        'StarGate is built on top of LayerZero protocol. LayerZero relies on oracles to periodically submit source chain block hashes to the destination chain.\
+        Once block hash is submitted, relayers can provide the merkle proof for the transfers / swaps.',
       references: [],
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'Oracles or Relayers fail to facilitate the transfer.',
+          text: 'oracles or relayers fail to facilitate the transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'Oracles and Relayers collude to submit fraudulent block hash and relay fraudulent transfer .',
+          text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer .',
           isCritical: true,
         },
       ],
@@ -127,7 +127,7 @@ export const stargate: Bridge = {
         address: '0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C',
         name: 'UltraLightNode',
         description:
-          'LayerZero UltraLight Node. Used by Oracles to checkpoint source chain block hashes.',
+          'LayerZero UltraLight Node. Used by oracles to checkpoint source chain block hashes.',
       },
       {
         address: '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2',
