@@ -17,7 +17,6 @@ export function RiskCell({ item }: Props) {
       className={classNames(
         'sm:text-sm md:text-base',
         item.sentiment && 'px-1 rounded-sm',
-        'text-gray-800 dark:text-gray-200 bg-gray-200 dark:bg-gray-800',
         item.sentiment === 'bad' && 'text-white bg-red-100',
         item.sentiment === 'warning' && 'text-black bg-yellow-100',
         'Tooltip',
