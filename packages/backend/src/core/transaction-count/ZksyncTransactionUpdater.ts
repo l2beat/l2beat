@@ -16,17 +16,8 @@ interface ZksyncTransactionUpdaterOpts {
 export class ZksyncTransactionUpdater implements TransactionCounter {
   readonly projectId = ProjectId.ZKSYNC
 
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-  )
-  private readonly blockQueue = new UniqueTaskQueue(
-    this.updateBlock.bind(this),
-    this.logger,
-    {
-      workers: this.opts?.workQueueWorkers,
-    },
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly blockQueue: UniqueTaskQueue<number>
 
   constructor(
     private readonly zksyncClient: ZksyncClient,
@@ -36,6 +27,15 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     private readonly opts?: ZksyncTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
+    this.updateQueue = new TaskQueue<void>(
+      this.update.bind(this),
+      this.logger.for('updateQueue'),
+    )
+    this.blockQueue = new UniqueTaskQueue(
+      this.updateBlock.bind(this),
+      this.logger.for('blockQueue'),
+      { workers: this.opts?.workQueueWorkers },
+    )
   }
 
   start() {
