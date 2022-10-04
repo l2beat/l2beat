@@ -49,6 +49,7 @@ export function getLocalConfig(): Config {
       zkSyncWorkQueueWorkers: 100,
       starkexWorkQueueWorkers: 1,
       loopringWorkQueueWorkers: 1,
+      loopringCallsPerMinute: 400,
     },
   }
 }

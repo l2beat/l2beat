@@ -39,6 +39,7 @@ export interface Config {
         zkSyncWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number
+        loopringCallsPerMinute: number
       }
     | false
 }
