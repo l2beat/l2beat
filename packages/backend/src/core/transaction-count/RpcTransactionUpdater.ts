@@ -1,4 +1,4 @@
-import { Logger, Retries, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -24,7 +24,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       id: `RpcTransactionUpdater.updateQueue[${this.projectId.toString()}]`,
     },
   )
-  private readonly blockQueue = new UniqueTaskQueue(
+  private readonly blockQueue = new TaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
