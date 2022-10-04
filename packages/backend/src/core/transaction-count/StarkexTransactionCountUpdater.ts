@@ -15,11 +15,17 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
   private readonly updateQueue = new TaskQueue<void>(
     () => this.update(),
     this.logger,
+    {
+      id: `StarkexTransactionCountUpdater.updateQueue[${this.projectId.toString()}]`,
+    },
   )
   private readonly daysQueue = new UniqueTaskQueue(
     this.updateDay.bind(this),
     this.logger,
-    { workers: this.opts?.workQueueWorkers },
+    {
+      workers: this.opts?.workQueueWorkers,
+      id: `StarkexTransactionCountUpdater.daysQueue[${this.projectId.toString()}]`,
+    },
   )
   private readonly startDay: number
 
