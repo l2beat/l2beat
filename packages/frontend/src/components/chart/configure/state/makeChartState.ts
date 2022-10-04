@@ -3,17 +3,23 @@ import { apiGet } from './api'
 import { Charts } from './ChartInput'
 import { ChartState } from './ChartState'
 import { getControls } from './getControls'
-import { getEndpoint } from './getEndpoint'
+import {
+  getActivityEndpoint,
+  getInitialEndpoint,
+  getTvlEndpoint,
+} from './getEndpoint'
+import { getType } from './getType'
 import { onRadioChange } from './onRadioChange'
 
 export function makeChartState(chart: HTMLElement, onChange: () => void) {
   const controls = getControls(chart)
 
-  const mainEndpoint = getEndpoint(chart)
+  const type = getType(chart)
   const selected = controls.token.find((x) => x.checked)
-  const initialEndpoint = selected ? getEndpoint(selected) : mainEndpoint
+  const initialEndpoint = getInitialEndpoint(type, chart, selected)
 
   const state: ChartState = {
+    type,
     endpoint: initialEndpoint,
     days: toDays(controls.range.find((x) => x.checked)?.value ?? '90D'),
     altCurrency: controls.currency.find((x) => x.checked)?.value === 'ETH',
@@ -40,8 +46,8 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     for (const input of controls.token) {
       input.checked = false
     }
-    if (state.endpoint !== mainEndpoint) {
-      state.endpoint = mainEndpoint
+    if (state.endpoint !== getTvlEndpoint(chart)) {
+      state.endpoint = getTvlEndpoint(chart)
       updateInput(state.endpoint)
     } else {
       onChange()
@@ -54,7 +60,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
   })
 
   onRadioChange(controls.token, (control) => {
-    state.endpoint = getEndpoint(control)
+    state.endpoint = getTvlEndpoint(control)
     state.token = control.value
     state.altCurrency = false
     for (const input of controls.currency) {
@@ -74,8 +80,25 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
 
   controls.combined?.addEventListener('change', () => {
     const checked = !!controls.combined?.checked
-    updateInput(!checked ? mainEndpoint : '/api/combined-tvl.json')
+    updateInput(!checked ? getTvlEndpoint(chart) : '/api/combined-tvl.json')
   })
+
+  controls.tvlActivity?.addEventListener('change', () => {
+    const checked = !!controls.tvlActivity?.checked
+    updateType(checked)
+  })
+
+  function updateType(toActivity: boolean) {
+    if (toActivity) {
+      state.type = 'activity'
+      onChange()
+      updateInput(getActivityEndpoint(chart))
+    } else {
+      state.type = 'tvl'
+      onChange()
+      updateInput(getTvlEndpoint(chart))
+    }
+  }
 
   function updateInput(url: string) {
     state.endpoint = url

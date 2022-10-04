@@ -10,6 +10,7 @@ import {
   NavbarProps,
 } from '../../../components'
 import { Page } from '../../../components/Page'
+import { ShowProjectActivityToggle } from '../../../components/ShowProjectActivityToggle'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
 export interface ProjectPageProps {
@@ -25,6 +26,7 @@ export function ProjectPage(props: ProjectPageProps) {
     <Page navbar={props.navbar}>
       <Header {...props.header} />
       <Chart {...props.chart} />
+      <ShowProjectActivityToggle />
       <ProjectDetails {...props.projectDetails} />
       <Footer {...props.footer} />
     </Page>

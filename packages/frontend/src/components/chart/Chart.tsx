@@ -12,7 +12,9 @@ import { TokenControls } from './TokenControls'
 import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
-  tvlEndpoint: string
+  type?: 'tvl' | 'activity'
+  tvlEndpoint?: string
+  activityEndpoint?: string
   tokens?: { symbol: string; endpoint: string }[]
   days?: 7 | 30
   hideControls?: boolean
@@ -20,14 +22,18 @@ export interface ChartProps {
 
 export function Chart({
   tvlEndpoint,
+  activityEndpoint,
   tokens,
   days = 7,
   hideControls = false,
+  type,
 }: ChartProps) {
   return (
     <section
       data-role="chart"
-      data-endpoint={tvlEndpoint}
+      data-type={type ?? 'tvl'}
+      data-tvlendpoint={tvlEndpoint}
+      data-activityendpoint={activityEndpoint}
       className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
     >
       <TimeRange />
