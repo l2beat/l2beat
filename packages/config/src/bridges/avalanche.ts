@@ -9,9 +9,17 @@ export const avalanche: Bridge = {
     name: 'Avalanche Bridge',
     slug: 'avalanche',
     description:
-      'Avalanche Bridge is an externally validated bridge. It uses a set of Wardens using secure SGX Enclave to sign tansfers. On Ethereum side it uses periodically rotated EOA address for an Escdrow. In the announcement, 3 out of 4 Warden signatures are required, however the exact number is impossible to verify for an external observer.',
+      'Avalanche Bridge is an externally validated bridge. It uses a set of Wardens using secure SGX Enclave to sign transfers. On Ethereum side it uses periodically rotated EOA address for an Escrow. In the announcement, 3 out of 4 Warden signatures are required, however the exact number is impossible to verify for an external observer.',
     links: {
-      websites: ['https://bridge.avax.network/'],
+      websites: ['https://www.avax.network/'],
+      explorers: ['https://subnets.avax.network/'],
+      apps: ['https://bridge.avax.network/'],
+      repositories: ['https://github.com/ava-labs'],
+      socialMedia: [
+        'https://twitter.com/avalancheavax',
+        'https://t.me/avalancheavax',
+        'https://discord.gg/RwXY7P6',
+      ],
     },
   },
   config: {
@@ -62,11 +70,6 @@ export const avalanche: Bridge = {
       },
     ],
   },
-  technology: {
-    canonical: true,
-    category: 'Lock-Mint',
-    destination: ['Avalanche'],
-  },
   riskView: {
     validation: {
       value: 'External',
@@ -78,5 +81,29 @@ export const avalanche: Bridge = {
       description: 'Avalanche Bridge uses EOA for Escrow',
       sentiment: 'bad',
     },
+    destinationToken: {
+      value: 'Wrapped',
+      description:
+        'Tokens transferred end up as wrapped ERC20 proxies, the contract is named BridgeToken',
+      sentiment: 'bad',
+    },
   },
+  technology: {
+    canonical: true,
+    category: 'Lock-Mint',
+    destination: ['Avalanche'],
+  },
+  permissions: [
+    {
+      name: 'Escrow owner',
+      description:
+        'Controls all the funds deposited to the bridge. The owner of this account can potentially withdraw all the funds. In the event of potential private key exploit the hacker can quickly drain all the funds.',
+      accounts: [
+        {
+          address: '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
+          type: 'EOA',
+        },
+      ],
+    },
+  ],
 }
