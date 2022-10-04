@@ -19,14 +19,14 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
       items: [
         project.technology.principleOfOperation &&
           makeTechnologyChoice(
-            'validation',
+            'principle-of-operation',
             project.technology.principleOfOperation,
           ),
         project.technology.validation &&
           makeTechnologyChoice('validation', project.technology.validation),
         project.technology.destinationToken &&
           makeTechnologyChoice(
-            'validation',
+            'destination-token',
             project.technology.destinationToken,
           ),
       ].filter(noUndefined),
