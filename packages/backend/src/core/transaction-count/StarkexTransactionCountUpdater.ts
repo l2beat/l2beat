@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -19,7 +19,7 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
       id: `StarkexTransactionCountUpdater.updateQueue[${this.projectId.toString()}]`,
     },
   )
-  private readonly daysQueue = new UniqueTaskQueue(
+  private readonly daysQueue = new TaskQueue(
     this.updateDay.bind(this),
     this.logger,
     {
@@ -69,6 +69,8 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
+
+    await this.daysQueue.waitTilEmpty()
 
     const missingRanges =
       await this.starkexTransactionCountRepository.getMissingRangesByProject(

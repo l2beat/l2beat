@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
@@ -18,7 +18,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       id: 'LoopringTransactionUpdater.updateQueue',
     },
   )
-  private readonly blockQueue = new UniqueTaskQueue(
+  private readonly blockQueue = new TaskQueue(
     this.updateBlock.bind(this),
     this.logger,
     {
@@ -70,6 +70,8 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started')
+
+    await this.blockQueue.waitTilEmpty()
 
     const missingRanges =
       await this.blockTransactionCountRepository.getMissingRangesByProject(
