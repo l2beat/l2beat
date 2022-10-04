@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -43,6 +43,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
+        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
       },
     )
     this.assessCount = opts?.assessCount ?? identity

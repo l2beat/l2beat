@@ -5,7 +5,7 @@ import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 /**
- * Note: by default, queue will retry tasks using exponential back off strategy. Eventually, failing tasks will be dropped (and logged).
+ * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
  */
 export class TaskQueue<T> {
   private readonly queue: Job<T>[] = []
@@ -23,12 +23,7 @@ export class TaskQueue<T> {
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry =
-      opts?.shouldRetry ??
-      Retries.exponentialBackOff(100, {
-        maxAttempts: 8,
-        maxDistance: 3_000,
-      })
+    this.shouldRetry = opts?.shouldRetry ?? Retries.defaultExponentialBackOff
   }
 
   private get isEmpty() {
