@@ -21,7 +21,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     () => this.update(),
     this.logger,
     {
-      id: 'RpcTransactionUpdater.updateQueue',
+      id: `RpcTransactionUpdater.updateQueue[${this.projectId.toString()}]`,
     },
   )
   private readonly blockQueue = new UniqueTaskQueue(
@@ -29,7 +29,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.logger,
     {
       workers: this.opts?.workQueueWorkers,
-      id: 'RpcTransactionUpdater.blockQueue',
+      id: `RpcTransactionUpdater.blockQueue[${this.projectId.toString()}]`,
       shouldRetry: Retries.exponentialBackOff(100, {
         maxAttempts: 8,
         maxDistance: 3000,

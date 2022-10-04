@@ -77,10 +77,18 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job)
     if (!result.retry) {
+      this.logger.info({
+        message: 'No more retries',
+        job: JSON.stringify(job),
+      })
       return
     }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
     this.queue.unshift(job)
+    this.logger.info({
+      message: 'Scheduled retry',
+      job: JSON.stringify(job),
+    })
   }
 
   private earliestScheduledExecution() {
