@@ -1,8 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { polygonpos } from './polygonpos'
 import { CONTRACTS } from '../layer2s/common'
-
+import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
 
 export const polygonplasma: Bridge = {
