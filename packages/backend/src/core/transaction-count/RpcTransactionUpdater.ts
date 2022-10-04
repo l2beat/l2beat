@@ -17,21 +17,8 @@ interface RpcTransactionUpdaterOpts {
 }
 
 export class RpcTransactionUpdater implements TransactionCounter {
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-    {
-      id: `RpcTransactionUpdater.updateQueue[${this.projectId.toString()}]`,
-    },
-  )
-  private readonly blockQueue = new UniqueTaskQueue(
-    this.updateBlock.bind(this),
-    this.logger,
-    {
-      workers: this.opts?.workQueueWorkers,
-      id: `RpcTransactionUpdater.blockQueue[${this.projectId.toString()}]`,
-    },
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly blockQueue: UniqueTaskQueue<number>
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
@@ -44,7 +31,20 @@ export class RpcTransactionUpdater implements TransactionCounter {
     readonly projectId: ProjectId,
     private readonly opts?: RpcTransactionUpdaterOpts,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(
+      `${RpcTransactionUpdater.name}[${projectId.toString()}]`,
+    )
+    this.updateQueue = new TaskQueue<void>(
+      this.update.bind(this),
+      this.logger.for('updateQueue'),
+    )
+    this.blockQueue = new UniqueTaskQueue(
+      this.updateBlock.bind(this),
+      this.logger.for('blockQueue'),
+      {
+        workers: this.opts?.workQueueWorkers,
+      },
+    )
     this.assessCount = opts?.assessCount ?? identity
     this.startBlock = opts?.startBlock ?? 0
     this.workQueueSizeLimit = opts?.workQueueSizeLimit ?? 200_000

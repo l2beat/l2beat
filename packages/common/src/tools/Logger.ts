@@ -30,11 +30,11 @@ export class Logger {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  for(object: {}) {
+  for(service: object | string) {
+    const name =
+      typeof service === 'string' ? service : service.constructor.name
     return this.configure({
-      service: this.options.service
-        ? `${this.options.service}.${object.constructor.name}`
-        : object.constructor.name,
+      service: this.options.service ? `${this.options.service}.${name}` : name,
     })
   }
 

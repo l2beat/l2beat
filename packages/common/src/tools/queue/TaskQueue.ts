@@ -18,9 +18,6 @@ export class TaskQueue<T> {
     private readonly logger: Logger,
     opts?: TaskQueueOpts<T>,
   ) {
-    this.logger = opts?.id
-      ? this.logger.configure({ service: `TaskQueue<${opts.id}>` })
-      : this.logger.for(this)
     this.workers = opts?.workers ?? 1
     assert(
       this.workers > 0 && Number.isInteger(this.workers),
