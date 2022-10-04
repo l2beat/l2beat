@@ -22,7 +22,7 @@ export function getProps(
       navbar: getNavbarProps(config),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
       chart,
-      hasActivity: !!activityApiResponse,
+      showActivityToggle: config.features.activity && !!activityApiResponse,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),
     },
