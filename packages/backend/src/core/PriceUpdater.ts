@@ -25,7 +25,7 @@ export class PriceUpdater {
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('taskQueue'),
     )
   }
