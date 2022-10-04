@@ -155,6 +155,28 @@ export const polygonpos: Bridge = {
         },
       },
       {
+        address: '0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287',
+        name: 'RootChain',
+        description:
+          'Contract storing Polygon sidechain checkpoints. Note that validatity of these checkpoints is not verfied, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
+        upgradeability: {
+          type: 'Custom',
+          implementation: '0x536c55cFe4892E581806e10b38dFE8083551bd03 ',
+          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf ',
+        },
+      },
+      {
+        address: '0xA0c68C638235ee32657e8f720a23ceC1bFc77C77',
+        name: 'RootChainManager',
+        description:
+          'Main contract to manage bridge tokens, deposits and withdrawals.',
+        upgradeability: {
+          type: 'Custom',
+          implementation: '0x37D26DC2890b35924b40574BAc10552794771997 ',
+          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf ',
+        },
+      },
+      {
         address: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
         name: 'Timelock',
         description: 'Contract enforcing delay on code upgrades.',
