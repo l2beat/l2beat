@@ -62,7 +62,7 @@
       }
     },
     {
-      "files": ["src/stories/**/*.{ts,tsx}"],
+      "files": ["src/**/*.stories.{ts,tsx}"],
       "rules": {
         "import/no-extraneous-dependencies": "off",
         "import/no-default-export": "off"
