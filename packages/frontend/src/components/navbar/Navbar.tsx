@@ -50,7 +50,7 @@ export function Navbar(props: NavbarProps) {
       {props.showBanner && <Banner />}
       <nav
         className={classNames(
-          'text-base relative flex justify-between items-center h-16 px-12',
+          'text-base relative flex md:justify-between items-center h-14 md:h-16 px-4 md:px-12',
           'border-gray-100 dark:border-gray-900 border-b',
         )}
       >
@@ -58,36 +58,46 @@ export function Navbar(props: NavbarProps) {
           <MenuOpenIcon className="block" aria-label="Open menu" />
         </button>
         <ul className="flex h-full items-center">
-          <li className="mr-8">
+          <li
+            className={classNames(
+              props.showBridges
+                ? 'mx-4 md:ml-0 md:mr-8'
+                : 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
+            )}
+          >
             <a href="/">
-              <Logo />
+              <Logo className="h-8 w-auto" />
             </a>
           </li>
-          <li className="h-full">
-            <PageLink
-              selected={props.selectedPage === 'scaling'}
-              large
-              href="/scaling/tvl"
-            >
-              Scaling
-            </PageLink>
-          </li>
-          <li className="h-full">
-            <PageLink
-              selected={props.selectedPage === 'bridges'}
-              large
-              href="/bridges/tvl"
-            >
-              Bridges
-            </PageLink>
-          </li>
+          {props.showBridges && (
+            <>
+              <li className="h-full">
+                <PageLink
+                  selected={props.selectedPage === 'scaling'}
+                  large
+                  href="/scaling/tvl"
+                >
+                  Scaling
+                </PageLink>
+              </li>
+              <li className="h-full">
+                <PageLink
+                  selected={props.selectedPage === 'bridges'}
+                  large
+                  href="/bridges/tvl"
+                >
+                  Bridges
+                </PageLink>
+              </li>
+            </>
+          )}
         </ul>
-        <div className="h-full flex gap-5 items-center">
-          <ul className="hidden md:flex gap-4 items-center">
+        <div className="h-full hidden md:flex gap-5 items-center">
+          <ul className="flex gap-4 items-center">
             <SocialLinks {...props.socialLinks} />
           </ul>
           <VerticalBar />
-          <ul className="h-full hidden md:flex items-center">
+          <ul className="h-full flex items-center">
             <li className="h-full">
               <OutLink
                 className="flex items-center h-full px-2"
