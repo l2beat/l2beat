@@ -8,7 +8,7 @@ export function getChart(
   tvlApiResponse: TvlApiResponse,
 ): ChartProps {
   return {
-    endpoint: `/api/${project.display.slug}.json`,
+    tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     tokens: getTokens(project.id, tvlApiResponse),
   }
 }

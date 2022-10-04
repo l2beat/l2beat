@@ -41,7 +41,7 @@ export function getProps(
       bridgesTvlSevenDayChange,
       combinedTvl: formatUSD(combinedTvl),
       combinedTvlSevenDayChange,
-      apiEndpoint: '/api/bridges-tvl.json',
+      tvlEndpoint: '/api/bridges-tvl.json',
       tvlView: {
         items: getBridgesTvlView(
           ordering,

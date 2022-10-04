@@ -1,4 +1,5 @@
 import {
+  ActivityApiChart,
   ActivityApiResponse,
   TvlApiCharts,
   TvlApiResponse,
@@ -19,13 +20,24 @@ export function createApi(
   urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
   urlCharts.set('combined-tvl', tvlApiResponse.combined)
   for (const project of [...config.layer2s, ...config.bridges]) {
-    const projectData = tvlApiResponse.projects[project.id.toString()]
-    if (!projectData) {
-      continue
+    const projectTvlData = tvlApiResponse.projects[project.id.toString()]
+    if (projectTvlData) {
+      urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
     }
-    urlCharts.set(project.display.slug, projectData.charts)
+
+    const projectActivityData =
+      activityApiResponse.projects[project.id.toString()]
+    if (projectActivityData) {
+      urlCharts.set(
+        `${project.display.slug}-activity`,
+        getCompatibleApi(projectActivityData),
+      )
+    }
   }
-  urlCharts.set('scaling-activity', getCompatibleApi(activityApiResponse))
+  urlCharts.set(
+    'scaling-activity',
+    getCompatibleApi(activityApiResponse.combined),
+  )
 
   outputCharts(urlCharts)
 }
@@ -40,19 +52,19 @@ export function outputCharts(urlCharts: Map<string, TvlApiCharts>) {
   }
 }
 
-function getCompatibleApi(apiActivity: ActivityApiResponse): TvlApiCharts {
+function getCompatibleApi(activityApiChart: ActivityApiChart): TvlApiCharts {
   return {
     hourly: {
       types: ['timestamp', 'tps', ''],
-      data: apiActivity.combined.data.map((d) => [d[0], getTps(d[1]), 0]),
+      data: activityApiChart.data.map((d) => [d[0], getTps(d[1]), 0]),
     },
     sixHourly: {
       types: ['timestamp', 'tps', ''],
-      data: apiActivity.combined.data.map((d) => [d[0], getTps(d[1]), 0]),
+      data: activityApiChart.data.map((d) => [d[0], getTps(d[1]), 0]),
     },
     daily: {
       types: ['timestamp', 'tps', ''],
-      data: apiActivity.combined.data.map((d) => [d[0], getTps(d[1]), 0]),
+      data: activityApiChart.data.map((d) => [d[0], getTps(d[1]), 0]),
     },
   }
 }
