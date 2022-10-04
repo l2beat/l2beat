@@ -215,7 +215,7 @@ export const tokenList: TokenInfo[] = [
     symbol: 'BAL',
     decimals: 18,
     sinceTimestamp: new UnixTime(1592616779),
-    category: 'other'
+    category: 'other',
   },
   {
     id: AssetId('bnt-bancor-network-token'),
