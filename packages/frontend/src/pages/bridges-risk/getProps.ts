@@ -21,7 +21,7 @@ export function getProps(
 
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'bridges'),
       riskView: {
         items: ordering.map(
           (project): BridgesRiskViewEntry => ({
