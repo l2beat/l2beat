@@ -28,7 +28,7 @@ export class EventUpdater {
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('taskQueue'),
     )
 
