@@ -35,6 +35,7 @@ export function ActivityPage(props: ActivityPageProps) {
           title="Activity"
           tpsDaily={props.tpsDaily}
           tpsWeeklyChange={props.tpsWeeklyChange}
+          showTps
         />
         <Chart
           type={'activity'}

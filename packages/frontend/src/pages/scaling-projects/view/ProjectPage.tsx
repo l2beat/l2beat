@@ -17,6 +17,7 @@ export interface ProjectPageProps {
   navbar: NavbarProps
   header: HeaderProps
   chart: ChartProps
+  hasActivity: boolean
   projectDetails: ProjectDetailsProps
   footer: FooterProps
 }
@@ -26,7 +27,7 @@ export function ProjectPage(props: ProjectPageProps) {
     <Page navbar={props.navbar}>
       <Header {...props.header} />
       <Chart {...props.chart} />
-      <ShowProjectActivityToggle />
+      {props.hasActivity && <ShowProjectActivityToggle />}
       <ProjectDetails {...props.projectDetails} />
       <Footer {...props.footer} />
     </Page>
