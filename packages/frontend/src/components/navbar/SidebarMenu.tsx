@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
-import { OtherLinks } from './OtherLinks'
+import { OutLink } from '../OutLink'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
 
 export interface SidebarMenuProps {
@@ -40,7 +40,15 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </li>
             </ul>
           </li>
-          <OtherLinks forumLink={props.forumLink} />
+          <li>
+            <OutLink href={props.forumLink}>Forum</OutLink>
+          </li>
+          <li>
+            <a href="/donate">Donate</a>
+          </li>
+          <li>
+            <a href="/faq">FAQ</a>
+          </li>
           <li>
             <ul className="flex gap-4">
               <SocialLinks {...props.socialLinks} />
