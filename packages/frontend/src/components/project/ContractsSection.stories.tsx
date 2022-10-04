@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ContractsSection as ContractsSectionComponent } from '../../../components/project/ContractsSection'
+import { ContractsSection as ContractsSectionComponent } from './ContractsSection'
 
 export default {
   title: 'Components/Project/ContractsSection',

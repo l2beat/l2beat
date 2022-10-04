@@ -23,7 +23,7 @@ export function getProps(
 
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'scaling'),
       tvl: formatUSD(tvl),
       sevenDayChange,
       apiEndpoint: '/api/scaling-tvl.json',

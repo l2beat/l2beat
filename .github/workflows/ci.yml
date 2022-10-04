@@ -31,6 +31,7 @@ jobs:
       - run: yarn build:dependencies
       - run: yarn test
         env:
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
   lint:
