@@ -1,5 +1,5 @@
 import { Layer2, Layer2RiskView } from '@l2beat/config'
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 import {
@@ -55,7 +55,7 @@ export function ScalingRiskView({ items, className }: ScalingRiskViewProps) {
   ]
 
   return (
-    <section className={classNames('RiskView', className)}>
+    <section className={cx('RiskView', className)}>
       <TableView items={items} columns={columns} />
       <div className="RiskView-Symbols">
         <p>

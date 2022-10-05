@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 export interface PageSelectionProps {
@@ -30,7 +30,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
         {pages.map((page, i) => (
           <li
             key={i}
-            className={classNames(
+            className={cx(
               'relative w-full font-[600] h-[48px] text-sm sm:text-lg sm:h-[64px] z-0 opacity-70',
               'border-gray-300 dark:border-gray-700 border border-r-0',
               i === pages.length - 1 && 'border-r rounded-r-lg',
@@ -41,7 +41,7 @@ export function PageSelection({ pages }: PageSelectionProps) {
           >
             <a
               href={page.link}
-              className={classNames(
+              className={cx(
                 'w-full h-full flex justify-center items-center gap-4 z-10 rounded-lg',
                 page.selected && 'dark:bg-[#32102A] bg-opacity-90 bg-white',
               )}
