@@ -36,11 +36,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
       `${RpcTransactionUpdater.name}[${projectId.toString()}]`,
     )
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.blockQueue = new TaskQueue(
-      this.updateBlock.bind(this),
+      (block) => this.updateBlock(block),
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,

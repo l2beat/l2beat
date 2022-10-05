@@ -29,11 +29,11 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   ) {
     this.logger = logger.for(this)
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.blockQueue = new TaskQueue(
-      this.updateBlock.bind(this),
+      (block) => this.updateBlock(block),
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
