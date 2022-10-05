@@ -6,7 +6,11 @@ import { EthereumCell } from '../../../components/EthreumCell'
 import { NoInfoCell } from '../../../components/NoInfoCell'
 import { ProjectLink } from '../../../components/ProjectLink'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../../components/TableView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -53,9 +57,20 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
   ]
 
+  const rows: RowConfig<ActivityViewEntry> = {
+    getProps: (entry) =>
+      entry.name === 'Ethereum'
+        ? {
+            className: 'accent',
+          }
+        : {},
+  }
+
+  console
+
   return (
     <section className="mt-4">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>
   )

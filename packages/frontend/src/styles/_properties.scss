@@ -18,6 +18,9 @@
   --background-info: rgba(150, 192, 247, 0.2);
   --background-warning: rgba(203, 152, 0, 0.2);
   --background-action: #ffde2f;
+  --background-accent: rgba(186, 218, 255, 1);
+
+  --border-accent: rgba(43, 92, 217, 1);
 
   --gradient-1: rgb(126, 65, 204);
   --gradient-2: rgb(216, 61, 164);
@@ -61,6 +64,9 @@
   --text-info: #cbdff9;
 
   --background-job: #000000;
+  --background-accent: rgba(17, 41, 68, 1);
+
+  --border-accent: rgba(83, 162, 255, 1);
 }
 
 @media (max-width: 1000px) {
