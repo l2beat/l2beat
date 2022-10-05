@@ -19,9 +19,9 @@ export function ProjectLink({ project, type }: Props) {
       : `/bridges/projects/${project.slug}`
   return (
     <>
-      <a className="ProjectLink" href={href}>
+      <a className="ProjectCell--link" href={href}>
         <img
-          className="ProjectLink-Icon"
+          className="ProjectCell-Icon"
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
@@ -29,7 +29,7 @@ export function ProjectLink({ project, type }: Props) {
       </a>
       {project.provider === 'StarkEx' && (
         <span
-          className="ProjectLink-Provider Tooltip"
+          className="ProjectCell-Provider Tooltip"
           title="This project is built using StarkEx."
         >
           <StarkWareIcon />
@@ -37,7 +37,7 @@ export function ProjectLink({ project, type }: Props) {
       )}
       {project.provider === 'Optimism' && (
         <span
-          className="ProjectLink-Provider Tooltip"
+          className="ProjectCell-Provider Tooltip"
           title="This project is based on Optimism's code base."
         >
           <OptimismIcon />
@@ -45,7 +45,7 @@ export function ProjectLink({ project, type }: Props) {
       )}
       {project.provider === 'zkSync' && (
         <span
-          className="ProjectLink-Provider Tooltip"
+          className="ProjectCell-Provider Tooltip"
           title="This project is based on zkSync's code base."
         >
           <ZkSyncIcon />

@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
+import { EthereumCell } from '../../../components/EthreumCell'
 import { NoInfoCell } from '../../../components/NoInfoCell'
 import { ProjectLink } from '../../../components/ProjectLink'
 import { ScalingLegend } from '../../../components/ScalingLegend'
@@ -28,7 +29,12 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) =>
+        project.slug !== 'ethereum' ? (
+          <ProjectLink type="layer2" project={project} />
+        ) : (
+          <EthereumCell project={project} />
+        ),
     },
     {
       name: 'TPS',

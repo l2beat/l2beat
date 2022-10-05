@@ -1,5 +1,9 @@
-import { Layer2 } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
+import { Ethereum, Layer2 } from '@l2beat/config'
+import {
+  ActivityApiChart,
+  ActivityApiResponse,
+  TvlApiResponse,
+} from '@l2beat/types'
 
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
@@ -9,17 +13,20 @@ import { orderByTvl } from '../../../utils/orderByTvl'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
+  ethereum: Ethereum,
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
 ): ActivityViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
+  const items = ordering.map((x) =>
+    getActivityViewEntry(x, activityApiResponse),
+  )
+  items.push(getEthereumActivityViewEntry(ethereum, activityApiResponse))
 
   return {
-    items: ordering
-      .map((x) => getActivityViewEntry(x, activityApiResponse))
-      .sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),
+    items: items.sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),
   }
 }
 
@@ -28,9 +35,8 @@ export function getActivityViewEntry(
   activityApiResponse: ActivityApiResponse,
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
-  const tpsDaily = getTpsDaily(data)
-  const tpsWeeklyChange = getTpsWeeklyChange(data)
-  const transactionsWeeklyCount = getTransactionWeeklyCount(data)
+  const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
+    getActivityViewEntryDetails(data)
 
   return {
     name: project.display.name,
@@ -40,4 +46,29 @@ export function getActivityViewEntry(
     tpsWeeklyChange,
     transactionsWeeklyCount,
   }
+}
+
+function getEthereumActivityViewEntry(
+  ethereum: Ethereum,
+  activityApiResponse: ActivityApiResponse,
+) {
+  const data = activityApiResponse.ethereum.data
+  const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
+    getActivityViewEntryDetails(data)
+
+  return {
+    name: ethereum.name,
+    slug: ethereum.slug,
+    provider: undefined,
+    tpsDaily,
+    tpsWeeklyChange,
+    transactionsWeeklyCount,
+  }
+}
+
+function getActivityViewEntryDetails(data?: ActivityApiChart['data']) {
+  const tpsDaily = getTpsDaily(data)
+  const tpsWeeklyChange = getTpsWeeklyChange(data)
+  const transactionsWeeklyCount = getTransactionWeeklyCount(data)
+  return { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount }
 }

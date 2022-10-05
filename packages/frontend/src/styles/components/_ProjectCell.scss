@@ -1,16 +1,19 @@
-.ProjectLink {
+.ProjectCell {
   position: relative;
   padding-left: 30px;
   text-decoration: none;
   color: var(--text);
   font-weight: bold;
 
-  &:hover {
-    text-decoration: underline;
+  &--link {
+    @extend .ProjectCell;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
-.ProjectLink-Icon {
+.ProjectCell-Icon {
   position: absolute;
   top: 2px;
   left: 0;
@@ -24,7 +27,7 @@
   }
 }
 
-.ProjectLink-Provider {
+.ProjectCell-Provider {
   position: relative;
   display: inline-block;
   height: 16px;
