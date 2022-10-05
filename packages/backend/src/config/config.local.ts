@@ -44,7 +44,7 @@ export function getLocalConfig(): Config {
       arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
       optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
       ethereumAlchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-      rpcWorkQueueLimit: 200_000,
+      rpcWorkQueueLimit: 10_000,
       rpcWorkQueueWorkers: 1,
       zkSyncWorkQueueWorkers: 1,
       starkexWorkQueueWorkers: 1,
