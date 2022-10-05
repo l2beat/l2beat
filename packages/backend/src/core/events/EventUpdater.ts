@@ -16,10 +16,7 @@ import { EventDetails } from './types/EventDetails'
 
 export class EventUpdater {
   private readonly eventsToWatch: EventDetails[] = []
-  private readonly taskQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-  )
+  private readonly taskQueue: TaskQueue<void>
 
   constructor(
     private readonly ethereumClient: EthereumClient,
@@ -30,6 +27,10 @@ export class EventUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+    this.taskQueue = new TaskQueue<void>(
+      () => this.update(),
+      this.logger.for('taskQueue'),
+    )
 
     this.eventsToWatch = this.projects
       .map((project) =>

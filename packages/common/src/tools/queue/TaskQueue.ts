@@ -1,9 +1,17 @@
 import assert from 'assert'
+import { setTimeout as wait } from 'timers/promises'
 
-import { Logger } from '../Logger'
+import { getErrorMessage, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
+const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
+  maxDistance: 3_000,
+})
+
+/**
+ * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
+ */
 export class TaskQueue<T> {
   private readonly queue: Job<T>[] = []
   private busyWorkers = 0
@@ -20,7 +28,7 @@ export class TaskQueue<T> {
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts?.shouldRetry ?? Retries.always
+    this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
   }
 
   private get isEmpty() {
@@ -56,9 +64,19 @@ export class TaskQueue<T> {
     setTimeout(() => this.execute())
   }
 
+  async waitTilEmpty() {
+    while (!this.isEmpty) {
+      await wait(100)
+    }
+  }
+
   private execute() {
     this.executeUnchecked().catch((e) => {
-      this.logger.error(e)
+      // this should never happen
+      this.logger.error(
+        { message: '[CRITICAL] Error during executeUnchecked' },
+        e,
+      )
     })
   }
 
@@ -70,10 +88,18 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job)
     if (!result.retry) {
+      this.logger.error({
+        message: 'No more retries',
+        job: JSON.stringify(job),
+      })
       return
     }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
     this.queue.unshift(job)
+    this.logger.info({
+      message: 'Scheduled retry',
+      job: JSON.stringify(job),
+    })
   }
 
   private earliestScheduledExecution() {
@@ -93,9 +119,13 @@ export class TaskQueue<T> {
     this.busyWorkers++
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
+      this.logger.debug('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
     } catch (error) {
-      this.logger.error(error)
+      this.logger.warn('Error during task execution', {
+        job: JSON.stringify(job),
+        error: getErrorMessage(error),
+      })
       this.handleFailure(job)
     } finally {
       this.busyWorkers--

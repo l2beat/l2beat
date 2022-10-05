@@ -119,4 +119,25 @@ describe(TaskQueue.name, () => {
       expect(completed).toEqual([1, 1, 3, 2, 5])
     })
   })
+
+  it('can wait until it is empty', async () => {
+    const completed: number[] = []
+
+    async function execute(value: number) {
+      await setTimeout(value * 10)
+      completed.push(value)
+    }
+
+    const queue = new TaskQueue(execute, Logger.SILENT, { workers: 3 })
+
+    queue.addToBack(1)
+    queue.addToBack(3)
+    queue.addToBack(5)
+    queue.addToBack(1)
+    queue.addToBack(2)
+
+    await queue.waitTilEmpty()
+
+    expect(queue.length).toEqual(0)
+  })
 })

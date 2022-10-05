@@ -24,7 +24,9 @@ export interface Config {
   projects: Project[]
   syncEnabled: boolean
   freshStart: boolean
-  eventsSyncEnabled: boolean
+
+  eventsSync: boolean
+  tvlReportSync: boolean
   transactionCountSync:
     | {
         starkexApiUrl: string
@@ -32,6 +34,17 @@ export interface Config {
         arbitrumAlchemyApiKey: string
         optimismAlchemyApiKey: string
         ethereumAlchemyApiKey: string
+        rpcWorkQueueLimit: number
+        rpcWorkQueueWorkers: number
+        zkSyncWorkQueueWorkers: number
+        starkexWorkQueueWorkers: number
+        loopringWorkQueueWorkers: number
+        loopringCallsPerMinute: number
       }
     | false
 }
+
+export type TransactionCountSyncConfig = Exclude<
+  Config['transactionCountSync'],
+  false
+>
