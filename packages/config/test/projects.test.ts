@@ -162,7 +162,7 @@ describe('projects', () => {
             )
           } else if (link.includes('t.me')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/t\.me\/\w+$/),
+              expect.stringMatching(/^https:\/\/t\.me\/(joinchat\/)?\w+$/),
             )
           } else if (link.includes('medium')) {
             expect(link).toEqual(
