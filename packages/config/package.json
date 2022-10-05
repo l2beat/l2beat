@@ -13,7 +13,7 @@
     "lint": "eslint --ext .ts --max-warnings 0 src test",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "update-multichain": "node -r esbuild-register scripts/multichain/updateMultichain.ts"
+    "update-multichain": "node -r esbuild-register scripts/multichain"
   },
   "dependencies": {
     "@l2beat/types": "*"

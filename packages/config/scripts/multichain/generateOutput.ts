@@ -100,11 +100,13 @@ export function generateOutput(config: MultichainConfig) {
   // return { groupedEscrows }
 
   return {
-    escrows: groupedEscrows.map((x) => ({
-      type: x.type,
-      address: x.address,
-      tokens: x.tokens.map((t) => t.address).sort(),
-    })).sort((a, b) => a.address.localeCompare(b.address.toString())),
+    escrows: groupedEscrows
+      .map((x) => ({
+        type: x.type,
+        address: x.address,
+        tokens: x.tokens.map((t) => t.address).sort(),
+      }))
+      .sort((a, b) => a.address.localeCompare(b.address.toString())),
   }
 }
 
