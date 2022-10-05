@@ -12,10 +12,13 @@ export function generateOutput(config: MultichainConfig) {
   const escrows = []
   const ETHEREUM = '1'
 
+  const routeTypes = new Set<string>()
+
   for (const [source, tokens] of Object.entries(config)) {
     for (const token of Object.values(tokens)) {
       for (const [destination, routes] of Object.entries(token.destChains)) {
         for (const route of Object.values(routes)) {
+          routeTypes.add(route.type)
           if (
             (source === ETHEREUM && route.type === 'swapin') ||
             (destination === ETHEREUM && route.type === 'swapout')
@@ -42,20 +45,20 @@ export function generateOutput(config: MultichainConfig) {
           }
 
           if (
-            destination === ETHEREUM &&
-            route.type === 'NATIVE' &&
-            route.anytoken &&
-            route.underlying
+            source === ETHEREUM &&
+            ['STABLEV3', 'NATIVE', 'NON_EVM', 'UNDERLYINGV2'].includes(
+              route.type,
+            )
           ) {
             escrows.push({
               chainId: source !== ETHEREUM ? source : destination,
               type: 'any',
               token: {
-                address: addressOrEth(route.underlying.address),
-                name: route.underlying.name ?? '?',
-                symbol: route.underlying.symbol ?? '?',
+                address: addressOrEth(token.address),
+                name: token.name ?? '?',
+                symbol: token.symbol ?? '?',
               },
-              address: EthereumAddress(route.anytoken.address),
+              address: EthereumAddress(route.fromanytoken.address),
             })
           }
         }
@@ -63,8 +66,11 @@ export function generateOutput(config: MultichainConfig) {
     }
   }
 
+  const tokens = new Set<EthereumAddress | 'ETH'>()
+
   const groupedEscrows: GroupedEscrow[] = []
   for (const escrow of escrows) {
+    tokens.add(escrow.token.address)
     const existing = groupedEscrows.find((x) => x.address === escrow.address)
     if (existing) {
       if (!existing.chainIds.includes(escrow.chainId)) {
@@ -83,7 +89,23 @@ export function generateOutput(config: MultichainConfig) {
     }
   }
 
-  return { escrows: groupedEscrows }
+  console.log({
+    routeTypes: [...routeTypes],
+    basicEscrows: groupedEscrows.filter((x) => x.type === 'basic').length,
+    anyEscrows: groupedEscrows.filter((x) => x.type === 'any').length,
+    lockedTokens: tokens.size,
+  })
+
+  // uncomment to debug
+  // return { groupedEscrows }
+
+  return {
+    escrows: groupedEscrows.map((x) => ({
+      type: x.type,
+      address: x.address,
+      tokens: x.tokens.map((t) => t.address).sort(),
+    })).sort((a, b) => a.address.localeCompare(b.address.toString())),
+  }
 }
 
 function addressOrEth(address: string): EthereumAddress | 'ETH' {
