@@ -1,8 +1,7 @@
 import { writeFile } from 'fs/promises'
-import fetch from 'node-fetch'
 import { tokenList } from '@l2beat/config'
-import { MultichainApiResponse } from './MultichainApiResponse'
 import { chainIdNames } from './chainIdNames'
+import { fetchMultichainConfig } from './fetchMultichainConfig'
 
 /*
 
@@ -25,14 +24,15 @@ Goal: list all any* on Ethereum with underlying
 
 main()
 async function main() {
-  const res = await fetch('https://bridgeapi.anyswap.exchange/v4/tokenlistv4/1')
-  const json: MultichainApiResponse = await res.json()
+  const config = await fetchMultichainConfig()
 
   const escrows = []
   const chainIds = new Set<string>()
   const specTypes = new Set<string>()
 
-  for (const [key, token] of Object.entries(json)) {
+  const ethereumConfig = config['1']
+
+  for (const [key, token] of Object.entries(ethereumConfig)) {
     for (const [id, chain] of Object.entries(token.destChains)) {
       chainIds.add(id)
       for (const [hash, spec] of Object.entries(chain)) {

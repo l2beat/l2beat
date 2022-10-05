@@ -1,6 +1,250 @@
 {
   "escrows": [
     {
+      "address": "0xf778F4D7a14A8CB73d5261f9C61970ef4E7D7842",
+      "chainId": "250",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "SpookyToken",
+          "address": "0x55af5865807b196bd0197e0902746f31fbccfa58"
+        },
+        {
+          "unknown": true,
+          "name": "JustYours",
+          "address": "0x3053ad3b31600074e9a90440770f78d5e8fc5a54"
+        },
+        {
+          "unknown": true,
+          "name": "Metti Inu",
+          "address": "0x84b67e43474a403cde9aa181b02ba07399a54573"
+        },
+        {
+          "unknown": true,
+          "name": "SpiritSwapToken",
+          "address": "0x6ccf12b480a99c54b23647c995f4525d544a7e72"
+        }
+      ]
+    },
+    {
+      "address": "0xE3e0C14bbCBF86b3Ff60E8666C070d34b84F3f73",
+      "chainId": "250",
+      "tokens": [
+        "FTM"
+      ]
+    },
+    {
+      "address": "Ld184nvim5wvH2cNw9tuJdH2VvL3Kx5wBh",
+      "chainId": "LTC",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "ANYLitecoin",
+          "address": "0x0abcfbfa8e3fda8b7fba18721caf7d5cf55cf5f5"
+        }
+      ]
+    },
+    {
+      "address": "BoXzhY6SQ2Zorj8ha8RamvRiKK16q6PRW3",
+      "chainId": "BLOCK",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "ANYBlocknet",
+          "address": "0xe692c8d72bd4ac7764090d54842a305546dd1de5"
+        }
+      ]
+    },
+    {
+      "address": "1918DgsaJCsRF5E5rTp2AsE5XyFTF95tTQ",
+      "chainId": "BTC",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "ANYBitcoin",
+          "address": "0x51600b0cff6bbf79e7767158c41fd15e968ec404"
+        }
+      ]
+    },
+    {
+      "address": "0x4464FC279180045b1F57beACFa0D82e9Cd4235Cd",
+      "chainId": "32659",
+      "tokens": [
+        "ANY",
+        {
+          "unknown": true,
+          "name": "Fusion",
+          "address": "0x979aca85ba37c675e78322ed5d97fa980b9bdf00"
+        }
+      ]
+    },
+    {
+      "address": "0xB16E3336699A636DD6C8246A3a12b813bFa0A3AD",
+      "chainId": "56",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "Manga token",
+          "address": "0x2cf51e73c3516f3d86e9c0b4de0971dbf0766fd4"
+        },
+        {
+          "unknown": true,
+          "name": "CollectorCoin",
+          "address": "0x667fd83e24ca1d935d36717d305d54fa0cac991c"
+        },
+        {
+          "unknown": true,
+          "name": "Travala.comToken",
+          "address": "0x442B153F6F61C0c99A33Aa4170DCb31e1ABDa1D0"
+        },
+        {
+          "unknown": true,
+          "name": "BatTrueDollar",
+          "address": "0xfbdd194376de19a88118e84e279b977f165d01b8"
+        },
+        {
+          "unknown": true,
+          "name": "Coin of the champions",
+          "address": "0xc4bb7277a74678f053259cb1f96140347efbfd46"
+        },
+        {
+          "unknown": true,
+          "name": "FaraCrystal",
+          "address": "0xaef9e3e050d0ef060cdfd5246209b0b6bb66060f"
+        },
+        {
+          "unknown": true,
+          "name": "FevrToken",
+          "address": "0x9fb83c0635de2e815fd1c21b3a292277540c2e8d"
+        },
+        {
+          "unknown": true,
+          "name": "ImpossibleFinance",
+          "address": "0xb0e1fc65c1a741b4662b813eb787d369b8614af1"
+        },
+        {
+          "unknown": true,
+          "name": "Investintoken",
+          "address": "0xd22a58f79e9481d1a88e00c343885a588b34b68b"
+        },
+        {
+          "unknown": true,
+          "name": "Kampay",
+          "address": "0x3907e6ff436e2b2b05d6b929fb05f14c0ee18d90"
+        },
+        {
+          "unknown": true,
+          "name": "Loud Market",
+          "address": "0x3129662808bec728a27ab6a6b9afd3cbaca8a43c"
+        },
+        {
+          "unknown": true,
+          "name": "MANUFACTORY",
+          "address": "0x39fc9e94caeacb435842fadedecb783589f50f5f"
+        },
+        {
+          "unknown": true,
+          "name": "Pirate Coin",
+          "address": "0x5f006745a9a192a7cd1236089f704f9b35d3b9cd"
+        },
+        {
+          "unknown": true,
+          "name": "Risq Protocol",
+          "address": "0xaac2bb703093eca3ce9b97434fd16f2765951c0e"
+        },
+        {
+          "unknown": true,
+          "name": "SeedifyFund",
+          "address": "0x461d52769884ca6235b685ef2040f47d30c94eb5"
+        },
+        {
+          "unknown": true,
+          "name": "Shar Pei",
+          "address": "0xcb9f441ffae898e7a2f32143fd79ac899517a9dc"
+        },
+        {
+          "unknown": true,
+          "name": "BSCstarter",
+          "address": "0x1d7ca62f6af49ec66f6680b8606e634e55ef22c1"
+        },
+        {
+          "unknown": true,
+          "name": "Wakanda Inu Token",
+          "address": "0x5444c30210d8a0a156178cfb8048b4137c0d40d1"
+        },
+        {
+          "unknown": true,
+          "name": "WOWswap",
+          "address": "0x3405a1bd46b85c5c029483fbecf2f3e611026e45"
+        },
+        {
+          "unknown": true,
+          "name": "JumpToken",
+          "address": "0x420a24c9c65bd44c48bfb1cc8d6cd1ea8b1ac840"
+        }
+      ]
+    },
+    {
+      "address": "DNBysEzKALzp4oJWiX9ucqhEGCKDMF3RVF",
+      "chainId": "COLX",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "ColossusXT",
+          "address": "0x95bf7e307bc1ab0ba38ae10fc27084bc36fcd605"
+        }
+      ]
+    },
+    {
+      "address": "0xeA2368b69d09cEf7C8b1817A930b8e2185253F53",
+      "chainId": "137",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "PolyGajToken",
+          "address": "0x9fda7ceec4c18008096c2fe2b85f05dc300f94d0"
+        },
+        {
+          "unknown": true,
+          "name": "NASDEXToken",
+          "address": "0xe069af87450fb51fc0d0e044617f1c134163e591"
+        }
+      ]
+    },
+    {
+      "address": "0x5Daa0020441e3546652937C110425DCA61dE9a56",
+      "chainId": "42161",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "MAGICToken",
+          "address": "0xa384bc7cdc0a93e686da9e7b8c0807cd040f4e0b"
+        }
+      ]
+    },
+    {
+      "address": "0xA1066443Ae78D4a1Cf61d62f15B6A03bEE864982",
+      "chainId": "1285",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "PETSToken",
+          "address": "0x6afcff9189e8ed3fcc1cffa184feb1276f6a82a5"
+        }
+      ]
+    },
+    {
+      "address": "0x5A6C228e85172dfA9d4844a01CE453a3549c2C0a",
+      "chainId": "336",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "Shiden",
+          "address": "0x00e856ee945a49bb73436e719d96910cd9d116a4"
+        }
+      ]
+    },
+    {
       "address": "0x13B432914A996b0A48695dF9B2d701edA45FF264",
       "chainId": "56",
       "tokens": [
@@ -67,22 +311,46 @@
     {
       "address": "0x353B98DDc927173005dD8B293B043Bd950cDA468",
       "chainId": "30",
-      "tokens": ["DAI", "WETH", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0x8cC49FE67A4bD7a15674c4ffD4E969D94304BBbf",
       "chainId": "57",
-      "tokens": ["DAI", "WETH", "USDT", "TUSD", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "TUSD",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0x7F923dB3d90047D75D078e29b1f8Eac03e30F761",
       "chainId": "61",
-      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0xCDd83050f045ab31B884f0Dc49581BC7b3e0B84C",
       "chainId": "106",
-      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
@@ -556,7 +824,16 @@
     {
       "address": "0xEC4486a90371c9b66f499Ff3936F29f0D5AF8b7E",
       "chainId": "1284",
-      "tokens": ["DAI", "WETH", "USDT", "AAVE", "CRV", "SUSHI", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "AAVE",
+        "CRV",
+        "SUSHI",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0x10c6b61DbF44a083Aec3780aCF769C77BE747E23",
@@ -632,7 +909,15 @@
     {
       "address": "0x55F089d5f6aeDfdACBD5E3aCB0e8F31FBAb44088",
       "chainId": "2000",
-      "tokens": ["DAI", "WETH", "USDT", "FRAX", "FXS", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "FRAX",
+        "FXS",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0xbd40733A2F223fF32195a759a81df25E35DD4dEA",
@@ -669,22 +954,43 @@
     {
       "address": "0xF62385C78f3BDBff33145703546b0377853AAa77",
       "chainId": "9001",
-      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0xE4cf417081A0Ab3f964b44D904BC2b534351A9a7",
       "chainId": "42262",
-      "tokens": ["DAI", "WETH", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0x896be9f48b225154593A84b382d927F9d7Bc2361",
       "chainId": "47805",
-      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "USDC",
+        "WBTC"
+      ]
     },
     {
       "address": "0x57ed6BD35a6CE815079855CD0b21331d1D5D0A0e",
       "chainId": "40",
-      "tokens": ["WETH", "SUSHI", "WBTC"]
+      "tokens": [
+        "WETH",
+        "SUSHI",
+        "WBTC"
+      ]
     },
     {
       "address": "0x87bCB3038988ca2A89605fFa8f237FB78Df1c3Ae",
@@ -2192,12 +2498,17 @@
     {
       "address": "0x65e64963b755043CA4FFC88029FfB8305615EeDD",
       "chainId": "250",
-      "tokens": ["LINK", "YFI"]
+      "tokens": [
+        "LINK",
+        "YFI"
+      ]
     },
     {
       "address": "0xA024856a51B1D8bFBbc78DDbc98e6d5b94dc24c4",
       "chainId": "256256",
-      "tokens": ["USDT"]
+      "tokens": [
+        "USDT"
+      ]
     },
     {
       "address": "0x668b9734FfE9eE8a01d4Ade3362De71E8989EA87",
@@ -2803,7 +3114,9 @@
     {
       "address": "0x3696f44F2B7FE51486f81D2639Ff895202614711",
       "chainId": "42220",
-      "tokens": ["CRV"]
+      "tokens": [
+        "CRV"
+      ]
     }
   ],
   "chainIds": [
