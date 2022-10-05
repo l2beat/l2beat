@@ -9,16 +9,20 @@ import { LoopringResponse } from './schemas'
 
 type Block = number | 'finalized'
 
+interface LoopringClientOpts {
+  callsPerMinute?: number
+}
+
 export class LoopringClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
-    callsPerMinute?: number,
+    opts?: LoopringClientOpts,
   ) {
     this.logger = logger.for(this)
-    if (callsPerMinute) {
+    if (opts?.callsPerMinute) {
       const rateLimiter = new RateLimiter({
-        callsPerMinute,
+        callsPerMinute: opts.callsPerMinute,
       })
       this.call = rateLimiter.wrap(this.call.bind(this))
     }
