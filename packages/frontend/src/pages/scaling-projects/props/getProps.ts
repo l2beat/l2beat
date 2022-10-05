@@ -19,7 +19,7 @@ export function getProps(
   const chart = getChart(project, tvlApiResponse)
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
       chart,
       showActivityToggle: config.features.activity && !!activityApiResponse,

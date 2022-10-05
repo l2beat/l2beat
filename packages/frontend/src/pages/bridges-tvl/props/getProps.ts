@@ -36,7 +36,7 @@ export function getProps(
 
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'bridges'),
       bridgesTvl: formatUSD(bridgesTvl),
       bridgesTvlSevenDayChange,
       combinedTvl: formatUSD(combinedTvl),

@@ -116,7 +116,10 @@ describe('tokens', () => {
     this.timeout(10000)
 
     const http = new HttpClient()
-    const coingeckoClient = new CoingeckoClient(http, undefined)
+    const coingeckoClient = new CoingeckoClient(
+      http,
+      process.env.COINGECKO_API_KEY,
+    )
 
     const coinsList = await coingeckoClient.getCoinList({
       includePlatform: true,
