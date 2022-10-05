@@ -73,7 +73,7 @@ export const ronin: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'Validators of the Ronin Bridge watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Ronin (Axie Infinity) chain. To withdraw tokens, users need to lock them on Ronin chain and wait for validators to generate signature, which can be submitted to the Ethereum bridge contract to finalize the withdrawal.',
+        'A Ronin Bridge service watches for events on Ethereum and transmit those events to a contract on Ronin chain (Axie Infinity chain). Designated group of validators votes on the validity of those events, and when acknowledged, a representation token is minted on Ronin chain. To withdraw tokens, user needs to deposit them to a contract on Ronin chain, which will generate an event that will be picked by the validators. When validators acknowledge the event, they generate signature, which can be submitted to the Ethereum bridge contract to finalize the withdrawal. Ronin V2 introduced multi-tier withdrawal limits dependent on the overall value of the transaction and the token used. The higher value of transaction, the more validators need to vote to unlock withdrawal request. There is a separate group of actors called "governors" who are able to upgrade contracts, change thresholds and add/remove validators. Each validator has a corresponding governor account. There is also a daily withdrawal limit. If it\'s crossed, an address from a list of "Withdrawal unlockers" needs to participate in the transaction.',
       references: [
         {
           text: 'Token transfer flows',
@@ -130,9 +130,19 @@ export const ronin: Bridge = {
         },
       },
       {
+        address: '0x9EcbB8dBfF5D32643fe308B399ceF26d384875BA',
+        name: 'RoninValidator',
+        description: 'Upgradeable Ronin Validator contract.',
+        upgradeability: {
+          type: 'EIP1967',
+          admin: '0x661E14A43173191d65951fbf7285749F416cbC8C',
+          implementation: '0xd5c2FB313f9536558C2f3bd6cf698E6295b3C3B1',
+        },
+      },
+      {
         address: '0x661E14A43173191d65951fbf7285749F416cbC8C',
         name: 'GovernanceAdmin',
-        description: 'Admin of Bridge V2 Upgradeable Proxy.',
+        description: 'Admin of Bridge and Validator Upgradeable Proxies.',
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -145,9 +155,9 @@ export const ronin: Bridge = {
           type: 'MultiSig',
         },
       ],
-      name: 'Bridge and Governance Admin 2/3 MultiSig',
+      name: 'GovernanceAdmin admin role 2/3 MultiSig',
       description:
-        'Can propose upgrades to Bridge contract and update Ronin Bridge governance parameters.',
+        'Can propose upgrades to Bridge and RoninValidator contracts and invoke admin functions.',
     },
     {
       accounts: [
@@ -155,8 +165,19 @@ export const ronin: Bridge = {
         { address: '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0', type: 'EOA' },
         { address: '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192', type: 'EOA' },
       ],
-      name: 'MultiSig Participants',
-      description: 'Participants of the 2/3 MultiSig.',
+      name: 'GovernanceAdmin MultiSig Participants',
+      description: 'Participants of the GovernanceAdmin 2/3 MultiSig.',
+    },
+    {
+      accounts: [
+        { address: '0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4', type: 'EOA' },
+        { address: '0xE5EB222996967BE79468C28bA39D665fd96E8b30', type: 'EOA' },
+        { address: '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0', type: 'EOA' },
+        { address: '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192', type: 'EOA' },
+      ],
+      name: 'Withdrawal Unlockers',
+      description:
+        'Addresses able to unlock withdrawals that pass tier limits.',
     },
   ],
 }
