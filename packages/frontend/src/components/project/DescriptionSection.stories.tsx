@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DescriptionSection as DescriptionSectionComponent } from '../../../components/project/DescriptionSection'
+import { DescriptionSection as DescriptionSectionComponent } from './DescriptionSection'
 
 export default {
   title: 'Components/Project/DescriptionSection',

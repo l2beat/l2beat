@@ -11,7 +11,7 @@ export async function getProps(
   const address = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'donate'),
       title: 'Donate',
       details: {
         ethereumAddress: address,

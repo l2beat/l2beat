@@ -31,6 +31,7 @@ export type ProjectUpgradeability =
   | NutBerryUpgradeability
   | ReferenceUpgradeability
   | ArbitrumProxy
+  | BeaconUpgradeability
 
 export interface CustomUpgradeability {
   type: 'Custom'
@@ -96,4 +97,14 @@ export interface ArbitrumProxy {
   adminImplementation: string
   /** Address of the user logic (secondary) implementation */
   userImplementation: string
+}
+
+export interface BeaconUpgradeability {
+  type: 'Beacon'
+  /** Address of the beacon contract */
+  beacon: string
+  /** Address of the admin of the beacon contract */
+  beaconAdmin: string
+  /** Address of the implementation */
+  implementation: string
 }

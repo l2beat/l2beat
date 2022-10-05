@@ -12,7 +12,7 @@ import { renderHeading } from './renderHeading'
 export function getProps(config: Config): Wrapped<FaqPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
       content: getHtml(),
       footer: getFooterProps(config),
