@@ -2,6 +2,7 @@ import { writeFile } from 'fs/promises'
 import fetch from 'node-fetch'
 import { tokenList } from '@l2beat/config'
 import { MultichainApiResponse } from './MultichainApiResponse'
+import { chainIdNames } from './chainIdNames'
 
 main()
 async function main() {
@@ -9,11 +10,13 @@ async function main() {
   const json: MultichainApiResponse = await res.json()
 
   const escrows = []
+  const chainIds = new Set<string>()
 
   for (const [key, token] of Object.entries(json)) {
     for (const [id, chain] of Object.entries(token.destChains)) {
+      chainIds.add(id)
       for (const [hash, spec] of Object.entries(chain)) {
-        if (spec.type === 'swapin') {
+        if (spec.type === 'swapin' || spec.type === 'swapout') {
           escrows.push({
             tokenName: token.name,
             tokenSymbol: token.symbol,
@@ -59,5 +62,17 @@ async function main() {
     }),
   )
 
-  writeFile('escrows.json', JSON.stringify(groupedEscrows, null, 2))
+  const namedChainIds = [...chainIds].map((id) => ({
+    chainId: id,
+    name: chainIdNames.get(id) ?? null,
+  }))
+
+  const configFile = {
+    escrows: groupedEscrows,
+    chainIds: namedChainIds,
+  }
+
+  console.log('Total chains', namedChainIds.length)
+
+  writeFile('src/bridges/multichain.json', JSON.stringify(configFile, null, 2))
 }

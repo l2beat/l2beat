@@ -1,0 +1,3039 @@
+{
+  "escrows": [
+    {
+      "address": "0x13B432914A996b0A48695dF9B2d701edA45FF264",
+      "chainId": "56",
+      "tokens": [
+        "COMP",
+        "OMG",
+        "UNI",
+        {
+          "unknown": true,
+          "name": "Mettalex",
+          "address": "0x2e1e15c44ffe4df6a0cb7371cd00d5028e571d14"
+        },
+        "SUPER",
+        {
+          "unknown": true,
+          "name": "TRVL",
+          "address": "0xd47bdf574b4f76210ed503e0efe81b58aa061f3d"
+        },
+        {
+          "unknown": true,
+          "name": "Sleep Future",
+          "address": "0x80cd73badb406ea36b9a7cdeb8df06aefa7e12d9"
+        }
+      ]
+    },
+    {
+      "address": "0x46290B0c3A234E3d538050d8F34421797532A827",
+      "chainId": "32659",
+      "tokens": [
+        "COMP",
+        "DAI",
+        {
+          "unknown": true,
+          "name": "Enecuum",
+          "address": "0x16ea01acb4b0bca2000ee5473348b6937ee6f72f"
+        },
+        "WETH",
+        {
+          "unknown": true,
+          "name": "Hegic",
+          "address": "0x584bc13c7d411c00c01a62e8019472de68768430"
+        },
+        {
+          "unknown": true,
+          "name": "ShabuShabu",
+          "address": "0xcb4e8cafeda995da5cedfda5205bd5664a12b848"
+        },
+        "LINK",
+        "OMG",
+        {
+          "unknown": true,
+          "name": "RealioNetwork",
+          "address": "0xf21661d0d1d76d3ecb8e1b9f1c923dbfffae4097"
+        },
+        "UNI",
+        "USDT",
+        "YFI",
+        {
+          "unknown": true,
+          "name": "zLOT",
+          "address": "0xa8e7ad77c60ee6f30bac54e2e7c0617bd7b5a03e"
+        }
+      ]
+    },
+    {
+      "address": "0x353B98DDc927173005dD8B293B043Bd950cDA468",
+      "chainId": "30",
+      "tokens": ["DAI", "WETH", "USDC", "WBTC"]
+    },
+    {
+      "address": "0x8cC49FE67A4bD7a15674c4ffD4E969D94304BBbf",
+      "chainId": "57",
+      "tokens": ["DAI", "WETH", "USDT", "TUSD", "USDC", "WBTC"]
+    },
+    {
+      "address": "0x7F923dB3d90047D75D078e29b1f8Eac03e30F761",
+      "chainId": "61",
+      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+    },
+    {
+      "address": "0xCDd83050f045ab31B884f0Dc49581BC7b3e0B84C",
+      "chainId": "106",
+      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+    },
+    {
+      "address": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
+      "chainId": "250",
+      "tokens": [
+        "DAI",
+        {
+          "unknown": true,
+          "name": "Hegic",
+          "address": "0x584bc13c7d411c00c01a62e8019472de68768430"
+        },
+        "LINK",
+        "USDT",
+        "YFI",
+        {
+          "unknown": true,
+          "name": "zLOT",
+          "address": "0xa8e7ad77c60ee6f30bac54e2e7c0617bd7b5a03e"
+        },
+        {
+          "unknown": true,
+          "name": "Badger",
+          "address": "0x3472a5a71965499acd81997a54bba8d852c6e53d"
+        },
+        {
+          "unknown": true,
+          "name": "Badger Sett Badger",
+          "address": "0x19d97d8fa813ee2f51ad4b4e04ea08baf4dffc28"
+        },
+        "BFC",
+        "FRAX",
+        "FXS",
+        {
+          "unknown": true,
+          "name": "InverseDAO",
+          "address": "0x41d5d79431a913c4ae7d69a668ecdfe5ff9dfb68"
+        },
+        {
+          "unknown": true,
+          "name": "Cryptokek.com",
+          "address": "0x3fa400483487a489ec9b1db29c4129063eec4654"
+        },
+        {
+          "unknown": true,
+          "name": "Spice",
+          "address": "0xb753428af26e81097e7fd17f40c88aaa3e04902c"
+        },
+        {
+          "unknown": true,
+          "name": "YELToken",
+          "address": "0x7815bda662050d84718b988735218cffd32f75ea"
+        },
+        {
+          "unknown": true,
+          "name": "PieDAO Balanced Crypto Pie",
+          "address": "0xe4f726adc8e89c6a6017f01eada77865db22da14"
+        },
+        {
+          "unknown": true,
+          "name": "BiFi",
+          "address": "0x2791bfd60d232150bff86b39b7146c0eaaa2ba81"
+        },
+        {
+          "unknown": true,
+          "name": "CyberFi",
+          "address": "0x63b4f3e3fa4e438698ce330e365e831f7ccd1ef4"
+        },
+        {
+          "unknown": true,
+          "name": "CocktailBar",
+          "address": "0x22b6c31c2beb8f2d0d5373146eed41ab9ede3caf"
+        },
+        {
+          "unknown": true,
+          "name": "DEAPCOIN",
+          "address": "0x1a3496c18d558bd9c6c8f609e1b129f67ab08163"
+        },
+        {
+          "unknown": true,
+          "name": "UnitProtocol",
+          "address": "0x92e187a03b6cd19cb6af293ba17f2745fd2357d5"
+        },
+        {
+          "unknown": true,
+          "name": "FoundryLogisticsToken",
+          "address": "0x6c972b70c533e2e045f333ee28b9ffb8d717be69"
+        },
+        {
+          "unknown": true,
+          "name": "Levolution.io Token",
+          "address": "0x09970aec766b6f3223aca9111555e99dc50ff13a"
+        },
+        {
+          "unknown": true,
+          "name": "Metric.exchange",
+          "address": "0xefc1c73a3d8728dc4cf2a18ac5705fe93e5914ac"
+        },
+        {
+          "unknown": true,
+          "name": "MMToken",
+          "address": "0xa283aa7cfbb27ef0cfbcb2493dd9f4330e0fd304"
+        },
+        {
+          "unknown": true,
+          "name": "Modefi",
+          "address": "0xea1ea0972fa092dd463f2968f9bb51cc4c981d71"
+        },
+        {
+          "unknown": true,
+          "name": "Nord",
+          "address": "0x6e9730ecffbed43fd876a264c982e254ef05a0de"
+        },
+        {
+          "unknown": true,
+          "name": "Popcorn",
+          "address": "0xd0cd466b34a24fcb2f87676278af2005ca8a78c4"
+        },
+        {
+          "unknown": true,
+          "name": "Plasma",
+          "address": "0x054d64b73d3d8a21af3d764efd76bcaa774f3bb2"
+        },
+        {
+          "unknown": true,
+          "name": "SheeshaFinance",
+          "address": "0x232fb065d9d24c34708eedbf03724f2e95abe768"
+        },
+        {
+          "unknown": true,
+          "name": "StoneToken",
+          "address": "0xe63d6b308bce0f6193aec6b7e6eba005f41e36ab"
+        },
+        {
+          "unknown": true,
+          "name": "VideoCoin",
+          "address": "0x2c9023bbc572ff8dc1228c7858a280046ea8c9e5"
+        },
+        {
+          "unknown": true,
+          "name": "Woofy",
+          "address": "0xd0660cd418a64a1d44e9214ad8e459324d8157f1"
+        },
+        {
+          "unknown": true,
+          "name": "ANGLE",
+          "address": "0x31429d1856ad1377a8a0079410b297e1a9e214c2"
+        },
+        {
+          "unknown": true,
+          "name": "DSLA",
+          "address": "0x3affcca64c2a6f4e3b6bd9c64cd2c969efd1ecbe"
+        },
+        {
+          "unknown": true,
+          "name": "Font",
+          "address": "0x4c25bdf026ea05f32713f00f73ca55857fbf6342"
+        },
+        {
+          "unknown": true,
+          "name": "IceToken",
+          "address": "0xf16e81dce15b08f326220742020379b855b87df9"
+        },
+        {
+          "unknown": true,
+          "name": "Launchpooltoken",
+          "address": "0x6149c26cd2f7b5ccdb32029af817123f6e37df5b"
+        },
+        {
+          "unknown": true,
+          "name": "Million",
+          "address": "0x6b4c7a5e3f0b99fcd83e9c089bddd6c7fce5c611"
+        },
+        {
+          "unknown": true,
+          "name": "Pepemon",
+          "address": "0x4d2ee5dae46c86da2ff521f7657dad98834f97b8"
+        },
+        {
+          "unknown": true,
+          "name": "Pepedex",
+          "address": "0xf1f508c7c9f0d1b15a76fba564eef2d956220cf7"
+        },
+        {
+          "unknown": true,
+          "name": "Statera",
+          "address": "0xa7de087329bfcda5639247f96140f9dabe3deed1"
+        },
+        {
+          "unknown": true,
+          "name": "UNIONProtocolGovernanceToken",
+          "address": "0x226f7b842e0f0120b7e194d05432b3fd14773a9d"
+        },
+        {
+          "unknown": true,
+          "name": "VesperToken",
+          "address": "0x1b40183efb4dd766f11bda7a7c3ad8982e998421"
+        },
+        {
+          "unknown": true,
+          "name": "Zeedex",
+          "address": "0x5150956e082c748ca837a5dfa0a7c10ca4697f9c"
+        },
+        {
+          "unknown": true,
+          "name": "KittenFinance",
+          "address": "0x177ba0cac51bfc7ea24bad39d81dcefd59d74faa"
+        },
+        {
+          "unknown": true,
+          "name": "0xMonero",
+          "address": "0x035df12e0f3ac6671126525f1015e47d79dfeddf"
+        },
+        "AAVE",
+        {
+          "unknown": true,
+          "name": "AtariToken",
+          "address": "0xdacd69347de42babfaecd09dc88958378780fb62"
+        },
+        "BAL",
+        "BAND",
+        {
+          "unknown": true,
+          "name": "Bishu Finance",
+          "address": "0xd49374d1d6d2b2d793035a0116f2b0d19230de26"
+        },
+        "CEL",
+        {
+          "unknown": true,
+          "name": "CRE8R DAO ",
+          "address": "0xaa61d5dec73971cd4a026ef2820bb87b4a4ed8d6"
+        },
+        {
+          "unknown": true,
+          "name": "Cream",
+          "address": "0x2ba592f78db6436527729929aaf6c908497cb200"
+        },
+        "CRV",
+        {
+          "unknown": true,
+          "name": "DFYNToken",
+          "address": "0x9695e0114e12c0d3a3636fab5a18e6b737529023"
+        },
+        {
+          "unknown": true,
+          "name": "DolaUSDStablecoin",
+          "address": "0x865377367054516e17014ccded1e7d814edc9ce4"
+        },
+        {
+          "unknown": true,
+          "name": "EQUOSOrigin",
+          "address": "0x46e9fe43470fafd690100c86037f9e566e24d480"
+        },
+        {
+          "unknown": true,
+          "name": "Flex Ungovernance Token",
+          "address": "0x6243d8cea23066d098a15582d81a598b4e8391f4"
+        },
+        "GUSD",
+        {
+          "unknown": true,
+          "name": "JPY Coin",
+          "address": "0x2370f9d504c7a6e775bf6e14b3f12846b594cd53"
+        },
+        {
+          "unknown": true,
+          "name": "KishuInu",
+          "address": "0xa2b4c0af19cc16a6cfacce81f192b024d625817d"
+        },
+        "KP3R",
+        "LEO",
+        {
+          "unknown": true,
+          "name": "LunaChow",
+          "address": "0xa5ef74068d04ba0809b7379dd76af5ce34ab7c57"
+        },
+        {
+          "unknown": true,
+          "name": "MEME Inu.",
+          "address": "0x74b988156925937bd4e082f0ed7429da8eaea8db"
+        },
+        {
+          "unknown": true,
+          "name": "MIMO Parallel Governance Token",
+          "address": "0x90b831fa3bebf58e9744a14d638e25b4ee06f9bc"
+        },
+        {
+          "unknown": true,
+          "name": "moda",
+          "address": "0x1117ac6ad6cdf1a3bc543bad3b133724620522d5"
+        },
+        {
+          "unknown": true,
+          "name": "88mph.app",
+          "address": "0x8888801af4d980682e47f1a9036e589479e835c5"
+        },
+        "NEXO",
+        {
+          "unknown": true,
+          "name": "Octo.fi",
+          "address": "0x7240ac91f01233baaf8b064248e80feaa5912ba3"
+        },
+        {
+          "unknown": true,
+          "name": "Oh!Finance",
+          "address": "0x16ba8efe847ebdfef99d399902ec29397d403c30"
+        },
+        {
+          "unknown": true,
+          "name": "OnX.finance",
+          "address": "0xe0ad1806fd3e7edf6ff52fdb822432e847411033"
+        },
+        {
+          "unknown": true,
+          "name": "OpenOcean",
+          "address": "0x7778360f035c589fce2f4ea5786cbd8b36e5396b"
+        },
+        {
+          "unknown": true,
+          "name": "PAR Stablecoin",
+          "address": "0x68037790a0229e9ce6eaa8a99ea92964106c4703"
+        },
+        {
+          "unknown": true,
+          "name": "RaiReflexIndex",
+          "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919"
+        },
+        {
+          "unknown": true,
+          "name": "Route",
+          "address": "0x16eccfdbb4ee1a85a33f3a9b21175cd7ae753db4"
+        },
+        "SHIB",
+        {
+          "unknown": true,
+          "name": "Tranche Finance",
+          "address": "0x0aee8703d34dd9ae107386d3eff22ae75dd616d1"
+        },
+        "SNX",
+        {
+          "unknown": true,
+          "name": "Space Token",
+          "address": "0x3dc7b06dd0b1f08ef9acbbd2564f8605b4868eea"
+        },
+        {
+          "unknown": true,
+          "name": "SynthsUSD",
+          "address": "0x57ab1ec28d129707052df4df418d58a2d46d5f51"
+        },
+        "SUSHI",
+        "TUSD",
+        {
+          "unknown": true,
+          "name": "UnblockedLedgerToken",
+          "address": "0x09617f6fd6cf8a71278ec86e23bbab29c04353a7"
+        },
+        "USDC",
+        {
+          "unknown": true,
+          "name": "Strudel BTC",
+          "address": "0xe1406825186d63980fd6e2ec61888f7b91c4bae4"
+        },
+        {
+          "unknown": true,
+          "name": "Vox.Finance",
+          "address": "0x12d102f06da35cc0111eb58017fd2cd28537d0e1"
+        },
+        "WBTC",
+        "WETH",
+        {
+          "unknown": true,
+          "name": "Wrapped Interest-Bearing Bitcoin",
+          "address": "0x8751d4196027d4e6da63716fa7786b5174f04c15"
+        },
+        "WOO",
+        {
+          "unknown": true,
+          "name": "WolvesOfWallStreet",
+          "address": "0x672ef7e4fe230b5ca1466c5fdd40588d30fdf90a"
+        },
+        {
+          "unknown": true,
+          "name": "Wrapped STA",
+          "address": "0xedeec5691f23e4914cf0183a4196bbeb30d027a0"
+        },
+        {
+          "unknown": true,
+          "name": "Wirex Token",
+          "address": "0xa02120696c7b8fe16c09c749e4598819b2b0e915"
+        },
+        {
+          "unknown": true,
+          "name": "X",
+          "address": "0x7f3141c4d6b047fb930991b450f1ed996a51cb26"
+        },
+        {
+          "unknown": true,
+          "name": "CoverProtocolGovernanceToken",
+          "address": "0x4688a8b1f292fdab17e9a90c8bc379dc1dbd8713"
+        },
+        "RGT",
+        {
+          "unknown": true,
+          "name": "Hakka Finance",
+          "address": "0x0e29e5abbb5fd88e28b2d355774e73bd47de3bcd"
+        },
+        {
+          "unknown": true,
+          "name": "Scoobi-Doge",
+          "address": "0x06a87f6afec4a739c367bef69eefe383d27106bd"
+        },
+        {
+          "unknown": true,
+          "name": "archangel",
+          "address": "0x36e43065e977bc72cb86dbd8405fae7057cdc7fd"
+        },
+        {
+          "unknown": true,
+          "name": "Tempus",
+          "address": "0xa36fdbbae3c9d55a1d67ee5821d53b50b63a1ab9"
+        }
+      ]
+    },
+    {
+      "address": "0x4E67df0f232C3bc985F8a63326D80ce3d9A40400",
+      "chainId": "336",
+      "tokens": [
+        "DAI",
+        "WETH",
+        "LINK",
+        "USDT",
+        {
+          "unknown": true,
+          "name": "MOchiMArket",
+          "address": "0xbd1848e1491d4308ad18287a745dd4db2a4bd55b"
+        },
+        {
+          "unknown": true,
+          "name": "Coinversation Token",
+          "address": "0xa5e48a6e56e164907263e901b98d9b11ccb46c47"
+        },
+        {
+          "unknown": true,
+          "name": "JPY Coin",
+          "address": "0x2370f9d504c7a6e775bf6e14b3f12846b594cd53"
+        },
+        "USDC",
+        "WBTC",
+        {
+          "unknown": true,
+          "name": "Kwikswap",
+          "address": "0x286c0936c7eaf6651099ab5dab9ee5a6cb5d229d"
+        }
+      ]
+    },
+    {
+      "address": "0x373590a576ccb8143f377DB5f1c16F9f8528a8B4",
+      "chainId": "1030",
+      "tokens": [
+        "DAI",
+        "WETH",
+        "USDT",
+        "USDC",
+        "WBTC",
+        {
+          "unknown": true,
+          "name": "ZB TOKEN",
+          "address": "0x5a9c8c6406d341a16aa3010108026f45fc372168"
+        }
+      ]
+    },
+    {
+      "address": "0xEC4486a90371c9b66f499Ff3936F29f0D5AF8b7E",
+      "chainId": "1284",
+      "tokens": ["DAI", "WETH", "USDT", "AAVE", "CRV", "SUSHI", "USDC", "WBTC"]
+    },
+    {
+      "address": "0x10c6b61DbF44a083Aec3780aCF769C77BE747E23",
+      "chainId": "1285",
+      "tokens": [
+        "DAI",
+        "WETH",
+        "LINK",
+        "UNI",
+        "USDT",
+        "YFI",
+        {
+          "unknown": true,
+          "name": "ETHA",
+          "address": "0x59e9261255644c411afdd00bd89162d09d862e38"
+        },
+        "FRAX",
+        "FXS",
+        {
+          "unknown": true,
+          "name": "MOchiMArket",
+          "address": "0xbd1848e1491d4308ad18287a745dd4db2a4bd55b"
+        },
+        "OCEAN",
+        {
+          "unknown": true,
+          "name": "SpiderDAOToken",
+          "address": "0xbcd4b7de6fde81025f74426d43165a5b0d790fdd"
+        },
+        {
+          "unknown": true,
+          "name": "Bondly",
+          "address": "0x91dfbee3965baaee32784c2d546b7a0c62f268c9"
+        },
+        {
+          "unknown": true,
+          "name": "KSMStarterToken",
+          "address": "0xbc17729fdf562723f0267f79ff25ade441056d87"
+        },
+        {
+          "unknown": true,
+          "name": "Million",
+          "address": "0x6b4c7a5e3f0b99fcd83e9c089bddd6c7fce5c611"
+        },
+        "AAVE",
+        "CRV",
+        "SNX",
+        "SUSHI",
+        "USDC",
+        "WBTC",
+        {
+          "unknown": true,
+          "name": "CRUST",
+          "address": "0x32a7c02e79c4ea1008dd6564b35f131428673c41"
+        },
+        {
+          "unknown": true,
+          "name": "GeoDBCoin",
+          "address": "0x147faf8de9d8d8daae129b187f0d02d819126750"
+        },
+        {
+          "unknown": true,
+          "name": "Pinknode Token",
+          "address": "0xaf691508ba57d416f895e32a1616da1024e882d2"
+        },
+        {
+          "unknown": true,
+          "name": "Voucher Ethereum",
+          "address": "0xc3d088842dcf02c13699f936bb83dfbbc6f721ab"
+        }
+      ]
+    },
+    {
+      "address": "0x55F089d5f6aeDfdACBD5E3aCB0e8F31FBAb44088",
+      "chainId": "2000",
+      "tokens": ["DAI", "WETH", "USDT", "FRAX", "FXS", "USDC", "WBTC"]
+    },
+    {
+      "address": "0xbd40733A2F223fF32195a759a81df25E35DD4dEA",
+      "chainId": "2001",
+      "tokens": [
+        "DAI",
+        "WETH",
+        "UNI",
+        "USDT",
+        "AAVE",
+        "SNX",
+        "USDC",
+        "WBTC",
+        "SAND",
+        {
+          "unknown": true,
+          "name": "OCC",
+          "address": "0x2f109021afe75b949429fe30523ee7c0d5b27207"
+        },
+        "AXS",
+        {
+          "unknown": true,
+          "name": "deFIRE",
+          "address": "0xe74dc43867e0cbeb208f1a012fc60dcbbf0e3044"
+        },
+        {
+          "unknown": true,
+          "name": "CardWallet",
+          "address": "0xd55236d48606c295adebf129dad04fc74bfaa708"
+        },
+        "MANA"
+      ]
+    },
+    {
+      "address": "0xF62385C78f3BDBff33145703546b0377853AAa77",
+      "chainId": "9001",
+      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+    },
+    {
+      "address": "0xE4cf417081A0Ab3f964b44D904BC2b534351A9a7",
+      "chainId": "42262",
+      "tokens": ["DAI", "WETH", "USDC", "WBTC"]
+    },
+    {
+      "address": "0x896be9f48b225154593A84b382d927F9d7Bc2361",
+      "chainId": "47805",
+      "tokens": ["DAI", "WETH", "USDT", "USDC", "WBTC"]
+    },
+    {
+      "address": "0x57ed6BD35a6CE815079855CD0b21331d1D5D0A0e",
+      "chainId": "40",
+      "tokens": ["WETH", "SUSHI", "WBTC"]
+    },
+    {
+      "address": "0x87bCB3038988ca2A89605fFa8f237FB78Df1c3Ae",
+      "chainId": "122",
+      "tokens": [
+        "WETH",
+        {
+          "unknown": true,
+          "name": "agEUR",
+          "address": "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8"
+        }
+      ]
+    },
+    {
+      "address": "0x533e3c0e6b48010873B947bddC4721b1bDFF9648",
+      "chainId": "56",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "ShabuShabu",
+          "address": "0xcb4e8cafeda995da5cedfda5205bd5664a12b848"
+        },
+        "ACH",
+        {
+          "unknown": true,
+          "name": "Augmented Finance",
+          "address": "0xb3ed706b564bba9cab64042f4e1b391be7bebce5"
+        },
+        {
+          "unknown": true,
+          "name": "AladdinToken",
+          "address": "0xb26c4b3ca601136daf98593feaeff9e0ca702a8d"
+        },
+        {
+          "unknown": true,
+          "name": "Attrace",
+          "address": "0x44e2dec86b9f0e0266e9aa66e10323a2bd69cf9a"
+        },
+        {
+          "unknown": true,
+          "name": "BaconDAO",
+          "address": "0x34f797e7190c131cf630524655a618b5bd8738e7"
+        },
+        {
+          "unknown": true,
+          "name": "Badger",
+          "address": "0x3472a5a71965499acd81997a54bba8d852c6e53d"
+        },
+        {
+          "unknown": true,
+          "name": "Badger Sett Badger",
+          "address": "0x19d97d8fa813ee2f51ad4b4e04ea08baf4dffc28"
+        },
+        {
+          "unknown": true,
+          "name": "BDPToken",
+          "address": "0xf3dcbc6d72a4e1892f7917b7c43b74131df8480e"
+        },
+        "BFC",
+        {
+          "unknown": true,
+          "name": "BitScreenerToken",
+          "address": "0xff2b3353c3015e9f1fbf95b9bda23f58aa7ce007"
+        },
+        {
+          "unknown": true,
+          "name": "BitBall Treasure",
+          "address": "0x73c9275c3a2dd84b5741fd59aebf102c91eb033f"
+        },
+        {
+          "unknown": true,
+          "name": "CashBetCoin",
+          "address": "0x26db5439f651caf491a87d48799da81f191bdb6b"
+        },
+        {
+          "unknown": true,
+          "name": "CBK",
+          "address": "0x87761e886399ef8e1624cb0db3230b075a322c88"
+        },
+        {
+          "unknown": true,
+          "name": "Centaurify",
+          "address": "0x08ba718f288c3b12b01146816bef9fa03cc635bc"
+        },
+        {
+          "unknown": true,
+          "name": "copycat",
+          "address": "0x2f1bd435e2b928c1744202dae9400d10a2d569dc"
+        },
+        {
+          "unknown": true,
+          "name": "CryptoRewards",
+          "address": "0xec7d3e835da3f6118079fa9a236b267d044fd7ca"
+        },
+        "DAO",
+        {
+          "unknown": true,
+          "name": "Dragon X",
+          "address": "0x77e9618179820961ee99a988983bc9ab41ff3112"
+        },
+        {
+          "unknown": true,
+          "name": "Decentr",
+          "address": "0x30f271c9e86d2b7d00a6376cd96a1cfbd5f0b9b3"
+        },
+        {
+          "unknown": true,
+          "name": "DEGENIndex",
+          "address": "0x126c121f99e1e211df2e5f8de2d96fa36647c855"
+        },
+        {
+          "unknown": true,
+          "name": "DeRaceToken",
+          "address": "0x9fa69536d1cda4a04cfb50688294de75b505a9ae"
+        },
+        {
+          "unknown": true,
+          "name": "DefiDollar DAO",
+          "address": "0x20c36f062a31865bed8a5b1e512d9a1a20aa333a"
+        },
+        {
+          "unknown": true,
+          "name": "DeHive.finance",
+          "address": "0x62dc4817588d53a056cbbd18231d91ffccd34b2a"
+        },
+        {
+          "unknown": true,
+          "name": "DefiPulse Index",
+          "address": "0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b"
+        },
+        {
+          "unknown": true,
+          "name": "DecentralizedUniversalBasicIn",
+          "address": "0xf3d6af45c6dfec43216cc3347ea91fefba0849d1"
+        },
+        {
+          "unknown": true,
+          "name": "DecentraWeb",
+          "address": "0xe7f58a92476056627f9fdb92286778abd83b285f"
+        },
+        {
+          "unknown": true,
+          "name": "DoYourTip",
+          "address": "0x740623d2c797b7d8d1ecb98e9b4afcf99ec31e14"
+        },
+        {
+          "unknown": true,
+          "name": "UnFederalReserveToken",
+          "address": "0x5218e472cfcfe0b64a064f055b43b4cdc9efd3a6"
+        },
+        {
+          "unknown": true,
+          "name": "ETHA",
+          "address": "0x59e9261255644c411afdd00bd89162d09d862e38"
+        },
+        {
+          "unknown": true,
+          "name": "Ethix",
+          "address": "0xfd09911130e6930bf87f2b0554c44f400bd80d3e"
+        },
+        {
+          "unknown": true,
+          "name": "MetaFabric",
+          "address": "0x8c6fa66c21ae3fc435790e451946a9ea82e6e523"
+        },
+        "FRAX",
+        "FXS",
+        {
+          "unknown": true,
+          "name": "Governor",
+          "address": "0x515d7e9d75e2b76db60f8a051cd890eba23286bc"
+        },
+        {
+          "unknown": true,
+          "name": "HEIDI",
+          "address": "0x58a3520d738b268c2353ecee518a1ad8e28e4ae5"
+        },
+        {
+          "unknown": true,
+          "name": "HotbitToken",
+          "address": "0x6be61833fc4381990e82d7d4a9f4c9b3f67ea941"
+        },
+        {
+          "unknown": true,
+          "name": "INCH TOKEN",
+          "address": "0x6339bd92eaa3cb8e629b06449e08b90581a33cea"
+        },
+        {
+          "unknown": true,
+          "name": "InverseDAO",
+          "address": "0x41d5d79431a913c4ae7d69a668ecdfe5ff9dfb68"
+        },
+        {
+          "unknown": true,
+          "name": "iQeon",
+          "address": "0x0db8d8b76bc361bacbb72e2c491e06085a97ab31"
+        },
+        {
+          "unknown": true,
+          "name": "Cryptokek.com",
+          "address": "0x3fa400483487a489ec9b1db29c4129063eec4654"
+        },
+        {
+          "unknown": true,
+          "name": "KnitFinance",
+          "address": "0xef53462838000184f35f7d991452e5f25110b207"
+        },
+        {
+          "unknown": true,
+          "name": "Koinos",
+          "address": "0x66d28cb58487a7609877550e1a34691810a6b9fc"
+        },
+        {
+          "unknown": true,
+          "name": "Kuma Inu",
+          "address": "0x48c276e8d03813224bb1e55f953adb6d02fd3e02"
+        },
+        {
+          "unknown": true,
+          "name": "Coinlegs",
+          "address": "0x4157aa94c04799d8ea1ca09e8440e6eebbe04830"
+        },
+        {
+          "unknown": true,
+          "name": "lien",
+          "address": "0xab37e1358b639fd877f015027bb62d3ddaa7557e"
+        },
+        {
+          "unknown": true,
+          "name": "LympoMarketToken",
+          "address": "0x327673ae6b33bd3d90f0096870059994f30dc8af"
+        },
+        {
+          "unknown": true,
+          "name": "LunchMoney",
+          "address": "0x66fd97a78d8854fec445cd1c80a07896b0b4851f"
+        },
+        {
+          "unknown": true,
+          "name": "MovieBizCoin",
+          "address": "0xd8b110beee01e74dba9be687fc247c550a41cffe"
+        },
+        {
+          "unknown": true,
+          "name": "MOchiMArket",
+          "address": "0xbd1848e1491d4308ad18287a745dd4db2a4bd55b"
+        },
+        {
+          "unknown": true,
+          "name": "dotmoovs",
+          "address": "0x24ec2ca132abf8f6f8a6e24a1b97943e31f256a7"
+        },
+        {
+          "unknown": true,
+          "name": "Meta Shiba",
+          "address": "0x9cf77be84214beb066f26a4ea1c38ddcc2afbcf7"
+        },
+        {
+          "unknown": true,
+          "name": "MVPToken",
+          "address": "0x65fc94d99cb301c5630c485d312e6ff5edde13d0"
+        },
+        {
+          "unknown": true,
+          "name": "Mysterium",
+          "address": "0x4cf89ca06ad997bc732dc876ed2a7f26a9e7f361"
+        },
+        {
+          "unknown": true,
+          "name": "Nexity Network",
+          "address": "0xebeef419bb5a347e3d98f7d2168055214d12cbdb"
+        },
+        "OCEAN",
+        {
+          "unknown": true,
+          "name": "OpenLeverage",
+          "address": "0x92cfbec26c206c90aee3b7c66a9ae673754fab7e"
+        },
+        {
+          "unknown": true,
+          "name": "Parachute",
+          "address": "0x1beef31946fbbb40b877a72e4ae04a8d1a5cee06"
+        },
+        {
+          "unknown": true,
+          "name": "PolarsBSCIncentivestoken",
+          "address": "0x123ab66587361bebd0141f1dde69d8075f073450"
+        },
+        "PEOPLE",
+        {
+          "unknown": true,
+          "name": "Polkamarkets",
+          "address": "0xd478161c952357f05f0292b56012cd8457f1cfbf"
+        },
+        {
+          "unknown": true,
+          "name": "PolkaParty",
+          "address": "0x48592de8cded16f6bb56c896fe1affc37630889c"
+        },
+        {
+          "unknown": true,
+          "name": "UniPower",
+          "address": "0xf2f9a7e93f845b3ce154efbeb64fb9346fcce509"
+        },
+        {
+          "unknown": true,
+          "name": "premia",
+          "address": "0x6399c842dd2be3de30bf99bc7d1bbf6fa3650e70"
+        },
+        {
+          "unknown": true,
+          "name": "ParsiqToken",
+          "address": "0x362bc847a3a9637d3af6624eec853618a43ed7d2"
+        },
+        {
+          "unknown": true,
+          "name": "PortionToken",
+          "address": "0x6d0f5149c502faf215c89ab306ec3e50b15e2892"
+        },
+        {
+          "unknown": true,
+          "name": "Qredo Token",
+          "address": "0x4123a133ae3c521fd134d7b13a2dec35b56c2463"
+        },
+        {
+          "unknown": true,
+          "name": "Ridotto",
+          "address": "0x4740735aa98dc8aa232bd049f8f0210458e7fca3"
+        },
+        "REQ",
+        {
+          "unknown": true,
+          "name": "REVV",
+          "address": "0x557b933a7c2c45672b610f8954a3deb39a51a8ca"
+        },
+        {
+          "unknown": true,
+          "name": "Rentible",
+          "address": "0x2a039b1d9bbdccbb91be28691b730ca893e5e743"
+        },
+        {
+          "unknown": true,
+          "name": "Royale",
+          "address": "0x7eaf9c89037e4814dc0d9952ac7f888c784548db"
+        },
+        {
+          "unknown": true,
+          "name": "SensitrustToken",
+          "address": "0x04e0af0af1b7f0023c6b12af5a94df59b0e8cf59"
+        },
+        {
+          "unknown": true,
+          "name": "Spice",
+          "address": "0xb753428af26e81097e7fd17f40c88aaa3e04902c"
+        },
+        {
+          "unknown": true,
+          "name": "ShowcaseToken",
+          "address": "0xcc0014ccb39f6e86b1be0f17859a783b6722722f"
+        },
+        {
+          "unknown": true,
+          "name": "Smartchem",
+          "address": "0xb9964c8b9c48800678e72b2fe7b9b365d3d0019d"
+        },
+        {
+          "unknown": true,
+          "name": "SIMBCOINSWAP",
+          "address": "0x53bd789f2cdb846b227d8ffc7b46ed4263231fdf"
+        },
+        {
+          "unknown": true,
+          "name": "SpiderDAOToken",
+          "address": "0xbcd4b7de6fde81025f74426d43165a5b0d790fdd"
+        },
+        {
+          "unknown": true,
+          "name": "Starbase",
+          "address": "0xf70a642bd387f94380ffb90451c2c81d4eb82cbc"
+        },
+        {
+          "unknown": true,
+          "name": "structure.finance token",
+          "address": "0x1f4cb968b76931c494ff92ed80ccb169ad641cb1"
+        },
+        {
+          "unknown": true,
+          "name": "SuperBid",
+          "address": "0x0563dce613d559a47877ffd1593549fb9d3510d6"
+        },
+        {
+          "unknown": true,
+          "name": "inSure",
+          "address": "0xcb86c6a22cb56b6cf40cafedb06ba0df188a416e"
+        },
+        {
+          "unknown": true,
+          "name": "TrustSwapToken",
+          "address": "0xcc4304a31d09258b0029ea7fe63d032f52e44efe"
+        },
+        {
+          "unknown": true,
+          "name": "Tanks",
+          "address": "0xf604d1e51122592e0babe63ac334c0e647222f2d"
+        },
+        {
+          "unknown": true,
+          "name": "TheFamousToken",
+          "address": "0xaef4f02e31cdbf007f8d98da4ae365188a0e9ecc"
+        },
+        {
+          "unknown": true,
+          "name": "TOWER",
+          "address": "0x1c9922314ed1415c95b9fd453c3818fd41867d0b"
+        },
+        {
+          "unknown": true,
+          "name": "TriumphX",
+          "address": "0x056354f3ff20743aa4c0da365603871c7000b081"
+        },
+        {
+          "unknown": true,
+          "name": "UREEQA Token",
+          "address": "0x1735db6ab5baa19ea55d0adceed7bcdc008b3136"
+        },
+        {
+          "unknown": true,
+          "name": "WrappedCHI",
+          "address": "0x6dc02164d75651758ac74435806093e421b64605"
+        },
+        {
+          "unknown": true,
+          "name": "Wrapped SCRT",
+          "address": "0x2b89bf8ba858cd2fcee1fada378d5cd6936968be"
+        },
+        {
+          "unknown": true,
+          "name": "YELToken",
+          "address": "0x7815bda662050d84718b988735218cffd32f75ea"
+        },
+        {
+          "unknown": true,
+          "name": "YFLink",
+          "address": "0x28cb7e841ee97947a86b06fa4090c8451f64c0be"
+        },
+        {
+          "unknown": true,
+          "name": "TOSHIFY.FINANCE",
+          "address": "0x9cd39da8f25ec50cf2ee260e464ac23ea23f6bb0"
+        },
+        {
+          "unknown": true,
+          "name": "Zilla Token",
+          "address": "0xfd8971d5e8e1740ce2d0a84095fca4de729d0c16"
+        },
+        {
+          "unknown": true,
+          "name": "ABYSS",
+          "address": "0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6"
+        },
+        {
+          "unknown": true,
+          "name": "ACoconutBTC",
+          "address": "0xef6e45af9a422c5469928f927ca04ed332322e2e"
+        },
+        {
+          "unknown": true,
+          "name": "AGAToken",
+          "address": "0x2d80f5f5328fdcb6eceb7cacf5dd8aedaec94e20"
+        },
+        {
+          "unknown": true,
+          "name": "Aluna",
+          "address": "0x8185bc4757572da2a610f887561c32298f1a5748"
+        },
+        {
+          "unknown": true,
+          "name": "Apron",
+          "address": "0xd4342a57ecf2fe7ffa37c33cb8f63b1500e575e6"
+        },
+        {
+          "unknown": true,
+          "name": "Armor",
+          "address": "0x1337def16f9b486faed0293eb623dc8395dfe46a"
+        },
+        {
+          "unknown": true,
+          "name": "AirSwap",
+          "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a"
+        },
+        {
+          "unknown": true,
+          "name": "AuctusToken",
+          "address": "0xc12d099be31567add4e4e4d0d45691c3f58f5663"
+        },
+        {
+          "unknown": true,
+          "name": "BAB",
+          "address": "0xc36824905dff2eaaee7ecc09fcc63abc0af5abc5"
+        },
+        {
+          "unknown": true,
+          "name": "BaoToken",
+          "address": "0x374cb8c27130e2c9e04f44303f3c8351b9de61c1"
+        },
+        {
+          "unknown": true,
+          "name": "BallswapperAcceleratorReflecti",
+          "address": "0x21fb4dd8c500be1a9ba27f827217e477217d6225"
+        },
+        {
+          "unknown": true,
+          "name": "EvidenZ",
+          "address": "0xacfa209fb73bf3dd5bbfb1101b9bc999c49062a5"
+        },
+        {
+          "unknown": true,
+          "name": "PieDAO Balanced Crypto Pie",
+          "address": "0xe4f726adc8e89c6a6017f01eada77865db22da14"
+        },
+        {
+          "unknown": true,
+          "name": "Badger Sett Digg",
+          "address": "0x7e7e112a68d8d2e221e11047a72ffc1065c38e1a"
+        },
+        {
+          "unknown": true,
+          "name": "BetProtocolToken",
+          "address": "0xcf3c8be2e2c42331da80ef210e9b1b307c03d36a"
+        },
+        {
+          "unknown": true,
+          "name": "BiFi",
+          "address": "0x2791bfd60d232150bff86b39b7146c0eaaa2ba81"
+        },
+        {
+          "unknown": true,
+          "name": "BITTOKEN",
+          "address": "0x9f9913853f749b3fe6d6d4e16a1cc3c1656b6d51"
+        },
+        {
+          "unknown": true,
+          "name": "BlackHole.BLACKGovernanceToken",
+          "address": "0xd714d91a169127e11d8fab3665d72e8b7ef9dbe2"
+        },
+        {
+          "unknown": true,
+          "name": "Bondly",
+          "address": "0x91dfbee3965baaee32784c2d546b7a0c62f268c9"
+        },
+        {
+          "unknown": true,
+          "name": "BasketCoin",
+          "address": "0xc03841b5135600312707d39eb2af0d2ad5d51a91"
+        },
+        {
+          "unknown": true,
+          "name": "BallSwap",
+          "address": "0xe51b8ab09008285a0380dd2680cd9dd5e13924d3"
+        },
+        {
+          "unknown": true,
+          "name": "BTAP",
+          "address": "0x270371c58d9d775ed73971dd414656107384f235"
+        },
+        {
+          "unknown": true,
+          "name": "BitBase",
+          "address": "0x32e6c34cd57087abbd59b5a4aecc4cb495924356"
+        },
+        {
+          "unknown": true,
+          "name": "CyberFi",
+          "address": "0x63b4f3e3fa4e438698ce330e365e831f7ccd1ef4"
+        },
+        {
+          "unknown": true,
+          "name": "Cirus",
+          "address": "0xa01199c61841fce3b3dafb83fefc1899715c8756"
+        },
+        {
+          "unknown": true,
+          "name": "CocktailBar",
+          "address": "0x22b6c31c2beb8f2d0d5373146eed41ab9ede3caf"
+        },
+        {
+          "unknown": true,
+          "name": "Coiin",
+          "address": "0xd080f46d7781a6c82b3dd74a223b73242884e7e6"
+        },
+        {
+          "unknown": true,
+          "name": "CORToken",
+          "address": "0x9c2dc0c3cc2badde84b0025cf4df1c5af288d835"
+        },
+        {
+          "unknown": true,
+          "name": "DEAPCOIN",
+          "address": "0x1a3496c18d558bd9c6c8f609e1b129f67ab08163"
+        },
+        {
+          "unknown": true,
+          "name": "DinoXCoin",
+          "address": "0x20a8cec5fffea65be7122bcab2ffe32ed4ebf03a"
+        },
+        {
+          "unknown": true,
+          "name": "Donkey",
+          "address": "0x217ddead61a42369a266f1fb754eb5d3ebadc88a"
+        },
+        {
+          "unknown": true,
+          "name": "DOSE",
+          "address": "0xb31ef9e52d94d4120eb44fe1ddfde5b4654a6515"
+        },
+        {
+          "unknown": true,
+          "name": "Dragon",
+          "address": "0x419c4db4b9e25d6db2ad9691ccb832c8d9fda05e"
+        },
+        {
+          "unknown": true,
+          "name": "Dether",
+          "address": "0x5adc961d6ac3f7062d2ea45fefb8d8167d44b190"
+        },
+        {
+          "unknown": true,
+          "name": "UnitProtocol",
+          "address": "0x92e187a03b6cd19cb6af293ba17f2745fd2357d5"
+        },
+        {
+          "unknown": true,
+          "name": "EDDA",
+          "address": "0xfbbe9b1142c699512545f47937ee6fae0e4b0aa9"
+        },
+        {
+          "unknown": true,
+          "name": "FARM Reward",
+          "address": "0xa0246c9032bc3a600820415ae600c6388619a14d"
+        },
+        {
+          "unknown": true,
+          "name": "FastSwapToken",
+          "address": "0xc888a0ab4831a29e6ca432babf52e353d23db3c2"
+        },
+        {
+          "unknown": true,
+          "name": "FormationFinance",
+          "address": "0x21381e026ad6d8266244f2a583b35f9e4413fa2a"
+        },
+        {
+          "unknown": true,
+          "name": "FoundryLogisticsToken",
+          "address": "0x6c972b70c533e2e045f333ee28b9ffb8d717be69"
+        },
+        {
+          "unknown": true,
+          "name": "GenShards",
+          "address": "0xe0b9a2c3e9f40cf74b2c7f591b2b0cca055c3112"
+        },
+        {
+          "unknown": true,
+          "name": "EveripediaIQ",
+          "address": "0x579cea1889991f68acc35ff5c3dd0621ff29b0c9"
+        },
+        {
+          "unknown": true,
+          "name": "KIRANetwork",
+          "address": "0x16980b3b4a3f9d89e33311b5aa8f80303e5ca4f8"
+        },
+        {
+          "unknown": true,
+          "name": "KSMStarterToken",
+          "address": "0xbc17729fdf562723f0267f79ff25ade441056d87"
+        },
+        {
+          "unknown": true,
+          "name": "Kattana",
+          "address": "0x491e136ff7ff03e6ab097e54734697bb5802fc1c"
+        },
+        {
+          "unknown": true,
+          "name": "Unilayer",
+          "address": "0x0ff6ffcfda92c53f615a4a75d982f399c989366b"
+        },
+        {
+          "unknown": true,
+          "name": "Levolution.io Token",
+          "address": "0x09970aec766b6f3223aca9111555e99dc50ff13a"
+        },
+        {
+          "unknown": true,
+          "name": "LixirToken",
+          "address": "0xd0345d30fd918d7682398acbcdf139c808998709"
+        },
+        {
+          "unknown": true,
+          "name": "MatrixSwapToken",
+          "address": "0xc8d3dcb63c38607cb0c9d3f55e8ecce628a01c36"
+        },
+        {
+          "unknown": true,
+          "name": "MAXToken",
+          "address": "0xe7976c4efc60d9f4c200cc1bcef1a1e3b02c73e7"
+        },
+        {
+          "unknown": true,
+          "name": "Metric.exchange",
+          "address": "0xefc1c73a3d8728dc4cf2a18ac5705fe93e5914ac"
+        },
+        {
+          "unknown": true,
+          "name": "MarginSwap",
+          "address": "0xaa4e3edb11afa93c41db59842b29de64b72e355b"
+        },
+        {
+          "unknown": true,
+          "name": "Mimir Token",
+          "address": "0x71dc40668682a124231301414167e4cf7f55383c"
+        },
+        {
+          "unknown": true,
+          "name": "MixMarvelToken",
+          "address": "0x5d285f735998f36631f678ff41fb56a10a4d0429"
+        },
+        {
+          "unknown": true,
+          "name": "MediaLicensingToken",
+          "address": "0x9506d37f70eb4c3d79c398d326c871abbf10521d"
+        },
+        {
+          "unknown": true,
+          "name": "MMToken",
+          "address": "0xa283aa7cfbb27ef0cfbcb2493dd9f4330e0fd304"
+        },
+        {
+          "unknown": true,
+          "name": "Modefi",
+          "address": "0xea1ea0972fa092dd463f2968f9bb51cc4c981d71"
+        },
+        {
+          "unknown": true,
+          "name": "Moyom",
+          "address": "0xb9892f9a892f3e251fc58b9076c56add528eb8a6"
+        },
+        {
+          "unknown": true,
+          "name": "NEXT",
+          "address": "0x377d552914e7a104bc22b4f3b6268ddc69615be7"
+        },
+        {
+          "unknown": true,
+          "name": "NFracTionToken",
+          "address": "0x9a54a39a8d78cd6031636628a11c890124b1b5cf"
+        },
+        {
+          "unknown": true,
+          "name": "NFTYToken",
+          "address": "0xe1d7c7a4596b038ced2a84bf65b8647271c53208"
+        },
+        {
+          "unknown": true,
+          "name": "Nord",
+          "address": "0x6e9730ecffbed43fd876a264c982e254ef05a0de"
+        },
+        {
+          "unknown": true,
+          "name": "OrmeusCoin",
+          "address": "0xc96df921009b790dffca412375251ed1a2b75c60"
+        },
+        {
+          "unknown": true,
+          "name": "Paper",
+          "address": "0x7ae1d57b58fa6411f32948314badd83583ee0e8c"
+        },
+        {
+          "unknown": true,
+          "name": "Playcent",
+          "address": "0x657b83a0336561c8f64389a6f5ade675c04b0c3b"
+        },
+        {
+          "unknown": true,
+          "name": "PILLAR",
+          "address": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17"
+        },
+        {
+          "unknown": true,
+          "name": "Popcorn",
+          "address": "0xd0cd466b34a24fcb2f87676278af2005ca8a78c4"
+        },
+        {
+          "unknown": true,
+          "name": "Plasma",
+          "address": "0x054d64b73d3d8a21af3d764efd76bcaa774f3bb2"
+        },
+        {
+          "unknown": true,
+          "name": "PolkaRareToken",
+          "address": "0x2c2f7e7c5604d162d75641256b80f1bf6f4dc796"
+        },
+        {
+          "unknown": true,
+          "name": "PUSSY token",
+          "address": "0x9196e18bc349b1f64bc08784eae259525329a1ad"
+        },
+        {
+          "unknown": true,
+          "name": "QuarkChainToken",
+          "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664"
+        },
+        {
+          "unknown": true,
+          "name": "RFOX",
+          "address": "0xa1d6df714f91debf4e0802a542e13067f31b8262"
+        },
+        {
+          "unknown": true,
+          "name": "ResardisToken",
+          "address": "0x73627974adea82397bcf7fac5848207cce88938d"
+        },
+        {
+          "unknown": true,
+          "name": "ScaleSwapToken",
+          "address": "0x1fbd3df007eb8a7477a1eab2c63483dcc24effd6"
+        },
+        {
+          "unknown": true,
+          "name": "Shard",
+          "address": "0xbebdab6da046bc49ffbb61fbd7b33157eb270d05"
+        },
+        {
+          "unknown": true,
+          "name": "SheeshaFinance",
+          "address": "0x232fb065d9d24c34708eedbf03724f2e95abe768"
+        },
+        {
+          "unknown": true,
+          "name": "Sukhavati Network Token",
+          "address": "0x012e0e6342308b247f36ee500ecb14dc77a7a8c1"
+        },
+        {
+          "unknown": true,
+          "name": "SkyrimFinance",
+          "address": "0x2610f0bfc21ef389fe4d03cfb7de9ac1e6c99d6e"
+        },
+        {
+          "unknown": true,
+          "name": "SOMIDAX",
+          "address": "0x7e8539d1e5cb91d63e46b8e188403b3f262a949b"
+        },
+        {
+          "unknown": true,
+          "name": "MogulStars",
+          "address": "0xc55c2175e90a46602fd42e931f62b3acc1a013ca"
+        },
+        {
+          "unknown": true,
+          "name": "StartFiToken",
+          "address": "0xfd9cd8c0d18cd7e06958f3055e0ec3adbdba0b17"
+        },
+        {
+          "unknown": true,
+          "name": "StoneToken",
+          "address": "0xe63d6b308bce0f6193aec6b7e6eba005f41e36ab"
+        },
+        {
+          "unknown": true,
+          "name": "SUKU",
+          "address": "0x0763fdccf1ae541a5961815c0872a8c5bc6de4d7"
+        },
+        {
+          "unknown": true,
+          "name": "TitanSwap",
+          "address": "0x3a8cccb969a61532d1e6005e2ce12c200caece87"
+        },
+        {
+          "unknown": true,
+          "name": "Tiger King",
+          "address": "0x24e89bdf2f65326b94e36978a7edeac63623dafa"
+        },
+        {
+          "unknown": true,
+          "name": "UpBots",
+          "address": "0x8564653879a18c560e7c0ea0e084c516c62f5653"
+        },
+        {
+          "unknown": true,
+          "name": "UMAD",
+          "address": "0x31c2415c946928e9fd1af83cdfa38d3edbd4326f"
+        },
+        {
+          "unknown": true,
+          "name": "Unistake",
+          "address": "0x9ed8e7c9604790f7ec589f99b94361d8aab64e5e"
+        },
+        {
+          "unknown": true,
+          "name": "Unvest",
+          "address": "0xf009f5531de69067435e32c4b9d36077f4c4a673"
+        },
+        {
+          "unknown": true,
+          "name": "Utopia Open Platform",
+          "address": "0xe4ae84448db5cfe1daf1e6fb172b469c161cb85f"
+        },
+        {
+          "unknown": true,
+          "name": "Validator",
+          "address": "0x27c4af9a860c4cadc358005f8b48140b2e434a7b"
+        },
+        {
+          "unknown": true,
+          "name": "VideoCoin",
+          "address": "0x2c9023bbc572ff8dc1228c7858a280046ea8c9e5"
+        },
+        {
+          "unknown": true,
+          "name": "Woofy",
+          "address": "0xd0660cd418a64a1d44e9214ad8e459324d8157f1"
+        },
+        {
+          "unknown": true,
+          "name": "WorkQuestToken",
+          "address": "0x06677dc4fe12d3ba3c7ccfd0df8cd45e4d4095bf"
+        },
+        {
+          "unknown": true,
+          "name": "ZeroHybrid",
+          "address": "0x4b13a8a95da56773312ca0d4e0670530aa700fcf"
+        },
+        {
+          "unknown": true,
+          "name": "ACY",
+          "address": "0xaf9db9e362e306688af48c4acb9618c06db38ac3"
+        },
+        {
+          "unknown": true,
+          "name": "AGA Rewards",
+          "address": "0xb453f1f2ee776daf2586501361c457db70e1ca0f"
+        },
+        "AMP",
+        {
+          "unknown": true,
+          "name": "ANGLE",
+          "address": "0x31429d1856ad1377a8a0079410b297e1a9e214c2"
+        },
+        {
+          "unknown": true,
+          "name": "Artemis Vision",
+          "address": "0x28fda76721a8077a5de802ab0212849b8c38429e"
+        },
+        {
+          "unknown": true,
+          "name": "ASIA COIN",
+          "address": "0xf519381791c03dd7666c142d4e49fd94d3536011"
+        },
+        {
+          "unknown": true,
+          "name": "Bit2Me",
+          "address": "0xd7c302fc3ac829c7e896a32c4bd126f3e8bd0a1f"
+        },
+        {
+          "unknown": true,
+          "name": "BAC",
+          "address": "0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a"
+        },
+        {
+          "unknown": true,
+          "name": "BASv2",
+          "address": "0x106538cc16f938776c7c180186975bca23875287"
+        },
+        {
+          "unknown": true,
+          "name": "Billion",
+          "address": "0x0239d3a3485ec54511bee9d77d92695e443bf060"
+        },
+        {
+          "unknown": true,
+          "name": "DragonBite",
+          "address": "0x4eed0fa8de12d5a86517f214c2f11586ba2ed88d"
+        },
+        {
+          "unknown": true,
+          "name": "BridgeMutual",
+          "address": "0x725c263e32c72ddc3a19bea12c5a0479a81ee688"
+        },
+        {
+          "unknown": true,
+          "name": "BoostedFinance",
+          "address": "0x3e780920601d61cedb860fe9c4a90c9ea6a35e78"
+        },
+        {
+          "unknown": true,
+          "name": "BitBall",
+          "address": "0x06e0feb0d74106c7ada8497754074d222ec6bcdf"
+        },
+        {
+          "unknown": true,
+          "name": "BT.Finance",
+          "address": "0x76c5449f4950f6338a393f53cda8b53b0cd3ca3a"
+        },
+        {
+          "unknown": true,
+          "name": "ChartEx",
+          "address": "0x1d37986f252d0e349522ea6c3b98cb935495e63e"
+        },
+        {
+          "unknown": true,
+          "name": "CLearingHouse Token",
+          "address": "0xd7d8f3b8bc8bc48d3acc37879eaba7b85889fa52"
+        },
+        {
+          "unknown": true,
+          "name": "Coinspaid",
+          "address": "0x9b31bb425d8263fa1b8b9d090b83cf0c31665355"
+        },
+        {
+          "unknown": true,
+          "name": "Carbon",
+          "address": "0xcdeee767bed58c5325f68500115d4b722b3724ee"
+        },
+        {
+          "unknown": true,
+          "name": "CRD Network",
+          "address": "0xcaaa93712bdac37f736c323c93d4d5fdefcc31cc"
+        },
+        {
+          "unknown": true,
+          "name": "Coinversation Token",
+          "address": "0xa5e48a6e56e164907263e901b98d9b11ccb46c47"
+        },
+        {
+          "unknown": true,
+          "name": "CreatorChain",
+          "address": "0x923b83c26b3809d960ff80332ed00aa46d7ed375"
+        },
+        {
+          "unknown": true,
+          "name": "DEXTools",
+          "address": "0xfb7b4564402e5500db5bb6d63ae671302777c75a"
+        },
+        {
+          "unknown": true,
+          "name": "Definitex",
+          "address": "0xf1f5de69c9c8d9be8a7b01773cc1166d4ec6ede2"
+        },
+        {
+          "unknown": true,
+          "name": "DigiColToken",
+          "address": "0x63b8b7d4a3efd0735c4bffbd95b332a55e4eb851"
+        },
+        {
+          "unknown": true,
+          "name": "DSLA",
+          "address": "0x3affcca64c2a6f4e3b6bd9c64cd2c969efd1ecbe"
+        },
+        {
+          "unknown": true,
+          "name": "DAOventuresDeFi",
+          "address": "0x77dce26c03a9b833fc2d7c31c22da4f42e9d9582"
+        },
+        {
+          "unknown": true,
+          "name": "Ethereum-bridged Lunr Token",
+          "address": "0xa87135285ae208e22068acdbff64b11ec73eaa5a"
+        },
+        {
+          "unknown": true,
+          "name": "QuadrantProtocol",
+          "address": "0xc28e931814725bbeb9e670676fabbcb694fe7df2"
+        },
+        {
+          "unknown": true,
+          "name": "FERA",
+          "address": "0x539f3615c1dbafa0d008d87504667458acbd16fa"
+        },
+        {
+          "unknown": true,
+          "name": "Font",
+          "address": "0x4c25bdf026ea05f32713f00f73ca55857fbf6342"
+        },
+        {
+          "unknown": true,
+          "name": "Gains",
+          "address": "0xd9b312d77bc7bed9b9cecb56636300bed4fe5ce9"
+        },
+        {
+          "unknown": true,
+          "name": "BuzzShow Token",
+          "address": "0x594207c791afd06a8d087d84d99d1da53ccbd45f"
+        },
+        {
+          "unknown": true,
+          "name": "Hillstone.Finance",
+          "address": "0xba6b0dbb2ba8daa8f5d6817946393aef8d3a4487"
+        },
+        {
+          "unknown": true,
+          "name": "IceToken",
+          "address": "0xf16e81dce15b08f326220742020379b855b87df9"
+        },
+        {
+          "unknown": true,
+          "name": "DexKit",
+          "address": "0x7866e48c74cbfb8183cd1a929cd9b95a7a5cb4f4"
+        },
+        {
+          "unknown": true,
+          "name": "Lepasa",
+          "address": "0xbba6c7c7d673c48d90069ad2e9d2fe587fcb6bc3"
+        },
+        {
+          "unknown": true,
+          "name": "LimitSwap",
+          "address": "0x1712aad2c773ee04bdc9114b32163c058321cd85"
+        },
+        {
+          "unknown": true,
+          "name": "LOOT Token",
+          "address": "0x721a1b990699ee9d90b6327faad0a3e840ae8335"
+        },
+        {
+          "unknown": true,
+          "name": "Launchpooltoken",
+          "address": "0x6149c26cd2f7b5ccdb32029af817123f6e37df5b"
+        },
+        {
+          "unknown": true,
+          "name": "LuaToken",
+          "address": "0xb1f66997a5760428d3a87d68b90bfe0ae64121cc"
+        },
+        {
+          "unknown": true,
+          "name": "MoedaLoyaltyPoints",
+          "address": "0x51db5ad35c671a87207d88fc11d593ac0c8415bd"
+        },
+        {
+          "unknown": true,
+          "name": "MegaShiba Inu",
+          "address": "0x1c23f0f3e06fa0e07c5e661353612a2d63323bc6"
+        },
+        {
+          "unknown": true,
+          "name": "MorpheusInfrastructureToken",
+          "address": "0x4a527d8fc13c5203ab24ba0944f4cb14658d1db6"
+        },
+        {
+          "unknown": true,
+          "name": "Million",
+          "address": "0x6b4c7a5e3f0b99fcd83e9c089bddd6c7fce5c611"
+        },
+        {
+          "unknown": true,
+          "name": "Musicoin",
+          "address": "0x35747eb4c027ebbf0a7f4e642627afcd7fd8cd7a"
+        },
+        {
+          "unknown": true,
+          "name": "RED MWAT",
+          "address": "0x6425c6be902d692ae2db752b3c268afadb099d3b"
+        },
+        {
+          "unknown": true,
+          "name": "MYTH",
+          "address": "0xa12d7e5319f5b43476ef19d1569e10097cacdfe2"
+        },
+        {
+          "unknown": true,
+          "name": "NAOSToken",
+          "address": "0x4a615bb7166210cce20e6642a6f8fb5d4d044496"
+        },
+        {
+          "unknown": true,
+          "name": "Unifty",
+          "address": "0x7e291890b01e5181f7ecc98d79ffbe12ad23df9e"
+        },
+        {
+          "unknown": true,
+          "name": "nomadCoin",
+          "address": "0x56860dbf9437c7109e1b3f66c00c68d33ee12a50"
+        },
+        {
+          "unknown": true,
+          "name": "OctopusNetworkToken",
+          "address": "0xf5cfbc74057c610c8ef151a439252680ac68c6dc"
+        },
+        "ORBS",
+        {
+          "unknown": true,
+          "name": "ParetoNetworkToken",
+          "address": "0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc"
+        },
+        {
+          "unknown": true,
+          "name": "PolkaDoge",
+          "address": "0x1be66c15731788bae659b4bdd40d4aa9b3bbca94"
+        },
+        {
+          "unknown": true,
+          "name": "Protocol Finance",
+          "address": "0x7b69d465c0f9fb22affae56aa86149973e9b0966"
+        },
+        {
+          "unknown": true,
+          "name": "PublicIndexNetwork",
+          "address": "0xc1f976b91217e240885536af8b63bc8b5269a9be"
+        },
+        {
+          "unknown": true,
+          "name": "PolkastarterToken",
+          "address": "0x83e6f1e41cdd28eaceb20cb649155049fac3d5aa"
+        },
+        {
+          "unknown": true,
+          "name": "Polars",
+          "address": "0xc17fbe1d709ddf6c0b6665dd0591046815ac7554"
+        },
+        {
+          "unknown": true,
+          "name": "Pepemon",
+          "address": "0x4d2ee5dae46c86da2ff521f7657dad98834f97b8"
+        },
+        {
+          "unknown": true,
+          "name": "Pepedex",
+          "address": "0xf1f508c7c9f0d1b15a76fba564eef2d956220cf7"
+        },
+        {
+          "unknown": true,
+          "name": "QUIDD",
+          "address": "0xda9fdab21bc4a5811134a6e0ba6ca06624e67c07"
+        },
+        {
+          "unknown": true,
+          "name": "RazeNetwork",
+          "address": "0x5eaa69b29f99c84fe5de8200340b4e9b4ab38eac"
+        },
+        {
+          "unknown": true,
+          "name": "RAZOR",
+          "address": "0x50de6856358cc35f3a9a57eaaa34bd4cb707d2cd"
+        },
+        {
+          "unknown": true,
+          "name": "ROCKI",
+          "address": "0xff44b937788215eca197baaf9af69dbdc214aa04"
+        },
+        {
+          "unknown": true,
+          "name": "RulerProtocol",
+          "address": "0x2aeccb42482cc64e087b6d2e5da39f5a7a7001f8"
+        },
+        {
+          "unknown": true,
+          "name": "SAITO",
+          "address": "0xfa14fa6958401314851a17d6c5360ca29f74b57b"
+        },
+        {
+          "unknown": true,
+          "name": "SOAR.FI",
+          "address": "0xbae5f2d8a1299e5c4963eaff3312399253f27ccb"
+        },
+        {
+          "unknown": true,
+          "name": "Solv",
+          "address": "0x256f2d67e52fe834726d2ddcd8413654f5eb8b53"
+        },
+        {
+          "unknown": true,
+          "name": "Sparkleswap Rewards Token",
+          "address": "0xa3a7cba479df86c7f866280b90ebc3b25f2371f0"
+        },
+        {
+          "unknown": true,
+          "name": "STAKE",
+          "address": "0x0ae055097c6d159879521c384f1d2123d1f195e6"
+        },
+        {
+          "unknown": true,
+          "name": "Statera",
+          "address": "0xa7de087329bfcda5639247f96140f9dabe3deed1"
+        },
+        {
+          "unknown": true,
+          "name": "Standard",
+          "address": "0x9040e237c3bf18347bb00957dc22167d0f2b999d"
+        },
+        {
+          "unknown": true,
+          "name": "Stater",
+          "address": "0x84bb947fcedba6b9c7dcead42df07e113bb03007"
+        },
+        {
+          "unknown": true,
+          "name": "Suterusu",
+          "address": "0xaa2ce7ae64066175e0b90497ce7d9c190c315db4"
+        },
+        {
+          "unknown": true,
+          "name": "Trusted Node",
+          "address": "0x0e95b13539d0381ab20b4e2893e926fc99b3d8dc"
+        },
+        {
+          "unknown": true,
+          "name": "TomoChain",
+          "address": "0x05d3606d5c81eb9b7b18530995ec9b29da05faba"
+        },
+        {
+          "unknown": true,
+          "name": "UmiToken",
+          "address": "0x61107a409fffe1965126aa456af679719695c69c"
+        },
+        {
+          "unknown": true,
+          "name": "UNIONProtocolGovernanceToken",
+          "address": "0x226f7b842e0f0120b7e194d05432b3fd14773a9d"
+        },
+        {
+          "unknown": true,
+          "name": "Vera",
+          "address": "0xd7f0cc50ad69408ae58be033f4f85d2367c2e468"
+        },
+        {
+          "unknown": true,
+          "name": "DAOInvest",
+          "address": "0x1f19f83fc9a25f3c861260143e36c17706257986"
+        },
+        {
+          "unknown": true,
+          "name": "VirtuePlayerPoints",
+          "address": "0x5eeaa2dcb23056f4e8654a349e57ebe5e76b5e6e"
+        },
+        {
+          "unknown": true,
+          "name": "VesperToken",
+          "address": "0x1b40183efb4dd766f11bda7a7c3ad8982e998421"
+        },
+        {
+          "unknown": true,
+          "name": "VortexDeFi",
+          "address": "0xceb286c9604c542d3cc08b41aa6c9675b078a832"
+        },
+        {
+          "unknown": true,
+          "name": "Exeedme",
+          "address": "0xee573a945b01b788b9287ce062a0cfc15be9fd86"
+        },
+        {
+          "unknown": true,
+          "name": "XEND",
+          "address": "0xe4cfe9eaa8cdb0942a80b7bc68fd8ab0f6d44903"
+        },
+        {
+          "unknown": true,
+          "name": "INVERSE",
+          "address": "0x44f262622248027f8e2a8fb1090c4cf85072392c"
+        },
+        {
+          "unknown": true,
+          "name": "Robonomics",
+          "address": "0x7de91b204c1c737bcee6f000aaa6569cf7061cb7"
+        },
+        {
+          "unknown": true,
+          "name": "ZENExchangeToken",
+          "address": "0xc52c326331e9ce41f04484d3b5e5648158028804"
+        },
+        {
+          "unknown": true,
+          "name": "Zeedex",
+          "address": "0x5150956e082c748ca837a5dfa0a7c10ca4697f9c"
+        },
+        {
+          "unknown": true,
+          "name": "IntelligentMiningToken",
+          "address": "0x964291d2d0a7e3477a8a06ee745f3cd8e3d0b375"
+        },
+        {
+          "unknown": true,
+          "name": "KittenFinance",
+          "address": "0x177ba0cac51bfc7ea24bad39d81dcefd59d74faa"
+        },
+        {
+          "unknown": true,
+          "name": "KESEF.FINANCE",
+          "address": "0x049e119413ab1f1b0fd836e657e3e4ba3ad9cab8"
+        },
+        {
+          "unknown": true,
+          "name": "NashExchangeToken",
+          "address": "0xe2dc070524a6e305ddb64d8513dc444b6a1ec845"
+        },
+        {
+          "unknown": true,
+          "name": "PKGToken",
+          "address": "0x02f2d4a04e6e01ace88bd2cd632875543b2ef577"
+        },
+        {
+          "unknown": true,
+          "name": "Akita Inu",
+          "address": "0x3301ee63fb29f863f2333bd4466acb46cd8323e6"
+        },
+        {
+          "unknown": true,
+          "name": "Bit Store Coin",
+          "address": "0x31ea0de8119307aa264bb4b38727aab4e36b074f"
+        },
+        {
+          "unknown": true,
+          "name": "Crafting Finance",
+          "address": "0x508df5aa4746be37b5b6a69684dfd8bdc322219d"
+        },
+        {
+          "unknown": true,
+          "name": "PrimeNumbers",
+          "address": "0x7cfea0dd176651e7b5a1ced9c4faf8ee295315fd"
+        },
+        {
+          "unknown": true,
+          "name": "archangel",
+          "address": "0x36e43065e977bc72cb86dbd8405fae7057cdc7fd"
+        },
+        {
+          "unknown": true,
+          "name": "YfDAI.finance",
+          "address": "0xf4cd3d3fda8d7fd6c5a500203e38640a70bf9577"
+        },
+        {
+          "unknown": true,
+          "name": "AdBank",
+          "address": "0x2baac9330cf9ac479d819195794d79ad0c7616e3"
+        },
+        {
+          "unknown": true,
+          "name": "LABSGroup",
+          "address": "0x8b0e42f366ba502d787bb134478adfae966c8798"
+        },
+        {
+          "unknown": true,
+          "name": "Fodl",
+          "address": "0x4c2e59d098df7b6cbae0848d66de2f8a4889b9c3"
+        },
+        {
+          "unknown": true,
+          "name": "iEx.ec Network Token",
+          "address": "0x607f4c5bb672230e8672085532f7e901544a7375"
+        },
+        {
+          "unknown": true,
+          "name": "Lambatoken",
+          "address": "0x55091ee4c62cdcf7bfb6e0f7f78447f8f7b44269"
+        },
+        {
+          "unknown": true,
+          "name": "Colizeum",
+          "address": "0x436da116249044e8b4464f0cf21dd93311d88190"
+        },
+        {
+          "unknown": true,
+          "name": "Milio Token",
+          "address": "0xb3214d4af8af68e56a4716f7538e57c5f0ef622c"
+        },
+        {
+          "unknown": true,
+          "name": "Metasens Universal Unit",
+          "address": "0xdfd8d604951ebf1b2297285f1b68de140c43992b"
+        },
+        {
+          "unknown": true,
+          "name": "Rights Token",
+          "address": "0xac809cdf43a36acbd6d4e6e1676ca56ad8438e28"
+        },
+        {
+          "unknown": true,
+          "name": "Universe Crystal Gene",
+          "address": "0x7d92a06808b4c4833623f809218ed403e4a85fe1"
+        },
+        {
+          "unknown": true,
+          "name": "Tycoon Token",
+          "address": "0x3a82d3111ab5faf39d847d46023d9090261a658f"
+        },
+        {
+          "unknown": true,
+          "name": "PRIMATE",
+          "address": "0x46e98ffe40e408ba6412beb670507e083c8b95ff"
+        },
+        {
+          "unknown": true,
+          "name": "Grok",
+          "address": "0x21d486f6b7eb7b556978c5a0c96c79a08eb841de"
+        },
+        {
+          "unknown": true,
+          "name": "Zloadr Token",
+          "address": "0xbdfa65533074b0b23ebc18c7190be79fa74b30c2"
+        },
+        {
+          "unknown": true,
+          "name": "Aprocoin",
+          "address": "0x114b3381b47650c6bea8a4dca8d8fa6afb329678"
+        }
+      ]
+    },
+    {
+      "address": "0x65e64963b755043CA4FFC88029FfB8305615EeDD",
+      "chainId": "250",
+      "tokens": ["LINK", "YFI"]
+    },
+    {
+      "address": "0xA024856a51B1D8bFBbc78DDbc98e6d5b94dc24c4",
+      "chainId": "256256",
+      "tokens": ["USDT"]
+    },
+    {
+      "address": "0x668b9734FfE9eE8a01d4Ade3362De71E8989EA87",
+      "chainId": "137",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "AladdinToken",
+          "address": "0xb26c4b3ca601136daf98593feaeff9e0ca702a8d"
+        },
+        {
+          "unknown": true,
+          "name": "DeHive.finance",
+          "address": "0x62dc4817588d53a056cbbd18231d91ffccd34b2a"
+        },
+        {
+          "unknown": true,
+          "name": "DecentraWeb",
+          "address": "0xe7f58a92476056627f9fdb92286778abd83b285f"
+        },
+        {
+          "unknown": true,
+          "name": "LunchMoney",
+          "address": "0x66fd97a78d8854fec445cd1c80a07896b0b4851f"
+        },
+        {
+          "unknown": true,
+          "name": "MOchiMArket",
+          "address": "0xbd1848e1491d4308ad18287a745dd4db2a4bd55b"
+        },
+        {
+          "unknown": true,
+          "name": "Nexity Network",
+          "address": "0xebeef419bb5a347e3d98f7d2168055214d12cbdb"
+        },
+        "REQ",
+        {
+          "unknown": true,
+          "name": "Tanks",
+          "address": "0xf604d1e51122592e0babe63ac334c0e647222f2d"
+        },
+        {
+          "unknown": true,
+          "name": "YELToken",
+          "address": "0x7815bda662050d84718b988735218cffd32f75ea"
+        },
+        {
+          "unknown": true,
+          "name": "BallswapperAcceleratorReflecti",
+          "address": "0x21fb4dd8c500be1a9ba27f827217e477217d6225"
+        },
+        {
+          "unknown": true,
+          "name": "BlackHole.BLACKGovernanceToken",
+          "address": "0xd714d91a169127e11d8fab3665d72e8b7ef9dbe2"
+        },
+        {
+          "unknown": true,
+          "name": "DinoXCoin",
+          "address": "0x20a8cec5fffea65be7122bcab2ffe32ed4ebf03a"
+        },
+        {
+          "unknown": true,
+          "name": "FoundryLogisticsToken",
+          "address": "0x6c972b70c533e2e045f333ee28b9ffb8d717be69"
+        },
+        {
+          "unknown": true,
+          "name": "KSMStarterToken",
+          "address": "0xbc17729fdf562723f0267f79ff25ade441056d87"
+        },
+        {
+          "unknown": true,
+          "name": "MarginSwap",
+          "address": "0xaa4e3edb11afa93c41db59842b29de64b72e355b"
+        },
+        {
+          "unknown": true,
+          "name": "Mimir Token",
+          "address": "0x71dc40668682a124231301414167e4cf7f55383c"
+        },
+        {
+          "unknown": true,
+          "name": "NFTYToken",
+          "address": "0xe1d7c7a4596b038ced2a84bf65b8647271c53208"
+        },
+        {
+          "unknown": true,
+          "name": "StartFiToken",
+          "address": "0xfd9cd8c0d18cd7e06958f3055e0ec3adbdba0b17"
+        },
+        {
+          "unknown": true,
+          "name": "Unvest",
+          "address": "0xf009f5531de69067435e32c4b9d36077f4c4a673"
+        },
+        {
+          "unknown": true,
+          "name": "Utopia Open Platform",
+          "address": "0xe4ae84448db5cfe1daf1e6fb172b469c161cb85f"
+        },
+        "AMP",
+        {
+          "unknown": true,
+          "name": "Artemis Vision",
+          "address": "0x28fda76721a8077a5de802ab0212849b8c38429e"
+        },
+        {
+          "unknown": true,
+          "name": "Bit2Me",
+          "address": "0xd7c302fc3ac829c7e896a32c4bd126f3e8bd0a1f"
+        },
+        {
+          "unknown": true,
+          "name": "CRD Network",
+          "address": "0xcaaa93712bdac37f736c323c93d4d5fdefcc31cc"
+        },
+        {
+          "unknown": true,
+          "name": "Gains",
+          "address": "0xd9b312d77bc7bed9b9cecb56636300bed4fe5ce9"
+        },
+        {
+          "unknown": true,
+          "name": "BuzzShow Token",
+          "address": "0x594207c791afd06a8d087d84d99d1da53ccbd45f"
+        },
+        {
+          "unknown": true,
+          "name": "IceToken",
+          "address": "0xf16e81dce15b08f326220742020379b855b87df9"
+        },
+        {
+          "unknown": true,
+          "name": "Launchpooltoken",
+          "address": "0x6149c26cd2f7b5ccdb32029af817123f6e37df5b"
+        },
+        {
+          "unknown": true,
+          "name": "QUIDD",
+          "address": "0xda9fdab21bc4a5811134a6e0ba6ca06624e67c07"
+        },
+        {
+          "unknown": true,
+          "name": "Vera",
+          "address": "0xd7f0cc50ad69408ae58be033f4f85d2367c2e468"
+        },
+        {
+          "unknown": true,
+          "name": "XEND",
+          "address": "0xe4cfe9eaa8cdb0942a80b7bc68fd8ab0f6d44903"
+        },
+        {
+          "unknown": true,
+          "name": "Flex Ungovernance Token",
+          "address": "0x6243d8cea23066d098a15582d81a598b4e8391f4"
+        },
+        {
+          "unknown": true,
+          "name": "LunaChow",
+          "address": "0xa5ef74068d04ba0809b7379dd76af5ce34ab7c57"
+        },
+        {
+          "unknown": true,
+          "name": "moda",
+          "address": "0x1117ac6ad6cdf1a3bc543bad3b133724620522d5"
+        },
+        {
+          "unknown": true,
+          "name": "Oh!Finance",
+          "address": "0x16ba8efe847ebdfef99d399902ec29397d403c30"
+        },
+        {
+          "unknown": true,
+          "name": "ARIANEE",
+          "address": "0xedf6568618a00c6f0908bf7758a16f76b6e04af9"
+        },
+        {
+          "unknown": true,
+          "name": "AXIS Token",
+          "address": "0xf0c5831ec3da15f3696b4dad8b21c7ce2f007f28"
+        },
+        {
+          "unknown": true,
+          "name": "EsportsPro",
+          "address": "0x29c56e7cb9c840d2b2371b17e28bab44ad3c3ead"
+        },
+        {
+          "unknown": true,
+          "name": "Hakka Finance",
+          "address": "0x0e29e5abbb5fd88e28b2d355774e73bd47de3bcd"
+        },
+        {
+          "unknown": true,
+          "name": "hoge.finance",
+          "address": "0xfad45e47083e4607302aa43c65fb3106f1cd7607"
+        },
+        {
+          "unknown": true,
+          "name": "Lympo tokens",
+          "address": "0xc690f7c7fcffa6a82b79fab7508c466fefdfc8c5"
+        },
+        {
+          "unknown": true,
+          "name": "Paribus",
+          "address": "0xd528cf2e081f72908e086f8800977df826b5a483"
+        },
+        {
+          "unknown": true,
+          "name": "Scoobi-Doge",
+          "address": "0x06a87f6afec4a739c367bef69eefe383d27106bd"
+        },
+        {
+          "unknown": true,
+          "name": "0chain",
+          "address": "0xb9ef770b6a5e12e45983c5d80545258aa38f3b78"
+        },
+        {
+          "unknown": true,
+          "name": "SelfKey",
+          "address": "0x4cc19356f2d37338b9802aa8e8fc58b0373296e7"
+        },
+        {
+          "unknown": true,
+          "name": "Kounotori",
+          "address": "0x616ef40d55c0d2c506f4d6873bda8090b79bf8fc"
+        }
+      ]
+    },
+    {
+      "address": "0x183D0dC5867c01bFB1dbBc41d6a9d3dE6e044626",
+      "chainId": "42161",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "AladdinToken",
+          "address": "0xb26c4b3ca601136daf98593feaeff9e0ca702a8d"
+        },
+        "FRAX",
+        "FXS",
+        {
+          "unknown": true,
+          "name": "Paper",
+          "address": "0x7ae1d57b58fa6411f32948314badd83583ee0e8c"
+        },
+        {
+          "unknown": true,
+          "name": "IceToken",
+          "address": "0xf16e81dce15b08f326220742020379b855b87df9"
+        },
+        {
+          "unknown": true,
+          "name": "CRE8R DAO ",
+          "address": "0xaa61d5dec73971cd4a026ef2820bb87b4a4ed8d6"
+        },
+        {
+          "unknown": true,
+          "name": "Alchemix",
+          "address": "0xdbdb4d16eda451d0503b854cf79d55697f90c8df"
+        },
+        {
+          "unknown": true,
+          "name": "MCN.VENTURES",
+          "address": "0xd91e9a0fef7c0fa4ebdaf4d0acf55888949a2a9b"
+        }
+      ]
+    },
+    {
+      "address": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
+      "chainId": "43114",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "BaconDAO",
+          "address": "0x34f797e7190c131cf630524655a618b5bd8738e7"
+        },
+        "FRAX",
+        "FXS",
+        {
+          "unknown": true,
+          "name": "inSure",
+          "address": "0xcb86c6a22cb56b6cf40cafedb06ba0df188a416e"
+        },
+        {
+          "unknown": true,
+          "name": "AGAToken",
+          "address": "0x2d80f5f5328fdcb6eceb7cacf5dd8aedaec94e20"
+        },
+        {
+          "unknown": true,
+          "name": "BaoToken",
+          "address": "0x374cb8c27130e2c9e04f44303f3c8351b9de61c1"
+        },
+        {
+          "unknown": true,
+          "name": "EvidenZ",
+          "address": "0xacfa209fb73bf3dd5bbfb1101b9bc999c49062a5"
+        },
+        {
+          "unknown": true,
+          "name": "BiFi",
+          "address": "0x2791bfd60d232150bff86b39b7146c0eaaa2ba81"
+        },
+        {
+          "unknown": true,
+          "name": "DEAPCOIN",
+          "address": "0x1a3496c18d558bd9c6c8f609e1b129f67ab08163"
+        },
+        {
+          "unknown": true,
+          "name": "KSMStarterToken",
+          "address": "0xbc17729fdf562723f0267f79ff25ade441056d87"
+        },
+        {
+          "unknown": true,
+          "name": "MarginSwap",
+          "address": "0xaa4e3edb11afa93c41db59842b29de64b72e355b"
+        },
+        {
+          "unknown": true,
+          "name": "Nord",
+          "address": "0x6e9730ecffbed43fd876a264c982e254ef05a0de"
+        },
+        {
+          "unknown": true,
+          "name": "Popcorn",
+          "address": "0xd0cd466b34a24fcb2f87676278af2005ca8a78c4"
+        },
+        {
+          "unknown": true,
+          "name": "AGA Rewards",
+          "address": "0xb453f1f2ee776daf2586501361c457db70e1ca0f"
+        },
+        "AMP",
+        {
+          "unknown": true,
+          "name": "ANGLE",
+          "address": "0x31429d1856ad1377a8a0079410b297e1a9e214c2"
+        },
+        {
+          "unknown": true,
+          "name": "CRD Network",
+          "address": "0xcaaa93712bdac37f736c323c93d4d5fdefcc31cc"
+        },
+        {
+          "unknown": true,
+          "name": "DSLA",
+          "address": "0x3affcca64c2a6f4e3b6bd9c64cd2c969efd1ecbe"
+        },
+        {
+          "unknown": true,
+          "name": "DAOventuresDeFi",
+          "address": "0x77dce26c03a9b833fc2d7c31c22da4f42e9d9582"
+        },
+        {
+          "unknown": true,
+          "name": "IceToken",
+          "address": "0xf16e81dce15b08f326220742020379b855b87df9"
+        },
+        {
+          "unknown": true,
+          "name": "Million",
+          "address": "0x6b4c7a5e3f0b99fcd83e9c089bddd6c7fce5c611"
+        },
+        "ORBS",
+        {
+          "unknown": true,
+          "name": "UNIONProtocolGovernanceToken",
+          "address": "0x226f7b842e0f0120b7e194d05432b3fd14773a9d"
+        },
+        {
+          "unknown": true,
+          "name": "DAOInvest",
+          "address": "0x1f19f83fc9a25f3c861260143e36c17706257986"
+        },
+        {
+          "unknown": true,
+          "name": "VortexDeFi",
+          "address": "0xceb286c9604c542d3cc08b41aa6c9675b078a832"
+        },
+        "CRV",
+        {
+          "unknown": true,
+          "name": "LunaChow",
+          "address": "0xa5ef74068d04ba0809b7379dd76af5ce34ab7c57"
+        },
+        {
+          "unknown": true,
+          "name": "Oh!Finance",
+          "address": "0x16ba8efe847ebdfef99d399902ec29397d403c30"
+        },
+        {
+          "unknown": true,
+          "name": "OnX.finance",
+          "address": "0xe0ad1806fd3e7edf6ff52fdb822432e847411033"
+        },
+        {
+          "unknown": true,
+          "name": "OpenOcean",
+          "address": "0x7778360f035c589fce2f4ea5786cbd8b36e5396b"
+        },
+        {
+          "unknown": true,
+          "name": "RaiReflexIndex",
+          "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919"
+        },
+        {
+          "unknown": true,
+          "name": "Scoobi-Doge",
+          "address": "0x06a87f6afec4a739c367bef69eefe383d27106bd"
+        },
+        {
+          "unknown": true,
+          "name": "agEUR",
+          "address": "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8"
+        },
+        {
+          "unknown": true,
+          "name": "Akita Inu",
+          "address": "0x3301ee63fb29f863f2333bd4466acb46cd8323e6"
+        },
+        "ANKR",
+        {
+          "unknown": true,
+          "name": "BNPL Pay",
+          "address": "0x84d821f7fbdd595c4c4a50842913e6b1e07d7a53"
+        },
+        {
+          "unknown": true,
+          "name": "DEXTF Token",
+          "address": "0x5f64ab1544d28732f0a24f4713c2c8ec0da089f0"
+        },
+        {
+          "unknown": true,
+          "name": "ForceDAO",
+          "address": "0x2c31b10ca416b82cec4c5e93c615ca851213d48d"
+        },
+        {
+          "unknown": true,
+          "name": "MetaBrands",
+          "address": "0xd52aae39a2b5cc7812f7b9450ebb61dfef702b15"
+        },
+        {
+          "unknown": true,
+          "name": "StakeDAOToken",
+          "address": "0x73968b9a57c6e53d41345fd57a6e6ae27d6cdb2f"
+        },
+        {
+          "unknown": true,
+          "name": "StackOS",
+          "address": "0x56a86d648c435dc707c8405b78e2ae8eb4e60ba4"
+        },
+        {
+          "unknown": true,
+          "name": "Unbanked",
+          "address": "0x06b884e60794ce02aafab13791b59a2e6a07442f"
+        },
+        {
+          "unknown": true,
+          "name": "Shibaverse",
+          "address": "0x7ae0d42f23c33338de15bfa89c7405c068d9dc0a"
+        },
+        {
+          "unknown": true,
+          "name": "XIO Network",
+          "address": "0x0f7f961648ae6db43c75663ac7e5414eb79b5704"
+        },
+        {
+          "unknown": true,
+          "name": "Sifu",
+          "address": "0x29127fe04ffa4c32acac0ffe17280abd74eac313"
+        },
+        {
+          "unknown": true,
+          "name": "Zloadr Token",
+          "address": "0xbdfa65533074b0b23ebc18c7190be79fa74b30c2"
+        }
+      ]
+    },
+    {
+      "address": "0xFc7cc7C7e7985316d23104B9689C511134f59bc8",
+      "chainId": "592",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "SpiderDAOToken",
+          "address": "0xbcd4b7de6fde81025f74426d43165a5b0d790fdd"
+        }
+      ]
+    },
+    {
+      "address": "0xD779967F8B511C5edf39115341B310022900eFED",
+      "chainId": "128",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "BlackHole.BLACKGovernanceToken",
+          "address": "0xd714d91a169127e11d8fab3665d72e8b7ef9dbe2"
+        },
+        {
+          "unknown": true,
+          "name": "KSMStarterToken",
+          "address": "0xbc17729fdf562723f0267f79ff25ade441056d87"
+        },
+        {
+          "unknown": true,
+          "name": "Unilayer",
+          "address": "0x0ff6ffcfda92c53f615a4a75d982f399c989366b"
+        },
+        {
+          "unknown": true,
+          "name": "StartFiToken",
+          "address": "0xfd9cd8c0d18cd7e06958f3055e0ec3adbdba0b17"
+        },
+        {
+          "unknown": true,
+          "name": "Polars",
+          "address": "0xc17fbe1d709ddf6c0b6665dd0591046815ac7554"
+        },
+        {
+          "unknown": true,
+          "name": "XEND",
+          "address": "0xe4cfe9eaa8cdb0942a80b7bc68fd8ab0f6d44903"
+        },
+        {
+          "unknown": true,
+          "name": "PKGToken",
+          "address": "0x02f2d4a04e6e01ace88bd2cd632875543b2ef577"
+        }
+      ]
+    },
+    {
+      "address": "0x2F10c5eE93ac666dA72195abA8a49FD6D27fA02F",
+      "chainId": "100",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "Unistake",
+          "address": "0x9ed8e7c9604790f7ec589f99b94361d8aab64e5e"
+        },
+        "WBTC"
+      ]
+    },
+    {
+      "address": "0xF2c78A59885f1E5548E1FcD2A900EF6cF8c279d4",
+      "chainId": "1666600000",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "ANGLE",
+          "address": "0x31429d1856ad1377a8a0079410b297e1a9e214c2"
+        },
+        {
+          "unknown": true,
+          "name": "UNIONProtocolGovernanceToken",
+          "address": "0x226f7b842e0f0120b7e194d05432b3fd14773a9d"
+        },
+        {
+          "unknown": true,
+          "name": "LunaChow",
+          "address": "0xa5ef74068d04ba0809b7379dd76af5ce34ab7c57"
+        },
+        {
+          "unknown": true,
+          "name": "Space Token",
+          "address": "0x3dc7b06dd0b1f08ef9acbbd2564f8605b4868eea"
+        },
+        {
+          "unknown": true,
+          "name": "Sperax",
+          "address": "0xb4a3b0faf0ab53df58001804dda5bfc6a3d59008"
+        }
+      ]
+    },
+    {
+      "address": "0x80641af4A0e1dcD69d7EA75ceB8D661baa84297c",
+      "chainId": "4689",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "UNIONProtocolGovernanceToken",
+          "address": "0x226f7b842e0f0120b7e194d05432b3fd14773a9d"
+        },
+        {
+          "unknown": true,
+          "name": "Space Token",
+          "address": "0x3dc7b06dd0b1f08ef9acbbd2564f8605b4868eea"
+        }
+      ]
+    },
+    {
+      "address": "0x923e0a17F49Fb03d936F2af2D59D379C615f5447",
+      "chainId": "321",
+      "tokens": [
+        {
+          "unknown": true,
+          "name": "Zeedex",
+          "address": "0x5150956e082c748ca837a5dfa0a7c10ca4697f9c"
+        },
+        "SAND"
+      ]
+    },
+    {
+      "address": "0x3696f44F2B7FE51486f81D2639Ff895202614711",
+      "chainId": "42220",
+      "tokens": ["CRV"]
+    }
+  ],
+  "chainIds": [
+    {
+      "chainId": "250",
+      "name": "Fantom"
+    },
+    {
+      "chainId": "25",
+      "name": null
+    },
+    {
+      "chainId": "40",
+      "name": null
+    },
+    {
+      "chainId": "56",
+      "name": null
+    },
+    {
+      "chainId": "288",
+      "name": null
+    },
+    {
+      "chainId": "1030",
+      "name": null
+    },
+    {
+      "chainId": "1284",
+      "name": null
+    },
+    {
+      "chainId": "2001",
+      "name": null
+    },
+    {
+      "chainId": "42220",
+      "name": null
+    },
+    {
+      "chainId": "1666600000",
+      "name": null
+    },
+    {
+      "chainId": "LTC",
+      "name": "Litecoin"
+    },
+    {
+      "chainId": "BLOCK",
+      "name": null
+    },
+    {
+      "chainId": "BTC",
+      "name": "Bitcoin"
+    },
+    {
+      "chainId": "32659",
+      "name": null
+    },
+    {
+      "chainId": "137",
+      "name": null
+    },
+    {
+      "chainId": "1088",
+      "name": null
+    },
+    {
+      "chainId": "43114",
+      "name": null
+    },
+    {
+      "chainId": "COLX",
+      "name": null
+    },
+    {
+      "chainId": "42161",
+      "name": null
+    },
+    {
+      "chainId": "1285",
+      "name": null
+    },
+    {
+      "chainId": "336",
+      "name": null
+    },
+    {
+      "chainId": "10",
+      "name": null
+    },
+    {
+      "chainId": "30",
+      "name": null
+    },
+    {
+      "chainId": "57",
+      "name": null
+    },
+    {
+      "chainId": "61",
+      "name": null
+    },
+    {
+      "chainId": "106",
+      "name": null
+    },
+    {
+      "chainId": "108",
+      "name": null
+    },
+    {
+      "chainId": "1024",
+      "name": null
+    },
+    {
+      "chainId": "1234",
+      "name": null
+    },
+    {
+      "chainId": "2000",
+      "name": null
+    },
+    {
+      "chainId": "2025",
+      "name": null
+    },
+    {
+      "chainId": "2222",
+      "name": null
+    },
+    {
+      "chainId": "9001",
+      "name": null
+    },
+    {
+      "chainId": "10000",
+      "name": null
+    },
+    {
+      "chainId": "10001",
+      "name": null
+    },
+    {
+      "chainId": "42262",
+      "name": null
+    },
+    {
+      "chainId": "47805",
+      "name": null
+    },
+    {
+      "chainId": "71402",
+      "name": null
+    },
+    {
+      "chainId": "24",
+      "name": null
+    },
+    {
+      "chainId": "66",
+      "name": null
+    },
+    {
+      "chainId": "88",
+      "name": null
+    },
+    {
+      "chainId": "122",
+      "name": null
+    },
+    {
+      "chainId": "128",
+      "name": null
+    },
+    {
+      "chainId": "321",
+      "name": null
+    },
+    {
+      "chainId": "24734",
+      "name": null
+    },
+    {
+      "chainId": "42170",
+      "name": null
+    },
+    {
+      "chainId": "58",
+      "name": null
+    },
+    {
+      "chainId": "86",
+      "name": null
+    },
+    {
+      "chainId": "199",
+      "name": null
+    },
+    {
+      "chainId": "256256",
+      "name": null
+    },
+    {
+      "chainId": "XRP",
+      "name": null
+    },
+    {
+      "chainId": "100",
+      "name": null
+    },
+    {
+      "chainId": "592",
+      "name": null
+    },
+    {
+      "chainId": "4689",
+      "name": null
+    },
+    {
+      "chainId": "1294",
+      "name": null
+    },
+    {
+      "chainId": "NEAR",
+      "name": null
+    },
+    {
+      "chainId": "8217",
+      "name": null
+    }
+  ]
+}
