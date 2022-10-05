@@ -23,10 +23,7 @@ interface HeldAsset {
 export class BalanceUpdater {
   private readonly configHash: Hash256
   private readonly knownSet = new Set<number>()
-  private readonly taskQueue = new TaskQueue(
-    this.update.bind(this),
-    this.logger,
-  )
+  private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
     private readonly multicall: MulticallClient,
@@ -39,6 +36,10 @@ export class BalanceUpdater {
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getBalanceConfigHash(projects)
+    this.taskQueue = new TaskQueue(
+      this.update.bind(this),
+      this.logger.for('taskQueue'),
+    )
   }
 
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {

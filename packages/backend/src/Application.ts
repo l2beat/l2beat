@@ -200,14 +200,16 @@ export class Application {
       await database.migrateToLatest()
 
       if (config.syncEnabled) {
-        priceUpdater.start()
-        await blockNumberUpdater.start()
-        await balanceUpdater.start()
-        await reportUpdater.start()
+        if (config.tvlReportSync) {
+          priceUpdater.start()
+          await blockNumberUpdater.start()
+          await balanceUpdater.start()
+          await reportUpdater.start()
+        }
 
         activityModule?.start()
 
-        if (config.eventsSyncEnabled) {
+        if (config.eventsSync) {
           eventUpdater.start()
         }
       }

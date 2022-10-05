@@ -35,7 +35,8 @@ export function getProductionConfig(): Config {
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
-    eventsSyncEnabled: false,
+    tvlReportSync: true,
+    eventsSync: false,
     transactionCountSync: false,
   }
 }

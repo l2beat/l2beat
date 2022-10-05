@@ -1,14 +1,17 @@
 import { HttpClient, Logger } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 
 import { ActivityController } from '../api/controllers/ActivityController'
 import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
+import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
-import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
+import { LoopringClient } from '../peripherals/loopring'
 import { StarkexClient } from '../peripherals/starkex'
 import { ZksyncClient } from '../peripherals/zksync'
 import {
@@ -36,8 +39,11 @@ export function getActivityModule(
   )
 
   const zksyncClient = new ZksyncClient(http, logger)
+  const loopringClient = new LoopringClient(http, logger, {
+    callsPerMinute: config.transactionCountSync.loopringCallsPerMinute,
+  })
 
-  const rpcTransactionCountRepository = new RpcTransactionCountRepository(
+  const blockTransactionCountRepository = new BlockTransactionCountRepository(
     database,
     logger,
   )
@@ -50,13 +56,14 @@ export function getActivityModule(
 
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
-    rpcTransactionCountRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
-    rpcTransactionCountRepository,
+    config.transactionCountSync,
+    blockTransactionCountRepository,
     clock,
     logger,
     config.transactionCountSync.ethereumAlchemyApiKey,
@@ -75,6 +82,16 @@ export function getActivityModule(
     zksyncTransactionRepository,
     clock,
     logger,
+    { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
+  )
+
+  const loopringTransactionUpdater = new LoopringTransactionUpdater(
+    loopringClient,
+    blockTransactionCountRepository,
+    clock,
+    logger,
+    ProjectId.LOOPRING,
+    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
   )
 
   const activityController = new ActivityController(
@@ -82,6 +99,7 @@ export function getActivityModule(
       ...layer2RpcTransactionUpdaters,
       ...starkexTransactionUpdaters,
       zksyncTransactionUpdater,
+      loopringTransactionUpdater,
     ],
     ethereumTransactionUpdater,
   )
@@ -98,6 +116,7 @@ export function getActivityModule(
       updater.start()
     }
     zksyncTransactionUpdater.start()
+    loopringTransactionUpdater.start()
     ethereumTransactionUpdater.start()
   }
 

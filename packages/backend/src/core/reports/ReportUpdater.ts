@@ -15,10 +15,7 @@ import { ReportProject } from './ReportProject'
 
 export class ReportUpdater {
   private readonly configHash: Hash256
-  private readonly taskQueue = new TaskQueue(
-    this.update.bind(this),
-    this.logger,
-  )
+  private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
@@ -32,6 +29,10 @@ export class ReportUpdater {
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getReportConfigHash(projects)
+    this.taskQueue = new TaskQueue(
+      this.update.bind(this),
+      this.logger.for('taskQueue'),
+    )
   }
 
   async start() {
