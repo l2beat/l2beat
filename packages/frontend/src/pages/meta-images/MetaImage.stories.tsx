@@ -33,7 +33,7 @@ function Template({ projectId }: TemplateProps) {
           sevenDayChange="+3.45%"
           name={project?.display.name}
           icon={project?.display.slug && `/icons/${project.display.slug}.png`}
-          apiEndpoint="/fakeTvl.json"
+          tvlEndpoint="/fakeTvl.json"
         />
       </div>
     </div>

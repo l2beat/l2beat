@@ -8,7 +8,7 @@ export interface MetaImageProps {
   sevenDayChange: string
   name?: string
   icon?: string
-  apiEndpoint: string
+  tvlEndpoint: string
 }
 
 export function MetaImage(props: MetaImageProps) {
@@ -28,7 +28,7 @@ export function MetaImage(props: MetaImageProps) {
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart endpoint={props.apiEndpoint} days={30} />
+      <Chart tvlEndpoint={props.tvlEndpoint} days={30} />
       <Logo />
     </div>
   )
