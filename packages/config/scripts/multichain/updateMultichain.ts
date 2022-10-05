@@ -1,6 +1,6 @@
-const { writeFile } = require("fs/promises");
-const fetch = require("node-fetch");
-const { tokenList } = require("@l2beat/config");
+import { writeFile } from "fs/promises"
+import fetch from "node-fetch"
+import { tokenList } from "@l2beat/config";
 
 main();
 async function main() {
@@ -11,9 +11,9 @@ async function main() {
 
   const escrows = [];
 
-  for (const [key, token] of Object.entries(json)) {
-    for (const [id, chain] of Object.entries(token.destChains)) {
-      for (const [hash, spec] of Object.entries(chain)) {
+  for (const [key, token] of Object.entries<any>(json)) {
+    for (const [id, chain] of Object.entries<any>(token.destChains)) {
+      for (const [hash, spec] of Object.entries<any>(chain)) {
         if (spec.type === "swapin") {
           escrows.push({
             tokenName: token.name,
