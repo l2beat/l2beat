@@ -50,16 +50,20 @@ export function generateOutput(config: MultichainConfig) {
               route.type,
             )
           ) {
-            escrows.push({
-              chainId: source !== ETHEREUM ? source : destination,
-              type: 'any',
-              token: {
-                address: addressOrEth(token.address),
-                name: token.name ?? '?',
-                symbol: token.symbol ?? '?',
-              },
-              address: EthereumAddress(route.fromanytoken.address),
-            })
+            const tokenAddress = addressOrEth(token.address)
+            const escrowAddress = EthereumAddress(route.fromanytoken.address)
+            if (tokenAddress !== escrowAddress) {
+              escrows.push({
+                chainId: source !== ETHEREUM ? source : destination,
+                type: 'any',
+                token: {
+                  address: tokenAddress,
+                  name: token.name ?? '?',
+                  symbol: token.symbol ?? '?',
+                },
+                address: escrowAddress,
+              })
+            }
           }
         }
       }
