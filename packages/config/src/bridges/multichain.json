@@ -2,6 +2,7 @@
   "escrows": [
     {
       "address": "0x13B432914A996b0A48695dF9B2d701edA45FF264",
+      "type": "basic",
       "chainIds": [
         "56"
       ],
@@ -70,6 +71,7 @@
     },
     {
       "address": "0x46290B0c3A234E3d538050d8F34421797532A827",
+      "type": "basic",
       "chainIds": [
         "32659"
       ],
@@ -143,6 +145,7 @@
     },
     {
       "address": "0x353B98DDc927173005dD8B293B043Bd950cDA468",
+      "type": "basic",
       "chainIds": [
         "30"
       ],
@@ -171,6 +174,7 @@
     },
     {
       "address": "0x8cC49FE67A4bD7a15674c4ffD4E969D94304BBbf",
+      "type": "basic",
       "chainIds": [
         "57"
       ],
@@ -209,6 +213,7 @@
     },
     {
       "address": "0x7F923dB3d90047D75D078e29b1f8Eac03e30F761",
+      "type": "basic",
       "chainIds": [
         "61"
       ],
@@ -242,6 +247,7 @@
     },
     {
       "address": "0xCDd83050f045ab31B884f0Dc49581BC7b3e0B84C",
+      "type": "basic",
       "chainIds": [
         "106"
       ],
@@ -275,6 +281,7 @@
     },
     {
       "address": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
+      "type": "basic",
       "chainIds": [
         "250"
       ],
@@ -803,6 +810,7 @@
     },
     {
       "address": "0x4E67df0f232C3bc985F8a63326D80ce3d9A40400",
+      "type": "basic",
       "chainIds": [
         "336"
       ],
@@ -861,6 +869,7 @@
     },
     {
       "address": "0x373590a576ccb8143f377DB5f1c16F9f8528a8B4",
+      "type": "basic",
       "chainIds": [
         "1030"
       ],
@@ -899,6 +908,7 @@
     },
     {
       "address": "0xEC4486a90371c9b66f499Ff3936F29f0D5AF8b7E",
+      "type": "basic",
       "chainIds": [
         "1284"
       ],
@@ -947,6 +957,7 @@
     },
     {
       "address": "0x10c6b61DbF44a083Aec3780aCF769C77BE747E23",
+      "type": "basic",
       "chainIds": [
         "1285"
       ],
@@ -1080,6 +1091,7 @@
     },
     {
       "address": "0x55F089d5f6aeDfdACBD5E3aCB0e8F31FBAb44088",
+      "type": "basic",
       "chainIds": [
         "2000"
       ],
@@ -1123,6 +1135,7 @@
     },
     {
       "address": "0xbd40733A2F223fF32195a759a81df25E35DD4dEA",
+      "type": "basic",
       "chainIds": [
         "2001"
       ],
@@ -1201,6 +1214,7 @@
     },
     {
       "address": "0xF62385C78f3BDBff33145703546b0377853AAa77",
+      "type": "basic",
       "chainIds": [
         "9001"
       ],
@@ -1234,6 +1248,7 @@
     },
     {
       "address": "0xE4cf417081A0Ab3f964b44D904BC2b534351A9a7",
+      "type": "basic",
       "chainIds": [
         "42262"
       ],
@@ -1262,6 +1277,7 @@
     },
     {
       "address": "0x896be9f48b225154593A84b382d927F9d7Bc2361",
+      "type": "basic",
       "chainIds": [
         "47805"
       ],
@@ -1295,6 +1311,7 @@
     },
     {
       "address": "0x57ed6BD35a6CE815079855CD0b21331d1D5D0A0e",
+      "type": "basic",
       "chainIds": [
         "40"
       ],
@@ -1328,6 +1345,7 @@
     },
     {
       "address": "0x87bCB3038988ca2A89605fFa8f237FB78Df1c3Ae",
+      "type": "basic",
       "chainIds": [
         "122"
       ],
@@ -1351,6 +1369,7 @@
     },
     {
       "address": "0x533e3c0e6b48010873B947bddC4721b1bDFF9648",
+      "type": "basic",
       "chainIds": [
         "56"
       ],
@@ -2934,6 +2953,7 @@
     },
     {
       "address": "0x65e64963b755043CA4FFC88029FfB8305615EeDD",
+      "type": "basic",
       "chainIds": [
         "250"
       ],
@@ -2967,6 +2987,7 @@
     },
     {
       "address": "0xA024856a51B1D8bFBbc78DDbc98e6d5b94dc24c4",
+      "type": "basic",
       "chainIds": [
         "256256"
       ],
@@ -2980,6 +3001,7 @@
     },
     {
       "address": "0x668b9734FfE9eE8a01d4Ade3362De71E8989EA87",
+      "type": "basic",
       "chainIds": [
         "137"
       ],
@@ -3228,6 +3250,7 @@
     },
     {
       "address": "0x183D0dC5867c01bFB1dbBc41d6a9d3dE6e044626",
+      "type": "basic",
       "chainIds": [
         "42161"
       ],
@@ -3286,6 +3309,7 @@
     },
     {
       "address": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
+      "type": "basic",
       "chainIds": [
         "43114"
       ],
@@ -3534,6 +3558,7 @@
     },
     {
       "address": "0xFc7cc7C7e7985316d23104B9689C511134f59bc8",
+      "type": "basic",
       "chainIds": [
         "592"
       ],
@@ -3567,6 +3592,7 @@
     },
     {
       "address": "0xD779967F8B511C5edf39115341B310022900eFED",
+      "type": "basic",
       "chainIds": [
         "128"
       ],
@@ -3620,6 +3646,7 @@
     },
     {
       "address": "0x2F10c5eE93ac666dA72195abA8a49FD6D27fA02F",
+      "type": "basic",
       "chainIds": [
         "100"
       ],
@@ -3638,6 +3665,7 @@
     },
     {
       "address": "0xF2c78A59885f1E5548E1FcD2A900EF6cF8c279d4",
+      "type": "basic",
       "chainIds": [
         "1666600000"
       ],
@@ -3671,6 +3699,7 @@
     },
     {
       "address": "0x80641af4A0e1dcD69d7EA75ceB8D661baa84297c",
+      "type": "basic",
       "chainIds": [
         "4689"
       ],
@@ -3689,6 +3718,7 @@
     },
     {
       "address": "0x923e0a17F49Fb03d936F2af2D59D379C615f5447",
+      "type": "basic",
       "chainIds": [
         "321"
       ],
@@ -3722,6 +3752,7 @@
     },
     {
       "address": "0x3696f44F2B7FE51486f81D2639Ff895202614711",
+      "type": "basic",
       "chainIds": [
         "42220"
       ],
@@ -3735,6 +3766,7 @@
     },
     {
       "address": "0x97cFFC8aaDC28cda8Ba901667222d6386A46f705",
+      "type": "basic",
       "chainIds": [
         "5"
       ],
@@ -3748,6 +3780,7 @@
     },
     {
       "address": "0x9c1F1f8d03f5cca7a5D31b56D90c967B1D8cFAb7",
+      "type": "basic",
       "chainIds": [
         "10"
       ],
@@ -3760,7 +3793,144 @@
       ]
     },
     {
+      "address": "0xB01371072fDcB9B4433b855e16A682B461F94AB3",
+      "type": "any",
+      "chainIds": [
+        "25",
+        "40",
+        "56",
+        "250",
+        "288",
+        "1030",
+        "1284",
+        "2001",
+        "42220",
+        "1666600000"
+      ],
+      "tokens": [
+        {
+          "address": "0x4E15361FD6b4BB609Fa63C81A2be19d873717870",
+          "name": "FantomToken",
+          "symbol": "FTM"
+        }
+      ]
+    },
+    {
+      "address": "0xd13eB71515DC48a8a367D12F844e5737bab415dF",
+      "type": "any",
+      "chainIds": [
+        "25",
+        "40",
+        "56",
+        "57",
+        "106",
+        "288",
+        "1088",
+        "2001",
+        "42220"
+      ],
+      "tokens": [
+        {
+          "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+          "name": "BinanceUSD",
+          "symbol": "BUSD"
+        }
+      ]
+    },
+    {
+      "address": "0x1Cb1284CF62C3E593a8f49EEf3db37AD20467Bed",
+      "type": "any",
+      "chainIds": [
+        "25",
+        "40",
+        "56",
+        "106",
+        "137",
+        "288",
+        "1030",
+        "1088",
+        "2000",
+        "42220"
+      ],
+      "tokens": [
+        {
+          "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+          "name": "Matic Token",
+          "symbol": "MATIC"
+        }
+      ]
+    },
+    {
+      "address": "0xcaF5191fc480F43e4DF80106c7695ECA56E48B18",
+      "type": "any",
+      "chainIds": [
+        "40",
+        "56"
+      ],
+      "tokens": [
+        {
+          "address": "0x7825e833D495F3d1c28872415a4aee339D26AC88",
+          "name": "pTokens TLOS",
+          "symbol": "TLOS"
+        }
+      ]
+    },
+    {
+      "address": "0x9Fb9a33956351cf4fa040f65A13b835A3C8764E3",
+      "type": "any",
+      "chainIds": [
+        "56",
+        "137",
+        "250",
+        "321",
+        "1024",
+        "1030",
+        "1285",
+        "42161",
+        "43114"
+      ],
+      "tokens": [
+        {
+          "address": "0x65Ef703f5594D2573eb71Aaf55BC0CB548492df4",
+          "name": "Multichain",
+          "symbol": "MULTI"
+        }
+      ]
+    },
+    {
+      "address": "0xe6D9C0aCF30194E2a5ae9C1c8342aC49e98A4B0A",
+      "type": "any",
+      "chainIds": [
+        "56",
+        "122",
+        "137"
+      ],
+      "tokens": [
+        {
+          "address": "0x970B9bB2C0444F5E81e9d0eFb84C8ccdcdcAf84d",
+          "name": "Fuse Token",
+          "symbol": "FUSE"
+        }
+      ]
+    },
+    {
+      "address": "0x84e9a6F9D240FdD33801f7135908BfA16866939A",
+      "type": "any",
+      "chainIds": [
+        "56",
+        "2025"
+      ],
+      "tokens": [
+        {
+          "address": "0x0E5C8C387C5EBa2eCbc137aD012aeD5Fe729e251",
+          "name": "Rangers Protocol Gas",
+          "symbol": "RPG"
+        }
+      ]
+    },
+    {
       "address": "0xBe008e52c5682A49dd0260735a26Aa221f303456",
+      "type": "basic",
       "chainIds": [
         "250"
       ],
@@ -3774,6 +3944,7 @@
     },
     {
       "address": "0xd0a4297F433a642912583b2b644801a6e250031e",
+      "type": "basic",
       "chainIds": [
         "288"
       ],

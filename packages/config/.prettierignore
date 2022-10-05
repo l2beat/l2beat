@@ -1,3 +1,4 @@
 node_modules
 build
 src/bridges/multichain.json
+scripts/multichain/cache.json

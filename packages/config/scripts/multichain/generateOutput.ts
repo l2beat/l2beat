@@ -3,6 +3,7 @@ import { MultichainConfig } from './types'
 
 interface GroupedEscrow {
   address: EthereumAddress
+  type: string
   chainIds: string[]
   tokens: { name: string; symbol: string; address: EthereumAddress | 'ETH' }[]
 }
@@ -34,9 +35,27 @@ export function generateOutput(config: MultichainConfig) {
 
             escrows.push({
               chainId: source !== ETHEREUM ? source : destination,
-              type: route.type,
+              type: 'basic',
               token,
               address: EthereumAddress(route.DepositAddress),
+            })
+          }
+
+          if (
+            destination === ETHEREUM &&
+            route.type === 'NATIVE' &&
+            route.anytoken &&
+            route.underlying
+          ) {
+            escrows.push({
+              chainId: source !== ETHEREUM ? source : destination,
+              type: 'any',
+              token: {
+                address: addressOrEth(route.underlying.address),
+                name: route.underlying.name ?? '?',
+                symbol: route.underlying.symbol ?? '?',
+              },
+              address: EthereumAddress(route.anytoken.address),
             })
           }
         }
@@ -57,6 +76,7 @@ export function generateOutput(config: MultichainConfig) {
     } else {
       groupedEscrows.push({
         address: escrow.address,
+        type: escrow.type,
         chainIds: [escrow.chainId],
         tokens: [escrow.token],
       })
