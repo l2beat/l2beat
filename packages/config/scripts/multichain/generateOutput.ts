@@ -109,11 +109,10 @@ export function generateOutput(config: MultichainConfig) {
     chains: chainIds.size,
   })
 
-  // uncomment to debug
-  // return { groupedEscrows }
-
   return {
-    chains: [...chainIds].map((id) => ({ id, name: chainIdNames.get(id) })),
+    chains: [...chainIds]
+      .sort()
+      .map((id) => ({ id, name: chainIdNames.get(id) })),
     escrows: groupedEscrows
       .map((x) => ({
         type: x.type,

@@ -1,167 +1,219 @@
 {
   "chains": [
     {
-      "id": "25"
+      "id": "10",
+      "name": "Optimism"
     },
     {
-      "id": "40"
+      "id": "100",
+      "name": "Gnosis"
     },
     {
-      "id": "56"
+      "id": "10000",
+      "name": "Smart Bitcoin Cash"
+    },
+    {
+      "id": "10001",
+      "name": "ETHPoW"
+    },
+    {
+      "id": "1024",
+      "name": "CLV Parachain"
+    },
+    {
+      "id": "1030",
+      "name": "Conflux eSpace"
+    },
+    {
+      "id": "106",
+      "name": "Velas EVM"
+    },
+    {
+      "id": "108",
+      "name": "ThunderCore"
+    },
+    {
+      "id": "1088",
+      "name": "Metis Andromeda"
+    },
+    {
+      "id": "122",
+      "name": "Fuse"
+    },
+    {
+      "id": "1234"
+    },
+    {
+      "id": "128",
+      "name": "Huobi ECO Chain"
+    },
+    {
+      "id": "1284",
+      "name": "Moonbeam"
+    },
+    {
+      "id": "1285",
+      "name": "Moonriver"
+    },
+    {
+      "id": "1294",
+      "name": "Boba Network Bobabeam"
+    },
+    {
+      "id": "137",
+      "name": "Polygon"
+    },
+    {
+      "id": "1666600000",
+      "name": "Harmony Shard 0"
+    },
+    {
+      "id": "199",
+      "name": "BitTorrent Chain"
+    },
+    {
+      "id": "2000",
+      "name": "Dogechain"
+    },
+    {
+      "id": "2001",
+      "name": "Milkomeda C1"
+    },
+    {
+      "id": "2025",
+      "name": "Rangers Protocol"
+    },
+    {
+      "id": "2222",
+      "name": "Kava EVM"
+    },
+    {
+      "id": "24",
+      "name": "Dithereum"
+    },
+    {
+      "id": "24734",
+      "name": "MintMe.com"
+    },
+    {
+      "id": "25",
+      "name": "Cronos Mainnet Beta"
     },
     {
       "id": "250",
       "name": "Fantom"
     },
     {
-      "id": "288"
+      "id": "256256",
+      "name": "CMP"
     },
     {
-      "id": "1030"
+      "id": "288",
+      "name": "Boba Network"
     },
     {
-      "id": "1284"
+      "id": "30",
+      "name": "RSK"
     },
     {
-      "id": "2001"
+      "id": "321",
+      "name": "KCC"
     },
     {
-      "id": "42220"
+      "id": "32659",
+      "name": "Fusion"
     },
     {
-      "id": "1666600000"
+      "id": "336",
+      "name": "Shiden"
     },
     {
-      "id": "32659"
+      "id": "40",
+      "name": "Telos EVM"
     },
     {
-      "id": "10"
+      "id": "42161",
+      "name": "Arbitrum One"
     },
     {
-      "id": "137"
+      "id": "42170",
+      "name": "Arbitrum Nova"
     },
     {
-      "id": "42161"
+      "id": "42220",
+      "name": "Celo"
     },
     {
-      "id": "43114"
+      "id": "42262",
+      "name": "Oasis Emerald ParaTime"
     },
     {
-      "id": "30"
+      "id": "43114",
+      "name": "Avalanche C-Chain"
     },
     {
-      "id": "108"
+      "id": "4689",
+      "name": "IoTeX Network"
     },
     {
-      "id": "1024"
+      "id": "47805",
+      "name": "REI"
     },
     {
-      "id": "1234"
+      "id": "5",
+      "name": "Goerli"
     },
     {
-      "id": "2025"
+      "id": "56",
+      "name": "Binance Smart Chain"
     },
     {
-      "id": "2222"
+      "id": "57",
+      "name": "Syscoin"
     },
     {
-      "id": "10000"
+      "id": "58",
+      "name": "Ontology"
     },
     {
-      "id": "10001"
+      "id": "592",
+      "name": "Astar"
     },
     {
-      "id": "71402"
+      "id": "61",
+      "name": "Ethereum Classic"
     },
     {
-      "id": "57"
+      "id": "66",
+      "name": "OKXChain"
     },
     {
-      "id": "61"
+      "id": "71402",
+      "name": "Godwoken"
     },
     {
-      "id": "106"
+      "id": "8217",
+      "name": "Klaytn Mainnet Cypress"
     },
     {
-      "id": "336"
+      "id": "86",
+      "name": "GateChain"
     },
     {
-      "id": "1285"
+      "id": "88",
+      "name": "TomoChain"
     },
     {
-      "id": "2000"
+      "id": "9001",
+      "name": "Evmos"
     },
     {
-      "id": "9001"
+      "id": "NEAR",
+      "name": "Near"
     },
     {
-      "id": "42262"
-    },
-    {
-      "id": "47805"
-    },
-    {
-      "id": "66"
-    },
-    {
-      "id": "128"
-    },
-    {
-      "id": "321"
-    },
-    {
-      "id": "24"
-    },
-    {
-      "id": "88"
-    },
-    {
-      "id": "24734"
-    },
-    {
-      "id": "42170"
-    },
-    {
-      "id": "122"
-    },
-    {
-      "id": "199"
-    },
-    {
-      "id": "58"
-    },
-    {
-      "id": "86"
-    },
-    {
-      "id": "256256"
-    },
-    {
-      "id": "XRP"
-    },
-    {
-      "id": "100"
-    },
-    {
-      "id": "592"
-    },
-    {
-      "id": "1088"
-    },
-    {
-      "id": "4689"
-    },
-    {
-      "id": "1294"
-    },
-    {
-      "id": "NEAR"
-    },
-    {
-      "id": "8217"
-    },
-    {
-      "id": "5"
+      "id": "XRP",
+      "name": "XRP"
     }
   ],
   "escrows": [
