@@ -1,8 +1,8 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { Logo } from './Logo'
-import { PercentChange } from './PercentChange'
+import { Logo } from '../Logo'
+import { PercentChange } from '../PercentChange'
 
 export interface HeaderProps {
   title: string
