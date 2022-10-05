@@ -1,77 +1,74 @@
-import { tokenList } from '../../src/tokens'
-import { chainIdNames } from './chainIdNames'
+import { EthereumAddress } from '@l2beat/types'
 import { MultichainConfig } from './types'
+
+interface GroupedEscrow {
+  address: EthereumAddress
+  chainIds: string[]
+  tokens: { name: string; symbol: string; address: EthereumAddress | 'ETH' }[]
+}
 
 export function generateOutput(config: MultichainConfig) {
   const escrows = []
-  const chainIds = new Set<string>()
-  const specTypes = new Set<string>()
+  const ETHEREUM = '1'
 
-  const ethereumConfig = config['1']
+  for (const [source, tokens] of Object.entries(config)) {
+    for (const token of Object.values(tokens)) {
+      for (const [destination, routes] of Object.entries(token.destChains)) {
+        for (const route of Object.values(routes)) {
+          if (
+            (source === ETHEREUM && route.type === 'swapin') ||
+            (destination === ETHEREUM && route.type === 'swapout')
+          ) {
+            const token =
+              route.chainId === ETHEREUM
+                ? {
+                    address: addressOrEth(route.address),
+                    name: route.name ?? '?',
+                    symbol: route.symbol ?? '?',
+                  }
+                : {
+                    address: addressOrEth(route.fromanytoken.address),
+                    name: route.fromanytoken.name ?? '?',
+                    symbol: route.fromanytoken.symbol ?? '?',
+                  }
 
-  for (const [key, token] of Object.entries(ethereumConfig)) {
-    for (const [id, chain] of Object.entries(token.destChains)) {
-      chainIds.add(id)
-      for (const [hash, spec] of Object.entries(chain)) {
-        specTypes.add(spec.type)
-        if (spec.type === 'swapin' || spec.type === 'swapout') {
-          escrows.push({
-            tokenName: token.name,
-            tokenSymbol: token.symbol,
-            tokenAddress: token.address,
-            chainId: id,
-            escrowAddress: spec.DepositAddress,
-          })
+            escrows.push({
+              chainId: source !== ETHEREUM ? source : destination,
+              type: route.type,
+              token,
+              address: EthereumAddress(route.DepositAddress),
+            })
+          }
         }
       }
     }
   }
 
-  const groupedEscrowMap = new Map()
+  const groupedEscrows: GroupedEscrow[] = []
   for (const escrow of escrows) {
-    const groupedEntry = groupedEscrowMap.get(escrow.escrowAddress) ?? {
-      chainId: escrow.chainId,
-      tokens: [],
-    }
-    groupedEscrowMap.set(escrow.escrowAddress, groupedEntry)
-    if (escrow.chainId !== groupedEntry.chainId) {
-      console.log({ escrow, groupedEntry })
-      throw new Error('Duplicate chainId')
-    }
-    const token = tokenList.find(
-      (x) => x.address?.toLowerCase() === escrow.tokenAddress.toLowerCase(),
-    )
-    if (token) {
-      groupedEntry.tokens.push(token.symbol)
+    const existing = groupedEscrows.find((x) => x.address === escrow.address)
+    if (existing) {
+      if (!existing.chainIds.includes(escrow.chainId)) {
+        existing.chainIds.push(escrow.chainId)
+      }
+      if (!existing.tokens.some((x) => x.address === escrow.token.address)) {
+        existing.tokens.push(escrow.token)
+      }
     } else {
-      groupedEntry.tokens.push({
-        unknown: true,
-        name: escrow.tokenName,
-        address: escrow.tokenAddress,
+      groupedEscrows.push({
+        address: escrow.address,
+        chainIds: [escrow.chainId],
+        tokens: [escrow.token],
       })
     }
   }
 
-  const groupedEscrows = [...groupedEscrowMap.entries()].map(
-    ([address, entry]) => ({
-      address,
-      chainId: entry.chainId,
-      tokens: entry.tokens,
-    }),
-  )
+  return { escrows: groupedEscrows }
+}
 
-  const namedChainIds = [...chainIds].map((id) => ({
-    chainId: id,
-    name: chainIdNames.get(id) ?? null,
-  }))
-
-  const configFile = {
-    escrows: groupedEscrows,
-    chainIds: namedChainIds,
+function addressOrEth(address: string): EthereumAddress | 'ETH' {
+  if (address === 'ETH') {
+    return address
   }
-
-  console.log('Total chains', namedChainIds.length)
-  console.log(specTypes)
-
-  return configFile
+  return EthereumAddress(address)
 }
