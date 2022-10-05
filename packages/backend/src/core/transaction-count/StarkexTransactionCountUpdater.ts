@@ -1,4 +1,4 @@
-import { Logger, Retries, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -6,6 +6,7 @@ import { StarkexTransactionCountRepository } from '../../peripherals/database/St
 import { StarkexClient } from '../../peripherals/starkex'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
+import { BACK_OFF_AND_DROP } from './utils'
 
 interface StarkexTransactionCountUpdaterOpts {
   workQueueWorkers?: number
@@ -38,7 +39,7 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
       this.logger.for('daysQueue'),
       {
         workers: this.opts?.workQueueWorkers,
-        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
+        shouldRetry: BACK_OFF_AND_DROP,
       },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()

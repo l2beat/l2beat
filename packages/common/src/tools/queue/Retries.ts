@@ -42,13 +42,4 @@ export const Retries = {
   always,
   exponentialBackOff,
   maxAttempts,
-  // never drops failing tasks
-  defaultExponentialBackOff: exponentialBackOff(100, {
-    maxDistance: 3_000,
-  }),
-  // drops failing tasks after few retries
-  defaultExponentialBackOffAndDrop: exponentialBackOff(100, {
-    maxDistance: 3_000,
-    maxAttempts: 8,
-  }),
 }

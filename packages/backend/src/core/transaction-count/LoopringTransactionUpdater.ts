@@ -1,10 +1,11 @@
-import { Logger, Retries, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
+import { BACK_OFF_AND_DROP } from './utils'
 
 interface LoopringTransactionUpdaterOpts {
   workQueueWorkers?: number
@@ -32,7 +33,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
-        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
+        shouldRetry: BACK_OFF_AND_DROP,
       },
     )
   }

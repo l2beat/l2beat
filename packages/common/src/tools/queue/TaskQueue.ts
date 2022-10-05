@@ -5,6 +5,10 @@ import { getErrorMessage, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
+const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
+  maxDistance: 3_000,
+})
+
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
  */
@@ -24,7 +28,7 @@ export class TaskQueue<T> {
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts?.shouldRetry ?? Retries.defaultExponentialBackOff
+    this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
   }
 
   private get isEmpty() {
