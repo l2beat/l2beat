@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
@@ -30,7 +30,10 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     this.blockQueue = new UniqueTaskQueue(
       this.updateBlock.bind(this),
       this.logger.for('blockQueue'),
-      { workers: this.opts?.workQueueWorkers },
+      {
+        workers: this.opts?.workQueueWorkers,
+        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
+      },
     )
   }
 
