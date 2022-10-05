@@ -1,5 +1,5 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 import { NoInfoCell } from './NoInfoCell'
@@ -14,7 +14,7 @@ export function RiskCell({ item }: Props) {
   }
   return (
     <span
-      className={classNames(
+      className={cx(
         'sm:text-sm md:text-base',
         item.sentiment && 'px-1 rounded-sm',
         item.sentiment === 'bad' && 'text-white bg-red-100',

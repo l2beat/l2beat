@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
@@ -49,7 +49,7 @@ export function ActivityView({ items, className }: ActivityViewProps) {
   ]
 
   return (
-    <section className={classNames('ActivityView', className)}>
+    <section className={cx('ActivityView', className)}>
       <TableView items={items} columns={columns} />
     </section>
   )

@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 export function ChartButton(props: Props) {
   return (
     <label
-      className={classNames(
+      className={cx(
         'block relative select-none cursor-pointer',
         props.className,
       )}

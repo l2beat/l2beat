@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 export interface PageLinkProps {
@@ -11,7 +11,7 @@ export interface PageLinkProps {
 export function PageLink(props: PageLinkProps) {
   return (
     <a
-      className={classNames(
+      className={cx(
         'flex items-center h-full font-medium',
         props.large ? 'text-base md:text-lg px-2 md:px-4' : 'px-2',
         props.selected &&
