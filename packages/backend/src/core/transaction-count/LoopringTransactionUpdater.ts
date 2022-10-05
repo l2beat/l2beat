@@ -1,31 +1,27 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import {
-  ZksyncTransactionRecord,
-  ZksyncTransactionRepository,
-} from '../../peripherals/database/ZksyncTransactionRepository'
-import { ZksyncClient } from '../../peripherals/zksync'
+import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
+import { LoopringClient } from '../../peripherals/loopring'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
-interface ZksyncTransactionUpdaterOpts {
+interface LoopringTransactionUpdaterOpts {
   workQueueWorkers?: number
 }
 
-export class ZksyncTransactionUpdater implements TransactionCounter {
-  readonly projectId = ProjectId.ZKSYNC
-
+export class LoopringTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
-  private readonly blockQueue: TaskQueue<number>
+  private readonly blockQueue: TaskQueue<string | number>
 
   constructor(
-    private readonly zksyncClient: ZksyncClient,
-    private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
+    private readonly loopringClient: LoopringClient,
+    private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
-    private readonly opts?: ZksyncTransactionUpdaterOpts,
+    readonly projectId: ProjectId,
+    private readonly opts?: LoopringTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
     this.updateQueue = new TaskQueue<void>(
@@ -51,28 +47,24 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async updateBlock(blockNumber: number) {
-    const transactions = await this.zksyncClient.getTransactionsInBlock(
-      blockNumber,
-    )
+    const block = await this.loopringClient.getBlock(blockNumber)
 
-    // Block 427 has a duplicated blockIndex
-    // so I fixed it
-    if (blockNumber === 427) {
-      transactions[1].blockIndex = transactions[1].blockIndex + 1
+    // We download all the blocks, but discard those that are more recent
+    // than clock.getLastHour() to avoid dealing with potential reorgs
+    if (block.createdAt.gt(this.clock.getLastHour())) {
+      return
     }
 
-    const records: ZksyncTransactionRecord[] = transactions.map(
-      (transaction) => ({
-        blockNumber,
-        blockIndex: transaction.blockIndex,
-        timestamp: transaction.createdAt,
-      }),
-    )
-
-    await this.zksyncTransactionRepository.addMany(records)
-    this.logger.debug('Block updated', {
+    await this.blockTransactionCountRepository.add({
+      projectId: this.projectId,
+      timestamp: block.createdAt,
       blockNumber,
-      transactionCount: records.length,
+      count: block.transactions,
+    })
+
+    this.logger.debug('Block updated', {
+      project: this.projectId.toString(),
+      blockNumber,
     })
   }
 
@@ -82,13 +74,16 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     await this.blockQueue.waitTilEmpty()
 
     const missingRanges =
-      await this.zksyncTransactionRepository.getMissingRanges()
-    const latestBlock = await this.zksyncClient.getLatestBlock()
+      await this.blockTransactionCountRepository.getMissingRangesByProject(
+        this.projectId,
+      )
+
+    const finalizedBlock = await this.loopringClient.getFinalizedBlockNumber()
 
     for (const [start, end] of missingRanges) {
       for (
         let i = Math.max(start, 1);
-        i < Math.min(end, Number(latestBlock) + 1);
+        i < Math.min(end, finalizedBlock + 1);
         i++
       ) {
         this.blockQueue.addToBack(i)
@@ -99,13 +94,18 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.zksyncTransactionRepository.getDailyTransactionCount()
+    return await this.blockTransactionCountRepository.getDailyTransactionCount(
+      this.projectId,
+    )
   }
 
   async getStatus() {
     return {
       queuedJobsCount: this.blockQueue.length,
-      missingRanges: await this.zksyncTransactionRepository.getMissingRanges(),
+      missingRanges:
+        await this.blockTransactionCountRepository.getMissingRangesByProject(
+          this.projectId,
+        ),
       busyWorkers: this.blockQueue.getBusyWorkers(),
     }
   }

@@ -33,7 +33,8 @@ export function getLocalConfig(): Config {
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
-    eventsSyncEnabled: getEnv.boolean('EVENTS_ENABLED', false),
+    tvlReportSync: true,
+    eventsSync: getEnv.boolean('EVENTS_ENABLED', false),
     transactionCountSync: getEnv.boolean(
       'TRANSACTION_COUNT_ENABLED',
       false,
@@ -43,6 +44,12 @@ export function getLocalConfig(): Config {
       arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
       optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
       ethereumAlchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      rpcWorkQueueLimit: 10_000,
+      rpcWorkQueueWorkers: 1,
+      zkSyncWorkQueueWorkers: 1,
+      starkexWorkQueueWorkers: 1,
+      loopringWorkQueueWorkers: 1,
+      loopringCallsPerMinute: 10,
     },
   }
 }

@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -6,16 +6,15 @@ import { StarkexTransactionCountRepository } from '../../peripherals/database/St
 import { StarkexClient } from '../../peripherals/starkex'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
+import { BACK_OFF_AND_DROP } from './utils'
+
+interface StarkexTransactionCountUpdaterOpts {
+  workQueueWorkers?: number
+}
 
 export class StarkexTransactionCountUpdater implements TransactionCounter {
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-  )
-  private readonly daysQueue = new UniqueTaskQueue(
-    this.updateDay.bind(this),
-    this.logger,
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly daysQueue: TaskQueue<number>
   private readonly startDay: number
 
   constructor(
@@ -26,8 +25,23 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     private readonly product: StarkexProduct,
     readonly projectId: ProjectId,
     startTimestamp: UnixTime,
+    private readonly opts?: StarkexTransactionCountUpdaterOpts,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(
+      `${StarkexTransactionCountUpdater.name}[${projectId.toString()}]`,
+    )
+    this.updateQueue = new TaskQueue<void>(
+      this.update.bind(this),
+      this.logger.for('updateQueue'),
+    )
+    this.daysQueue = new TaskQueue(
+      this.updateDay.bind(this),
+      this.logger.for('daysQueue'),
+      {
+        workers: this.opts?.workQueueWorkers,
+        shouldRetry: BACK_OFF_AND_DROP,
+      },
+    )
     this.startDay = startTimestamp.toStartOf('day').toDays()
   }
 
@@ -57,6 +71,8 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
+
+    await this.daysQueue.waitTilEmpty()
 
     const missingRanges =
       await this.starkexTransactionCountRepository.getMissingRangesByProject(

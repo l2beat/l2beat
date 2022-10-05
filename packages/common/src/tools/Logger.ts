@@ -5,15 +5,16 @@ import { inspect } from 'util'
 export enum LogLevel {
   NONE = 0,
   ERROR = 1,
-  INFO = 2,
-  DEBUG = 3,
+  WARN = 2,
+  INFO = 3,
+  DEBUG = 4,
 }
 
 export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
   format: 'pretty' | 'json'
-  reportError?: (error: unknown) => void
+  reportError?: (...args: unknown[]) => void
 }
 
 export type LoggerParameters = Record<string, json>
@@ -29,26 +30,35 @@ export class Logger {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  for(object: {}) {
+  for(service: object | string) {
+    const name =
+      typeof service === 'string' ? service : service.constructor.name
     return this.configure({
-      service: this.options.service
-        ? `${this.options.service}.${object.constructor.name}`
-        : object.constructor.name,
+      service: this.options.service ? `${this.options.service}.${name}` : name,
     })
   }
 
   error(error: unknown): void
-  error(annotation: string, error: unknown): void
-  error(...args: [unknown] | [string, unknown]): void {
+  error(parameters: LoggerParameters, error: unknown): void
+  error(...args: [unknown] | [LoggerParameters, unknown]): void {
     if (this.options.logLevel >= LogLevel.ERROR) {
-      const [annotation, error] = args.length === 1 ? ['', args[0]] : args
+      const [parameters, error] = args.length === 1 ? [{}, args[0]] : args
 
-      const message = [annotation, getErrorMessage(error)]
-        .filter(Boolean)
-        .join(' ')
+      const message = { ...parameters, error: getErrorMessage(error) }
 
       this.print('error', { message })
-      this.options.reportError?.(error)
+      this.options.reportError?.(error, {
+        ...parameters,
+        service: this.options.service,
+      })
+    }
+  }
+
+  warn(message: string, parameters?: LoggerParameters): void
+  warn(parameters: LoggerParameters): void
+  warn(message: string | LoggerParameters, parameters?: LoggerParameters) {
+    if (this.options.logLevel >= LogLevel.WARN) {
+      this.print('warn', combine(message, parameters))
     }
   }
 
@@ -126,7 +136,7 @@ export function getErrorMessage(error: unknown) {
 function combine(
   message: string | LoggerParameters,
   parameters?: LoggerParameters,
-) {
+): LoggerParameters {
   if (typeof message === 'string') {
     return { message, ...parameters }
   } else {
@@ -147,10 +157,12 @@ function getPrettyLevel(level: string) {
   switch (level) {
     case 'error':
       return chalk.red(level.toUpperCase())
+    case 'warn':
+      return chalk.yellow(level.toUpperCase())
     case 'info':
       return chalk.blue(level.toUpperCase())
     case 'debug':
-      return chalk.yellow(level.toUpperCase())
+      return chalk.gray(level.toUpperCase())
   }
   return level.toUpperCase()
 }

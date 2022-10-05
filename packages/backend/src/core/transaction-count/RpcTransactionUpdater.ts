@@ -1,49 +1,55 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { RpcTransactionCountRepository } from '../../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
-
-// We want to avoid adding too much tasks to the block queue
-// This constraint will be here only to sync transactions on stage
-const BLOCK_QUEUE_LIMIT = 200_000
+import { BACK_OFF_AND_DROP } from './utils'
 
 const identity = (x: number) => x
 
 interface RpcTransactionUpdaterOpts {
   assessCount?: AssessCount
   startBlock?: number
+  workQueueWorkers?: number
+  workQueueSizeLimit?: number
 }
 
 export class RpcTransactionUpdater implements TransactionCounter {
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-  )
-  private readonly blockQueue = new UniqueTaskQueue(
-    this.updateBlock.bind(this),
-    this.logger,
-    {
-      workers: 100,
-    },
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly blockQueue: TaskQueue<number>
   private readonly assessCount: AssessCount
   private readonly startBlock: number
+  private readonly workQueueSizeLimit: number
 
   constructor(
     private readonly ethereumClient: EthereumClient,
-    private readonly rpcTransactionCountRepository: RpcTransactionCountRepository,
+    private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     readonly projectId: ProjectId,
-    opts?: RpcTransactionUpdaterOpts,
+    private readonly opts?: RpcTransactionUpdaterOpts,
   ) {
-    this.logger = logger.for(this)
+    this.logger = logger.for(
+      `${RpcTransactionUpdater.name}[${projectId.toString()}]`,
+    )
+    this.updateQueue = new TaskQueue<void>(
+      this.update.bind(this),
+      this.logger.for('updateQueue'),
+    )
+    this.blockQueue = new TaskQueue(
+      this.updateBlock.bind(this),
+      this.logger.for('blockQueue'),
+      {
+        workers: this.opts?.workQueueWorkers,
+        shouldRetry: BACK_OFF_AND_DROP,
+      },
+    )
     this.assessCount = opts?.assessCount ?? identity
     this.startBlock = opts?.startBlock ?? 0
+    this.workQueueSizeLimit = opts?.workQueueSizeLimit ?? 200_000
   }
 
   start() {
@@ -66,7 +72,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     const count = block.transactions.length
 
-    await this.rpcTransactionCountRepository.add({
+    await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
@@ -82,8 +88,13 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
 
+    // Wait until there is no more tasks either waiting or being executed in the queue
+    // Otherwise it was prone to race conditions between what is in the queue and what is read
+    // from the database using `getMissingRanges`
+    await this.blockQueue.waitTilEmpty()
+
     const missingRanges =
-      await this.rpcTransactionCountRepository.getMissingRangesByProject(
+      await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
     const latestBlock = await this.ethereumClient.getBlockNumber()
@@ -94,7 +105,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
-        if (this.blockQueue.length >= BLOCK_QUEUE_LIMIT) {
+        if (this.blockQueue.length >= this.workQueueSizeLimit) {
           break enqueueBlockLoop
         }
         this.blockQueue.addToBack(i)
@@ -105,7 +116,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.rpcTransactionCountRepository.getDailyTransactionCount(
+    return this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
     )
   }
@@ -114,7 +125,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
     return {
       queuedJobsCount: this.blockQueue.length,
       missingRanges:
-        await this.rpcTransactionCountRepository.getMissingRangesByProject(
+        await this.blockTransactionCountRepository.getMissingRangesByProject(
           this.projectId,
         ),
       startBlock: this.startBlock,

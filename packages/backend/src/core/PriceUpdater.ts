@@ -14,10 +14,7 @@ import { Clock } from './Clock'
 
 export class PriceUpdater {
   private readonly knownSet = new Set<number>()
-  private readonly taskQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-  )
+  private readonly taskQueue: TaskQueue<void>
 
   constructor(
     private readonly coingeckoQueryService: CoingeckoQueryService,
@@ -27,6 +24,10 @@ export class PriceUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+    this.taskQueue = new TaskQueue(
+      () => this.update(),
+      this.logger.for('taskQueue'),
+    )
   }
 
   async getPricesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {

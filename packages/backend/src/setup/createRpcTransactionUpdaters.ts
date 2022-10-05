@@ -4,26 +4,28 @@ import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { Config } from '../config'
+import { TransactionCountSyncConfig } from '../config/Config'
 import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
-import { RpcTransactionCountRepository } from '../peripherals/database/RpcTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { assert } from '../tools/assert'
 
 export function createLayer2RpcTransactionUpdaters(
   config: Config,
-  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
   logger: Logger,
 ) {
+  assert(config.transactionCountSync)
   const rpcUpdaters: RpcTransactionUpdater[] = []
 
   for (const project of config.projects) {
     if (project.transactionApi?.type === 'rpc') {
       const l2Provider = createL2Provider(
+        config.transactionCountSync,
         project.transactionApi,
         project.projectId,
-        config,
       )
 
       const ethereumClient = new EthereumClient(
@@ -34,11 +36,15 @@ export function createLayer2RpcTransactionUpdaters(
 
       const transactionUpdater = new RpcTransactionUpdater(
         ethereumClient,
-        rpcTransactionCountRepository,
+        blockTransactionCountRepository,
         clock,
         logger,
         project.projectId,
-        { assessCount: project.transactionApi.assessCount },
+        {
+          assessCount: project.transactionApi.assessCount,
+          workQueueSizeLimit: config.transactionCountSync.rpcWorkQueueLimit,
+          workQueueWorkers: config.transactionCountSync.rpcWorkQueueWorkers,
+        },
       )
 
       rpcUpdaters.push(transactionUpdater)
@@ -49,7 +55,8 @@ export function createLayer2RpcTransactionUpdaters(
 }
 
 export function createEthereumTransactionUpdater(
-  rpcTransactionCountRepository: RpcTransactionCountRepository,
+  config: TransactionCountSyncConfig,
+  blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
   logger: Logger,
   apiKey: string,
@@ -58,22 +65,24 @@ export function createEthereumTransactionUpdater(
   const client = new EthereumClient(provider, logger)
   const updater = new RpcTransactionUpdater(
     client,
-    rpcTransactionCountRepository,
+    blockTransactionCountRepository,
     clock,
     logger,
     ProjectId.ETHEREUM,
-    { startBlock: 8929324 }, // TODO: make it cleaner, we already have a min timestamp in config
+    {
+      startBlock: 8929324,
+      workQueueSizeLimit: config.rpcWorkQueueLimit,
+      workQueueWorkers: config.rpcWorkQueueWorkers,
+    }, // TODO: make it cleaner, we already have a min timestamp in config
   )
   return updater
 }
 
 function createL2Provider(
+  config: TransactionCountSyncConfig,
   rpc: RpcTransactionApi,
   projectId: ProjectId,
-  config: Config,
 ) {
-  assert(config.transactionCountSync)
-
   if (rpc.provider === 'jsonRpc') {
     return new providers.JsonRpcProvider({
       url: rpc.url,
@@ -83,10 +92,10 @@ function createL2Provider(
 
   let apiKey = ''
   if (projectId === ProjectId('arbitrum')) {
-    apiKey = config.transactionCountSync.arbitrumAlchemyApiKey
+    apiKey = config.arbitrumAlchemyApiKey
   }
   if (projectId === ProjectId('optimism')) {
-    apiKey = config.transactionCountSync.optimismAlchemyApiKey
+    apiKey = config.optimismAlchemyApiKey
   }
   if (!apiKey) {
     throw new Error('Please provide alchemy api key')
