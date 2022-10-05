@@ -8,11 +8,11 @@ import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
-interface StarkexTransactionCountUpdaterOpts {
+interface StarkexTransactionUpdaterOpts {
   workQueueWorkers?: number
 }
 
-export class StarkexTransactionCountUpdater implements TransactionCounter {
+export class StarkexTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly daysQueue: TaskQueue<number>
   private readonly startDay: number
@@ -25,17 +25,17 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     private readonly product: StarkexProduct,
     readonly projectId: ProjectId,
     startTimestamp: UnixTime,
-    private readonly opts?: StarkexTransactionCountUpdaterOpts,
+    private readonly opts?: StarkexTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(
-      `${StarkexTransactionCountUpdater.name}[${projectId.toString()}]`,
+      `${StarkexTransactionUpdater.name}[${projectId.toString()}]`,
     )
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.daysQueue = new TaskQueue(
-      this.updateDay.bind(this),
+      (day) => this.updateDay(day),
       this.logger.for('daysQueue'),
       {
         workers: this.opts?.workQueueWorkers,
