@@ -1,4 +1,4 @@
-import { Bridge, Layer2, TokenInfo } from '@l2beat/config'
+import { Bridge, Ethereum, Layer2, TokenInfo } from '@l2beat/config'
 
 export interface Config {
   links: {
@@ -22,4 +22,5 @@ export interface Config {
   layer2s: Layer2[]
   bridges: Bridge[]
   tokens: TokenInfo[]
+  ethereum: Ethereum
 }
