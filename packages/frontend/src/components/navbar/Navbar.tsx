@@ -69,7 +69,7 @@ export function Navbar(props: NavbarProps) {
                 : 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
             )}
           >
-            <a href="/">
+            <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
               <Logo className="h-8 w-auto" />
             </a>
           </li>
@@ -109,7 +109,7 @@ export function Navbar(props: NavbarProps) {
           <ul className="h-full flex items-center">
             <li className="h-full">
               <OutLink
-                className="flex items-center h-full px-2"
+                className="flex items-center h-full px-2 font-medium"
                 href={props.forumLink}
               >
                 Forum
