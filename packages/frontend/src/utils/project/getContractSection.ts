@@ -92,6 +92,21 @@ function makeTechnologyContract(
     })
   }
 
+  if (item.upgradeability?.type === 'Beacon') {
+    links.push({
+      name: 'Beacon',
+      href: `https://etherscan.io/address/${item.upgradeability.beacon}#code`,
+    })
+    links.push({
+      name: 'Implementation (Upgradable)',
+      href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+    })
+    links.push({
+      name: 'Beacon Admin',
+      href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin}#code`,
+    })
+  }
+
   const tokens = project.config.escrows.find(
     (x) => x.address === item.address,
   )?.tokens
