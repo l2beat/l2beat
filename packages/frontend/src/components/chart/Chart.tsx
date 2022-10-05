@@ -32,8 +32,8 @@ export function Chart({
     <section
       data-role="chart"
       data-type={type ?? 'tvl'}
-      data-tvlendpoint={tvlEndpoint}
-      data-activityendpoint={activityEndpoint}
+      data-tvl-endpoint={tvlEndpoint}
+      data-activity-endpoint={activityEndpoint}
       className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
     >
       <TimeRange />

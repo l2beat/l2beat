@@ -14,7 +14,7 @@ export function getInitialEndpoint(
 }
 
 export function getTvlEndpoint(element: HTMLElement) {
-  const endpoint = element.dataset.tvlendpoint
+  const endpoint = element.dataset.tvlEndpoint
   if (!endpoint) {
     throw new Error('Initial endpoint missing!')
   }
@@ -22,7 +22,7 @@ export function getTvlEndpoint(element: HTMLElement) {
 }
 
 export function getActivityEndpoint(element: HTMLElement) {
-  const endpoint = element.dataset.activityendpoint
+  const endpoint = element.dataset.activityEndpoint
   if (!endpoint) {
     throw new Error('Activity endpoint missing!')
   }
