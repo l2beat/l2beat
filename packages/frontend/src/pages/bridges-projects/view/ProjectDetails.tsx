@@ -21,6 +21,10 @@ import {
   PermissionsSectionProps,
 } from '../../../components/project/PermissionsSection'
 import {
+  RiskSection,
+  RiskSectionProps,
+} from '../../../components/project/RiskSection'
+import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
 } from '../../../components/project/TechnologyIncomplete'
@@ -33,6 +37,7 @@ export interface ProjectDetailsProps {
   linkSection: LinkSectionProps
   newsSection: NewsSectionProps
   descriptionSection: DescriptionSectionProps
+  riskSection: RiskSectionProps
   incomplete?: TechnologyIncompleteProps
   sections: TechnologySectionProps[]
   permissionsSection?: PermissionsSectionProps
@@ -46,7 +51,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
       <NewsSection {...props.newsSection} />
       <div className="ProjectDetails-Content">
         <DescriptionSection {...props.descriptionSection} />
-        {/* <RiskSection {...props.riskSection} /> */}
+        <RiskSection {...props.riskSection} />
         {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
         {props.sections.map((section) => (
           <TechnologySection key={section.id} {...section} />

@@ -1,7 +1,10 @@
+import { Layer2 } from '@l2beat/config'
 import classNames from 'classnames'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
+import { NoInfoCell } from '../../../components/NoInfoCell'
+import { ProjectLink } from '../../../components/ProjectLink'
 import { ColumnConfig, TableView } from '../../../components/TableView'
 
 export interface ActivityViewProps {
@@ -12,9 +15,10 @@ export interface ActivityViewProps {
 export interface ActivityViewEntry {
   name: string
   slug: string
-  tpsDaily: string
+  provider: Layer2['technology']['provider']
+  tpsDaily: number | undefined
   tpsWeeklyChange: string
-  transactionsWeeklyCount: string
+  transactionsWeeklyCount: number | undefined
 }
 
 export function ActivityView({ items, className }: ActivityViewProps) {
@@ -25,12 +29,12 @@ export function ActivityView({ items, className }: ActivityViewProps) {
     },
     {
       name: 'Name',
-      getValue: (project) => project.name,
+      getValue: (project) => <ProjectLink type="layer2" project={project} />,
     },
     {
       name: 'TPS',
       alignRight: true,
-      getValue: (project) => project.tpsDaily,
+      getValue: (project) => project.tpsDaily ?? <NoInfoCell />,
     },
     {
       name: '7d Change',

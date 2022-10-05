@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { RiskSection as RiskSectionComponent } from '../../../components/project/RiskSection'
+import { RiskSection as RiskSectionComponent } from './RiskSection'
 
 export default {
   title: 'Components/Project/RiskSection',

@@ -11,23 +11,26 @@ module.exports = {
     colors: {
       current: 'currentColor',
       link: 'rgb(var(--link-rgb) / <alpha-value>)',
-      white: '#fafafa',
+      white: '#FAFAFA',
       gray: {
-        100: '#ededed',
-        200: '#dfdfdf',
+        100: '#EDEDED',
+        200: '#DFDFDF',
+        300: '#D3D3D3',
+        700: '#565656',
         800: '#424242',
-        900: '#2f2f2f',
+        900: '#2F2F2F',
       },
+      black: '#1B1B1B',
       yellow: {
-        100: '#fdcf44',
+        100: '#FDCF44',
       },
       red: {
-        100: '#ae2121',
+        100: '#AE2121',
       },
-      black: '#1b1b1b',
-      'bg-2': 'rgb(var(--bg-2) / <alpha-value>)',
-      'bg-3': 'rgb(var(--bg-3) / <alpha-value>)',
-      'bg-4': 'rgb(var(--bg-4) / <alpha-value>)',
+      pink: {
+        100: '#DB8BF7',
+        900: '#AB3BD2',
+      },
     },
     screens: {
       xs: '400px',

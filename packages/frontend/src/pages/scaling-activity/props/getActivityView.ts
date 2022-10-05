@@ -1,27 +1,33 @@
 import { Layer2 } from '@l2beat/config'
-import { ActivityApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionWeeklyCount } from '../../../utils/activity/getTransactionWeeklyCount'
+import { getIncludedProjects } from '../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../utils/orderByTvl'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
   projects: Layer2[],
-  apiActivity: ActivityApiResponse,
+  tvlApiResponse: TvlApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ): ActivityViewProps {
+  const included = getIncludedProjects(projects, tvlApiResponse)
+  const ordering = orderByTvl(included, tvlApiResponse)
+
   return {
-    items: projects
-      .map((x) => getActivityViewEntry(x, apiActivity))
-      .sort((a, b) => +b.tpsDaily - +a.tpsDaily),
+    items: ordering
+      .map((x) => getActivityViewEntry(x, activityApiResponse))
+      .sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),
   }
 }
 
 export function getActivityViewEntry(
   project: Layer2,
-  apiActivity: ActivityApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ): ActivityViewEntry {
-  const data = apiActivity.projects[project.id.toString()]?.data
+  const data = activityApiResponse.projects[project.id.toString()]?.data
   const tpsDaily = getTpsDaily(data)
   const tpsWeeklyChange = getTpsWeeklyChange(data)
   const transactionsWeeklyCount = getTransactionWeeklyCount(data)
@@ -29,8 +35,9 @@ export function getActivityViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    tpsDaily: tpsDaily?.toString() ?? '',
+    provider: project.technology.provider,
+    tpsDaily,
     tpsWeeklyChange,
-    transactionsWeeklyCount: transactionsWeeklyCount?.toString() ?? '',
+    transactionsWeeklyCount,
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ReferenceList as ReferenceListComponent } from '../../../components/project/ReferenceList'
+import { ReferenceList as ReferenceListComponent } from './ReferenceList'
 
 export default {
   title: 'Components/Project/ReferenceList',

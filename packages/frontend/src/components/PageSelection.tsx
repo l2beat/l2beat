@@ -31,7 +31,8 @@ export function PageSelection({ pages }: PageSelectionProps) {
           <li
             key={i}
             className={classNames(
-              'relative w-full border-bg-4 border border-r-0 font-[600] h-[48px] text-sm sm:text-lg sm:h-[64px] z-0 opacity-70',
+              'relative w-full font-[600] h-[48px] text-sm sm:text-lg sm:h-[64px] z-0 opacity-70',
+              'border-gray-300 dark:border-gray-700 border border-r-0',
               i === pages.length - 1 && 'border-r rounded-r-lg',
               i === 0 && 'rounded-l-lg',
               page.selected && 'border-0 opacity-100 z-10',
