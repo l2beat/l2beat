@@ -119,7 +119,7 @@ export class TaskQueue<T> {
     this.busyWorkers++
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
-      this.logger.info('Executing job', { job: JSON.stringify(job) })
+      this.logger.debug('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
     } catch (error) {
       this.logger.warn('Error during task execution', {
