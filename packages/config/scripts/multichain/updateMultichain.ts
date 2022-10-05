@@ -1,5 +1,5 @@
 import { writeFile } from 'fs/promises'
-import { tokenList } from '@l2beat/config'
+import { tokenList } from '../../src/tokens'
 import { chainIdNames } from './chainIdNames'
 import { fetchMultichainConfig } from './fetchMultichainConfig'
 
