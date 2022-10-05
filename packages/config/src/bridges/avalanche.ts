@@ -102,27 +102,27 @@ export const avalanche: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'Outgoing transfers on Ethereum side are being watched by external entity which informs Avalanche side of the bridge about incoming transfer. The mechanism in other direction works very similar, user can unwrap tokens signaling external entity intention to transfer, which later informs Ethereum Bridge Operator about incoming transfer.',
+        'Outgoing transfers on Ethereum side are being watched by external entity which informs Avalanche side of the bridge about incoming transfer. The mechanism in other direction works very similar, users can burn tokens signaling external entity intention to transfer, which later informs Ethereum Bridge Wardens about incoming transfer.',
       references: [],
       risks: [
         {
           category: 'Funds can be stolen if',
-          text: 'operator decides to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
+          text: 'wardens decide to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
           isCritical: true,
         },
         {
           category: 'Users can be censored if',
-          text: 'operator decides to censor certain transactions.',
+          text: 'wardens decide to censor certain transactions.',
           isCritical: true,
         },
         {
           category: 'Funds can be lost if',
-          text: 'operator looses the private key.',
+          text: 'wardens loose the private key.',
           isCritical: true,
         },
         {
           category: 'Funds can be frozen if',
-          text: 'operator decides to stop processing transfers.',
+          text: 'wardens decide to stop processing transfers.',
           isCritical: true,
         },
       ],
@@ -137,9 +137,13 @@ export const avalanche: Bridge = {
       isIncomplete: true,
     },
   },
+  contracts: {
+    addresses: [],
+    risks: []
+  },
   permissions: [
     {
-      name: 'Bridge Operator',
+      name: 'Bridge Wardens',
       description:
         'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
       accounts: [
