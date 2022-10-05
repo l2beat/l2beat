@@ -17,7 +17,7 @@ export const near: Bridge = {
       socialMedia: ['https://twitter.com/auroraisnear'],
     },
     description:
-      'Rainbow bridge is an light client based bridge between NEAR/AURORA and Ethereum that allows for asset and data movement between these chains. For better gas efficiency from NEAR to Ethereum it leverages optimisitic validation which adds some trust assumption and latency.',
+      'Rainbow bridge is an light client based bridge between NEAR/AURORA and Ethereum that allows for asset and data movement between these chains. For better gas efficiency from NEAR to Ethereum it leverages optimistic validation which adds some trust assumption and latency.',
   },
   config: {
     associatedTokens: ['AURORA'],
@@ -74,7 +74,7 @@ export const near: Bridge = {
     validation: {
       name: 'Both inbound and outbound transfers are verified by the light client',
       description:
-        'Near Rainbow bridge implements light client for both inboud and outbound transfers. For inbound transfers, checkpoints of near state are submitted every 4 hours. \
+        'Near Rainbow bridge implements light client for both inbound and outbound transfers. For inbound transfers, checkpoints of near state are submitted every 4 hours. \
         These are optimistically assumed to be signed by 2/3 of Near Validators. The signatures are not immediately verified by Ethereum due to a different signature scheme \
         used on NEAR and - as a result - very high gas cost on Ethereum. If signatures are found to be invalid, checkpoints can be permissionlessly challenged. \
         Users can withdraw funds by submitting a merkle proof of a burn event against the checkpoint. \
@@ -118,7 +118,7 @@ export const near: Bridge = {
       {
         address: '0x051AD3F020274910065Dcb421629cd2e6E5b46c4',
         name: 'NearProver',
-        description: 'Contract veryfing merkle proofs, used for withdrawals.',
+        description: 'Contract verifying merkle proofs, used for withdrawals.',
       },
       {
         address: '0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873', // new near bridge
