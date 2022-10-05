@@ -15,6 +15,8 @@ module.exports = {
       base: ['16px', '24px'],
       lg: ['18px', '28px'],
       xl: ['20px', '28px'],
+      '2xl': ['24px', '32px'],
+      '3xl': ['32px', '36px'],
     },
     colors: {
       current: 'currentColor',
