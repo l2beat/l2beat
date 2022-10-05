@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { RpcTransactionCountRow } from 'knex/types/tables'
+import { BlockTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
 import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
-export interface RpcTransactionCountRecord {
+export interface BlockTransactionCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   blockNumber: number
@@ -15,11 +15,12 @@ export interface RpcTransactionCountRecord {
 }
 interface RawBlockNumberQueryResult {
   rows: {
-    block_number: number
+    no_next_block_number: number | null
+    no_prev_block_number: number | null
   }[]
 }
 
-export class RpcTransactionCountRepository extends BaseRepository {
+export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -33,17 +34,17 @@ export class RpcTransactionCountRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async add(record: RpcTransactionCountRecord) {
+  async add(record: BlockTransactionCountRecord) {
     const knex = await this.knex()
     const row = toRow(record)
-    await knex('transactions.rpc').insert(row)
+    await knex('transactions.block').insert(row)
     return `${row.project_id}-${row.block_number}`
   }
 
-  async addMany(records: RpcTransactionCountRecord[]) {
+  async addMany(records: BlockTransactionCountRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex('transactions.rpc').insert(rows)
+    await knex('transactions.block').insert(rows)
     return rows.length
   }
 
@@ -51,42 +52,55 @@ export class RpcTransactionCountRepository extends BaseRepository {
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
 
-    const noNext = (await knex.raw(
+    const blockNumbers = (await knex.raw(
       `
       WITH 
         project_blocks AS (
-          SELECT * FROM transactions.rpc WHERE project_id=?
-        )
-      SELECT * 
-      FROM (
-        SELECT project_blocks.block_number 
-        FROM project_blocks 
-        LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
-        WHERE b2.block_number IS NULL) AS no_next
-      ORDER BY block_number ASC
-    `,
-      projectId.toString(),
-    )) as unknown as RawBlockNumberQueryResult
-
-    const noPrev = (await knex.raw(
-      `
-      WITH 
-          project_blocks AS (
-            SELECT * FROM transactions.rpc WHERE project_id=?
-          )
-        SELECT * 
-        FROM (
-          SELECT project_blocks.block_number 
+          SELECT * FROM transactions.block WHERE project_id=?
+        ),
+        no_next AS (
+          SELECT 
+            project_blocks.block_number
+          FROM project_blocks 
+          LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
+          WHERE b2.block_number IS NULL
+        ),
+        no_prev AS (
+          SELECT 
+            project_blocks.block_number 
           FROM project_blocks 
           LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
-          WHERE b2.block_number IS NULL) AS no_prev
-        ORDER BY block_number ASC
-    `,
+          WHERE b2.block_number IS NULL
+        )
+      SELECT no_prev.block_number as no_prev_block_number, NULL as no_next_block_number
+      FROM no_prev 
+      UNION
+      SELECT NULL as no_prev_block_number, no_next.block_number as no_next_block_number
+      FROM no_next
+      ORDER BY no_prev_block_number, no_next_block_number ASC
+      `,
       projectId.toString(),
     )) as unknown as RawBlockNumberQueryResult
 
-    const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
-    const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
+    const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
+      (acc, row) => {
+        if (row.no_prev_block_number !== null) {
+          acc.push(row.no_prev_block_number)
+        }
+        return acc
+      },
+      [],
+    )
+
+    const noNextBlockNumbers = blockNumbers.rows.reduce<number[]>(
+      (acc, row) => {
+        if (row.no_next_block_number !== null) {
+          acc.push(row.no_next_block_number + 1)
+        }
+        return acc
+      },
+      [],
+    )
 
     noPrevBlockNumbers.push(Infinity)
     noNextBlockNumbers.unshift(-Infinity)
@@ -106,7 +120,7 @@ export class RpcTransactionCountRepository extends BaseRepository {
         date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
         sum(count) as count
       FROM
-        transactions.rpc
+        transactions.block
       WHERE
         project_id = ?
       GROUP BY
@@ -115,7 +129,7 @@ export class RpcTransactionCountRepository extends BaseRepository {
     `,
       projectId.toString(),
     )) as unknown as {
-      rows: Pick<RpcTransactionCountRow, 'unix_timestamp' | 'count'>[]
+      rows: Pick<BlockTransactionCountRow, 'unix_timestamp' | 'count'>[]
     }
 
     return rows.map((r) => ({
@@ -126,11 +140,11 @@ export class RpcTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transactions.rpc').delete()
+    return await knex('transactions.block').delete()
   }
 }
 
-function toRow(record: RpcTransactionCountRecord): RpcTransactionCountRow {
+function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),

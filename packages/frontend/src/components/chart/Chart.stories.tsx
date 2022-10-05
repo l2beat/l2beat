@@ -33,7 +33,7 @@ function Template({ tokenCount }: TemplateProps) {
   return (
     <PageContent>
       <ChartComponent
-        endpoint="/fakeTvl.json"
+        tvlEndpoint="/fakeTvl.json"
         tokens={tokens.slice(0, tokenCount)}
       />
     </PageContent>

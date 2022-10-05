@@ -1,8 +1,8 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { Logo } from './Logo'
-import { PercentChange } from './PercentChange'
+import { Logo } from '../Logo'
+import { PercentChange } from '../PercentChange'
 
 export interface HeaderProps {
   title: string
@@ -11,6 +11,7 @@ export interface HeaderProps {
   icon?: string
   tvl?: string
   tvlWeeklyChange?: string
+  showTps?: boolean
   tpsDaily?: string
   tpsWeeklyChange?: string
 }
@@ -32,7 +33,7 @@ export function Header(props: HeaderProps) {
         {!props.title && <Logo />}
       </h1>
       {props.tvl && props.tvlWeeklyChange && (
-        <div className="Header-Right">
+        <div className="Header-Right" id="header-tvl">
           <p className="Header-Tvl">
             TVL: <span className="Header-TvlValue">{props.tvl}</span>
           </p>
@@ -43,7 +44,10 @@ export function Header(props: HeaderProps) {
       )}
 
       {props.tpsDaily && props.tpsWeeklyChange && (
-        <div className="Header-Right">
+        <div
+          className={cx('Header-Right', !props.showTps ? 'hidden' : undefined)}
+          id="header-activity"
+        >
           <p className="Header-Tvl">
             TPS: <span className="Header-TvlValue">{props.tpsDaily}</span>
           </p>

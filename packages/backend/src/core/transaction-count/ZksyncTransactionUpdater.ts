@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import {
@@ -8,29 +8,38 @@ import {
 import { ZksyncClient } from '../../peripherals/zksync'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
+import { BACK_OFF_AND_DROP } from './utils'
+
+interface ZksyncTransactionUpdaterOpts {
+  workQueueWorkers?: number
+}
 
 export class ZksyncTransactionUpdater implements TransactionCounter {
   readonly projectId = ProjectId.ZKSYNC
 
-  private readonly updateQueue = new TaskQueue<void>(
-    () => this.update(),
-    this.logger,
-  )
-  private readonly blockQueue = new UniqueTaskQueue(
-    this.updateBlock.bind(this),
-    this.logger,
-    {
-      workers: 100,
-    },
-  )
+  private readonly updateQueue: TaskQueue<void>
+  private readonly blockQueue: TaskQueue<number>
 
   constructor(
     private readonly zksyncClient: ZksyncClient,
     private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
+    private readonly opts?: ZksyncTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(this)
+    this.updateQueue = new TaskQueue<void>(
+      () => this.update(),
+      this.logger.for('updateQueue'),
+    )
+    this.blockQueue = new TaskQueue(
+      (block) => this.updateBlock(block),
+      this.logger.for('blockQueue'),
+      {
+        workers: this.opts?.workQueueWorkers,
+        shouldRetry: BACK_OFF_AND_DROP,
+      },
+    )
   }
 
   start() {
@@ -69,6 +78,8 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started')
+
+    await this.blockQueue.waitTilEmpty()
 
     const missingRanges =
       await this.zksyncTransactionRepository.getMissingRanges()

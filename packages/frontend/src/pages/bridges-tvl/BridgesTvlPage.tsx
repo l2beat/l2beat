@@ -19,7 +19,7 @@ export interface BridgesTvlPageProps {
   bridgesTvlSevenDayChange: string
   combinedTvl: string
   combinedTvlSevenDayChange: string
-  apiEndpoint: string
+  tvlEndpoint: string
   tvlView: BridgesTvlViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -44,7 +44,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
             tvlWeeklyChange={props.combinedTvlSevenDayChange}
           />
         </div>
-        <Chart endpoint={props.apiEndpoint} />
+        <Chart tvlEndpoint={props.tvlEndpoint} />
         <IncludeLayer2sCheckbox />
         <BridgesTvlView {...props.tvlView} />
         <OtherSites />

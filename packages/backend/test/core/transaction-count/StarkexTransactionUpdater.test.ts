@@ -4,12 +4,12 @@ import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
-import { StarkexTransactionCountUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
+import { StarkexTransactionUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
 import { StarkexTransactionCountRepository } from '../../../src/peripherals/database/StarkexTransactionCountRepository'
 import { StarkexClient } from '../../../src/peripherals/starkex'
 
-describe(StarkexTransactionCountUpdater.name, () => {
-  describe(StarkexTransactionCountUpdater.prototype.start.name, () => {
+describe(StarkexTransactionUpdater.name, () => {
+  describe(StarkexTransactionUpdater.prototype.start.name, () => {
     it('skips known blocks', async () => {
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
@@ -30,7 +30,7 @@ describe(StarkexTransactionCountUpdater.name, () => {
         },
         getLastHour: () => UnixTime.fromDays(7),
       })
-      const updater = new StarkexTransactionCountUpdater(
+      const updater = new StarkexTransactionUpdater(
         starkexTransactionCountRepository,
         starkexClient,
         clock,
@@ -51,7 +51,7 @@ describe(StarkexTransactionCountUpdater.name, () => {
     })
   })
 
-  describe(StarkexTransactionCountUpdater.prototype.updateDay.name, () => {
+  describe(StarkexTransactionUpdater.prototype.updateDay.name, () => {
     it('queries a day and adds to a DB', async () => {
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
@@ -62,7 +62,7 @@ describe(StarkexTransactionCountUpdater.name, () => {
       })
       const clock = mock<Clock>()
 
-      const updater = new StarkexTransactionCountUpdater(
+      const updater = new StarkexTransactionUpdater(
         starkexTransactionCountRepository,
         starkexClient,
         clock,

@@ -28,12 +28,7 @@ export function toUiState(state: ChartStateWithInput): UiState {
     dataPoints[dataPoints.length - 1][0],
   )
 
-  const description = state.token
-    ? `Total ${state.token} Locked`
-    : state.altCurrency
-    ? 'Total Value Locked (*ETH equivalent)'
-    : 'Total Value Locked (USD equivalent)'
-
+  const description = getDescription(state)
   const values = dataPoints.map((x) => x[state.altCurrency ? 2 : 1])
   const currency = state.input.types[state.altCurrency ? 2 : 1]
   const ticks = calculateTicks(5, values, state.logScale)
@@ -71,4 +66,20 @@ function getLogY(min: number, max: number) {
     }
     return (Math.log(value) - Math.log(min)) / (Math.log(max) - Math.log(min))
   }
+}
+
+function getDescription(state: ChartStateWithInput) {
+  if (state.type === 'activity') {
+    return 'Transactions per second'
+  }
+
+  if (state.token) {
+    return `Total ${state.token} Locked`
+  }
+
+  if (state.altCurrency) {
+    return 'Total Value Locked (*ETH equivalent)'
+  }
+
+  return 'Total Value Locked (USD equivalent)'
 }
