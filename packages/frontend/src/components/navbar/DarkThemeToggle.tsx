@@ -10,7 +10,7 @@ export function DarkThemeToggle({ withText }: DarkThemeToggleProps) {
   return (
     <button
       data-role="dark-theme-toggle"
-      className="flex gap-4"
+      className="flex gap-4 font-medium"
       title="Change color scheme"
     >
       <SunIcon className="hidden dark:block" aria-label="Toggle light mode" />

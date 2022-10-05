@@ -34,18 +34,20 @@ export function SidebarMenu(props: SidebarMenuProps) {
         <div className="p-4 flex-1 relative overflow-y-auto overflow-x-visible">
           <ul className="mt-8">
             <li>
-              <div className="uppercase text-sm mb-4">Scaling</div>
+              <div className="uppercase text-sm mb-4 font-medium text-gray-700 dark:text-gray-300">
+                Scaling
+              </div>
               <ul className="flex flex-col gap-4">
-                <li className="font-bold flex gap-2">
+                <li className="font-medium flex gap-2">
                   <TvlIcon className="w-5 h-auto" />
                   <a href="/scaling/tvl">Total Value Locked</a>
                 </li>
-                <li className="font-bold flex gap-2">
+                <li className="font-medium flex gap-2">
                   <RiskIcon className="w-5 h-auto" />
                   <a href="/scaling/risk">Risks</a>
                 </li>
                 {props.showActivity && (
-                  <li className="font-bold flex gap-2">
+                  <li className="font-medium flex gap-2">
                     <ActivityIcon className="w-5 h-auto" />
                     <a href="/scaling/activity">Activity</a>
                   </li>
@@ -56,13 +58,15 @@ export function SidebarMenu(props: SidebarMenuProps) {
           {props.showBridges && (
             <ul className="mt-8">
               <li>
-                <div className="uppercase text-sm mb-4">Bridges</div>
+                <div className="uppercase text-sm mb-4 font-medium text-gray-700 dark:text-gray-300">
+                  Bridges
+                </div>
                 <ul className="flex flex-col gap-4">
-                  <li className="font-bold flex gap-2">
+                  <li className="font-medium flex gap-2">
                     <TvlIcon className="w-5 h-auto" />
                     <a href="/bridges/tvl">Total Value Locked</a>
                   </li>
-                  <li className="font-bold flex gap-2">
+                  <li className="font-medium flex gap-2">
                     <RiskIcon className="w-5 h-auto" />
                     <a href="/bridges/risk">Risks</a>
                   </li>
@@ -71,7 +75,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </ul>
           )}
           <HorizontalBar />
-          <ul className="font-bold flex flex-col gap-4">
+          <ul className="font-medium flex flex-col gap-4">
             <li>
               <OutLink href={props.forumLink}>Forum</OutLink>
             </li>
