@@ -9,7 +9,7 @@ import { expect } from 'earljs'
 
 import { ActivityController } from '../../../src/api/controllers/ActivityController'
 import { RpcTransactionUpdater } from '../../../src/core/transaction-count/RpcTransactionUpdater'
-import { StarkexTransactionCountUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
+import { StarkexTransactionUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
 import { TransactionCounter } from '../../../src/core/transaction-count/TransactionCounter'
 import { ZksyncTransactionUpdater } from '../../../src/core/transaction-count/ZksyncTransactionUpdater'
 
@@ -41,7 +41,7 @@ describe(ActivityController.name, () => {
             ]
           },
         }),
-        mock<StarkexTransactionCountUpdater>({
+        mock<StarkexTransactionUpdater>({
           projectId: ProjectId('dydx'),
           async getDailyTransactionCounts() {
             return [
