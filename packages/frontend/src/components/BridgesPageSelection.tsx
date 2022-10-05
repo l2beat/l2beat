@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { RiskIcon } from './icons/symbols/RiskIcon'
-import { TvlIcon } from './icons/symbols/TvlIcon'
+import { RiskIcon, TvlIcon } from './icons'
 import { PageSelection } from './PageSelection'
 
 interface BridgesPageSelectionProps {

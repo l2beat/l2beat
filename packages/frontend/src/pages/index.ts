@@ -23,7 +23,7 @@ export async function renderPages(
 
   pages.push(getRiskPage(config, tvlApiResponse))
   pages.push(getTvlPage(config, tvlApiResponse))
-  pages.push(getActivityPage(config, activityApiResponse))
+  pages.push(getActivityPage(config, tvlApiResponse, activityApiResponse))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, tvlApiResponse))

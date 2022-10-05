@@ -1,5 +1,5 @@
 import { ProjectPermission } from '@l2beat/config'
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 import { EtherscanLink } from './EtherscanLink'
@@ -21,7 +21,7 @@ export function PermissionsSection(props: PermissionsSectionProps) {
             <div className="PermissionsSection-Address">
               <strong>{permission.name}</strong>{' '}
               <span
-                className={classNames(
+                className={cx(
                   'text-sm lg:text-base',
                   permission.accounts.length > 1 && 'block',
                 )}

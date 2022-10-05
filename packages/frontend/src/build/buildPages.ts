@@ -80,11 +80,15 @@ function sanityCheck(tvlApiResponse: TvlApiResponse) {
     throw new Error('The API has returned an insufficient number of bridges')
   }
 
+  const ids = [...bridgesInApi, ...layer2sInApi].map((x) => x.id.toString())
+
   const emptyChartsExist = [
     tvlApiResponse.bridges,
     tvlApiResponse.layers2s,
     tvlApiResponse.combined,
-    ...Object.values(tvlApiResponse.projects).map((x) => x?.charts),
+    ...Object.entries(tvlApiResponse.projects)
+      .filter(([id]) => ids.includes(id))
+      .map(([, project]) => project?.charts),
   ]
     .flatMap((x) => [x?.daily, x?.sixHourly, x?.hourly])
     .some((x) => x?.data.length === 0)

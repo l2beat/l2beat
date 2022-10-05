@@ -18,7 +18,7 @@ export function getProps(
   const chart = getChart(bridge, tvlApiResponse)
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'bridges'),
       header: getHeader(bridge, tvlApiResponse),
       chart,
       projectDetails: getProjectDetails(bridge),

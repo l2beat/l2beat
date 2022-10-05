@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 export function YAxisLabels() {
@@ -17,7 +17,7 @@ function Label({ className }: { className: string }) {
   return (
     <div
       data-role="chart-label"
-      className={classNames(
+      className={cx(
         'flex items-end text-sm border-b border-black dark:border-white border-opacity-30 dark:border-opacity-30',
         className,
       )}

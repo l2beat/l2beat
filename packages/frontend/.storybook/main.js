@@ -14,7 +14,7 @@ module.exports = {
   features: {
     storyStoreV7: true,
   },
-  staticDirs: ['../src/static', '../src/stories/static'],
+  staticDirs: ['../src/static', './static'],
   async viteFinal(config) {
     return mergeConfig(config, {
       optimizeDeps: {

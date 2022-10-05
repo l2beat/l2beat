@@ -40,7 +40,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectLink type="bridge" project={entry} />,
+      getValue: (entry) => <ProjectLink type={entry.type} project={entry} />,
     },
     {
       name: 'TVL',
