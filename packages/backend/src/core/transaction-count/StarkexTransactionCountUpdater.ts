@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -36,7 +36,10 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     this.daysQueue = new TaskQueue(
       this.updateDay.bind(this),
       this.logger.for('daysQueue'),
-      { workers: this.opts?.workQueueWorkers },
+      {
+        workers: this.opts?.workQueueWorkers,
+        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
+      },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()
   }

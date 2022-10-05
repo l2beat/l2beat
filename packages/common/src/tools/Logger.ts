@@ -5,8 +5,9 @@ import { inspect } from 'util'
 export enum LogLevel {
   NONE = 0,
   ERROR = 1,
-  INFO = 2,
-  DEBUG = 3,
+  WARN = 2,
+  INFO = 3,
+  DEBUG = 4,
 }
 
 export interface LoggerOptions {
@@ -50,6 +51,14 @@ export class Logger {
         ...parameters,
         service: this.options.service,
       })
+    }
+  }
+
+  warn(message: string, parameters?: LoggerParameters): void
+  warn(parameters: LoggerParameters): void
+  warn(message: string | LoggerParameters, parameters?: LoggerParameters) {
+    if (this.options.logLevel >= LogLevel.WARN) {
+      this.print('warn', combine(message, parameters))
     }
   }
 
@@ -148,10 +157,12 @@ function getPrettyLevel(level: string) {
   switch (level) {
     case 'error':
       return chalk.red(level.toUpperCase())
+    case 'warn':
+      return chalk.yellow(level.toUpperCase())
     case 'info':
       return chalk.blue(level.toUpperCase())
     case 'debug':
-      return chalk.yellow(level.toUpperCase())
+      return chalk.gray(level.toUpperCase())
   }
   return level.toUpperCase()
 }

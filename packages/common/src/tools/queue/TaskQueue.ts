@@ -1,10 +1,13 @@
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
-import { Logger } from '../Logger'
+import { getErrorMessage, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
+/**
+ * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
+ */
 export class TaskQueue<T> {
   private readonly queue: Job<T>[] = []
   private busyWorkers = 0
@@ -21,7 +24,7 @@ export class TaskQueue<T> {
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts?.shouldRetry ?? Retries.always
+    this.shouldRetry = opts?.shouldRetry ?? Retries.defaultExponentialBackOff
   }
 
   private get isEmpty() {
@@ -81,7 +84,7 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job)
     if (!result.retry) {
-      this.logger.info({
+      this.logger.error({
         message: 'No more retries',
         job: JSON.stringify(job),
       })
@@ -115,13 +118,10 @@ export class TaskQueue<T> {
       this.logger.info('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
     } catch (error) {
-      this.logger.error(
-        {
-          message: 'Error during executing task',
-          job: JSON.stringify(job),
-        },
-        error,
-      )
+      this.logger.warn('Error during task execution', {
+        job: JSON.stringify(job),
+        error: getErrorMessage(error),
+      })
       this.handleFailure(job)
     } finally {
       this.busyWorkers--

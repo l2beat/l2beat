@@ -43,10 +43,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
-        shouldRetry: Retries.exponentialBackOff(100, {
-          maxAttempts: 8,
-          maxDistance: 3000,
-        }),
+        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
       },
     )
     this.assessCount = opts?.assessCount ?? identity
