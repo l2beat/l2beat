@@ -9,7 +9,9 @@ interface GroupedEscrow {
   tokens: { name: string; symbol: string; address: EthereumAddress | 'ETH' }[]
 }
 
-export function generateOutput(config: MultichainConfig) {
+export type IntermediateConfig = ReturnType<typeof generateIntermediateConfig>
+
+export function generateIntermediateConfig(config: MultichainConfig) {
   const escrows = []
   const ETHEREUM = '1'
 
