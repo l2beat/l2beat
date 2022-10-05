@@ -4,6 +4,25 @@ import { tokenList } from '@l2beat/config'
 import { MultichainApiResponse } from './MultichainApiResponse'
 import { chainIdNames } from './chainIdNames'
 
+/*
+
+Escrows:
+
+1. Get all escrows through swapin & swapout as usual
+2. Download all token lists for all known chainIds
+2.5 https://bridgeapi.anyswap.exchange/v4/tokenlistv4/all
+3. Find destinations leading back to chainid 1
+4. Add those escrows
+
+AnyTokens:
+
+anyDAI (1) -> underlying: DAI (1)
+anyDAI (250) -> underlying: DAI (250)
+
+Goal: list all any* on Ethereum with underlying
+
+*/
+
 main()
 async function main() {
   const res = await fetch('https://bridgeapi.anyswap.exchange/v4/tokenlistv4/1')
@@ -11,11 +30,13 @@ async function main() {
 
   const escrows = []
   const chainIds = new Set<string>()
+  const specTypes = new Set<string>()
 
   for (const [key, token] of Object.entries(json)) {
     for (const [id, chain] of Object.entries(token.destChains)) {
       chainIds.add(id)
       for (const [hash, spec] of Object.entries(chain)) {
+        specTypes.add(spec.type)
         if (spec.type === 'swapin' || spec.type === 'swapout') {
           escrows.push({
             tokenName: token.name,
@@ -73,6 +94,7 @@ async function main() {
   }
 
   console.log('Total chains', namedChainIds.length)
+  console.log(specTypes)
 
   writeFile('src/bridges/multichain.json', JSON.stringify(configFile, null, 2))
 }
