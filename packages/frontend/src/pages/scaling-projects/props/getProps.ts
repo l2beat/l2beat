@@ -18,7 +18,7 @@ export function getProps(
   const chart = getChart(project, tvlApiResponse)
   return {
     props: {
-      navbar: getNavbarProps(config),
+      navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse),
       chart,
       projectDetails: getProjectDetails(project),
