@@ -87,7 +87,7 @@ function sanityCheck(tvlApiResponse: TvlApiResponse) {
     tvlApiResponse.layers2s,
     tvlApiResponse.combined,
     ...Object.entries(tvlApiResponse.projects)
-      .filter(([k]) => ids.includes(k))
+      .filter(([id]) => ids.includes(id))
       .map(([, project]) => project?.charts),
   ]
     .flatMap((x) => [x?.daily, x?.sixHourly, x?.hourly])
