@@ -1,4 +1,4 @@
-import { Logger, Retries, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import {
@@ -8,6 +8,7 @@ import {
 import { ZksyncClient } from '../../peripherals/zksync'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
+import { BACK_OFF_AND_DROP } from './utils'
 
 interface ZksyncTransactionUpdaterOpts {
   workQueueWorkers?: number
@@ -36,7 +37,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
-        shouldRetry: Retries.defaultExponentialBackOffAndDrop,
+        shouldRetry: BACK_OFF_AND_DROP,
       },
     )
   }
