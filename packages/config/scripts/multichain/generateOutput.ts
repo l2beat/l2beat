@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+import { chainIdNames } from './chainIdNames'
 import { MultichainConfig } from './types'
 
 interface GroupedEscrow {
@@ -93,17 +94,26 @@ export function generateOutput(config: MultichainConfig) {
     }
   }
 
+  const chainIds = new Set<string>()
+  for (const escrow of groupedEscrows) {
+    for (const chainId of escrow.chainIds) {
+      chainIds.add(chainId)
+    }
+  }
+
   console.log({
     routeTypes: [...routeTypes],
     basicEscrows: groupedEscrows.filter((x) => x.type === 'basic').length,
     anyEscrows: groupedEscrows.filter((x) => x.type === 'any').length,
     lockedTokens: tokens.size,
+    chains: chainIds.size,
   })
 
   // uncomment to debug
   // return { groupedEscrows }
 
   return {
+    chains: [...chainIds].map((id) => ({ id, name: chainIdNames.get(id) })),
     escrows: groupedEscrows
       .map((x) => ({
         type: x.type,
