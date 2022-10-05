@@ -60,7 +60,7 @@
   tr {
     border-bottom: 1px solid var(--background-3);
 
-    &:hover {
+    &:not(.accent):hover {
       background-color: var(--background-2);
       box-shadow: 0 1px 3px 0 var(--shadow);
     }
