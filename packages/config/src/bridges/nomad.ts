@@ -12,7 +12,10 @@ export const nomad: Bridge = {
     links: {
       websites: ['https://app.nomad.xyz/', 'https://docs.nomad.xyz/'],
       repositories: ['https://github.com/nomad-xyz/monorepo'],
-      socialMedia: ['https://twitter.com/nomadxyz_', 'discord.gg/nomadxyz'],
+      socialMedia: [
+        'https://twitter.com/nomadxyz_',
+        'https://discord.gg/nomadxyz',
+      ],
     },
 
     description:
@@ -58,12 +61,12 @@ export const nomad: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'Updater fails to attest messages and governance does not change the Updater.',
+          text: 'updater fails to attest messages and governance does not change the Updater.',
           isCritical: false,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'Updater manages to relay fraudulent message batch and is not slashed by Watchers during 20 min fraud proof window.',
+          text: 'updater manages to relay fraudulent message batch and is not slashed by Watchers during 20 min fraud proof window.',
           isCritical: false,
         },
         {
