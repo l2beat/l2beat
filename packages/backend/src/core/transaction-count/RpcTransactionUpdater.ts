@@ -1,4 +1,4 @@
-import { Logger, Retries, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -18,7 +18,7 @@ interface RpcTransactionUpdaterOpts {
 
 export class RpcTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
-  private readonly blockQueue: UniqueTaskQueue<number>
+  private readonly blockQueue: TaskQueue<number>
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
@@ -38,7 +38,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       this.update.bind(this),
       this.logger.for('updateQueue'),
     )
-    this.blockQueue = new UniqueTaskQueue(
+    this.blockQueue = new TaskQueue(
       this.updateBlock.bind(this),
       this.logger.for('blockQueue'),
       {
@@ -86,6 +86,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
+
+    // Wait until there is no more tasks either waiting or being executed in the queue
+    // Otherwise it was prone to race conditions between what is in the queue and what is read
+    // from the database using `getMissingRanges`
+    await this.blockQueue.waitTilEmpty()
 
     const missingRanges =
       await this.blockTransactionCountRepository.getMissingRangesByProject(

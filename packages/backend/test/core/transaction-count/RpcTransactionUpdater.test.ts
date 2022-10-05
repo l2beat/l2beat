@@ -48,44 +48,6 @@ describe(RpcTransactionUpdater.name, () => {
     })
   })
 
-  describe(RpcTransactionUpdater.prototype.update.name, () => {
-    it('does not query the same blocks multiple times', async () => {
-      const ethereumClient = mock<EthereumClient>({
-        getBlock: async () => fakeBlock(),
-        getBlockNumber: async () => 5n,
-      })
-      const blockCountTransactionRepository =
-        mock<BlockTransactionCountRepository>({
-          getMissingRangesByProject: async () => [
-            [-Infinity, -1],
-            [2, 3],
-            [5, Infinity],
-          ],
-          add: async () => '',
-        })
-      const clock = mock<Clock>({
-        onNewHour: (callback) => {
-          callback(UnixTime.now())
-          return () => {}
-        },
-        getLastHour: () => UnixTime.now(),
-      })
-      const blockTxCountUpdater = new RpcTransactionUpdater(
-        ethereumClient,
-        blockCountTransactionRepository,
-        clock,
-        Logger.SILENT,
-        ProjectId('fake-project'),
-      )
-      await blockTxCountUpdater.update()
-      await blockTxCountUpdater.update()
-
-      await waitForExpect(() => {
-        expect(ethereumClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
-      })
-    })
-  })
-
   describe(RpcTransactionUpdater.prototype.updateBlock.name, () => {
     it('downloads and saves a block to DB', async () => {
       const TIME_0 = UnixTime.now().add(-1, 'days').toStartOf('day')

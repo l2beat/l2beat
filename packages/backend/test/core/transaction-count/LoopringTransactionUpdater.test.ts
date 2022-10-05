@@ -1,7 +1,6 @@
 import { Logger, mock } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
-import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
 import { LoopringTransactionUpdater } from '../../../src/core/transaction-count/LoopringTransactionUpdater'
@@ -10,48 +9,6 @@ import { LoopringClient } from '../../../src/peripherals/loopring/LoopringClient
 
 describe(LoopringTransactionUpdater.name, () => {
   const TIME_0 = new UnixTime(0)
-
-  describe(LoopringTransactionUpdater.prototype.update.name, () => {
-    it('does not query the same blocks multiple times', async () => {
-      const loopringClient = mock<LoopringClient>({
-        getBlock: async (number) => ({
-          blockId: number,
-          createdAt: TIME_0,
-          transactions: 13,
-        }),
-        getFinalizedBlockNumber: async () => 5,
-      })
-      const blockCountTransactionRepository =
-        mock<BlockTransactionCountRepository>({
-          getMissingRangesByProject: async () => [
-            [-Infinity, -1],
-            [2, 3],
-            [5, Infinity],
-          ],
-          add: async () => '',
-        })
-      const clock = mock<Clock>({
-        onNewHour: (callback) => {
-          callback(UnixTime.now())
-          return () => {}
-        },
-        getLastHour: () => UnixTime.now(),
-      })
-      const blockTxCountUpdater = new LoopringTransactionUpdater(
-        loopringClient,
-        blockCountTransactionRepository,
-        clock,
-        Logger.SILENT,
-        ProjectId('fake-project'),
-      )
-      await blockTxCountUpdater.update()
-      await blockTxCountUpdater.update()
-
-      await waitForExpect(() => {
-        expect(loopringClient.getBlock).toHaveBeenCalledExactlyWith([[2], [5]])
-      })
-    })
-  })
 
   describe(LoopringTransactionUpdater.prototype.updateBlock.name, () => {
     it('downloads and saves a block to DB', async () => {

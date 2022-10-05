@@ -1,4 +1,4 @@
-import { Logger, Retries, TaskQueue, UniqueTaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import {
@@ -17,7 +17,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   readonly projectId = ProjectId.ZKSYNC
 
   private readonly updateQueue: TaskQueue<void>
-  private readonly blockQueue: UniqueTaskQueue<number>
+  private readonly blockQueue: TaskQueue<number>
 
   constructor(
     private readonly zksyncClient: ZksyncClient,
@@ -31,7 +31,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
       this.update.bind(this),
       this.logger.for('updateQueue'),
     )
-    this.blockQueue = new UniqueTaskQueue(
+    this.blockQueue = new TaskQueue(
       this.updateBlock.bind(this),
       this.logger.for('blockQueue'),
       {
@@ -77,6 +77,8 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started')
+
+    await this.blockQueue.waitTilEmpty()
 
     const missingRanges =
       await this.zksyncTransactionRepository.getMissingRanges()
