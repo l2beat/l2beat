@@ -130,7 +130,8 @@ export const avalanche: Bridge = {
     },
     destinationToken: {
       name: 'Destination tokens are wrapped',
-      description: 'Tokens transferred end up as wrapped ERC20 proxies. The contract is named BridgeToken.',
+      description:
+        'Tokens transferred end up as wrapped ERC20 proxies. The contract is named BridgeToken.',
       references: [],
       risks: [],
       isIncomplete: true,
