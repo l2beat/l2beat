@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React from 'react'
 
 import { Logo } from './Logo'
@@ -19,7 +19,11 @@ export function Header(props: HeaderProps) {
   return (
     <header className="Header">
       <h1
-        className={cx('Header-Title', props.titleLength, props.titleClassName)}
+        className={classNames(
+          'Header-Title',
+          props.titleLength,
+          props.titleClassName,
+        )}
       >
         {props.icon && (
           <img

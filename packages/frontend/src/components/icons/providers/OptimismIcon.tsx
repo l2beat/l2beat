@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
@@ -8,7 +8,7 @@ export function OptimismIcon(props: SVGAttributes<SVGElement>) {
     <Icon
       aria-label="Optimism badge icon"
       {...props}
-      className={cx('OptimismIcon', props.className)}
+      className={classNames('OptimismIcon', props.className)}
     >
       <rect y="3" width="24" height="18" fill="#FF0420" />
       <path

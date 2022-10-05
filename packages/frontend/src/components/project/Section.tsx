@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { Heading } from '../Heading'
@@ -12,7 +12,7 @@ interface Props {
 
 export function Section(props: Props) {
   return (
-    <section className={cx('Section', props.className)}>
+    <section className={classNames('Section', props.className)}>
       <Heading
         id={props.id}
         level={2}

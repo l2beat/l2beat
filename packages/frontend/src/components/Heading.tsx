@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React, { createElement, HTMLAttributes } from 'react'
 
 import { OutLink } from './OutLink'
@@ -21,7 +21,7 @@ export function Heading(props: HeadingProps) {
     <Hx
       level={props.level}
       id={props.id}
-      className={cx('Heading', `level-${props.level}`, props.className)}
+      className={classNames('Heading', `level-${props.level}`, props.className)}
     >
       <a className="Heading-Title" href={`#${props.id}`}>
         {props.title}

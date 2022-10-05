@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
@@ -16,7 +16,7 @@ export function MetaImage(props: MetaImageProps) {
 
   return (
     <div
-      className={cx(
+      className={classNames(
         'MetaImage leading-[1.15]',
         !props.name ? 'overview' : 'project',
       )}
