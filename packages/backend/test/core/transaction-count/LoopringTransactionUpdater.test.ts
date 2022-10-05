@@ -56,6 +56,7 @@ describe(LoopringTransactionUpdater.name, () => {
         ],
       ])
     })
+
     it('skips too new blocks', async () => {
       const TIME_1 = TIME_0.add(2, 'hours')
       const block1 = {
