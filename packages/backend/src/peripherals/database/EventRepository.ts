@@ -72,7 +72,7 @@ export class EventRepository extends BaseRepository {
     const raw = (await knex.raw(
       `
       SELECT
-        date_trunc(:granularity, unix_timestamp) AS unix_timestamp_aggregated,
+        date_trunc(:granularity, unix_timestamp, 'UTC') AS unix_timestamp_aggregated,
         event_name,
         project_id,
         COUNT(*) as count
