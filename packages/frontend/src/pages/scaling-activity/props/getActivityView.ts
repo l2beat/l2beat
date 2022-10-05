@@ -52,7 +52,7 @@ function getEthereumActivityViewEntry(
   ethereum: Ethereum,
   activityApiResponse: ActivityApiResponse,
 ) {
-  const data = activityApiResponse.ethereum.data
+  const data = activityApiResponse.ethereum?.data
   const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
     getActivityViewEntryDetails(data)
 
