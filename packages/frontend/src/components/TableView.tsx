@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React, { HTMLAttributes, ReactNode } from 'react'
 
 interface Props<T> {
@@ -21,7 +21,7 @@ export interface RowConfig<T> {
 
 export function TableView<T>({ className, items, columns, rows }: Props<T>) {
   return (
-    <div className={classNames('TableView', className)}>
+    <div className={cx('TableView', className)}>
       <table className="TableView-Table">
         <thead className="TableView-Header">
           <tr>

@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
@@ -53,7 +53,7 @@ export function Navbar(props: NavbarProps) {
       />
       {props.showBanner && <Banner />}
       <nav
-        className={classNames(
+        className={cx(
           'text-base relative flex md:justify-between items-center h-14 md:h-16 px-4 md:px-12',
           'border-gray-100 dark:border-gray-900 border-b',
         )}
@@ -63,7 +63,7 @@ export function Navbar(props: NavbarProps) {
         </button>
         <ul className="flex h-full items-center">
           <li
-            className={classNames(
+            className={cx(
               props.showBridges
                 ? 'mx-4 md:ml-0 md:mr-8'
                 : 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
@@ -98,7 +98,7 @@ export function Navbar(props: NavbarProps) {
         </ul>
         <div className="h-full hidden md:flex gap-5 items-center">
           <ul
-            className={classNames(
+            className={cx(
               'flex gap-4 items-center',
               !props.showBridges && 'absolute left-4 md:left-12',
             )}

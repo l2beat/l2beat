@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
@@ -21,7 +21,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
     <>
       <div
         id="sidebar-menu"
-        className={classNames(
+        className={cx(
           'hidden fixed left-0 bottom-0 z-50 text-base',
           props.showBanner ? 'top-8' : 'top-0',
           'w-3/4 min-w-[240px]',
@@ -97,7 +97,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
       </div>
       <div
         id="sidebar-menu-shadow"
-        className={classNames(
+        className={cx(
           'hidden fixed top-0 left-0 z-40',
           'bg-black opacity-30 w-full h-full',
         )}

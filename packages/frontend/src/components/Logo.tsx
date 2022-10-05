@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cx from 'classnames'
 import React from 'react'
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 export function Logo({ className }: Props) {
   return (
     <svg
-      className={classNames('Logo', className)}
+      className={cx('Logo', className)}
       width="88"
       height="36"
       viewBox="0 0 88 36"
