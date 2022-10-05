@@ -31,11 +31,11 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       `${StarkexTransactionUpdater.name}[${projectId.toString()}]`,
     )
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.daysQueue = new TaskQueue(
-      this.updateDay.bind(this),
+      (day) => this.updateDay(day),
       this.logger.for('daysQueue'),
       {
         workers: this.opts?.workQueueWorkers,
