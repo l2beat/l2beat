@@ -25,5 +25,5 @@ async function fetchWithCache() {
   if (USE_CACHE) {
     await writeFile(CACHE_FILE, JSON.stringify(json))
   }
-  console.log(json)
+  return json
 }
