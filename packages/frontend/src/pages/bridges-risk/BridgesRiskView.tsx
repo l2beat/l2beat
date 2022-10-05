@@ -50,7 +50,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     {
       name: 'Type',
       getValue: (entry) => (
-        <span className="sm:text-sm md:text-base">{entry.category}</span>
+        <span className="sm:text-xs md:text-base">{entry.category}</span>
       ),
     },
     {

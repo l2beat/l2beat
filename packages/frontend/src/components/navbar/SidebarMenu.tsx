@@ -34,7 +34,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
         <div className="p-4 flex-1 relative overflow-y-auto overflow-x-visible">
           <ul className="mt-8">
             <li>
-              <div className="uppercase text-sm mb-4 font-medium text-gray-700 dark:text-gray-300">
+              <div className="uppercase text-xs mb-4 font-medium text-gray-700 dark:text-gray-300">
                 Scaling
               </div>
               <ul className="flex flex-col gap-4">
@@ -58,7 +58,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
           {props.showBridges && (
             <ul className="mt-8">
               <li>
-                <div className="uppercase text-sm mb-4 font-medium text-gray-700 dark:text-gray-300">
+                <div className="uppercase text-xs mb-4 font-medium text-gray-700 dark:text-gray-300">
                   Bridges
                 </div>
                 <ul className="flex flex-col gap-4">

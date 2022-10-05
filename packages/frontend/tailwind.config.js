@@ -8,6 +8,14 @@ module.exports = {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
     },
+    fontSize: {
+      '2xs': ['12px', '16px'],
+      xs: ['14px', '20px'],
+      sm: ['15px', '22px'],
+      base: ['16px', '24px'],
+      lg: ['18px', '28px'],
+      xl: ['20px', '28px'],
+    },
     colors: {
       current: 'currentColor',
       link: 'rgb(var(--link-rgb) / <alpha-value>)',
