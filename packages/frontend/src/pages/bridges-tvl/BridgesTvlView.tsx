@@ -1,8 +1,12 @@
 import React from 'react'
 
 import { PercentChange } from '../../components'
-import { ProjectLink } from '../../components/ProjectLink'
-import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
+import { ProjectLink } from '../../components/table/ProjectLink'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../components/table/TableView'
 import { TVLBreakdown, TVLBreakdownProps } from '../../components/TVLBreakdown'
 
 export interface BridgesTvlViewProps {

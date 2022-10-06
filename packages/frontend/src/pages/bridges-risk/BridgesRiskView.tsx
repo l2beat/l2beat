@@ -1,9 +1,13 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectLink } from '../../components/ProjectLink'
-import { RiskCell } from '../../components/RiskCell'
-import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
+import { ProjectLink } from '../../components/table/ProjectLink'
+import { RiskCell } from '../../components/table/RiskCell'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../components/table/TableView'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]

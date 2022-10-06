@@ -2,10 +2,10 @@ import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
-import { NoInfoCell } from '../../../components/NoInfoCell'
-import { ProjectLink } from '../../../components/ProjectLink'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import { NoInfoCell } from '../../../components/table/NoInfoCell'
+import { ProjectLink } from '../../../components/table/ProjectLink'
+import { ColumnConfig, TableView } from '../../../components/table/TableView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]

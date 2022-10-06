@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
+import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 interface Props {
   project: {

@@ -2,9 +2,9 @@ import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
-import { ProjectLink } from '../../../components/ProjectLink'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import { ProjectLink } from '../../../components/table/ProjectLink'
+import { ColumnConfig, TableView } from '../../../components/table/TableView'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
