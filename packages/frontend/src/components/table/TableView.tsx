@@ -54,11 +54,12 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
           {items.map((item, i) => (
             <tr
               key={i}
+              {...rows?.getProps(item, i)}
               className={cx(
                 'border-b border-b-gray-200 dark:border-b-gray-800',
                 'hover:bg-gray-100 dark:hover:bg-gray-900 hover:shadow-sm',
+                rows?.getProps(item, i).className,
               )}
-              {...rows?.getProps(item, i)}
             >
               {columns.map((column, j) => (
                 <td

@@ -1,15 +1,15 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { PercentChange } from '../../../components'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../components/TVLBreakdown'
-import { FinancialCell } from './FinancialCell'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
@@ -43,7 +43,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     {
       name: 'TVL',
       alignRight: true,
-      getValue: (project) => project.tvl,
+      getValue: (project) => <NumberCell>{project.tvl}</NumberCell>,
     },
     {
       name: 'Breakdown',
@@ -53,33 +53,26 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     {
       name: '7d Change',
       alignRight: true,
-      getValue: (project) => <PercentChange value={project.sevenDayChange} />,
+      getValue: (project) => (
+        <NumberCell signed>{project.sevenDayChange}</NumberCell>
+      ),
     },
     {
       name: 'Market share',
       alignRight: true,
-      getValue: (project) => project.marketShare,
+      getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
     },
     {
       name: 'Purpose',
       alignRight: true,
-      getValue: (project) => <FinancialCell>{project.purpose}</FinancialCell>,
+      getValue: (project) => project.purpose,
     },
     {
       name: 'Technology',
       shortName: 'Tech',
       alignRight: true,
       getValue: (project) => (
-        <FinancialCell
-          className={
-            project.technology === 'ZK Rollup' ||
-            project.technology === 'Optimistic Rollup'
-              ? 'rollup'
-              : undefined
-          }
-        >
-          {project.technology}
-        </FinancialCell>
+        <TechnologyCell>{project.technology}</TechnologyCell>
       ),
     },
   ]
