@@ -23,8 +23,10 @@ export interface ActivityViewEntry {
 export function ActivityView({ items }: ActivityViewProps) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (entry, index) => `${index + 1}.`,
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
+      getValue: (entry, index) => index + 1,
     },
     {
       name: 'Name',

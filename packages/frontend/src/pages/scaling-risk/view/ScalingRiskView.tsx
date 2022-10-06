@@ -19,8 +19,10 @@ export interface ScalingRiskViewEntry extends Layer2RiskView {
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (entry, index) => `${index + 1}.`,
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
+      getValue: (entry, index) => index + 1,
     },
     {
       name: 'Name',

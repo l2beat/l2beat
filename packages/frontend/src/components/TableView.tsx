@@ -11,6 +11,7 @@ export interface ColumnConfig<T> {
   name: ReactNode
   shortName?: ReactNode
   alignRight?: true
+  minimalWidth?: true
   getValue: (value: T, index: number) => ReactNode
 }
 
@@ -30,6 +31,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                 className={cx(
                   'font-medium uppercase py-2 text-sm text-gray-700 dark:text-gray-300',
                   column.alignRight && 'text-right',
+                  column.minimalWidth && 'w-0',
                   i !== columns.length - 1 && 'pr-3 md:pr-4',
                 )}
               >
@@ -59,6 +61,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                   className={cx(
                     'h-10',
                     column.alignRight && 'text-right',
+                    column.minimalWidth && 'w-0',
                     j !== columns.length - 1 && 'pr-3 md:pr-4',
                   )}
                 >

@@ -28,12 +28,14 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
-      name: 'No.',
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}.</span>
+          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}</span>
           <span data-combined-only className="hidden">
-            {index + 1}.
+            {index + 1}
           </span>
         </>
       ),
