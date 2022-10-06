@@ -15,7 +15,7 @@ export function PageLink(props: PageLinkProps) {
         'flex items-center h-full font-medium',
         props.large ? 'text-base md:text-lg px-2 md:px-4' : 'px-2',
         props.selected &&
-          'pt-0.5 text-pink-900 dark:text-pink-100 border-current border-b-2',
+          'pt-0.5 text-pink-900 dark:text-pink-200 border-current border-b-2',
       )}
       href={props.href}
     >
