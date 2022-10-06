@@ -16,7 +16,7 @@ export interface DonatePageProps {
 
 export function DonatePage(props: DonatePageProps) {
   return (
-    <Page navbar={props.navbar}>
+    <Page narrow navbar={props.navbar}>
       <Header title={props.title} />
       <DonateLetter />
       {props.showGitcoinButton && <GitcoinButton />}

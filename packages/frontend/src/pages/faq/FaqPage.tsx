@@ -12,7 +12,7 @@ export interface FaqPageProps {
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <Page navbar={props.navbar}>
+    <Page narrow navbar={props.navbar}>
       <article
         className="Faq"
         dangerouslySetInnerHTML={{ __html: props.content }}

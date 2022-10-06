@@ -6,13 +6,14 @@ import { PageContent } from './PageContent'
 export interface PageProps {
   children: ReactNode
   navbar: NavbarProps
+  narrow?: boolean
 }
 
-export function Page({ children, navbar }: PageProps) {
+export function Page({ children, navbar, narrow }: PageProps) {
   return (
     <>
       <Navbar {...navbar} />
-      <PageContent>{children}</PageContent>
+      <PageContent narrow={narrow}>{children}</PageContent>
     </>
   )
 }
