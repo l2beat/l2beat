@@ -43,10 +43,11 @@ export class TaskQueueMonitor {
       .forEach((t) => this.timestampCounters.delete(t))
   }
 
-  record(when: UnixTime, type: 'success' | 'retry' | 'error') {
-    const counters = this.timestampCounters.get(+when) ?? new Counters()
+  record(type: 'success' | 'retry' | 'error') {
+    const now = UnixTime.now().toNumber()
+    const counters = this.timestampCounters.get(now) ?? new Counters()
     counters[type] += 1
-    this.timestampCounters.set(+when, counters)
+    this.timestampCounters.set(now, counters)
   }
 
   getStats(): json {

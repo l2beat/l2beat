@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/types'
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
@@ -96,7 +95,7 @@ export class TaskQueue<T> {
         message: 'No more retries',
         job: JSON.stringify(job),
       })
-      this.monitor?.record(UnixTime.now(), 'error')
+      this.monitor?.record('error')
       return
     }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
@@ -105,7 +104,7 @@ export class TaskQueue<T> {
       message: 'Scheduled retry',
       job: JSON.stringify(job),
     })
-    this.monitor?.record(UnixTime.now(), 'retry')
+    this.monitor?.record('retry')
   }
 
   private earliestScheduledExecution() {
@@ -127,7 +126,7 @@ export class TaskQueue<T> {
     try {
       this.logger.debug('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
-      this.monitor?.record(UnixTime.now(), 'success')
+      this.monitor?.record('success')
     } catch (error) {
       this.logger.warn('Error during task execution', {
         job: JSON.stringify(job),
