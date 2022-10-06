@@ -55,8 +55,8 @@ describe(StarkexClient.name, () => {
       const product: StarkexProduct = 'dydx'
 
       const body = {
-        day_start: day,
-        day_end: day + 1,
+        day_start: day - 1,
+        day_end: day,
         product,
         tx_type: '_all',
         token_id: '_all',
