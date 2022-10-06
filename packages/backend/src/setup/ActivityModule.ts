@@ -36,6 +36,9 @@ export function getActivityModule(
     config.transactionCountSync.starkexApiKey,
     http,
     logger,
+    {
+      callsPerMinute: config.transactionCountSync.starkexCallsPerMinute,
+    },
   )
 
   const zksyncClient = new ZksyncClient(http, logger)

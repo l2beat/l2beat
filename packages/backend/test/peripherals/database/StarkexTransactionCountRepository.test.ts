@@ -201,6 +201,43 @@ describe(StarkexTransactionCountRepository.name, () => {
           },
         ])
       })
+
+      it('orders by day', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeTransactionCount({
+            timestamp: today.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 3,
+          }),
+          fakeTransactionCount({
+            timestamp: today,
+            projectId: PROJECT_A,
+            count: 1,
+          }),
+          fakeTransactionCount({
+            timestamp: today.add(2, 'days'),
+            projectId: PROJECT_A,
+            count: 4,
+          }),
+        ])
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            count: 1,
+            timestamp: today,
+          },
+          {
+            count: 3,
+            timestamp: today.add(1, 'days'),
+          },
+          {
+            count: 4,
+            timestamp: today.add(2, 'days'),
+          },
+        ])
+      })
     },
   )
 })

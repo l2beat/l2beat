@@ -13,11 +13,11 @@ export function ChartHover() {
       />
       <div
         data-role="chart-hover-contents"
-        className="absolute z-40 p-2 border border-current bg-white dark:bg-black shadow-sm text-right text-sm h-[76px] select-none pointer-events-none flex flex-col justify-center items-end"
+        className="absolute z-40 p-2 border border-current bg-white dark:bg-black shadow-sm text-right text-xs h-[76px] select-none pointer-events-none flex flex-col justify-center items-end"
       >
         <div data-role="chart-hover-date" className="font-bold mb-2 sm:mb-1" />
-        <div data-role="chart-hover-value-a" className="text-xs xs:text-sm" />
-        <div data-role="chart-hover-value-b" className="text-xs xs:text-sm" />
+        <div data-role="chart-hover-value-a" className="text-2xs xs:text-xs" />
+        <div data-role="chart-hover-value-b" className="text-2xs xs:text-xs" />
       </div>
     </div>
   )

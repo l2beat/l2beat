@@ -29,6 +29,8 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.getBlockCount = this.wrapAny(this.getBlockCount)
+    this.getMaxBlock = this.wrapAny(this.getMaxBlock)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -143,6 +145,20 @@ export class ZksyncTransactionRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return await knex('transactions.zksync').delete()
+  }
+
+  async getMaxBlock(): Promise<number> {
+    const knex = await this.knex()
+    const [{ max }] = await knex('transactions.zksync').max('block_number')
+    return max as number
+  }
+
+  async getBlockCount(): Promise<number> {
+    const knex = await this.knex()
+    const [{ count }] = await knex('transactions.zksync').countDistinct(
+      'block_number',
+    )
+    return count as number
   }
 }
 

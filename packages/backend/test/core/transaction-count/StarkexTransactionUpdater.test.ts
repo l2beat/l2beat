@@ -4,7 +4,7 @@ import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
-import { StarkexTransactionUpdater } from '../../../src/core/transaction-count/StarkexTransactionCountUpdater'
+import { StarkexTransactionUpdater } from '../../../src/core/transaction-count/StarkexTransactionUpdater'
 import { StarkexTransactionCountRepository } from '../../../src/peripherals/database/StarkexTransactionCountRepository'
 import { StarkexClient } from '../../../src/peripherals/starkex'
 

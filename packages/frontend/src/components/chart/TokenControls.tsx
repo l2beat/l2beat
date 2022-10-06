@@ -2,8 +2,12 @@ import React from 'react'
 
 import { ChartButton } from './ChartButton'
 
+export interface TokenControl {
+  symbol: string
+  tvlEndpoint: string
+}
 export interface TokenControlsProps {
-  tokens?: { symbol: string; endpoint: string }[]
+  tokens?: TokenControl[]
 }
 
 export function TokenControls({ tokens }: TokenControlsProps) {
@@ -21,7 +25,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
           key={x.symbol}
           name="token"
           value={x.symbol}
-          endpoint={x.endpoint}
+          tvlEndpoint={x.tvlEndpoint}
           className={i >= 3 ? 'hidden' : undefined}
         />
       ))}

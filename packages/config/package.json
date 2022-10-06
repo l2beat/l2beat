@@ -12,13 +12,16 @@
     "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .ts --max-warnings 0 src test",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "update-multichain": "node -r esbuild-register scripts/multichain"
   },
   "dependencies": {
     "@l2beat/types": "*"
   },
   "devDependencies": {
     "ethers": "^5.6.8",
+    "zod": "^3.17.3",
+    "node-fetch": "^2.6.7",
     "@l2beat/common": "*"
   }
 }
