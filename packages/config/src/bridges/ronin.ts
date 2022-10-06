@@ -177,7 +177,7 @@ export const ronin: Bridge = {
       ],
       name: 'Withdrawal Unlockers',
       description:
-        'Addresses able to unlock withdrawals that pass tier limits.',
+        'Addresses able to unlock withdrawals that cross tier limits.',
     },
   ],
 }
