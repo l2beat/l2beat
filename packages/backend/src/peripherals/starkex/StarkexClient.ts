@@ -12,6 +12,7 @@ import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 interface StarkexClientOpts {
   callsPerMinute?: number
 }
+
 export class StarkexClient {
   constructor(
     private readonly starkexApiUrl: string,
