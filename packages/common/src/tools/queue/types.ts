@@ -1,5 +1,3 @@
-import { TaskQueueMonitor } from './TaskQueueMonitor'
-
 export interface Job<T> {
   task: T
   attempts: number
@@ -14,5 +12,5 @@ export type ShouldRetry<T> = (job: { task: T; attempts: number }) => {
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
-  monitor?: TaskQueueMonitor
+  enableMonitoring?: boolean
 }

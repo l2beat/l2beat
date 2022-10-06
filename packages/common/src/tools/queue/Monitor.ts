@@ -1,12 +1,12 @@
-import { json, UnixTime } from '@l2beat/types'
+import { UnixTime } from '@l2beat/types'
 
-interface Counters {
+export interface Counters {
   success: number
   retry: number
   error: number
 }
 
-export class TaskQueueMonitor {
+export class Monitor {
   private readonly timestampCounters = new Map<number, Counters>()
 
   constructor() {
@@ -24,7 +24,7 @@ export class TaskQueueMonitor {
     this.timestampCounters.set(now, counters)
   }
 
-  getStats(): json {
+  getStats() {
     this.removeOldCounters()
     const now = UnixTime.now()
 
@@ -47,13 +47,12 @@ export class TaskQueueMonitor {
 
   private getLastSecondCounters(now: UnixTime) {
     const lastTimestamp = now.add(-1, 'seconds').toNumber()
-    return (
-      this.timestampCounters.get(lastTimestamp) ?? {
-        success: 0,
-        retry: 0,
-        error: 0,
-      }
-    )
+    const counters = this.timestampCounters.get(lastTimestamp)
+    return {
+      success: counters?.success ?? 0,
+      retry: counters?.retry ?? 0,
+      error: counters?.error ?? 0,
+    }
   }
 
   private getCountersAverage(now: UnixTime, duration: 'hours' | 'minutes') {

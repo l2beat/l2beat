@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, TaskQueueMonitor } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import {
@@ -19,7 +19,6 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
-  private readonly blockQueueMonitor = new TaskQueueMonitor()
   private latestBlock?: number
 
   constructor(
@@ -40,7 +39,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
-        monitor: this.blockQueueMonitor,
+        enableMonitoring: true,
       },
     )
   }
@@ -108,9 +107,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async getStatus() {
     return {
-      queuedJobsCount: this.blockQueue.length,
-      busyWorkers: this.blockQueue.getBusyWorkers(),
-      syncStats: this.blockQueueMonitor.getStats(),
+      workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
       latestFetchedBlock: await this.zksyncTransactionRepository.getMaxBlock(),
       totalBlocks: await this.zksyncTransactionRepository.getBlockCount(),

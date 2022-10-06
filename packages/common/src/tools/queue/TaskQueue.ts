@@ -1,9 +1,10 @@
+import { json } from '@l2beat/types'
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
 import { getErrorMessage, Logger } from '../Logger'
+import { Monitor } from './Monitor'
 import { Retries } from './Retries'
-import { TaskQueueMonitor } from './TaskQueueMonitor'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
@@ -18,7 +19,7 @@ export class TaskQueue<T> {
   private busyWorkers = 0
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
-  private readonly monitor?: TaskQueueMonitor
+  private readonly monitor?: Monitor
 
   constructor(
     private readonly executeTask: (task: T) => Promise<void>,
@@ -31,23 +32,13 @@ export class TaskQueue<T> {
       'workers needs to be a positive integer',
     )
     this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
-    this.monitor = opts?.monitor
-  }
-
-  private get isEmpty() {
-    return this.queue.length === 0 && this.busyWorkers === 0
-  }
-
-  private get allWorkersBusy() {
-    return this.busyWorkers === this.workers
+    if (opts?.enableMonitoring) {
+      this.monitor = new Monitor()
+    }
   }
 
   get length() {
     return this.queue.length
-  }
-
-  getBusyWorkers() {
-    return this.busyWorkers
   }
 
   addIfEmpty(task: T) {
@@ -71,6 +62,22 @@ export class TaskQueue<T> {
     while (!this.isEmpty) {
       await wait(100)
     }
+  }
+
+  getStats(): json {
+    return {
+      busyWorkers: this.busyWorkers,
+      queuedTasks: this.queue.length,
+      monitoring: this.monitor?.getStats() ?? null,
+    }
+  }
+
+  private get isEmpty() {
+    return this.queue.length === 0 && this.busyWorkers === 0
+  }
+
+  private get allWorkersBusy() {
+    return this.busyWorkers === this.workers
   }
 
   private execute() {

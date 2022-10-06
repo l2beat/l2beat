@@ -1,4 +1,4 @@
-import { Logger, TaskQueue, TaskQueueMonitor } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -23,7 +23,6 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
-  private readonly blockQueueMonitor = new TaskQueueMonitor()
   private latestBlock?: bigint
 
   constructor(
@@ -47,7 +46,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
-        monitor: this.blockQueueMonitor,
+        enableMonitoring: true,
       },
     )
     this.assessCount = opts?.assessCount ?? identity
@@ -127,9 +126,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
   async getStatus() {
     return {
-      queuedJobsCount: this.blockQueue.length,
-      busyWorkers: this.blockQueue.getBusyWorkers(),
-      syncStats: this.blockQueueMonitor.getStats(),
+      workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
       latestBlock: this.latestBlock?.toString() ?? null,
       latestFetchedBlock:
