@@ -55,7 +55,7 @@ export function Navbar(props: NavbarProps) {
       <nav
         className={cx(
           'text-base relative flex md:justify-between items-center h-14 md:h-16 px-4 md:px-12',
-          'border-gray-200 dark:border-gray-800 border-b',
+          'border-gray-200 dark:border-gray-850 border-b',
         )}
       >
         <button id="sidebar-menu-open" className="block md:hidden">
