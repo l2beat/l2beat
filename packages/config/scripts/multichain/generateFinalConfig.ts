@@ -1,4 +1,5 @@
 import { tokenList } from '../../src'
+import { escrowTimestamps } from './escrowTimestamps'
 import { IntermediateConfig } from './generateIntermediateConfig'
 
 export function generateFinalConfig(config: IntermediateConfig) {
@@ -16,8 +17,16 @@ export function generateFinalConfig(config: IntermediateConfig) {
         .filter(noUndefined),
     }))
     .filter((escrow) => escrow.tokens.length > 0)
+    .map(escrow => ({
+      ...escrow,
+      sinceTimestamp: escrowTimestamps.get(escrow.address)
+    }))
 
-  // TODO: figure out sinceTimestamp
+  for (const escrow of escrows) {
+    if (escrow.sinceTimestamp === undefined) {
+      console.error('Missing sinceTimestamp', escrow.address)
+    }
+  }
 
   return {
     destinations,

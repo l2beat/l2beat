@@ -60,28 +60,32 @@
       "address": "0x0615Dbba33Fe61a31c7eD131BDA6655Ed76748B1",
       "tokens": [
         "WETH"
-      ]
+      ],
+      "sinceTimestamp": 1644997112
     },
     {
       "type": "any",
       "address": "0x0914D4CCc4154cA864637B0B653Bc5Fd5e1d3ecF",
       "tokens": [
         "LDO"
-      ]
+      ],
+      "sinceTimestamp": 1645423761
     },
     {
       "type": "any",
       "address": "0x0bd19f6447cd676255C7C7B00428462B3dA67e3a",
       "tokens": [
         "TUSD"
-      ]
+      ],
+      "sinceTimestamp": 1634785736
     },
     {
       "type": "any",
       "address": "0x0E1b539Eaf71d5D025f8ce90cA2256b4Cf3e94B1",
       "tokens": [
         "CRV"
-      ]
+      ],
+      "sinceTimestamp": 1652425690
     },
     {
       "type": "basic",
@@ -102,14 +106,16 @@
         "CRV",
         "USDT",
         "ETH"
-      ]
+      ],
+      "sinceTimestamp": 1630665650
     },
     {
       "type": "any",
       "address": "0x11eb3aA66FE1f2B75cB353D3e874E96968182BdA",
       "tokens": [
         "MKR"
-      ]
+      ],
+      "sinceTimestamp": 1649060734
     },
     {
       "type": "basic",
@@ -124,7 +130,8 @@
         "USDT",
         "SUPER",
         "ETH"
-      ]
+      ],
+      "sinceTimestamp": 1603963154
     },
     {
       "type": "any",
