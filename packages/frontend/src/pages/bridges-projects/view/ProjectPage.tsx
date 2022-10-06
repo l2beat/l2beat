@@ -9,6 +9,7 @@ import {
   HeaderProps,
   NavbarProps,
 } from '../../../components'
+import { BridgesMvpWarning } from '../../../components/BridgesMvpWarning'
 import { Page } from '../../../components/Page'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
@@ -22,7 +23,8 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page navbar={props.navbar}>
+    <Page narrow navbar={props.navbar}>
+      <BridgesMvpWarning />
       <Header {...props.header} />
       <Chart {...props.chart} />
       <ProjectDetails {...props.projectDetails} />

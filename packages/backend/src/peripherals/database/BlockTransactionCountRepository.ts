@@ -30,6 +30,8 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getDailyTransactionCount = this.wrapGet(this.getDailyTransactionCount)
+    this.getMaxBlock = this.wrapAny(this.getMaxBlock)
+    this.getBlockCount = this.wrapAny(this.getBlockCount)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -126,6 +128,8 @@ export class BlockTransactionCountRepository extends BaseRepository {
       GROUP BY
         project_id,
         date_trunc('day', unix_timestamp, 'UTC')
+      ORDER BY 
+        unix_timestamp
     `,
       projectId.toString(),
     )) as unknown as {
@@ -141,6 +145,22 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return await knex('transactions.block').delete()
+  }
+
+  async getMaxBlock(projectId: ProjectId): Promise<number> {
+    const knex = await this.knex()
+    const [{ max }] = await knex('transactions.block')
+      .max('block_number')
+      .where('project_id', projectId.toString())
+    return max as number
+  }
+
+  async getBlockCount(projectId: ProjectId): Promise<number> {
+    const knex = await this.knex()
+    const [{ count }] = await knex('transactions.block')
+      .count()
+      .where('project_id', projectId.toString())
+    return count as number
   }
 }
 

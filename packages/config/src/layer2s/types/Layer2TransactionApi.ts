@@ -25,7 +25,7 @@ export type StarkexProduct =
   | 'sorare'
   | 'immutable'
   | 'myria'
-  | 'diversify'
+  | 'deversifi'
 interface StarkexApi {
   type: 'starkex'
   product: StarkexProduct
