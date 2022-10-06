@@ -4,43 +4,11 @@ class Counters {
   constructor(public success = 0, public retry = 0, public error = 0) {}
 }
 
-const countersAverage = (timestampCounters: Counters[]) => {
-  if (timestampCounters.length === 0) {
-    return new Counters()
-  }
-  const sum = timestampCounters.reduce((acc, counter) => {
-    return new Counters(
-      acc.success + counter.success,
-      acc.retry + counter.retry,
-      acc.error + counter.error,
-    )
-  }, new Counters())
-  return new Counters(
-    sum.success / timestampCounters.length,
-    sum.retry / timestampCounters.length,
-    sum.error / timestampCounters.length,
-  )
-}
-
 export class TaskQueueMonitor {
   private readonly timestampCounters = new Map<number, Counters>()
 
   constructor() {
     setInterval(() => this.handleNewSecond(), 1_000)
-  }
-
-  private handleNewSecond() {
-    const now = UnixTime.now()
-    if (!this.timestampCounters.has(+now)) {
-      this.timestampCounters.set(+now, new Counters())
-    }
-    this.removeOldCounters(now)
-  }
-
-  private removeOldCounters(now: UnixTime) {
-    Array.from(this.timestampCounters.keys())
-      .filter((t) => now.add(-1, 'hours').gt(new UnixTime(t)))
-      .forEach((t) => this.timestampCounters.delete(t))
   }
 
   record(type: 'success' | 'retry' | 'error') {
@@ -64,4 +32,36 @@ export class TaskQueueMonitor {
       lastHourAverage: { ...countersAverage(lastHourCounters) },
     }
   }
+
+  private handleNewSecond() {
+    const now = UnixTime.now()
+    if (!this.timestampCounters.has(+now)) {
+      this.timestampCounters.set(+now, new Counters())
+    }
+    this.removeOldCounters(now)
+  }
+
+  private removeOldCounters(now: UnixTime) {
+    Array.from(this.timestampCounters.keys())
+      .filter((t) => now.add(-1, 'hours').gt(new UnixTime(t)))
+      .forEach((t) => this.timestampCounters.delete(t))
+  }
+}
+
+const countersAverage = (timestampCounters: Counters[]) => {
+  if (timestampCounters.length === 0) {
+    return new Counters()
+  }
+  const sum = timestampCounters.reduce((acc, counter) => {
+    return new Counters(
+      acc.success + counter.success,
+      acc.retry + counter.retry,
+      acc.error + counter.error,
+    )
+  }, new Counters())
+  return new Counters(
+    sum.success / timestampCounters.length,
+    sum.retry / timestampCounters.length,
+    sum.error / timestampCounters.length,
+  )
 }
