@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { PercentChange } from '../../components'
-import { ProjectLink } from '../../components/table/ProjectLink'
+import { ProjectCell } from '../../components/table/ProjectCell'
 import {
   ColumnConfig,
   RowConfig,
@@ -46,7 +46,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectLink type={entry.type} project={entry} />,
+      getValue: (entry) => <ProjectCell type={entry.type} project={entry} />,
     },
     {
       name: 'TVL',

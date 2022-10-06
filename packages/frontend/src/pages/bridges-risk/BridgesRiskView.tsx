@@ -1,7 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectLink } from '../../components/table/ProjectLink'
+import { ProjectCell } from '../../components/table/ProjectCell'
 import { RiskCell } from '../../components/table/RiskCell'
 import {
   ColumnConfig,
@@ -43,7 +43,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectLink type={entry.type} project={entry} />,
+      getValue: (entry) => <ProjectCell type={entry.type} project={entry} />,
     },
     {
       name: 'Destination',

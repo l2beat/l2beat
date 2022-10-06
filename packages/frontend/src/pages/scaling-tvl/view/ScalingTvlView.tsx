@@ -3,7 +3,7 @@ import React from 'react'
 
 import { PercentChange } from '../../../components'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ProjectLink } from '../../../components/table/ProjectLink'
+import { ProjectCell } from '../../../components/table/ProjectCell'
 import { ColumnConfig, TableView } from '../../../components/table/TableView'
 import {
   TVLBreakdown,
@@ -38,7 +38,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
       name: 'TVL',

@@ -4,7 +4,7 @@ import React from 'react'
 import { PercentChange } from '../../../components'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { NoInfoCell } from '../../../components/table/NoInfoCell'
-import { ProjectLink } from '../../../components/table/ProjectLink'
+import { ProjectCell } from '../../../components/table/ProjectCell'
 import { ColumnConfig, TableView } from '../../../components/table/TableView'
 
 export interface ActivityViewProps {
@@ -30,7 +30,7 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
       name: 'TPS',
