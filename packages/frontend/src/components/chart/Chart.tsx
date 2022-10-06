@@ -8,14 +8,14 @@ import { Description } from './Description'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
-import { TokenControls } from './TokenControls'
+import { TokenControl, TokenControls } from './TokenControls'
 import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
   type?: 'tvl' | 'activity'
   tvlEndpoint?: string
   activityEndpoint?: string
-  tokens?: { symbol: string; endpoint: string }[]
+  tokens?: TokenControl[]
   days?: 7 | 30
   hideControls?: boolean
 }

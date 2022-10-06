@@ -154,6 +154,30 @@ describe(ZksyncTransactionRepository.name, () => {
           },
         ])
       })
+
+      it('orders by day', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeRecord({
+            timestamp: today.add(1, 'days'),
+          }),
+          fakeRecord({
+            timestamp: today,
+          }),
+        ])
+
+        expect(await repository.getDailyTransactionCount()).toEqual([
+          {
+            count: 1,
+            timestamp: today,
+          },
+          {
+            count: 1,
+            timestamp: today.add(1, 'days'),
+          },
+        ])
+      })
     },
   )
 })

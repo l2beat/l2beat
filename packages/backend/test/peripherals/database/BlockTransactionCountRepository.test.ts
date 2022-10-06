@@ -192,6 +192,36 @@ describe(BlockTransactionCountRepository.name, () => {
           },
         ])
       })
+
+      it('orders by day', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeTransactionCount({
+            blockNumber: 3,
+            timestamp: today.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 3,
+          }),
+          fakeTransactionCount({
+            blockNumber: 1,
+            timestamp: today.add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 1,
+          }),
+        ])
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            count: 1,
+            timestamp: today,
+          },
+          {
+            count: 3,
+            timestamp: today.add(1, 'days'),
+          },
+        ])
+      })
     },
   )
 })

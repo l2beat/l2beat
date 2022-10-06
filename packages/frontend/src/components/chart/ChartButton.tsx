@@ -5,7 +5,7 @@ interface Props {
   checked?: boolean
   name: string
   value: string
-  endpoint?: string
+  tvlEndpoint?: string
   children?: ReactNode
   className?: string
 }
@@ -24,7 +24,7 @@ export function ChartButton(props: Props) {
         type="radio"
         name={props.name}
         value={props.value}
-        data-tvlendpoint={props.endpoint}
+        data-tvl-endpoint={props.tvlEndpoint}
       />
       <span className="block relative pb-1 after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 peer-checked:font-bold peer-checked:after:bg-current peer-focus-visible:outline-1 peer-focus-visible:outline-dotted outline-current">
         {props.children ?? props.value}
