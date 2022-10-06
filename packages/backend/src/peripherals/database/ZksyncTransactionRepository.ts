@@ -113,7 +113,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async getDailyTransactionCount(today: UnixTime) {
+  async getDailyTransactionCount(maxTimestamp: UnixTime) {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
       `
@@ -128,7 +128,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
         date_trunc('day', unix_timestamp, 'UTC')
       ORDER BY unix_timestamp
     `,
-      today.toStartOf('day').toDate(),
+      maxTimestamp.toDate(),
     )) as unknown as {
       rows: { unix_timestamp: Date; count: string }[]
     }

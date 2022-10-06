@@ -102,7 +102,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async getDailyTransactionCounts() {
     return this.zksyncTransactionRepository.getDailyTransactionCount(
-      UnixTime.now(),
+      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
