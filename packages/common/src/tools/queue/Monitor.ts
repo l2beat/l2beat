@@ -6,6 +6,8 @@ type TaskEvent = 'success' | 'retry' | 'error' | 'started'
 
 type Counter = Map<number, number>
 
+const ONE_HOUR = 1000 * 60 * 60
+
 export class Monitor {
   private readonly counters: Record<TaskEvent, Counter> = {
     success: new Map(),
@@ -15,7 +17,7 @@ export class Monitor {
   }
 
   constructor() {
-    setInterval(() => this.pruneOldCounts(), 1_000 * 60 * 60)
+    setInterval(() => this.pruneOldCounts(), ONE_HOUR)
   }
 
   record(event: TaskEvent) {
