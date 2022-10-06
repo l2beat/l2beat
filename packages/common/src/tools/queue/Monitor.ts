@@ -63,24 +63,28 @@ export class Monitor {
   ): Counts {
     const from = now.add(-1, duration)
     return {
-      error: this.getDurationAverage(from, this.counters.error),
-      success: this.getDurationAverage(from, this.counters.success),
-      retry: this.getDurationAverage(from, this.counters.retry),
-      started: this.getDurationAverage(from, this.counters.started),
+      error: this.getDurationAverage(from, now, this.counters.error),
+      success: this.getDurationAverage(from, now, this.counters.success),
+      retry: this.getDurationAverage(from, now, this.counters.retry),
+      started: this.getDurationAverage(from, now, this.counters.started),
     }
   }
 
-  private getDurationAverage(from: UnixTime, counter: Counter): number {
+  private getDurationAverage(
+    from: UnixTime,
+    to: UnixTime,
+    counter: Counter,
+  ): number {
     let sum = 0
-    let total = 0
 
     counter.forEach((count, timestamp) => {
-      if (new UnixTime(timestamp).gte(from)) {
+      const when = new UnixTime(timestamp)
+      if (when.gte(from) && when.lt(to)) {
         sum += count
-        total++
       }
     })
 
+    const total = to.toNumber() - from.toNumber()
     return total === 0 ? 0 : sum / total
   }
 }
