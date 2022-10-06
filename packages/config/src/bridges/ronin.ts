@@ -73,7 +73,7 @@ export const ronin: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'A Ronin Bridge service watches for events on Ethereum and transmit those events to a contract on Ronin chain (Axie Infinity chain). Designated group of validators votes on the validity of those events, and when acknowledged, a representation token is minted on Ronin chain. To withdraw tokens, user needs to deposit them to a contract on Ronin chain, which will generate an event that will be picked by the validators. When validators acknowledge the event, they generate signature, which can be submitted to the Ethereum bridge contract to finalize the withdrawal. Ronin V2 introduced multi-tier withdrawal limits dependent on the overall value of the transaction and the token used. The higher value of transaction, the more validators need to vote to unlock withdrawal request. There is a separate group of actors called "governors" who are able to upgrade contracts, change thresholds and add/remove validators. Each validator has a corresponding governor account. There is also a daily withdrawal limit. If it\'s crossed, an address from a list of "Withdrawal unlockers" needs to participate in the transaction.',
+        'A Ronin Bridge service watches for events on Ethereum and transmits those events to a contract on Ronin chain (Axie Infinity chain). Designated group of weighted validators vote on the validity of those events, and when acknowledged, a "representation token" is minted on the Ronin chain. To withdraw tokens, user needs to deposit them to a contract on the Ronin chain, which will generate an event to be picked by the validators. When validators acknowledge the event, they generate signature, which can be submitted to the Ethereum bridge contract to finalize the withdrawal. Ronin V2 introduced multi-tier withdrawal limits dependent on the overall value of the transaction and the token used. The higher value of transaction, the more validators need to vote to approve withdrawal request. There is a separate group of actors called "governors" who are able to change thresholds, add/remove validators and update contracts. Each validator has a corresponding weighted governor account. There is also a daily withdrawal limit. If it\'s crossed, an address from a list of "Withdrawal unlockers" needs to participate in the transaction.',
       references: [
         {
           text: 'Token transfer flows',
@@ -83,7 +83,7 @@ export const ronin: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'validators decide to not mint tokens after observing an event on Ethereum.',
+          text: 'validators decide to not approve a token mint after observing an event on Ethereum.',
           isCritical: true,
         },
         {
@@ -93,7 +93,7 @@ export const ronin: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          text: 'validators allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
           isCritical: true,
         },
         {
