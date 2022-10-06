@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
@@ -98,6 +98,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return await this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
+      UnixTime.now(),
     )
   }
 

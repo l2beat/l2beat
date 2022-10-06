@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   ZksyncTransactionRecord,
@@ -101,7 +101,9 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.zksyncTransactionRepository.getDailyTransactionCount()
+    return this.zksyncTransactionRepository.getDailyTransactionCount(
+      UnixTime.now(),
+    )
   }
 
   async getStatus() {
