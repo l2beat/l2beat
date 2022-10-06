@@ -17,9 +17,9 @@ export function generateFinalConfig(config: IntermediateConfig) {
         .filter(noUndefined),
     }))
     .filter((escrow) => escrow.tokens.length > 0)
-    .map(escrow => ({
+    .map((escrow) => ({
       ...escrow,
-      sinceTimestamp: escrowTimestamps.get(escrow.address)
+      sinceTimestamp: escrowTimestamps.get(escrow.address),
     }))
 
   for (const escrow of escrows) {
