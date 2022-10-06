@@ -1,67 +1,76 @@
 import { json, UnixTime } from '@l2beat/types'
 
-class Counters {
-  constructor(public success = 0, public retry = 0, public error = 0) {}
+interface Counters {
+  success: number
+  retry: number
+  error: number
 }
 
 export class TaskQueueMonitor {
   private readonly timestampCounters = new Map<number, Counters>()
 
   constructor() {
-    setInterval(() => this.handleNewSecond(), 1_000)
+    setInterval(() => this.removeOldCounters(), 1_000 * 60 * 60)
   }
 
   record(type: 'success' | 'retry' | 'error') {
     const now = UnixTime.now().toNumber()
-    const counters = this.timestampCounters.get(now) ?? new Counters()
+    const counters = this.timestampCounters.get(now) ?? {
+      success: 0,
+      retry: 0,
+      error: 0,
+    }
     counters[type] += 1
     this.timestampCounters.set(now, counters)
   }
 
   getStats(): json {
-    const now = UnixTime.now().add(-1, 'seconds')
-    const lastSecond = this.timestampCounters.get(+now) ?? new Counters()
-    const lastMinuteCounters = Array.from(this.timestampCounters.entries())
-      .filter(([t]) => now.add(-1, 'minutes').lt(new UnixTime(t)))
-      .map(([_t, counters]) => counters)
-    const lastHourCounters = Array.from(this.timestampCounters.values())
+    this.removeOldCounters()
+    const now = UnixTime.now()
 
     return {
-      lastSecond: { ...lastSecond },
-      lastMinuteAverage: { ...countersAverage(lastMinuteCounters) },
-      lastHourAverage: { ...countersAverage(lastHourCounters) },
+      lastSecond: this.getLastSecondCounters(now),
+      lastMinuteAverage: this.getCountersAverage(now, 'minutes'),
+      lastHourAverage: this.getCountersAverage(now, 'hours'),
     }
   }
 
-  private handleNewSecond() {
+  private removeOldCounters() {
     const now = UnixTime.now()
-    if (!this.timestampCounters.has(+now)) {
-      this.timestampCounters.set(+now, new Counters())
-    }
-    this.removeOldCounters(now)
+    this.timestampCounters.forEach((_counter, timestamp) => {
+      if (!now.add(-1, 'hours').gt(new UnixTime(timestamp))) {
+        return
+      }
+      this.timestampCounters.delete(timestamp)
+    })
   }
 
-  private removeOldCounters(now: UnixTime) {
-    Array.from(this.timestampCounters.keys())
-      .filter((t) => now.add(-1, 'hours').gt(new UnixTime(t)))
-      .forEach((t) => this.timestampCounters.delete(t))
-  }
-}
-
-const countersAverage = (timestampCounters: Counters[]) => {
-  if (timestampCounters.length === 0) {
-    return new Counters()
-  }
-  const sum = timestampCounters.reduce((acc, counter) => {
-    return new Counters(
-      acc.success + counter.success,
-      acc.retry + counter.retry,
-      acc.error + counter.error,
+  private getLastSecondCounters(now: UnixTime) {
+    const lastTimestamp = now.add(-1, 'seconds').toNumber()
+    return (
+      this.timestampCounters.get(lastTimestamp) ?? {
+        success: 0,
+        retry: 0,
+        error: 0,
+      }
     )
-  }, new Counters())
-  return new Counters(
-    sum.success / timestampCounters.length,
-    sum.retry / timestampCounters.length,
-    sum.error / timestampCounters.length,
-  )
+  }
+
+  private getCountersAverage(now: UnixTime, duration: 'hours' | 'minutes') {
+    const average = { success: 0, retry: 0, error: 0 }
+    let total = 0
+    this.timestampCounters.forEach((counter, timestamp) => {
+      if (!now.add(-1, duration).lte(new UnixTime(timestamp))) {
+        return
+      }
+      total++
+      average.success += counter.success
+      average.retry += counter.retry
+      average.error += counter.error
+    })
+    average.success = average.success / total
+    average.retry = average.retry / total
+    average.error = average.error / total
+    return average
+  }
 }
