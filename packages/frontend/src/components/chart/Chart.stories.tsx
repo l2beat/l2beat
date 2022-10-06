@@ -24,7 +24,7 @@ function Template({ tokenCount }: TemplateProps) {
     'AAVE',
     'YFI',
     'UNI',
-  ].map((x) => ({ symbol: x, endpoint: '/' }))
+  ].map((x) => ({ symbol: x, tvlEndpoint: '/' }))
 
   useEffect(() => {
     configureChart()
