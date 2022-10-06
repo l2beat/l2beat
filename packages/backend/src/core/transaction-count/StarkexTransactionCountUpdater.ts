@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue, TaskQueueMonitor } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -16,6 +16,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly daysQueue: TaskQueue<number>
   private readonly startDay: number
+  private readonly daysQueueMonitor = new TaskQueueMonitor()
 
   constructor(
     private readonly starkexTransactionCountRepository: StarkexTransactionCountRepository,
@@ -40,6 +41,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        monitor: this.daysQueueMonitor,
       },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()
@@ -110,6 +112,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
           this.projectId,
         ),
       busyWorkers: this.daysQueue.getBusyWorkers(),
+      syncStats: this.daysQueueMonitor.getStats(),
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue, TaskQueueMonitor } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -23,6 +23,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
+  private readonly blockQueueMonitor = new TaskQueueMonitor()
 
   constructor(
     private readonly ethereumClient: EthereumClient,
@@ -45,6 +46,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        monitor: this.blockQueueMonitor,
       },
     )
     this.assessCount = opts?.assessCount ?? identity
@@ -130,6 +132,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
         ),
       startBlock: this.startBlock,
       busyWorkers: this.blockQueue.getBusyWorkers(),
+      syncStats: this.blockQueueMonitor.getStats(),
     }
   }
 }

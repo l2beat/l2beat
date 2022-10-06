@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue, TaskQueueMonitor } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
@@ -14,6 +14,7 @@ interface LoopringTransactionUpdaterOpts {
 export class LoopringTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
+  private readonly blockQueueMonitor = new TaskQueueMonitor()
 
   constructor(
     private readonly loopringClient: LoopringClient,
@@ -34,6 +35,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        monitor: this.blockQueueMonitor,
       },
     )
   }
@@ -107,6 +109,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
           this.projectId,
         ),
       busyWorkers: this.blockQueue.getBusyWorkers(),
+      syncStats: this.blockQueueMonitor.getStats(),
     }
   }
 }

@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/types'
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
 import { getErrorMessage, Logger } from '../Logger'
 import { Retries } from './Retries'
+import { TaskQueueMonitor } from './TaskQueueMonitor'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
@@ -17,6 +19,7 @@ export class TaskQueue<T> {
   private busyWorkers = 0
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
+  private readonly monitor?: TaskQueueMonitor
 
   constructor(
     private readonly executeTask: (task: T) => Promise<void>,
@@ -29,6 +32,7 @@ export class TaskQueue<T> {
       'workers needs to be a positive integer',
     )
     this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
+    this.monitor = opts?.monitor
   }
 
   private get isEmpty() {
@@ -92,6 +96,7 @@ export class TaskQueue<T> {
         message: 'No more retries',
         job: JSON.stringify(job),
       })
+      this.monitor?.record(UnixTime.now(), 'error')
       return
     }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
@@ -100,6 +105,7 @@ export class TaskQueue<T> {
       message: 'Scheduled retry',
       job: JSON.stringify(job),
     })
+    this.monitor?.record(UnixTime.now(), 'retry')
   }
 
   private earliestScheduledExecution() {
@@ -121,6 +127,7 @@ export class TaskQueue<T> {
     try {
       this.logger.debug('Executing job', { job: JSON.stringify(job) })
       await this.executeTask(job.task)
+      this.monitor?.record(UnixTime.now(), 'success')
     } catch (error) {
       this.logger.warn('Error during task execution', {
         job: JSON.stringify(job),
