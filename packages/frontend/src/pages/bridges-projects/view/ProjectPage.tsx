@@ -22,7 +22,7 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page navbar={props.navbar}>
+    <Page narrow navbar={props.navbar}>
       <Header {...props.header} />
       <Chart {...props.chart} />
       <ProjectDetails {...props.projectDetails} />
