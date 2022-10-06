@@ -132,6 +132,7 @@ export class TaskQueue<T> {
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
       this.logger.debug('Executing job', { job: JSON.stringify(job) })
+      this.monitor?.record('started')
       await this.executeTask(job.task)
       this.monitor?.record('success')
     } catch (error) {
