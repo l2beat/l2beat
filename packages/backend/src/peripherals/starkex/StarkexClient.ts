@@ -1,8 +1,17 @@
-import { getErrorMessage, HttpClient, Logger } from '@l2beat/common'
+import {
+  getErrorMessage,
+  HttpClient,
+  Logger,
+  RateLimiter,
+} from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { json } from '@l2beat/types'
 
 import { parseStarkexApiResponse } from './parseStarkexApiResponse'
+
+interface StarkexClientOpts {
+  callsPerMinute?: number
+}
 
 export class StarkexClient {
   constructor(
@@ -10,8 +19,15 @@ export class StarkexClient {
     private readonly starkexApiKey: string,
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    opts?: StarkexClientOpts,
   ) {
     this.logger = this.logger.for(this)
+    if (opts?.callsPerMinute) {
+      const rateLimiter = new RateLimiter({
+        callsPerMinute: opts.callsPerMinute,
+      })
+      this.call = rateLimiter.wrap(this.call.bind(this))
+    }
   }
 
   async getDailyCount(day: number, product: StarkexProduct): Promise<number> {

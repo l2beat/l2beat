@@ -40,6 +40,7 @@ export interface Config {
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number
         loopringCallsPerMinute: number
+        starkexCallsPerMinute: number
       }
     | false
 }
