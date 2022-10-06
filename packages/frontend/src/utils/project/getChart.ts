@@ -21,7 +21,7 @@ function getTokens(projectId: ProjectId, tvlApiResponse: TvlApiResponse) {
       if (symbol) {
         return {
           symbol,
-          endpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
+          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
           tvl,
         }
       }
