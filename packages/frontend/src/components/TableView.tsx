@@ -2,7 +2,6 @@ import cx from 'classnames'
 import React, { HTMLAttributes, ReactNode } from 'react'
 
 interface Props<T> {
-  className?: string
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
@@ -19,29 +18,50 @@ export interface RowConfig<T> {
   getProps: (value: T, index: number) => HTMLAttributes<HTMLTableRowElement>
 }
 
-export function TableView<T>({ className, items, columns, rows }: Props<T>) {
+export function TableView<T>({ items, columns, rows }: Props<T>) {
   return (
-    <div className={cx('TableView', className)}>
-      <table className="TableView-Table">
-        <thead className="TableView-Header">
-          <tr>
+    <div className="-mx-4 w-[calc(100%_+_32px)] px-4 overflow-x-auto whitespace-pre text-base">
+      <table className="w-full border-collapse text-left">
+        <thead>
+          <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
             {columns.map((column, i) => (
-              <th key={i} className={column.alignRight ? 'right' : undefined}>
-                <span data-wide={column.shortName ? true : undefined}>
+              <th
+                key={i}
+                className={cx(
+                  'font-medium uppercase py-2 text-sm text-gray-700 dark:text-gray-300',
+                  column.alignRight && 'text-right',
+                  i !== columns.length - 1 && 'pr-3 md:pr-4',
+                )}
+              >
+                <span className={cx(column.shortName && 'hidden md:block')}>
                   {column.name}
                 </span>
                 {column.shortName && (
-                  <span data-narrow>{column.shortName}</span>
+                  <span className="md:hidden">{column.shortName}</span>
                 )}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="TableView-Body">
+        <tbody className="">
           {items.map((item, i) => (
-            <tr key={i} {...rows?.getProps(item, i)}>
+            <tr
+              key={i}
+              className={cx(
+                'border-b border-b-gray-200 dark:border-b-gray-800',
+                'hover:bg-gray-100 dark:hover:bg-gray-900 hover:shadow-sm',
+              )}
+              {...rows?.getProps(item, i)}
+            >
               {columns.map((column, j) => (
-                <td key={j} className={column.alignRight ? 'right' : undefined}>
+                <td
+                  key={j}
+                  className={cx(
+                    'h-10',
+                    column.alignRight && 'text-right',
+                    j !== columns.length - 1 && 'pr-3 md:pr-4',
+                  )}
+                >
                   {column.getValue(item, i)}
                 </td>
               ))}
