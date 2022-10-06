@@ -8,6 +8,7 @@ import {
   NavbarProps,
 } from '../../components'
 import { About } from '../../components/About'
+import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
 import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
 import { OtherSites } from '../../components/OtherSites'
@@ -30,6 +31,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
     <Page navbar={props.navbar}>
       <BridgesPageSelection selected="tvl" />
       <main>
+        <BridgesMvpWarning />
         <div data-bridges-only>
           <Header
             title="Value locked"

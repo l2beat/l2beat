@@ -1,15 +1,14 @@
 import { Layer2 } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
 import { PercentChange } from '../../../components'
 import { NoInfoCell } from '../../../components/NoInfoCell'
 import { ProjectLink } from '../../../components/ProjectLink'
+import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ColumnConfig, TableView } from '../../../components/TableView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
-  className?: string
 }
 
 export interface ActivityViewEntry {
@@ -21,7 +20,7 @@ export interface ActivityViewEntry {
   transactionsWeeklyCount: number | undefined
 }
 
-export function ActivityView({ items, className }: ActivityViewProps) {
+export function ActivityView({ items }: ActivityViewProps) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: 'No.',
@@ -49,8 +48,9 @@ export function ActivityView({ items, className }: ActivityViewProps) {
   ]
 
   return (
-    <section className={cx('ActivityView', className)}>
+    <section className="mt-4">
       <TableView items={items} columns={columns} />
+      <ScalingLegend />
     </section>
   )
 }
