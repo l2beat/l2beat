@@ -8,7 +8,7 @@ export const opticsV2: Bridge = {
   id: ProjectId('opticsV2'),
   display: {
     name: 'Optics V2',
-    slug: 'opticsV2',
+    slug: 'opticsv2',
     links: {
       websites: ['https://optics.app/'],
       repositories: ['https://github.com/celo-org/optics-monorepo'],
