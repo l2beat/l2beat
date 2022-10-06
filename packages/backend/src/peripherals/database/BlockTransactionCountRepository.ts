@@ -128,6 +128,8 @@ export class BlockTransactionCountRepository extends BaseRepository {
       GROUP BY
         project_id,
         date_trunc('day', unix_timestamp, 'UTC')
+      ORDER BY 
+        unix_timestamp
     `,
       projectId.toString(),
     )) as unknown as {
