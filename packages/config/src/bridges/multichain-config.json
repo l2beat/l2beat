@@ -200,7 +200,8 @@
       "address": "0x3696f44F2B7FE51486f81D2639Ff895202614711",
       "tokens": [
         "CRV"
-      ]
+      ],
+      "sinceTimestamp": 1665051467
     },
     {
       "type": "basic",
@@ -219,7 +220,8 @@
       "address": "0x3D632d9e1a60a0880Dd45E61f279D919b5748377",
       "tokens": [
         "C98"
-      ]
+      ],
+      "sinceTimestamp": 1665051467
     },
     {
       "type": "basic",
@@ -241,14 +243,16 @@
       "address": "0x4a0A3902e091cdb3AEc4279a6BFAC50297F0A79e",
       "tokens": [
         "ENJ"
-      ]
+      ],
+      "sinceTimestamp": 1665051467
     },
     {
       "type": "any",
       "address": "0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
       "tokens": [
         "eXRD"
-      ]
+      ],
+      "sinceTimestamp": 1665051467
     },
     {
       "type": "basic",
