@@ -1,82 +1,86 @@
 import { UnixTime } from '@l2beat/types'
 
+type Counts = Record<TaskEvent, number>
+
 type TaskEvent = 'success' | 'retry' | 'error' | 'started'
-export type Counter = Record<TaskEvent, number>
+
+type Counter = Map<number, number>
 
 export class Monitor {
-  private readonly counters = new Map<number, Counter>()
+  private readonly counters: Record<TaskEvent, Counter> = {
+    success: new Map(),
+    retry: new Map(),
+    error: new Map(),
+    started: new Map(),
+  }
 
   constructor() {
-    setInterval(() => this.removeOldCounters(), 1_000 * 60 * 60)
+    setInterval(() => this.pruneOldCounts(), 1_000 * 60 * 60)
   }
 
   record(event: TaskEvent) {
     const now = UnixTime.now().toNumber()
-    const counter = this.counters.get(now) ?? {
-      success: 0,
-      retry: 0,
-      error: 0,
-      started: 0,
-    }
-    counter[event] += 1
-    this.counters.set(now, counter)
+    const count = this.counters[event].get(now) ?? 0
+    this.counters[event].set(now, count + 1)
   }
 
   getStats() {
-    this.removeOldCounters()
+    this.pruneOldCounts()
     const now = UnixTime.now()
 
     return {
-      lastSecond: this.getLastSecondCounters(now),
-      lastMinuteAverage: this.getCountersAverage(now, 'minutes'),
-      lastHourAverage: this.getCountersAverage(now, 'hours'),
+      lastSecond: this.getLastSecondCounts(now),
+      lastMinuteAverage: this.getAverageCounts(now, 'minutes'),
+      lastHourAverage: this.getAverageCounts(now, 'hours'),
     }
   }
 
-  private removeOldCounters() {
-    const now = UnixTime.now()
-    this.counters.forEach((_counter, timestamp) => {
-      if (!now.add(-1, 'hours').gt(new UnixTime(timestamp))) {
-        return
-      }
-      this.counters.delete(timestamp)
+  private pruneOldCounts() {
+    const earliest = UnixTime.now().add(-1, 'hours')
+
+    Object.values(this.counters).forEach((counter) => {
+      counter.forEach((timestamp) => {
+        if (new UnixTime(timestamp).lt(earliest)) {
+          counter.delete(timestamp)
+        }
+      })
     })
   }
 
-  private getLastSecondCounters(now: UnixTime): Counter {
-    const lastTimestamp = now.add(-1, 'seconds').toNumber()
-    const counter = this.counters.get(lastTimestamp)
+  private getLastSecondCounts(now: UnixTime): Counts {
+    const lastSecond = now.add(-1, 'seconds').toNumber()
     return {
-      success: counter?.success ?? 0,
-      retry: counter?.retry ?? 0,
-      error: counter?.error ?? 0,
-      started: counter?.started ?? 0,
+      error: this.counters.error.get(lastSecond) ?? 0,
+      success: this.counters.success.get(lastSecond) ?? 0,
+      retry: this.counters.retry.get(lastSecond) ?? 0,
+      started: this.counters.started.get(lastSecond) ?? 0,
     }
   }
 
-  private getCountersAverage(
+  private getAverageCounts(
     now: UnixTime,
     duration: 'hours' | 'minutes',
-  ): Counter {
-    const average = { success: 0, retry: 0, error: 0, started: 0 }
+  ): Counts {
+    const from = now.add(-1, duration)
+    return {
+      error: this.getDurationAverage(from, this.counters.error),
+      success: this.getDurationAverage(from, this.counters.success),
+      retry: this.getDurationAverage(from, this.counters.retry),
+      started: this.getDurationAverage(from, this.counters.started),
+    }
+  }
+
+  private getDurationAverage(from: UnixTime, counter: Counter): number {
+    let sum = 0
     let total = 0
 
-    this.counters.forEach((counter, timestamp) => {
-      if (!now.add(-1, duration).lte(new UnixTime(timestamp))) {
-        return
+    counter.forEach((count, timestamp) => {
+      if (new UnixTime(timestamp).gte(from)) {
+        sum += count
+        total++
       }
-      total++
-      average.success += counter.success
-      average.retry += counter.retry
-      average.error += counter.error
-      average.started += counter.started
     })
 
-    average.success = average.success / total
-    average.retry = average.retry / total
-    average.error = average.error / total
-    average.started = average.started / total
-
-    return average
+    return total === 0 ? 0 : sum / total
   }
 }
