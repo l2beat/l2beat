@@ -66,8 +66,6 @@ export function ActivityView({ items }: ActivityViewProps) {
         : {},
   }
 
-  console
-
   return (
     <section className="mt-4">
       <TableView items={items} columns={columns} rows={rows} />

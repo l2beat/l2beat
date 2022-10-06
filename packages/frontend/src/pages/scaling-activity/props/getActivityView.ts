@@ -13,7 +13,6 @@ import { orderByTvl } from '../../../utils/orderByTvl'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
-  ethereum: Ethereum,
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
@@ -23,7 +22,7 @@ export function getActivityView(
   const items = ordering.map((x) =>
     getActivityViewEntry(x, activityApiResponse),
   )
-  items.push(getEthereumActivityViewEntry(ethereum, activityApiResponse))
+  items.push(getEthereumActivityViewEntry(activityApiResponse))
 
   return {
     items: items.sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),
@@ -49,7 +48,6 @@ export function getActivityViewEntry(
 }
 
 function getEthereumActivityViewEntry(
-  ethereum: Ethereum,
   activityApiResponse: ActivityApiResponse,
 ) {
   const data = activityApiResponse.ethereum?.data
@@ -57,8 +55,8 @@ function getEthereumActivityViewEntry(
     getActivityViewEntryDetails(data)
 
   return {
-    name: ethereum.name,
-    slug: ethereum.slug,
+    name: 'Ethereum',
+    slug: 'ethereum',
     provider: undefined,
     tpsDaily,
     tpsWeeklyChange,

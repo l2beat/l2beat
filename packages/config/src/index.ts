@@ -1,5 +1,4 @@
 export * from './bridges'
 export * from './common'
-export * from './ethereum'
 export * from './layer2s'
 export * from './tokens'
