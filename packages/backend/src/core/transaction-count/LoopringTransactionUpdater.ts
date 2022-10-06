@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
