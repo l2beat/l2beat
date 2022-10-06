@@ -20,6 +20,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
   private readonly blockQueueMonitor = new TaskQueueMonitor()
+  private latestBlock?: number
 
   constructor(
     private readonly zksyncClient: ZksyncClient,
@@ -86,6 +87,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     const missingRanges =
       await this.zksyncTransactionRepository.getMissingRanges()
     const latestBlock = await this.zksyncClient.getLatestBlock()
+    this.latestBlock = latestBlock
 
     for (const [start, end] of missingRanges) {
       for (
@@ -107,9 +109,11 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   async getStatus() {
     return {
       queuedJobsCount: this.blockQueue.length,
-      missingRanges: await this.zksyncTransactionRepository.getMissingRanges(),
       busyWorkers: this.blockQueue.getBusyWorkers(),
       syncStats: this.blockQueueMonitor.getStats(),
+      latestBlock: this.latestBlock ?? null,
+      latestFetchedBlock: await this.zksyncTransactionRepository.getMaxBlock(),
+      totalBlocks: await this.zksyncTransactionRepository.getBlockCount(),
     }
   }
 }

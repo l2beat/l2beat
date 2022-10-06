@@ -105,14 +105,10 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    return {
+    return Promise.resolve({
       queuedJobsCount: this.daysQueue.length,
-      missingRanges:
-        await this.starkexTransactionCountRepository.getMissingRangesByProject(
-          this.projectId,
-        ),
       busyWorkers: this.daysQueue.getBusyWorkers(),
       syncStats: this.daysQueueMonitor.getStats(),
-    }
+    })
   }
 }

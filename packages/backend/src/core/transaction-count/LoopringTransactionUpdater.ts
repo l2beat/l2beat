@@ -15,6 +15,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
   private readonly blockQueueMonitor = new TaskQueueMonitor()
+  private latestBlock?: number
 
   constructor(
     private readonly loopringClient: LoopringClient,
@@ -81,6 +82,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       )
 
     const finalizedBlock = await this.loopringClient.getFinalizedBlockNumber()
+    this.latestBlock = finalizedBlock
 
     for (const [start, end] of missingRanges) {
       for (
@@ -104,12 +106,14 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   async getStatus() {
     return {
       queuedJobsCount: this.blockQueue.length,
-      missingRanges:
-        await this.blockTransactionCountRepository.getMissingRangesByProject(
-          this.projectId,
-        ),
       busyWorkers: this.blockQueue.getBusyWorkers(),
       syncStats: this.blockQueueMonitor.getStats(),
+      latestBlock: this.latestBlock ?? null,
+      latestFetchedBlock:
+        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
+      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
+        this.projectId,
+      ),
     }
   }
 }

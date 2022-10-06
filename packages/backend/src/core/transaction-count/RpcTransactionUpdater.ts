@@ -24,6 +24,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
   private readonly blockQueueMonitor = new TaskQueueMonitor()
+  private latestBlock?: bigint
 
   constructor(
     private readonly ethereumClient: EthereumClient,
@@ -100,6 +101,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
         this.projectId,
       )
     const latestBlock = await this.ethereumClient.getBlockNumber()
+    this.latestBlock = latestBlock
 
     enqueueBlockLoop: for (const [start, end] of missingRanges) {
       for (
@@ -126,13 +128,15 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async getStatus() {
     return {
       queuedJobsCount: this.blockQueue.length,
-      missingRanges:
-        await this.blockTransactionCountRepository.getMissingRangesByProject(
-          this.projectId,
-        ),
-      startBlock: this.startBlock,
       busyWorkers: this.blockQueue.getBusyWorkers(),
       syncStats: this.blockQueueMonitor.getStats(),
+      startBlock: this.startBlock,
+      latestBlock: this.latestBlock?.toString() ?? null,
+      latestFetchedBlock:
+        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
+      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
+        this.projectId,
+      ),
     }
   }
 }
