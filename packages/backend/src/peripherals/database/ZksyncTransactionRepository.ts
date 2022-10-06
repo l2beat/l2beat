@@ -15,7 +15,8 @@ export interface ZksyncTransactionRecord {
 
 interface RawBlockNumberQueryResult {
   rows: {
-    block_number: number
+    no_next_block_number: number | null
+    no_prev_block_number: number | null
   }[]
 }
 
@@ -50,40 +51,57 @@ export class ZksyncTransactionRepository extends BaseRepository {
   async getMissingRanges() {
     const knex = await this.knex()
 
-    const noNext = (await knex.raw(
+    const blockNumbers = (await knex.raw(
       `
       WITH 
         blocks AS (
-          SELECT DISTINCT block_number FROM transactions.zksync 
+          SELECT DISTINCT block_number FROM transactions.zksync
+        ),
+        no_next AS (
+          SELECT 
+            blocks.block_number
+          FROM blocks 
+          LEFT JOIN blocks b2 ON blocks.block_number  = b2.block_number - 1
+          WHERE b2.block_number IS NULL
+        ),
+        no_prev AS (
+          SELECT 
+            blocks.block_number
+          FROM blocks 
+          LEFT JOIN blocks b2 ON blocks.block_number = b2.block_number + 1
+          WHERE b2.block_number IS NULL
         )
-      SELECT * 
-      FROM (
-        SELECT blocks.block_number 
-        FROM blocks 
-        LEFT JOIN blocks b2 ON blocks.block_number  = b2.block_number - 1
-        WHERE b2.block_number IS NULL) AS no_next
-      ORDER BY block_number ASC
-    `,
+      SELECT 
+        no_prev.block_number as no_prev_block_number, 
+        NULL as no_next_block_number
+      FROM no_prev 
+      UNION
+      SELECT 
+        NULL as no_prev_block_number, 
+        no_next.block_number as no_next_block_number
+      FROM no_next
+      ORDER BY no_prev_block_number, no_next_block_number ASC
+  `,
     )) as unknown as RawBlockNumberQueryResult
 
-    const noPrev = (await knex.raw(
-      `
-      WITH 
-        blocks AS (
-          SELECT DISTINCT block_number FROM transactions.zksync 
-        )
-      SELECT * 
-      FROM (
-        SELECT blocks.block_number 
-        FROM blocks 
-        LEFT JOIN blocks b2 ON blocks.block_number  = b2.block_number + 1
-        WHERE b2.block_number IS NULL) AS no_next
-      ORDER BY block_number ASC
-    `,
-    )) as unknown as RawBlockNumberQueryResult
-
-    const noPrevBlockNumbers = noPrev.rows.map((row) => row.block_number)
-    const noNextBlockNumbers = noNext.rows.map((row) => row.block_number + 1)
+    const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
+      (acc, row) => {
+        if (row.no_prev_block_number !== null) {
+          acc.push(row.no_prev_block_number)
+        }
+        return acc
+      },
+      [],
+    )
+    const noNextBlockNumbers = blockNumbers.rows.reduce<number[]>(
+      (acc, row) => {
+        if (row.no_next_block_number !== null) {
+          acc.push(row.no_next_block_number + 1)
+        }
+        return acc
+      },
+      [],
+    )
 
     noPrevBlockNumbers.push(Infinity)
     noNextBlockNumbers.unshift(-Infinity)

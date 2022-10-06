@@ -3,14 +3,17 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import {
-  RpcTransactionCountRecord,
-  RpcTransactionCountRepository,
-} from '../../../src/peripherals/database/RpcTransactionCountRepository'
+  BlockTransactionCountRecord,
+  BlockTransactionCountRepository,
+} from '../../../src/peripherals/database/BlockTransactionCountRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
-describe(RpcTransactionCountRepository.name, () => {
+describe(BlockTransactionCountRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new RpcTransactionCountRepository(database, Logger.SILENT)
+  const repository = new BlockTransactionCountRepository(
+    database,
+    Logger.SILENT,
+  )
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -20,7 +23,7 @@ describe(RpcTransactionCountRepository.name, () => {
   })
 
   describe(
-    RpcTransactionCountRepository.prototype.getMissingRangesByProject.name,
+    BlockTransactionCountRepository.prototype.getMissingRangesByProject.name,
     () => {
       it('works with an empty repository', async () => {
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
@@ -110,7 +113,7 @@ describe(RpcTransactionCountRepository.name, () => {
   )
 
   describe(
-    RpcTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    BlockTransactionCountRepository.prototype.getDailyTransactionCount.name,
     () => {
       it('works with empty repository', async () => {
         expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
@@ -194,8 +197,8 @@ describe(RpcTransactionCountRepository.name, () => {
 })
 
 export function fakeTransactionCount(
-  txCount?: Partial<RpcTransactionCountRecord>,
-): RpcTransactionCountRecord {
+  txCount?: Partial<BlockTransactionCountRecord>,
+): BlockTransactionCountRecord {
   return {
     projectId: ProjectId('fake-project'),
     timestamp: new UnixTime(0),

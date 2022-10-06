@@ -45,43 +45,6 @@ describe(ZksyncTransactionUpdater.name, () => {
     })
   })
 
-  describe(ZksyncTransactionUpdater.prototype.update.name, () => {
-    it('does not query the same blocks multiple times', async () => {
-      const zksyncClient = mock<ZksyncClient>({
-        getTransactionsInBlock: async () => [],
-        getLatestBlock: async () => 5,
-      })
-      const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
-        getMissingRanges: async () => [
-          [-Infinity, -1],
-          [2, 3],
-          [5, Infinity],
-        ],
-        addMany: async () => 0,
-      })
-      const clock = mock<Clock>({
-        onNewHour: (callback) => {
-          callback(UnixTime.now())
-          return () => {}
-        },
-      })
-      const zksyncTransactionUpdater = new ZksyncTransactionUpdater(
-        zksyncClient,
-        zksyncTransactionRepository,
-        clock,
-        Logger.SILENT,
-      )
-      await zksyncTransactionUpdater.update()
-      await zksyncTransactionUpdater.update()
-
-      await waitForExpect(() => {
-        expect(zksyncClient.getTransactionsInBlock).toHaveBeenCalledExactlyWith(
-          [[2], [5]],
-        )
-      })
-    })
-  })
-
   describe(ZksyncTransactionUpdater.prototype.updateBlock.name, () => {
     it('downloads and saves transactions to DB', async () => {
       const transactions1 = [{ blockIndex: 0, createdAt: new UnixTime(0) }]
