@@ -43,6 +43,11 @@ export const myria: Layer2 = {
       },
     ],
     events: [],
+    transactionApi: {
+      type: 'starkex',
+      product: 'myria',
+      sinceTimestamp: new UnixTime(1659542607),
+    },
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
