@@ -1,10 +1,11 @@
 import cx from 'classnames'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 export interface PageSelectionProps {
   pages: {
-    content: React.ReactNode
-    icon?: React.ReactNode
+    fullTitle: ReactNode
+    shortTitle: ReactNode
+    icon?: ReactNode
     link: string
     selected: boolean
   }[]
@@ -23,7 +24,7 @@ const gradientBorder = [
   'before:rounded-lg',
 ]
 
-export function PageSelection({ pages }: PageSelectionProps) {
+export function NavigationTabs({ pages }: PageSelectionProps) {
   return (
     <nav className="mt-4 mb-4 md:mb-10 md:mt-10">
       <ul className="flex w-full justify-around items-center">
@@ -46,7 +47,9 @@ export function PageSelection({ pages }: PageSelectionProps) {
                 page.selected && 'dark:bg-[#32102A] bg-opacity-90 bg-white',
               )}
             >
-              <div className="hidden sm:block">{page.icon}</div> {page.content}
+              <div className="hidden sm:block">{page.icon}</div>{' '}
+              <div className="hidden sm:block">{page.fullTitle}</div>
+              <div className="block sm:hidden">{page.shortTitle}</div>
             </a>
           </li>
         ))}

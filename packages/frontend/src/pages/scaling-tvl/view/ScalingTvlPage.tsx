@@ -8,9 +8,9 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
+import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
@@ -26,7 +26,7 @@ export interface TvlPageProps {
 export function ScalingTvlPage(props: TvlPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <ScalingPageSelection showActivity={props.showActivity} selected="tvl" />
+      <ScalingNavigationTabs showActivity={props.showActivity} selected="tvl" />
       <main>
         <Header
           title="Value locked"
