@@ -2,13 +2,11 @@ import { UnixTime } from '@l2beat/types'
 
 import { History, ReadonlyHistory } from './types'
 
-const ONE_HOUR = 1000 * 60 * 60
-
 export class EventTracker {
   private readonly history: History = new Map()
 
-  constructor() {
-    setInterval(() => this.pruneOldHistory(), ONE_HOUR)
+  constructor(private readonly historySizeInSeconds = UnixTime.HOUR) {
+    setInterval(() => this.pruneOldHistory(), this.historySizeInSeconds * 1000)
   }
 
   record() {
@@ -23,10 +21,13 @@ export class EventTracker {
   }
 
   private pruneOldHistory() {
-    const hourAgo = UnixTime.now().add(-1, 'hours')
+    const beginning = UnixTime.now().add(
+      -1 * this.historySizeInSeconds,
+      'seconds',
+    )
 
-    this.history.forEach((timestamp) => {
-      if (new UnixTime(timestamp).lt(hourAgo)) {
+    this.history.forEach((_count, timestamp) => {
+      if (new UnixTime(timestamp).lt(beginning)) {
         this.history.delete(timestamp)
       }
     })
