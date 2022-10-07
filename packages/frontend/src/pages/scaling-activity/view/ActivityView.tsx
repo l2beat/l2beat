@@ -1,8 +1,9 @@
 import { Layer2 } from '@l2beat/config'
+import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { EthereumCell } from '../../../components/table/EthreumCell'
+import { EthereumCell } from '../../../components/table/EthereumCell'
 import { NoInfoCell } from '../../../components/table/NoInfoCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
@@ -72,7 +73,10 @@ export function ActivityView({ items }: ActivityViewProps) {
     getProps: (entry) =>
       entry.name === 'Ethereum'
         ? {
-            className: 'accent',
+            className: cx(
+              'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
+              'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+            ),
           }
         : {},
   }

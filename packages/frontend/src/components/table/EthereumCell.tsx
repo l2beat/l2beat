@@ -10,14 +10,14 @@ interface EthereumCellProps {
 export function EthereumCell({ project }: EthereumCellProps) {
   return (
     <>
-      <div className="relative pl-7 ">
+      <span className="relative pl-7">
         <img
           className="absolute left-0 top-0 block w-[18px] h-[18px]"
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
         <span className="font-bold text-base md:text-lg">{project.name}</span>
-      </div>
+      </span>
     </>
   )
 }
