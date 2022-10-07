@@ -1,7 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
-import { NoInfoCell } from '../../components/table/NoInfoCell'
 
+import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
 import { RiskCell } from '../../components/table/RiskCell'
