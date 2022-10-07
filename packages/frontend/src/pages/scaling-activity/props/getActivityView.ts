@@ -10,17 +10,19 @@ import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionWeeklyCount } from '../../../utils/activity/getTransactionWeeklyCount'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
+import { formatPercent } from '../../../utils/utils'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
+  tpsCombined?: number,
 ): ActivityViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
   const items = ordering.map((x) =>
-    getActivityViewEntry(x, activityApiResponse),
+    getActivityViewEntry(x, activityApiResponse, tpsCombined),
   )
   items.push(getEthereumActivityViewEntry(activityApiResponse))
 
@@ -32,6 +34,7 @@ export function getActivityView(
 export function getActivityViewEntry(
   project: Layer2,
   activityApiResponse: ActivityApiResponse,
+  tpsCombined?: number,
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
   const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
@@ -45,6 +48,10 @@ export function getActivityViewEntry(
     tpsDaily,
     tpsWeeklyChange,
     transactionsWeeklyCount,
+    marketShare:
+      tpsDaily && tpsCombined
+        ? formatPercent(tpsDaily / tpsCombined)
+        : undefined,
   }
 }
 
@@ -58,10 +65,11 @@ function getEthereumActivityViewEntry(
   return {
     name: 'Ethereum',
     slug: 'ethereum',
-    provider: undefined,
     tpsDaily,
     tpsWeeklyChange,
     transactionsWeeklyCount,
+    provider: undefined,
+    marketShare: undefined,
   }
 }
 
