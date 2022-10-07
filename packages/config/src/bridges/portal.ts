@@ -5,7 +5,7 @@ import { Bridge } from './types'
 
 export const portal: Bridge = {
   type: 'bridge',
-  id: ProjectId('wormhole'),//because of legacy reasons
+  id: ProjectId('wormhole'), //because of legacy reasons
   display: {
     name: 'Portal',
     slug: 'portal',
