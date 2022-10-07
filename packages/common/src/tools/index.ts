@@ -1,3 +1,4 @@
+export * from './EventTracker'
 export * from './Logger'
 export * from './mock'
 export * from './queue/Retries'
