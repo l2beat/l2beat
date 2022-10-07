@@ -39,7 +39,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
-        enableMonitoring: true,
+        trackEvents: true,
       },
     )
   }

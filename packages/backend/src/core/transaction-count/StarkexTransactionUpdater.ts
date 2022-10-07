@@ -40,7 +40,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
-        enableMonitoring: true,
+        trackEvents: true,
       },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()
