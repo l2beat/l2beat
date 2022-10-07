@@ -10,6 +10,7 @@ import { BACK_OFF_AND_DROP } from './utils'
 
 interface StarkexTransactionUpdaterOpts {
   workQueueWorkers?: number
+  apiDelayHours?: number
 }
 
 export class StarkexTransactionUpdater implements TransactionCounter {
@@ -84,7 +85,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
     const today = this.clock
       .getLastHour()
       // Delay to make sure that API's data is ready
-      .add(-4, 'hours')
+      .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
       .toStartOf('day')
       .toDays()
 
