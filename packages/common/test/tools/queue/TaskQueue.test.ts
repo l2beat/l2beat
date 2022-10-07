@@ -154,5 +154,6 @@ describe(TaskQueue.name, () => {
   })
 })
 
+// Unfortunately fake-timers do not work well with timers/promises
 const wait = (delay: number) =>
   new Promise((resolve) => setTimeout(resolve, delay))
