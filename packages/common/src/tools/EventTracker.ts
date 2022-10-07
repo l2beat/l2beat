@@ -33,7 +33,7 @@ export class EventTracker<T extends string> {
       this.historySize,
     )
     // Let tests end without explicitly stopping the interval
-    // Ref: https://nodejs.org/api/timers.html#timers_timeout_unref
+    // Ref: https://stackoverflow.com/a/48192771
     intervalId.unref()
   }
 
