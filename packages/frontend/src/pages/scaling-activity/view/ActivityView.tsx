@@ -1,11 +1,11 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { PercentChange } from '../../../components'
-import { NoInfoCell } from '../../../components/NoInfoCell'
-import { ProjectLink } from '../../../components/ProjectLink'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import { NoInfoCell } from '../../../components/table/NoInfoCell'
+import { NumberCell } from '../../../components/table/NumberCell'
+import { ProjectCell } from '../../../components/table/ProjectCell'
+import { ColumnConfig, TableView } from '../../../components/table/TableView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -23,27 +23,38 @@ export interface ActivityViewEntry {
 export function ActivityView({ items }: ActivityViewProps) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (entry, index) => `${index + 1}.`,
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
+      getValue: (entry, index) => index + 1,
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
       name: 'TPS',
       alignRight: true,
-      getValue: (project) => project.tpsDaily ?? <NoInfoCell />,
+      getValue: (project) =>
+        project.tpsDaily ? (
+          <NumberCell>{project.tpsDaily}</NumberCell>
+        ) : (
+          <NoInfoCell />
+        ),
     },
     {
       name: '7d Change',
       alignRight: true,
-      getValue: (project) => <PercentChange value={project.tpsWeeklyChange} />,
+      getValue: (project) => (
+        <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
+      ),
     },
     {
       name: '7d Count',
       alignRight: true,
-      getValue: (project) => project.transactionsWeeklyCount,
+      getValue: (project) => (
+        <NumberCell>{project.transactionsWeeklyCount}</NumberCell>
+      ),
     },
   ]
 
