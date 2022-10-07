@@ -116,7 +116,9 @@ describe(BlockTransactionCountRepository.name, () => {
     BlockTransactionCountRepository.prototype.getDailyTransactionCount.name,
     () => {
       it('works with empty repository', async () => {
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
+        expect(
+          await repository.getDailyTransactionCount(PROJECT_A, UnixTime.now()),
+        ).toEqual([])
       })
 
       it('counts only for requested project', async () => {
@@ -139,7 +141,12 @@ describe(BlockTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(
+          await repository.getDailyTransactionCount(
+            PROJECT_A,
+            start.add(1, 'days'),
+          ),
+        ).toEqual([
           {
             timestamp: start,
             count: aCounts.reduce((acc, record) => acc + record.count, 0),
@@ -148,77 +155,115 @@ describe(BlockTransactionCountRepository.name, () => {
       })
 
       it('groups by day', async () => {
-        const today = UnixTime.now().toStartOf('day')
+        const start = UnixTime.now().toStartOf('day')
 
         await repository.addMany([
           fakeTransactionCount({
             blockNumber: 1,
-            timestamp: today.add(1, 'hours'),
+            timestamp: start.add(1, 'hours'),
             projectId: PROJECT_A,
             count: 1,
           }),
           fakeTransactionCount({
             blockNumber: 2,
-            timestamp: today.add(1, 'days').add(-1, 'seconds'),
+            timestamp: start.add(1, 'days').add(-1, 'seconds'),
             projectId: PROJECT_A,
             count: 2,
           }),
           fakeTransactionCount({
             blockNumber: 3,
-            timestamp: today.add(1, 'days').add(1, 'hours'),
+            timestamp: start.add(1, 'days').add(1, 'hours'),
             projectId: PROJECT_A,
             count: 3,
           }),
           fakeTransactionCount({
             blockNumber: 4,
-            timestamp: today.add(2, 'days'),
+            timestamp: start.add(2, 'days'),
             projectId: PROJECT_A,
             count: 4,
           }),
         ])
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(
+          await repository.getDailyTransactionCount(
+            PROJECT_A,
+            start.add(3, 'days'),
+          ),
+        ).toEqual([
           {
             count: 3,
-            timestamp: today,
+            timestamp: start,
           },
           {
             count: 3,
-            timestamp: today.add(1, 'days'),
+            timestamp: start.add(1, 'days'),
           },
           {
             count: 4,
-            timestamp: today.add(2, 'days'),
+            timestamp: start.add(2, 'days'),
           },
         ])
       })
 
       it('orders by day', async () => {
-        const today = UnixTime.now().toStartOf('day')
+        const start = UnixTime.now().toStartOf('day')
 
         await repository.addMany([
           fakeTransactionCount({
             blockNumber: 3,
-            timestamp: today.add(1, 'days').add(1, 'hours'),
+            timestamp: start.add(1, 'days').add(1, 'hours'),
             projectId: PROJECT_A,
             count: 3,
           }),
           fakeTransactionCount({
             blockNumber: 1,
-            timestamp: today.add(1, 'hours'),
+            timestamp: start.add(1, 'hours'),
             projectId: PROJECT_A,
             count: 1,
           }),
         ])
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(
+          await repository.getDailyTransactionCount(
+            PROJECT_A,
+            start.add(2, 'days'),
+          ),
+        ).toEqual([
           {
             count: 1,
-            timestamp: today,
+            timestamp: start,
           },
           {
             count: 3,
-            timestamp: today.add(1, 'days'),
+            timestamp: start.add(1, 'days'),
+          },
+        ])
+      })
+
+      it('skips records from today', async () => {
+        const today = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeTransactionCount({
+            blockNumber: 1,
+            timestamp: today.add(-1, 'days'),
+            projectId: PROJECT_A,
+            count: 1,
+          }),
+          fakeTransactionCount({
+            blockNumber: 3,
+            timestamp: today,
+            projectId: PROJECT_A,
+            count: 3,
+          }),
+        ])
+
+        expect(
+          await repository.getDailyTransactionCount(PROJECT_A, today),
+        ).toEqual([
+          {
+            count: 1,
+            timestamp: today.add(-1, 'days'),
           },
         ])
       })
