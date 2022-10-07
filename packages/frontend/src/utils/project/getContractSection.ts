@@ -58,6 +58,13 @@ function makeTechnologyContract(
     })
   }
 
+  if (item.upgradeability?.type === 'CustomWithoutAdmin') {
+    links.push({
+      name: 'Implementation (Upgradable)',
+      href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+    })
+  }
+
   if (item.upgradeability?.type === 'StarkWare') {
     const delay = item.upgradeability.upgradeDelay !== 0
     const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)

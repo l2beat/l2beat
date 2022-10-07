@@ -5,7 +5,7 @@ import { Bridge } from './types'
 
 export const portal: Bridge = {
   type: 'bridge',
-  id: ProjectId('wormhole'), //because of legacy reasons
+  id: ProjectId('wormhole'), //todo change to portal
   display: {
     name: 'Portal',
     slug: 'portal',
@@ -105,7 +105,7 @@ export const portal: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'guardians decide to stop processing certain transactions',
+          text: 'guardians decide to stop processing certain transactions.',
           isCritical: true,
         },
         {
@@ -143,8 +143,7 @@ export const portal: Bridge = {
         name: 'Token Bridge',
         description: '',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '',
+          type: 'CustomWithoutAdmin',
           implementation: '0x299b4F6066d231521d11FAE8331fb1A4fe794F58',
         },
       },
@@ -153,8 +152,7 @@ export const portal: Bridge = {
         name: 'Wormhole',
         description: '',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '',
+          type: 'CustomWithoutAdmin',
           implementation: '0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0',
         },
       },
