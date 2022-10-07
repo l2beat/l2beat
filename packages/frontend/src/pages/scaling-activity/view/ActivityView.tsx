@@ -1,8 +1,8 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { EthereumCell } from '../../../components/EthreumCell'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { EthereumCell } from '../../../components/table/EthreumCell'
 import { NoInfoCell } from '../../../components/table/NoInfoCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
