@@ -1,4 +1,3 @@
-import assert from 'assert'
 
 const ONE_HOUR = 1_000 * 60 * 60
 

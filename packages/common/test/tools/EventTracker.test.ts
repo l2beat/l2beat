@@ -51,11 +51,11 @@ describe(EventTracker.name, () => {
   })
 
   it('prunes history before returning', async () => {
-    const tracker = new EventTracker(100)
+    const tracker = new EventTracker(10)
     tracker.record('a')
     tracker.record('b')
     tracker.record('c')
-    await setTimeout(101)
+    await setTimeout(100)
     expect(tracker.getStats()).toEqual({
       lastSecond: {},
       lastMinuteAverage: {},
