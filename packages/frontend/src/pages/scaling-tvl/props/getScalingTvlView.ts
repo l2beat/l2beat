@@ -34,6 +34,7 @@ function getScalingTvlViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
+    warning: project.display.warning,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,
     oneDayChange: stats.oneDayChange,
