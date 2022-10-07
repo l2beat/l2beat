@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { InfoIcon, WarningIcon } from './icons'
+import { WarningIcon } from './icons'
 
 export interface TVLBreakdownProps {
   warning?: string
-  warningSeverity: 'info' | 'warning' | 'bad'
+  warningSeverity: 'warning' | 'bad'
   label: string
   empty: boolean
   associated: number
@@ -41,9 +41,6 @@ export function TVLBreakdown(props: TVLBreakdownProps) {
       </span>
       {props.warning && (
         <div className="Tooltip" title={props.warning}>
-          {props.warningSeverity === 'info' && (
-            <InfoIcon className="fill-blue-700 dark:fill-blue-300" />
-          )}
           {props.warningSeverity === 'warning' && (
             <WarningIcon className="fill-yellow-700 dark:fill-yellow-300" />
           )}
