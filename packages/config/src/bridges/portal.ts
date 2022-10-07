@@ -3,9 +3,9 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { CONTRACTS } from '../layer2s/common'
 import { Bridge } from './types'
 
-export const wormhole: Bridge = {
+export const portal: Bridge = {
   type: 'bridge',
-  id: ProjectId('wormhole'),
+  id: ProjectId('wormhole'),//because of legacy reasons
   display: {
     name: 'Portal',
     slug: 'portal',
