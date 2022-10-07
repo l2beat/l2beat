@@ -9,8 +9,8 @@ import {
 } from '../../components'
 import { About } from '../../components/About'
 import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
-import { BridgesPageSelection } from '../../components/BridgesPageSelection'
 import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
+import { BridgesNavigationTabs } from '../../components/navigation-tabs/BridgesNavigationTabs'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
@@ -29,7 +29,7 @@ export interface BridgesTvlPageProps {
 export function BridgesTvlPage(props: BridgesTvlPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <BridgesPageSelection selected="tvl" />
+      <BridgesNavigationTabs selected="tvl" />
       <main>
         <BridgesMvpWarning />
         <div data-bridges-only>

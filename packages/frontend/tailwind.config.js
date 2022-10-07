@@ -20,6 +20,7 @@ module.exports = {
     },
     colors: {
       current: 'currentColor',
+      transparent: 'transparent',
       link: 'rgb(var(--link-rgb) / <alpha-value>)',
       white: '#FAFAFA',
       gray: {
@@ -28,7 +29,9 @@ module.exports = {
         300: '#D3D3D3',
         700: '#565656',
         800: '#424242',
+        850: '#333333',
         900: '#2F2F2F',
+        950: '#111111',
       },
       black: '#1B1B1B',
       yellow: {
@@ -37,8 +40,14 @@ module.exports = {
       red: {
         100: '#AE2121',
       },
+      purple: {
+        100: '#7E41CC',
+        200: '#F3ECFD',
+        800: '#32102A',
+      },
       pink: {
-        100: '#DB8BF7',
+        100: '#FF46C0',
+        200: '#DB8BF7',
         900: '#AB3BD2',
       },
     },

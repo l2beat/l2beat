@@ -1,23 +1,25 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, TvlIcon } from './icons'
-import { PageSelection } from './PageSelection'
+import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
+import { NavigationTabs } from './NavigationTabs'
 
-interface ScalingPageSelectionProps {
+interface ScalingNavigationTabsProps {
   selected: 'tvl' | 'risk' | 'activity'
   showActivity: boolean
 }
 
-export function ScalingPageSelection(props: ScalingPageSelectionProps) {
+export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
   const pages = [
     {
-      content: 'Total Value Locked',
+      fullTitle: 'Total Value Locked',
+      shortTitle: 'TVL',
       icon: <TvlIcon />,
       link: '/scaling/tvl',
       selected: props.selected === 'tvl',
     },
     {
-      content: 'Risk analysis',
+      fullTitle: 'Risk analysis',
+      shortTitle: 'Risks',
       icon: <RiskIcon />,
       link: '/scaling/risk',
       selected: props.selected === 'risk',
@@ -25,11 +27,12 @@ export function ScalingPageSelection(props: ScalingPageSelectionProps) {
   ]
   if (props.showActivity) {
     pages.push({
-      content: 'Activity',
+      fullTitle: 'Activity',
+      shortTitle: 'Activity',
       icon: <ActivityIcon />,
       link: '/scaling/activity',
       selected: props.selected === 'activity',
     })
   }
-  return <PageSelection pages={pages} />
+  return <NavigationTabs pages={pages} />
 }

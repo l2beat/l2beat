@@ -8,9 +8,9 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
+import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
@@ -26,7 +26,7 @@ export interface ActivityPageProps {
 export function ActivityPage(props: ActivityPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <ScalingPageSelection
+      <ScalingNavigationTabs
         showActivity={props.showActivity}
         selected="activity"
       />
