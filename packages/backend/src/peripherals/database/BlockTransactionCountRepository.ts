@@ -114,6 +114,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async getDailyTransactionCount(
     projectId: ProjectId,
+    maxTimestamp: UnixTime,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
@@ -124,14 +125,15 @@ export class BlockTransactionCountRepository extends BaseRepository {
       FROM
         transactions.block
       WHERE
-        project_id = ?
+        project_id = ? 
+        AND unix_timestamp < ?
       GROUP BY
         project_id,
         date_trunc('day', unix_timestamp, 'UTC')
       ORDER BY 
         unix_timestamp
     `,
-      projectId.toString(),
+      [projectId.toString(), maxTimestamp.toDate()],
     )) as unknown as {
       rows: Pick<BlockTransactionCountRow, 'unix_timestamp' | 'count'>[]
     }
