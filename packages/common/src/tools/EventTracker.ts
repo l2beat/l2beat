@@ -27,6 +27,10 @@ export class EventTracker<T extends string> {
     }
   }
 
+  getEventsCount() {
+    return this.events.length
+  }
+
   private enablePruning() {
     const intervalId = setInterval(
       () => this.pruneOldEvents(),
@@ -43,7 +47,7 @@ export class EventTracker<T extends string> {
   ): Record<T, number> {
     const beginning = now - secondsBack * 1_000
     const sums = this.events
-      .filter(({ timestamp }) => timestamp >= beginning)
+      .filter(({ timestamp }) => timestamp > beginning)
       .reduce<Record<string, number>>(
         (acc, { name }) => ({ ...acc, [name]: (acc[name] || 0) + 1 }),
         {},
@@ -60,6 +64,6 @@ export class EventTracker<T extends string> {
 
   private pruneOldEvents() {
     const beginning = Date.now() - this.historySize
-    this.events = this.events.filter(({ timestamp }) => timestamp >= beginning)
+    this.events = this.events.filter(({ timestamp }) => timestamp > beginning)
   }
 }
