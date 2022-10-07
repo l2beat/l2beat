@@ -44,7 +44,9 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectCell type={entry.type} project={entry} />,
+      getValue: (entry) => (
+        <ProjectCell highlightL2 type={entry.type} project={entry} />
+      ),
     },
     {
       name: 'Destination',

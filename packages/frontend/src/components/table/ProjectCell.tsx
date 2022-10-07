@@ -15,10 +15,11 @@ export interface ProjectCellProps {
     provider?: Layer2['technology']['provider']
     warning?: string
   }
+  highlightL2?: boolean
   type: 'layer2' | 'bridge'
 }
 
-export function ProjectCell({ project, type }: ProjectCellProps) {
+export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
   const href =
     type === 'layer2'
       ? `/scaling/projects/${project.slug}`
@@ -35,6 +36,15 @@ export function ProjectCell({ project, type }: ProjectCellProps) {
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
+        {highlightL2 && type === 'layer2' && (
+          <div
+            role="img"
+            aria-label={type}
+            className="absolute -bottom-1 left-2.5 text-3xs font-bold px-0.5 rounded-sm bg-gray-800 dark:bg-gray-200 text-white dark:text-black"
+          >
+            L2
+          </div>
+        )}
         <span className="font-bold text-base md:text-lg">{project.name}</span>
       </a>
       {project.provider === 'StarkEx' && (
