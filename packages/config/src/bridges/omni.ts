@@ -26,11 +26,6 @@ export const omni: Bridge = {
           //'BRIGHT'
         ],
       },
-      {
-        address: '0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016',
-        sinceTimestamp: new UnixTime(1596501090),
-        tokens: ['cDAI', 'DAI'],
-      },
     ],
   },
   technology: {
