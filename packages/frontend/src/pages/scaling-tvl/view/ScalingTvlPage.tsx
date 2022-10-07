@@ -1,13 +1,8 @@
 import React from 'react'
 
-import {
-  Chart,
-  Footer,
-  FooterProps,
-  Header,
-  NavbarProps,
-} from '../../../components'
+import { Chart, Footer, FooterProps, NavbarProps } from '../../../components'
 import { About } from '../../../components/About'
+import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -28,11 +23,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
     <Page navbar={props.navbar}>
       <ScalingNavigationTabs showActivity={props.showActivity} selected="tvl" />
       <main>
-        <Header
-          title="Value locked"
-          tvl={props.tvl}
-          tvlWeeklyChange={props.sevenDayChange}
-        />
+        <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.sevenDayChange} />
         <Chart tvlEndpoint={props.tvlEndpoint} />
         <ScalingTvlView {...props.tvlView} />
         <OtherSites />

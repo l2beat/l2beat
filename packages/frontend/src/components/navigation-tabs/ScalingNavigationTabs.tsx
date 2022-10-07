@@ -18,7 +18,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       selected: props.selected === 'tvl',
     },
     {
-      fullTitle: 'Risk analysis',
+      fullTitle: 'Risk Analysis',
       shortTitle: 'Risks',
       icon: <RiskIcon />,
       link: '/scaling/risk',
