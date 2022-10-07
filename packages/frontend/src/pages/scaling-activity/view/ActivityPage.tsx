@@ -1,16 +1,11 @@
 import React from 'react'
 
-import {
-  Chart,
-  Footer,
-  FooterProps,
-  Header,
-  NavbarProps,
-} from '../../../components'
+import { Chart, Footer, FooterProps, NavbarProps } from '../../../components'
 import { About } from '../../../components/About'
+import { ActivityHeader } from '../../../components/header/ActivityHeader'
+import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
-import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
@@ -26,17 +21,12 @@ export interface ActivityPageProps {
 export function ActivityPage(props: ActivityPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <ScalingPageSelection
+      <ScalingNavigationTabs
         showActivity={props.showActivity}
         selected="activity"
       />
       <main>
-        <Header
-          title="Activity"
-          tpsDaily={props.tpsDaily}
-          tpsWeeklyChange={props.tpsWeeklyChange}
-          showTps
-        />
+        <ActivityHeader scalingFactor="1.5x" />
         <Chart
           type={'activity'}
           activityEndpoint={props.apiEndpoint}
