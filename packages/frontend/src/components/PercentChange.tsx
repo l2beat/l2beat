@@ -6,6 +6,14 @@ interface Props {
 }
 
 export function PercentChange({ value }: Props) {
-  const className = cx('PercentChange', value.startsWith('+') ? 'up' : 'down')
-  return <span className={className}>{value}</span>
+  return (
+    <span
+      className={cx(
+        value.startsWith('+') && 'text-green-700 dark:text-green-300',
+        value.startsWith('-') && 'text-red-700 dark:text-red-300',
+      )}
+    >
+      {value}
+    </span>
+  )
 }

@@ -1,8 +1,13 @@
 import React from 'react'
 
-import { PercentChange } from '../../components'
-import { ProjectLink } from '../../components/ProjectLink'
-import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
+import { NumberCell } from '../../components/table/NumberCell'
+import { ProjectCell } from '../../components/table/ProjectCell'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../components/table/TableView'
+import { TechnologyCell } from '../../components/table/TechnologyCell'
 import { TVLBreakdown, TVLBreakdownProps } from '../../components/TVLBreakdown'
 
 export interface BridgesTvlViewProps {
@@ -28,56 +33,57 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
-      name: 'No.',
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}.</span>
+          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}</span>
           <span data-combined-only className="hidden">
-            {index + 1}.
+            {index + 1}
           </span>
         </>
       ),
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectLink type={entry.type} project={entry} />,
+      getValue: (entry) => <ProjectCell type={entry.type} project={entry} />,
     },
     {
       name: 'TVL',
       alignRight: true,
-      getValue: (entry) => entry.tvl,
+      getValue: (entry) => <NumberCell>{entry.tvl}</NumberCell>,
     },
     {
       name: 'Breakdown',
-      alignRight: true,
       getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: '7d Change',
       alignRight: true,
-      getValue: (entry) => <PercentChange value={entry.sevenDayChange} />,
+      getValue: (entry) => (
+        <NumberCell signed>{entry.sevenDayChange}</NumberCell>
+      ),
     },
     {
       name: 'Market share',
       alignRight: true,
       getValue: (entry) => (
-        <>
+        <NumberCell>
           <span data-bridges-only>{entry.bridgesMarketShare}</span>
           <span data-combined-only className="hidden">
             {entry.combinedMarketShare}
           </span>
-        </>
+        </NumberCell>
       ),
     },
     {
       name: 'Validation',
-      alignRight: true,
       getValue: (entry) => entry.validation,
     },
     {
       name: 'Type',
-      alignRight: true,
-      getValue: (entry) => entry.category,
+      getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
     },
   ]
 

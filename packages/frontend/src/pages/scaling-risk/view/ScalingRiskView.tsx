@@ -1,10 +1,10 @@
 import { Layer2, Layer2RiskView } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectLink } from '../../../components/ProjectLink'
-import { RiskCell } from '../../../components/RiskCell'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import { ProjectCell } from '../../../components/table/ProjectCell'
+import { RiskCell } from '../../../components/table/RiskCell'
+import { ColumnConfig, TableView } from '../../../components/table/TableView'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -19,12 +19,14 @@ export interface ScalingRiskViewEntry extends Layer2RiskView {
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (entry, index) => `${index + 1}.`,
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
+      getValue: (entry, index) => index + 1,
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
       name: 'State validation',
