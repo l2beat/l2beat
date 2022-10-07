@@ -16,6 +16,7 @@ export interface BridgesTvlViewProps {
 
 export interface BridgesTvlViewEntry {
   type: 'bridge' | 'layer2'
+  showTypeBadge: boolean
   name: string
   slug: string
   warning?: string

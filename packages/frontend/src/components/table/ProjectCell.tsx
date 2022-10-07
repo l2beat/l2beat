@@ -14,6 +14,7 @@ export interface ProjectCellProps {
     slug: string
     provider?: Layer2['technology']['provider']
     warning?: string
+    showTypeBadge?: boolean
   }
   type: 'layer2' | 'bridge'
 }
@@ -35,6 +36,16 @@ export function ProjectCell({ project, type }: ProjectCellProps) {
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
+        {project.showTypeBadge && (
+          <div
+            role="img"
+            aria-label={type}
+            className="absolute -bottom-1 left-2.5 text-3xs font-bold px-0.5 rounded-sm bg-gray-800 dark:bg-gray-200 text-white dark:text-black"
+          >
+            {type === 'layer2' && 'L2'}
+            {type === 'bridge' && 'BR'}
+          </div>
+        )}
         <span className="font-bold text-base md:text-lg">{project.name}</span>
       </a>
       {project.provider === 'StarkEx' && (
