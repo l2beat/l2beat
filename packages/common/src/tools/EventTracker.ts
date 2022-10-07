@@ -1,4 +1,3 @@
-
 const ONE_HOUR = 1_000 * 60 * 60
 
 interface Event<T extends string> {
