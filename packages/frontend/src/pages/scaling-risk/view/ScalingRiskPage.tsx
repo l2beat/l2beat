@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { Footer, FooterProps, Header, NavbarProps } from '../../../components'
+import { Footer, FooterProps, NavbarProps } from '../../../components'
 import { About } from '../../../components/About'
+import { RiskHeader } from '../../../components/header/RiskHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
@@ -22,7 +23,7 @@ export function ScalingRiskPage(props: ScalingRiskPageProps) {
         selected="risk"
       />
       <main>
-        <Header title="Risk Analysis" />
+        <RiskHeader />
         <ScalingRiskView {...props.riskView} />
         <OtherSites />
         <About />

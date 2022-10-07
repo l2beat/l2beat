@@ -29,10 +29,7 @@ export function ScalingLegend(props: ScalingLegendProps) {
       {props.showTokenWarnings && (
         <div className="flex flex-col gap-2">
           <p className="flex gap-1">
-            <WarningIcon
-              fill="var(--text-warning)"
-              className="relative min-w-[24px] -top-0.5"
-            />
+            <WarningIcon className="fill-yellow-700 dark:fill-yellow-300 relative min-w-[24px] -top-0.5" />
             <span>&ndash;</span>
             <span>
               A token associated with the project accounts for more than 10% of
@@ -40,10 +37,7 @@ export function ScalingLegend(props: ScalingLegendProps) {
             </span>
           </p>
           <p className="flex gap-1">
-            <WarningIcon
-              fill="var(--text-bad)"
-              className="relative min-w-[24px] -top-0.5"
-            />
+            <WarningIcon className="fill-red-700 dark:fill-red-300 relative min-w-[24px] -top-0.5" />
             <span>&ndash;</span>
             <span>
               A token associated with the project accounts for more than 90% of
