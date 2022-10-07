@@ -13,7 +13,8 @@ interface LoopringTransactionUpdaterOpts {
 
 export class LoopringTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
-  private readonly blockQueue: TaskQueue<string | number>
+  private readonly blockQueue: TaskQueue<number>
+  private latestBlock?: number
 
   constructor(
     private readonly loopringClient: LoopringClient,
@@ -25,11 +26,11 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   ) {
     this.logger = logger.for(this)
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.blockQueue = new TaskQueue(
-      this.updateBlock.bind(this),
+      (block) => this.updateBlock(block),
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
@@ -79,6 +80,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       )
 
     const finalizedBlock = await this.loopringClient.getFinalizedBlockNumber()
+    this.latestBlock = finalizedBlock
 
     for (const [start, end] of missingRanges) {
       for (
@@ -96,17 +98,20 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return await this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
+      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
   async getStatus() {
     return {
       queuedJobsCount: this.blockQueue.length,
-      missingRanges:
-        await this.blockTransactionCountRepository.getMissingRangesByProject(
-          this.projectId,
-        ),
       busyWorkers: this.blockQueue.getBusyWorkers(),
+      latestBlock: this.latestBlock ?? null,
+      latestFetchedBlock:
+        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
+      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
+        this.projectId,
+      ),
     }
   }
 }

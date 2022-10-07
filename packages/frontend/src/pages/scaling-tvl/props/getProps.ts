@@ -20,19 +20,20 @@ export function getProps(
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
+  const tvlEndpoint = '/api/scaling-tvl.json'
 
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       tvl: formatUSD(tvl),
       sevenDayChange,
-      apiEndpoint: '/api/scaling-tvl.json',
+      tvlEndpoint,
       tvlView: getScalingTvlView(ordering, tvlApiResponse, tvl),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },
     wrapper: {
-      preloadApi: '/api/scaling-tvl.json',
+      preloadApi: tvlEndpoint,
       metadata: getPageMetadata(),
     },
   }

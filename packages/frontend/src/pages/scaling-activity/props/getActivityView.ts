@@ -36,6 +36,7 @@ export function getActivityViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
+    warning: project.display.warning,
     tpsDaily,
     tpsWeeklyChange,
     transactionsWeeklyCount,

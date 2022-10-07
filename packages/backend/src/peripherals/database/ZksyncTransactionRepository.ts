@@ -29,6 +29,8 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.getBlockCount = this.wrapAny(this.getBlockCount)
+    this.getMaxBlock = this.wrapAny(this.getMaxBlock)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -111,7 +113,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async getDailyTransactionCount() {
+  async getDailyTransactionCount(maxTimestamp: UnixTime) {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
       `
@@ -120,10 +122,13 @@ export class ZksyncTransactionRepository extends BaseRepository {
         count(*) as count
       FROM
         transactions.zksync
+      WHERE
+        unix_timestamp < ?
       GROUP BY
         date_trunc('day', unix_timestamp, 'UTC')
       ORDER BY unix_timestamp
     `,
+      maxTimestamp.toDate(),
     )) as unknown as {
       rows: { unix_timestamp: Date; count: string }[]
     }
@@ -143,6 +148,20 @@ export class ZksyncTransactionRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return await knex('transactions.zksync').delete()
+  }
+
+  async getMaxBlock(): Promise<number> {
+    const knex = await this.knex()
+    const [{ max }] = await knex('transactions.zksync').max('block_number')
+    return max as number
+  }
+
+  async getBlockCount(): Promise<number> {
+    const knex = await this.knex()
+    const [{ count }] = await knex('transactions.zksync').countDistinct(
+      'block_number',
+    )
+    return count as number
   }
 }
 

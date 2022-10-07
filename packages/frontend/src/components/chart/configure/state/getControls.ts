@@ -13,5 +13,8 @@ export function getControls(chart: Element) {
     combined: document.querySelector<HTMLInputElement>(
       '[data-role="chart-combined"]',
     ),
+    tvlActivity: document.querySelector<HTMLInputElement>(
+      '[data-role="toggle-tvl-activity"]',
+    ),
   }
 }

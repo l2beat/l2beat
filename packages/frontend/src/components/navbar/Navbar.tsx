@@ -54,18 +54,18 @@ export function Navbar(props: NavbarProps) {
       {props.showBanner && <Banner />}
       <nav
         className={cx(
-          'text-base relative flex md:justify-between items-center h-14 md:h-16 px-4 md:px-12',
-          'border-gray-100 dark:border-gray-900 border-b',
+          'text-base relative flex lg:justify-between items-center h-14 lg:h-16 px-4 lg:px-12',
+          'border-gray-200 dark:border-gray-850 border-b',
         )}
       >
-        <button id="sidebar-menu-open" className="block md:hidden">
+        <button id="sidebar-menu-open" className="block lg:hidden">
           <MenuOpenIcon className="block" aria-label="Open menu" />
         </button>
         <ul className="flex h-full items-center">
           <li
             className={cx(
               props.showBridges
-                ? 'mx-4 md:ml-0 md:mr-8'
+                ? 'mx-4 lg:ml-0 lg:mr-8'
                 : 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
             )}
           >
@@ -96,11 +96,11 @@ export function Navbar(props: NavbarProps) {
             </>
           )}
         </ul>
-        <div className="h-full hidden md:flex gap-5 items-center">
+        <div className="h-full hidden lg:flex gap-5 items-center">
           <ul
             className={cx(
               'flex gap-4 items-center',
-              !props.showBridges && 'absolute left-4 md:left-12',
+              !props.showBridges && 'absolute left-4 lg:left-12',
             )}
           >
             <SocialLinks {...props.socialLinks} />

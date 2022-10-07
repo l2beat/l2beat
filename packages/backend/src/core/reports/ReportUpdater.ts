@@ -30,7 +30,7 @@ export class ReportUpdater {
     this.logger = this.logger.for(this)
     this.configHash = getReportConfigHash(projects)
     this.taskQueue = new TaskQueue(
-      this.update.bind(this),
+      (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
     )
   }

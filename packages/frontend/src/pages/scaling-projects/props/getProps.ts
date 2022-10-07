@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -14,18 +14,20 @@ export function getProps(
   project: Layer2,
   config: Config,
   tvlApiResponse: TvlApiResponse,
+  activityApiResponse?: ActivityApiResponse,
 ): Wrapped<ProjectPageProps> {
   const chart = getChart(project, tvlApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      header: getHeader(project, tvlApiResponse),
+      header: getHeader(project, tvlApiResponse, activityApiResponse),
       chart,
+      showActivityToggle: config.features.activity && !!activityApiResponse,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),
     },
     wrapper: {
-      preloadApi: chart.endpoint,
+      preloadApi: chart.tvlEndpoint,
       metadata: getPageMetadata(project),
     },
   }

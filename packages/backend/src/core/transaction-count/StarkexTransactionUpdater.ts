@@ -8,11 +8,12 @@ import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
-interface StarkexTransactionCountUpdaterOpts {
+interface StarkexTransactionUpdaterOpts {
   workQueueWorkers?: number
+  apiDelayHours?: number
 }
 
-export class StarkexTransactionCountUpdater implements TransactionCounter {
+export class StarkexTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly daysQueue: TaskQueue<number>
   private readonly startDay: number
@@ -25,17 +26,17 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
     private readonly product: StarkexProduct,
     readonly projectId: ProjectId,
     startTimestamp: UnixTime,
-    private readonly opts?: StarkexTransactionCountUpdaterOpts,
+    private readonly opts?: StarkexTransactionUpdaterOpts,
   ) {
     this.logger = logger.for(
-      `${StarkexTransactionCountUpdater.name}[${projectId.toString()}]`,
+      `${StarkexTransactionUpdater.name}[${projectId.toString()}]`,
     )
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.daysQueue = new TaskQueue(
-      this.updateDay.bind(this),
+      (day) => this.updateDay(day),
       this.logger.for('daysQueue'),
       {
         workers: this.opts?.workQueueWorkers,
@@ -81,7 +82,12 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
 
     // Because starkex API operates on days (unix_timestamp / 86400)
     // it is easier to loop through all days we want to update.
-    const today = this.clock.getLastHour().toStartOf('day').toDays()
+    const today = this.clock
+      .getLastHour()
+      // Delay to make sure that API's data is ready
+      .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
+      .toStartOf('day')
+      .toDays()
 
     for (const [start, end] of missingRanges) {
       for (
@@ -103,13 +109,9 @@ export class StarkexTransactionCountUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    return {
+    return Promise.resolve({
       queuedJobsCount: this.daysQueue.length,
-      missingRanges:
-        await this.starkexTransactionCountRepository.getMissingRangesByProject(
-          this.projectId,
-        ),
       busyWorkers: this.daysQueue.getBusyWorkers(),
-    }
+    })
   }
 }

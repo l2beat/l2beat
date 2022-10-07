@@ -23,6 +23,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
+  private latestBlock?: bigint
 
   constructor(
     private readonly ethereumClient: EthereumClient,
@@ -36,11 +37,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
       `${RpcTransactionUpdater.name}[${projectId.toString()}]`,
     )
     this.updateQueue = new TaskQueue<void>(
-      this.update.bind(this),
+      () => this.update(),
       this.logger.for('updateQueue'),
     )
     this.blockQueue = new TaskQueue(
-      this.updateBlock.bind(this),
+      (block) => this.updateBlock(block),
       this.logger.for('blockQueue'),
       {
         workers: this.opts?.workQueueWorkers,
@@ -98,6 +99,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
         this.projectId,
       )
     const latestBlock = await this.ethereumClient.getBlockNumber()
+    this.latestBlock = latestBlock
 
     enqueueBlockLoop: for (const [start, end] of missingRanges) {
       for (
@@ -118,18 +120,21 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
+      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
   async getStatus() {
     return {
       queuedJobsCount: this.blockQueue.length,
-      missingRanges:
-        await this.blockTransactionCountRepository.getMissingRangesByProject(
-          this.projectId,
-        ),
-      startBlock: this.startBlock,
       busyWorkers: this.blockQueue.getBusyWorkers(),
+      startBlock: this.startBlock,
+      latestBlock: this.latestBlock?.toString() ?? null,
+      latestFetchedBlock:
+        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
+      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
+        this.projectId,
+      ),
     }
   }
 }

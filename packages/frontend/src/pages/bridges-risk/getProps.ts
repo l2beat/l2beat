@@ -28,6 +28,7 @@ export function getProps(
             type: project.type,
             name: project.display.name,
             slug: project.display.slug,
+            warning: project.display.warning,
             category: project.technology.category,
             destination: getDestination(
               project.type === 'bridge'

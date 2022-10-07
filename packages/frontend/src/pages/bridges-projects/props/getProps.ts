@@ -25,7 +25,7 @@ export function getProps(
       footer: getFooterProps(config),
     },
     wrapper: {
-      preloadApi: chart.endpoint,
+      preloadApi: chart.tvlEndpoint,
       metadata: getPageMetadata(bridge),
     },
   }

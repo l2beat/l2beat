@@ -8,7 +8,8 @@ export function getChart(
   tvlApiResponse: TvlApiResponse,
 ): ChartProps {
   return {
-    endpoint: `/api/${project.display.slug}.json`,
+    tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
+    activityEndpoint: `/api/${project.display.slug}-activity.json`,
     tokens: getTokens(project.id, tvlApiResponse),
   }
 }
@@ -20,7 +21,7 @@ function getTokens(projectId: ProjectId, tvlApiResponse: TvlApiResponse) {
       if (symbol) {
         return {
           symbol,
-          endpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
+          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
           tvl,
         }
       }

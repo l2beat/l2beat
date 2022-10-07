@@ -1,20 +1,15 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { PercentChange } from '../../../components'
-import {
-  OptimismIcon,
-  StarkWareIcon,
-  WarningIcon,
-  ZkSyncIcon,
-} from '../../../components/icons'
-import { ProjectLink } from '../../../components/ProjectLink'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import { ScalingLegend } from '../../../components/ScalingLegend'
+import { NumberCell } from '../../../components/table/NumberCell'
+import { ProjectCell } from '../../../components/table/ProjectCell'
+import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../components/TVLBreakdown'
-import { FinancialCell } from './FinancialCell'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
@@ -24,6 +19,7 @@ export interface ScalingTvlViewEntry {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
+  warning?: string
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -36,95 +32,53 @@ export interface ScalingTvlViewEntry {
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (entry, index) => `${index + 1}.`,
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
+      getValue: (entry, index) => index + 1,
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
       name: 'TVL',
       alignRight: true,
-      getValue: (project) => project.tvl,
+      getValue: (project) => <NumberCell>{project.tvl}</NumberCell>,
     },
     {
       name: 'Breakdown',
-      alignRight: true,
       getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
       name: '7d Change',
       alignRight: true,
-      getValue: (project) => <PercentChange value={project.sevenDayChange} />,
+      getValue: (project) => (
+        <NumberCell signed>{project.sevenDayChange}</NumberCell>
+      ),
     },
     {
       name: 'Market share',
       alignRight: true,
-      getValue: (project) => project.marketShare,
+      getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
     },
     {
       name: 'Purpose',
-      alignRight: true,
-      getValue: (project) => <FinancialCell>{project.purpose}</FinancialCell>,
+      getValue: (project) => project.purpose,
     },
     {
       name: 'Technology',
       shortName: 'Tech',
-      alignRight: true,
       getValue: (project) => (
-        <FinancialCell
-          className={
-            project.technology === 'ZK Rollup' ||
-            project.technology === 'Optimistic Rollup'
-              ? 'rollup'
-              : undefined
-          }
-        >
-          {project.technology}
-        </FinancialCell>
+        <TechnologyCell>{project.technology}</TechnologyCell>
       ),
     },
   ]
 
   return (
-    <section className="FinancialView active mt-4 sm:mt-8">
+    <section className="mt-4 sm:mt-8">
       <TableView items={items} columns={columns} />
-      <div className="FinancialView-Symbols">
-        <p>
-          <WarningIcon fill="var(--text-warning)" />
-          <span>&ndash;</span>
-          <span>
-            A token associated with the project accounts for more than 10% of
-            the TVL.
-          </span>
-        </p>
-        <p>
-          <WarningIcon fill="var(--text-bad)" />
-          <span>&ndash;</span>
-          <span>
-            A token associated with the project accounts for more than 90% of
-            the TVL. This may make the metric vulnerable to manipulation if the
-            majority of the supply is concentrated and markets are very
-            illiquid.
-          </span>
-        </p>
-        <p>
-          <StarkWareIcon />
-          <span>&ndash;</span>
-          <span>This project is built using StarkEx.</span>
-        </p>
-        <p>
-          <OptimismIcon />
-          <span>&ndash;</span>
-          <span>This project is based on Optimism&apos;s code base.</span>
-        </p>
-        <p>
-          <ZkSyncIcon />
-          <span>&ndash;</span>
-          <span>This project is based on zkSync&apos;s code base.</span>
-        </p>
-      </div>
+      <ScalingLegend showTokenWarnings />
     </section>
   )
 }

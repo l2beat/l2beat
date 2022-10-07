@@ -18,7 +18,6 @@ export function RiskView() {
     <>
       <PageContent>
         <ScalingRiskView
-          className="!block"
           items={[
             {
               name: 'Forktimism',

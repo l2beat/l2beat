@@ -10,6 +10,8 @@ import { multichain } from './multichain'
 import { near } from './near'
 import { nomad } from './nomad'
 import { omni } from './omni'
+import { opticsV1 } from './opticsV1'
+import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
 import { polygonplasma } from './polygonplasma'
@@ -39,6 +41,8 @@ export const bridges: Bridge[] = [
   near,
   nomad,
   omni,
+  opticsV1,
+  opticsV2,
   orbit,
   orbiter,
   polygonplasma,

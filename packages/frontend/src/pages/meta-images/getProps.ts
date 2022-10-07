@@ -16,19 +16,21 @@ export function getProps(
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const apiEndpoint = `/api/${project?.display.slug ?? 'tvl'}.json`
+  const apiPath = project ? `${project.display.slug}-tvl` : 'scaling-tvl'
+
+  const tvlEndpoint = `/api/${apiPath}.json`
   return {
     props: {
       tvl: formatUSD(tvl),
       sevenDayChange,
       name: project?.display.name,
       icon: project && `/icons/${project.display.slug}.png`,
-      apiEndpoint,
+      tvlEndpoint,
     },
     wrapper: {
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: apiEndpoint,
+      preloadApi: tvlEndpoint,
     },
   }
 }

@@ -24,7 +24,7 @@ function Template({ tokenCount }: TemplateProps) {
     'AAVE',
     'YFI',
     'UNI',
-  ].map((x) => ({ symbol: x, endpoint: '/' }))
+  ].map((x) => ({ symbol: x, tvlEndpoint: '/' }))
 
   useEffect(() => {
     configureChart()
@@ -33,7 +33,7 @@ function Template({ tokenCount }: TemplateProps) {
   return (
     <PageContent>
       <ChartComponent
-        endpoint="/fakeTvl.json"
+        tvlEndpoint="/fakeTvl.json"
         tokens={tokens.slice(0, tokenCount)}
       />
     </PageContent>
