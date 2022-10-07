@@ -83,7 +83,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   }
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 sm:mt-8">
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )
