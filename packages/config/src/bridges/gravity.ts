@@ -19,14 +19,17 @@ export const gravity: Bridge = {
         'https://bridge.blockscape.network/',
       ],
       repositories: ['https://github.com/Gravity-Bridge'],
-      documentation: ['https://github.com/Gravity-Bridge/Gravity-Docs'],
+      documentation: [
+        'https://www.gravitybridge.net/faq',
+        'https://github.com/Gravity-Bridge/Gravity-Docs',
+      ],
       socialMedia: [
         'https://twitter.com/gravity_bridge',
         'https://discord.gg/d3DshmHpXA',
       ],
-    }, //todo
+    },
     description:
-      'Gravity bridge is a token transfer bridge designed to connect cosmos and ethereum ecosystems together. The bridge is validated ... todo',
+      'Gravity bridge is designed to connect Cosmos and Ethereum ecosystems together. The bridge is using custom blockchain called Cosmos Gravity Bridge for cross-chain message passing.',
   },
   config: {
     escrows: [
@@ -39,19 +42,19 @@ export const gravity: Bridge = {
   },
   riskView: {
     validation: {
-      value: '',
-      description: '',
-      sentiment: '',
+      value: 'External',
+      description:
+        'Transfers need to be approved by 2/3 of the validator set operating in Cosmos Gravity Bridge blockchain.',
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: '',
-      description: '',
-      sentiment: '',
+      value: 'No',
+      description: 'The code that secures the system can never change.',
     },
     destinationToken: {
-      value: '',
-      description: '',
-      sentiment: '',
+      value: 'Wrapped',
+      description: 'Tokens transferred end up as wrapped ERC20 proxies.',
+      sentiment: 'bad',
     },
   },
   technology: {
@@ -59,10 +62,45 @@ export const gravity: Bridge = {
     canonical: false,
     category: 'Lock-Mint',
     principleOfOperation: {
-      name: '',
-      description: '',
+      name: 'Principle of operation',
+      description:
+        'Gravity is a Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on Cosmos. The cross-chain communication is achieved using Gravity Bridge Blockchain with validators watching Ethereum network for events and minting tokens on Cosmos. Validators also approve transfers back to Ethereum via message signing.',
       references: [],
       risks: [],
     },
+    validation: {
+      name: 'Transfers are externally verified',
+      description:
+        'Transfer events on Ethereum are being watched by Validators and when they happen tokens are minted on Cosmos. When bridging back to Ethereum the message is signed by the previously mentioned blockchain and relayed to the Ethereum network where it is checked. If everything is correct the funds are released and send back to the user.',
+      references: [],
+      risks: [],
+    },
+    destinationToken: {
+      name: 'Destination tokens',
+      description: 'Tokens transferred end up as wrapped ERC20 proxies.',
+      references: [],
+      risks: [],
+      isIncomplete: true,
+    },
   },
+  contracts: {
+    addresses: [
+      {
+        address: '0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906',
+        name: 'Gravity',
+        description:
+          'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
+      },
+    ],
+    risks: [],
+    isIncomplete: true,
+  },
+  permissions: [
+    {
+      name: 'Cosmos Validators',
+      description:
+        'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validators set.',
+      accounts: [],
+    },
+  ],
 }
