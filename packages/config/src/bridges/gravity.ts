@@ -24,7 +24,9 @@ export const gravity: Bridge = {
         'https://twitter.com/gravity_bridge',
         'https://discord.gg/d3DshmHpXA',
       ],
-    },
+    }, //todo
+    description:
+      'Gravity bridge is a token transfer bridge designed to connect cosmos and ethereum ecosystems together. The bridge is validated ... todo',
   },
   config: {
     escrows: [
@@ -35,8 +37,32 @@ export const gravity: Bridge = {
       },
     ],
   },
+  riskView: {
+    validation: {
+      value: '',
+      description: '',
+      sentiment: '',
+    },
+    sourceUpgradeability: {
+      value: '',
+      description: '',
+      sentiment: '',
+    },
+    destinationToken: {
+      value: '',
+      description: '',
+      sentiment: '',
+    },
+  },
   technology: {
-    category: 'Lock-Mint',
     destination: ['Cosmos'],
+    canonical: false,
+    category: 'Lock-Mint',
+    principleOfOperation: {
+      name: '',
+      description: '',
+      references: [],
+      risks: [],
+    },
   },
 }
