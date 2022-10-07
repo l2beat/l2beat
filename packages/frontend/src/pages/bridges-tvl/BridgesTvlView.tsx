@@ -1,7 +1,10 @@
+import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
+import { NoInfoCell } from '../../components/table/NoInfoCell'
 
 import { NumberCell } from '../../components/table/NumberCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
+import { RiskCell } from '../../components/table/RiskCell'
 import {
   ColumnConfig,
   RowConfig,
@@ -24,7 +27,7 @@ export interface BridgesTvlViewEntry {
   sevenDayChange: string
   bridgesMarketShare: string
   combinedMarketShare: string
-  validation: string
+  validation?: ProjectRiskViewEntry
   category: string
 }
 
@@ -79,7 +82,12 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Validation',
-      getValue: (entry) => entry.validation,
+      getValue: (entry) =>
+        entry.validation ? (
+          <RiskCell item={entry.validation} />
+        ) : (
+          <NoInfoCell />
+        ),
     },
     {
       name: 'Type',
