@@ -1,4 +1,4 @@
-import { Ethereum, Layer2 } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
