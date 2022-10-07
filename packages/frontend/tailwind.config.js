@@ -35,10 +35,7 @@ module.exports = {
       },
       black: '#1B1B1B',
       yellow: {
-        100: '#FDCF44',
-      },
-      red: {
-        100: '#AE2121',
+        500: '#E5C227',
       },
       purple: {
         100: '#7E41CC',
@@ -56,6 +53,7 @@ module.exports = {
       },
       red: {
         300: '#fa3a3a',
+        500: '#C32806',
         700: '#d70000',
       },
     },
