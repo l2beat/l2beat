@@ -19,6 +19,7 @@ export interface ScalingTvlViewEntry {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
+  warning?: string
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string

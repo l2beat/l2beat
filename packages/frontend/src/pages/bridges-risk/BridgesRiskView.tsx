@@ -17,6 +17,7 @@ export interface BridgesRiskViewEntry {
   name: string
   slug: string
   type: 'layer2' | 'bridge'
+  warning?: string
   category: string
   destination: ProjectRiskViewEntry
   validation?: ProjectRiskViewEntry

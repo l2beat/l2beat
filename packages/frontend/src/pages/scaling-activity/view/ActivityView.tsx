@@ -15,6 +15,7 @@ export interface ActivityViewEntry {
   name: string
   slug: string
   provider: Layer2['technology']['provider']
+  warning?: string
   tpsDaily: number | undefined
   tpsWeeklyChange: string
   transactionsWeeklyCount: number | undefined
