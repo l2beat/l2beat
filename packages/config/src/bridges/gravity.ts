@@ -9,7 +9,21 @@ export const gravity: Bridge = {
     name: 'Gravity',
     slug: 'gravity',
     links: {
-      websites: ['https://bridge.roninchain.com/'],
+      websites: ['https://www.gravitybridge.net/'],
+      explorers: [
+        'https://www.mintscan.io/gravity-bridge',
+        'https://www.skynetexplorers.com/gravity-bridge',
+      ],
+      apps: [
+        'https://spacestation.zone/',
+        'https://bridge.blockscape.network/',
+      ],
+      repositories: ['https://github.com/Gravity-Bridge'],
+      documentation: ['https://github.com/Gravity-Bridge/Gravity-Docs'],
+      socialMedia: [
+        'https://twitter.com/gravity_bridge',
+        'https://discord.gg/d3DshmHpXA',
+      ],
     },
   },
   config: {
