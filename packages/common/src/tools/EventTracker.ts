@@ -32,7 +32,9 @@ export class EventTracker<T extends string> {
       () => this.pruneOldEvents(),
       this.historySize,
     )
-    intervalId.unref() // Let mocha tests end without explicitly stopping interval
+    // Let tests end without explicitly stopping the interval
+    // Ref: https://nodejs.org/api/timers.html#timers_timeout_unref
+    intervalId.unref()
   }
 
   private getSecondsAverage(
