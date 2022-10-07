@@ -1,4 +1,4 @@
-import { bridges, ethereum, layer2s, tokenList } from '@l2beat/config'
+import { bridges, layer2s, tokenList } from '@l2beat/config'
 
 export const common = {
   links: {
@@ -18,5 +18,4 @@ export const common = {
   layer2s,
   bridges,
   tokens: tokenList,
-  ethereum,
 }
