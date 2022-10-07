@@ -14,6 +14,7 @@ export interface ScalingRiskViewEntry extends Layer2RiskView {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
+  warning?: string
 }
 
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {

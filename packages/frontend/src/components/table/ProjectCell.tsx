@@ -1,13 +1,19 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
+import {
+  OptimismIcon,
+  ShieldWarnIcon,
+  StarkWareIcon,
+  ZkSyncIcon,
+} from '../icons'
 
 export interface ProjectCellProps {
   project: {
     name: string
     slug: string
     provider?: Layer2['technology']['provider']
+    warning?: string
   }
   type: 'layer2' | 'bridge'
 }
@@ -53,6 +59,14 @@ export function ProjectCell({ project, type }: ProjectCellProps) {
           title="This project is based on zkSync's code base."
         >
           <ZkSyncIcon className={providerIconClassName} />
+        </span>
+      )}
+      {project.warning && (
+        <span
+          className="Tooltip relative inline-block w-6 h-6 ml-1"
+          title={project.warning}
+        >
+          <ShieldWarnIcon className="absolute -top-0.5 left-0 fill-yellow-700 dark:fill-yellow-300" />
         </span>
       )}
     </>

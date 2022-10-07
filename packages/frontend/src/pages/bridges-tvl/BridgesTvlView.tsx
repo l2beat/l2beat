@@ -18,6 +18,7 @@ export interface BridgesTvlViewEntry {
   type: 'bridge' | 'layer2'
   name: string
   slug: string
+  warning?: string
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
