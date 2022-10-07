@@ -16,7 +16,6 @@ export interface BridgesTvlViewProps {
 
 export interface BridgesTvlViewEntry {
   type: 'bridge' | 'layer2'
-  showTypeBadge: boolean
   name: string
   slug: string
   warning?: string
@@ -49,7 +48,9 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectCell type={entry.type} project={entry} />,
+      getValue: (entry) => (
+        <ProjectCell highlightL2 type={entry.type} project={entry} />
+      ),
     },
     {
       name: 'TVL',

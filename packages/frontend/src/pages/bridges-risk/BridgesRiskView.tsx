@@ -17,7 +17,6 @@ export interface BridgesRiskViewEntry {
   name: string
   slug: string
   type: 'layer2' | 'bridge'
-  showTypeBadge: boolean
   warning?: string
   category: string
   destination: ProjectRiskViewEntry
@@ -45,7 +44,9 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectCell type={entry.type} project={entry} />,
+      getValue: (entry) => (
+        <ProjectCell highlightL2 type={entry.type} project={entry} />
+      ),
     },
     {
       name: 'Destination',

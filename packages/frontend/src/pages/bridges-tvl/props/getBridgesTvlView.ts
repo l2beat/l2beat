@@ -31,7 +31,6 @@ function getBridgesTvlViewEntry(
 
   return {
     type: project.type,
-    showTypeBadge: project.type === 'layer2',
     name: project.display.name,
     slug: project.display.slug,
     warning: project.display.warning,
