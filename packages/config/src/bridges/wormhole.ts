@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
+import { CONTRACTS } from '../layer2s/common'
 
 import { Bridge } from './types'
 
@@ -6,8 +7,8 @@ export const wormhole: Bridge = {
   type: 'bridge',
   id: ProjectId('wormhole'),
   display: {
-    name: 'Wormhole',
-    slug: 'wormhole',
+    name: 'Portal',
+    slug: 'portal',
     links: {
       websites: ['https://wormhole.com/', 'https://linktr.ee/wormholecrypto'],
       documentation: [
@@ -24,7 +25,7 @@ export const wormhole: Bridge = {
       ],
     },
     description:
-      'Assets bridging is built on top of Wormhole, which is a message passing protocol that leverages specialized network of nodes to perform cross-chain communication.',
+      'Portal Token Bridge is built on top of Wormhole, which is a message passing protocol that leverages specialized network of nodes to perform cross-chain communication.',
   },
   config: {
     escrows: [
@@ -59,15 +60,15 @@ export const wormhole: Bridge = {
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: 'The code that secures the system can be changed arbitrarily and without notice.',
+      description:
+        'The code that secures the system can be changed arbitrarily and without notice.',
       sentiment: 'bad',
     },
     destinationToken: {
-      //todo
-      value: 'WrappedToken ',
+      value: 'Canonical or WrappedUpgradable',
       description:
-        'This token follows Beacon Proxy pattern and can be upgraded by ????',
-      sentiment: 'bad',
+        'The tokens ends up wrapped if the destination chain is not native for this token, otherwise the canonical tokens are transferred.',
+      sentiment: 'warning',
     },
   },
   technology: {
@@ -92,32 +93,81 @@ export const wormhole: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the target chain for processing.',
+        'This is a Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
       references: [],
       risks: [],
     },
     validation: {
-      //todo
       name: 'Transfers are externally verified',
-      description: 'Wormhole is a generic ',
+      description:
+        'Validation process takes place in external network called Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'guardians decide to stop processing certain transactions',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'guardians allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'guardians sign a fraudulent message allowing themselves to withdraw all locked funds.',
+          isCritical: true,
+        },
+      ],
     },
     destinationToken: {
-      //todo
       name: 'Destination tokens',
-      description: '',
+      description:
+        'Type of the token received on the destination chain depends on the token, if it is native to this chain user will receive canonical token. If the bridged token is not native to the destination chain then user will end up with wrapped version, the contract is called BridgeToken and is upgradable.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'destination token contract is maliciously upgraded.',
+          isCritical: true,
+        },
+      ],
     },
   },
 
   contracts: {
-    //todo
     isIncomplete: true,
-    addresses: [],
-    risks: [],
+    addresses: [
+      {
+        address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
+        name: 'Token Bridge',
+        description: '',
+        upgradeability: {
+          type: 'EIP1967',
+          admin: '',
+          implementation: '0x299b4F6066d231521d11FAE8331fb1A4fe794F58',
+        },
+      },
+      {
+        address: '0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B',
+        name: 'Wormhole',
+        description: '',
+        upgradeability: {
+          type: 'EIP1967',
+          admin: '',
+          implementation: '0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0',
+        },
+      },
+    ],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 
-  permissions: [//todo],
+  permissions: [
+    {
+      name: 'Guardian Network',
+      description:
+        'Off-chain actors signing messages (VAA) containing transfer information or governance actions such as upgrade, which are decoded on chain with signatures check.',
+      accounts: [],
+    },
+  ],
 }
