@@ -14,6 +14,7 @@ export function getRiskViewEntry(project: Layer2): ScalingRiskViewEntry {
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
+    warning: project.display.warning,
     ...project.riskView,
   }
 }

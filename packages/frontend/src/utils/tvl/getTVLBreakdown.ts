@@ -90,12 +90,7 @@ function getTvlWarning(
       warning = `${what} account for ${percent} of the TVL!`
     }
   }
-  let warningSeverity: 'bad' | 'warning' | 'info' =
+  const warningSeverity: 'bad' | 'warning' =
     breakdown.associated > 0.9 ? 'bad' : 'warning'
-  if (name === 'Layer2.Finance') {
-    warning =
-      'The TVL is calculated incorrectly because it does not account for the assets locked in DeFi.'
-    warningSeverity = 'info'
-  }
   return { warning, warningSeverity }
 }
