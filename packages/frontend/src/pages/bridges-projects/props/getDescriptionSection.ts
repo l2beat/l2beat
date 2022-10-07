@@ -7,7 +7,7 @@ export function getDescriptionSection(bridge: Bridge): DescriptionSectionProps {
   return {
     issueLink: getIssueLink(`Problem: ${bridge.display.name} project page`),
     editLink: getEditLink(bridge),
-    warning: undefined,
+    warning: bridge.display.warning,
     description: bridge.display.description ?? '',
   }
 }

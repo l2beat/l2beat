@@ -20,7 +20,7 @@ export function BridgesNavigationTabs(props: BridgesNavigationTabsProps) {
         },
         {
           icon: <RiskIcon />,
-          fullTitle: 'Risk analysis',
+          fullTitle: 'Risk Analysis',
           shortTitle: 'Risks',
           link: '/bridges/risk',
           selected: props.selected === 'risk',
