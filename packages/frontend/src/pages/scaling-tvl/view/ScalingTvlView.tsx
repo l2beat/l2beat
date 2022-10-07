@@ -47,7 +47,6 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
     {
       name: 'Breakdown',
-      alignRight: true,
       getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
@@ -64,13 +63,11 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
     {
       name: 'Purpose',
-      alignRight: true,
       getValue: (project) => project.purpose,
     },
     {
       name: 'Technology',
       shortName: 'Tech',
-      alignRight: true,
       getValue: (project) => (
         <TechnologyCell>{project.technology}</TechnologyCell>
       ),

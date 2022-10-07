@@ -15,25 +15,13 @@ export interface TVLBreakdownProps {
 
 export function TVLBreakdown(props: TVLBreakdownProps) {
   return (
-    <span className="TVLBreakdown">
-      {props.warning && (
-        <div className="TVLBreakdown-TvlWarning">
-          <div className="Tooltip" title={props.warning}>
-            {props.warningSeverity === 'info' && (
-              <InfoIcon fill="var(--text-info)" />
-            )}
-            {props.warningSeverity === 'warning' && (
-              <WarningIcon fill="var(--text-warning)" />
-            )}
-            {props.warningSeverity === 'bad' && (
-              <WarningIcon fill="var(--text-bad)" />
-            )}
-          </div>
-        </div>
-      )}
-      <span className="Tooltip" data-tooltip-align="right" title={props.label}>
+    <span className="flex items-center gap-1">
+      <span
+        className="Tooltip opacity-80 rounded overflow-hidden"
+        title={props.label}
+      >
         <svg
-          className="TVLBreakdown-Breakdown"
+          className=""
           width="100"
           height="21"
           viewBox="0 0 100 21"
@@ -51,6 +39,19 @@ export function TVLBreakdown(props: TVLBreakdownProps) {
           ))}
         </svg>
       </span>
+      {props.warning && (
+        <div className="Tooltip" title={props.warning}>
+          {props.warningSeverity === 'info' && (
+            <InfoIcon className="fill-blue-700 dark:fill-blue-300" />
+          )}
+          {props.warningSeverity === 'warning' && (
+            <WarningIcon className="fill-yellow-700 dark:fill-yellow-300" />
+          )}
+          {props.warningSeverity === 'bad' && (
+            <WarningIcon className="fill-red-700 dark:fill-red-300" />
+          )}
+        </div>
+      )}
     </span>
   )
 }

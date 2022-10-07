@@ -56,7 +56,6 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Breakdown',
-      alignRight: true,
       getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
@@ -80,12 +79,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Validation',
-      alignRight: true,
       getValue: (entry) => entry.validation,
     },
     {
       name: 'Type',
-      alignRight: true,
       getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
     },
   ]
