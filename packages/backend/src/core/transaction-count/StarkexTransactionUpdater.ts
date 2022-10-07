@@ -41,6 +41,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        trackEvents: true,
       },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()
@@ -110,8 +111,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
 
   async getStatus() {
     return Promise.resolve({
-      queuedJobsCount: this.daysQueue.length,
-      busyWorkers: this.daysQueue.getBusyWorkers(),
+      workQueue: this.daysQueue.getStats(),
     })
   }
 }
