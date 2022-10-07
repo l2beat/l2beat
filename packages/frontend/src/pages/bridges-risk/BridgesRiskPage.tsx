@@ -21,9 +21,9 @@ export function BridgesRiskPage(props: BridgesRiskPageProps) {
     <Page navbar={props.navbar}>
       <BridgesNavigationTabs selected="risk" />
       <main>
-        <BridgesMvpWarning />
         <RiskHeader />
-        <IncludeLayer2sCheckbox />
+        <BridgesMvpWarning />
+        <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
         <BridgesRiskView {...props.riskView} />
         <OtherSites />
         <About />

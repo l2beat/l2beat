@@ -52,7 +52,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   ]
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 sm:mt-8">
       <TableView items={items} columns={columns} />
       <ScalingLegend />
     </section>
