@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { CONTRACTS } from '../layer2s/common'
 
+import { CONTRACTS } from '../layer2s/common'
 import { Bridge } from './types'
 
 export const wormhole: Bridge = {
