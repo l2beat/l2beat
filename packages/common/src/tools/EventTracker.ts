@@ -15,26 +15,7 @@ export class EventTracker<T extends string> {
     this.enablePruning()
   }
 
-  enablePruning() {
-    if (this.pruningIntervalId) {
-      return
-    }
-    this.pruningIntervalId = setInterval(
-      () => this.pruneOldEvents(),
-      this.historySize,
-    )
-  }
-
-  disablePruning() {
-    clearInterval(this.pruningIntervalId)
-    this.pruningIntervalId = undefined
-  }
-
   record(name: T) {
-    assert(
-      this.isPruningEnabled(),
-      'Record not allowed when pruning is disabled to prevent memory leaks',
-    )
     this.events.push({ timestamp: Date.now(), name })
   }
 
@@ -48,8 +29,12 @@ export class EventTracker<T extends string> {
     }
   }
 
-  private isPruningEnabled() {
-    return this.pruningIntervalId !== undefined
+  private enablePruning() {
+    const intervalId = setInterval(
+      () => this.pruneOldEvents(),
+      this.historySize,
+    )
+    intervalId.unref() // Let mocha tests end without explicitly stopping interval
   }
 
   private getSecondsAverage(

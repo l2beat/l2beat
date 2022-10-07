@@ -11,7 +11,6 @@ describe(EventTracker.name, () => {
       lastMinuteAverage: {},
       lastHourAverage: {},
     })
-    tracker.disablePruning()
   })
 
   it('records event', () => {
@@ -28,14 +27,13 @@ describe(EventTracker.name, () => {
         something: 1 / 3_600,
       },
     })
-    tracker.disablePruning()
   })
 
   it('groups event', async () => {
     const tracker = new EventTracker()
     tracker.record('a')
     tracker.record('b')
-    await setTimeout(1000)
+    await setTimeout(1001)
     tracker.record('b')
     expect(tracker.getStats()).toEqual({
       lastSecond: {
@@ -50,7 +48,6 @@ describe(EventTracker.name, () => {
         b: 2 / 3_600,
       },
     })
-    tracker.disablePruning()
   })
 
   it('prunes history before returning', async () => {
@@ -58,12 +55,11 @@ describe(EventTracker.name, () => {
     tracker.record('a')
     tracker.record('b')
     tracker.record('c')
-    await setTimeout(100)
+    await setTimeout(101)
     expect(tracker.getStats()).toEqual({
       lastSecond: {},
       lastMinuteAverage: {},
       lastHourAverage: {},
     })
-    tracker.disablePruning()
   })
 })
