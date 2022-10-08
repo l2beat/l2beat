@@ -33,7 +33,7 @@ export const omni: Bridge = {
       ],
     },
     description:
-      'Omni Bridge is the official bridge of Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Ethereum escrow acts as a fractional reserve since some deposited stablecoins are sent to Aave to accrue yield which is passed to GnosisDAO.',
+      'Omni Bridge is the official bridge of Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Ethereum escrow acts as a fractional reserve since deposited tokens can be sent to yield generating contracts to accrue interest for external recipient.',
   },
   config: {
     associatedTokens: ['GNO'],
@@ -69,14 +69,14 @@ export const omni: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a Lock-Mint bridge that takes ownership of tokens in escrow contracts on Ethereum and mints "representation tokens" on the Gnosis Chain. Not all tokens in escrow are effectively locked, as part of deposited stablecoins is currently transferred to Aave to accrue interest (yield is passed to GnosisDAO). When bridging back to Ethereum, tokens are burned on the Gnosis Chain and then released from the escrow on Ethereum. If not enough reserves is available in the escrow, user needs to wait for a rebalancing from Aave to take place. A special care needs to be taken when bridging xDai token that is native to Gnosis Chain. There\'s a separate bridge for xDai and Omni bridge should not be used, as it mints non-native "representation version" of xDai.',
+        'This is a Lock-Mint bridge that takes ownership of tokens in escrow contracts on Ethereum and mints "representation tokens" on the Gnosis Chain. When bridging back to Ethereum, tokens are burned on the Gnosis Chain and then released from the escrow on Ethereum. Tokens in Ethereum escrow are not effectively locked, as deposited tokens can be invested to generate yield (interest is intended to go to GnosisDAO). Bridge contract enables its owner (currently 7/16 Multisig) to specify or disable a separate external contract with investment logic. Currently investment contracts have been disabled around the time of the Ethereum Merge. Previously used investment contract sent part of deposited USDC and USDT to Aave. A special care needs to be taken when bridging xDai token that is native to Gnosis Chain. There\'s a separate bridge for xDai and Omni bridge should not be used, as it mints non-native "representation version" of xDai.',
       references: [],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'Omni bridge is built on top of Arbitrary Message Bridge (AMB), a trusted cross-chain message relaying mechanism currently validated by a 4/6 Validator MultiSig. A separate Governor 7/16 Multisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omni bridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Tokens deposited by users to escrow are not precisely locked since part of stablecoin deposits is used for yield generation on Aave. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction, but tokens on Gnosis are burned and tokens on Ethereum are released from escrow, immediately if there\'s enough liquidity, or after liquidity is transferred from Aave.',
+        'Omni bridge is built on top of Arbitrary Message Bridge (AMB), a trusted cross-chain message relaying mechanism currently validated by a 4/6 Validator MultiSig. A separate Governor 7/16 Multisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omni bridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction but tokens on Gnosis are burned and tokens on Ethereum are released from escrow.',
       references: [
         {
           text: 'Omnibridge documentation',
@@ -101,7 +101,7 @@ export const omni: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: "there's an exploit in Aave contracts that hold user deposit.",
+          text: "there's an exploit in contracts that invest user deposit.",
           isCritical: true,
         },
         {
@@ -148,6 +148,11 @@ export const omni: Bridge = {
           implementation: '0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218',
         },
       },
+      {
+        address: '0x87D48c565D0D85770406D248efd7dc3cbd41e729',
+        name: 'AAVEInterestERC20',
+        description: 'Recently used investment contract which sends specified amount of deposited USDC & USDT tokens to Aave. Governed by 7/16 Bridge Governance Multisig.',
+      }
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
