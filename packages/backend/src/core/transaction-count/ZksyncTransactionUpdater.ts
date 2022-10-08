@@ -39,6 +39,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        trackEvents: true,
       },
     )
   }
@@ -108,8 +109,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async getStatus() {
     return {
-      queuedJobsCount: this.blockQueue.length,
-      busyWorkers: this.blockQueue.getBusyWorkers(),
+      workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
       latestFetchedBlock: await this.zksyncTransactionRepository.getMaxBlock(),
       totalBlocks: await this.zksyncTransactionRepository.getBlockCount(),
