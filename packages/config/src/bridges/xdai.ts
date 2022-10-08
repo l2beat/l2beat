@@ -30,7 +30,7 @@ export const xdai: Bridge = {
       repositories: ['https://github.com/gnosischain'],
     },
     description:
-      'xDai Bridge is the official bridge dedicated to transferring Dai from Ethereum into xDai on Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Ethereum escrow acts as a fractional reserve since part of the deposits is sent to Aave and Compound to accrue yield which is passed to GnosisDAO.',
+      'xDai Bridge is the official bridge dedicated to transferring Dai from Ethereum into xDai on Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Ethereum escrow acts as a fractional reserve since part of the deposits can be sent to Compound to accrue yield which is passed to external recipient.',
   },
   config: {
     escrows: [
@@ -47,11 +47,15 @@ export const xdai: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        "xDai Bridge is the native Gnosis Chain bridge for swapping Dai on Ethereum into xDai on Gnosis, which is the native asset used for gas and transaction fees. Due to this native aspect of xDai it is minted via block reward contract by Gnosis consensus mechanism. Specifically, when a user deposits Dai to Bridge Contract on Ethereum, it is noticed by an external Bridge Validator Oracle service (4/6 Multisig). After collecting required signatures, the service calls a Bridge Contract on Gnosis which instructs a Block Reward Contract that recipient's xDai balance needs to be increased (as an EVM state update by consensus engine). To transfer xDai to Ethereum, a user deposits xDai to Bridge Contract on Gnosis chain, which is then burned. The Bridge Validator Service prodvides required signatures for a Bridge Contract on Ethereum which releases Dai to the user.",
+        "xDai Bridge is the native Gnosis Chain bridge for swapping Dai on Ethereum into xDai on Gnosis, which is the native asset used for gas and transaction fees. Due to this native aspect of xDai it is minted via block reward contract by Gnosis consensus mechanism. Specifically, when a user deposits Dai to Bridge Contract on Ethereum, it is noticed by an external Bridge Validator Oracle service (4/6 Multisig). After collecting required signatures, the service calls a Bridge Contract on the Gnosis chain which instructs a Block Reward Contract that recipient's xDai balance needs to be increased (as an EVM state update by consensus engine). To transfer xDai to Ethereum, a user deposits xDai to Bridge Contract on Gnosis chain, which is then burned. The Bridge Validator Service provides required signatures for a Bridge Contract on Ethereum which releases Dai to the user. Bridge contract on Ethereum supports sending deposited tokens to Compound to accrue yield, which can be transferred to EOA account with intention to be spent on supporting bridge operations.",
       references: [
         {
           text: 'xDai Bridge Documentation',
           href: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge',
+        },
+        {
+          text: 'Earning yield on Bridge Deposit',
+          href: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge#earning-yield-on-bridge-deposits',
         },
       ],
       risks: [],
@@ -84,7 +88,7 @@ export const xdai: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: "there's an exploit in Aave contracts that hold user deposit.",
+          text: "there's an exploit in Compound when it holds part of user deposit.",
           isCritical: true,
         },
         {
@@ -93,7 +97,7 @@ export const xdai: Bridge = {
         },
         {
           category: 'Funds can be frozen if',
-          text: "there's insufficient liquidity of requested token in escrow and Aave.",
+          text: "there's insufficient liquidity of requested token in escrow and Compound.",
         },
       ],
     },
@@ -101,7 +105,17 @@ export const xdai: Bridge = {
   riskView: {
     validation: {
       value: 'External',
-      description: 'TODO',
+      description: '4/6 Validator MultiSig',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'YES',
+      description: 'Contracts can be upgraded by 7/16 MultiSig',
+      sentiment: 'bad',
+    },
+    destinationToken: {
+      value: 'Native',
+      description: 'xDai is the native token of Gnosis Chain',
     },
   },
   contracts: {
@@ -174,6 +188,14 @@ export const xdai: Bridge = {
       ],
       name: 'Participants in BridgeValidators 4/6 MultiSig',
       description: 'Bridge Validators',
+    },
+    {
+      accounts: [
+        { address: '0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC', type: 'EOA' },
+      ],
+      name: 'Interest Receiver',
+      description:
+        'Address set to receive interest from investing deposited tokens.',
     },
   ],
 }
