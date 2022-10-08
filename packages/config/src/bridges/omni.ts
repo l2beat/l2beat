@@ -151,8 +151,9 @@ export const omni: Bridge = {
       {
         address: '0x87D48c565D0D85770406D248efd7dc3cbd41e729',
         name: 'AAVEInterestERC20',
-        description: 'Recently used investment contract which sends specified amount of deposited USDC & USDT tokens to Aave. Governed by 7/16 Bridge Governance Multisig.',
-      }
+        description:
+          'Recently used investment contract which sends specified amount of deposited USDC & USDT tokens to Aave. Governed by 7/16 Bridge Governance Multisig.',
+      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
