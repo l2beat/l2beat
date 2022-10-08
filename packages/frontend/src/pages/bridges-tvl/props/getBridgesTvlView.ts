@@ -33,6 +33,7 @@ function getBridgesTvlViewEntry(
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
+    warning: project.display.warning,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,
     oneDayChange: stats.oneDayChange,
@@ -40,9 +41,9 @@ function getBridgesTvlViewEntry(
     bridgesMarketShare: formatPercent(stats.tvl / bridgesTvl),
     combinedMarketShare: formatPercent(stats.tvl / combinedTvl),
     validation:
-      (project.type === 'layer2'
-        ? project.riskView.bridge?.validation?.value
-        : project.riskView?.validation?.value) ?? '-',
+      project.type === 'layer2'
+        ? project.riskView.bridge?.validation
+        : project.riskView?.validation,
     category: project.technology.category,
   }
 }

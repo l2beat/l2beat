@@ -1,9 +1,13 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectLink } from '../../components/ProjectLink'
-import { RiskCell } from '../../components/RiskCell'
-import { ColumnConfig, RowConfig, TableView } from '../../components/TableView'
+import { ProjectCell } from '../../components/table/ProjectCell'
+import { RiskCell } from '../../components/table/RiskCell'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../components/table/TableView'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
@@ -13,6 +17,7 @@ export interface BridgesRiskViewEntry {
   name: string
   slug: string
   type: 'layer2' | 'bridge'
+  warning?: string
   category: string
   destination: ProjectRiskViewEntry
   validation?: ProjectRiskViewEntry
@@ -25,19 +30,23 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
-      name: 'No.',
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}.</span>
+          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}</span>
           <span data-combined-only className="hidden">
-            {index + 1}.
+            {index + 1}
           </span>
         </>
       ),
     },
     {
       name: 'Name',
-      getValue: (entry) => <ProjectLink type={entry.type} project={entry} />,
+      getValue: (entry) => (
+        <ProjectCell highlightL2 type={entry.type} project={entry} />
+      ),
     },
     {
       name: 'Destination',
@@ -74,7 +83,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   }
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 sm:mt-8">
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )

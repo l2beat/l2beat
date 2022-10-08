@@ -10,6 +10,7 @@ import { BACK_OFF_AND_DROP } from './utils'
 
 interface StarkexTransactionUpdaterOpts {
   workQueueWorkers?: number
+  apiDelayHours?: number
 }
 
 export class StarkexTransactionUpdater implements TransactionCounter {
@@ -40,6 +41,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        trackEvents: true,
       },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()
@@ -81,7 +83,12 @@ export class StarkexTransactionUpdater implements TransactionCounter {
 
     // Because starkex API operates on days (unix_timestamp / 86400)
     // it is easier to loop through all days we want to update.
-    const today = this.clock.getLastHour().toStartOf('day').toDays()
+    const today = this.clock
+      .getLastHour()
+      // Delay to make sure that API's data is ready
+      .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
+      .toStartOf('day')
+      .toDays()
 
     for (const [start, end] of missingRanges) {
       for (
@@ -104,8 +111,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
 
   async getStatus() {
     return Promise.resolve({
-      queuedJobsCount: this.daysQueue.length,
-      busyWorkers: this.daysQueue.getBusyWorkers(),
+      workQueue: this.daysQueue.getStats(),
     })
   }
 }

@@ -25,6 +25,7 @@ export interface Bridge {
 export interface BridgeDisplay {
   name: string
   slug: string
+  warning?: string
   description?: string
   links: Partial<ProjectLinks>
 }

@@ -1,16 +1,11 @@
 import React from 'react'
 
-import {
-  Chart,
-  Footer,
-  FooterProps,
-  Header,
-  NavbarProps,
-} from '../../components'
+import { Chart, Footer, FooterProps, NavbarProps } from '../../components'
 import { About } from '../../components/About'
 import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
-import { BridgesPageSelection } from '../../components/BridgesPageSelection'
+import { TvlHeader } from '../../components/header/TvlHeader'
 import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
+import { BridgesNavigationTabs } from '../../components/navigation-tabs/BridgesNavigationTabs'
 import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
@@ -29,25 +24,23 @@ export interface BridgesTvlPageProps {
 export function BridgesTvlPage(props: BridgesTvlPageProps) {
   return (
     <Page navbar={props.navbar}>
-      <BridgesPageSelection selected="tvl" />
+      <BridgesNavigationTabs selected="tvl" />
       <main>
-        <BridgesMvpWarning />
         <div data-bridges-only>
-          <Header
-            title="Value locked"
+          <TvlHeader
             tvl={props.bridgesTvl}
             tvlWeeklyChange={props.bridgesTvlSevenDayChange}
           />
         </div>
         <div data-combined-only className="hidden">
-          <Header
-            title="Value locked"
+          <TvlHeader
             tvl={props.combinedTvl}
             tvlWeeklyChange={props.combinedTvlSevenDayChange}
           />
         </div>
+        <BridgesMvpWarning />
         <Chart tvlEndpoint={props.tvlEndpoint} />
-        <IncludeLayer2sCheckbox />
+        <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
         <BridgesTvlView {...props.tvlView} />
         <OtherSites />
         <About />

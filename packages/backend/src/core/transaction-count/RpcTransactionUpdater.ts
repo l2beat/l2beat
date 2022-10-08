@@ -46,6 +46,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        trackEvents: true,
       },
     )
     this.assessCount = opts?.assessCount ?? identity
@@ -120,13 +121,13 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
+      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
   async getStatus() {
     return {
-      queuedJobsCount: this.blockQueue.length,
-      busyWorkers: this.blockQueue.getBusyWorkers(),
+      workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
       latestBlock: this.latestBlock?.toString() ?? null,
       latestFetchedBlock:
