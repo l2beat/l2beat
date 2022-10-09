@@ -25,6 +25,7 @@ export interface ActivityViewEntry {
   tpsDaily: number | undefined
   tpsWeeklyChange: string
   transactionsWeeklyCount: number | undefined
+  marketShare: string | undefined
 }
 
 export function ActivityView({ items }: ActivityViewProps) {
@@ -67,6 +68,12 @@ export function ActivityView({ items }: ActivityViewProps) {
       getValue: (project) => (
         <NumberCell>{project.transactionsWeeklyCount}</NumberCell>
       ),
+    },
+    {
+      name: 'Market share',
+      alignRight: true,
+      getValue: (project) =>
+        project.marketShare && <NumberCell>{project.marketShare}</NumberCell>,
     },
   ]
 
