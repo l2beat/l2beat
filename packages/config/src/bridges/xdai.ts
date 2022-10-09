@@ -42,7 +42,7 @@ export const xdai: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Gnosis Chain'],
     principleOfOperation: {
       name: 'Principle of operation',
@@ -103,19 +103,20 @@ export const xdai: Bridge = {
     },
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description: '4/6 Validator MultiSig',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Contracts can be upgraded by 7/16 MultiSig',
       sentiment: 'bad',
     },
     destinationToken: {
       value: 'Native',
-      description: 'xDai is the native token of Gnosis Chain',
+      description:
+        'Tokens transferred via this bridge end up as xDAI and are used to pay for gas on the destination chain.',
     },
   },
   contracts: {
