@@ -4,7 +4,6 @@ import { Chart, Footer, FooterProps, NavbarProps } from '../../../components'
 import { About } from '../../../components/About'
 import { ActivityHeader } from '../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
-import { OtherSites } from '../../../components/OtherSites'
 import { Page } from '../../../components/Page'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
@@ -33,7 +32,6 @@ export function ActivityPage(props: ActivityPageProps) {
           hideControls
         ></Chart>
         <ActivityView {...props.activityView} />
-        <OtherSites />
         <About />
       </main>
       <Footer {...props.footer} />

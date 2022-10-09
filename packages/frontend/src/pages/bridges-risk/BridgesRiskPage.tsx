@@ -6,7 +6,6 @@ import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
 import { RiskHeader } from '../../components/header/RiskHeader'
 import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
 import { BridgesNavigationTabs } from '../../components/navigation-tabs/BridgesNavigationTabs'
-import { OtherSites } from '../../components/OtherSites'
 import { Page } from '../../components/Page'
 import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
 
@@ -25,7 +24,6 @@ export function BridgesRiskPage(props: BridgesRiskPageProps) {
         <BridgesMvpWarning />
         <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
         <BridgesRiskView {...props.riskView} />
-        <OtherSites />
         <About />
       </main>
       <Footer {...props.footer} />
