@@ -6,7 +6,7 @@ export interface ActivityHeaderProps {
 
 export function ActivityHeader(props: ActivityHeaderProps) {
   return (
-    <header className="mb-4 md:mb-12">
+    <header className="mt-4 md:mt-12">
       <div className="flex justify-between items-baseline">
         <h1 className="font-bold text-3xl mb-1">Activity</h1>
         <p className="font-bold text-3xl text-right">

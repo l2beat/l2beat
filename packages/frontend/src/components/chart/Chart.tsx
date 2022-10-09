@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React from 'react'
 
 import { Logo } from '../Logo'
@@ -18,6 +19,7 @@ export interface ChartProps {
   tokens?: TokenControl[]
   days?: 7 | 30
   hideControls?: boolean
+  className?: string
 }
 
 export function Chart({
@@ -34,7 +36,10 @@ export function Chart({
       data-type={type ?? 'tvl'}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
-      className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4 mt-2 sm:mt-4"
+      className={cx(
+        'grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4',
+        'mt-4 sm:mt-8',
+      )}
     >
       <TimeRange />
       {!hideControls && <RangeControls days={days} />}

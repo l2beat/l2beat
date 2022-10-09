@@ -26,7 +26,6 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
     <Page navbar={props.navbar}>
       <BridgesNavigationTabs selected="tvl" />
       <main>
-        <BridgesMvpWarning />
         <div data-bridges-only>
           <TvlHeader
             tvl={props.bridgesTvl}
@@ -39,8 +38,9 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
             tvlWeeklyChange={props.combinedTvlSevenDayChange}
           />
         </div>
+        <BridgesMvpWarning />
         <Chart tvlEndpoint={props.tvlEndpoint} />
-        <IncludeLayer2sCheckbox />
+        <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
         <BridgesTvlView {...props.tvlView} />
         <OtherSites />
         <About />
