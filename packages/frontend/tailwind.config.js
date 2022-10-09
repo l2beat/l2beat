@@ -61,7 +61,11 @@ module.exports = {
       },
       blue: {
         300: '#CBDFF9',
+        400: '#BADAFF',
+        500: '#53A2FF',
+        600: '#2B5CD9',
         700: '#005DD7',
+        900: '#112944',
       },
     },
     screens: {

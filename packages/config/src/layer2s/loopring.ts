@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -60,13 +61,15 @@ export const loopring: Layer2 = {
       },
     ],
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('LRC'),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     category: 'ZK Rollup',
     stateCorrectness: {

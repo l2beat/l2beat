@@ -49,7 +49,7 @@ export function IncludeLayer2sCheckbox({
           strokeLinejoin="round"
         />
       </svg>
-      <span>Include Layer2s as bridges</span>
+      <span>Include canonical bridges to Layer2s</span>
     </label>
   )
 }

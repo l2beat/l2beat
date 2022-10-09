@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -49,13 +50,15 @@ export const myria: Layer2 = {
       sinceTimestamp: new UnixTime(1659542607),
     },
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
-  },
+    destinationToken: RISK_VIEW.CANONICAL,
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     provider: 'StarkEx',
     category: 'Validium',

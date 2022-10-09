@@ -20,7 +20,7 @@ export interface BridgesRiskViewEntry {
   warning?: string
   category: string
   destination: ProjectRiskViewEntry
-  validation?: ProjectRiskViewEntry
+  validatedBy?: ProjectRiskViewEntry
   sourceUpgradeability?: ProjectRiskViewEntry
   destinationToken?: ProjectRiskViewEntry
 }
@@ -53,8 +53,8 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       getValue: (entry) => <RiskCell item={entry.destination} />,
     },
     {
-      name: 'Validation',
-      getValue: (entry) => <RiskCell item={entry.validation} />,
+      name: 'Validated by',
+      getValue: (entry) => <RiskCell item={entry.validatedBy} />,
     },
     {
       name: 'Type',

@@ -23,13 +23,7 @@ export const hyphen: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
-    destination: ['TODO', 'TODO', 'TODO'],
-  },
-  riskView: {
-    validation: {
-      value: 'Liquidity Network',
-      description: 'TODO',
-    },
+    category: 'Token Bridge',
+    destination: ['Various'], // TODO: list the chains
   },
 }

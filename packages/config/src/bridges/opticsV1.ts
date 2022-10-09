@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const opticsV1: Bridge = {
@@ -39,12 +40,12 @@ export const opticsV1: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Celo', 'Polygon'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Optics Bridge is a Lock-Mint bridge with ability to facilitate fast transfers via additional LP-provided liquidity. For deposits, it locks tokens in the escrow contracts on Ethereum and mints a "representation token" on the destination network. When bridging back to Ethereum tokens are burned and then released from the escrow on Ethereum.',
+        'Optics Bridge is a Token Bridge with ability to facilitate fast transfers via additional LP-provided liquidity. For deposits, it locks tokens in the escrow contracts on Ethereum and mints a "representation token" on the destination network. When bridging back to Ethereum tokens are burned and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },
@@ -90,22 +91,18 @@ export const opticsV1: Bridge = {
     },
   },
   riskView: {
-    validation: {
-      value: 'Optimistic Bridge',
+    validatedBy: {
+      value: 'Optimistically',
       description:
         'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',
+      sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Bridge can be upgraded by 3/5 MultiSig.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: 'Wrapped, Upgradable',
-      description:
-        'Tokens transferred end up as "representation tokens" implementing IBridgeToken interface.',
-      sentiment: 'bad',
-    },
+    destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
     addresses: [

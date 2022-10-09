@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
 
@@ -25,8 +26,8 @@ export const polygonplasma: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'Light Client',
+    validatedBy: {
+      value: 'Destination Chain',
       description:
         'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
       sentiment: 'warning',
@@ -37,20 +38,16 @@ export const polygonplasma: Bridge = {
         'The bridge can be upgraded by 5/9 MSig after 48 hour delay.',
       sentiment: 'warning',
     },
-    destinationToken: {
-      value: 'Native',
-      description:
-        'Native MATIC token used to pay for gas on a Polygon PoS sidechain is minted by the bridge.',
-    },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MATIC'),
   },
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a very typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. The withdrawal process includes 7-day delay.',
+        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. The withdrawal process includes 7-day delay.',
       references: [],
       risks: [],
     },

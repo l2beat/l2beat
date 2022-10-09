@@ -40,10 +40,7 @@ function getBridgesTvlViewEntry(
     sevenDayChange: stats.sevenDayChange,
     bridgesMarketShare: formatPercent(stats.tvl / bridgesTvl),
     combinedMarketShare: formatPercent(stats.tvl / combinedTvl),
-    validation:
-      project.type === 'layer2'
-        ? project.riskView.bridge?.validation
-        : project.riskView?.validation,
+    validatedBy: project.riskView?.validatedBy,
     category: project.technology.category,
   }
 }

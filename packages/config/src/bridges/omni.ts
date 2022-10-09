@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const omni: Bridge = {
@@ -46,24 +47,25 @@ export const omni: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description: '4/6 Validator MultiSig',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Contracts can be upgraded by 7/16 MultiSig',
       sentiment: 'bad',
     },
     destinationToken: {
-      value: 'Wrapped',
-      description: 'Tokens transferred end up as wrapped ERC677.',
-      sentiment: 'warning',
+      ...RISK_VIEW.WRAPPED,
+      description:
+        RISK_VIEW.WRAPPED.description +
+        ' Tokens transferred end up as wrapped ERC677.',
     },
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Gnosis Chain'],
     canonical: true,
     principleOfOperation: {
