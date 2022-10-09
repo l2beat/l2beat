@@ -15,15 +15,15 @@ export function ChartHover() {
       <div
         data-role="chart-hover-contents"
         className={cx(
-          'absolute z-40 py-2 md:py-3 px-3 md:px-4 text-right text-xs h-[76px] rounded-lg',
+          'absolute z-40 py-2 md:py-3 px-3 md:px-4 text-right text-2xs md:text-xs h-[76px] rounded-lg',
           'bg-gray-100 dark:bg-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.25)]',
           'select-none pointer-events-none',
           'flex flex-col justify-center items-end',
         )}
       >
         <div data-role="chart-hover-date" className="font-bold mb-2 sm:mb-1" />
-        <div data-role="chart-hover-value-a" className="text-2xs xs:text-xs" />
-        <div data-role="chart-hover-value-b" className="text-2xs xs:text-xs" />
+        <div data-role="chart-hover-value-a" />
+        <div data-role="chart-hover-value-b" />
       </div>
     </div>
   )
