@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -70,13 +71,15 @@ export const dydx: Layer2 = {
       sinceTimestamp: new UnixTime(1613033682),
     },
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-  },
+    destinationToken: RISK_VIEW.CANONICAL_USDC,
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     provider: 'StarkEx',
     category: 'ZK Rollup',

@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -50,13 +51,15 @@ export const zkswap: Layer2 = {
     ],
     events: [],
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     provider: 'zkSync',
     category: 'ZK Rollup',

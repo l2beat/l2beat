@@ -84,7 +84,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       ),
     },
     {
-      name: 'Validation',
+      name: 'Validated by',
       getValue: (entry) =>
         entry.validatedBy ? (
           <RiskCell item={entry.validatedBy} />

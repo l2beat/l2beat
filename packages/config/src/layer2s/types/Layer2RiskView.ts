@@ -1,7 +1,7 @@
-import { BridgeRiskView } from '../../bridges'
+import { BridgeRiskView } from '../../bridges/types'
 import { ProjectRiskViewEntry } from '../../common'
 
-export interface Layer2RiskView extends BridgeRiskView {
+export interface Layer2RiskView extends Required<BridgeRiskView> {
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry

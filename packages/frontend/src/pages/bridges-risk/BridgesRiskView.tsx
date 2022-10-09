@@ -53,7 +53,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       getValue: (entry) => <RiskCell item={entry.destination} />,
     },
     {
-      name: 'Validation',
+      name: 'Validated by',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
     },
     {
