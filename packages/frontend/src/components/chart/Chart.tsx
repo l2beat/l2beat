@@ -5,7 +5,6 @@ import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { CurrencyControls } from './CurrencyControls'
-import { Description } from './Description'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
@@ -59,7 +58,7 @@ export function Chart({
         />
       </div>
       {!hideControls && <CurrencyControls />}
-      <Description hidden={hideControls} />
+      <div />
       {!hideControls && <ScaleControls />}
       {!hideControls && <TokenControls tokens={tokens} />}
     </section>

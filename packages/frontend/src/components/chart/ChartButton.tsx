@@ -10,6 +10,7 @@ interface Props {
   className?: string
 }
 
+/** @deprecated */
 export function ChartButton(props: Props) {
   return (
     <label
