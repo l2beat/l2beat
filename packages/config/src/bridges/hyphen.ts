@@ -27,7 +27,7 @@ export const hyphen: Bridge = {
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Liquidity Network',
       description: 'TODO',
     },

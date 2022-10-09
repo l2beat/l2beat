@@ -32,7 +32,7 @@ export const synapse: Bridge = {
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: 'Transfers out of the bridge are validated by EOA.',
       sentiment: 'bad',

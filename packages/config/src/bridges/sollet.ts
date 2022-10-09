@@ -36,7 +36,7 @@ export const sollet: Bridge = {
     destination: ['Solana'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: 'TODO',
     },

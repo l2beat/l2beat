@@ -36,7 +36,7 @@ export const orbit: Bridge = {
     destination: ['KLAYTN'], //TODO: add more chains
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: 'MultiSig',
       sentiment: 'bad',

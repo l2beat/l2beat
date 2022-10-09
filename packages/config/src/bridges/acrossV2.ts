@@ -39,7 +39,7 @@ export const acrossV2: Bridge = {
     ],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Optimistic Bridge',
       description:
         'Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain.',

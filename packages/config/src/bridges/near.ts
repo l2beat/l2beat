@@ -41,7 +41,7 @@ export const near: Bridge = {
     ],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Light Client',
       description:
         'Transfers out of the bridge are validated using Optimistic Light Client of Near Chain on Ethereum. Transfers into NEAR are validated by Ethereum light client on NEAR side.',

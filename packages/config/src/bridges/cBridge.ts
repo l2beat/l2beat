@@ -35,7 +35,7 @@ export const cBridge: Bridge = {
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Native Bridge',
       description: 'TODO',
     },

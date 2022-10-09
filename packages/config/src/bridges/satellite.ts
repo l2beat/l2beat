@@ -38,7 +38,7 @@ export const satellite: Bridge = {
     destination: ['Multichain'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: '2/3 Validators',
       sentiment: 'bad',

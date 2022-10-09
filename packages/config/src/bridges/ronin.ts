@@ -43,7 +43,7 @@ export const ronin: Bridge = {
     ],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: '2/3 MultiSig',
       sentiment: 'bad',

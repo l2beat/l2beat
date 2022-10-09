@@ -71,7 +71,7 @@ export const avalanche: Bridge = {
     ],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: '6/8 Intel SGX',
       sentiment: 'bad',

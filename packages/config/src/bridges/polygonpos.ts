@@ -61,7 +61,7 @@ export const polygonpos: Bridge = {
     ],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Light Client',
       description:
         'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',

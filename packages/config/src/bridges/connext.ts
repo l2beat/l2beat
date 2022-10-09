@@ -26,7 +26,7 @@ export const connext: Bridge = {
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Native Bridge',
       description: 'TODO',
     },

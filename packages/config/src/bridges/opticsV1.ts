@@ -90,7 +90,7 @@ export const opticsV1: Bridge = {
     },
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Optimistic Bridge',
       description:
         'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',

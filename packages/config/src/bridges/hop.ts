@@ -51,7 +51,7 @@ export const hop: Bridge = {
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Native',
       description:
         'Validation depends on the destination chain as its native bridge is used.',

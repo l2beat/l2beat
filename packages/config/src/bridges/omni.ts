@@ -38,7 +38,7 @@ export const omni: Bridge = {
     destination: ['Gnosis Chain'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'Native Bridge',
       description: 'TODO',
     },

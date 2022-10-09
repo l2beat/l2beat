@@ -37,7 +37,7 @@ export const polynetwork: Bridge = {
     destination: ['TODO', 'TODO', 'TODO'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'LC Token Bridge',
       description: 'TODO',
     },

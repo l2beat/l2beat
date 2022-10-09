@@ -25,7 +25,7 @@ export const stargate: Bridge = {
       'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle and relayer for cross-chain security for the protocol.',
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description:
         'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',

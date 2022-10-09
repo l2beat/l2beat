@@ -50,7 +50,7 @@ export const harmony: Bridge = {
     destination: ['Harmony'],
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: '2/5 MultiSig',
       sentiment: 'bad',

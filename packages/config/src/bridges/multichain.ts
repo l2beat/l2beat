@@ -27,7 +27,7 @@ export const multichain: Bridge = {
     destination: config.destinations,
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description: '2/3rd of MPC.',
       sentiment: 'bad',

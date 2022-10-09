@@ -37,7 +37,7 @@ export const wormholeV1: Bridge = {
     canonical: true,
   },
   riskView: {
-    validation: {
+    validatedBy: {
       value: 'External',
       description:
         'Transfers need to be signed offchain by a set of 2/3 of Guardians and then permissionesly relayed to the destination chain.',
