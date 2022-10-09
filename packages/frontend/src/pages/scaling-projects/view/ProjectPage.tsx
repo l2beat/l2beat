@@ -7,9 +7,10 @@ import {
   FooterProps,
   Header,
   HeaderProps,
+  Navbar,
   NavbarProps,
 } from '../../../components'
-import { Page } from '../../../components/Page'
+import { PageContent } from '../../../components/PageContent'
 import { ShowProjectActivityToggle } from '../../../components/ShowProjectActivityToggle'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
@@ -24,12 +25,15 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page narrow navbar={props.navbar}>
-      <Header {...props.header} />
-      <Chart {...props.chart} />
-      {props.showActivityToggle && <ShowProjectActivityToggle />}
-      <ProjectDetails {...props.projectDetails} />
-      <Footer {...props.footer} />
-    </Page>
+    <>
+      <Navbar {...props.navbar} />
+      <PageContent narrow>
+        <Header {...props.header} />
+        <Chart {...props.chart} />
+        {props.showActivityToggle && <ShowProjectActivityToggle />}
+        <ProjectDetails {...props.projectDetails} />
+      </PageContent>
+      <Footer narrow {...props.footer} />
+    </>
   )
 }
