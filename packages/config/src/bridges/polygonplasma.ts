@@ -27,7 +27,7 @@ export const polygonplasma: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Destination chain',
+      value: 'Destination Chain',
       description:
         'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
       sentiment: 'warning',
@@ -43,11 +43,11 @@ export const polygonplasma: Bridge = {
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a very typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. The withdrawal process includes 7-day delay.',
+        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. The withdrawal process includes 7-day delay.',
       references: [],
       risks: [],
     },

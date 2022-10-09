@@ -26,7 +26,7 @@ export const ronin: Bridge = {
       // repositories: ['https://github.com/axieinfinity/ronin-smart-contracts-v2']
     },
     description:
-      'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Lock-Mint swap.',
+      'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
   },
   config: {
     associatedTokens: ['AXS'],
@@ -63,13 +63,13 @@ export const ronin: Bridge = {
     },
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Axie Infinity Chain'],
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Ronin network. When bridging back to Ethereum tokens are burned on Ronin and then released from the escrow on Ethereum.',
+        'This is a typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Ronin network. When bridging back to Ethereum tokens are burned on Ronin and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },

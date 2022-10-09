@@ -43,7 +43,7 @@ export interface BridgeRiskView {
 
 export interface BridgeTechnology {
   canonical?: boolean
-  category: string
+  category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
   destination: string[]
   principleOfOperation?: ProjectTechnologyChoice
   validation?: ProjectTechnologyChoice

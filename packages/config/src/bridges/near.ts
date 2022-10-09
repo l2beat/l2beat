@@ -64,12 +64,12 @@ export const near: Bridge = {
   },
   technology: {
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Near', 'Aurora'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Rainbow is a Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Aurora or NEAR network. When bridging back to Ethereum tokens are burned on Aurora / NEAR and then released from the escrow on Ethereum.',
+        'Rainbow is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Aurora or NEAR network. When bridging back to Ethereum tokens are burned on Aurora / NEAR and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },

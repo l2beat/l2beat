@@ -46,7 +46,7 @@ export const harmony: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Harmony'],
   },
   riskView: {

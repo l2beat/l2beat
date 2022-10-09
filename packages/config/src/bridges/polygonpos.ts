@@ -84,11 +84,11 @@ export const polygonpos: Bridge = {
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a very typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum.',
+        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },

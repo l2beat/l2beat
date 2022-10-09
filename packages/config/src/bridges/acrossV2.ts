@@ -53,7 +53,7 @@ export const acrossV2: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    category: 'Swap',
+    category: 'Liquidity Network',
     destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum'],
     principleOfOperation: {
       name: 'Principle of operation',

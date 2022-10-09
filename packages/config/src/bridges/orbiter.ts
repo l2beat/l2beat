@@ -28,7 +28,7 @@ export const orbiter: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Various'], // TODO: list the chains
   },
 }

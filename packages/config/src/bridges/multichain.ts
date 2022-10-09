@@ -24,7 +24,7 @@ export const multichain: Bridge = {
     })),
   },
   technology: {
-    category: 'Lock-Mint OR Swap',
+    category: 'Hybrid',
     destination: config.destinations,
   },
   riskView: {

@@ -32,7 +32,7 @@ export const sollet: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Solana'],
   },
   riskView: {

@@ -22,7 +22,7 @@ export const connext: Bridge = {
     ],
   },
   technology: {
-    category: 'Atomic Swap',
+    category: 'Liquidity Network',
     destination: ['Various'], // TODO: list the chains
   },
 }

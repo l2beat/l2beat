@@ -42,12 +42,12 @@ export const nomad: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Avalanche', 'Evmos', 'Milkomedia C1', 'Moonbeam'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Nomad Bridge is a Lock-Mint bridge with ability to facilitate fast transfers via additional LP-provided liquidity. For deposits, it locks tokens in the escrow contracts on Ethereum and mints a "representation token" on the destination network. When bridging back to Ethereum tokens are burned and then released from the escrow on Ethereum.',
+        'Nomad Bridge is a Token Bridge with ability to facilitate fast transfers via additional LP-provided liquidity. For deposits, it locks tokens in the escrow contracts on Ethereum and mints a "representation token" on the destination network. When bridging back to Ethereum tokens are burned and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },

@@ -34,12 +34,12 @@ export const satellite: Bridge = {
   },
   technology: {
     canonical: true,
-    category: 'Lock-Mint OR Swap',
-    destination: ['Multichain'],
+    category: 'Hybrid',
+    destination: ['Various'], // TODO: list the chains
   },
   riskView: {
     validatedBy: {
-      value: 'Third party',
+      value: 'Third Party',
       description: '2/3 Validators',
       sentiment: 'bad',
     },

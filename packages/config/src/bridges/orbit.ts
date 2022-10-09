@@ -31,7 +31,7 @@ export const orbit: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     //TODO: Originally for KLAYTN, Orbit Bridge now supports multiple chains and has Liquidity Network
     destination: ['KLAYTN'], //TODO: add more chains
   },
