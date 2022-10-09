@@ -5,7 +5,6 @@ import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { CurrencyControls } from './CurrencyControls'
-import { Description } from './Description'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
@@ -36,13 +35,12 @@ export function Chart({
       data-type={type ?? 'tvl'}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
-      className={cx(
-        'grid grid-cols-[auto_auto_1fr_auto] gap-y-2 sm:gap-y-4',
-        'mt-4 sm:mt-8',
-      )}
+      className={cx('flex flex-col gap-4', 'mt-4 sm:mt-8')}
     >
-      <TimeRange />
-      {!hideControls && <RangeControls days={days} />}
+      <div className="flex justify-between">
+        <TimeRange />
+        {!hideControls && <RangeControls days={days} />}
+      </div>
       <div
         data-role="chart-view"
         className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
@@ -51,16 +49,17 @@ export function Chart({
       >
         <ChartLoader />
         <ChartHover />
-        <YAxisLabels />
         <Logo className="absolute bottom-2 right-2 z-10 w-[60px] h-[25px] opacity-40" />
         <canvas
           data-role="chart-canvas"
           className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
         />
+        <YAxisLabels />
       </div>
-      {!hideControls && <CurrencyControls />}
-      <Description hidden={hideControls} />
-      {!hideControls && <ScaleControls />}
+      <div className="flex justify-between">
+        {!hideControls && <CurrencyControls />}
+        {!hideControls && <ScaleControls />}
+      </div>
       {!hideControls && <TokenControls tokens={tokens} />}
     </section>
   )
