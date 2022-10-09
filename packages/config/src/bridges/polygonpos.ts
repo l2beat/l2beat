@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const polygonpos: Bridge = {
@@ -62,7 +63,7 @@ export const polygonpos: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Light Client',
+      value: 'Destination Chain',
       description:
         'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
       sentiment: 'warning',
@@ -74,10 +75,10 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     destinationToken: {
-      value: 'Wrapped, upgradable',
+      ...RISK_VIEW.WRAPPED,
       description:
-        'Tokens transferred end up as wrapped ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
-      sentiment: 'bad',
+        RISK_VIEW.WRAPPED.description +
+        ' Tokens transferred end up as ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
     },
   },
   technology: {

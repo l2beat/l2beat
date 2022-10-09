@@ -39,7 +39,7 @@ export const satellite: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'External',
+      value: 'Third party',
       description: '2/3 Validators',
       sentiment: 'bad',
     },

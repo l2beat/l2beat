@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const near: Bridge = {
@@ -42,21 +43,22 @@ export const near: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Light Client',
+      value: 'Destination Chain',
       description:
         'Transfers out of the bridge are validated using Optimistic Light Client of Near Chain on Ethereum. Transfers into NEAR are validated by Ethereum light client on NEAR side.',
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description:
         'Bridge cannot be upgraded but 3/6 Admin Multisig can move all funds out of the bridge via admin functions with no warning.',
       sentiment: 'bad',
     },
     destinationToken: {
-      value: '???',
+      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:
-        'Tokens minted on AURORA do not appear to be verified on aurorascan.dev.',
+        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
+        ' Tokens minted on AURORA do not appear to be verified on aurorascan.dev.',
       sentiment: 'bad',
     },
   },

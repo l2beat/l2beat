@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
 
@@ -26,7 +27,7 @@ export const polygonplasma: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Light Client',
+      value: 'Destination chain',
       description:
         'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
       sentiment: 'warning',
@@ -37,11 +38,7 @@ export const polygonplasma: Bridge = {
         'The bridge can be upgraded by 5/9 MSig after 48 hour delay.',
       sentiment: 'warning',
     },
-    destinationToken: {
-      value: 'Native',
-      description:
-        'Native MATIC token used to pay for gas on a Polygon PoS sidechain is minted by the bridge.',
-    },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MATIC'),
   },
   technology: {
     destination: ['Polygon'],

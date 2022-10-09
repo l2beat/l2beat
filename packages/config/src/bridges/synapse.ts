@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const synapse: Bridge = {
@@ -29,11 +30,11 @@ export const synapse: Bridge = {
   },
   technology: {
     category: 'Lock-Mint OR Swap',
-    destination: ['TODO', 'TODO', 'TODO'],
+    destination: ['Various'], // TODO: list the chains
   },
   riskView: {
     validatedBy: {
-      value: 'External',
+      value: 'Third Party',
       description: 'Transfers out of the bridge are validated by EOA.',
       sentiment: 'bad',
     },
@@ -43,10 +44,6 @@ export const synapse: Bridge = {
         'Bridge can be upgraded after 3 hour delay by a 2/3 Admin MultiSig.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: 'SynapseERC20',
-      description: 'Info not available yet',
-      sentiment: 'warning',
-    },
+    destinationToken: RISK_VIEW.CANONICAL,
   },
 }

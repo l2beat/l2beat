@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const ronin: Bridge = {
@@ -44,18 +45,20 @@ export const ronin: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'External',
+      value: 'Third Party',
       description: '2/3 MultiSig',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Gateway Proxy can be upgraded by a 2/3 MultiSig.',
       sentiment: 'bad',
     },
     destinationToken: {
-      value: 'Wrapped',
-      description: 'Tokens transferred end up as wrapped ERC20/ERC721.',
+      ...RISK_VIEW.CANONICAL,
+      description:
+        RISK_VIEW.CANONICAL.description +
+        ' The Ronin explorer does not show contract source code!',
       sentiment: 'warning',
     },
   },

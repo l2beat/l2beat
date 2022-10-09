@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const nomad: Bridge = {
@@ -93,21 +94,16 @@ export const nomad: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Optimistic Bridge',
+      value: 'Optimistically',
       description:
         'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Bridge can be upgraded by 3/5 MultiSig.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: 'Wrapped, Upgradable',
-      description:
-        'Tokens transferred end up as "representation tokens" implementing IBridgeToken interface.',
-      sentiment: 'bad',
-    },
+    destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
     addresses: [

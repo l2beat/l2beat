@@ -37,8 +37,8 @@ export const sollet: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'External',
-      description: 'TODO',
+      value: 'Third Party',
+      description: '',
     },
   },
 }

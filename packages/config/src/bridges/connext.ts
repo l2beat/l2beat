@@ -23,12 +23,6 @@ export const connext: Bridge = {
   },
   technology: {
     category: 'Atomic Swap',
-    destination: ['TODO', 'TODO', 'TODO'],
-  },
-  riskView: {
-    validatedBy: {
-      value: 'Native Bridge',
-      description: 'TODO',
-    },
+    destination: ['Various'], // TODO: list the chains
   },
 }

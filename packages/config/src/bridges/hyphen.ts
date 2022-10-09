@@ -24,12 +24,6 @@ export const hyphen: Bridge = {
   },
   technology: {
     category: 'Lock-Mint',
-    destination: ['TODO', 'TODO', 'TODO'],
-  },
-  riskView: {
-    validatedBy: {
-      value: 'Liquidity Network',
-      description: 'TODO',
-    },
+    destination: ['Various'], // TODO: list the chains
   },
 }

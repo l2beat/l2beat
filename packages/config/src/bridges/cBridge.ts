@@ -32,12 +32,6 @@ export const cBridge: Bridge = {
   },
   technology: {
     category: 'Lock-Mint',
-    destination: ['TODO', 'TODO', 'TODO'],
-  },
-  riskView: {
-    validatedBy: {
-      value: 'Native Bridge',
-      description: 'TODO',
-    },
+    destination: ['Various'], // TODO: list the chains
   },
 }

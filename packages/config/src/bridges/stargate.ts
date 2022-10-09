@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const stargate: Bridge = {
@@ -26,7 +27,7 @@ export const stargate: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'External',
+      value: 'Third Party',
       description:
         'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
       sentiment: 'bad',
@@ -35,11 +36,7 @@ export const stargate: Bridge = {
       value: 'No',
       description: 'Contracts are not upgradable.',
     },
-    destinationToken: {
-      value: 'Canonical',
-      description:
-        'Tokens on a destination chain are sourced from the liquidity pool.',
-    },
+    destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: [

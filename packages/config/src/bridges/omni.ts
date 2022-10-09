@@ -37,10 +37,4 @@ export const omni: Bridge = {
     category: 'Lock-Mint',
     destination: ['Gnosis Chain'],
   },
-  riskView: {
-    validatedBy: {
-      value: 'Native Bridge',
-      description: 'TODO',
-    },
-  },
 }

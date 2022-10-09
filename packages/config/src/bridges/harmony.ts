@@ -51,18 +51,9 @@ export const harmony: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'External',
+      value: 'Third Party',
       description: '2/5 MultiSig',
       sentiment: 'bad',
-    },
-    sourceUpgradeability: {
-      value: 'No',
-      description: '',
-    },
-    destinationToken: {
-      value: 'BridgedToken',
-      description:
-        'BridgedTokens cannot be upgraded. They can be minted by approved Minters.',
     },
   },
 }

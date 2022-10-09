@@ -37,19 +37,14 @@ export const orbit: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'External',
+      value: 'Third Party',
       description: 'MultiSig',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: '',
       sentiment: 'bad',
-    },
-    destinationToken: {
-      value: 'KToken',
-      description: 'Info not available yet',
-      sentiment: 'warning',
     },
   },
 }
