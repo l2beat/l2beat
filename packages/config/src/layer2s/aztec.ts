@@ -4,6 +4,7 @@ import {
   CONTRACTS,
   DATA_AVAILABILITY,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -55,7 +56,7 @@ export const aztec: Layer2 = {
       },
     ],
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: {
@@ -65,7 +66,9 @@ export const aztec: Layer2 = {
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
     validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
-  },
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
   technology: {
     category: 'ZK Rollup',
     stateCorrectness: {

@@ -1,4 +1,14 @@
 import { ProjectRiskViewEntry } from '../../common'
+import { Layer2RiskView } from '../types'
+
+export function makeBridgeCompatible(
+  entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
+): Layer2RiskView {
+  return {
+    ...entry,
+    sourceUpgradeability: entry.upgradeability,
+  }
+}
 
 // State validation
 
@@ -217,6 +227,35 @@ export const PROVER_DOWN: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+// bridges
+
+export const VALIDATED_BY_ETHEREUM: ProjectRiskViewEntry = {
+  value: 'Ethereum',
+  description: 'Smart contracts on Ethereum validate all bridge transfers.',
+}
+
+export function NATIVE_AND_CANONICAL(
+  nativeTokens = 'ETH',
+  isAre: 'is' | 'are' = 'is',
+): ProjectRiskViewEntry {
+  return {
+    value: 'Native & Canonical',
+    description: `${nativeTokens} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
+  }
+}
+
+export const CANONICAL: ProjectRiskViewEntry = {
+  value: 'Canonical',
+  description:
+    'Tokens transferred are considered canonical on the destination chain.',
+}
+
+export const CANONICAL_USDC: ProjectRiskViewEntry = {
+  value: 'Canonical',
+  description:
+    'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -250,4 +289,8 @@ export const RISK_VIEW = {
   VALIDATOR_NO_MECHANISM,
   VALIDATOR_WHITELISTED_BLOCKS,
   PROVER_DOWN,
+  VALIDATED_BY_ETHEREUM,
+  NATIVE_AND_CANONICAL,
+  CANONICAL,
+  CANONICAL_USDC,
 }

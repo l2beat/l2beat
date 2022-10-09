@@ -36,16 +36,15 @@ export interface BridgeConfig {
 }
 
 export interface BridgeRiskView {
-  validation?: ProjectRiskViewEntry
+  validatedBy?: ProjectRiskViewEntry
   sourceUpgradeability?: ProjectRiskViewEntry
   destinationToken?: ProjectRiskViewEntry
 }
 
 export interface BridgeTechnology {
   canonical?: boolean
-  category: string
+  category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
   destination: string[]
-  // TODO: replace them with actual values
   principleOfOperation?: ProjectTechnologyChoice
   validation?: ProjectTechnologyChoice
   destinationToken?: ProjectTechnologyChoice

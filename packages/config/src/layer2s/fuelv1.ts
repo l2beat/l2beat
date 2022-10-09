@@ -4,6 +4,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -41,13 +42,15 @@ export const fuelv1: Layer2 = {
     ],
     events: [],
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
     sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS,
     validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     category: 'Optimistic Rollup',
     stateCorrectness: {

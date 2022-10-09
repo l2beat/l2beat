@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -109,7 +110,7 @@ export const arbitrum: Layer2 = {
         blockNumber >= 22207818 ? count - 1 : count,
     },
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'Fraud proofs (INT)',
       description:
@@ -120,13 +121,9 @@ export const arbitrum: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-    bridge: {
-      validation: {
-        value: 'Native',
-        description: 'Rollups are the safest bridges',
-      },
-    },
-  },
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
   technology: {
     category: 'Optimistic Rollup',
     stateCorrectness: {

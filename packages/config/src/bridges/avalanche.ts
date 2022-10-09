@@ -71,8 +71,8 @@ export const avalanche: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description: '6/8 Intel SGX',
       sentiment: 'bad',
     },
@@ -91,11 +91,11 @@ export const avalanche: Bridge = {
   technology: {
     destination: ['Avalanche'],
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Avalanche Bridge is a Lock-Mint bridge that locks tokens in the escrow account and mints tokens on Avalanche network. When bridging back to Ethereum tokens are burned on Avalanche and transferred back to the receiver on Ethereum.',
+        'Avalanche Bridge is a Token Bridge that locks tokens in the escrow account and mints tokens on Avalanche network. When bridging back to Ethereum tokens are burned on Avalanche and transferred back to the receiver on Ethereum.',
       references: [],
       risks: [],
     },

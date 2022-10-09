@@ -46,23 +46,14 @@ export const harmony: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Harmony'],
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description: '2/5 MultiSig',
       sentiment: 'bad',
-    },
-    sourceUpgradeability: {
-      value: 'No',
-      description: '',
-    },
-    destinationToken: {
-      value: 'BridgedToken',
-      description:
-        'BridgedTokens cannot be upgraded. They can be minted by approved Minters.',
     },
   },
 }

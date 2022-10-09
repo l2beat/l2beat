@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const polygonpos: Bridge = {
@@ -61,8 +62,8 @@ export const polygonpos: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'Light Client',
+    validatedBy: {
+      value: 'Destination Chain',
       description:
         'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
       sentiment: 'warning',
@@ -74,20 +75,20 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     destinationToken: {
-      value: 'Wrapped, upgradable',
+      ...RISK_VIEW.WRAPPED,
       description:
-        'Tokens transferred end up as wrapped ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
-      sentiment: 'bad',
+        RISK_VIEW.WRAPPED.description +
+        ' Tokens transferred end up as ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
     },
   },
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a very typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum.',
+        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },

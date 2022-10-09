@@ -28,7 +28,7 @@ export interface BridgesTvlViewEntry {
   sevenDayChange: string
   bridgesMarketShare: string
   combinedMarketShare: string
-  validation?: ProjectRiskViewEntry
+  validatedBy?: ProjectRiskViewEntry
   category: string
 }
 
@@ -84,10 +84,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       ),
     },
     {
-      name: 'Validation',
+      name: 'Validated by',
       getValue: (entry) =>
-        entry.validation ? (
-          <RiskCell item={entry.validation} />
+        entry.validatedBy ? (
+          <RiskCell item={entry.validatedBy} />
         ) : (
           <NoInfoCell />
         ),
