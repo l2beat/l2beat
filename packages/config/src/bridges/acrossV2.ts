@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const acrossV2: Bridge = {
@@ -20,7 +21,7 @@ export const acrossV2: Bridge = {
       ],
     },
     description:
-      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain. Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using native bridges.',
+      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain. Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
   },
   config: {
     escrows: [
@@ -39,23 +40,20 @@ export const acrossV2: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'Optimistic Bridge',
+    validatedBy: {
+      value: 'Optimistically',
       description:
         'Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain.',
+      sentiment: 'warning',
     },
     sourceUpgradeability: {
       value: 'No',
       description: 'The code that secures the system can never change.',
     },
-    destinationToken: {
-      value: 'Native',
-      description:
-        'Received tokens are those previously transferred using native chain bridge.',
-    },
+    destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    category: 'Swap',
+    category: 'Liquidity Network',
     destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum'],
     principleOfOperation: {
       name: 'Principle of operation',

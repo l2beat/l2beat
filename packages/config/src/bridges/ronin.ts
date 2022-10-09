@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const ronin: Bridge = {
@@ -25,7 +26,7 @@ export const ronin: Bridge = {
       // repositories: ['https://github.com/axieinfinity/ronin-smart-contracts-v2']
     },
     description:
-      'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Lock-Mint swap.',
+      'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
   },
   config: {
     associatedTokens: ['AXS'],
@@ -43,30 +44,32 @@ export const ronin: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description: '2/3 MultiSig',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Gateway Proxy can be upgraded by a 2/3 MultiSig.',
       sentiment: 'bad',
     },
     destinationToken: {
-      value: 'Wrapped',
-      description: 'Tokens transferred end up as wrapped ERC20/ERC721.',
+      ...RISK_VIEW.CANONICAL,
+      description:
+        RISK_VIEW.CANONICAL.description +
+        ' The Ronin explorer does not show contract source code!',
       sentiment: 'warning',
     },
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Axie Infinity Chain'],
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a typical Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Ronin network. When bridging back to Ethereum tokens are burned on Ronin and then released from the escrow on Ethereum.',
+        'This is a typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Ronin network. When bridging back to Ethereum tokens are burned on Ronin and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },

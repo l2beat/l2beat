@@ -9,7 +9,7 @@ export interface TvlHeaderProps {
 
 export function TvlHeader(props: TvlHeaderProps) {
   return (
-    <header className="mb-4 md:mb-12 flex justify-between flex-col md:flex-row text-base">
+    <header className="mt-4 md:mt-12 flex justify-between flex-col md:flex-row text-base">
       <div>
         <h1 className="font-bold text-3xl mb-1">Total Value Locked</h1>
         <p className="text-gray-700 hidden md:block">

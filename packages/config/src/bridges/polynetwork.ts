@@ -33,13 +33,7 @@ export const polynetwork: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint OR Swap',
-    destination: ['TODO', 'TODO', 'TODO'],
-  },
-  riskView: {
-    validation: {
-      value: 'LC Token Bridge',
-      description: 'TODO',
-    },
+    category: 'Hybrid',
+    destination: ['Various'], // TODO: list the chains
   },
 }

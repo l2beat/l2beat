@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import * as config from './multichain-config.json'
 import { Bridge } from './types'
 
@@ -23,19 +24,26 @@ export const multichain: Bridge = {
     })),
   },
   technology: {
-    category: 'Lock-Mint OR Swap',
+    category: 'Hybrid',
     destination: config.destinations,
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description: '2/3rd of MPC.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: 'Custom Multichain or anyToken',
+    sourceUpgradeability: {
+      value: 'No / EOA',
       description:
-        'Depending on the router configuration either Multichain tokens or anyToken is minted.',
+        'Depending on the router configuration escrow contracts are EOAs or Any tokens which cannot be upgraded.',
+      sentiment: 'bad',
+    },
+    destinationToken: {
+      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
+      description:
+        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
+        ' Depending on the router configuration either Multichain tokens or Any tokens are minted.',
     },
   },
 }

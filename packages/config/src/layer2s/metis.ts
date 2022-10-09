@@ -4,6 +4,7 @@ import {
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -70,7 +71,7 @@ export const metis: Layer2 = {
       url: 'https://andromeda.metis.io/',
     },
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'In development',
       description:
@@ -81,7 +82,9 @@ export const metis: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     provider: 'Optimism',
     category: 'Optimistic Chain',

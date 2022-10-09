@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const gravity: Bridge = {
@@ -41,8 +42,8 @@ export const gravity: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description:
         'Transfers need to be approved by 2/3 of the validator set operating in Cosmos Gravity Bridge blockchain.',
       sentiment: 'bad',
@@ -51,20 +52,16 @@ export const gravity: Bridge = {
       value: 'No',
       description: 'The code that secures the system can never change.',
     },
-    destinationToken: {
-      value: 'Wrapped',
-      description: 'Tokens transferred end up as wrapped ERC20 proxies.',
-      sentiment: 'bad',
-    },
+    destinationToken: RISK_VIEW.WRAPPED,
   },
   technology: {
     destination: ['Cosmos'],
     canonical: false,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Gravity is a Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on Cosmos. The cross-chain communication is achieved using Gravity Bridge Blockchain with validators watching Ethereum network for events and minting tokens on Cosmos. Validators also approve transfers back to Ethereum via message signing.',
+        'Gravity is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on Cosmos. The cross-chain communication is achieved using Gravity Bridge Blockchain with validators watching Ethereum network for events and minting tokens on Cosmos. Validators also approve transfers back to Ethereum via message signing.',
       references: [],
       risks: [],
     },
