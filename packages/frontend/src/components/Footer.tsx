@@ -22,10 +22,10 @@ export function Footer(props: FooterProps) {
       <div
         className={cx(
           props.narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
-          'px-4 md:px-12 mx-auto grid grid-cols-3',
+          'px-4 md:px-12 mx-auto flex flex-col gap-4 md:grid grid-cols-3',
         )}
       >
-        <p className="font-medium text-sm">
+        <p className="font-medium text-sm text-center md:text-left">
           Made with ❤️ by the L2BEAT research team.{' '}
           <br className="hidden lg:inline" />
           Support us by{' '}
@@ -37,7 +37,7 @@ export function Footer(props: FooterProps) {
         <ul className="flex gap-4 w-full justify-center">
           <SocialLinks {...props} />
         </ul>
-        <p className="font-medium text-sm text-right">
+        <p className="font-medium text-sm text-center md:text-right">
           Copyright {new Date().getFullYear()} L2BEAT
         </p>
       </div>
