@@ -1,11 +1,17 @@
 import { Layer2 } from '@l2beat/config'
+import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { EthereumCell } from '../../../components/table/EthereumCell'
 import { NoInfoCell } from '../../../components/table/NoInfoCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../../components/table/TableView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -31,7 +37,12 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) =>
+        project.slug !== 'ethereum' ? (
+          <ProjectCell type="layer2" project={project} />
+        ) : (
+          <EthereumCell project={project} />
+        ),
     },
     {
       name: 'TPS',
@@ -59,9 +70,21 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
   ]
 
+  const rows: RowConfig<ActivityViewEntry> = {
+    getProps: (entry) =>
+      entry.name === 'Ethereum'
+        ? {
+            className: cx(
+              'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
+              'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+            ),
+          }
+        : {},
+  }
+
   return (
     <section className="mt-4 sm:mt-8">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>
   )
