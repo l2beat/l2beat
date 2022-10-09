@@ -49,12 +49,12 @@ export function Chart({
       >
         <ChartLoader />
         <ChartHover />
-        <YAxisLabels />
         <Logo className="absolute bottom-2 right-2 z-10 w-[60px] h-[25px] opacity-40" />
         <canvas
           data-role="chart-canvas"
           className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
         />
+        <YAxisLabels />
       </div>
       <div className="flex justify-between">
         {!hideControls && <CurrencyControls />}
