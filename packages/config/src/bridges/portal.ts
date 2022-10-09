@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const portal: Bridge = {
@@ -52,8 +53,8 @@ export const portal: Bridge = {
     ],
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description:
         'Transfers need to be signed offchain by a set of 2/3 of Guardians and then relayed to the destination chain.',
       sentiment: 'bad',
@@ -64,12 +65,7 @@ export const portal: Bridge = {
         'The code that secures the system can be changed arbitrarily and without notice.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: 'Canonical or WrappedUpgradable',
-      description:
-        'The tokens ends up wrapped if the destination chain is not native for this token, otherwise the canonical tokens are transferred.',
-      sentiment: 'warning',
-    },
+    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {
     destination: [
@@ -89,11 +85,11 @@ export const portal: Bridge = {
       'Polygon',
     ],
     canonical: true,
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a Lock-Mint bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
+        'This is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
       references: [],
       risks: [],
     },
