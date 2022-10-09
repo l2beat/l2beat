@@ -1,4 +1,4 @@
-import { Layer2, Layer2RiskView } from '@l2beat/config'
+import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
@@ -10,11 +10,16 @@ export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
 }
 
-export interface ScalingRiskViewEntry extends Layer2RiskView {
+export interface ScalingRiskViewEntry {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  stateValidation: ProjectRiskViewEntry
+  dataAvailability: ProjectRiskViewEntry
+  upgradeability: ProjectRiskViewEntry
+  sequencerFailure: ProjectRiskViewEntry
+  validatorFailure: ProjectRiskViewEntry
 }
 
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {
@@ -52,7 +57,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   ]
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 sm:mt-8">
       <TableView items={items} columns={columns} />
       <ScalingLegend />
     </section>

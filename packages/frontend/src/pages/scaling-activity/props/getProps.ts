@@ -28,6 +28,7 @@ export function getProps(
         config.layer2s,
         tvlApiResponse,
         activityApiResponse,
+        tpsDaily,
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,

@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -54,7 +55,7 @@ export const gluon: Layer2 = {
     ],
     events: [],
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'Fraud proofs (!)',
       description:
@@ -65,7 +66,9 @@ export const gluon: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_EXIT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
-  },
+    destinationToken: RISK_VIEW.CANONICAL,
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     category: 'Plasma',
     stateCorrectness: {
