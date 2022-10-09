@@ -47,20 +47,20 @@ export const hop: Bridge = {
     ],
   },
   technology: {
-    category: 'AMM Swap',
-    destination: ['TODO', 'TODO', 'TODO'],
+    category: 'Liquidity Network',
+    destination: ['Various'], // TODO: list the chains
   },
   riskView: {
-    validation: {
-      value: 'Native',
+    validatedBy: {
+      value: 'Varying',
       description:
-        'Validation depends on the destination chain as its native bridge is used.',
+        'Validation depends on the destination chain as its canonical bridge is used.',
       sentiment: 'warning',
     },
     destinationToken: {
-      value: 'hToken',
+      value: 'Canonical',
       description:
-        'hToken is minted for Liquidity Providers. It will be converted for canonical tokens at the destination.',
+        'The bridge uses a technical hToken that is minted for Liquidity Providers. The hToken is then swapped for  canonical tokens on the destination chain',
     },
   },
 }

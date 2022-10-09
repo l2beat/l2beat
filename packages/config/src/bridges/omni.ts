@@ -29,13 +29,7 @@ export const omni: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Gnosis Chain'],
-  },
-  riskView: {
-    validation: {
-      value: 'Native Bridge',
-      description: 'TODO',
-    },
   },
 }

@@ -35,9 +35,7 @@ export function getProps(
                 ? project.technology.destination
                 : [project.display.name],
             ),
-            ...(project.type === 'bridge'
-              ? project.riskView
-              : project.riskView.bridge),
+            ...project.riskView,
           }),
         ),
       },

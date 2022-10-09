@@ -6,6 +6,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -65,7 +66,7 @@ export const nova: Layer2 = {
       assessCount: (count: number) => count - 1,
     },
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'Fraud proofs (INT)',
       description:
@@ -76,7 +77,9 @@ export const nova: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     category: 'Optimistic Chain',
     stateCorrectness: {
