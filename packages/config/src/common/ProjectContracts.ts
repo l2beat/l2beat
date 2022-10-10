@@ -26,6 +26,7 @@ export interface ProjectContract {
 export type ProjectUpgradeability =
   | EIP1967Upgradeability
   | CustomUpgradeability
+  | CustomUpgradeabilityWithoutAdmin
   | StarkWareUpgradeability
   | ZeppelinOsUpgradeability
   | NutBerryUpgradeability
@@ -38,6 +39,12 @@ export interface CustomUpgradeability {
   /** Address of the admin */
   admin: string
   /** Address of the implementation */
+  implementation: string
+}
+
+export interface CustomUpgradeabilityWithoutAdmin {
+  type: 'CustomWithoutAdmin'
+  /** Address of the admin */
   implementation: string
 }
 
