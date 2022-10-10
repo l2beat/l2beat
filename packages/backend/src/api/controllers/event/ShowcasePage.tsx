@@ -74,7 +74,7 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
                   Average:
                   {Math.floor(
                     event.hourly.reduce((a, b) => a + b, 0) /
-                      event.hourly.filter((h) => h != 0).length,
+                      event.hourly.filter((h) => h !== 0).length,
                   )}
                 </div>
               </blockquote>
@@ -107,7 +107,7 @@ export function ShowcasePage({ events }: ShowcasePageProps) {
                   Average:
                   {Math.floor(
                     event.daily.reduce((a, b) => a + b, 0) /
-                      event.daily.filter((h) => h != 0).length,
+                      event.daily.filter((h) => h !== 0).length,
                   )}
                 </div>
               </blockquote>

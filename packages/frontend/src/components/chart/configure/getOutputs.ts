@@ -8,7 +8,6 @@ export function getOutputs(chart: Element) {
     canvas: $<HTMLCanvasElement>('[data-role="chart-canvas"]'),
     loader: $('[data-role="chart-loader"]'),
     range: $('[data-role="chart-range"]'),
-    description: $('[data-role="chart-description"]'),
     labels: $$('[data-role="chart-label"]'),
   }
 }

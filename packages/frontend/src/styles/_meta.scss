@@ -31,34 +31,14 @@ html.meta,
     margin-left: auto;
   }
 
-  .Chart {
-    margin-top: 8px;
-    row-gap: 8px;
+  [data-role='chart'] {
+    margin-top: 0px;
   }
 
-  .Chart-Loader,
-  .Chart-Watermark,
-  .Chart-RangeControls,
-  .Chart-CurrencyControls,
-  .Chart-ScaleControls,
-  .Chart-Line,
-  .Chart-Label,
-  .Chart-Description,
-  .ChartHover {
-    display: none;
-  }
-
-  .Chart-Range {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    font-size: var(--font-l);
-    z-index: 1000;
-  }
-
-  .Chart-View {
+  [data-role='chart-view'] {
     position: relative;
     height: 262px;
+
     &::after {
       content: '';
       position: absolute;
@@ -74,12 +54,32 @@ html.meta,
       );
       opacity: 0.376;
     }
+
+    .Logo {
+      display: none;
+    }
   }
 
-  .Chart-Canvas {
+  [data-role='chart-range'] {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: var(--font-l);
+    z-index: 1000;
+  }
+
+  [data-role='chart-canvas'] {
     height: 202px;
     bottom: unset;
     top: 0;
+  }
+
+  [data-role='chart-loader'],
+  [data-role='chart-range-controls'],
+  [data-role='chart-currency-controls'],
+  [data-role='chart-scale-controls'],
+  [data-role='chart-label'] {
+    display: none;
   }
 
   .MetaImage.project {

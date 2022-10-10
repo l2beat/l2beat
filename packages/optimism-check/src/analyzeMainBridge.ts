@@ -42,7 +42,7 @@ export async function analyzeMainBridge(
     ),
   ])
   const implementation = wordToAddress(implementationSlot)
-  if (implementation != mainBridge.implementation) {
+  if (implementation !== mainBridge.implementation) {
     console.log(
       `Warning: bridge implementation is not ${mainBridge.implementation}`,
     )

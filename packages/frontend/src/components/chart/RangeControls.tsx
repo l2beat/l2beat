@@ -1,19 +1,20 @@
 import React from 'react'
 
-import { ChartButton } from './ChartButton'
+import { RadioGroup } from './RadioGroup'
 
 export function RangeControls({ days }: { days: number }) {
   return (
-    <div
-      data-role="chart-range-controls"
-      className="col-span-2 flex items-center justify-end gap-4"
-    >
-      <ChartButton checked={days === 7} name="range" value="7D" />
-      <ChartButton checked={days === 30} name="range" value="30D" />
-      <ChartButton className="!hidden sm:!block" name="range" value="90D" />
-      <ChartButton className="!hidden sm:!block" name="range" value="180D" />
-      <ChartButton name="range" value="1Y" />
-      <ChartButton name="range" value="MAX" />
-    </div>
+    <RadioGroup
+      role="chart-range-controls"
+      name="range"
+      options={[
+        { value: '7D', checked: days === 7 },
+        { value: '30D', checked: days === 30 },
+        { value: '90D', className: '!hidden sm:!block' },
+        { value: '180D', className: '!hidden sm:!block' },
+        { value: '1Y' },
+        { value: 'MAX' },
+      ]}
+    />
   )
 }

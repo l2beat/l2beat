@@ -17,8 +17,10 @@ export function ActivityHeader(props: ActivityHeaderProps) {
         </p>
       </div>
       <div className="flex justify-between items-baseline">
-        <p className="text-gray-700 hidden md:block">Transactions per second</p>
-        <p className="text-gray-700 text-xs md:text-base text-right w-full md:w-auto">
+        <p className="text-gray-500 dark:text-gray-600 hidden md:block">
+          Transactions per second
+        </p>
+        <p className="text-gray-500 dark:text-gray-600 text-xs md:text-base text-right w-full md:w-auto">
           More txs on Ethereum because of L2s
         </p>
       </div>

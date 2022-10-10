@@ -7,10 +7,11 @@ import {
   FooterProps,
   Header,
   HeaderProps,
+  Navbar,
   NavbarProps,
 } from '../../../components'
 import { BridgesMvpWarning } from '../../../components/BridgesMvpWarning'
-import { Page } from '../../../components/Page'
+import { PageContent } from '../../../components/PageContent'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 
 export interface ProjectPageProps {
@@ -23,12 +24,15 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   return (
-    <Page narrow navbar={props.navbar}>
-      <BridgesMvpWarning />
-      <Header {...props.header} />
-      <Chart {...props.chart} />
-      <ProjectDetails {...props.projectDetails} />
-      <Footer {...props.footer} />
-    </Page>
+    <>
+      <Navbar {...props.navbar} />
+      <PageContent narrow>
+        <BridgesMvpWarning />
+        <Header {...props.header} />
+        <Chart {...props.chart} />
+        <ProjectDetails {...props.projectDetails} />
+      </PageContent>
+      <Footer narrow {...props.footer} />
+    </>
   )
 }
