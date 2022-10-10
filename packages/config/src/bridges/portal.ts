@@ -89,7 +89,7 @@ export const portal: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
+        'This is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via the Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
       references: [],
       risks: [],
     },
