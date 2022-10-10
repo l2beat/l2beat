@@ -104,9 +104,9 @@ function prettyPrint(resolved: Map<string, AnalyzedItem>, network: string) {
 
       for (const [key, value] of Object.entries(analyzed)) {
         if (
-          key != 'componentAddress' &&
-          key != 'libAddressManager' &&
-          key != 'componentContract'
+          key !== 'componentAddress' &&
+          key !== 'libAddressManager' &&
+          key !== 'componentContract'
         ) {
           t3.cell('Component', componentName)
           t3.cell('Parameter', key)
