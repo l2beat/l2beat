@@ -101,7 +101,7 @@ export const arbitrum: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      callsPerMinute: 1200,
+      callsPerMinute: 60 * 25,
       // We need to subtract the Nitro system transactions
       // after the block of the update
       assessCount: (count: number, blockNumber: number) =>

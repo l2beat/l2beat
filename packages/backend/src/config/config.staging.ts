@@ -34,11 +34,9 @@ export function getStagingConfig(): Config {
             url: getEnv('ACTIVITY_ETHEREUM_URL'),
           },
           optimism: {
-            callsPerMinute: 25 * 60,
             url: getEnv('ACTIVITY_OPTIMISM_URL'),
           },
           arbitrum: {
-            callsPerMinute: 25 * 60,
             url: getEnv('ACTIVITY_ARBITRUM_URL'),
           },
         },
