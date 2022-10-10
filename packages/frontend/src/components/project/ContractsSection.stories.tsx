@@ -22,7 +22,6 @@ function Template(props: ContractsSectionProps) {
 }
 
 export const Contracts: Story<ContractsSectionProps> = Template.bind({})
-
 Contracts.args = {
   contracts: [
     {
