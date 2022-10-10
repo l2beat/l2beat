@@ -34,7 +34,7 @@ export const omni: Bridge = {
       ],
     },
     description:
-      'Omni Bridge is the official bridge of Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Ethereum escrow acts as a fractional reserve since deposited tokens can be sent to yield generating contracts to accrue interest for external recipient.',
+      'Omni Bridge is the official bridge of Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Tokens sent to the bridge escrow can be further sent to yield generating contracts (e.g. AAVE) to accrue interest for external recipient, although this functionality has been disabled at the time of Ethereum Merge.',
   },
   config: {
     associatedTokens: ['GNO'],
@@ -58,9 +58,9 @@ export const omni: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: {
-      ...RISK_VIEW.WRAPPED,
+      ...RISK_VIEW.CANONICAL,
       description:
-        RISK_VIEW.WRAPPED.description +
+        RISK_VIEW.CANONICAL.description +
         ' Tokens transferred end up as wrapped ERC677.',
     },
   },
