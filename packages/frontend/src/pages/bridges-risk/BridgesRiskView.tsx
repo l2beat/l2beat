@@ -63,7 +63,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       ),
     },
     {
-      name: 'Upgradeability',
+      name: 'Source Upgradeability',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
     },
     {
