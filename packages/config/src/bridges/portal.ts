@@ -96,7 +96,7 @@ export const portal: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'Validation process takes place in external network called Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
+        'Validation process takes place in external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
       references: [],
       risks: [
         {
