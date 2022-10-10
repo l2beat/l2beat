@@ -42,7 +42,7 @@ export const omni: Bridge = {
       {
         address: '0x88ad09518695c6c3712AC10a214bE5109a655671',
         sinceTimestamp: new UnixTime(1596501090),
-        tokens: ['GNO', 'DXD', 'HOPR', 'NODE', 'COW', 'LINK'],
+        tokens: ['GNO', 'LINK'],
       },
     ],
   },
