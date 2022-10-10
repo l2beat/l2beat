@@ -88,7 +88,6 @@ export const optimism: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      callsPerMinute: 60 * 25,
     },
   },
   riskView: makeBridgeCompatible({
