@@ -16,7 +16,7 @@ export interface NewsItem {
 }
 
 export function NewsSection({ news }: NewsSectionProps) {
-  if (news.length == 0) {
+  if (news.length === 0) {
     return null
   }
 
