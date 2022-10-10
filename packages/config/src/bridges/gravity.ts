@@ -37,7 +37,7 @@ export const gravity: Bridge = {
       {
         address: '0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906',
         sinceTimestamp: new UnixTime(1639416372),
-        tokens: ['USDC', 'WETH', 'DAI'],
+        tokens: ['USDC', 'WETH', 'DAI', 'USDT', 'WBTC'],
       },
     ],
   },
