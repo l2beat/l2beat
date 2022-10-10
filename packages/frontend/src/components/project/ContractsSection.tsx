@@ -25,6 +25,10 @@ export interface TechnologyContract {
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
+  if (props.contracts.length == 0) {
+    return <></>
+  }
+
   return (
     <Section
       title="Smart Contracts"
