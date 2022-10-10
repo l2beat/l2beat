@@ -10,13 +10,7 @@ export default {
 function Template(props: ContractsSectionProps) {
   return (
     <div className="px-4">
-      <ContractsSection
-        contracts={props.contracts}
-        risks={props.risks}
-        references={props.references}
-        architectureImage={props.architectureImage}
-        isIncomplete={props.isIncomplete}
-      ></ContractsSection>
+      <ContractsSection {...props}></ContractsSection>
     </div>
   )
 }
