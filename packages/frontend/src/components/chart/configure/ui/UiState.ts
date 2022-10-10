@@ -1,6 +1,5 @@
 export interface UiState {
   dateRange: string
-  description: string
   labels: string[]
   points: Point[]
 }
