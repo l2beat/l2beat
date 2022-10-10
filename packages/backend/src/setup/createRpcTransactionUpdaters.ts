@@ -61,8 +61,9 @@ export function createEthereumTransactionUpdater(
   clock: Clock,
   logger: Logger,
 ) {
-  const url = config.rpc.projects.ethereum.url
-  const callsPerMinute = config.rpc.projects.ethereum.callsPerMinute
+  const url = config.rpc.projects.ethereum?.url
+  assert(url)
+  const callsPerMinute = config.rpc.projects.ethereum?.callsPerMinute
   const provider = new providers.JsonRpcProvider({
     url,
     timeout: 10_000,
