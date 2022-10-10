@@ -6,7 +6,7 @@ import { Bridge } from './types'
 
 export const portal: Bridge = {
   type: 'bridge',
-  id: ProjectId('wormhole'), //todo change to portal
+  id: ProjectId('portal'),
   display: {
     name: 'Portal',
     slug: 'portal',
