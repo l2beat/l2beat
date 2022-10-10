@@ -29,7 +29,7 @@ export const synapse: Bridge = {
     ],
   },
   technology: {
-    category: 'Hybrid',
+    category: 'Liquidity Network',
     destination: ['Various'], // TODO: list the chains
   },
   riskView: {

@@ -33,7 +33,7 @@ export const polynetwork: Bridge = {
     ],
   },
   technology: {
-    category: 'Hybrid',
+    category: 'Liquidity Network',
     destination: ['Various'], // TODO: list the chains
   },
 }
