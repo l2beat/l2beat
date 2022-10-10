@@ -14,7 +14,7 @@ export class FourBytesApi {
   private readonly cache = new Cache<string | null>()
 
   async getMethodSignature(identifier: string) {
-    if (identifier.length != 10) return undefined
+    if (identifier.length !== 10) return undefined
     if (!this.cache.has(identifier)) {
       const signature = await this.fetchMethodSignature(identifier)
       this.cache.set(identifier, signature ?? null)
@@ -29,7 +29,7 @@ export class FourBytesApi {
       throw new Error(`HTTP error! status: ${res.status}`)
     }
     const json = (await res.json()) as FourBytesResult
-    if (json.count != 0) {
+    if (json.count !== 0) {
       // grabbing name with the lowest id
       const [first, ...rest] = json.results
       let min = first

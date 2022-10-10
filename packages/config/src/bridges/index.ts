@@ -17,13 +17,13 @@ import { orbiter } from './orbiter'
 import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
+import { portal } from './portal'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { synapse } from './synapse'
 import { Bridge } from './types'
-import { wormhole } from './wormhole'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
 
@@ -54,7 +54,7 @@ export const bridges: Bridge[] = [
   sollet,
   stargate,
   synapse,
-  wormhole,
+  portal,
   wormholeV1,
   xdai,
 ]
