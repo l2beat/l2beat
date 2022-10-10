@@ -10,7 +10,7 @@ export default {
 function Template(props: ContractsSectionProps) {
   return (
     <div className="px-4">
-      <ContractsSection {...props}></ContractsSection>
+      <ContractsSection {...props} />
     </div>
   )
 }
