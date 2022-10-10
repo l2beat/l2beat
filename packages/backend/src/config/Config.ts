@@ -31,16 +31,19 @@ export interface Config {
     | {
         starkexApiUrl: string
         starkexApiKey: string
-        arbitrumAlchemyApiKey: string
-        optimismAlchemyApiKey: string
-        ethereumAlchemyApiKey: string
-        rpcWorkQueueLimit: number
-        rpcWorkQueueWorkers: number
         zkSyncWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number
         loopringCallsPerMinute: number
         starkexCallsPerMinute: number
+        rpc: {
+          workQueueLimit: number
+          workQueueWorkers: number
+          projects: Record<
+            string,
+            { callsPerMinute?: number; url: string } | undefined
+          >
+        }
       }
     | false
 }
