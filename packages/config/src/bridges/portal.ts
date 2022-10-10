@@ -36,7 +36,7 @@ export const portal: Bridge = {
         tokens: [
           'WETH',
           //'NEXM',
-          //'XCN',
+          'XCN',
           'USDT',
           'USDC',
           'HUSD',
@@ -47,7 +47,7 @@ export const portal: Bridge = {
           'UNI',
           'LDO',
           'DAI',
-          //'stETH',
+          'stETH',
         ],
       },
     ],
