@@ -71,7 +71,6 @@ export const bobanetwork: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      provider: 'jsonRpc',
       url: 'https://mainnet.boba.network/',
       callsPerMinute: 200,
     },

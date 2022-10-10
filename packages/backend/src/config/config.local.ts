@@ -41,16 +41,38 @@ export function getLocalConfig(): Config {
     ) && {
       starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
-      optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
-      ethereumAlchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-      rpcWorkQueueLimit: 10_000,
-      rpcWorkQueueWorkers: 1,
       zkSyncWorkQueueWorkers: 1,
       starkexWorkQueueWorkers: 1,
       starkexCallsPerMinute: 10,
       loopringWorkQueueWorkers: 1,
       loopringCallsPerMinute: 10,
+      rpc: {
+        workQueueLimit: 10_000,
+        workQueueWorkers: 1,
+        projects: {
+          ethereum: {
+            callsPerMinute: 60 / 5,
+            url: getEnv(
+              'ACTIVITY_ETHEREUM_URL',
+              'https://eth-mainnet.alchemyapi.io/v2/demo',
+            ),
+          },
+          optimism: {
+            callsPerMinute: 60 / 5,
+            url: getEnv(
+              'ACTIVITY_OPTIMISM_URL',
+              'https://mainnet.optimism.io/',
+            ),
+          },
+          arbitrum: {
+            callsPerMinute: 60 / 5,
+            url: getEnv(
+              'ACTIVITY_ARBITRUM_URL',
+              'https://arb1.arbitrum.io/rpc',
+            ),
+          },
+        },
+      },
     },
   }
 }
