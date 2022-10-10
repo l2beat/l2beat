@@ -10,7 +10,13 @@ export default {
 export function Footer() {
   return (
     <PageContent>
-      <FooterComponent twitterLink="#" discordLink="#" githubLink="#" />
+      <FooterComponent
+        twitterLink="#"
+        discordLink="#"
+        githubLink="#"
+        mediumLink="#"
+        youTubeLink="#"
+      />
     </PageContent>
   )
 }

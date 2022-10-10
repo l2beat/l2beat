@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Footer, FooterProps, NavbarProps } from '../../components'
-import { Page } from '../../components/Page'
+import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
+import { PageContent } from '../../components/PageContent'
 
 export interface FaqPageProps {
   title: string
@@ -12,12 +12,15 @@ export interface FaqPageProps {
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <Page narrow navbar={props.navbar}>
-      <article
-        className="Faq"
-        dangerouslySetInnerHTML={{ __html: props.content }}
-      />
-      <Footer {...props.footer} />
-    </Page>
+    <>
+      <Navbar {...props.navbar} />
+      <PageContent narrow>
+        <article
+          className="Faq"
+          dangerouslySetInnerHTML={{ __html: props.content }}
+        />
+      </PageContent>
+      <Footer narrow {...props.footer} />
+    </>
   )
 }
