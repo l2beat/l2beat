@@ -10,6 +10,8 @@ export const multichain: Bridge = {
   display: {
     name: 'Multichain',
     slug: 'multichain',
+    warning:
+      'In July 2021 millions of dollars of user funds from the Multichain escrow addresses were taken out by validators to supply liquidity to Any tokens on various chains. As a result there is more tokens minted (e.g. DAI on Fantom) than there are tokens directly backing them in escrow.',
     description:
       'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
     links: {
