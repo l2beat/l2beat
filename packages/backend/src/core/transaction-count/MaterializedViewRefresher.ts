@@ -27,6 +27,8 @@ export class MaterializedViewRefresher {
   }
 
   async update() {
+    this.logger.info('Refresh started')
     await this.blockTransactionCountRepository.refresh()
+    this.logger.info('Refresh finished')
   }
 }
