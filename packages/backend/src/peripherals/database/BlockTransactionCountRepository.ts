@@ -112,7 +112,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async refresh() {
+  async refreshDailyTransactionCount() {
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }

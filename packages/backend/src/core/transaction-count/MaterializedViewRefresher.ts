@@ -30,8 +30,8 @@ export class MaterializedViewRefresher {
 
   async update() {
     this.logger.info('Refresh started')
-    await this.blockTransactionCountRepository.refresh()
-    await this.zksyncTransactionRepository.refresh()
+    await this.blockTransactionCountRepository.refreshDailyTransactionCount()
+    await this.zksyncTransactionRepository.refreshDailyTransactionCount()
     this.logger.info('Refresh finished')
   }
 }
