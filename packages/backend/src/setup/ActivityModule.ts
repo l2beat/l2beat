@@ -6,6 +6,7 @@ import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
+import { MaterializedViewRefresher } from '../core/transaction-count/MaterializedViewRefresher'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
 import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
@@ -54,6 +55,12 @@ export function getActivityModule(
     new StarkexTransactionCountRepository(database, logger)
   const zksyncTransactionRepository = new ZksyncTransactionRepository(
     database,
+    logger,
+  )
+
+  const materializedViewRefresher = new MaterializedViewRefresher(
+    blockTransactionCountRepository,
+    clock,
     logger,
   )
 
@@ -110,6 +117,8 @@ export function getActivityModule(
 
   const start = () => {
     logger.info('Starting Activity Module')
+
+    materializedViewRefresher.start()
 
     for (const updater of layer2RpcTransactionUpdaters) {
       updater.start()

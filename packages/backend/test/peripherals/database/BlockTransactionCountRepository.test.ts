@@ -116,6 +116,7 @@ describe(BlockTransactionCountRepository.name, () => {
     BlockTransactionCountRepository.prototype.getDailyTransactionCount.name,
     () => {
       it('works with empty repository', async () => {
+        await repository.refresh()
         expect(
           await repository.getDailyTransactionCount(PROJECT_A, UnixTime.now()),
         ).toEqual([])
@@ -141,6 +142,7 @@ describe(BlockTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
+        await repository.refresh()
         expect(
           await repository.getDailyTransactionCount(
             PROJECT_A,
@@ -184,6 +186,7 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
+        await repository.refresh()
         expect(
           await repository.getDailyTransactionCount(
             PROJECT_A,
@@ -223,6 +226,7 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
+        await repository.refresh()
         expect(
           await repository.getDailyTransactionCount(
             PROJECT_A,
@@ -258,6 +262,7 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
+        await repository.refresh()
         expect(
           await repository.getDailyTransactionCount(PROJECT_A, today),
         ).toEqual([

@@ -112,30 +112,22 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
+  async refresh() {
+    const knex = await this.knex()
+    await knex.schema.refreshMaterializedView('transactions.block_count_view')
+  }
+
   async getDailyTransactionCount(
     projectId: ProjectId,
     maxTimestamp: UnixTime,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
-    const { rows } = (await knex.raw(
-      `
-      SELECT
-        date_trunc('day', unix_timestamp) AS unix_timestamp,
-        sum(count) as count
-      FROM
-        transactions.block
-      WHERE
-        project_id = ? 
-        AND unix_timestamp < ?
-      GROUP BY
-        date_trunc('day', unix_timestamp)
-      ORDER BY 
-        unix_timestamp
-    `,
-      [projectId.toString(), maxTimestamp.toDate()],
-    )) as unknown as {
-      rows: Pick<BlockTransactionCountRow, 'unix_timestamp' | 'count'>[]
-    }
+    const rows = (await knex
+      .withSchema('transactions')
+      .from('block_count_view')
+      .where('project_id', projectId.toString())
+      .andWhere('unix_timestamp', '<', maxTimestamp.toDate())
+      .orderBy('unix_timestamp')) as { unix_timestamp: Date; count: string }[]
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
