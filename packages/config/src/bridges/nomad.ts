@@ -10,6 +10,8 @@ export const nomad: Bridge = {
   display: {
     name: 'Nomad',
     slug: 'nomad',
+    warning:
+      'The Nomad token bridge contract has recently been exploited and currently is not operational.',
     links: {
       websites: ['https://app.nomad.xyz/', 'https://docs.nomad.xyz/'],
       repositories: ['https://github.com/nomad-xyz/monorepo'],
@@ -18,7 +20,6 @@ export const nomad: Bridge = {
         'https://discord.gg/nomadxyz',
       ],
     },
-
     description:
       'Nomad is a general messaging bridge that uses optimistic verification to validate cross-chain bridging transactions.',
   },
@@ -97,6 +98,7 @@ export const nomad: Bridge = {
       value: 'Optimistically',
       description:
         'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',
+      sentiment: 'warning',
     },
     sourceUpgradeability: {
       value: 'Yes',

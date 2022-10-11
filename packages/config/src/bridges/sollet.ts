@@ -39,6 +39,7 @@ export const sollet: Bridge = {
     validatedBy: {
       value: 'Third Party',
       description: '',
+      sentiment: 'bad',
     },
   },
 }

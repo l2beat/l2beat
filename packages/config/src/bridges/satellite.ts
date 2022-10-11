@@ -34,7 +34,7 @@ export const satellite: Bridge = {
   },
   technology: {
     canonical: true,
-    category: 'Hybrid',
+    category: 'Liquidity Network',
     destination: ['Various'], // TODO: list the chains
   },
   riskView: {
