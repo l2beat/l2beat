@@ -41,7 +41,7 @@ export const immutablex: Layer2 = {
       {
         address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
         sinceTimestamp: new UnixTime(1615389188),
-        tokens: ['ETH', 'IMX', 'USDC'],
+        tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
       },
     ],
     events: [
