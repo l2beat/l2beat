@@ -27,7 +27,7 @@ export function getStagingConfig(): Config {
       loopringCallsPerMinute: 400,
       rpc: {
         workQueueLimit: 200_000,
-        workQueueWorkers: 100,
+        workQueueWorkers: getEnv.integer('ACTIVITY_RPC_WORKERS'),
         projects: {
           ethereum: {
             callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
