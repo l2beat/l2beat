@@ -1,4 +1,4 @@
-import { layer2s } from '@l2beat/config'
+import { bridges, layer2s } from '@l2beat/config'
 import express from 'express'
 import { Server } from 'http'
 import puppeteer from 'puppeteer'
@@ -15,7 +15,9 @@ async function main() {
     const server = app.listen(1234, () => resolve(server))
   })
 
-  const slugs = layer2s.map((x) => x.display.slug).concat('overview')
+  const slugs = [...layer2s, ...bridges]
+    .map((x) => x.display.slug)
+    .concat('overview-scaling', 'overview-bridges')
 
   const browser = await puppeteer.launch({
     args: ['--no-sandbox'],

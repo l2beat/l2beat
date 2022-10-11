@@ -8,6 +8,7 @@ import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
 import { BridgesRiskViewEntry } from './BridgesRiskView'
+import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
@@ -42,12 +43,7 @@ export function getProps(
       footer: getFooterProps(config),
     },
     wrapper: {
-      metadata: {
-        description: '',
-        image: '',
-        title: '',
-        url: '',
-      },
+      metadata: getPageMetadata(),
     },
   }
 }
