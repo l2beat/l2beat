@@ -1,0 +1,46 @@
+{
+  "name": "synapse",
+  "contracts": [
+    {
+      "name": "SynapseBridge",
+      "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
+      "upgradeability": {
+        "type": "proxy",
+        "adminSlot": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+        "implementationSlot": "0x31fe393815822edacBd81C2262467402199EFD0D"
+      },
+      "values": {
+        "ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "admins": [
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
+        "adminsCount": 1,
+        "GOVERNANCE_ROLE": "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1",
+        "governors": [
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
+        "governorsCount": 1,
+        "NODEGROUP_ROLE": "0xb5c00e6706c3d213edd70ff33717fac657eacc5fe161f07180cf1fcab13cc4cd",
+        "nodes": [
+          "0x230A1AC45690B9Ae1176389434610B9526d2f21b"
+        ],
+        "nodesCount": 1
+      }
+    },
+    {
+      "name": "MultiSig",
+      "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+      "upgradeability": {
+        "type": "gnosis safe"
+      },
+      "values": {
+        "owners": [
+          "0xb3DAD3C24A861b84fDF380B212662620627D4e15",
+          "0x42980E3e602178354E065723d9652BEf79Ae3673",
+          "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
+        ],
+        "threshold": 2
+      }
+    }
+  ]
+}

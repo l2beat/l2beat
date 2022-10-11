@@ -11,6 +11,7 @@ import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
 import { discoverStarkNet, STARK_NET_NAME } from '../projects/starknet'
+import { discoverSynapse, SYNAPSE_NAME } from '../projects/synapse'
 import { discoverZkSpace, ZK_SPACE_NAME } from '../projects/zkSpace'
 import { discoverZkSwap1, ZK_SWAP_1_NAME } from '../projects/zkSwap1'
 import { discoverZkSwap2, ZK_SWAP_2_NAME } from '../projects/zkSwap2'
@@ -47,6 +48,7 @@ export async function discover(args: string[]) {
     [NOVA_NAME, discoverNova],
     [DYDX_NAME, discoverDydx],
     [ORBIT_BRIDGE_NAME, discoverOrbitBridge],
+    [SYNAPSE_NAME, discoverSynapse],
   ]
 
   const project = projects.find((x) => x[0] === args[0])
