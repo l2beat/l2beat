@@ -113,25 +113,20 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async getDailyTransactionCount(maxTimestamp: UnixTime) {
+  async refresh() {
     const knex = await this.knex()
-    const { rows } = (await knex.raw(
-      `
-      SELECT
-        date_trunc('day', unix_timestamp) AS unix_timestamp,
-        count(*) as count
-      FROM
-        transactions.zksync
-      WHERE
-        unix_timestamp < ?
-      GROUP BY
-        date_trunc('day', unix_timestamp)
-      ORDER BY unix_timestamp
-    `,
-      maxTimestamp.toDate(),
-    )) as unknown as {
-      rows: { unix_timestamp: Date; count: string }[]
-    }
+    await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
+  }
+
+  async getDailyTransactionCount(
+    maxTimestamp: UnixTime,
+  ): Promise<{ timestamp: UnixTime; count: number }[]> {
+    const knex = await this.knex()
+    const rows = (await knex
+      .withSchema('transactions')
+      .from('zksync_count_view')
+      .where('unix_timestamp', '<', maxTimestamp.toDate())
+      .orderBy('unix_timestamp')) as { unix_timestamp: Date; count: string }[]
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
