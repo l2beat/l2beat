@@ -120,7 +120,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const { rows } = (await knex.raw(
       `
       SELECT
-        date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
+        date_trunc('day', unix_timestamp) AS unix_timestamp,
         sum(count) as count
       FROM
         transactions.block
@@ -128,8 +128,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
         project_id = ? 
         AND unix_timestamp < ?
       GROUP BY
-        project_id,
-        date_trunc('day', unix_timestamp, 'UTC')
+        date_trunc('day', unix_timestamp)
       ORDER BY 
         unix_timestamp
     `,
