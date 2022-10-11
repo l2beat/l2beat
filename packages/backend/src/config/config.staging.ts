@@ -30,15 +30,15 @@ export function getStagingConfig(): Config {
         workQueueWorkers: 100,
         projects: {
           ethereum: {
-            callsPerMinute: 10,
+            callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
             url: getEnv('ACTIVITY_ETHEREUM_URL'),
           },
           optimism: {
-            callsPerMinute: 60 * 25,
+            callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
             url: getEnv('ACTIVITY_OPTIMISM_URL'),
           },
           arbitrum: {
-            callsPerMinute: 60 * 25,
+            callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
             url: getEnv('ACTIVITY_ARBITRUM_URL'),
           },
         },
