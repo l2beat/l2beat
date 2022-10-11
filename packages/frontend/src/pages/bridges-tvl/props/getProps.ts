@@ -8,6 +8,7 @@ import { formatUSD, getPercentageChange } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
 import { BridgesTvlPageProps } from '../BridgesTvlPage'
 import { getBridgesTvlView } from './getBridgesTvlView'
+import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
@@ -54,12 +55,7 @@ export function getProps(
     },
     wrapper: {
       preloadApi: '/api/bridges-tvl.json',
-      metadata: {
-        description: '',
-        image: '',
-        title: '',
-        url: '',
-      },
+      metadata: getPageMetadata(),
     },
   }
 }
