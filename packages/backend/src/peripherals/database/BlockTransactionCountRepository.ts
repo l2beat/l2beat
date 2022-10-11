@@ -128,7 +128,6 @@ export class BlockTransactionCountRepository extends BaseRepository {
         project_id = ? 
         AND unix_timestamp < ?
       GROUP BY
-        project_id,
         date_trunc('day', unix_timestamp)
       ORDER BY 
         unix_timestamp

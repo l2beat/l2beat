@@ -121,7 +121,6 @@ export class StarkexTransactionCountRepository extends BaseRepository {
       WHERE
         project_id = ?
       GROUP BY
-        project_id,
         date_trunc('day', unix_timestamp)
       ORDER BY 
         unix_timestamp
