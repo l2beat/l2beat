@@ -1,11 +1,10 @@
 import { Bridge, Layer2, ProjectContract } from '@l2beat/config'
-import { existsSync } from 'fs'
-import path from 'path'
 
 import {
   ContractsSectionProps,
   TechnologyContract,
 } from '../../components/project/ContractsSection'
+import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
   project: Layer2 | Bridge,
@@ -19,12 +18,7 @@ export function getContractSection(
     isCritical: !!risk.isCritical,
   }))
 
-  const file = path.join(
-    __dirname,
-    `../../static/images/${project.display.slug}-architecture.png`,
-  )
-  console.log(file)
-  const architectureImage = existsSync(file)
+  const architectureImage = hasArchitectureImage(project.display.slug)
     ? `/images/${project.display.slug}-architecture.png`
     : undefined
 
