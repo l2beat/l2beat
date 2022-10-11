@@ -118,14 +118,14 @@ export class ZksyncTransactionRepository extends BaseRepository {
     const { rows } = (await knex.raw(
       `
       SELECT
-        date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
+        date_trunc('day', unix_timestamp) AS unix_timestamp,
         count(*) as count
       FROM
         transactions.zksync
       WHERE
         unix_timestamp < ?
       GROUP BY
-        date_trunc('day', unix_timestamp, 'UTC')
+        date_trunc('day', unix_timestamp)
       ORDER BY unix_timestamp
     `,
       maxTimestamp.toDate(),
