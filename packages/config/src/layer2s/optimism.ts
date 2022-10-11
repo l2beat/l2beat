@@ -88,9 +88,6 @@ export const optimism: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      provider: 'alchemy',
-      networkName: 'optimism',
-      callsPerMinute: 1200,
     },
   },
   riskView: makeBridgeCompatible({
