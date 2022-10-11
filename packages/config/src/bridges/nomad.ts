@@ -11,7 +11,7 @@ export const nomad: Bridge = {
     name: 'Nomad',
     slug: 'nomad',
     warning:
-      'The Nomad token bridge contract has recently been exploited and current is not operational.',
+      'The Nomad token bridge contract has recently been exploited and currently is not operational.',
     links: {
       websites: ['https://app.nomad.xyz/', 'https://docs.nomad.xyz/'],
       repositories: ['https://github.com/nomad-xyz/monorepo'],
