@@ -114,15 +114,14 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     const { rows } = (await knex.raw(
       `
       SELECT
-        date_trunc('day', unix_timestamp, 'UTC') AS unix_timestamp,
+        date_trunc('day', unix_timestamp) AS unix_timestamp,
         sum(count) as count
       FROM
         transactions.starkex
       WHERE
         project_id = ?
       GROUP BY
-        project_id,
-        date_trunc('day', unix_timestamp, 'UTC')
+        date_trunc('day', unix_timestamp)
       ORDER BY 
         unix_timestamp
     `,
