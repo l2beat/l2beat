@@ -21,8 +21,9 @@ export function getContractSection(
 
   const file = path.join(
     __dirname,
-    `../../../static/images/${project.display.slug}-architecture.png`,
+    `../../static/images/${project.display.slug}-architecture.png`,
   )
+  console.log(file)
   const architectureImage = existsSync(file)
     ? `/images/${project.display.slug}-architecture.png`
     : undefined
