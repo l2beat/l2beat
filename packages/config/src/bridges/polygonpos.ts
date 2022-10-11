@@ -75,9 +75,9 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     destinationToken: {
-      ...RISK_VIEW.WRAPPED,
+      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:
-        RISK_VIEW.WRAPPED.description +
+        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
         ' Tokens transferred end up as ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
     },
   },
