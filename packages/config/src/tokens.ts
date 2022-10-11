@@ -337,6 +337,17 @@ export const tokenList: TokenInfo[] = [
     sinceTimestamp: new UnixTime(1523274016),
     category: 'other',
   },
+
+  {
+    id: AssetId('xcn-chain'),
+    name: 'Chain',
+    coingeckoId: CoingeckoId('chain-2'),
+    address: EthereumAddress('0xA2cd3D43c775978A96BdBf12d733D5A1ED94fb18'),
+    symbol: 'XCN',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1646687021),
+    category: 'other',
+  },
   {
     id: AssetId('link-chain-link-token'),
     name: 'ChainLink Token',

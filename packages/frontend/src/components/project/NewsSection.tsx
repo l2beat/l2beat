@@ -16,6 +16,10 @@ export interface NewsItem {
 }
 
 export function NewsSection({ news }: NewsSectionProps) {
+  if (news.length === 0) {
+    return null
+  }
+
   return (
     <Section title="News" id="news" className="NewsSection">
       <ul className="NewsSection-List">
