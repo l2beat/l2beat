@@ -111,24 +111,12 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
-    const { rows } = (await knex.raw(
-      `
-      SELECT
-        date_trunc('day', unix_timestamp) AS unix_timestamp,
-        sum(count) as count
-      FROM
-        transactions.starkex
-      WHERE
-        project_id = ?
-      GROUP BY
-        date_trunc('day', unix_timestamp)
-      ORDER BY 
-        unix_timestamp
-    `,
-      projectId.toString(),
-    )) as unknown as {
-      rows: Pick<StarkexTransactionCountRow, 'unix_timestamp' | 'count'>[]
-    }
+    const rows = (await knex('transactions.starkex')
+      .where('project_id', projectId.toString())
+      .orderBy('unix_timestamp')) as Pick<
+      StarkexTransactionCountRow,
+      'unix_timestamp' | 'count'
+    >[]
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
