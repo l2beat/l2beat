@@ -59,7 +59,6 @@ export const nova: Layer2 = {
     events: [],
     transactionApi: {
       type: 'rpc',
-      provider: 'jsonRpc',
       url: 'https://nova.arbitrum.io/rpc',
       callsPerMinute: 200,
       // We need to subtract the Nitro system transaction

@@ -67,7 +67,6 @@ export const metis: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      provider: 'jsonRpc',
       url: 'https://andromeda.metis.io/',
     },
   },
