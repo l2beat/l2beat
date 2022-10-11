@@ -30,7 +30,7 @@ export const xdai: Bridge = {
       repositories: ['https://github.com/gnosischain'],
     },
     description:
-      'xDai Bridge is the official bridge dedicated to transferring Dai from Ethereum into xDai on Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Ethereum escrow acts as a fractional reserve since part of the deposits can be sent to Compound to accrue yield which is passed to external recipient.',
+      'xDai Bridge is the official bridge dedicated to transferring Dai from Ethereum into xDai on Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Tokens sent to the bridge escrow can be further sent to Compound to generate interest for external recipient, although this functionality has been disabled at the time of Ethereum Merge.',
   },
   config: {
     escrows: [
