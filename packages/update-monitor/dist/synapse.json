@@ -5,7 +5,7 @@
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
       "upgradeability": {
-        "type": "proxy",
+        "type": "eip1967 proxy",
         "adminSlot": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
         "implementationSlot": "0x31fe393815822edacBd81C2262467402199EFD0D"
       },
@@ -40,6 +40,33 @@
           "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
         ],
         "threshold": 2
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
+      }
+    },
+    {
+      "name": "Timelock",
+      "address": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "minDelay": 180,
+        "isMultisigAdmin": true,
+        "isMultisigExecutor": true,
+        "isMultisigProposer": true
       }
     }
   ]
