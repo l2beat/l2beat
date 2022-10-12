@@ -109,9 +109,9 @@ export class StarkexTransactionUpdater implements TransactionCounter {
     )
   }
 
-  async getStatus() {
-    return Promise.resolve({
+  getStatus() {
+    return {
       workQueue: this.daysQueue.getStats(),
-    })
+    }
   }
 }
