@@ -10,8 +10,8 @@ export function createActivityRouter(activityController: ActivityController) {
     ctx.body = data
   })
 
-  router.get('/api/activity/status', async (ctx) => {
-    const data = await activityController.getStatus()
+  router.get('/api/activity/status', (ctx) => {
+    const data = activityController.getStatus()
     ctx.body = data
   })
 

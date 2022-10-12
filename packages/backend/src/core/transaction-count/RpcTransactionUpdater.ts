@@ -125,16 +125,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
     )
   }
 
-  async getStatus() {
+  getStatus() {
     return {
       workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
       latestBlock: this.latestBlock?.toString() ?? null,
-      latestFetchedBlock:
-        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
-      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
-        this.projectId,
-      ),
     }
   }
 }
