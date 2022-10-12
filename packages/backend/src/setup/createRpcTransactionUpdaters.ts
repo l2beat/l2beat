@@ -8,6 +8,7 @@ import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
 import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
+import { StarkNetClient } from '../peripherals/StarknetClient'
 import { assert } from '../tools/assert'
 
 export function createLayer2RpcTransactionUpdaters(
@@ -80,6 +81,27 @@ export function createEthereumTransactionUpdater(
       workQueueSizeLimit: config.rpc.workQueueLimit,
       workQueueWorkers: config.rpc.workQueueWorkers,
     }, // TODO: make it cleaner, we already have a min timestamp in config
+  )
+  return updater
+}
+
+export function createStarkNetTransactionUpdater(
+  config: TransactionCountSyncConfig,
+  blockTransactionCountRepository: BlockTransactionCountRepository,
+  clock: Clock,
+  logger: Logger,
+) {
+  const client = new StarkNetClient({ callsPerMinute: 60 * 5 })
+  const updater = new RpcTransactionUpdater(
+    client,
+    blockTransactionCountRepository,
+    clock,
+    logger,
+    ProjectId('starknet'),
+    {
+      workQueueSizeLimit: config.rpc.workQueueLimit,
+      workQueueWorkers: config.rpc.workQueueWorkers,
+    },
   )
   return updater
 }
