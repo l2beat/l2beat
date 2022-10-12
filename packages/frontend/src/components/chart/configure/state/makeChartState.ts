@@ -88,6 +88,11 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     updateType(checked)
   })
 
+  controls.ethActivity?.addEventListener('change', () => {
+    const checked = !!controls.ethActivity?.checked
+    updateSecondaryInput(checked ? '/api/ethereum-activity.json' : undefined)
+  })
+
   function updateType(toActivity: boolean) {
     if (toActivity) {
       state.type = 'activity'
@@ -102,22 +107,42 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
 
   function updateInput(url: string) {
     state.endpoint = url
-    state.input = undefined
+    state.mainInput = undefined
     onChange()
     apiGet<Charts>(url).then((result) => {
       // prevent race conditions
       if (state.endpoint !== url) {
         return
       }
-      state.input =
-        state.days === 7
-          ? result.hourly
-          : state.days <= 90
-          ? result.sixHourly
-          : result.daily
+      state.mainInput = getInput(state, result)
+      onChange()
+    }, console.error)
+  }
+
+  function updateSecondaryInput(url?: string) {
+    state.secondaryEndpoint = url
+    state.secondaryInput = undefined
+    onChange()
+    if (!url) {
+      return
+    }
+    apiGet<Charts>(url).then((result) => {
+      // prevent race conditions
+      if (state.secondaryEndpoint !== url) {
+        return
+      }
+      state.secondaryInput = getInput(state, result)
       onChange()
     }, console.error)
   }
 
   return state
+}
+
+function getInput(state: ChartState, result: Charts) {
+  return state.days === 7
+    ? result.hourly
+    : state.days <= 90
+    ? result.sixHourly
+    : result.daily
 }

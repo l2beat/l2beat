@@ -14,12 +14,12 @@ function getDataPoints(points: ChartInput['data'], days: number) {
 }
 
 export function toUiState(state: ChartStateWithInput): UiState {
-  const dataPoints = getDataPoints(state.input.data, state.days)
+  const dataPoints = getDataPoints(state.mainInput.data, state.days)
   if (dataPoints.length === 0) {
     return {
       dateRange: 'No data',
       labels: ['', '', '', '', ''],
-      points: [],
+      mainPoints: [],
     }
   }
   const dateRange = formatRange(
@@ -28,26 +28,50 @@ export function toUiState(state: ChartStateWithInput): UiState {
   )
 
   const values = dataPoints.map((x) => x[state.altCurrency ? 2 : 1])
-  const currency = state.input.types[state.altCurrency ? 2 : 1]
+  const currency = state.mainInput.types[state.altCurrency ? 2 : 1]
   const ticks = calculateTicks(5, values, state.logScale)
   const labels = ticks.map((x) => formatCurrency(x, currency))
   const [min, , , , max] = ticks
 
   const getY = state.logScale ? getLogY(min, max) : getLinY(min, max)
+  const mainPoints = calcPoints(state.mainInput.data, state, values, getY)
+
+  if (!state.secondaryInput) {
+    return {
+      dateRange,
+      labels,
+      mainPoints,
+    }
+  }
+
+  const secondaryData = state.secondaryInput.data.slice(-mainPoints.length)
+  const secondaryPoints = calcPoints(secondaryData, state, values, getY)
+
+  return {
+    dateRange,
+    labels,
+    mainPoints,
+    secondaryPoints,
+  }
+}
+
+function calcPoints(
+  data: ChartInput['data'],
+  state: ChartStateWithInput,
+  values: number[],
+  getY: (value: number) => number,
+) {
+  const dataPoints = getDataPoints(data, state.days)
 
   const points = dataPoints.map(([timestamp, valueA, valueB], i) => ({
     x: i / (values.length - 1),
     y: getY(state.altCurrency ? valueB : valueA),
     date: formatTimestamp(timestamp, true),
-    valueA: formatCurrencyExact(valueA, state.input.types[1]),
-    valueB: formatCurrencyExact(valueB, state.input.types[2]),
+    valueA: formatCurrencyExact(valueA, state.mainInput.types[1]),
+    valueB: formatCurrencyExact(valueB, state.mainInput.types[2]),
   }))
 
-  return {
-    dateRange,
-    labels,
-    points,
-  }
+  return points
 }
 
 function getLinY(min: number, max: number) {

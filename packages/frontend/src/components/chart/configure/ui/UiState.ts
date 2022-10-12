@@ -1,7 +1,8 @@
 export interface UiState {
   dateRange: string
   labels: string[]
-  points: Point[]
+  mainPoints: Point[]
+  secondaryPoints?: Point[]
 }
 
 export interface Point {

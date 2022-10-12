@@ -17,7 +17,8 @@ export function configureChart() {
   window.addEventListener('resize', () => requestAnimationFrame(draw))
 
   function update() {
-    uiState = chartState.input && toUiState(chartState as ChartStateWithInput)
+    uiState =
+      chartState.mainInput && toUiState(chartState as ChartStateWithInput)
     requestAnimationFrame(draw)
   }
 

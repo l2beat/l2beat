@@ -5,6 +5,7 @@ import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { CurrencyControls } from './CurrencyControls'
+import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
@@ -61,6 +62,7 @@ export function Chart({
         {!hideControls && <ScaleControls />}
       </div>
       {!hideControls && <TokenControls tokens={tokens} />}
+      {type === 'activity' && <EthereumActivityToggle />}
     </section>
   )
 }

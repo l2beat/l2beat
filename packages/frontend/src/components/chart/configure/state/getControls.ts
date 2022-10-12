@@ -16,5 +16,8 @@ export function getControls(chart: Element) {
     tvlActivity: document.querySelector<HTMLInputElement>(
       '[data-role="toggle-tvl-activity"]',
     ),
+    ethActivity: document.querySelector<HTMLInputElement>(
+      '[data-role="toggle-ethereum-activity"]',
+    ),
   }
 }
