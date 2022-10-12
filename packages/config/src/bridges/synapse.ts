@@ -10,27 +10,43 @@ export const synapse: Bridge = {
     name: 'Synapse',
     slug: 'synapse',
     links: {
-      websites: ['https://synapseprotocol.com/'],
+      websites: ['https://synapseprotocol.com/landing'],
+      apps: ['https://synapseprotocol.com'],
+      documentation: ['https://docs.synapseprotocol.com/'],
+      repositories: ['https://github.com/synapsecns'],
+      explorers: ['https://analytics.synapseprotocol.com/'],
+      socialMedia: [
+        'https://twitter.com/SynapseProtocol',
+        'https://discord.gg/synapseprotocol',
+        'https://forum.synapseprotocol.com/',
+        'https://synapse.mirror.xyz/',
+      ],
     },
+    description:
+      'Synapse is a token bridge leveraging a validator between chains and liquidity pools to perform cross-chain and same chain swaps.',
   },
   config: {
     escrows: [
       {
         address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
         sinceTimestamp: new UnixTime(1629082107),
-        tokens: [
-          'ETH',
-          'WETH',
-          //'gOHM',
-          //'HIGH',
-          'FRAX',
-        ],
+        tokens: ['ETH', 'WETH', 'FRAX', 'USDT', 'USDC', 'WBTC', 'DAI'],
       },
     ],
   },
   technology: {
     category: 'Liquidity Network',
-    destination: ['Various'], // TODO: list the chains
+    destination: [
+      'Arbitrum',
+      'Avalanche',
+      'BNB Chain',
+      'Optimism',
+      'Polygon',
+      'Aurora',
+      'Boba Network',
+      'Fantom',
+      'Metis',
+    ],
   },
   riskView: {
     validatedBy: {
