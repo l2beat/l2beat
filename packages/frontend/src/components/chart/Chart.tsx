@@ -20,6 +20,7 @@ export interface ChartProps {
   days?: 7 | 30
   hideControls?: boolean
   className?: string
+  hasActivity?: boolean
 }
 
 export function Chart({
@@ -29,6 +30,7 @@ export function Chart({
   days = 7,
   hideControls = false,
   type,
+  hasActivity,
 }: ChartProps) {
   return (
     <section
@@ -62,7 +64,9 @@ export function Chart({
         {!hideControls && <ScaleControls />}
       </div>
       {!hideControls && <TokenControls tokens={tokens} />}
-      {type === 'activity' && <EthereumActivityToggle />}
+      {hasActivity && (
+        <EthereumActivityToggle showToggle={type === 'activity'} />
+      )}
     </section>
   )
 }

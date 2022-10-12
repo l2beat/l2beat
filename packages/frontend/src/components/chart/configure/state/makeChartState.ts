@@ -25,10 +25,17 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     altCurrency: controls.currency.find((x) => x.checked)?.value === 'ETH',
     logScale: controls.scale.find((x) => x.checked)?.value === 'LOG',
     token: selected?.value,
+    secondaryEndpoint: controls.ethActivity?.checked
+      ? '/api/ethereum-activity.json'
+      : undefined,
   }
 
   if (state.endpoint) {
     setTimeout(() => updateInput(state.endpoint))
+  }
+
+  if (state.secondaryEndpoint) {
+    setTimeout(() => updateSecondaryInput(state.secondaryEndpoint))
   }
 
   onRadioChange(controls.range, (control) => {
@@ -97,10 +104,12 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     if (toActivity) {
       state.type = 'activity'
       onChange()
+      controls.ethActivity?.parentElement?.classList.remove('hidden')
       updateInput(getActivityEndpoint(chart))
     } else {
       state.type = 'tvl'
       onChange()
+      controls.ethActivity?.parentElement?.classList.add('hidden')
       updateInput(getTvlEndpoint(chart))
     }
   }

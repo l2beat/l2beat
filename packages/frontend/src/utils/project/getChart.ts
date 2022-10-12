@@ -11,6 +11,7 @@ export function getChart(
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     activityEndpoint: `/api/${project.display.slug}-activity.json`,
     tokens: getTokens(project.id, tvlApiResponse),
+    hasActivity: true,
   }
 }
 

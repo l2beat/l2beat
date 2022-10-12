@@ -38,6 +38,7 @@ export function ActivityPage(props: ActivityPageProps) {
             type={'activity'}
             activityEndpoint={props.apiEndpoint}
             hideControls
+            hasActivity={true}
           ></Chart>
           <ActivityView {...props.activityView} />
           <About />
