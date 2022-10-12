@@ -103,15 +103,10 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     )
   }
 
-  async getStatus() {
+  getStatus() {
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
-      latestFetchedBlock:
-        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
-      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
-        this.projectId,
-      ),
     }
   }
 }
