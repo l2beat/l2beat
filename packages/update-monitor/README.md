@@ -9,6 +9,7 @@ To run please use `yarn start`. Display help with `yarn start --help`.
 ### Step 1: Discovery
 
 1. inside `src/projects` create your project's folder with the files:
+
    1. `constants.ts` where you specify addresses of the contracts, see example [starknet](src/projects/starknet/constants.ts)
    2. `index.ts` with the async function responsible for setting up the discovery engine, see example [starknet](src/projects/starknet/index.ts)
 
@@ -25,6 +26,7 @@ To run please use `yarn start`. Display help with `yarn start --help`.
 7. Typechain will generate Typescript typings inside `/src/typechain`
 
 ### Step 2: Getting values
+
 Now we can create getter for the values, see example function `getStarkNetParameters` in [starknet](src/projects/starknet/index.ts)
 
 1. Create getter for given contract's values, see example [starknet](src/proj/../projects/starknet/contracts/starknet.ts)
@@ -36,9 +38,3 @@ Now we can create getter for the values, see example function `getStarkNetParame
 4. Script will generate file `dist/[project].json` with fetched values
 
 ### Step 3: Verifying parameters
-
-
-
-
-
-

@@ -25,7 +25,7 @@ export async function getTimelock(
   )
   const isMultisigProposer = await timelock.hasRole(
     PROPOSER_ROLE,
-    addresses.multisig
+    addresses.multisig,
   )
 
   return {
@@ -42,7 +42,7 @@ export async function getTimelock(
       minDelay,
       isMultisigAdmin,
       isMultisigExecutor,
-      isMultisigProposer
+      isMultisigProposer,
     },
   }
 }

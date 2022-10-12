@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -35,7 +36,6 @@ export const synapse: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: [
       'Arbitrum',
       'Avalanche',
@@ -47,17 +47,61 @@ export const synapse: Bridge = {
       'Fantom',
       'Metis',
     ],
+    category: 'Hybrid',
+    principleOfOperation: {
+      name: 'Principle of operation',
+      description:
+        'Synapse leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The external actor is observing events on supported chains and manages funds accordingly. The tokens are swapped using a typical lock-mint bridge with a wrapped asset on the other chain, or are provided via liquidity pools through something called stable swap, where the user funds are converted to a stable on one end and on the other end this stable is minted and immediately swapped to a given token.',
+      references: [],
+      risks: [],
+    },
+    validation: {
+      name: 'Transfers are externally verified',
+      description:
+        'External actor observe events on Ethereum and transfer funds to other bridges. The same happens when bridging back to Ethereum, external actor instructs EOA to perform withdraw on users account.',
+      references: [],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'nodes decide not to transfer tokens after observing an event on Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'nodes decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'nodes decide to withdraw all the funds from the Ethereum Contract.',
+          isCritical: true,
+        },
+      ],
+    },
+    destinationToken: {
+      name: 'Destination tokens',
+      description:
+        'Type of the token received on the destination chain depends on the token, if it is native to this chain user will receive canonical token. If the bridged token is not native to the destination chain then user will end up with wrapped version, the contract is called BridgeToken and is upgradable.',
+      references: [],
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'destination token contract is maliciously upgraded or not securely implemented.',
+          isCritical: true,
+        },
+      ],
+    },
   },
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'Transfers out of the bridge are validated by EOA.',
+      description: 'Withdraws are validated by EOA.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: '3 hour delay',
+      value: '3 minutes delay',
       description:
-        'Bridge can be upgraded after 3 hour delay by a 2/3 Admin MultiSig.',
+        'Bridge can be upgraded after 3 minutes delay by a 2/3 Admin MultiSig.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.CANONICAL,
@@ -66,12 +110,14 @@ export const synapse: Bridge = {
     addresses: [
       {
         name: 'L1BridgeZap',
-        description: '',
+        description:
+          'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
         address: '0x6571d6be3d8460CF5F7d6711Cd9961860029D85F',
       },
       {
         name: 'SynapseBridge',
-        description: '',
+        description:
+          "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
         address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
         upgradeability: {
           type: 'EIP1967',
@@ -80,14 +126,14 @@ export const synapse: Bridge = {
         },
       },
     ],
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('3 minutes')],
   },
 
   permissions: [
     {
       name: 'Bridge Governance 2/3 MultiSig',
       description:
-        'Can update chain gas amount, weth address, manage roles, add kappas, withdraw fees, pause and unpause,   ',
+        "Can upgrade Bridge implementation and manage the bridge parameters. Potential malicious upgrade can result in the loss of user's funds.",
       accounts: [
         {
           address: '0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55',
@@ -116,7 +162,7 @@ export const synapse: Bridge = {
     },
     {
       name: 'Nodes',
-      description: 'Can withdraw funds, mint SynERC20 Wrapped tokens.',
+      description: 'Can withdraw funds and mint SynERC20 Wrapped tokens.',
       accounts: [
         {
           address: '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
