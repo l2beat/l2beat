@@ -19,7 +19,8 @@ export async function up(knex: Knex) {
     .where({ block_number: 0, project_id: 'nova' })
   await knex('transactions.block')
     .delete()
-    .where({ block_number: 0, project_id: 'ethereum' })
+    .where('project_id', 'ethereum')
+    .andWhere('block_number', '<', 8929324)
 }
 
 export async function down(_knex: Knex) {}
