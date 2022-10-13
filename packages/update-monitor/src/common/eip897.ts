@@ -1,4 +1,4 @@
-import { Contract, providers } from 'ethers'
+import { constants, Contract, providers } from 'ethers'
 
 import { bytes32ToAddress } from './address'
 
@@ -10,9 +10,21 @@ export async function getEip897Implementation(
   contract: Contract | string,
 ) {
   const address = typeof contract === 'string' ? contract : contract.address
-  const value = await provider.call({
-    to: address,
-    data: FN_IMPLEMENTATION_SIG,
-  })
-  return bytes32ToAddress(value)
+  try {
+    const value = await provider.call({
+      to: address,
+      data: FN_IMPLEMENTATION_SIG,
+    })
+    return bytes32ToAddress(value)
+  } catch (e) {
+    if (
+      e instanceof Error &&
+      e.message.includes('Transaction reverted without a reason string')
+    ) {
+      // This contract doesn't contain "implementation()"
+      return constants.AddressZero
+    } else {
+      throw e
+    }
+  }
 }
