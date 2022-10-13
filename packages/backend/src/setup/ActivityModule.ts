@@ -18,7 +18,6 @@ import { ZksyncClient } from '../peripherals/zksync'
 import {
   createEthereumTransactionUpdater,
   createLayer2RpcTransactionUpdaters,
-  createStarkNetTransactionUpdater,
 } from './createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './createStarkexTransactionUpdaters'
 
@@ -69,17 +68,11 @@ export function getActivityModule(
     config,
     blockTransactionCountRepository,
     clock,
+    http,
     logger,
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
-    config.transactionCountSync,
-    blockTransactionCountRepository,
-    clock,
-    logger,
-  )
-
-  const starkNetTransactionUpdater = createStarkNetTransactionUpdater(
     config.transactionCountSync,
     blockTransactionCountRepository,
     clock,
@@ -117,7 +110,6 @@ export function getActivityModule(
       ...starkexTransactionUpdaters,
       zksyncTransactionUpdater,
       loopringTransactionUpdater,
-      starkNetTransactionUpdater,
     ],
     ethereumTransactionUpdater,
   )
@@ -138,7 +130,6 @@ export function getActivityModule(
     zksyncTransactionUpdater.start()
     loopringTransactionUpdater.start()
     ethereumTransactionUpdater.start()
-    starkNetTransactionUpdater.start()
   }
 
   return {

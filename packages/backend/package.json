@@ -41,12 +41,9 @@
     "react-dom": "^18.1.0",
     "rollbar": "^2.25.2",
     "source-map-support": "^0.5.21",
-    "starknet": "^4.4.2",
     "zod": "^3.17.3"
   },
   "devDependencies": {
-    "@types/bn.js": "^5.1.1",
-    "@types/elliptic": "^6.4.14",
     "@types/koa-conditional-get": "^2.0.0",
     "@types/koa-etag": "^3.0.0",
     "@types/supertest": "^2.0.12",
