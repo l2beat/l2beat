@@ -1,7 +1,7 @@
 import { Point } from '../ui'
 import { path } from './path'
 
-export function stroke(
+export function strokeChartLine(
   ctx: CanvasRenderingContext2D,
   points: Point[],
   canvas: HTMLCanvasElement,

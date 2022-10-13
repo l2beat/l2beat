@@ -1,5 +1,5 @@
-import { fill } from './draw/fill'
-import { stroke } from './draw/stroke'
+import { fillBelowChart } from './draw/fillBelowChart'
+import { strokeChartLine } from './draw/strokeChartLine'
 import { getMainStyle, getSecondaryStyle } from './draw/style'
 import { Outputs } from './getOutputs'
 import { UiState } from './ui'
@@ -27,14 +27,25 @@ export function plot(uiState: UiState | undefined, outputs: Outputs) {
   const mainStyle = getMainStyle(canvas, ctx)
 
   if (uiState.secondaryPoints) {
-    fill(ctx, uiState.secondaryPoints, canvas, secondaryStyle.fillGradient, {
-      fade: true,
-    })
-    fill(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
-    stroke(ctx, uiState.secondaryPoints, canvas, secondaryStyle.strokeGradient)
-    stroke(ctx, uiState.mainPoints, canvas, mainStyle.strokeGradient)
+    fillBelowChart(
+      ctx,
+      uiState.secondaryPoints,
+      canvas,
+      secondaryStyle.fillGradient,
+      {
+        fade: true,
+      },
+    )
+    fillBelowChart(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
+    strokeChartLine(
+      ctx,
+      uiState.secondaryPoints,
+      canvas,
+      secondaryStyle.strokeGradient,
+    )
+    strokeChartLine(ctx, uiState.mainPoints, canvas, mainStyle.strokeGradient)
   } else {
-    fill(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
-    stroke(ctx, uiState.mainPoints, canvas, mainStyle.strokeGradient)
+    fillBelowChart(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
+    strokeChartLine(ctx, uiState.mainPoints, canvas, mainStyle.strokeGradient)
   }
 }
