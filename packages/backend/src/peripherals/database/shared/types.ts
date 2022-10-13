@@ -72,7 +72,7 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
-  interface BlockTransactionCountView {
+  interface TransactionCountViewRow {
     project_id: string
     count: number
     unix_timestamp: Date
@@ -87,11 +87,10 @@ declare module 'knex/types/tables' {
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
     events: EventRow
-    transactions: {
-      block: BlockTransactionCountRow
-      starkex: StarkexTransactionCountRow
-      zksync: ZksyncTransactionRow
-      block_count_view: BlockTransactionCountView
-    }
+    'transactions.block': BlockTransactionCountRow
+    'transactions.block_count_view': TransactionCountViewRow
+    'transactions.starkex': StarkexTransactionCountRow
+    'transactions.zksync': ZksyncTransactionRow
+    'transactions.zksync_count_view': TransactionCountViewRow
   }
 }
