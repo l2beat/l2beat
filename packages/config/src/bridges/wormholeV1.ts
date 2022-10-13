@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const wormholeV1: Bridge = {
@@ -32,26 +33,21 @@ export const wormholeV1: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
-    destination: ['TODO', 'TODO', 'TODO'],
+    category: 'Token Bridge',
+    destination: ['Various'], // TODO: list the chains
     canonical: true,
   },
   riskView: {
-    validation: {
-      value: 'External',
+    validatedBy: {
+      value: 'Third Party',
       description:
-        'Transfers need to be signed offchain by a set of 2/3 of Guardians and then permissionesly relayed to the destination chain.',
+        'Transfers need to be signed offchain by a set of 2/3 of Guardians and then in a permissionless way relayed to the destination chain.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'No',
       description: '',
     },
-    destinationToken: {
-      value: 'WrappedToken ',
-      description:
-        'This token follows Beacon Proxy pattern and can be upgraded by ????',
-      sentiment: 'bad',
-    },
+    destinationToken: RISK_VIEW.WRAPPED,
   },
 }

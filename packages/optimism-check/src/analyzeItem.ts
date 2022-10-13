@@ -30,7 +30,7 @@ export async function analyzeItem(
   )) as string
 
   if (contracts[component].expectedAddress) {
-    if (componentAddress != contracts[component].expectedAddress) {
+    if (componentAddress !== contracts[component].expectedAddress) {
       console.log(
         `Warning: ${component} resolved to a different address than expected !`,
       )

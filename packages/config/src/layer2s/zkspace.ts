@@ -1,6 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
-import { CONTRACTS, NEW_CRYPTOGRAPHY, RISK_VIEW } from './common'
+import {
+  CONTRACTS,
+  makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
+  RISK_VIEW,
+} from './common'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
 
@@ -17,7 +22,7 @@ export const zkspace: Layer2 = {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
       documentation: ['https://en.wiki.zks.org/'],
-      explorers: ['https://zkswap.info'],
+      explorers: ['https://zkspace.info'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],
       socialMedia: [
         'https://medium.com/@zkspaceofficial',
@@ -54,13 +59,15 @@ export const zkspace: Layer2 = {
       },
     ],
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     provider: 'zkSync',
     category: zkswap.technology.category,

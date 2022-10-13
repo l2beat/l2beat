@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -87,12 +88,9 @@ export const optimism: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      provider: 'alchemy',
-      networkName: 'optimism',
-      callsPerMinute: 1200,
     },
   },
-  riskView: {
+  riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'In development',
       description:
@@ -103,7 +101,9 @@ export const optimism: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-  },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: {
     provider: 'Optimism',
     category: 'Optimistic Rollup',

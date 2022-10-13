@@ -20,16 +20,29 @@ export function getStagingConfig(): Config {
     transactionCountSync: {
       starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      arbitrumAlchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
-      optimismAlchemyApiKey: getEnv('OPTIMISM_ALCHEMY_API_KEY'),
-      ethereumAlchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-      rpcWorkQueueLimit: 200_000,
-      rpcWorkQueueWorkers: 100,
       zkSyncWorkQueueWorkers: 100,
       starkexWorkQueueWorkers: 1,
       starkexCallsPerMinute: 400,
       loopringWorkQueueWorkers: 1,
       loopringCallsPerMinute: 400,
+      rpc: {
+        workQueueLimit: 200_000,
+        workQueueWorkers: getEnv.integer('ACTIVITY_RPC_WORKERS'),
+        projects: {
+          ethereum: {
+            callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
+            url: getEnv('ACTIVITY_ETHEREUM_URL'),
+          },
+          optimism: {
+            callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
+            url: getEnv('ACTIVITY_OPTIMISM_URL'),
+          },
+          arbitrum: {
+            callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
+            url: getEnv('ACTIVITY_ARBITRUM_URL'),
+          },
+        },
+      },
     },
   }
 }

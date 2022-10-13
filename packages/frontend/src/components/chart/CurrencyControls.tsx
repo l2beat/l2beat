@@ -1,17 +1,13 @@
 import React from 'react'
 
-import { ChartButton } from './ChartButton'
+import { RadioGroup } from './RadioGroup'
 
 export function CurrencyControls() {
   return (
-    <div
-      data-role="chart-currency-controls"
-      className="col-span-2 sm:col-span-1 flex items-center justify-start gap-4"
-    >
-      <ChartButton checked name="currency" value="USD" />
-      <ChartButton name="currency" value="ETH">
-        ETH<sup>*</sup>
-      </ChartButton>
-    </div>
+    <RadioGroup
+      role="chart-currency-controls"
+      name="currency"
+      options={[{ value: 'USD', checked: true }, { value: 'ETH' }]}
+    />
   )
 }

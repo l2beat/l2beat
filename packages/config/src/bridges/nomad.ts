@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const nomad: Bridge = {
@@ -9,6 +10,8 @@ export const nomad: Bridge = {
   display: {
     name: 'Nomad',
     slug: 'nomad',
+    warning:
+      'The Nomad token bridge contract has recently been exploited and currently is not operational.',
     links: {
       websites: ['https://app.nomad.xyz/', 'https://docs.nomad.xyz/'],
       repositories: ['https://github.com/nomad-xyz/monorepo'],
@@ -17,7 +20,6 @@ export const nomad: Bridge = {
         'https://discord.gg/nomadxyz',
       ],
     },
-
     description:
       'Nomad is a general messaging bridge that uses optimistic verification to validate cross-chain bridging transactions.',
   },
@@ -41,12 +43,12 @@ export const nomad: Bridge = {
     ],
   },
   technology: {
-    category: 'Lock-Mint',
+    category: 'Token Bridge',
     destination: ['Avalanche', 'Evmos', 'Milkomedia C1', 'Moonbeam'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Nomad Bridge is a Lock-Mint bridge with ability to facilitate fast transfers via additional LP-provided liquidity. For deposits, it locks tokens in the escrow contracts on Ethereum and mints a "representation token" on the destination network. When bridging back to Ethereum tokens are burned and then released from the escrow on Ethereum.',
+        'Nomad Bridge is a Token Bridge with ability to facilitate fast transfers via additional LP-provided liquidity. For deposits, it locks tokens in the escrow contracts on Ethereum and mints a "representation token" on the destination network. When bridging back to Ethereum tokens are burned and then released from the escrow on Ethereum.',
       references: [],
       risks: [],
     },
@@ -92,22 +94,18 @@ export const nomad: Bridge = {
     },
   },
   riskView: {
-    validation: {
-      value: 'Optimistic Bridge',
+    validatedBy: {
+      value: 'Optimistically',
       description:
         'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',
+      sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: 'Bridge can be upgraded by 3/5 MultiSig.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: 'Wrapped, Upgradable',
-      description:
-        'Tokens transferred end up as "representation tokens" implementing IBridgeToken interface.',
-      sentiment: 'bad',
-    },
+    destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
     addresses: [

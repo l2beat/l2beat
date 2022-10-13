@@ -35,6 +35,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       {
         workers: this.opts?.workQueueWorkers,
         shouldRetry: BACK_OFF_AND_DROP,
+        trackEvents: true,
       },
     )
   }
@@ -98,19 +99,14 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return await this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
+      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
-  async getStatus() {
+  getStatus() {
     return {
-      queuedJobsCount: this.blockQueue.length,
-      busyWorkers: this.blockQueue.getBusyWorkers(),
+      workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
-      latestFetchedBlock:
-        await this.blockTransactionCountRepository.getMaxBlock(this.projectId),
-      totalBlocks: await this.blockTransactionCountRepository.getBlockCount(
-        this.projectId,
-      ),
     }
   }
 }

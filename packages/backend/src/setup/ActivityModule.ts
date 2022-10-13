@@ -6,6 +6,7 @@ import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
 import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
+import { MaterializedViewRefresher } from '../core/transaction-count/MaterializedViewRefresher'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
 import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
@@ -57,10 +58,18 @@ export function getActivityModule(
     logger,
   )
 
+  const materializedViewRefresher = new MaterializedViewRefresher(
+    blockTransactionCountRepository,
+    zksyncTransactionRepository,
+    clock,
+    logger,
+  )
+
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
     blockTransactionCountRepository,
     clock,
+    http,
     logger,
   )
 
@@ -69,7 +78,6 @@ export function getActivityModule(
     blockTransactionCountRepository,
     clock,
     logger,
-    config.transactionCountSync.ethereumAlchemyApiKey,
   )
 
   const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
@@ -111,6 +119,8 @@ export function getActivityModule(
 
   const start = () => {
     logger.info('Starting Activity Module')
+
+    materializedViewRefresher.start()
 
     for (const updater of layer2RpcTransactionUpdaters) {
       updater.start()

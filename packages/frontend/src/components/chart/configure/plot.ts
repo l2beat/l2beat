@@ -9,7 +9,6 @@ export function plot(uiState: UiState | undefined, outputs: Outputs) {
   outputs.loader.classList.add('hidden')
 
   outputs.range.innerHTML = uiState.dateRange
-  outputs.description.innerHTML = uiState.description
   for (let i = 0; i < 5; i++) {
     outputs.labels[i].innerHTML = uiState.labels[4 - i]
   }

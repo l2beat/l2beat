@@ -4,13 +4,14 @@ import {
   Chart,
   Footer,
   FooterProps,
-  Header,
+  Navbar,
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
+import { TvlHeader } from '../../../components/header/TvlHeader'
+import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/OtherSites'
-import { Page } from '../../../components/Page'
-import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
+import { PageContent } from '../../../components/PageContent'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
@@ -25,20 +26,22 @@ export interface TvlPageProps {
 
 export function ScalingTvlPage(props: TvlPageProps) {
   return (
-    <Page navbar={props.navbar}>
-      <ScalingPageSelection showActivity={props.showActivity} selected="tvl" />
-      <main>
-        <Header
-          title="Value locked"
-          tvl={props.tvl}
-          tvlWeeklyChange={props.sevenDayChange}
+    <>
+      <Navbar {...props.navbar} />
+      <PageContent>
+        <ScalingNavigationTabs
+          showActivity={props.showActivity}
+          selected="tvl"
         />
-        <Chart tvlEndpoint={props.tvlEndpoint} />
-        <ScalingTvlView {...props.tvlView} />
-        <OtherSites />
-        <About />
-      </main>
+        <main>
+          <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.sevenDayChange} />
+          <Chart tvlEndpoint={props.tvlEndpoint} />
+          <ScalingTvlView {...props.tvlView} />
+          <OtherSites />
+          <About />
+        </main>
+      </PageContent>
       <Footer {...props.footer} />
-    </Page>
+    </>
   )
 }

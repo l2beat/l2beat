@@ -15,13 +15,12 @@ export function RiskCell({ item }: Props) {
   return (
     <span
       className={cx(
-        'sm:text-sm md:text-base',
-        item.sentiment && 'px-1 rounded-sm',
-        item.sentiment === 'bad' && 'text-white bg-red-100',
-        item.sentiment === 'warning' && 'text-black bg-yellow-100',
-        'Tooltip',
+        item.sentiment && 'px-1.5 py-px text-sm rounded',
+        item.sentiment === 'bad' && 'text-white bg-red-500',
+        item.sentiment === 'warning' && 'text-black bg-yellow-500',
+        item.description !== '' && 'Tooltip',
       )}
-      title={item.description}
+      title={item.description !== '' ? item.description : undefined}
     >
       {item.value}
     </span>

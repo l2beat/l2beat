@@ -32,8 +32,8 @@ export class StarkexClient {
 
   async getDailyCount(day: number, product: StarkexProduct): Promise<number> {
     const body = {
-      day_start: day - 1,
-      day_end: day,
+      day_start: day,
+      day_end: day + 1,
       product,
       tx_type: '_all',
       token_id: '_all',

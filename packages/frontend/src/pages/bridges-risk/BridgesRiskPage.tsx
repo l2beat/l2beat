@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { Footer, FooterProps, Header, NavbarProps } from '../../components'
+import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
 import { About } from '../../components/About'
-import { BridgesPageSelection } from '../../components/BridgesPageSelection'
+import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
+import { RiskHeader } from '../../components/header/RiskHeader'
 import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
-import { OtherSites } from '../../components/OtherSites'
-import { Page } from '../../components/Page'
+import { BridgesNavigationTabs } from '../../components/navigation-tabs/BridgesNavigationTabs'
+import { PageContent } from '../../components/PageContent'
 import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
 
 export interface BridgesRiskPageProps {
@@ -16,16 +17,19 @@ export interface BridgesRiskPageProps {
 
 export function BridgesRiskPage(props: BridgesRiskPageProps) {
   return (
-    <Page navbar={props.navbar}>
-      <BridgesPageSelection selected="risk" />
-      <main>
-        <Header title="Risk Analysis" />
-        <IncludeLayer2sCheckbox />
-        <BridgesRiskView {...props.riskView} />
-        <OtherSites />
-        <About />
-      </main>
+    <>
+      <Navbar {...props.navbar} />
+      <PageContent>
+        <BridgesNavigationTabs selected="risk" />
+        <main>
+          <RiskHeader />
+          <BridgesMvpWarning />
+          <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
+          <BridgesRiskView {...props.riskView} />
+          <About />
+        </main>
+      </PageContent>
       <Footer {...props.footer} />
-    </Page>
+    </>
   )
 }

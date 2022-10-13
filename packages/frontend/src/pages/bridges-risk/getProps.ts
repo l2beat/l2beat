@@ -8,6 +8,7 @@ import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
 import { BridgesRiskViewEntry } from './BridgesRiskView'
+import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
@@ -28,27 +29,21 @@ export function getProps(
             type: project.type,
             name: project.display.name,
             slug: project.display.slug,
+            warning: project.display.warning,
             category: project.technology.category,
             destination: getDestination(
               project.type === 'bridge'
                 ? project.technology.destination
                 : [project.display.name],
             ),
-            ...(project.type === 'bridge'
-              ? project.riskView
-              : project.riskView.bridge),
+            ...project.riskView,
           }),
         ),
       },
       footer: getFooterProps(config),
     },
     wrapper: {
-      metadata: {
-        description: '',
-        image: '',
-        title: '',
-        url: '',
-      },
+      metadata: getPageMetadata(),
     },
   }
 }

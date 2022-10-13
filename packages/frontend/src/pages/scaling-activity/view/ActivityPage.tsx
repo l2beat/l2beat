@@ -4,18 +4,17 @@ import {
   Chart,
   Footer,
   FooterProps,
-  Header,
+  Navbar,
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
-import { OtherSites } from '../../../components/OtherSites'
-import { Page } from '../../../components/Page'
-import { ScalingPageSelection } from '../../../components/ScalingPageSelection'
+import { ActivityHeader } from '../../../components/header/ActivityHeader'
+import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
+import { PageContent } from '../../../components/PageContent'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
-  tpsDaily: string
-  tpsWeeklyChange: string
+  scalingFactor: string
   apiEndpoint: string
   activityView: ActivityViewProps
   footer: FooterProps
@@ -25,28 +24,25 @@ export interface ActivityPageProps {
 
 export function ActivityPage(props: ActivityPageProps) {
   return (
-    <Page navbar={props.navbar}>
-      <ScalingPageSelection
-        showActivity={props.showActivity}
-        selected="activity"
-      />
-      <main>
-        <Header
-          title="Activity"
-          tpsDaily={props.tpsDaily}
-          tpsWeeklyChange={props.tpsWeeklyChange}
-          showTps
+    <>
+      <Navbar {...props.navbar} />
+      <PageContent>
+        <ScalingNavigationTabs
+          showActivity={props.showActivity}
+          selected="activity"
         />
-        <Chart
-          type={'activity'}
-          activityEndpoint={props.apiEndpoint}
-          hideControls
-        ></Chart>
-        <ActivityView {...props.activityView} />
-        <OtherSites />
-        <About />
-      </main>
+        <main>
+          <ActivityHeader scalingFactor={props.scalingFactor} />
+          <Chart
+            type={'activity'}
+            activityEndpoint={props.apiEndpoint}
+            hideControls
+          ></Chart>
+          <ActivityView {...props.activityView} />
+          <About />
+        </main>
+      </PageContent>
       <Footer {...props.footer} />
-    </Page>
+    </>
   )
 }

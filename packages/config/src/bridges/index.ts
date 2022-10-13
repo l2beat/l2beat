@@ -10,19 +10,22 @@ import { multichain } from './multichain'
 import { near } from './near'
 import { nomad } from './nomad'
 import { omni } from './omni'
+import { opticsV1 } from './opticsV1'
+import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
 import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
+import { portal } from './portal'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { synapse } from './synapse'
 import { Bridge } from './types'
-import { wormhole } from './wormhole'
 import { wormholeV1 } from './wormholeV1'
+import { xdai } from './xdai'
 
 export * from './types'
 
@@ -39,6 +42,8 @@ export const bridges: Bridge[] = [
   near,
   nomad,
   omni,
+  opticsV1,
+  opticsV2,
   orbit,
   orbiter,
   polygonplasma,
@@ -49,6 +54,7 @@ export const bridges: Bridge[] = [
   sollet,
   stargate,
   synapse,
-  wormhole,
+  portal,
   wormholeV1,
+  xdai,
 ]

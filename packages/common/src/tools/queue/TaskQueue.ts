@@ -1,6 +1,8 @@
+import { json } from '@l2beat/types'
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
+import { EventTracker } from '../EventTracker'
 import { getErrorMessage, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
@@ -17,6 +19,9 @@ export class TaskQueue<T> {
   private busyWorkers = 0
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
+  private readonly eventTracker?: EventTracker<
+    'started' | 'success' | 'error' | 'retry'
+  >
 
   constructor(
     private readonly executeTask: (task: T) => Promise<void>,
@@ -29,22 +34,13 @@ export class TaskQueue<T> {
       'workers needs to be a positive integer',
     )
     this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
-  }
-
-  private get isEmpty() {
-    return this.queue.length === 0 && this.busyWorkers === 0
-  }
-
-  private get allWorkersBusy() {
-    return this.busyWorkers === this.workers
+    if (opts?.trackEvents) {
+      this.eventTracker = new EventTracker()
+    }
   }
 
   get length() {
     return this.queue.length
-  }
-
-  getBusyWorkers() {
-    return this.busyWorkers
   }
 
   addIfEmpty(task: T) {
@@ -70,6 +66,22 @@ export class TaskQueue<T> {
     }
   }
 
+  getStats(): json {
+    return {
+      busyWorkers: this.busyWorkers,
+      queuedTasks: this.queue.length,
+      events: this.eventTracker?.getStats() ?? null,
+    }
+  }
+
+  private get isEmpty() {
+    return this.queue.length === 0 && this.busyWorkers === 0
+  }
+
+  private get allWorkersBusy() {
+    return this.busyWorkers === this.workers
+  }
+
   private execute() {
     this.executeUnchecked().catch((e) => {
       // this should never happen
@@ -92,6 +104,7 @@ export class TaskQueue<T> {
         message: 'No more retries',
         job: JSON.stringify(job),
       })
+      this.eventTracker?.record('error')
       return
     }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
@@ -100,6 +113,7 @@ export class TaskQueue<T> {
       message: 'Scheduled retry',
       job: JSON.stringify(job),
     })
+    this.eventTracker?.record('retry')
   }
 
   private earliestScheduledExecution() {
@@ -120,7 +134,9 @@ export class TaskQueue<T> {
     const job = this.queue.splice(jobIndex, 1)[0]
     try {
       this.logger.debug('Executing job', { job: JSON.stringify(job) })
+      this.eventTracker?.record('started')
       await this.executeTask(job.task)
+      this.eventTracker?.record('success')
     } catch (error) {
       this.logger.warn('Error during task execution', {
         job: JSON.stringify(job),

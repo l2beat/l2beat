@@ -1,36 +1,38 @@
-import { Layer2, Layer2RiskView } from '@l2beat/config'
-import cx from 'classnames'
+import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import {
-  OptimismIcon,
-  StarkWareIcon,
-  ZkSyncIcon,
-} from '../../../components/icons'
-import { ProjectLink } from '../../../components/ProjectLink'
-import { RiskCell } from '../../../components/RiskCell'
-import { ColumnConfig, TableView } from '../../../components/TableView'
+import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ProjectCell } from '../../../components/table/ProjectCell'
+import { RiskCell } from '../../../components/table/RiskCell'
+import { ColumnConfig, TableView } from '../../../components/table/TableView'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
-  className?: string
 }
 
-export interface ScalingRiskViewEntry extends Layer2RiskView {
+export interface ScalingRiskViewEntry {
   name: string
   slug: string
   provider?: Layer2['technology']['provider']
+  warning?: string
+  stateValidation: ProjectRiskViewEntry
+  dataAvailability: ProjectRiskViewEntry
+  upgradeability: ProjectRiskViewEntry
+  sequencerFailure: ProjectRiskViewEntry
+  validatorFailure: ProjectRiskViewEntry
 }
 
-export function ScalingRiskView({ items, className }: ScalingRiskViewProps) {
+export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
-      name: 'No.',
-      getValue: (entry, index) => `${index + 1}.`,
+      name: '#',
+      alignRight: true,
+      minimalWidth: true,
+      getValue: (entry, index) => index + 1,
     },
     {
       name: 'Name',
-      getValue: (project) => <ProjectLink type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
       name: 'State validation',
@@ -55,25 +57,9 @@ export function ScalingRiskView({ items, className }: ScalingRiskViewProps) {
   ]
 
   return (
-    <section className={cx('RiskView', className)}>
+    <section className="mt-4 sm:mt-8">
       <TableView items={items} columns={columns} />
-      <div className="RiskView-Symbols">
-        <p>
-          <StarkWareIcon />
-          <span>&ndash;</span>
-          <span>This project is built using StarkEx.</span>
-        </p>
-        <p>
-          <OptimismIcon />
-          <span>&ndash;</span>
-          <span>This project is based on Optimism&apos;s code base.</span>
-        </p>
-        <p>
-          <ZkSyncIcon />
-          <span>&ndash;</span>
-          <span>This project is based on zkSync&apos;s code base.</span>
-        </p>
-      </div>
+      <ScalingLegend />
     </section>
   )
 }
