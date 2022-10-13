@@ -3,8 +3,8 @@ import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../Clock'
+import { RpcClient } from './RpcClient'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
@@ -26,7 +26,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private latestBlock?: bigint
 
   constructor(
-    private readonly ethereumClient: EthereumClient,
+    private readonly rpcClient: RpcClient,
     private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
@@ -63,7 +63,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async updateBlock(number: number) {
-    const block = await this.ethereumClient.getBlock(number)
+    const block = await this.rpcClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
     // We download all the blocks, but discard those that are more recent
@@ -72,13 +72,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
       return
     }
 
-    const count = block.transactions.length
-
     await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
       blockNumber: block.number,
-      count: this.assessCount(count, number),
+      count: this.assessCount(block.transactions.length, number),
     })
 
     this.logger.debug('Block updated', {
@@ -99,7 +97,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
       await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
-    const latestBlock = await this.ethereumClient.getBlockNumber()
+    const latestBlock = await this.rpcClient.getBlockNumber()
     this.latestBlock = latestBlock
 
     enqueueBlockLoop: for (const [start, end] of missingRanges) {
