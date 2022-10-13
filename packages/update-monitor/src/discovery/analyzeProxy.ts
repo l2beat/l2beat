@@ -55,7 +55,7 @@ export async function analyzeProxy(
     getStarkWare2019Implementation(provider, proxyAddress),
     getSlot0(provider, proxyAddress),
     getMasterCopy(provider, proxyAddress),
-    getEip897Implementation(provider, proxyAddress)
+    getEip897Implementation(provider, proxyAddress),
   ])
 
   if (masterCopy && masterCopy === slot0) {

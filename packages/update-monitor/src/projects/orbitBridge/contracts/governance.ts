@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
 import { getEip897Implementation } from '../../../common/eip897'
-import {  OrbitBridgeProxy__factory } from '../../../typechain'
+import { OrbitBridgeProxy__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
 

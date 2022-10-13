@@ -12,13 +12,10 @@ export async function getOrbitBridgeParameters(
 ): Promise<ProjectParameters> {
   const parameters: ProjectParameters = {
     name: ORBIT_BRIDGE_NAME,
-    contracts: await Promise.all([
-        getBridgeWithGovernance(provider),
-    ]),
+    contracts: await Promise.all([getBridgeWithGovernance(provider)]),
   }
   return parameters
 }
-
 
 export async function discoverOrbitBridge(discoveryEngine: DiscoveryEngine) {
   await discoveryEngine.discover(ORBIT_BRIDGE_NAME, [addresses.bridge], {
@@ -29,7 +26,7 @@ export async function discoverOrbitBridge(discoveryEngine: DiscoveryEngine) {
         'getConfirmations',
         'getConfirmationCount',
         'tetherAddress',
-        'owners'
+        'owners',
       ],
     },
   })

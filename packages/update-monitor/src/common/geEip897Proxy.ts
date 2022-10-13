@@ -15,7 +15,6 @@ export async function getEip897Proxy(
       type: 'proxy',
       implementation: await getEip897Implementation(provider, address),
     },
-    values: {
-    },
+    values: {},
   }
 }

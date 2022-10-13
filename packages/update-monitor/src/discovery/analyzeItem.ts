@@ -64,7 +64,7 @@ export async function analyzeItem(
   } else if (proxy?.type === 'gnosis safe') {
     upgradeability = { type: 'gnosis safe' }
   } else if (proxy?.type === 'eip897') {
-    upgradeability = { 
+    upgradeability = {
       type: 'proxy',
       implementation: proxy.eip897Implementation,
     }
