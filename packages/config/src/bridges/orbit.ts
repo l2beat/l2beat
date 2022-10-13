@@ -13,18 +13,23 @@ export const orbit: Bridge = {
     links: {
       websites: [
         'https://bridge.orbitchain.io/',
-        'https://orbitchain.io/about'
+        'https://orbitchain.io/about',
       ],
       apps: ['https://bridge.orbitchain.io/'],
       socialMedia: [
         'https://twitter.com/Orbit_Chain',
         'https://t.me/OrbitChainGlobal',
-        'https://discord.com/invite/orbit-chain',
+        'https://discord.gg/orbit-chain',
       ],
       documentation: ['https://bridge-docs.orbitchain.io/'],
       repositories: ['https://github.com/orbit-chain'],
-      explorers: ['https://bridge.orbitchain.io/history/token/ALL'],
+      explorers: [
+        'https://bridge.orbitchain.io/history/token/ALL',
+        'https://explorer.orbitchain.io',
+      ],
     },
+    description:
+      'Orbit Bridge is part of the Orbit Chain project. It is a cross-chain bridge that allows users to transfer tokens between supported blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. Deposited tokens are not precisely locked and can be used in DeFi protocols by Orbit Farm. Accrued interest is not passed directly to token depositors.',
   },
   config: {
     associatedTokens: ['ORC'],
@@ -55,36 +60,86 @@ export const orbit: Bridge = {
       'Avalanche',
       'Celo',
       'Fantom',
-      'Gnosis',
+      'destination',
       'HECO',
       'ICON',
       'OKC',
       'Polygon',
     ],
     principleOfOperation: {
-      name: 'Principal of Operation',
+      name: 'Principle of Operation',
       description:
-        'Orbit Bridge is part of the Orbit Chain project. It is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. Deposited tokens are not locked and can be used in DeFi protocols by Orbit Farm. Accrued interest is not passed directly to token depositors.',
-      references: [],
+        'Orbit Bridge is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. When a user deposits tokens to an escrow contract on Ethereum, a message is relayed to a group o validators via Orbit Hub contract on Orbit chain to a minter contract on a destination chain, where "representation tokens" are minted. Deposited tokens are not locked and can be used in DeFi protocols by Orbit Farm. When a user deposits minted tokens on the destination chain, they are burned and a message is relayed to validators through Orbit Hub contract on Orbit chain to Ethereum vault, which releases the tokens if enough liquidity is available.',
+      references: [
+        {
+          text: 'Bridging transactions',
+          href: 'https://bridge-docs.orbitchain.io/bridging-transaction',
+        },
+      ],
       risks: [],
-    }
+      isIncomplete: true,
+    },
+    validation: {
+      name: 'Validation',
+      description:
+        'Orbit Bridge actors include Operators and Validators. Operators relay data between Orbit Chain and supported chains, while Validators build multi-sig based consensus on validity of transactions.',
+      references: [
+        {
+          text: 'Orbit Bridge - How it works',
+          href: 'https://bridge-docs.orbitchain.io/how-it-works',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'validators decide to not pass selected messages between chains.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'validators relay a fake message to a destination chain to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'validators relay a fake message to Ethereum chain allowing a user to withdraw tokens from Ethereum escrow when equivalent amount of tokens has not been deposited and burned on destination chain.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: "there's an exploit in contracts that invest user deposit.",
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be frozen if',
+          text: "validators don't relay messages between chains.",
+        },
+        {
+          category: 'Funds can be frozen if',
+          text: "there's insufficient liquidity of requested token in escrow.",
+        },
+      ],
+      isIncomplete: true,
+    },
   },
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'MultiSig, depending on destination',
-      sentiment: 'bad'
+      description: 'MultiSig, quorum depends on destination',
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: 'Contracts can be upgraded by 6/9 MultiSig. Bridge source code implementation is not verified on Etherscan.',
+      description:
+        'Contract can be upgraded by 6/9 MultiSig. Bridge source code implementation is not verified on Etherscan.',
       sentiment: 'bad',
     },
     destinationToken: {
       ...RISK_VIEW.WRAPPED,
-      description: RISK_VIEW.WRAPPED.description +
-      ' Tokens are minted as Orbit Bridge specific oTokens.'
-    }
+      description:
+        RISK_VIEW.WRAPPED.description +
+        ' Tokens are minted as Orbit Bridge specific oTokens.',
+    },
   },
   contracts: {
     addresses: [
@@ -114,7 +169,7 @@ export const orbit: Bridge = {
         { address: '0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1', type: 'EOA' },
       ],
       name: 'Bridge contract Governance',
-      description: 'Participants of Bridge Governance 6/9 MultiSig'
+      description: 'Participants of Bridge Governance 6/9 MultiSig',
     },
-  ]
+  ],
 }
