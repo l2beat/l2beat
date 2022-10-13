@@ -23,7 +23,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     type,
     endpoint: initialEndpoint,
     days: toDays(controls.range.find((x) => x.checked)?.value ?? '90D'),
-    altCurrency: controls.currency.find((x) => x.checked)?.value === 'ETH',
+    altCurrency: controls.currencies.find((x) => x.checked)?.value === 'ETH',
     logScale: controls.scale.find((x) => x.checked)?.value === 'LOG',
     token: selected?.value,
     secondaryEndpoint: getEthereumActivityEndpoint(
@@ -49,7 +49,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     }
   })
 
-  onRadioChange(controls.currency, (control) => {
+  onRadioChange(controls.currencies, (control) => {
     state.altCurrency = control.value === 'ETH'
     state.token = undefined
     for (const input of controls.token) {
@@ -72,7 +72,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     state.endpoint = getTvlEndpoint(control)
     state.token = control.value
     state.altCurrency = false
-    for (const input of controls.currency) {
+    for (const input of controls.currencies) {
       input.checked = false
     }
     if (state.endpoint) {
@@ -107,12 +107,14 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     if (toActivity) {
       state.type = 'activity'
       onChange()
+      controls.currencyControl?.classList.add('hidden')
       controls.ethActivity?.parentElement?.classList.remove('hidden')
       updateInput(getActivityEndpoint(chart))
     } else {
       state.type = 'tvl'
       onChange()
       controls.ethActivity?.parentElement?.classList.add('hidden')
+      controls.currencyControl?.classList.remove('hidden')
       updateInput(getTvlEndpoint(chart))
     }
   }

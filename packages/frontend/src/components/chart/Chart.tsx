@@ -63,13 +63,13 @@ export function Chart({
         <YAxisLabels />
       </div>
       <div className="flex justify-between">
+        {hasActivity && (
+          <EthereumActivityToggle showToggle={type === 'activity'} />
+        )}
         {!hideControls && <CurrencyControls />}
         {!hideControls && <ScaleControls />}
       </div>
       {!hideControls && <TokenControls tokens={tokens} />}
-      {hasActivity && (
-        <EthereumActivityToggle showToggle={type === 'activity'} />
-      )}
     </section>
   )
 }

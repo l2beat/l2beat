@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Checkbox } from '../Checkbox'
+
 interface EthereumActivityToggleProps {
   showToggle: boolean
 }
@@ -7,15 +9,12 @@ interface EthereumActivityToggleProps {
 export function EthereumActivityToggle(props: EthereumActivityToggleProps) {
   const className = props.showToggle ? undefined : 'hidden'
   return (
-    <label className={className}>
-      <input
-        data-role="toggle-ethereum-activity"
-        id="ethereum-activity"
-        type="checkbox"
-        autoComplete="off"
-        defaultChecked={props.showToggle}
-      />{' '}
-      <span>ETH Mainnet Transaction</span>
-    </label>
+    <Checkbox
+      className={className}
+      role="toggle-ethereum-activity"
+      id="ethereum-activity"
+      text="ETH Mainnet Transaction"
+      defaultChecked={props.showToggle}
+    />
   )
 }
