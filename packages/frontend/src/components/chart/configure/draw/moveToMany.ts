@@ -1,6 +1,6 @@
 import { Point } from '../ui'
 
-export function path(
+export function moveToMany(
   points: Point[],
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,

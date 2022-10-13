@@ -1,5 +1,5 @@
 import { Point } from '../ui'
-import { path } from './path'
+import { moveToMany } from './moveToMany'
 
 export function strokeChartLine(
   ctx: CanvasRenderingContext2D,
@@ -8,7 +8,7 @@ export function strokeChartLine(
   strokeStyle: CanvasGradient,
 ) {
   ctx.beginPath()
-  path(points, ctx, canvas)
+  moveToMany(points, ctx, canvas)
 
   ctx.strokeStyle = strokeStyle
   ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)

@@ -1,5 +1,5 @@
 import { Point } from '../ui'
-import { path } from './path'
+import { moveToMany } from './moveToMany'
 
 export function fillBelowChart(
   ctx: CanvasRenderingContext2D,
@@ -16,7 +16,7 @@ export function fillBelowChart(
   }
 
   ctx.beginPath()
-  path(points, ctx, canvas)
+  moveToMany(points, ctx, canvas)
 
   ctx.fillStyle = fillStyle
   ctx.lineTo(canvas.width, canvas.height)
