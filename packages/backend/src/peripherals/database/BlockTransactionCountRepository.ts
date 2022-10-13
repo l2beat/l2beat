@@ -112,7 +112,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async refresh() {
+  async refreshDailyTransactionCount() {
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }
@@ -122,12 +122,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
     maxTimestamp: UnixTime,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
-    const rows = (await knex
-      .withSchema('transactions')
-      .from('block_count_view')
+    const rows = await knex('transactions.block_count_view')
       .where('project_id', projectId.toString())
       .andWhere('unix_timestamp', '<', maxTimestamp.toDate())
-      .orderBy('unix_timestamp')) as { unix_timestamp: Date; count: string }[]
+      .orderBy('unix_timestamp')
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
@@ -145,7 +143,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const [{ max }] = await knex('transactions.block')
       .max('block_number')
       .where('project_id', projectId.toString())
-    return max as number
+    return max
   }
 
   async getBlockCount(projectId: ProjectId): Promise<number> {
@@ -153,7 +151,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const [{ count }] = await knex('transactions.block')
       .count()
       .where('project_id', projectId.toString())
-    return count as number
+    return Number(count)
   }
 }
 

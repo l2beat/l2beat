@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
@@ -8,12 +8,14 @@ import { Clock } from '../core/Clock'
 import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
 import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
+import { StarkNetClient } from '../peripherals/starknet/StarkNetClient'
 import { assert } from '../tools/assert'
 
 export function createLayer2RpcTransactionUpdaters(
   config: Config,
   blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
+  http: HttpClient,
   logger: Logger,
 ) {
   const activityConfig = config.transactionCountSync
@@ -28,17 +30,19 @@ export function createLayer2RpcTransactionUpdaters(
       const callsPerMinute =
         transactionApi.callsPerMinute ??
         activityConfig.rpc.projects[projectId.toString()]?.callsPerMinute
-      const provider = new providers.JsonRpcProvider({
-        url,
-        timeout: 10000,
-      })
-      const ethereumClient = new EthereumClient(
-        provider,
-        logger,
-        callsPerMinute,
-      )
+      const rpcClient =
+        projectId === ProjectId.STARKNET
+          ? new StarkNetClient(url, http, { callsPerMinute })
+          : new EthereumClient(
+              new providers.JsonRpcProvider({
+                url,
+                timeout: 10_000,
+              }),
+              logger,
+              callsPerMinute,
+            )
       const transactionUpdater = new RpcTransactionUpdater(
-        ethereumClient,
+        rpcClient,
         blockTransactionCountRepository,
         clock,
         logger,
