@@ -60,6 +60,7 @@ export function getActivityModule(
 
   const materializedViewRefresher = new MaterializedViewRefresher(
     blockTransactionCountRepository,
+    zksyncTransactionRepository,
     clock,
     logger,
   )
