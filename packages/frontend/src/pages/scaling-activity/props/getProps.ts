@@ -24,6 +24,7 @@ export function getProps(
       tpsDaily: tpsDaily?.toString() ?? '',
       tpsWeeklyChange,
       apiEndpoint: '/api/scaling-activity.json',
+      secondaryEndpoint: '/api/ethereum-activity.json',
       activityView: getActivityView(
         config.layer2s,
         tvlApiResponse,

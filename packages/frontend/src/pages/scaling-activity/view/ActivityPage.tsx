@@ -17,6 +17,7 @@ export interface ActivityPageProps {
   tpsDaily: string
   tpsWeeklyChange: string
   apiEndpoint: string
+  secondaryEndpoint: string
   activityView: ActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -37,8 +38,9 @@ export function ActivityPage(props: ActivityPageProps) {
           <Chart
             type={'activity'}
             activityEndpoint={props.apiEndpoint}
+            ethereumActivityEndpoint={props.secondaryEndpoint}
             hideControls
-            hasActivity={true}
+            hasActivity
           ></Chart>
           <ActivityView {...props.activityView} />
           <About />

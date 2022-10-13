@@ -16,6 +16,7 @@ export interface ChartProps {
   type?: 'tvl' | 'activity'
   tvlEndpoint?: string
   activityEndpoint?: string
+  ethereumActivityEndpoint?: string
   tokens?: TokenControl[]
   days?: 7 | 30
   hideControls?: boolean
@@ -26,6 +27,7 @@ export interface ChartProps {
 export function Chart({
   tvlEndpoint,
   activityEndpoint,
+  ethereumActivityEndpoint,
   tokens,
   days = 7,
   hideControls = false,
@@ -38,6 +40,7 @@ export function Chart({
       data-type={type ?? 'tvl'}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
+      data-ethereum-activity-endpoint={ethereumActivityEndpoint}
       className={cx('flex flex-col gap-4', 'mt-4 sm:mt-8')}
     >
       <div className="flex justify-between">

@@ -5,6 +5,7 @@ import { ChartState } from './ChartState'
 import { getControls } from './getControls'
 import {
   getActivityEndpoint,
+  getEthereumActivityEndpoint,
   getInitialEndpoint,
   getTvlEndpoint,
 } from './getEndpoint'
@@ -25,9 +26,10 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     altCurrency: controls.currency.find((x) => x.checked)?.value === 'ETH',
     logScale: controls.scale.find((x) => x.checked)?.value === 'LOG',
     token: selected?.value,
-    secondaryEndpoint: controls.ethActivity?.checked
-      ? '/api/ethereum-activity.json'
-      : undefined,
+    secondaryEndpoint: getEthereumActivityEndpoint(
+      controls.ethActivity?.checked,
+      chart,
+    ),
   }
 
   if (state.endpoint) {
@@ -96,8 +98,9 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
   })
 
   controls.ethActivity?.addEventListener('change', () => {
-    const checked = !!controls.ethActivity?.checked
-    updateSecondaryInput(checked ? '/api/ethereum-activity.json' : undefined)
+    updateSecondaryInput(
+      getEthereumActivityEndpoint(controls.ethActivity?.checked, chart),
+    )
   })
 
   function updateType(toActivity: boolean) {
