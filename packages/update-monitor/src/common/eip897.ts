@@ -21,7 +21,9 @@ export async function getEip897Implementation(
       e instanceof Error &&
       e.message.includes('Transaction reverted without a reason string')
     ) {
-      // This contract doesn't contain "implementation()"
+      // This is a hacky way of noticing that contract doesn't have "implementation()"
+      // function. The proper way would be to check ABI, but in current function flow
+      // we don't have access to ABI yet.
       return constants.AddressZero
     } else {
       throw e
