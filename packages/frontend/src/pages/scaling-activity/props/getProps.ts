@@ -2,8 +2,8 @@ import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
+import { getScalingFactor } from '../../../utils/activity/getScalingFactor'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
-import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { Wrapped } from '../../Page'
 import { ActivityPageProps } from '../view/ActivityPage'
 import { getActivityView } from './getActivityView'
@@ -16,13 +16,12 @@ export function getProps(
 ): Wrapped<ActivityPageProps> {
   const data = activityApiResponse.combined.data
   const tpsDaily = getTpsDaily(data)
-  const tpsWeeklyChange = getTpsWeeklyChange(data)
+  const scalingFactor = getScalingFactor(activityApiResponse)
 
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      tpsDaily: tpsDaily?.toString() ?? '',
-      tpsWeeklyChange,
+      scalingFactor,
       apiEndpoint: '/api/scaling-activity.json',
       activityView: getActivityView(
         config.layer2s,
