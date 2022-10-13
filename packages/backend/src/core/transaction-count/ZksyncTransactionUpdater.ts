@@ -107,12 +107,10 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     )
   }
 
-  async getStatus() {
+  getStatus() {
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
-      latestFetchedBlock: await this.zksyncTransactionRepository.getMaxBlock(),
-      totalBlocks: await this.zksyncTransactionRepository.getBlockCount(),
     }
   }
 }

@@ -43,17 +43,17 @@ export class ActivityController {
     )
   }
 
-  async getStatus(): Promise<json> {
-    return Promise.all([
-      ...this.layer2Counters.map(async (c) => ({
+  getStatus(): json {
+    return [
+      ...this.layer2Counters.map((c) => ({
         projectId: c.projectId.toString(),
-        status: await c.getStatus(),
+        status: c.getStatus(),
       })),
       {
         projectId: ProjectId.ETHEREUM.toString(),
-        status: await this.ethereumCounter.getStatus(),
+        status: this.ethereumCounter.getStatus(),
       },
-    ])
+    ]
   }
 
   private toCombinedActivity(
