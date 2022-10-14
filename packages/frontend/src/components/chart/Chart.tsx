@@ -18,7 +18,6 @@ export interface ChartProps {
   activityEndpoint?: string
   ethereumActivityEndpoint?: string
   tokens?: TokenControl[]
-  days?: 7 | 30
   className?: string
   hasActivity?: boolean
   hasTvl?: boolean
@@ -30,16 +29,16 @@ export function Chart({
   activityEndpoint,
   ethereumActivityEndpoint,
   tokens,
-  days = 7,
-  type,
+  type = 'tvl',
   hasActivity,
   hasTvl = true,
   metaChart = false,
 }: ChartProps) {
+  const days = metaChart || type === 'activity' ? 30 : 7
   return (
     <section
       data-role="chart"
-      data-type={type ?? 'tvl'}
+      data-type={type}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
       data-ethereum-activity-endpoint={ethereumActivityEndpoint}
@@ -54,7 +53,7 @@ export function Chart({
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
           <TimeRange />
-          <RangeControls days={days} />
+          <RangeControls days={days} type={type} />
         </div>
         <div
           data-role="chart-view"

@@ -107,6 +107,14 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     if (toActivity) {
       state.type = 'activity'
       onChange()
+      const sevenDaysRangeInput = controls.range.find((x) => x.value === '7D')
+      sevenDaysRangeInput?.parentElement?.classList.add('hidden')
+      const thirtyDaysRangeInput = controls.range.find((x) => x.value === '30D')
+      if (sevenDaysRangeInput?.checked && thirtyDaysRangeInput) {
+        sevenDaysRangeInput.checked = false
+        thirtyDaysRangeInput.checked = true
+        state.days = 30
+      }
       controls.tokenControl?.classList.add('hidden')
       controls.currencyControl?.classList.add('hidden')
       controls.ethActivity?.parentElement?.classList.remove('hidden')
@@ -117,6 +125,9 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
       controls.ethActivity?.parentElement?.classList.add('hidden')
       controls.currencyControl?.classList.remove('hidden')
       controls.tokenControl?.classList.remove('hidden')
+      controls.range
+        .find((x) => x.value === '7D')
+        ?.parentElement?.classList.remove('hidden')
       updateInput(getTvlEndpoint(chart))
     }
   }
