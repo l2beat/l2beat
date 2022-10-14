@@ -46,7 +46,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     },
     {
       name: 'Upgradeability',
-      tooltip: 'Are contracts on Ethereum upgradeable?',
+      tooltip: 'Are the Ethereum contracts upgradeable?',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {

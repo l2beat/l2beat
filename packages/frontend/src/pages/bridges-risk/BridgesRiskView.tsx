@@ -68,7 +68,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Source\nUpgradeability',
-      tooltip: 'Are contracts on Ethereum upgradeable?',
+      tooltip: 'Are the Ethereum contracts upgradeable?',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
     },
     {
