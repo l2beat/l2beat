@@ -28,3 +28,18 @@ export function getActivityEndpoint(element: HTMLElement) {
   }
   return endpoint
 }
+
+export function getEthereumActivityEndpoint(
+  showEthereumActivity: boolean | undefined,
+  element: HTMLElement,
+) {
+  if (!showEthereumActivity) {
+    return
+  }
+
+  const endpoint = element.dataset.ethereumActivityEndpoint
+  if (!endpoint) {
+    throw new Error('Ethereum activity endpoint missing!')
+  }
+  return endpoint
+}

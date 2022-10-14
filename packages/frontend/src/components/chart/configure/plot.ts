@@ -1,3 +1,6 @@
+import { fillBelowChart } from './draw/fillBelowChart'
+import { strokeChartLine } from './draw/strokeChartLine'
+import { getMainStyle, getSecondaryStyle } from './draw/style'
 import { Outputs } from './getOutputs'
 import { UiState } from './ui'
 
@@ -20,35 +23,27 @@ export function plot(uiState: UiState | undefined, outputs: Outputs) {
   canvas.width = box.width * window.devicePixelRatio
   canvas.height = box.height * window.devicePixelRatio
 
-  ctx.beginPath()
-  for (const [i, { x, y }] of uiState.points.entries()) {
-    if (i === 0) {
-      ctx.moveTo(x * canvas.width, (1 - y) * canvas.height)
-    } else {
-      ctx.lineTo(x * canvas.width, (1 - y) * canvas.height)
-    }
+  const secondaryStyle = getSecondaryStyle(canvas, ctx)
+  const mainStyle = getMainStyle(canvas, ctx)
+
+  if (uiState.secondaryPoints) {
+    fillBelowChart(
+      ctx,
+      uiState.secondaryPoints,
+      canvas,
+      secondaryStyle.fillGradient,
+      { fade: true },
+    )
+    fillBelowChart(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
+    strokeChartLine(
+      ctx,
+      uiState.secondaryPoints,
+      canvas,
+      secondaryStyle.strokeGradient,
+    )
+    strokeChartLine(ctx, uiState.mainPoints, canvas, mainStyle.strokeGradient)
+  } else {
+    fillBelowChart(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
+    strokeChartLine(ctx, uiState.mainPoints, canvas, mainStyle.strokeGradient)
   }
-
-  const style = getComputedStyle(canvas)
-
-  const strokeGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
-  strokeGradient.addColorStop(0, style.getPropertyValue('--gradient-1'))
-  strokeGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2'))
-  strokeGradient.addColorStop(1, style.getPropertyValue('--gradient-3'))
-
-  const fillGradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
-  fillGradient.addColorStop(0, style.getPropertyValue('--gradient-1-light'))
-  fillGradient.addColorStop(0.5, style.getPropertyValue('--gradient-2-light'))
-  fillGradient.addColorStop(1, style.getPropertyValue('--gradient-3-light'))
-
-  ctx.strokeStyle = strokeGradient
-  ctx.fillStyle = fillGradient
-  ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
-  ctx.lineJoin = 'round'
-  ctx.stroke()
-
-  ctx.lineTo(canvas.width, canvas.height)
-  ctx.lineTo(0, canvas.height)
-  ctx.closePath()
-  ctx.fill()
 }

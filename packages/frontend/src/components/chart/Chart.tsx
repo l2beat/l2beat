@@ -5,6 +5,7 @@ import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { CurrencyControls } from './CurrencyControls'
+import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
@@ -15,19 +16,23 @@ export interface ChartProps {
   type?: 'tvl' | 'activity'
   tvlEndpoint?: string
   activityEndpoint?: string
+  ethereumActivityEndpoint?: string
   tokens?: TokenControl[]
   days?: 7 | 30
   hideControls?: boolean
   className?: string
+  hasActivity?: boolean
 }
 
 export function Chart({
   tvlEndpoint,
   activityEndpoint,
+  ethereumActivityEndpoint,
   tokens,
   days = 7,
   hideControls = false,
   type,
+  hasActivity,
 }: ChartProps) {
   return (
     <section
@@ -35,6 +40,7 @@ export function Chart({
       data-type={type ?? 'tvl'}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
+      data-ethereum-activity-endpoint={ethereumActivityEndpoint}
       className={cx('flex flex-col gap-4', 'mt-4 sm:mt-8')}
     >
       <div className="flex justify-between">
@@ -57,6 +63,9 @@ export function Chart({
         <YAxisLabels />
       </div>
       <div className="flex justify-between">
+        {hasActivity && (
+          <EthereumActivityToggle showToggle={type === 'activity'} />
+        )}
         {!hideControls && <CurrencyControls />}
         {!hideControls && <ScaleControls />}
       </div>
