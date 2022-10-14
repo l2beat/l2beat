@@ -1,9 +1,9 @@
 import cx from 'classnames'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 export interface IncludeLayer2sCheckboxProps {
   className?: string
-  text: string
+  label: ReactNode
   role: string
   id: string
   defaultChecked?: boolean
@@ -11,7 +11,7 @@ export interface IncludeLayer2sCheckboxProps {
 
 export function Checkbox({
   className,
-  text,
+  label,
   role,
   id,
   defaultChecked,
@@ -58,7 +58,7 @@ export function Checkbox({
           strokeLinejoin="round"
         />
       </svg>
-      <span>{text}</span>
+      <span>{label}</span>
     </label>
   )
 }

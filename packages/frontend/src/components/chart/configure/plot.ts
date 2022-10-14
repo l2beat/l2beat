@@ -32,9 +32,7 @@ export function plot(uiState: UiState | undefined, outputs: Outputs) {
       uiState.secondaryPoints,
       canvas,
       secondaryStyle.fillGradient,
-      {
-        fade: true,
-      },
+      { fade: true },
     )
     fillBelowChart(ctx, uiState.mainPoints, canvas, mainStyle.fillGradient)
     strokeChartLine(

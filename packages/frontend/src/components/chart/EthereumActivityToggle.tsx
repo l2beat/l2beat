@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React from 'react'
 
 import { Checkbox } from '../Checkbox'
@@ -7,13 +8,12 @@ interface EthereumActivityToggleProps {
 }
 
 export function EthereumActivityToggle(props: EthereumActivityToggleProps) {
-  const className = props.showToggle ? undefined : 'hidden'
   return (
     <Checkbox
-      className={className}
+      className={cx(!props.showToggle && 'hidden')}
       role="toggle-ethereum-activity"
       id="ethereum-activity"
-      text="ETH Mainnet Transaction"
+      label="ETH Mainnet Transaction"
       defaultChecked={props.showToggle}
     />
   )
