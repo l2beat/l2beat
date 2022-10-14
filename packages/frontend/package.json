@@ -20,7 +20,7 @@
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6006 --no-open",
-    "build-storybook": "build-storybook"
+    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{types,common,config} -recsm build --module es6) && build-storybook"
   },
   "dependencies": {
     "@l2beat/common": "*",
