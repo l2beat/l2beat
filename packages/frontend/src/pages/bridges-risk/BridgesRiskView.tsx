@@ -50,24 +50,30 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     },
     {
       name: 'Destination',
+      tooltip: 'What chains can you get to using this bridge?',
       getValue: (entry) => <RiskCell item={entry.destination} />,
     },
     {
       name: 'Validated by',
+      tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
     },
     {
       name: 'Type',
+      tooltip:
+        'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => (
         <span className="sm:text-xs md:text-base">{entry.category}</span>
       ),
     },
     {
-      name: 'Source Upgradeability',
+      name: 'Source\nUpgradeability',
+      tooltip: 'Are the Ethereum contracts upgradeable?',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
     },
     {
-      name: 'Destination Token',
+      name: 'Destination\nToken',
+      tooltip: 'What is the token that you receive from this bridge?',
       getValue: (entry) => <RiskCell item={entry.destinationToken} />,
     },
   ]

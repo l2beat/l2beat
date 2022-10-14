@@ -36,22 +36,28 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     },
     {
       name: 'State validation',
+      tooltip: 'How is the validity of the system state checked?',
       getValue: (project) => <RiskCell item={project.stateValidation} />,
     },
     {
       name: 'Data availability',
+      tooltip: 'Is the data needed to reconstruct the state available?',
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
     },
     {
       name: 'Upgradeability',
+      tooltip: 'Are the Ethereum contracts upgradeable?',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
       name: 'Sequencer failure',
+      tooltip: 'What happens if the sequencer is offline or decides to censor?',
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
       name: 'Validator failure',
+      tooltip:
+        'What happens if the block producer is offline or decides to censor?',
       getValue: (project) => <RiskCell item={project.validatorFailure} />,
     },
   ]
