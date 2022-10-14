@@ -57,15 +57,19 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'TVL',
+      tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
       getValue: (entry) => <NumberCell>{entry.tvl}</NumberCell>,
     },
     {
       name: 'Breakdown',
+      tooltip:
+        'Composition of the total value locked broken down by token type.',
       getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: '7d Change',
+      tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
       getValue: (entry) => (
         <NumberCell signed>{entry.sevenDayChange}</NumberCell>
@@ -73,6 +77,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Market share',
+      tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (entry) => (
         <NumberCell>
@@ -85,6 +90,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Validated by',
+      tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) =>
         entry.validatedBy ? (
           <RiskCell item={entry.validatedBy} />
@@ -94,6 +100,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Type',
+      tooltip:
+        'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
     },
   ]

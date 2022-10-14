@@ -43,15 +43,19 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
     {
       name: 'TVL',
+      tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
       getValue: (project) => <NumberCell>{project.tvl}</NumberCell>,
     },
     {
       name: 'Breakdown',
+      tooltip:
+        'Composition of the total value locked broken down by token type.',
       getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
       name: '7d Change',
+      tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
       getValue: (project) => (
         <NumberCell signed>{project.sevenDayChange}</NumberCell>
@@ -59,15 +63,19 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
     {
       name: 'Market share',
+      tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
     },
     {
       name: 'Purpose',
+      tooltip: 'Functionality supported by this Layer 2.',
       getValue: (project) => project.purpose,
     },
     {
       name: 'Technology',
+      tooltip:
+        'Type of this Layer 2. Determines data availability and proof system used.',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell>{project.technology}</TechnologyCell>
