@@ -85,6 +85,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Validated by',
+      tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) =>
         entry.validatedBy ? (
           <RiskCell item={entry.validatedBy} />
@@ -94,6 +95,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     },
     {
       name: 'Type',
+      tooltip:
+        'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
     },
   ]
