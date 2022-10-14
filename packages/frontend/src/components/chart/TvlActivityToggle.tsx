@@ -36,8 +36,9 @@ export function TvlActivityToggle() {
         />
         <div
           className={cx(
-            'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5 rounded-md',
+            'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5',
             'flex justify-center',
+            'rounded md:rounded-md',
             'bg-gradient-to-r from-purple-100 to-pink-100',
             'peer-checked:bg-none',
           )}
@@ -47,8 +48,9 @@ export function TvlActivityToggle() {
         </div>
         <div
           className={cx(
-            'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5 rounded-md',
+            'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5',
             'flex justify-center',
+            'rounded md:rounded-md',
             'peer-checked:bg-gradient-to-r',
             'peer-checked:from-purple-100',
             'peer-checked:to-pink-100',
