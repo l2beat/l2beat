@@ -23,6 +23,7 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       scalingFactor,
       apiEndpoint: '/api/scaling-activity.json',
+      secondaryEndpoint: '/api/ethereum-activity.json',
       activityView: getActivityView(
         config.layer2s,
         tvlApiResponse,

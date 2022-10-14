@@ -4,8 +4,11 @@ export function getControls(chart: Element) {
   const { $, $$ } = makeQuery(chart)
   return {
     range: $$<HTMLInputElement>('[data-role="chart-range-controls"] input'),
-    currency: $$<HTMLInputElement>(
+    currencies: $$<HTMLInputElement>(
       '[data-role="chart-currency-controls"] input',
+    ),
+    currencyControl: $.maybe<HTMLElement>(
+      '[data-role="chart-currency-controls"]',
     ),
     scale: $$<HTMLInputElement>('[data-role="chart-scale-controls"] input'),
     token: $$<HTMLInputElement>('[data-role="chart-token-controls"] input'),
@@ -15,6 +18,9 @@ export function getControls(chart: Element) {
     ),
     tvlActivity: document.querySelector<HTMLInputElement>(
       '[data-role="toggle-tvl-activity"]',
+    ),
+    ethActivity: document.querySelector<HTMLInputElement>(
+      '[data-role="toggle-ethereum-activity"]',
     ),
   }
 }

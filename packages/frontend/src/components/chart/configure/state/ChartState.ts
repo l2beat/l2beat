@@ -3,7 +3,9 @@ import { ChartInput } from './ChartInput'
 export interface ChartState {
   type: 'tvl' | 'activity'
   endpoint: string
-  input?: ChartInput
+  secondaryEndpoint?: string
+  mainInput?: ChartInput
+  secondaryInput?: ChartInput
   days: number
   altCurrency: boolean
   logScale: boolean
@@ -11,5 +13,5 @@ export interface ChartState {
 }
 
 export interface ChartStateWithInput extends ChartState {
-  input: ChartInput
+  mainInput: ChartInput
 }

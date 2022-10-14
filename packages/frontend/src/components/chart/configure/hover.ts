@@ -36,14 +36,14 @@ export function initHover(chart: HTMLElement) {
   }
 
   function render() {
-    if (!visible || !uiState || uiState.points.length === 0) {
+    if (!visible || !uiState || uiState.mainPoints.length === 0) {
       elements.hover.classList.add('hidden')
       return
     }
     elements.hover.classList.remove('hidden')
-    const spaces = uiState.points.length - 1
+    const spaces = uiState.mainPoints.length - 1
     const closest = Math.min(spaces, Math.max(0, Math.round(position * spaces)))
-    const point = uiState.points[closest]
+    const point = uiState.mainPoints[closest]
     const left = point.x * width
     const bottom = Math.max(0, point.y * (height - 20))
     elements.line.style.left = `${left - 1}px`
