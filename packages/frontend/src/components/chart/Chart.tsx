@@ -22,6 +22,7 @@ export interface ChartProps {
   className?: string
   hasActivity?: boolean
   hasTvl?: boolean
+  metaChart?: boolean
 }
 
 export function Chart({
@@ -33,6 +34,7 @@ export function Chart({
   type,
   hasActivity,
   hasTvl = true,
+  metaChart = false,
 }: ChartProps) {
   return (
     <section
@@ -43,10 +45,12 @@ export function Chart({
       data-ethereum-activity-endpoint={ethereumActivityEndpoint}
       className="mt-4 sm:mt-8"
     >
-      <div className="md:flex gap-5 md:items-center mb-4 md:mb-6">
-        <h2 className="hidden md:inline text-3xl font-bold">Chart</h2>
-        {hasActivity && hasTvl && <TvlActivityToggle />}
-      </div>
+      {!metaChart && (
+        <div className="md:flex gap-5 md:items-center mb-4 md:mb-6">
+          <h2 className="hidden md:inline text-3xl font-bold">Chart</h2>
+          {hasActivity && hasTvl && <TvlActivityToggle />}
+        </div>
+      )}
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
           <TimeRange />
@@ -67,14 +71,18 @@ export function Chart({
           />
           <YAxisLabels />
         </div>
-        <div className="flex justify-between">
-          {hasActivity && (
-            <EthereumActivityToggle showToggle={type === 'activity'} />
-          )}
-          {hasTvl && <CurrencyControls />}
-          <ScaleControls />
-        </div>
-        {hasTvl && <TokenControls tokens={tokens} />}
+        {!metaChart && (
+          <>
+            <div className="flex justify-between">
+              {hasActivity && (
+                <EthereumActivityToggle showToggle={type === 'activity'} />
+              )}
+              {hasTvl && <CurrencyControls />}
+              <ScaleControls />
+            </div>
+            {hasTvl && <TokenControls tokens={tokens} />}{' '}
+          </>
+        )}
       </div>
     </section>
   )
