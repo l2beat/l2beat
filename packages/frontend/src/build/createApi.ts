@@ -39,6 +39,13 @@ export function createApi(
     getCompatibleApi(activityApiResponse.combined),
   )
 
+  if (activityApiResponse.ethereum) {
+    urlCharts.set(
+      'ethereum-activity',
+      getCompatibleApi(activityApiResponse.ethereum),
+    )
+  }
+
   outputCharts(urlCharts)
 }
 

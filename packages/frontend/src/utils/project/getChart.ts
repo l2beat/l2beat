@@ -10,7 +10,9 @@ export function getChart(
   return {
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     activityEndpoint: `/api/${project.display.slug}-activity.json`,
+    ethereumActivityEndpoint: '/api/ethereum-activity.json',
     tokens: getTokens(project.id, tvlApiResponse),
+    hasActivity: true,
   }
 }
 

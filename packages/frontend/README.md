@@ -21,3 +21,7 @@ yarn build:frontend
 - `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn lint:fix` - run eslint automatic fixer
 - `yarn typecheck` - check if the code satisfies the typescript compiler
+
+## Storybook
+
+Production build requires (for some unknown reason) rebuilding dependencies in with ESM. Use `yarn storybook:build` to do exactly that.

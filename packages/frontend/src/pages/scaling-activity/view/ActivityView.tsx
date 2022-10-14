@@ -46,7 +46,8 @@ export function ActivityView({ items }: ActivityViewProps) {
         ),
     },
     {
-      name: 'TPS',
+      name: 'Daily TPS',
+      tooltip: 'Actually observed transactions per second over the last day.',
       alignRight: true,
       getValue: (project) =>
         project.tpsDaily ? (
@@ -57,6 +58,8 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: '7d Change',
+      tooltip:
+        'Actually observed change in daily transactions per second as compared to a week ago.',
       alignRight: true,
       getValue: (project) => (
         <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
@@ -64,6 +67,7 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: '7d Count',
+      tooltip: 'Total number of transactions over the past week.',
       alignRight: true,
       getValue: (project) => (
         <NumberCell>{project.transactionsWeeklyCount}</NumberCell>
@@ -71,6 +75,8 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: 'Market share',
+      tooltip:
+        'Share of the sum of daily transactions per second of all projects.',
       alignRight: true,
       getValue: (project) =>
         project.marketShare && <NumberCell>{project.marketShare}</NumberCell>,

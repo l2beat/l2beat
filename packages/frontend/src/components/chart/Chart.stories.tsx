@@ -11,9 +11,11 @@ export default {
 
 interface TemplateProps {
   tokenCount: number
+  hasActivity?: boolean
+  type?: 'activity' | 'tvl'
 }
 
-function Template({ tokenCount }: TemplateProps) {
+function Template({ tokenCount, hasActivity, type }: TemplateProps) {
   const tokens = [
     'DAI',
     'ETH',
@@ -30,11 +32,20 @@ function Template({ tokenCount }: TemplateProps) {
     configureChart()
   }, [])
 
+  const activityEndpoint = hasActivity ? '/fakeActivity.json' : undefined
+  const ethereumActivityEndpoint = hasActivity
+    ? '/fakeEthereumActivity.json'
+    : undefined
+
   return (
     <PageContent>
       <ChartComponent
         tvlEndpoint="/fakeTvl.json"
+        activityEndpoint={activityEndpoint}
+        ethereumActivityEndpoint={ethereumActivityEndpoint}
         tokens={tokens.slice(0, tokenCount)}
+        hasActivity={hasActivity}
+        type={type}
       />
     </PageContent>
   )
@@ -53,4 +64,11 @@ FewTokens.args = {
 export const ManyTokens: Story<TemplateProps> = Template.bind({})
 ManyTokens.args = {
   tokenCount: 10,
+}
+
+export const WithActivity: Story<TemplateProps> = Template.bind({})
+WithActivity.args = {
+  tokenCount: 0,
+  hasActivity: true,
+  type: 'activity',
 }

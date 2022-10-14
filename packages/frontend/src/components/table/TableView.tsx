@@ -13,6 +13,7 @@ export interface ColumnConfig<T> {
   alignRight?: true
   minimalWidth?: true
   getValue: (value: T, index: number) => ReactNode
+  tooltip?: string
 }
 
 export interface RowConfig<T> {
@@ -34,18 +35,23 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
               <th
                 key={i}
                 className={cx(
-                  'font-medium uppercase py-2 text-sm text-gray-700 dark:text-gray-300',
+                  'font-medium uppercase py-2 text-sm text-gray-700 dark:text-gray-300 whitespace-pre align-bottom',
                   column.alignRight && 'text-right',
                   column.minimalWidth && 'w-0',
                   i !== columns.length - 1 && 'pr-3 md:pr-4',
                 )}
               >
-                <span className={cx(column.shortName && 'hidden md:block')}>
-                  {column.name}
+                <span
+                  className={cx('inline-block', column.tooltip && 'Tooltip')}
+                  title={column.tooltip}
+                >
+                  <span className={cx(column.shortName && 'hidden md:block')}>
+                    {column.name}
+                  </span>
+                  {column.shortName && (
+                    <span className="md:hidden">{column.shortName}</span>
+                  )}
                 </span>
-                {column.shortName && (
-                  <span className="md:hidden">{column.shortName}</span>
-                )}
               </th>
             ))}
           </tr>

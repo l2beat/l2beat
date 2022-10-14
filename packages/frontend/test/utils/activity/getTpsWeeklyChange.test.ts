@@ -14,7 +14,8 @@ describe(getTpsWeeklyChange.name, () => {
       [new UnixTime(4), ONE_TPS],
       [new UnixTime(5), ONE_TPS],
       [new UnixTime(6), ONE_TPS],
-      [new UnixTime(7), ONE_TPS * 2],
+      [new UnixTime(7), ONE_TPS],
+      [new UnixTime(8), ONE_TPS * 2],
     ]
 
     const result = getTpsWeeklyChange(data)
