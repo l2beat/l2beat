@@ -131,112 +131,32 @@ describe(StarkexTransactionCountRepository.name, () => {
         const start = UnixTime.now().toStartOf('day')
         const aCounts = [
           fakeTransactionCount({
-            timestamp: start.add(1, 'hours'),
+            timestamp: start,
             projectId: PROJECT_A,
+            count: 100,
           }),
           fakeTransactionCount({
-            timestamp: start.add(2, 'hours'),
+            timestamp: start.add(1, 'days'),
             projectId: PROJECT_A,
+            count: 101,
           }),
         ]
         const bCounts = [
           fakeTransactionCount({
-            timestamp: start.add(1, 'hours'),
+            timestamp: start,
 
             projectId: PROJECT_B,
           }),
           fakeTransactionCount({
-            timestamp: start.add(3, 'hours'),
+            timestamp: start.add(1, 'days'),
             projectId: PROJECT_B,
           }),
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
-          {
-            timestamp: start,
-            count: aCounts.reduce((acc, record) => acc + record.count, 0),
-          },
-        ])
-      })
-
-      it('groups by day', async () => {
-        const today = UnixTime.now().toStartOf('day')
-
-        await repository.addMany([
-          fakeTransactionCount({
-            timestamp: today.add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 1,
-          }),
-          fakeTransactionCount({
-            timestamp: today.add(1, 'days').add(-1, 'seconds'),
-            projectId: PROJECT_A,
-            count: 2,
-          }),
-          fakeTransactionCount({
-            timestamp: today.add(1, 'days').add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 3,
-          }),
-          fakeTransactionCount({
-            timestamp: today.add(2, 'days'),
-            projectId: PROJECT_A,
-            count: 4,
-          }),
-        ])
-
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
-          {
-            count: 3,
-            timestamp: today,
-          },
-          {
-            count: 3,
-            timestamp: today.add(1, 'days'),
-          },
-          {
-            count: 4,
-            timestamp: today.add(2, 'days'),
-          },
-        ])
-      })
-
-      it('orders by day', async () => {
-        const today = UnixTime.now().toStartOf('day')
-
-        await repository.addMany([
-          fakeTransactionCount({
-            timestamp: today.add(1, 'days').add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 3,
-          }),
-          fakeTransactionCount({
-            timestamp: today,
-            projectId: PROJECT_A,
-            count: 1,
-          }),
-          fakeTransactionCount({
-            timestamp: today.add(2, 'days'),
-            projectId: PROJECT_A,
-            count: 4,
-          }),
-        ])
-
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
-          {
-            count: 1,
-            timestamp: today,
-          },
-          {
-            count: 3,
-            timestamp: today.add(1, 'days'),
-          },
-          {
-            count: 4,
-            timestamp: today.add(2, 'days'),
-          },
-        ])
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual(
+          aCounts.map(({ timestamp, count }) => ({ timestamp, count })),
+        )
       })
     },
   )

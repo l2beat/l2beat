@@ -119,6 +119,7 @@ describe(ZksyncTransactionRepository.name, () => {
     ZksyncTransactionRepository.prototype.getDailyTransactionCount.name,
     () => {
       it('works with empty repository', async () => {
+        await repository.refreshDailyTransactionCount()
         expect(
           await repository.getDailyTransactionCount(UnixTime.now()),
         ).toEqual([])
@@ -145,6 +146,7 @@ describe(ZksyncTransactionRepository.name, () => {
           }),
         ])
 
+        await repository.refreshDailyTransactionCount()
         expect(
           await repository.getDailyTransactionCount(start.add(2, 'days')),
         ).toEqual([
@@ -171,6 +173,7 @@ describe(ZksyncTransactionRepository.name, () => {
           }),
         ])
 
+        await repository.refreshDailyTransactionCount()
         expect(
           await repository.getDailyTransactionCount(start.add(2, 'days')),
         ).toEqual([
@@ -197,6 +200,7 @@ describe(ZksyncTransactionRepository.name, () => {
           }),
         ])
 
+        await repository.refreshDailyTransactionCount()
         expect(await repository.getDailyTransactionCount(today)).toEqual([
           {
             count: 1,

@@ -16,7 +16,7 @@ import { Layer2 } from './types'
 
 export const starknet: Layer2 = {
   type: 'layer2',
-  id: ProjectId('starknet'),
+  id: ProjectId.STARKNET,
   display: {
     name: 'StarkNet',
     slug: 'starknet',
@@ -98,6 +98,11 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1657029433),
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      callsPerMinute: 60 * 5,
+      url: 'https://alpha-mainnet.starknet.io',
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
