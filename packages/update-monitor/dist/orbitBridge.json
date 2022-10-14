@@ -9,7 +9,7 @@
         "implementation": "0xe62Fa6C59AD14B46d4e7791FA817030732953b79"
       },
       "values": {
-        "validators": [
+        "owners": [
           "0x8a3F117Ef3b40f1661Dedf7f28fC33E7b6fae4F8",
           "0x67C3c784C49d9ab8757ADb71491df1A1B38FbFA8",
           "0x34EBf4f74a881eB63F666E63ce1Ff2F287CA5a8b",
@@ -20,7 +20,7 @@
           "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437",
           "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1"
         ],
-        "threshold": 6
+        "required": 6
       }
     }
   ]

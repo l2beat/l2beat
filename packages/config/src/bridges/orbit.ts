@@ -131,7 +131,7 @@ export const orbit: Bridge = {
     sourceUpgradeability: {
       value: 'Yes',
       description:
-        'Contract can be upgraded by 6/9 MultiSig. Bridge source code implementation is not verified on Etherscan.',
+        'Contract can be upgraded by 6/9 MultiSig. Bridge proxied implementation is not verified on Etherscan.',
       sentiment: 'bad',
     },
     destinationToken: {
