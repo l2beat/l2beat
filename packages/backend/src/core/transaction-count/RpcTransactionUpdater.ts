@@ -95,16 +95,25 @@ export class RpcTransactionUpdater implements TransactionCounter {
     // from the database using `getMissingRanges`
     await this.blockQueue.waitTilEmpty()
 
+    this.logger.debug('Tip refresh started')
+    const tip = await this.blockTransactionCountRepository.refreshProjectTip(
+      this.projectId,
+    )
+    this.logger.debug('Tip refresh finished')
+
+    this.logger.debug('Missing ranges query started')
     const missingRanges =
       await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
+    this.logger.debug('Missing ranges query finished')
+
     const latestBlock = await this.ethereumClient.getBlockNumber()
     this.latestBlock = latestBlock
 
     enqueueBlockLoop: for (const [start, end] of missingRanges) {
       for (
-        let i = Math.max(start, this.startBlock);
+        let i = Math.max(start, tip?.blockNumber ?? this.startBlock);
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
