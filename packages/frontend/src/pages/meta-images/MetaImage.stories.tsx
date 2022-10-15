@@ -2,8 +2,8 @@ import { layer2s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
+import { configureCharts } from '../../components/chart/configure'
 
-import { configureChart } from '../../components/chart/configure-old'
 import { MetaImage } from './MetaImage'
 
 export default {
@@ -22,7 +22,7 @@ interface TemplateProps {
 
 function Template({ projectId }: TemplateProps) {
   useEffect(() => {
-    configureChart()
+    configureCharts()
   })
   const project = layer2s.find((x) => x.id === projectId)
   return (
