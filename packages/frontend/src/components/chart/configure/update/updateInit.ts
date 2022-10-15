@@ -32,7 +32,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         activity: message.activityEndpoint,
       },
       request: {
-        lastId: 0,
+        lastId: 1,
         isFetching: true,
         showLoader: false,
       },
