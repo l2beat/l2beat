@@ -1,5 +1,5 @@
 import { assert } from '../../../utils/assert'
-import { Effect } from './effects'
+import { handleEffect } from './effects/handleEffect'
 import { InitMessage, Message } from './messages'
 import { EMPTY_STATE } from './state/empty'
 import { State } from './state/State'
@@ -21,13 +21,9 @@ function configureChart(chart: HTMLElement) {
     const [nextState, effects] = update(currentState, message)
     currentState = nextState
 
-    effects.forEach(handleEffect)
+    effects.forEach((effect) => handleEffect(effect, dispatch))
 
     requestAnimationFrame(render)
-  }
-
-  function handleEffect(effect: Effect) {
-    console.log('effect', effect)
   }
 
   function render() {
@@ -48,6 +44,7 @@ function getInitMessage(chart: HTMLElement): InitMessage {
     days: 30, // TODO: determine this
     showEthereum: false, // TODO: determine this
     aggregateTvlEndpoint: chart.dataset.tvlEndpoint,
+    alternativeTvlEndpoint: undefined, // TODO: determine this
     activityEndpoint: chart.dataset.activityEndpoint,
   }
 }

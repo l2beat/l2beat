@@ -1,6 +1,7 @@
 export interface State {
   endpoints: {
     aggregateTvl: string | undefined
+    alternativeTvl: string | undefined
     activity: string | undefined
   }
   request: {
@@ -10,6 +11,7 @@ export interface State {
   }
   responses: {
     aggregateTvl: AggregateTvlResponse | undefined
+    alternativeTvl: AggregateTvlResponse | undefined
     activity: ActivityResponse | undefined
     tokenTvl: Record<string, TokenTvlResponse | undefined>
   }
@@ -20,6 +22,7 @@ export interface State {
     currency: 'USD' | 'ETH'
     token: string | undefined
     showEthereum: boolean
+    showAlternativeTvl: boolean
     mouseX: number | undefined
   }
   view: {

@@ -1,4 +1,4 @@
-import { Effect } from '../effects'
+import { Effect } from '../effects/effects'
 import { InitMessage } from '../messages'
 import { State } from '../state/State'
 
@@ -28,6 +28,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
     {
       endpoints: {
         aggregateTvl: message.aggregateTvlEndpoint,
+        alternativeTvl: message.alternativeTvlEndpoint,
         activity: message.activityEndpoint,
       },
       request: {
@@ -37,6 +38,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
       },
       responses: {
         aggregateTvl: undefined,
+        alternativeTvl: undefined,
         activity: undefined,
         tokenTvl: {},
       },
@@ -47,6 +49,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         currency: 'USD',
         token: undefined,
         showEthereum: message.showEthereum,
+        showAlternativeTvl: false,
         mouseX: undefined,
       },
       view: {

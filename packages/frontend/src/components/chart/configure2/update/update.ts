@@ -1,4 +1,4 @@
-import { Effect } from '../effects'
+import { Effect } from '../effects/effects'
 import { Message } from '../messages'
 import { State } from '../state/State'
 import { updateInit } from './updateInit'

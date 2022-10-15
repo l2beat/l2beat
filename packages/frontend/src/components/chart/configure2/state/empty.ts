@@ -3,6 +3,7 @@ import { State } from './State'
 export const EMPTY_STATE: State = {
   endpoints: {
     aggregateTvl: undefined,
+    alternativeTvl: undefined,
     activity: undefined,
   },
   request: {
@@ -12,6 +13,7 @@ export const EMPTY_STATE: State = {
   },
   responses: {
     aggregateTvl: undefined,
+    alternativeTvl: undefined,
     activity: undefined,
     tokenTvl: {},
   },
@@ -22,6 +24,7 @@ export const EMPTY_STATE: State = {
     currency: 'USD',
     token: undefined,
     showEthereum: false,
+    showAlternativeTvl: false,
     mouseX: undefined,
   },
   view: {

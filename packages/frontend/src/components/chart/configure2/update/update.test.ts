@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
-import { EMPTY_STATE } from '../state/empty'
 
+import { EMPTY_STATE } from '../state/empty'
 import { update } from './update'
 
 describe(update.name, () => {
@@ -11,12 +11,14 @@ describe(update.name, () => {
         days: 7,
         initialView: 'tvl',
         aggregateTvlEndpoint: '/tvl.json',
+        alternativeTvlEndpoint: '/alt-tvl.json',
         activityEndpoint: undefined,
         showEthereum: false,
       })
 
       expect(state.endpoints).toEqual({
         aggregateTvl: '/tvl.json',
+        alternativeTvl: '/alt-tvl.json',
         activity: undefined,
       })
 
@@ -27,6 +29,7 @@ describe(update.name, () => {
         currency: 'USD',
         token: undefined,
         showEthereum: false,
+        showAlternativeTvl: false,
         mouseX: undefined,
       })
 
@@ -42,12 +45,14 @@ describe(update.name, () => {
         days: 30,
         initialView: 'activity',
         aggregateTvlEndpoint: undefined,
+        alternativeTvlEndpoint: undefined,
         activityEndpoint: '/activity.json',
         showEthereum: true,
       })
 
       expect(state.endpoints).toEqual({
         aggregateTvl: undefined,
+        alternativeTvl: undefined,
         activity: '/activity.json',
       })
 
@@ -58,6 +63,7 @@ describe(update.name, () => {
         currency: 'USD',
         token: undefined,
         showEthereum: true,
+        showAlternativeTvl: false,
         mouseX: undefined,
       })
 
@@ -73,12 +79,14 @@ describe(update.name, () => {
         days: 30,
         initialView: 'activity',
         aggregateTvlEndpoint: '/tvl.json',
+        alternativeTvlEndpoint: undefined,
         activityEndpoint: '/activity.json',
         showEthereum: false,
       })
 
       expect(state.endpoints).toEqual({
         aggregateTvl: '/tvl.json',
+        alternativeTvl: undefined,
         activity: '/activity.json',
       })
 
@@ -89,6 +97,7 @@ describe(update.name, () => {
         currency: 'USD',
         token: undefined,
         showEthereum: false,
+        showAlternativeTvl: false,
         mouseX: undefined,
       })
 
