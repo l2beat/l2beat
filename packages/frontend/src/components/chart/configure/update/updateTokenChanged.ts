@@ -1,7 +1,7 @@
 import { Effect } from '../effects/effects'
 import { TokenChangedMessage } from '../messages'
 import { State } from '../state/State'
-import { calculateView } from './calculateView'
+import { calculateView } from './view/calculateView'
 
 export function updateTokenChanged(
   state: State,

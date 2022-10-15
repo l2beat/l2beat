@@ -1,7 +1,7 @@
 import { expect } from 'earljs'
 
-import { calculateView } from '../../../../../src/components/chart/configure2/update/calculateView'
-import { update } from '../../../../../src/components/chart/configure2/update/update'
+import { update } from '../../../../../src/components/chart/configure/update/update'
+import { calculateView } from '../../../../../src/components/chart/configure/update/view/calculateView'
 import { EXAMPLE_AGGREGATE_TVL_DATA } from './data'
 import { stateAfter } from './stateAfter'
 

@@ -10,7 +10,7 @@ import {
   TokenTvlLoadedMessage,
 } from '../messages'
 import { State } from '../state/State'
-import { calculateView } from './calculateView'
+import { calculateView } from './view/calculateView'
 
 export function updateLoadedOrFailed(
   state: State,

@@ -1,7 +1,7 @@
-import { fillBelowChart } from '../../configure/draw/fillBelowChart'
-import { strokeChartLine } from '../../configure/draw/strokeChartLine'
-import { getMainStyle, getSecondaryStyle } from '../../configure/draw/style'
 import { State } from '../state/State'
+import { fillBelowChart } from './fillBelowChart'
+import { strokeChartLine } from './strokeChartLine'
+import { getMainStyle, getSecondaryStyle } from './style'
 
 export function render(chart: HTMLElement, previousState: State, state: State) {
   if (previousState === state) {

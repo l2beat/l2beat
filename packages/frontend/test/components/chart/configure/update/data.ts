@@ -2,7 +2,7 @@ import {
   ActivityResponse,
   AggregateTvlResponse,
   TokenTvlResponse,
-} from '../../../../../src/components/chart/configure2/state/State'
+} from '../../../../../src/components/chart/configure/state/State'
 
 export const NOW = 1665792000 // Sat Oct 15 2022 00:00:00 GMT+0000
 

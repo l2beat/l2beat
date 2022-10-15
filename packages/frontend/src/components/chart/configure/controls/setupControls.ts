@@ -1,5 +1,5 @@
-import { onRadioChange } from '../../configure/state/onRadioChange'
-import { toDays } from '../../configure/toDays'
+import { onRadioChange } from '../../configure-old/state/onRadioChange'
+import { toDays } from '../../configure-old/toDays'
 import { ChartElements } from '../elements'
 import { Message } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'

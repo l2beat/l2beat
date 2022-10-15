@@ -1,6 +1,6 @@
-import { fillBelowChart } from './draw/fillBelowChart'
-import { strokeChartLine } from './draw/strokeChartLine'
-import { getMainStyle, getSecondaryStyle } from './draw/style'
+import { fillBelowChart } from '../configure/render/fillBelowChart'
+import { strokeChartLine } from '../configure/render/strokeChartLine'
+import { getMainStyle, getSecondaryStyle } from '../configure/render/style'
 import { Outputs } from './getOutputs'
 import { UiState } from './ui'
 

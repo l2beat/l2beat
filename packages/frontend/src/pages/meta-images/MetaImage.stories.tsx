@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/types'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { configureChart } from '../../components/chart/configure'
+import { configureChart } from '../../components/chart/configure-old'
 import { MetaImage } from './MetaImage'
 
 export default {

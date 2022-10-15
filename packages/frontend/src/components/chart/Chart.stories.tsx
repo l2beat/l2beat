@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../PageContent'
 import { Chart as ChartComponent } from './Chart'
-import { configureCharts } from './configure2'
+import { configureCharts } from './configure'
 
 export default {
   title: 'Components/Chart',

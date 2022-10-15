@@ -1,8 +1,11 @@
 import { formatRange, formatTimestamp } from '../../../../utils'
+import { calculateTicks } from '../../configure/update/view/calculateTicks'
+import {
+  formatCurrency,
+  formatCurrencyExact,
+} from '../../configure/update/view/format'
 import { ChartStateWithInput } from '../state'
 import { ChartInput } from '../state/ChartInput'
-import { calculateTicks } from './calculateTicks'
-import { formatCurrency, formatCurrencyExact } from './format'
 import { UiState } from './UiState'
 
 function getDataPoints(

@@ -1,4 +1,4 @@
-import { configureChart } from '../components/chart/configure'
+import { configureChart } from '../components/chart/configure-old'
 import { configureTvlActivity } from '../components/header/configureTvlActivity'
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
