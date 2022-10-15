@@ -43,7 +43,6 @@ describe(update.name, () => {
 
       expect(effects).toEqual([
         { type: 'FetchAggregateTvl', url: '/tvl.json', requestId: 1 },
-        { type: 'LoaderTimeout', requestId: 1 },
       ])
     })
 
@@ -83,7 +82,6 @@ describe(update.name, () => {
 
       expect(effects).toEqual([
         { type: 'FetchActivity', url: '/activity.json', requestId: 1 },
-        { type: 'LoaderTimeout', requestId: 1 },
       ])
     })
 
@@ -123,7 +121,6 @@ describe(update.name, () => {
 
       expect(effects).toEqual([
         { type: 'FetchActivity', url: '/activity.json', requestId: 1 },
-        { type: 'LoaderTimeout', requestId: 1 },
       ])
     })
   })

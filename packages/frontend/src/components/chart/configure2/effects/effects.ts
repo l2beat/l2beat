@@ -23,14 +23,8 @@ export interface FetchActivityEffect {
   url: string
 }
 
-export interface LoaderTimeoutEffect {
-  type: 'LoaderTimeout'
-  requestId: number
-}
-
 export type Effect =
   | FetchAggregateTvlEffect
   | FetchAlternativeTvlEffect
   | FetchTokenTvlEffect
   | FetchActivityEffect
-  | LoaderTimeoutEffect

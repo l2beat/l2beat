@@ -45,6 +45,11 @@ export interface ScaleChangedMessage {
   isLogScale: boolean
 }
 
+export interface ShowAlternativeTvlChangedMessage {
+  type: 'ShowAlternativeTvlChanged'
+  showAlternativeTvl: boolean
+}
+
 export interface MouseMovedMessage {
   type: 'MouseMoved'
   x: number
@@ -112,6 +117,7 @@ export type Message =
   | TokenChangedMessage
   | ShowEthereumChangedMessage
   | ScaleChangedMessage
+  | ShowAlternativeTvlChangedMessage
   | MouseMovedMessage
   | MouseExitedMessage
   | AggregateTvlLoadedMessage

@@ -5,7 +5,6 @@ import {
   FetchAggregateTvlEffect,
   FetchAlternativeTvlEffect,
   FetchTokenTvlEffect,
-  LoaderTimeoutEffect,
 } from './effects'
 
 export function handleEffect(
@@ -21,8 +20,6 @@ export function handleEffect(
       return handleFetchTokenTvl(effect, dispatch)
     case 'FetchActivity':
       return handleFetchActivity(effect, dispatch)
-    case 'LoaderTimeout':
-      return handleLoaderTimeout(effect, dispatch)
   }
 }
 
@@ -30,6 +27,7 @@ function handleFetchAggregateTvl(
   { url, requestId }: FetchAggregateTvlEffect,
   dispatch: (message: Message) => void,
 ) {
+  timeoutLoader(requestId, dispatch)
   fetchThenDispatch(
     url,
     dispatch,
@@ -43,6 +41,7 @@ function handleFetchAlternativeTvl(
   { url, requestId }: FetchAlternativeTvlEffect,
   dispatch: (message: Message) => void,
 ) {
+  timeoutLoader(requestId, dispatch)
   fetchThenDispatch(
     url,
     dispatch,
@@ -56,6 +55,7 @@ function handleFetchTokenTvl(
   { url, requestId, token }: FetchTokenTvlEffect,
   dispatch: (message: Message) => void,
 ) {
+  timeoutLoader(requestId, dispatch)
   fetchThenDispatch(
     url,
     dispatch,
@@ -69,6 +69,7 @@ function handleFetchActivity(
   { url, requestId }: FetchActivityEffect,
   dispatch: (message: Message) => void,
 ) {
+  timeoutLoader(requestId, dispatch)
   fetchThenDispatch(
     url,
     dispatch,
@@ -97,16 +98,9 @@ function fetchThenDispatch(
     )
 }
 
-function handleLoaderTimeout(
-  effect: LoaderTimeoutEffect,
+function timeoutLoader(
+  requestId: number,
   dispatch: (message: Message) => void,
 ) {
-  setTimeout(
-    () =>
-      dispatch({
-        type: 'LoaderTimedOut',
-        requestId: effect.requestId,
-      }),
-    300,
-  )
+  setTimeout(() => dispatch({ type: 'LoaderTimedOut', requestId }), 300)
 }

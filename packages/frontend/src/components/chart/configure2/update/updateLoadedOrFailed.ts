@@ -37,23 +37,21 @@ export function updateLoadedOrFailed(
     return [newState, []]
   }
 
-  const responses: State['responses'] = {
-    aggregateTvl:
-      message.type === 'AggregateTvlLoaded'
-        ? message.data
-        : state.responses.aggregateTvl,
-    alternativeTvl:
-      message.type === 'AlternativeTvlLoaded'
-        ? message.data
-        : state.responses.alternativeTvl,
-    tokenTvl:
-      message.type === 'TokenTvlLoaded'
-        ? { ...state.responses.tokenTvl, [message.token]: message.data }
-        : state.responses.tokenTvl,
-    activity:
-      message.type === 'ActivityLoaded'
-        ? message.data
-        : state.responses.activity,
+  const responses: State['responses'] = { ...state.responses }
+  if (message.type === 'AggregateTvlLoaded') {
+    responses.aggregateTvl = message.data
+  }
+  if (message.type === 'AlternativeTvlLoaded') {
+    responses.alternativeTvl = message.data
+  }
+  if (message.type === 'TokenTvlLoaded') {
+    responses.tokenTvl = {
+      ...state.responses.tokenTvl,
+      [message.token]: message.data,
+    }
+  }
+  if (message.type === 'ActivityLoaded') {
+    responses.activity = message.data
   }
 
   const newState: State = {

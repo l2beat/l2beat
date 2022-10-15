@@ -59,6 +59,6 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         chart: undefined,
       },
     },
-    [fetchEffect, { type: 'LoaderTimeout', requestId: 1 }],
+    [fetchEffect],
   ]
 }
