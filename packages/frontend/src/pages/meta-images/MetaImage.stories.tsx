@@ -2,8 +2,8 @@ import { layer2s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
-import { configureCharts } from '../../components/chart/configure'
 
+import { configureCharts } from '../../components/chart/configure'
 import { MetaImage } from './MetaImage'
 
 export default {

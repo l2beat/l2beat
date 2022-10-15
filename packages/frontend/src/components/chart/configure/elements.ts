@@ -6,13 +6,13 @@ export function getChartElements(chart: HTMLElement) {
     controls: {
       // this one is outside the chart!
       showCombined: document.querySelector<HTMLInputElement>(
-        '[data-role="chart-combined"] input',
+        '[data-role="chart-combined"]',
       ),
       showActivity: chart.querySelector<HTMLInputElement>(
         '[data-role="toggle-tvl-activity"]',
       ),
       showEthereum: chart.querySelector<HTMLInputElement>(
-        '[data-role="toggle-ethereum-activity"] input',
+        '[data-role="toggle-ethereum-activity"]',
       ),
       days: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
@@ -50,9 +50,6 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
-      ),
-      showElementControlWrapper: chart.querySelector<HTMLElement>(
-        '[data-role="toggle-ethereum-activity"]',
       ),
     },
     hover: {

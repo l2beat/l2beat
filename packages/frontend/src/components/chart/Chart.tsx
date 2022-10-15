@@ -13,12 +13,15 @@ import { TvlActivityToggle } from './TvlActivityToggle'
 import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
-  initialView: 'tvl' | 'activity'
+  type?: 'tvl' | 'activity'
   tvlEndpoint?: string
   activityEndpoint?: string
   ethereumActivityEndpoint?: string
   tokens?: TokenControl[]
-  isMetaChart?: boolean
+  className?: string
+  hasActivity?: boolean
+  hasTvl?: boolean
+  metaChart?: boolean
 }
 
 export function Chart({
@@ -26,31 +29,31 @@ export function Chart({
   activityEndpoint,
   ethereumActivityEndpoint,
   tokens,
-  initialView,
-  isMetaChart = false,
+  type = 'tvl',
+  hasActivity,
+  hasTvl = true,
+  metaChart = false,
 }: ChartProps) {
-  const days = isMetaChart || initialView === 'activity' ? 30 : 7
-
+  const days = metaChart || type === 'activity' ? 30 : 7
   return (
     <section
       data-role="chart"
-      data-type={initialView}
-      data-initial-view={initialView}
+      data-type={type}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
       data-ethereum-activity-endpoint={ethereumActivityEndpoint}
       className="mt-4 sm:mt-8"
     >
-      {!isMetaChart && (
+      {!metaChart && (
         <div className="md:flex gap-5 md:items-center mb-4 md:mb-6">
           <h2 className="hidden md:inline text-3xl font-bold">Chart</h2>
-          {activityEndpoint && tvlEndpoint && <TvlActivityToggle />}
+          {hasActivity && hasTvl && <TvlActivityToggle />}
         </div>
       )}
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
           <TimeRange />
-          <RangeControls days={days} type={initialView} />
+          <RangeControls days={days} type={type} />
         </div>
         <div
           data-role="chart-view"
@@ -67,14 +70,16 @@ export function Chart({
           />
           <YAxisLabels />
         </div>
-        {!isMetaChart && (
+        {!metaChart && (
           <>
             <div className="flex justify-between">
-              <EthereumActivityToggle showToggle={initialView === 'activity'} />
-              {tvlEndpoint && <CurrencyControls />}
+              {hasActivity && (
+                <EthereumActivityToggle showToggle={type === 'activity'} />
+              )}
+              {hasTvl && <CurrencyControls />}
               <ScaleControls />
             </div>
-            {tvlEndpoint && <TokenControls tokens={tokens} />}{' '}
+            {hasTvl && <TokenControls tokens={tokens} />}{' '}
           </>
         )}
       </div>

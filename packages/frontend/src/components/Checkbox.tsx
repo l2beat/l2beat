@@ -18,7 +18,6 @@ export function Checkbox({
 }: IncludeLayer2sCheckboxProps) {
   return (
     <label
-      data-role={role}
       className={cx(
         'text-base font-medium bg-gray-200 dark:bg-gray-800',
         'inline-flex items-center p-1 pr-2 gap-2 rounded-lg cursor-pointer select-none',
@@ -26,6 +25,7 @@ export function Checkbox({
       )}
     >
       <input
+        data-role={role}
         id={id}
         type="checkbox"
         autoComplete="off"

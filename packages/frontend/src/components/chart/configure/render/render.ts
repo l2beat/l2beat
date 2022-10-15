@@ -46,7 +46,10 @@ export function render(
     sevenDayRadio?.classList.toggle('hidden', !isTvl)
     elements.view.currencyControlsWrapper?.classList.toggle('hidden', !isTvl)
     elements.view.tokenControlsWrapper?.classList.toggle('hidden', !isTvl)
-    elements.view.showElementControlWrapper?.classList.toggle('hidden', isTvl)
+    elements.controls.showEthereum?.parentElement?.classList.toggle(
+      'hidden',
+      isTvl,
+    )
   }
 
   if (state.view !== previousState.view) {

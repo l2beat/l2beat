@@ -35,7 +35,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.sevenDayChange} />
-          <Chart initialView="tvl" tvlEndpoint={props.tvlEndpoint} />
+          <Chart tvlEndpoint={props.tvlEndpoint} />
           <ScalingTvlView {...props.tvlView} />
           <OtherSites />
           <About />

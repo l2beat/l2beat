@@ -1,4 +1,3 @@
-import { assert } from '../../../utils/assert'
 import { setupControls } from './controls/setupControls'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
@@ -42,8 +41,7 @@ function configureChart(chart: HTMLElement) {
 }
 
 function getInitMessage(elements: ChartElements): InitMessage {
-  const initialView = elements.chart.dataset.initialView
-  assert(initialView === 'tvl' || initialView === 'activity')
+  const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
   return {
     type: 'Init',
