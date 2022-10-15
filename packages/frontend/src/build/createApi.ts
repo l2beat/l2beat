@@ -9,12 +9,19 @@ import path from 'path'
 
 import { Config } from './config'
 
+export interface FrontendActivityChart {
+  daily: {
+    types: ['timestamp', 'transactions', 'ethereumTransactions']
+    data: [number, number, number][]
+  }
+}
+
 export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
 ) {
-  const urlCharts = new Map<string, TvlApiCharts>()
+  const urlCharts = new Map<string, TvlApiCharts | FrontendActivityChart>()
 
   urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
   urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
@@ -34,6 +41,26 @@ export function createApi(
       )
     }
   }
+
+  if (activityApiResponse.ethereum) {
+    urlCharts.set(
+      'activity/combined',
+      getActivityChart(
+        activityApiResponse.combined,
+        activityApiResponse.ethereum,
+      ),
+    )
+
+    for (const [key, chart] of Object.entries(activityApiResponse.projects)) {
+      if (chart) {
+        urlCharts.set(
+          `activity/${key}`,
+          getActivityChart(chart, activityApiResponse.ethereum),
+        )
+      }
+    }
+  }
+
   urlCharts.set(
     'scaling-activity',
     getCompatibleApi(activityApiResponse.combined),
@@ -49,13 +76,36 @@ export function createApi(
   outputCharts(urlCharts)
 }
 
-export function outputCharts(urlCharts: Map<string, TvlApiCharts>) {
+export function outputCharts(
+  urlCharts: Map<string, TvlApiCharts | FrontendActivityChart>,
+) {
   for (const [url, charts] of urlCharts) {
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(
       path.join('build/api', `${url}.json`),
       JSON.stringify(charts),
     )
+  }
+}
+
+function getActivityChart(
+  apiChart: ActivityApiChart,
+  ethereumChart: ActivityApiChart,
+): FrontendActivityChart {
+  const length = Math.min(apiChart.data.length, ethereumChart.data.length)
+  return {
+    daily: {
+      types: ['timestamp', 'transactions', 'ethereumTransactions'],
+      data: new Array(length).fill(0).map((x, i) => {
+        const apiPoint = apiChart.data.at(-length + i)
+        const ethPoint = ethereumChart.data.at(-length + i)
+        return [
+          apiPoint?.[0].toNumber() ?? 0,
+          apiPoint?.[1] ?? 0,
+          ethPoint?.[1] ?? 0,
+        ]
+      }),
+    },
   }
 }
 
