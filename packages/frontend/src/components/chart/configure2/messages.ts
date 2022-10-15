@@ -52,7 +52,7 @@ export interface ShowAlternativeTvlChangedMessage {
 
 export interface MouseMovedMessage {
   type: 'MouseMoved'
-  x: number
+  mouseX: number
 }
 
 export interface MouseExitedMessage {

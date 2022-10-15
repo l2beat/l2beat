@@ -6,7 +6,6 @@ import {
   ShowAlternativeTvlChangedMessage,
   ShowEthereumChangedMessage,
   TokenChangedMessage,
-  ViewChangedMessage,
 } from '../messages'
 import { State } from '../state/State'
 import { calculateView } from './calculateView'
@@ -14,7 +13,6 @@ import { calculateView } from './calculateView'
 export function updateControlsChanged(
   state: State,
   message:
-    | ViewChangedMessage
     | DaysChangedMessage
     | CurrencyChangedMessage
     | TokenChangedMessage
@@ -23,12 +21,6 @@ export function updateControlsChanged(
     | ShowAlternativeTvlChangedMessage,
 ): [State, Effect[]] {
   const controls: State['controls'] = { ...state.controls }
-  if (message.type === 'ViewChanged') {
-    controls.view = message.view
-    if (controls.view === 'activity') {
-      controls.days = Math.max(controls.days, 30)
-    }
-  }
   if (message.type === 'DaysChanged') {
     controls.days = message.days
   }

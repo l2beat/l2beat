@@ -70,9 +70,9 @@ function updateRequest(
 ): State['request'] {
   return {
     isFetching:
-      oldRequest.lastId < message.requestId ? false : oldRequest.isFetching,
+      message.requestId === oldRequest.lastId ? false : oldRequest.isFetching,
     showLoader:
-      oldRequest.lastId < message.requestId ? false : oldRequest.isFetching,
-    lastId: Math.max(oldRequest.lastId, message.requestId),
+      message.requestId === oldRequest.lastId ? false : oldRequest.showLoader,
+    lastId: oldRequest.lastId,
   }
 }
