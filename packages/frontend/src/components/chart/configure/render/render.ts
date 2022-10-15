@@ -54,6 +54,10 @@ export function render(
       labels[i].innerHTML = state.view.labels?.[4 - i] ?? '...'
     }
 
+    if (elements.view.dateRange) {
+      elements.view.dateRange.innerHTML = state.view.dateRange ?? '...'
+    }
+
     const ctx = elements.view.canvas?.getContext('2d')
     if (elements.view.canvas && ctx) {
       renderChart(state, elements.view.canvas, ctx)

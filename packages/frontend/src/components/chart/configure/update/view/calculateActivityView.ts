@@ -1,5 +1,6 @@
 import { formatRange, formatTimestamp } from '../../../../../utils'
 import { State } from '../../state/State'
+import { formatTps } from './format'
 import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
 
@@ -18,7 +19,7 @@ export function calculateActivityView(
       ? entries.flatMap((x) => [getTps(x[1]), getTps(x[2])])
       : entries.map((x) => getTps(x[1])),
     controls.isLogScale,
-    (x) => x.toFixed(2),
+    formatTps,
   )
 
   const points = entries.map(
@@ -27,8 +28,8 @@ export function calculateActivityView(
       y: getY(getTps(transactions)),
       y2: getY(getTps(ethereumTransactions)),
       date: formatTimestamp(timestamp, true),
-      tps: getTps(transactions).toFixed(2),
-      ethereumTps: getTps(ethereumTransactions).toFixed(2),
+      tps: formatTps(getTps(transactions)),
+      ethereumTps: formatTps(getTps(ethereumTransactions)),
     }),
   )
 
@@ -39,6 +40,7 @@ export function calculateActivityView(
     showHoverAtIndex: getHoverIndex(controls.mouseX, points.length),
   }
 }
+
 function getTps(dailyTransactions: number) {
   return dailyTransactions / (60 * 60 * 24)
 }

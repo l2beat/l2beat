@@ -43,6 +43,7 @@ export function getChartElements(chart: HTMLElement) {
         '[data-role="chart-canvas"]',
       ),
       loader: chart.querySelector<HTMLElement>('[data-role="chart-loader"]'),
+      dateRange: chart.querySelector<HTMLElement>('[data-role="chart-range"]'),
       currencyControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-currency-controls"]',
       ),
