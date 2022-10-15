@@ -66,5 +66,36 @@ describe(update.name, () => {
         { type: 'LoaderTimeout', requestId: 1 },
       ])
     })
+
+    it('handles a joint init', () => {
+      const [state, effects] = update(EMPTY_STATE, {
+        type: 'Init',
+        days: 30,
+        initialView: 'activity',
+        aggregateTvlEndpoint: '/tvl.json',
+        activityEndpoint: '/activity.json',
+        showEthereum: false,
+      })
+
+      expect(state.endpoints).toEqual({
+        aggregateTvl: '/tvl.json',
+        activity: '/activity.json',
+      })
+
+      expect(state.controls).toEqual({
+        view: 'activity',
+        days: 30,
+        isLogScale: false,
+        currency: 'USD',
+        token: undefined,
+        showEthereum: false,
+        mouseX: undefined,
+      })
+
+      expect(effects).toEqual([
+        { type: 'FetchActivity', url: '/activity.json', requestId: 1 },
+        { type: 'LoaderTimeout', requestId: 1 },
+      ])
+    })
   })
 })
