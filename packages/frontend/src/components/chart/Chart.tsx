@@ -35,6 +35,7 @@ export function Chart({
     <section
       data-role="chart"
       data-type={initialView}
+      data-initial-view={initialView}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
       data-ethereum-activity-endpoint={ethereumActivityEndpoint}
