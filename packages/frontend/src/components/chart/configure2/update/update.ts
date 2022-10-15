@@ -41,7 +41,5 @@ export function update(state: State, message: Message): [State, Effect[]] {
       return updateLoadedOrFailed(state, message)
     case 'LoaderTimedOut':
       return updateLoaderTimedOut(state, message)
-    default:
-      throw new Error('Unknown message type!')
   }
 }
