@@ -59,7 +59,7 @@ export interface ActivityChart {
   type: 'ActivityChart'
   points: {
     x: number
-    y1: number
+    y: number
     y2: number
     date: string
     tps: string

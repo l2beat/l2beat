@@ -113,7 +113,7 @@ function calculateActivityView(
   const points = entries.map(
     ([timestamp, transactions, ethereumTransactions], i) => ({
       x: i / (entries.length - 1),
-      y1: getY(getTps(transactions)),
+      y: getY(getTps(transactions)),
       y2: getY(getTps(ethereumTransactions)),
       date: formatTimestamp(timestamp, true),
       tps: getTps(transactions).toFixed(2),

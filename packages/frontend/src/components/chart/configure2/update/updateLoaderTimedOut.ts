@@ -10,7 +10,8 @@ export function updateLoaderTimedOut(
     ...state,
     request: {
       ...state.request,
-      showLoader: state.request.lastId === message.requestId,
+      showLoader:
+        state.request.isFetching && state.request.lastId === message.requestId,
     },
   }
   return [newState, []]
