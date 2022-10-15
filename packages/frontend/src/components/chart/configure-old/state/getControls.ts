@@ -17,7 +17,7 @@ export function getControls(chart: Element) {
     ),
     moreTokens: $.maybe('[data-role="chart-more-tokens"]'),
     combined: document.querySelector<HTMLInputElement>(
-      '[data-role="chart-combined"]',
+      '[data-role="chart-combined"] input',
     ),
     tvlActivity: document.querySelector<HTMLInputElement>(
       '[data-role="toggle-tvl-activity"]',

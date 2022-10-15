@@ -1,5 +1,5 @@
 import { onRadioChange } from '../../configure/controls/onRadioChange'
-import { toDays } from '../toDays'
+import { toDays } from '../../configure/controls/toDays'
 import { apiGet } from './api'
 import { Charts } from './ChartInput'
 import { ChartState } from './ChartState'

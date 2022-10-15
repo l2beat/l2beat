@@ -28,7 +28,7 @@ function configureChart(chart: HTMLElement) {
   }
 
   function renderUpdates() {
-    render(chart, previousState, currentState)
+    render(elements, previousState, currentState)
     previousState = currentState
   }
 

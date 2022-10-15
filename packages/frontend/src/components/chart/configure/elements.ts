@@ -4,14 +4,15 @@ export function getChartElements(chart: HTMLElement) {
   return {
     chart,
     controls: {
-      showCombined: chart.querySelector<HTMLInputElement>(
-        '[data-role="chart-combined"]',
+      // this one is outside the chart!
+      showCombined: document.querySelector<HTMLInputElement>(
+        '[data-role="chart-combined"] input',
       ),
       showActivity: chart.querySelector<HTMLInputElement>(
         '[data-role="toggle-tvl-activity"]',
       ),
       showEthereum: chart.querySelector<HTMLInputElement>(
-        '[data-role="toggle-ethereum-activity"]',
+        '[data-role="toggle-ethereum-activity"] input',
       ),
       days: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
@@ -21,6 +22,11 @@ export function getChartElements(chart: HTMLElement) {
       currency: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
           '[data-role="chart-currency-controls"] input',
+        ),
+      ),
+      tokens: Array.from(
+        chart.querySelectorAll<HTMLInputElement>(
+          '[data-role="chart-token-controls"] input',
         ),
       ),
       scale: Array.from(
@@ -35,6 +41,16 @@ export function getChartElements(chart: HTMLElement) {
       ),
       canvas: chart.querySelector<HTMLCanvasElement>(
         '[data-role="chart-canvas"]',
+      ),
+      loader: chart.querySelector<HTMLElement>('[data-role="chart-loader"]'),
+      currencyControlsWrapper: chart.querySelector<HTMLElement>(
+        '[data-role="chart-currency-controls"]',
+      ),
+      tokenControlsWrapper: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-controls"]',
+      ),
+      showElementControlWrapper: chart.querySelector<HTMLElement>(
+        '[data-role="toggle-ethereum-activity"]',
       ),
     },
   }

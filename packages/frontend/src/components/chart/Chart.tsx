@@ -70,11 +70,7 @@ export function Chart({
         {!isMetaChart && (
           <>
             <div className="flex justify-between">
-              {activityEndpoint && (
-                <EthereumActivityToggle
-                  showToggle={initialView === 'activity'}
-                />
-              )}
+              <EthereumActivityToggle showToggle={initialView === 'activity'} />
               {tvlEndpoint && <CurrencyControls />}
               <ScaleControls />
             </div>

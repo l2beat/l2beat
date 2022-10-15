@@ -1,8 +1,8 @@
-import { toDays } from '../../configure-old/toDays'
 import { ChartElements } from '../elements'
 import { Message } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
 import { onRadioChange } from './onRadioChange'
+import { toDays } from './toDays'
 
 export function setupControls(
   elements: ChartElements,
@@ -16,6 +16,17 @@ export function setupControls(
     dispatch({
       type: 'CurrencyChanged',
       currency: control.value === 'ETH' ? 'eth' : 'usd',
+    })
+  })
+
+  onRadioChange(elements.controls.tokens, (control) => {
+    if (!control.dataset.tvlEndpoint) {
+      throw new Error('Missing tvl endpoint')
+    }
+    dispatch({
+      type: 'TokenChanged',
+      token: control.value,
+      tokenEndpoint: control.dataset.tvlEndpoint,
     })
   })
 
