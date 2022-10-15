@@ -1,25 +1,37 @@
 export interface State {
-  tvlEndpoint: string | undefined
-  tvlResponse: AggregateTvlResponse | undefined
-  activityEndpoint: string | undefined
-  activityResponse: ActivityResponse | undefined
-  tokenTvlResponses: Record<string, TokenTvlResponse | undefined>
-
-  labels: string[] | undefined
-  chart: AggregateTvlChart | TokenTvlChart | ActivityChart | undefined
-  days: number
-  isLogScale: boolean
-  dateRange: string | undefined
-  showHoverAtIndex: number | undefined
-
-  lastRequestId: number
-  isFetching: boolean
-  showLoader: boolean
+  endpoints: {
+    aggregateTvl: string | undefined
+    activity: string | undefined
+  }
+  request: {
+    lastId: number
+    isFetching: boolean
+    showLoader: boolean
+  }
+  responses: {
+    aggregateTvl: AggregateTvlResponse | undefined
+    activity: ActivityResponse | undefined
+    tokenTvl: Record<string, TokenTvlResponse | undefined>
+  }
+  controls: {
+    view: 'tvl' | 'activity'
+    days: number
+    isLogScale: boolean
+    currency: 'USD' | 'ETH'
+    token: string | undefined
+    showEthereum: boolean
+    mouseX: number | undefined
+  }
+  view: {
+    dateRange: string | undefined
+    labels: string[] | undefined
+    showHoverAtIndex: number | undefined
+    chart: AggregateTvlChart | TokenTvlChart | ActivityChart | undefined
+  }
 }
 
 export interface AggregateTvlChart {
   type: 'AggregateTvlChart'
-  currency: 'USD' | 'ETH'
   points: {
     x: number
     y: number
@@ -31,7 +43,6 @@ export interface AggregateTvlChart {
 
 export interface TokenTvlChart {
   type: 'TokenTvlChart'
-  token: string
   points: {
     x: number
     y: number
@@ -43,7 +54,6 @@ export interface TokenTvlChart {
 
 export interface ActivityChart {
   type: 'ActivityChart'
-  showEthereum: boolean
   points: {
     x: number
     y1: number

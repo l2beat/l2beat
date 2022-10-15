@@ -1,13 +1,10 @@
 import { Effect } from '../effects'
 import { Message } from '../messages'
-import { State } from '../State'
+import { State } from '../state/State'
 import { updateInit } from './updateInit'
 
-export function update(
-  state: State | undefined,
-  message: Message,
-): [State, Effect[]] {
-  if (message.type === 'InitMessage') {
+export function update(state: State, message: Message): [State, Effect[]] {
+  if (message.type === 'Init') {
     return updateInit(message)
   }
   throw new Error('Unknown message type!')

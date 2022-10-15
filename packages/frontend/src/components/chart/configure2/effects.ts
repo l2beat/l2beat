@@ -1,17 +1,17 @@
 export interface FetchAggregateTvlEffect {
-  type: 'FetchAggregateTvlEffect'
+  type: 'FetchAggregateTvl'
   requestId: number
   url: string
 }
 
 export interface FetchActivityEffect {
-  type: 'FetchActivityEffect'
+  type: 'FetchActivity'
   requestId: number
   url: string
 }
 
 export interface LoaderTimeoutEffect {
-  type: 'LoaderTimeoutEffect'
+  type: 'LoaderTimeout'
   requestId: number
 }
 

@@ -1,7 +1,8 @@
 import { assert } from '../../../utils/assert'
 import { Effect } from './effects'
 import { InitMessage, Message } from './messages'
-import { State } from './State'
+import { EMPTY_STATE } from './state/empty'
+import { State } from './state/State'
 import { update } from './update/update'
 
 export function configureCharts() {
@@ -11,42 +12,42 @@ export function configureCharts() {
 }
 
 function configureChart(chart: HTMLElement) {
-  const initMessage = getInitMessage(chart, 30)
+  const initMessage = getInitMessage(chart)
 
-  let previousState: State | undefined
-  let currentState: State | undefined
+  let previousState: State = EMPTY_STATE
+  let currentState: State = EMPTY_STATE
 
   function dispatch(message: Message) {
     const [nextState, effects] = update(currentState, message)
-    previousState = currentState
     currentState = nextState
 
     effects.forEach(handleEffect)
 
-    const [previous, current] = [previousState, currentState]
-    requestAnimationFrame(() => render(previous, current))
+    requestAnimationFrame(render)
   }
 
   function handleEffect(effect: Effect) {
     console.log('effect', effect)
   }
 
-  function render(previousState: State | undefined, currentState: State) {
+  function render() {
     console.log('render', previousState, currentState)
+    previousState = currentState
   }
 
   dispatch(initMessage)
 }
 
-function getInitMessage(chart: HTMLElement, days: number): InitMessage {
+function getInitMessage(chart: HTMLElement): InitMessage {
   const initialView = chart.dataset.initialView
   assert(initialView === 'tvl' || initialView === 'activity')
 
   return {
-    type: 'InitMessage',
+    type: 'Init',
     initialView,
-    days,
-    tvlEndpoint: chart.dataset.tvlEndpoint,
+    days: 30, // TODO: determine this
+    showEthereum: false, // TODO: determine this
+    aggregateTvlEndpoint: chart.dataset.tvlEndpoint,
     activityEndpoint: chart.dataset.activityEndpoint,
   }
 }

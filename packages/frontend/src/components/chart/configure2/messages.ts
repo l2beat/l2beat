@@ -1,9 +1,10 @@
 export interface InitMessage {
-  type: 'InitMessage'
+  type: 'Init'
   initialView: 'tvl' | 'activity'
   days: number
-  tvlEndpoint: string | undefined
+  aggregateTvlEndpoint: string | undefined
   activityEndpoint: string | undefined
+  showEthereum: boolean
 }
 
 export type Message = InitMessage
