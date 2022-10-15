@@ -21,7 +21,7 @@ export const EMPTY_STATE: State = {
     view: 'tvl',
     days: 0,
     isLogScale: false,
-    currency: 'USD',
+    currency: 'usd',
     token: undefined,
     showEthereum: false,
     showAlternativeTvl: false,

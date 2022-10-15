@@ -1,9 +1,9 @@
 export function calculateTicks(
   ticks: number,
   values: number[],
-  logScale: boolean,
+  isLogScale: boolean,
 ) {
-  return logScale
+  return isLogScale
     ? calculateLogTicks(ticks, values)
     : calculateLinTicks(ticks, values)
 }

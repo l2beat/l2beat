@@ -19,7 +19,7 @@ export interface State {
     view: 'tvl' | 'activity'
     days: number
     isLogScale: boolean
-    currency: 'USD' | 'ETH'
+    currency: 'usd' | 'eth'
     token: string | undefined
     showEthereum: boolean
     showAlternativeTvl: boolean

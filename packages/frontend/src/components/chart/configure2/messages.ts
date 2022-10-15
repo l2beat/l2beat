@@ -26,7 +26,7 @@ export interface DaysChangedMessage {
 
 export interface CurrencyChangedMessage {
   type: 'CurrencyChanged'
-  currency: 'USD' | 'ETH'
+  currency: 'usd' | 'eth'
 }
 
 export interface TokenChangedMessage {
