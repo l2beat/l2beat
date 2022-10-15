@@ -10,14 +10,20 @@ export function getChart(
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
+  const hasActivity =
+    config?.features.activity &&
+    !!activityApiResponse?.projects[project.display.slug]
+
   return {
+    initialView: 'tvl',
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
-    activityEndpoint: `/api/${project.display.slug}-activity.json`,
-    ethereumActivityEndpoint: '/api/ethereum-activity.json',
+    activityEndpoint: hasActivity
+      ? `/api/${project.display.slug}-activity.json`
+      : undefined,
+    ethereumActivityEndpoint: hasActivity
+      ? '/api/ethereum-activity.json'
+      : undefined,
     tokens: getTokens(project.id, tvlApiResponse),
-    hasActivity:
-      config?.features.activity &&
-      !!activityApiResponse?.projects[project.display.slug],
   }
 }
 

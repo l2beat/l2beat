@@ -35,12 +35,10 @@ export function ActivityPage(props: ActivityPageProps) {
         <main>
           <ActivityHeader scalingFactor={props.scalingFactor} />
           <Chart
-            type={'activity'}
+            initialView='activity'
             activityEndpoint={props.apiEndpoint}
             ethereumActivityEndpoint={props.secondaryEndpoint}
-            hasTvl={false}
-            hasActivity
-          ></Chart>
+          />
           <ActivityView {...props.activityView} />
           <About />
         </main>

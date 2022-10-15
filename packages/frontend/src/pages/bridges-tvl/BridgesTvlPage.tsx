@@ -46,7 +46,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
             />
           </div>
           <BridgesMvpWarning />
-          <Chart tvlEndpoint={props.tvlEndpoint} />
+          <Chart initialView="tvl" tvlEndpoint={props.tvlEndpoint} />
           <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
           <BridgesTvlView {...props.tvlView} />
           <About />

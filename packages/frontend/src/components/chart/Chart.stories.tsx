@@ -12,10 +12,10 @@ export default {
 interface TemplateProps {
   tokenCount: number
   hasActivity?: boolean
-  type?: 'activity' | 'tvl'
+  initialView?: 'activity' | 'tvl'
 }
 
-function Template({ tokenCount, hasActivity, type }: TemplateProps) {
+function Template({ tokenCount, hasActivity, initialView }: TemplateProps) {
   const tokens = [
     'DAI',
     'ETH',
@@ -44,8 +44,7 @@ function Template({ tokenCount, hasActivity, type }: TemplateProps) {
         activityEndpoint={activityEndpoint}
         ethereumActivityEndpoint={ethereumActivityEndpoint}
         tokens={tokens.slice(0, tokenCount)}
-        hasActivity={hasActivity}
-        type={type}
+        initialView={initialView ?? 'tvl'}
       />
     </PageContent>
   )
@@ -70,5 +69,5 @@ export const WithActivity: Story<TemplateProps> = Template.bind({})
 WithActivity.args = {
   tokenCount: 0,
   hasActivity: true,
-  type: 'tvl',
+  initialView: 'tvl',
 }
