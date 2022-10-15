@@ -8,10 +8,10 @@ export interface InitMessage {
   type: 'Init'
   initialView: 'tvl' | 'activity'
   days: number
-  aggregateTvlEndpoint: string | undefined
-  alternativeTvlEndpoint: string | undefined
-  activityEndpoint: string | undefined
-  showEthereum: boolean
+  aggregateTvlEndpoint?: string
+  alternativeTvlEndpoint?: string
+  activityEndpoint?: string
+  showEthereum?: boolean
 }
 
 export interface ViewChangedMessage {

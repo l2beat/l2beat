@@ -48,7 +48,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         isLogScale: false,
         currency: 'USD',
         token: undefined,
-        showEthereum: message.showEthereum,
+        showEthereum: !!message.showEthereum,
         showAlternativeTvl: false,
         mouseX: undefined,
       },
