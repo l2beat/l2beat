@@ -1,3 +1,4 @@
+import { onRadioChange } from '../../configure/controls/onRadioChange'
 import { toDays } from '../toDays'
 import { apiGet } from './api'
 import { Charts } from './ChartInput'
@@ -10,7 +11,6 @@ import {
   getTvlEndpoint,
 } from './getEndpoint'
 import { getType } from './getType'
-import { onRadioChange } from './onRadioChange'
 
 export function makeChartState(chart: HTMLElement, onChange: () => void) {
   const controls = getControls(chart)

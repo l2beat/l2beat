@@ -1,8 +1,8 @@
-import { onRadioChange } from '../../configure-old/state/onRadioChange'
 import { toDays } from '../../configure-old/toDays'
 import { ChartElements } from '../elements'
 import { Message } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
+import { onRadioChange } from './onRadioChange'
 
 export function setupControls(
   elements: ChartElements,
