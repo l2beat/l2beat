@@ -1,6 +1,7 @@
 import { ChartElements } from '../elements'
 import { Message } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
+import { onMouseMove } from './onMouseMove'
 import { onRadioChange } from './onRadioChange'
 import { toDays } from './toDays'
 
@@ -45,4 +46,8 @@ export function setupControls(
   onCheckboxChange(elements.controls.showEthereum, (checked) => {
     dispatch({ type: 'ShowEthereumChanged', showEthereum: checked })
   })
+
+  if (elements.view.view) {
+    onMouseMove(elements.view.view, dispatch)
+  }
 }

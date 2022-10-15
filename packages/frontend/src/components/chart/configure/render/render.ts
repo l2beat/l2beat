@@ -2,6 +2,7 @@ import { toDays } from '../controls/toDays'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
 import { renderChart } from './renderChart'
+import { renderHover } from './renderHover'
 
 export function render(
   elements: ChartElements,
@@ -63,4 +64,6 @@ export function render(
       renderChart(state, elements.view.canvas, ctx)
     }
   }
+
+  renderHover(elements, previousState, state)
 }

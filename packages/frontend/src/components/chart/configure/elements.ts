@@ -36,6 +36,7 @@ export function getChartElements(chart: HTMLElement) {
       ),
     },
     view: {
+      view: chart.querySelector<HTMLElement>('[data-role="chart-view"]'),
       labels: Array.from(
         chart.querySelectorAll<HTMLElement>('[data-role="chart-label"]'),
       ),
@@ -52,6 +53,23 @@ export function getChartElements(chart: HTMLElement) {
       ),
       showElementControlWrapper: chart.querySelector<HTMLElement>(
         '[data-role="toggle-ethereum-activity"]',
+      ),
+    },
+    hover: {
+      hover: chart.querySelector<HTMLElement>('[data-role="chart-hover"'),
+      line: chart.querySelector<HTMLElement>('[data-role="chart-hover-line"]'),
+      circle: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-circle"]',
+      ),
+      contents: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-contents"]',
+      ),
+      date: chart.querySelector<HTMLElement>('[data-role="chart-hover-date"]'),
+      valueA: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-value-a"]',
+      ),
+      valueB: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-value-b"]',
       ),
     },
   }
