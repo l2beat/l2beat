@@ -29,7 +29,7 @@ export const orbit: Bridge = {
       ],
     },
     description:
-      'Orbit Bridge is part of the Orbit Chain project. It is a cross-chain bridge that allows users to transfer tokens between supported blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. Deposited tokens are not precisely locked and can be used in DeFi protocols by Orbit Farm. Accrued interest is not passed directly to token depositors.',
+      'Orbit Bridge is part of the Orbit Chain project. It is a cross-chain bridge that allows users to transfer tokens between supported blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. Deposited tokens are not precisely locked and can be used in DeFi protocols by Orbit Farm. Accrued interest is not passed directly to token depositors. Bridge contract implementation and farm contract source code are not verified on Etherscan!'
   },
   config: {
     associatedTokens: ['ORC'],
@@ -89,7 +89,7 @@ export const orbit: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        'Orbit Bridge is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. When a user deposits tokens to an escrow contract on Ethereum, a message is relayed to a group o validators via Orbit Hub contract on Orbit chain to a minter contract on a destination chain, where "representation tokens" are minted. Deposited tokens are not locked and can be used in DeFi protocols by Orbit Farm. When a user deposits minted tokens on the destination chain, they are burned and a message is relayed to validators through Orbit Hub contract on Orbit chain to Ethereum vault, which releases the tokens if enough liquidity is available.',
+        'Orbit Bridge is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. When a user deposits tokens to an escrow contract on Ethereum, a message is relayed to a group o validators via Orbit Hub contract on Orbit chain to a minter contract on a destination chain, where "representation tokens" are minted. Deposited tokens are not locked and can be used in DeFi protocols by Orbit Farm. When a user deposits minted tokens on the destination chain, they are burned and a message is relayed to validators through Orbit Hub contract on Orbit chain to Ethereum vault, which releases the tokens if enough liquidity is available. Bridge contract implementation and farm contract source code are not verified on Etherscan!',
       references: [
         {
           text: 'Bridging transactions',
@@ -166,14 +166,34 @@ export const orbit: Bridge = {
       {
         address: '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
         name: 'EthVault',
-        description: 'Bridge contract, Escrow, Governance.',
+        description: 'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan!',
         upgradeability: {
           type: 'CustomWithoutAdmin',
           implementation: '0xe62Fa6C59AD14B46d4e7791FA817030732953b79',
         },
       },
+      {
+        address: '0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9',
+        name: 'USDT Compound Farm',
+        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+      },
+      {
+        address: '0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0',
+        name: 'DAI Compound Farm',
+        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+      },
+      {
+        address: '0x830433dE03ABedE062660CC629e1A2c714272474',
+        name: 'USDC Compound Farm',
+        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+      },
+      {
+        address: '0xd910f6F23889919fAd9C8cE3171dd557cE0308Da',
+        name: 'WBTC Compound Farm',
+        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+      },
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
   },
   permissions: [
     {
