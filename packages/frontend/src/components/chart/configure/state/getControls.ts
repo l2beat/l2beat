@@ -11,7 +11,10 @@ export function getControls(chart: Element) {
       '[data-role="chart-currency-controls"]',
     ),
     scale: $$<HTMLInputElement>('[data-role="chart-scale-controls"] input'),
-    token: $$<HTMLInputElement>('[data-role="chart-token-controls"] input'),
+    tokens: $$<HTMLInputElement>('[data-role="chart-token-controls"] input'),
+    tokenControl: $.maybe<HTMLInputElement>(
+      '[data-role="chart-token-controls"]',
+    ),
     moreTokens: $.maybe('[data-role="chart-more-tokens"]'),
     combined: document.querySelector<HTMLInputElement>(
       '[data-role="chart-combined"]',
