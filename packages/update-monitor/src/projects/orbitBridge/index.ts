@@ -3,7 +3,7 @@ import { providers } from 'ethers'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
-import { getBridgeWithGovernance } from './contracts/governance'
+import { getBridgeWithGovernance } from './contracts/bridge'
 
 export const ORBIT_BRIDGE_NAME = 'orbitBridge'
 
