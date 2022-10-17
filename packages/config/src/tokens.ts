@@ -88,6 +88,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('aleph-aleph-im'),
+    name: 'Aleph.im',
+    coingeckoId: CoingeckoId('aleph-im'),
+    address: EthereumAddress('0x27702a26126e0B3702af63Ee09aC4d1A084EF628'),
+    symbol: 'ALEPH',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1600970788),
+    category: 'other',
+  },
+  {
     id: AssetId('alusd-alchemix-usd'),
     name: 'Alchemix USD',
     coingeckoId: CoingeckoId('alchemix-usd'),

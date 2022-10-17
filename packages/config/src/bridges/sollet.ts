@@ -9,6 +9,8 @@ export const sollet: Bridge = {
   display: {
     name: 'Sollet',
     slug: 'sollet',
+    warning:
+      'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
     description:
       'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
     links: {
@@ -24,16 +26,7 @@ export const sollet: Bridge = {
       {
         address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
         sinceTimestamp: new UnixTime(1599794859),
-        tokens: [
-          'SRM',
-          'ETH',
-          //'ALEPH',
-          'USDT',
-          'USDC',
-          'UNI',
-          'KEEP',
-          'LINK',
-        ],
+        tokens: ['SRM', 'ETH', 'ALEPH', 'USDT', 'USDC', 'UNI', 'KEEP', 'LINK'],
       },
     ],
   },
