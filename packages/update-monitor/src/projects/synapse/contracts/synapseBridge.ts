@@ -26,10 +26,7 @@ export async function getSynapseBridge(
     upgradeability: {
       type: 'eip1967 proxy',
       admin: await getEip1967Admin(provider, synapseBridge),
-      implementation: await getEip1967Implementation(
-        provider,
-        synapseBridge,
-      ),
+      implementation: await getEip1967Implementation(provider, synapseBridge),
     },
     values: {
       ADMIN_ROLE,
