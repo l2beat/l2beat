@@ -14,7 +14,7 @@ export function onMouseMove(
 
   function onEvent(e: MouseEvent | Touch) {
     const rect = view.getBoundingClientRect()
-    // Each point on the chart except the first and the last has are on both
+    // Each point on the chart except the first and the last has space on both
     // sides that causes it to show on hover. The first and the last only have
     // it to the right and left respectively. To combat this we extend this area
     // artificially by an arbitrary amount.
