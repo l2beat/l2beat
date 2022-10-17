@@ -21,8 +21,8 @@ export function TvlActivityToggle() {
     >
       <label
         className={cx(
-          'text-lg font-bold bg-purple-200 dark:bg-purple-700',
-          'flex items-center p-[5px] md:p-[7px] md:m-[1px]',
+          'text-lg font-bold bg-purple-300 dark:bg-purple-700',
+          'flex items-center p-[5px] md:p-[7px]',
           'rounded-[5px] md:rounded-[11px] cursor-pointer select-none',
           'relative z-20',
         )}
