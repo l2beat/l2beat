@@ -36,7 +36,7 @@ export const bobanetwork: Layer2 = {
         'https://discord.gg/m7NysJjKhm',
       ],
     },
-    activityDataSource: 'Blockchain RPC'
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     associatedTokens: ['BOBA', 'OMG'],

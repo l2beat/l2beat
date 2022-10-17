@@ -38,7 +38,7 @@ export const arbitrum: Layer2 = {
         'https://discord.gg/5KE54JwyTs',
       ],
     },
-    activityDataSource: 'Blockchain RPC'
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [

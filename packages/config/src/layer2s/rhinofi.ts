@@ -44,7 +44,7 @@ export const rhinofi: Layer2 = {
         'https://youtube.com/c/deversifi',
       ],
     },
-    activityDataSource: 'Closed API'
+    activityDataSource: 'Closed API',
   },
   config: {
     associatedTokens: ['DVF'],
