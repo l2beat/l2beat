@@ -7,19 +7,14 @@ const ONE_TPS = 24 * 60 * 60
 
 describe(getTransactionMonthlyCount.name, () => {
   it('calculates correctly', () => {
-    const data: ActivityApiChartPoint[] = [
-      [new UnixTime(1), ONE_TPS],
-      [new UnixTime(2), ONE_TPS],
-      [new UnixTime(3), ONE_TPS],
-      [new UnixTime(4), ONE_TPS],
-      [new UnixTime(5), ONE_TPS],
-      [new UnixTime(6), ONE_TPS],
-      [new UnixTime(7), ONE_TPS * 2],
-    ]
+    const data: ActivityApiChartPoint[] = new Array(50).fill([
+      new UnixTime(0),
+      ONE_TPS,
+    ])
 
     const result = getTransactionMonthlyCount(data)
 
-    expect(result).toEqual(8 * ONE_TPS)
+    expect(result).toEqual(30 * ONE_TPS)
   })
   it('returns undefined if data is undefined', () => {
     const data = undefined
@@ -28,9 +23,9 @@ describe(getTransactionMonthlyCount.name, () => {
 
     expect(result).toEqual(undefined)
   })
-  it('returns undefined if data array is too short', () => {
+  it('counts as much as it can if the data is too short', () => {
     const result = getTransactionMonthlyCount([[new UnixTime(1), ONE_TPS]])
 
-    expect(result).toEqual(undefined)
+    expect(result).toEqual(ONE_TPS)
   })
 })
