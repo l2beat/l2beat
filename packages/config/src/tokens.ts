@@ -94,7 +94,7 @@ export const tokenList: TokenInfo[] = [
     address: EthereumAddress('0x27702a26126e0B3702af63Ee09aC4d1A084EF628'),
     symbol: 'ALEPH',
     decimals: 18,
-    sinceTimestamp: new UnixTime(1600970788),
+    sinceTimestamp: new UnixTime(1601134720),
     category: 'other',
   },
   {
