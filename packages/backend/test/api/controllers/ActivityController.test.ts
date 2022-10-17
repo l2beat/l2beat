@@ -81,8 +81,6 @@ describe(ActivityController.name, () => {
           [new UnixTime(0), 4],
           [new UnixTime(0).add(1, 'days'), 6],
           [new UnixTime(0).add(2, 'days'), 15],
-          [new UnixTime(0).add(3, 'days'), 11],
-          [new UnixTime(0).add(4, 'days'), 9],
         ],
         projects: {
           dydx: [
@@ -93,20 +91,13 @@ describe(ActivityController.name, () => {
           optimism: [
             [new UnixTime(0).add(1, 'days'), 1],
             [new UnixTime(0).add(2, 'days'), 2],
-            [new UnixTime(0).add(3, 'days'), 3],
           ],
-          zksync: [
-            [new UnixTime(0).add(2, 'days'), 7],
-            [new UnixTime(0).add(3, 'days'), 8],
-            [new UnixTime(0).add(4, 'days'), 9],
-          ],
+          zksync: [[new UnixTime(0).add(2, 'days'), 7]],
         },
         ethereum: [
           [new UnixTime(0), 100],
           [new UnixTime(0).add(1, 'days'), 200],
           [new UnixTime(0).add(2, 'days'), 300],
-          [new UnixTime(0).add(3, 'days'), 400],
-          [new UnixTime(0).add(4, 'days'), 500],
         ],
       }),
     )

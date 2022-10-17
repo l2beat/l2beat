@@ -25,6 +25,7 @@ describe(RpcTransactionUpdater.name, () => {
             [5, Infinity],
           ],
           add: async () => '',
+          refreshProjectTip: async () => undefined,
         })
       const clock = mock<Clock>({
         onNewHour: (callback) => {

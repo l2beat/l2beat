@@ -22,6 +22,7 @@ describe(ZksyncTransactionUpdater.name, () => {
           [5, Infinity],
         ],
         addMany: async () => 0,
+        refreshTip: async () => undefined,
       })
       const clock = mock<Clock>({
         onNewHour: (callback) => {

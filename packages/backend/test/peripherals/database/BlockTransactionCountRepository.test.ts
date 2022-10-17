@@ -117,9 +117,7 @@ describe(BlockTransactionCountRepository.name, () => {
     () => {
       it('works with empty repository', async () => {
         await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(PROJECT_A, UnixTime.now()),
-        ).toEqual([])
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
       })
 
       it('counts only for requested project', async () => {
@@ -143,12 +141,9 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.addMany([...aCounts, ...bCounts])
 
         await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(
-            PROJECT_A,
-            start.add(1, 'days'),
-          ),
-        ).toEqual([
+        await repository.refreshProjectTip(PROJECT_A)
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: aCounts.reduce((acc, record) => acc + record.count, 0),
@@ -186,13 +181,10 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
+        await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(
-            PROJECT_A,
-            start.add(3, 'days'),
-          ),
-        ).toEqual([
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
             count: 3,
             timestamp: start,
@@ -226,13 +218,10 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
+        await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(
-            PROJECT_A,
-            start.add(2, 'days'),
-          ),
-        ).toEqual([
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
             count: 1,
             timestamp: start,
@@ -240,35 +229,6 @@ describe(BlockTransactionCountRepository.name, () => {
           {
             count: 3,
             timestamp: start.add(1, 'days'),
-          },
-        ])
-      })
-
-      it('skips records from today', async () => {
-        const today = UnixTime.now().toStartOf('day')
-
-        await repository.addMany([
-          fakeTransactionCount({
-            blockNumber: 1,
-            timestamp: today.add(-1, 'days'),
-            projectId: PROJECT_A,
-            count: 1,
-          }),
-          fakeTransactionCount({
-            blockNumber: 3,
-            timestamp: today,
-            projectId: PROJECT_A,
-            count: 3,
-          }),
-        ])
-
-        await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(PROJECT_A, today),
-        ).toEqual([
-          {
-            count: 1,
-            timestamp: today.add(-1, 'days'),
           },
         ])
       })
