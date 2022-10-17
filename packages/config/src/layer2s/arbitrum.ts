@@ -17,6 +17,8 @@ export const arbitrum: Layer2 = {
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    warning:
+      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description:
       'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
     purpose: 'Universal',
@@ -126,7 +128,7 @@ export const arbitrum: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
       risks: [
         {
           category: 'Funds can be stolen if',

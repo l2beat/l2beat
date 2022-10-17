@@ -16,13 +16,12 @@ export function getProps(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(project, tvlApiResponse)
+  const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
       chart,
-      showActivityToggle: config.features.activity && !!activityApiResponse,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),
     },
