@@ -1,5 +1,5 @@
 {
-  "name": "synapse",
+  "name": "synapseBridge",
   "contracts": [
     {
       "name": "SynapseBridge",
