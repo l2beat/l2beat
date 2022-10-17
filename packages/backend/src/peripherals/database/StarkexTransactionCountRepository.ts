@@ -22,13 +22,14 @@ interface RawBlockNumberQueryResult {
 export class StarkexTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-
     /* eslint-disable @typescript-eslint/unbound-method */
-
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-
+    this.getMissingRangesByProject = this.wrapAny(
+      this.getMissingRangesByProject,
+    )
+    this.getDailyTransactionCount = this.wrapAny(this.getDailyTransactionCount)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -61,14 +62,14 @@ export class StarkexTransactionCountRepository extends BaseRepository {
           SELECT 
             project_days.unix_timestamp
           FROM project_days 
-          LEFT JOIN project_days b2 ON project_days.unix_timestamp  = b2.unix_timestamp - INTERVAL '1 DAY'
+          LEFT JOIN project_days b2 ON project_days.unix_timestamp  = b2.unix_timestamp - INTERVAL '24 HOUR'
           WHERE b2.unix_timestamp IS NULL
         ),
         no_prev AS (
           SELECT 
             project_days.unix_timestamp
           FROM project_days
-          LEFT JOIN project_days b2 ON project_days.unix_timestamp = b2.unix_timestamp + INTERVAL '1 DAY'
+          LEFT JOIN project_days b2 ON project_days.unix_timestamp = b2.unix_timestamp + INTERVAL '24 HOUR'
           WHERE b2.unix_timestamp IS NULL
         )
       SELECT
@@ -163,7 +164,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
           lead(unix_timestamp) over (order by unix_timestamp) as next
         FROM transactions.starkex where project_id = :projectId
       ) with_lead
-      WHERE next <> unix_timestamp + 1;
+      WHERE next <> unix_timestamp + INTERVAL '24 HOUR';
     `,
       {
         projectId: projectId.toString(),

@@ -28,20 +28,9 @@ export class ZksyncTransactionRepository extends BaseRepository {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getBlockCount = this.wrapAny(this.getBlockCount)
-
     /* eslint-enable @typescript-eslint/unbound-method */
-  }
-
-  async add(record: ZksyncTransactionRecord) {
-    const knex = await this.knex()
-    const row = toRow(record)
-    await knex('transactions.zksync').insert(row)
-    return `${row.block_number}-${row.block_index}`
   }
 
   async addMany(records: ZksyncTransactionRecord[]) {
@@ -64,8 +53,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
         .where('project_id', ProjectId.ZKSYNC.toString())
       return undefined
     } else {
-      const tip = await knex('transactions.block')
-        .where('project_id', ProjectId.ZKSYNC.toString())
+      const tip = await knex('transactions.zksync')
         .andWhere('block_number', tipNumber)
         .first()
       assert(tip, 'Calculated tip not found')
@@ -180,18 +168,10 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return await knex('transactions.zksync').delete()
   }
 
-  async getBlockCount(): Promise<number> {
+  private async getMaxBlockNumber(): Promise<number | undefined> {
     const knex = await this.knex()
-    const [{ count }] = await knex('transactions.zksync').countDistinct(
-      'block_number',
-    )
-    return Number(count)
-  }
-
-  private async getMaxBlockNumber(): Promise<number> {
-    const knex = await this.knex()
-    const [{ max }] = await knex('transactions.zksync').max('block_number')
-    return max
+    const row = await knex('transactions.zksync').max('block_number').first()
+    return row?.max
   }
 
   private async getTip() {

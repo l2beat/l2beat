@@ -19,7 +19,7 @@ describe(ZksyncTransactionRepository.name, () => {
   describe(ZksyncTransactionRepository.prototype.getAll.name, () => {
     it('gets one record', async () => {
       const record = fakeRecord()
-      await repository.add(record)
+      await repository.addMany([record])
 
       expect(await repository.getAll()).toEqual([record])
     })

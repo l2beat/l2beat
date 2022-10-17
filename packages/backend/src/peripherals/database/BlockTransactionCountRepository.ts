@@ -26,15 +26,18 @@ interface RawBlockNumberQueryResult {
 export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-
     /* eslint-disable @typescript-eslint/unbound-method */
-
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.refreshProjectTip = this.wrapAny(this.refreshProjectTip)
+    this.getMissingRangesByProject = this.wrapAny(
+      this.getMissingRangesByProject,
+    )
+    this.refreshDailyTransactionCount = this.wrapAny(
+      this.refreshDailyTransactionCount,
+    )
     this.getDailyTransactionCount = this.wrapGet(this.getDailyTransactionCount)
-    this.getBlockCount = this.wrapAny(this.getBlockCount)
-
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -173,14 +176,6 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return await knex('transactions.block').delete()
-  }
-
-  async getBlockCount(projectId: ProjectId): Promise<number> {
-    const knex = await this.knex()
-    const [{ count }] = await knex('transactions.block')
-      .count()
-      .where('project_id', projectId.toString())
-    return Number(count)
   }
 
   private async getMaxBlockNumber(projectId: ProjectId): Promise<number> {
