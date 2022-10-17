@@ -1,4 +1,7 @@
+import cx from 'classnames'
 import React from 'react'
+
+import { InfoIcon } from '../icons'
 
 export interface ActivityHeaderProps {
   scalingFactor: string
@@ -20,13 +23,24 @@ export function ActivityHeader(props: ActivityHeaderProps) {
         <p className="text-gray-500 dark:text-gray-600 hidden md:block">
           Transactions per second
         </p>
-        <p className="text-gray-500 dark:text-gray-600 text-xs md:text-base text-right w-full md:w-auto">
-          Observed over the last 7 days{' '}
+
+        <p
+          className={cx(
+            'text-gray-500 dark:text-gray-600 text-xs md:text-base text-right w-full md:w-auto',
+            'flex items-center gap-1.5',
+          )}
+        >
+          Observed over the last 7 days
           <span
-            className="Tooltip"
+            className="Tooltip inline-block"
             title="More txs on Ethereum because of L2s. Formula: (L2 txs + ETH txs) / ETH txs"
           >
-            [info icon]
+            <InfoIcon
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="#737373"
+            />
           </span>
         </p>
       </div>
