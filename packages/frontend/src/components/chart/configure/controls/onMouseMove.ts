@@ -1,5 +1,7 @@
 import { Message } from '../messages'
 
+const HOVER_AREA_EXTENSION_PX = 16
+
 export function onMouseMove(
   view: HTMLElement,
   dispatch: (message: Message) => void,
@@ -13,8 +15,8 @@ export function onMouseMove(
   function onEvent(e: MouseEvent | Touch) {
     const rect = view.getBoundingClientRect()
     const isInside =
-      e.clientX >= rect.left - 16 &&
-      e.clientX <= rect.right + 16 &&
+      e.clientX >= rect.left - HOVER_AREA_EXTENSION_PX &&
+      e.clientX <= rect.right + HOVER_AREA_EXTENSION_PX &&
       e.clientY >= rect.top &&
       e.clientY <= rect.bottom
     const position = (e.clientX - rect.left) / rect.width
