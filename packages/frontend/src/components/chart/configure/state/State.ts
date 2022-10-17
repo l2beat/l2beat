@@ -25,6 +25,7 @@ export interface State {
     showAlternativeTvl: boolean
     mouseX: number | undefined
     showMoreTokens: boolean
+    labelCount: number
   }
   view: {
     dateRange: string | undefined

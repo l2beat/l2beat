@@ -12,6 +12,7 @@ export interface InitMessage {
   alternativeTvlEndpoint?: string
   activityEndpoint?: string
   showEthereum?: boolean
+  labelCount: number
 }
 
 export interface ViewChangedMessage {

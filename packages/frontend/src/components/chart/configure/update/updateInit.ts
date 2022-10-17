@@ -52,6 +52,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         showAlternativeTvl: false,
         mouseX: undefined,
         showMoreTokens: false,
+        labelCount: message.labelCount,
       },
       view: {
         dateRange: undefined,

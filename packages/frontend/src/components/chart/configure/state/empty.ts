@@ -27,6 +27,7 @@ export const EMPTY_STATE: State = {
     showAlternativeTvl: false,
     mouseX: undefined,
     showMoreTokens: false,
+    labelCount: 0,
   },
   view: {
     dateRange: undefined,

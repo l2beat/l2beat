@@ -18,6 +18,7 @@ export function calculateActivityView(
     controls.showEthereum
       ? entries.flatMap((x) => [getTps(x[1]), getTps(x[2])])
       : entries.map((x) => getTps(x[1])),
+    controls.labelCount,
     controls.isLogScale,
     formatTps,
   )

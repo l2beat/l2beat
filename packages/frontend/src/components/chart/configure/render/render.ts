@@ -10,6 +10,7 @@ export function render(
   state: State,
 ) {
   if (previousState === state) {
+    // multiple renders must have happened in the same animation frame
     return
   }
 
@@ -54,8 +55,8 @@ export function render(
 
   if (state.view !== previousState.view) {
     const labels = elements.view.labels
-    for (let i = 0; i < 5; i++) {
-      labels[i].innerHTML = state.view.labels?.[4 - i] ?? '...'
+    for (let i = 0; i < labels.length; i++) {
+      labels[i].innerHTML = state.view.labels?.[labels.length - 1 - i] ?? '...'
     }
 
     if (elements.view.dateRange) {

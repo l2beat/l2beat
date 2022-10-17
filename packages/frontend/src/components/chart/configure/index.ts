@@ -58,5 +58,6 @@ function getInitMessage(elements: ChartElements): InitMessage {
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
+    labelCount: elements.view.labels.length,
   }
 }
