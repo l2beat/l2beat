@@ -35,6 +35,7 @@ export const zksync: Layer2 = {
         'https://twitter.com/zksync',
       ],
     },
+    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [

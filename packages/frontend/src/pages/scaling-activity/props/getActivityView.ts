@@ -35,6 +35,7 @@ export function getActivityViewEntry(
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
+    dataSource: project.display.activityDataSource,
     ...getActivityViewEntryDetails(data),
   }
 }

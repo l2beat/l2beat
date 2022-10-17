@@ -24,6 +24,7 @@ export interface ActivityViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string
   transactionsMonthlyCount: number | undefined
@@ -41,6 +42,7 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: 'Name',
+      minimalWidth: true,
       getValue: (project) =>
         project.slug !== 'ethereum' ? (
           <ProjectCell type="layer2" project={project} />
@@ -75,15 +77,15 @@ export function ActivityView({ items }: ActivityViewProps) {
       alignRight: true,
       getValue: (project) =>
         project.maxTps !== undefined && (
-          <span className="flex items-baseline justify-end gap-2">
+          <span className="flex items-baseline justify-end gap-1.5">
             <NumberCell>{formatTps(project.maxTps)}</NumberCell>
             <span
               className={cx(
                 'text-gray-700 dark:text-gray-300',
-                'text-sm rounded block min-w-[87px] text-left',
+                'block min-w-[115px] text-left',
               )}
             >
-              {project.maxTpsDate}
+              on {project.maxTpsDate}
             </span>
           </span>
         ),
@@ -98,6 +100,11 @@ export function ActivityView({ items }: ActivityViewProps) {
             {formatLargeNumber(project.transactionsMonthlyCount)}
           </NumberCell>
         ) : undefined,
+    },
+    {
+      name: 'Data source',
+      tooltip: 'Where is the transaction data coming from.',
+      getValue: (project) => project.dataSource,
     },
   ]
 
