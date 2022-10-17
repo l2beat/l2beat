@@ -21,10 +21,10 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           Transactions per second
         </p>
         <p className="text-gray-500 dark:text-gray-600 text-xs md:text-base text-right w-full md:w-auto">
-          More Ethereum txs through L2s{' '}
+          Observed over the last 7 days{' '}
           <span
             className="Tooltip"
-            title="Last week (L2 txs + ETH txs) / ETH txs"
+            title="More txs on Ethereum because of L2s. Formula: (L2 txs + ETH txs) / ETH txs"
           >
             [info icon]
           </span>
