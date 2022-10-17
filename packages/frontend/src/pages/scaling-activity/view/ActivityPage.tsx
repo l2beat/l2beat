@@ -38,7 +38,7 @@ export function ActivityPage(props: ActivityPageProps) {
             type={'activity'}
             activityEndpoint={props.apiEndpoint}
             ethereumActivityEndpoint={props.secondaryEndpoint}
-            hideControls
+            hasTvl={false}
             hasActivity
           ></Chart>
           <ActivityView {...props.activityView} />

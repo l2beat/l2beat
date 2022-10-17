@@ -1,18 +1,23 @@
 import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
-import { ProjectId, TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, ProjectId, TvlApiResponse } from '@l2beat/types'
 
+import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
 
 export function getChart(
   project: Layer2 | Bridge,
   tvlApiResponse: TvlApiResponse,
+  config?: Config,
+  activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     activityEndpoint: `/api/${project.display.slug}-activity.json`,
     ethereumActivityEndpoint: '/api/ethereum-activity.json',
     tokens: getTokens(project.id, tvlApiResponse),
-    hasActivity: true,
+    hasActivity:
+      config?.features.activity &&
+      !!activityApiResponse?.projects[project.display.slug],
   }
 }
 

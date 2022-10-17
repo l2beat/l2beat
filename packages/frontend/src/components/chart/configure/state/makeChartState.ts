@@ -16,7 +16,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
   const controls = getControls(chart)
 
   const type = getType(chart)
-  const selected = controls.token.find((x) => x.checked)
+  const selected = controls.tokens.find((x) => x.checked)
   const initialEndpoint = getInitialEndpoint(type, chart, selected)
 
   const state: ChartState = {
@@ -52,7 +52,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
   onRadioChange(controls.currencies, (control) => {
     state.altCurrency = control.value === 'ETH'
     state.token = undefined
-    for (const input of controls.token) {
+    for (const input of controls.tokens) {
       input.checked = false
     }
     if (state.endpoint !== getTvlEndpoint(chart)) {
@@ -68,7 +68,7 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     onChange()
   })
 
-  onRadioChange(controls.token, (control) => {
+  onRadioChange(controls.tokens, (control) => {
     state.endpoint = getTvlEndpoint(control)
     state.token = control.value
     state.altCurrency = false
@@ -107,6 +107,15 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
     if (toActivity) {
       state.type = 'activity'
       onChange()
+      const sevenDaysRangeInput = controls.range.find((x) => x.value === '7D')
+      sevenDaysRangeInput?.parentElement?.classList.add('hidden')
+      const thirtyDaysRangeInput = controls.range.find((x) => x.value === '30D')
+      if (sevenDaysRangeInput?.checked && thirtyDaysRangeInput) {
+        sevenDaysRangeInput.checked = false
+        thirtyDaysRangeInput.checked = true
+        state.days = 30
+      }
+      controls.tokenControl?.classList.add('hidden')
       controls.currencyControl?.classList.add('hidden')
       controls.ethActivity?.parentElement?.classList.remove('hidden')
       updateInput(getActivityEndpoint(chart))
@@ -115,6 +124,10 @@ export function makeChartState(chart: HTMLElement, onChange: () => void) {
       onChange()
       controls.ethActivity?.parentElement?.classList.add('hidden')
       controls.currencyControl?.classList.remove('hidden')
+      controls.tokenControl?.classList.remove('hidden')
+      controls.range
+        .find((x) => x.value === '7D')
+        ?.parentElement?.classList.remove('hidden')
       updateInput(getTvlEndpoint(chart))
     }
   }

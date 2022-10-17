@@ -44,7 +44,8 @@ module.exports = {
       },
       purple: {
         100: '#7E41CC',
-        200: '#F3ECFD',
+        300: '#F1D6FF',
+        700: '#4A133C',
         800: '#32102A',
       },
       pink: {
