@@ -19,11 +19,13 @@ export const sollet: Bridge = {
     },
   },
   config: {
+    associatedTokens: ['SRM'],
     escrows: [
       {
         address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
         sinceTimestamp: new UnixTime(1599794859),
         tokens: [
+          'SRM',
           'ETH',
           //'ALEPH',
           'USDT',
