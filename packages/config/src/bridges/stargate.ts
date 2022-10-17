@@ -7,7 +7,7 @@ export const stargate: Bridge = {
   type: 'bridge',
   id: ProjectId('stargate'),
   display: {
-    name: 'StarGate',
+    name: 'StarGate (LayerZero)',
     slug: 'stargate',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
