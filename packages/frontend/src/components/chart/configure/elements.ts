@@ -29,6 +29,9 @@ export function getChartElements(chart: HTMLElement) {
           '[data-role="chart-token-controls"] input',
         ),
       ),
+      showMoreTokens: chart.querySelector<HTMLButtonElement>(
+        '[data-role="chart-more-tokens"]',
+      ),
       scale: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
           '[data-role="chart-scale-controls"] input',

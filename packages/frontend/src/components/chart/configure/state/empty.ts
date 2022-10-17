@@ -26,6 +26,7 @@ export const EMPTY_STATE: State = {
     showEthereum: false,
     showAlternativeTvl: false,
     mouseX: undefined,
+    showMoreTokens: false,
   },
   view: {
     dateRange: undefined,

@@ -68,5 +68,14 @@ export function render(
     }
   }
 
+  if (state.controls.showMoreTokens !== previousState.controls.showMoreTokens) {
+    if (state.controls.showMoreTokens) {
+      elements.controls.tokens.forEach((x) =>
+        x.parentElement?.classList.remove('hidden'),
+      )
+      elements.controls.showMoreTokens?.classList.add('hidden')
+    }
+  }
+
   renderHover(elements, previousState, state)
 }
