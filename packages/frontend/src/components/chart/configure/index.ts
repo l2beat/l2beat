@@ -54,7 +54,7 @@ function getInitMessage(elements: ChartElements): InitMessage {
     days,
     showEthereum: false, // TODO: determine this
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
-    alternativeTvlEndpoint: undefined, // TODO: determine this
+    alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
   }
 }
