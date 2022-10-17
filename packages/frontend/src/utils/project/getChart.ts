@@ -12,8 +12,7 @@ export function getChart(
 ): ChartProps {
   return {
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
-    activityEndpoint: `/api/${project.display.slug}-activity.json`,
-    ethereumActivityEndpoint: '/api/ethereum-activity.json',
+    activityEndpoint: `/api/activity/${project.display.slug}.json`,
     tokens: getTokens(project.id, tvlApiResponse),
     hasActivity:
       config?.features.activity &&

@@ -22,8 +22,7 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       scalingFactor,
-      apiEndpoint: '/api/scaling-activity.json',
-      secondaryEndpoint: '/api/ethereum-activity.json',
+      apiEndpoint: '/api/activity/combined.json',
       activityView: getActivityView(
         config.layer2s,
         tvlApiResponse,
@@ -35,7 +34,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getPageMetadata(),
-      preloadApi: '/api/scaling-activity.json',
+      preloadApi: '/api/activity/combined.json',
     },
   }
 }

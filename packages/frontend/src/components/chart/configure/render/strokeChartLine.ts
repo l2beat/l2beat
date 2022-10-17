@@ -1,9 +1,8 @@
-import { Point } from '../ui'
 import { moveToMany } from './moveToMany'
 
 export function strokeChartLine(
   ctx: CanvasRenderingContext2D,
-  points: Point[],
+  points: { x: number; y: number }[],
   canvas: HTMLCanvasElement,
   strokeStyle: CanvasGradient,
 ) {
