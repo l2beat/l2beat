@@ -44,10 +44,28 @@ export async function getTimelock(
     PROPOSER_ROLE,
   )
 
-  const admin = await getRoleAdmin(
+  const timelockAdminRoleAdmin = await getRoleAdmin(
     provider,
     addresses.timelock,
     TIMELOCK_ADMIN_ROLE,
+  )
+
+  const defaultAdminRoleAdmin = await getRoleAdmin(
+    provider,
+    addresses.timelock,
+    DEFAULT_ADMIN_ROLE,
+  )
+
+  const proposerRoleAdmin = await getRoleAdmin(
+    provider,
+    addresses.timelock,
+    PROPOSER_ROLE,
+  )
+
+  const executorRoleAdmin = await getRoleAdmin(
+    provider,
+    addresses.timelock,
+    EXECUTOR_ROLE,
   )
 
   return {
@@ -66,6 +84,10 @@ export async function getTimelock(
       defaultAdmins: defaultAdmins.map((t) => t.toString()),
       executors: executors.map((t) => t.toString()),
       proposers: proposers.map((t) => t.toString()),
+      timelockAdminRoleAdmin,
+      defaultAdminRoleAdmin,
+      proposerRoleAdmin,
+      executorRoleAdmin,
     },
   }
 }

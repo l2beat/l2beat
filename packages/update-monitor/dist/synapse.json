@@ -74,7 +74,11 @@
         ],
         "proposers": [
           "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
-        ]
+        ],
+        "timelockAdminRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "defaultAdminRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "proposerRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "executorRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       }
     }
   ]
