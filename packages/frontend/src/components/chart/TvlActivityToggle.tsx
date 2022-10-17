@@ -21,7 +21,7 @@ export function TvlActivityToggle() {
     >
       <label
         className={cx(
-          'text-lg font-bold bg-purple-700',
+          'text-lg font-bold bg-purple-200 dark:bg-purple-700',
           'flex items-center p-[5px] md:p-[7px] md:m-[1px]',
           'rounded-[5px] md:rounded-[11px] cursor-pointer select-none',
           'relative z-20',
@@ -41,6 +41,9 @@ export function TvlActivityToggle() {
             'rounded md:rounded-md',
             'bg-gradient-to-r from-purple-100 to-pink-100',
             'peer-checked:bg-none',
+            'text-white',
+            'peer-checked:text-black',
+            'dark:peer-checked:text-white',
           )}
         >
           <span className="hidden md:inline">Total Value Locked</span>
@@ -51,6 +54,7 @@ export function TvlActivityToggle() {
             'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5',
             'flex justify-center',
             'rounded md:rounded-md',
+            'peer-checked:text-white',
             'peer-checked:bg-gradient-to-r',
             'peer-checked:from-purple-100',
             'peer-checked:to-pink-100',
