@@ -17,6 +17,8 @@ export const bobanetwork: Layer2 = {
   display: {
     name: 'Boba Network',
     slug: 'bobanetwork',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation. Boba is an Optimistic Rollup \
       forked from Optimism. Amongst other features it adds standard fast withdrawal facility that allows users to remove funds immediately without waiting \
