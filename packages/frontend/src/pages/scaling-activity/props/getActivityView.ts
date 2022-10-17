@@ -4,20 +4,18 @@ import { ActivityApiChart, ActivityApiResponse, ProjectId } from '@l2beat/types'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionWeeklyCount } from '../../../utils/activity/getTransactionWeeklyCount'
-import { formatPercent } from '../../../utils/utils'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
   projects: Layer2[],
   activityApiResponse: ActivityApiResponse,
-  tpsCombined?: number,
 ): ActivityViewProps {
   const included = getIncludedProjects(projects, activityApiResponse, [
     ProjectId('aztec'),
     ProjectId('aztecconnect'),
   ])
   const items = included.map((x) =>
-    getActivityViewEntry(x, activityApiResponse, tpsCombined),
+    getActivityViewEntry(x, activityApiResponse),
   )
   items.push(getEthereumActivityViewEntry(activityApiResponse))
 
@@ -29,7 +27,6 @@ export function getActivityView(
 export function getActivityViewEntry(
   project: Layer2,
   activityApiResponse: ActivityApiResponse,
-  tpsCombined?: number,
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
   const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
@@ -43,10 +40,6 @@ export function getActivityViewEntry(
     tpsDaily,
     tpsWeeklyChange,
     transactionsWeeklyCount,
-    marketShare:
-      tpsDaily && tpsCombined
-        ? formatPercent(tpsDaily / tpsCombined)
-        : undefined,
   }
 }
 
