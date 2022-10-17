@@ -14,8 +14,7 @@ import { PageContent } from '../../../components/PageContent'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
-  tpsDaily: string
-  tpsWeeklyChange: string
+  scalingFactor: string
   apiEndpoint: string
   activityView: ActivityViewProps
   footer: FooterProps
@@ -33,11 +32,12 @@ export function ActivityPage(props: ActivityPageProps) {
           selected="activity"
         />
         <main>
-          <ActivityHeader scalingFactor="1.5x" />
+          <ActivityHeader scalingFactor={props.scalingFactor} />
           <Chart
             type={'activity'}
             activityEndpoint={props.apiEndpoint}
-            hideControls
+            hasTvl={false}
+            hasActivity
           ></Chart>
           <ActivityView {...props.activityView} />
           <About />

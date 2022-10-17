@@ -69,6 +69,7 @@ export function getActivityModule(
     config,
     blockTransactionCountRepository,
     clock,
+    http,
     logger,
   )
 
