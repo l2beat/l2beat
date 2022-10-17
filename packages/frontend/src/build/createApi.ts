@@ -51,10 +51,14 @@ export function createApi(
       ),
     )
 
-    for (const [key, chart] of Object.entries(activityApiResponse.projects)) {
-      if (chart) {
+    for (const [projectId, chart] of Object.entries(
+      activityApiResponse.projects,
+    )) {
+      const slug = config.layer2s.find((x) => x.id.toString() === projectId)
+        ?.display.slug
+      if (chart && slug) {
         urlCharts.set(
-          `activity/${key}`,
+          `activity/${slug}`,
           getActivityChart(chart, activityApiResponse.ethereum),
         )
       }
