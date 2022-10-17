@@ -140,8 +140,8 @@ describe(BlockTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
-        await repository.refreshDailyTransactionCount()
         await repository.refreshProjectTip(PROJECT_A)
+        await repository.refreshDailyTransactionCount()
 
         expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
