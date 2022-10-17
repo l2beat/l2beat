@@ -45,8 +45,8 @@ export interface ArbitrumProxyUpgradeability {
 
 export interface EIP1967ProxyUpgradeability {
   type: 'eip1967 proxy'
-  adminSlot: string
-  implementationSlot: string
+  admin: string
+  implementation: string
 }
 
 export type ContractValue =

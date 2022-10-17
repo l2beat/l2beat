@@ -25,8 +25,8 @@ export async function getSynapseBridge(
     address: synapseBridge.address,
     upgradeability: {
       type: 'eip1967 proxy',
-      adminSlot: await getEip1967Admin(provider, synapseBridge),
-      implementationSlot: await getEip1967Implementation(
+      admin: await getEip1967Admin(provider, synapseBridge),
+      implementation: await getEip1967Implementation(
         provider,
         synapseBridge,
       ),

@@ -4,7 +4,7 @@ Verifies permissioned addresses against the blockchain.
 
 To run please use `yarn start`. Display help with `yarn start --help`.
 
-## How to add project ?
+## How to add a new project ?
 
 ### Step 1: Discovery
 
