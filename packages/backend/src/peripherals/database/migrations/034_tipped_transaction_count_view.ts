@@ -36,7 +36,7 @@ export async function up(knex: Knex) {
             'unix_timestamp',
             '<=',
             knex.raw(
-              "(SELECT coalesce(min(unix_timestamp), '1900-01-01 00:00:00+00'::timestamptz) FROM transactions.block_tip)",
+              "(SELECT coalesce(min(unix_timestamp) - interval '24 hour', '1900-01-01 00:00:00+00'::timestamptz) FROM transactions.block_tip)",
             ),
           )
           .groupByRaw("project_id, date_trunc('day', unix_timestamp)"),
