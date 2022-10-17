@@ -48,6 +48,26 @@ export const orbit: Bridge = {
           'MATIC',
         ],
       },
+      {
+        address: '0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9',
+        sinceTimestamp: new UnixTime(1603950507),
+        tokens: ['cUSDT'],
+      },
+      {
+        address: '0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0',
+        sinceTimestamp: new UnixTime(1603950507),
+        tokens: ['cDAI'],
+      },
+      {
+        address: '0x830433dE03ABedE062660CC629e1A2c714272474',
+        sinceTimestamp: new UnixTime(1603950507),
+        tokens: ['cUSDC'],
+      },
+      {
+        address: '0xd910f6F23889919fAd9C8cE3171dd557cE0308Da',
+        sinceTimestamp: new UnixTime(1603950507),
+        tokens: ['cWBTC'],
+      },
     ],
   },
   technology: {
