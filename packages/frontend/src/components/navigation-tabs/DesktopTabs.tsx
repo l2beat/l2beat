@@ -47,7 +47,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
             className={cx(
               'relative w-full h-full flex justify-center items-center gap-4 z-20 rounded-md',
               !page.selected && 'opacity-50',
-              page.selected && 'bg-purple-200 dark:bg-purple-800',
+              page.selected && 'bg-purple-300 dark:bg-purple-800',
             )}
           >
             {page.icon} {page.fullTitle}

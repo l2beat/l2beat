@@ -17,6 +17,8 @@ export const arbitrum: Layer2 = {
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    warning:
+      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description:
       'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
     purpose: 'Universal',
