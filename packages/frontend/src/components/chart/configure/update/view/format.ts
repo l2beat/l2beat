@@ -1,4 +1,4 @@
-import { formatLargeNumber } from '../../../../utils'
+import { formatLargeNumber } from '../../../../../utils'
 
 export function formatCurrency(value: number, currency: string) {
   const num = formatLargeNumber(value)
@@ -39,4 +39,12 @@ function formatInteger(integer: number | string): string {
     resultValue.splice(-4 * i + 1, 0, ',')
   }
   return resultValue.join('')
+}
+
+export function formatTps(tps: number): string {
+  const fixed = tps.toFixed(2)
+  if (tps !== 0 && fixed === '0.00') {
+    return '<0.01 TPS'
+  }
+  return `${fixed} TPS`
 }

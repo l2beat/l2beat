@@ -1,7 +1,5 @@
-import { Point } from '../ui'
-
 export function moveToMany(
-  points: Point[],
+  points: { x: number; y: number }[],
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
 ) {

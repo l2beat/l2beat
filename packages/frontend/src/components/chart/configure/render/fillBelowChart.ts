@@ -1,9 +1,8 @@
-import { Point } from '../ui'
 import { moveToMany } from './moveToMany'
 
 export function fillBelowChart(
   ctx: CanvasRenderingContext2D,
-  points: Point[],
+  points: { x: number; y: number }[],
   canvas: HTMLCanvasElement,
   fillStyle: CanvasGradient,
   opts?: {
@@ -32,7 +31,7 @@ export function fillBelowChart(
 function fadeFill(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
-  points: Point[],
+  points: { x: number; y: number }[],
 ) {
   const darkenGradient = ctx.createLinearGradient(
     0,
@@ -46,7 +45,7 @@ function fadeFill(
   ctx.fillRect(0, 0, canvas.width, canvas.height)
 }
 
-function getMedianHeight(points: Point[]) {
+function getMedianHeight(points: { x: number; y: number }[]) {
   const y = points.map(({ y }) => y)
   y.sort((a, b) => a - b)
 

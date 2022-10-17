@@ -1,31 +1,63 @@
-import { getOutputs } from './getOutputs'
-import { initHover } from './hover'
-import { plot } from './plot'
-import { ChartStateWithInput, makeChartState } from './state'
-import { toUiState, UiState } from './ui'
+import { setupControls } from './controls/setupControls'
+import { toDays } from './controls/toDays'
+import { handleEffect } from './effects/handleEffect'
+import { ChartElements, getChartElements } from './elements'
+import { InitMessage, Message } from './messages'
+import { render } from './render/render'
+import { EMPTY_STATE } from './state/empty'
+import { State } from './state/State'
+import { update } from './update/update'
 
-export function configureChart() {
-  const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
-  if (!chart) {
-    return
+export function configureCharts() {
+  document
+    .querySelectorAll<HTMLElement>('[data-role="chart"]')
+    .forEach(configureChart)
+}
+
+function configureChart(chart: HTMLElement) {
+  const elements = getChartElements(chart)
+
+  let previousState: State = EMPTY_STATE
+  let currentState: State = EMPTY_STATE
+
+  function dispatch(message: Message) {
+    const [nextState, effects] = update(currentState, message)
+    currentState = nextState
+    effects.forEach((effect) => handleEffect(effect, dispatch))
+    requestAnimationFrame(renderUpdates)
   }
 
-  const outputs = getOutputs(chart)
-
-  let uiState: UiState | undefined
-  const chartState = makeChartState(chart, () => update())
-  window.addEventListener('resize', () => requestAnimationFrame(draw))
-
-  function update() {
-    uiState =
-      chartState.mainInput && toUiState(chartState as ChartStateWithInput)
-    requestAnimationFrame(draw)
+  function renderUpdates() {
+    render(elements, previousState, currentState)
+    previousState = currentState
   }
 
-  const hover = initHover(chart)
+  window.addEventListener('resize', () => {
+    previousState = EMPTY_STATE
+    requestAnimationFrame(renderUpdates)
+  })
 
-  function draw() {
-    hover.update(uiState)
-    plot(uiState, outputs)
+  setupControls(elements, dispatch)
+  dispatch(getInitMessage(elements))
+}
+
+function getInitMessage(elements: ChartElements): InitMessage {
+  const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
+
+  const daysValue =
+    elements.controls.days.find((x) => x.checked)?.value ?? '30D'
+  const days = toDays(daysValue)
+
+  const showEthereum = !!elements.controls.showEthereum?.checked
+
+  return {
+    type: 'Init',
+    initialView,
+    days,
+    showEthereum,
+    aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
+    alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
+    activityEndpoint: elements.chart.dataset.activityEndpoint,
+    labelCount: elements.view.labels.length,
   }
 }
