@@ -1,6 +1,9 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
-import { ZksyncTransactionRow } from 'knex/types/tables'
+import { ProjectId, UnixTime } from '@l2beat/types'
+import {
+  TransactionCountBlockTipRow,
+  ZksyncTransactionRow,
+} from 'knex/types/tables'
 import _ from 'lodash'
 
 import { assert } from '../../tools/assert'
@@ -30,7 +33,6 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getBlockCount = this.wrapAny(this.getBlockCount)
-    this.getMaxBlock = this.wrapAny(this.getMaxBlock)
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -49,15 +51,49 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return rows.length
   }
 
+  async refreshTip() {
+    const knex = await this.knex()
+    const currentTip = await this.getTip()
+    const tipNumber =
+      (await this.getFirstBlockNumberWithoutNext(currentTip?.block_number)) ??
+      (await this.getMaxBlockNumber())
+
+    if (!tipNumber) {
+      await knex('transactions.block_tip')
+        .delete()
+        .where('project_id', ProjectId.ZKSYNC.toString())
+      return undefined
+    } else {
+      const tip = await knex('transactions.block')
+        .where('project_id', ProjectId.ZKSYNC.toString())
+        .andWhere('block_number', tipNumber)
+        .first()
+      assert(tip, 'Calculated tip not found')
+      await knex('transactions.block_tip')
+        .insert({
+          block_number: tipNumber,
+          unix_timestamp: tip.unix_timestamp,
+          project_id: ProjectId.ZKSYNC.toString(),
+        })
+        .onConflict('project_id')
+        .merge(['block_number', 'unix_timestamp'])
+      return {
+        blockNumber: tip.block_number,
+        timestamp: UnixTime.fromDate(tip.unix_timestamp),
+      }
+    }
+  }
+
   // Returns an array of half open intervals [) that include all missing block numbers
   async getMissingRanges() {
     const knex = await this.knex()
+    const tip = await this.getTip()
 
     const blockNumbers = (await knex.raw(
       `
       WITH 
         blocks AS (
-          SELECT DISTINCT block_number FROM transactions.zksync
+          SELECT DISTINCT block_number FROM transactions.zksync WHERE block_number >= :blockNumber
         ),
         no_next AS (
           SELECT 
@@ -84,6 +120,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
       FROM no_next
       ORDER BY no_prev_block_number, no_next_block_number ASC
   `,
+      { blockNumber: tip?.block_number ?? 0 },
     )) as unknown as RawBlockNumberQueryResult
 
     const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
@@ -118,13 +155,13 @@ export class ZksyncTransactionRepository extends BaseRepository {
     await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
   }
 
-  async getDailyTransactionCount(
-    maxTimestamp: UnixTime,
-  ): Promise<{ timestamp: UnixTime; count: number }[]> {
+  async getDailyTransactionCount(): Promise<
+    { timestamp: UnixTime; count: number }[]
+  > {
     const knex = await this.knex()
-    const rows = await knex('transactions.zksync_count_view')
-      .where('unix_timestamp', '<', maxTimestamp.toDate())
-      .orderBy('unix_timestamp')
+    const rows = await knex('transactions.zksync_count_view').orderBy(
+      'unix_timestamp',
+    )
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
@@ -143,18 +180,49 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return await knex('transactions.zksync').delete()
   }
 
-  async getMaxBlock(): Promise<number> {
-    const knex = await this.knex()
-    const [{ max }] = await knex('transactions.zksync').max('block_number')
-    return max as number
-  }
-
   async getBlockCount(): Promise<number> {
     const knex = await this.knex()
     const [{ count }] = await knex('transactions.zksync').countDistinct(
       'block_number',
     )
     return Number(count)
+  }
+
+  private async getMaxBlockNumber(): Promise<number> {
+    const knex = await this.knex()
+    const [{ max }] = await knex('transactions.zksync').max('block_number')
+    return max
+  }
+
+  private async getTip() {
+    const knex = await this.knex()
+    return knex('transactions.block_tip')
+      .where('project_id', ProjectId.ZKSYNC.toString())
+      .first()
+  }
+
+  private async getFirstBlockNumberWithoutNext(scanFrom = 0) {
+    const knex = await this.knex()
+    const {
+      rows: [noNext],
+    } = (await knex.raw(
+      `
+      SELECT min(block_number) as block_number
+      FROM (
+        SELECT
+          block_number,
+          lead(block_number) over (order by block_number) as next
+        FROM transactions.zksync where block_number >= :blockNumber
+      ) with_lead
+      WHERE next <> block_number + 1;
+    `,
+      {
+        blockNumber: scanFrom,
+      },
+    )) as unknown as {
+      rows: (Pick<TransactionCountBlockTipRow, 'block_number'> | undefined)[]
+    }
+    return noNext?.block_number
   }
 }
 

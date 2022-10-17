@@ -83,6 +83,10 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
+    this.logger.debug('Tip refresh started')
+    const tip = await this.zksyncTransactionRepository.refreshTip()
+    this.logger.debug('Tip refresh finished')
+
     const missingRanges =
       await this.zksyncTransactionRepository.getMissingRanges()
     const latestBlock = await this.zksyncClient.getLatestBlock()
@@ -90,7 +94,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
     for (const [start, end] of missingRanges) {
       for (
-        let i = Math.max(start, 1);
+        let i = Math.max(start, tip?.blockNumber ?? 1);
         i < Math.min(end, Number(latestBlock) + 1);
         i++
       ) {
@@ -102,9 +106,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.zksyncTransactionRepository.getDailyTransactionCount(
-      this.clock.getLastHour().toStartOf('day'),
-    )
+    return this.zksyncTransactionRepository.getDailyTransactionCount()
   }
 
   getStatus() {

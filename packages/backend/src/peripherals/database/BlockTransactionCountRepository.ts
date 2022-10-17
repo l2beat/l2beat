@@ -158,12 +158,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async getDailyTransactionCount(
     projectId: ProjectId,
-    maxTimestamp: UnixTime,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
     const rows = await knex('transactions.block_count_view')
       .where('project_id', projectId.toString())
-      .andWhere('unix_timestamp', '<', maxTimestamp.toDate())
       .orderBy('unix_timestamp')
 
     return rows.map((r) => ({

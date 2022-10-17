@@ -111,8 +111,13 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
+    const tipTimestamp = await this.getTipTimestamp(projectId)
+    if (!tipTimestamp) {
+      return []
+    }
     const rows = (await knex('transactions.starkex')
       .where('project_id', projectId.toString())
+      .andWhere('unix_timestamp', '<=', tipTimestamp)
       .orderBy('unix_timestamp')) as Pick<
       StarkexTransactionCountRow,
       'unix_timestamp' | 'count'
@@ -127,6 +132,46 @@ export class StarkexTransactionCountRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return await knex('transactions.starkex').delete()
+  }
+
+  private async getTipTimestamp(projectId: ProjectId) {
+    const [noNext, max] = await Promise.all([
+      this.getFirstTimestampWithoutNext(projectId),
+      this.getMaxTimestamp(projectId),
+    ])
+    return noNext ?? max
+  }
+
+  private async getMaxTimestamp(projectId: ProjectId) {
+    const knex = await this.knex()
+    const [{ max }] = await knex('transactions.starkex')
+      .max('unix_timestamp')
+      .where('project_id', projectId.toString())
+    return max
+  }
+
+  private async getFirstTimestampWithoutNext(projectId: ProjectId) {
+    const knex = await this.knex()
+    const {
+      rows: [noNext],
+    } = (await knex.raw(
+      `
+      SELECT min(unix_timestamp) as unix_timestamp
+      FROM (
+        SELECT
+          unix_timestamp,
+          lead(unix_timestamp) over (order by unix_timestamp) as next
+        FROM transactions.starkex where project_id = :projectId
+      ) with_lead
+      WHERE next <> unix_timestamp + 1;
+    `,
+      {
+        projectId: projectId.toString(),
+      },
+    )) as unknown as {
+      rows: ({ unix_timestamp: number } | undefined)[]
+    }
+    return noNext?.unix_timestamp
   }
 }
 

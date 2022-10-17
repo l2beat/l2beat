@@ -75,17 +75,25 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
+    this.logger.debug('Tip refresh started')
+    const tip = await this.blockTransactionCountRepository.refreshProjectTip(
+      this.projectId,
+    )
+    this.logger.debug('Tip refresh finished')
+
+    this.logger.debug('Missing ranges query started')
     const missingRanges =
       await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
+    this.logger.debug('Missing ranges query finished')
 
     const finalizedBlock = await this.loopringClient.getFinalizedBlockNumber()
     this.latestBlock = finalizedBlock
 
     for (const [start, end] of missingRanges) {
       for (
-        let i = Math.max(start, 1);
+        let i = Math.max(start, tip?.blockNumber ?? 1);
         i < Math.min(end, finalizedBlock + 1);
         i++
       ) {
@@ -99,7 +107,6 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return await this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
-      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
