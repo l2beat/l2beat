@@ -25,10 +25,34 @@ export const orbiter: Bridge = {
         sinceTimestamp: new UnixTime(1635067681),
         tokens: ['USDC'],
       },
+      {
+        address: '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
+        sinceTimestamp: new UnixTime(1654853887),
+        tokens: ['USDT'],
+      },
+      {
+        address: '0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc',
+        sinceTimestamp: new UnixTime(1649661119),
+        tokens: ['ETH'],
+      },
     ],
   },
   technology: {
-    category: 'Token Bridge',
-    destination: ['Various'], // TODO: list the chains
+    category: 'Liquidity Network',
+    destination: [
+      'zkSync',
+      'Polygon',
+      'Arbitrum One',
+      'Arbitrum Nova',
+      'Loopring',
+      'Optimism',
+      'zkSpace',
+      'Boba',
+      'ImmutibleX',
+      'StarkNet',
+      'BSC',
+      'Metis',
+      'dYdX',
+    ],
   },
 }
