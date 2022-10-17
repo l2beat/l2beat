@@ -196,7 +196,7 @@ export const arbitrum: Layer2 = {
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
-      },x
+      },
       {
         name: 'Tradeable Bridge Exit',
         description:
