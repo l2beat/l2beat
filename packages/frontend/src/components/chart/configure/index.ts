@@ -48,11 +48,13 @@ function getInitMessage(elements: ChartElements): InitMessage {
     elements.controls.days.find((x) => x.checked)?.value ?? '30D'
   const days = toDays(daysValue)
 
+  const showEthereum = !!elements.controls.showEthereum?.checked
+
   return {
     type: 'Init',
     initialView,
     days,
-    showEthereum: false, // TODO: determine this
+    showEthereum,
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
