@@ -10,8 +10,5 @@ export function getTpsDaily(
     return undefined
   }
 
-  return (
-    Math.round(((data.at(-(1 + daysAgo))?.[1] ?? 0) / SECONDS_IN_A_DAY) * 100) /
-    100
-  )
+  return (data.at(-(1 + daysAgo))?.[1] ?? 0) / SECONDS_IN_A_DAY
 }

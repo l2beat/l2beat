@@ -12,7 +12,10 @@ export function getActivityView(
   activityApiResponse: ActivityApiResponse,
   tpsCombined?: number,
 ): ActivityViewProps {
-  const included = getIncludedProjects(projects, activityApiResponse)
+  const included = getIncludedProjects(projects, activityApiResponse, [
+    ProjectId('aztec'),
+    ProjectId('aztecconnect'),
+  ])
   const items = included.map((x) =>
     getActivityViewEntry(x, activityApiResponse, tpsCombined),
   )
@@ -60,8 +63,6 @@ function getEthereumActivityViewEntry(
     tpsDaily,
     tpsWeeklyChange,
     transactionsWeeklyCount,
-    provider: undefined,
-    marketShare: undefined,
   }
 }
 
@@ -75,6 +76,11 @@ function getActivityViewEntryDetails(data?: ActivityApiChart['data']) {
 export function getIncludedProjects<T extends { id: ProjectId }>(
   projects: T[],
   activityApiResponse: ActivityApiResponse,
+  comingSoonProjects: ProjectId[],
 ) {
-  return projects.filter((x) => !!activityApiResponse.projects[x.id.toString()])
+  return projects.filter(
+    (x) =>
+      !!activityApiResponse.projects[x.id.toString()] ||
+      comingSoonProjects.includes(x.id),
+  )
 }
