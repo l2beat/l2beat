@@ -1,4 +1,5 @@
 import { acrossV2 } from './acrossV2'
+import { allbridge } from './allbridge'
 import { avalanche } from './avalanche'
 import { cBridge } from './cBridge'
 import { connext } from './connext'
@@ -31,6 +32,7 @@ export * from './types'
 
 export const bridges: Bridge[] = [
   acrossV2,
+  allbridge,
   avalanche,
   cBridge,
   connext,
