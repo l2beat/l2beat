@@ -8,7 +8,7 @@ export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
   display: {
-    name: 'Portal',
+    name: 'Portal (Wormhole)',
     slug: 'portal',
     links: {
       websites: ['https://wormhole.com/', 'https://linktr.ee/wormholecrypto'],
