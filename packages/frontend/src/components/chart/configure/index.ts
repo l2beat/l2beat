@@ -1,4 +1,5 @@
 import { setupControls } from './controls/setupControls'
+import { toDays } from './controls/toDays'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
@@ -43,10 +44,14 @@ function configureChart(chart: HTMLElement) {
 function getInitMessage(elements: ChartElements): InitMessage {
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
+  const daysValue =
+    elements.controls.days.find((x) => x.checked)?.value ?? '30D'
+  const days = toDays(daysValue)
+
   return {
     type: 'Init',
     initialView,
-    days: 30, // TODO: determine this
+    days,
     showEthereum: false, // TODO: determine this
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
     alternativeTvlEndpoint: undefined, // TODO: determine this
