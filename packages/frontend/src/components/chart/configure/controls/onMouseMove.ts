@@ -14,6 +14,10 @@ export function onMouseMove(
 
   function onEvent(e: MouseEvent | Touch) {
     const rect = view.getBoundingClientRect()
+    // Each point on the chart except the first and the last has are on both
+    // sides that causes it to show on hover. The first and the last only have
+    // it to the right and left respectively. To combat this we extend this area
+    // artificially by an arbitrary amount.
     const isInside =
       e.clientX >= rect.left - HOVER_AREA_EXTENSION_PX &&
       e.clientX <= rect.right + HOVER_AREA_EXTENSION_PX &&
