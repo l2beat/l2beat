@@ -160,6 +160,39 @@ describe(StarkexTransactionCountRepository.name, () => {
           aCounts.map(({ timestamp, count }) => ({ timestamp, count })),
         )
       })
+
+      it('takes tip into consideration', async () => {
+        const start = UnixTime.now().toStartOf('day')
+
+        await repository.addMany([
+          fakeTransactionCount({
+            timestamp: start,
+            projectId: PROJECT_A,
+            count: 100,
+          }),
+          fakeTransactionCount({
+            timestamp: start.add(1, 'days'),
+            projectId: PROJECT_A,
+            count: 101,
+          }),
+          fakeTransactionCount({
+            timestamp: start.add(3, 'days'),
+            projectId: PROJECT_A,
+            count: 102,
+          }),
+        ])
+
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
+          {
+            timestamp: start,
+            count: 100,
+          },
+          {
+            timestamp: start.add(1, 'days'),
+            count: 101,
+          },
+        ])
+      })
     },
   )
 })
