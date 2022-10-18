@@ -20,6 +20,21 @@ export async function getSynapseBridge(
   const GOVERNANCE_ROLE = await synapseBridge.GOVERNANCE_ROLE()
   const NODEGROUP_ROLE = await synapseBridge.NODEGROUP_ROLE()
 
+  const admins = [await synapseBridge.getRoleMember(ADMIN_ROLE, 0)]
+  const adminsCount = (
+    await synapseBridge.getRoleMemberCount(ADMIN_ROLE)
+  ).toNumber()
+
+  const governors = [await synapseBridge.getRoleMember(GOVERNANCE_ROLE, 0)]
+  const governorsCount = (
+    await synapseBridge.getRoleMemberCount(GOVERNANCE_ROLE)
+  ).toNumber()
+
+  const nodes = [await synapseBridge.getRoleMember(NODEGROUP_ROLE, 0)]
+  const nodesCount = (
+    await synapseBridge.getRoleMemberCount(NODEGROUP_ROLE)
+  ).toNumber()
+
   return {
     name: 'SynapseBridge',
     address: synapseBridge.address,
@@ -30,20 +45,14 @@ export async function getSynapseBridge(
     },
     values: {
       ADMIN_ROLE,
-      admins: [await synapseBridge.getRoleMember(ADMIN_ROLE, 0)],
-      adminsCount: (
-        await synapseBridge.getRoleMemberCount(ADMIN_ROLE)
-      ).toNumber(),
+      admins,
+      adminsCount,
       GOVERNANCE_ROLE,
-      governors: [await synapseBridge.getRoleMember(GOVERNANCE_ROLE, 0)],
-      governorsCount: (
-        await synapseBridge.getRoleMemberCount(GOVERNANCE_ROLE)
-      ).toNumber(),
+      governors,
+      governorsCount,
       NODEGROUP_ROLE,
-      nodes: [await synapseBridge.getRoleMember(NODEGROUP_ROLE, 0)],
-      nodesCount: (
-        await synapseBridge.getRoleMemberCount(NODEGROUP_ROLE)
-      ).toNumber(),
+      nodes,
+      nodesCount,
     },
   }
 }

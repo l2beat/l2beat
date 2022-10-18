@@ -32,9 +32,7 @@ export async function getRoleMembers(
     fromBlock,
   })
 
-  const granted = logsGranted
-    .filter((log) => log.topics[1] === role)
-    .map((log) => log.topics[2])
+  const granted = logsGranted.map((log) => log.topics[2])
 
   const revokedFilter = accessControl.filters.RoleRevoked(role)
 
@@ -43,24 +41,14 @@ export async function getRoleMembers(
     fromBlock,
   })
 
-  const revoked = logsRevoked
-    .filter((log) => log.topics[1] === role)
+  logsRevoked
     .map((log) => log.topics[2])
+    .forEach((revokedAddress) => {
+      const index = granted.indexOf(revokedAddress)
+      if (index !== -1) {
+        granted.splice(index, 1)
+      }
+    })
 
-  const members = getMembers(granted, revoked)
-
-  return members.map(bytes32ToAddress)
-}
-
-const getMembers = (granted: string[], revoked: string[]) => {
-  const members = granted.filter((log) => {
-    if (revoked.includes(log)) {
-      const index = revoked.indexOf(log)
-      revoked.splice(index, 1)
-      return false
-    }
-    return true
-  })
-
-  return members
+  return granted.map(bytes32ToAddress)
 }
