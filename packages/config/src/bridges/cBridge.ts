@@ -28,16 +28,7 @@ export const cBridge: Bridge = {
       {
         address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
         sinceTimestamp: new UnixTime(1638346811),
-        tokens: [
-          'USDC',
-          'WETH',
-          'USDT',
-          'MASK',
-          //'LYRA',
-          'BUSD',
-          //'THALES',
-          //'TORN',
-        ],
+        tokens: ['USDC', 'WETH', 'USDT', 'MASK', 'BUSD'],
       },
     ],
   },
