@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 
+import { getRoleAdmin, getRoleMembers } from '../../../common/accessControl'
 import {
   getEip1967Admin,
   getEip1967Implementation,
@@ -7,6 +8,8 @@ import {
 import { SynapseBridge__factory } from '../../../typechain/factories/synapse'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
+
+const DEPLOYED_AT = 13033669
 
 export async function getSynapseBridge(
   provider: providers.JsonRpcProvider,
@@ -20,20 +23,44 @@ export async function getSynapseBridge(
   const GOVERNANCE_ROLE = await synapseBridge.GOVERNANCE_ROLE()
   const NODEGROUP_ROLE = await synapseBridge.NODEGROUP_ROLE()
 
-  const admins = [await synapseBridge.getRoleMember(ADMIN_ROLE, 0)]
-  const adminsCount = (
-    await synapseBridge.getRoleMemberCount(ADMIN_ROLE)
-  ).toNumber()
+  const admins = await getRoleMembers(
+    provider,
+    addresses.synapseBridge,
+    DEPLOYED_AT,
+    ADMIN_ROLE,
+  )
 
-  const governors = [await synapseBridge.getRoleMember(GOVERNANCE_ROLE, 0)]
-  const governorsCount = (
-    await synapseBridge.getRoleMemberCount(GOVERNANCE_ROLE)
-  ).toNumber()
+  const governors = await getRoleMembers(
+    provider,
+    addresses.synapseBridge,
+    DEPLOYED_AT,
+    GOVERNANCE_ROLE,
+  )
 
-  const nodes = [await synapseBridge.getRoleMember(NODEGROUP_ROLE, 0)]
-  const nodesCount = (
-    await synapseBridge.getRoleMemberCount(NODEGROUP_ROLE)
-  ).toNumber()
+  const nodes = await getRoleMembers(
+    provider,
+    addresses.synapseBridge,
+    DEPLOYED_AT,
+    NODEGROUP_ROLE,
+  )
+
+  const adminRoleAdmin = await getRoleAdmin(
+    provider,
+    addresses.synapseBridge,
+    ADMIN_ROLE,
+  )
+
+  const governorRoleAdmin = await getRoleAdmin(
+    provider,
+    addresses.synapseBridge,
+    GOVERNANCE_ROLE,
+  )
+
+  const nodeRoleAdmin = await getRoleAdmin(
+    provider,
+    addresses.synapseBridge,
+    NODEGROUP_ROLE,
+  )
 
   return {
     name: 'SynapseBridge',
@@ -45,14 +72,14 @@ export async function getSynapseBridge(
     },
     values: {
       ADMIN_ROLE,
-      admins,
-      adminsCount,
       GOVERNANCE_ROLE,
-      governors,
-      governorsCount,
       NODEGROUP_ROLE,
+      admins,
+      governors,
       nodes,
-      nodesCount,
+      adminRoleAdmin,
+      governorRoleAdmin,
+      nodeRoleAdmin,
     },
   }
 }
