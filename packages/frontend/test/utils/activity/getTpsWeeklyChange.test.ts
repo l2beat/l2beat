@@ -29,9 +29,9 @@ describe(getTpsWeeklyChange.name, () => {
 
     expect(result).toEqual('')
   })
-  it('returns empty string if data array is too short', () => {
+  it('returns 0 if data array is too short', () => {
     const result = getTpsWeeklyChange([[new UnixTime(1), ONE_TPS]])
 
-    expect(result).toEqual('')
+    expect(result).toEqual('+0.00%')
   })
 })
