@@ -6,9 +6,9 @@ export const satellite: Bridge = {
   type: 'bridge',
   id: ProjectId('satellite'),
   display: {
-    name: 'Satellite Bridge',
+    name: 'Satellite (Axelar)',
     slug: 'satellite',
-    description: 'Satellite is a token bridge powered by AxlerR network',
+    description: 'Satellite is a token bridge powered by Axelar network',
     links: {
       websites: ['https://satellite.money/'],
     },

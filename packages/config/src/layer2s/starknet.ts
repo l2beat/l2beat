@@ -46,6 +46,7 @@ export const starknet: Layer2 = {
         'https://starkware.co/',
       ],
     },
+    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [

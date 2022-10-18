@@ -36,6 +36,7 @@ export const sorare: Layer2 = {
         'https://instagram.com/sorare_official/',
       ],
     },
+    activityDataSource: 'Closed API',
   },
   config: {
     escrows: [
