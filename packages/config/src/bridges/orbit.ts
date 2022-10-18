@@ -10,6 +10,8 @@ export const orbit: Bridge = {
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',
+    warning:
+      'Bridge contract implementation and farm contracts that hold token deposits invested on Compound are not verified on Etherscan.',
     links: {
       websites: [
         'https://bridge.orbitchain.io/',
