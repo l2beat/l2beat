@@ -132,7 +132,7 @@ function renderTpsRow(value: number, source: 'L2' | 'ETH') {
   const formatted = formatTps(value)
   const formattedHTML = `<span class="font-bold">${formatted}</span>`
   const customStyles =
-    source === 'L2' ? 'bg-red-300 rounded-full' : 'bg-blue-600'
+    source === 'L2' ? 'bg-red-300 rounded-full' : 'bg-blue-600 rotate-45'
   const circleClass = `inline-block mr-1 w-2 h-2 relative -top-px border-2 border-current ${customStyles}`
   const circleHTML = `<div class="${circleClass}"></div>`
   return `<div>${circleHTML} ${sourceHTML} avg. TPS: ${formattedHTML}</div>`
