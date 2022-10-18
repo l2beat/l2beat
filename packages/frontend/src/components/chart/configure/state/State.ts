@@ -41,8 +41,8 @@ export interface AggregateTvlChart {
     x: number
     y: number
     date: string
-    usd: string
-    eth: string
+    usd: number
+    eth: number
   }[]
 }
 
@@ -52,8 +52,9 @@ export interface TokenTvlChart {
     x: number
     y: number
     date: string
-    balance: string
-    usd: string
+    balance: number
+    symbol: string
+    usd: number
   }[]
 }
 
@@ -64,8 +65,8 @@ export interface ActivityChart {
     y: number
     y2: number
     date: string
-    tps: string
-    ethereumTps: string
+    tps: number
+    ethereumTps: number
   }[]
 }
 
