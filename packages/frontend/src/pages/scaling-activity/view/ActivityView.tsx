@@ -3,8 +3,8 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ComingSoonCell } from '../../../components/table/ComingSoonCell'
 import { EthereumCell } from '../../../components/table/EthereumCell'
-import { NoInfoCell } from '../../../components/table/NoInfoCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import {
@@ -12,6 +12,7 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
+import { formatTps } from '../../../utils/formatTps'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -20,12 +21,12 @@ export interface ActivityViewProps {
 export interface ActivityViewEntry {
   name: string
   slug: string
-  provider: Layer2['technology']['provider']
+  provider?: Layer2['technology']['provider']
   warning?: string
-  tpsDaily: number | undefined
+  tpsDaily?: number
   tpsWeeklyChange: string
   transactionsWeeklyCount: number | undefined
-  marketShare: string | undefined
+  marketShare?: string
 }
 
 export function ActivityView({ items }: ActivityViewProps) {
@@ -34,7 +35,7 @@ export function ActivityView({ items }: ActivityViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (entry, index) => index + 1,
+      getValue: (_, index) => index + 1,
     },
     {
       name: 'Name',
@@ -50,10 +51,10 @@ export function ActivityView({ items }: ActivityViewProps) {
       tooltip: 'Actually observed transactions per second over the last day.',
       alignRight: true,
       getValue: (project) =>
-        project.tpsDaily ? (
-          <NumberCell>{project.tpsDaily}</NumberCell>
+        project.tpsDaily !== undefined ? (
+          <NumberCell>{formatTps(project.tpsDaily)}</NumberCell>
         ) : (
-          <NoInfoCell />
+          <ComingSoonCell />
         ),
     },
     {

@@ -1,27 +1,22 @@
 import { Layer2 } from '@l2beat/config'
-import {
-  ActivityApiChart,
-  ActivityApiResponse,
-  TvlApiResponse,
-} from '@l2beat/types'
+import { ActivityApiChart, ActivityApiResponse, ProjectId } from '@l2beat/types'
 
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionWeeklyCount } from '../../../utils/activity/getTransactionWeeklyCount'
-import { getIncludedProjects } from '../../../utils/getIncludedProjects'
-import { orderByTvl } from '../../../utils/orderByTvl'
 import { formatPercent } from '../../../utils/utils'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
   projects: Layer2[],
-  tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
   tpsCombined?: number,
 ): ActivityViewProps {
-  const included = getIncludedProjects(projects, tvlApiResponse)
-  const ordering = orderByTvl(included, tvlApiResponse)
-  const items = ordering.map((x) =>
+  const included = getIncludedProjects(projects, activityApiResponse, [
+    ProjectId('aztec'),
+    ProjectId('aztecconnect'),
+  ])
+  const items = included.map((x) =>
     getActivityViewEntry(x, activityApiResponse, tpsCombined),
   )
   items.push(getEthereumActivityViewEntry(activityApiResponse))
@@ -68,8 +63,6 @@ function getEthereumActivityViewEntry(
     tpsDaily,
     tpsWeeklyChange,
     transactionsWeeklyCount,
-    provider: undefined,
-    marketShare: undefined,
   }
 }
 
@@ -78,4 +71,16 @@ function getActivityViewEntryDetails(data?: ActivityApiChart['data']) {
   const tpsWeeklyChange = getTpsWeeklyChange(data)
   const transactionsWeeklyCount = getTransactionWeeklyCount(data)
   return { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount }
+}
+
+export function getIncludedProjects<T extends { id: ProjectId }>(
+  projects: T[],
+  activityApiResponse: ActivityApiResponse,
+  comingSoonProjects: ProjectId[],
+) {
+  return projects.filter(
+    (x) =>
+      !!activityApiResponse.projects[x.id.toString()] ||
+      comingSoonProjects.includes(x.id),
+  )
 }
