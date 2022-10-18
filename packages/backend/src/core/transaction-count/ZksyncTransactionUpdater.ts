@@ -106,9 +106,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyTransactionCounts() {
-    return this.zksyncTransactionRepository.getDailyTransactionCount(
-      this.clock.getLastHour().toStartOf('day'),
-    )
+    return this.zksyncTransactionRepository.getDailyTransactionCount()
   }
 
   getStatus() {
