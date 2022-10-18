@@ -107,7 +107,6 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   async getDailyTransactionCounts() {
     return await this.blockTransactionCountRepository.getDailyTransactionCount(
       this.projectId,
-      this.clock.getLastHour().toStartOf('day'),
     )
   }
 

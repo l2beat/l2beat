@@ -17,36 +17,20 @@ import * as oldView from './030_transaction_count_view'
 
 export async function up(knex: Knex) {
   await oldView.down(knex)
-  await knex.schema
-    .withSchema('transactions')
-    .createMaterializedView('block_count_view', function (view) {
-      view.columns(['project_id', 'unix_timestamp', 'count'])
-      view.as(
-        knex
-          .withSchema('transactions')
-          .select(
-            knex.raw(`
-              project_id, 
-              date_trunc('day', unix_timestamp) as unix_timestamp,
-              sum(count) as count
-              `),
-          )
-          .from('block')
-          .where(
-            'unix_timestamp',
-            '<=',
-            knex.raw(
-              "(SELECT coalesce(min(unix_timestamp), '1900-01-01 00:00:00+00'::timestamptz) FROM transactions.block_tip)",
-            ),
-          )
-          .groupByRaw("project_id, date_trunc('day', unix_timestamp)"),
-      )
-    })
+  await knex.schema.raw(`
+  CREATE MATERIALIZED VIEW transactions.block_count_view AS
+    SELECT
+      block.project_id,
+      date_trunc('day'::text, block.unix_timestamp) unix_timestamp,
+      sum(block.count) count
+    FROM transactions.block block
+    INNER JOIN transactions.block_tip tip ON block.project_id = tip.project_id
+    WHERE block.unix_timestamp < date_trunc('day', tip.unix_timestamp)
+    GROUP BY block.project_id, (date_trunc('day'::text, block.unix_timestamp))
+  `)
 }
 
 export async function down(knex: Knex) {
-  await knex.schema
-    .withSchema('transactions')
-    .dropMaterializedView('block_count_view')
+  await knex.schema.raw('DROP MATERIALIZED VIEW transactions.block_count_view')
   await oldView.up(knex)
 }

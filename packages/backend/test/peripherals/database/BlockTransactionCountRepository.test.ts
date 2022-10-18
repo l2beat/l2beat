@@ -110,6 +110,26 @@ describe(BlockTransactionCountRepository.name, () => {
 
         expect(result.sort()).toEqual(expected.sort())
       })
+
+      it('takes tip into consideration', async () => {
+        await repository.addMany([
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 2, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 7, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 10, projectId: PROJECT_A }),
+        ])
+
+        await repository.refreshProjectTip(PROJECT_A)
+
+        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
+          [-Infinity, 2],
+          [3, 6],
+          [8, 10],
+          [11, Infinity],
+        ])
+      })
     },
   )
 
@@ -118,14 +138,12 @@ describe(BlockTransactionCountRepository.name, () => {
     () => {
       it('works with empty repository', async () => {
         await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(PROJECT_A, UnixTime.now()),
-        ).toEqual([])
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
       })
 
-      it('counts only for requested project', async () => {
+      it('skips last day', async () => {
         const start = UnixTime.now().toStartOf('day')
-        const aCounts = [
+        const syncedCounts = [
           fakeTransactionCount({
             blockNumber: 1,
             timestamp: start.add(1, 'hours'),
@@ -134,6 +152,59 @@ describe(BlockTransactionCountRepository.name, () => {
           fakeTransactionCount({
             blockNumber: 2,
             timestamp: start.add(2, 'hours'),
+            projectId: PROJECT_A,
+          }),
+        ]
+        const lastDayCounts = [
+          fakeTransactionCount({
+            blockNumber: 3,
+            timestamp: start.add(1, 'days'),
+            projectId: PROJECT_A,
+          }),
+          fakeTransactionCount({
+            blockNumber: 4,
+            timestamp: start.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+          }),
+          fakeTransactionCount({
+            blockNumber: 5,
+            timestamp: start.add(1, 'days').add(2, 'hours'),
+            projectId: PROJECT_A,
+          }),
+        ]
+        await repository.addMany([...syncedCounts, ...lastDayCounts])
+
+        await repository.refreshProjectTip(PROJECT_A)
+        await repository.refreshProjectTip(PROJECT_B)
+        await repository.refreshDailyTransactionCount()
+
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+          {
+            timestamp: start,
+            count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
+          },
+        ])
+      })
+
+      it('counts only for requested project', async () => {
+        const start = UnixTime.now().toStartOf('day')
+        const syncedCounts = [
+          fakeTransactionCount({
+            blockNumber: 1,
+            timestamp: start.add(1, 'hours'),
+            projectId: PROJECT_A,
+          }),
+          fakeTransactionCount({
+            blockNumber: 2,
+            timestamp: start.add(2, 'hours'),
+            projectId: PROJECT_A,
+          }),
+        ]
+        const aCounts = [
+          ...syncedCounts,
+          fakeTransactionCount({
+            blockNumber: 3,
+            timestamp: start.add(1, 'days'),
             projectId: PROJECT_A,
           }),
         ]
@@ -148,6 +219,11 @@ describe(BlockTransactionCountRepository.name, () => {
             projectId: PROJECT_B,
             timestamp: start.add(2, 'hours'),
           }),
+          fakeTransactionCount({
+            blockNumber: 3,
+            projectId: PROJECT_B,
+            timestamp: start.add(1, 'days'),
+          }),
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
@@ -155,15 +231,10 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_B)
         await repository.refreshDailyTransactionCount()
 
-        expect(
-          await repository.getDailyTransactionCount(
-            PROJECT_A,
-            start.add(1, 'days'),
-          ),
-        ).toEqual([
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
             timestamp: start,
-            count: aCounts.reduce((acc, record) => acc + record.count, 0),
+            count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
           },
         ])
       })
@@ -201,12 +272,7 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshDailyTransactionCount()
 
-        expect(
-          await repository.getDailyTransactionCount(
-            PROJECT_A,
-            start.add(3, 'days'),
-          ),
-        ).toEqual([
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
             count: 3,
             timestamp: start,
@@ -214,10 +280,6 @@ describe(BlockTransactionCountRepository.name, () => {
           {
             count: 3,
             timestamp: start.add(1, 'days'),
-          },
-          {
-            count: 4,
-            timestamp: start.add(2, 'days'),
           },
         ])
       })
@@ -228,6 +290,12 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.addMany([
           fakeTransactionCount({
             blockNumber: 3,
+            timestamp: start.add(2, 'days'),
+            projectId: PROJECT_A,
+            count: 3,
+          }),
+          fakeTransactionCount({
+            blockNumber: 2,
             timestamp: start.add(1, 'days').add(1, 'hours'),
             projectId: PROJECT_A,
             count: 3,
@@ -243,12 +311,7 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshDailyTransactionCount()
 
-        expect(
-          await repository.getDailyTransactionCount(
-            PROJECT_A,
-            start.add(2, 'days'),
-          ),
-        ).toEqual([
+        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
           {
             count: 1,
             timestamp: start,
@@ -259,34 +322,73 @@ describe(BlockTransactionCountRepository.name, () => {
           },
         ])
       })
+    },
+  )
 
-      it('skips records from today', async () => {
-        const today = UnixTime.now().toStartOf('day')
+  describe(
+    BlockTransactionCountRepository.prototype.refreshProjectTip.name,
+    () => {
+      it('works with empty repository', async () => {
+        const tip = await repository.refreshProjectTip(PROJECT_A)
+        expect(tip).not.toBeDefined()
+      })
 
+      it('finds tip in gaps', async () => {
+        const start = UnixTime.now().toStartOf('day')
         await repository.addMany([
           fakeTransactionCount({
             blockNumber: 1,
-            timestamp: today.add(-1, 'days'),
+            timestamp: start,
             projectId: PROJECT_A,
             count: 1,
           }),
           fakeTransactionCount({
-            blockNumber: 3,
-            timestamp: today,
+            blockNumber: 2,
+            timestamp: start.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 2,
+          }),
+          fakeTransactionCount({
+            blockNumber: 4,
+            timestamp: start.add(2, 'days').add(1, 'hours'),
             projectId: PROJECT_A,
             count: 3,
           }),
         ])
 
-        await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(PROJECT_A, today),
-        ).toEqual([
-          {
+        const tip = await repository.refreshProjectTip(PROJECT_A)
+
+        expect(tip?.blockNumber).toEqual(2)
+        expect(tip?.timestamp).toEqual(start.add(1, 'days').add(1, 'hours'))
+      })
+
+      it('finds tip without gaps', async () => {
+        const start = UnixTime.now().toStartOf('day')
+        await repository.addMany([
+          fakeTransactionCount({
+            blockNumber: 1,
+            timestamp: start,
+            projectId: PROJECT_A,
             count: 1,
-            timestamp: today.add(-1, 'days'),
-          },
+          }),
+          fakeTransactionCount({
+            blockNumber: 2,
+            timestamp: start.add(1, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 2,
+          }),
+          fakeTransactionCount({
+            blockNumber: 3,
+            timestamp: start.add(2, 'days').add(1, 'hours'),
+            projectId: PROJECT_A,
+            count: 3,
+          }),
         ])
+
+        const tip = await repository.refreshProjectTip(PROJECT_A)
+
+        expect(tip?.blockNumber).toEqual(3)
+        expect(tip?.timestamp).toEqual(start.add(2, 'days').add(1, 'hours'))
       })
     },
   )
