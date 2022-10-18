@@ -58,13 +58,6 @@ export function getActivityModule(
     logger,
   )
 
-  const materializedViewRefresher = new MaterializedViewRefresher(
-    blockTransactionCountRepository,
-    zksyncTransactionRepository,
-    clock,
-    logger,
-  )
-
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
     blockTransactionCountRepository,
@@ -76,6 +69,16 @@ export function getActivityModule(
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
     config.transactionCountSync,
     blockTransactionCountRepository,
+    clock,
+    logger,
+  )
+
+  const materializedViewRefresher = new MaterializedViewRefresher(
+    blockTransactionCountRepository,
+    zksyncTransactionRepository,
+    layer2RpcTransactionUpdaters
+      .map((u) => u.projectId)
+      .concat(ProjectId.ETHEREUM),
     clock,
     logger,
   )

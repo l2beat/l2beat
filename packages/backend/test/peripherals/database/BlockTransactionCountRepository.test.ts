@@ -20,7 +20,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.refreshDailyTransactionCount()
+    await repository.refreshFullySyncedDailyCounts()
   })
 
   describe(
@@ -137,7 +137,7 @@ describe(BlockTransactionCountRepository.name, () => {
     BlockTransactionCountRepository.prototype.getFullySyncedDailyCounts.name,
     () => {
       it('works with empty repository', async () => {
-        await repository.refreshDailyTransactionCount()
+        await repository.refreshFullySyncedDailyCounts()
         expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual(
           [],
         )
@@ -178,7 +178,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
         await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshProjectTip(PROJECT_B)
-        await repository.refreshDailyTransactionCount()
+        await repository.refreshFullySyncedDailyCounts()
 
         expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
@@ -231,7 +231,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
         await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshProjectTip(PROJECT_B)
-        await repository.refreshDailyTransactionCount()
+        await repository.refreshFullySyncedDailyCounts()
 
         expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
@@ -272,7 +272,7 @@ describe(BlockTransactionCountRepository.name, () => {
         ])
 
         await repository.refreshProjectTip(PROJECT_A)
-        await repository.refreshDailyTransactionCount()
+        await repository.refreshFullySyncedDailyCounts()
 
         expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
@@ -311,7 +311,7 @@ describe(BlockTransactionCountRepository.name, () => {
         ])
 
         await repository.refreshProjectTip(PROJECT_A)
-        await repository.refreshDailyTransactionCount()
+        await repository.refreshFullySyncedDailyCounts()
 
         expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {

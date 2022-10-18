@@ -34,8 +34,8 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.getMissingRangesByProject = this.wrapAny(
       this.getMissingRangesByProject,
     )
-    this.refreshDailyTransactionCount = this.wrapAny(
-      this.refreshDailyTransactionCount,
+    this.refreshFullySyncedDailyCounts = this.wrapAny(
+      this.refreshFullySyncedDailyCounts,
     )
     this.getFullySyncedDailyCounts = this.wrapGet(
       this.getFullySyncedDailyCounts,
@@ -156,7 +156,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async refreshDailyTransactionCount() {
+  async refreshFullySyncedDailyCounts() {
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }

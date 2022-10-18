@@ -1,4 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../../peripherals/database/ZksyncTransactionRepository'
@@ -10,6 +11,7 @@ export class MaterializedViewRefresher {
   constructor(
     private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
     private readonly zksyncTransactionRepository: ZksyncTransactionRepository,
+    private readonly blockProjectIds: ProjectId[],
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
@@ -30,8 +32,12 @@ export class MaterializedViewRefresher {
 
   async update() {
     this.logger.info('Refresh started')
-    await this.blockTransactionCountRepository.refreshDailyTransactionCount()
-    await this.zksyncTransactionRepository.refreshDailyTransactionCount()
+    for (const projectId of this.blockProjectIds) {
+      await this.blockTransactionCountRepository.refreshProjectTip(projectId)
+    }
+    await this.blockTransactionCountRepository.refreshFullySyncedDailyCounts()
+    await this.zksyncTransactionRepository.refreshTip()
+    await this.zksyncTransactionRepository.refreshFullySyncedDailyCounts()
     this.logger.info('Refresh finished')
   }
 }

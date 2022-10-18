@@ -138,7 +138,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async refreshDailyTransactionCount() {
+  async refreshFullySyncedDailyCounts() {
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
   }
