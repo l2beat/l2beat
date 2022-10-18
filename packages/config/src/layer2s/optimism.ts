@@ -37,6 +37,7 @@ export const optimism: Layer2 = {
         'https://twitch.tv/optimismpbc',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     associatedTokens: ['OP'],

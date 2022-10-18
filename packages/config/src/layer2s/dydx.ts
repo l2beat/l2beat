@@ -47,6 +47,7 @@ export const dydx: Layer2 = {
         'https://linkedin.com/company/dydx',
       ],
     },
+    activityDataSource: 'Closed API',
   },
   config: {
     escrows: [

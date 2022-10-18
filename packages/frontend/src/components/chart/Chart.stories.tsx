@@ -70,5 +70,5 @@ export const WithActivity: Story<TemplateProps> = Template.bind({})
 WithActivity.args = {
   tokenCount: 0,
   hasActivity: true,
-  type: 'tvl',
+  type: 'activity',
 }

@@ -11,11 +11,19 @@ export function formatCurrency(value: number, currency: string) {
   }
 }
 
-export function formatCurrencyExact(value: number, currency: string) {
-  const string = currency === 'usd' ? value.toFixed(2) : formatCrypto(value)
+export function formatCurrencyExactValue(value: number, currency: string) {
+  const string =
+    currency === 'usd' || currency === 'USD'
+      ? value.toFixed(2)
+      : formatCrypto(value)
   const [integer, decimal = ''] = string.split('.')
   const formatted = formatInteger(integer)
-  return formatted + (decimal && `.${decimal}`) + ` ${currency.toUpperCase()}`
+  return formatted + (decimal && `.${decimal}`)
+}
+
+export function formatCurrencyExact(value: number, currency: string) {
+  const formatted = formatCurrencyExactValue(value, currency)
+  return `${formatted} ${currency.toUpperCase()}`
 }
 
 function formatCrypto(value: number) {
@@ -39,12 +47,4 @@ function formatInteger(integer: number | string): string {
     resultValue.splice(-4 * i + 1, 0, ',')
   }
   return resultValue.join('')
-}
-
-export function formatTps(tps: number): string {
-  const fixed = tps.toFixed(2)
-  if (tps !== 0 && fixed === '0.00') {
-    return '<0.01 TPS'
-  }
-  return `${fixed} TPS`
 }

@@ -1,6 +1,6 @@
 import { formatRange, formatTimestamp } from '../../../../../utils'
 import { State } from '../../state/State'
-import { formatCurrency, formatCurrencyExact } from './format'
+import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
 import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
@@ -33,8 +33,9 @@ export function calculateTokenTvlView(
     x: i / (entries.length - 1),
     y: getY(balance),
     date: formatTimestamp(timestamp, true),
-    balance: formatCurrencyExact(balance, token),
-    usd: formatCurrencyExact(usd, 'usd'),
+    balance,
+    symbol: token,
+    usd,
   }))
 
   return {
