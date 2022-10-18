@@ -61,15 +61,14 @@ export function getChartElements(chart: HTMLElement) {
       circle: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-circle"]',
       ),
+      redCircle: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-circle-red"]',
+      ),
+      blueSquare: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-square-blue"]',
+      ),
       contents: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-contents"]',
-      ),
-      date: chart.querySelector<HTMLElement>('[data-role="chart-hover-date"]'),
-      valueA: chart.querySelector<HTMLElement>(
-        '[data-role="chart-hover-value-a"]',
-      ),
-      valueB: chart.querySelector<HTMLElement>(
-        '[data-role="chart-hover-value-b"]',
       ),
     },
   }
