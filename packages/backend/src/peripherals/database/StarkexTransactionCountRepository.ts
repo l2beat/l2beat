@@ -137,7 +137,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     return await knex('transactions.starkex').delete()
   }
 
-  private async getTipTimestamp(projectId: ProjectId) {
+  async getTipTimestamp(projectId: ProjectId) {
     const [noNext, max] = await Promise.all([
       this.getFirstTimestampWithoutNext(projectId),
       this.getMaxTimestamp(projectId),
@@ -147,10 +147,11 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
   private async getMaxTimestamp(projectId: ProjectId) {
     const knex = await this.knex()
-    const [{ max }] = await knex('transactions.starkex')
+    const result = await knex('transactions.starkex')
       .max('unix_timestamp')
       .where('project_id', projectId.toString())
-    return max
+      .first()
+    return result?.max
   }
 
   private async getFirstTimestampWithoutNext(projectId: ProjectId) {
@@ -172,7 +173,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
         projectId: projectId.toString(),
       },
     )) as unknown as {
-      rows: ({ unix_timestamp: number } | undefined)[]
+      rows: ({ unix_timestamp: Date } | undefined)[]
     }
     return noNext?.unix_timestamp
   }

@@ -169,17 +169,17 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return await knex('transactions.zksync').delete()
   }
 
-  private async getMaxBlockNumber(): Promise<number | undefined> {
-    const knex = await this.knex()
-    const row = await knex('transactions.zksync').max('block_number').first()
-    return row?.max
-  }
-
-  private async getTip() {
+  async getTip() {
     const knex = await this.knex()
     return knex('transactions.block_tip')
       .where('project_id', ProjectId.ZKSYNC.toString())
       .first()
+  }
+
+  private async getMaxBlockNumber(): Promise<number | undefined> {
+    const knex = await this.knex()
+    const row = await knex('transactions.zksync').max('block_number').first()
+    return row?.max
   }
 
   private async getFirstBlockNumberWithoutNext(scanFrom = 0) {

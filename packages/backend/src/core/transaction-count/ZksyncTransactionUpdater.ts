@@ -109,10 +109,14 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     return this.zksyncTransactionRepository.getFullySyncedDailyCounts()
   }
 
-  getStatus() {
+  async getStatus() {
+    const storedTip = await this.zksyncTransactionRepository.getTip()
+    const fullySyncedTip = (await this.getFullySyncedDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
+      storedTip: storedTip?.unix_timestamp.toISOString() ?? null,
+      fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }
 }

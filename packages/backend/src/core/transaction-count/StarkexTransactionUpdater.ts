@@ -109,9 +109,13 @@ export class StarkexTransactionUpdater implements TransactionCounter {
     )
   }
 
-  getStatus() {
+  async getStatus() {
+    const tip = await this.starkexTransactionCountRepository.getTipTimestamp(
+      this.projectId,
+    )
     return {
       workQueue: this.daysQueue.getStats(),
+      fullySyncedTip: tip?.toISOString() ?? null,
     }
   }
 }

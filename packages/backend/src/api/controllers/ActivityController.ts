@@ -41,17 +41,17 @@ export class ActivityController {
     }
   }
 
-  getStatus(): json {
-    return [
-      ...this.layer2Counters.map((c) => ({
+  async getStatus(): Promise<json> {
+    const layer2s = await Promise.all(
+      this.layer2Counters.map(async (c) => ({
         projectId: c.projectId.toString(),
-        status: c.getStatus(),
+        status: await c.getStatus(),
       })),
-      {
-        projectId: ProjectId.ETHEREUM.toString(),
-        status: this.ethereumCounter.getStatus(),
-      },
-    ]
+    )
+    return layer2s.concat({
+      projectId: ProjectId.ETHEREUM.toString(),
+      status: await this.ethereumCounter.getStatus(),
+    })
   }
 
   private async getLayer2s(): Promise<Layer2[]> {

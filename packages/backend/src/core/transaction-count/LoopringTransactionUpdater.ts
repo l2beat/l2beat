@@ -110,10 +110,15 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     )
   }
 
-  getStatus() {
+  async getStatus() {
+    const storedTip =
+      await this.blockTransactionCountRepository.getTipByProject(this.projectId)
+    const fullySyncedTip = (await this.getFullySyncedDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
-      latestBlock: this.latestBlock ?? null,
+      latestBlock: this.latestBlock?.toString() ?? null,
+      storedTip: storedTip?.unix_timestamp.toISOString() ?? null,
+      fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }
 }
