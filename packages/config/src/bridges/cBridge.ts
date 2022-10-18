@@ -10,7 +10,7 @@ export const cBridge: Bridge = {
     name: 'cBridge V2',
     slug: 'cbridge',
     description:
-      'Celer is a general messaging bridge, token-bridge and a liquidity network that leverages the "state-guardian" aka SGN thats operated by validators runnning on tendermint engine to perform cross-chain transactions.',
+      'Celer is a general messaging bridge, token-bridge and a liquidity network that leverages the "state-guardian" aka SGN thats operated by validators running on Tendermint engine to perform cross-chain transactions.',
     links: {
       websites: ['https://www.celer.network/'],
       apps: ['https://cbridge.celer.network/'],
@@ -48,19 +48,38 @@ export const cBridge: Bridge = {
     category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
-      description: '',
+      description:
+        'Synapse Bridge is a Token Bridge that locks tokens in the escrow account and mints tokens on destination network. When bridging back to Ethereum tokens are burned on source chain and transferred back to the receiver on Ethereum.',
       references: [],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
-      description: '',
+      description:
+        'Validation process takes place in external network called SGN. Nodes in the network, called state-guardian, observe contracts on each supported chain and sign messages when everything is correct. Based on the signatures user can withdraw funds on the other end of the bridge.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: '"state-guardians" decide to stop processing certain transactions.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: '"state-guardians" allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: '"state-guardians" sign a fraudulent message allowing themselves to withdraw all locked funds.',
+          isCritical: true,
+        },
+      ],
     },
     destinationToken: {
       name: 'Destination tokens',
-      description: '',
+      description:
+        'Type of the token received on the destination chain depends on the token, if it is native to this chain user will receive canonical token. If the bridged token is not native to the destination chain then user will end up with wrapped version.',
       references: [],
       risks: [],
     },
