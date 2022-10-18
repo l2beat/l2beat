@@ -73,7 +73,8 @@ export const cBridge: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
     validatedBy: {
       value: 'Third Party',
-      description: '',
+      description:
+        'Transfers need to be signed by external actors set by the governance.',
       sentiment: 'bad',
     },
   },
