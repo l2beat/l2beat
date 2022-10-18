@@ -82,7 +82,7 @@ jobs:
           yarn storybook:build
           yarn storybook:screenshot
         working-directory: ./packages/frontend
-      - uses: bokuweb/reg-actions@v1
+      - uses: krzkaczor/reg-actions@v1
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           image-directory-path: "./packages/frontend/__screenshots__"
