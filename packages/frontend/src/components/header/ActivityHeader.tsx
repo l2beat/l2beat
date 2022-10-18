@@ -33,7 +33,13 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           Observed over the last 7 days
           <span
             className="Tooltip inline-block"
-            title="More txs on Ethereum because of L2s. Formula: (L2 txs + ETH txs) / ETH txs"
+            title={
+              'How many more transactions are settled by Ethereum if we take into account the L2 solutions.' +
+              '\n' +
+              'Exact formula:' +
+              '\n' +
+              '(L2 txs/7d + ETH txs/7d) / ETH txs/7d'
+            }
           >
             <InfoIcon
               width="16"
