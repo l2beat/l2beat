@@ -28,9 +28,9 @@ export function calculateActivityView(
       x: i / (entries.length - 1),
       y: getY(getTps(transactions)),
       y2: getY(getTps(ethereumTransactions)),
-      date: formatTimestamp(timestamp, true),
-      tps: formatTpsWithUnit(getTps(transactions)),
-      ethereumTps: formatTpsWithUnit(getTps(ethereumTransactions)),
+      date: formatTimestamp(timestamp, false),
+      tps: getTps(transactions),
+      ethereumTps: getTps(ethereumTransactions),
     }),
   )
 

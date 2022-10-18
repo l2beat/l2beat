@@ -1,6 +1,6 @@
 import { formatRange, formatTimestamp } from '../../../../../utils'
 import { State } from '../../state/State'
-import { formatCurrency, formatCurrencyExact } from './format'
+import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
 import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
@@ -29,8 +29,8 @@ export function calculateRegularTvlView(
     x: i / (entries.length - 1),
     y: getY(controls.currency === 'usd' ? usd : eth),
     date: formatTimestamp(timestamp, true),
-    usd: formatCurrencyExact(usd, 'usd'),
-    eth: formatCurrencyExact(eth, 'eth'),
+    usd,
+    eth,
   }))
 
   return {
