@@ -41,6 +41,7 @@ export const loopring: Layer2 = {
         'https://loopring.substack.com/',
       ],
     },
+    activityDataSource: 'Explorer API',
   },
   config: {
     associatedTokens: ['LRC'],

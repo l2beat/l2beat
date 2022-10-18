@@ -1,9 +1,10 @@
 import { Layer2 } from '@l2beat/config'
 import { ActivityApiChart, ActivityApiResponse, ProjectId } from '@l2beat/types'
 
+import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
-import { getTransactionWeeklyCount } from '../../../utils/activity/getTransactionWeeklyCount'
+import { getTransactionMonthlyCount } from '../../../utils/activity/getTransactionWeeklyCount'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
@@ -29,17 +30,13 @@ export function getActivityViewEntry(
   activityApiResponse: ActivityApiResponse,
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
-  const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
-    getActivityViewEntryDetails(data)
-
   return {
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
-    tpsDaily,
-    tpsWeeklyChange,
-    transactionsWeeklyCount,
+    dataSource: project.display.activityDataSource,
+    ...getActivityViewEntryDetails(data),
   }
 }
 
@@ -47,23 +44,20 @@ function getEthereumActivityViewEntry(
   activityApiResponse: ActivityApiResponse,
 ) {
   const data = activityApiResponse.ethereum?.data
-  const { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount } =
-    getActivityViewEntryDetails(data)
-
   return {
     name: 'Ethereum',
     slug: 'ethereum',
-    tpsDaily,
-    tpsWeeklyChange,
-    transactionsWeeklyCount,
+    ...getActivityViewEntryDetails(data),
   }
 }
 
 function getActivityViewEntryDetails(data?: ActivityApiChart['data']) {
-  const tpsDaily = getTpsDaily(data)
-  const tpsWeeklyChange = getTpsWeeklyChange(data)
-  const transactionsWeeklyCount = getTransactionWeeklyCount(data)
-  return { tpsDaily, tpsWeeklyChange, transactionsWeeklyCount }
+  return {
+    tpsDaily: getTpsDaily(data),
+    tpsWeeklyChange: getTpsWeeklyChange(data),
+    transactionsMonthlyCount: getTransactionMonthlyCount(data),
+    ...getMaxTps(data),
+  }
 }
 
 export function getIncludedProjects<T extends { id: ProjectId }>(

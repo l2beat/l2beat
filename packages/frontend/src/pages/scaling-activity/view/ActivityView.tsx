@@ -12,6 +12,7 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
+import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 
 export interface ActivityViewProps {
@@ -23,9 +24,12 @@ export interface ActivityViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string
-  transactionsWeeklyCount: number | undefined
+  transactionsMonthlyCount: number | undefined
+  maxTps?: number
+  maxTpsDate?: string
 }
 
 export function ActivityView({ items }: ActivityViewProps) {
@@ -38,6 +42,7 @@ export function ActivityView({ items }: ActivityViewProps) {
     },
     {
       name: 'Name',
+      minimalWidth: true,
       getValue: (project) =>
         project.slug !== 'ethereum' ? (
           <ProjectCell type="layer2" project={project} />
@@ -46,8 +51,8 @@ export function ActivityView({ items }: ActivityViewProps) {
         ),
     },
     {
-      name: 'Daily TPS',
-      tooltip: 'Actually observed transactions per second over the last day.',
+      name: 'Past day TPS',
+      tooltip: 'Transactions per second averaged over the past day.',
       alignRight: true,
       getValue: (project) =>
         project.tpsDaily !== undefined ? (
@@ -59,19 +64,47 @@ export function ActivityView({ items }: ActivityViewProps) {
     {
       name: '7d Change',
       tooltip:
-        'Actually observed change in daily transactions per second as compared to a week ago.',
+        'Observed change in average daily transactions per second as compared to a week ago.',
       alignRight: true,
       getValue: (project) => (
         <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
       ),
     },
     {
-      name: '7d Count',
-      tooltip: 'Total number of transactions over the past week.',
+      name: 'Max daily TPS',
+      tooltip:
+        'Highest observed transactions per second averaged over a single day.',
       alignRight: true,
-      getValue: (project) => (
-        <NumberCell>{project.transactionsWeeklyCount}</NumberCell>
-      ),
+      getValue: (project) =>
+        project.maxTps !== undefined && (
+          <span className="flex items-baseline justify-end gap-1.5">
+            <NumberCell>{formatTps(project.maxTps)}</NumberCell>
+            <span
+              className={cx(
+                'text-gray-700 dark:text-gray-300',
+                'block min-w-[115px] text-left',
+              )}
+            >
+              on {project.maxTpsDate}
+            </span>
+          </span>
+        ),
+    },
+    {
+      name: '30D Count',
+      tooltip: 'Total number of transactions over the past month.',
+      alignRight: true,
+      getValue: (project) =>
+        project.transactionsMonthlyCount ? (
+          <NumberCell>
+            {formatLargeNumber(project.transactionsMonthlyCount)}
+          </NumberCell>
+        ) : undefined,
+    },
+    {
+      name: 'Data source',
+      tooltip: 'Where is the transaction data coming from.',
+      getValue: (project) => project.dataSource,
     },
   ]
 
