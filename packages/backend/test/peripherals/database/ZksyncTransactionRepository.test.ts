@@ -14,6 +14,7 @@ describe(ZksyncTransactionRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
+    await repository.refreshDailyTransactionCount()
   })
 
   describe(ZksyncTransactionRepository.prototype.getAll.name, () => {

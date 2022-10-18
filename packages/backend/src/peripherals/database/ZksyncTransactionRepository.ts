@@ -143,13 +143,13 @@ export class ZksyncTransactionRepository extends BaseRepository {
     await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
   }
 
-  async getDailyTransactionCount(): Promise<
-    { timestamp: UnixTime; count: number }[]
-  > {
+  async getDailyTransactionCount(
+    maxTimestamp: UnixTime,
+  ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
-    const rows = await knex('transactions.zksync_count_view').orderBy(
-      'unix_timestamp',
-    )
+    const rows = await knex('transactions.zksync_count_view')
+      .where('unix_timestamp', '<', maxTimestamp.toDate())
+      .orderBy('unix_timestamp')
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
@@ -165,6 +165,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
+    await knex('transactions.block_tip').delete()
     return await knex('transactions.zksync').delete()
   }
 
