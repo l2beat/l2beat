@@ -104,8 +104,8 @@ export class LoopringTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued')
   }
 
-  async getDailyTransactionCounts() {
-    return await this.blockTransactionCountRepository.getDailyTransactionCount(
+  async getFullySyncedDailyCounts() {
+    return await this.blockTransactionCountRepository.getFullySyncedDailyCounts(
       this.projectId,
     )
   }

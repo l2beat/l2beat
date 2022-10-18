@@ -121,10 +121,12 @@ describe(StarkexTransactionCountRepository.name, () => {
   )
 
   describe(
-    StarkexTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    StarkexTransactionCountRepository.prototype.getFullySyncedDailyCounts.name,
     () => {
       it('works with empty repository', async () => {
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual(
+          [],
+        )
       })
 
       it('counts only for requested project', async () => {
@@ -154,7 +156,7 @@ describe(StarkexTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual(
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual(
           aCounts.map(({ timestamp, count }) => ({ timestamp, count })),
         )
       })

@@ -37,7 +37,9 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.refreshDailyTransactionCount = this.wrapAny(
       this.refreshDailyTransactionCount,
     )
-    this.getDailyTransactionCount = this.wrapGet(this.getDailyTransactionCount)
+    this.getFullySyncedDailyCounts = this.wrapGet(
+      this.getFullySyncedDailyCounts,
+    )
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -159,7 +161,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }
 
-  async getDailyTransactionCount(
+  async getFullySyncedDailyCounts(
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()

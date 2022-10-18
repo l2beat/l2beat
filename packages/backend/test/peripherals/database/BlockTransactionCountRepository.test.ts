@@ -134,11 +134,13 @@ describe(BlockTransactionCountRepository.name, () => {
   )
 
   describe(
-    BlockTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    BlockTransactionCountRepository.prototype.getFullySyncedDailyCounts.name,
     () => {
       it('works with empty repository', async () => {
         await repository.refreshDailyTransactionCount()
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual(
+          [],
+        )
       })
 
       it('skips last day', async () => {
@@ -178,7 +180,7 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_B)
         await repository.refreshDailyTransactionCount()
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
@@ -231,7 +233,7 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_B)
         await repository.refreshDailyTransactionCount()
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
@@ -272,7 +274,7 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshDailyTransactionCount()
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
             count: 3,
             timestamp: start,
@@ -311,7 +313,7 @@ describe(BlockTransactionCountRepository.name, () => {
         await repository.refreshProjectTip(PROJECT_A)
         await repository.refreshDailyTransactionCount()
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([
+        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
           {
             count: 1,
             timestamp: start,

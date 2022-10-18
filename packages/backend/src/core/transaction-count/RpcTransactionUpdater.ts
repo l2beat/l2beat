@@ -125,8 +125,8 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued', { project: this.projectId.toString() })
   }
 
-  async getDailyTransactionCounts() {
-    return this.blockTransactionCountRepository.getDailyTransactionCount(
+  async getFullySyncedDailyCounts() {
+    return this.blockTransactionCountRepository.getFullySyncedDailyCounts(
       this.projectId,
     )
   }

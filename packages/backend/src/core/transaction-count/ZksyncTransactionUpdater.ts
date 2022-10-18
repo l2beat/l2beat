@@ -105,8 +105,8 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued')
   }
 
-  async getDailyTransactionCounts() {
-    return this.zksyncTransactionRepository.getDailyTransactionCount()
+  async getFullySyncedDailyCounts() {
+    return this.zksyncTransactionRepository.getFullySyncedDailyCounts()
   }
 
   getStatus() {

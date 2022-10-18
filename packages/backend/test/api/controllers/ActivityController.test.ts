@@ -18,7 +18,7 @@ describe(ActivityController.name, () => {
     const controller = new ActivityController(
       [],
       mock<TransactionCounter>({
-        async getDailyTransactionCounts() {
+        async getFullySyncedDailyCounts() {
           return []
         },
       }),
@@ -33,7 +33,7 @@ describe(ActivityController.name, () => {
       [
         mock<RpcTransactionUpdater>({
           projectId: ProjectId('optimism'),
-          async getDailyTransactionCounts() {
+          async getFullySyncedDailyCounts() {
             return [
               { count: 1, timestamp: new UnixTime(0).add(1, 'days') },
               { count: 2, timestamp: new UnixTime(0).add(2, 'days') },
@@ -43,7 +43,7 @@ describe(ActivityController.name, () => {
         }),
         mock<StarkexTransactionUpdater>({
           projectId: ProjectId('dydx'),
-          async getDailyTransactionCounts() {
+          async getFullySyncedDailyCounts() {
             return [
               { count: 4, timestamp: new UnixTime(0) },
               { count: 5, timestamp: new UnixTime(0).add(1, 'days') },
@@ -53,7 +53,7 @@ describe(ActivityController.name, () => {
         }),
         mock<ZksyncTransactionUpdater>({
           projectId: ProjectId('zksync'),
-          async getDailyTransactionCounts() {
+          async getFullySyncedDailyCounts() {
             return [
               { count: 7, timestamp: new UnixTime(0).add(2, 'days') },
               { count: 8, timestamp: new UnixTime(0).add(3, 'days') },
@@ -63,7 +63,7 @@ describe(ActivityController.name, () => {
         }),
       ],
       mock<TransactionCounter>({
-        async getDailyTransactionCounts() {
+        async getFullySyncedDailyCounts() {
           return [
             { count: 100, timestamp: new UnixTime(0) },
             { count: 200, timestamp: new UnixTime(0).add(1, 'days') },

@@ -7,6 +7,6 @@ export interface DailyTransactionCount {
 
 export interface TransactionCounter {
   readonly projectId: ProjectId
-  getDailyTransactionCounts(): Promise<DailyTransactionCount[]>
+  getFullySyncedDailyCounts(): Promise<DailyTransactionCount[]>
   getStatus(): json
 }

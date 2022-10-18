@@ -143,7 +143,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
   }
 
-  async getDailyTransactionCount(): Promise<
+  async getFullySyncedDailyCounts(): Promise<
     { timestamp: UnixTime; count: number }[]
   > {
     const knex = await this.knex()

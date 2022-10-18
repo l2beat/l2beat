@@ -29,7 +29,9 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     this.getMissingRangesByProject = this.wrapAny(
       this.getMissingRangesByProject,
     )
-    this.getDailyTransactionCount = this.wrapAny(this.getDailyTransactionCount)
+    this.getFullySyncedDailyCounts = this.wrapAny(
+      this.getFullySyncedDailyCounts,
+    )
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -108,7 +110,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     return _.zip(noNextDay, noPrevDay) as [number, number][]
   }
 
-  async getDailyTransactionCount(
+  async getFullySyncedDailyCounts(
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
