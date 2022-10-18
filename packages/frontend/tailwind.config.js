@@ -18,6 +18,7 @@ module.exports = {
       xl: ['20px', '28px'],
       '2xl': ['24px', '32px'],
       '3xl': ['32px', '36px'],
+      '4xl': ['40px', '48px'],
     },
     colors: {
       current: 'currentColor',

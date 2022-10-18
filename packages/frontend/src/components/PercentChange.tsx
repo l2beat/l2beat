@@ -3,14 +3,16 @@ import React from 'react'
 
 interface Props {
   value: string
+  className?: string
 }
 
-export function PercentChange({ value }: Props) {
+export function PercentChange({ value, className }: Props) {
   return (
     <span
       className={cx(
         value.startsWith('+') && 'text-green-700 dark:text-green-300',
         value.startsWith('-') && 'text-red-700 dark:text-red-300',
+        className,
       )}
     >
       {value}
