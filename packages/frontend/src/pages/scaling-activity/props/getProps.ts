@@ -19,10 +19,7 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       scalingFactor,
       apiEndpoint: '/api/activity/combined.json',
-      activityView: getActivityView(
-        config.layer2s,
-        activityApiResponse,
-      ),
+      activityView: getActivityView(config.layer2s, activityApiResponse),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },
