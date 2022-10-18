@@ -5,7 +5,8 @@ import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionMonthlyCount } from '../../../utils/activity/getTransactionWeeklyCount'
-import { formatUSD, getPercentageChange } from '../../../utils/utils'
+import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
+import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
@@ -13,11 +14,7 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
-  const hourly =
-    tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data ?? []
-  const tvl = hourly.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
-  const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
+  const { tvl, tvlWeeklyChange } = getTvlWithChange(tvlApiResponse, project)
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.data
