@@ -3,6 +3,7 @@ import { EthereumAddress } from '@l2beat/types'
 import { constants, Contract, providers } from 'ethers'
 
 import { bytes32ToAddress } from '../common/address'
+import { getEip897Implementation } from '../common/eip897'
 import { getEip1967Admin, getEip1967Implementation } from '../common/eip1967'
 import { getStarkWare2019Implementation } from '../common/starkWareProxy'
 
@@ -10,6 +11,7 @@ export type ProxyAnalysis =
   | EIP1967Analysis
   | StarkWare2019Analysis
   | GnosisSafeAnalysis
+  | EIP897Analysis
 
 export interface EIP1967Analysis {
   type: 'eip1967'
@@ -29,6 +31,12 @@ export interface GnosisSafeAnalysis {
   implementationAnalysis: AnalyzedAddress
 }
 
+export interface EIP897Analysis {
+  type: 'eip897'
+  eip897Implementation: string
+  implementationAnalysis: AnalyzedAddress
+}
+
 export async function analyzeProxy(
   provider: providers.Provider,
   addressAnalyzer: AddressAnalyzer,
@@ -40,12 +48,14 @@ export async function analyzeProxy(
     starkWare2019Implementation,
     slot0,
     masterCopy,
+    eip897Implementation,
   ] = await Promise.all([
     getEip1967Implementation(provider, proxyAddress),
     getEip1967Admin(provider, proxyAddress),
     getStarkWare2019Implementation(provider, proxyAddress),
     getSlot0(provider, proxyAddress),
     getMasterCopy(provider, proxyAddress),
+    getEip897Implementation(provider, proxyAddress),
   ])
 
   if (masterCopy && masterCopy === slot0) {
@@ -77,6 +87,17 @@ export async function analyzeProxy(
       type: 'eip1967',
       eip1967Admin: eip1967Admin,
       eip1967Implementation,
+      implementationAnalysis,
+    }
+  }
+
+  if (eip897Implementation !== constants.AddressZero) {
+    const implementationAnalysis = await addressAnalyzer.analyze(
+      EthereumAddress(eip897Implementation),
+    )
+    return {
+      type: 'eip897',
+      eip897Implementation,
       implementationAnalysis,
     }
   }

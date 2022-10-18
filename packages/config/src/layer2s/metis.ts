@@ -39,6 +39,7 @@ export const metis: Layer2 = {
         'https://t.me/MetisDAO',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     associatedTokens: ['Metis'],
