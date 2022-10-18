@@ -436,7 +436,7 @@ export const tokenList: TokenInfo[] = [
     symbol: 'cDAI',
     decimals: 8,
     sinceTimestamp: new UnixTime(1574471013),
-    category: 'other',
+    category: 'stablecoin',
   },
   {
     id: AssetId('ceth-compound-ether'),
@@ -456,21 +456,28 @@ export const tokenList: TokenInfo[] = [
     symbol: 'cUSDC',
     decimals: 8,
     sinceTimestamp: new UnixTime(1557192331),
+    category: 'stablecoin',
+  },
+  {
+    id: AssetId('cusdt-compound-usdt'),
+    name: 'Compound USDT',
+    coingeckoId: CoingeckoId('compound-usdt'),
+    address: EthereumAddress('0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'),
+    symbol: 'cUSDT',
+    decimals: 8,
+    sinceTimestamp: new UnixTime(1586985186),
+    category: 'stablecoin',
+  },
+  {
+    id: AssetId('cwbtc-compound-wbtc'),
+    name: 'Compound Wrapped BTC',
+    coingeckoId: CoingeckoId('compound-wrapped-btc'),
+    address: EthereumAddress('0xccF4429DB6322D5C611ee964527D42E5d685DD6a'),
+    symbol: 'cWBTC',
+    decimals: 8,
+    sinceTimestamp: new UnixTime(1615751087),
     category: 'other',
   },
-  // There is an issue with cUSDT price on coingecko
-  // https://www.coingecko.com/en/coins/compound-usdt
-  // until it is resolved the cUSDT tvl would not be tracked
-  // {
-  //   id: AssetId('cusdt-compound-usdt'),
-  //   name: 'Compound USDT',
-  //   coingeckoId: CoingeckoId('compound-usdt'),
-  //   address: EthereumAddress('0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'),
-  //   symbol: 'cUSDT',
-  //   decimals: 8,
-  //   sinceTimestamp: new UnixTime(1586985186),
-  //   category: 'other',
-  // },
   {
     id: AssetId('people-constitution-dao'),
     name: 'ConstitutionDAO',
