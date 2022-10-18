@@ -27,7 +27,6 @@ export interface ChartProps {
 export function Chart({
   tvlEndpoint,
   activityEndpoint,
-  ethereumActivityEndpoint,
   tokens,
   type = 'tvl',
   hasActivity,
@@ -41,7 +40,6 @@ export function Chart({
       data-type={type}
       data-tvl-endpoint={tvlEndpoint}
       data-activity-endpoint={activityEndpoint}
-      data-ethereum-activity-endpoint={ethereumActivityEndpoint}
       className="mt-4 sm:mt-8"
     >
       {!metaChart && (

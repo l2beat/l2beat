@@ -5,6 +5,10 @@ import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
 import { DYDX_NAME, getDydxParameters } from '../projects/dYdX'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
 import {
+  getOrbitBridgeParameters,
+  ORBIT_BRIDGE_NAME,
+} from '../projects/orbitBridge'
+import {
   getSolletBridgeParameters,
   SOLLET_BRIDGE_NAME,
 } from '../projects/solletBridge'
@@ -37,6 +41,7 @@ export async function analyze(projects: string[]) {
     [NOVA_NAME, getNovaParameters],
     [DYDX_NAME, getDydxParameters],
     [SOLLET_BRIDGE_NAME, getSolletBridgeParameters],
+    [ORBIT_BRIDGE_NAME, getOrbitBridgeParameters],
   ]
 
   const unknownArguments = projects.filter(

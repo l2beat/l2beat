@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
+    "@l2beat/config": "*",
     "@l2beat/types": "*",
     "@types/lodash": "^4.14.182",
     "@types/mkdirp": "^1.0.2",

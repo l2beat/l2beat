@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../PageContent'
 import { Chart as ChartComponent } from './Chart'
-import { configureChart } from './configure'
+import { configureCharts } from './configure'
 
 export default {
   title: 'Components/Chart',
@@ -29,7 +29,7 @@ function Template({ tokenCount, hasActivity, type }: TemplateProps) {
   ].map((x) => ({ symbol: x, tvlEndpoint: '/' }))
 
   useEffect(() => {
-    configureChart()
+    configureCharts()
   }, [])
 
   const activityEndpoint = hasActivity ? '/fakeActivity.json' : undefined
@@ -70,5 +70,5 @@ export const WithActivity: Story<TemplateProps> = Template.bind({})
 WithActivity.args = {
   tokenCount: 0,
   hasActivity: true,
-  type: 'tvl',
+  type: 'activity',
 }

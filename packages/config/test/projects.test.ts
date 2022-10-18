@@ -158,7 +158,7 @@ describe('projects', () => {
         it(link, () => {
           if (link.includes('discord')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/discord\.gg\/\w+$/),
+              expect.stringMatching(/^https:\/\/discord\.gg\/[\w-]+$/),
             )
           } else if (link.includes('t.me')) {
             expect(link).toEqual(

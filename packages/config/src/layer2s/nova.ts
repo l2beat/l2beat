@@ -37,6 +37,7 @@ export const nova: Layer2 = {
         'https://discord.gg/5KE54JwyTs',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
