@@ -1,15 +1,17 @@
 import { ActivityApiResponse } from '@l2beat/types'
 
-import { getTransactionMonthlyCount } from './getTransactionWeeklyCount'
+import { getTransactionCount } from './getTransactionCount'
 
 export function getScalingFactor(
   activityApiResponse: ActivityApiResponse,
 ): string {
-  const combinedWeeklyCount = getTransactionMonthlyCount(
+  const combinedWeeklyCount = getTransactionCount(
     activityApiResponse.combined.data,
+    'week',
   )
-  const ethereumWeeklyCount = getTransactionMonthlyCount(
+  const ethereumWeeklyCount = getTransactionCount(
     activityApiResponse.ethereum?.data,
+    'week',
   )
 
   if (!combinedWeeklyCount || !ethereumWeeklyCount) {

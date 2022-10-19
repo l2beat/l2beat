@@ -4,7 +4,7 @@ import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
-import { getTransactionMonthlyCount } from '../../../utils/activity/getTransactionMonthlyCount'
+import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -21,7 +21,7 @@ export function getProjectHeader(
     activityApiResponse?.projects[project.id.toString()]?.data
   const tpsDaily = getTpsDaily(activityData)
   const tpsWeeklyChange = getTpsWeeklyChange(activityData)
-  const transactionMonthlyCount = getTransactionMonthlyCount(activityData)
+  const transactionMonthlyCount = getTransactionCount(activityData, 'month')
 
   return {
     icon: `/icons/${project.display.slug}.png`,
