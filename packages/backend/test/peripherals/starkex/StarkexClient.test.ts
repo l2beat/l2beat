@@ -35,7 +35,6 @@ describe(StarkexClient.name, () => {
         },
       })
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
@@ -63,7 +62,7 @@ describe(StarkexClient.name, () => {
 
       const httpClient = mock<HttpClient>({
         async fetch(url, init) {
-          expect(url).toEqual(API_URL)
+          expect(url).toEqual(API_URL + '/aggregations/count')
           expect(init?.body).toEqual(JSON.stringify(body))
 
           return new Response(JSON.stringify({ count: 0x45 }))
@@ -74,6 +73,9 @@ describe(StarkexClient.name, () => {
         API_KEY,
         httpClient,
         Logger.SILENT,
+        {
+          apiUrl: API_URL,
+        },
       )
 
       await starkexClient.getDailyCount(day, product)
