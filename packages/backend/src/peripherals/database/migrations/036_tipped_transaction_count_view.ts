@@ -21,12 +21,12 @@ export async function up(knex: Knex) {
   CREATE MATERIALIZED VIEW transactions.block_count_view AS
     SELECT
       block.project_id,
-      date_trunc('day'::text, block.unix_timestamp) unix_timestamp,
+      date_trunc('day', block.unix_timestamp) unix_timestamp,
       sum(block.count) count
     FROM transactions.block block
     INNER JOIN transactions.block_tip tip ON block.project_id = tip.project_id
     WHERE block.unix_timestamp < date_trunc('day', tip.unix_timestamp)
-    GROUP BY block.project_id, (date_trunc('day'::text, block.unix_timestamp))
+    GROUP BY block.project_id, date_trunc('day', block.unix_timestamp)
   `)
 }
 

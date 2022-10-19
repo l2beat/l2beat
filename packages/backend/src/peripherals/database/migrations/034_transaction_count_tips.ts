@@ -21,17 +21,8 @@ export async function up(knex: Knex) {
       table.dateTime('unix_timestamp').notNullable()
       table.integer('block_number').notNullable()
     })
-  await knex.schema
-    .withSchema('transactions')
-    .createTable('starkex_tip', function (table) {
-      table.string('project_id').primary()
-      table.dateTime('unix_timestamp').notNullable()
-    })
 }
 
 export async function down(knex: Knex) {
-  await knex.schema
-    .withSchema('transactions')
-    .dropTable('block_tip')
-    .dropTable('starkex_tip')
+  await knex.schema.withSchema('transactions').dropTable('block_tip')
 }
