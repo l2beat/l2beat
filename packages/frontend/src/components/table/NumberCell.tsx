@@ -1,31 +1,21 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { PercentChange } from '../PercentChange'
+
 export interface NumberCellProps {
   signed?: boolean
   children: ReactNode
 }
 
 export function NumberCell(props: NumberCellProps) {
-  const isPositive =
-    props.signed &&
-    typeof props.children === 'string' &&
-    props.children.startsWith('+')
-
-  const isNegative =
-    props.signed &&
-    typeof props.children === 'string' &&
-    props.children.startsWith('-')
-
   return (
-    <span
-      className={cx(
-        'text-base md:text-lg',
-        isPositive && 'text-green-700 dark:text-green-300',
-        isNegative && 'text-red-700 dark:text-red-300',
+    <span className={cx('text-base md:text-lg')}>
+      {props.signed && typeof props.children === 'string' ? (
+        <PercentChange value={props.children} />
+      ) : (
+        props.children
       )}
-    >
-      {props.children}
     </span>
   )
 }
