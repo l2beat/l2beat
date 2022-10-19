@@ -24,7 +24,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   references: [
     {
       text: 'ZK-Rollup - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/data-availability-modes#zk-rollup',
+      href: 'https://docs.starkware.co/starkex/data-availability-modes.html#zk_rollup',
     },
   ],
 }
@@ -37,7 +37,11 @@ const STARKNET_ON_CHAIN: ProjectTechnologyChoice = {
   references: [
     {
       text: 'On-chain Data',
-      href: 'https://docs.starknet.io/docs/Data%20Availabilty/on-chain-data/',
+      href: 'https://docs.starkware.co/starkex/data-availability-modes.html',
+    },
+    {
+      text: 'State Updates (Trades)',
+      href: 'https://docs.starkware.co/starkex/trade.html#step_3_state_update',
     },
   ],
 }
@@ -89,11 +93,11 @@ const STARKEX_OFF_CHAIN: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Validium - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/data-availability-modes#validium',
+      href: 'https://docs.starkware.co/starkex/data-availability-modes.html#validium_starkex_for_spot_trading',
     },
     {
       text: 'Availability Verifiers - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/contract-management#availability-verifiers',
+      href: 'https://docs.starkware.co/starkex/contract-management.html#availability_verifiers',
     },
   ],
 }
