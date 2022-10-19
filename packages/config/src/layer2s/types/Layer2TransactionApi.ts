@@ -7,6 +7,7 @@ interface RpcTransactionApi {
   url?: string
   callsPerMinute?: number
   assessCount?: AssessCount
+  startBlock?: number
 }
 
 export type StarkexProduct =

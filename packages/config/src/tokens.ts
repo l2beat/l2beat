@@ -108,6 +108,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('aleph-aleph-im-v2'),
+    name: 'aleph.im v2',
+    coingeckoId: CoingeckoId('aleph'),
+    address: EthereumAddress('0x27702a26126e0B3702af63Ee09aC4d1A084EF628'),
+    symbol: 'ALEPH',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1601134720),
+    category: 'other',
+  },
+  {
     id: AssetId('amp-amp'),
     name: 'Amp',
     coingeckoId: CoingeckoId('amp-token'),
