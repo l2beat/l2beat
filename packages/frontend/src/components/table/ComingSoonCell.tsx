@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { GreyCell } from './GreyCell'
+import { GrayCell } from './GrayCell'
 
 export function ComingSoonCell() {
-  return <GreyCell title="This item will be added soon.">Coming soon</GreyCell>
+  return <GrayCell title="This item will be added soon.">Coming soon</GrayCell>
 }

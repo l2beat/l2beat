@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { GreyCell } from './GreyCell'
+import { GrayCell } from './GrayCell'
 
 export function NoInfoCell() {
-  return <GreyCell title="This item is still under review.">No info</GreyCell>
+  return <GrayCell title="This item is still under review.">No info</GrayCell>
 }

@@ -1,12 +1,12 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-interface GreyCellProps {
+interface GrayCellProps {
   title: string
   children: ReactNode
 }
 
-export function GreyCell(props: GreyCellProps) {
+export function GrayCell(props: GrayCellProps) {
   return (
     <span
       className={cx(

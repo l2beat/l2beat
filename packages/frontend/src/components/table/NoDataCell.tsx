@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { GreyCell } from './GreyCell'
+import { GrayCell } from './GrayCell'
 
 export function NoDataCell() {
-  return <GreyCell title="We don't have data for this item">No data</GreyCell>
+  return <GrayCell title="We don't have data for this item">No data</GrayCell>
 }
