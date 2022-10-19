@@ -11,7 +11,6 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ProjectId } from '@l2beat/types'
 import { Knex } from 'knex'
 
 import * as oldView from './032_transaction_count_view_zksync'
@@ -20,14 +19,14 @@ export async function up(knex: Knex) {
   await oldView.down(knex)
   await knex.schema.raw(
     `
-  CREATE MATERIALIZED VIEW transactions.zksync_count_view AS
-    SELECT
-      date_trunc('day', zksync.unix_timestamp) unix_timestamp,
-      count(*) count
-    FROM transactions.zksync zksync
-    INNER JOIN transactions.block_tip tip ON tip.project_id = '${ProjectId.ZKSYNC.toString()}'
-    WHERE zksync.unix_timestamp < date_trunc('day', tip.unix_timestamp)
-    GROUP BY date_trunc('day', zksync.unix_timestamp)
+    CREATE MATERIALIZED VIEW transactions.zksync_count_view AS
+      SELECT
+        date_trunc('day', zksync.unix_timestamp) unix_timestamp,
+        count(*) count
+      FROM transactions.zksync zksync
+      INNER JOIN transactions.block_tip tip ON tip.project_id = 'zksync'
+      WHERE zksync.unix_timestamp < date_trunc('day', tip.unix_timestamp)
+      GROUP BY date_trunc('day', zksync.unix_timestamp)
   `,
   )
 }
