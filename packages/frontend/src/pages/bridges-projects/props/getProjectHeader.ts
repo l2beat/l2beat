@@ -10,7 +10,8 @@ export function getProjectHeader(
   project: Bridge,
   tvlApiResponse: TvlApiResponse,
 ): ProjectHeaderProps {
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(tvlApiResponse, project)
+  const charts = tvlApiResponse.projects[project.id.toString()]?.charts
+  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
   return {
     icon: `/icons/${project.display.slug}.png`,

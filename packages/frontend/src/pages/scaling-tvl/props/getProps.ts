@@ -4,7 +4,8 @@ import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
-import { formatUSD, getPercentageChange } from '../../../utils/utils'
+import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
+import { formatUSD } from '../../../utils/utils'
 import { Wrapped } from '../../Page'
 import { TvlPageProps } from '../view/ScalingTvlPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -14,9 +15,8 @@ export function getProps(
   config: Config,
   tvlApiResponse: TvlApiResponse,
 ): Wrapped<TvlPageProps> {
-  const tvl = tvlApiResponse.layers2s.hourly.data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = tvlApiResponse.layers2s.hourly.data[0]?.[1] ?? 0
-  const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
+  const charts = tvlApiResponse.layers2s
+  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
@@ -26,7 +26,7 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       tvl: formatUSD(tvl),
-      sevenDayChange,
+      tvlWeeklyChange,
       tvlEndpoint,
       tvlView: getScalingTvlView(ordering, tvlApiResponse, tvl),
       footer: getFooterProps(config),

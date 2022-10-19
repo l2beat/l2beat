@@ -4,7 +4,7 @@ import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
-import { getTransactionMonthlyCount } from '../../../utils/activity/getTransactionWeeklyCount'
+import { getTransactionMonthlyCount } from '../../../utils/activity/getTransactionMonthlyCount'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -14,7 +14,8 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(tvlApiResponse, project)
+  const charts = tvlApiResponse.projects[project.id.toString()]?.charts
+  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.data
