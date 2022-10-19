@@ -7,6 +7,7 @@ import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
+import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
@@ -54,6 +55,7 @@ export async function discover(args: string[]) {
     [SOLLET_BRIDGE_NAME, discoverSolletBridge],
     [ORBIT_BRIDGE_NAME, discoverOrbitBridge],
     [SYNAPSE_NAME, discoverSynapse],
+    [CBRIDGE_NAME, discoverCBridge],
   ]
 
   const project = projects.find((x) => x[0] === args[0])

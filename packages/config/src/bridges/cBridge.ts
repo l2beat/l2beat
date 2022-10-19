@@ -172,7 +172,7 @@ export const cBridge: Bridge = {
       ],
     },
     {
-      name: 'Pauser',
+      name: 'Pausers',
       description: 'Can pause and unpause the system.',
       accounts: [
         {
