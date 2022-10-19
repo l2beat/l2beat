@@ -13,6 +13,7 @@ import {
   SOLLET_BRIDGE_NAME,
 } from '../projects/solletBridge'
 import { getStarkNetParameters, STARK_NET_NAME } from '../projects/starknet'
+import { getSynapseParameters, SYNAPSE_NAME } from '../projects/synapse'
 import { getZkSpaceParameters, ZK_SPACE_NAME } from '../projects/zkSpace'
 import { getZkSwap1Parameters, ZK_SWAP_1_NAME } from '../projects/zkSwap1'
 import { getZkSwap2Parameters, ZK_SWAP_2_NAME } from '../projects/zkSwap2'
@@ -42,6 +43,7 @@ export async function analyze(projects: string[]) {
     [DYDX_NAME, getDydxParameters],
     [SOLLET_BRIDGE_NAME, getSolletBridgeParameters],
     [ORBIT_BRIDGE_NAME, getOrbitBridgeParameters],
+    [SYNAPSE_NAME, getSynapseParameters],
   ]
 
   const unknownArguments = projects.filter(
