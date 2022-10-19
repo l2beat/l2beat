@@ -18,7 +18,6 @@ export function getStagingConfig(): Config {
     },
     tvlReportSync: true,
     transactionCountSync: {
-      starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       zkSyncWorkQueueWorkers: 100,
       starkexWorkQueueWorkers: 1,
