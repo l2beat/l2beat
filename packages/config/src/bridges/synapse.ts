@@ -62,7 +62,7 @@ export const synapse: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Synapse leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The external actor is observing events on supported chains and manages funds accordingly. The tokens are swapped using a typical lock-mint bridge with a wrapped asset on the other chain, or are provided via liquidity pools through something called stable swap, where the user funds are converted to a stable on one end and on the other end this stable is minted and immediately swapped to a given token.',
+        'Synapse leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The external actor is observing events on supported chains and manages funds accordingly. The tokens are swapped using a typical lock-mint bridge with a wrapped asset on the other chain, or are provided via liquidity pools, where the user funds are converted to a stable on one end and on the other end synthetic stablecoin nUSD is minted and immediately swapped to a given token.',
       references: [],
       risks: [],
     },
