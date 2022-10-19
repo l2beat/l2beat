@@ -10,7 +10,7 @@ export const cBridge: Bridge = {
     name: 'cBridge V2',
     slug: 'cbridge',
     description:
-      'Celer is a general messaging bridge, token-bridge and a liquidity network that leverages the "state-guardian" aka SGN thats operated by validators running on Tendermint engine to perform cross-chain transactions.',
+      'Celer is a token-bridge that leverages the "state-guardian" aka SGN that is operated by validators running on Tendermint consensus protocol to perform cross-chain transactions.',
     links: {
       websites: ['https://www.celer.network/'],
       apps: ['https://cbridge.celer.network/'],
