@@ -1,9 +1,6 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import {
-  BlockTransactionCountRow,
-  TransactionCountBlockTipRow,
-} from 'knex/types/tables'
+import { BlockTransactionCountRow } from 'knex/types/tables'
 import _ from 'lodash'
 
 import { assert } from '../../tools/assert'
@@ -41,6 +38,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
       this.getFullySyncedDailyCounts,
     )
     this.findTipByProject = this.wrapFind(this.findTipByProject)
+    this.findFreshTipByProject = this.wrapFind(this.findFreshTipByProject)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -61,34 +59,29 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async refreshProjectTip(projectId: ProjectId) {
     const knex = await this.knex()
     const currentTip = await this.findTipByProject(projectId)
-    const tipNumber = await this.getFirstBlockNumberWithoutNext(
+    const tip = await this.findFreshTipByProject(
       projectId,
       currentTip?.block_number,
     )
 
-    if (!tipNumber) {
+    if (!tip) {
       await knex('transactions.block_tip')
         .delete()
         .where('project_id', projectId.toString())
       return undefined
     } else {
-      const tip = await knex('transactions.block')
-        .where('project_id', projectId.toString())
-        .andWhere('block_number', tipNumber)
-        .first()
-      assert(tip, 'Calculated tip not found')
       await knex('transactions.block_tip')
         .insert({
-          block_number: tipNumber,
-          unix_timestamp: tip.unix_timestamp,
+          block_number: tip.blockNumber,
+          unix_timestamp: tip.timestamp.toDate(),
           project_id: projectId.toString(),
         })
         .onConflict('project_id')
         .merge(['block_number', 'unix_timestamp'])
       return {
         projectId,
-        blockNumber: tip.block_number,
-        timestamp: UnixTime.fromDate(tip.unix_timestamp),
+        blockNumber: tip.blockNumber,
+        timestamp: tip.timestamp,
       }
     }
   }
@@ -188,32 +181,29 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return await knex('transactions.block').delete()
   }
 
-  private async getFirstBlockNumberWithoutNext(
-    projectId: ProjectId,
-    scanFrom = 0,
-  ) {
+  private async findFreshTipByProject(projectId: ProjectId, scanFrom = 0) {
     const knex = await this.knex()
-    const {
-      rows: [noNext],
-    } = (await knex.raw(
+    const blockNumberQuery = knex.raw(
       `
-      SELECT min(block_number) block_number
+      SELECT min(block_number)
       FROM (
         SELECT
           block_number,
           lead(block_number) over (order by block_number) next
-        FROM transactions.block where project_id = :projectId AND block_number >= :blockNumber
+        FROM transactions.block where block_number >= :blockNumber AND project_id = :projectId
       ) with_lead
-      WHERE next <> block_number + 1 OR next IS NULL;
-    `,
+      WHERE next <> block_number + 1 OR next IS NULL`,
       {
         projectId: projectId.toString(),
         blockNumber: scanFrom,
       },
-    )) as unknown as {
-      rows: (Pick<TransactionCountBlockTipRow, 'block_number'> | undefined)[]
-    }
-    return noNext?.block_number
+    )
+    const row = await knex('transactions.block')
+      .where('project_id', projectId.toString())
+      .andWhere('block_number', blockNumberQuery.wrap('(', ')'))
+      .first()
+
+    return row ? toRecord(row) : undefined
   }
 }
 
@@ -223,5 +213,14 @@ function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
     project_id: record.projectId.toString(),
     block_number: record.blockNumber,
     count: record.count,
+  }
+}
+
+function toRecord(row: BlockTransactionCountRow): BlockTransactionCountRecord {
+  return {
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    projectId: ProjectId(row.project_id),
+    blockNumber: row.block_number,
+    count: row.count,
   }
 }
