@@ -1,10 +1,7 @@
 import { providers } from 'ethers'
 
 import { getRoleAdmin, getRoleMembers } from '../../../common/accessControl'
-import {
-  getEip1967Admin,
-  getEip1967Implementation,
-} from '../../../common/eip1967'
+import { Eip1967Proxy } from '../../../common/proxies/Eip1967Proxy'
 import { SynapseBridge__factory } from '../../../typechain/factories/synapse'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -67,8 +64,11 @@ export async function getSynapseBridge(
     address: synapseBridge.address,
     upgradeability: {
       type: 'eip1967 proxy',
-      admin: await getEip1967Admin(provider, synapseBridge),
-      implementation: await getEip1967Implementation(provider, synapseBridge),
+      admin: await Eip1967Proxy.getAdmin(provider, synapseBridge),
+      implementation: await Eip1967Proxy.getImplementation(
+        provider,
+        synapseBridge,
+      ),
     },
     values: {
       ADMIN_ROLE,

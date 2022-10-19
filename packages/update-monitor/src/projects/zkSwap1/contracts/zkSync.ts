@@ -1,10 +1,7 @@
 import { providers } from 'ethers'
 
 import { bytes32ToAddress } from '../../../common/address'
-import {
-  getEip1967Admin,
-  getEip1967Implementation,
-} from '../../../common/eip1967'
+import { Eip1967Proxy } from '../../../common/proxies/Eip1967Proxy'
 import { ZkSwap1ZkSync, ZkSwap1ZkSync__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -18,11 +15,11 @@ export async function getZkSync(
     name: 'zkSync',
     address: zkSync.address,
     upgradeability: {
-      type: 'proxy',
-      implementation: await getEip1967Implementation(provider, zkSync),
+      type: 'eip1967 proxy',
+      admin: await Eip1967Proxy.getAdmin(provider, zkSync),
+      implementation: await Eip1967Proxy.getImplementation(provider, zkSync),
     },
     values: {
-      admin: await getEip1967Admin(provider, zkSync),
       zkSyncCommitBlock: await zkSync.zkSyncCommitBlockAddress(),
       zkSyncExit: await zkSync.zkSyncExitAddress(),
       verifier: await getAddressAt(zkSync, 5),

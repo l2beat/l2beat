@@ -2,7 +2,7 @@ import { Contract, providers } from 'ethers'
 
 import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
-import { getEip1967Admin, getEip1967Implementation } from '../eip1967'
+import { Eip1967Proxy } from '../proxies/Eip1967Proxy'
 
 export async function getRollup(
   provider: providers.JsonRpcProvider,
@@ -13,14 +13,17 @@ export async function getRollup(
     address,
     upgradeability: {
       type: 'arbitrum proxy',
-      adminImplementation: await getEip1967Implementation(provider, address),
+      adminImplementation: await Eip1967Proxy.getImplementation(
+        provider,
+        address,
+      ),
       userImplementation: await getArbitrumSecondaryImplementation(
         provider,
         address,
       ),
     },
     values: {
-      admin: await getEip1967Admin(provider, address),
+      admin: await Eip1967Proxy.getAdmin(provider, address),
     },
   }
 }
