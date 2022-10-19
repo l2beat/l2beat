@@ -82,7 +82,7 @@ async function detect(
 export const Eip1967Proxy = {
   getImplementation,
   getAdmin,
-  getUpgradeability,
   getContract,
+  getUpgradeability,
   detect,
 }

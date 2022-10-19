@@ -1,7 +1,7 @@
 import { providers, utils } from 'ethers'
 
 import { bytes32ToAddress } from '../../../common/address'
-import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
+import { StarkWare2019Proxy } from '../../../common/proxies/StarkWare2019Proxy'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
 
@@ -11,13 +11,10 @@ export async function getStarkPerpetual(
   return {
     name: 'StarkPerpetual',
     address: addresses.starkPerpetual,
-    upgradeability: {
-      type: 'proxy',
-      implementation: await getStarkWare2019Implementation(
-        provider,
-        addresses.starkPerpetual,
-      ),
-    },
+    upgradeability: await StarkWare2019Proxy.getUpgradeability(
+      provider,
+      addresses.starkPerpetual,
+    ),
     values: {
       subContracts: await Promise.all([
         getMapping(provider, addresses.starkPerpetual, 30, 1).then(

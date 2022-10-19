@@ -12,14 +12,26 @@ export interface ContractParameters {
 
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
+  | EIP1967ProxyUpgradeability
+  | StarkWare2019ProxyUpgradeability
   | GnosisSafeUpgradeability
   | ProxyUpgradeability
   | CallProxyUpgradeability
   | ArbitrumProxyUpgradeability
-  | EIP1967ProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
+}
+
+export interface EIP1967ProxyUpgradeability {
+  type: 'eip1967 proxy'
+  admin: string
+  implementation: string
+}
+
+export interface StarkWare2019ProxyUpgradeability {
+  type: 'StarkWare2019 proxy'
+  implementation: string
 }
 
 export interface GnosisSafeUpgradeability {
@@ -41,12 +53,6 @@ export interface ArbitrumProxyUpgradeability {
   type: 'arbitrum proxy'
   adminImplementation: string
   userImplementation: string
-}
-
-export interface EIP1967ProxyUpgradeability {
-  type: 'eip1967 proxy'
-  admin: string
-  implementation: string
 }
 
 export type ContractValue =

@@ -1,6 +1,10 @@
 import { constants, Contract, providers } from 'ethers'
 
-import { ContractParameters, ProxyDetection } from '../../types'
+import {
+  ContractParameters,
+  ProxyDetection,
+  UpgradeabilityParameters,
+} from '../../types'
 import { bytes32ToAddress } from '../address'
 
 // keccak256("StarkWare2019.implemntation-slot")
@@ -27,10 +31,17 @@ async function getContract(
   return {
     name,
     address,
-    upgradeability: {
-      type: 'proxy',
-      implementation: await getImplementation(provider, address),
-    },
+    upgradeability: await getUpgradeability(provider, address),
+  }
+}
+
+async function getUpgradeability(
+  provider: providers.Provider,
+  contract: Contract | string,
+): Promise<UpgradeabilityParameters> {
+  return {
+    type: 'StarkWare2019 proxy',
+    implementation: await getImplementation(provider, contract),
   }
 }
 
@@ -55,5 +66,6 @@ async function detect(
 export const StarkWare2019Proxy = {
   getImplementation,
   getContract,
+  getUpgradeability,
   detect,
 }

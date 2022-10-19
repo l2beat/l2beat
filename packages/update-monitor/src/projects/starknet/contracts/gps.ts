@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
+import { StarkWare2019Proxy } from '../../../common/proxies/StarkWare2019Proxy'
 import { CallProxy__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -18,7 +18,10 @@ export async function getGps(
     address: callProxy.address,
     upgradeability: {
       type: 'call proxy',
-      implementation: await getStarkWare2019Implementation(provider, callProxy),
+      implementation: await StarkWare2019Proxy.getImplementation(
+        provider,
+        callProxy,
+      ),
       callProxyImplementation: await callProxy.callProxyImplementation(),
     },
     values: {},
