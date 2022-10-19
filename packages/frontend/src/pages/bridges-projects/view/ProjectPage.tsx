@@ -36,7 +36,6 @@ export function ProjectPage(props: ProjectPageProps) {
         ) : (
           <Header {...props.header} />
         )}
-
         <Chart {...props.chart} />
         <ProjectDetails {...props.projectDetails} />
       </PageContent>
