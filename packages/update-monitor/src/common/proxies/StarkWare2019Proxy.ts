@@ -19,7 +19,7 @@ async function getImplementation(
   return bytes32ToAddress(value)
 }
 
-async function getSimpleContract(
+async function getContract(
   provider: providers.Provider,
   address: string,
   name: string,
@@ -54,6 +54,6 @@ async function detect(
 
 export const StarkWare2019Proxy = {
   getImplementation,
-  getSimpleContract,
+  getContract,
   detect,
 }

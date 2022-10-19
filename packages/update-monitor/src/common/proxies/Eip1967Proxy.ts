@@ -32,7 +32,7 @@ async function getAdmin(
   return bytes32ToAddress(value)
 }
 
-async function getSimpleContract(
+async function getContract(
   provider: providers.Provider,
   address: string,
   name: string,
@@ -71,6 +71,6 @@ async function detect(
 export const Eip1967Proxy = {
   getImplementation,
   getAdmin,
-  getSimpleContract,
+  getContract,
   detect,
 }
