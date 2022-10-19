@@ -22,9 +22,7 @@ import { LinkIcon } from './symbols/LinkIcon'
 import { MenuCloseIcon } from './symbols/MenuCloseIcon'
 import { MenuOpenIcon } from './symbols/MenuOpenIcon'
 import { MoonIcon } from './symbols/MoonIcon'
-import { ShieldBadIcon } from './symbols/ShieldBadIcon'
-import { ShieldGoodIcon } from './symbols/ShieldGoodIcon'
-import { ShieldWarnIcon } from './symbols/ShieldWarnIcon'
+import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
 import { WarningIcon } from './symbols/WarningIcon'
 
@@ -68,9 +66,7 @@ export function SymbolIcons() {
       <MenuCloseIcon />
       <MenuOpenIcon />
       <MoonIcon />
-      <ShieldBadIcon />
-      <ShieldGoodIcon />
-      <ShieldWarnIcon />
+      <ShieldIcon />
       <SunIcon />
       <WarningIcon />
     </div>

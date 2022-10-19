@@ -1,12 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import {
-  OptimismIcon,
-  ShieldWarnIcon,
-  StarkWareIcon,
-  ZkSyncIcon,
-} from '../icons'
+import { OptimismIcon, ShieldIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 export interface ProjectCellProps {
   project: {
@@ -76,7 +71,7 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
           className="Tooltip relative inline-block w-6 h-6 ml-1"
           title={project.warning}
         >
-          <ShieldWarnIcon className="absolute -top-0.5 left-0 fill-yellow-700 dark:fill-yellow-300" />
+          <ShieldIcon className="absolute -top-0.5 left-0 fill-yellow-700 dark:fill-yellow-300" />
         </span>
       )}
     </>
