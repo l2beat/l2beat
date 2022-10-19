@@ -9,7 +9,7 @@ export function ArrowUpIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Arrow up icon"
       alt-text="+"
       className={cx(
-        'inline-block  fill-green-700 dark:fill-green-300',
+        'inline-block fill-green-700 dark:fill-green-300',
         props.className,
       )}
     />
