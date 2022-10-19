@@ -62,14 +62,10 @@ export async function getSynapseBridge(
   return {
     name: 'SynapseBridge',
     address: synapseBridge.address,
-    upgradeability: {
-      type: 'eip1967 proxy',
-      admin: await Eip1967Proxy.getAdmin(provider, synapseBridge),
-      implementation: await Eip1967Proxy.getImplementation(
-        provider,
-        synapseBridge,
-      ),
-    },
+    upgradeability: await Eip1967Proxy.getUpgradeability(
+      provider,
+      synapseBridge,
+    ),
     values: {
       ADMIN_ROLE,
       GOVERNANCE_ROLE,

@@ -19,14 +19,7 @@ export async function getGovernance(
   return {
     name: 'Governance',
     address: governance.address,
-    upgradeability: {
-      type: 'eip1967 proxy',
-      admin: await Eip1967Proxy.getAdmin(provider, governance),
-      implementation: await Eip1967Proxy.getImplementation(
-        provider,
-        governance,
-      ),
-    },
+    upgradeability: await Eip1967Proxy.getUpgradeability(provider, governance),
     values: {
       validators: await getValidators(governance),
       networkGovernor: await governance.networkGovernor(),

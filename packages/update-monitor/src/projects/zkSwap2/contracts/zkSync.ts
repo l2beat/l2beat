@@ -14,11 +14,7 @@ export async function getZkSync(
   return {
     name: 'zkSync',
     address: zkSync.address,
-    upgradeability: {
-      type: 'eip1967 proxy',
-      admin: await Eip1967Proxy.getImplementation(provider, zkSync),
-      implementation: await Eip1967Proxy.getImplementation(provider, zkSync),
-    },
+    upgradeability: await Eip1967Proxy.getUpgradeability(provider, zkSync),
     values: {
       zkSyncCommitBlock: await zkSync.zkSyncCommitBlockAddress(),
       zkSyncExit: await zkSync.zkSyncExitAddress(),

@@ -16,11 +16,7 @@ export async function getZKSeaNFT(
   return {
     name: 'ZKSeaNFT',
     address: zkSeaNFT.address,
-    upgradeability: {
-      type: 'eip1967 proxy',
-      admin: await Eip1967Proxy.getAdmin(provider, zkSeaNFT),
-      implementation: await Eip1967Proxy.getImplementation(provider, zkSeaNFT),
-    },
+    upgradeability: await Eip1967Proxy.getUpgradeability(provider, zkSeaNFT),
     values: {
       owner: await zkSeaNFT.owner(),
       zkSync: await zkSeaNFT.zksCore(),
