@@ -38,7 +38,7 @@ const STARKNET_ON_CHAIN: ProjectTechnologyChoice = {
     {
       text: 'On-chain Data',
       href: 'https://docs.starkware.co/starkex/data-availability-modes.html',
-    },    
+    },
     {
       text: 'State Updates (Trades)',
       href: 'https://docs.starkware.co/starkex/trade.html#step_3_state_update',
