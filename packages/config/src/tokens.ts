@@ -858,6 +858,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('gohm-governance-ohm'),
+    name: 'Governance OHM',
+    coingeckoId: CoingeckoId('governance-ohm'),
+    address: EthereumAddress('0x0ab87046fBb341D058F17CBC4c1133F25a20a52f'),
+    symbol: 'gOHM',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1637726104),
+    category: 'other',
+  },
+  {
     id: AssetId('grt-graph-token'),
     name: 'Graph Token',
     coingeckoId: CoingeckoId('the-graph'),
