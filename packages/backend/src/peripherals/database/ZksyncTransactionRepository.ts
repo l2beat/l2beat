@@ -29,7 +29,17 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
     /* eslint-disable @typescript-eslint/unbound-method */
     this.addMany = this.wrapAddMany(this.addMany)
+    this.refreshTip = this.wrapAny(this.refreshTip)
+    this.getMissingRanges = this.wrapGet(this.getMissingRanges)
+    this.refreshFullySyncedDailyCounts = this.wrapAny(
+      this.refreshFullySyncedDailyCounts,
+    )
+    this.getFullySyncedDailyCounts = this.wrapGet(
+      this.getFullySyncedDailyCounts,
+    )
+    this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
+    this.findTip = this.wrapFind(this.findTip)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -42,7 +52,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async refreshTip() {
     const knex = await this.knex()
-    const currentTip = await this.getTip()
+    const currentTip = await this.findTip()
     const tipNumber =
       (await this.getFirstBlockNumberWithoutNext(currentTip?.block_number)) ??
       (await this.getMaxBlockNumber())
@@ -75,7 +85,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
   // Returns an array of half open intervals [) that include all missing block numbers
   async getMissingRanges() {
     const knex = await this.knex()
-    const tip = await this.getTip()
+    const tip = await this.findTip()
 
     const blockNumbers = (await knex.raw(
       `
@@ -169,7 +179,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return await knex('transactions.zksync').delete()
   }
 
-  async getTip() {
+  async findTip() {
     const knex = await this.knex()
     return knex('transactions.block_tip')
       .where('project_id', ProjectId.ZKSYNC.toString())

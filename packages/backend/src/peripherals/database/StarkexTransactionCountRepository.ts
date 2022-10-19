@@ -26,12 +26,13 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getMissingRangesByProject = this.wrapAny(
+    this.getMissingRangesByProject = this.wrapGet(
       this.getMissingRangesByProject,
     )
-    this.getFullySyncedDailyCounts = this.wrapAny(
+    this.getFullySyncedDailyCounts = this.wrapGet(
       this.getFullySyncedDailyCounts,
     )
+    this.findTipTimestamp = this.wrapFind(this.findTipTimestamp)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -114,7 +115,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
-    const tipTimestamp = await this.getTipTimestamp(projectId)
+    const tipTimestamp = await this.findTipTimestamp(projectId)
     if (!tipTimestamp) {
       return []
     }
@@ -137,7 +138,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     return await knex('transactions.starkex').delete()
   }
 
-  async getTipTimestamp(projectId: ProjectId) {
+  async findTipTimestamp(projectId: ProjectId) {
     const [noNext, max] = await Promise.all([
       this.getFirstTimestampWithoutNext(projectId),
       this.getMaxTimestamp(projectId),

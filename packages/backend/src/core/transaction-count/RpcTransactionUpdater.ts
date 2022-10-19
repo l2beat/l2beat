@@ -133,7 +133,9 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
   async getStatus() {
     const storedTip =
-      await this.blockTransactionCountRepository.getTipByProject(this.projectId)
+      await this.blockTransactionCountRepository.findTipByProject(
+        this.projectId,
+      )
     const fullySyncedTip = (await this.getFullySyncedDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),

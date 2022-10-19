@@ -110,7 +110,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    const storedTip = await this.zksyncTransactionRepository.getTip()
+    const storedTip = await this.zksyncTransactionRepository.findTip()
     const fullySyncedTip = (await this.getFullySyncedDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),

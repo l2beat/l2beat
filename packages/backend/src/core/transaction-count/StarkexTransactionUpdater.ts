@@ -110,7 +110,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    const tip = await this.starkexTransactionCountRepository.getTipTimestamp(
+    const tip = await this.starkexTransactionCountRepository.findTipTimestamp(
       this.projectId,
     )
     return {

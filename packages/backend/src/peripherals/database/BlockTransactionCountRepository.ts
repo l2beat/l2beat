@@ -31,7 +31,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.refreshProjectTip = this.wrapAny(this.refreshProjectTip)
-    this.getMissingRangesByProject = this.wrapAny(
+    this.getMissingRangesByProject = this.wrapGet(
       this.getMissingRangesByProject,
     )
     this.refreshFullySyncedDailyCounts = this.wrapAny(
@@ -40,6 +40,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.getFullySyncedDailyCounts = this.wrapGet(
       this.getFullySyncedDailyCounts,
     )
+    this.findTipByProject = this.wrapFind(this.findTipByProject)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -59,7 +60,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async refreshProjectTip(projectId: ProjectId) {
     const knex = await this.knex()
-    const currentTip = await this.getTipByProject(projectId)
+    const currentTip = await this.findTipByProject(projectId)
     const tipNumber =
       (await this.getFirstBlockNumberWithoutNext(
         projectId,
@@ -96,7 +97,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
   // Returns an array of half open intervals [) that include all missing block numbers
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    const tip = await this.getTipByProject(projectId)
+    const tip = await this.findTipByProject(projectId)
 
     const blockNumbers = (await knex.raw(
       `
@@ -175,7 +176,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     }))
   }
 
-  async getTipByProject(projectId: ProjectId) {
+  async findTipByProject(projectId: ProjectId) {
     const knex = await this.knex()
     return knex('transactions.block_tip')
       .where('project_id', projectId.toString())
