@@ -61,11 +61,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async refreshProjectTip(projectId: ProjectId) {
     const knex = await this.knex()
     const currentTip = await this.findTipByProject(projectId)
-    const tipNumber =
-      (await this.getFirstBlockNumberWithoutNext(
-        projectId,
-        currentTip?.block_number,
-      )) ?? (await this.getMaxBlockNumber(projectId))
+    const tipNumber = await this.getFirstBlockNumberWithoutNext(
+      projectId,
+      currentTip?.block_number,
+    )
 
     if (!tipNumber) {
       await knex('transactions.block_tip')
@@ -189,15 +188,6 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return await knex('transactions.block').delete()
   }
 
-  private async getMaxBlockNumber(projectId: ProjectId) {
-    const knex = await this.knex()
-    const result = await knex('transactions.block')
-      .max('block_number')
-      .where('project_id', projectId.toString())
-      .first()
-    return result?.max
-  }
-
   private async getFirstBlockNumberWithoutNext(
     projectId: ProjectId,
     scanFrom = 0,
@@ -207,14 +197,14 @@ export class BlockTransactionCountRepository extends BaseRepository {
       rows: [noNext],
     } = (await knex.raw(
       `
-      SELECT min(block_number) as block_number
+      SELECT min(block_number) block_number
       FROM (
         SELECT
           block_number,
-          lead(block_number) over (order by block_number) as next
+          lead(block_number) over (order by block_number) next
         FROM transactions.block where project_id = :projectId AND block_number >= :blockNumber
       ) with_lead
-      WHERE next <> block_number + 1;
+      WHERE next <> block_number + 1 OR next IS NULL;
     `,
       {
         projectId: projectId.toString(),
