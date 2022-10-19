@@ -33,7 +33,6 @@ export function getActivityModule(
   }
 
   const starkexClient = new StarkexClient(
-    config.transactionCountSync.starkexApiUrl,
     config.transactionCountSync.starkexApiKey,
     http,
     logger,
