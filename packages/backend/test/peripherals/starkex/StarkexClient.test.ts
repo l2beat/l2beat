@@ -17,13 +17,12 @@ describe(StarkexClient.name, () => {
         },
       })
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
       )
 
-      await expect(starkexClient.call('foo')).toBeRejected(
+      await expect(starkexClient.call('/', 'foo')).toBeRejected(
         TypeError,
         'Invalid Starkex response.',
       )
@@ -42,7 +41,7 @@ describe(StarkexClient.name, () => {
         Logger.SILENT,
       )
 
-      await expect(starkexClient.call('foo')).toBeRejected(
+      await expect(starkexClient.call('/', 'foo')).toBeRejected(
         Error,
         `Server responded with non-2XX result: 400 Bad Request`,
       )
@@ -72,7 +71,6 @@ describe(StarkexClient.name, () => {
       })
 
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
@@ -89,7 +87,6 @@ describe(StarkexClient.name, () => {
       })
 
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,

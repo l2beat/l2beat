@@ -11,17 +11,25 @@ import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 
 interface StarkexClientOpts {
   callsPerMinute?: number
+  apiUrl?: string
+  timeout?: number
 }
 
+const API_URL = 'https://bi-v1-ddper8ah.uc.gateway.dev'
+
 export class StarkexClient {
+  timeout: number
+  apiUrl: string
+
   constructor(
-    private readonly starkexApiUrl: string,
-    private readonly starkexApiKey: string,
+    private readonly apiKey: string,
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
     opts?: StarkexClientOpts,
   ) {
     this.logger = this.logger.for(this)
+    this.timeout = opts?.timeout ?? 10_000
+    this.apiUrl = opts?.apiUrl ?? API_URL
     if (opts?.callsPerMinute) {
       const rateLimiter = new RateLimiter({
         callsPerMinute: opts.callsPerMinute,
@@ -39,22 +47,22 @@ export class StarkexClient {
       token_id: '_all',
     }
 
-    const response = await this.call(body)
+    const response = await this.call('/aggregations/count', body)
     return response.count
   }
 
-  async call(body: json) {
+  async call(path: string, body: json) {
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient
-      .fetch(this.starkexApiUrl, {
+      .fetch(this.apiUrl + path, {
         method: 'POST',
         headers: {
           accept: 'application/json',
           'Content-Type': 'application/json',
-          'x-api-key': this.starkexApiKey,
+          'x-api-key': this.apiKey,
         },
         body: JSON.stringify(body),
-        timeout: 10_000,
+        timeout: this.timeout,
       })
       .then(
         (httpResponse) => ({ httpResponse, error: undefined }),
