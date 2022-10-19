@@ -136,6 +136,12 @@ export const synapse: Bridge = {
           implementation: '0x31fe393815822edacBd81C2262467402199EFD0D',
         },
       },
+      {
+        name: 'Liquidity Pool',
+        description:
+          'Contract utilized as Liquidity Pool, allowing users to bridge their tokens to canonical versions on Ethereum.',
+        address: '0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8',
+      },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('3 minutes')],
   },
@@ -144,7 +150,7 @@ export const synapse: Bridge = {
     {
       name: 'Bridge Governance 2/3 MultiSig',
       description:
-        "Can upgrade Bridge implementation and manage the bridge parameters. Potential malicious upgrade can result in the loss of user's funds.",
+        "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
       accounts: [
         {
           address: '0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55',
