@@ -17,13 +17,12 @@ describe(StarkexClient.name, () => {
         },
       })
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
       )
 
-      await expect(starkexClient.call('foo')).toBeRejected(
+      await expect(starkexClient.call('/', 'foo')).toBeRejected(
         TypeError,
         'Invalid Starkex response.',
       )
@@ -36,13 +35,12 @@ describe(StarkexClient.name, () => {
         },
       })
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
       )
 
-      await expect(starkexClient.call('foo')).toBeRejected(
+      await expect(starkexClient.call('/', 'foo')).toBeRejected(
         Error,
         `Server responded with non-2XX result: 400 Bad Request`,
       )
@@ -64,7 +62,7 @@ describe(StarkexClient.name, () => {
 
       const httpClient = mock<HttpClient>({
         async fetch(url, init) {
-          expect(url).toEqual(API_URL)
+          expect(url).toEqual(API_URL + '/aggregations/count')
           expect(init?.body).toEqual(JSON.stringify(body))
 
           return new Response(JSON.stringify({ count: 0x45 }))
@@ -72,10 +70,12 @@ describe(StarkexClient.name, () => {
       })
 
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
+        {
+          apiUrl: API_URL,
+        },
       )
 
       await starkexClient.getDailyCount(day, product)
@@ -89,7 +89,6 @@ describe(StarkexClient.name, () => {
       })
 
       const starkexClient = new StarkexClient(
-        API_URL,
         API_KEY,
         httpClient,
         Logger.SILENT,
