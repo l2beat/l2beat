@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 
 import { Eip1967Proxy } from '../common/proxies/Eip1967Proxy'
+import { GnosisSafe } from '../common/proxies/GnosisSafe'
 import { StarkWare2019Proxy } from '../common/proxies/StarkWare2019Proxy'
 import { ProxyDetection } from '../types'
 
@@ -11,6 +12,7 @@ export async function detectProxy(
   const checks = await Promise.all([
     Eip1967Proxy.detect(provider, address),
     StarkWare2019Proxy.detect(provider, address),
+    GnosisSafe.detect(provider, address),
   ])
   return checks.find((x) => x !== undefined)
 }

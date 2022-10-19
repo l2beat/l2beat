@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
-import { getGnosisSafe } from '../../common/gnosisSafe'
 import { Eip1967Proxy } from '../../common/proxies/Eip1967Proxy'
+import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { verify } from '../../verify/verify'
@@ -24,7 +24,7 @@ export async function getZkSyncParameters(
       getGovernance(provider),
       Eip1967Proxy.getContract(provider, addresses.verifier, 'Verifier'),
       getTokenGovernance(provider),
-      getGnosisSafe(provider, addresses.multisig, 'Multisig'),
+      GnosisSafe.getContract(provider, addresses.multisig, 'Multisig'),
     ]),
   }
   verify(parameters, [

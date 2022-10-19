@@ -2,8 +2,8 @@ import { providers } from 'ethers'
 
 import { getProxyAdmin } from '../../common/arbitrum/proxyAdmin'
 import { getRollup } from '../../common/arbitrum/rollup'
-import { getGnosisSafe } from '../../common/gnosisSafe'
 import { Eip1967Proxy } from '../../common/proxies/Eip1967Proxy'
+import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { verify } from '../../verify/verify'
@@ -17,7 +17,7 @@ export async function getNovaParameters(
   const parameters: ProjectParameters = {
     name: NOVA_NAME,
     contracts: await Promise.all([
-      getGnosisSafe(provider, addresses.multisig, 'Multisig'),
+      GnosisSafe.getContract(provider, addresses.multisig, 'Multisig'),
       getRollup(provider, addresses.rollup),
       getProxyAdmin(provider, addresses.proxyAdmin1, 'ProxyAdmin1'),
       getProxyAdmin(provider, addresses.proxyAdmin2, 'ProxyAdmin2'),
