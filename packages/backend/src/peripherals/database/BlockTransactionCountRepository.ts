@@ -59,12 +59,12 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async refreshProjectTip(projectId: ProjectId) {
     const knex = await this.knex()
     const currentTip = await this.findTipByProject(projectId)
-    const tip = await this.findFreshTipByProject(
+    const freshTip = await this.findFreshTipByProject(
       projectId,
       currentTip?.block_number,
     )
 
-    if (!tip) {
+    if (!freshTip) {
       await knex('transactions.block_tip')
         .delete()
         .where('project_id', projectId.toString())
@@ -72,16 +72,16 @@ export class BlockTransactionCountRepository extends BaseRepository {
     } else {
       await knex('transactions.block_tip')
         .insert({
-          block_number: tip.blockNumber,
-          unix_timestamp: tip.timestamp.toDate(),
+          block_number: freshTip.blockNumber,
+          unix_timestamp: freshTip.timestamp.toDate(),
           project_id: projectId.toString(),
         })
         .onConflict('project_id')
         .merge(['block_number', 'unix_timestamp'])
       return {
         projectId,
-        blockNumber: tip.blockNumber,
-        timestamp: tip.timestamp,
+        blockNumber: freshTip.blockNumber,
+        timestamp: freshTip.timestamp,
       }
     }
   }
