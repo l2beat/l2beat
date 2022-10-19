@@ -1,7 +1,7 @@
 import { HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import { ActivityController } from '../api/controllers/ActivityController'
+import { ActivityController } from '../api/controllers/activity/ActivityController'
 import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
