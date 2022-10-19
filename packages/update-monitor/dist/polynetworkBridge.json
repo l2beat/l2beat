@@ -2,6 +2,26 @@
   "name": "polynetworkBridge",
   "contracts": [
     {
+      "name": "PolyWrapper",
+      "address": "0x81910675dbaf69dee0fd77570bfd07f8e436386a",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "chainId": 2,
+        "feeCollector": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+        "isOwner": false,
+        "maxLockProxyIndex": 3,
+        "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+        "paused": false,
+        "lockProxies": [
+          "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+          "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
+          "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035"
+        ]
+      }
+    },
+    {
       "name": "LockProxy",
       "address": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
       "upgradeability": {

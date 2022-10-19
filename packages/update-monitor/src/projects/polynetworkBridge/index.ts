@@ -2,11 +2,11 @@ import { providers } from 'ethers'
 
 import { bytes32ToAddress } from '../../common/address'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
-import { PolyWrapper__factory } from '../../typechain'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
 import { getEthCrossChainManager } from './contracts/crossChainManager'
 import { getLockProxy } from './contracts/lockProxy'
+import { getLockProxies, getPolyWrapper } from './contracts/polyWrapper'
 
 export const POLYNETWORK_BRIDGE_NAME = 'polynetworkBridge'
 
@@ -22,17 +22,6 @@ async function getEthCrossChainManagerAddress(
   return bytes32ToAddress(
     await provider.call({ to: proxyContract, data: '0x87939a7f' }), // $ cast sig "getEthCrossChainManager()"
   )
-}
-
-async function getLockProxies(provider: providers.Provider): Promise<string[]> {
-  const polyWrapper = PolyWrapper__factory.connect(addresses.bridge, provider)
-  const maxLockProxyIndex = (await polyWrapper.maxLockProxyIndex()).toNumber()
-  const result: string[] = []
-  for (let i = 0; i < maxLockProxyIndex; i++) {
-    const lockProxy = await polyWrapper.lockProxyIndexMap(i)
-    result.push(lockProxy)
-  }
-  return result
 }
 
 export async function getPolynetworkBridgeParameters(
@@ -57,7 +46,7 @@ export async function getPolynetworkBridgeParameters(
   }
   const parameters: ProjectParameters = {
     name: POLYNETWORK_BRIDGE_NAME,
-    contracts: await Promise.all(toCall),
+    contracts: await Promise.all([getPolyWrapper(provider), ...toCall]),
   }
   return parameters
 }
