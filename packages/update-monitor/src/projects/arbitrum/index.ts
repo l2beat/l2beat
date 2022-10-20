@@ -111,13 +111,8 @@ export async function discoverArbitrum(discoveryEngine: DiscoveryEngine) {
           'getNode',
           'getNodeHash',
         ],
-        '0xe5896783a2F463446E1f624e64Aa6836BE4C6f58': [
-          'challenges'
-        ],
-        '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840': [
-          'spent',
-          'isSpent'
-        ]
+        '0xe5896783a2F463446E1f624e64Aa6836BE4C6f58': ['challenges'],
+        '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840': ['spent', 'isSpent'],
       },
     },
   )

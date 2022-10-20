@@ -1,8 +1,8 @@
 import { BigNumber, constants, Contract, providers } from 'ethers'
 
-import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
-import { ProxyDetection, UpgradeabilityParameters } from './types'
+import { extendDetect } from './extendDetect'
+import { ProxyDetection } from './types'
 
 // keccak256("StarkWare2019.implemntation-slot")
 const IMPLEMENTATION_SLOT =
@@ -47,30 +47,6 @@ async function getUpgradeDelay(
   }
 }
 
-async function getContract(
-  provider: providers.Provider,
-  address: string,
-  name: string,
-): Promise<ContractParameters> {
-  return {
-    name,
-    address,
-    upgradeability: await getUpgradeability(provider, address),
-  }
-}
-
-async function getUpgradeability(
-  provider: providers.Provider,
-  contract: Contract | string,
-): Promise<UpgradeabilityParameters> {
-  return {
-    type: 'StarkWare proxy',
-    implementation: await getImplementation(provider, contract),
-    callImplementation: await getCallImplementation(provider, contract),
-    upgradeDelay: await getUpgradeDelay(provider, contract),
-  }
-}
-
 async function detect(
   provider: providers.Provider,
   address: string,
@@ -79,8 +55,10 @@ async function detect(
   if (implementation === constants.AddressZero) {
     return
   }
-  const callImplementation = await getCallImplementation(provider, address)
-  const upgradeDelay = await getUpgradeDelay(provider, address)
+  const [callImplementation, upgradeDelay] = await Promise.all([
+    getCallImplementation(provider, address),
+    getUpgradeDelay(provider, address),
+  ])
 
   return {
     implementations:
@@ -101,7 +79,5 @@ export const StarkWareProxy = {
   getImplementation,
   getCallImplementation,
   getUpgradeDelay,
-  getContract,
-  getUpgradeability,
-  detect,
+  ...extendDetect(detect),
 }

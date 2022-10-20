@@ -1,8 +1,8 @@
 import { constants, Contract, providers } from 'ethers'
 
-import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
-import { ProxyDetection, UpgradeabilityParameters } from './types'
+import { extendDetect } from './extendDetect'
+import { ProxyDetection } from './types'
 
 // keccak256('eip1967.proxy.implementation') - 1)
 const EIP1967_IMPLEMENTATION_SLOT =
@@ -33,29 +33,6 @@ async function getAdmin(
   return bytes32ToAddress(value)
 }
 
-async function getContract(
-  provider: providers.Provider,
-  address: string,
-  name: string,
-): Promise<ContractParameters> {
-  return {
-    name,
-    address,
-    upgradeability: await getUpgradeability(provider, address),
-  }
-}
-
-async function getUpgradeability(
-  provider: providers.Provider,
-  contract: Contract | string,
-): Promise<UpgradeabilityParameters> {
-  return {
-    type: 'eip1967 proxy',
-    implementation: await getImplementation(provider, contract),
-    admin: await getAdmin(provider, contract),
-  }
-}
-
 async function detect(
   provider: providers.Provider,
   address: string,
@@ -79,7 +56,5 @@ async function detect(
 export const Eip1967Proxy = {
   getImplementation,
   getAdmin,
-  getContract,
-  getUpgradeability,
-  detect,
+  ...extendDetect(detect),
 }

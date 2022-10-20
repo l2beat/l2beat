@@ -1,9 +1,9 @@
 import { constants, Contract, providers } from 'ethers'
 
-import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
 import { Eip1967Proxy } from './Eip1967Proxy'
-import { ProxyDetection, UpgradeabilityParameters } from './types'
+import { extendDetect } from './extendDetect'
+import { ProxyDetection } from './types'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)
 export const SECONDARY_IMPLEMENTATION_SLOT =
@@ -21,33 +21,6 @@ export async function getSecondaryImplementation(
   return bytes32ToAddress(value)
 }
 
-async function getContract(
-  provider: providers.Provider,
-  address: string,
-  name: string,
-): Promise<ContractParameters> {
-  return {
-    name,
-    address,
-    upgradeability: await getUpgradeability(provider, address),
-  }
-}
-
-async function getUpgradeability(
-  provider: providers.Provider,
-  contract: Contract | string,
-): Promise<UpgradeabilityParameters> {
-  return {
-    type: 'arbitrum proxy',
-    admin: await Eip1967Proxy.getAdmin(provider, contract),
-    adminImplementation: await Eip1967Proxy.getImplementation(
-      provider,
-      contract,
-    ),
-    userImplementation: await getSecondaryImplementation(provider, contract),
-  }
-}
-
 async function detect(
   provider: providers.Provider,
   address: string,
@@ -56,11 +29,10 @@ async function detect(
   if (userImplementation === constants.AddressZero) {
     return
   }
-  const adminImplementation = await Eip1967Proxy.getImplementation(
-    provider,
-    address,
-  )
-  const admin = await Eip1967Proxy.getAdmin(provider, address)
+  const [adminImplementation, admin] = await Promise.all([
+    Eip1967Proxy.getImplementation(provider, address),
+    Eip1967Proxy.getAdmin(provider, address),
+  ])
   return {
     implementations: [adminImplementation, userImplementation],
     relatives: [admin],
@@ -77,7 +49,5 @@ export const ArbitrumProxy = {
   getAdmin: Eip1967Proxy.getAdmin,
   getAdminImplementation: Eip1967Proxy.getImplementation,
   getUserImplementation: getSecondaryImplementation,
-  getContract,
-  getUpgradeability,
-  detect,
+  ...extendDetect(detect),
 }
