@@ -1,24 +1,22 @@
 import { constants, Contract, providers } from 'ethers'
 
 import { bytes32ToAddress } from '../address'
+import { getStorage } from '../getStorage'
 import { Eip1967Proxy } from './Eip1967Proxy'
 import { extendDetect } from './extendDetect'
 import { ProxyDetection } from './types'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)
-export const SECONDARY_IMPLEMENTATION_SLOT =
+const SECONDARY_IMPLEMENTATION_SLOT =
   '0x2b1dbce74324248c222f0ec2d5ed7bd323cfc425b336f0253c5ccfda7265546d'
 
 export async function getSecondaryImplementation(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
-  const address = typeof contract === 'string' ? contract : contract.address
-  const value = await provider.getStorageAt(
-    address,
-    SECONDARY_IMPLEMENTATION_SLOT,
+  return bytes32ToAddress(
+    await getStorage(provider, contract, SECONDARY_IMPLEMENTATION_SLOT),
   )
-  return bytes32ToAddress(value)
 }
 
 async function detect(

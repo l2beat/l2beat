@@ -1,8 +1,8 @@
-import { Contract, providers } from 'ethers'
+import { providers } from 'ethers'
 
 import { GnosisSafe__factory } from '../../typechain'
 import { ContractParameters } from '../../types'
-import { isRevert } from '../isRevert'
+import { getCallResult } from '../getCallResult'
 import { ProxyDetection } from './types'
 
 async function getContract(
@@ -43,20 +43,11 @@ async function detect(
 }
 
 async function getMasterCopy(provider: providers.Provider, address: string) {
-  const contract = new Contract(
-    address,
-    ['function masterCopy() view returns(address)'],
+  return getCallResult<string>(
     provider,
+    address,
+    'function masterCopy() view returns(address)',
   )
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    return (await contract.masterCopy()) as string
-  } catch (e) {
-    if (isRevert(e)) {
-      return undefined
-    }
-    throw e
-  }
 }
 
 export const GnosisSafe = {

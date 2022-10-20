@@ -1,6 +1,7 @@
 import { BigNumber, constants, Contract, providers } from 'ethers'
 
 import { bytes32ToAddress } from '../address'
+import { getStorage } from '../getStorage'
 import { extendDetect } from './extendDetect'
 import { ProxyDetection } from './types'
 
@@ -12,9 +13,9 @@ async function getImplementation(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
-  const address = typeof contract === 'string' ? contract : contract.address
-  const value = await provider.getStorageAt(address, IMPLEMENTATION_SLOT)
-  return bytes32ToAddress(value)
+  return bytes32ToAddress(
+    await getStorage(provider, contract, IMPLEMENTATION_SLOT),
+  )
 }
 
 // keccak256("'StarkWare2020.CallProxy.Implemntation.Slot'")
@@ -25,9 +26,9 @@ async function getCallImplementation(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
-  const address = typeof contract === 'string' ? contract : contract.address
-  const value = await provider.getStorageAt(address, CALL_IMPLEMENTATION_SLOT)
-  return bytes32ToAddress(value)
+  return bytes32ToAddress(
+    await getStorage(provider, contract, CALL_IMPLEMENTATION_SLOT),
+  )
 }
 
 // Web3.solidityKeccak(['string'], ['StarkWare.Upgradibility.Delay.Slot'])
@@ -38,13 +39,8 @@ async function getUpgradeDelay(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
-  const address = typeof contract === 'string' ? contract : contract.address
-  const value = await provider.getStorageAt(address, UPGRADE_DELAY_SLOT)
-  try {
-    return BigNumber.from(value).toNumber()
-  } catch {
-    return Infinity
-  }
+  const value = await getStorage(provider, contract, UPGRADE_DELAY_SLOT)
+  return BigNumber.from(value).toNumber()
 }
 
 async function detect(
