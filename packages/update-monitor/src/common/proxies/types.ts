@@ -7,10 +7,9 @@ export interface ProxyDetection {
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | EIP1967ProxyUpgradeability
-  | StarkWare2019ProxyUpgradeability
+  | StarkWareProxyUpgradeability
   | GnosisSafeUpgradeability
   | ProxyUpgradeability
-  | CallProxyUpgradeability
   | ArbitrumProxyUpgradeability
 
 export interface ImmutableUpgradeability {
@@ -23,9 +22,11 @@ export interface EIP1967ProxyUpgradeability {
   implementation: string
 }
 
-export interface StarkWare2019ProxyUpgradeability {
-  type: 'StarkWare2019 proxy'
+export interface StarkWareProxyUpgradeability {
+  type: 'StarkWare proxy'
   implementation: string
+  callImplementation: string
+  upgradeDelay: number
 }
 
 export interface GnosisSafeUpgradeability {
@@ -35,12 +36,6 @@ export interface GnosisSafeUpgradeability {
 export interface ProxyUpgradeability {
   type: 'proxy'
   implementation: string
-}
-
-export interface CallProxyUpgradeability {
-  type: 'call proxy'
-  implementation: string
-  callProxyImplementation: string
 }
 
 export interface ArbitrumProxyUpgradeability {

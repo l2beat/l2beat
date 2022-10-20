@@ -1,11 +1,11 @@
-import { constants, Contract, providers } from 'ethers'
+import { BigNumber, constants, Contract, providers } from 'ethers'
 
 import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
 import { ProxyDetection, UpgradeabilityParameters } from './types'
 
 // keccak256("StarkWare2019.implemntation-slot")
-const STARK_WARE_2019_IMPLEMENTATION_SLOT =
+const IMPLEMENTATION_SLOT =
   '0x177667240aeeea7e35eabe3a35e18306f336219e1386f7710a6bf8783f761b24'
 
 async function getImplementation(
@@ -13,11 +13,38 @@ async function getImplementation(
   contract: Contract | string,
 ) {
   const address = typeof contract === 'string' ? contract : contract.address
-  const value = await provider.getStorageAt(
-    address,
-    STARK_WARE_2019_IMPLEMENTATION_SLOT,
-  )
+  const value = await provider.getStorageAt(address, IMPLEMENTATION_SLOT)
   return bytes32ToAddress(value)
+}
+
+// keccak256("'StarkWare2020.CallProxy.Implemntation.Slot'")
+const CALL_IMPLEMENTATION_SLOT =
+  '0x7184681641399eb4ad2fdb92114857ee6ff239f94ad635a1779978947b8843be'
+
+async function getCallImplementation(
+  provider: providers.Provider,
+  contract: Contract | string,
+) {
+  const address = typeof contract === 'string' ? contract : contract.address
+  const value = await provider.getStorageAt(address, CALL_IMPLEMENTATION_SLOT)
+  return bytes32ToAddress(value)
+}
+
+// Web3.solidityKeccak(['string'], ['StarkWare.Upgradibility.Delay.Slot'])
+const UPGRADE_DELAY_SLOT =
+  '0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f'
+
+async function getUpgradeDelay(
+  provider: providers.Provider,
+  contract: Contract | string,
+) {
+  const address = typeof contract === 'string' ? contract : contract.address
+  const value = await provider.getStorageAt(address, UPGRADE_DELAY_SLOT)
+  try {
+    return BigNumber.from(value).toNumber()
+  } catch {
+    return Infinity
+  }
 }
 
 async function getContract(
@@ -37,8 +64,10 @@ async function getUpgradeability(
   contract: Contract | string,
 ): Promise<UpgradeabilityParameters> {
   return {
-    type: 'StarkWare2019 proxy',
+    type: 'StarkWare proxy',
     implementation: await getImplementation(provider, contract),
+    callImplementation: await getCallImplementation(provider, contract),
+    upgradeDelay: await getUpgradeDelay(provider, contract),
   }
 }
 
@@ -50,18 +79,28 @@ async function detect(
   if (implementation === constants.AddressZero) {
     return
   }
+  const callImplementation = await getCallImplementation(provider, address)
+  const upgradeDelay = await getUpgradeDelay(provider, address)
+
   return {
-    implementations: [implementation],
+    implementations:
+      callImplementation !== constants.AddressZero
+        ? [implementation, callImplementation]
+        : [implementation],
     relatives: [],
     upgradeability: {
-      type: 'proxy',
+      type: 'StarkWare proxy',
       implementation,
+      callImplementation,
+      upgradeDelay,
     },
   }
 }
 
 export const StarkWareProxy = {
   getImplementation,
+  getCallImplementation,
+  getUpgradeDelay,
   getContract,
   getUpgradeability,
   detect,

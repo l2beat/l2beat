@@ -45,6 +45,7 @@ export async function analyzeItem(
     )
     .filter((x): x is string => typeof x === 'string' && utils.isAddress(x))
     .concat(proxyDetection?.relatives ?? [])
+    .filter((x) => !proxyDetection?.implementations.includes(x))
     .filter((x, i, a) => a.indexOf(x) === i)
 
   const upgradeability = proxyDetection?.upgradeability ?? { type: 'immutable' }
