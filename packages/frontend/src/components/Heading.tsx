@@ -1,13 +1,10 @@
 import cx from 'classnames'
 import React, { createElement, HTMLAttributes } from 'react'
 
-import { OutLink } from './OutLink'
-
 export interface HeadingProps {
   level: number
   id: string
   title: string
-  links?: HeadingLink[]
   className?: string
 }
 
@@ -16,6 +13,7 @@ export interface HeadingLink {
   href: string
 }
 
+/**  @deprecated */
 export function Heading(props: HeadingProps) {
   return (
     <Hx
@@ -26,15 +24,6 @@ export function Heading(props: HeadingProps) {
       <a className="Heading-Title" href={`#${props.id}`}>
         {props.title}
       </a>
-      {props.links?.map((link, i) => (
-        <OutLink
-          key={i}
-          className="Heading-Link text-link underline"
-          href={link.href}
-        >
-          [{link.name}]
-        </OutLink>
-      ))}
     </Hx>
   )
 }

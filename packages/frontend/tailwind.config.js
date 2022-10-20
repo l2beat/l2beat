@@ -15,10 +15,10 @@ module.exports = {
       sm: ['15px', '22px'],
       base: ['16px', '24px'],
       lg: ['18px', '28px'],
-      xl: ['20px', '28px'],
-      '2xl': ['24px', '32px'],
+      xl: ['20px', '30px'],
+      '2xl': ['24px', '36px'],
       '3xl': ['32px', '36px'],
-      '4xl': ['40px', '48px'],
+      '4xl': ['40px', '60px'],
     },
     colors: {
       current: 'currentColor',
