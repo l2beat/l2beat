@@ -12,9 +12,9 @@ export interface PermissionsSectionProps {
 export function PermissionsSection(props: PermissionsSectionProps) {
   return (
     <Section title="Permissioned Addresses" id="permissionedAddresses">
-      <p className="mt-4">
+      <h3 className="mt-4 font-bold md:text-md">
         The system uses the following set of permissioned addresses:
-      </p>
+      </h3>
       <ul className="list-disc mt-4 pl-8 space-y-4">
         {props.permissions.map((permission, i) => (
           <li key={i}>
@@ -37,9 +37,9 @@ export function PermissionsSection(props: PermissionsSectionProps) {
               </span>
             </div>
             {permission.description && (
-              <div className="PermissionsSection-Description">
+              <p className="PermissionsSection-Description">
                 {permission.description}
-              </div>
+              </p>
             )}
           </li>
         ))}

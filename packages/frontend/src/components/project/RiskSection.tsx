@@ -26,9 +26,14 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
   return (
     <Section title="Risk summary" id="risks" className="RiskSection">
       {riskGroups.map((group, i) => (
-        <div className="RiskSection-Group" key={i}>
-          <p className="RiskSection-Title">{group.name}&hellip;</p>
-          <ol className="RiskSection-Risks" start={group.start}>
+        <div className="mt-4 md:mt-6" key={i}>
+          <h3 className="text-red-700 dark:text-red-300 md:text-lg font-bold">
+            {group.name}
+          </h3>
+          <ol
+            className="list-decimal list-inside p-1.5 dark:text-gray-200"
+            start={group.start}
+          >
             {group.items.map((item, i) => (
               <li className="RiskSection-Risk" key={i}>
                 <a href={`#${item.referencedId}`}>

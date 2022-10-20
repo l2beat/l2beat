@@ -31,11 +31,7 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <Section
-      title="Smart Contracts"
-      id="contracts"
-      className="ContractsSection"
-    >
+    <Section title="Smart Contracts" id="contracts">
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="ContractsSection-Architecture">
@@ -44,10 +40,14 @@ export function ContractsSection(props: ContractsSectionProps) {
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
-          <figcaption>A diagram of the smart contract architecture</figcaption>
+          <figcaption className="text-gray-500 dark:text-gray-600">
+            A diagram of the smart contract architecture
+          </figcaption>
         </figure>
       )}
-      <p>The system consists of the following smart contracts:</p>
+      <h3 className="font-bold md:text-md">
+        The system consists of the following smart contracts:
+      </h3>
       <ul className="ContractsSection-Contracts">
         {props.contracts.map((contract, i) => (
           <li key={i}>
@@ -64,9 +64,9 @@ export function ContractsSection(props: ContractsSectionProps) {
               ))}
             </div>
             {contract.description && (
-              <div className="ContractsSection-Description">
+              <p className="ContractsSection-Description">
                 {contract.description}
-              </div>
+              </p>
             )}
           </li>
         ))}
