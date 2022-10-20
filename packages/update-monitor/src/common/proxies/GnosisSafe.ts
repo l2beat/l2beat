@@ -2,7 +2,9 @@ import { providers } from 'ethers'
 
 import { GnosisSafe__factory } from '../../typechain'
 import { ContractParameters } from '../../types'
+import { bytes32ToAddress } from '../address'
 import { getCallResult } from '../getCallResult'
+import { getStorage } from '../getStorage'
 import { ProxyDetection } from './types'
 
 async function getContract(
@@ -43,11 +45,18 @@ async function detect(
 }
 
 async function getMasterCopy(provider: providers.Provider, address: string) {
-  return getCallResult<string>(
-    provider,
-    address,
-    'function masterCopy() view returns(address)',
-  )
+  const [callResult, slot0] = await Promise.all([
+    getCallResult<string>(
+      provider,
+      address,
+      'function masterCopy() view returns(address)',
+    ),
+    getStorage(provider, address, 0),
+  ])
+  const slot0Address = bytes32ToAddress(slot0)
+  if (callResult === slot0Address) {
+    return callResult
+  }
 }
 
 export const GnosisSafe = {

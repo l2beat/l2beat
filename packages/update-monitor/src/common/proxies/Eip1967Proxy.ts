@@ -42,7 +42,7 @@ async function detect(
     implementations: [implementation],
     relatives: [admin],
     upgradeability: {
-      type: 'eip1967 proxy',
+      type: 'EIP1967 proxy',
       implementation,
       admin,
     },

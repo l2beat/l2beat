@@ -10,7 +10,8 @@ export type UpgradeabilityParameters =
   | EIP1967ProxyUpgradeability
   | StarkWareProxyUpgradeability
   | ArbitrumProxyUpgradeability
-  | GenericProxyUpgradeability
+  | EIP897ProxyUpgradeability
+  | CustomProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -21,7 +22,7 @@ export interface GnosisSafeUpgradeability {
 }
 
 export interface EIP1967ProxyUpgradeability {
-  type: 'eip1967 proxy'
+  type: 'EIP1967 proxy'
   admin: string
   implementation: string
 }
@@ -40,7 +41,13 @@ export interface ArbitrumProxyUpgradeability {
   userImplementation: string
 }
 
-export interface GenericProxyUpgradeability {
-  type: 'generic proxy'
+export interface EIP897ProxyUpgradeability {
+  type: 'EIP897 proxy'
+  isUpgradable: boolean
+  implementation: string
+}
+
+export interface CustomProxyUpgradeability {
+  type: 'custom proxy'
   implementation: string
 }

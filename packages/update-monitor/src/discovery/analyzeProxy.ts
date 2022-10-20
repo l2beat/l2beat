@@ -3,7 +3,6 @@ import { EthereumAddress } from '@l2beat/types'
 import { constants, Contract, providers } from 'ethers'
 
 import { bytes32ToAddress } from '../common/address'
-import { getEip897Implementation } from '../common/eip897'
 import { Eip1967Proxy } from '../common/proxies/Eip1967Proxy'
 import { StarkWareProxy } from '../common/proxies/StarkWareProxy'
 
@@ -55,7 +54,7 @@ export async function analyzeProxy(
     StarkWareProxy.getImplementation(provider, proxyAddress),
     getSlot0(provider, proxyAddress),
     getMasterCopy(provider, proxyAddress),
-    getEip897Implementation(provider, proxyAddress),
+    Eip1967Proxy.getImplementation(provider, proxyAddress),
   ])
 
   if (masterCopy && masterCopy === slot0) {
