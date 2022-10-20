@@ -71,6 +71,7 @@ export const metis: Layer2 = {
     transactionApi: {
       type: 'rpc',
       url: 'https://andromeda.metis.io/',
+      startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
   },
   riskView: makeBridgeCompatible({

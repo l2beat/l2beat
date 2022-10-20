@@ -1,0 +1,75 @@
+{
+  "name": "synapseBridge",
+  "contracts": [
+    {
+      "name": "SynapseBridge",
+      "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
+      "upgradeability": {
+        "type": "eip1967 proxy",
+        "admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+        "implementation": "0x31fe393815822edacBd81C2262467402199EFD0D"
+      },
+      "values": {
+        "ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "GOVERNANCE_ROLE": "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1",
+        "NODEGROUP_ROLE": "0xb5c00e6706c3d213edd70ff33717fac657eacc5fe161f07180cf1fcab13cc4cd",
+        "admins": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
+        "governors": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
+        "nodes": ["0x230A1AC45690B9Ae1176389434610B9526d2f21b"],
+        "adminRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "governorRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "nodeRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "MultiSig",
+      "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+      "upgradeability": {
+        "type": "gnosis safe"
+      },
+      "values": {
+        "owners": [
+          "0xb3DAD3C24A861b84fDF380B212662620627D4e15",
+          "0x42980E3e602178354E065723d9652BEf79Ae3673",
+          "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
+        ],
+        "threshold": 2
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
+      }
+    },
+    {
+      "name": "Timelock",
+      "address": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "minDelaySeconds": 180,
+        "timelockAdmins": [
+          "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
+        "defaultAdmins": [],
+        "executors": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
+        "proposers": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
+        "timelockAdminRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "defaultAdminRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "proposerRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "executorRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      }
+    }
+  ]
+}

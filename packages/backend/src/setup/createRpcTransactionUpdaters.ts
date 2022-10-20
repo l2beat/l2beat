@@ -51,6 +51,7 @@ export function createLayer2RpcTransactionUpdaters(
           assessCount: transactionApi.assessCount,
           workQueueSizeLimit: activityConfig.rpc.workQueueLimit,
           workQueueWorkers: activityConfig.rpc.workQueueWorkers,
+          startBlock: transactionApi.startBlock,
         },
       )
       rpcUpdaters.push(transactionUpdater)
