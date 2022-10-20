@@ -33,7 +33,7 @@ export async function getBridgeWithGovernance(
     name: 'Bridge with Governance',
     address: addresses.bridge,
     upgradeability: {
-      type: 'proxy',
+      type: 'generic proxy',
       implementation: await bridgeProxy.implementation(),
     },
     values: {

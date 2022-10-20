@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
 import { getProxyAdmin } from '../../common/arbitrum/proxyAdmin'
-import { getRollup } from '../../common/arbitrum/rollup'
+import { ArbitrumProxy } from '../../common/proxies/ArbitrumProxy'
 import { Eip1967Proxy } from '../../common/proxies/Eip1967Proxy'
 import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
@@ -18,7 +18,7 @@ export async function getArbitrumParameters(
     name: ARBITRUM_NAME,
     contracts: await Promise.all([
       GnosisSafe.getContract(provider, addresses.multisig, 'Multisig'),
-      getRollup(provider, addresses.rollup),
+      ArbitrumProxy.getContract(provider, addresses.rollup, 'Rollup'),
       getProxyAdmin(provider, addresses.proxyAdmin1, 'ProxyAdmin1'),
       getProxyAdmin(provider, addresses.proxyAdmin2, 'ProxyAdmin2'),
       getProxyAdmin(provider, addresses.proxyAdmin3, 'ProxyAdmin3'),

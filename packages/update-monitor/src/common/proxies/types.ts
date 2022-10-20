@@ -6,14 +6,18 @@ export interface ProxyDetection {
 
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
+  | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
   | StarkWareProxyUpgradeability
-  | GnosisSafeUpgradeability
-  | ProxyUpgradeability
   | ArbitrumProxyUpgradeability
+  | GenericProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
+}
+
+export interface GnosisSafeUpgradeability {
+  type: 'gnosis safe'
 }
 
 export interface EIP1967ProxyUpgradeability {
@@ -29,17 +33,14 @@ export interface StarkWareProxyUpgradeability {
   upgradeDelay: number
 }
 
-export interface GnosisSafeUpgradeability {
-  type: 'gnosis safe'
-}
-
-export interface ProxyUpgradeability {
-  type: 'proxy'
-  implementation: string
-}
-
 export interface ArbitrumProxyUpgradeability {
   type: 'arbitrum proxy'
+  admin: string
   adminImplementation: string
   userImplementation: string
+}
+
+export interface GenericProxyUpgradeability {
+  type: 'generic proxy'
+  implementation: string
 }

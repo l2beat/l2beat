@@ -12,7 +12,7 @@ export async function getEip897Proxy(
     name,
     address,
     upgradeability: {
-      type: 'proxy',
+      type: 'generic proxy',
       implementation: await getEip897Implementation(provider, address),
     },
     values: {},
