@@ -75,22 +75,20 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    const boundaries =
-      await this.blockTransactionCountRepository.findBoundariesByProject(
+    const [boundaries, gaps, latestBlock] = await Promise.all([
+      this.blockTransactionCountRepository.findBoundariesByProject(
         this.projectId,
-      )
-    this.logger.debug('Gaps query started')
-    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
-      this.projectId,
-    )
-    this.logger.debug('Gaps query finished')
-    const finalizedBlock = await this.loopringClient.getFinalizedBlockNumber()
-    this.latestBlock = finalizedBlock
+      ),
+      this.blockTransactionCountRepository.getGapsByProject(this.projectId),
+      this.loopringClient.getFinalizedBlockNumber(),
+    ])
+    this.latestBlock = latestBlock
+
     if (!boundaries) {
-      gaps.push([1, finalizedBlock])
+      gaps.push([1, this.latestBlock])
     } else {
-      if (boundaries.max < finalizedBlock) {
-        gaps.push([boundaries.max + 1, finalizedBlock])
+      if (boundaries.max < this.latestBlock) {
+        gaps.push([boundaries.max + 1, this.latestBlock])
       }
       if (boundaries.min > 1) {
         gaps.push([1, boundaries.min - 1])
@@ -107,7 +105,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return await this.blockTransactionCountRepository.getDailyCounts(
+    return await this.blockTransactionCountRepository.getDailyCountsByProject(
       this.projectId,
     )
   }

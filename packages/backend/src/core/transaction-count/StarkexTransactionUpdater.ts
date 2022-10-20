@@ -76,26 +76,35 @@ export class StarkexTransactionUpdater implements TransactionCounter {
 
     await this.daysQueue.waitTilEmpty()
 
-    const missingRanges =
-      await this.starkexTransactionCountRepository.getMissingRangesByProject(
+    const [boundaries, gaps] = await Promise.all([
+      this.starkexTransactionCountRepository.findBoundariesByProject(
         this.projectId,
-      )
+      ),
+      this.starkexTransactionCountRepository.getGapsByProject(this.projectId),
+    ])
 
     // Because starkex API operates on days (unix_timestamp / 86400)
     // it is easier to loop through all days we want to update.
-    const today = this.clock
+    const lastDay = this.clock
       .getLastHour()
       // Delay to make sure that API's data is ready
       .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
       .toStartOf('day')
       .toDays()
 
-    for (const [start, end] of missingRanges) {
-      for (
-        let i = Math.max(start, this.startDay);
-        i < Math.min(end, today);
-        i++
-      ) {
+    if (!boundaries) {
+      gaps.push([this.startDay, lastDay])
+    } else {
+      if (boundaries.max < lastDay) {
+        gaps.push([boundaries.max + 1, lastDay])
+      }
+      if (boundaries.min > this.startDay) {
+        gaps.push([this.startDay, boundaries.min - 1])
+      }
+    }
+
+    for (const [start, end] of gaps) {
+      for (let i = start; i <= end; i++) {
         this.daysQueue.addToBack(i)
       }
     }
@@ -104,18 +113,18 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return this.starkexTransactionCountRepository.getFullySyncedDailyCounts(
+    return this.starkexTransactionCountRepository.getDailyCountsByProject(
       this.projectId,
     )
   }
 
   async getStatus() {
-    const tip = await this.starkexTransactionCountRepository.findTipTimestamp(
+    const tip = await this.starkexTransactionCountRepository.findTipByProject(
       this.projectId,
     )
     return {
       workQueue: this.daysQueue.getStats(),
-      fullySyncedTip: tip?.toISOString() ?? null,
+      fullySyncedTip: tip?.timestamp.toDate().toISOString() ?? null,
     }
   }
 }

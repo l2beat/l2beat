@@ -114,11 +114,11 @@ describe(BlockTransactionCountRepository.name, () => {
   )
 
   describe(
-    BlockTransactionCountRepository.prototype.getDailyCounts.name,
+    BlockTransactionCountRepository.prototype.getDailyCountsByProject.name,
     () => {
       it('works with empty repository', async () => {
         await repository.refreshDailyCounts([PROJECT_A])
-        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([])
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([])
       })
 
       it('skips last day', async () => {
@@ -156,7 +156,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
         await repository.refreshDailyCounts([PROJECT_A, PROJECT_B])
 
-        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
@@ -207,7 +207,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
         await repository.refreshDailyCounts([PROJECT_A, PROJECT_B])
 
-        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
@@ -247,7 +247,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
         await repository.refreshDailyCounts([PROJECT_A])
 
-        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([
           {
             count: 3,
             timestamp: start,
@@ -285,7 +285,7 @@ describe(BlockTransactionCountRepository.name, () => {
 
         await repository.refreshDailyCounts([PROJECT_A])
 
-        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([
           {
             count: 1,
             timestamp: start,

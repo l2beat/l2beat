@@ -20,7 +20,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.findBoundariesByProject = this.wrapFind(this.findBoundariesByProject)
-    this.getDailyCounts = this.wrapGet(this.getDailyCounts)
+    this.getDailyCountsByProject = this.wrapGet(this.getDailyCountsByProject)
     this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
     this.getGapsByProject = this.wrapGet(this.getGapsByProject)
     this.findTipByProject = this.wrapFind(this.findTipByProject)
@@ -63,7 +63,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
       : undefined
   }
 
-  async getDailyCounts(
+  async getDailyCountsByProject(
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()

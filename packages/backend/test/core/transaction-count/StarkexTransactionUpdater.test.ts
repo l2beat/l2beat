@@ -13,12 +13,9 @@ describe(StarkexTransactionUpdater.name, () => {
     it('skips known blocks', async () => {
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
-          getMissingRangesByProject: async () => [
-            [-Infinity, -1],
-            [2, 3],
-            [5, Infinity],
-          ],
+          getGapsByProject: async () => [[2, 2]],
           add: async () => '',
+          findBoundariesByProject: async () => ({ min: 0, max: 4 }),
         })
       const starkexClient = mock<StarkexClient>({
         getDailyCount: async () => 1,
@@ -38,6 +35,7 @@ describe(StarkexTransactionUpdater.name, () => {
         'dydx',
         ProjectId('dydx'),
         new UnixTime(0),
+        { apiDelayHours: 6 },
       )
       updater.start()
 

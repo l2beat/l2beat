@@ -83,13 +83,12 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    const boundaries = await this.zksyncTransactionRepository.findBoundaries()
-
-    this.logger.debug('Gaps query started')
-    const gaps = await this.zksyncTransactionRepository.getGaps()
-    this.logger.debug('Gaps query finished')
-
-    this.latestBlock = await this.zksyncClient.getLatestBlock()
+    const [boundaries, gaps, latestBlock] = await Promise.all([
+      this.zksyncTransactionRepository.findBoundaries(),
+      this.zksyncTransactionRepository.getGaps(),
+      this.zksyncClient.getLatestBlock(),
+    ])
+    this.latestBlock = latestBlock
 
     if (!boundaries) {
       gaps.push([1, this.latestBlock])

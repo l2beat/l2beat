@@ -90,16 +90,14 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    const boundaries =
-      await this.blockTransactionCountRepository.findBoundariesByProject(
+    const [boundaries, gaps, latestBlock] = await Promise.all([
+      this.blockTransactionCountRepository.findBoundariesByProject(
         this.projectId,
-      )
-    this.logger.debug('Gaps query started')
-    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
-      this.projectId,
-    )
-    this.logger.debug('Gaps query finished')
-    this.latestBlock = Number(await this.rpcClient.getBlockNumber())
+      ),
+      this.blockTransactionCountRepository.getGapsByProject(this.projectId),
+      this.rpcClient.getBlockNumber(),
+    ])
+    this.latestBlock = Number(latestBlock)
 
     if (!boundaries) {
       gaps.push([this.startBlock, this.latestBlock])
@@ -125,7 +123,9 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return this.blockTransactionCountRepository.getDailyCounts(this.projectId)
+    return this.blockTransactionCountRepository.getDailyCountsByProject(
+      this.projectId,
+    )
   }
 
   async getStatus() {
