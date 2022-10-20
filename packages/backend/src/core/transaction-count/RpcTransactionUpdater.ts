@@ -23,7 +23,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
-  private latestBlock?: bigint
+  private latestBlock?: number
 
   constructor(
     private readonly rpcClient: RpcClient,
@@ -88,30 +88,32 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
 
-    // Wait until there is no more tasks either waiting or being executed in the queue
-    // Otherwise it was prone to race conditions between what is in the queue and what is read
-    // from the database using `getMissingRanges`
     await this.blockQueue.waitTilEmpty()
 
-    this.logger.debug('Missing ranges query started')
-    const missingRanges =
-      await this.blockTransactionCountRepository.getMissingRangesByProject(
+    const boundaries =
+      await this.blockTransactionCountRepository.findBoundariesByProject(
         this.projectId,
       )
-    this.logger.debug('Missing ranges query finished')
-    const tip = await this.blockTransactionCountRepository.findTipByProject(
+    this.logger.debug('Gaps query started')
+    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
     )
+    this.logger.debug('Gaps query finished')
+    this.latestBlock = Number(await this.rpcClient.getBlockNumber())
 
-    const latestBlock = await this.rpcClient.getBlockNumber()
-    this.latestBlock = latestBlock
+    if (!boundaries) {
+      gaps.push([this.startBlock, this.latestBlock])
+    } else {
+      if (boundaries.max < this.latestBlock) {
+        gaps.push([boundaries.max + 1, this.latestBlock])
+      }
+      if (boundaries.min > this.startBlock) {
+        gaps.push([this.startBlock, boundaries.min - 1])
+      }
+    }
 
-    enqueueBlockLoop: for (const [start, end] of missingRanges) {
-      for (
-        let i = Math.max(start, tip?.blockNumber ?? this.startBlock);
-        i < Math.min(end, Number(latestBlock) + 1);
-        i++
-      ) {
+    enqueueBlockLoop: for (const [start, end] of gaps) {
+      for (let i = start; i <= end; i++) {
         if (this.blockQueue.length >= this.workQueueSizeLimit) {
           break enqueueBlockLoop
         }

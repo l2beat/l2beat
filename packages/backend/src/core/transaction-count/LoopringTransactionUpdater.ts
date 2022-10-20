@@ -75,25 +75,30 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    this.logger.debug('Missing ranges query started')
-    const missingRanges =
-      await this.blockTransactionCountRepository.getMissingRangesByProject(
+    const boundaries =
+      await this.blockTransactionCountRepository.findBoundariesByProject(
         this.projectId,
       )
-    this.logger.debug('Missing ranges query finished')
-    const tip = await this.blockTransactionCountRepository.findTipByProject(
+    this.logger.debug('Gaps query started')
+    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
     )
-
+    this.logger.debug('Gaps query finished')
     const finalizedBlock = await this.loopringClient.getFinalizedBlockNumber()
     this.latestBlock = finalizedBlock
+    if (!boundaries) {
+      gaps.push([1, finalizedBlock])
+    } else {
+      if (boundaries.max < finalizedBlock) {
+        gaps.push([boundaries.max + 1, finalizedBlock])
+      }
+      if (boundaries.min > 1) {
+        gaps.push([1, boundaries.min - 1])
+      }
+    }
 
-    for (const [start, end] of missingRanges) {
-      for (
-        let i = Math.max(start, tip?.blockNumber ?? 1);
-        i < Math.min(end, finalizedBlock + 1);
-        i++
-      ) {
+    for (const [start, end] of gaps) {
+      for (let i = start; i <= end; i++) {
         this.blockQueue.addToBack(i)
       }
     }

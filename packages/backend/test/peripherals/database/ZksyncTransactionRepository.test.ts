@@ -16,102 +16,47 @@ describe(ZksyncTransactionRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(ZksyncTransactionRepository.prototype.getAll.name, () => {
-    it('gets one record', async () => {
-      const record = fakeRecord()
-      await repository.addMany([record])
-
-      expect(await repository.getAll()).toEqual([record])
+  describe(ZksyncTransactionRepository.prototype.getGaps.name, () => {
+    it('works with no data', async () => {
+      expect(await repository.getGaps()).toEqual([])
     })
 
-    it('gets multiple records', async () => {
-      const records = [fakeRecord(), fakeRecord(), fakeRecord()]
-      await repository.addMany(records)
-
-      expect(await repository.getAll()).toBeAnArrayWith(...records)
-    })
-  })
-
-  describe(ZksyncTransactionRepository.prototype.getMissingRanges.name, () => {
-    it('works with an empty repository', async () => {
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, Infinity],
-      ])
-    })
-
-    it('finds holes', async () => {
-      await repository.addMany([
-        fakeRecord({ blockNumber: 0 }),
-        fakeRecord({ blockNumber: 1 }),
-        fakeRecord({ blockNumber: 6 }),
-        fakeRecord({ blockNumber: 7 }),
-        fakeRecord({ blockNumber: 10 }),
-      ])
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 1],
-        [2, 6],
-        [8, 10],
-        [11, Infinity],
-      ])
-    })
-
-    it('finds holes when block 0 is missing', async () => {
-      await repository.addMany([fakeRecord({ blockNumber: 1 })])
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 1],
-        [2, Infinity],
-      ])
-    })
-
-    it('finds holes with multiple records with the same block number', async () => {
-      await repository.addMany([
-        fakeRecord({ blockNumber: 1, blockIndex: 0 }),
-        fakeRecord({ blockNumber: 1, blockIndex: 1 }),
-        fakeRecord({ blockNumber: 2, blockIndex: 0 }),
-      ])
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 2],
-        [3, Infinity],
-      ])
-    })
-
-    it('finds holes on a big set', async () => {
+    it('finds gaps', async () => {
+      const maxNumber = 1000
       const numbers = Array.from({ length: 200 }, () =>
-        Math.floor(Math.random() * 1000),
+        Math.floor(Math.random() * maxNumber),
       ).filter((x, i, a) => a.indexOf(x) === i)
 
       await repository.addMany(
-        numbers.flatMap((number) => {
-          if (Math.random() > 0.2) {
-            return [
-              fakeRecord({ blockNumber: number, blockIndex: 1 }),
-              fakeRecord({ blockNumber: number, blockIndex: 2 }),
-            ]
-          }
-          return [fakeRecord({ blockNumber: number })]
-        }),
+        numbers.map((number) => fakeRecord({ blockNumber: number })),
       )
 
-      const ranges = await repository.getMissingRanges()
+      const gaps = await repository.getGaps()
 
-      const result = []
-      for (const [start, end] of ranges) {
-        for (let i = Math.max(start, 0); i < Math.min(end, 1000); i++) {
-          result.push(i)
+      for (const [start, end] of gaps) {
+        for (let i = start; i <= end; i++) {
+          expect(numbers.includes(i)).toEqual(false)
         }
       }
+    })
+  })
 
-      const expected = []
-      for (let i = 0; i < 1000; i++) {
-        if (!numbers.includes(i)) {
-          expected.push(i)
-        }
-      }
+  describe(ZksyncTransactionRepository.prototype.findBoundaries.name, () => {
+    it('works with no data', async () => {
+      expect(await repository.findBoundaries()).not.toBeDefined()
+    })
 
-      expect(result.sort()).toEqual(expected.sort())
+    it('returns min and max', async () => {
+      await repository.addMany([
+        fakeRecord({ blockNumber: 1 }),
+        fakeRecord({ blockNumber: 3 }),
+        fakeRecord({ blockNumber: 6 }),
+        fakeRecord({ blockNumber: 100 }),
+      ])
+
+      const boundaries = await repository.findBoundaries()
+
+      expect(boundaries).toEqual({ min: 1, max: 100 })
     })
   })
 

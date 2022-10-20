@@ -16,11 +16,8 @@ describe(ZksyncTransactionUpdater.name, () => {
         getTransactionsInBlock: async () => [],
       })
       const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
-        getMissingRanges: async () => [
-          [-Infinity, -1],
-          [2, 3],
-          [5, Infinity],
-        ],
+        getGaps: async () => [[2, 2]],
+        findBoundaries: async () => ({ min: 1, max: 4 }),
         addMany: async () => 0,
         findTip: async () => undefined,
       })

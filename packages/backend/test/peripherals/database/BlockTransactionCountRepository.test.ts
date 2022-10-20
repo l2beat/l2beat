@@ -23,66 +23,16 @@ describe(BlockTransactionCountRepository.name, () => {
   })
 
   describe(
-    BlockTransactionCountRepository.prototype.getMissingRangesByProject.name,
+    BlockTransactionCountRepository.prototype.getGapsByProject.name,
     () => {
-      it('works with an empty repository', async () => {
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, Infinity],
-        ])
+      it('works with no data', async () => {
+        expect(await repository.getGapsByProject(PROJECT_A)).toEqual([])
       })
 
-      it('finds holes', async () => {
-        await repository.addMany([
-          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 7, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 10, projectId: PROJECT_A }),
-        ])
-
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 1],
-          [2, 6],
-          [8, 10],
-          [11, Infinity],
-        ])
-      })
-
-      it('finds holes when block 0 is missing', async () => {
-        await repository.addMany([
-          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
-        ])
-
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 1],
-          [2, Infinity],
-        ])
-      })
-
-      it('finds holes with multiple projects', async () => {
-        await repository.addMany([
-          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_B }),
-          fakeTransactionCount({ blockNumber: 4, projectId: PROJECT_B }),
-        ])
-
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 1],
-          [2, 3],
-          [4, Infinity],
-        ])
-        expect(await repository.getMissingRangesByProject(PROJECT_B)).toEqual([
-          [-Infinity, 0],
-          [1, 4],
-          [5, Infinity],
-        ])
-      })
-
-      it('finds holes on a big set', async () => {
+      it('finds gaps with a single project', async () => {
+        const maxNumber = 1000
         const numbers = Array.from({ length: 200 }, () =>
-          Math.floor(Math.random() * 1000),
+          Math.floor(Math.random() * maxNumber),
         ).filter((x, i, a) => a.indexOf(x) === i)
 
         await repository.addMany(
@@ -91,23 +41,74 @@ describe(BlockTransactionCountRepository.name, () => {
           ),
         )
 
-        const ranges = await repository.getMissingRangesByProject(PROJECT_A)
+        const gaps = await repository.getGapsByProject(PROJECT_A)
 
-        const result = []
-        for (const [start, end] of ranges) {
-          for (let i = Math.max(start, 0); i < Math.min(end, 1000); i++) {
-            result.push(i)
+        for (const [start, end] of gaps) {
+          for (let i = start; i <= end; i++) {
+            expect(numbers.includes(i)).toEqual(false)
           }
         }
+      })
 
-        const expected = []
-        for (let i = 0; i < 1000; i++) {
-          if (!numbers.includes(i)) {
-            expected.push(i)
-          }
-        }
+      it('finds holes with multiple projects', async () => {
+        await repository.addMany([
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_B }),
+          fakeTransactionCount({ blockNumber: 4, projectId: PROJECT_B }),
+        ])
 
-        expect(result.sort()).toEqual(expected.sort())
+        expect(await repository.getGapsByProject(PROJECT_A)).toEqual([
+          [2, 2],
+          [4, 5],
+        ])
+        expect(await repository.getGapsByProject(PROJECT_B)).toEqual([[1, 3]])
+      })
+    },
+  )
+
+  describe(
+    BlockTransactionCountRepository.prototype.findBoundariesByProject.name,
+    () => {
+      it('works with no data', async () => {
+        expect(
+          await repository.findBoundariesByProject(PROJECT_A),
+        ).not.toBeDefined()
+      })
+
+      it('returns min and max for single project', async () => {
+        await repository.addMany([
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
+        ])
+
+        const boundaries = await repository.findBoundariesByProject(PROJECT_A)
+
+        expect(boundaries).toEqual({ min: 0, max: 6 })
+      })
+
+      it('returns min and max with multiple projects', async () => {
+        await repository.addMany([
+          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
+          fakeTransactionCount({ blockNumber: 2, projectId: PROJECT_B }),
+          fakeTransactionCount({ blockNumber: 4, projectId: PROJECT_B }),
+        ])
+
+        expect(await repository.findBoundariesByProject(PROJECT_A)).toEqual({
+          min: 0,
+          max: 6,
+        })
+        expect(await repository.findBoundariesByProject(PROJECT_B)).toEqual({
+          min: 2,
+          max: 4,
+        })
       })
     },
   )

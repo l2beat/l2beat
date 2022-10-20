@@ -83,18 +83,27 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    const missingRanges =
-      await this.zksyncTransactionRepository.getMissingRanges()
-    const latestBlock = await this.zksyncClient.getLatestBlock()
-    this.latestBlock = latestBlock
-    const tip = await this.zksyncTransactionRepository.findTip()
+    const boundaries = await this.zksyncTransactionRepository.findBoundaries()
 
-    for (const [start, end] of missingRanges) {
-      for (
-        let i = Math.max(start, tip?.blockNumber ?? 1);
-        i < Math.min(end, Number(latestBlock) + 1);
-        i++
-      ) {
+    this.logger.debug('Gaps query started')
+    const gaps = await this.zksyncTransactionRepository.getGaps()
+    this.logger.debug('Gaps query finished')
+
+    this.latestBlock = await this.zksyncClient.getLatestBlock()
+
+    if (!boundaries) {
+      gaps.push([1, this.latestBlock])
+    } else {
+      if (boundaries.max < this.latestBlock) {
+        gaps.push([boundaries.max + 1, this.latestBlock])
+      }
+      if (boundaries.min > 1) {
+        gaps.push([1, boundaries.min - 1])
+      }
+    }
+
+    for (const [start, end] of gaps) {
+      for (let i = start; i <= end; i++) {
         this.blockQueue.addToBack(i)
       }
     }
