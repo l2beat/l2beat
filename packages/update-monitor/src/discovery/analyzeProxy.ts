@@ -5,7 +5,7 @@ import { constants, Contract, providers } from 'ethers'
 import { bytes32ToAddress } from '../common/address'
 import { getEip897Implementation } from '../common/eip897'
 import { Eip1967Proxy } from '../common/proxies/Eip1967Proxy'
-import { StarkWare2019Proxy } from '../common/proxies/StarkWare2019Proxy'
+import { StarkWareProxy } from '../common/proxies/StarkWareProxy'
 
 export type ProxyAnalysis =
   | EIP1967Analysis
@@ -52,7 +52,7 @@ export async function analyzeProxy(
   ] = await Promise.all([
     Eip1967Proxy.getImplementation(provider, proxyAddress),
     Eip1967Proxy.getAdmin(provider, proxyAddress),
-    StarkWare2019Proxy.getImplementation(provider, proxyAddress),
+    StarkWareProxy.getImplementation(provider, proxyAddress),
     getSlot0(provider, proxyAddress),
     getMasterCopy(provider, proxyAddress),
     getEip897Implementation(provider, proxyAddress),

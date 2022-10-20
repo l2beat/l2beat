@@ -1,11 +1,8 @@
 import { constants, Contract, providers } from 'ethers'
 
-import {
-  ContractParameters,
-  ProxyDetection,
-  UpgradeabilityParameters,
-} from '../../types'
+import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
+import { ProxyDetection, UpgradeabilityParameters } from './types'
 
 // keccak256('eip1967.proxy.implementation') - 1)
 const EIP1967_IMPLEMENTATION_SLOT =

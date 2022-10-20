@@ -1,7 +1,7 @@
 import { AddressAnalyzer } from '@l2beat/common'
 import { providers, utils } from 'ethers'
 
-import { ContractParameters, UpgradeabilityParameters } from '../types'
+import { ContractParameters } from '../types'
 import { detectProxy } from './detectProxy'
 import { DiscoveryOptions } from './DiscoveryOptions'
 import { JsonFragment } from './getAbi'
@@ -47,8 +47,7 @@ export async function analyzeItem(
     .concat(proxyDetection?.relatives ?? [])
     .filter((x, i, a) => a.indexOf(x) === i)
 
-  const upgradeability: UpgradeabilityParameters =
-    proxyDetection?.upgradeability ?? { type: 'immutable' }
+  const upgradeability = proxyDetection?.upgradeability ?? { type: 'immutable' }
 
   return {
     analyzed: {

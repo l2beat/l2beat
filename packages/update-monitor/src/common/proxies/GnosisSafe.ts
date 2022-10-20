@@ -1,8 +1,9 @@
 import { Contract, providers } from 'ethers'
 
 import { GnosisSafe__factory } from '../../typechain'
-import { ContractParameters, ProxyDetection } from '../../types'
+import { ContractParameters } from '../../types'
 import { isRevert } from '../isRevert'
+import { ProxyDetection } from './types'
 
 async function getContract(
   provider: providers.JsonRpcProvider,

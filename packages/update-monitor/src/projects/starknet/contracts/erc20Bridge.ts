@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { StarkWare2019Proxy } from '../../../common/proxies/StarkWare2019Proxy'
+import { StarkWareProxy } from '../../../common/proxies/StarkWareProxy'
 import { StarknetERC20Bridge__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 
@@ -14,7 +14,7 @@ export async function getErc20Bridge(
   return {
     name,
     address,
-    upgradeability: await StarkWare2019Proxy.getUpgradeability(
+    upgradeability: await StarkWareProxy.getUpgradeability(
       provider,
       erc20Bridge,
     ),

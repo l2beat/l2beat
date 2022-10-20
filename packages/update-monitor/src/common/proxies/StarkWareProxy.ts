@@ -1,11 +1,8 @@
 import { constants, Contract, providers } from 'ethers'
 
-import {
-  ContractParameters,
-  ProxyDetection,
-  UpgradeabilityParameters,
-} from '../../types'
+import { ContractParameters } from '../../types'
 import { bytes32ToAddress } from '../address'
+import { ProxyDetection, UpgradeabilityParameters } from './types'
 
 // keccak256("StarkWare2019.implemntation-slot")
 const STARK_WARE_2019_IMPLEMENTATION_SLOT =
@@ -63,7 +60,7 @@ async function detect(
   }
 }
 
-export const StarkWare2019Proxy = {
+export const StarkWareProxy = {
   getImplementation,
   getContract,
   getUpgradeability,
