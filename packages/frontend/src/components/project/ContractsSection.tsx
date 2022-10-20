@@ -34,13 +34,13 @@ export function ContractsSection(props: ContractsSectionProps) {
     <Section title="Smart Contracts" id="contracts">
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="ContractsSection-Architecture">
+        <figure className="mt-4 mb-8 text-center">
           <img
-            className="inline align-[unset]"
+            className="inline align-[unset] max-w-full dark:invert"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
-          <figcaption className="text-gray-500 dark:text-gray-600">
+          <figcaption className="text-gray-500 dark:text-gray-600 text-xs">
             A diagram of the smart contract architecture
           </figcaption>
         </figure>
@@ -48,26 +48,23 @@ export function ContractsSection(props: ContractsSectionProps) {
       <h3 className="font-bold md:text-md">
         The system consists of the following smart contracts:
       </h3>
-      <ul className="ContractsSection-Contracts">
+      <ul className="ContractsSection-Contracts list-disc my-4 pl-8">
         {props.contracts.map((contract, i) => (
-          <li key={i}>
-            <div className="ContractsSection-Contract">
-              <span className="ContractsSection-Name">{contract.name}</span>{' '}
-              <EtherscanLink address={contract.address} />
-              {contract.links.map((x, i) => (
-                <React.Fragment key={i}>
-                  {' '}
-                  <OutLink className="text-link underline" href={x.href}>
-                    {x.name}
-                  </OutLink>
-                </React.Fragment>
-              ))}
-            </div>
-            {contract.description && (
-              <p className="ContractsSection-Description">
-                {contract.description}
-              </p>
-            )}
+          <li key={i} className="mt-4 first:mt-0">
+            <strong>{contract.name}</strong>{' '}
+            <EtherscanLink
+              address={contract.address}
+              className="text-xs md:text-base"
+            />
+            {contract.links.map((x, i) => (
+              <React.Fragment key={i}>
+                {' '}
+                <OutLink className="text-link underline" href={x.href}>
+                  {x.name}
+                </OutLink>
+              </React.Fragment>
+            ))}
+            {contract.description && <p>{contract.description}</p>}
           </li>
         ))}
       </ul>
