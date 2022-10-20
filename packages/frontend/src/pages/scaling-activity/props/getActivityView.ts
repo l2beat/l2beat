@@ -4,7 +4,7 @@ import { ActivityApiChart, ActivityApiResponse, ProjectId } from '@l2beat/types'
 import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
-import { getTransactionMonthlyCount } from '../../../utils/activity/getTransactionWeeklyCount'
+import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
@@ -55,7 +55,7 @@ function getActivityViewEntryDetails(data?: ActivityApiChart['data']) {
   return {
     tpsDaily: getTpsDaily(data),
     tpsWeeklyChange: getTpsWeeklyChange(data),
-    transactionsMonthlyCount: getTransactionMonthlyCount(data),
+    transactionsMonthlyCount: getTransactionCount(data, 'month'),
     ...getMaxTps(data),
   }
 }

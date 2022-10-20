@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-export function PercentChange({ value }: Props) {
+export function PercentChange({ value, className }: Props) {
   const isMore = value.startsWith('+')
   const isLess = value.startsWith('-')
 
@@ -18,6 +18,7 @@ export function PercentChange({ value }: Props) {
         isMore && 'text-green-700 dark:text-green-300',
         isLess && 'text-red-700 dark:text-red-300',
         'relative',
+        className,
       )}
     >
       {isMore && (

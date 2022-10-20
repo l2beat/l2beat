@@ -9,6 +9,7 @@ import { Wrapped } from '../../Page'
 import { ProjectPageProps } from '../view/ProjectPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getProjectDetails } from './getProjectDetails'
+import { getProjectHeader } from './getProjectHeader'
 
 export function getProps(
   project: Layer2,
@@ -21,6 +22,12 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
+      showProjectHeader: config.features.activity,
+      projectHeader: getProjectHeader(
+        project,
+        tvlApiResponse,
+        activityApiResponse,
+      ),
       chart,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),
