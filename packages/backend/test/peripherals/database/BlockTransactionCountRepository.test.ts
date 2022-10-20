@@ -20,7 +20,6 @@ describe(BlockTransactionCountRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.refreshFullySyncedDailyCounts()
   })
 
   describe(
@@ -42,7 +41,7 @@ describe(BlockTransactionCountRepository.name, () => {
         ])
 
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 0],
+          [-Infinity, 1],
           [2, 6],
           [8, 10],
           [11, Infinity],
@@ -70,7 +69,7 @@ describe(BlockTransactionCountRepository.name, () => {
         ])
 
         expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 0],
+          [-Infinity, 1],
           [2, 3],
           [4, Infinity],
         ])
@@ -110,37 +109,15 @@ describe(BlockTransactionCountRepository.name, () => {
 
         expect(result.sort()).toEqual(expected.sort())
       })
-
-      it('takes tip into consideration', async () => {
-        await repository.addMany([
-          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 2, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 7, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 10, projectId: PROJECT_A }),
-        ])
-
-        await repository.refreshProjectTip(PROJECT_A)
-
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 2],
-          [3, 6],
-          [8, 10],
-          [11, Infinity],
-        ])
-      })
     },
   )
 
   describe(
-    BlockTransactionCountRepository.prototype.getFullySyncedDailyCounts.name,
+    BlockTransactionCountRepository.prototype.getDailyCounts.name,
     () => {
       it('works with empty repository', async () => {
-        await repository.refreshFullySyncedDailyCounts()
-        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual(
-          [],
-        )
+        await repository.refreshDailyCounts([PROJECT_A])
+        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([])
       })
 
       it('skips last day', async () => {
@@ -176,11 +153,9 @@ describe(BlockTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...syncedCounts, ...lastDayCounts])
 
-        await repository.refreshProjectTip(PROJECT_A)
-        await repository.refreshProjectTip(PROJECT_B)
-        await repository.refreshFullySyncedDailyCounts()
+        await repository.refreshDailyCounts([PROJECT_A, PROJECT_B])
 
-        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
@@ -229,11 +204,9 @@ describe(BlockTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
-        await repository.refreshProjectTip(PROJECT_A)
-        await repository.refreshProjectTip(PROJECT_B)
-        await repository.refreshFullySyncedDailyCounts()
+        await repository.refreshDailyCounts([PROJECT_A, PROJECT_B])
 
-        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
@@ -271,10 +244,9 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
-        await repository.refreshProjectTip(PROJECT_A)
-        await repository.refreshFullySyncedDailyCounts()
+        await repository.refreshDailyCounts([PROJECT_A])
 
-        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
           {
             count: 3,
             timestamp: start,
@@ -310,10 +282,9 @@ describe(BlockTransactionCountRepository.name, () => {
           }),
         ])
 
-        await repository.refreshProjectTip(PROJECT_A)
-        await repository.refreshFullySyncedDailyCounts()
+        await repository.refreshDailyCounts([PROJECT_A])
 
-        expect(await repository.getFullySyncedDailyCounts(PROJECT_A)).toEqual([
+        expect(await repository.getDailyCounts(PROJECT_A)).toEqual([
           {
             count: 1,
             timestamp: start,
@@ -323,74 +294,6 @@ describe(BlockTransactionCountRepository.name, () => {
             timestamp: start.add(1, 'days'),
           },
         ])
-      })
-    },
-  )
-
-  describe(
-    BlockTransactionCountRepository.prototype.refreshProjectTip.name,
-    () => {
-      it('works with empty repository', async () => {
-        const tip = await repository.refreshProjectTip(PROJECT_A)
-        expect(tip).not.toBeDefined()
-      })
-
-      it('finds tip in gaps', async () => {
-        const start = UnixTime.now().toStartOf('day')
-        await repository.addMany([
-          fakeTransactionCount({
-            blockNumber: 1,
-            timestamp: start,
-            projectId: PROJECT_A,
-            count: 1,
-          }),
-          fakeTransactionCount({
-            blockNumber: 2,
-            timestamp: start.add(1, 'days').add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 2,
-          }),
-          fakeTransactionCount({
-            blockNumber: 4,
-            timestamp: start.add(2, 'days').add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 3,
-          }),
-        ])
-
-        const tip = await repository.refreshProjectTip(PROJECT_A)
-
-        expect(tip?.blockNumber).toEqual(2)
-        expect(tip?.timestamp).toEqual(start.add(1, 'days').add(1, 'hours'))
-      })
-
-      it('finds tip without gaps', async () => {
-        const start = UnixTime.now().toStartOf('day')
-        await repository.addMany([
-          fakeTransactionCount({
-            blockNumber: 1,
-            timestamp: start,
-            projectId: PROJECT_A,
-            count: 1,
-          }),
-          fakeTransactionCount({
-            blockNumber: 2,
-            timestamp: start.add(1, 'days').add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 2,
-          }),
-          fakeTransactionCount({
-            blockNumber: 3,
-            timestamp: start.add(2, 'days').add(1, 'hours'),
-            projectId: PROJECT_A,
-            count: 3,
-          }),
-        ])
-
-        const tip = await repository.refreshProjectTip(PROJECT_A)
-
-        expect(tip?.blockNumber).toEqual(3)
-        expect(tip?.timestamp).toEqual(start.add(2, 'days').add(1, 'hours'))
       })
     },
   )

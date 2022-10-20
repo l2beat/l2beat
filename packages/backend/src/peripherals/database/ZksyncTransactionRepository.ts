@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/common'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { UnixTime } from '@l2beat/types'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 import _ from 'lodash'
 
@@ -28,12 +28,8 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.addMany = this.wrapAddMany(this.addMany)
     this.refreshTip = this.wrapAny(this.refreshTip)
     this.getMissingRanges = this.wrapGet(this.getMissingRanges)
-    this.refreshFullySyncedDailyCounts = this.wrapAny(
-      this.refreshFullySyncedDailyCounts,
-    )
-    this.getFullySyncedDailyCounts = this.wrapGet(
-      this.getFullySyncedDailyCounts,
-    )
+    this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
+    this.getDailyCounts = this.wrapGet(this.getDailyCounts)
     this.getAll = this.wrapGet(this.getAll)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.findTip = this.wrapFind(this.findTip)
@@ -47,36 +43,10 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return rows.length
   }
 
-  async refreshTip() {
-    const knex = await this.knex()
-    const currentTip = await this.findTip()
-    const freshTip = await this.findFreshTip(currentTip?.block_number)
-
-    if (!freshTip) {
-      await knex('transactions.block_tip')
-        .delete()
-        .where('project_id', ProjectId.ZKSYNC.toString())
-      return undefined
-    } else {
-      await knex('transactions.block_tip')
-        .insert({
-          block_number: freshTip.blockNumber,
-          unix_timestamp: freshTip.timestamp.toDate(),
-          project_id: ProjectId.ZKSYNC.toString(),
-        })
-        .onConflict('project_id')
-        .merge(['block_number', 'unix_timestamp'])
-      return {
-        blockNumber: freshTip.blockNumber,
-        timestamp: freshTip.timestamp,
-      }
-    }
-  }
-
   // Returns an array of half open intervals [) that include all missing block numbers
   async getMissingRanges() {
     const knex = await this.knex()
-    const tip = await this.findTip()
+    const tip = await this.refreshTip()
 
     const blockNumbers = (await knex.raw(
       `
@@ -109,7 +79,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
       FROM no_next
       ORDER BY no_prev_block_number, no_next_block_number ASC
   `,
-      { blockNumber: tip?.block_number ?? 0 },
+      { blockNumber: tip?.blockNumber ?? 0 },
     )) as unknown as RawBlockNumberQueryResult
 
     const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
@@ -139,14 +109,13 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async refreshFullySyncedDailyCounts() {
+  async refreshDailyCounts() {
     const knex = await this.knex()
+    await this.refreshTip()
     await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
   }
 
-  async getFullySyncedDailyCounts(): Promise<
-    { timestamp: UnixTime; count: number }[]
-  > {
+  async getDailyCounts(): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
     const rows = await knex('transactions.zksync_count_view').orderBy(
       'unix_timestamp',
@@ -166,15 +135,26 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    await knex('transactions.block_tip').delete()
+    await knex('transactions.zksync_tip').delete()
     return await knex('transactions.zksync').delete()
   }
 
   async findTip() {
     const knex = await this.knex()
-    return knex('transactions.block_tip')
-      .where('project_id', ProjectId.ZKSYNC.toString())
-      .first()
+    const row = await knex('transactions.zksync_tip').first()
+    return row ? toRecord(row) : undefined
+  }
+
+  private async refreshTip() {
+    const knex = await this.knex()
+    const currentTip = await this.findTip()
+    const freshTip = await this.findFreshTip(currentTip?.blockNumber)
+
+    await knex('transactions.zksync_tip').delete()
+    if (freshTip) {
+      await knex('transactions.zksync_tip').insert(toRow(freshTip))
+    }
+    return freshTip
   }
 
   private async findFreshTip(scanFrom = 0) {

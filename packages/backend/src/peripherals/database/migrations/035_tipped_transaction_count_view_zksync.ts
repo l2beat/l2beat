@@ -24,8 +24,7 @@ export async function up(knex: Knex) {
         date_trunc('day', zksync.unix_timestamp) unix_timestamp,
         count(*) count
       FROM transactions.zksync zksync
-      INNER JOIN transactions.block_tip tip ON tip.project_id = 'zksync'
-      WHERE zksync.unix_timestamp < date_trunc('day', tip.unix_timestamp)
+      INNER JOIN transactions.zksync_tip tip ON zksync.unix_timestamp < date_trunc('day', tip.unix_timestamp)
       GROUP BY date_trunc('day', zksync.unix_timestamp)
   `,
   )

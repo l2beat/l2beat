@@ -32,24 +32,10 @@ export class MaterializedViewRefresher {
 
   async update() {
     this.logger.info('Refresh started')
-    for (const projectId of this.blockProjectIds) {
-      const tip = await this.blockTransactionCountRepository.refreshProjectTip(
-        projectId,
-      )
-      this.logger.debug('Tip refreshed', {
-        projectId: projectId.toString(),
-        blockNumber: tip?.blockNumber ?? null,
-        timestamp: tip?.timestamp.toString() ?? null,
-      })
-    }
-    await this.blockTransactionCountRepository.refreshFullySyncedDailyCounts()
-    const tip = await this.zksyncTransactionRepository.refreshTip()
-    this.logger.debug('Tip refreshed', {
-      projectId: ProjectId.ZKSYNC.toString(),
-      blockNumber: tip?.blockNumber ?? null,
-      timestamp: tip?.timestamp.toString() ?? null,
-    })
-    await this.zksyncTransactionRepository.refreshFullySyncedDailyCounts()
+    await this.blockTransactionCountRepository.refreshDailyCounts(
+      this.blockProjectIds,
+    )
+    await this.zksyncTransactionRepository.refreshDailyCounts()
     this.logger.info('Refresh finished')
   }
 }

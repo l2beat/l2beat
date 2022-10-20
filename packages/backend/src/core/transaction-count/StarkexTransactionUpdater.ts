@@ -103,7 +103,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued', { project: this.projectId.toString() })
   }
 
-  async getFullySyncedDailyCounts() {
+  async getDailyCounts() {
     return this.starkexTransactionCountRepository.getFullySyncedDailyCounts(
       this.projectId,
     )

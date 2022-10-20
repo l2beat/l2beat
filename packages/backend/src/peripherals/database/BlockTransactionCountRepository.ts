@@ -31,12 +31,8 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.getMissingRangesByProject = this.wrapGet(
       this.getMissingRangesByProject,
     )
-    this.refreshFullySyncedDailyCounts = this.wrapAny(
-      this.refreshFullySyncedDailyCounts,
-    )
-    this.getFullySyncedDailyCounts = this.wrapGet(
-      this.getFullySyncedDailyCounts,
-    )
+    this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
+    this.getDailyCounts = this.wrapGet(this.getDailyCounts)
     this.findTipByProject = this.wrapFind(this.findTipByProject)
     this.findFreshTipByProject = this.wrapFind(this.findFreshTipByProject)
     /* eslint-enable @typescript-eslint/unbound-method */
@@ -56,40 +52,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return rows.length
   }
 
-  async refreshProjectTip(projectId: ProjectId) {
-    const knex = await this.knex()
-    const currentTip = await this.findTipByProject(projectId)
-    const freshTip = await this.findFreshTipByProject(
-      projectId,
-      currentTip?.block_number,
-    )
-
-    if (!freshTip) {
-      await knex('transactions.block_tip')
-        .delete()
-        .where('project_id', projectId.toString())
-      return undefined
-    } else {
-      await knex('transactions.block_tip')
-        .insert({
-          block_number: freshTip.blockNumber,
-          unix_timestamp: freshTip.timestamp.toDate(),
-          project_id: projectId.toString(),
-        })
-        .onConflict('project_id')
-        .merge(['block_number', 'unix_timestamp'])
-      return {
-        projectId,
-        blockNumber: freshTip.blockNumber,
-        timestamp: freshTip.timestamp,
-      }
-    }
-  }
-
   // Returns an array of half open intervals [) that include all missing block numbers
   async getMissingRangesByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    const tip = await this.findTipByProject(projectId)
+    const tip = await this.refreshProjectTip(projectId)
 
     const blockNumbers = (await knex.raw(
       `
@@ -118,7 +84,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
       FROM no_next
       ORDER BY no_prev_block_number, no_next_block_number ASC
       `,
-      { projectId: projectId.toString(), blockNumber: tip?.block_number ?? 0 },
+      { projectId: projectId.toString(), blockNumber: tip?.blockNumber ?? 0 },
     )) as unknown as RawBlockNumberQueryResult
 
     const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
@@ -149,12 +115,15 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
   }
 
-  async refreshFullySyncedDailyCounts() {
+  async refreshDailyCounts(projectIds: ProjectId[]) {
     const knex = await this.knex()
+    for (const projectId of projectIds) {
+      await this.refreshProjectTip(projectId)
+    }
     await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }
 
-  async getFullySyncedDailyCounts(
+  async getDailyCounts(
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
@@ -170,15 +139,38 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async findTipByProject(projectId: ProjectId) {
     const knex = await this.knex()
-    return knex('transactions.block_tip')
+    const row = await knex('transactions.block_tip')
       .where('project_id', projectId.toString())
       .first()
+    return row ? toRecord(row) : undefined
   }
 
   async deleteAll() {
     const knex = await this.knex()
     await knex('transactions.block_tip').delete()
     return await knex('transactions.block').delete()
+  }
+
+  private async refreshProjectTip(projectId: ProjectId) {
+    const knex = await this.knex()
+    const currentTip = await this.findTipByProject(projectId)
+    const freshTip = await this.findFreshTipByProject(
+      projectId,
+      currentTip?.blockNumber,
+    )
+
+    if (!freshTip) {
+      await knex('transactions.block_tip')
+        .delete()
+        .where('project_id', projectId.toString())
+      return undefined
+    } else {
+      await knex('transactions.block_tip')
+        .insert(toRow(freshTip))
+        .onConflict('project_id')
+        .merge(['block_number', 'unix_timestamp'])
+      return freshTip
+    }
   }
 
   private async findFreshTipByProject(projectId: ProjectId, scanFrom = 0) {

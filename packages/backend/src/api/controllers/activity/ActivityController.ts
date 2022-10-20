@@ -26,7 +26,7 @@ export class ActivityController {
   async getTransactionActivity(): Promise<ActivityApiResponse> {
     const [layer2s, ethereumCounts] = await Promise.all([
       this.getLayer2s(),
-      this.ethereumCounter.getFullySyncedDailyCounts(),
+      this.ethereumCounter.getDailyCounts(),
     ])
     const tip = getTip(layer2s.map((l2) => l2.counts).concat([ethereumCounts]))
     const fullySyncedLayer2s = layer2s.map(({ counts, projectId }) => ({
@@ -59,7 +59,7 @@ export class ActivityController {
     return Promise.all(
       this.layer2Counters.map(async (c) => ({
         projectId: c.projectId,
-        counts: await c.getFullySyncedDailyCounts(),
+        counts: await c.getDailyCounts(),
       })),
     )
   }

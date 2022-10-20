@@ -14,7 +14,6 @@ describe(ZksyncTransactionRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.refreshFullySyncedDailyCounts()
   })
 
   describe(ZksyncTransactionRepository.prototype.getAll.name, () => {
@@ -50,7 +49,7 @@ describe(ZksyncTransactionRepository.name, () => {
       ])
 
       expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 0],
+        [-Infinity, 1],
         [2, 6],
         [8, 10],
         [11, Infinity],
@@ -74,7 +73,7 @@ describe(ZksyncTransactionRepository.name, () => {
       ])
 
       expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 1],
+        [-Infinity, 2],
         [3, Infinity],
       ])
     })
@@ -114,172 +113,94 @@ describe(ZksyncTransactionRepository.name, () => {
 
       expect(result.sort()).toEqual(expected.sort())
     })
-
-    it('takes tip into consideration', async () => {
-      await repository.addMany([
-        fakeRecord({ blockNumber: 0 }),
-        fakeRecord({ blockNumber: 1 }),
-        fakeRecord({ blockNumber: 2 }),
-        fakeRecord({ blockNumber: 6 }),
-        fakeRecord({ blockNumber: 7 }),
-        fakeRecord({ blockNumber: 10 }),
-      ])
-
-      await repository.refreshTip()
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 2],
-        [3, 6],
-        [8, 10],
-        [11, Infinity],
-      ])
-    })
   })
 
-  describe(
-    ZksyncTransactionRepository.prototype.getFullySyncedDailyCounts.name,
-    () => {
-      it('works with empty repository', async () => {
-        await repository.refreshFullySyncedDailyCounts()
-        expect(await repository.getFullySyncedDailyCounts()).toEqual([])
-      })
-
-      it('skips last day', async () => {
-        const start = UnixTime.now().toStartOf('day')
-        const syncedCounts = [
-          fakeRecord({
-            blockNumber: 1,
-            timestamp: start.add(1, 'hours'),
-          }),
-          fakeRecord({
-            blockNumber: 2,
-            timestamp: start.add(2, 'hours'),
-          }),
-        ]
-        const lastDayCounts = [
-          fakeRecord({
-            blockNumber: 3,
-            timestamp: start.add(1, 'days'),
-          }),
-          fakeRecord({
-            blockNumber: 4,
-            timestamp: start.add(1, 'days').add(1, 'hours'),
-          }),
-          fakeRecord({
-            blockNumber: 5,
-            timestamp: start.add(1, 'days').add(2, 'hours'),
-          }),
-        ]
-        await repository.addMany([...syncedCounts, ...lastDayCounts])
-
-        await repository.refreshTip()
-        await repository.refreshFullySyncedDailyCounts()
-
-        expect(await repository.getFullySyncedDailyCounts()).toEqual([
-          {
-            timestamp: start,
-            count: 2,
-          },
-        ])
-      })
-
-      it('groups by day', async () => {
-        const start = UnixTime.now().toStartOf('day')
-
-        await repository.addMany([
-          fakeRecord({
-            timestamp: start.add(1, 'hours'),
-            blockNumber: 1,
-          }),
-          fakeRecord({
-            timestamp: start.add(2, 'hours'),
-            blockNumber: 2,
-          }),
-          fakeRecord({
-            timestamp: start.add(3, 'hours'),
-            blockNumber: 3,
-          }),
-          fakeRecord({
-            timestamp: start.add(1, 'days'),
-            blockNumber: 4,
-          }),
-          fakeRecord({
-            timestamp: start.add(1, 'days').add(1, 'hours'),
-            blockNumber: 5,
-          }),
-          fakeRecord({
-            timestamp: start.add(2, 'days').add(1, 'hours'),
-            blockNumber: 6,
-          }),
-        ])
-
-        await repository.refreshTip()
-        await repository.refreshFullySyncedDailyCounts()
-
-        expect(await repository.getFullySyncedDailyCounts()).toEqual([
-          {
-            count: 3,
-            timestamp: start,
-          },
-          {
-            count: 2,
-            timestamp: start.add(1, 'days'),
-          },
-        ])
-      })
-    },
-  )
-
-  describe(ZksyncTransactionRepository.prototype.refreshTip.name, () => {
+  describe(ZksyncTransactionRepository.prototype.getDailyCounts.name, () => {
     it('works with empty repository', async () => {
-      const tip = await repository.refreshTip()
-      expect(tip).not.toBeDefined()
+      await repository.refreshDailyCounts()
+      expect(await repository.getDailyCounts()).toEqual([])
     })
 
-    it('finds tip in gaps', async () => {
+    it('skips last day', async () => {
       const start = UnixTime.now().toStartOf('day')
-      await repository.addMany([
+      const syncedCounts = [
         fakeRecord({
           blockNumber: 1,
-          timestamp: start,
+          timestamp: start.add(1, 'hours'),
         }),
         fakeRecord({
           blockNumber: 2,
-          timestamp: start.add(1, 'days').add(1, 'hours'),
+          timestamp: start.add(2, 'hours'),
+        }),
+      ]
+      const lastDayCounts = [
+        fakeRecord({
+          blockNumber: 3,
+          timestamp: start.add(1, 'days'),
         }),
         fakeRecord({
           blockNumber: 4,
-          timestamp: start.add(2, 'days').add(1, 'hours'),
-        }),
-      ])
-
-      const tip = await repository.refreshTip()
-
-      expect(tip?.blockNumber).toEqual(2)
-      expect(tip?.timestamp).toEqual(start.add(1, 'days').add(1, 'hours'))
-    })
-
-    it('finds tip without gaps', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      await repository.addMany([
-        fakeRecord({
-          blockNumber: 1,
-          timestamp: start,
-        }),
-        fakeRecord({
-          blockNumber: 2,
           timestamp: start.add(1, 'days').add(1, 'hours'),
         }),
         fakeRecord({
+          blockNumber: 5,
+          timestamp: start.add(1, 'days').add(2, 'hours'),
+        }),
+      ]
+      await repository.addMany([...syncedCounts, ...lastDayCounts])
+
+      await repository.refreshDailyCounts()
+
+      expect(await repository.getDailyCounts()).toEqual([
+        {
+          timestamp: start,
+          count: 2,
+        },
+      ])
+    })
+
+    it('groups by day', async () => {
+      const start = UnixTime.now().toStartOf('day')
+
+      await repository.addMany([
+        fakeRecord({
+          timestamp: start.add(1, 'hours'),
+          blockNumber: 1,
+        }),
+        fakeRecord({
+          timestamp: start.add(2, 'hours'),
+          blockNumber: 2,
+        }),
+        fakeRecord({
+          timestamp: start.add(3, 'hours'),
           blockNumber: 3,
+        }),
+        fakeRecord({
+          timestamp: start.add(1, 'days'),
+          blockNumber: 4,
+        }),
+        fakeRecord({
+          timestamp: start.add(1, 'days').add(1, 'hours'),
+          blockNumber: 5,
+        }),
+        fakeRecord({
           timestamp: start.add(2, 'days').add(1, 'hours'),
+          blockNumber: 6,
         }),
       ])
 
-      const tip = await repository.refreshTip()
+      await repository.refreshDailyCounts()
 
-      expect(tip?.blockNumber).toEqual(3)
-      expect(tip?.timestamp).toEqual(start.add(2, 'days').add(1, 'hours'))
+      expect(await repository.getDailyCounts()).toEqual([
+        {
+          count: 3,
+          timestamp: start,
+        },
+        {
+          count: 2,
+          timestamp: start.add(1, 'days'),
+        },
+      ])
     })
   })
 })

@@ -83,14 +83,11 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    this.logger.debug('Tip refresh started')
-    const tip = await this.zksyncTransactionRepository.refreshTip()
-    this.logger.debug('Tip refresh finished')
-
     const missingRanges =
       await this.zksyncTransactionRepository.getMissingRanges()
     const latestBlock = await this.zksyncClient.getLatestBlock()
     this.latestBlock = latestBlock
+    const tip = await this.zksyncTransactionRepository.findTip()
 
     for (const [start, end] of missingRanges) {
       for (
@@ -105,17 +102,17 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued')
   }
 
-  async getFullySyncedDailyCounts() {
-    return this.zksyncTransactionRepository.getFullySyncedDailyCounts()
+  async getDailyCounts() {
+    return this.zksyncTransactionRepository.getDailyCounts()
   }
 
   async getStatus() {
     const storedTip = await this.zksyncTransactionRepository.findTip()
-    const fullySyncedTip = (await this.getFullySyncedDailyCounts()).at(-1)
+    const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
-      storedTip: storedTip?.unix_timestamp.toISOString() ?? null,
+      storedTip: storedTip?.timestamp.toDate().toISOString() ?? null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }

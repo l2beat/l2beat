@@ -93,18 +93,15 @@ export class RpcTransactionUpdater implements TransactionCounter {
     // from the database using `getMissingRanges`
     await this.blockQueue.waitTilEmpty()
 
-    this.logger.debug('Tip refresh started')
-    const tip = await this.blockTransactionCountRepository.refreshProjectTip(
-      this.projectId,
-    )
-    this.logger.debug('Tip refresh finished')
-
     this.logger.debug('Missing ranges query started')
     const missingRanges =
       await this.blockTransactionCountRepository.getMissingRangesByProject(
         this.projectId,
       )
     this.logger.debug('Missing ranges query finished')
+    const tip = await this.blockTransactionCountRepository.findTipByProject(
+      this.projectId,
+    )
 
     const latestBlock = await this.rpcClient.getBlockNumber()
     this.latestBlock = latestBlock
@@ -125,10 +122,8 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued', { project: this.projectId.toString() })
   }
 
-  async getFullySyncedDailyCounts() {
-    return this.blockTransactionCountRepository.getFullySyncedDailyCounts(
-      this.projectId,
-    )
+  async getDailyCounts() {
+    return this.blockTransactionCountRepository.getDailyCounts(this.projectId)
   }
 
   async getStatus() {
@@ -136,12 +131,12 @@ export class RpcTransactionUpdater implements TransactionCounter {
       await this.blockTransactionCountRepository.findTipByProject(
         this.projectId,
       )
-    const fullySyncedTip = (await this.getFullySyncedDailyCounts()).at(-1)
+    const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
       latestBlock: this.latestBlock?.toString() ?? null,
-      storedTip: storedTip?.unix_timestamp.toISOString() ?? null,
+      storedTip: storedTip?.timestamp.toDate().toISOString() ?? null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }
