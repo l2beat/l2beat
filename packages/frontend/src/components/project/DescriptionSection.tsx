@@ -13,11 +13,7 @@ export interface DescriptionSectionProps {
 
 export function DescriptionSection(props: DescriptionSectionProps) {
   return (
-    <Section
-      title="Description"
-      id="description"
-      className="DescriptionSection"
-    >
+    <Section title="Description" id="description" className="md:!mt-6">
       {props.warning && (
         <div className="DescriptionSection-Warning">
           <ShieldWarnIcon />

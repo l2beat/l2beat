@@ -5,6 +5,7 @@ import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
+import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 
 export interface ContractsSectionProps {
   contracts: TechnologyContract[]
@@ -35,12 +36,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       id="contracts"
       className="ContractsSection"
     >
-      {props.isIncomplete && (
-        <div className="TechnologySection-Incomplete">
-          <strong>Note:</strong> This section requires more research and might
-          not present accurate information.
-        </div>
-      )}
+      {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="ContractsSection-Architecture">
           <img
