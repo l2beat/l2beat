@@ -186,7 +186,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
         SELECT
           block_number,
           lead(block_number) over (order by block_number) next
-        FROM transactions.zksync where block_number >= 0
+        FROM transactions.zksync where block_number >= :blockNumber
       ) with_lead
       WHERE next > block_number + 1 OR next IS NULL`,
       {
