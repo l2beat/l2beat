@@ -20,7 +20,7 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           {props.warning}
         </div>
       )}
-      <p className="DescriptionSection-Text">{props.description}</p>
+      <p className="mt-4">{props.description}</p>
       <p className="mt-4">
         If you find something wrong on this page you can{' '}
         <OutLink className="text-link underline" href={props.issueLink}>
