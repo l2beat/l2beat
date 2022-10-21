@@ -16,6 +16,7 @@ export type UpgradeabilityParameters =
   | ProxyUpgradeability
   | CallProxyUpgradeability
   | ArbitrumProxyUpgradeability
+  | EIP1967ProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -40,6 +41,12 @@ export interface ArbitrumProxyUpgradeability {
   type: 'arbitrum proxy'
   adminImplementation: string
   userImplementation: string
+}
+
+export interface EIP1967ProxyUpgradeability {
+  type: 'eip1967 proxy'
+  admin: string
+  implementation: string
 }
 
 export type ContractValue =

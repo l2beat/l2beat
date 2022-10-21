@@ -108,6 +108,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('aleph-aleph-im-v2'),
+    name: 'aleph.im v2',
+    coingeckoId: CoingeckoId('aleph'),
+    address: EthereumAddress('0x27702a26126e0B3702af63Ee09aC4d1A084EF628'),
+    symbol: 'ALEPH',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1601134720),
+    category: 'other',
+  },
+  {
     id: AssetId('amp-amp'),
     name: 'Amp',
     coingeckoId: CoingeckoId('amp-token'),
@@ -845,6 +855,16 @@ export const tokenList: TokenInfo[] = [
     symbol: 'GLM',
     decimals: 18,
     sinceTimestamp: new UnixTime(1605690833),
+    category: 'other',
+  },
+  {
+    id: AssetId('gohm-governance-ohm'),
+    name: 'Governance OHM',
+    coingeckoId: CoingeckoId('governance-ohm'),
+    address: EthereumAddress('0x0ab87046fBb341D058F17CBC4c1133F25a20a52f'),
+    symbol: 'gOHM',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1637726104),
     category: 'other',
   },
   {
