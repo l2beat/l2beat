@@ -16,18 +16,18 @@ export const polynetwork: Bridge = {
       socialMedia: [
         'https://twitter.com/PolyNetwork2',
         'https://polynetwork.medium.com/',
-        'https://www.youtube.com/channel/UC4vFRyVgvK7RnlkkLDmp23w',
+        'https://youtube.com/channel/UC4vFRyVgvK7RnlkkLDmp23w',
         'https://discord.gg/y6MuEnq',
       ],
       repositories: ['https://github.com/polynetwork'],
       documentation: [
         'https://dev-docs.poly.network/',
         'https://github.com/polynetwork/docs',
-        'https://github.com/polynetwork/docs/blob/master/eth/README.md'
+        'https://github.com/polynetwork/docs/blob/master/eth/README.md',
       ],
     },
     description:
-      'Poly Bridge allows users to transfer assets between different blockchains using Lock-Mint swap. It uses a PolyNetwork chain to verify and coordinate message passing between Relayers on supported chains. Each chain has a set of Relayers, while PolyNetwork chain has a set of Keepers that sign cross-chain messages. Chains integrated with Poly Bridge need to support light client verification, since validation of cross-chain messages includes verifying block headers and transactions via Merkle proofs. Some of the smart contracts used by the bridge infrastructure are not verified on Etherscan.'
+      'Poly Bridge allows users to transfer assets between different blockchains using Lock-Mint swap. It uses a PolyNetwork chain to verify and coordinate message passing between Relayers on supported chains. Each chain has a set of Relayers, while PolyNetwork chain has a set of Keepers that sign cross-chain messages. Chains integrated with Poly Bridge need to support light client verification, since validation of cross-chain messages includes verifying block headers and transactions via Merkle proofs. Some of the smart contracts used by the bridge infrastructure are not verified on Etherscan.',
   },
   riskView: {
     validatedBy: {
@@ -42,8 +42,7 @@ export const polynetwork: Bridge = {
     },
     destinationToken: {
       ...RISK_VIEW.WRAPPED,
-      description:
-        RISK_VIEW.WRAPPED.description,
+      description: RISK_VIEW.WRAPPED.description,
     },
   },
   config: {
@@ -68,8 +67,8 @@ export const polynetwork: Bridge = {
         // This new Escrow address has been added on 20 Oct 2022.
         address: '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
         sinceTimestamp: new UnixTime(1666256303),
-        tokens: ['ETH']
-      }
+        tokens: ['ETH'],
+      },
     ],
   },
   technology: {
@@ -84,12 +83,12 @@ export const polynetwork: Bridge = {
       references: [
         {
           text: 'PolyNetwork docs from source code',
-          href:  'https://github.com/polynetwork/docs'
+          href: 'https://github.com/polynetwork/docs',
         },
         {
           text: 'Ethereum-related PolyNetwork docs from source code',
-          href:  'https://github.com/polynetwork/docs/blob/master/eth/README.md'
-        }
+          href: 'https://github.com/polynetwork/docs/blob/master/eth/README.md',
+        },
       ],
       risks: [
         {
@@ -106,13 +105,13 @@ export const polynetwork: Bridge = {
       references: [
         {
           text: 'Header verification source code',
-          href: 'https://github.com/polynetwork/poly/blob/master/native/service/header_sync/eth/header_sync.go#L99'
-        }
+          href: 'https://github.com/polynetwork/poly/blob/master/native/service/header_sync/eth/header_sync.go#L99',
+        },
       ],
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'Relayers decide to not pass certain transactions to the destination chain.',
+          text: 'chain Relayers decide to not pass certain transactions to the destination chain.',
           isCritical: true,
         },
         {
@@ -122,23 +121,23 @@ export const polynetwork: Bridge = {
         },
         {
           category: 'Funds can be frozen if',
-          text: "Relayers don't relay messages.",
+          text: "chain Relayers don't relay messages.",
         },
         {
           category: 'Funds can be frozen if',
-          text: "Keepers don't sign messages.",
+          text: "the PolyNetwork Keepers don't sign messages.",
         },
       ],
       isIncomplete: true,
-    }
+    },
   },
   contracts: {
     addresses: [
       {
-        address: '0x81910675dbaf69dee0fd77570bfd07f8e436386a',
+        address: '0x81910675DbaF69deE0fD77570BFD07f8E436386A',
         name: 'PolyWrapper',
         description:
-          'Entrypoint contract for the bridge. It proxies requests to LockProxy',
+          'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
       },
       {
         address: '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
@@ -163,21 +162,21 @@ export const polynetwork: Bridge = {
       {
         address: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
         name: 'EthCrossChainManager',
-        description: 
-          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs. It uses a separate contract to store block headers.'
+        description:
+          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs. It uses a separate contract to store block headers.',
       },
       {
         address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
         name: 'EthCrossChainData (Unverified source code)',
-        description: 
-          'Contract unverified on Etherscan. Used to store block data for EthCrossChainManager.'
+        description:
+          'Contract unverified on Etherscan. Used to store block data for EthCrossChainManager.',
       },
       {
         address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
         name: 'EthCrossChainManagerProxy (Unverified source code)',
-        description: 
-          'Contract unverified on Etherscan. Used to proxy requests from LockProxy to EthCrossChainManager.'
-      }
+        description:
+          'Contract unverified on Etherscan. Used to proxy requests from LockProxy to EthCrossChainManager.',
+      },
     ],
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -191,40 +190,38 @@ export const polynetwork: Bridge = {
       ],
       name: 'Owner and Fee Collector at PolyWrapper',
       description:
-        'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.'
+        'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.',
     },
     {
       accounts: [
         {
           address: '0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb',
-          type: 'Contract'
+          type: 'Contract',
         },
       ],
       name: 'Owner of EthCrossChainManager (Unverified source code)',
       description:
-        'Unverified contract on Etherscan. Can pause the contracts and update implementation of EthCrossChainData contract.'
+        'Unverified contract on Etherscan. Can pause the contracts and update implementation of EthCrossChainData contract.',
     },
     {
       accounts: [
         {
           address: '0x8B35064B158634458Fd53A861d68Eb84152E4106',
-          type: 'EOA'
+          type: 'EOA',
         },
       ],
       name: 'Owner of LockProxy 0x250e',
-      description:
-        'Can update address of EthCrossChainManagerProxy contract.'
+      description: 'Can update address of EthCrossChainManagerProxy contract.',
     },
     {
       accounts: [
         {
           address: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
-          type: 'EOA'
+          type: 'EOA',
         },
       ],
       name: 'Owner of LockProxy 0x250e',
-      description:
-        'Can update address of EthCrossChainManagerProxy contract.'
-    }
-  ]
+      description: 'Can update address of EthCrossChainManagerProxy contract.',
+    },
+  ],
 }

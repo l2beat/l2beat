@@ -15,7 +15,7 @@ export async function getLockProxy(
 
   return {
     // There can be multiple LockProxies, so appending address prefix to the name
-    name: `LockProxy ${address.slice(0, 6)}...`, 
+    name: `LockProxy ${address.slice(0, 6)}...`,
     address: address,
     upgradeability: {
       type: 'immutable',
