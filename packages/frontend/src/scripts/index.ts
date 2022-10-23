@@ -1,4 +1,4 @@
-import { configureChart } from '../components/chart/configure'
+import { configureCharts } from '../components/chart/configure'
 import { configureTvlActivity } from '../components/header/configureTvlActivity'
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
@@ -9,5 +9,5 @@ configureCombinedBridges()
 configureDarkThemeToggle()
 configureSidebarMenu()
 configureTooltips()
-configureChart()
+configureCharts()
 configureTvlActivity()

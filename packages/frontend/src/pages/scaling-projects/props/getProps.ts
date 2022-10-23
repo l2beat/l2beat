@@ -9,6 +9,7 @@ import { Wrapped } from '../../Page'
 import { ProjectPageProps } from '../view/ProjectPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getProjectDetails } from './getProjectDetails'
+import { getProjectHeader } from './getProjectHeader'
 
 export function getProps(
   project: Layer2,
@@ -16,13 +17,18 @@ export function getProps(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const chart = getChart(project, tvlApiResponse)
+  const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
+      showProjectHeader: config.features.activity,
+      projectHeader: getProjectHeader(
+        project,
+        tvlApiResponse,
+        activityApiResponse,
+      ),
       chart,
-      showActivityToggle: config.features.activity && !!activityApiResponse,
       projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),
     },

@@ -39,7 +39,6 @@ export function getLocalConfig(): Config {
       'TRANSACTION_COUNT_ENABLED',
       false,
     ) && {
-      starkexApiUrl: getEnv('STARKEX_API_URL'),
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       zkSyncWorkQueueWorkers: 1,
       starkexWorkQueueWorkers: 1,

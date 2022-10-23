@@ -34,6 +34,7 @@ export const myria: Layer2 = {
         'https://twitter.com/myria',
       ],
     },
+    activityDataSource: 'Closed API',
   },
   config: {
     escrows: [

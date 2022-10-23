@@ -27,7 +27,7 @@ export const optimism: Layer2 = {
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
-      documentation: ['https://community.optimism.io/docs/'],
+      documentation: ['https://community.optimism.io'],
       explorers: ['https://optimistic.etherscan.io/'],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
@@ -37,6 +37,7 @@ export const optimism: Layer2 = {
         'https://twitch.tv/optimismpbc',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     associatedTokens: ['OP'],
@@ -88,6 +89,7 @@ export const optimism: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
   },
   riskView: makeBridgeCompatible({

@@ -29,15 +29,4 @@ describe(getTpsDaily.name, () => {
 
     expect(result).toEqual(undefined)
   })
-  it('rounds correctly', () => {
-    const data: ActivityApiChartPoint[] = [
-      [new UnixTime(0), 0],
-      [new UnixTime(1), 1],
-      [new UnixTime(2), ONE_TPS * 1.456],
-    ]
-
-    const result = getTpsDaily(data)
-
-    expect(result).toEqual(1.46)
-  })
 })

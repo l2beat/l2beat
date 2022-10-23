@@ -18,6 +18,7 @@ module.exports = {
       xl: ['20px', '28px'],
       '2xl': ['24px', '32px'],
       '3xl': ['32px', '36px'],
+      '4xl': ['40px', '48px'],
     },
     colors: {
       current: 'currentColor',
@@ -44,7 +45,8 @@ module.exports = {
       },
       purple: {
         100: '#7E41CC',
-        200: '#F3ECFD',
+        300: '#F1D6FF',
+        700: '#4A133C',
         800: '#32102A',
       },
       pink: {

@@ -11,14 +11,15 @@ import {
   NavbarProps,
 } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
-import { ShowProjectActivityToggle } from '../../../components/ShowProjectActivityToggle'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
+import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
   header: HeaderProps
+  showProjectHeader: boolean
+  projectHeader: ProjectHeaderProps
   chart: ChartProps
-  showActivityToggle: boolean
   projectDetails: ProjectDetailsProps
   footer: FooterProps
 }
@@ -28,9 +29,12 @@ export function ProjectPage(props: ProjectPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent narrow>
-        <Header {...props.header} />
+        {props.showProjectHeader ? (
+          <ProjectHeader {...props.projectHeader} />
+        ) : (
+          <Header {...props.header} />
+        )}
         <Chart {...props.chart} />
-        {props.showActivityToggle && <ShowProjectActivityToggle />}
         <ProjectDetails {...props.projectDetails} />
       </PageContent>
       <Footer narrow {...props.footer} />
