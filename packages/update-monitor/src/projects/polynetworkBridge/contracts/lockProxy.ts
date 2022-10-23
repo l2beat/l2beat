@@ -14,15 +14,16 @@ export async function getLockProxy(
   )
 
   return {
-    name: 'LockProxy',
+    // There can be multiple LockProxies, so appending address prefix to the name
+    name: `LockProxy ${address.slice(0, 6)}...`, 
     address: address,
     upgradeability: {
-      type: 'proxy',
-      implementation: ethCrossChainManagerAddress,
+      type: 'immutable',
     },
     values: {
       isOwner: await lockProxy.isOwner(),
       managerProxyContract: await lockProxy.managerProxyContract(),
+      managerProxyContractImplementation: ethCrossChainManagerAddress,
       owner: await lockProxy.owner(),
     },
   }

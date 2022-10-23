@@ -16,8 +16,7 @@ export async function getEthCrossChainManager(
     name: 'EthCrossChainManager',
     address: ethCrossChainManagerAddress,
     upgradeability: {
-      type: 'proxy',
-      implementation: await manager.EthCrossChainDataAddress(),
+      type: 'immutable',
     },
     values: {
       EthCrossChainDataAddress: await manager.EthCrossChainDataAddress(),
