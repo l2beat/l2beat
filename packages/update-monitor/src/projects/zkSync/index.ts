@@ -33,9 +33,9 @@ export async function getZkSyncParameters(
     ['UpgradeGatekeeper.managedContracts[2]', 'zkSync'],
     ['UpgradeGatekeeper.mainContract', 'zkSync'],
     ['UpgradeGatekeeper.master', 'Multisig'],
-    ['Governance.admin', 'UpgradeGatekeeper'],
-    ['Verifier.admin', 'UpgradeGatekeeper'],
-    ['zkSync.admin', 'UpgradeGatekeeper'],
+    ['Governance.upgradeability.admin', 'UpgradeGatekeeper'],
+    ['Verifier.upgradeability.admin', 'UpgradeGatekeeper'],
+    ['zkSync.upgradeability.admin', 'UpgradeGatekeeper'],
     ['Governance.networkGovernor', 'Multisig'],
     ['Governance.tokenGovernance', 'TokenGovernance'],
   ])

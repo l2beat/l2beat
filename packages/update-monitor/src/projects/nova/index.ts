@@ -52,17 +52,17 @@ export async function getNovaParameters(
     ]),
   }
   verify(parameters, [
-    ['Rollup.admin', 'Multisig'],
+    ['Rollup.upgradeability.admin', 'Multisig'],
     ['ProxyAdmin1.owner', 'Multisig'],
     ['ProxyAdmin2.owner', 'Multisig'],
-    ['Inbox.admin', 'ProxyAdmin1'],
-    ['SequencerInbox.admin', 'ProxyAdmin1'],
-    ['Outbox.admin', 'ProxyAdmin1'],
-    ['Bridge.admin', 'ProxyAdmin1'],
-    ['ChallengeManager.admin', 'ProxyAdmin1'],
-    ['L1CustomGateway.admin', 'ProxyAdmin2'],
-    ['L1ERC20Gateway.admin', 'ProxyAdmin2'],
-    ['L1GatewayRouter.admin', 'ProxyAdmin2'],
+    ['Inbox.upgradeability.admin', 'ProxyAdmin1'],
+    ['SequencerInbox.upgradeability.admin', 'ProxyAdmin1'],
+    ['Outbox.upgradeability.admin', 'ProxyAdmin1'],
+    ['Bridge.upgradeability.admin', 'ProxyAdmin1'],
+    ['ChallengeManager.upgradeability.admin', 'ProxyAdmin1'],
+    ['L1CustomGateway.upgradeability.admin', 'ProxyAdmin2'],
+    ['L1ERC20Gateway.upgradeability.admin', 'ProxyAdmin2'],
+    ['L1GatewayRouter.upgradeability.admin', 'ProxyAdmin2'],
   ])
   return parameters
 }
