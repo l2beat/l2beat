@@ -13,7 +13,7 @@ export function Section(props: Props) {
     <section
       className={cx(
         props.className,
-        'mt-10 md:mt-15 dark:[&_p]:text-gray-400 dark:[&_li]:text-gray-400',
+        'mt-10 md:mt-16 dark:[&_p]:text-gray-400 dark:[&_li]:text-gray-400',
       )}
     >
       <h2
