@@ -90,17 +90,17 @@ export const cBridge: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: '"SGN" decide to stop processing certain transactions.',
+          text: 'validators (SGN) decide to stop processing certain transactions.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: '"SGN" allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          text: 'validators (SGN) allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: '"SGN" sign a fraudulent message allowing themselves to withdraw all locked funds.',
+          text: 'validators (SGN) sign a fraudulent message allowing themselves to withdraw all locked funds.',
           isCritical: true,
         },
       ],
