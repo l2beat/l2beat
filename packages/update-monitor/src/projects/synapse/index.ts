@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { getGnosisSafe } from '../../common/gnosisSafe'
+import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { getProxyAdmin } from '../../common/proxyAdmin'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
@@ -17,7 +17,7 @@ export async function getSynapseParameters(
     name: SYNAPSE_NAME,
     contracts: await Promise.all([
       getSynapseBridge(provider),
-      getGnosisSafe(provider, addresses.multisig, 'MultiSig'),
+      GnosisSafe.getContract(provider, addresses.multisig, 'MultiSig'),
       getProxyAdmin(provider, addresses.proxyAdmin, 'ProxyAdmin'),
       getTimelock(provider),
     ]),
