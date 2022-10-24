@@ -31,7 +31,6 @@ export function DetailsHeader(props: HeaderProps) {
           {props.title}
         </h1>
         <DetailsHeaderStats stats={props.stats} />
-        {/* TODO: Full width line on mobile */}
       </header>
       <hr className="mt-2 md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />
     </>
