@@ -1,9 +1,9 @@
 import { providers } from 'ethers'
 
 import { getProxyAdmin } from '../../common/arbitrum/proxyAdmin'
-import { getRollup } from '../../common/arbitrum/rollup'
-import { getSimpleEip1967Proxy } from '../../common/getSimpleEip1967Proxy'
-import { getGnosisSafe } from '../../common/gnosisSafe'
+import { ArbitrumProxy } from '../../common/proxies/ArbitrumProxy'
+import { Eip1967Proxy } from '../../common/proxies/Eip1967Proxy'
+import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { verify } from '../../verify/verify'
@@ -17,35 +17,35 @@ export async function getArbitrumParameters(
   const parameters = {
     name: ARBITRUM_NAME,
     contracts: await Promise.all([
-      getGnosisSafe(provider, addresses.multisig, 'Multisig'),
-      getRollup(provider, addresses.rollup),
+      GnosisSafe.getContract(provider, addresses.multisig, 'Multisig'),
+      ArbitrumProxy.getContract(provider, addresses.rollup, 'Rollup'),
       getProxyAdmin(provider, addresses.proxyAdmin1, 'ProxyAdmin1'),
       getProxyAdmin(provider, addresses.proxyAdmin2, 'ProxyAdmin2'),
       getProxyAdmin(provider, addresses.proxyAdmin3, 'ProxyAdmin3'),
-      getSimpleEip1967Proxy(provider, addresses.bridge, 'Bridge'),
-      getSimpleEip1967Proxy(
+      Eip1967Proxy.getContract(provider, addresses.bridge, 'Bridge'),
+      Eip1967Proxy.getContract(
         provider,
         addresses.challengeManager,
         'ChallengeManager',
       ),
-      getSimpleEip1967Proxy(provider, addresses.inbox, 'Inbox'),
-      getSimpleEip1967Proxy(
+      Eip1967Proxy.getContract(provider, addresses.inbox, 'Inbox'),
+      Eip1967Proxy.getContract(
         provider,
         addresses.sequencerInbox,
         'SequencerInbox',
       ),
-      getSimpleEip1967Proxy(provider, addresses.outbox, 'Outbox'),
-      getSimpleEip1967Proxy(
+      Eip1967Proxy.getContract(provider, addresses.outbox, 'Outbox'),
+      Eip1967Proxy.getContract(
         provider,
         addresses.l1CustomGateway,
         'L1CustomGateway',
       ),
-      getSimpleEip1967Proxy(
+      Eip1967Proxy.getContract(
         provider,
         addresses.l1ERC20Gateway,
         'L1ERC20Gateway',
       ),
-      getSimpleEip1967Proxy(
+      Eip1967Proxy.getContract(
         provider,
         addresses.l1GatewayRouter,
         'L1GatewayRouter',
@@ -53,17 +53,17 @@ export async function getArbitrumParameters(
     ]),
   }
   verify(parameters, [
-    ['Rollup.admin', 'Multisig'],
+    ['Rollup.upgradeability.admin', 'Multisig'],
     ['ProxyAdmin1.owner', 'Multisig'],
     ['ProxyAdmin2.owner', 'Multisig'],
-    ['Inbox.admin', 'ProxyAdmin2'],
-    ['SequencerInbox.admin', 'ProxyAdmin1'],
-    ['Outbox.admin', 'ProxyAdmin1'],
-    ['Bridge.admin', 'ProxyAdmin1'],
-    ['ChallengeManager.admin', 'ProxyAdmin1'],
-    ['L1CustomGateway.admin', 'ProxyAdmin3'],
-    ['L1ERC20Gateway.admin', 'ProxyAdmin3'],
-    ['L1GatewayRouter.admin', 'ProxyAdmin3'],
+    ['Inbox.upgradeability.admin', 'ProxyAdmin2'],
+    ['SequencerInbox.upgradeability.admin', 'ProxyAdmin1'],
+    ['Outbox.upgradeability.admin', 'ProxyAdmin1'],
+    ['Bridge.upgradeability.admin', 'ProxyAdmin1'],
+    ['ChallengeManager.upgradeability.admin', 'ProxyAdmin1'],
+    ['L1CustomGateway.upgradeability.admin', 'ProxyAdmin3'],
+    ['L1ERC20Gateway.upgradeability.admin', 'ProxyAdmin3'],
+    ['L1GatewayRouter.upgradeability.admin', 'ProxyAdmin3'],
   ])
   return parameters
 }
@@ -111,6 +111,8 @@ export async function discoverArbitrum(discoveryEngine: DiscoveryEngine) {
           'getNode',
           'getNodeHash',
         ],
+        '0xe5896783a2F463446E1f624e64Aa6836BE4C6f58': ['challenges'],
+        '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840': ['spent', 'isSpent'],
       },
     },
   )

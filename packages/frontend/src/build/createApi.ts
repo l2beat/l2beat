@@ -31,15 +31,6 @@ export function createApi(
     if (projectTvlData) {
       urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
     }
-
-    const projectActivityData =
-      activityApiResponse.projects[project.id.toString()]
-    if (projectActivityData) {
-      urlCharts.set(
-        `${project.display.slug}-activity`,
-        getCompatibleApi(projectActivityData),
-      )
-    }
   }
 
   if (activityApiResponse.ethereum) {
@@ -63,18 +54,6 @@ export function createApi(
         )
       }
     }
-  }
-
-  urlCharts.set(
-    'scaling-activity',
-    getCompatibleApi(activityApiResponse.combined),
-  )
-
-  if (activityApiResponse.ethereum) {
-    urlCharts.set(
-      'ethereum-activity',
-      getCompatibleApi(activityApiResponse.ethereum),
-    )
   }
 
   outputCharts(urlCharts)
@@ -111,27 +90,4 @@ function getActivityChart(
       }),
     },
   }
-}
-
-function getCompatibleApi(activityApiChart: ActivityApiChart): TvlApiCharts {
-  return {
-    hourly: {
-      types: ['timestamp', 'tps', ''],
-      data: activityApiChart.data.map((d) => [d[0], getTps(d[1]), 0]),
-    },
-    sixHourly: {
-      types: ['timestamp', 'tps', ''],
-      data: activityApiChart.data.map((d) => [d[0], getTps(d[1]), 0]),
-    },
-    daily: {
-      types: ['timestamp', 'tps', ''],
-      data: activityApiChart.data.map((d) => [d[0], getTps(d[1]), 0]),
-    },
-  }
-}
-
-function getTps(txCount: number): number {
-  const SECONDS_IN_A_DAY = 24 * 60 * 60
-
-  return +(txCount / SECONDS_IN_A_DAY).toFixed(2)
 }
