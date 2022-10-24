@@ -1,9 +1,6 @@
 import { providers } from 'ethers'
 
-import {
-  getEip1967Admin,
-  getEip1967Implementation,
-} from '../../../common/eip1967'
+import { Eip1967Proxy } from '../../../common/proxies/Eip1967Proxy'
 import { ZkSyncGovernance, ZkSyncGovernance__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -19,12 +16,8 @@ export async function getGovernance(
   return {
     name: 'Governance',
     address: governance.address,
-    upgradeability: {
-      type: 'proxy',
-      implementation: await getEip1967Implementation(provider, governance),
-    },
+    upgradeability: await Eip1967Proxy.getUpgradeability(provider, governance),
     values: {
-      admin: await getEip1967Admin(provider, governance),
       validators: await getValidators(governance),
       networkGovernor: await governance.networkGovernor(),
       tokenGovernance: await governance.tokenGovernance(),

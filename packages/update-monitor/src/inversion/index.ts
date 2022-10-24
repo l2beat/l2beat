@@ -44,7 +44,7 @@ export function invertAndPrint(project: ProjectParameters) {
   }
 
   for (const contract of project.contracts) {
-    for (const [key, value] of Object.entries(contract.values)) {
+    for (const [key, value] of Object.entries(contract.values ?? {})) {
       if (Array.isArray(value)) {
         for (const [i, entry] of value.entries()) {
           add(`${key}[${i}]`, entry, contract.name, contract.address)

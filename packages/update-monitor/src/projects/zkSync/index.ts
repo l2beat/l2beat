@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
-import { getSimpleEip1967Proxy } from '../../common/getSimpleEip1967Proxy'
-import { getGnosisSafe } from '../../common/gnosisSafe'
+import { Eip1967Proxy } from '../../common/proxies/Eip1967Proxy'
+import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { verify } from '../../verify/verify'
@@ -22,9 +22,9 @@ export async function getZkSyncParameters(
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
       getGovernance(provider),
-      getSimpleEip1967Proxy(provider, addresses.verifier, 'Verifier'),
+      Eip1967Proxy.getContract(provider, addresses.verifier, 'Verifier'),
       getTokenGovernance(provider),
-      getGnosisSafe(provider, addresses.multisig, 'Multisig'),
+      GnosisSafe.getContract(provider, addresses.multisig, 'Multisig'),
     ]),
   }
   verify(parameters, [
@@ -33,9 +33,9 @@ export async function getZkSyncParameters(
     ['UpgradeGatekeeper.managedContracts[2]', 'zkSync'],
     ['UpgradeGatekeeper.mainContract', 'zkSync'],
     ['UpgradeGatekeeper.master', 'Multisig'],
-    ['Governance.admin', 'UpgradeGatekeeper'],
-    ['Verifier.admin', 'UpgradeGatekeeper'],
-    ['zkSync.admin', 'UpgradeGatekeeper'],
+    ['Governance.upgradeability.admin', 'UpgradeGatekeeper'],
+    ['Verifier.upgradeability.admin', 'UpgradeGatekeeper'],
+    ['zkSync.upgradeability.admin', 'UpgradeGatekeeper'],
     ['Governance.networkGovernor', 'Multisig'],
     ['Governance.tokenGovernance', 'TokenGovernance'],
   ])

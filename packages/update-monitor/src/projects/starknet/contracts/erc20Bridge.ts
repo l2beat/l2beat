@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
+import { StarkWareProxy } from '../../../common/proxies/StarkWareProxy'
 import { StarknetERC20Bridge__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 
@@ -9,19 +9,19 @@ export async function getErc20Bridge(
   address: string,
   name: string,
 ): Promise<ContractParameters> {
-  const Erc20Bridge = StarknetERC20Bridge__factory.connect(address, provider)
+  const erc20Bridge = StarknetERC20Bridge__factory.connect(address, provider)
 
   return {
     name,
     address,
-    upgradeability: {
-      type: 'proxy',
-      implementation: await getStarkWare2019Implementation(provider, address),
-    },
+    upgradeability: await StarkWareProxy.getUpgradeability(
+      provider,
+      erc20Bridge,
+    ),
     values: {
-      isFrozen: await Erc20Bridge.isFrozen(),
-      maxDeposit: (await Erc20Bridge.maxDeposit()).toNumber(),
-      maxTotalBalance: (await Erc20Bridge.maxTotalBalance()).toNumber(),
+      isFrozen: await erc20Bridge.isFrozen(),
+      maxDeposit: (await erc20Bridge.maxDeposit()).toNumber(),
+      maxTotalBalance: (await erc20Bridge.maxTotalBalance()).toNumber(),
     },
   }
 }
