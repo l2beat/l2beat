@@ -27,6 +27,9 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     this.deleteAll = this.wrapDelete(this.deleteAll)
     this.getDailyCountsByProject = this.wrapGet(this.getDailyCountsByProject)
     this.getGapsByProject = this.wrapGet(this.getGapsByProject)
+    this.getGapsAndBoundariesByProject = this.wrapAny(
+      this.getGapsAndBoundariesByProject,
+    )
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -52,7 +55,9 @@ export class StarkexTransactionCountRepository extends BaseRepository {
   async getDailyCountsByProject(
     projectId: ProjectId,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
-    const { boundaries, gaps } = await this.getGapsAndBoundaries(projectId)
+    const { boundaries, gaps } = await this.getGapsAndBoundariesByProject(
+      projectId,
+    )
     const tipDay = extractTipNumber(gaps, boundaries)
     if (!tipDay) {
       return []
@@ -73,11 +78,13 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     first: number,
     last: number,
   ): Promise<Gap[]> {
-    const { boundaries, gaps } = await this.getGapsAndBoundaries(projectId)
+    const { boundaries, gaps } = await this.getGapsAndBoundariesByProject(
+      projectId,
+    )
     return toExpandedGaps(first, last, gaps, boundaries)
   }
 
-  private async getGapsAndBoundaries(projectId: ProjectId): Promise<{
+  private async getGapsAndBoundariesByProject(projectId: ProjectId): Promise<{
     gaps: Gap[]
     boundaries?: Boundaries
   }> {

@@ -29,8 +29,12 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.getDailyCountsByProject = this.wrapGet(this.getDailyCountsByProject)
     this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
     this.getGapsByProject = this.wrapGet(this.getGapsByProject)
-    this.findTipByProject = this.wrapFind(this.findTipByProject)
     this.refreshProjectTip = this.wrapAny(this.refreshProjectTip)
+    this.getGapsAndBoundaries = this.wrapAny(this.getGapsAndBoundaries)
+    this.findTipByProject = this.wrapFind(this.findTipByProject)
+    this.updateProjectTipByBlockNumber = this.wrapAny(
+      this.updateProjectTipByBlockNumber,
+    )
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 

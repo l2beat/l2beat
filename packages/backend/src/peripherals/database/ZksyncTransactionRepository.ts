@@ -28,8 +28,10 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
     this.getDailyCounts = this.wrapGet(this.getDailyCounts)
     this.getGaps = this.wrapGet(this.getGaps)
-    this.findTip = this.wrapFind(this.findTip)
     this.refreshTip = this.wrapAny(this.refreshTip)
+    this.getGapsAndBoundaries = this.wrapAny(this.getGapsAndBoundaries)
+    this.findTip = this.wrapFind(this.findTip)
+    this.updateTipByBlockNumber = this.wrapAny(this.updateTipByBlockNumber)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
