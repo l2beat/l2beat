@@ -113,7 +113,7 @@ export const opticsV2: Bridge = {
           type: 'Beacon',
           beacon: '0x101a39eA1143cb252fc8093847399046fc35Db89',
           beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0xfc6E146384b5c65f372d5b20537F3e8727aD3723,',
+          implementation: '0xfc6E146384b5c65f372d5b20537F3e8727aD3723',
         },
       },
       {
@@ -125,7 +125,7 @@ export const opticsV2: Bridge = {
           type: 'Beacon',
           beacon: '0xA734EDE8229970776e1B68085D579b6b6E97dAd4',
           beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58,',
+          implementation: '0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58',
         },
       },
       {
@@ -159,7 +159,7 @@ export const opticsV2: Bridge = {
           type: 'Beacon',
           beacon: '0x4d89F34dB307015F8002F97c1d100d84e3AFb76c',
           beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0xe552861e90a42ddDC66b508A18a85bCEAbFcB835,',
+          implementation: '0xe552861e90a42ddDC66b508A18a85bCEAbFcB835',
         },
       },
     ],

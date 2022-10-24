@@ -118,7 +118,7 @@ export const nomad: Bridge = {
           type: 'Beacon',
           beacon: '0x063e871f8DB991CEAd34B557A00B157B360084cc',
           beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C,',
+          implementation: '0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C',
         },
       },
       {
@@ -130,7 +130,7 @@ export const nomad: Bridge = {
           type: 'Beacon',
           beacon: '0x0876dFe4AcAe0e1c0a43302716483f5752298b71',
           beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0xb92336759618f55bd0f8313bd843604592e27bd8,',
+          implementation: '0xb92336759618f55bd0f8313bd843604592e27bd8',
         },
       },
       {
@@ -159,7 +159,7 @@ export const nomad: Bridge = {
           type: 'Beacon',
           beacon: '0x4D5ff8A01ed833E11Aba43821D2881A5F2911F98',
           beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0xa7E4Fea3c1468D6C1A3A77e21e6e43Daed855C1b,',
+          implementation: '0xa7E4Fea3c1468D6C1A3A77e21e6e43Daed855C1b',
         },
       },
       {
@@ -175,7 +175,7 @@ export const nomad: Bridge = {
           type: 'Beacon',
           beacon: '0x67833a48b3F509d4252ac2c19cd604556eD6c981',
           beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0x569D80f7FC17316B4C83f072b92EF37B72819DE0,',
+          implementation: '0x569D80f7FC17316B4C83f072b92EF37B72819DE0',
         },
       },
     ],
