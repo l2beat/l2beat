@@ -14,7 +14,10 @@ export const cBridge: Bridge = {
     links: {
       websites: ['https://www.celer.network/'],
       apps: ['https://cbridge.celer.network/'],
-      explorers: ['https://cbridge-analytics.celer.network/'],
+      explorers: [
+        'https://cbridge-analytics.celer.network/',
+        'https://celerscan.com/',
+      ],
       documentation: ['https://cbridge-docs.celer.network/'],
       repositories: ['https://github.com/celer-network'],
       socialMedia: [
