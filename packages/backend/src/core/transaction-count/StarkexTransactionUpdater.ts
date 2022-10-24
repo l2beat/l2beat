@@ -104,8 +104,10 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    return Promise.resolve({
+    const fullySyncedTip = (await this.getDailyCounts()).at(-1)
+    return {
       workQueue: this.daysQueue.getStats(),
-    })
+      fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
+    }
   }
 }
