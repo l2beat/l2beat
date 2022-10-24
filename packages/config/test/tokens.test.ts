@@ -4,6 +4,7 @@ import { expect } from 'earljs'
 import { Contract, providers, utils } from 'ethers'
 
 import { tokenList } from '../src/tokens'
+import { config } from './config'
 
 describe('tokens', () => {
   const addresses = tokenList.map((x) => x.address)
@@ -50,7 +51,10 @@ describe('tokens', () => {
     )
 
     before('fetch metadata', async () => {
-      const provider = new providers.AlchemyProvider('mainnet')
+      const provider = new providers.AlchemyProvider(
+        'mainnet',
+        config.alchemyApiKey,
+      )
       const contract = new Contract(MULTICALL_ADDRESS, CODER, provider)
 
       const calls = checkedTokens.flatMap((x) =>

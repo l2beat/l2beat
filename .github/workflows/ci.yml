@@ -33,6 +33,7 @@ jobs:
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+          CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
 
   lint:
     runs-on: ubuntu-latest
