@@ -74,7 +74,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </li>
             </ul>
           )}
-          <HorizontalBar />
+          <HorizontalBar className="my-6" />
           <ul className="font-medium flex flex-col gap-4">
             <li>
               <OutLink href={props.forumLink}>Forum</OutLink>
@@ -86,7 +86,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               <a href="/faq">FAQ</a>
             </li>
           </ul>
-          <HorizontalBar />
+          <HorizontalBar className="my-6" />
           <ul className="flex gap-4 mb-12">
             <SocialLinks {...props.socialLinks} />
           </ul>

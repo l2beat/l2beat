@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React from 'react'
 
 import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
@@ -13,11 +14,18 @@ export function LinkSectionLink({ href, social }: Props) {
     const parsed = parseSocial(href)
     return (
       <OutLink
-        className="LinkSection-SocialLink text-link underline"
+        className={cx(
+          'text-link',
+          'flex gap-1 items-center',
+          'rounded-md mt-1 first:mt-0',
+        )}
         href={href}
       >
         {parsed.platform ? (
-          <ProductIcon product={parsed.platform} />
+          <ProductIcon
+            className="fill-link w-[1em] h-[1em] left-0"
+            product={parsed.platform}
+          />
         ) : (
           <GlobeIcon />
         )}
