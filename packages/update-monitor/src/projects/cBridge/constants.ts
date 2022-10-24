@@ -1,3 +1,4 @@
 export const addresses = {
   cBridge: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
+  governance: '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575',
 }
