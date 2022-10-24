@@ -90,25 +90,12 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    const [boundaries, gaps, latestBlock] = await Promise.all([
-      this.blockTransactionCountRepository.findBoundariesByProject(
-        this.projectId,
-      ),
-      this.blockTransactionCountRepository.getGapsByProject(this.projectId),
-      this.rpcClient.getBlockNumber(),
-    ])
-    this.latestBlock = Number(latestBlock)
-
-    if (!boundaries) {
-      gaps.push([this.startBlock, this.latestBlock])
-    } else {
-      if (boundaries.max < this.latestBlock) {
-        gaps.push([boundaries.max + 1, this.latestBlock])
-      }
-      if (boundaries.min > this.startBlock) {
-        gaps.push([this.startBlock, boundaries.min - 1])
-      }
-    }
+    this.latestBlock = Number(await this.rpcClient.getBlockNumber())
+    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
+      this.projectId,
+      this.startBlock,
+      this.latestBlock,
+    )
 
     enqueueBlockLoop: for (const [start, end] of gaps) {
       for (let i = start; i <= end; i++) {
@@ -129,16 +116,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    const storedTip =
-      await this.blockTransactionCountRepository.findTipByProject(
-        this.projectId,
-      )
     const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
       latestBlock: this.latestBlock?.toString() ?? null,
-      storedTip: storedTip?.timestamp.toDate().toISOString() ?? null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }

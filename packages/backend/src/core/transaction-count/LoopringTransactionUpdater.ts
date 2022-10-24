@@ -75,25 +75,12 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    const [boundaries, gaps, latestBlock] = await Promise.all([
-      this.blockTransactionCountRepository.findBoundariesByProject(
-        this.projectId,
-      ),
-      this.blockTransactionCountRepository.getGapsByProject(this.projectId),
-      this.loopringClient.getFinalizedBlockNumber(),
-    ])
-    this.latestBlock = latestBlock
-
-    if (!boundaries) {
-      gaps.push([1, this.latestBlock])
-    } else {
-      if (boundaries.max < this.latestBlock) {
-        gaps.push([boundaries.max + 1, this.latestBlock])
-      }
-      if (boundaries.min > 1) {
-        gaps.push([1, boundaries.min - 1])
-      }
-    }
+    this.latestBlock = await this.loopringClient.getFinalizedBlockNumber()
+    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
+      this.projectId,
+      1,
+      this.latestBlock,
+    )
 
     for (const [start, end] of gaps) {
       for (let i = start; i <= end; i++) {
@@ -111,15 +98,10 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    const storedTip =
-      await this.blockTransactionCountRepository.findTipByProject(
-        this.projectId,
-      )
     const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock?.toString() ?? null,
-      storedTip: storedTip?.timestamp.toDate().toISOString() ?? null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }

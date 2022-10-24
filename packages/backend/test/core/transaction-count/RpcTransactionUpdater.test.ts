@@ -19,10 +19,11 @@ describe(RpcTransactionUpdater.name, () => {
       })
       const blockCountTransactionRepository =
         mock<BlockTransactionCountRepository>({
-          getGapsByProject: async () => [[2, 2]],
-          findBoundariesByProject: async () => ({ min: 1, max: 4 }),
+          getGapsByProject: async () => [
+            [2, 2],
+            [5, 5],
+          ],
           add: async () => '',
-          findTipByProject: async () => undefined,
         })
       const clock = mock<Clock>({
         onNewHour: (callback) => {

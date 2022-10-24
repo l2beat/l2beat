@@ -80,33 +80,17 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started')
-
     await this.blockQueue.waitTilEmpty()
-
-    const [boundaries, gaps, latestBlock] = await Promise.all([
-      this.zksyncTransactionRepository.findBoundaries(),
-      this.zksyncTransactionRepository.getGaps(),
-      this.zksyncClient.getLatestBlock(),
-    ])
-    this.latestBlock = latestBlock
-
-    if (!boundaries) {
-      gaps.push([1, this.latestBlock])
-    } else {
-      if (boundaries.max < this.latestBlock) {
-        gaps.push([boundaries.max + 1, this.latestBlock])
-      }
-      if (boundaries.min > 1) {
-        gaps.push([1, boundaries.min - 1])
-      }
-    }
-
+    this.latestBlock = await this.zksyncClient.getLatestBlock()
+    const gaps = await this.zksyncTransactionRepository.getGaps(
+      1,
+      this.latestBlock,
+    )
     for (const [start, end] of gaps) {
       for (let i = start; i <= end; i++) {
         this.blockQueue.addToBack(i)
       }
     }
-
     this.logger.info('Update enqueued')
   }
 
@@ -115,12 +99,10 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    const storedTip = await this.zksyncTransactionRepository.findTip()
     const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
-      storedTip: storedTip?.timestamp.toDate().toISOString() ?? null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }

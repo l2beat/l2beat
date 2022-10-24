@@ -26,23 +26,32 @@ describe(StarkexTransactionCountRepository.name, () => {
     StarkexTransactionCountRepository.prototype.getGapsByProject.name,
     () => {
       it('works with no data', async () => {
-        expect(await repository.getGapsByProject(PROJECT_A)).toEqual([])
+        expect(await repository.getGapsByProject(PROJECT_A, 1, 5)).toEqual([
+          [1, 5],
+        ])
       })
 
       it('finds gaps with a single project', async () => {
-        const maxNumber = 1000
-        const numbers = Array.from({ length: 200 }, () =>
-          Math.floor(Math.random() * maxNumber),
+        const min = 100
+        const max = 400
+        const total = (max - min) / 2
+        const first = min - 10
+        const last = max + 10
+
+        const numbers = Array.from({ length: total }, () =>
+          Math.floor(Math.random() * (max - min) + min),
         ).filter((x, i, a) => a.indexOf(x) === i)
 
-        numbers.map((number) =>
-          fakeTransactionCount({
-            timestamp: UnixTime.fromDays(number),
-            projectId: PROJECT_A,
-          }),
+        await repository.addMany(
+          numbers.map((number) =>
+            fakeTransactionCount({
+              projectId: PROJECT_A,
+              timestamp: UnixTime.fromDays(number),
+            }),
+          ),
         )
 
-        const gaps = await repository.getGapsByProject(PROJECT_A)
+        const gaps = await repository.getGapsByProject(PROJECT_A, first, last)
 
         for (const [start, end] of gaps) {
           for (let i = start; i <= end; i++) {
@@ -75,74 +84,15 @@ describe(StarkexTransactionCountRepository.name, () => {
           }),
         ])
 
-        expect(await repository.getGapsByProject(PROJECT_A)).toEqual([[1, 9]])
-        expect(await repository.getGapsByProject(PROJECT_B)).toEqual([[21, 99]])
-      })
-    },
-  )
-
-  describe(
-    StarkexTransactionCountRepository.prototype.findBoundariesByProject.name,
-    () => {
-      it('works with no data', async () => {
-        expect(
-          await repository.findBoundariesByProject(PROJECT_A),
-        ).not.toBeDefined()
-      })
-
-      it('returns min and max for single project', async () => {
-        await repository.addMany([
-          fakeTransactionCount({
-            projectId: PROJECT_A,
-            timestamp: UnixTime.fromDays(1),
-          }),
-          fakeTransactionCount({
-            projectId: PROJECT_A,
-            timestamp: UnixTime.fromDays(3),
-          }),
-          fakeTransactionCount({
-            projectId: PROJECT_A,
-            timestamp: UnixTime.fromDays(5),
-          }),
+        expect(await repository.getGapsByProject(PROJECT_A, 0, 15)).toEqual([
+          [1, 9],
+          [12, 15],
         ])
-
-        const boundaries = await repository.findBoundariesByProject(PROJECT_A)
-
-        expect(boundaries).toEqual({ min: 1, max: 5 })
-      })
-
-      it('returns min and max with multiple projects', async () => {
-        await repository.addMany([
-          fakeTransactionCount({
-            projectId: PROJECT_A,
-            timestamp: UnixTime.fromDays(0),
-          }),
-          fakeTransactionCount({
-            projectId: PROJECT_A,
-            timestamp: UnixTime.fromDays(10),
-          }),
-          fakeTransactionCount({
-            projectId: PROJECT_A,
-            timestamp: UnixTime.fromDays(11),
-          }),
-          fakeTransactionCount({
-            projectId: PROJECT_B,
-            timestamp: UnixTime.fromDays(100),
-          }),
-          fakeTransactionCount({
-            projectId: PROJECT_B,
-            timestamp: UnixTime.fromDays(20),
-          }),
+        expect(await repository.getGapsByProject(PROJECT_B, 0, 120)).toEqual([
+          [0, 19],
+          [21, 99],
+          [101, 120],
         ])
-
-        expect(await repository.findBoundariesByProject(PROJECT_A)).toEqual({
-          min: 0,
-          max: 11,
-        })
-        expect(await repository.findBoundariesByProject(PROJECT_B)).toEqual({
-          min: 20,
-          max: 100,
-        })
       })
     },
   )

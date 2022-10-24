@@ -16,10 +16,11 @@ describe(ZksyncTransactionUpdater.name, () => {
         getTransactionsInBlock: async () => [],
       })
       const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
-        getGaps: async () => [[2, 2]],
-        findBoundaries: async () => ({ min: 1, max: 4 }),
+        getGaps: async () => [
+          [2, 2],
+          [5, 5],
+        ],
         addMany: async () => 0,
-        findTip: async () => undefined,
       })
       const clock = mock<Clock>({
         onNewHour: (callback) => {
@@ -36,6 +37,9 @@ describe(ZksyncTransactionUpdater.name, () => {
       zksyncTransactionUpdater.start()
 
       await waitForExpect(() => {
+        expect(zksyncTransactionRepository.getGaps).toHaveBeenCalledExactlyWith(
+          [[1, 5]],
+        )
         expect(zksyncClient.getTransactionsInBlock).toHaveBeenCalledExactlyWith(
           [[2], [5]],
         )

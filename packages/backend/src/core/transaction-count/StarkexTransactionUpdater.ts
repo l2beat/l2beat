@@ -76,32 +76,17 @@ export class StarkexTransactionUpdater implements TransactionCounter {
 
     await this.daysQueue.waitTilEmpty()
 
-    const [boundaries, gaps] = await Promise.all([
-      this.starkexTransactionCountRepository.findBoundariesByProject(
-        this.projectId,
-      ),
-      this.starkexTransactionCountRepository.getGapsByProject(this.projectId),
-    ])
-
-    // Because starkex API operates on days (unix_timestamp / 86400)
-    // it is easier to loop through all days we want to update.
     const lastDay = this.clock
       .getLastHour()
-      // Delay to make sure that API's data is ready
       .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
       .toStartOf('day')
       .toDays()
 
-    if (!boundaries) {
-      gaps.push([this.startDay, lastDay])
-    } else {
-      if (boundaries.max < lastDay) {
-        gaps.push([boundaries.max + 1, lastDay])
-      }
-      if (boundaries.min > this.startDay) {
-        gaps.push([this.startDay, boundaries.min - 1])
-      }
-    }
+    const gaps = await this.starkexTransactionCountRepository.getGapsByProject(
+      this.projectId,
+      this.startDay,
+      lastDay,
+    )
 
     for (const [start, end] of gaps) {
       for (let i = start; i <= end; i++) {
@@ -119,12 +104,8 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   }
 
   async getStatus() {
-    const tip = await this.starkexTransactionCountRepository.findTipByProject(
-      this.projectId,
-    )
-    return {
+    return Promise.resolve({
       workQueue: this.daysQueue.getStats(),
-      fullySyncedTip: tip?.timestamp.toDate().toISOString() ?? null,
-    }
+    })
   }
 }

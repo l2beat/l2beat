@@ -26,22 +26,32 @@ describe(BlockTransactionCountRepository.name, () => {
     BlockTransactionCountRepository.prototype.getGapsByProject.name,
     () => {
       it('works with no data', async () => {
-        expect(await repository.getGapsByProject(PROJECT_A)).toEqual([])
+        expect(await repository.getGapsByProject(PROJECT_A, 1, 5)).toEqual([
+          [1, 5],
+        ])
       })
 
       it('finds gaps with a single project', async () => {
-        const maxNumber = 1000
-        const numbers = Array.from({ length: 200 }, () =>
-          Math.floor(Math.random() * maxNumber),
+        const min = 100
+        const max = 400
+        const total = (max - min) / 2
+        const first = min - 10
+        const last = max + 10
+
+        const numbers = Array.from({ length: total }, () =>
+          Math.floor(Math.random() * (max - min) + min),
         ).filter((x, i, a) => a.indexOf(x) === i)
 
         await repository.addMany(
           numbers.map((number) =>
-            fakeTransactionCount({ blockNumber: number, projectId: PROJECT_A }),
+            fakeTransactionCount({
+              projectId: PROJECT_A,
+              blockNumber: number,
+            }),
           ),
         )
 
-        const gaps = await repository.getGapsByProject(PROJECT_A)
+        const gaps = await repository.getGapsByProject(PROJECT_A, first, last)
 
         for (const [start, end] of gaps) {
           for (let i = start; i <= end; i++) {
@@ -60,55 +70,14 @@ describe(BlockTransactionCountRepository.name, () => {
           fakeTransactionCount({ blockNumber: 4, projectId: PROJECT_B }),
         ])
 
-        expect(await repository.getGapsByProject(PROJECT_A)).toEqual([
+        expect(await repository.getGapsByProject(PROJECT_A, 0, 8)).toEqual([
           [2, 2],
           [4, 5],
+          [7, 8],
         ])
-        expect(await repository.getGapsByProject(PROJECT_B)).toEqual([[1, 3]])
-      })
-    },
-  )
-
-  describe(
-    BlockTransactionCountRepository.prototype.findBoundariesByProject.name,
-    () => {
-      it('works with no data', async () => {
-        expect(
-          await repository.findBoundariesByProject(PROJECT_A),
-        ).not.toBeDefined()
-      })
-
-      it('returns min and max for single project', async () => {
-        await repository.addMany([
-          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
+        expect(await repository.getGapsByProject(PROJECT_B, 0, 4)).toEqual([
+          [1, 3],
         ])
-
-        const boundaries = await repository.findBoundariesByProject(PROJECT_A)
-
-        expect(boundaries).toEqual({ min: 0, max: 6 })
-      })
-
-      it('returns min and max with multiple projects', async () => {
-        await repository.addMany([
-          fakeTransactionCount({ blockNumber: 0, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 1, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 3, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 6, projectId: PROJECT_A }),
-          fakeTransactionCount({ blockNumber: 2, projectId: PROJECT_B }),
-          fakeTransactionCount({ blockNumber: 4, projectId: PROJECT_B }),
-        ])
-
-        expect(await repository.findBoundariesByProject(PROJECT_A)).toEqual({
-          min: 0,
-          max: 6,
-        })
-        expect(await repository.findBoundariesByProject(PROJECT_B)).toEqual({
-          min: 2,
-          max: 4,
-        })
       })
     },
   )

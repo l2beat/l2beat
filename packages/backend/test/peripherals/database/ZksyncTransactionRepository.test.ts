@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
+import { range } from 'lodash'
 
 import {
   ZksyncTransactionRecord,
@@ -18,45 +19,38 @@ describe(ZksyncTransactionRepository.name, () => {
 
   describe(ZksyncTransactionRepository.prototype.getGaps.name, () => {
     it('works with no data', async () => {
-      expect(await repository.getGaps()).toEqual([])
+      expect(await repository.getGaps(1, 5)).toEqual([[1, 5]])
     })
 
     it('finds gaps', async () => {
-      const maxNumber = 1000
-      const numbers = Array.from({ length: 200 }, () =>
-        Math.floor(Math.random() * maxNumber),
+      const min = 100
+      const max = 400
+      const total = (max - min) / 2
+      const first = min - 10
+      const last = max + 10
+
+      const numbers = Array.from({ length: total }, () =>
+        Math.floor(Math.random() * (max - min) + min),
       ).filter((x, i, a) => a.indexOf(x) === i)
 
       await repository.addMany(
         numbers.map((number) => fakeRecord({ blockNumber: number })),
       )
 
-      const gaps = await repository.getGaps()
+      const gaps = await repository.getGaps(first, last)
 
+      const inGaps = []
       for (const [start, end] of gaps) {
         for (let i = start; i <= end; i++) {
-          expect(numbers.includes(i)).toEqual(false)
+          inGaps.push(i)
         }
       }
-    })
-  })
 
-  describe(ZksyncTransactionRepository.prototype.findBoundaries.name, () => {
-    it('works with no data', async () => {
-      expect(await repository.findBoundaries()).not.toBeDefined()
-    })
-
-    it('returns min and max', async () => {
-      await repository.addMany([
-        fakeRecord({ blockNumber: 1 }),
-        fakeRecord({ blockNumber: 3 }),
-        fakeRecord({ blockNumber: 6 }),
-        fakeRecord({ blockNumber: 100 }),
-      ])
-
-      const boundaries = await repository.findBoundaries()
-
-      expect(boundaries).toEqual({ min: 1, max: 100 })
+      const inGapsAndStored = inGaps.concat(numbers)
+      const fullRange = range(first, last + 1)
+      expect(inGapsAndStored.sort((a, b) => a - b)).toEqual(
+        fullRange.sort((a, b) => a - b),
+      )
     })
   })
 

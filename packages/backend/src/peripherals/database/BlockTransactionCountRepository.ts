@@ -2,8 +2,15 @@ import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { BlockTransactionCountRow } from 'knex/types/tables'
 
+import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  Boundaries,
+  extractTipNumber,
+  Gap,
+  toExpandedGaps,
+} from './transactionCountTip'
 
 export interface BlockTransactionCountRecord {
   timestamp: UnixTime
@@ -19,13 +26,11 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.findBoundariesByProject = this.wrapFind(this.findBoundariesByProject)
     this.getDailyCountsByProject = this.wrapGet(this.getDailyCountsByProject)
     this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
     this.getGapsByProject = this.wrapGet(this.getGapsByProject)
     this.findTipByProject = this.wrapFind(this.findTipByProject)
     this.refreshProjectTip = this.wrapAny(this.refreshProjectTip)
-    this.findFreshTipByProject = this.wrapFind(this.findFreshTipByProject)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -47,20 +52,6 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const knex = await this.knex()
     await knex('transactions.block_tip').delete()
     return await knex('transactions.block').delete()
-  }
-
-  async findBoundariesByProject(
-    projectId: ProjectId,
-  ): Promise<{ min: number; max: number } | undefined> {
-    const knex = await this.knex()
-    const row = (await knex('transactions.block')
-      .min('block_number')
-      .max('block_number')
-      .where('project_id', projectId.toString())
-      .first()) as { min: null | number; max: null | number }
-    return row.min !== null && row.max !== null
-      ? { min: row.min, max: row.max }
-      : undefined
   }
 
   async getDailyCountsByProject(
@@ -85,28 +76,60 @@ export class BlockTransactionCountRepository extends BaseRepository {
     await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }
 
-  async getGapsByProject(projectId: ProjectId): Promise<[number, number][]> {
+  async getGapsByProject(
+    projectId: ProjectId,
+    first: number,
+    last: number,
+  ): Promise<[number, number][]> {
+    const { boundaries, gaps } = await this.refreshProjectTip(projectId)
+    return toExpandedGaps(first, last, gaps, boundaries)
+  }
+
+  private async refreshProjectTip(projectId: ProjectId) {
+    const { boundaries, gaps } = await this.getGapsAndBoundaries(projectId)
+    const tipBlockNumber = extractTipNumber(gaps, boundaries)
+    await this.updateProjectTipByBlockNumber(projectId, tipBlockNumber)
+    return { boundaries, gaps }
+  }
+
+  private async getGapsAndBoundaries(projectId: ProjectId): Promise<{
+    gaps: Gap[]
+    boundaries?: Boundaries
+  }> {
     const knex = await this.knex()
-    const tip = await this.refreshProjectTip(projectId)
+    const tip = await this.findTipByProject(projectId)
     const { rows } = (await knex.raw(
       `
-      SELECT block_number + 1 start, next - 1 end
+      SELECT NULL prev, min(block_number) next FROM transactions.block WHERE project_id = :projectId
+      UNION
+      SELECT block_number prev, next
       FROM (
         SELECT
           block_number,
           lead(block_number) over (order by block_number) next
-        FROM transactions.block where block_number >= :blockNumber AND project_id = :projectId
+        FROM transactions.block WHERE block_number >= :blockNumber AND project_id = :projectId
       ) with_lead
-      WHERE next <> block_number + 1`,
+      WHERE next > block_number + 1 OR next IS NULL
+      ORDER BY next ASC`,
       {
-        projectId: projectId.toString(),
         blockNumber: tip?.blockNumber ?? 0,
+        projectId: projectId.toString(),
       },
-    )) as unknown as { rows: { start: number; end: number }[] }
-    return rows.map(({ start, end }) => [start, end])
+    )) as unknown as { rows: { prev: number | null; next: number | null }[] }
+
+    const min = rows.splice(0, 1)[0]?.next
+    const max = rows.splice(-1, 1)[0]?.prev
+
+    return {
+      gaps: rows.map(({ prev, next }) => {
+        assert(prev !== null && next !== null)
+        return [prev + 1, next - 1]
+      }),
+      boundaries: min !== null && max !== null ? { min, max } : undefined,
+    }
   }
 
-  async findTipByProject(projectId: ProjectId) {
+  private async findTipByProject(projectId: ProjectId) {
     const knex = await this.knex()
     const row = await knex('transactions.block_tip')
       .where('project_id', projectId.toString())
@@ -114,51 +137,28 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  private async refreshProjectTip(projectId: ProjectId) {
+  private async updateProjectTipByBlockNumber(
+    projectId: ProjectId,
+    blockNumber?: number,
+  ) {
     const knex = await this.knex()
-    const currentTip = await this.findTipByProject(projectId)
-    const freshTip = await this.findFreshTipByProject(
-      projectId,
-      currentTip?.blockNumber,
-    )
-
-    if (!freshTip) {
-      await knex('transactions.block_tip')
+    await knex.transaction(async (trx) => {
+      await trx('transactions.block_tip')
         .delete()
         .where('project_id', projectId.toString())
-      return undefined
-    } else {
-      await knex('transactions.block_tip')
-        .insert(toRow(freshTip))
-        .onConflict('project_id')
-        .merge(['block_number', 'unix_timestamp'])
-      return freshTip
-    }
-  }
-
-  private async findFreshTipByProject(projectId: ProjectId, scanFrom = 0) {
-    const knex = await this.knex()
-    const blockNumberQuery = knex.raw(
-      `
-      SELECT min(block_number)
-      FROM (
-        SELECT
-          block_number,
-          lead(block_number) over (order by block_number) next
-        FROM transactions.block where block_number >= :blockNumber AND project_id = :projectId
-      ) with_lead
-      WHERE next <> block_number + 1 OR next IS NULL`,
-      {
-        projectId: projectId.toString(),
-        blockNumber: scanFrom,
-      },
-    )
-    const row = await knex('transactions.block')
-      .where('project_id', projectId.toString())
-      .andWhere('block_number', blockNumberQuery.wrap('(', ')'))
-      .first()
-
-    return row ? toRecord(row) : undefined
+      if (blockNumber) {
+        await trx.raw(
+          `
+          INSERT INTO transactions.block_tip (project_id, block_number, unix_timestamp, count)
+            SELECT project_id, block_number, unix_timestamp, count
+            FROM transactions.block
+            WHERE block_number = :blockNumber AND project_id = :projectId
+            LIMIT 1
+        `,
+          { blockNumber, projectId: projectId.toString() },
+        )
+      }
+    })
   }
 }
 

@@ -13,9 +13,11 @@ describe(StarkexTransactionUpdater.name, () => {
     it('skips known blocks', async () => {
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
-          getGapsByProject: async () => [[2, 2]],
+          getGapsByProject: async () => [
+            [2, 2],
+            [5, 6],
+          ],
           add: async () => '',
-          findBoundariesByProject: async () => ({ min: 0, max: 4 }),
         })
       const starkexClient = mock<StarkexClient>({
         getDailyCount: async () => 1,
@@ -45,6 +47,9 @@ describe(StarkexTransactionUpdater.name, () => {
           [5, 'dydx'],
           [6, 'dydx'],
         ])
+        expect(
+          starkexTransactionCountRepository.getGapsByProject,
+        ).toHaveBeenCalledExactlyWith([[ProjectId('dydx'), 0, 6]])
       })
     })
   })
