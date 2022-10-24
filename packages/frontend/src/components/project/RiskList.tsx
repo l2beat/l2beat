@@ -12,11 +12,15 @@ export interface TechnologyRisk {
 }
 
 export function RiskList({ risks }: RiskList) {
+  if (risks.length === 0) {
+    return null
+  }
+
   return (
-    <ul className="bg-red-600 rounded-lg p-4">
+    <ul className="bg-red-600 rounded-lg p-4 mt-4 md:mt-6">
       {risks.map((risk, i) => (
         <li className="mt-2 first:mt-0 flex gap-3" key={i}>
-          <ShieldIcon className="inline-block fill-red-700 dark:fill-red-300" />
+          <ShieldIcon className="shrink-0 fill-red-700 dark:fill-red-300" />
           <p>
             {risk.isCritical ? (
               <>

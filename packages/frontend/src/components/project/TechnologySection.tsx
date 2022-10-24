@@ -28,7 +28,7 @@ export function TechnologySection({
   return (
     <Section title={title} id={id}>
       {items.map((item, i) => (
-        <div className="mt-4" key={i}>
+        <div className="mt-4 md:mt-6" key={i}>
           <h3 id={item.id} className="text-xl font-bold">
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
