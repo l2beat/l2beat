@@ -2,17 +2,20 @@ import { providers } from 'ethers'
 
 import { bytes32ToAddress } from '../../../common/address'
 import { getMembers } from '../../../common/utils/getMembers'
-import { CBridge } from '../../../typechain'
-import { CBridge__factory } from '../../../typechain/factories/cBridge'
+import { LiquidityNetwork } from '../../../typechain/cBridge/LiquidityNetwork'
+import { LiquidityNetwork__factory } from '../../../typechain/factories/cBridge/LiquidityNetwork__factory'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
 
 const DEPLOYED_AT = 13719989
 
-export async function getCBridge(
+export async function getLiquidityNetwork(
   provider: providers.JsonRpcProvider,
 ): Promise<ContractParameters> {
-  const cbridge = CBridge__factory.connect(addresses.cBridge, provider)
+  const cbridge = LiquidityNetwork__factory.connect(
+    addresses.liquidityNetwork,
+    provider,
+  )
 
   const delayPeriod = (await cbridge.delayPeriod()).toString()
   const epochLength = (await cbridge.epochLength()).toString()
@@ -29,8 +32,8 @@ export async function getCBridge(
   const governors = await getGovernors(provider, cbridge)
 
   return {
-    name: 'CBRidge',
-    address: addresses.cBridge,
+    name: 'LiquidityNetwork',
+    address: addresses.liquidityNetwork,
     upgradeability: {
       type: 'immutable',
     },
@@ -53,7 +56,7 @@ export async function getCBridge(
 
 async function getPausers(
   provider: providers.JsonRpcProvider,
-  cbridge: CBridge,
+  cbridge: LiquidityNetwork,
 ) {
   const pausersAddedFilter = cbridge.filters.PauserAdded()
   const logsGranted = await provider.getLogs({
@@ -76,7 +79,7 @@ async function getPausers(
 
 async function getGovernors(
   provider: providers.JsonRpcProvider,
-  cbridge: CBridge,
+  cbridge: LiquidityNetwork,
 ) {
   const governorsAddedFilter = cbridge.filters.GovernorAdded()
   const logsGranted = await provider.getLogs({
