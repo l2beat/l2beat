@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 import { readFile } from 'fs/promises'
 
-import { getSimpleEip1967Proxy } from '../../common/getSimpleEip1967Proxy'
+import { Eip1967Proxy } from '../../common/proxies/Eip1967Proxy'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
@@ -20,9 +20,13 @@ export async function getZkSwap2Parameters(
       getUpgradeGatekeeper(provider),
       getZkSync(provider),
       getGovernance(provider),
-      getSimpleEip1967Proxy(provider, addresses.verifier, 'Verifier'),
-      getSimpleEip1967Proxy(provider, addresses.verifierExit, 'VerifierExit'),
-      getSimpleEip1967Proxy(provider, addresses.pairManager, 'PairManager'),
+      Eip1967Proxy.getContract(provider, addresses.verifier, 'Verifier'),
+      Eip1967Proxy.getContract(
+        provider,
+        addresses.verifierExit,
+        'VerifierExit',
+      ),
+      Eip1967Proxy.getContract(provider, addresses.pairManager, 'PairManager'),
     ]),
   }
 }
