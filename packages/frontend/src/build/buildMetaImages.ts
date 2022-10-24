@@ -17,7 +17,7 @@ async function main() {
 
   const slugs = [...layer2s, ...bridges]
     .map((x) => x.display.slug)
-    .concat('overview-scaling', 'overview-bridges')
+    .concat('overview-scaling', 'overview-bridges', 'overview-scaling-activity')
 
   const browser = await puppeteer.launch({
     args: ['--no-sandbox'],

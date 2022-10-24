@@ -1,15 +1,16 @@
-import { TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
-import { getProps } from './getProps'
-import { MetaImage } from './MetaImage'
+import { getProps, getPropsActivity } from './getProps'
+import { ActivityMetaImage, MetaImage } from './MetaImage'
 
 export function getMetaImagePages(
   config: Config,
   tvlApiResponse: TvlApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ) {
   const included = getIncludedProjects(
     [...config.layer2s, ...config.bridges],
@@ -17,12 +18,21 @@ export function getMetaImagePages(
   )
   const scaling = getProps(tvlApiResponse, undefined, 'layers2s')
   const bridges = getProps(tvlApiResponse, undefined, 'bridges')
+  const activity = getPropsActivity(activityApiResponse)
   return [
     {
       slug: '/meta-images/overview-scaling',
       page: (
         <PageWrapper {...scaling.wrapper}>
           <MetaImage {...scaling.props} />
+        </PageWrapper>
+      ),
+    },
+    {
+      slug: '/meta-images/overview-scaling-activity',
+      page: (
+        <PageWrapper {...activity.wrapper}>
+          <ActivityMetaImage {...activity.props} />
         </PageWrapper>
       ),
     },

@@ -33,3 +33,27 @@ export function MetaImage(props: MetaImageProps) {
     </div>
   )
 }
+
+export interface ActivityMetaImageProps {
+  tpsDaily: string
+  tpsWeeklyChange: string
+  tvlEndpoint: string
+}
+
+export function ActivityMetaImage(props: ActivityMetaImageProps) {
+  const name = 'Activity'
+
+  return (
+    <div className={'MetaImage leading-[1.15] overview'}>
+      <Header
+        showTps
+        title={name}
+        titleClassName={name.length > 12 ? '!text-5xl' : undefined}
+        tpsDaily={props.tpsDaily}
+        tpsWeeklyChange={props.tpsWeeklyChange}
+      />
+      <Chart tvlEndpoint={props.tvlEndpoint} metaChart />
+      <Logo />
+    </div>
+  )
+}
