@@ -42,10 +42,10 @@ export function Chart({
       data-activity-endpoint={activityEndpoint}
       className="mt-4 sm:mt-8"
     >
-      {!metaChart && (
+      {!metaChart && hasActivity && hasTvl && (
         <div className="md:flex gap-5 md:items-center mb-4 md:mb-6">
           <h2 className="hidden md:inline text-3xl font-bold">Chart</h2>
-          {hasActivity && hasTvl && <TvlActivityToggle />}
+          <TvlActivityToggle />
         </div>
       )}
       <div className="flex flex-col gap-4">
