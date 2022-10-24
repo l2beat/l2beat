@@ -1,8 +1,13 @@
 import { providers } from 'ethers'
 
-import { CBridge__factory } from '../../../typechain'
+import { bytes32ToAddress } from '../../../common/address'
+import { getMembers } from '../../../common/utils/getMembers'
+import { CBridge } from '../../../typechain'
+import { CBridge__factory } from '../../../typechain/factories/cBridge'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
+
+const DEPLOYED_AT = 13719989
 
 export async function getCBridge(
   provider: providers.JsonRpcProvider,
@@ -20,6 +25,9 @@ export async function getCBridge(
   const ssHash = (await cbridge.ssHash()).toString()
   const triggerTime = (await cbridge.triggerTime()).toString()
 
+  const pausers = await getPausers(provider, cbridge)
+  const governors = await getGovernors(provider, cbridge)
+
   return {
     name: 'CBRidge',
     address: addresses.cBridge,
@@ -34,18 +42,57 @@ export async function getCBridge(
       noticePeriod,
       owner,
       paused,
-      resetTime,
+      resetTime, //changed when signers are reset
       ssHash, //updated when signers are updated
       triggerTime, //updated when signers are updated
+      pausers,
+      governors,
     },
   }
 }
 
-//todo 
-/*
-  *epoch volume caps
-  *epoch volumes
-  governors
-  pausers
+async function getPausers(
+  provider: providers.JsonRpcProvider,
+  cbridge: CBridge,
+) {
+  const pausersAddedFilter = cbridge.filters.PauserAdded()
+  const logsGranted = await provider.getLogs({
+    ...pausersAddedFilter,
+    fromBlock: DEPLOYED_AT,
+  })
+  const granted = logsGranted.map((l) => l.data)
 
-*/
+  const pausersRemovedFilter = cbridge.filters.PauserRemoved()
+  const logsRevoked = await provider.getLogs({
+    ...pausersRemovedFilter,
+    fromBlock: DEPLOYED_AT,
+  })
+  const revoked = logsRevoked.map((l) => l.data)
+
+  const pausers = getMembers(granted, revoked)
+
+  return pausers.map(bytes32ToAddress)
+}
+
+async function getGovernors(
+  provider: providers.JsonRpcProvider,
+  cbridge: CBridge,
+) {
+  const governorsAddedFilter = cbridge.filters.GovernorAdded()
+  const logsGranted = await provider.getLogs({
+    ...governorsAddedFilter,
+    fromBlock: DEPLOYED_AT,
+  })
+  const granted = logsGranted.map((l) => l.data)
+
+  const governorsRemovedFilter = cbridge.filters.GovernorRemoved()
+  const logsRevoked = await provider.getLogs({
+    ...governorsRemovedFilter,
+    fromBlock: DEPLOYED_AT,
+  })
+  const revoked = logsRevoked.map((l) => l.data)
+
+  const governors = getMembers(granted, revoked)
+
+  return governors.map(bytes32ToAddress)
+}

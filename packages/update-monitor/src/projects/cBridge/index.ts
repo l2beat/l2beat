@@ -3,6 +3,7 @@ import { providers } from 'ethers'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
+import { getCBridge } from './contracts/getCBridge'
 
 export const CBRIDGE_NAME = 'cBridge'
 
@@ -11,9 +12,7 @@ export async function getCBridgeParameters(
 ): Promise<ProjectParameters> {
   return {
     name: CBRIDGE_NAME,
-    contracts: await Promise.all([
-        
-    ]),
+    contracts: await Promise.all([getCBridge(provider)]),
   }
 }
 

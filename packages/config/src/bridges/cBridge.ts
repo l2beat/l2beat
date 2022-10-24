@@ -7,7 +7,7 @@ export const cBridge: Bridge = {
   type: 'bridge',
   id: ProjectId('cbridge'),
   display: {
-    name: 'cBridge V2',
+    name: 'cBridge',
     slug: 'cbridge',
     description:
       'Celer is a token-bridge that leverages the "state-guardian" aka SGN that is operated by validators running on Tendermint consensus protocol to perform cross-chain transactions.',
