@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
+import { StarkWareProxy } from '../../../common/proxies/StarkWareProxy'
 import { getStarkWareNamedStorageAddress } from '../../../common/starkWareNamedStorage'
-import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
 import { StarkNet__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -14,10 +14,7 @@ export async function getStarkNet(
   return {
     name: 'StarkNet',
     address: starkNet.address,
-    upgradeability: {
-      type: 'proxy',
-      implementation: await getStarkWare2019Implementation(provider, starkNet),
-    },
+    upgradeability: await StarkWareProxy.getUpgradeability(provider, starkNet),
     values: {
       upgradeActivationDelay: (
         await starkNet.getUpgradeActivationDelay()
