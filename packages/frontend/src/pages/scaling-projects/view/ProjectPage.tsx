@@ -28,13 +28,13 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent narrow>
+      <PageContent narrow mobileFull>
         {props.showProjectHeader ? (
           <ProjectHeader {...props.projectHeader} />
         ) : (
           <Header {...props.header} />
         )}
-        <Chart {...props.chart} />
+        <Chart {...props.chart} mobileFull />
         <ProjectDetails {...props.projectDetails} />
       </PageContent>
       <Footer narrow {...props.footer} />
