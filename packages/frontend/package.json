@@ -20,7 +20,8 @@
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6006 --no-open",
-    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{types,common,config} -recsm build --module es6) && build-storybook"
+    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{types,common,config} -recsm build --module es6) && build-storybook",
+    "storybook:screenshot": "yarn storycap --serverCmd \"npx http-server ./storybook-static -p 9001\" http://localhost:9001"
   },
   "dependencies": {
     "@l2beat/common": "*",
@@ -62,6 +63,7 @@
     "prettier": "^2.6.2",
     "sass": "^1.52.2",
     "storybook-dark-mode": "^1.1.0",
+    "storycap": "^3.1.9",
     "tailwindcss": "^3.1.0",
     "vite": "^3.0.9"
   }

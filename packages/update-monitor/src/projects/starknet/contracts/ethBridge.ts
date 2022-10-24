@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
+import { StarkWareProxy } from '../../../common/proxies/StarkWareProxy'
 import { getStarkWareNamedStorageAddress } from '../../../common/starkWareNamedStorage'
-import { getStarkWare2019Implementation } from '../../../common/starkWareProxy'
 import { EthBridge__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -14,10 +14,7 @@ export async function getEthBridge(
   return {
     name: 'EthBridge',
     address: ethBridge.address,
-    upgradeability: {
-      type: 'proxy',
-      implementation: await getStarkWare2019Implementation(provider, ethBridge),
-    },
+    upgradeability: await StarkWareProxy.getUpgradeability(provider, ethBridge),
     values: {
       upgradeActivationDelay: (
         await ethBridge.getUpgradeActivationDelay()
