@@ -1,8 +1,8 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
 import { TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
+import { getDestination } from '../../utils/getDestination'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
@@ -46,17 +46,4 @@ export function getProps(
       metadata: getPageMetadata(),
     },
   }
-}
-
-function getDestination(destinations: string[]): ProjectRiskViewEntry {
-  if (destinations.length === 0) {
-    throw new Error('Invalid destination')
-  }
-  if (destinations.length === 1) {
-    return { value: destinations[0], description: '' }
-  }
-  if (destinations.length === 2) {
-    return { value: destinations.join(', '), description: '' }
-  }
-  return { value: 'Various', description: destinations.join(',\n') }
 }

@@ -12,6 +12,10 @@ This is the shared config for the L2BEAT website. It contains layer2 definitions
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
 
+### Tests dependencies
+
+In some tests rpc calls to ethereum network are performed through Alchemy. In order to remove default mainnet url flakiness out of the equation it is possible to use a dedicated key through `CONFIG_ALCHEMY_API_KEY` environment variable (`.env` file is supported).
+
 ## Project blogs to get the news from
 
 | Project                           | Blog URL                                                 |
