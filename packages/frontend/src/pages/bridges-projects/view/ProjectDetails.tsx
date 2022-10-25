@@ -49,7 +49,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
     <main className="ProjectDetails">
       <LinkSection {...props.linkSection} />
       <NewsSection {...props.newsSection} />
-      <div className="ProjectDetails-Content">
+      <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
         <RiskSection {...props.riskSection} />
         {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
