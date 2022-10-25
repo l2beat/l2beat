@@ -7,7 +7,7 @@ import { EtherscanClient } from '../peripherals/etherscan'
 import { Clock } from './Clock'
 
 export class BlockNumberUpdater {
-  private readonly blocksByTimestamp = new Map<number, bigint>()
+  private readonly blocksByTimestamp = new Map<number, number>()
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
@@ -41,10 +41,10 @@ export class BlockNumberUpdater {
     from: UnixTime,
     to: UnixTime,
     refreshIntervalMs = 1000,
-  ): Promise<{ timestamp: UnixTime; blockNumber: bigint }[]> {
+  ): Promise<{ timestamp: UnixTime; blockNumber: number }[]> {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
-      const blocks: { timestamp: UnixTime; blockNumber: bigint }[] = []
+      const blocks: { timestamp: UnixTime; blockNumber: number }[] = []
       let noHoles = true
       for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
         const blockNumber = this.blocksByTimestamp.get(t.toNumber())

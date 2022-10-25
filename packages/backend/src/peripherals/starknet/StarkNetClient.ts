@@ -24,7 +24,7 @@ export class StarkNetClient {
 
   async getBlockNumber() {
     const block = await this.getBlock('latest')
-    return BigInt(block.number)
+    return block.number
   }
 
   async getBlock(blockNumber: number | string) {
