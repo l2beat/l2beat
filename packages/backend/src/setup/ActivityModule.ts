@@ -1,7 +1,7 @@
 import { HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import { ActivityController } from '../api/controllers/ActivityController'
+import { ActivityController } from '../api/controllers/activity/ActivityController'
 import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { Clock } from '../core/Clock'
@@ -57,13 +57,6 @@ export function getActivityModule(
     logger,
   )
 
-  const materializedViewRefresher = new MaterializedViewRefresher(
-    blockTransactionCountRepository,
-    zksyncTransactionRepository,
-    clock,
-    logger,
-  )
-
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
     config,
     blockTransactionCountRepository,
@@ -72,9 +65,29 @@ export function getActivityModule(
     logger,
   )
 
+  const loopringTransactionUpdater = new LoopringTransactionUpdater(
+    loopringClient,
+    blockTransactionCountRepository,
+    clock,
+    logger,
+    ProjectId.LOOPRING,
+    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
+  )
+
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
     config.transactionCountSync,
     blockTransactionCountRepository,
+    clock,
+    logger,
+  )
+
+  const materializedViewRefresher = new MaterializedViewRefresher(
+    blockTransactionCountRepository,
+    zksyncTransactionRepository,
+    layer2RpcTransactionUpdaters
+      .map((u) => u.projectId)
+      .concat(ProjectId.ETHEREUM)
+      .concat(ProjectId.LOOPRING),
     clock,
     logger,
   )
@@ -93,15 +106,6 @@ export function getActivityModule(
     clock,
     logger,
     { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
-  )
-
-  const loopringTransactionUpdater = new LoopringTransactionUpdater(
-    loopringClient,
-    blockTransactionCountRepository,
-    clock,
-    logger,
-    ProjectId.LOOPRING,
-    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
   )
 
   const activityController = new ActivityController(
