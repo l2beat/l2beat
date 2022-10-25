@@ -31,7 +31,8 @@ async function main() {
   )
 
   printApiInfo(tvlApiResponse, activityApiResponse)
-  sanityCheck(tvlApiResponse, activityApiResponse)
+  tvlSanityCheck(tvlApiResponse)
+  activitySanityCheck(activityApiResponse)
 
   createApi(config, tvlApiResponse, activityApiResponse)
   await renderPages(config, tvlApiResponse, activityApiResponse)
@@ -98,44 +99,27 @@ function printApiInfo(
   }
 }
 
-function sanityCheck(
-  tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse,
-) {
-  const projectsInApiTvl = Object.keys(tvlApiResponse.projects).map(ProjectId)
-  const projectsInApiActivity = Object.keys(activityApiResponse.projects).map(
-    ProjectId,
-  )
+function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
+  const projectsInApi = Object.keys(tvlApiResponse.projects).map(ProjectId)
 
-  const bridgesInApiTvl = bridges.filter((x) => projectsInApiTvl.includes(x.id))
-  const layer2sInApiTvl = layer2s.filter((x) => projectsInApiTvl.includes(x.id))
-  const layer2sInApiActivity = layer2s.filter((x) =>
-    projectsInApiActivity.includes(x.id),
-  )
+  const bridgesInApi = bridges.filter((x) => projectsInApi.includes(x.id))
+  const layer2sInApi = layer2s.filter((x) => projectsInApi.includes(x.id))
 
-  if (layer2sInApiTvl.length / layer2s.length < 0.8) {
+  if (layer2sInApi.length / layer2s.length < 0.8) {
     throw new Error(
       'The API has returned an insufficient number of layer2s tvl',
     )
   }
 
-  if (bridgesInApiTvl.length / bridges.length < 0.8) {
+  if (bridgesInApi.length / bridges.length < 0.8) {
     throw new Error(
       'The API has returned an insufficient number of bridges tvl',
     )
   }
 
-  if (layer2sInApiActivity.length / layer2s.length < 0.5) {
-    throw new Error(
-      'The API has returned an insufficient number of layer2s activity',
-    )
-  }
+  const ids = [...bridgesInApi, ...layer2sInApi].map((x) => x.id.toString())
 
-  const ids = [...bridgesInApiTvl, ...layer2sInApiTvl].map((x) =>
-    x.id.toString(),
-  )
-
-  const emptyTvlChartsExist = [
+  const emptyChartsExist = [
     tvlApiResponse.bridges,
     tvlApiResponse.layers2s,
     tvlApiResponse.combined,
@@ -146,9 +130,25 @@ function sanityCheck(
     .flatMap((x) => [x?.daily, x?.sixHourly, x?.hourly])
     .some((x) => x?.data.length === 0)
 
-  if (emptyTvlChartsExist) {
+  if (emptyChartsExist) {
     throw new Error('The API has returned some empty tvl charts')
   }
+}
+
+function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
+  const projectsInApiActivity = Object.keys(activityApiResponse.projects).map(
+    ProjectId,
+  )
+  const layer2sInApiActivity = layer2s.filter((x) =>
+    projectsInApiActivity.includes(x.id),
+  )
+
+  // TODO: uncomment after deploying activity to prod
+  // if (layer2sInApiActivity.length / layer2s.length < 0.5) {
+  //   throw new Error(
+  //     'The API has returned an insufficient number of layer2s activity',
+  //   )
+  // }
 
   const activityIds = layer2sInApiActivity.map((x) => x.id.toString())
   const emptyActivityChartsExist = [
