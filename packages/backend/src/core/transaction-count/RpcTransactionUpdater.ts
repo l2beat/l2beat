@@ -86,7 +86,9 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     this.latestBlock = await this.rpcClient.getBlockNumberAtOrBefore(
       this.clock.getLastHour(),
+      this.latestBlock,
     )
+
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
       this.startBlock,
