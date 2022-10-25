@@ -9,12 +9,12 @@ import { getProps } from './getProps'
 export function getBridgesRiskPage(
   config: Config,
   tvlApiResponse: TvlApiResponse,
-  highlightUnverifiedContracts: Record<string, boolean>,
+  verificationStatus: Record<string, boolean>,
 ) {
   const { props, wrapper } = getProps(
     config,
     tvlApiResponse,
-    highlightUnverifiedContracts,
+    verificationStatus,
   )
   return {
     slug: '/bridges/risk',

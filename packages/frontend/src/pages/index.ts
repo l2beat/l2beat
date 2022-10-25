@@ -1,6 +1,5 @@
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
-
 import { Config } from '../build/config'
+import { PagesData } from '../build/types'
 import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
@@ -14,13 +13,10 @@ import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
 
-export async function renderPages(
-  config: Config,
-  tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse,
-  highlightUnverifiedContracts: Record<string, boolean>,
-) {
+export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
+
+  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
 
   pages.push(getRiskPage(config, tvlApiResponse))
   pages.push(getTvlPage(config, tvlApiResponse))
@@ -31,9 +27,7 @@ export async function renderPages(
   pages.push(...getMetaImagePages(config, tvlApiResponse))
   if (config.features.bridges) {
     pages.push(getBridgesTvlPage(config, tvlApiResponse))
-    pages.push(
-      getBridgesRiskPage(config, tvlApiResponse, highlightUnverifiedContracts),
-    )
+    pages.push(getBridgesRiskPage(config, tvlApiResponse, verificationStatus))
     pages.push(...getBridgeProjectPages(config, tvlApiResponse))
   }
 

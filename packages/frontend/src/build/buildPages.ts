@@ -8,6 +8,7 @@ import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchActivityApi } from './fetchActivityApi'
 import { fetchTvlApi } from './fetchTvlApi'
+import { PagesData } from './types'
 
 main().catch((e) => {
   console.error(e)
@@ -33,19 +34,20 @@ async function main() {
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
 
-  const highlightUnverifiedContracts: Record<string, boolean> = {}
+  const verificationStatus: Record<string, boolean> = {}
 
   if (config.features.highlightUnverified) {
-    highlightUnverifiedContracts['Polygon PoS'] = true
+    verificationStatus['Polygon PoS'] = false
+  }
+
+  const pagesData: PagesData = {
+    tvlApiResponse,
+    activityApiResponse,
+    verificationStatus,
   }
 
   createApi(config, tvlApiResponse, activityApiResponse)
-  await renderPages(
-    config,
-    tvlApiResponse,
-    activityApiResponse,
-    highlightUnverifiedContracts,
-  )
+  await renderPages(config, pagesData)
 }
 
 function printApiInfo(tvlApiResponse: TvlApiResponse) {

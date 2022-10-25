@@ -23,7 +23,7 @@ export interface BridgesRiskViewEntry {
   validatedBy?: ProjectRiskViewEntry
   sourceUpgradeability?: ProjectRiskViewEntry
   destinationToken?: ProjectRiskViewEntry
-  highlightUnverified?: boolean
+  verificationStatus?: boolean
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
@@ -87,7 +87,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
         result.className += 'hidden '
         result['data-combined-only'] = true
       }
-      if (entry.highlightUnverified) {
+      if (entry.verificationStatus === false) {
         result.className += 'bg-red-300 '
       }
       return result
