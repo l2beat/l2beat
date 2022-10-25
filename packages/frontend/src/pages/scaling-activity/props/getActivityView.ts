@@ -47,6 +47,7 @@ function getEthereumActivityViewEntry(
   return {
     name: 'Ethereum',
     slug: 'ethereum',
+    dataSource: 'Blockchain RPC',
     ...getActivityViewEntryDetails(data),
   }
 }
