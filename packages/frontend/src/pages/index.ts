@@ -18,6 +18,7 @@ export async function renderPages(
   config: Config,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse,
+  verifiedContracts: Record<string, boolean>,
 ) {
   const pages: Page[] = []
 
@@ -30,7 +31,7 @@ export async function renderPages(
   pages.push(...getMetaImagePages(config, tvlApiResponse))
   if (config.features.bridges) {
     pages.push(getBridgesTvlPage(config, tvlApiResponse))
-    pages.push(getBridgesRiskPage(config, tvlApiResponse))
+    pages.push(getBridgesRiskPage(config, tvlApiResponse, verifiedContracts))
     pages.push(...getBridgeProjectPages(config, tvlApiResponse))
   }
 

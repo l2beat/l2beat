@@ -13,6 +13,7 @@ import { getPageMetadata } from './getPageMetadata'
 export function getProps(
   config: Config,
   tvlApiResponse: TvlApiResponse,
+  verifiedContracts: Record<string, boolean>,
 ): Wrapped<BridgesRiskPageProps> {
   const included = getIncludedProjects(
     [...config.bridges, ...config.layer2s],
@@ -31,8 +32,7 @@ export function getProps(
             slug: project.display.slug,
             warning: project.display.warning,
             category: project.technology.category,
-            //isVeirfied will be set from the function parameters
-            isVerified: false,
+            isVerified: verifiedContracts[project.display.name],
             destination: getDestination(
               project.type === 'bridge'
                 ? project.technology.destination

@@ -33,8 +33,17 @@ async function main() {
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
 
+  const verifiedContracts = {
+    'Polygon PoS': false,
+  }
+
   createApi(config, tvlApiResponse, activityApiResponse)
-  await renderPages(config, tvlApiResponse, activityApiResponse)
+  await renderPages(
+    config,
+    tvlApiResponse,
+    activityApiResponse,
+    verifiedContracts,
+  )
 }
 
 function printApiInfo(tvlApiResponse: TvlApiResponse) {
