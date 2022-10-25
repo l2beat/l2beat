@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import { range } from 'lodash'
 
+import { BlockTipRepository } from '../../../src/peripherals/database/BlockTipRepository'
 import {
   ZksyncTransactionRecord,
   ZksyncTransactionRepository,
@@ -11,7 +12,11 @@ import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(ZksyncTransactionRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new ZksyncTransactionRepository(database, Logger.SILENT)
+  const repository = new ZksyncTransactionRepository(
+    database,
+    Logger.SILENT,
+    new BlockTipRepository(database, Logger.SILENT),
+  )
 
   beforeEach(async () => {
     await repository.deleteAll()
