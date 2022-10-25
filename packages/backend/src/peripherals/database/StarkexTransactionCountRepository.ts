@@ -91,13 +91,13 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     const knex = await this.knex()
     const { rows } = (await knex.raw(
       `
-      SELECT NULL prev, min(unix_timestamp) next FROM transactions.starkex WHERE project_id = :projectId
+      SELECT NULL AS prev, min(unix_timestamp) AS next FROM transactions.starkex WHERE project_id = :projectId
       UNION
-      SELECT unix_timestamp prev, next
+      SELECT unix_timestamp AS prev, next
       FROM (
         SELECT
           unix_timestamp,
-          lead(unix_timestamp) over (order by unix_timestamp) next
+          lead(unix_timestamp) over (order by unix_timestamp) AS next
         FROM transactions.starkex where project_id = :projectId
       ) with_lead
       WHERE next > unix_timestamp + interval '24 hours' OR next IS NULL

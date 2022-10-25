@@ -104,13 +104,13 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const tip = await this.findTipByProject(projectId)
     const { rows } = (await knex.raw(
       `
-      SELECT NULL prev, min(block_number) next FROM transactions.block WHERE project_id = :projectId
+      SELECT NULL AS prev, min(block_number) AS next FROM transactions.block WHERE project_id = :projectId
       UNION
-      SELECT block_number prev, next
+      SELECT block_number AS prev, next
       FROM (
         SELECT
           block_number,
-          lead(block_number) over (order by block_number) next
+          lead(block_number) over (order by block_number) AS next
         FROM transactions.block WHERE block_number >= :blockNumber AND project_id = :projectId
       ) with_lead
       WHERE next > block_number + 1 OR next IS NULL
