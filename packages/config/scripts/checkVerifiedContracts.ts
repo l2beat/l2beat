@@ -1,139 +1,74 @@
 import { EtherscanClient, HttpClient, Logger, TaskQueue } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { config as dotenv } from 'dotenv'
-import { setTimeout as wait } from 'timers/promises'
+import { writeFile } from 'fs/promises'
 
-import {
-  Bridge,
-  bridges,
-  Layer2,
-  layer2s,
-  ProjectContracts,
-  ProjectUpgradeability,
-} from '../src'
+import { Bridge, bridges, Layer2, layer2s } from '../src'
+import { getEnv, getUniqueContractsForProject } from '../src/utils'
 
-function gatherAddressesFromUpgradeability(
-  item: ProjectUpgradeability,
-): string[] {
-  const result: string[] = []
-  switch (item.type) {
-    case 'Custom':
-    case 'CustomWithoutAdmin':
-    case 'EIP1967':
-    case 'ZeppelinOs':
-    case 'NutBerry':
-      result.push(item.implementation)
-      break
-    case 'StarkWare':
-      result.push(item.implementation)
-      if (item.callImplementation) {
-        result.push(item.callImplementation)
-      }
-      break
-    case 'Arbitrum':
-      result.push(item.adminImplementation)
-      result.push(item.userImplementation)
-      break
-    case 'Beacon':
-      result.push(item.beacon)
-      result.push(item.implementation)
-      break
-    case 'Reference':
-      // Ignoring type "Reference"
-      break
-    default:
-      // This call makes sure that we handled all possible cases
-      assertUnreachable(item)
-  }
-  return result
-}
-
-// This method triggers a compile-time error if not all cases has been covered!
-function assertUnreachable(_: never): never {
-  throw new Error(
-    'There are more values to this type than handled in the switch statement.',
-  )
-}
-
-function gatherAddressesFromContracts(contracts: ProjectContracts): string[] {
-  const result: string[] = []
-  for (const contract of contracts.addresses) {
-    result.push(contract.address)
-
-    if (contract.upgradeability) {
-      result.push(...gatherAddressesFromUpgradeability(contract.upgradeability))
-    }
-  }
-  return result
-}
-
-function gatherAddresses(projects: (Layer2 | Bridge)[]): string[] {
-  const result: string[] = []
+function getUniqueContractAddresses(projects: (Layer2 | Bridge)[]): EthereumAddress[] {
+  const addresses = []
   for (const project of projects) {
-    if (project.contracts) {
-      result.push(...gatherAddressesFromContracts(project.contracts))
-    }
+    addresses.push(...getUniqueContractsForProject(project))
   }
-  return result
+  // Cast to Set to remove duplicates
+  return [...new Set(addresses)]
 }
 
-async function isContractUnverified(
+async function isContractVerified(
   etherscanClient: EtherscanClient,
-  address: string,
-) {
-  // console.log(`Checking ${address}`)
-  const sourceCodeResponse = await etherscanClient.getContractSource(
-    EthereumAddress(address),
-  )
-  const result = sourceCodeResponse.SourceCode === ''
-  // console.log(result)
+  address: EthereumAddress,
+): Promise<boolean> {
+  const resp = await etherscanClient.getContractSource(address)
+  return resp.SourceCode !== ''
 }
 
-export function getEnv(name: string, fallback?: string): string {
-  const value = process.env[name]
-  if (value !== undefined) {
-    return value
-  }
-  if (fallback !== undefined) {
-    return fallback
-  }
-  throw new Error(`Missing environment variable ${name}!`)
-}
-
-export async function main() {
-  console.log(
-    'Gathering validation status of Layer2s and Bridges on Etherscan.',
-  )
-  console.log('===============================================================')
-
-  console.log('Gathering contract addresses...')
-  const addresses = gatherAddresses([...layer2s, ...bridges])
-  console.log(`Found ${addresses.length} contract addresses,`)
-  const uniqueAddresses = new Set(addresses)
-  console.log(`of which ${uniqueAddresses.size} are unique.`)
-
-
-  console.log('Checking source code verification of each contract...')
+async function checkVerificationOfAddresses(
+  addresses: EthereumAddress[],
+  workers: number,
+): Promise<Map<EthereumAddress, boolean>> {
+  console.log(`Processing ${addresses.length} unique addresses.`)
   const etherscanClient = new EtherscanClient(
     new HttpClient(),
     'https://api.etherscan.io/api',
     getEnv('ETHERSCAN_API_KEY'),
   )
-  const workers = parseInt(getEnv('WORKERS', '5'))
+  const verificationMap = new Map<EthereumAddress, boolean>()
   const taskQueue = new TaskQueue(
-    (address: string) => isContractUnverified(etherscanClient, address), 
-    Logger.WARN, 
-    { 
-      workers, 
+    async (address: EthereumAddress) => {
+      verificationMap.set(
+        address,
+        await isContractVerified(etherscanClient, address),
+      )
+    },
+    Logger.WARN,
+    {
+      workers,
       // Force exit the script on first error
-      shouldRetry: () => process.exit(1) 
-    }
+      shouldRetry: () => process.exit(1),
+    },
   )
-  uniqueAddresses.forEach(address => taskQueue.addToBack(address))
-  while (taskQueue.length > 0) {
-    console.log(`Remaining: ${taskQueue.length}`)
-    await wait(5000)
-  }
+  addresses.forEach((address) => taskQueue.addToBack(address))
+  await taskQueue.waitTilEmpty()
+  console.log('Done.')
+  return verificationMap
+}
+
+export async function main() {
+  const envWorkersVar = 'ETHERSCAN_WORKERS'
+  const workers = parseInt(getEnv(envWorkersVar, '5'))
+  console.log('Check Verified Contracts.')
+  console.log('=========================')
+  console.log(
+    `${envWorkersVar}=${workers} (can be changed via environment variable)`,
+  )
+
+  const addresses = getUniqueContractAddresses([...layer2s, ...bridges])
+  const verifiedMap = await checkVerificationOfAddresses(addresses.slice(1, 10), workers)
+  await writeFile(
+    'build/verifiedContracts.json',
+    JSON.stringify(Object.fromEntries(verifiedMap), null, 2)
+  )
 }
 
 dotenv()
