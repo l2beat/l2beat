@@ -62,7 +62,7 @@ function printApiInfo(
     const chart = activityApiResponse.projects[project.id.toString()]
     printActivity(project.id.toString(), chart)
   }
-  console.debug('\n')
+  console.debug() // new line
 
   function printTvl(label: string, charts: TvlApiResponse['combined']) {
     const tvl = (charts.hourly.data.at(-1)?.[1] ?? 0).toFixed(2)
