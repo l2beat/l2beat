@@ -13,10 +13,9 @@ describe(StarkexTransactionUpdater.name, () => {
     it('skips known blocks', async () => {
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
-          getMissingRangesByProject: async () => [
-            [-Infinity, -1],
-            [2, 3],
-            [5, Infinity],
+          getGapsByProject: async () => [
+            [2, 2],
+            [5, 6],
           ],
           add: async () => '',
         })
@@ -38,6 +37,7 @@ describe(StarkexTransactionUpdater.name, () => {
         'dydx',
         ProjectId('dydx'),
         new UnixTime(0),
+        { apiDelayHours: 6 },
       )
       updater.start()
 
@@ -47,6 +47,9 @@ describe(StarkexTransactionUpdater.name, () => {
           [5, 'dydx'],
           [6, 'dydx'],
         ])
+        expect(
+          starkexTransactionCountRepository.getGapsByProject,
+        ).toHaveBeenCalledExactlyWith([[ProjectId('dydx'), 0, 6]])
       })
     })
   })

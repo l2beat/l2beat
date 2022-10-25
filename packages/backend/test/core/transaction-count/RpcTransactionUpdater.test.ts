@@ -19,10 +19,9 @@ describe(RpcTransactionUpdater.name, () => {
       })
       const blockCountTransactionRepository =
         mock<BlockTransactionCountRepository>({
-          getMissingRangesByProject: async () => [
-            [-Infinity, -1],
-            [2, 3],
-            [5, Infinity],
+          getGapsByProject: async () => [
+            [2, 2],
+            [5, 5],
           ],
           add: async () => '',
         })
@@ -39,6 +38,7 @@ describe(RpcTransactionUpdater.name, () => {
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
+        { startBlock: 1 },
       )
       blockTxCountUpdater.start()
 

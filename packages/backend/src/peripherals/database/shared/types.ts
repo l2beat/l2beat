@@ -89,8 +89,10 @@ declare module 'knex/types/tables' {
     events: EventRow
     'transactions.block': BlockTransactionCountRow
     'transactions.block_count_view': TransactionCountViewRow
-    'transactions.starkex': StarkexTransactionCountRow
+    'transactions.block_tip': BlockTransactionCountRow
     'transactions.zksync': ZksyncTransactionRow
     'transactions.zksync_count_view': TransactionCountViewRow
+    'transactions.zksync_tip': ZksyncTransactionRow
+    'transactions.starkex': StarkexTransactionCountRow
   }
 }
