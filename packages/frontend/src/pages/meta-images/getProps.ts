@@ -61,17 +61,19 @@ export function getPropsActivity(
   assert(activitySevenDaysAgo, "Can't get past daily TPS")
   const weeklyChange = getPercentageChange(activityNow, activitySevenDaysAgo)
 
-  const tvlEndpoint = `/api/activity/combined.json`
+  const activityEndpoint = `/api/activity/combined.json`
+  const ethereumActivityEndpoint = `/api/activity/ethereum.json`
   return {
     props: {
       tpsDaily: activityNow.toFixed(2),
       tpsWeeklyChange: weeklyChange,
-      chartEndpoint: tvlEndpoint,
+      activityEndpoint: activityEndpoint,
+      ethereumActivityEndpoint: ethereumActivityEndpoint,
     },
     wrapper: {
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: tvlEndpoint,
+      preloadApi: activityEndpoint,
     },
   }
 }

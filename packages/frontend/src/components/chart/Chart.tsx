@@ -77,18 +77,14 @@ export function Chart({
             />
             <YAxisLabels />
           </div>
-          {!metaChart && (
-            <>
-              <div className="flex justify-between">
-                {hasActivity && (
-                  <EthereumActivityToggle showToggle={type === 'activity'} />
-                )}
-                {hasTvl && <CurrencyControls />}
-                <ScaleControls />
-              </div>
-              {hasTvl && <TokenControls tokens={tokens} />}
-            </>
-          )}
+          <div className="flex justify-between">
+            {hasActivity && (
+              <EthereumActivityToggle showToggle={type === 'activity'} />
+            )}
+            {hasTvl && <CurrencyControls />}
+            <ScaleControls />
+          </div>
+          {hasTvl && <TokenControls tokens={tokens} />}
         </div>
       </section>
       <hr className="w-full md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />

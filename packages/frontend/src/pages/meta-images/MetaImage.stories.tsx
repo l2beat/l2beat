@@ -57,7 +57,8 @@ export const ActivityOverview: Story<TemplateProps> = () => {
         <ActivityMetaImage
           tpsDaily="15.69"
           tpsWeeklyChange="+3.45%"
-          chartEndpoint="/fakeTvl.json"
+          activityEndpoint="/fakeActivity.json"
+          ethereumActivityEndpoint="/fakeEthereumActivity.json"
         />
       </div>
     </div>
