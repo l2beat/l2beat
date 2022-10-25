@@ -105,7 +105,7 @@ describe(BlockNumberUpdater.name, () => {
       await blockNumberUpdater.update(timestamp)
 
       await waitForExpect(() => {
-        expect(result).toEqual(1234n)
+        expect(result).toEqual(1234)
       })
     })
   })
@@ -185,15 +185,15 @@ describe(BlockNumberUpdater.name, () => {
         expect(result).toEqual([
           {
             timestamp: from,
-            blockNumber: 1234n,
+            blockNumber: 1234,
           },
           {
             timestamp: from.add(1, 'hours'),
-            blockNumber: 1234n,
+            blockNumber: 1234,
           },
           {
             timestamp: from.add(2, 'hours'),
-            blockNumber: 1234n,
+            blockNumber: 1234,
           },
         ])
       })
