@@ -28,6 +28,8 @@ export interface BridgeDisplay {
   warning?: string
   description?: string
   links: Partial<ProjectLinks>
+  /** Does it have unverified contracts in config? */
+  includesUnverifiedContracts?: boolean
 }
 
 export interface BridgeConfig {

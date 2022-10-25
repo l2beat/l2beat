@@ -31,6 +31,8 @@ export function getProps(
             slug: project.display.slug,
             warning: project.display.warning,
             category: project.technology.category,
+            includesUnverifiedContracts:
+              project.display.includesUnverifiedContracts,
             destination: getDestination(
               project.type === 'bridge'
                 ? project.technology.destination

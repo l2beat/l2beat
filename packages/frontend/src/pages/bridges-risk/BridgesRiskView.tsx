@@ -23,6 +23,7 @@ export interface BridgesRiskViewEntry {
   validatedBy?: ProjectRiskViewEntry
   sourceUpgradeability?: ProjectRiskViewEntry
   destinationToken?: ProjectRiskViewEntry
+  includesUnverifiedContracts?: boolean
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
@@ -79,13 +80,18 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   ]
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
-    getProps: (entry) =>
-      entry.type === 'bridge'
-        ? {}
-        : {
-            ['data-combined-only']: true,
-            className: 'hidden',
-          },
+    getProps: (entry) => {
+      const result: Record<string, any> = {}
+      result.className = ''
+      if (entry.type !== 'bridge') {
+        result.className += 'hidden '
+        result['data-combined-only'] = true
+      }
+      if (entry.includesUnverifiedContracts) {
+        result.className += 'bg-red-300 '
+      }
+      return result
+    },
   }
 
   return (
