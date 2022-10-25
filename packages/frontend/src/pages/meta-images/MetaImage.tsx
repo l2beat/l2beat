@@ -37,7 +37,7 @@ export function MetaImage(props: MetaImageProps) {
 export interface ActivityMetaImageProps {
   tpsDaily: string
   tpsWeeklyChange: string
-  tvlEndpoint: string
+  chartEndpoint: string
 }
 
 export function ActivityMetaImage(props: ActivityMetaImageProps) {
@@ -52,7 +52,13 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
         tpsDaily={props.tpsDaily}
         tpsWeeklyChange={props.tpsWeeklyChange}
       />
-      <Chart tvlEndpoint={props.tvlEndpoint} metaChart />
+      <Chart
+        type={'activity'}
+        metaChart
+        activityEndpoint={props.chartEndpoint}
+        hasTvl={false}
+        hasActivity
+      />
       <Logo />
     </div>
   )

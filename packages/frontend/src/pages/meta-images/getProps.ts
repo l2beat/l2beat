@@ -66,7 +66,7 @@ export function getPropsActivity(
     props: {
       tpsDaily: activityNow.toFixed(2),
       tpsWeeklyChange: weeklyChange,
-      tvlEndpoint,
+      chartEndpoint: tvlEndpoint,
     },
     wrapper: {
       htmlClassName: 'light meta',
