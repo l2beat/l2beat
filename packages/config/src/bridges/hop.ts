@@ -77,11 +77,13 @@ export const hop: Bridge = {
           category: 'Users can be censored if',
           text: 'AMB of the destination chain censors the message.',
           isCritical: false,
+          _ignoreTextFormatting: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'Bonder submits invalid message bundle and is left unchallenged for 24 hours.',
           isCritical: false,
+          _ignoreTextFormatting: true,
         },
       ],
     },

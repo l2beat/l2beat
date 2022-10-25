@@ -3,6 +3,7 @@ import { expect } from 'earljs'
 import { utils } from 'ethers'
 
 import { bridges, getTokenBySymbol, layer2s } from '../src'
+import { checkRisk } from './checkRisk'
 
 describe('projects', () => {
   describe('addresses', () => {
@@ -120,9 +121,7 @@ describe('projects', () => {
         }
 
         for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
-          it(`contracts.risks[${i}] is correctly formatted`, () => {
-            expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
-          })
+          checkRisk(risk, `contracts.risks[${i}]`)
         }
       })
     }
