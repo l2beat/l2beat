@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
+import { range } from 'lodash'
 
 import {
   ZksyncTransactionRecord,
@@ -16,200 +17,131 @@ describe(ZksyncTransactionRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(ZksyncTransactionRepository.prototype.getAll.name, () => {
-    it('gets one record', async () => {
-      const record = fakeRecord()
-      await repository.add(record)
-
-      expect(await repository.getAll()).toEqual([record])
+  describe(ZksyncTransactionRepository.prototype.getGaps.name, () => {
+    it('works with no data', async () => {
+      expect(await repository.getGaps(1, 5)).toEqual([[1, 5]])
     })
 
-    it('gets multiple records', async () => {
-      const records = [fakeRecord(), fakeRecord(), fakeRecord()]
-      await repository.addMany(records)
+    it('finds gaps', async () => {
+      const min = 100
+      const max = 400
+      const total = (max - min) / 2
+      const first = min - 10
+      const last = max + 10
 
-      expect(await repository.getAll()).toBeAnArrayWith(...records)
-    })
-  })
-
-  describe(ZksyncTransactionRepository.prototype.getMissingRanges.name, () => {
-    it('works with an empty repository', async () => {
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, Infinity],
-      ])
-    })
-
-    it('finds holes', async () => {
-      await repository.addMany([
-        fakeRecord({ blockNumber: 0 }),
-        fakeRecord({ blockNumber: 1 }),
-        fakeRecord({ blockNumber: 6 }),
-        fakeRecord({ blockNumber: 7 }),
-        fakeRecord({ blockNumber: 10 }),
-      ])
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 0],
-        [2, 6],
-        [8, 10],
-        [11, Infinity],
-      ])
-    })
-
-    it('finds holes when block 0 is missing', async () => {
-      await repository.addMany([fakeRecord({ blockNumber: 1 })])
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 1],
-        [2, Infinity],
-      ])
-    })
-
-    it('finds holes with multiple records with the same block number', async () => {
-      await repository.addMany([
-        fakeRecord({ blockNumber: 1, blockIndex: 0 }),
-        fakeRecord({ blockNumber: 1, blockIndex: 1 }),
-        fakeRecord({ blockNumber: 2, blockIndex: 0 }),
-      ])
-
-      expect(await repository.getMissingRanges()).toEqual([
-        [-Infinity, 1],
-        [3, Infinity],
-      ])
-    })
-
-    it('finds holes on a big set', async () => {
-      const numbers = Array.from({ length: 200 }, () =>
-        Math.floor(Math.random() * 1000),
+      const numbers = Array.from({ length: total }, () =>
+        Math.floor(Math.random() * (max - min) + min),
       ).filter((x, i, a) => a.indexOf(x) === i)
 
       await repository.addMany(
-        numbers.flatMap((number) => {
-          if (Math.random() > 0.2) {
-            return [
-              fakeRecord({ blockNumber: number, blockIndex: 1 }),
-              fakeRecord({ blockNumber: number, blockIndex: 2 }),
-            ]
-          }
-          return [fakeRecord({ blockNumber: number })]
-        }),
+        numbers.map((number) => fakeRecord({ blockNumber: number })),
       )
 
-      const ranges = await repository.getMissingRanges()
+      const gaps = await repository.getGaps(first, last)
 
-      const result = []
-      for (const [start, end] of ranges) {
-        for (let i = Math.max(start, 0); i < Math.min(end, 1000); i++) {
-          result.push(i)
+      const inGaps = []
+      for (const [start, end] of gaps) {
+        for (let i = start; i <= end; i++) {
+          inGaps.push(i)
         }
       }
 
-      const expected = []
-      for (let i = 0; i < 1000; i++) {
-        if (!numbers.includes(i)) {
-          expected.push(i)
-        }
-      }
-
-      expect(result.sort()).toEqual(expected.sort())
+      const inGapsAndStored = inGaps.concat(numbers)
+      const fullRange = range(first, last + 1)
+      expect(inGapsAndStored.sort((a, b) => a - b)).toEqual(
+        fullRange.sort((a, b) => a - b),
+      )
     })
   })
 
-  describe(
-    ZksyncTransactionRepository.prototype.getDailyTransactionCount.name,
-    () => {
-      it('works with empty repository', async () => {
-        await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(UnixTime.now()),
-        ).toEqual([])
-      })
+  describe(ZksyncTransactionRepository.prototype.getDailyCounts.name, () => {
+    it('works with empty repository', async () => {
+      await repository.refreshDailyCounts()
+      expect(await repository.getDailyCounts()).toEqual([])
+    })
 
-      it('groups by day', async () => {
-        const start = UnixTime.now().toStartOf('day')
+    it('skips last day', async () => {
+      const start = UnixTime.now().toStartOf('day')
+      const syncedCounts = [
+        fakeRecord({
+          blockNumber: 1,
+          timestamp: start.add(1, 'hours'),
+        }),
+        fakeRecord({
+          blockNumber: 2,
+          timestamp: start.add(2, 'hours'),
+        }),
+      ]
+      const lastDayCounts = [
+        fakeRecord({
+          blockNumber: 3,
+          timestamp: start.add(1, 'days'),
+        }),
+        fakeRecord({
+          blockNumber: 4,
+          timestamp: start.add(1, 'days').add(1, 'hours'),
+        }),
+        fakeRecord({
+          blockNumber: 5,
+          timestamp: start.add(1, 'days').add(2, 'hours'),
+        }),
+      ]
+      await repository.addMany([...syncedCounts, ...lastDayCounts])
 
-        await repository.addMany([
-          fakeRecord({
-            timestamp: start.add(1, 'hours'),
-          }),
-          fakeRecord({
-            timestamp: start.add(2, 'hours'),
-          }),
-          fakeRecord({
-            timestamp: start.add(3, 'hours'),
-          }),
-          fakeRecord({
-            timestamp: start.add(1, 'days'),
-          }),
-          fakeRecord({
-            timestamp: start.add(1, 'days').add(1, 'hours'),
-          }),
-        ])
+      await repository.refreshDailyCounts()
 
-        await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(start.add(2, 'days')),
-        ).toEqual([
-          {
-            count: 3,
-            timestamp: start,
-          },
-          {
-            count: 2,
-            timestamp: start.add(1, 'days'),
-          },
-        ])
-      })
+      expect(await repository.getDailyCounts()).toEqual([
+        {
+          timestamp: start,
+          count: 2,
+        },
+      ])
+    })
 
-      it('orders by day', async () => {
-        const start = UnixTime.now().toStartOf('day')
+    it('groups by day', async () => {
+      const start = UnixTime.now().toStartOf('day')
 
-        await repository.addMany([
-          fakeRecord({
-            timestamp: start.add(1, 'days'),
-          }),
-          fakeRecord({
-            timestamp: start,
-          }),
-        ])
+      await repository.addMany([
+        fakeRecord({
+          timestamp: start.add(1, 'hours'),
+          blockNumber: 1,
+        }),
+        fakeRecord({
+          timestamp: start.add(2, 'hours'),
+          blockNumber: 2,
+        }),
+        fakeRecord({
+          timestamp: start.add(3, 'hours'),
+          blockNumber: 3,
+        }),
+        fakeRecord({
+          timestamp: start.add(1, 'days'),
+          blockNumber: 4,
+        }),
+        fakeRecord({
+          timestamp: start.add(1, 'days').add(1, 'hours'),
+          blockNumber: 5,
+        }),
+        fakeRecord({
+          timestamp: start.add(2, 'days').add(1, 'hours'),
+          blockNumber: 6,
+        }),
+      ])
 
-        await repository.refreshDailyTransactionCount()
-        expect(
-          await repository.getDailyTransactionCount(start.add(2, 'days')),
-        ).toEqual([
-          {
-            count: 1,
-            timestamp: start,
-          },
-          {
-            count: 1,
-            timestamp: start.add(1, 'days'),
-          },
-        ])
-      })
+      await repository.refreshDailyCounts()
 
-      it('skips records from today', async () => {
-        const today = UnixTime.now().toStartOf('day')
-
-        await repository.addMany([
-          fakeRecord({
-            timestamp: today.add(-1, 'days'),
-          }),
-          fakeRecord({
-            timestamp: today,
-          }),
-        ])
-
-        await repository.refreshDailyTransactionCount()
-        expect(await repository.getDailyTransactionCount(today)).toEqual([
-          {
-            count: 1,
-            timestamp: today.add(-1, 'days'),
-          },
-        ])
-      })
-    },
-  )
+      expect(await repository.getDailyCounts()).toEqual([
+        {
+          count: 3,
+          timestamp: start,
+        },
+        {
+          count: 2,
+          timestamp: start.add(1, 'days'),
+        },
+      ])
+    })
+  })
 })
 
 function fakeRecord(

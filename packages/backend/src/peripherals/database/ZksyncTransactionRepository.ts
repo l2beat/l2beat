@@ -1,11 +1,16 @@
 import { Logger } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { ZksyncTransactionRow } from 'knex/types/tables'
-import _ from 'lodash'
 
 import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  Boundaries,
+  extractTipNumber,
+  Gap,
+  toExpandedGaps,
+} from './transactionCountTip'
 
 export interface ZksyncTransactionRecord {
   blockNumber: number
@@ -13,33 +18,21 @@ export interface ZksyncTransactionRecord {
   timestamp: UnixTime
 }
 
-interface RawBlockNumberQueryResult {
-  rows: {
-    no_next_block_number: number | null
-    no_prev_block_number: number | null
-  }[]
-}
-
 export class ZksyncTransactionRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getBlockCount = this.wrapAny(this.getBlockCount)
-    this.getMaxBlock = this.wrapAny(this.getMaxBlock)
-
+    this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
+    this.getDailyCounts = this.wrapGet(this.getDailyCounts)
+    this.getGaps = this.wrapGet(this.getGaps)
+    this.refreshTip = this.wrapAny(this.refreshTip)
+    this.getGapsAndBoundaries = this.wrapAny(this.getGapsAndBoundaries)
+    this.findTip = this.wrapFind(this.findTip)
+    this.updateTipByBlockNumber = this.wrapAny(this.updateTipByBlockNumber)
     /* eslint-enable @typescript-eslint/unbound-method */
-  }
-
-  async add(record: ZksyncTransactionRecord) {
-    const knex = await this.knex()
-    const row = toRow(record)
-    await knex('transactions.zksync').insert(row)
-    return `${row.block_number}-${row.block_index}`
   }
 
   async addMany(records: ZksyncTransactionRecord[]) {
@@ -49,82 +42,23 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return rows.length
   }
 
-  // Returns an array of half open intervals [) that include all missing block numbers
-  async getMissingRanges() {
+  async deleteAll() {
     const knex = await this.knex()
-
-    const blockNumbers = (await knex.raw(
-      `
-      WITH 
-        blocks AS (
-          SELECT DISTINCT block_number FROM transactions.zksync
-        ),
-        no_next AS (
-          SELECT 
-            blocks.block_number
-          FROM blocks 
-          LEFT JOIN blocks b2 ON blocks.block_number  = b2.block_number - 1
-          WHERE b2.block_number IS NULL
-        ),
-        no_prev AS (
-          SELECT 
-            blocks.block_number
-          FROM blocks 
-          LEFT JOIN blocks b2 ON blocks.block_number = b2.block_number + 1
-          WHERE b2.block_number IS NULL
-        )
-      SELECT 
-        no_prev.block_number as no_prev_block_number, 
-        NULL as no_next_block_number
-      FROM no_prev 
-      UNION
-      SELECT 
-        NULL as no_prev_block_number, 
-        no_next.block_number as no_next_block_number
-      FROM no_next
-      ORDER BY no_prev_block_number, no_next_block_number ASC
-  `,
-    )) as unknown as RawBlockNumberQueryResult
-
-    const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
-      (acc, row) => {
-        if (row.no_prev_block_number !== null) {
-          acc.push(row.no_prev_block_number)
-        }
-        return acc
-      },
-      [],
-    )
-    const noNextBlockNumbers = blockNumbers.rows.reduce<number[]>(
-      (acc, row) => {
-        if (row.no_next_block_number !== null) {
-          acc.push(row.no_next_block_number + 1)
-        }
-        return acc
-      },
-      [],
-    )
-
-    noPrevBlockNumbers.push(Infinity)
-    noNextBlockNumbers.unshift(-Infinity)
-
-    assert(noNextBlockNumbers.length === noPrevBlockNumbers.length)
-
-    return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
+    await knex('transactions.zksync_tip').delete()
+    return await knex('transactions.zksync').delete()
   }
 
-  async refreshDailyTransactionCount() {
+  async refreshDailyCounts() {
+    await this.refreshTip()
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView('transactions.zksync_count_view')
   }
 
-  async getDailyTransactionCount(
-    maxTimestamp: UnixTime,
-  ): Promise<{ timestamp: UnixTime; count: number }[]> {
+  async getDailyCounts(): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
-    const rows = await knex('transactions.zksync_count_view')
-      .where('unix_timestamp', '<', maxTimestamp.toDate())
-      .orderBy('unix_timestamp')
+    const rows = await knex('transactions.zksync_count_view').orderBy(
+      'unix_timestamp',
+    )
 
     return rows.map((r) => ({
       timestamp: UnixTime.fromDate(r.unix_timestamp),
@@ -132,29 +66,78 @@ export class ZksyncTransactionRepository extends BaseRepository {
     }))
   }
 
-  async getAll() {
-    const knex = await this.knex()
-    const rows = await knex('transactions.zksync').select()
-    return rows.map(toRecord)
+  async getGaps(first: number, last: number): Promise<Gap[]> {
+    const { boundaries, gaps } = await this.refreshTip()
+    return toExpandedGaps(first, last, gaps, boundaries)
   }
 
-  async deleteAll() {
-    const knex = await this.knex()
-    return await knex('transactions.zksync').delete()
+  private async refreshTip() {
+    const { boundaries, gaps } = await this.getGapsAndBoundaries()
+    const tipBlockNumber = extractTipNumber(gaps, boundaries)
+    await this.updateTipByBlockNumber(tipBlockNumber)
+    return { boundaries, gaps }
   }
 
-  async getMaxBlock(): Promise<number> {
+  private async getGapsAndBoundaries(): Promise<{
+    gaps: Gap[]
+    boundaries?: Boundaries
+  }> {
     const knex = await this.knex()
-    const [{ max }] = await knex('transactions.zksync').max('block_number')
-    return max as number
+    const tip = await this.findTip()
+    const { rows } = (await knex.raw(
+      `
+      SELECT NULL prev, min(block_number) next FROM transactions.zksync
+      UNION
+      SELECT block_number prev, next
+      FROM (
+        SELECT
+          block_number,
+          lead(block_number) over (order by block_number) next
+        FROM transactions.zksync WHERE block_number >= :blockNumber
+      ) with_lead
+      WHERE next > block_number + 1 OR next IS NULL
+      ORDER BY next ASC`,
+      {
+        blockNumber: tip?.blockNumber ?? 0,
+      },
+    )) as unknown as { rows: { prev: number | null; next: number | null }[] }
+
+    const min = rows.splice(0, 1)[0]?.next
+    const max = rows.splice(-1, 1)[0]?.prev
+
+    return {
+      gaps: rows.map(({ prev, next }) => {
+        assert(prev !== null && next !== null)
+        return [prev + 1, next - 1]
+      }),
+      boundaries: min !== null && max !== null ? { min, max } : undefined,
+    }
   }
 
-  async getBlockCount(): Promise<number> {
+  private async findTip() {
     const knex = await this.knex()
-    const [{ count }] = await knex('transactions.zksync').countDistinct(
-      'block_number',
-    )
-    return Number(count)
+    const row = await knex('transactions.zksync_tip').first()
+    return row ? toRecord(row) : undefined
+  }
+
+  private async updateTipByBlockNumber(blockNumber?: number) {
+    const knex = await this.knex()
+    await knex.transaction(async (trx) => {
+      await trx('transactions.zksync_tip').delete()
+      if (blockNumber) {
+        await trx.raw(
+          `
+          INSERT INTO transactions.zksync_tip (block_number, block_index, unix_timestamp)
+            SELECT block_number, block_index, unix_timestamp
+            FROM transactions.zksync
+            WHERE block_number = :blockNumber
+            ORDER BY block_index DESC
+            LIMIT 1
+        `,
+          { blockNumber },
+        )
+      }
+    })
   }
 }
 

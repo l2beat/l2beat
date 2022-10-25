@@ -1,11 +1,16 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { BlockTransactionCountRow } from 'knex/types/tables'
-import _ from 'lodash'
 
 import { assert } from '../../tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  Boundaries,
+  extractTipNumber,
+  Gap,
+  toExpandedGaps,
+} from './transactionCountTip'
 
 export interface BlockTransactionCountRecord {
   timestamp: UnixTime
@@ -13,26 +18,23 @@ export interface BlockTransactionCountRecord {
   blockNumber: number
   count: number
 }
-interface RawBlockNumberQueryResult {
-  rows: {
-    no_next_block_number: number | null
-    no_prev_block_number: number | null
-  }[]
-}
 
 export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-
     /* eslint-disable @typescript-eslint/unbound-method */
-
     this.add = this.wrapAdd(this.add)
     this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getDailyTransactionCount = this.wrapGet(this.getDailyTransactionCount)
-    this.getMaxBlock = this.wrapAny(this.getMaxBlock)
-    this.getBlockCount = this.wrapAny(this.getBlockCount)
-
+    this.getDailyCountsByProject = this.wrapGet(this.getDailyCountsByProject)
+    this.refreshDailyCounts = this.wrapAny(this.refreshDailyCounts)
+    this.getGapsByProject = this.wrapGet(this.getGapsByProject)
+    this.refreshProjectTip = this.wrapAny(this.refreshProjectTip)
+    this.getGapsAndBoundaries = this.wrapAny(this.getGapsAndBoundaries)
+    this.findTipByProject = this.wrapFind(this.findTipByProject)
+    this.updateProjectTipByBlockNumber = this.wrapAny(
+      this.updateProjectTipByBlockNumber,
+    )
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -50,81 +52,18 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return rows.length
   }
 
-  // Returns an array of half open intervals [) that include all missing block numbers
-  async getMissingRangesByProject(projectId: ProjectId) {
+  async deleteAll() {
     const knex = await this.knex()
-
-    const blockNumbers = (await knex.raw(
-      `
-      WITH 
-        project_blocks AS (
-          SELECT * FROM transactions.block WHERE project_id=?
-        ),
-        no_next AS (
-          SELECT 
-            project_blocks.block_number
-          FROM project_blocks 
-          LEFT JOIN project_blocks b2 ON project_blocks.block_number  = b2.block_number - 1
-          WHERE b2.block_number IS NULL
-        ),
-        no_prev AS (
-          SELECT 
-            project_blocks.block_number 
-          FROM project_blocks 
-          LEFT JOIN project_blocks b2 ON project_blocks.block_number = b2.block_number + 1
-          WHERE b2.block_number IS NULL
-        )
-      SELECT no_prev.block_number as no_prev_block_number, NULL as no_next_block_number
-      FROM no_prev 
-      UNION
-      SELECT NULL as no_prev_block_number, no_next.block_number as no_next_block_number
-      FROM no_next
-      ORDER BY no_prev_block_number, no_next_block_number ASC
-      `,
-      projectId.toString(),
-    )) as unknown as RawBlockNumberQueryResult
-
-    const noPrevBlockNumbers = blockNumbers.rows.reduce<number[]>(
-      (acc, row) => {
-        if (row.no_prev_block_number !== null) {
-          acc.push(row.no_prev_block_number)
-        }
-        return acc
-      },
-      [],
-    )
-
-    const noNextBlockNumbers = blockNumbers.rows.reduce<number[]>(
-      (acc, row) => {
-        if (row.no_next_block_number !== null) {
-          acc.push(row.no_next_block_number + 1)
-        }
-        return acc
-      },
-      [],
-    )
-
-    noPrevBlockNumbers.push(Infinity)
-    noNextBlockNumbers.unshift(-Infinity)
-
-    assert(noNextBlockNumbers.length === noPrevBlockNumbers.length)
-
-    return _.zip(noNextBlockNumbers, noPrevBlockNumbers) as [number, number][]
+    await knex('transactions.block_tip').delete()
+    return await knex('transactions.block').delete()
   }
 
-  async refreshDailyTransactionCount() {
-    const knex = await this.knex()
-    await knex.schema.refreshMaterializedView('transactions.block_count_view')
-  }
-
-  async getDailyTransactionCount(
+  async getDailyCountsByProject(
     projectId: ProjectId,
-    maxTimestamp: UnixTime,
   ): Promise<{ timestamp: UnixTime; count: number }[]> {
     const knex = await this.knex()
     const rows = await knex('transactions.block_count_view')
       .where('project_id', projectId.toString())
-      .andWhere('unix_timestamp', '<', maxTimestamp.toDate())
       .orderBy('unix_timestamp')
 
     return rows.map((r) => ({
@@ -133,25 +72,97 @@ export class BlockTransactionCountRepository extends BaseRepository {
     }))
   }
 
-  async deleteAll() {
+  async refreshDailyCounts(projectIds: ProjectId[]) {
     const knex = await this.knex()
-    return await knex('transactions.block').delete()
+    for (const projectId of projectIds) {
+      await this.refreshProjectTip(projectId)
+    }
+    await knex.schema.refreshMaterializedView('transactions.block_count_view')
   }
 
-  async getMaxBlock(projectId: ProjectId): Promise<number> {
-    const knex = await this.knex()
-    const [{ max }] = await knex('transactions.block')
-      .max('block_number')
-      .where('project_id', projectId.toString())
-    return max
+  async getGapsByProject(
+    projectId: ProjectId,
+    first: number,
+    last: number,
+  ): Promise<[number, number][]> {
+    const { boundaries, gaps } = await this.refreshProjectTip(projectId)
+    return toExpandedGaps(first, last, gaps, boundaries)
   }
 
-  async getBlockCount(projectId: ProjectId): Promise<number> {
+  private async refreshProjectTip(projectId: ProjectId) {
+    const { boundaries, gaps } = await this.getGapsAndBoundaries(projectId)
+    const tipBlockNumber = extractTipNumber(gaps, boundaries)
+    await this.updateProjectTipByBlockNumber(projectId, tipBlockNumber)
+    return { boundaries, gaps }
+  }
+
+  private async getGapsAndBoundaries(projectId: ProjectId): Promise<{
+    gaps: Gap[]
+    boundaries?: Boundaries
+  }> {
     const knex = await this.knex()
-    const [{ count }] = await knex('transactions.block')
-      .count()
+    const tip = await this.findTipByProject(projectId)
+    const { rows } = (await knex.raw(
+      `
+      SELECT NULL prev, min(block_number) next FROM transactions.block WHERE project_id = :projectId
+      UNION
+      SELECT block_number prev, next
+      FROM (
+        SELECT
+          block_number,
+          lead(block_number) over (order by block_number) next
+        FROM transactions.block WHERE block_number >= :blockNumber AND project_id = :projectId
+      ) with_lead
+      WHERE next > block_number + 1 OR next IS NULL
+      ORDER BY next ASC`,
+      {
+        blockNumber: tip?.blockNumber ?? 0,
+        projectId: projectId.toString(),
+      },
+    )) as unknown as { rows: { prev: number | null; next: number | null }[] }
+
+    const min = rows.splice(0, 1)[0]?.next
+    const max = rows.splice(-1, 1)[0]?.prev
+
+    return {
+      gaps: rows.map(({ prev, next }) => {
+        assert(prev !== null && next !== null)
+        return [prev + 1, next - 1]
+      }),
+      boundaries: min !== null && max !== null ? { min, max } : undefined,
+    }
+  }
+
+  private async findTipByProject(projectId: ProjectId) {
+    const knex = await this.knex()
+    const row = await knex('transactions.block_tip')
       .where('project_id', projectId.toString())
-    return Number(count)
+      .first()
+    return row ? toRecord(row) : undefined
+  }
+
+  private async updateProjectTipByBlockNumber(
+    projectId: ProjectId,
+    blockNumber?: number,
+  ) {
+    const knex = await this.knex()
+    await knex.transaction(async (trx) => {
+      await trx('transactions.block_tip')
+        .delete()
+        .where('project_id', projectId.toString())
+      if (blockNumber) {
+        await trx.raw(
+          `
+          INSERT INTO transactions.block_tip (project_id, block_number, unix_timestamp, count)
+            SELECT project_id, block_number, unix_timestamp, count
+            FROM transactions.block
+            WHERE block_number = :blockNumber AND project_id = :projectId
+            LIMIT 1
+        `,
+          { blockNumber, projectId: projectId.toString() },
+        )
+      }
+    })
   }
 }
 
@@ -161,5 +172,14 @@ function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
     project_id: record.projectId.toString(),
     block_number: record.blockNumber,
     count: record.count,
+  }
+}
+
+function toRecord(row: BlockTransactionCountRow): BlockTransactionCountRecord {
+  return {
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    projectId: ProjectId(row.project_id),
+    blockNumber: row.block_number,
+    count: row.count,
   }
 }
