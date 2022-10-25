@@ -14,6 +14,7 @@ export const common = {
     gitcoinOption: false,
     bridges: true,
     activity: false,
+    highlightUnverified: false,
   },
   layer2s,
   bridges,

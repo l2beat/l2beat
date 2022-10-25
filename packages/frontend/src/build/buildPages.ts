@@ -33,8 +33,10 @@ async function main() {
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
 
-  const verifiedContracts = {
-    'Polygon PoS': false,
+  const highlightUnverifiedContracts: Record<string, boolean> = {}
+
+  if (config.features.highlightUnverified) {
+    highlightUnverifiedContracts['Polygon PoS'] = true
   }
 
   createApi(config, tvlApiResponse, activityApiResponse)
@@ -42,7 +44,7 @@ async function main() {
     config,
     tvlApiResponse,
     activityApiResponse,
-    verifiedContracts,
+    highlightUnverifiedContracts,
   )
 }
 
