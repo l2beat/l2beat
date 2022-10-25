@@ -10,6 +10,8 @@ export interface ProjectContracts {
   references?: ProjectReference[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
+  /** Are the contracts verified*/
+  isVerified?: boolean
 }
 
 export interface ProjectContract {

@@ -31,8 +31,8 @@ export function getProps(
             slug: project.display.slug,
             warning: project.display.warning,
             category: project.technology.category,
-            includesUnverifiedContracts:
-              project.display.includesUnverifiedContracts,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            isVerified: project.contracts?.isVerified,
             destination: getDestination(
               project.type === 'bridge'
                 ? project.technology.destination

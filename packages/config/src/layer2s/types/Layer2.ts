@@ -47,8 +47,6 @@ export interface Layer2Display {
   links: ProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: string
-  /** Does it have unverified contracts in config? */
-  includesUnverifiedContracts?: boolean
 }
 
 export interface Layer2Config {
