@@ -14,7 +14,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "update-multichain": "node -r esbuild-register scripts/multichain",
-    "find-unverified-contracts": "node -r esbuild-register scripts/findUnverified"
+    "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts"
   },
   "dependencies": {
     "@l2beat/types": "*",
