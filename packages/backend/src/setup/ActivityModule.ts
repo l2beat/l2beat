@@ -65,6 +65,15 @@ export function getActivityModule(
     logger,
   )
 
+  const loopringTransactionUpdater = new LoopringTransactionUpdater(
+    loopringClient,
+    blockTransactionCountRepository,
+    clock,
+    logger,
+    ProjectId.LOOPRING,
+    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
+  )
+
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
     config.transactionCountSync,
     blockTransactionCountRepository,
@@ -77,7 +86,8 @@ export function getActivityModule(
     zksyncTransactionRepository,
     layer2RpcTransactionUpdaters
       .map((u) => u.projectId)
-      .concat(ProjectId.ETHEREUM),
+      .concat(ProjectId.ETHEREUM)
+      .concat(ProjectId.LOOPRING),
     clock,
     logger,
   )
@@ -96,15 +106,6 @@ export function getActivityModule(
     clock,
     logger,
     { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
-  )
-
-  const loopringTransactionUpdater = new LoopringTransactionUpdater(
-    loopringClient,
-    blockTransactionCountRepository,
-    clock,
-    logger,
-    ProjectId.LOOPRING,
-    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
   )
 
   const activityController = new ActivityController(
