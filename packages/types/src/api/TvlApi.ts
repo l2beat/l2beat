@@ -17,7 +17,7 @@ const TvlApiChart = z.object({
 })
 export type TvlApiChart = z.infer<typeof TvlApiChart>
 
-export const  TvlApiCharts = z.object({
+export const TvlApiCharts = z.object({
   hourly: TvlApiChart,
   sixHourly: TvlApiChart,
   daily: TvlApiChart,
