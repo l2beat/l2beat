@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/common'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 
-import { getBlockNumberAtOrBefore } from '../getBlockAtOrBefore'
+import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
 
