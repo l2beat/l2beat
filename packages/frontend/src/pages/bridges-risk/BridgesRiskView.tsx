@@ -81,7 +81,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
     getProps: (entry) => {
-      const result: Record<string, any> = {}
+      const result: Record<string, string | boolean> = {}
       result.className = ''
       if (entry.type !== 'bridge') {
         result.className += 'hidden '

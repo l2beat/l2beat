@@ -1,4 +1,4 @@
-import { ActivityApiResponse, TvlApiResponse } from "@l2beat/types"
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 export interface PagesData {
   tvlApiResponse: TvlApiResponse

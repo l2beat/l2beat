@@ -34,11 +34,10 @@ async function main() {
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
 
-  const verificationStatus: Record<string, boolean> = {}
-
-  if (config.features.highlightUnverified) {
-    verificationStatus['Polygon PoS'] = false
-  }
+  const verificationStatus: Record<string, boolean> = config.features
+    .highlightUnverified
+    ? { 'Polygon PoS': false }
+    : {}
 
   const pagesData: PagesData = {
     tvlApiResponse,
