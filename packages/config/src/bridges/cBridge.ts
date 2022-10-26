@@ -49,7 +49,7 @@ export const cBridge: Bridge = {
           'WBTC',
           'CELR',
           'FXS',
-          'WXT'
+          'WXT',
         ],
       },
     ],
@@ -110,7 +110,16 @@ export const cBridge: Bridge = {
       name: 'Destination tokens',
       description:
         'Type of the token received on the destination chain depends on the token, if it is native to this chain user will receive canonical token. If the bridged token is not native to the destination chain then user will end up with wrapped version.',
-      references: [],
+      references: [
+        {
+          text: 'Bridging models',
+          href: 'https://cbridge-docs.celer.network/introduction/fungible-token-bridging-models',
+        },
+        {
+          text: 'Open Canonical Token Bridge Standard',
+          href: 'https://blog.celer.network/2021/12/13/say-no-to-vendor-lock-in-calling-for-an-open-canonical-token-bridge-standard/',
+        },
+      ],
       risks: [],
     },
   },
