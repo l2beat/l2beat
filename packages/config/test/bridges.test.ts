@@ -1,11 +1,7 @@
 import { expect } from 'earljs'
 
-import {
-  bridges,
-  BridgeTechnology,
-  ProjectRisk,
-  ProjectTechnologyChoice,
-} from '../src'
+import { bridges, BridgeTechnology, ProjectTechnologyChoice } from '../src'
+import { checkRisk } from './checkRisk'
 
 describe('bridges', () => {
   describe('technology', () => {
@@ -36,12 +32,6 @@ describe('bridges', () => {
             for (const [i, risk] of choice.risks.entries()) {
               checkRisk(risk, `${name}.risks[${i}]`)
             }
-          })
-        }
-
-        function checkRisk(risk: ProjectRisk, name: string) {
-          it(`${name} is correctly formatted`, () => {
-            expect(risk.text).toEqual(expect.stringMatching(/^[a-z].*\.$/))
           })
         }
 
