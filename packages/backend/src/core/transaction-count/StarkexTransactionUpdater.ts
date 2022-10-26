@@ -80,6 +80,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       .getLastHour()
       .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
       .toStartOf('day')
+      .add(-1, 'days')
       .toDays()
 
     const gaps = await this.starkexTransactionCountRepository.getGapsByProject(
