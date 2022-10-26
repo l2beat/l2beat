@@ -17,7 +17,7 @@ To run please use `yarn start`. Display help with `yarn start --help`.
 
 3. run `yarn start discover [project]`
 
-   - \*if your script is stuck at some method there probably is a need to skip it by providing configuration parameter `skipMethods`, see example [arbitrum](src/projects/arbitrum/index.ts)
+   - if your script is stuck at some method there probably is a need to skip it by providing configuration parameter `skipMethods`, see example [arbitrum](src/projects/arbitrum/index.ts)
 
 4. Discovery Engine will generate file with values(discovered by calling all possible read methods) inside `dist/discovery` and ABI per-contract in the folder `dist/discovery/abi/[contractAddress].json`
 
