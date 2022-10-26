@@ -10,7 +10,7 @@ export function getScalingFactor(
     'week',
   )
   const ethereumWeeklyCount = getTransactionCount(
-    activityApiResponse.ethereum?.data,
+    activityApiResponse.ethereum.data,
     'week',
   )
 

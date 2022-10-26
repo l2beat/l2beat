@@ -16,10 +16,9 @@ describe(ZksyncTransactionUpdater.name, () => {
         getTransactionsInBlock: async () => [],
       })
       const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({
-        getMissingRanges: async () => [
-          [-Infinity, -1],
-          [2, 3],
-          [5, Infinity],
+        getGaps: async () => [
+          [2, 2],
+          [5, 5],
         ],
         addMany: async () => 0,
       })
@@ -38,6 +37,9 @@ describe(ZksyncTransactionUpdater.name, () => {
       zksyncTransactionUpdater.start()
 
       await waitForExpect(() => {
+        expect(zksyncTransactionRepository.getGaps).toHaveBeenCalledExactlyWith(
+          [[1, 5]],
+        )
         expect(zksyncClient.getTransactionsInBlock).toHaveBeenCalledExactlyWith(
           [[2], [5]],
         )
