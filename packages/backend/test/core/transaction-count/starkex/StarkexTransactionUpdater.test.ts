@@ -3,10 +3,10 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../../../src/core/Clock'
-import { StarkexTransactionUpdater } from '../../../src/core/transaction-count/StarkexTransactionUpdater'
-import { StarkexTransactionCountRepository } from '../../../src/peripherals/database/StarkexTransactionCountRepository'
-import { StarkexClient } from '../../../src/peripherals/starkex'
+import { Clock } from '../../../../src/core/Clock'
+import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/starkex/StarkexTransactionUpdater'
+import { StarkexTransactionCountRepository } from '../../../../src/peripherals/database/StarkexTransactionCountRepository'
+import { StarkexClient } from '../../../../src/peripherals/starkex'
 
 describe(StarkexTransactionUpdater.name, () => {
   describe(StarkexTransactionUpdater.prototype.start.name, () => {
@@ -14,11 +14,12 @@ describe(StarkexTransactionUpdater.name, () => {
       const firstDay = UnixTime.fromDays(0)
       const lastDay = UnixTime.fromDays(7)
       const apiDelayHours = 6
+      const lastHour = lastDay.add(apiDelayHours, 'hours')
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
           getGapsByProject: async () => [
             [2, 2],
-            [4, 5],
+            [4, 6],
           ],
           add: async () => '',
         })
@@ -30,7 +31,7 @@ describe(StarkexTransactionUpdater.name, () => {
           callback(UnixTime.now())
           return () => {}
         },
-        getLastHour: () => lastDay.add(apiDelayHours / 2, 'hours'),
+        getLastHour: () => lastHour,
       })
       const updater = new StarkexTransactionUpdater(
         starkexTransactionCountRepository,
@@ -49,11 +50,12 @@ describe(StarkexTransactionUpdater.name, () => {
           [2, 'dydx'],
           [4, 'dydx'],
           [5, 'dydx'],
+          [6, 'dydx'],
         ])
         expect(
           starkexTransactionCountRepository.getGapsByProject,
         ).toHaveBeenCalledExactlyWith([
-          [ProjectId('dydx'), 0, lastDay.toDays() - 2],
+          [ProjectId('dydx'), 0, lastDay.toDays() - 1],
         ])
       })
     })
