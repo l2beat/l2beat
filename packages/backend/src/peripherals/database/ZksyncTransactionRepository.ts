@@ -1,8 +1,9 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 
 import { assert } from '../../tools/assert'
+import { BlockTipRepository } from './BlockTipRepository'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 import {
@@ -19,7 +20,11 @@ export interface ZksyncTransactionRecord {
 }
 
 export class ZksyncTransactionRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(
+    database: Database,
+    logger: Logger,
+    private readonly tipRepository: BlockTipRepository,
+  ) {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
@@ -30,7 +35,6 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.getGaps = this.wrapGet(this.getGaps)
     this.refreshTip = this.wrapAny(this.refreshTip)
     this.getGapsAndBoundaries = this.wrapAny(this.getGapsAndBoundaries)
-    this.findTip = this.wrapFind(this.findTip)
     this.updateTipByBlockNumber = this.wrapAny(this.updateTipByBlockNumber)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -83,7 +87,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     boundaries?: Boundaries
   }> {
     const knex = await this.knex()
-    const tip = await this.findTip()
+    const tip = await this.tipRepository.findByProject(ProjectId.ZKSYNC)
     const { rows } = (await knex.raw(
       `
       SELECT NULL AS prev, min(block_number) AS next FROM transactions.zksync
@@ -114,30 +118,19 @@ export class ZksyncTransactionRepository extends BaseRepository {
     }
   }
 
-  private async findTip() {
-    const knex = await this.knex()
-    const row = await knex('transactions.zksync_tip').first()
-    return row ? toRecord(row) : undefined
-  }
-
   private async updateTipByBlockNumber(blockNumber?: number) {
     const knex = await this.knex()
-    await knex.transaction(async (trx) => {
-      await trx('transactions.zksync_tip').delete()
-      if (blockNumber) {
-        await trx.raw(
-          `
-          INSERT INTO transactions.zksync_tip (block_number, block_index, unix_timestamp)
-            SELECT block_number, block_index, unix_timestamp
-            FROM transactions.zksync
-            WHERE block_number = :blockNumber
-            ORDER BY block_index DESC
-            LIMIT 1
-        `,
-          { blockNumber },
-        )
-      }
-    })
+    const tip =
+      blockNumber !== undefined
+        ? await knex('transactions.zksync')
+            .andWhere('block_number', blockNumber)
+            .orderBy('block_index', 'desc')
+            .first()
+        : undefined
+    await this.tipRepository.updateByProject(
+      ProjectId.ZKSYNC,
+      tip ? toRecord(tip) : undefined,
+    )
   }
 }
 

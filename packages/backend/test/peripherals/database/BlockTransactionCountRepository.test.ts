@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
+import { BlockTipRepository } from '../../../src/peripherals/database/BlockTipRepository'
 import {
   BlockTransactionCountRecord,
   BlockTransactionCountRepository,
@@ -13,6 +14,7 @@ describe(BlockTransactionCountRepository.name, () => {
   const repository = new BlockTransactionCountRepository(
     database,
     Logger.SILENT,
+    new BlockTipRepository(database, Logger.SILENT),
   )
 
   const PROJECT_A = ProjectId('project-a')

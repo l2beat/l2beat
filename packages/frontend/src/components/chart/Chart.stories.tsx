@@ -33,16 +33,12 @@ function Template({ tokenCount, hasActivity, type }: TemplateProps) {
   }, [])
 
   const activityEndpoint = hasActivity ? '/fakeActivity.json' : undefined
-  const ethereumActivityEndpoint = hasActivity
-    ? '/fakeEthereumActivity.json'
-    : undefined
 
   return (
     <PageContent>
       <ChartComponent
         tvlEndpoint="/fakeTvl.json"
         activityEndpoint={activityEndpoint}
-        ethereumActivityEndpoint={ethereumActivityEndpoint}
         tokens={tokens.slice(0, tokenCount)}
         hasActivity={hasActivity}
         type={type}

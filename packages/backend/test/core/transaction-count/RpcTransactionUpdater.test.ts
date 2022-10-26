@@ -15,7 +15,7 @@ describe(RpcTransactionUpdater.name, () => {
     it('skips known blocks', async () => {
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
-        getBlockNumber: async () => 5n,
+        getBlockNumber: async () => 5,
       })
       const blockCountTransactionRepository =
         mock<BlockTransactionCountRepository>({
@@ -68,7 +68,7 @@ describe(RpcTransactionUpdater.name, () => {
               transactions: ['t0', 't1', 't2'],
             }),
           ),
-        getBlockNumber: async () => 5n,
+        getBlockNumber: async () => 5,
       })
       const blockCountTransactionRepository =
         mock<BlockTransactionCountRepository>({

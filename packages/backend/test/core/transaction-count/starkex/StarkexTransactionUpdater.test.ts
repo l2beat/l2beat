@@ -3,19 +3,23 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../../../src/core/Clock'
-import { StarkexTransactionUpdater } from '../../../src/core/transaction-count/StarkexTransactionUpdater'
-import { StarkexTransactionCountRepository } from '../../../src/peripherals/database/StarkexTransactionCountRepository'
-import { StarkexClient } from '../../../src/peripherals/starkex'
+import { Clock } from '../../../../src/core/Clock'
+import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/starkex/StarkexTransactionUpdater'
+import { StarkexTransactionCountRepository } from '../../../../src/peripherals/database/StarkexTransactionCountRepository'
+import { StarkexClient } from '../../../../src/peripherals/starkex'
 
 describe(StarkexTransactionUpdater.name, () => {
   describe(StarkexTransactionUpdater.prototype.start.name, () => {
     it('skips known blocks', async () => {
+      const firstDay = UnixTime.fromDays(0)
+      const lastDay = UnixTime.fromDays(7)
+      const apiDelayHours = 6
+      const lastHour = lastDay.add(apiDelayHours, 'hours')
       const starkexTransactionCountRepository =
         mock<StarkexTransactionCountRepository>({
           getGapsByProject: async () => [
             [2, 2],
-            [5, 6],
+            [4, 6],
           ],
           add: async () => '',
         })
@@ -27,7 +31,7 @@ describe(StarkexTransactionUpdater.name, () => {
           callback(UnixTime.now())
           return () => {}
         },
-        getLastHour: () => UnixTime.fromDays(7),
+        getLastHour: () => lastHour,
       })
       const updater = new StarkexTransactionUpdater(
         starkexTransactionCountRepository,
@@ -36,20 +40,23 @@ describe(StarkexTransactionUpdater.name, () => {
         Logger.SILENT,
         'dydx',
         ProjectId('dydx'),
-        new UnixTime(0),
-        { apiDelayHours: 6 },
+        firstDay,
+        { apiDelayHours },
       )
       updater.start()
 
       await waitForExpect(() => {
         expect(starkexClient.getDailyCount).toHaveBeenCalledExactlyWith([
           [2, 'dydx'],
+          [4, 'dydx'],
           [5, 'dydx'],
           [6, 'dydx'],
         ])
         expect(
           starkexTransactionCountRepository.getGapsByProject,
-        ).toHaveBeenCalledExactlyWith([[ProjectId('dydx'), 0, 6]])
+        ).toHaveBeenCalledExactlyWith([
+          [ProjectId('dydx'), 0, lastDay.toDays() - 1],
+        ])
       })
     })
   })
