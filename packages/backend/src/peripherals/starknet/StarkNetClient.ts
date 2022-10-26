@@ -1,6 +1,8 @@
 import { HttpClient, RateLimiter } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
 import { assert } from '../../tools/assert'
+import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { StarkNetGetBlockResponseBodySchema } from './schemas'
 
 interface StarkNetClientOpts {
@@ -24,7 +26,18 @@ export class StarkNetClient {
 
   async getBlockNumber() {
     const block = await this.getBlock('latest')
-    return BigInt(block.number)
+    return block.number
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
+    const end = await this.getBlockNumber()
+
+    return await getBlockNumberAtOrBefore(
+      timestamp,
+      start,
+      end,
+      this.getBlock.bind(this),
+    )
   }
 
   async getBlock(blockNumber: number | string) {

@@ -7,18 +7,6 @@ export function stringAsInt(fallback?: number) {
   }, z.number().int())
 }
 
-export function stringAsBigInt(fallback?: bigint) {
-  return z.preprocess((v) => {
-    try {
-      const s = z.string().parse(v)
-      if (s === '') return fallback
-      return BigInt(s)
-    } catch {
-      return fallback
-    }
-  }, z.bigint())
-}
-
 function branded<T extends z.ZodTypeAny, B>(
   schema: T,
   Brand: (t: z.TypeOf<T>) => B,
