@@ -17,7 +17,6 @@ export interface ChartProps {
   type?: 'tvl' | 'activity'
   tvlEndpoint?: string
   activityEndpoint?: string
-  ethereumActivityEndpoint?: string
   tokens?: TokenControl[]
   className?: string
   hasActivity?: boolean

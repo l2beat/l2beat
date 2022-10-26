@@ -4,7 +4,8 @@ import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
-import { ActivityMetaImageProps, MetaImageProps } from './MetaImage'
+import { ActivityMetaImageProps } from './ActivityMetaImage'
+import { TvlMetaImageProps } from './TvlMetaImage'
 
 // where should this be placed? we already have it in backend code
 export function assert(
@@ -20,7 +21,7 @@ export function getProps(
   tvlApiResponse: TvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
-): Wrapped<MetaImageProps> {
+): Wrapped<TvlMetaImageProps> {
   const daily = project
     ? tvlApiResponse.projects[project.id.toString()]?.charts.daily.data ?? []
     : tvlApiResponse[type].daily.data
@@ -62,13 +63,11 @@ export function getPropsActivity(
   const weeklyChange = getPercentageChange(activityNow, activitySevenDaysAgo)
 
   const activityEndpoint = `/api/activity/combined.json`
-  const ethereumActivityEndpoint = `/api/activity/ethereum.json`
   return {
     props: {
       tpsDaily: activityNow.toFixed(2),
       tpsWeeklyChange: weeklyChange,
-      activityEndpoint: activityEndpoint,
-      ethereumActivityEndpoint: ethereumActivityEndpoint,
+      activityEndpoint,
     },
     wrapper: {
       htmlClassName: 'light meta',

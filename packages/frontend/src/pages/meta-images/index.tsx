@@ -4,8 +4,9 @@ import React from 'react'
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
+import { ActivityMetaImage } from './ActivityMetaImage'
 import { getProps, getPropsActivity } from './getProps'
-import { ActivityMetaImage, MetaImage } from './MetaImage'
+import { TvlMetaImage } from './TvlMetaImage'
 
 export function getMetaImagePages(
   config: Config,
@@ -24,7 +25,7 @@ export function getMetaImagePages(
       slug: '/meta-images/overview-scaling',
       page: (
         <PageWrapper {...scaling.wrapper}>
-          <MetaImage {...scaling.props} />
+          <TvlMetaImage {...scaling.props} />
         </PageWrapper>
       ),
     },
@@ -40,7 +41,7 @@ export function getMetaImagePages(
       slug: '/meta-images/overview-bridges',
       page: (
         <PageWrapper {...bridges.wrapper}>
-          <MetaImage {...bridges.props} />
+          <TvlMetaImage {...bridges.props} />
         </PageWrapper>
       ),
     },
@@ -50,7 +51,7 @@ export function getMetaImagePages(
         slug: `/meta-images/${project.display.slug}`,
         page: (
           <PageWrapper {...wrapper}>
-            <MetaImage {...props} />
+            <TvlMetaImage {...props} />
           </PageWrapper>
         ),
       }

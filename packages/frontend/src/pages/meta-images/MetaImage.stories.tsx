@@ -4,7 +4,8 @@ import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { configureCharts } from '../../components/chart/configure'
-import { ActivityMetaImage, MetaImage } from './MetaImage'
+import { ActivityMetaImage } from './ActivityMetaImage'
+import { TvlMetaImage } from './TvlMetaImage'
 
 export default {
   title: 'Other/MetaImage',
@@ -28,7 +29,7 @@ function Template({ projectId }: TemplateProps) {
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">
-        <MetaImage
+        <TvlMetaImage
           tvl="$1.34 B"
           sevenDayChange="+3.45%"
           name={project?.display.name}
@@ -58,7 +59,6 @@ export const ActivityOverview: Story<TemplateProps> = () => {
           tpsDaily="15.69"
           tpsWeeklyChange="+3.45%"
           activityEndpoint="/fakeActivity.json"
-          ethereumActivityEndpoint="/fakeEthereumActivity.json"
         />
       </div>
     </div>
