@@ -179,6 +179,7 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
     .filter(([name]) => importantProjects.includes(name))
     .map(([name, data]) => {
       // can we assume here that data is always sorted?
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return [name, data.data.at(-1)!] as const
     })
     .filter(([_, lastValue]) => lastValue[1] === 0)
