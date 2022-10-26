@@ -29,7 +29,7 @@ export function createStarkexTransactionUpdaters(
         project.transactionApi.sinceTimestamp,
         {
           workQueueWorkers: config.transactionCountSync.starkexWorkQueueWorkers,
-          apiDelayHours: 4,
+          apiDelayHours: config.transactionCountSync.starkexApiDelayHours,
         },
       )
 
