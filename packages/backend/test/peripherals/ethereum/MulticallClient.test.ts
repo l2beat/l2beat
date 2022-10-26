@@ -37,7 +37,7 @@ describe(MulticallClient.name, () => {
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
-    const blockTag = MULTICALL_V1_BLOCK - 1n
+    const blockTag = MULTICALL_V1_BLOCK - 1
 
     const result = await multicallClient.multicall(
       [
@@ -75,7 +75,7 @@ describe(MulticallClient.name, () => {
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
-    const blockTag = MULTICALL_V2_BLOCK - 1n
+    const blockTag = MULTICALL_V2_BLOCK - 1
 
     const result = await multicallClient.multicall(
       [
@@ -122,7 +122,7 @@ describe(MulticallClient.name, () => {
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
-    const blockTag = MULTICALL_V2_BLOCK + 1n
+    const blockTag = MULTICALL_V2_BLOCK + 1
 
     const result = await multicallClient.multicall(
       [
@@ -168,7 +168,7 @@ describe(MulticallClient.name, () => {
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
-    const blockTag = MULTICALL_V2_BLOCK + 1n
+    const blockTag = MULTICALL_V2_BLOCK + 1
 
     const result = await multicallClient.multicall(
       new Array(MULTICALL_BATCH_SIZE * 2 + 1).fill(0).map(() => ({
@@ -196,7 +196,7 @@ describe(MulticallClient.name, () => {
     })
 
     const multicallClient = new MulticallClient(ethereumClient)
-    const blockTag = MULTICALL_V2_BLOCK + 1n
+    const blockTag = MULTICALL_V2_BLOCK + 1
 
     const result = await multicallClient.multicallNamed(
       {

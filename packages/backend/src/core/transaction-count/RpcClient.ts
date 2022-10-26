@@ -1,5 +1,5 @@
 export interface RpcClient {
-  getBlockNumber(): Promise<bigint>
+  getBlockNumber(): Promise<number>
   getBlock(number: number): Promise<{
     number: number
     timestamp: number
