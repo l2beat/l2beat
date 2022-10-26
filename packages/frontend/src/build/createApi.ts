@@ -33,26 +33,24 @@ export function createApi(
     }
   }
 
-  if (activityApiResponse.ethereum) {
-    urlCharts.set(
-      'activity/combined',
-      getActivityChart(
-        activityApiResponse.combined,
-        activityApiResponse.ethereum,
-      ),
-    )
+  urlCharts.set(
+    'activity/combined',
+    getActivityChart(
+      activityApiResponse.combined,
+      activityApiResponse.ethereum,
+    ),
+  )
 
-    for (const [projectId, chart] of Object.entries(
-      activityApiResponse.projects,
-    )) {
-      const slug = config.layer2s.find((x) => x.id.toString() === projectId)
-        ?.display.slug
-      if (chart && slug) {
-        urlCharts.set(
-          `activity/${slug}`,
-          getActivityChart(chart, activityApiResponse.ethereum),
-        )
-      }
+  for (const [projectId, chart] of Object.entries(
+    activityApiResponse.projects,
+  )) {
+    const slug = config.layer2s.find((x) => x.id.toString() === projectId)
+      ?.display.slug
+    if (chart && slug) {
+      urlCharts.set(
+        `activity/${slug}`,
+        getActivityChart(chart, activityApiResponse.ethereum),
+      )
     }
   }
 
