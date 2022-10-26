@@ -1818,16 +1818,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    id: AssetId('wxt-wirex-token'),
-    name: 'Wirex Token',
-    coingeckoId: CoingeckoId('wirex'),
-    address: EthereumAddress('0xa02120696c7B8fE16C09C749E4598819b2B0E915'),
-    symbol: 'WXT',
-    decimals: 18,
-    sinceTimestamp: new UnixTime(1619284830),
-    category: 'other',
-  },
-  {
     id: AssetId('woo-wootrade-network'),
     name: 'Wootrade Network',
     coingeckoId: CoingeckoId('woo-network'),
