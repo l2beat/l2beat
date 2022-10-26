@@ -46,7 +46,7 @@ export class MaterializedViewRefresher {
   private async checkIfFullySynced() {
     const lastHour = this.clock.getLastHour()
     const startOfDay = lastHour.toStartOf('day')
-    const timeToCheck = lastHour.equals(
+    const timeToCheck = lastHour.gte(
       startOfDay.add(this.delayHours + 1, 'hours'),
     )
     if (!timeToCheck) {
