@@ -2,11 +2,12 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
-import { StarkexClient } from '../../peripherals/starkex'
-import { Clock } from '../Clock'
-import { TransactionCounter } from './TransactionCounter'
-import { BACK_OFF_AND_DROP } from './utils'
+import { StarkexTransactionCountRepository } from '../../../peripherals/database/StarkexTransactionCountRepository'
+import { StarkexClient } from '../../../peripherals/starkex'
+import { Clock } from '../../Clock'
+import { TransactionCounter } from '../TransactionCounter'
+import { BACK_OFF_AND_DROP } from '../utils'
+import { getLastDay } from './getLastDay'
 
 interface StarkexTransactionUpdaterOpts {
   workQueueWorkers?: number
@@ -17,6 +18,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly daysQueue: TaskQueue<number>
   private readonly startDay: number
+  private readonly apiDelayHours: number
 
   constructor(
     private readonly starkexTransactionCountRepository: StarkexTransactionCountRepository,
@@ -45,6 +47,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
       },
     )
     this.startDay = startTimestamp.toStartOf('day').toDays()
+    this.apiDelayHours = this.opts?.apiDelayHours ?? 0
   }
 
   start() {
@@ -76,11 +79,7 @@ export class StarkexTransactionUpdater implements TransactionCounter {
 
     await this.daysQueue.waitTilEmpty()
 
-    const lastDay = this.clock
-      .getLastHour()
-      .add(-(this.opts?.apiDelayHours ?? 0), 'hours')
-      .toStartOf('day')
-      .toDays()
+    const lastDay = getLastDay(this.clock.getLastHour(), this.apiDelayHours)
 
     const gaps = await this.starkexTransactionCountRepository.getGapsByProject(
       this.projectId,
