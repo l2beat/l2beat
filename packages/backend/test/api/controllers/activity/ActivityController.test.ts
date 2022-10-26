@@ -9,7 +9,7 @@ import { expect } from 'earljs'
 
 import { ActivityController } from '../../../../src/api/controllers/activity/ActivityController'
 import { RpcTransactionUpdater } from '../../../../src/core/transaction-count/RpcTransactionUpdater'
-import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/StarkexTransactionUpdater'
+import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/starkex/StarkexTransactionUpdater'
 import { TransactionCounter } from '../../../../src/core/transaction-count/TransactionCounter'
 import { ZksyncTransactionUpdater } from '../../../../src/core/transaction-count/ZksyncTransactionUpdater'
 
