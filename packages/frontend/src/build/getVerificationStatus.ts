@@ -4,14 +4,7 @@ import fs from 'fs'
 const PATH = '../config/build/verified.json'
 
 export function getVerificationStatus(isEnabled: boolean): VerificationStatus {
-  if (!isEnabled) {
-    return {
-      projects: {},
-      contracts: {},
-    }
-  }
-
-  if (!fs.existsSync(PATH)) {
+  if (!isEnabled || !fs.existsSync(PATH)) {
     return {
       projects: {},
       contracts: {},
