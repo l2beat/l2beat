@@ -35,6 +35,11 @@ export const orbiter: Bridge = {
         sinceTimestamp: new UnixTime(1649661119),
         tokens: ['ETH'],
       },
+      {
+        address: '0x095D2918B03b2e86D68551DCF11302121fb626c9',
+        sinceTimestamp: new UnixTime(1666335431),
+        tokens: ['DAI'],
+      },
     ],
   },
   technology: {
