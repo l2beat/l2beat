@@ -8,8 +8,6 @@ import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchActivityApi } from './fetchActivityApi'
 import { fetchTvlApi } from './fetchTvlApi'
-import { getVerificationStatus } from './getVerificationStatus'
-import { PagesData } from './types'
 
 main().catch((e) => {
   console.error(e)
@@ -35,19 +33,8 @@ async function main() {
   printApiInfo(tvlApiResponse)
   sanityCheck(tvlApiResponse)
 
-  const verificationStatus: Record<string, boolean> = config.features
-    .highlightUnverified
-    ? getVerificationStatus()
-    : {}
-
-  const pagesData: PagesData = {
-    tvlApiResponse,
-    activityApiResponse,
-    verificationStatus,
-  }
-
   createApi(config, tvlApiResponse, activityApiResponse)
-  await renderPages(config, pagesData)
+  await renderPages(config, tvlApiResponse, activityApiResponse)
 }
 
 function printApiInfo(tvlApiResponse: TvlApiResponse) {
