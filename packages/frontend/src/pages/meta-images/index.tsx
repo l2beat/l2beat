@@ -1,15 +1,17 @@
-import { TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
-import { getProps } from './getProps'
-import { MetaImage } from './MetaImage'
+import { ActivityMetaImage } from './ActivityMetaImage'
+import { getProps, getPropsActivity } from './getProps'
+import { TvlMetaImage } from './TvlMetaImage'
 
 export function getMetaImagePages(
   config: Config,
   tvlApiResponse: TvlApiResponse,
+  activityApiResponse: ActivityApiResponse,
 ) {
   const included = getIncludedProjects(
     [...config.layer2s, ...config.bridges],
@@ -17,12 +19,21 @@ export function getMetaImagePages(
   )
   const scaling = getProps(tvlApiResponse, undefined, 'layers2s')
   const bridges = getProps(tvlApiResponse, undefined, 'bridges')
+  const activity = getPropsActivity(activityApiResponse)
   return [
     {
       slug: '/meta-images/overview-scaling',
       page: (
         <PageWrapper {...scaling.wrapper}>
-          <MetaImage {...scaling.props} />
+          <TvlMetaImage {...scaling.props} />
+        </PageWrapper>
+      ),
+    },
+    {
+      slug: '/meta-images/overview-scaling-activity',
+      page: (
+        <PageWrapper {...activity.wrapper}>
+          <ActivityMetaImage {...activity.props} />
         </PageWrapper>
       ),
     },
@@ -30,7 +41,7 @@ export function getMetaImagePages(
       slug: '/meta-images/overview-bridges',
       page: (
         <PageWrapper {...bridges.wrapper}>
-          <MetaImage {...bridges.props} />
+          <TvlMetaImage {...bridges.props} />
         </PageWrapper>
       ),
     },
@@ -40,7 +51,7 @@ export function getMetaImagePages(
         slug: `/meta-images/${project.display.slug}`,
         page: (
           <PageWrapper {...wrapper}>
-            <MetaImage {...props} />
+            <TvlMetaImage {...props} />
           </PageWrapper>
         ),
       }

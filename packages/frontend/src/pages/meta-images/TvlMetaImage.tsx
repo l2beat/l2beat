@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
 
-export interface MetaImageProps {
+export interface TvlMetaImageProps {
   tvl: string
   sevenDayChange: string
   name?: string
@@ -11,7 +11,7 @@ export interface MetaImageProps {
   tvlEndpoint: string
 }
 
-export function MetaImage(props: MetaImageProps) {
+export function TvlMetaImage(props: TvlMetaImageProps) {
   const name = props.name ?? 'Overview'
 
   return (
