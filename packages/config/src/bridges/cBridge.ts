@@ -49,7 +49,7 @@ export const cBridge: Bridge = {
           'WBTC',
           'CELR',
           'FXS',
-          'WXT',
+          // 'WXT',
         ],
       },
     ],
