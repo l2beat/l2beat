@@ -8,6 +8,7 @@ import { providers } from 'ethers'
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
+import { discoverHop, HOP_NAME } from '../projects/hop'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
 import {
@@ -50,6 +51,7 @@ export async function discover(args: string[]) {
     [ARBITRUM_NAME, discoverArbitrum],
     [STARK_NET_NAME, discoverStarkNet],
     [NOVA_NAME, discoverNova],
+    [HOP_NAME, discoverHop],
     [DYDX_NAME, discoverDydx],
     [SOLLET_BRIDGE_NAME, discoverSolletBridge],
     [ORBIT_BRIDGE_NAME, discoverOrbitBridge],
