@@ -43,7 +43,7 @@ export function getActivityViewEntry(
 function getEthereumActivityViewEntry(
   activityApiResponse: ActivityApiResponse,
 ) {
-  const data = activityApiResponse.ethereum?.data
+  const data = activityApiResponse.ethereum.data
   return {
     name: 'Ethereum',
     slug: 'ethereum',
