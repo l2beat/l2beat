@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { ZksyncTransactionRepository } from '../../peripherals/database/ZksyncTransactionRepository'
@@ -46,8 +46,11 @@ export class MaterializedViewRefresher {
   private async checkIfFullySynced() {
     const lastHour = this.clock.getLastHour()
     const startOfDay = lastHour.toStartOf('day')
-    if (!lastHour.equals(startOfDay.add(this.delayHours + 1, 'hours'))) {
-      this.logger.debug('Skipping fully sync check - too early')
+    const timeToCheck = lastHour.equals(
+      startOfDay.add(this.delayHours + 1, 'hours'),
+    )
+    if (!timeToCheck) {
+      this.logger.info('Skipping fully sync check - too early')
       return
     }
     const expectedTip = startOfDay.add(-1, 'days')
@@ -56,11 +59,7 @@ export class MaterializedViewRefresher {
     })
     const lagging = await this.getLaggingProjects(startOfDay)
     if (lagging.length > 0) {
-      this.logger.error({
-        message: 'Transaction counters are not fully synced',
-        lagging,
-        expectedTip: expectedTip.toYYYYMMDD(),
-      })
+      this.logLaggingError(lagging, expectedTip)
     } else {
       this.logger.info('Transaction counters are fully synced', {
         day: expectedTip.toYYYYMMDD(),
@@ -82,5 +81,24 @@ export class MaterializedViewRefresher {
     )
     const lagging = tips.filter((tip) => !tip.timestamp?.equals(expectedTip))
     return lagging
+  }
+
+  private logLaggingError(
+    lagging: { projectId: ProjectId; timestamp?: UnixTime }[],
+    expectedTip: UnixTime,
+  ) {
+    this.logger.error(
+      {
+        ...lagging.reduce(
+          (acc, p) => ({
+            ...acc,
+            [p.projectId.toString()]: p.timestamp?.toYYYYMMDD() ?? null,
+          }),
+          {},
+        ),
+        expectedTip: expectedTip.toYYYYMMDD(),
+      },
+      new Error('Transaction counters are not fully synced'),
+    )
   }
 }
