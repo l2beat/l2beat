@@ -54,7 +54,7 @@ function gatherAddressesFromUpgradeability(
       // Ignoring type "Reference"
       break
     default:
-      // This code triggers a typescript compile-time error if not all cases has been covered
+      // This code triggers a typescript compile-time error if not all cases have been covered
       assertUnreachable(item)
   }
   return result.map(EthereumAddress)
