@@ -24,7 +24,7 @@ export function NewsSection({ news }: NewsSectionProps) {
     <Section title="News" id="news" className="NewsSection px-4 md:px-0">
       <ul className="NewsSection-List">
         {news.map((news, i) => (
-          <li key={i} className="dark:text-gray-400">
+          <li key={i}>
             <OutLink className="NewsSection-News" href={news.href}>
               <div className="NewsSection-Source">
                 <span>{news.date}</span> &middot; <span>{news.domain}</span>

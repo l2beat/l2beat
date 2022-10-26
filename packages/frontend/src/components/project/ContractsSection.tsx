@@ -65,14 +65,16 @@ export function ContractsSection(props: ContractsSectionProps) {
               </React.Fragment>
             ))}
             {contract.description && (
-              <p className="dark:text-gray-400">{contract.description}</p>
+              <p className="text-gray-860 dark:text-gray-400">
+                {contract.description}
+              </p>
             )}
           </li>
         ))}
       </ul>
       {props.risks.length > 0 && (
         <>
-          <p className="dark:text-gray-400">
+          <p className="text-gray-860 dark:text-gray-400">
             The current deployment carries some associated risks:
           </p>
           <RiskList risks={props.risks} />

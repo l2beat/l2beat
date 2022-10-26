@@ -35,7 +35,9 @@ export function PermissionsSection(props: PermissionsSectionProps) {
               ))}
             </span>
             {permission.description && (
-              <p className="dark:text-gray-400">{permission.description}</p>
+              <p className="text-gray-860 dark:text-gray-400">
+                {permission.description}
+              </p>
             )}
           </li>
         ))}
