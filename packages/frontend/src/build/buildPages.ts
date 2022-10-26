@@ -8,6 +8,7 @@ import { getConfig } from './config'
 import { createApi } from './createApi'
 import { fetchActivityApi } from './fetchActivityApi'
 import { fetchTvlApi } from './fetchTvlApi'
+import { getVerificationStatus } from './getVerificationStatus'
 import { PagesData } from './types'
 
 main().catch((e) => {
@@ -36,7 +37,7 @@ async function main() {
 
   const verificationStatus: Record<string, boolean> = config.features
     .highlightUnverified
-    ? { 'Polygon PoS': false }
+    ? getVerificationStatus()
     : {}
 
   const pagesData: PagesData = {
