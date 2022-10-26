@@ -12,10 +12,10 @@ describe(findCorrespondingBlocks.name, () => {
       { blockNumber: 15 },
     ]
     const blocks = [
-      { timestamp: new UnixTime(0), blockNumber: 0n },
-      { timestamp: new UnixTime(5), blockNumber: 5n },
-      { timestamp: new UnixTime(10), blockNumber: 10n },
-      { timestamp: new UnixTime(15), blockNumber: 15n },
+      { timestamp: new UnixTime(0), blockNumber: 0 },
+      { timestamp: new UnixTime(5), blockNumber: 5 },
+      { timestamp: new UnixTime(10), blockNumber: 10 },
+      { timestamp: new UnixTime(15), blockNumber: 15 },
     ]
 
     const res = findCorrespondingBlocks(blocks, logs)
@@ -36,29 +36,29 @@ describe(findCorrespondingBlocks.name, () => {
       { blockNumber: 6 },
     ]
     const blocks = [
-      { timestamp: new UnixTime(15), blockNumber: 15n },
-      { timestamp: new UnixTime(0), blockNumber: 0n },
-      { timestamp: new UnixTime(10), blockNumber: 10n },
-      { timestamp: new UnixTime(5), blockNumber: 5n },
+      { timestamp: new UnixTime(15), blockNumber: 15 },
+      { timestamp: new UnixTime(0), blockNumber: 0 },
+      { timestamp: new UnixTime(10), blockNumber: 10 },
+      { timestamp: new UnixTime(5), blockNumber: 5 },
     ]
 
     const res = findCorrespondingBlocks(blocks, logs)
 
     expect(res).toEqual([
       {
-        block: { timestamp: new UnixTime(0), blockNumber: 0n },
+        block: { timestamp: new UnixTime(0), blockNumber: 0 },
         value: { blockNumber: 4 },
       },
       {
-        block: { timestamp: new UnixTime(5), blockNumber: 5n },
+        block: { timestamp: new UnixTime(5), blockNumber: 5 },
         value: { blockNumber: 5 },
       },
       {
-        block: { timestamp: new UnixTime(5), blockNumber: 5n },
+        block: { timestamp: new UnixTime(5), blockNumber: 5 },
         value: { blockNumber: 6 },
       },
       {
-        block: { timestamp: new UnixTime(15), blockNumber: 15n },
+        block: { timestamp: new UnixTime(15), blockNumber: 15 },
         value: { blockNumber: 15 },
       },
     ])
@@ -66,7 +66,7 @@ describe(findCorrespondingBlocks.name, () => {
 
   it('works with only one block', () => {
     const logs = [{ blockNumber: 1 }, { blockNumber: 2 }]
-    const blocks = [{ timestamp: new UnixTime(0), blockNumber: 0n }]
+    const blocks = [{ timestamp: new UnixTime(0), blockNumber: 0 }]
 
     const res = findCorrespondingBlocks(blocks, logs)
 
@@ -78,7 +78,7 @@ describe(findCorrespondingBlocks.name, () => {
 
   it('throws without a matching block', () => {
     const logs = [{ blockNumber: 4 }]
-    const blocks = [{ timestamp: new UnixTime(6), blockNumber: 6n }]
+    const blocks = [{ timestamp: new UnixTime(6), blockNumber: 6 }]
 
     expect(() => findCorrespondingBlocks(blocks, logs)).toThrow()
   })
@@ -86,8 +86,8 @@ describe(findCorrespondingBlocks.name, () => {
   it('throws without any matching blocks', () => {
     const logs = [{ blockNumber: 4 }]
     const blocks = [
-      { timestamp: new UnixTime(6), blockNumber: 6n },
-      { timestamp: new UnixTime(12), blockNumber: 12n },
+      { timestamp: new UnixTime(6), blockNumber: 6 },
+      { timestamp: new UnixTime(12), blockNumber: 12 },
     ]
 
     expect(() => findCorrespondingBlocks(blocks, logs)).toThrow()

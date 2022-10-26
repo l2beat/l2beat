@@ -203,7 +203,7 @@ describe(BalanceUpdater.name, () => {
         ],
       })
       const blockNumberUpdater = mock<BlockNumberUpdater>({
-        getBlockNumberWhenReady: async () => 1234n,
+        getBlockNumberWhenReady: async () => 1234,
       })
       const balanceUpdater = new BalanceUpdater(
         multicallClient,

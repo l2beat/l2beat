@@ -19,7 +19,7 @@ export class EthereumClient {
 
   async getBlockNumber() {
     const result = await this.provider.getBlockNumber()
-    return BigInt(result) // TODO: probably could be a simple number
+    return result
   }
 
   async getBlock(blockNumber: number) {
@@ -36,8 +36,7 @@ export class EthereumClient {
         value: parameters.value,
         data: parameters.data?.toString(),
       },
-      // TODO: probably could be a simple number
-      typeof blockTag === 'bigint' ? Number(blockTag) : blockTag,
+      blockTag,
     )
     return Bytes.fromHex(bytes)
   }

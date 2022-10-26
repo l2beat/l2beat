@@ -6,7 +6,7 @@ import {
 } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
-import { stringAsBigInt } from '../../tools/types'
+import { stringAsInt } from '../../tools/types'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
 
 export class EtherscanError extends Error {}
@@ -24,12 +24,12 @@ export class EtherscanClient {
     this.logger = this.logger.for(this)
   }
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<bigint> {
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     const result = await this.call('block', 'getblocknobytime', {
       timestamp: timestamp.toString(),
       closest: 'before',
     })
-    return stringAsBigInt().parse(result)
+    return stringAsInt().parse(result)
   }
 
   async call(module: string, action: string, params: Record<string, string>) {

@@ -19,14 +19,13 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           {props.scalingFactor}
         </p>
       </div>
-      <div className="flex justify-between items-baseline">
+      <div className="flex justify-between items-baseline text-xs md:text-base">
         <p className="text-gray-500 dark:text-gray-600 hidden md:block">
           Transactions per second
         </p>
-
         <p
           className={cx(
-            'text-gray-500 dark:text-gray-600 text-xs md:text-base text-right w-full md:w-auto',
+            'text-gray-500 dark:text-gray-600 text-right w-full md:w-auto',
             'flex items-center gap-1.5',
           )}
         >

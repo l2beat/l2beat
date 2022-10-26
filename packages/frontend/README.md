@@ -24,4 +24,8 @@ yarn build:frontend
 
 ## Storybook
 
-Production build requires (for some unknown reason) rebuilding dependencies in with ESM. Use `yarn storybook:build` to do exactly that.
+Production build requires (for some unknown reason) rebuilding dependencies in with ESM. Use `yarn storybook:build` to do exactly that. Run `yarn storybook:screenshot` to automatically screenshot whole storybook (used to enable visual regression).
+
+## Meta images
+
+We use dedicated subpages (with storybooks) like: `meta-images/overview-scaling-activity/` to render meta images for given pages. Later these pages are crawled and screenshoted during build process (`packages/frontend/src/build/buildMetaImages.ts`) to generate final meta images. Meta image paths should be used in `getPageMetadata` files.

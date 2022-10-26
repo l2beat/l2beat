@@ -29,6 +29,7 @@ const getMockData = (): ActivityApiResponse => {
   const arbitrumData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 0.6])
   const optimismData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 0.3])
   const dydxData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 0.1])
+  const ethereumData: [UnixTime, number][] = data.map((d) => [d[0], d[1] * 2])
 
   return {
     combined: {
@@ -48,6 +49,10 @@ const getMockData = (): ActivityApiResponse => {
         types: ['timestamp', 'daily tx count'],
         data: dydxData,
       },
+    },
+    ethereum: {
+      types: ['timestamp', 'daily tx count'],
+      data: ethereumData,
     },
   }
 }

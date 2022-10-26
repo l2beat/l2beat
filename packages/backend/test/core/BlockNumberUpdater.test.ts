@@ -60,7 +60,7 @@ describe(BlockNumberUpdater.name, () => {
     it('returns immediately if the data is available', async () => {
       const timestamp = UnixTime.now()
       const etherscanClient = mock<EtherscanClient>({
-        getBlockNumberAtOrBefore: async () => 1234n,
+        getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mock<BlockNumberRepository>({
         add: async () => 0,
@@ -74,13 +74,13 @@ describe(BlockNumberUpdater.name, () => {
 
       await blockNumberUpdater.update(timestamp)
       const result = await blockNumberUpdater.getBlockNumberWhenReady(timestamp)
-      expect(result).toEqual(1234n)
+      expect(result).toEqual(1234)
     })
 
     it('waits until data is available, then returns', async () => {
       const timestamp = UnixTime.now()
       const etherscanClient = mock<EtherscanClient>({
-        getBlockNumberAtOrBefore: async () => 1234n,
+        getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mock<BlockNumberRepository>({
         add: async () => 0,
@@ -105,7 +105,7 @@ describe(BlockNumberUpdater.name, () => {
       await blockNumberUpdater.update(timestamp)
 
       await waitForExpect(() => {
-        expect(result).toEqual(1234n)
+        expect(result).toEqual(1234)
       })
     })
   })
@@ -116,7 +116,7 @@ describe(BlockNumberUpdater.name, () => {
       const to = from.add(2, 'hours')
 
       const etherscanClient = mock<EtherscanClient>({
-        getBlockNumberAtOrBefore: async () => 1234n,
+        getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mock<BlockNumberRepository>({
         add: async () => 0,
@@ -137,15 +137,15 @@ describe(BlockNumberUpdater.name, () => {
       expect(result).toEqual([
         {
           timestamp: from,
-          blockNumber: 1234n,
+          blockNumber: 1234,
         },
         {
           timestamp: from.add(1, 'hours'),
-          blockNumber: 1234n,
+          blockNumber: 1234,
         },
         {
           timestamp: from.add(2, 'hours'),
-          blockNumber: 1234n,
+          blockNumber: 1234,
         },
       ])
     })
@@ -155,7 +155,7 @@ describe(BlockNumberUpdater.name, () => {
       const to = from.add(2, 'hours')
 
       const etherscanClient = mock<EtherscanClient>({
-        getBlockNumberAtOrBefore: async () => 1234n,
+        getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mock<BlockNumberRepository>({
         add: async () => 0,
@@ -185,15 +185,15 @@ describe(BlockNumberUpdater.name, () => {
         expect(result).toEqual([
           {
             timestamp: from,
-            blockNumber: 1234n,
+            blockNumber: 1234,
           },
           {
             timestamp: from.add(1, 'hours'),
-            blockNumber: 1234n,
+            blockNumber: 1234,
           },
           {
             timestamp: from.add(2, 'hours'),
-            blockNumber: 1234n,
+            blockNumber: 1234,
           },
         ])
       })
