@@ -20,8 +20,8 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           {props.warning}
         </div>
       )}
-      <p className="mt-4">{props.description}</p>
-      <p className="mt-4">
+      <p className="mt-4 dark:text-gray-400">{props.description}</p>
+      <p className="mt-4 dark:text-gray-400">
         If you find something wrong on this page you can{' '}
         <OutLink className="text-link underline" href={props.issueLink}>
           submit an issue

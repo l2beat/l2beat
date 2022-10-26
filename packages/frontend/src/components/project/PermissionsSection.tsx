@@ -18,28 +18,24 @@ export function PermissionsSection(props: PermissionsSectionProps) {
       <ul className="list-disc mt-4 pl-8 space-y-4">
         {props.permissions.map((permission, i) => (
           <li key={i}>
-            <div className="PermissionsSection-Address">
-              <strong>{permission.name}</strong>{' '}
-              <span
-                className={cx(
-                  'text-sm lg:text-base',
-                  permission.accounts.length > 1 && 'block',
-                )}
-              >
-                {permission.accounts.map((account, i, { length }) => (
-                  <React.Fragment key={i}>
-                    <EtherscanLink key={i} address={account.address}>
-                      &nbsp;{`(${account.type})`}
-                    </EtherscanLink>
-                    {i !== length - 1 && <span>, </span>}
-                  </React.Fragment>
-                ))}
-              </span>
-            </div>
+            <strong>{permission.name}</strong>{' '}
+            <span
+              className={cx(
+                'text-sm lg:text-base',
+                permission.accounts.length > 1 && 'block',
+              )}
+            >
+              {permission.accounts.map((account, i, { length }) => (
+                <React.Fragment key={i}>
+                  <EtherscanLink key={i} address={account.address}>
+                    &nbsp;{`(${account.type})`}
+                  </EtherscanLink>
+                  {i !== length - 1 && <span>, </span>}
+                </React.Fragment>
+              ))}
+            </span>
             {permission.description && (
-              <p className="PermissionsSection-Description">
-                {permission.description}
-              </p>
+              <p className="dark:text-gray-400">{permission.description}</p>
             )}
           </li>
         ))}

@@ -48,9 +48,9 @@ export function ContractsSection(props: ContractsSectionProps) {
       <h3 className="font-bold md:text-md">
         The system consists of the following smart contracts:
       </h3>
-      <ul className="ContractsSection-Contracts list-disc my-4 pl-8">
+      <ul className="list-disc my-4 pl-8 space-y-4">
         {props.contracts.map((contract, i) => (
-          <li key={i} className="mt-4 first:mt-0">
+          <li key={i}>
             <strong>{contract.name}</strong>{' '}
             <EtherscanLink
               address={contract.address}
@@ -64,13 +64,17 @@ export function ContractsSection(props: ContractsSectionProps) {
                 </OutLink>
               </React.Fragment>
             ))}
-            {contract.description && <p>{contract.description}</p>}
+            {contract.description && (
+              <p className="dark:text-gray-400">{contract.description}</p>
+            )}
           </li>
         ))}
       </ul>
       {props.risks.length > 0 && (
         <>
-          <p>The current deployment carries some associated risks:</p>
+          <p className="dark:text-gray-400">
+            The current deployment carries some associated risks:
+          </p>
           <RiskList risks={props.risks} />
         </>
       )}
