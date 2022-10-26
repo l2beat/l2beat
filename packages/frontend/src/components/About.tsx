@@ -7,7 +7,7 @@ export function About() {
         id="about"
         className="text-2xl md:text-3xl font-bold md:leading-normal"
       >
-        <a href="#about"></a>About L2BEAT
+        <a href="#about">About L2BEAT</a>
       </h2>
       <div className="grid md:grid-cols-2 gap-4 mt-4">
         <div className="flex flex-col gap-4">
