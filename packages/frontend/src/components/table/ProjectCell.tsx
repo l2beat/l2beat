@@ -68,10 +68,10 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
       )}
       {project.warning && (
         <span
-          className="Tooltip relative inline-block w-6 h-6 ml-1"
+          className="Tooltip relative inline-block w-4 h-6 ml-1"
           title={project.warning}
         >
-          <ShieldIcon className="absolute -top-0.5 left-0 fill-yellow-700 dark:fill-yellow-300" />
+          <ShieldIcon className="absolute top-1/2 -translate-y-1/2 fill-yellow-700 dark:fill-yellow-300" />
         </span>
       )}
     </>
