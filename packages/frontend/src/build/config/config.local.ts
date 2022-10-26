@@ -7,7 +7,6 @@ export function getLocalConfig() {
       ...common.features,
       bridges: true,
       activity: true,
-      highlightUnverified: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',
