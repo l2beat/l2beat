@@ -81,7 +81,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
     for (const projectId of projectIds) {
       await this.refreshProjectTip(projectId)
     }
-    await knex.schema.refreshMaterializedView('transactions.block_count_view')
+    await knex.schema.refreshMaterializedView(
+      'transactions.block_count_view',
+      true,
+    )
   }
 
   async getGapsByProject(
