@@ -6,6 +6,12 @@ import { ZksyncTransactionRepository } from '../../peripherals/database/ZksyncTr
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 
+export interface MaterializedViewRefresherOpts {
+  logLaggingError: (
+    lagging: { projectId: ProjectId; timestamp?: UnixTime }[],
+    expectedTip: UnixTime,
+  ) => void
+}
 export class MaterializedViewRefresher {
   private readonly queue: TaskQueue<void>
 
@@ -17,12 +23,15 @@ export class MaterializedViewRefresher {
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly delayHours: number,
+    private readonly opts?: MaterializedViewRefresherOpts,
   ) {
     this.logger = logger.for(this)
     this.queue = new TaskQueue<void>(
       () => this.update(),
       this.logger.for('queue'),
     )
+    this.logLaggingError =
+      opts?.logLaggingError.bind(this) ?? this.logLaggingError.bind(this)
   }
 
   start() {
@@ -43,7 +52,7 @@ export class MaterializedViewRefresher {
     await this.checkIfFullySynced()
   }
 
-  private async checkIfFullySynced() {
+  async checkIfFullySynced() {
     const lastHour = this.clock.getLastHour()
     const startOfDay = lastHour.toStartOf('day')
     const timeToCheck = lastHour.gte(
@@ -57,7 +66,7 @@ export class MaterializedViewRefresher {
     this.logger.info('Fully sync check started', {
       day: expectedTip.toYYYYMMDD(),
     })
-    const lagging = await this.getLaggingProjects(startOfDay)
+    const lagging = await this.getLaggingProjects(expectedTip)
     if (lagging.length > 0) {
       this.logLaggingError(lagging, expectedTip)
     } else {
