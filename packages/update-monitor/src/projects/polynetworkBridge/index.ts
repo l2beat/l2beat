@@ -1,6 +1,6 @@
-import { providers } from 'ethers'
+import { constants, providers } from 'ethers'
 
-import { bytes32ToAddress } from '../../common/address'
+import { getCallResult } from '../../common/getCallResult'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
@@ -16,12 +16,20 @@ async function getEthCrossChainManagerAddress(
 ): Promise<string> {
   // Since `managerProxyContract` is not verified on Etherscan,
   // discovery won't find the manager address itself. We get it manually:
-  const proxyContract = bytes32ToAddress(
-    await provider.call({ to: lockProxy, data: '0xd798f881' }), // $ cast sig "managerProxyContract()"
+  const proxyContract = await getCallResult<string>(
+    provider,
+    lockProxy,
+    'function managerProxyContract() public returns (address)',
   )
-  return bytes32ToAddress(
-    await provider.call({ to: proxyContract, data: '0x87939a7f' }), // $ cast sig "getEthCrossChainManager()"
-  )
+  if (proxyContract) {
+    const managerAddress = await getCallResult<string>(
+      provider,
+      proxyContract,
+      'function getEthCrossChainManager() external returns (address)',
+    )
+    return managerAddress ?? constants.AddressZero
+  }
+  return constants.AddressZero
 }
 
 export async function getPolynetworkBridgeParameters(
