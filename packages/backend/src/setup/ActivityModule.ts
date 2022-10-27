@@ -85,17 +85,6 @@ export function getActivityModule(
     logger,
   )
 
-  const materializedViewRefresher = new MaterializedViewRefresher(
-    blockTransactionCountRepository,
-    zksyncTransactionRepository,
-    layer2RpcTransactionUpdaters
-      .map((u) => u.projectId)
-      .concat(ProjectId.ETHEREUM)
-      .concat(ProjectId.LOOPRING),
-    clock,
-    logger,
-  )
-
   const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
     config,
     starkexTransactionCountRepository,
@@ -110,6 +99,20 @@ export function getActivityModule(
     clock,
     logger,
     { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
+  )
+
+  const materializedViewRefresher = new MaterializedViewRefresher(
+    blockTransactionCountRepository,
+    zksyncTransactionRepository,
+    [
+      ...layer2RpcTransactionUpdaters,
+      ethereumTransactionUpdater,
+      loopringTransactionUpdater,
+    ],
+    [...starkexTransactionUpdaters, zksyncTransactionUpdater],
+    clock,
+    logger,
+    config.transactionCountSync.starkexApiDelayHours,
   )
 
   const activityController = new ActivityController(

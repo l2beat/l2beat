@@ -10,7 +10,6 @@ export function getStagingConfig(): Config {
 
   return {
     ...productionConfig,
-
     name,
     databaseConnection: {
       ...(productionConfig.databaseConnection as Knex.PgConnectionConfig),
@@ -19,6 +18,7 @@ export function getStagingConfig(): Config {
     tvlReportSync: true,
     transactionCountSync: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 5,
       zkSyncWorkQueueWorkers: 100,
       starkexWorkQueueWorkers: 1,
       starkexCallsPerMinute: 400,
