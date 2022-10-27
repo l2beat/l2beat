@@ -17,38 +17,51 @@ describe(StarkexTransactionCountRepository.name, () => {
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
-  const TODAY = UnixTime.now().toStartOf('day')
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
   describe(
-    StarkexTransactionCountRepository.prototype.getMissingRangesByProject.name,
+    StarkexTransactionCountRepository.prototype.getGapsByProject.name,
     () => {
-      it('works with an empty repository', async () => {
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, Infinity],
+      it('works with no data', async () => {
+        expect(await repository.getGapsByProject(PROJECT_A, 1, 5)).toEqual([
+          [1, 5],
         ])
       })
 
-      it('finds holes', async () => {
-        const record = fakeTransactionCount({
-          projectId: PROJECT_A,
-          timestamp: UnixTime.fromDays(10),
-        })
+      it('finds gaps with a single project', async () => {
+        const min = 100
+        const max = 400
+        const total = (max - min) / 2
+        const first = min - 10
+        const last = max + 10
 
-        await repository.add(record)
+        const numbers = Array.from({ length: total }, () =>
+          Math.floor(Math.random() * (max - min) + min),
+        ).filter((x, i, a) => a.indexOf(x) === i)
 
-        const result = await repository.getMissingRangesByProject(PROJECT_A)
-        expect(result).toEqual([
-          [-Infinity, 10],
-          [11, Infinity],
-        ])
+        await repository.addMany(
+          numbers.map((number) =>
+            fakeTransactionCount({
+              projectId: PROJECT_A,
+              timestamp: UnixTime.fromDays(number),
+            }),
+          ),
+        )
+
+        const gaps = await repository.getGapsByProject(PROJECT_A, first, last)
+
+        for (const [start, end] of gaps) {
+          for (let i = start; i <= end; i++) {
+            expect(numbers.includes(i)).toEqual(false)
+          }
+        }
       })
 
       it('finds holes with multiple projects', async () => {
-        const records = [
+        await repository.addMany([
           fakeTransactionCount({
             projectId: PROJECT_A,
             timestamp: UnixTime.fromDays(0),
@@ -67,64 +80,28 @@ describe(StarkexTransactionCountRepository.name, () => {
           }),
           fakeTransactionCount({
             projectId: PROJECT_B,
-            timestamp: TODAY,
+            timestamp: UnixTime.fromDays(20),
           }),
-        ]
-
-        await repository.addMany(records)
-
-        expect(await repository.getMissingRangesByProject(PROJECT_A)).toEqual([
-          [-Infinity, 0],
-          [1, 10],
-          [12, Infinity],
         ])
-        expect(await repository.getMissingRangesByProject(PROJECT_B)).toEqual([
-          [-Infinity, 100],
-          [101, TODAY.toDays()],
-          [TODAY.toDays() + 1, Infinity],
+
+        expect(await repository.getGapsByProject(PROJECT_A, 0, 15)).toEqual([
+          [1, 9],
+          [12, 15],
         ])
-      })
-
-      it('finds holes on a big set', async () => {
-        const numbers = Array.from({ length: 200 }, () =>
-          Math.floor(Math.random() * 1000),
-        ).filter((x, i, a) => a.indexOf(x) === i)
-
-        await repository.addMany(
-          numbers.map((number) =>
-            fakeTransactionCount({
-              timestamp: UnixTime.fromDays(number),
-              projectId: PROJECT_A,
-            }),
-          ),
-        )
-
-        const ranges = await repository.getMissingRangesByProject(PROJECT_A)
-
-        const result = []
-        for (const [start, end] of ranges) {
-          for (let i = Math.max(start, 0); i < Math.min(end, 1000); i++) {
-            result.push(i)
-          }
-        }
-
-        const expected = []
-        for (let i = 0; i < 1000; i++) {
-          if (!numbers.includes(i)) {
-            expected.push(i)
-          }
-        }
-
-        expect(result.sort()).toEqual(expected.sort())
+        expect(await repository.getGapsByProject(PROJECT_B, 0, 120)).toEqual([
+          [0, 19],
+          [21, 99],
+          [101, 120],
+        ])
       })
     },
   )
 
   describe(
-    StarkexTransactionCountRepository.prototype.getDailyTransactionCount.name,
+    StarkexTransactionCountRepository.prototype.getDailyCountsByProject.name,
     () => {
       it('works with empty repository', async () => {
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual([])
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([])
       })
 
       it('counts only for requested project', async () => {
@@ -154,7 +131,7 @@ describe(StarkexTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...aCounts, ...bCounts])
 
-        expect(await repository.getDailyTransactionCount(PROJECT_A)).toEqual(
+        expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual(
           aCounts.map(({ timestamp, count }) => ({ timestamp, count })),
         )
       })

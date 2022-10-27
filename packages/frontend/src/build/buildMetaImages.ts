@@ -1,5 +1,6 @@
 import { bridges, layer2s } from '@l2beat/config'
 import express from 'express'
+import { mkdirpSync } from 'fs-extra'
 import { Server } from 'http'
 import puppeteer from 'puppeteer'
 
@@ -9,6 +10,9 @@ main().catch((e) => {
 })
 
 async function main() {
+  // ensure that meta-images directory exists
+  mkdirpSync('build/meta-images')
+
   const app = express()
   app.use(express.static('build'))
   const server = await new Promise<Server>((resolve) => {
@@ -17,7 +21,7 @@ async function main() {
 
   const slugs = [...layer2s, ...bridges]
     .map((x) => x.display.slug)
-    .concat('overview-scaling', 'overview-bridges')
+    .concat('overview-scaling', 'overview-bridges', 'overview-scaling-activity')
 
   const browser = await puppeteer.launch({
     args: ['--no-sandbox'],

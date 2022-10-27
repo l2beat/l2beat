@@ -4,11 +4,11 @@ import { utils } from 'ethers'
 import { EthereumClient } from './EthereumClient'
 
 export const MULTICALL_BATCH_SIZE = 150
-export const MULTICALL_V1_BLOCK = 7929876n
+export const MULTICALL_V1_BLOCK = 7929876
 export const MULTICALL_V1_ADDRESS = EthereumAddress(
   '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
 )
-export const MULTICALL_V2_BLOCK = 12336033n
+export const MULTICALL_V2_BLOCK = 12336033
 export const MULTICALL_V2_ADDRESS = EthereumAddress(
   '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
 )
@@ -28,7 +28,7 @@ export class MulticallClient {
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,
-    blockNumber: bigint,
+    blockNumber: number,
   ): Promise<Record<string, MulticallResponse>> {
     const entries = Object.entries(requests)
     const results = await this.multicall(
@@ -41,7 +41,7 @@ export class MulticallClient {
     return Object.fromEntries(resultEntries)
   }
 
-  async multicall(requests: MulticallRequest[], blockNumber: bigint) {
+  async multicall(requests: MulticallRequest[], blockNumber: number) {
     if (blockNumber < MULTICALL_V1_BLOCK) {
       return this.executeIndividual(requests, blockNumber)
     }
@@ -54,7 +54,7 @@ export class MulticallClient {
 
   private async executeIndividual(
     requests: MulticallRequest[],
-    blockNumber: bigint,
+    blockNumber: number,
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
       requests.map((request) =>
@@ -77,7 +77,7 @@ export class MulticallClient {
 
   private async executeBatch(
     requests: MulticallRequest[],
-    blockNumber: bigint,
+    blockNumber: number,
   ): Promise<MulticallResponse[]> {
     if (blockNumber < MULTICALL_V2_BLOCK) {
       const encoded = encodeMulticallV1(requests)

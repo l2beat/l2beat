@@ -14,8 +14,8 @@ describe(BlockNumberRepository.name, () => {
   })
 
   it('can add new records', async () => {
-    const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
-    const itemB = { blockNumber: 7777n, timestamp: new UnixTime(222222) }
+    const itemA = { blockNumber: 1234, timestamp: new UnixTime(5678) }
+    const itemB = { blockNumber: 7777, timestamp: new UnixTime(222222) }
 
     await repository.add(itemA)
     await repository.add(itemB)
@@ -27,8 +27,8 @@ describe(BlockNumberRepository.name, () => {
   })
 
   it('can find by timestamp', async () => {
-    const itemA = { blockNumber: 1234n, timestamp: new UnixTime(5678) }
-    const itemB = { blockNumber: 7777n, timestamp: new UnixTime(222222) }
+    const itemA = { blockNumber: 1234, timestamp: new UnixTime(5678) }
+    const itemB = { blockNumber: 7777, timestamp: new UnixTime(222222) }
 
     await repository.add(itemA)
     await repository.add(itemB)
@@ -38,7 +38,7 @@ describe(BlockNumberRepository.name, () => {
   })
 
   it('can delete all records', async () => {
-    await repository.add({ blockNumber: 1n, timestamp: new UnixTime(1) })
+    await repository.add({ blockNumber: 1, timestamp: new UnixTime(1) })
     await repository.deleteAll()
 
     const results = await repository.getAll()

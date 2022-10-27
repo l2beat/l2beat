@@ -78,6 +78,12 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  interface BlockTipRow {
+    project_id: string
+    block_number: number | null
+    unix_timestamp: Date | null
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -89,8 +95,9 @@ declare module 'knex/types/tables' {
     events: EventRow
     'transactions.block': BlockTransactionCountRow
     'transactions.block_count_view': TransactionCountViewRow
-    'transactions.starkex': StarkexTransactionCountRow
+    'transactions.block_tip': BlockTipRow
     'transactions.zksync': ZksyncTransactionRow
     'transactions.zksync_count_view': TransactionCountViewRow
+    'transactions.starkex': StarkexTransactionCountRow
   }
 }

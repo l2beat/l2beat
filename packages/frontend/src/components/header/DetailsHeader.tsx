@@ -11,28 +11,29 @@ export interface HeaderProps {
 
 export function DetailsHeader(props: HeaderProps) {
   return (
-    <header className="mt-6 md:mt-16">
-      <h1
-        className={cx(
-          'relative flex items-center justify-start gap-3 mb-6',
-          'font-bold text-3xl md:text-4xl whitespace-pre',
-          props.titleLength,
-          props.titleClassName,
-        )}
-      >
-        {props.icon && (
-          <img
-            className="w-8 h-8 md:w-10 md:h-10"
-            src={props.icon}
-            alt={`${props.title} logo`}
-          />
-        )}
-        {props.title}
-      </h1>
-      <DetailsHeaderStats stats={props.stats} />
-      {/* TODO: Full width line on mobile */}
-      <hr className="mt-2 md:mt-6 border-gray-300 dark:border-gray-850" />
-    </header>
+    <>
+      <header className="mt-6 md:mt-16 px-4 md:px-0">
+        <h1
+          className={cx(
+            'relative flex items-center justify-start gap-3 mb-6',
+            'font-bold text-3xl md:text-4xl whitespace-pre',
+            props.titleLength,
+            props.titleClassName,
+          )}
+        >
+          {props.icon && (
+            <img
+              className="w-8 h-8 md:w-10 md:h-10"
+              src={props.icon}
+              alt={`${props.title} logo`}
+            />
+          )}
+          {props.title}
+        </h1>
+        <DetailsHeaderStats stats={props.stats} />
+      </header>
+      <hr className="mt-2 md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />
+    </>
   )
 }
 

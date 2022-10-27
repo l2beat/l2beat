@@ -5,7 +5,7 @@ import { assert } from '../../tools/assert'
 
 interface BlockInfo {
   timestamp: UnixTime
-  blockNumber: bigint
+  blockNumber: number
 }
 
 export function findCorrespondingBlocks<T extends { blockNumber: number }>(

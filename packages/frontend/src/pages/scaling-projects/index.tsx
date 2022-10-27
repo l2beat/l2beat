@@ -20,6 +20,7 @@ export function getProjectPages(
       tvlApiResponse,
       activityApiResponse,
     )
+
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (

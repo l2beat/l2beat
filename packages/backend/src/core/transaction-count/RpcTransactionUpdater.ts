@@ -23,7 +23,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
-  private latestBlock?: bigint
+  private latestBlock?: number
 
   constructor(
     private readonly rpcClient: RpcClient,
@@ -66,12 +66,6 @@ export class RpcTransactionUpdater implements TransactionCounter {
     const block = await this.rpcClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
-    // We download all the blocks, but discard those that are more recent
-    // than clock.getLastHour() to avoid dealing with potential reorgs
-    if (timestamp.gt(this.clock.getLastHour())) {
-      return
-    }
-
     await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
@@ -88,24 +82,21 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async update() {
     this.logger.info('Update started', { project: this.projectId.toString() })
 
-    // Wait until there is no more tasks either waiting or being executed in the queue
-    // Otherwise it was prone to race conditions between what is in the queue and what is read
-    // from the database using `getMissingRanges`
     await this.blockQueue.waitTilEmpty()
 
-    const missingRanges =
-      await this.blockTransactionCountRepository.getMissingRangesByProject(
-        this.projectId,
-      )
-    const latestBlock = await this.rpcClient.getBlockNumber()
-    this.latestBlock = latestBlock
+    this.latestBlock = await this.rpcClient.getBlockNumberAtOrBefore(
+      this.clock.getLastHour(),
+      this.latestBlock,
+    )
 
-    enqueueBlockLoop: for (const [start, end] of missingRanges) {
-      for (
-        let i = Math.max(start, this.startBlock);
-        i < Math.min(end, Number(latestBlock) + 1);
-        i++
-      ) {
+    const gaps = await this.blockTransactionCountRepository.getGapsByProject(
+      this.projectId,
+      this.startBlock,
+      this.latestBlock,
+    )
+
+    enqueueBlockLoop: for (const [start, end] of gaps) {
+      for (let i = start; i <= end; i++) {
         if (this.blockQueue.length >= this.workQueueSizeLimit) {
           break enqueueBlockLoop
         }
@@ -116,18 +107,19 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.logger.info('Update enqueued', { project: this.projectId.toString() })
   }
 
-  async getDailyTransactionCounts() {
-    return this.blockTransactionCountRepository.getDailyTransactionCount(
+  async getDailyCounts() {
+    return this.blockTransactionCountRepository.getDailyCountsByProject(
       this.projectId,
-      this.clock.getLastHour().toStartOf('day'),
     )
   }
 
-  getStatus() {
+  async getStatus() {
+    const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
       latestBlock: this.latestBlock?.toString() ?? null,
+      fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }
 }

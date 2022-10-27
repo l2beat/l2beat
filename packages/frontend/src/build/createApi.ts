@@ -19,7 +19,7 @@ export interface FrontendActivityChart {
 export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse,
+  activityApiResponse: ActivityApiResponse | undefined,
 ) {
   const urlCharts = new Map<string, TvlApiCharts | FrontendActivityChart>()
 
@@ -33,7 +33,7 @@ export function createApi(
     }
   }
 
-  if (activityApiResponse.ethereum) {
+  if (activityApiResponse) {
     urlCharts.set(
       'activity/combined',
       getActivityChart(
