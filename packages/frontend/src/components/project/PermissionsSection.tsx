@@ -12,34 +12,32 @@ export interface PermissionsSectionProps {
 export function PermissionsSection(props: PermissionsSectionProps) {
   return (
     <Section title="Permissioned Addresses" id="permissionedAddresses">
-      <p className="mt-4">
+      <h3 className="mt-4 font-bold md:text-md">
         The system uses the following set of permissioned addresses:
-      </p>
+      </h3>
       <ul className="list-disc mt-4 pl-8 space-y-4">
         {props.permissions.map((permission, i) => (
           <li key={i}>
-            <div className="PermissionsSection-Address">
-              <strong>{permission.name}</strong>{' '}
-              <span
-                className={cx(
-                  'text-sm lg:text-base',
-                  permission.accounts.length > 1 && 'block',
-                )}
-              >
-                {permission.accounts.map((account, i, { length }) => (
-                  <React.Fragment key={i}>
-                    <EtherscanLink key={i} address={account.address}>
-                      &nbsp;{`(${account.type})`}
-                    </EtherscanLink>
-                    {i !== length - 1 && <span>, </span>}
-                  </React.Fragment>
-                ))}
-              </span>
-            </div>
+            <strong>{permission.name}</strong>{' '}
+            <span
+              className={cx(
+                'text-sm lg:text-base',
+                permission.accounts.length > 1 && 'block',
+              )}
+            >
+              {permission.accounts.map((account, i, { length }) => (
+                <React.Fragment key={i}>
+                  <EtherscanLink key={i} address={account.address}>
+                    &nbsp;{`(${account.type})`}
+                  </EtherscanLink>
+                  {i !== length - 1 && <span>, </span>}
+                </React.Fragment>
+              ))}
+            </span>
             {permission.description && (
-              <div className="PermissionsSection-Description">
+              <p className="text-gray-860 dark:text-gray-400">
                 {permission.description}
-              </div>
+              </p>
             )}
           </li>
         ))}

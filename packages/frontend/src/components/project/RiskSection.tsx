@@ -24,17 +24,25 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
     return null
   }
   return (
-    <Section title="Risk summary" id="risks" className="RiskSection">
+    <Section title="Risk summary" id="risks" className="mt-4">
       {riskGroups.map((group, i) => (
-        <div className="RiskSection-Group" key={i}>
-          <p className="RiskSection-Title">{group.name}&hellip;</p>
-          <ol className="RiskSection-Risks" start={group.start}>
+        <div className="mt-4 md:mt-6" key={i}>
+          <h3 className="text-red-700 dark:text-red-300 md:text-lg font-bold">
+            {group.name}
+          </h3>
+          <ol
+            className="list-decimal list-inside p-1.5 text-gray-860 dark:text-gray-400"
+            start={group.start}
+          >
             {group.items.map((item, i) => (
-              <li className="RiskSection-Risk" key={i}>
-                <a href={`#${item.referencedId}`}>
+              <li key={i}>
+                <a href={`#${item.referencedId}`} className="underline">
                   {item.isCritical ? (
                     <>
-                      {item.text.slice(0, -1)} <strong>(CRITICAL)</strong>
+                      {item.text.slice(0, -1)}{' '}
+                      <span className="text-red-700 dark:text-red-300 underline">
+                        (CRITICAL)
+                      </span>
                       {item.text.slice(-1)}
                     </>
                   ) : (

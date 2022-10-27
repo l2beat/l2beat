@@ -13,20 +13,23 @@ export function LinkSectionLink({ href, social }: Props) {
     const parsed = parseSocial(href)
     return (
       <OutLink
-        className="LinkSection-SocialLink text-link underline"
+        className="text-link mt-1 first:mt-0 flex gap-1 items-center"
         href={href}
       >
         {parsed.platform ? (
-          <ProductIcon product={parsed.platform} />
+          <ProductIcon
+            className="fill-link w-[1em] h-[1em]"
+            product={parsed.platform}
+          />
         ) : (
-          <GlobeIcon />
+          <GlobeIcon className="fill-link w-[1em] h-[1em]" />
         )}
         {parsed.text}
       </OutLink>
     )
   }
   return (
-    <OutLink className="text-link underline" href={href}>
+    <OutLink className="text-link underline block" href={href}>
       {simplify(href)}
     </OutLink>
   )

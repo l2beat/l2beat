@@ -1,8 +1,6 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { Heading } from '../Heading'
-
 interface Props {
   title: string
   id: string
@@ -12,13 +10,13 @@ interface Props {
 
 export function Section(props: Props) {
   return (
-    <section className={cx('Section', props.className)}>
-      <Heading
+    <section className={cx(props.className, 'mt-10 md:mt-16')}>
+      <h2
         id={props.id}
-        level={2}
-        title={props.title}
-        className="Section-Title"
-      />
+        className="text-2xl md:text-4xl font-bold md:leading-normal"
+      >
+        <a href={`#${props.id}`}>{props.title}</a>
+      </h2>
       {props.children}
     </section>
   )
