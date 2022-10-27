@@ -36,19 +36,23 @@ describe(MaterializedViewRefresher.name, () => {
         blockRepository,
         zksyncRepository,
         [
-          mock<TransactionCounter>({
+          mockCounter({
             projectId: projectA,
-            getDailyCounts: async () => [
-              { count: 0, timestamp: startOfDay.add(-1, 'days') },
-            ],
+            tip: expectedTip,
+          }),
+          mockCounter({
+            projectId: projectC,
+            tip: expectedTip,
           }),
         ],
         [
-          mock<TransactionCounter>({
+          mockCounter({
             projectId: projectB,
-            getDailyCounts: async () => [
-              { count: 0, timestamp: startOfDay.add(-1, 'days') },
-            ],
+            tip: expectedTip,
+          }),
+          mockCounter({
+            projectId: projectD,
+            tip: expectedTip,
           }),
         ],
         clock,
@@ -70,27 +74,23 @@ describe(MaterializedViewRefresher.name, () => {
         blockRepository,
         zksyncRepository,
         [
-          mock<TransactionCounter>({
+          mockCounter({
             projectId: projectA,
-            getDailyCounts: async () => [
-              { count: 0, timestamp: expectedTip.add(-1, 'days') },
-            ],
+            tip: expectedTip.add(-1, 'days'),
           }),
-          mock<TransactionCounter>({
+          mockCounter({
             projectId: projectB,
-            getDailyCounts: async () => [{ count: 0, timestamp: expectedTip }],
+            tip: expectedTip,
           }),
         ],
         [
-          mock<TransactionCounter>({
+          mockCounter({
             projectId: projectC,
-            getDailyCounts: async () => [{ count: 0, timestamp: expectedTip }],
+            tip: expectedTip,
           }),
-          mock<TransactionCounter>({
+          mockCounter({
             projectId: projectD,
-            getDailyCounts: async () => [
-              { count: 0, timestamp: expectedTip.add(-3, 'days') },
-            ],
+            tip: expectedTip.add(-3, 'days'),
           }),
         ],
         clock,
@@ -119,3 +119,16 @@ describe(MaterializedViewRefresher.name, () => {
     })
   })
 })
+
+function mockCounter({
+  projectId,
+  tip,
+}: {
+  projectId: ProjectId
+  tip: UnixTime
+}) {
+  return mock<TransactionCounter>({
+    projectId,
+    getDailyCounts: async () => [{ count: 0, timestamp: tip }],
+  })
+}
