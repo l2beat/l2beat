@@ -3,6 +3,7 @@ import { writeFile } from 'fs/promises'
 
 import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
 import { DYDX_NAME, getDydxParameters } from '../projects/dYdX'
+import { getHopParameters, HOP_NAME } from '../projects/hop'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
 import {
   getOrbitBridgeParameters,
@@ -39,6 +40,7 @@ export async function analyze(projects: string[]) {
     [ZK_SPACE_NAME, getZkSpaceParameters],
     [ARBITRUM_NAME, getArbitrumParameters],
     [STARK_NET_NAME, getStarkNetParameters],
+    [HOP_NAME, getHopParameters],
     [NOVA_NAME, getNovaParameters],
     [DYDX_NAME, getDydxParameters],
     [SOLLET_BRIDGE_NAME, getSolletBridgeParameters],

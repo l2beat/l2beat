@@ -19,7 +19,7 @@ export interface FrontendActivityChart {
 export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse,
+  activityApiResponse: ActivityApiResponse | undefined,
 ) {
   const urlCharts = new Map<string, TvlApiCharts | FrontendActivityChart>()
 
@@ -33,24 +33,26 @@ export function createApi(
     }
   }
 
-  urlCharts.set(
-    'activity/combined',
-    getActivityChart(
-      activityApiResponse.combined,
-      activityApiResponse.ethereum,
-    ),
-  )
+  if (activityApiResponse) {
+    urlCharts.set(
+      'activity/combined',
+      getActivityChart(
+        activityApiResponse.combined,
+        activityApiResponse.ethereum,
+      ),
+    )
 
-  for (const [projectId, chart] of Object.entries(
-    activityApiResponse.projects,
-  )) {
-    const slug = config.layer2s.find((x) => x.id.toString() === projectId)
-      ?.display.slug
-    if (chart && slug) {
-      urlCharts.set(
-        `activity/${slug}`,
-        getActivityChart(chart, activityApiResponse.ethereum),
-      )
+    for (const [projectId, chart] of Object.entries(
+      activityApiResponse.projects,
+    )) {
+      const slug = config.layer2s.find((x) => x.id.toString() === projectId)
+        ?.display.slug
+      if (chart && slug) {
+        urlCharts.set(
+          `activity/${slug}`,
+          getActivityChart(chart, activityApiResponse.ethereum),
+        )
+      }
     }
   }
 

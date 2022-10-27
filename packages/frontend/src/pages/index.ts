@@ -17,21 +17,25 @@ import { getTvlPage } from './scaling-tvl'
 export async function renderPages(
   config: Config,
   tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse,
+  activityApiResponse: ActivityApiResponse | undefined,
 ) {
   const pages: Page[] = []
 
   pages.push(getRiskPage(config, tvlApiResponse))
   pages.push(getTvlPage(config, tvlApiResponse))
-  pages.push(getActivityPage(config, activityApiResponse))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
-  pages.push(...getProjectPages(config, tvlApiResponse, activityApiResponse))
-  pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
   if (config.features.bridges) {
     pages.push(getBridgesTvlPage(config, tvlApiResponse))
     pages.push(getBridgesRiskPage(config, tvlApiResponse))
     pages.push(...getBridgeProjectPages(config, tvlApiResponse))
+  }
+  if (activityApiResponse) {
+    pages.push(getActivityPage(config, activityApiResponse))
+    pages.push(...getProjectPages(config, tvlApiResponse, activityApiResponse))
+    pages.push(
+      ...getMetaImagePages(config, tvlApiResponse, activityApiResponse),
+    )
   }
 
   outputPages(pages)
