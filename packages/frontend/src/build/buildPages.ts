@@ -1,6 +1,11 @@
 import { HttpClient } from '@l2beat/common'
 import { bridges, layer2s } from '@l2beat/config'
-import { ActivityApiResponse, ProjectId, TvlApiResponse } from '@l2beat/types'
+import {
+  ActivityApiChart,
+  ActivityApiResponse,
+  ProjectId,
+  TvlApiResponse,
+} from '@l2beat/types'
 
 import { renderPages } from '../pages'
 import { JsonHttpClient } from './caching/JsonHttpClient'
@@ -18,30 +23,24 @@ async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'production'
   const config = getConfig(env)
 
-  const http: JsonHttpClient = new JsonHttpClient(
-    new HttpClient(),
-    config.backend.skipCache,
-  )
+  const http = new JsonHttpClient(new HttpClient(), config.backend.skipCache)
 
   const tvlApiResponse = await fetchTvlApi(config.backend.apiUrl, http)
-
-  const activityApiResponse = await fetchActivityApi(
-    config.backend.apiUrl,
-    http,
-  )
-
-  printApiInfo(tvlApiResponse, activityApiResponse)
+  printApiInfo(tvlApiResponse)
   tvlSanityCheck(tvlApiResponse)
-  activitySanityCheck(activityApiResponse)
+
+  let activityApiResponse: ActivityApiResponse | undefined = undefined
+  if (config.features.activity) {
+    activityApiResponse = await fetchActivityApi(config.backend.apiUrl, http)
+    printActivityInfo(activityApiResponse)
+    activitySanityCheck(activityApiResponse)
+  }
 
   createApi(config, tvlApiResponse, activityApiResponse)
   await renderPages(config, tvlApiResponse, activityApiResponse)
 }
 
-function printApiInfo(
-  tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse,
-) {
+function printApiInfo(tvlApiResponse: TvlApiResponse) {
   console.debug('\n', 'TVL')
   printTvl('combined', tvlApiResponse.combined)
   printTvl('layer2s', tvlApiResponse.layers2s)
@@ -54,15 +53,6 @@ function printApiInfo(
       console.debug(project.id.toString(), '...', 'MISSING')
     }
   }
-
-  console.debug('\n', 'ACTIVITY')
-  printActivity('combined', activityApiResponse.combined)
-  printActivity('ethereum', activityApiResponse.ethereum)
-  for (const project of [...layer2s]) {
-    const chart = activityApiResponse.projects[project.id.toString()]
-    printActivity(project.id.toString(), chart)
-  }
-  console.debug() // new line
 
   function printTvl(label: string, charts: TvlApiResponse['combined']) {
     const tvl = (charts.hourly.data.at(-1)?.[1] ?? 0).toFixed(2)
@@ -78,6 +68,17 @@ function printApiInfo(
       `D ${daily.padStart(4, ' ')}]`,
     )
   }
+}
+
+function printActivityInfo(activityApiResponse: ActivityApiResponse) {
+  console.debug('\n', 'ACTIVITY')
+  printActivity('combined', activityApiResponse.combined)
+  printActivity('ethereum', activityApiResponse.ethereum)
+  for (const project of [...layer2s]) {
+    const chart = activityApiResponse.projects[project.id.toString()]
+    printActivity(project.id.toString(), chart)
+  }
+  console.debug() // new line
 
   function printActivity(
     label: string,
@@ -143,12 +144,11 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
     projectsInApiActivity.includes(x.id),
   )
 
-  // TODO: uncomment after deploying activity to prod
-  // if (layer2sInApiActivity.length / layer2s.length < 0.5) {
-  //   throw new Error(
-  //     'The API has returned an insufficient number of layer2s activity',
-  //   )
-  // }
+  if (layer2sInApiActivity.length / layer2s.length < 0.5) {
+    throw new Error(
+      'The API has returned an insufficient number of layer2s activity',
+    )
+  }
 
   const activityIds = layer2sInApiActivity.map((x) => x.id.toString())
   const emptyActivityChartsExist = [
@@ -158,8 +158,37 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
       .filter(([id]) => activityIds.includes(id))
       .map(([, project]) => project),
   ].some((x) => x?.data.length === 0)
-
   if (emptyActivityChartsExist) {
     throw new Error('The API has returned some empty activity charts')
+  }
+
+  const importantProjects = [
+    'ethereum',
+    'dydx',
+    'arbitrum',
+    'immutablex',
+    'optimism',
+    'sorare',
+    'starknet',
+  ]
+  const allProjects = [
+    ['ethereum', activityApiResponse.ethereum],
+    ...Object.entries(activityApiResponse.projects),
+  ] as [string, ActivityApiChart][]
+  const zeroTpsProjects = allProjects
+    .filter(([name]) => importantProjects.includes(name))
+    .map(([name, data]) => {
+      // can we assume here that data is always sorted?
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return [name, data.data.at(-1)!] as const
+    })
+    .filter(([_, lastValue]) => lastValue[1] === 0)
+
+  if (zeroTpsProjects.length > 0) {
+    throw new Error(
+      `Some projects have 0 TPS! ${zeroTpsProjects
+        .map((v) => v[0])
+        .join(', ')}`,
+    )
   }
 }
