@@ -32,8 +32,16 @@ export const polynetwork: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'MultiSig with limited trust via light client verification.',
-      sentiment: 'warning',
+      // Fetch current Keeper's count and public keys via
+      // $ cast call 0xcF2afe102057bA5c16f899271045a0A37fCb10f2 "getCurEpochConPubKeyBytes()"
+      // Parse result via:
+      // $ cast --calldata-decode "deserializeKeepers(bytes)" 0x0ddf7259<OUTPUT WITHOUT 0x>
+      // First 8 bytes is the number of keepers (int).
+      // The formula for number of signatures is taken from EthCrossChainManager contract:
+      // EthCrossChainManager.sol#1467
+      // n - (n - 1) / 3 (n = keepers count)
+      description: '3/4 MultiSig of PolyNetwork Keepers',
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
@@ -150,9 +158,29 @@ export const polynetwork: Bridge = {
         },
       },
       {
+        address: '0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54',
+        name: 'LockProxyWithLP 0x7b9B...',
+        description: 'Proxy contract for the Bridge.',
+        upgradeability: {
+          type: 'Custom',
+          admin: '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
+          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+        },
+      },
+      {
+        address: '0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035',
+        name: 'LockProxy 0x3Ee7...',
+        description: 'Escrow and proxy contract for the Bridge.',
+        upgradeability: {
+          type: 'Custom',
+          admin: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
+          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+        },
+      },
+      {
         address: '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
         name: 'LockProxy 0x53D2...',
-        description: 'More recent escrow and proxy contract for the Bridge.',
+        description: 'Escrow and proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
           admin: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
@@ -163,13 +191,13 @@ export const polynetwork: Bridge = {
         address: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
         name: 'EthCrossChainManager',
         description:
-          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs. It uses a separate contract to store block headers.',
+          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
       },
       {
         address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
         name: 'EthCrossChainData (Unverified source code)',
         description:
-          'Contract unverified on Etherscan. Used to store block data for EthCrossChainManager.',
+          "Contract unverified on Etherscan. Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
       },
       {
         address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
@@ -188,7 +216,7 @@ export const polynetwork: Bridge = {
           type: 'EOA',
         },
       ],
-      name: 'Owner and Fee Collector at PolyWrapper',
+      name: 'Owner and Fee Collector at PolyWrapper and owner at LockProxyWithLP',
       description:
         'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.',
     },
@@ -216,11 +244,21 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
+          address: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
+          type: 'EOA',
+        },
+      ],
+      name: 'Owner at LockProxy 0x3Ee7...',
+      description: 'Can update address of EthCrossChainManagerProxy contract.',
+    },
+    {
+      accounts: [
+        {
           address: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
           type: 'EOA',
         },
       ],
-      name: 'Owner of LockProxy 0x250e',
+      name: 'Owner of LockProxy 0x53D2...',
       description: 'Can update address of EthCrossChainManagerProxy contract.',
     },
   ],
