@@ -79,7 +79,9 @@ export class MaterializedViewRefresher {
         }),
       ),
     )
-    const lagging = tips.filter((tip) => !tip.timestamp?.equals(expectedTip))
+    const lagging = tips.filter(
+      (tip) => !tip.timestamp || tip.timestamp.lt(expectedTip),
+    )
     return lagging
   }
 
