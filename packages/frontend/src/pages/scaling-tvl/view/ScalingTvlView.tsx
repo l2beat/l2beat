@@ -4,7 +4,11 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
@@ -20,6 +24,7 @@ export interface ScalingTvlViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  verificationStatus: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -83,9 +88,18 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
   ]
 
+  const rows: RowConfig<ScalingTvlViewEntry> = {
+    getProps: (entry) =>
+      entry.verificationStatus === false
+        ? {
+            className: 'bg-red-300',
+          }
+        : {},
+  }
+
   return (
     <section className="mt-4 sm:mt-8">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend showTokenWarnings />
     </section>
   )

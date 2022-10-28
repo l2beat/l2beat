@@ -21,7 +21,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
-  pages.push(getTvlPage(config, tvlApiResponse))
+  pages.push(getTvlPage(config, pagesData))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, tvlApiResponse, activityApiResponse))
