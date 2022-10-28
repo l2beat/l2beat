@@ -28,9 +28,12 @@ export class LoopringClient {
     }
   }
 
-  async getFinalizedBlockNumber() {
+  async getFinalizedBlock() {
     const block = await this.call('finalized')
-    return block.blockId
+    return {
+      number: block.blockId,
+      timestamp: block.createdAt,
+    }
   }
 
   async getBlock(blockNumber: number) {

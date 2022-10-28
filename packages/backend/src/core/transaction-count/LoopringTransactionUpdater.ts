@@ -1,9 +1,10 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
 import { Clock } from '../Clock'
+import { fillMissingDailyCounts } from './fillMissingDailyCounts'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
@@ -14,7 +15,7 @@ interface LoopringTransactionUpdaterOpts {
 export class LoopringTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
-  private latestBlock?: number
+  private latestBlock?: { number: number; timestamp: UnixTime }
 
   constructor(
     private readonly loopringClient: LoopringClient,
@@ -75,11 +76,11 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    this.latestBlock = await this.loopringClient.getFinalizedBlockNumber()
+    this.latestBlock = await this.loopringClient.getFinalizedBlock()
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
       1,
-      this.latestBlock,
+      this.latestBlock.number,
     )
 
     for (const [start, end] of gaps) {
@@ -92,9 +93,11 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return await this.blockTransactionCountRepository.getDailyCountsByProject(
-      this.projectId,
-    )
+    const counts =
+      await this.blockTransactionCountRepository.getDailyCountsByProject(
+        this.projectId,
+      )
+    return fillMissingDailyCounts(counts, this.latestBlock?.timestamp)
   }
 
   async getStatus() {
