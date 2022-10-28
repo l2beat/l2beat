@@ -13,7 +13,7 @@ export const common = {
     banner: true,
     gitcoinOption: false,
     bridges: true,
-    activity: false,
+    activity: true,
   },
   layer2s,
   bridges,
