@@ -11,6 +11,7 @@ import {
   TableView,
 } from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
+import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -41,7 +42,16 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (entry, index) => index + 1,
+      getValue: (entry, index) => {
+        if (entry.verificationStatus === false) {
+          return (
+            <div className="">
+              <UnverifiedWarning />
+            </div>
+          )
+        }
+        return index + 1
+      },
     },
     {
       name: 'Name',

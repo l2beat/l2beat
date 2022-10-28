@@ -1,6 +1,7 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
+import { InfoIcon } from '../../../components/icons'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ProjectCell } from '../../../components/table/ProjectCell'
@@ -10,6 +11,7 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
+import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -34,7 +36,16 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (entry, index) => index + 1,
+      getValue: (entry, index) => {
+        if (entry.verificationStatus === false) {
+          return (
+            <div className="">
+              <UnverifiedWarning />
+            </div>
+          )
+        }
+        return index + 1
+      },
     },
     {
       name: 'Name',
