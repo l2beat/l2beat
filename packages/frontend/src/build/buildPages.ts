@@ -21,6 +21,7 @@ main().catch((e) => {
 
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'production'
+  console.log(`Using config for ${env}`)
   const config = getConfig(env)
 
   const http = new JsonHttpClient(new HttpClient(), config.backend.skipCache)
