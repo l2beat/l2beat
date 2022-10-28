@@ -4,7 +4,11 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { RiskCell } from '../../../components/table/RiskCell'
-import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../../components/table/TableView'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -63,10 +67,22 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     },
   ]
 
+  const rows: RowConfig<ScalingRiskViewEntry> = {
+    getProps: (entry) =>
+      entry.verificationStatus === false
+        ? {
+            className: 'bg-red-300',
+          }
+        : {},
+  }
+
   return (
     <section className="mt-4 sm:mt-8">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>
   )
+}
+function cx(arg0: string, arg1: string): string | undefined {
+  throw new Error('Function not implemented.')
 }

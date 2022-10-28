@@ -5,11 +5,11 @@ export function getStagingConfig() {
     ...common,
     features: {
       ...common.features,
+      highlightUnverified: true,
     },
     backend: {
       apiUrl: 'https://staging.l2beat.com',
       skipCache: false,
-      highlightUnverified: true,
     },
   }
 }

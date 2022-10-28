@@ -12,7 +12,7 @@ export function getRiskView(
 ): ScalingRiskViewProps {
   return {
     items: projects.map((p) =>
-      getRiskViewEntry(p, verificationStatus.projects[p.display.name]),
+      getRiskViewEntry(p, verificationStatus.projects[p.id.toString()]),
     ),
   }
 }
