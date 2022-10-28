@@ -103,7 +103,7 @@ export const multichain: Bridge = {
         },
         {
           category: 'Funds can be lost if',
-          text: 'MPC nodes loose the private key.',
+          text: 'MPC nodes lose the private key.',
           isCritical: true,
           _ignoreTextFormatting: true,
         },
