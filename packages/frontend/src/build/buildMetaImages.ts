@@ -45,18 +45,14 @@ async function main() {
       height: 314,
       deviceScaleFactor: 2,
     })
-    const imagePath = `build/meta-images/${slug}.png`
-    const urlPath = `meta-images/${slug}`
-    const url = `http://localhost:1234/${urlPath}`
+    const path = `build/meta-images/${slug}.png`
+    const url = `http://localhost:1234/meta-images/${slug}`
     await page.goto(url, { waitUntil: 'networkidle0' })
 
-    if (await is404(page, urlPath)) {
-      const string = `Meta image for ${slug} did not build properly!`
-      throw new Error(string)
-    }
+    await sanityCheck(page, slug)
 
-    await page.screenshot({ path: imagePath })
-    console.log(`Captured ${imagePath}`)
+    await page.screenshot({ path })
+    console.log(`Captured ${path}`)
   }
 
   await browser.close()
@@ -65,14 +61,10 @@ async function main() {
   )
 }
 
-async function is404(page: puppeteer.Page, urlPath: string) {
-  const body = await page.$('body')
-  const innerHTML = await body?.getProperty('innerHTML')
-  const value = await innerHTML?.jsonValue()
-
-  if (typeof value !== 'string') {
-    throw new Error('Value should be string!')
+async function sanityCheck(page: puppeteer.Page, slug: string) {
+  const l2BeatLogo = await page.$('[aria-label="L2BEAT logo"]')
+  if (!l2BeatLogo) {
+    const string = `Meta image for ${slug} did not build properly!`
+    throw new Error(string)
   }
-
-  return value.includes(`Cannot GET /${urlPath}`)
 }
