@@ -139,7 +139,7 @@ export const near: Bridge = {
     {
       accounts: [
         {
-          address: '0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1 ',
+          address: '0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1',
           type: 'MultiSig',
         },
       ],
