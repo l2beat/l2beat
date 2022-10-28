@@ -1,0 +1,86 @@
+{
+  "name": "cBridge",
+  "contracts": [
+    {
+      "name": "LiquidityNetwork",
+      "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "delayPeriod": "1800",
+        "epochLength": "1800",
+        "minimalMaxSlippage": "500",
+        "nativeWrap": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "noticePeriod": "0",
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+        "paused": "false",
+        "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "ssHash": "0xcf6cc25e9197682fae73318f99df17b16f67a1843a2443ed311b12117ec2f47a",
+        "triggerTime": "1666607084",
+        "pausers": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
+          "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
+        ],
+        "governors": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c"
+        ]
+      }
+    },
+    {
+      "name": "SimpleGovernance",
+      "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "MAX_ACTIVE_PERIOD": 2419200,
+        "MIN_ACTIVE_PERIOD": 3600,
+        "THRESHOLD_DECIMAL": 100,
+        "voters": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+        ],
+        "votersPowers": [10000, 10000, 10000, 10000, 10000]
+      }
+    },
+    {
+      "name": "TokenBridge",
+      "address": "0xB37D31b2A74029B5951a2778F959282E2D518595",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "delayPeriod": "1800",
+        "epochLength": "1800",
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+        "paused": "false",
+        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
+        "pausers": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
+          "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
+        ],
+        "governors": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c"
+        ]
+      }
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
 import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
+import { CBRIDGE_NAME, getCBridgeParameters } from '../projects/cBridge'
 import { DYDX_NAME, getDydxParameters } from '../projects/dYdX'
 import { getHopParameters, HOP_NAME } from '../projects/hop'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
@@ -46,6 +47,7 @@ export async function analyze(projects: string[]) {
     [SOLLET_BRIDGE_NAME, getSolletBridgeParameters],
     [ORBIT_BRIDGE_NAME, getOrbitBridgeParameters],
     [SYNAPSE_NAME, getSynapseParameters],
+    [CBRIDGE_NAME, getCBridgeParameters],
   ]
 
   const unknownArguments = projects.filter(

@@ -17,7 +17,9 @@ To run please use `yarn start`. Display help with `yarn start --help`.
 
 3. run `yarn start discover [project]`
 
-4. Discovery Engine will generate file with values from ABI calls inside `dist/discovery` and ABI per-contract in the folder `dist/discovery/abi/[contractAddress].json`
+   - if your script is stuck at some method there probably is a need to skip it by providing configuration parameter `skipMethods`, see example [arbitrum](src/projects/arbitrum/index.ts)
+
+4. Discovery Engine will generate file with values(discovered by calling all possible read methods) inside `dist/discovery` and ABI per-contract in the folder `dist/discovery/abi/[contractAddress].json`
 
 5. Copy your discovered ABI file to `abi/[project]` folder, I recommend renaming it from contract's address to the human readable name
 
@@ -27,9 +29,9 @@ To run please use `yarn start`. Display help with `yarn start --help`.
 
 ### Step 2: Getting values
 
-Now we can create getter for the values, see example function `getStarkNetParameters` in [starknet](src/projects/starknet/index.ts)
+In this step we will create a function that will be called when running `yarn start [project]`, this will result in saving output of this function into `dist/[project].json`. You can put everything inside `index.ts`, but I recommend splitting it by-contract, so you create getters for every contract and later in `index.ts` you create aggregate call. Let's see the simple flow of this process:
 
-1. Create getter for given contract's values, see example [starknet](src/proj/../projects/starknet/contracts/starknet.ts)
+1. Create folder `src/projects/[project]/contracts` and inside put a getter for given contract's values, see example [starknet](src/proj/../projects/starknet/contracts/starknet.ts)
 
 2. Add your getter to the "main getter" inside `index.ts`, see example [starknet](src/projects/starknet/index.ts)
 
