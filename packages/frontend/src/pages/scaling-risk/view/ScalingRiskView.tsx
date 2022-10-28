@@ -1,4 +1,5 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
+import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
@@ -71,7 +72,10 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     getProps: (entry) =>
       entry.verificationStatus === false
         ? {
-            className: 'bg-red-300',
+            className: cx(
+              'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
+              'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+            ),
           }
         : {},
   }
@@ -82,7 +86,4 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       <ScalingLegend />
     </section>
   )
-}
-function cx(arg0: string, arg1: string): string | undefined {
-  throw new Error('Function not implemented.')
 }

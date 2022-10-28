@@ -1,4 +1,5 @@
 import { Layer2 } from '@l2beat/config'
+import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
@@ -92,7 +93,10 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     getProps: (entry) =>
       entry.verificationStatus === false
         ? {
-            className: 'bg-red-300',
+            className: cx(
+              'bg-unverified hover:bg-unverified border-b-unverifiedBorder',
+              'dark:bg-unverified dark:hover:bg-unverified dark:border-b-unverifiedBorder',
+            ),
           }
         : {},
   }

@@ -77,6 +77,8 @@ module.exports = {
         700: '#005DD7',
         900: '#112944',
       },
+      unverified: '#441111',
+      unverifiedBorder: '#FF3F4A'
     },
     screens: {
       xs: '400px',
