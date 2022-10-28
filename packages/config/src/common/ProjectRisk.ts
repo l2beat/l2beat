@@ -5,6 +5,8 @@ export interface ProjectRisk {
   text: string
   /** If the risk is particularly bad */
   isCritical?: boolean
+  /** Ignore tests for formatting */
+  _ignoreTextFormatting?: boolean
 }
 
 export type ProjectRiskCategory =

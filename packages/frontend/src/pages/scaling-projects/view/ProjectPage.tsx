@@ -28,7 +28,7 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent narrow mobileFull>
+      <PageContent mobileFull>
         {props.showProjectHeader ? (
           <ProjectHeader {...props.projectHeader} />
         ) : (

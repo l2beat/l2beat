@@ -66,12 +66,6 @@ export class RpcTransactionUpdater implements TransactionCounter {
     const block = await this.rpcClient.getBlock(number)
     const timestamp = new UnixTime(block.timestamp)
 
-    // We download all the blocks, but discard those that are more recent
-    // than clock.getLastHour() to avoid dealing with potential reorgs
-    if (timestamp.gt(this.clock.getLastHour())) {
-      return
-    }
-
     await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp,
@@ -90,7 +84,11 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    this.latestBlock = Number(await this.rpcClient.getBlockNumber())
+    this.latestBlock = await this.rpcClient.getBlockNumberAtOrBefore(
+      this.clock.getLastHour(),
+      this.latestBlock,
+    )
+
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
       this.startBlock,

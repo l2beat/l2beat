@@ -12,10 +12,10 @@ export interface HeaderProps {
 export function DetailsHeader(props: HeaderProps) {
   return (
     <>
-      <header className="mt-6 md:mt-16 px-4 md:px-0">
+      <header className="mt-6 md:mt-15 px-4 md:px-0">
         <h1
           className={cx(
-            'relative flex items-center justify-start gap-3 mb-6',
+            'relative flex items-center justify-start gap-3 mb-4',
             'font-bold text-3xl md:text-4xl whitespace-pre',
             props.titleLength,
             props.titleClassName,

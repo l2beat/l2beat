@@ -10,8 +10,8 @@ describe(BlocksController.name, () => {
     const blockNumberRepository = mock<BlockNumberRepository>({
       async getAll() {
         return [
-          { blockNumber: 123n, timestamp: new UnixTime(1000) },
-          { blockNumber: 456n, timestamp: new UnixTime(2000) },
+          { blockNumber: 123, timestamp: new UnixTime(1000) },
+          { blockNumber: 456, timestamp: new UnixTime(2000) },
         ]
       },
     })

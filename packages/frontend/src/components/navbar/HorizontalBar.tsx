@@ -1,7 +1,13 @@
+import cx from 'classnames'
 import React from 'react'
 
-export function HorizontalBar() {
+export function HorizontalBar({ className }: { className?: string }) {
   return (
-    <hr className="my-6 h-px text-gray-100 dark:text-gray-900 border-current -mx-4" />
+    <hr
+      className={cx(
+        'h-px text-gray-100 dark:text-gray-900 border-current -mx-4',
+        className,
+      )}
+    />
   )
 }

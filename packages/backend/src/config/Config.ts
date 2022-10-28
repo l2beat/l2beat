@@ -29,6 +29,7 @@ export interface Config {
   transactionCountSync:
     | {
         starkexApiKey: string
+        starkexApiDelayHours: number
         zkSyncWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number

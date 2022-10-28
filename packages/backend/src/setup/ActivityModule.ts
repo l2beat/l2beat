@@ -8,6 +8,7 @@ import { Clock } from '../core/Clock'
 import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
 import { MaterializedViewRefresher } from '../core/transaction-count/MaterializedViewRefresher'
 import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
+import { BlockTipRepository } from '../peripherals/database/BlockTipRepository'
 import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
 import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
@@ -46,15 +47,18 @@ export function getActivityModule(
     callsPerMinute: config.transactionCountSync.loopringCallsPerMinute,
   })
 
+  const blockTipRepository = new BlockTipRepository(database, logger)
   const blockTransactionCountRepository = new BlockTransactionCountRepository(
     database,
     logger,
+    blockTipRepository,
   )
   const starkexTransactionCountRepository =
     new StarkexTransactionCountRepository(database, logger)
   const zksyncTransactionRepository = new ZksyncTransactionRepository(
     database,
     logger,
+    blockTipRepository,
   )
 
   const layer2RpcTransactionUpdaters = createLayer2RpcTransactionUpdaters(
@@ -81,17 +85,6 @@ export function getActivityModule(
     logger,
   )
 
-  const materializedViewRefresher = new MaterializedViewRefresher(
-    blockTransactionCountRepository,
-    zksyncTransactionRepository,
-    layer2RpcTransactionUpdaters
-      .map((u) => u.projectId)
-      .concat(ProjectId.ETHEREUM)
-      .concat(ProjectId.LOOPRING),
-    clock,
-    logger,
-  )
-
   const starkexTransactionUpdaters = createStarkexTransactionUpdaters(
     config,
     starkexTransactionCountRepository,
@@ -106,6 +99,20 @@ export function getActivityModule(
     clock,
     logger,
     { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
+  )
+
+  const materializedViewRefresher = new MaterializedViewRefresher(
+    blockTransactionCountRepository,
+    zksyncTransactionRepository,
+    [
+      ...layer2RpcTransactionUpdaters,
+      ethereumTransactionUpdater,
+      loopringTransactionUpdater,
+    ],
+    [...starkexTransactionUpdaters, zksyncTransactionUpdater],
+    clock,
+    logger,
+    config.transactionCountSync.starkexApiDelayHours,
   )
 
   const activityController = new ActivityController(

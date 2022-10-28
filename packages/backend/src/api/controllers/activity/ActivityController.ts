@@ -13,10 +13,11 @@ import {
 } from '../../../core/transaction-count/TransactionCounter'
 import { getTip } from './getTip'
 
-interface Layer2 {
+interface Layer2Count {
   projectId: ProjectId
   counts: DailyTransactionCount[]
 }
+
 export class ActivityController {
   constructor(
     private readonly layer2Counters: TransactionCounter[],
@@ -24,12 +25,14 @@ export class ActivityController {
   ) {}
 
   async getTransactionActivity(): Promise<ActivityApiResponse> {
-    const [layer2s, ethereumCounts] = await Promise.all([
-      this.getLayer2s(),
+    const [layer2sCounts, ethereumCounts] = await Promise.all([
+      this.getLayer2sCounts(),
       this.ethereumCounter.getDailyCounts(),
     ])
-    const tip = getTip(layer2s.map((l2) => l2.counts).concat([ethereumCounts]))
-    const fullySyncedLayer2s = layer2s.map(({ counts, projectId }) => ({
+    const tip = getTip(
+      layer2sCounts.map((l2) => l2.counts).concat([ethereumCounts]),
+    )
+    const fullySyncedLayer2s = layer2sCounts.map(({ counts, projectId }) => ({
       projectId,
       counts: limitCounts(counts, tip),
     }))
@@ -55,7 +58,7 @@ export class ActivityController {
     })
   }
 
-  private async getLayer2s(): Promise<Layer2[]> {
+  private async getLayer2sCounts(): Promise<Layer2Count[]> {
     return Promise.all(
       this.layer2Counters.map(async (c) => ({
         projectId: c.projectId,
@@ -66,7 +69,7 @@ export class ActivityController {
 }
 
 function toCombinedActivity(
-  layer2s: Layer2[],
+  layer2s: Layer2Count[],
 ): ActivityApiResponse['combined'] {
   return formatChart(
     layer2s
@@ -86,7 +89,7 @@ function toCombinedActivity(
 }
 
 function toProjectsActivity(
-  layer2s: Layer2[],
+  layer2s: Layer2Count[],
 ): ActivityApiResponse['projects'] {
   const projects: ActivityApiResponse['projects'] = {}
   for (const { projectId, counts } of layer2s) {
