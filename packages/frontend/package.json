@@ -42,7 +42,9 @@
     "qrcode": "^1.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "lodash": "^4.17.21",
+    "@types/lodash": "^4.14.184"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",

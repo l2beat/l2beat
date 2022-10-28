@@ -25,6 +25,8 @@ export async function renderPages(
   pages.push(getTvlPage(config, tvlApiResponse))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
+  pages.push(...getProjectPages(config, tvlApiResponse, activityApiResponse))
+  pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
   if (config.features.bridges) {
     pages.push(getBridgesTvlPage(config, tvlApiResponse))
     pages.push(getBridgesRiskPage(config, tvlApiResponse))
@@ -32,10 +34,6 @@ export async function renderPages(
   }
   if (activityApiResponse) {
     pages.push(getActivityPage(config, activityApiResponse))
-    pages.push(...getProjectPages(config, tvlApiResponse, activityApiResponse))
-    pages.push(
-      ...getMetaImagePages(config, tvlApiResponse, activityApiResponse),
-    )
   }
 
   outputPages(pages)
