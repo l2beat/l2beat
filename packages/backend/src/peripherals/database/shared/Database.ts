@@ -26,6 +26,17 @@ export class Database {
           path.join(__dirname, '..', 'migrations'),
         ),
       },
+      pool: {
+        // https://knexjs.org/guide/#aftercreate
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        afterCreate: function (conn: { query: any }, done: any) {
+          // eslint-disable-next-line  @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+          conn.query('SET timezone="UTC";', function (err: any) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            done(err, conn)
+          })
+        },
+      },
     })
   }
 
