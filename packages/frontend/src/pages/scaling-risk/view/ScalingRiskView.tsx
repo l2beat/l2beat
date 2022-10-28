@@ -73,8 +73,8 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       entry.verificationStatus === false
         ? {
             className: cx(
-              'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
-              'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+              'bg-unverified hover:bg-unverified border-b-unverifiedBorder',
+              'dark:bg-unverified dark:hover:bg-unverified dark:border-b-unverifiedBorder',
             ),
           }
         : {},
