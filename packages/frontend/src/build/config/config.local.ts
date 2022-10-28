@@ -9,6 +9,7 @@ export function getLocalConfig() {
     backend: {
       apiUrl: 'http://localhost:3000',
       skipCache: true,
+      highlightUnverified: true,
     },
   }
 }

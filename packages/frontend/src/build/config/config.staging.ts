@@ -9,6 +9,7 @@ export function getStagingConfig() {
     backend: {
       apiUrl: 'https://staging.l2beat.com',
       skipCache: false,
+      highlightUnverified: true,
     },
   }
 }
