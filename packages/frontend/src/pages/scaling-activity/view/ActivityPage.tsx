@@ -38,7 +38,7 @@ export function ActivityPage(props: ActivityPageProps) {
             activityEndpoint={props.apiEndpoint}
             hasTvl={false}
             hasActivity
-          ></Chart>
+          />
           <ActivityView {...props.activityView} />
           <About />
         </main>

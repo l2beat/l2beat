@@ -5,8 +5,6 @@ export function getStagingConfig() {
     ...common,
     features: {
       ...common.features,
-      bridges: true,
-      activity: true,
     },
     backend: {
       apiUrl: 'https://staging.l2beat.com',

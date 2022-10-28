@@ -40,9 +40,10 @@ export function getLocalConfig(): Config {
       false,
     ) && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 5,
       zkSyncWorkQueueWorkers: 1,
-      starkexWorkQueueWorkers: 1,
-      starkexCallsPerMinute: 10,
+      starkexWorkQueueWorkers: 100,
+      starkexCallsPerMinute: 1000,
       loopringWorkQueueWorkers: 1,
       loopringCallsPerMinute: 10,
       rpc: {
