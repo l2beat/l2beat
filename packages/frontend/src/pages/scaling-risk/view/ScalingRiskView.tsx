@@ -20,6 +20,7 @@ export interface ScalingRiskViewEntry {
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   validatorFailure: ProjectRiskViewEntry
+  verificationStatus: boolean
 }
 
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {

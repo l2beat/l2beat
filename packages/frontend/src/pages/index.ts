@@ -1,6 +1,7 @@
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../build/config'
+import { PagesData } from '../build/types'
 import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
@@ -14,14 +15,12 @@ import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
 
-export async function renderPages(
-  config: Config,
-  tvlApiResponse: TvlApiResponse,
-  activityApiResponse: ActivityApiResponse | undefined,
-) {
+export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
-  pages.push(getRiskPage(config, tvlApiResponse))
+  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+
+  pages.push(getRiskPage(config, pagesData))
   pages.push(getTvlPage(config, tvlApiResponse))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
