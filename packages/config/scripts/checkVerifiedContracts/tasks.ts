@@ -8,8 +8,9 @@ function prepareTaskQueue(
   task: (task: EthereumAddress) => Promise<void>,
   etherscanClient: EtherscanClient,
   workersCount: number,
+  logger: Logger,
 ): TaskQueue<EthereumAddress> {
-  return new TaskQueue(task, Logger.WARN, {
+  return new TaskQueue(task, logger, {
     workers: workersCount,
     // Force exit the script on first error.
     shouldRetry: () => process.exit(1),
@@ -21,6 +22,7 @@ export async function verifyContracts(
   previouslyVerified: Set<EthereumAddress>,
   etherscanClient: EtherscanClient,
   workersCount: number,
+  logger: Logger,
 ): Promise<VerificationMap> {
   console.log(`Processing ${addresses.length} unique addresses.`)
   const result: VerificationMap = {}
@@ -32,12 +34,13 @@ export async function verifyContracts(
 
   const taskQueue = prepareTaskQueue(
     async (address: EthereumAddress) => {
-      console.log(`Checking ${address.toString()}...`)
+      logger.info(`Checking ${address.toString()}...`)
       const isVerified = await isContractVerified(etherscanClient, address)
       result[address.toString()] = isVerified
     },
     etherscanClient,
     workersCount,
+    logger,
   )
 
   // Only check contracts that were not already verified

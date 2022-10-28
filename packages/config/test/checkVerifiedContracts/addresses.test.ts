@@ -18,7 +18,7 @@ describe('checkVerifiedContracts:addresses', () => {
       ).not.toThrow()
     })
 
-    it('correctly finds unique addresses for all projects with duplicates', () => {
+    it('correctly finds unique addresses for all stub projects with duplicates', () => {
       const addresses = getUniqueContractsForAllProjects([
         layer2aWithDups,
         bridge1WithDups,
@@ -64,7 +64,7 @@ describe('checkVerifiedContracts:addresses', () => {
   })
 
   describe('getUniqueContractsForProject', () => {
-    it('correctly finds unique addresses for a single project with duplicates', () => {
+    it('correctly finds unique addresses for a single stub project with duplicates', () => {
       const addresses = getUniqueContractsForProject(layer2aWithDups)
       addresses.sort()
       expect(addresses.sort()).toEqual(

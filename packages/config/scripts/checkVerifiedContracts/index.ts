@@ -1,3 +1,4 @@
+import { Logger, LogLevel } from '@l2beat/common'
 import { config as dotenv } from 'dotenv'
 
 import { bridges, layer2s } from '../../src'
@@ -17,6 +18,7 @@ import { getEnv } from './utils'
 export const OUTPUT_FILEPATH = 'src/verified.json'
 
 export async function main() {
+  const logger = new Logger({ logLevel: LogLevel.INFO, format: 'pretty' })
   const envWorkersVar = 'ETHERSCAN_WORKERS'
   const workersCount = parseInt(getEnv(envWorkersVar, '4'))
 
@@ -37,6 +39,7 @@ export async function main() {
     previouslyVerified,
     etherscanClient,
     workersCount,
+    logger,
   )
   const projectVerificationMap: VerificationMap = {}
   projects.forEach((project) => {
