@@ -24,7 +24,7 @@ export async function verifyContracts(
   workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
-  console.log(`Processing ${addresses.length} unique addresses.`)
+  logger.info(`Processing ${addresses.length} unique addresses.`)
   const result: VerificationMap = {}
 
   // Copy previously verified contracts directly to result
