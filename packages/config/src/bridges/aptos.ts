@@ -32,10 +32,10 @@ export const aptos: Bridge = {
       sentiment: 'bad',
     },
     sourceUpgradeability: {
-      value: '1 week delay',
+      value: 'Yes',
       description:
-        'Token Bridge contracts are not upgradable but the owner (EOA) can remove all the funds after 1 week delay.',
-      sentiment: 'warning',
+        'Token Bridge contracts are not upgradable but the owner (EOA) can remove all the funds after 1 week delay. Layer Zero contracts are upgradable without delay.',
+      sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.CANONICAL,
   },
