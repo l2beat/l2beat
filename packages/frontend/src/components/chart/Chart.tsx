@@ -76,9 +76,12 @@ export function Chart({
             />
             <YAxisLabels />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             {hasActivity && (
-              <EthereumActivityToggle showToggle={type === 'activity'} />
+              <EthereumActivityToggle
+                showToggle={type === 'activity'}
+                className="max-w-[135px] xs:max-w-none"
+              />
             )}
             {hasTvl && <CurrencyControls />}
             <ScaleControls />
@@ -86,7 +89,7 @@ export function Chart({
           {hasTvl && <TokenControls tokens={tokens} />}
         </div>
       </section>
-      <hr className="w-full md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />
+      <hr className="w-full mt-4 md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />
     </>
   )
 }

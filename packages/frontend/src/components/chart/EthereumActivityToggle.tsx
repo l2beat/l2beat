@@ -6,12 +6,13 @@ import { EthereumLineIcon } from '../icons/chart/EthereumLineIcon'
 
 interface EthereumActivityToggleProps {
   showToggle: boolean
+  className: string
 }
 
 export function EthereumActivityToggle(props: EthereumActivityToggleProps) {
   return (
     <Checkbox
-      className={cx(!props.showToggle && 'hidden')}
+      className={cx(!props.showToggle && 'hidden', props.className)}
       role="toggle-ethereum-activity"
       id="ethereum-activity"
       label={
