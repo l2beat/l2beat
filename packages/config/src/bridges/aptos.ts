@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { RISK_VIEW } from './common'
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const aptos: Bridge = {
