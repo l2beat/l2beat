@@ -6,7 +6,7 @@ import {
 import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
-import { discoverAptos, APTOS_NAME } from '../projects/aptosBridge'
+import { APTOS_NAME,discoverAptos } from '../projects/aptosBridge'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
 import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'

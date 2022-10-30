@@ -1,9 +1,6 @@
-import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
-import { ProjectParameters } from '../../types'
 import { addresses } from './constants'
-import { getHopBridgeParams } from './contracts/aptosBridge'
 
 export const APTOS_NAME = 'aptos'
 
