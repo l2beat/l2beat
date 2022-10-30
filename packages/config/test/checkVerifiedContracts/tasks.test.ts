@@ -38,5 +38,27 @@ describe('checkVerifiedContracts:tasks', () => {
         '0x4444444444444444444444444444444444444444': false,
       })
     })
+
+    it('fails on any error in any task', async () => {
+      const EthereumClientMock = {
+        getContractSource: async (address: EthereumAddress) => {
+          throw new Error('An error occured')
+        },
+      }
+      await expect(
+        verifyContracts(
+          [
+            '0x1111111111111111111111111111111111111111',
+            '0x2222222222222222222222222222222222222222',
+            '0x3333333333333333333333333333333333333333',
+            '0x4444444444444444444444444444444444444444',
+          ].map(EthereumAddress),
+          new Set(),
+          EthereumClientMock as unknown as EtherscanClient,
+          2,
+          Logger.SILENT,
+        ),
+      ).toBeRejected()
+    })
   })
 })
