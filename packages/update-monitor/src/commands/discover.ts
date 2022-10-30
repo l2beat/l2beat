@@ -6,6 +6,7 @@ import {
 import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
+import { APTOS_NAME, discoverAptos } from '../projects/aptosBridge'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
 import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
@@ -45,6 +46,7 @@ export async function discover(args: string[]) {
   }
 
   const projects: [string, Discover][] = [
+    [APTOS_NAME, discoverAptos],
     [ZK_SYNC_NAME, discoverZkSync],
     [ZK_SWAP_1_NAME, discoverZkSwap1],
     [ZK_SWAP_2_NAME, discoverZkSwap2],
