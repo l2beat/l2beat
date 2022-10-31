@@ -1568,6 +1568,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('stg-stargate-finance'),
+    name: 'Stargate Finance',
+    coingeckoId: CoingeckoId('stargate-finance'),
+    address: EthereumAddress('0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6'),
+    symbol: 'STG',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1647504559),
+    category: 'other',
+  },
+  {
     id: AssetId('starl-star-link'),
     name: 'StarLink',
     coingeckoId: CoingeckoId('starlink'),
