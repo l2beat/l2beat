@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   ZksyncTransactionRecord,
@@ -7,6 +7,7 @@ import {
 } from '../../peripherals/database/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../peripherals/zksync'
 import { Clock } from '../Clock'
+import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
@@ -19,7 +20,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
-  private latestBlock?: number
+  private latestBlock?: { number: number; timestamp: UnixTime }
 
   constructor(
     private readonly zksyncClient: ZksyncClient,
@@ -84,7 +85,7 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
     this.latestBlock = await this.zksyncClient.getLatestBlock()
     const gaps = await this.zksyncTransactionRepository.getGaps(
       1,
-      this.latestBlock,
+      this.latestBlock.number,
     )
     for (const [start, end] of gaps) {
       for (let i = start; i <= end; i++) {
@@ -95,14 +96,20 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return this.zksyncTransactionRepository.getDailyCounts()
+    const counts = await this.zksyncTransactionRepository.getDailyCounts()
+    return getFilledDailyCounts(counts, this.latestBlock?.timestamp)
   }
 
   async getStatus() {
     const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
-      latestBlock: this.latestBlock ?? null,
+      latestBlock: this.latestBlock
+        ? {
+            number: this.latestBlock.number,
+            timestamp: this.latestBlock.timestamp.toString(),
+          }
+        : null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }

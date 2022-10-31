@@ -4,6 +4,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { Clock } from '../Clock'
+import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { RpcClient } from './RpcClient'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
@@ -23,7 +24,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
   private readonly assessCount: AssessCount
   private readonly startBlock: number
   private readonly workQueueSizeLimit: number
-  private latestBlock?: number
+  private latestBlock?: { number: number; timestamp: number }
 
   constructor(
     private readonly rpcClient: RpcClient,
@@ -84,15 +85,15 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    this.latestBlock = await this.rpcClient.getBlockNumberAtOrBefore(
+    this.latestBlock = await this.rpcClient.getBlockAtOrBefore(
       this.clock.getLastHour(),
-      this.latestBlock,
+      this.latestBlock?.number,
     )
 
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
       this.startBlock,
-      this.latestBlock,
+      this.latestBlock.number,
     )
 
     enqueueBlockLoop: for (const [start, end] of gaps) {
@@ -108,8 +109,13 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return this.blockTransactionCountRepository.getDailyCountsByProject(
-      this.projectId,
+    const counts =
+      await this.blockTransactionCountRepository.getDailyCountsByProject(
+        this.projectId,
+      )
+    return getFilledDailyCounts(
+      counts,
+      this.latestBlock ? new UnixTime(this.latestBlock.timestamp) : undefined,
     )
   }
 
@@ -118,7 +124,12 @@ export class RpcTransactionUpdater implements TransactionCounter {
     return {
       workQueue: this.blockQueue.getStats(),
       startBlock: this.startBlock,
-      latestBlock: this.latestBlock?.toString() ?? null,
+      latestBlock: this.latestBlock
+        ? {
+            number: this.latestBlock.number,
+            timestamp: this.latestBlock.timestamp.toString(),
+          }
+        : null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }

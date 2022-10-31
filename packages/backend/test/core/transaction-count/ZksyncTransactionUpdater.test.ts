@@ -12,7 +12,7 @@ describe(ZksyncTransactionUpdater.name, () => {
   describe(ZksyncTransactionUpdater.prototype.start.name, () => {
     it('skips known blocks', async () => {
       const zksyncClient = mock<ZksyncClient>({
-        getLatestBlock: async () => 5,
+        getLatestBlock: async () => ({ number: 5, timestamp: UnixTime.now() }),
         getTransactionsInBlock: async () => [],
       })
       const zksyncTransactionRepository = mock<ZksyncTransactionRepository>({

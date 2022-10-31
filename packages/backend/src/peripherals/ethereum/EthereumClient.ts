@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/common'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 
-import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
+import { getBlockAtOrBefore } from '../getBlockAtOrBefore'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
 
@@ -23,10 +23,10 @@ export class EthereumClient {
     return result
   }
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
+  async getBlockAtOrBefore(timestamp: UnixTime, start = 0) {
     const end = await this.getBlockNumber()
 
-    return await getBlockNumberAtOrBefore(
+    return await getBlockAtOrBefore(
       timestamp,
       start,
       end,

@@ -33,7 +33,7 @@ export class ZksyncClient {
     this.call = rateLimiter.wrap(this.call.bind(this))
   }
 
-  async getLatestBlock() {
+  async getLatestBlock(): Promise<{ number: number; timestamp: UnixTime }> {
     const result = await this.call('blocks/lastFinalized')
 
     const parsed = ZksyncBlocksResultSchema.safeParse(result)
@@ -42,7 +42,10 @@ export class ZksyncClient {
       throw new TypeError('Invalid Zksync block schema')
     }
 
-    return parsed.data.blockNumber
+    return {
+      number: parsed.data.blockNumber,
+      timestamp: parsed.data.finalizedAt,
+    }
   }
 
   async getTransactionsInBlock(blockNumber: number) {

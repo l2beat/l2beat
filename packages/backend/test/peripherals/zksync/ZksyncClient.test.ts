@@ -127,20 +127,22 @@ describe(ZksyncClient.name, () => {
 
   describe(ZksyncClient.prototype.getLatestBlock.name, () => {
     it('gets latest block', async () => {
+      const finalizedAt = new Date()
       const httpClient = mock<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
               status: 'success',
               error: null,
-              result: { blockNumber: 42 },
+              result: { blockNumber: 42, finalizedAt },
             }),
           ),
       })
       const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
 
-      const result = await zksyncClient.getLatestBlock()
-      expect(result).toEqual(42)
+      const { number, timestamp } = await zksyncClient.getLatestBlock()
+      expect(number).toEqual(42)
+      expect(timestamp).toEqual(UnixTime.fromDate(finalizedAt))
     })
 
     it('throws for invalid schema', async () => {

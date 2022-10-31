@@ -1,15 +1,12 @@
-import { UnixTime } from '@l2beat/types'
-
 import { DailyTransactionCount } from './TransactionCounter'
 
 export function fillMissingDailyCounts(
   counts: DailyTransactionCount[],
-  last?: UnixTime,
 ): DailyTransactionCount[] {
   if (counts.length === 0) return []
 
   const result = []
-  const lastTimestamp = last ?? counts[counts.length - 1].timestamp
+  const lastTimestamp = counts[counts.length - 1].timestamp
   let timestamp = counts[0].timestamp
   let i = 0
 

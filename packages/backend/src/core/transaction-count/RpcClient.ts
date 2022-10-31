@@ -5,7 +5,7 @@ export interface RpcClient {
   getBlockAtOrBefore(
     timestamp: UnixTime,
     start?: number,
-  ): Promise<{ number: number; timestamp: UnixTime }>
+  ): Promise<{ number: number; timestamp: number }>
   getBlock(number: number): Promise<{
     number: number
     timestamp: number

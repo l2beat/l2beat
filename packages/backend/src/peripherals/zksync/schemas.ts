@@ -23,6 +23,7 @@ const ZksyncErrorResponse = z.object({
 
 export const ZksyncBlocksResultSchema = z.object({
   blockNumber: z.number(),
+  finalizedAt: stringAs((s) => UnixTime.fromDate(new Date(s))),
 })
 
 export const ZksyncTransactionResultSchema = z.object({

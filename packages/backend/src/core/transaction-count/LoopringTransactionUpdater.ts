@@ -4,7 +4,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
 import { Clock } from '../Clock'
-import { fillMissingDailyCounts } from './fillMissingDailyCounts'
+import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
@@ -97,14 +97,19 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
       )
-    return fillMissingDailyCounts(counts, this.latestBlock?.timestamp)
+    return getFilledDailyCounts(counts, this.latestBlock?.timestamp)
   }
 
   async getStatus() {
     const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
-      latestBlock: this.latestBlock?.toString() ?? null,
+      latestBlock: this.latestBlock
+        ? {
+            number: this.latestBlock.number,
+            timestamp: this.latestBlock.timestamp.toString(),
+          }
+        : null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }
