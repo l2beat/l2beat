@@ -14,6 +14,10 @@ import { discoverHop, HOP_NAME } from '../projects/hop'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
 import {
+  discoverPolynetworkBridge,
+  POLYNETWORK_BRIDGE_NAME,
+} from '../projects/polynetworkBridge'
+import {
   discoverSolletBridge,
   SOLLET_BRIDGE_NAME,
 } from '../projects/solletBridge'
@@ -56,6 +60,7 @@ export async function discover(args: string[]) {
     [NOVA_NAME, discoverNova],
     [HOP_NAME, discoverHop],
     [DYDX_NAME, discoverDydx],
+    [POLYNETWORK_BRIDGE_NAME, discoverPolynetworkBridge],
     [SOLLET_BRIDGE_NAME, discoverSolletBridge],
     [ORBIT_BRIDGE_NAME, discoverOrbitBridge],
     [SYNAPSE_NAME, discoverSynapse],
