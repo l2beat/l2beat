@@ -26,7 +26,7 @@ export interface ScalingTvlViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
-  verificationStatus: boolean
+  isVerified?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -48,8 +48,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-        if (entry.verificationStatus === false) {
+        if (entry.isVerified === false) {
           return (
             <UnverifiedWarning message="This project includes unverified contracts" />
           )
@@ -105,8 +104,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
 
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) =>
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-      entry.verificationStatus === false
+      entry.isVerified === false
         ? {
             className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
           }

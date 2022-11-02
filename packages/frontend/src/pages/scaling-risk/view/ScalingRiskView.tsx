@@ -25,12 +25,12 @@ export interface ScalingRiskViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  isVerified?: boolean
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   validatorFailure: ProjectRiskViewEntry
-  verificationStatus: boolean
 }
 
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {
@@ -40,8 +40,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-        if (entry.verificationStatus === false) {
+        if (entry.isVerified === false) {
           return (
             <UnverifiedWarning message="This project includes unverified contracts" />
           )
@@ -83,8 +82,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   const rows: RowConfig<ScalingRiskViewEntry> = {
     getProps: (entry) =>
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-      entry.verificationStatus === false
+      entry.isVerified === false
         ? {
             className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
           }

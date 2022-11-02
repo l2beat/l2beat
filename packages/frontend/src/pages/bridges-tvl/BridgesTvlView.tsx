@@ -28,7 +28,7 @@ export interface BridgesTvlViewEntry {
   name: string
   slug: string
   warning?: string
-  verificationStatus: boolean
+  isVerified?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -50,24 +50,18 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            {
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-              entry.verificationStatus === false ? (
-                <UnverifiedWarning message="This project includes unverified contracts" />
-              ) : (
-                onlyBridges.indexOf(entry) + 1
-              )
-            }
+            {entry.isVerified === false ? (
+              <UnverifiedWarning message="This project includes unverified contracts" />
+            ) : (
+              onlyBridges.indexOf(entry) + 1
+            )}
           </span>
           <span data-combined-only className="hidden">
-            {
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-              entry.verificationStatus === false ? (
-                <UnverifiedWarning message="This project includes unverified contracts" />
-              ) : (
-                index + 1
-              )
-            }
+            {entry.isVerified === false ? (
+              <UnverifiedWarning message="This project includes unverified contracts" />
+            ) : (
+              index + 1
+            )}
           </span>
         </>
       ),
@@ -136,7 +130,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-      if (entry.verificationStatus === false) {
+      if (entry.isVerified === false) {
         result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
       }
 

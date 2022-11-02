@@ -39,7 +39,7 @@ export function TvlView() {
               marketShare: '50.42%',
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
-              verificationStatus: false,
+              isVerified: false,
             },
             {
               name: 'Arbitrage',
@@ -60,7 +60,7 @@ export function TvlView() {
               marketShare: '50.42%',
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
-              verificationStatus: true,
+              isVerified: true,
             },
             {
               name: 'StorkCommerce',
@@ -82,7 +82,7 @@ export function TvlView() {
               marketShare: '50.42%',
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
-              verificationStatus: false,
+              isVerified: false,
             },
             {
               name: 'zk.download',
@@ -104,7 +104,7 @@ export function TvlView() {
               marketShare: '50.42%',
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
-              verificationStatus: true,
+              isVerified: true,
             },
           ]}
         />

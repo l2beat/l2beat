@@ -43,7 +43,7 @@ export function getActivityViewEntry(
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
-    verificationStatus: isVerified,
+    isVerified,
     dataSource: project.display.activityDataSource,
     ...getActivityViewEntryDetails(data),
   }

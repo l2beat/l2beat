@@ -24,7 +24,7 @@ export interface BridgesRiskViewEntry {
   slug: string
   type: 'layer2' | 'bridge'
   warning?: string
-  verificationStatus: boolean
+  isVerified?: boolean
   category: string
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry
@@ -43,24 +43,18 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            {
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-              entry.verificationStatus === false ? (
-                <UnverifiedWarning message="This project includes unverified contracts" />
-              ) : (
-                onlyBridges.indexOf(entry) + 1
-              )
-            }
+            {entry.isVerified === false ? (
+              <UnverifiedWarning message="This project includes unverified contracts" />
+            ) : (
+              onlyBridges.indexOf(entry) + 1
+            )}
           </span>
           <span data-combined-only className="hidden">
-            {
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-              entry.verificationStatus === false ? (
-                <UnverifiedWarning message="This project includes unverified contracts" />
-              ) : (
-                index + 1
-              )
-            }
+            {entry.isVerified === false ? (
+              <UnverifiedWarning message="This project includes unverified contracts" />
+            ) : (
+              index + 1
+            )}
           </span>
         </>
       ),
@@ -107,8 +101,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
         className: '',
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-      if (entry.verificationStatus === false) {
+      if (entry.isVerified === false) {
         result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
       }
 

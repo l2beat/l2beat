@@ -31,8 +31,7 @@ export function getProps(
             name: project.display.name,
             slug: project.display.slug,
             warning: project.display.warning,
-            verificationStatus:
-              verificationStatus.projects[project.id.toString()],
+            isVerified: verificationStatus.projects[project.id.toString()],
             category: project.technology.category,
             destination: getDestination(
               project.type === 'bridge'

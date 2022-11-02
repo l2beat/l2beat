@@ -30,7 +30,7 @@ function getScalingTvlViewEntry(
   project: Layer2,
   tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
-  verificationStatus: boolean,
+  isVerified: boolean | undefined,
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
@@ -44,7 +44,7 @@ function getScalingTvlViewEntry(
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
-    verificationStatus,
+    isVerified,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,
     oneDayChange: stats.oneDayChange,

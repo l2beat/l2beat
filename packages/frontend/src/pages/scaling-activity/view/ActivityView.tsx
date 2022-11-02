@@ -29,7 +29,7 @@ export interface ActivityViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
-  verificationStatus: boolean
+  isVerified?: boolean
   dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string
@@ -45,8 +45,7 @@ export function ActivityView({ items }: ActivityViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-        if (entry.verificationStatus === false) {
+        if (entry.isVerified === false) {
           return (
             <UnverifiedWarning message="This project includes unverified contracts" />
           )
@@ -133,8 +132,7 @@ export function ActivityView({ items }: ActivityViewProps) {
         )
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-      if (entry.verificationStatus === false) {
+      if (entry.isVerified === false) {
         className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
       }
 
