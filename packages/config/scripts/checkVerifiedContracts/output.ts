@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+import { existsSync } from 'fs'
 import { readFile, writeFile } from 'fs/promises'
 import z from 'zod'
 
@@ -13,21 +14,21 @@ export type VerificationMap = Record<string, boolean>
 export async function loadPreviouslyVerifiedContracts(
   filePath: string,
 ): Promise<Set<EthereumAddress>> {
-  const result = new Set<EthereumAddress>()
-
-  try {
-    const data = await readFile(filePath, 'utf-8')
-    const parsed = FileStructure.parse(JSON.parse(data))
-    const addresses = Object.keys(parsed.contracts)
-    const result = new Set(
-      addresses.filter((a) => parsed.contracts[a]).map(EthereumAddress),
-    )
-    console.log(`Loaded ${result.size} previously verified contracts.`)
-    return result
-  } catch (e) {
-    console.log('Unable to load previously verified contracts.')
+  if (!existsSync(filePath)) {
+    console.log('File with previously verified contracts not found.')
+    return new Set()
   }
-  return result
+
+  const data = await readFile(filePath, 'utf-8')
+  const parsed = FileStructure.parse(JSON.parse(data))
+  const contractAddresses = Object.keys(parsed.contracts)
+  const verifiedAddresses = contractAddresses
+    .filter((a) => !!parsed.contracts[a])
+    .map(EthereumAddress)
+  console.log(
+    `Loaded ${verifiedAddresses.length} previously verified contracts.`,
+  )
+  return new Set(verifiedAddresses)
 }
 
 export async function saveResult(
