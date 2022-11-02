@@ -97,7 +97,10 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async getDailyCounts() {
     const counts = await this.zksyncTransactionRepository.getDailyCounts()
-    return getFilledDailyCounts(counts, this.latestBlock?.timestamp)
+    if (!this.latestBlock) {
+      this.latestBlock = await this.zksyncClient.getLatestBlock()
+    }
+    return getFilledDailyCounts(counts, this.latestBlock.timestamp)
   }
 
   async getStatus() {

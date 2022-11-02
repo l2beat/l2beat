@@ -1,4 +1,5 @@
 export * from './Cache'
 export * from './EmptyCacheBackend'
 export * from './FileCacheBackend'
+export * from './InMemoryCacheBackend'
 export * from './NestedDict'

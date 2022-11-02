@@ -97,7 +97,10 @@ export class LoopringTransactionUpdater implements TransactionCounter {
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
       )
-    return getFilledDailyCounts(counts, this.latestBlock?.timestamp)
+    if (!this.latestBlock) {
+      this.latestBlock = await this.loopringClient.getFinalizedBlock()
+    }
+    return getFilledDailyCounts(counts, this.latestBlock.timestamp)
   }
 
   async getStatus() {

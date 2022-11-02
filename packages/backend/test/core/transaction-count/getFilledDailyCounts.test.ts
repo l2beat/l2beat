@@ -5,13 +5,14 @@ import { getFilledDailyCounts } from '../../../src/core/transaction-count/getFil
 
 describe(getFilledDailyCounts.name, () => {
   it('handles empty counts', () => {
-    const filled = getFilledDailyCounts([])
+    const filled = getFilledDailyCounts([], UnixTime.now())
     expect(filled).toEqual([])
   })
 
   it('handles one count', () => {
-    const counts = [{ count: 1, timestamp: UnixTime.now().add(1, 'days') }]
-    const filled = getFilledDailyCounts(counts)
+    const timestamp = UnixTime.now().add(1, 'days')
+    const counts = [{ count: 1, timestamp }]
+    const filled = getFilledDailyCounts(counts, timestamp)
     expect(filled).toEqual(counts)
   })
 

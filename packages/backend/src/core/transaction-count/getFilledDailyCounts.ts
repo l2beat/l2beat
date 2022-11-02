@@ -5,10 +5,10 @@ import { DailyTransactionCount } from './TransactionCounter'
 
 export function getFilledDailyCounts(
   counts: DailyTransactionCount[],
-  lastTimestamp?: UnixTime,
+  lastTimestamp: UnixTime,
 ): DailyTransactionCount[] {
   const tip = counts.at(-1)?.timestamp
-  const isFullySynced = tip && lastTimestamp?.lte(tip)
+  const isFullySynced = tip && lastTimestamp.lte(tip)
   const startOfDay = UnixTime.now().toStartOf('day')
   if (isFullySynced && tip.lt(startOfDay)) {
     counts.push({

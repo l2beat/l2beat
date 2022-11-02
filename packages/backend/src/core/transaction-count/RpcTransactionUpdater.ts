@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Cache, InMemoryCacheBackend, Logger, TaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
@@ -53,6 +53,8 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.assessCount = opts?.assessCount ?? identity
     this.startBlock = opts?.startBlock ?? 0
     this.workQueueSizeLimit = opts?.workQueueSizeLimit ?? 200_000
+    const cache = new Cache(new InMemoryCacheBackend())
+    cache.wrapMethod(rpcClient, 'getBlockAtOrBefore')
   }
 
   start() {
@@ -113,9 +115,15 @@ export class RpcTransactionUpdater implements TransactionCounter {
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
       )
+    if (!this.latestBlock) {
+      this.latestBlock = await this.rpcClient.getBlockAtOrBefore(
+        this.clock.getLastHour(),
+        undefined,
+      )
+    }
     return getFilledDailyCounts(
       counts,
-      this.latestBlock ? new UnixTime(this.latestBlock.timestamp) : undefined,
+      new UnixTime(this.latestBlock.timestamp),
     )
   }
 
