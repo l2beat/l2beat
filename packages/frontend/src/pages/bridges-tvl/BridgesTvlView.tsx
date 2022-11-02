@@ -50,22 +50,28 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            {entry.verificationStatus === false ? (
-              <div className="">
-                <UnverifiedWarning message="This project includes unverified contracts" />
-              </div>
-            ) : (
-              onlyBridges.indexOf(entry) + 1
-            )}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+              entry.verificationStatus === false ? (
+                <div className="">
+                  <UnverifiedWarning message="This project includes unverified contracts" />
+                </div>
+              ) : (
+                onlyBridges.indexOf(entry) + 1
+              )
+            }
           </span>
           <span data-combined-only className="hidden">
-            {entry.verificationStatus === false ? (
-              <div className="">
-                <UnverifiedWarning message="This project includes unverified contracts" />
-              </div>
-            ) : (
-              index + 1
-            )}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+              entry.verificationStatus === false ? (
+                <div className="">
+                  <UnverifiedWarning message="This project includes unverified contracts" />
+                </div>
+              ) : (
+                index + 1
+              )
+            }
           </span>
         </>
       ),

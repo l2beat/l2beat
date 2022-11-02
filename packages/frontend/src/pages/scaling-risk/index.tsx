@@ -7,7 +7,6 @@ import { getProps } from './props'
 import { ScalingRiskPage } from './view/ScalingRiskPage'
 
 export function getRiskPage(config: Config, pagesData: PagesData) {
-  const { tvlApiResponse, verificationStatus } = pagesData
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/risk',
