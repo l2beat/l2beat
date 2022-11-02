@@ -41,19 +41,17 @@ export async function saveResult(
   const output = [
     '{',
     '  "projects": ' +
-      JSON.stringify(
-        projectVerificationMap,
-        Object.keys(projectVerificationMap).sort(),
-        4,
-      ) +
-      ',',
+      jsonStringifySorted(projectVerificationMap, 4).slice(0, -1) +
+      '  },',
     '  "contracts": ' +
-      JSON.stringify(
-        addressVerificationMap,
-        Object.keys(addressVerificationMap).sort(),
-        4,
-      ),
+      jsonStringifySorted(addressVerificationMap, 4).slice(0, -1) +
+      '  }',
     '}',
+    '',
   ].join('\n')
   await writeFile(filePath, output)
+}
+
+function jsonStringifySorted(m: VerificationMap, space: number) {
+  return JSON.stringify(m, Object.keys(m).sort(), space)
 }
