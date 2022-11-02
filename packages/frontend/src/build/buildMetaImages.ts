@@ -61,10 +61,9 @@ async function main() {
   )
 }
 
-async function sanityCheck(page: puppeteer.Page, slug: string) {
+async function sanityCheck(page: puppeteer.Page, slug: string): Promise<void> {
   const l2BeatLogo = await page.$('[aria-label="L2BEAT logo"]')
   if (!l2BeatLogo) {
-    const string = `Meta image for ${slug} did not build properly!`
-    throw new Error(string)
+    throw new Error(`Meta image for ${slug} did not build properly!`)
   }
 }
