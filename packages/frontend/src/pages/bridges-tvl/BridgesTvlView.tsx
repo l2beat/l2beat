@@ -53,9 +53,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             {
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
               entry.verificationStatus === false ? (
-                <div className="">
-                  <UnverifiedWarning message="This project includes unverified contracts" />
-                </div>
+                <UnverifiedWarning message="This project includes unverified contracts" />
               ) : (
                 onlyBridges.indexOf(entry) + 1
               )
@@ -65,9 +63,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             {
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
               entry.verificationStatus === false ? (
-                <div className="">
-                  <UnverifiedWarning message="This project includes unverified contracts" />
-                </div>
+                <UnverifiedWarning message="This project includes unverified contracts" />
               ) : (
                 index + 1
               )

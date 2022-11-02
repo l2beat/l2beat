@@ -1,16 +1,29 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
+
 import { InfoIcon } from '../icons'
 
 export interface UnverifiedWarningProps {
   message: string
-  className: string
 }
 
-export function UnverifiedWarning({ message, className}: UnverifiedWarningProps) {
+export function UnverifiedWarning({ message }: UnverifiedWarningProps) {
   return (
-    <span className={cx("Tooltip inline-block", className)} title={message}>
-      <InfoIcon width="16" height="16" viewBox="0 0 16 16" className='fill-red-300 dark:fill-red-700' />
-    </span>
+    <div className="relative">
+      <span
+        className={cx(
+          'Tooltip inline-block',
+          'absolute top-0 -translate-y-1/2 left-[6px]',
+        )}
+        title={message}
+      >
+        <InfoIcon
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          className="fill-red-300 dark:fill-red-700"
+        />
+      </span>
+    </div>
   )
 }
