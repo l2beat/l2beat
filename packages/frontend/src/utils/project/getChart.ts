@@ -16,7 +16,7 @@ export function getChart(
     tokens: getTokens(project.id, tvlApiResponse),
     hasActivity:
       config?.features.activity &&
-      !!activityApiResponse?.projects[project.display.slug],
+      !!activityApiResponse?.projects[project.id.toString()],
   }
 }
 
