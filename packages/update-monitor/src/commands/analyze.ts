@@ -11,6 +11,10 @@ import {
   ORBIT_BRIDGE_NAME,
 } from '../projects/orbitBridge'
 import {
+  getPolynetworkBridgeParameters,
+  POLYNETWORK_BRIDGE_NAME,
+} from '../projects/polynetworkBridge'
+import {
   getSolletBridgeParameters,
   SOLLET_BRIDGE_NAME,
 } from '../projects/solletBridge'
@@ -44,6 +48,7 @@ export async function analyze(projects: string[]) {
     [HOP_NAME, getHopParameters],
     [NOVA_NAME, getNovaParameters],
     [DYDX_NAME, getDydxParameters],
+    [POLYNETWORK_BRIDGE_NAME, getPolynetworkBridgeParameters],
     [SOLLET_BRIDGE_NAME, getSolletBridgeParameters],
     [ORBIT_BRIDGE_NAME, getOrbitBridgeParameters],
     [SYNAPSE_NAME, getSynapseParameters],
