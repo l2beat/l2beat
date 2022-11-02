@@ -26,7 +26,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
   if (config.features.bridges) {
     pages.push(getBridgesTvlPage(config, pagesData))
-    pages.push(getBridgesRiskPage(config, tvlApiResponse))
+    pages.push(getBridgesRiskPage(config, pagesData))
     pages.push(...getBridgeProjectPages(config, tvlApiResponse))
   }
   if (pagesData.activityApiResponse) {

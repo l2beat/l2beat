@@ -129,19 +129,18 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   const rows: RowConfig<BridgesTvlViewEntry> = {
     getProps: (entry) => {
-      const result = {
-        ['data-combined-only']: false,
+      const result: Record<string, string | boolean> = {
         className: '',
-      }
-
-      if (entry.type !== 'bridge') {
-        result.className += 'hidden'
-        result['data-combined-only'] = true
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
       if (entry.verificationStatus === false) {
         result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
+      }
+
+      if (entry.type !== 'bridge') {
+        result.className += cx(result.className, 'hidden')
+        result['data-combined-only'] = true
       }
 
       return result

@@ -1,4 +1,5 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
+import cx from 'classnames'
 import React from 'react'
 
 import { ProjectCell } from '../../components/table/ProjectCell'
@@ -8,6 +9,11 @@ import {
   RowConfig,
   TableView,
 } from '../../components/table/TableView'
+import { UnverifiedWarning } from '../../components/table/UnverifiedWarning'
+import {
+  UNVERIFIED_DARK_CX,
+  UNVERIFIED_LIGHT_CX,
+} from '../scaling-tvl/view/ScalingTvlView'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
@@ -18,6 +24,7 @@ export interface BridgesRiskViewEntry {
   slug: string
   type: 'layer2' | 'bridge'
   warning?: string
+  verificationStatus: boolean
   category: string
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry
@@ -35,9 +42,23 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}</span>
+          <span data-bridges-only>
+            {entry.verificationStatus === false ? (
+              <div className="">
+                <UnverifiedWarning message="This project includes unverified contracts" />
+              </div>
+            ) : (
+              onlyBridges.indexOf(entry) + 1
+            )}
+          </span>
           <span data-combined-only className="hidden">
-            {index + 1}
+            {entry.verificationStatus === false ? (
+              <div className="">
+                <UnverifiedWarning message="This project includes unverified contracts" />
+              </div>
+            ) : (
+              index + 1
+            )}
           </span>
         </>
       ),
@@ -79,13 +100,23 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   ]
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
-    getProps: (entry) =>
-      entry.type === 'bridge'
-        ? {}
-        : {
-            ['data-combined-only']: true,
-            className: 'hidden',
-          },
+    getProps: (entry) => {
+      const result: Record<string, string | boolean> = {
+        className: '',
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+      if (entry.verificationStatus === false) {
+        result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
+      }
+
+      if (entry.type !== 'bridge') {
+        result.className += cx(result.className, 'hidden')
+        result['data-combined-only'] = true
+      }
+
+      return result
+    },
   }
 
   return (

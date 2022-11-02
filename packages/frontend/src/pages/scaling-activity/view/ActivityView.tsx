@@ -45,7 +45,8 @@ export function ActivityView({ items }: ActivityViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        if (!entry.verificationStatus) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+        if (entry.verificationStatus === false) {
           return (
             <div className="">
               <UnverifiedWarning message="This project includes unverified contracts" />
