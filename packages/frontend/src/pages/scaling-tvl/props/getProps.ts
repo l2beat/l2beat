@@ -29,7 +29,12 @@ export function getProps(
       tvl: formatUSD(tvl),
       tvlWeeklyChange,
       tvlEndpoint,
-      tvlView: getScalingTvlView(ordering, tvlApiResponse, tvl, verificationStatus),
+      tvlView: getScalingTvlView(
+        ordering,
+        tvlApiResponse,
+        tvl,
+        verificationStatus,
+      ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

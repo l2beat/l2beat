@@ -40,7 +40,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        if (entry.verificationStatus === false) {
+        if (!entry.verificationStatus) {
           return (
             <div className="">
               <UnverifiedWarning message="This project includes unverified contracts" />
@@ -84,6 +84,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   const rows: RowConfig<ScalingRiskViewEntry> = {
     getProps: (entry) =>
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
       entry.verificationStatus === false
         ? {
             className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
