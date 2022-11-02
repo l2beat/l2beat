@@ -1,5 +1,3 @@
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
-
 import { Config } from '../build/config'
 import { PagesData } from '../build/types'
 import { getBridgeProjectPages } from './bridges-projects'
@@ -31,8 +29,8 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(getBridgesRiskPage(config, tvlApiResponse))
     pages.push(...getBridgeProjectPages(config, tvlApiResponse))
   }
-  if (activityApiResponse) {
-    pages.push(getActivityPage(config, activityApiResponse))
+  if (pagesData.activityApiResponse) {
+    pages.push(getActivityPage(config, pagesData))
   }
 
   outputPages(pages)

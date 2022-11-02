@@ -1,6 +1,5 @@
-import { ActivityApiResponse } from '@l2beat/types'
-
 import { Config } from '../../../build/config'
+import { PagesData } from '../../../build/types'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getScalingFactor } from '../../../utils/activity/getScalingFactor'
 import { Wrapped } from '../../Page'
@@ -10,8 +9,12 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  activityApiResponse: ActivityApiResponse,
+  pagesData: PagesData,
 ): Wrapped<ActivityPageProps> {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const activityApiResponse = pagesData.activityApiResponse!
+  const verificationStatus = pagesData.verificationStatus
+
   const scalingFactor = getScalingFactor(activityApiResponse)
 
   return {
@@ -19,7 +22,11 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       scalingFactor,
       apiEndpoint: '/api/activity/combined.json',
-      activityView: getActivityView(config.layer2s, activityApiResponse),
+      activityView: getActivityView(
+        config.layer2s,
+        activityApiResponse,
+        verificationStatus,
+      ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

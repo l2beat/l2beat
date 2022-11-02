@@ -12,8 +12,13 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
+import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
+import {
+  UNVERIFIED_DARK_CX,
+  UNVERIFIED_LIGHT_CX,
+} from '../../scaling-tvl/view/ScalingTvlView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -24,6 +29,7 @@ export interface ActivityViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  verificationStatus: boolean
   dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string
@@ -38,7 +44,16 @@ export function ActivityView({ items }: ActivityViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (_, index) => index + 1,
+      getValue: (entry, index) => {
+        if (entry.verificationStatus === false) {
+          return (
+            <div className="">
+              <UnverifiedWarning message="This project includes unverified contracts" />
+            </div>
+          )
+        }
+        return index + 1
+      },
     },
     {
       name: 'Name',
@@ -109,15 +124,24 @@ export function ActivityView({ items }: ActivityViewProps) {
   ]
 
   const rows: RowConfig<ActivityViewEntry> = {
-    getProps: (entry) =>
-      entry.name === 'Ethereum'
-        ? {
-            className: cx(
-              'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
-              'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
-            ),
-          }
-        : {},
+    getProps: (entry) => {
+      let className = ''
+
+      if (entry.name === 'Ethereum') {
+        className += cx(
+          'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
+          'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+        )
+      }
+
+      if (entry.verificationStatus === false) {
+        className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
+      }
+
+      return {
+        className,
+      }
+    },
   }
 
   return (
