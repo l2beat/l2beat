@@ -28,6 +28,7 @@ export function RiskView() {
               upgradeability: risk('medium', 'bad'),
               sequencerFailure: risk('long'),
               validatorFailure: risk('short', 'bad'),
+              verificationStatus: false,
             },
             {
               name: 'Arbitrage',
@@ -37,6 +38,7 @@ export function RiskView() {
               upgradeability: risk('short', 'bad'),
               sequencerFailure: risk('short'),
               validatorFailure: risk('long', 'warning'),
+              verificationStatus: true,
             },
             {
               name: 'StorkCommerce',
@@ -47,6 +49,7 @@ export function RiskView() {
               upgradeability: risk('long'),
               sequencerFailure: risk('medium', 'bad'),
               validatorFailure: risk('long', 'warning'),
+              verificationStatus: false,
             },
             {
               name: 'zk.download',
@@ -57,6 +60,7 @@ export function RiskView() {
               upgradeability: risk('long'),
               sequencerFailure: risk('long', 'warning'),
               validatorFailure: risk('short'),
+              verificationStatus: true,
             },
           ]}
         />
