@@ -51,8 +51,8 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
         if (entry.verificationStatus === false) {
           return (
-            <div className="">
-              <UnverifiedWarning message="This project includes unverified contracts" />
+            <div className="relative">
+              <UnverifiedWarning className='absolute top-0 -translate-y-1/2 left-[6px]' message="This project includes unverified contracts" />
             </div>
           )
         }
