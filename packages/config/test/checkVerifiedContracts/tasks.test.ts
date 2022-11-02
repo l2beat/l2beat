@@ -41,7 +41,7 @@ describe('checkVerifiedContracts:tasks', () => {
 
     it('fails on any error in any task', async () => {
       const EthereumClientMock = {
-        getContractSource: async (address: EthereumAddress) => {
+        getContractSource: async (_: EthereumAddress) => {
           throw new Error('An error occured')
         },
       }
