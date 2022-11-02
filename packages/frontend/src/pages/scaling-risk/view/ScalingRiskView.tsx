@@ -1,7 +1,6 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
-import { InfoIcon } from '../../../components/icons'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ProjectCell } from '../../../components/table/ProjectCell'
@@ -12,6 +11,10 @@ import {
   TableView,
 } from '../../../components/table/TableView'
 import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
+import {
+  UNVERIFIED_DARK_CX,
+  UNVERIFIED_LIGHT_CX,
+} from '../../scaling-tvl/view/ScalingTvlView'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -40,7 +43,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
         if (entry.verificationStatus === false) {
           return (
             <div className="">
-              <UnverifiedWarning />
+              <UnverifiedWarning message="This project includes unverified contracts" />
             </div>
           )
         }
@@ -83,10 +86,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     getProps: (entry) =>
       entry.verificationStatus === false
         ? {
-            className: cx(
-              'bg-unverified hover:bg-unverified border-b-unverifiedBorder',
-              'dark:bg-unverified dark:hover:bg-unverified dark:border-b-unverifiedBorder',
-            ),
+            className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
           }
         : {},
   }

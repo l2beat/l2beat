@@ -36,6 +36,11 @@ export interface ScalingTvlViewEntry {
   technology: string
 }
 
+export const UNVERIFIED_LIGHT_CX =
+  'bg-unverified hover:bg-unverified border-b-unverifiedBorder'
+export const UNVERIFIED_DARK_CX =
+  'dark:bg-unverified dark:hover:bg-unverified dark:border-b-unverifiedBorder'
+
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
@@ -46,7 +51,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
         if (entry.verificationStatus === false) {
           return (
             <div className="">
-              <UnverifiedWarning />
+              <UnverifiedWarning message="This project includes unverified contracts" />
             </div>
           )
         }
@@ -103,10 +108,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     getProps: (entry) =>
       entry.verificationStatus === false
         ? {
-            className: cx(
-              'bg-unverified hover:bg-unverified border-b-unverifiedBorder',
-              'dark:bg-unverified dark:hover:bg-unverified dark:border-b-unverifiedBorder',
-            ),
+            className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
           }
         : {},
   }
