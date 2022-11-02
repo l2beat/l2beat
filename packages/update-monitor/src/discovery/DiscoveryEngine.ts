@@ -9,7 +9,7 @@ import { DiscoveryOptions } from './DiscoveryOptions'
 
 export class DiscoveryEngine {
   constructor(
-    private readonly provider: providers.Provider,
+    readonly provider: providers.Provider,
     private readonly addressAnalyzer: AddressAnalyzer,
   ) {}
 
