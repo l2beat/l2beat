@@ -129,7 +129,6 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
         className: '',
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
       if (entry.isVerified === false) {
         result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
       }
