@@ -12,9 +12,9 @@ export function getBridgesTvlView(
   combinedTvl: number,
   verificationStatus: VerificationStatus,
 ): BridgesTvlViewEntry[] {
-  return projects.map((x) =>
+  return projects.map((project) =>
     getBridgesTvlViewEntry(
-      x,
+      project,
       tvlApiResponse,
       bridgesTvl,
       combinedTvl,

@@ -9,7 +9,7 @@ export default {
 export function Unverified() {
   return (
     <div className="p-10">
-      <UnverifiedWarning message="tooltip message" />
+      <UnverifiedWarning />
     </div>
   )
 }

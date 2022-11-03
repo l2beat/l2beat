@@ -6,6 +6,7 @@ import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ComingSoonCell } from '../../../components/table/ComingSoonCell'
 import { EthereumCell } from '../../../components/table/EthereumCell'
 import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import {
@@ -13,7 +14,6 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
-import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 
@@ -42,12 +42,7 @@ export function ActivityView({ items }: ActivityViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        if (entry.isVerified === false) {
-          return (
-            <UnverifiedWarning message="This project includes unverified contracts" />
-          )
-        }
-        return index + 1
+        return <IndexCell entry={entry} index={index + 1}></IndexCell>
       },
     },
     {

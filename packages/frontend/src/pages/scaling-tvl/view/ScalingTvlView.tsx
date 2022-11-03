@@ -3,6 +3,7 @@ import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import {
@@ -11,7 +12,6 @@ import {
   TableView,
 } from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
-import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -43,12 +43,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        if (entry.isVerified === false) {
-          return (
-            <UnverifiedWarning message="This project includes unverified contracts" />
-          )
-        }
-        return index + 1
+        return <IndexCell entry={entry} index={index + 1}></IndexCell>
       },
     },
     {

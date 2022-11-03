@@ -3,6 +3,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { getRowVerificationClassNames } from '../../components/table/getRowVerificationClassNames'
+import { IndexCell } from '../../components/table/IndexCell'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
@@ -13,7 +14,6 @@ import {
   TableView,
 } from '../../components/table/TableView'
 import { TechnologyCell } from '../../components/table/TechnologyCell'
-import { UnverifiedWarning } from '../../components/table/UnverifiedWarning'
 import { TVLBreakdown, TVLBreakdownProps } from '../../components/TVLBreakdown'
 
 export interface BridgesTvlViewProps {
@@ -47,18 +47,13 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            {entry.isVerified === false ? (
-              <UnverifiedWarning message="This project includes unverified contracts" />
-            ) : (
-              onlyBridges.indexOf(entry) + 1
-            )}
+            <IndexCell
+              entry={entry}
+              index={onlyBridges.indexOf(entry) + 1}
+            ></IndexCell>
           </span>
           <span data-combined-only className="hidden">
-            {entry.isVerified === false ? (
-              <UnverifiedWarning message="This project includes unverified contracts" />
-            ) : (
-              index + 1
-            )}
+            <IndexCell entry={entry} index={index + 1}></IndexCell>
           </span>
         </>
       ),
@@ -131,7 +126,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       }
 
       if (entry.type !== 'bridge') {
-        result.className += cx('hidden')
+        result.className += cx(' hidden')
         result['data-combined-only'] = true
       }
 

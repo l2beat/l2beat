@@ -3,6 +3,7 @@ import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { RiskCell } from '../../../components/table/RiskCell'
 import {
@@ -10,7 +11,6 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
-import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -36,12 +36,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        if (entry.isVerified === false) {
-          return (
-            <UnverifiedWarning message="This project includes unverified contracts" />
-          )
-        }
-        return index + 1
+        return <IndexCell entry={entry} index={index + 1}></IndexCell>
       },
     },
     {

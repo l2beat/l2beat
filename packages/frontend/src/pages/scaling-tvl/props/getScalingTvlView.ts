@@ -15,12 +15,12 @@ export function getScalingTvlView(
   verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
   return {
-    items: projects.map((x) =>
+    items: projects.map((project) =>
       getScalingTvlViewEntry(
-        x,
+        project,
         tvlApiResponse,
         tvl,
-        verificationStatus.projects[x.id.toString()],
+        verificationStatus.projects[project.id.toString()],
       ),
     ),
   }

@@ -3,11 +3,7 @@ import React from 'react'
 
 import { InfoIcon } from '../icons'
 
-export interface UnverifiedWarningProps {
-  message: string
-}
-
-export function UnverifiedWarning({ message }: UnverifiedWarningProps) {
+export function UnverifiedWarning() {
   return (
     <div className="relative">
       <span
@@ -15,7 +11,7 @@ export function UnverifiedWarning({ message }: UnverifiedWarningProps) {
           'Tooltip inline-block',
           'absolute top-0 -translate-y-1/2 left-[6px]',
         )}
-        title={message}
+        title="This project includes unverified contracts"
       >
         <InfoIcon
           width="16"

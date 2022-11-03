@@ -3,6 +3,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { getRowVerificationClassNames } from '../../components/table/getRowVerificationClassNames'
+import { IndexCell } from '../../components/table/IndexCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
 import { RiskCell } from '../../components/table/RiskCell'
 import {
@@ -10,7 +11,6 @@ import {
   RowConfig,
   TableView,
 } from '../../components/table/TableView'
-import { UnverifiedWarning } from '../../components/table/UnverifiedWarning'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
@@ -40,18 +40,13 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            {entry.isVerified === false ? (
-              <UnverifiedWarning message="This project includes unverified contracts" />
-            ) : (
-              onlyBridges.indexOf(entry) + 1
-            )}
+            <IndexCell
+              entry={entry}
+              index={onlyBridges.indexOf(entry) + 1}
+            ></IndexCell>
           </span>
           <span data-combined-only className="hidden">
-            {entry.isVerified === false ? (
-              <UnverifiedWarning message="This project includes unverified contracts" />
-            ) : (
-              index + 1
-            )}
+            <IndexCell entry={entry} index={index + 1}></IndexCell>
           </span>
         </>
       ),
@@ -103,7 +98,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       }
 
       if (entry.type !== 'bridge') {
-        result.className += cx('hidden')
+        result.className += cx(' hidden')
         result['data-combined-only'] = true
       }
 
