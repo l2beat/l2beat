@@ -36,10 +36,11 @@ export interface ScalingTvlViewEntry {
   technology: string
 }
 
+//todo - change colors for lightmode
 export const UNVERIFIED_LIGHT_CX =
-  'bg-unverified hover:bg-unverified border-b-unverifiedBorder'
+  'bg-red-900 hover:bg-red-900 border-b-red-200'
 export const UNVERIFIED_DARK_CX =
-  'dark:bg-unverified dark:hover:bg-unverified dark:border-b-unverifiedBorder'
+  'dark:bg-red-900 dark:hover:bg-red-900 dark:border-b-red-200'
 
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [

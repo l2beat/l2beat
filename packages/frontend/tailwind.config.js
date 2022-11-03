@@ -63,10 +63,12 @@ module.exports = {
         700: '#007408',
       },
       red: {
+        200: '#FF3F4A',
         300: '#FA3A3A',
         500: '#C32806',
         600: '#C71414',
         700: '#D70000',
+        900: '#441111',
       },
       blue: {
         300: '#CBDFF9',
@@ -77,8 +79,6 @@ module.exports = {
         700: '#005DD7',
         900: '#112944',
       },
-      unverified: '#441111',
-      unverifiedBorder: '#FF3F4A',
     },
     screens: {
       xs: '400px',
