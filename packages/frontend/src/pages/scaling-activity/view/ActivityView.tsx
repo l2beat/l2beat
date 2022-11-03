@@ -5,6 +5,7 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ComingSoonCell } from '../../../components/table/ComingSoonCell'
 import { EthereumCell } from '../../../components/table/EthereumCell'
+import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import {
@@ -15,10 +16,6 @@ import {
 import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
-import {
-  UNVERIFIED_DARK_CX,
-  UNVERIFIED_LIGHT_CX,
-} from '../../scaling-tvl/view/ScalingTvlView'
 
 export interface ActivityViewProps {
   items: ActivityViewEntry[]
@@ -133,7 +130,7 @@ export function ActivityView({ items }: ActivityViewProps) {
       }
 
       if (entry.isVerified === false) {
-        className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
+        className += getRowVerificationClassNames(entry)
       }
 
       return {

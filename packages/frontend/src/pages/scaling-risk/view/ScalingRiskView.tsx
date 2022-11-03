@@ -1,8 +1,8 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { RiskCell } from '../../../components/table/RiskCell'
 import {
@@ -11,10 +11,6 @@ import {
   TableView,
 } from '../../../components/table/TableView'
 import { UnverifiedWarning } from '../../../components/table/UnverifiedWarning'
-import {
-  UNVERIFIED_DARK_CX,
-  UNVERIFIED_LIGHT_CX,
-} from '../../scaling-tvl/view/ScalingTvlView'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -81,12 +77,9 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   ]
 
   const rows: RowConfig<ScalingRiskViewEntry> = {
-    getProps: (entry) =>
-      entry.isVerified === false
-        ? {
-            className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
-          }
-        : {},
+    getProps: (entry) => ({
+      className: getRowVerificationClassNames(entry),
+    }),
   }
 
   return (

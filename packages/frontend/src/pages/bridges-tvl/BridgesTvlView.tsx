@@ -2,6 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
+import { getRowVerificationClassNames } from '../../components/table/getRowVerificationClassNames'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
@@ -14,10 +15,6 @@ import {
 import { TechnologyCell } from '../../components/table/TechnologyCell'
 import { UnverifiedWarning } from '../../components/table/UnverifiedWarning'
 import { TVLBreakdown, TVLBreakdownProps } from '../../components/TVLBreakdown'
-import {
-  UNVERIFIED_DARK_CX,
-  UNVERIFIED_LIGHT_CX,
-} from '../scaling-tvl/view/ScalingTvlView'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]
@@ -130,7 +127,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       }
 
       if (entry.isVerified === false) {
-        result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
+        result.className += getRowVerificationClassNames(entry)
       }
 
       if (entry.type !== 'bridge') {

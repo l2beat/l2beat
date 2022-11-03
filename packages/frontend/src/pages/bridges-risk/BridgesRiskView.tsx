@@ -2,6 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
+import { getRowVerificationClassNames } from '../../components/table/getRowVerificationClassNames'
 import { ProjectCell } from '../../components/table/ProjectCell'
 import { RiskCell } from '../../components/table/RiskCell'
 import {
@@ -10,10 +11,6 @@ import {
   TableView,
 } from '../../components/table/TableView'
 import { UnverifiedWarning } from '../../components/table/UnverifiedWarning'
-import {
-  UNVERIFIED_DARK_CX,
-  UNVERIFIED_LIGHT_CX,
-} from '../scaling-tvl/view/ScalingTvlView'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
@@ -102,7 +99,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       }
 
       if (entry.isVerified === false) {
-        result.className += cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX)
+        result.className += getRowVerificationClassNames(entry)
       }
 
       if (entry.type !== 'bridge') {

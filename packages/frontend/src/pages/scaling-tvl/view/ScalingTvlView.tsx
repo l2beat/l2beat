@@ -1,8 +1,8 @@
 import { Layer2 } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import {
@@ -35,11 +35,6 @@ export interface ScalingTvlViewEntry {
   purpose: string
   technology: string
 }
-
-export const UNVERIFIED_LIGHT_CX =
-  'bg-red-100 hover:bg-red-100 border-b-red-200'
-export const UNVERIFIED_DARK_CX =
-  'dark:bg-red-900 dark:hover:bg-red-900 dark:border-b-red-200'
 
 export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
@@ -103,12 +98,9 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   ]
 
   const rows: RowConfig<ScalingTvlViewEntry> = {
-    getProps: (entry) =>
-      entry.isVerified === false
-        ? {
-            className: cx(UNVERIFIED_LIGHT_CX, UNVERIFIED_DARK_CX),
-          }
-        : {},
+    getProps: (entry) => ({
+      className: getRowVerificationClassNames(entry),
+    }),
   }
 
   return (
