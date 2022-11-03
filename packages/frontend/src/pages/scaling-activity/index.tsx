@@ -1,12 +1,18 @@
+import { ActivityApiResponse, VerificationStatus } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { PagesData } from '../../build/types'
 import { PageWrapper } from '../../components'
 import { getProps } from './props'
 import { ActivityPage } from './view/ActivityPage'
 
-export function getActivityPage(config: Config, pagesData: PagesData) {
+export function getActivityPage(
+  config: Config,
+  pagesData: {
+    activityApiResponse: ActivityApiResponse
+    verificationStatus: VerificationStatus
+  },
+) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/activity',

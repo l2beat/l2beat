@@ -16,7 +16,7 @@ import { getTvlPage } from './scaling-tvl'
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
-  const { tvlApiResponse, activityApiResponse } = pagesData
+  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
   pages.push(getTvlPage(config, pagesData))
@@ -29,8 +29,13 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(getBridgesRiskPage(config, pagesData))
     pages.push(...getBridgeProjectPages(config, tvlApiResponse))
   }
-  if (pagesData.activityApiResponse) {
-    pages.push(getActivityPage(config, pagesData))
+  if (activityApiResponse) {
+    pages.push(
+      getActivityPage(config, {
+        activityApiResponse,
+        verificationStatus,
+      }),
+    )
   }
 
   outputPages(pages)
