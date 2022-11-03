@@ -10,22 +10,22 @@ export interface WarningBarProps {
 }
 
 export function WarningBar({ color, text, isCritical }: WarningBarProps) {
+  const background = color === 'red' ? 'bg-red-600' : 'bg-yellow-300'
+  const iconFill =
+    color === 'red'
+      ? 'fill-red-700 dark:fill-red-300'
+      : 'fill-yellow-700 dark:fill-yellow-300'
+
   return (
     <div
       className={cx(
         'flex gap-3 mt-4 first:mt-0 md:mt-6 p-4',
         'bg-opacity-20 rounded-lg',
-        color === 'red' ? 'bg-red-600' : 'bg-yellow-300',
+        background,
       )}
     >
       <span>
-        <ShieldIcon
-          className={cx(
-            color === 'red'
-              ? 'fill-red-700 dark:fill-red-300'
-              : 'fill-yellow-700 dark:fill-yellow-300',
-          )}
-        />
+        <ShieldIcon className={cx(iconFill)} />
       </span>
       <p>
         {isCritical ? (
