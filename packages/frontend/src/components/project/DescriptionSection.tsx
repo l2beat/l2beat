@@ -2,7 +2,7 @@ import React from 'react'
 
 import { OutLink } from '../OutLink'
 import { Section } from './Section'
-import { WarningBar } from './WarningBar'
+import { WarningBarComponent } from './WarningBar'
 
 export interface DescriptionSectionProps {
   editLink: string
@@ -16,18 +16,18 @@ export function DescriptionSection(props: DescriptionSectionProps) {
   return (
     <Section title="Description" id="description" className="md:!mt-6">
       {props.isVerified === false && (
-        <WarningBar
+        <WarningBarComponent
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-        ></WarningBar>
+        ></WarningBarComponent>
       )}
       {props.warning && (
-        <WarningBar
+        <WarningBarComponent
           text={props.warning}
           color="yellow"
           isCritical={false}
-        ></WarningBar>
+        ></WarningBarComponent>
       )}
       <p className="mt-4 text-gray-860 dark:text-gray-400">
         {props.description}
