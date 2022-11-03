@@ -13,6 +13,6 @@ export function getDescriptionSection(
     editLink: getEditLink(project),
     warning: project.display.warning,
     description: project.display.description,
-    isVerified: verificationStatus.projects[project.id],
+    isVerified: verificationStatus.projects[project.id.toString()],
   }
 }
