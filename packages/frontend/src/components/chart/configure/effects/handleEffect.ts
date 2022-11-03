@@ -1,4 +1,11 @@
+import { ZodSchema } from 'zod'
+
 import { Message } from '../messages'
+import {
+  ActivityResponse,
+  AggregateTvlResponse,
+  TokenTvlResponse,
+} from '../state/State'
 import {
   Effect,
   FetchActivityEffect,
@@ -34,6 +41,7 @@ function handleFetchAggregateTvl(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     (data) => ({ type: 'AggregateTvlLoaded', requestId, data }),
     () => ({ type: 'AggregateTvlFailed', requestId }),
+    AggregateTvlResponse,
   )
 }
 
@@ -48,6 +56,7 @@ function handleFetchAlternativeTvl(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     (data) => ({ type: 'AlternativeTvlLoaded', requestId, data }),
     () => ({ type: 'AlternativeTvlFailed', requestId }),
+    AggregateTvlResponse,
   )
 }
 
@@ -62,6 +71,7 @@ function handleFetchTokenTvl(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     (data) => ({ type: 'TokenTvlLoaded', requestId, token, data }),
     () => ({ type: 'TokenTvlFailed', requestId }),
+    TokenTvlResponse,
   )
 }
 
@@ -76,6 +86,7 @@ function handleFetchActivity(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     (data) => ({ type: 'ActivityLoaded', requestId, data }),
     () => ({ type: 'ActivityFailed', requestId }),
+    ActivityResponse,
   )
 }
 
@@ -86,9 +97,11 @@ function fetchThenDispatch(
   successMessage: (data: any) => Message,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errorMessage: (error: any) => Message,
+  schema: ZodSchema<AggregateTvlResponse | TokenTvlResponse | ActivityResponse>,
 ) {
   fetch(url)
     .then((res) => res.json())
+    .then((json) => schema.parse(json))
     .then(
       (data) => dispatch(successMessage(data)),
       (error) => {
