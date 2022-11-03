@@ -24,7 +24,6 @@ export interface Config {
   projects: Project[]
   syncEnabled: boolean
   freshStart: boolean
-  eventsSync: boolean
   tvlReportSync: boolean
   transactionCountSync:
     | {
