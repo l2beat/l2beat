@@ -10,7 +10,10 @@ import { getNewsSection } from './getNewsSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
-export function getProjectDetails(project: Layer2, verificationStatus: VerificationStatus): ProjectDetailsProps {
+export function getProjectDetails(
+  project: Layer2,
+  verificationStatus: VerificationStatus,
+): ProjectDetailsProps {
   return {
     newsSection: getNewsSection(project),
     linkSection: getLinkSection(project),

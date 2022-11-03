@@ -1,7 +1,5 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { ShieldIcon } from '../icons'
 import { OutLink } from '../OutLink'
 import { Section } from './Section'
 import { WarningBar } from './WarningBar'
