@@ -44,6 +44,20 @@ describe('projects', () => {
           }
         }
       })
+
+      describe('permissions', () => {
+        for (const project of [...layer2s, ...bridges]) {
+          const permissions = project.permissions ?? []
+          const permissionAddresses = permissions
+            .flatMap((permission) => permission.accounts)
+            .filter((account) => account.type !== 'EOA')
+            .map((account) => account.address)
+
+          for (const address of permissionAddresses) {
+            testAddress(address)
+          }
+        }
+      })
     })
   })
 

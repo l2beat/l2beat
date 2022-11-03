@@ -154,7 +154,7 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0x65bb797c2B9830d891D87288F029ed8dACc19705 ',
+          address: '0x65bb797c2B9830d891D87288F029ed8dACc19705',
           type: 'MultiSig',
         },
       ],

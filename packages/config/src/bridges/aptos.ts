@@ -171,7 +171,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0x902F09715B6303d4173037652FA7377e5b98089E ',
+          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
           type: 'Contract',
         },
       ],
@@ -213,7 +213,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92 ',
+          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
           type: 'MultiSig',
         },
       ],
