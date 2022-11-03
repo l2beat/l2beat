@@ -131,7 +131,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       }
 
       if (entry.type !== 'bridge') {
-        result.className += cx(result.className, 'hidden')
+        result.className += cx('hidden')
         result['data-combined-only'] = true
       }
 

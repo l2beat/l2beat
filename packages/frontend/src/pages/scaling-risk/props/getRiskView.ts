@@ -19,7 +19,7 @@ export function getRiskView(
 
 export function getRiskViewEntry(
   project: Layer2,
-  isVerified: boolean | undefined,
+  isVerified?: boolean,
 ): ScalingRiskViewEntry {
   return {
     name: project.display.name,

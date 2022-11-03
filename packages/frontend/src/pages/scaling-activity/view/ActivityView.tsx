@@ -120,21 +120,14 @@ export function ActivityView({ items }: ActivityViewProps) {
 
   const rows: RowConfig<ActivityViewEntry> = {
     getProps: (entry) => {
-      let className = ''
-
-      if (entry.name === 'Ethereum') {
-        className += cx(
-          'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
-          'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
-        )
-      }
-
-      if (entry.isVerified === false) {
-        className += getRowVerificationClassNames(entry)
-      }
-
       return {
-        className,
+        className:
+          entry.name === 'Ethereum'
+            ? cx(
+                'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
+                'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+              )
+            : getRowVerificationClassNames(entry),
       }
     },
   }
