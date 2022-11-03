@@ -8,15 +8,10 @@ import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
 export function getProjectPages(config: Config, pagesData: PagesData) {
-  const { tvlApiResponse, activityApiResponse } = pagesData
+  const included = getIncludedProjects(config.layer2s, pagesData.tvlApiResponse)
 
-  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   return included.map((project) => {
-    const { wrapper, props } = getProps(
-      project,
-      config,
-      pagesData
-    )
+    const { wrapper, props } = getProps(project, config, pagesData)
 
     return {
       slug: `/scaling/projects/${project.display.slug}`,

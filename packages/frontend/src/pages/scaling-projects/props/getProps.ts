@@ -16,7 +16,7 @@ export function getProps(
   config: Config,
   pagesData: PagesData,
 ): Wrapped<ProjectPageProps> {
-  const { tvlApiResponse, activityApiResponse } = pagesData
+  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
 
   const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
   return {
@@ -30,7 +30,7 @@ export function getProps(
         activityApiResponse,
       ),
       chart,
-      projectDetails: getProjectDetails(project),
+      projectDetails: getProjectDetails(project, verificationStatus),
       footer: getFooterProps(config),
     },
     wrapper: {
