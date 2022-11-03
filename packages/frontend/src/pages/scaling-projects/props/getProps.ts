@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
-import { PagesData } from '../../../build/types'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getChart } from '../../../utils/project/getChart'
 import { getHeader } from '../../../utils/project/getHeader'
@@ -14,10 +14,9 @@ import { getProjectHeader } from './getProjectHeader'
 export function getProps(
   project: Layer2,
   config: Config,
-  pagesData: PagesData,
+  tvlApiResponse: TvlApiResponse,
+  activityApiResponse?: ActivityApiResponse,
 ): Wrapped<ProjectPageProps> {
-  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
-
   const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
   return {
     props: {
