@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { OutLink } from '../OutLink'
