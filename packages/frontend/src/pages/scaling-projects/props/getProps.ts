@@ -17,6 +17,8 @@ export function getProps(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): Wrapped<ProjectPageProps> {
+  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+
   const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
   return {
     props: {
