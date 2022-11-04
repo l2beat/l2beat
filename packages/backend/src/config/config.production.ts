@@ -36,7 +36,32 @@ export function getProductionConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     tvlReportSync: true,
-    eventsSync: false,
-    transactionCountSync: false,
+    transactionCountSync: {
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 5,
+      zkSyncWorkQueueWorkers: 100,
+      starkexWorkQueueWorkers: 10,
+      starkexCallsPerMinute: 200,
+      loopringWorkQueueWorkers: 10,
+      loopringCallsPerMinute: 200,
+      rpc: {
+        workQueueLimit: 200_000,
+        workQueueWorkers: getEnv.integer('ACTIVITY_RPC_WORKERS'),
+        projects: {
+          ethereum: {
+            callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
+            url: getEnv('ACTIVITY_ETHEREUM_URL'),
+          },
+          optimism: {
+            callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
+            url: getEnv('ACTIVITY_OPTIMISM_URL'),
+          },
+          arbitrum: {
+            callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
+            url: getEnv('ACTIVITY_ARBITRUM_URL'),
+          },
+        },
+      },
+    },
   }
 }

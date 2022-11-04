@@ -7,7 +7,7 @@ import { Database } from './shared/Database'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime
-  blockNumber: bigint
+  blockNumber: number
 }
 
 export class BlockNumberRepository extends BaseRepository {
@@ -58,13 +58,13 @@ export class BlockNumberRepository extends BaseRepository {
 function toRow(record: BlockNumberRecord): BlockNumberRow {
   return {
     unix_timestamp: record.timestamp.toString(),
-    block_number: Number(record.blockNumber),
+    block_number: record.blockNumber,
   }
 }
 
 function toRecord(row: BlockNumberRow): BlockNumberRecord {
   return {
     timestamp: new UnixTime(+row.unix_timestamp),
-    blockNumber: BigInt(row.block_number),
+    blockNumber: row.block_number,
   }
 }

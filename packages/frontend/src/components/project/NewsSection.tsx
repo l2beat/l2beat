@@ -21,7 +21,7 @@ export function NewsSection({ news }: NewsSectionProps) {
   }
 
   return (
-    <Section title="News" id="news" className="NewsSection">
+    <Section title="News" id="news" className="NewsSection px-4 md:px-0">
       <ul className="NewsSection-List">
         {news.map((news, i) => (
           <li key={i}>

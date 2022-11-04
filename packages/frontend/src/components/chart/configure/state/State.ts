@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 export interface State {
   endpoints: {
     aggregateTvl: string | undefined
@@ -70,39 +72,38 @@ export interface ActivityChart {
   }[]
 }
 
-export interface AggregateTvlResponse {
-  hourly: {
-    types: ['timestamp', 'usd', 'eth']
-    data: [number, number, number][]
-  }
-  sixHourly: {
-    types: ['timestamp', 'usd', 'eth']
-    data: [number, number, number][]
-  }
-  daily: {
-    types: ['timestamp', 'usd', 'eth']
-    data: [number, number, number][]
-  }
-}
+const AggregateTvlChart = z.object({
+  types: z.tuple([z.literal('timestamp'), z.literal('usd'), z.literal('eth')]),
+  data: z.array(z.tuple([z.number(), z.number(), z.number()])),
+})
 
-export interface TokenTvlResponse {
-  hourly: {
-    types: ['timestamp', string, 'usd']
-    data: [number, number, number][]
-  }
-  sixHourly: {
-    types: ['timestamp', string, 'usd']
-    data: [number, number, number][]
-  }
-  daily: {
-    types: ['timestamp', string, 'usd']
-    data: [number, number, number][]
-  }
-}
+export type AggregateTvlResponse = z.infer<typeof AggregateTvlResponse>
+export const AggregateTvlResponse = z.object({
+  hourly: AggregateTvlChart,
+  sixHourly: AggregateTvlChart,
+  daily: AggregateTvlChart,
+})
 
-export interface ActivityResponse {
-  daily: {
-    types: ['timestamp', 'transactions', 'ethereumTransactions']
-    data: [number, number, number][]
-  }
-}
+const TokenTvlChart = z.object({
+  types: z.tuple([z.literal('timestamp'), z.string(), z.literal('eth')]),
+  data: z.array(z.tuple([z.number(), z.number(), z.number()])),
+})
+
+export type TokenTvlResponse = z.infer<typeof TokenTvlResponse>
+export const TokenTvlResponse = z.object({
+  hourly: TokenTvlChart,
+  sixHourly: TokenTvlChart,
+  daily: TokenTvlChart,
+})
+
+export type ActivityResponse = z.infer<typeof ActivityResponse>
+export const ActivityResponse = z.object({
+  daily: z.object({
+    types: z.tuple([
+      z.literal('timestamp'),
+      z.literal('transactions'),
+      z.literal('ethereumTransactions'),
+    ]),
+    data: z.array(z.tuple([z.number(), z.number(), z.number()])),
+  }),
+})

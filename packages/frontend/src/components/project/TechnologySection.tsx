@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Heading } from '../Heading'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
+import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 
 export interface TechnologySectionProps {
   id: string
@@ -26,17 +26,16 @@ export function TechnologySection({
   items,
 }: TechnologySectionProps) {
   return (
-    <Section title={title} id={id} className="TechnologySection">
+    <Section title={title} id={id}>
       {items.map((item, i) => (
-        <div className="TechnologySection-Item" key={i}>
-          <Heading level={3} id={item.id} title={item.name} />
-          {item.isIncomplete && (
-            <div className="TechnologySection-Incomplete">
-              <strong>Note:</strong> This section requires more research and
-              might not present accurate information.
-            </div>
-          )}
-          <p>{item.description}</p>
+        <div className="mt-4 md:mt-6" key={i}>
+          <h3 id={item.id} className="text-xl font-bold">
+            <a href={`#${item.id}`}>{item.name}</a>
+          </h3>
+          {item.isIncomplete && <TechnologyIncompleteShort />}
+          <p className="mt-2 text-gray-860 dark:text-gray-400">
+            {item.description}
+          </p>
           <RiskList risks={item.risks} />
           <ReferenceList references={item.references} />
         </div>

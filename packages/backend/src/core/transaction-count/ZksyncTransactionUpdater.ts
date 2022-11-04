@@ -80,37 +80,30 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
 
   async update() {
     this.logger.info('Update started')
-
     await this.blockQueue.waitTilEmpty()
-
-    const missingRanges =
-      await this.zksyncTransactionRepository.getMissingRanges()
-    const latestBlock = await this.zksyncClient.getLatestBlock()
-    this.latestBlock = latestBlock
-
-    for (const [start, end] of missingRanges) {
-      for (
-        let i = Math.max(start, 1);
-        i < Math.min(end, Number(latestBlock) + 1);
-        i++
-      ) {
+    this.latestBlock = await this.zksyncClient.getLatestBlock()
+    const gaps = await this.zksyncTransactionRepository.getGaps(
+      1,
+      this.latestBlock,
+    )
+    for (const [start, end] of gaps) {
+      for (let i = start; i <= end; i++) {
         this.blockQueue.addToBack(i)
       }
     }
-
     this.logger.info('Update enqueued')
   }
 
-  async getDailyTransactionCounts() {
-    return this.zksyncTransactionRepository.getDailyTransactionCount(
-      this.clock.getLastHour().toStartOf('day'),
-    )
+  async getDailyCounts() {
+    return this.zksyncTransactionRepository.getDailyCounts()
   }
 
-  getStatus() {
+  async getStatus() {
+    const fullySyncedTip = (await this.getDailyCounts()).at(-1)
     return {
       workQueue: this.blockQueue.getStats(),
       latestBlock: this.latestBlock ?? null,
+      fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
   }
 }

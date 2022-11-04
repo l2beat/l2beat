@@ -6,10 +6,17 @@ import {
 import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
+import { APTOS_NAME, discoverAptos } from '../projects/aptosBridge'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
+import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
+import { discoverHop, HOP_NAME } from '../projects/hop'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
+import {
+  discoverPolynetworkBridge,
+  POLYNETWORK_BRIDGE_NAME,
+} from '../projects/polynetworkBridge'
 import {
   discoverSolletBridge,
   SOLLET_BRIDGE_NAME,
@@ -43,6 +50,7 @@ export async function discover(args: string[]) {
   }
 
   const projects: [string, Discover][] = [
+    [APTOS_NAME, discoverAptos],
     [ZK_SYNC_NAME, discoverZkSync],
     [ZK_SWAP_1_NAME, discoverZkSwap1],
     [ZK_SWAP_2_NAME, discoverZkSwap2],
@@ -50,10 +58,13 @@ export async function discover(args: string[]) {
     [ARBITRUM_NAME, discoverArbitrum],
     [STARK_NET_NAME, discoverStarkNet],
     [NOVA_NAME, discoverNova],
+    [HOP_NAME, discoverHop],
     [DYDX_NAME, discoverDydx],
+    [POLYNETWORK_BRIDGE_NAME, discoverPolynetworkBridge],
     [SOLLET_BRIDGE_NAME, discoverSolletBridge],
     [ORBIT_BRIDGE_NAME, discoverOrbitBridge],
     [SYNAPSE_NAME, discoverSynapse],
+    [CBRIDGE_NAME, discoverCBridge],
   ]
 
   const project = projects.find((x) => x[0] === args[0])

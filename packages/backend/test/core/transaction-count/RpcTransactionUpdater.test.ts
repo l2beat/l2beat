@@ -15,14 +15,13 @@ describe(RpcTransactionUpdater.name, () => {
     it('skips known blocks', async () => {
       const ethereumClient = mock<EthereumClient>({
         getBlock: async () => fakeBlock(),
-        getBlockNumber: async () => 5n,
+        getBlockNumberAtOrBefore: async () => 5,
       })
       const blockCountTransactionRepository =
         mock<BlockTransactionCountRepository>({
-          getMissingRangesByProject: async () => [
-            [-Infinity, -1],
-            [2, 3],
-            [5, Infinity],
+          getGapsByProject: async () => [
+            [2, 2],
+            [5, 5],
           ],
           add: async () => '',
         })
@@ -39,6 +38,7 @@ describe(RpcTransactionUpdater.name, () => {
         clock,
         Logger.SILENT,
         ProjectId('fake-project'),
+        { startBlock: 1 },
       )
       blockTxCountUpdater.start()
 
@@ -68,7 +68,7 @@ describe(RpcTransactionUpdater.name, () => {
               transactions: ['t0', 't1', 't2'],
             }),
           ),
-        getBlockNumber: async () => 5n,
+        getBlockNumber: async () => 5,
       })
       const blockCountTransactionRepository =
         mock<BlockTransactionCountRepository>({

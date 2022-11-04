@@ -110,7 +110,7 @@ describe(EtherscanClient.name, () => {
       const result = await etherscanClient.getBlockNumberAtOrBefore(
         new UnixTime(1578638524),
       )
-      expect(result).toEqual(9251482n)
+      expect(result).toEqual(9251482)
     })
   })
 })

@@ -24,11 +24,11 @@ export interface Config {
   projects: Project[]
   syncEnabled: boolean
   freshStart: boolean
-  eventsSync: boolean
   tvlReportSync: boolean
   transactionCountSync:
     | {
         starkexApiKey: string
+        starkexApiDelayHours: number
         zkSyncWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number

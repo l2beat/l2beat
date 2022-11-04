@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { ActivityController } from '../controllers/ActivityController'
+import { ActivityController } from '../controllers/activity/ActivityController'
 
 export function createActivityRouter(activityController: ActivityController) {
   const router = new Router()
@@ -10,8 +10,8 @@ export function createActivityRouter(activityController: ActivityController) {
     ctx.body = data
   })
 
-  router.get('/api/activity/status', (ctx) => {
-    const data = activityController.getStatus()
+  router.get('/api/activity/status', async (ctx) => {
+    const data = await activityController.getStatus()
     ctx.body = data
   })
 

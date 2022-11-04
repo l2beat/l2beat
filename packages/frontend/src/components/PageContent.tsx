@@ -4,14 +4,20 @@ import React, { ReactNode } from 'react'
 export interface PageContentProps {
   children: ReactNode
   narrow?: boolean
+  mobileFull?: boolean
 }
 
-export function PageContent({ narrow, children }: PageContentProps) {
+export function PageContent({
+  narrow,
+  children,
+  mobileFull = false,
+}: PageContentProps) {
   return (
     <div
       className={classNames(
         narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
-        'h-full px-4 md:px-12 mx-auto leading-[1.15]',
+        'h-full md:px-12 mx-auto leading-[1.15]',
+        !mobileFull && 'px-4',
       )}
     >
       {children}

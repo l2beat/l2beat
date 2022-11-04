@@ -130,31 +130,31 @@ export const rhinofi: Layer2 = {
       name: 'Data Availability Committee',
       accounts: [
         {
-          address: '0x6a8ea587133c1aa4b3ba0417b6d8ae38e61fd1e',
+          address: '0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4',
           type: 'EOA',
         },
         {
-          address: '0x3bf2562178ea0cef6b3f66d971494d65561efd3',
+          address: '0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36',
           type: 'EOA',
         },
         {
-          address: '0xf872cf881873029b8955b582c29b66347f3f132',
+          address: '0xf872Cf881873029B8955b582c29b66347f3f1326',
           type: 'EOA',
         },
         {
-          address: '0x70eeaa8b7cbf7124e349e94eade6188ddd2d617',
+          address: '0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178',
           type: 'EOA',
         },
         {
-          address: '0x51abde72a4542500a7b1cb32b18b13fbe1f9ff2',
+          address: '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
           type: 'EOA',
         },
         {
-          address: '0x2b6593fcfbfded663d7a6448d45b12c16df6b64',
+          address: '0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648',
           type: 'EOA',
         },
         {
-          address: '0xfbd7599fe0c3735b94c369adf0f0045d8d4f6cb9',
+          address: '0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9',
           type: 'EOA',
         },
       ],

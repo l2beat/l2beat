@@ -34,15 +34,15 @@ export function getLocalConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
     tvlReportSync: true,
-    eventsSync: getEnv.boolean('EVENTS_ENABLED', false),
     transactionCountSync: getEnv.boolean(
       'TRANSACTION_COUNT_ENABLED',
       false,
     ) && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 5,
       zkSyncWorkQueueWorkers: 1,
-      starkexWorkQueueWorkers: 1,
-      starkexCallsPerMinute: 10,
+      starkexWorkQueueWorkers: 100,
+      starkexCallsPerMinute: 1000,
       loopringWorkQueueWorkers: 1,
       loopringCallsPerMinute: 10,
       rpc: {

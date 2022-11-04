@@ -117,31 +117,31 @@ export const immutablex: Layer2 = {
       name: 'Data Availability Committee',
       accounts: [
         {
-          address: '0x1ffbdb8061b586a6d29fb608d025e5d8744f58d1',
+          address: '0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1',
           type: 'EOA',
         },
         {
-          address: '0x24eeffc269bb8e540f5b2c8f45750489abf8d54b',
+          address: '0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b',
           type: 'EOA',
         },
         {
-          address: '0x48af849535ddfa560a0eb0fbdef436688169b949',
+          address: '0x48AF849535DDFa560A0EB0FbDEf436688169B949',
           type: 'EOA',
         },
         {
-          address: '0x51abde72a4542500a7b1cb32b18b13fbe1f9ff2e',
+          address: '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
           type: 'EOA',
         },
         {
-          address: '0xafc4589af46c72cbf550f2eeae38c97aede15d17',
+          address: '0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17',
           type: 'EOA',
         },
         {
-          address: '0xb71fc111d7ba82d5955baddd7717f3467184ff61',
+          address: '0xB71FC111D7BA82D5955BaDdD7717f3467184FF61',
           type: 'EOA',
         },
         {
-          address: '0xff506616e8c53ee5e513b906ac00b5d76664c537',
+          address: '0xfF506616E8C53EE5e513b906AC00B5D76664C537',
           type: 'EOA',
         },
       ],

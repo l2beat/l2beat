@@ -5,6 +5,7 @@ import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
+import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 
 export interface ContractsSectionProps {
   contracts: TechnologyContract[]
@@ -30,54 +31,52 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <Section
-      title="Smart Contracts"
-      id="contracts"
-      className="ContractsSection"
-    >
-      {props.isIncomplete && (
-        <div className="TechnologySection-Incomplete">
-          <strong>Note:</strong> This section requires more research and might
-          not present accurate information.
-        </div>
-      )}
+    <Section title="Smart Contracts" id="contracts">
+      {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="ContractsSection-Architecture">
+        <figure className="mt-4 mb-8 text-center">
           <img
-            className="inline align-[unset]"
+            className="inline align-[unset] max-w-full dark:invert"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
-          <figcaption>A diagram of the smart contract architecture</figcaption>
+          <figcaption className="text-gray-500 dark:text-gray-600 text-xs">
+            A diagram of the smart contract architecture
+          </figcaption>
         </figure>
       )}
-      <p>The system consists of the following smart contracts:</p>
-      <ul className="ContractsSection-Contracts">
+      <h3 className="font-bold md:text-md">
+        The system consists of the following smart contracts:
+      </h3>
+      <ul className="list-disc my-4 pl-8 space-y-4">
         {props.contracts.map((contract, i) => (
           <li key={i}>
-            <div className="ContractsSection-Contract">
-              <span className="ContractsSection-Name">{contract.name}</span>{' '}
-              <EtherscanLink address={contract.address} />
-              {contract.links.map((x, i) => (
-                <React.Fragment key={i}>
-                  {' '}
-                  <OutLink className="text-link underline" href={x.href}>
-                    {x.name}
-                  </OutLink>
-                </React.Fragment>
-              ))}
-            </div>
+            <strong>{contract.name}</strong>{' '}
+            <EtherscanLink
+              address={contract.address}
+              className="text-xs md:text-base"
+            />
+            {contract.links.map((x, i) => (
+              <React.Fragment key={i}>
+                {' '}
+                <OutLink className="text-link underline" href={x.href}>
+                  {x.name}
+                </OutLink>
+              </React.Fragment>
+            ))}
             {contract.description && (
-              <div className="ContractsSection-Description">
+              <p className="text-gray-860 dark:text-gray-400">
                 {contract.description}
-              </div>
+              </p>
             )}
           </li>
         ))}
       </ul>
       {props.risks.length > 0 && (
         <>
-          <p>The current deployment carries some associated risks:</p>
+          <p className="text-gray-860 dark:text-gray-400">
+            The current deployment carries some associated risks:
+          </p>
           <RiskList risks={props.risks} />
         </>
       )}

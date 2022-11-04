@@ -215,17 +215,17 @@ export const arbitrum: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Arbitrum uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+        'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
       risks: [
         {
           category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex AVM implementation.',
+          text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
         },
       ],
       references: [
         {
-          text: 'AVM - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#avm-the-arbitrum-virtual-machine',
+          text: 'Inside Arbitrum Nitro',
+          href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
         },
       ],
     },
@@ -288,11 +288,11 @@ export const arbitrum: Layer2 = {
       name: 'Validators',
       accounts: [
         {
-          address: '0xa8c3e94015f1f91ff60e4e939e0a4d14b8d9fc4f',
+          address: '0xa8C3E94015f1F91FF60e4E939E0A4D14B8d9Fc4F',
           type: 'EOA',
         },
         {
-          address: '0x9919dbf38e05c6496d852d8e5705eb101308f089',
+          address: '0x9919dbF38e05C6496D852d8e5705EB101308f089',
           type: 'EOA',
         },
         {
