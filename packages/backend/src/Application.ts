@@ -5,19 +5,16 @@ import { compact } from 'lodash'
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
-import { EventController } from './api/controllers/event/EventController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { TvlController } from './api/controllers/tvl/TvlController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
-import { createEventRouter } from './api/routers/EventRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { createTvlRouter } from './api/routers/TvlRouter'
 import { Config } from './config'
 import { BalanceUpdater } from './core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from './core/BlockNumberUpdater'
 import { Clock } from './core/Clock'
-import { EventUpdater } from './core/events/EventUpdater'
 import { PriceUpdater } from './core/PriceUpdater'
 import { ReportUpdater } from './core/reports/ReportUpdater'
 import { CoingeckoQueryService } from './peripherals/coingecko/CoingeckoQueryService'
@@ -25,7 +22,6 @@ import { AggregateReportRepository } from './peripherals/database/AggregateRepor
 import { BalanceRepository } from './peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from './peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from './peripherals/database/BlockNumberRepository'
-import { EventRepository } from './peripherals/database/EventRepository'
 import { PriceRepository } from './peripherals/database/PriceRepository'
 import { ReportRepository } from './peripherals/database/ReportRepository'
 import { ReportStatusRepository } from './peripherals/database/ReportStatusRepository'
@@ -61,8 +57,6 @@ export class Application {
       database,
       logger,
     )
-    const eventRepository = new EventRepository(database, logger)
-
     const http = new HttpClient()
 
     const ethereumProvider = new providers.AlchemyProvider(
@@ -127,15 +121,6 @@ export class Application {
       config.projects,
       logger,
     )
-
-    const eventUpdater = new EventUpdater(
-      ethereumClient,
-      blockNumberUpdater,
-      eventRepository,
-      clock,
-      config.projects,
-      logger,
-    )
     // #endregion
     // #region api
 
@@ -159,12 +144,6 @@ export class Application {
       config.projects,
     )
 
-    const eventController = new EventController(
-      eventRepository,
-      clock,
-      config.projects,
-    )
-
     const dydxController = new DydxController(aggregateReportRepository)
 
     const activityModule = getActivityModule(
@@ -183,7 +162,6 @@ export class Application {
         createTvlRouter(tvlController),
         createStatusRouter(statusController),
         createDydxRouter(dydxController),
-        createEventRouter(eventController),
         activityModule?.router,
       ]),
       handleServerError,
@@ -208,10 +186,6 @@ export class Application {
         }
 
         activityModule?.start()
-
-        if (config.eventsSync) {
-          eventUpdater.start()
-        }
       }
     }
 

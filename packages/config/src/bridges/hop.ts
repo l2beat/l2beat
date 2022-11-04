@@ -47,9 +47,14 @@ export const hop: Bridge = {
         tokens: ['MATIC'],
       },
       {
-        address: '0xb98454270065A31D71Bf635F6F7Ee6A518dFb849',
-        sinceTimestamp: new UnixTime(1635022634),
-        tokens: ['WBTC'],
+        address: '0x914f986a44AcB623A277d6Bd17368171FCbe4273',
+        sinceTimestamp: new UnixTime(1663897247),
+        tokens: ['HOP'],
+      },
+      {
+        address: '0x893246FACF345c99e4235E5A7bbEE7404c988b96',
+        sinceTimestamp: new UnixTime(1664398079),
+        tokens: ['SNX'],
       },
     ],
   },
@@ -137,11 +142,6 @@ export const hop: Bridge = {
         description: 'USDT Bridge.',
       },
       {
-        address: '0xb98454270065A31D71Bf635F6F7Ee6A518dFb849',
-        name: 'L1_ERC20_Bridge',
-        description: 'WBTC Bridge.',
-      },
-      {
         address: '0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2',
         name: 'L1_ERC20_Bridge',
         description: 'MATIC Bridge.',
@@ -151,21 +151,20 @@ export const hop: Bridge = {
         name: 'L1_ETH_Bridge',
         description: 'ETH Bridge.',
       },
+      {
+        address: '0x914f986a44AcB623A277d6Bd17368171FCbe4273',
+        name: 'L1_HOP_Bridge',
+        description: 'HOP Bridge.',
+      },
+      {
+        address: '0x893246FACF345c99e4235E5A7bbEE7404c988b96',
+        name: 'L1_ERC20_Bridge',
+        description: 'SNX Bridge.',
+      },
     ],
     risks: [],
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: '0xF56e305024B195383245A075737d16dBdb8487Fb',
-          type: 'EOA',
-        },
-      ],
-      name: 'Manager of WBTC bridge.',
-      description:
-        'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
-    },
     {
       accounts: [
         {
