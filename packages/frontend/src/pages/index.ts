@@ -22,12 +22,12 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(getTvlPage(config, pagesData))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
-  pages.push(...getProjectPages(config, tvlApiResponse, activityApiResponse))
+  pages.push(...getProjectPages(config, pagesData))
   pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
   if (config.features.bridges) {
     pages.push(getBridgesTvlPage(config, pagesData))
     pages.push(getBridgesRiskPage(config, pagesData))
-    pages.push(...getBridgeProjectPages(config, tvlApiResponse))
+    pages.push(...getBridgeProjectPages(config, pagesData))
   }
   if (activityApiResponse) {
     pages.push(
