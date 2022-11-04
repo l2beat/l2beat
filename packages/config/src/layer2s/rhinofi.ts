@@ -154,7 +154,7 @@ export const rhinofi: Layer2 = {
           type: 'EOA',
         },
         {
-          address: '0xfbd7599fe0c3735b94c369adf0f0045d8d4f6cb9',
+          address: '0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9',
           type: 'EOA',
         },
       ],

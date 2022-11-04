@@ -50,7 +50,6 @@ describe('projects', () => {
           const permissions = project.permissions ?? []
           const permissionAddresses = permissions
             .flatMap((permission) => permission.accounts)
-            .filter((account) => account.type !== 'EOA')
             .map((account) => account.address)
 
           for (const address of permissionAddresses) {

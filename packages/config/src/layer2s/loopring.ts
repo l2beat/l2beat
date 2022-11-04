@@ -172,27 +172,27 @@ export const loopring: Layer2 = {
       name: 'MultiSig participants',
       accounts: [
         {
-          address: '0x3b1d1f89e0b6803174a2de72e21a6f6f8464d5f1',
+          address: '0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1',
           type: 'EOA',
         },
         {
-          address: '0x4cbbd41a2c057cab8db00ac60f1ab52f36870185',
+          address: '0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185',
           type: 'EOA',
         },
         {
-          address: '0x55d79345afc87806b690c9f96c4d7bfe2bca8268',
+          address: '0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268',
           type: 'EOA',
         },
         {
-          address: '0xb89cdf808da6cfb39f3c2e167ffb5ddfc811c33e',
+          address: '0xB89cdf808dA6Cfb39F3c2e167fFB5DDfc811C33E',
           type: 'EOA',
         },
         {
-          address: '0x51b8982ebfa21eb01b1e591b8f45a33fca216e0d',
+          address: '0x51b8982ebFA21Eb01B1E591b8F45a33fCA216e0D',
           type: 'EOA',
         },
         {
-          address: '0x1f28f10176f89f4e9985873b84d14e75751bb3d1',
+          address: '0x1F28F10176F89F4E9985873B84d14e75751BB3D1',
           type: 'EOA',
         },
       ],

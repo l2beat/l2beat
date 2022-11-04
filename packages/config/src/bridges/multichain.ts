@@ -168,7 +168,7 @@ export const multichain: Bridge = {
     {
       accounts: [
         {
-          address: '0x5e583b6a1686f7bc09a6bba66e852a7c80d36f00',
+          address: '0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00',
           type: 'EOA',
         },
       ],
@@ -180,7 +180,7 @@ export const multichain: Bridge = {
     {
       accounts: [
         {
-          address: '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869 ',
+          address: '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869',
           type: 'EOA',
         },
       ],
