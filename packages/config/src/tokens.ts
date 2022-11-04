@@ -899,7 +899,7 @@ export const tokenList: TokenInfo[] = [
   },
   {
     id: AssetId('hop-hop-protocol'),
-    name: 'Hop Protocol Token',
+    name: 'Hop',
     coingeckoId: CoingeckoId('hop-protocol'),
     address: EthereumAddress('0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC'),
     symbol: 'HOP',
