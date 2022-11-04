@@ -31,8 +31,8 @@ Contracts.args = {
       description:
         "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
       links: [
-        { href: '#', name: 'Implementation (Upgradable)' },
-        { href: '#', name: 'Admin' },
+        { href: '#', name: 'Implementation (Upgradable)', address: '0x' },
+        { href: '#', name: 'Admin', address: '0x' },
       ],
     },
     {

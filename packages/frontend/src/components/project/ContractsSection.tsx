@@ -44,7 +44,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <li key={i}>
             <ContractEntry
               contract={contract}
-              isVerified={props.verificationStatus.contracts[contract.address]}
+              verificationStatus={props.verificationStatus}
             />
           </li>
         ))}

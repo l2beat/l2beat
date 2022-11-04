@@ -1,3 +1,4 @@
+import { VerificationStatus } from '@l2beat/types'
 import React from 'react'
 
 import { OutLink } from '../OutLink'
@@ -11,15 +12,25 @@ export interface TechnologyContract {
   links: {
     name: string
     href: string
+    address: string
   }[]
 }
 
 export interface ContractEntryProps {
   contract: TechnologyContract
-  isVerified?: boolean
+  verificationStatus: VerificationStatus
 }
 
-export function ContractEntry({ contract, isVerified }: ContractEntryProps) {
+export function ContractEntry({
+  contract,
+  verificationStatus,
+}: ContractEntryProps) {
+  const areLinksUnverified = contract.links
+    .map((c) => verificationStatus.contracts[c.address])
+    .some((c) => c === false)
+
+  const isVerified = verificationStatus.contracts[contract.address]
+
   return (
     <>
       <div className="flex gap-2 flex-wrap">
@@ -34,12 +45,13 @@ export function ContractEntry({ contract, isVerified }: ContractEntryProps) {
               </OutLink>
             </React.Fragment>
           ))}
-          {isVerified === false && (
-            <UnverifiedContractsWarning
-              className={'absolute translate-y-1/3'}
-              tooltip="Source code of this contract is not verified."
-            ></UnverifiedContractsWarning>
-          )}
+          {isVerified === false ||
+            (areLinksUnverified && (
+              <UnverifiedContractsWarning
+                className={'absolute translate-y-1/4'}
+                tooltip="Source code is not verified."
+              ></UnverifiedContractsWarning>
+            ))}
         </div>
       </div>
       {contract.description && (
