@@ -36,7 +36,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       alignRight: true,
       minimalWidth: true,
       getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1}></IndexCell>
+        return <IndexCell entry={entry} index={index + 1}/>
       },
     },
     {

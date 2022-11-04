@@ -46,13 +46,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            <IndexCell
-              entry={entry}
-              index={onlyBridges.indexOf(entry) + 1}
-            ></IndexCell>
+            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
           </span>
           <span data-combined-only className="hidden">
-            <IndexCell entry={entry} index={index + 1}></IndexCell>
+            <IndexCell entry={entry} index={index + 1} />
           </span>
         </>
       ),
