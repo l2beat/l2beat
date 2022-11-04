@@ -34,7 +34,6 @@ export function getLocalConfig(): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
     tvlReportSync: true,
-    eventsSync: getEnv.boolean('EVENTS_ENABLED', false),
     transactionCountSync: getEnv.boolean(
       'TRANSACTION_COUNT_ENABLED',
       false,
