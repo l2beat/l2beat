@@ -9,7 +9,7 @@ export interface WarningBarProps {
   isCritical: boolean
 }
 
-export function WarningBarComponent({
+export function WarningBar({
   color,
   text,
   isCritical,
