@@ -1,7 +1,10 @@
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { WarningBarComponent, WarningBarProps } from './WarningBar'
+import {
+  WarningBar as WarningBarComponent,
+  WarningBarProps,
+} from './WarningBar'
 
 export default {
   title: 'Components/Project/WarningBar',
