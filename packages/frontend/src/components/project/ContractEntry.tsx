@@ -24,28 +24,30 @@ export function ContractEntry({ contract, isVerified }: ContractEntryProps) {
     <>
       <div className="flex gap-2 flex-wrap">
         <strong>{contract.name}</strong>{' '}
-        <EtherscanLink
-          address={contract.address}
-        />
-        {contract.links.map((x, i) => (
-          <React.Fragment key={i}>
-            {' '}
-            <OutLink className="text-link underline" href={x.href}>
-              {x.name}
-            </OutLink>
-          </React.Fragment>
-        ))}
-        {isVerified === false && (
-          <UnverifiedContractsWarning
-            className={'absolute translate-y-1/3'}
-            tooltip="Source code of this contract is not verified."
-          ></UnverifiedContractsWarning>
-        )}
+        <EtherscanLink address={contract.address} />
+        <div className="flex gap-1">
+          {contract.links.map((x, i) => (
+            <React.Fragment key={i}>
+              {' '}
+              <OutLink className="text-link underline" href={x.href}>
+                {x.name}
+              </OutLink>
+            </React.Fragment>
+          ))}
+          {isVerified === false && (
+            <UnverifiedContractsWarning
+              className={'absolute translate-y-1/3'}
+              tooltip="Source code of this contract is not verified."
+            ></UnverifiedContractsWarning>
+          )}
+        </div>
       </div>
       {contract.description && (
-        <p className="text-gray-860 dark:text-gray-400">
-          {contract.description}
-        </p>
+        <div>
+          <p className="text-gray-860 dark:text-gray-400">
+            {contract.description}
+          </p>
+        </div>
       )}
     </>
   )
