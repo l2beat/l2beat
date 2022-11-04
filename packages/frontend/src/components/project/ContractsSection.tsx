@@ -1,6 +1,8 @@
+import { VerificationStatus } from '@l2beat/types'
 import React from 'react'
 
 import { OutLink } from '../OutLink'
+import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
@@ -13,6 +15,7 @@ export interface ContractsSectionProps {
   references: TechnologyReference[]
   architectureImage?: string
   isIncomplete?: boolean
+  verificationStatus: VerificationStatus
 }
 
 export interface TechnologyContract {
@@ -51,19 +54,25 @@ export function ContractsSection(props: ContractsSectionProps) {
       <ul className="list-disc my-4 pl-8 space-y-4">
         {props.contracts.map((contract, i) => (
           <li key={i}>
-            <strong>{contract.name}</strong>{' '}
-            <EtherscanLink
-              address={contract.address}
-              className="text-xs md:text-base"
-            />
-            {contract.links.map((x, i) => (
-              <React.Fragment key={i}>
-                {' '}
-                <OutLink className="text-link underline" href={x.href}>
-                  {x.name}
-                </OutLink>
-              </React.Fragment>
-            ))}
+            <div className='flex gap-1 flex-wrap'>
+              <strong>{contract.name}</strong>{' '}
+              <EtherscanLink
+                address={contract.address}
+                // className="text-xs md:text-base"
+              />
+              {contract.links.map((x, i) => (
+                <React.Fragment key={i}>
+                  {' '}
+                  <OutLink className="text-link underline" href={x.href}>
+                    {x.name}
+                  </OutLink>
+                </React.Fragment>
+              ))}
+              {props.verificationStatus.contracts[contract.address] ===
+                false && (
+                <UnverifiedContractsWarning></UnverifiedContractsWarning>
+              )}
+            </div>
             {contract.description && (
               <p className="text-gray-860 dark:text-gray-400">
                 {contract.description}

@@ -1,4 +1,5 @@
 import { Bridge, Layer2, ProjectContract } from '@l2beat/config'
+import { VerificationStatus } from '@l2beat/types'
 
 import {
   ContractsSectionProps,
@@ -8,6 +9,7 @@ import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
   project: Layer2 | Bridge,
+  verificationStatus: VerificationStatus,
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) =>
     makeTechnologyContract(contract, project),
@@ -28,6 +30,7 @@ export function getContractSection(
     architectureImage,
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
+    verificationStatus,
   }
 }
 

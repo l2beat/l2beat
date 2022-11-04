@@ -20,7 +20,7 @@ export function getProjectDetails(
     descriptionSection: getDescriptionSection(bridge, verificationStatus),
     riskSection: getRiskSection(bridge, verificationStatus),
     permissionsSection: getPermissionsSection(bridge),
-    contractsSection: getContractSection(bridge),
+    contractsSection: getContractSection(bridge, verificationStatus),
     ...getTechnologyOverview(bridge),
   }
 }
