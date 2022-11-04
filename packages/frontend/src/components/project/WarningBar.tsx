@@ -9,11 +9,7 @@ export interface WarningBarProps {
   isCritical: boolean
 }
 
-export function WarningBar({
-  color,
-  text,
-  isCritical,
-}: WarningBarProps) {
+export function WarningBar({ color, text, isCritical }: WarningBarProps) {
   const background = color === 'red' ? 'bg-red-600' : 'bg-yellow-300'
   const iconFill =
     color === 'red'
