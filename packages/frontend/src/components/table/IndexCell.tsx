@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { UnverifiedWarning } from './UnverifiedWarning'
+import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
 export interface IndexCellProps {
   entry: {
@@ -11,7 +11,7 @@ export interface IndexCellProps {
 
 export function IndexCell({ entry, index }: IndexCellProps) {
   if (entry.isVerified === false) {
-    return <UnverifiedWarning />
+    return <UnverifiedContractsWarning />
   }
   return <>{index}</>
 }

@@ -3,7 +3,7 @@ import React from 'react'
 
 import { InfoIcon } from '../icons'
 
-export function UnverifiedWarning() {
+export function UnverifiedContractsWarning() {
   return (
     <div className="relative">
       <span

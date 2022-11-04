@@ -39,13 +39,10 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       getValue: (entry, index) => (
         <>
           <span data-bridges-only>
-            <IndexCell
-              entry={entry}
-              index={onlyBridges.indexOf(entry) + 1}
-            />
+            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
           </span>
           <span data-combined-only className="hidden">
-            <IndexCell entry={entry} index={index + 1}/>
+            <IndexCell entry={entry} index={index + 1} />
           </span>
         </>
       ),
