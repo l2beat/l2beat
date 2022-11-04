@@ -38,6 +38,7 @@ export function ContractEntry({ contract, isVerified }: ContractEntryProps) {
         {isVerified === false && (
           <UnverifiedContractsWarning
             className={'absolute translate-y-1/3'}
+            tooltip="Source code of this contract is not verified."
           ></UnverifiedContractsWarning>
         )}
       </div>
