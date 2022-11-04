@@ -18,7 +18,7 @@ export function getProjectDetails(
     newsSection: getNewsSection(project),
     linkSection: getLinkSection(project),
     descriptionSection: getDescriptionSection(project, verificationStatus),
-    riskSection: getRiskSection(project),
+    riskSection: getRiskSection(project, verificationStatus),
     permissionsSection: getPermissionsSection(project),
     contractsSection: getContractSection(project),
     ...getTechnologyOverview(project),
