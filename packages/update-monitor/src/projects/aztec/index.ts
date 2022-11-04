@@ -2,6 +2,7 @@ import { providers } from 'ethers'
 
 import { ProjectParameters } from '../../types'
 import { verify } from '../../verify/verify'
+import { getAztecFeeDistributor } from './contracts/getAztecFeeDistributor'
 import { getRollupProcessor } from './contracts/getRollupProcessor'
 import { getTurboVerifier } from './contracts/getTurboVerifier'
 
@@ -15,9 +16,13 @@ export async function getAztecParameters(
     contracts: await Promise.all([
       getRollupProcessor(provider),
       getTurboVerifier(),
+      getAztecFeeDistributor(),
     ]),
   }
-  verify(parameters, [['RollupProcessor.verifier', 'TurboVerifier']])
+  verify(parameters, [
+    ['RollupProcessor.verifier', 'TurboVerifier'],
+    ['RollupProcessor.feeDistributor', 'AztecFeeDistributor'],
+  ])
 
   return parameters
 }

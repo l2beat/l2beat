@@ -19,6 +19,7 @@ export async function getRollupProcessor(
     values: {
       owner: await rollupProcessor.owner(),
       verifier: await rollupProcessor.verifier(),
+      feeDistributor: await rollupProcessor.feeDistributor(),
     },
   }
 }
