@@ -5,10 +5,10 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ComingSoonCell } from '../../../components/table/ComingSoonCell'
 import { EthereumCell } from '../../../components/table/EthereumCell'
-import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
+import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
 import {
   ColumnConfig,
   RowConfig,

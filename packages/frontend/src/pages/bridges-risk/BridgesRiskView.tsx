@@ -1,10 +1,9 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
-import { getRowVerificationClassNames } from '../../components/table/getRowVerificationClassNames'
 import { IndexCell } from '../../components/table/IndexCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
+import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { RiskCell } from '../../components/table/RiskCell'
 import {
   ColumnConfig,
@@ -88,22 +87,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   ]
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
-    getProps: (entry) => {
-      const result: Record<string, string | boolean> = {
-        className: '',
-      }
-
-      if (entry.isVerified === false) {
-        result.className += getRowVerificationClassNames(entry)
-      }
-
-      if (entry.type !== 'bridge') {
-        result.className += cx(' hidden')
-        result['data-combined-only'] = true
-      }
-
-      return result
-    },
+    getProps: getBridgesRowProps,
   }
 
   return (

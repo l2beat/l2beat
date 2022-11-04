@@ -2,9 +2,9 @@ import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { getRowVerificationClassNames } from '../../../components/table/getRowVerificationClassNames'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
+import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
 import { RiskCell } from '../../../components/table/RiskCell'
 import {
   ColumnConfig,
