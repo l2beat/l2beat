@@ -1,5 +1,10 @@
 import { Layer2 } from '@l2beat/config'
-import { ActivityApiChart, ActivityApiResponse, ProjectId } from '@l2beat/types'
+import {
+  ActivityApiChart,
+  ActivityApiResponse,
+  ProjectId,
+  VerificationStatus,
+} from '@l2beat/types'
 
 import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
@@ -10,13 +15,14 @@ import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 export function getActivityView(
   projects: Layer2[],
   activityApiResponse: ActivityApiResponse,
+  verificationStatus: VerificationStatus,
 ): ActivityViewProps {
   const included = getIncludedProjects(projects, activityApiResponse, [
     ProjectId('aztec'),
     ProjectId('aztecconnect'),
   ])
   const items = included.map((x) =>
-    getActivityViewEntry(x, activityApiResponse),
+    getActivityViewEntry(x, activityApiResponse, verificationStatus),
   )
   items.push(getEthereumActivityViewEntry(activityApiResponse))
 
@@ -28,13 +34,16 @@ export function getActivityView(
 export function getActivityViewEntry(
   project: Layer2,
   activityApiResponse: ActivityApiResponse,
+  verificationStatus: VerificationStatus,
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
+  const isVerified = verificationStatus.projects[project.id.toString()]
   return {
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
+    isVerified,
     dataSource: project.display.activityDataSource,
     ...getActivityViewEntryDetails(data),
   }
@@ -48,6 +57,7 @@ function getEthereumActivityViewEntry(
     name: 'Ethereum',
     slug: 'ethereum',
     dataSource: 'Blockchain RPC',
+    verificationStatus: true,
     ...getActivityViewEntryDetails(data),
   }
 }

@@ -2,9 +2,15 @@ import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
+import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
 import { RiskCell } from '../../../components/table/RiskCell'
-import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../../components/table/TableView'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -15,6 +21,7 @@ export interface ScalingRiskViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  isVerified?: boolean
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
@@ -28,7 +35,9 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (entry, index) => index + 1,
+      getValue: (entry, index) => {
+        return <IndexCell entry={entry} index={index + 1} />
+      },
     },
     {
       name: 'Name',
@@ -62,9 +71,15 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     },
   ]
 
+  const rows: RowConfig<ScalingRiskViewEntry> = {
+    getProps: (entry) => ({
+      className: getRowVerificationClassNames(entry),
+    }),
+  }
+
   return (
     <section className="mt-4 sm:mt-8">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>
   )

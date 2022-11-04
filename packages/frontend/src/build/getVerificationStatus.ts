@@ -1,7 +1,7 @@
 import { VerificationStatus } from '@l2beat/types'
 import fs from 'fs'
 
-const PATH = '../config/build/verified.json'
+const PATH = '../config/src/verified.json'
 
 export function getVerificationStatus(isEnabled: boolean): VerificationStatus {
   if (!isEnabled || !fs.existsSync(PATH)) {

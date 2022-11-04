@@ -1,7 +1,9 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { IndexCell } from '../../components/table/IndexCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
+import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { RiskCell } from '../../components/table/RiskCell'
 import {
   ColumnConfig,
@@ -18,6 +20,7 @@ export interface BridgesRiskViewEntry {
   slug: string
   type: 'layer2' | 'bridge'
   warning?: string
+  isVerified?: boolean
   category: string
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry
@@ -35,9 +38,11 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}</span>
+          <span data-bridges-only>
+            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
+          </span>
           <span data-combined-only className="hidden">
-            {index + 1}
+            <IndexCell entry={entry} index={index + 1} />
           </span>
         </>
       ),
@@ -79,13 +84,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   ]
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
-    getProps: (entry) =>
-      entry.type === 'bridge'
-        ? {}
-        : {
-            ['data-combined-only']: true,
-            className: 'hidden',
-          },
+    getProps: getBridgesRowProps,
   }
 
   return (

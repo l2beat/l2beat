@@ -1,9 +1,11 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { IndexCell } from '../../components/table/IndexCell'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
+import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { RiskCell } from '../../components/table/RiskCell'
 import {
   ColumnConfig,
@@ -22,6 +24,7 @@ export interface BridgesTvlViewEntry {
   name: string
   slug: string
   warning?: string
+  isVerified?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -42,9 +45,11 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>{onlyBridges.indexOf(entry) + 1}</span>
+          <span data-bridges-only>
+            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
+          </span>
           <span data-combined-only className="hidden">
-            {index + 1}
+            <IndexCell entry={entry} index={index + 1} />
           </span>
         </>
       ),
@@ -107,13 +112,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   ]
 
   const rows: RowConfig<BridgesTvlViewEntry> = {
-    getProps: (entry) =>
-      entry.type === 'bridge'
-        ? {}
-        : {
-            ['data-combined-only']: true,
-            className: 'hidden',
-          },
+    getProps: getBridgesRowProps,
   }
 
   return (

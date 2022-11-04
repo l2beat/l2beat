@@ -2,9 +2,15 @@ import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { ColumnConfig, TableView } from '../../../components/table/TableView'
+import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
+import {
+  ColumnConfig,
+  RowConfig,
+  TableView,
+} from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
@@ -20,6 +26,7 @@ export interface ScalingTvlViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  isVerified?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -35,7 +42,9 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (entry, index) => index + 1,
+      getValue: (entry, index) => {
+        return <IndexCell entry={entry} index={index + 1} />
+      },
     },
     {
       name: 'Name',
@@ -83,9 +92,15 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
     },
   ]
 
+  const rows: RowConfig<ScalingTvlViewEntry> = {
+    getProps: (entry) => ({
+      className: getRowVerificationClassNames(entry),
+    }),
+  }
+
   return (
     <section className="mt-4 sm:mt-8">
-      <TableView items={items} columns={columns} />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend showTokenWarnings />
     </section>
   )
