@@ -16,6 +16,7 @@ import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTrans
 import { LoopringClient } from '../peripherals/loopring'
 import { StarkexClient } from '../peripherals/starkex'
 import { ZksyncClient } from '../peripherals/zksync'
+import { createAztecTransactionUpdaters } from './createAztecTransactionUpdaters'
 import {
   createEthereumTransactionUpdater,
   createLayer2RpcTransactionUpdaters,
@@ -78,6 +79,14 @@ export function getActivityModule(
     { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
   )
 
+  const aztecTransactionUpdaters = createAztecTransactionUpdaters(
+    http,
+    blockTransactionCountRepository,
+    clock,
+    logger,
+    config.transactionCountSync.aztecWorkQueueWorkers,
+  )
+
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
     config.transactionCountSync,
     blockTransactionCountRepository,
@@ -101,14 +110,16 @@ export function getActivityModule(
     { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
   )
 
+  const layer2BlockTransactionUpdaters = [
+    ...layer2RpcTransactionUpdaters,
+    ...aztecTransactionUpdaters,
+    loopringTransactionUpdater,
+  ]
+
   const materializedViewRefresher = new MaterializedViewRefresher(
     blockTransactionCountRepository,
     zksyncTransactionRepository,
-    [
-      ...layer2RpcTransactionUpdaters,
-      ethereumTransactionUpdater,
-      loopringTransactionUpdater,
-    ],
+    [...layer2BlockTransactionUpdaters, ethereumTransactionUpdater],
     [...starkexTransactionUpdaters, zksyncTransactionUpdater],
     clock,
     logger,
@@ -117,10 +128,9 @@ export function getActivityModule(
 
   const activityController = new ActivityController(
     [
-      ...layer2RpcTransactionUpdaters,
+      ...layer2BlockTransactionUpdaters,
       ...starkexTransactionUpdaters,
       zksyncTransactionUpdater,
-      loopringTransactionUpdater,
     ],
     ethereumTransactionUpdater,
   )
@@ -132,15 +142,14 @@ export function getActivityModule(
 
     materializedViewRefresher.start()
 
-    for (const updater of layer2RpcTransactionUpdaters) {
+    for (const updater of [
+      ...layer2BlockTransactionUpdaters,
+      ...starkexTransactionUpdaters,
+      zksyncTransactionUpdater,
+      ethereumTransactionUpdater,
+    ]) {
       updater.start()
     }
-    for (const updater of starkexTransactionUpdaters) {
-      updater.start()
-    }
-    zksyncTransactionUpdater.start()
-    loopringTransactionUpdater.start()
-    ethereumTransactionUpdater.start()
   }
 
   return {

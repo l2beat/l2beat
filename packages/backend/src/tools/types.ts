@@ -7,7 +7,7 @@ export function stringAsInt(fallback?: number) {
   }, z.number().int())
 }
 
-function branded<T extends z.ZodTypeAny, B>(
+export function branded<T extends z.ZodTypeAny, B>(
   schema: T,
   Brand: (t: z.TypeOf<T>) => B,
 ) {
