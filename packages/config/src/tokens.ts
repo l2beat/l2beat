@@ -898,6 +898,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('hop-hop-protocol'),
+    name: 'Hop',
+    coingeckoId: CoingeckoId('hop-protocol'),
+    address: EthereumAddress('0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC'),
+    symbol: 'HOP',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1663897247),
+    category: 'other',
+  },
+  {
     id: AssetId('heart-humans'),
     name: 'HUMANS',
     coingeckoId: CoingeckoId('humans-ai'),
