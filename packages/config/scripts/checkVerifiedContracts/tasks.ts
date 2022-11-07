@@ -7,7 +7,7 @@ import { VerificationMap } from './output'
 export async function verifyContracts(
   addresses: EthereumAddress[],
   previouslyVerified: Set<EthereumAddress>,
-  mamnuallyVerified: Set<EthereumAddress>,
+  manuallyVerified: Set<EthereumAddress>,
   etherscanClient: EtherscanClient,
   workersCount: number,
   logger: Logger,
@@ -26,7 +26,7 @@ export async function verifyContracts(
   )
 
   addresses.forEach((address) => {
-    if (previouslyVerified.has(address) || mamnuallyVerified.has(address)) {
+    if (previouslyVerified.has(address) || manuallyVerified.has(address)) {
       result[address.toString()] = true
     } else {
       taskQueue.addToBack(address)
