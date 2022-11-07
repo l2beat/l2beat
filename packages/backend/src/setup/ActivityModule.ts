@@ -131,7 +131,13 @@ export function getActivityModule(
       ...layer2BlockTransactionUpdaters,
       ...starkexTransactionUpdaters,
       zksyncTransactionUpdater,
-    ],
+    ].filter((updater) =>
+      config.projects.find(
+        (p) =>
+          p.projectId === updater.projectId &&
+          !p.transactionApi?.excludeFromActivityApi,
+      ),
+    ),
     ethereumTransactionUpdater,
   )
 

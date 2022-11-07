@@ -28,7 +28,8 @@ interface StarkexApi {
   sinceTimestamp: UnixTime
 }
 
-export type Layer2TransactionApi =
+export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApi
   | StarkexApi
   | AztecTransactionApi
+)
