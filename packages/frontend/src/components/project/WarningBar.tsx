@@ -11,7 +11,12 @@ export interface WarningBarProps {
   className?: string
 }
 
-export function WarningBar({ color, text, isCritical, className }: WarningBarProps) {
+export function WarningBar({
+  color,
+  text,
+  isCritical,
+  className,
+}: WarningBarProps) {
   const iconFill =
     color === 'red'
       ? 'fill-red-700 dark:fill-red-300'
@@ -19,7 +24,7 @@ export function WarningBar({ color, text, isCritical, className }: WarningBarPro
 
   return (
     <Callout
-    className={className}
+      className={className}
       color={color}
       icon={<ShieldIcon className={cx(iconFill)} />}
       body={

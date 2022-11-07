@@ -42,6 +42,15 @@ export function PermissionsSection() {
               'These addresses are the participants of the 2/3 Optimism MultiSig.',
           },
         ]}
+        verificationStatus={{
+          projects: {},
+          contracts: {
+            '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A': true,
+            '0x3041BA32f451F5850c147805F5521AC206421623': true,
+            '0x3bC453E5b3c941D1baD8F25E512772a50eE20AC1': false,
+            '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15': true,
+          },
+        }}
       />
     </div>
   )
