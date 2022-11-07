@@ -1,9 +1,13 @@
-import { Bridge, ProjectRisk } from '@l2beat/config'
+import { Bridge, CONTRACTS, ProjectRisk } from '@l2beat/config'
+import { VerificationStatus } from '@l2beat/types'
 
 import { RiskSectionProps } from '../../../components/project/RiskSection'
 import { groupRisks } from '../../../utils/project/groupRisks'
 
-export function getRiskSection(project: Bridge): RiskSectionProps {
+export function getRiskSection(
+  project: Bridge,
+  verificationStatus: VerificationStatus,
+): RiskSectionProps {
   const sections = [
     {
       id: 'principle-of-operation',
@@ -21,6 +25,13 @@ export function getRiskSection(project: Bridge): RiskSectionProps {
   }
   for (const risk of project.contracts?.risks ?? []) {
     risks.push({ ...risk, referencedId: 'contracts' })
+  }
+  // Explicit comparison to false because project might not exists in verification map at all.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+  if (verificationStatus.projects[project.id.toString()] === false) {
+    if (!risks.find((r) => r.text === CONTRACTS.UNVERIFIED_RISK.text)) {
+      risks.push({ ...CONTRACTS.UNVERIFIED_RISK, referencedId: 'contracts' })
+    }
   }
 
   return { riskGroups: groupRisks(risks) }
