@@ -53,6 +53,12 @@ export class AztecTransactionUpdater implements TransactionCounter {
   async updateBlock(blockNumber: number) {
     const block = await this.aztecClient.getBlock(blockNumber)
 
+    // We download all the blocks, but discard those that are more recent
+    // than clock.getLastHour() to avoid dealing with potential reorgs
+    if (block.timestamp.gt(this.clock.getLastHour())) {
+      return
+    }
+
     await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp: block.timestamp,
