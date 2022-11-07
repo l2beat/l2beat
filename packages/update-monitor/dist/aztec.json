@@ -1,0 +1,31 @@
+{
+  "name": "aztec",
+  "contracts": [
+    {
+      "name": "RollupProcessor",
+      "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
+        "verifier": "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1",
+        "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734"
+      }
+    },
+    {
+      "name": "TurboVerifier",
+      "address": "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "AztecFeeDistributor",
+      "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    }
+  ]
+}
