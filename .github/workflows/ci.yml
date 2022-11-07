@@ -56,7 +56,6 @@ jobs:
           node-version: 16.x
           cache: "yarn"
       - run: yarn --frozen-lockfile
-      - run: yarn check-verified-contracts
       - run: yarn build
       - run: yarn typecheck:ci
 
