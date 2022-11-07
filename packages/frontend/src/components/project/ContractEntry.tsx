@@ -50,8 +50,8 @@ export function ContractEntry({
         color={color}
         icon={icon}
         body={
-          <div>
-            <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-y-2 flex-wrap">
+            <div className="flex gap-x-2 flex-wrap">
               <strong>{contract.name}</strong>{' '}
               <EtherscanLink
                 address={contract.address}
@@ -59,7 +59,7 @@ export function ContractEntry({
                   isVerified === false ? 'text-red-700 dark:text-red-300' : '',
                 )}
               />
-              <div className="flex gap-1">
+              <div className="flex gap-x-1 flex-wrap">
                 {contract.links.map((x, i) => (
                   <React.Fragment key={i}>
                     {' '}
