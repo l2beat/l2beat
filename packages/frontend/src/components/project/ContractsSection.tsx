@@ -39,16 +39,15 @@ export function ContractsSection(props: ContractsSectionProps) {
       <h3 className="font-bold md:text-md">
         The system consists of the following smart contracts:
       </h3>
-      <ul className="list-none my-4 space-y-4">
+      <div className="flex flex-wrap gap-4 my-4">
         {props.contracts.map((contract, i) => (
-          <li key={i}>
-            <ContractEntry
-              contract={contract}
-              verificationStatus={props.verificationStatus}
-            />
-          </li>
+          <ContractEntry
+            key={i}
+            contract={contract}
+            verificationStatus={props.verificationStatus}
+          />
         ))}
-      </ul>
+      </div>
       {props.risks.length > 0 && (
         <>
           <p className="text-gray-860 dark:text-gray-400">
