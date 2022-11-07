@@ -5,6 +5,8 @@ import { Response } from 'node-fetch'
 
 import { AztecClient } from '../../../src/peripherals/aztec'
 
+const BASE_URL = 'base url'
+
 describe(AztecClient.name, () => {
   describe(AztecClient.prototype.getBlock.name, () => {
     it('gets block', async () => {
@@ -23,7 +25,7 @@ describe(AztecClient.name, () => {
             }),
           ),
       })
-      const aztecClient = new AztecClient(httpClient, 'aztec')
+      const aztecClient = new AztecClient(httpClient, BASE_URL)
       const result = await aztecClient.getBlock(42)
       expect(result).toEqual({
         number: 42,
@@ -36,7 +38,7 @@ describe(AztecClient.name, () => {
       const httpClient = mock<HttpClient>({
         fetch: async () => new Response(JSON.stringify({ foo: 'bar' })),
       })
-      const client = new AztecClient(httpClient, 'aztec')
+      const client = new AztecClient(httpClient, BASE_URL)
       await expect(client.getBlock(1)).toBeRejected()
     })
 
@@ -46,42 +48,8 @@ describe(AztecClient.name, () => {
           return new Response('foo', { status: 400 })
         },
       })
-      const aztecClient = new AztecClient(httpClient, 'aztec')
+      const aztecClient = new AztecClient(httpClient, BASE_URL)
       await expect(aztecClient.getBlock(1)).toBeRejected()
-    })
-
-    it('uses different url for version', async () => {
-      const mined = new Date()
-      const httpClient = mock<HttpClient>({
-        fetch: async () =>
-          new Response(
-            JSON.stringify({
-              data: {
-                rollup: {
-                  id: 42,
-                  mined,
-                  numTxs: 10,
-                },
-              },
-            }),
-          ),
-      })
-      const aztecClient = new AztecClient(httpClient, 'aztec')
-      const aztecConnectClient = new AztecClient(httpClient, 'aztecconnect')
-      await aztecClient.getBlock(42)
-      await aztecConnectClient.getBlock(42)
-      const [
-        {
-          args: [url1],
-        },
-        {
-          args: [url2],
-        },
-      ] = httpClient.fetch.calls
-      expect(url1).not.toEqual(url2)
-      const path = '/graphql?query={rollup(id:42){id mined numTxs}}'
-      expect(url1.endsWith(path))
-      expect(url2.endsWith(path))
     })
   })
 
@@ -104,7 +72,7 @@ describe(AztecClient.name, () => {
             }),
           ),
       })
-      const aztecClient = new AztecClient(httpClient, 'aztec')
+      const aztecClient = new AztecClient(httpClient, BASE_URL)
       const result = await aztecClient.getLatestBlock()
       expect(result).toEqual({
         number: 42,
@@ -117,7 +85,7 @@ describe(AztecClient.name, () => {
       const httpClient = mock<HttpClient>({
         fetch: async () => new Response(JSON.stringify({ foo: 'bar' })),
       })
-      const client = new AztecClient(httpClient, 'aztec')
+      const client = new AztecClient(httpClient, BASE_URL)
       await expect(client.getLatestBlock()).toBeRejected()
     })
 
@@ -127,44 +95,8 @@ describe(AztecClient.name, () => {
           return new Response('foo', { status: 400 })
         },
       })
-      const aztecClient = new AztecClient(httpClient, 'aztec')
+      const aztecClient = new AztecClient(httpClient, BASE_URL)
       await expect(aztecClient.getLatestBlock()).toBeRejected()
-    })
-
-    it('uses different url for version', async () => {
-      const mined = new Date()
-      const httpClient = mock<HttpClient>({
-        fetch: async () =>
-          new Response(
-            JSON.stringify({
-              data: {
-                rollups: [
-                  {
-                    id: 42,
-                    mined,
-                    numTxs: 10,
-                  },
-                ],
-              },
-            }),
-          ),
-      })
-      const aztecClient = new AztecClient(httpClient, 'aztec')
-      const aztecConnectClient = new AztecClient(httpClient, 'aztecconnect')
-      await aztecClient.getLatestBlock()
-      await aztecConnectClient.getLatestBlock()
-      const [
-        {
-          args: [url1],
-        },
-        {
-          args: [url2],
-        },
-      ] = httpClient.fetch.calls
-      expect(url1).not.toEqual(url2)
-      const path = '/graphql?query={rollups(take:1,skip:0){id mined numTxs}}'
-      expect(url1.endsWith(path))
-      expect(url2.endsWith(path))
     })
   })
 })

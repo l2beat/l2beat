@@ -84,7 +84,7 @@ export function getActivityModule(
     blockTransactionCountRepository,
     clock,
     logger,
-    config.transactionCountSync.aztecWorkQueueWorkers,
+    config,
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(

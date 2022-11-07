@@ -14,19 +14,14 @@ export interface Block {
   transactionCount: number
 }
 
-const API_URLS = {
-  aztec: 'https://api.aztec.network/falafel-mainnet',
-  aztecconnect: 'https://api.aztec.network/aztec-connect-prod/falafel',
-}
-
 export class AztecClient {
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly version: 'aztec' | 'aztecconnect',
+    private readonly url: string,
     callsPerMinute?: number,
   ) {
     const rateLimiter = new RateLimiter({
-      callsPerMinute: callsPerMinute ?? 3_000,
+      callsPerMinute: callsPerMinute ?? 60,
     })
     this.queryApi = rateLimiter.wrap(this.queryApi.bind(this))
   }
@@ -52,7 +47,7 @@ export class AztecClient {
   }
 
   private async queryApi(query: string): Promise<unknown> {
-    const url = `${API_URLS[this.version]}/graphql?query=${query}`
+    const url = `${this.url}/graphql?query=${query}`
     const response = await this.httpClient.fetch(url)
     assert(
       response.ok,

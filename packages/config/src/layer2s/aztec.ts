@@ -14,7 +14,7 @@ import { Layer2 } from './types'
 
 export const aztec: Layer2 = {
   type: 'layer2',
-  id: ProjectId('aztec'),
+  id: ProjectId.AZTEC,
   display: {
     name: 'Aztec',
     slug: 'aztec',
@@ -55,6 +55,11 @@ export const aztec: Layer2 = {
         sinceTimestamp: new UnixTime(1614799636),
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      url: 'https://api.aztec.network/falafel-mainnet',
+      callsPerMinute: 3_000,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
