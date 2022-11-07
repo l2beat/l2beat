@@ -10,6 +10,12 @@ interface RpcTransactionApi {
   startBlock?: number
 }
 
+interface AztecTransactionApi {
+  type: 'aztec'
+  url: string
+  callsPerMinute?: number
+}
+
 export type StarkexProduct =
   | 'dydx'
   | 'sorare'
@@ -22,4 +28,8 @@ interface StarkexApi {
   sinceTimestamp: UnixTime
 }
 
-export type Layer2TransactionApi = RpcTransactionApi | StarkexApi
+export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
+  | RpcTransactionApi
+  | StarkexApi
+  | AztecTransactionApi
+)
