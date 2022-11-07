@@ -14,21 +14,25 @@ export type VerificationMap = Record<string, boolean>
 export async function loadPreviouslyVerifiedContracts(
   filePath: string,
 ): Promise<Set<EthereumAddress>> {
-  if (!existsSync(filePath)) {
-    console.log('File with previously verified contracts not found.')
-    return new Set()
-  }
-
-  const data = await readFile(filePath, 'utf-8')
-  const parsed = FileStructure.parse(JSON.parse(data))
-  const contractAddresses = Object.keys(parsed.contracts)
+  const verified = await loadVerifiedJson(filePath)
+  const contractAddresses = Object.keys(verified.contracts)
   const verifiedAddresses = contractAddresses
-    .filter((a) => !!parsed.contracts[a])
+    .filter((a) => !!verified.contracts[a])
     .map(EthereumAddress)
   console.log(
     `Loaded ${verifiedAddresses.length} previously verified contracts.`,
   )
   return new Set(verifiedAddresses)
+}
+
+export async function loadVerifiedJson(
+  filePath: string,
+): Promise<FileStructure> {
+  if (!existsSync(filePath)) {
+    return { projects: {}, contracts: {} }
+  }
+  const data = await readFile(filePath, 'utf-8')
+  return FileStructure.parse(JSON.parse(data))
 }
 
 export async function saveResult(
