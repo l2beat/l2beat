@@ -132,7 +132,7 @@ export function getActivityModule(
       ...starkexTransactionUpdaters,
       zksyncTransactionUpdater,
     ].filter((updater) =>
-      config.projects.find(
+      config.projects.some(
         (p) =>
           p.projectId === updater.projectId &&
           !p.transactionApi?.excludeFromActivityApi,
