@@ -1,7 +1,6 @@
 import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { OUTPUT_FILEPATH } from '../../scripts/checkVerifiedContracts'
 import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
