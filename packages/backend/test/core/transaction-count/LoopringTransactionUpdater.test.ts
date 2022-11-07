@@ -14,8 +14,8 @@ describe(LoopringTransactionUpdater.name, () => {
     it('downloads and saves a block to DB', async () => {
       const LoopringClient = mock<LoopringClient>({
         getBlock: async (blockNumber) => ({
-          blockId: blockNumber,
-          createdAt: TIME_0,
+          number: blockNumber,
+          timestamp: TIME_0,
           transactions: 13,
         }),
       })
@@ -60,14 +60,14 @@ describe(LoopringTransactionUpdater.name, () => {
     it('skips too new blocks', async () => {
       const TIME_1 = TIME_0.add(2, 'hours')
       const block1 = {
-        blockId: 1,
-        createdAt: TIME_0,
+        number: 1,
+        timestamp: TIME_0,
         transactions: 13,
       }
       const LoopringClient = mock<LoopringClient>({
         getBlock: mockFn().resolvesToOnce(block1).resolvesToOnce({
-          blockId: 2,
-          createdAt: TIME_1,
+          number: 2,
+          timestamp: TIME_1,
           transactions: 11,
         }),
       })
@@ -94,8 +94,8 @@ describe(LoopringTransactionUpdater.name, () => {
           {
             projectId: ProjectId('fake-project'),
             count: block1.transactions,
-            timestamp: block1.createdAt,
-            blockNumber: block1.blockId,
+            timestamp: block1.timestamp,
+            blockNumber: block1.number,
           },
         ],
       ])

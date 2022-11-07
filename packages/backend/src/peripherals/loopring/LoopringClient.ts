@@ -4,10 +4,15 @@ import {
   Logger,
   RateLimiter,
 } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 
-import { LoopringResponse } from './schemas'
+import { LoopringBlock } from './schemas'
 
-type Block = number | 'finalized'
+interface Block {
+  number: number
+  timestamp: UnixTime
+  transactions: number
+}
 
 interface LoopringClientOpts {
   callsPerMinute?: number
@@ -28,19 +33,17 @@ export class LoopringClient {
     }
   }
 
-  async getFinalizedBlock() {
-    const block = await this.call('finalized')
-    return {
-      number: block.blockId,
-      timestamp: block.createdAt,
-    }
+  async getFinalizedBlock(): Promise<Block> {
+    const loopringBlock = await this.call('finalized')
+    return toBlock(loopringBlock)
   }
 
-  async getBlock(blockNumber: number) {
-    return await this.call(blockNumber)
+  async getBlock(blockNumber: number): Promise<Block> {
+    const loopringBlock = await this.call(blockNumber)
+    return toBlock(loopringBlock)
   }
 
-  private async call(block: Block) {
+  private async call(block: number | 'finalized') {
     const query = new URLSearchParams({ id: block.toString() })
     const url = `https://api3.loopring.io/api/v3/block/getBlock?${query.toString()}`
 
@@ -67,7 +70,7 @@ export class LoopringClient {
     }
 
     const json: unknown = JSON.parse(text)
-    const loopringResponse = LoopringResponse.safeParse(json)
+    const loopringResponse = LoopringBlock.safeParse(json)
 
     if (!loopringResponse.success) {
       const message = 'Invalid Loopring response.'
@@ -80,12 +83,24 @@ export class LoopringClient {
     return loopringResponse.data
   }
 
-  private recordError(block: Block, timeMs: number, message: string) {
+  private recordError(
+    block: number | 'finalized',
+    timeMs: number,
+    message: string,
+  ) {
     this.logger.debug({
       type: 'error',
       message,
       timeMs,
       block: block.toString(),
     })
+  }
+}
+
+function toBlock(loopringBlock: LoopringBlock): Block {
+  return {
+    number: loopringBlock.blockId,
+    timestamp: loopringBlock.createdAt,
+    transactions: loopringBlock.transactions,
   }
 }

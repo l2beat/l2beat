@@ -22,8 +22,8 @@ describe(LoopringClient.name, () => {
 
       const result = await loopringClient.getBlock(42)
       expect(result).toEqual({
-        blockId: 42,
-        createdAt: new UnixTime(1),
+        number: 42,
+        timestamp: new UnixTime(1),
         transactions: 1,
       })
     })

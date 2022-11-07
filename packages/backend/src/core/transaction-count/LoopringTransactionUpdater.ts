@@ -54,13 +54,13 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     // We download all the blocks, but discard those that are more recent
     // than clock.getLastHour() to avoid dealing with potential reorgs
-    if (block.createdAt.gt(this.clock.getLastHour())) {
+    if (block.timestamp.gt(this.clock.getLastHour())) {
       return
     }
 
     await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
-      timestamp: block.createdAt,
+      timestamp: block.timestamp,
       blockNumber,
       count: block.transactions,
     })
