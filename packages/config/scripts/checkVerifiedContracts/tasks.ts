@@ -7,17 +7,13 @@ import { VerificationMap } from './output'
 export async function verifyContracts(
   addresses: EthereumAddress[],
   previouslyVerified: Set<EthereumAddress>,
+  manuallyVerified: Set<EthereumAddress>,
   etherscanClient: EtherscanClient,
   workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
   logger.info(`Processing ${addresses.length} addresses.`)
   const result: VerificationMap = {}
-
-  // Copy previously verified contracts directly to result
-  addresses
-    .filter((a) => previouslyVerified.has(a))
-    .forEach((a) => (result[a.toString()] = true))
 
   const { taskQueue, queueStatus } = prepareTaskQueueWithQuickFail(
     async (address: EthereumAddress) => {
@@ -29,10 +25,13 @@ export async function verifyContracts(
     workersCount,
   )
 
-  // Only check contracts that were not already verified
-  addresses
-    .filter((a) => !previouslyVerified.has(a))
-    .forEach((a) => taskQueue.addToBack(a))
+  addresses.forEach((address) => {
+    if (previouslyVerified.has(address) || manuallyVerified.has(address)) {
+      result[address.toString()] = true
+    } else {
+      taskQueue.addToBack(address)
+    }
+  })
 
   await taskQueue.waitTilEmpty()
   if (queueStatus.errorOccurred) {

@@ -1,4 +1,5 @@
 import { Logger, LogLevel } from '@l2beat/common'
+import { EthereumAddress } from '@l2beat/types'
 import { config as dotenv } from 'dotenv'
 
 import { bridges, layer2s } from '../../src'
@@ -7,6 +8,7 @@ import {
   getUniqueContractsForAllProjects,
 } from './addresses'
 import { getEtherscanClient } from './etherscan'
+import manuallyVerified from './manuallyVerified.json'
 import {
   loadPreviouslyVerifiedContracts,
   saveResult,
@@ -37,6 +39,7 @@ export async function main() {
   const addressVerificationMap = await verifyContracts(
     addresses,
     previouslyVerified,
+    new Set(manuallyVerified.map(EthereumAddress)),
     etherscanClient,
     workersCount,
     logger,
