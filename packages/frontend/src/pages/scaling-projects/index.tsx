@@ -1,7 +1,7 @@
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 import React from 'react'
 
 import { Config } from '../../build/config'
+import { PagesData } from '../../build/types'
 import { PageWrapper } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { getProps } from './props'
