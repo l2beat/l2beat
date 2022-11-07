@@ -11,7 +11,7 @@ export function BulletIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Unverified contract icon"
       {...props}
     >
-      <circle cx="10" cy="15" r="2.75" fill="white" />
+      <circle cx="10" cy="15" r="2.75" />
     </Icon>
   )
 }

@@ -41,7 +41,7 @@ export function ContractEntry({
     isVerified === false || areLinksUnverified ? (
       <UnverifiedIcon className={cx('fill-red-700 dark:fill-red-300')} />
     ) : (
-      <BulletIcon></BulletIcon>
+      <BulletIcon className={cx('fill-black dark:fill-white')}></BulletIcon>
     )
 
   return (
