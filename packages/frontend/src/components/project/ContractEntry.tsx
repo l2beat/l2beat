@@ -20,13 +20,11 @@ export interface TechnologyContract {
 }
 
 export interface ContractEntryProps {
-  key: number
   contract: TechnologyContract
   verificationStatus: VerificationStatus
 }
 
 export function ContractEntry({
-  key,
   contract,
   verificationStatus,
 }: ContractEntryProps) {
@@ -47,47 +45,45 @@ export function ContractEntry({
     )
 
   return (
-    <div key={key}>
-      <Callout
-        color={color}
-        icon={icon}
-        body={
-          <div className="flex gap-2 flex-wrap">
-            <strong>{contract.name}</strong>{' '}
-            {contract.address && (
-              <EtherscanLink
-                address={contract.address}
+    <Callout
+      color={color}
+      icon={icon}
+      body={
+        <div className="flex gap-2 flex-wrap">
+          <strong>{contract.name}</strong>{' '}
+          {contract.address && (
+            <EtherscanLink
+              address={contract.address}
+              className={cx(
+                isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+              )}
+            />
+          )}
+          {contract.links.map((x, i) => (
+            <React.Fragment key={i}>
+              {' '}
+              <OutLink
                 className={cx(
-                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+                  'text-link underline',
+                  verificationStatus.contracts[x.address] === false
+                    ? 'text-red-700 dark:text-red-300'
+                    : '',
                 )}
-              />
-            )}
-            {contract.links.map((x, i) => (
-              <React.Fragment key={i}>
-                {' '}
-                <OutLink
-                  className={cx(
-                    'text-link underline',
-                    verificationStatus.contracts[x.address] === false
-                      ? 'text-red-700 dark:text-red-300'
-                      : '',
-                  )}
-                  href={x.href}
-                >
-                  {x.name}
-                </OutLink>
-              </React.Fragment>
-            ))}
-            {contract.description && (
-              <div>
-                <p className="text-gray-860 dark:text-gray-400">
-                  {contract.description}
-                </p>
-              </div>
-            )}
-          </div>
-        }
-      />
-    </div>
+                href={x.href}
+              >
+                {x.name}
+              </OutLink>
+            </React.Fragment>
+          ))}
+          {contract.description && (
+            <div>
+              <p className="text-gray-860 dark:text-gray-400">
+                {contract.description}
+              </p>
+            </div>
+          )}
+        </div>
+      }
+    />
   )
 }

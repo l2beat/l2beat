@@ -21,11 +21,12 @@ export function PermissionsSection({
       </h3>
       <div className="flex flex-wrap gap-4 my-4">
         {permissions.map(toContract).map((contract, i) => (
-          <ContractEntry
-            key={i}
-            contract={contract}
-            verificationStatus={verificationStatus}
-          />
+          <React.Fragment key={i}>
+            <ContractEntry
+              contract={contract}
+              verificationStatus={verificationStatus}
+            />
+          </React.Fragment>
         ))}
       </div>
     </Section>

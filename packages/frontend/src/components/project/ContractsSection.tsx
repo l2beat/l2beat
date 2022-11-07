@@ -41,11 +41,12 @@ export function ContractsSection(props: ContractsSectionProps) {
       </h3>
       <div className="flex flex-wrap gap-4 my-4">
         {props.contracts.map((contract, i) => (
-          <ContractEntry
-            key={i}
-            contract={contract}
-            verificationStatus={props.verificationStatus}
-          />
+          <React.Fragment key={i}>
+            <ContractEntry
+              contract={contract}
+              verificationStatus={props.verificationStatus}
+            />
+          </React.Fragment>
         ))}
       </div>
       {props.risks.length > 0 && (
