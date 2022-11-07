@@ -55,7 +55,9 @@ export function ContractEntry({
               <strong>{contract.name}</strong>{' '}
               <EtherscanLink
                 address={contract.address}
-                className={cx(isVerified === false ? 'text-red-300' : '')}
+                className={cx(
+                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+                )}
               />
               <div className="flex gap-1">
                 {contract.links.map((x, i) => (
@@ -65,7 +67,7 @@ export function ContractEntry({
                       className={cx(
                         'text-link underline',
                         verificationStatus.contracts[x.address] === false
-                          ? 'text-red-300'
+                          ? 'text-red-700 dark:text-red-300'
                           : '',
                       )}
                       href={x.href}
