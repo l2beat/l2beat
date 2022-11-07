@@ -12,7 +12,6 @@ To run or develop the backend you need to install and build its dependencies. Yo
 yarn
 yarn build
 ```
-//test
 ### Database
 
 After the nodejs dependencies have been installed you should also install a Postgres database. The recommended way is through docker using the commands below.
