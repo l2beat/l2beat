@@ -52,38 +52,32 @@ export function ContractEntry({
         color={color}
         icon={icon}
         body={
-          <div className="flex gap-y-2 flex-wrap">
-            <div className="flex gap-x-2 flex-wrap">
-              <strong>{contract.name}</strong>{' '}
-              {contract.address && (
-                <EtherscanLink
-                  address={contract.address}
+          <div className="flex gap-2 flex-wrap">
+            <strong>{contract.name}</strong>{' '}
+            {contract.address && (
+              <EtherscanLink
+                address={contract.address}
+                className={cx(
+                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+                )}
+              />
+            )}
+            {contract.links.map((x, i) => (
+              <React.Fragment key={i}>
+                {' '}
+                <OutLink
                   className={cx(
-                    isVerified === false
+                    'text-link underline',
+                    verificationStatus.contracts[x.address] === false
                       ? 'text-red-700 dark:text-red-300'
                       : '',
                   )}
-                />
-              )}
-              <div className="flex gap-x-1 flex-wrap">
-                {contract.links.map((x, i) => (
-                  <React.Fragment key={i}>
-                    {' '}
-                    <OutLink
-                      className={cx(
-                        'text-link underline',
-                        verificationStatus.contracts[x.address] === false
-                          ? 'text-red-700 dark:text-red-300'
-                          : '',
-                      )}
-                      href={x.href}
-                    >
-                      {x.name}
-                    </OutLink>
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
+                  href={x.href}
+                >
+                  {x.name}
+                </OutLink>
+              </React.Fragment>
+            ))}
             {contract.description && (
               <div>
                 <p className="text-gray-860 dark:text-gray-400">
