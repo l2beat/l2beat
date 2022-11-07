@@ -12,15 +12,15 @@ export const debridge: Bridge = {
     slug: 'debridge',
     links: {
       websites: ['https://debridge.finance'],
-      documentation: [‘https://docs.debridge.finance’],
+      documentation: ['https://docs.debridge.finance'],
       repositories: ['https://github.com/debridge-finance'],
       explorers: ['https://explorer.debridge.finance'],
       socialMedia: [
         'https://twitter.com/deBridgeFinance',
         'https://discord.gg/debridge',
         'https://blog.debridge.finance',
-       ‘https://reddit.com/r/debridge’,
-       ‘https://linkedin.com/company/debridge-finance’
+       'https://reddit.com/r/debridge’,
+       'https://linkedin.com/company/debridge-finance’
       ],
     },
     description:
@@ -87,7 +87,7 @@ export const debridge: Bridge = {
       {
         name: 'DeBridgeGate',
         description:
-          “The main point of cross-chain interactions coming from users and protocols. Its "send" method enables sending arbitrary messages and assets cross-chain in one transaction.”,
+          'The main point of cross-chain interactions coming from users and protocols. Its "send" method enables sending arbitrary messages and assets cross-chain in one transaction.”,
         address: '0x24455aa55ded7728783c9474be8ea2f5c935f8eb',
       },
          ],
