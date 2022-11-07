@@ -10,7 +10,7 @@ import { EtherscanLink } from './EtherscanLink'
 
 export interface TechnologyContract {
   name: string
-  address: string
+  address?: string
   description?: string
   links: {
     name: string
@@ -34,7 +34,9 @@ export function ContractEntry({
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
-  const isVerified = verificationStatus.contracts[contract.address]
+  const isVerified = contract.address
+    ? verificationStatus.contracts[contract.address]
+    : undefined
 
   const color = isVerified === false || areLinksUnverified ? 'red' : undefined
   const icon =
@@ -53,12 +55,16 @@ export function ContractEntry({
           <div className="flex gap-y-2 flex-wrap">
             <div className="flex gap-x-2 flex-wrap">
               <strong>{contract.name}</strong>{' '}
-              <EtherscanLink
-                address={contract.address}
-                className={cx(
-                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
-                )}
-              />
+              {contract.address && (
+                <EtherscanLink
+                  address={contract.address}
+                  className={cx(
+                    isVerified === false
+                      ? 'text-red-700 dark:text-red-300'
+                      : '',
+                  )}
+                />
+              )}
               <div className="flex gap-x-1 flex-wrap">
                 {contract.links.map((x, i) => (
                   <React.Fragment key={i}>
