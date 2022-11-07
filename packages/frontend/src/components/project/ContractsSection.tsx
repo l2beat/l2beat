@@ -39,7 +39,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       <h3 className="font-bold md:text-md">
         The system consists of the following smart contracts:
       </h3>
-      <ul className="list-disc my-4 pl-8 space-y-4">
+      <ul className="list-none my-4 space-y-4">
         {props.contracts.map((contract, i) => (
           <li key={i}>
             <ContractEntry

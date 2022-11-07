@@ -1,8 +1,11 @@
 import { VerificationStatus } from '@l2beat/types'
+import cx from 'classnames'
 import React from 'react'
 
+import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { OutLink } from '../OutLink'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
+import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 
 export interface TechnologyContract {
@@ -31,36 +34,48 @@ export function ContractEntry({
 
   const isVerified = verificationStatus.contracts[contract.address]
 
-  return (
-    <>
-      <div className="flex gap-2 flex-wrap">
-        <strong>{contract.name}</strong>{' '}
-        <EtherscanLink address={contract.address} />
-        <div className="flex gap-1">
-          {contract.links.map((x, i) => (
-            <React.Fragment key={i}>
-              {' '}
-              <OutLink className="text-link underline" href={x.href}>
-                {x.name}
-              </OutLink>
-            </React.Fragment>
-          ))}
-          {isVerified === false ||
-            (areLinksUnverified && (
-              <UnverifiedContractsWarning
-                className={'absolute translate-y-1/4'}
-                tooltip="Source code is not verified."
-              ></UnverifiedContractsWarning>
-            ))}
-        </div>
-      </div>
-      {contract.description && (
+  return isVerified === false || areLinksUnverified ? (
+    <Callout
+      color="red"
+      icon={<UnverifiedIcon className={cx('fill-red-700 dark:fill-red-300')} />}
+      body={
         <div>
-          <p className="text-gray-860 dark:text-gray-400">
-            {contract.description}
-          </p>
+          <div className="flex gap-2 flex-wrap">
+            <strong>{contract.name}</strong>{' '}
+            <EtherscanLink
+              address={contract.address}
+              className={cx(isVerified === false ? 'text-red-300' : '')}
+            />
+            <div className="flex gap-1">
+              {contract.links.map((x, i) => (
+                <React.Fragment key={i}>
+                  {' '}
+                  <OutLink
+                    className={cx(
+                      'text-link underline',
+                      verificationStatus.contracts[x.address] === false
+                        ? 'text-red-300'
+                        : '',
+                    )}
+                    href={x.href}
+                  >
+                    {x.name}
+                  </OutLink>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+          {contract.description && (
+            <div>
+              <p className="text-gray-860 dark:text-gray-400">
+                {contract.description}
+              </p>
+            </div>
+          )}
         </div>
-      )}
-    </>
+      }
+    ></Callout>
+  ) : (
+    <div>verified</div>
   )
 }
