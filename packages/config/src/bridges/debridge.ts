@@ -20,7 +20,7 @@ export const debridge: Bridge = {
         'https://discord.gg/debridge',
         'https://blog.debridge.finance',
        'https://reddit.com/r/debridge’,
-       'https://linkedin.com/company/debridge-finance’
+       'https://linkedin.com/company/debridge-finance’,
       ],
     },
     description:
