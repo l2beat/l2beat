@@ -14,7 +14,7 @@ import { Layer2 } from './types'
 
 export const aztec: Layer2 = {
   type: 'layer2',
-  id: ProjectId.AZTEC,
+  id: ProjectId('aztec'),
   display: {
     name: 'Aztec',
     slug: 'aztec',
@@ -56,7 +56,7 @@ export const aztec: Layer2 = {
       },
     ],
     transactionApi: {
-      type: 'rpc',
+      type: 'aztec',
       url: 'https://api.aztec.network/falafel-mainnet',
       callsPerMinute: 3_000,
     },
