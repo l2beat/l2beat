@@ -24,7 +24,7 @@ export function WarningBar({
 
   return (
     <Callout
-      className={className}
+      className={cx('p-4', className)}
       color={color}
       icon={<ShieldIcon className={cx(iconFill)} />}
       body={

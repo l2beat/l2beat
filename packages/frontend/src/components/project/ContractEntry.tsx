@@ -46,6 +46,7 @@ export function ContractEntry({
 
   return (
     <Callout
+      className={cx(color === 'red' ? 'p-4' : 'px-4')}
       color={color}
       icon={icon}
       body={
