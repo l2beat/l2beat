@@ -10,13 +10,13 @@ export function getPermissionsSection(
 ): PermissionsSectionProps | undefined {
   return (
     project.permissions && {
-      permissions: project.permissions.map(toContract),
+      permissions: project.permissions.map(toTechnologyContract),
       verificationStatus,
     }
   )
 }
 
-function toContract(permission: ProjectPermission): TechnologyContract {
+export function toTechnologyContract(permission: ProjectPermission): TechnologyContract {
   const links = permission.accounts.slice(1).map((account) => ({
     name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
     address: account.address,

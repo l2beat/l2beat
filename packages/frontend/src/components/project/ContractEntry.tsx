@@ -3,8 +3,8 @@ import cx from 'classnames'
 import React from 'react'
 
 import { BulletIcon } from '../icons/symbols/BulletIcon'
-import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { OutLink } from '../OutLink'
+import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 
@@ -39,7 +39,7 @@ export function ContractEntry({
   const color = isVerified === false || areLinksUnverified ? 'red' : undefined
   const icon =
     isVerified === false || areLinksUnverified ? (
-      <UnverifiedIcon className={cx('fill-red-700 dark:fill-red-300')} />
+      <UnverifiedContractsWarning tooltip="Source code is not verified" />
     ) : (
       <BulletIcon className={cx('fill-black dark:fill-white')} />
     )
