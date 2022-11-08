@@ -6,9 +6,9 @@ import {
 } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
-import { LoopringBlock } from './schemas'
+import { LoopringBlockResponse } from './schemas'
 
-interface Block {
+interface LoopringBlock {
   number: number
   timestamp: UnixTime
   transactions: number
@@ -33,12 +33,12 @@ export class LoopringClient {
     }
   }
 
-  async getFinalizedBlock(): Promise<Block> {
+  async getFinalizedBlock(): Promise<LoopringBlock> {
     const loopringBlock = await this.call('finalized')
     return toBlock(loopringBlock)
   }
 
-  async getBlock(blockNumber: number): Promise<Block> {
+  async getBlock(blockNumber: number): Promise<LoopringBlock> {
     const loopringBlock = await this.call(blockNumber)
     return toBlock(loopringBlock)
   }
@@ -70,7 +70,7 @@ export class LoopringClient {
     }
 
     const json: unknown = JSON.parse(text)
-    const loopringResponse = LoopringBlock.safeParse(json)
+    const loopringResponse = LoopringBlockResponse.safeParse(json)
 
     if (!loopringResponse.success) {
       const message = 'Invalid Loopring response.'
@@ -97,7 +97,7 @@ export class LoopringClient {
   }
 }
 
-function toBlock(loopringBlock: LoopringBlock): Block {
+function toBlock(loopringBlock: LoopringBlockResponse): LoopringBlock {
   return {
     number: loopringBlock.blockId,
     timestamp: loopringBlock.createdAt,
