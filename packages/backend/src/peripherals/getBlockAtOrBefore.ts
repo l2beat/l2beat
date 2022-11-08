@@ -5,13 +5,13 @@ export interface Block {
   timestamp: number
 }
 
-export async function getBlockAtOrBefore(
+export async function getBlockAtOrBefore<T extends Block>(
   timestamp: UnixTime,
   start: number,
   end: number,
-  getBlock: (number: number) => Promise<Block>,
-): Promise<Block> {
-  let [startBlock, endBlock] = await Promise.all([
+  getBlock: (number: number) => Promise<T>,
+): Promise<T> {
+  let [startBlock, endBlock]: T[] = await Promise.all([
     getBlock(start),
     getBlock(end),
   ])
