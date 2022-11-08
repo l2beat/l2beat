@@ -39,7 +39,10 @@ export function ContractEntry({
   const color = isVerified === false || areLinksUnverified ? 'red' : undefined
   const icon =
     isVerified === false || areLinksUnverified ? (
-      <UnverifiedContractsWarning className='mt-[3px]' tooltip="Source code is not verified" />
+      <UnverifiedContractsWarning
+        className="mt-[3px]"
+        tooltip="Source code is not verified"
+      />
     ) : (
       <BulletIcon className={cx('fill-black dark:fill-white')} />
     )
