@@ -76,7 +76,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
 
     await this.blockQueue.waitTilEmpty()
 
-    this.latestBlock = await this.loopringClient.getFinalizedBlock()
+    this.latestBlock = await this.loopringClient.getLatestBlock()
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
       1,
@@ -98,7 +98,7 @@ export class LoopringTransactionUpdater implements TransactionCounter {
         this.projectId,
       )
     if (!this.latestBlock) {
-      this.latestBlock = await this.loopringClient.getFinalizedBlock()
+      this.latestBlock = await this.loopringClient.getLatestBlock()
     }
     return getFilledDailyCounts(counts, this.latestBlock.timestamp)
   }

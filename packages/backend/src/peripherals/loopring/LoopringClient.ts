@@ -33,7 +33,7 @@ export class LoopringClient {
     }
   }
 
-  async getFinalizedBlock(): Promise<LoopringBlock> {
+  async getLatestBlock(): Promise<LoopringBlock> {
     const loopringBlock = await this.call('finalized')
     return toBlock(loopringBlock)
   }
