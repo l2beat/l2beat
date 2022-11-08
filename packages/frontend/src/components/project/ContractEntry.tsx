@@ -61,20 +61,18 @@ export function ContractEntry({
             />
           )}
           {contract.links.map((x, i) => (
-            <React.Fragment key={i}>
-              {' '}
-              <OutLink
-                className={cx(
-                  'text-link underline',
-                  verificationStatus.contracts[x.address] === false
-                    ? 'text-red-700 dark:text-red-300'
-                    : '',
-                )}
-                href={x.href}
-              >
-                {x.name}
-              </OutLink>
-            </React.Fragment>
+            <OutLink
+              key={i}
+              className={cx(
+                'text-link underline',
+                verificationStatus.contracts[x.address] === false
+                  ? 'text-red-700 dark:text-red-300'
+                  : '',
+              )}
+              href={x.href}
+            >
+              {x.name}
+            </OutLink>
           ))}
           {contract.description && (
             <div>
