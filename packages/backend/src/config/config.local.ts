@@ -51,21 +51,21 @@ export function getLocalConfig(): Config {
         workQueueWorkers: 1,
         projects: {
           ethereum: {
-            callsPerMinute: 60 / 5,
+            callsPerMinute: 60 * 10,
             url: getEnv(
               'ACTIVITY_ETHEREUM_URL',
               'https://eth-mainnet.alchemyapi.io/v2/demo',
             ),
           },
           optimism: {
-            callsPerMinute: 60 / 5,
+            callsPerMinute: 60 * 10,
             url: getEnv(
               'ACTIVITY_OPTIMISM_URL',
               'https://mainnet.optimism.io/',
             ),
           },
           arbitrum: {
-            callsPerMinute: 60 / 5,
+            callsPerMinute: 60 * 10,
             url: getEnv(
               'ACTIVITY_ARBITRUM_URL',
               'https://arb1.arbitrum.io/rpc',

@@ -1,8 +1,9 @@
-import { Cache, InMemoryCacheBackend, Logger, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { AssessCount } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
+import { waitUntilDefined } from '../../tools/waitUntilDefined'
 import { Clock } from '../Clock'
 import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { RpcClient } from './RpcClient'
@@ -53,8 +54,6 @@ export class RpcTransactionUpdater implements TransactionCounter {
     this.assessCount = opts?.assessCount ?? identity
     this.startBlock = opts?.startBlock ?? 0
     this.workQueueSizeLimit = opts?.workQueueSizeLimit ?? 200_000
-    const cache = new Cache(new InMemoryCacheBackend())
-    cache.wrapMethod(rpcClient, 'getBlockAtOrBefore')
   }
 
   start() {
@@ -89,7 +88,7 @@ export class RpcTransactionUpdater implements TransactionCounter {
 
     this.latestBlock = await this.rpcClient.getBlockAtOrBefore(
       this.clock.getLastHour(),
-      this.latestBlock?.number,
+      await this.getLatestBlockSearchStart(),
     )
 
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
@@ -111,20 +110,19 @@ export class RpcTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
+    const start = Date.now()
+    this.logger.info('Daily count started')
     const counts =
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
       )
-    if (!this.latestBlock) {
-      this.latestBlock = await this.rpcClient.getBlockAtOrBefore(
-        this.clock.getLastHour(),
-        undefined,
-      )
-    }
-    return getFilledDailyCounts(
+    const latestBlock = await waitUntilDefined(() => this.latestBlock)
+    const result = getFilledDailyCounts(
       counts,
-      new UnixTime(this.latestBlock.timestamp),
+      new UnixTime(latestBlock.timestamp),
     )
+    this.logger.info('Daily count finished', { timeMs: Date.now() - start })
+    return result
   }
 
   async getStatus() {
@@ -140,5 +138,20 @@ export class RpcTransactionUpdater implements TransactionCounter {
         : null,
       fullySyncedTip: fullySyncedTip?.timestamp.toDate().toISOString() ?? null,
     }
+  }
+
+  private async getLatestBlockSearchStart() {
+    // Some blockchains tend to get big in terms of blocks. Speed up search
+    // as much as we can by setting search space start point (ordered by priority):
+    // 1. Last search result (optimistic, most-common),
+    // 2. Max fetched block (start of the application - no result in memory yet),
+    // 3. Start block (first call ever)
+    return (
+      this.latestBlock?.number ??
+      (await this.blockTransactionCountRepository.getMaxBlockNumberByProject(
+        this.projectId,
+      )) ??
+      this.startBlock
+    )
   }
 }

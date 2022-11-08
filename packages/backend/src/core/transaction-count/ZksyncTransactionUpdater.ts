@@ -6,6 +6,7 @@ import {
   ZksyncTransactionRepository,
 } from '../../peripherals/database/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../peripherals/zksync'
+import { waitUntilDefined } from '../../tools/waitUntilDefined'
 import { Clock } from '../Clock'
 import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { TransactionCounter } from './TransactionCounter'
@@ -96,11 +97,13 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
+    const start = Date.now()
+    this.logger.info('Daily count started')
     const counts = await this.zksyncTransactionRepository.getDailyCounts()
-    if (!this.latestBlock) {
-      this.latestBlock = await this.zksyncClient.getLatestBlock()
-    }
-    return getFilledDailyCounts(counts, this.latestBlock.timestamp)
+    const latestBlock = await waitUntilDefined(() => this.latestBlock)
+    const result = getFilledDailyCounts(counts, latestBlock.timestamp)
+    this.logger.info('Daily count finished', { timeMs: Date.now() - start })
+    return result
   }
 
   async getStatus() {

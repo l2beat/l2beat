@@ -97,9 +97,14 @@ export class StarkexTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return this.starkexTransactionCountRepository.getDailyCountsByProject(
-      this.projectId,
-    )
+    const start = Date.now()
+    this.logger.info('Daily count started')
+    const counts =
+      await this.starkexTransactionCountRepository.getDailyCountsByProject(
+        this.projectId,
+      )
+    this.logger.info('Daily count finished', { timeMs: Date.now() - start })
+    return counts
   }
 
   async getStatus() {

@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { LoopringClient } from '../../peripherals/loopring'
+import { waitUntilDefined } from '../../tools/waitUntilDefined'
 import { Clock } from '../Clock'
 import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { TransactionCounter } from './TransactionCounter'
@@ -93,14 +94,16 @@ export class LoopringTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
+    const start = Date.now()
+    this.logger.info('Daily count started')
     const counts =
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
       )
-    if (!this.latestBlock) {
-      this.latestBlock = await this.loopringClient.getLatestBlock()
-    }
-    return getFilledDailyCounts(counts, this.latestBlock.timestamp)
+    const latestBlock = await waitUntilDefined(() => this.latestBlock)
+    const result = getFilledDailyCounts(counts, latestBlock.timestamp)
+    this.logger.info('Daily count finished', { timeMs: Date.now() - start })
+    return result
   }
 
   async getStatus() {

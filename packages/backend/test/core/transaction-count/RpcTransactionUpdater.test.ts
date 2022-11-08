@@ -24,6 +24,7 @@ describe(RpcTransactionUpdater.name, () => {
             [5, 5],
           ],
           add: async () => '',
+          getMaxBlockNumberByProject: async () => 4,
         })
       const clock = mock<Clock>({
         onNewHour: (callback) => {

@@ -26,12 +26,14 @@ export class EthereumClient {
   async getBlockAtOrBefore(timestamp: UnixTime, start = 0) {
     const end = await this.getBlockNumber()
 
-    return await getBlockAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlock.bind(this),
-    )
+    return await getBlockAtOrBefore(timestamp, start, end, (number) => {
+      this.logger.info('Bin searching block number', {
+        number,
+        start,
+        timestamp: timestamp.toString(),
+      })
+      return this.getBlock(number)
+    })
   }
 
   async getBlock(blockNumber: number) {

@@ -1,9 +1,11 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { AztecClient } from '../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
+import { waitUntilDefined } from '../../tools/waitUntilDefined'
 import { Clock } from '../Clock'
+import { getFilledDailyCounts } from './getFilledDailyCounts'
 import { TransactionCounter } from './TransactionCounter'
 import { BACK_OFF_AND_DROP } from './utils'
 
@@ -14,7 +16,7 @@ interface AztecTransactionUpdaterOpts {
 export class AztecTransactionUpdater implements TransactionCounter {
   private readonly updateQueue: TaskQueue<void>
   private readonly blockQueue: TaskQueue<number>
-  private latestBlock?: number
+  private latestBlock?: { number: number; timestamp: UnixTime }
 
   constructor(
     private readonly aztecClient: AztecClient,
@@ -78,11 +80,11 @@ export class AztecTransactionUpdater implements TransactionCounter {
     await this.blockQueue.waitTilEmpty()
 
     const latestBlock = await this.aztecClient.getLatestBlock()
-    this.latestBlock = latestBlock.number
+    this.latestBlock = latestBlock
     const gaps = await this.blockTransactionCountRepository.getGapsByProject(
       this.projectId,
       1,
-      this.latestBlock,
+      this.latestBlock.number,
     )
 
     for (const [start, end] of gaps) {
@@ -95,9 +97,16 @@ export class AztecTransactionUpdater implements TransactionCounter {
   }
 
   async getDailyCounts() {
-    return await this.blockTransactionCountRepository.getDailyCountsByProject(
-      this.projectId,
-    )
+    const start = Date.now()
+    this.logger.info('Daily count started')
+    const counts =
+      await this.blockTransactionCountRepository.getDailyCountsByProject(
+        this.projectId,
+      )
+    const latestBlock = await waitUntilDefined(() => this.latestBlock)
+    const result = getFilledDailyCounts(counts, latestBlock.timestamp)
+    this.logger.info('Daily count finished', { timeMs: Date.now() - start })
+    return result
   }
 
   async getStatus() {

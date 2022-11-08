@@ -96,6 +96,17 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return toExpandedGaps(first, last, gaps, boundaries)
   }
 
+  async getMaxBlockNumberByProject(
+    projectId: ProjectId,
+  ): Promise<number | undefined> {
+    const knex = await this.knex()
+    const row = await knex('transactions.block')
+      .max('block_number')
+      .where('project_id', projectId.toString())
+      .first()
+    return row?.max ?? undefined
+  }
+
   private async refreshProjectTip(projectId: ProjectId) {
     const { boundaries, gaps } = await this.getGapsAndBoundaries(projectId)
     const tipBlockNumber = extractTipNumber(gaps, boundaries)
