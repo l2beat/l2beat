@@ -45,6 +45,12 @@ export interface Config {
         }
       }
     | false
+  health?: HealthStatus
+}
+
+export interface HealthStatus {
+  startedAt: string
+  commitSha: string
 }
 
 export type TransactionCountSyncConfig = Exclude<

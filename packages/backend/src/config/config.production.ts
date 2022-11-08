@@ -64,5 +64,9 @@ export function getProductionConfig(): Config {
         },
       },
     },
+    health: {
+      startedAt: getEnv('HEROKU_RELEASE_CREATED_AT'),
+      commitSha: getEnv('HEROKU_SLUG_COMMIT'),
+    },
   }
 }
