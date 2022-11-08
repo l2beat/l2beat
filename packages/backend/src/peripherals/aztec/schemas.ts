@@ -4,9 +4,10 @@ import { z } from 'zod'
 import { stringAs } from '../../tools/types'
 
 export type Rollup = z.infer<typeof Rollup>
+const mined = stringAs((s) => UnixTime.fromDate(new Date(s)))
 const Rollup = z.object({
   id: z.number().int(),
-  mined: stringAs((s) => UnixTime.fromDate(new Date(s))),
+  mined,
   numTxs: z.number().int(),
 })
 
@@ -15,7 +16,7 @@ export type GetRollupsResponseBodySchema = z.infer<
 >
 export const GetRollupsResponseBodySchema = z.object({
   data: z.object({
-    rollups: z.array(Rollup),
+    rollups: z.array(Rollup.extend({ mined: mined.nullable() })),
   }),
 })
 

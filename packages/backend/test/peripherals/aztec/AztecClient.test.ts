@@ -54,7 +54,7 @@ describe(AztecClient.name, () => {
   })
 
   describe(AztecClient.prototype.getLatestBlock.name, () => {
-    it('gets block', async () => {
+    it('gets first mined block', async () => {
       const mined = new Date()
       const httpClient = mock<HttpClient>({
         fetch: async () =>
@@ -63,9 +63,19 @@ describe(AztecClient.name, () => {
               data: {
                 rollups: [
                   {
-                    id: 42,
+                    id: 3,
+                    mined: null,
+                    numTxs: 3,
+                  },
+                  {
+                    id: 2,
+                    mined: null,
+                    numTxs: 2,
+                  },
+                  {
+                    id: 1,
                     mined,
-                    numTxs: 10,
+                    numTxs: 1,
                   },
                 ],
               },
@@ -75,9 +85,9 @@ describe(AztecClient.name, () => {
       const aztecClient = new AztecClient(httpClient, BASE_URL)
       const result = await aztecClient.getLatestBlock()
       expect(result).toEqual({
-        number: 42,
+        number: 1,
         timestamp: UnixTime.fromDate(mined),
-        transactionCount: 10,
+        transactionCount: 1,
       })
     })
 
@@ -94,6 +104,37 @@ describe(AztecClient.name, () => {
         async fetch() {
           return new Response('foo', { status: 400 })
         },
+      })
+      const aztecClient = new AztecClient(httpClient, BASE_URL)
+      await expect(aztecClient.getLatestBlock()).toBeRejected()
+    })
+
+    it('throws if no mined block found', async () => {
+      const httpClient = mock<HttpClient>({
+        fetch: async () =>
+          new Response(
+            JSON.stringify({
+              data: {
+                rollups: [
+                  {
+                    id: 3,
+                    mined: null,
+                    numTxs: 3,
+                  },
+                  {
+                    id: 2,
+                    mined: null,
+                    numTxs: 2,
+                  },
+                  {
+                    id: 1,
+                    mined: null,
+                    numTxs: 1,
+                  },
+                ],
+              },
+            }),
+          ),
       })
       const aztecClient = new AztecClient(httpClient, BASE_URL)
       await expect(aztecClient.getLatestBlock()).toBeRejected()
