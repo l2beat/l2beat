@@ -1,4 +1,3 @@
-import { ProjectPermission } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/types'
 import React from 'react'
 

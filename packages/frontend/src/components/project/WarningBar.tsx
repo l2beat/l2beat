@@ -38,6 +38,6 @@ export function WarningBar({
           text
         )
       }
-    ></Callout>
+    />
   )
 }
