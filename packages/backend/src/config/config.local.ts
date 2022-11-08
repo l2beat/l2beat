@@ -6,6 +6,7 @@ import { config as dotenv } from 'dotenv'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
+import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(): Config {
   dotenv()
@@ -73,6 +74,10 @@ export function getLocalConfig(): Config {
           },
         },
       },
+    },
+    health: {
+      startedAt: new Date().toISOString(),
+      commitSha: getGitCommitHash(),
     },
   }
 }

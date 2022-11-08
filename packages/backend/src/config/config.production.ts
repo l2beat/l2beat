@@ -5,6 +5,7 @@ import { UnixTime } from '@l2beat/types'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
+import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(): Config {
   const name = 'Backend/Production'
@@ -65,8 +66,8 @@ export function getProductionConfig(): Config {
       },
     },
     health: {
-      startedAt: getEnv('HEROKU_RELEASE_CREATED_AT'),
-      commitSha: getEnv('HEROKU_SLUG_COMMIT'),
+      startedAt: new Date().toISOString(),
+      commitSha: getGitCommitHash(),
     },
   }
 }
