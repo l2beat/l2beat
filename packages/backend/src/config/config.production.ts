@@ -38,7 +38,7 @@ export function getProductionConfig(): Config {
     tvlReportSync: true,
     transactionCountSync: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 5,
+      starkexApiDelayHours: 12,
       zkSyncWorkQueueWorkers: 100,
       aztecWorkQueueWorkers: 100,
       starkexWorkQueueWorkers: 10,

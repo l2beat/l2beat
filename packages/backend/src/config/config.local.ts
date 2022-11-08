@@ -39,7 +39,7 @@ export function getLocalConfig(): Config {
       false,
     ) && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 5,
+      starkexApiDelayHours: 12,
       zkSyncWorkQueueWorkers: 1,
       aztecWorkQueueWorkers: 1,
       starkexWorkQueueWorkers: 100,
