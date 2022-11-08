@@ -8,7 +8,7 @@ export function BulletIcon(props: SVGAttributes<SVGElement>) {
       viewBox="0 0 20 20"
       width="16"
       height="20"
-      aria-label="Unverified contract icon"
+      aria-label="Bullet point icon"
       {...props}
     >
       <circle cx="10" cy="15" r="2.75" />
