@@ -1,7 +1,7 @@
 import { Bridge } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
+import { PagesData } from '../../../build/types'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getChart } from '../../../utils/project/getChart'
 import { getHeader } from '../../../utils/project/getHeader'
@@ -14,8 +14,10 @@ import { getProjectHeader } from './getProjectHeader'
 export function getProps(
   bridge: Bridge,
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  pagesData: PagesData,
 ): Wrapped<ProjectPageProps> {
+  const { tvlApiResponse, verificationStatus } = pagesData
+
   const chart = getChart(bridge, tvlApiResponse)
   return {
     props: {
@@ -24,7 +26,7 @@ export function getProps(
       showProjectHeader: config.features.activity,
       projectHeader: getProjectHeader(bridge, tvlApiResponse),
       chart,
-      projectDetails: getProjectDetails(bridge),
+      projectDetails: getProjectDetails(bridge, verificationStatus),
       footer: getFooterProps(config),
     },
     wrapper: {

@@ -288,11 +288,11 @@ export const arbitrum: Layer2 = {
       name: 'Validators',
       accounts: [
         {
-          address: '0xa8c3e94015f1f91ff60e4e939e0a4d14b8d9fc4f',
+          address: '0xa8C3E94015f1F91FF60e4E939E0A4D14B8d9Fc4F',
           type: 'EOA',
         },
         {
-          address: '0x9919dbf38e05c6496d852d8e5705eb101308f089',
+          address: '0x9919dbF38e05C6496D852d8e5705EB101308f089',
           type: 'EOA',
         },
         {

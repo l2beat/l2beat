@@ -130,23 +130,23 @@ export const myria: Layer2 = {
       name: 'Data Availability Committee',
       accounts: [
         {
-          address: '0x30cf77fc391b4feba1ab31b01fed442bc759c0a8',
+          address: '0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8',
           type: 'EOA',
         },
         {
-          address: '0x52e6ecb50d8c89fe9cbad2ef44ce962a430d8714',
+          address: '0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714',
           type: 'EOA',
         },
         {
-          address: '0xc7544ad893710bd0bf780bf78de5547706da75c5',
+          address: '0xC7544ad893710Bd0bf780bf78dE5547706da75c5',
           type: 'EOA',
         },
         {
-          address: '0xf365cdb8c33849d3684acff5475e7b6f075f9f0f',
+          address: '0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F',
           type: 'EOA',
         },
         {
-          address: '0xfba93b5f744c853648d62c1357532582f77ed394',
+          address: '0xfBA93b5f744c853648d62C1357532582f77ed394',
           type: 'EOA',
         },
       ],

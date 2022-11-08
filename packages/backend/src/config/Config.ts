@@ -30,6 +30,7 @@ export interface Config {
         starkexApiKey: string
         starkexApiDelayHours: number
         zkSyncWorkQueueWorkers: number
+        aztecWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number
         loopringCallsPerMinute: number

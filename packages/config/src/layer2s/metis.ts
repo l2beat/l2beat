@@ -213,7 +213,7 @@ export const metis: Layer2 = {
       name: 'Data Availability Verifiers',
       accounts: [
         {
-          address: '0x48fe1f85ff8ad9d088863a42af54d06a1328cf21',
+          address: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
           type: 'EOA',
         },
       ],
@@ -224,7 +224,7 @@ export const metis: Layer2 = {
       name: 'Execution Verifiers',
       accounts: [
         {
-          address: '0x48fe1f85ff8ad9d088863a42af54d06a1328cf21',
+          address: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
           type: 'EOA',
         },
       ],

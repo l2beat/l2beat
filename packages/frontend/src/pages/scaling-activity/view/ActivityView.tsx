@@ -5,8 +5,10 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ComingSoonCell } from '../../../components/table/ComingSoonCell'
 import { EthereumCell } from '../../../components/table/EthereumCell'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
+import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
 import {
   ColumnConfig,
   RowConfig,
@@ -24,6 +26,7 @@ export interface ActivityViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  isVerified?: boolean
   dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string
@@ -38,7 +41,9 @@ export function ActivityView({ items }: ActivityViewProps) {
       name: '#',
       alignRight: true,
       minimalWidth: true,
-      getValue: (_, index) => index + 1,
+      getValue: (entry, index) => {
+        return <IndexCell entry={entry} index={index + 1} />
+      },
     },
     {
       name: 'Name',
@@ -109,15 +114,17 @@ export function ActivityView({ items }: ActivityViewProps) {
   ]
 
   const rows: RowConfig<ActivityViewEntry> = {
-    getProps: (entry) =>
-      entry.name === 'Ethereum'
-        ? {
-            className: cx(
-              'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
-              'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
-            ),
-          }
-        : {},
+    getProps: (entry) => {
+      return {
+        className:
+          entry.name === 'Ethereum'
+            ? cx(
+                'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
+                'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
+              )
+            : getRowVerificationClassNames(entry),
+      }
+    },
   }
 
   return (

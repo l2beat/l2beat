@@ -171,7 +171,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0x902F09715B6303d4173037652FA7377e5b98089E ',
+          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
           type: 'Contract',
         },
       ],
@@ -182,7 +182,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327 ',
+          address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327',
           type: 'EOA',
         },
       ],
@@ -193,7 +193,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5 ',
+          address: '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
           type: 'EOA',
         },
       ],
@@ -203,7 +203,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8 ',
+          address: '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
           type: 'EOA',
         },
       ],
@@ -213,7 +213,7 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92 ',
+          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
           type: 'MultiSig',
         },
       ],

@@ -5,6 +5,7 @@ export function getLocalConfig() {
     ...common,
     features: {
       ...common.features,
+      highlightUnverified: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

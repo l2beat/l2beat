@@ -1,6 +1,5 @@
-import { TvlApiResponse } from '@l2beat/types'
-
 import { Config } from '../../build/config'
+import { PagesData } from '../../build/types'
 import { getFooterProps, getNavbarProps } from '../../components'
 import { getDestination } from '../../utils/getDestination'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
@@ -12,8 +11,10 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  pagesData: PagesData,
 ): Wrapped<BridgesRiskPageProps> {
+  const { tvlApiResponse, verificationStatus } = pagesData
+
   const included = getIncludedProjects(
     [...config.bridges, ...config.layer2s],
     tvlApiResponse,
@@ -30,6 +31,7 @@ export function getProps(
             name: project.display.name,
             slug: project.display.slug,
             warning: project.display.warning,
+            isVerified: verificationStatus.projects[project.id.toString()],
             category: project.technology.category,
             destination: getDestination(
               project.type === 'bridge'
