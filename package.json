@@ -14,7 +14,6 @@
   "scripts": {
     "build:backend": "wsrun -p @l2beat/backend -recsm build",
     "build:frontend": "wsrun -p @l2beat/frontend -recsm build",
-    "build:config": "wsrun -p @l2beat/config -recsm build",
     "build": "wsrun -ecsm build",
     "build:dependencies": "wsrun -p @l2beat/{types,common,config,update-monitor} -recsm build",
     "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck:ci && yarn test",
