@@ -5,6 +5,7 @@ export class HealthController {
 
   getStatus() {
     return {
+      releasedAt: this.health?.releasedAt,
       startedAt: this.health?.startedAt,
       commitSha: this.health?.commitSha,
     }

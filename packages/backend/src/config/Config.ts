@@ -49,6 +49,7 @@ export interface Config {
 }
 
 export interface HealthStatus {
+  releasedAt?: string
   startedAt: string
   commitSha: string
 }
