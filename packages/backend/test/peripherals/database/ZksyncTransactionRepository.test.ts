@@ -65,7 +65,7 @@ describe(ZksyncTransactionRepository.name, () => {
       expect(await repository.getDailyCounts()).toEqual([])
     })
 
-    it('skips last day', async () => {
+    it('includes last day', async () => {
       const start = UnixTime.now().toStartOf('day')
       const syncedCounts = [
         fakeRecord({
@@ -99,6 +99,10 @@ describe(ZksyncTransactionRepository.name, () => {
         {
           timestamp: start,
           count: 2,
+        },
+        {
+          timestamp: start.add(1, 'days'),
+          count: 3,
         },
       ])
     })
@@ -143,6 +147,10 @@ describe(ZksyncTransactionRepository.name, () => {
         {
           count: 2,
           timestamp: start.add(1, 'days'),
+        },
+        {
+          count: 1,
+          timestamp: start.add(2, 'days'),
         },
       ])
     })

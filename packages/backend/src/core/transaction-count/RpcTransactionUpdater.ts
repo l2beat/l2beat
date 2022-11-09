@@ -112,14 +112,20 @@ export class RpcTransactionUpdater implements TransactionCounter {
   async getDailyCounts() {
     const start = Date.now()
     this.logger.info('Daily count started')
-    const counts =
+    const [counts, tip] = await Promise.all([
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
-      )
+      ),
+      await this.blockTransactionCountRepository.findTipByProject(
+        this.projectId,
+      ),
+    ])
     const latestBlock = await waitUntilDefined(() => this.latestBlock)
     const result = getFilledDailyCounts(
+      UnixTime.now(),
       counts,
       new UnixTime(latestBlock.timestamp),
+      tip?.timestamp,
     )
     this.logger.info('Daily count finished', { timeMs: Date.now() - start })
     return result

@@ -99,9 +99,17 @@ export class ZksyncTransactionUpdater implements TransactionCounter {
   async getDailyCounts() {
     const start = Date.now()
     this.logger.info('Daily count started')
-    const counts = await this.zksyncTransactionRepository.getDailyCounts()
+    const [counts, tip] = await Promise.all([
+      await this.zksyncTransactionRepository.getDailyCounts(),
+      await this.zksyncTransactionRepository.findTip(),
+    ])
     const latestBlock = await waitUntilDefined(() => this.latestBlock)
-    const result = getFilledDailyCounts(counts, latestBlock.timestamp)
+    const result = getFilledDailyCounts(
+      UnixTime.now(),
+      counts,
+      latestBlock.timestamp,
+      tip?.timestamp,
+    )
     this.logger.info('Daily count finished', { timeMs: Date.now() - start })
     return result
   }

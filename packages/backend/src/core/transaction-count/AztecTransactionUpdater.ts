@@ -55,12 +55,6 @@ export class AztecTransactionUpdater implements TransactionCounter {
   async updateBlock(blockNumber: number) {
     const block = await this.aztecClient.getBlock(blockNumber)
 
-    // We download all the blocks, but discard those that are more recent
-    // than clock.getLastHour() to avoid dealing with potential reorgs
-    if (block.timestamp.gt(this.clock.getLastHour())) {
-      return
-    }
-
     await this.blockTransactionCountRepository.add({
       projectId: this.projectId,
       timestamp: block.timestamp,
@@ -99,12 +93,21 @@ export class AztecTransactionUpdater implements TransactionCounter {
   async getDailyCounts() {
     const start = Date.now()
     this.logger.info('Daily count started')
-    const counts =
+    const [counts, tip] = await Promise.all([
       await this.blockTransactionCountRepository.getDailyCountsByProject(
         this.projectId,
-      )
+      ),
+      await this.blockTransactionCountRepository.findTipByProject(
+        this.projectId,
+      ),
+    ])
     const latestBlock = await waitUntilDefined(() => this.latestBlock)
-    const result = getFilledDailyCounts(counts, latestBlock.timestamp)
+    const result = getFilledDailyCounts(
+      UnixTime.now(),
+      counts,
+      latestBlock.timestamp,
+      tip?.timestamp,
+    )
     this.logger.info('Daily count finished', { timeMs: Date.now() - start })
     return result
   }

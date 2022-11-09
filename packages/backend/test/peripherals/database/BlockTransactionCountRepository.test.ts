@@ -92,7 +92,7 @@ describe(BlockTransactionCountRepository.name, () => {
         expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([])
       })
 
-      it('skips last day', async () => {
+      it('includes last day', async () => {
         const start = UnixTime.now().toStartOf('day')
         const syncedCounts = [
           fakeTransactionCount({
@@ -125,12 +125,16 @@ describe(BlockTransactionCountRepository.name, () => {
         ]
         await repository.addMany([...syncedCounts, ...lastDayCounts])
 
-        await repository.refreshDailyCounts([PROJECT_A, PROJECT_B])
+        await repository.refreshDailyCounts([PROJECT_A])
 
         expect(await repository.getDailyCountsByProject(PROJECT_A)).toEqual([
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
+          },
+          {
+            timestamp: start.add(1, 'days'),
+            count: lastDayCounts.reduce((acc, record) => acc + record.count, 0),
           },
         ])
       })
@@ -149,14 +153,14 @@ describe(BlockTransactionCountRepository.name, () => {
             projectId: PROJECT_A,
           }),
         ]
-        const aCounts = [
-          ...syncedCounts,
+        const todayCounts = [
           fakeTransactionCount({
             blockNumber: 3,
             timestamp: start.add(1, 'days'),
             projectId: PROJECT_A,
           }),
         ]
+        const aCounts = [...syncedCounts, ...todayCounts]
         const bCounts = [
           fakeTransactionCount({
             blockNumber: 1,
@@ -182,6 +186,10 @@ describe(BlockTransactionCountRepository.name, () => {
           {
             timestamp: start,
             count: syncedCounts.reduce((acc, record) => acc + record.count, 0),
+          },
+          {
+            timestamp: start.add(1, 'days'),
+            count: todayCounts.reduce((acc, record) => acc + record.count, 0),
           },
         ])
       })
@@ -227,6 +235,10 @@ describe(BlockTransactionCountRepository.name, () => {
             count: 3,
             timestamp: start.add(1, 'days'),
           },
+          {
+            count: 4,
+            timestamp: start.add(2, 'days'),
+          },
         ])
       })
 
@@ -264,6 +276,10 @@ describe(BlockTransactionCountRepository.name, () => {
           {
             count: 3,
             timestamp: start.add(1, 'days'),
+          },
+          {
+            count: 3,
+            timestamp: start.add(2, 'days'),
           },
         ])
       })

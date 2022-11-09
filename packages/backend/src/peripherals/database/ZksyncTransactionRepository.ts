@@ -78,6 +78,10 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return toExpandedGaps(first, last, gaps, boundaries)
   }
 
+  async findTip() {
+    return this.tipRepository.findByProject(ProjectId.ZKSYNC)
+  }
+
   private async refreshTip() {
     const { boundaries, gaps } = await this.getGapsAndBoundaries()
     const tipBlockNumber = extractTipNumber(gaps, boundaries)

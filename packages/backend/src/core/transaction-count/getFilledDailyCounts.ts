@@ -4,17 +4,32 @@ import { fillMissingDailyCounts } from './fillMissingDailyCounts'
 import { DailyTransactionCount } from './TransactionCounter'
 
 export function getFilledDailyCounts(
+  now: UnixTime,
   counts: DailyTransactionCount[],
-  lastTimestamp: UnixTime,
+  latest: UnixTime,
+  tip?: UnixTime,
 ): DailyTransactionCount[] {
-  const tip = counts.at(-1)?.timestamp
-  const isFullySynced = tip && lastTimestamp.lte(tip)
-  const startOfDay = UnixTime.now().toStartOf('day')
-  if (isFullySynced && tip.lt(startOfDay)) {
-    counts.push({
-      timestamp: startOfDay,
-      count: 0,
-    })
+  const countsToFill = getCountsToFill(now, counts, latest, tip)
+  return fillMissingDailyCounts(countsToFill)
+}
+
+function getCountsToFill(
+  now: UnixTime,
+  counts: DailyTransactionCount[],
+  latest: UnixTime,
+  tip?: UnixTime,
+) {
+  const startOfYesterday = now.toStartOf('day').add(-1, 'days')
+  const isSynced = tip?.equals(latest)
+
+  if (!isSynced) {
+    return counts.filter((c) => c.timestamp.lte(startOfYesterday))
   }
-  return fillMissingDailyCounts(counts)
+
+  const latestBeforeYesterday = latest.lt(startOfYesterday)
+  if (latestBeforeYesterday) {
+    return counts.concat([{ timestamp: startOfYesterday, count: 0 }])
+  }
+
+  return counts
 }

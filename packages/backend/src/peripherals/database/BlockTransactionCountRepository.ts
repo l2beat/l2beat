@@ -107,6 +107,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return row?.max ?? undefined
   }
 
+  async findTipByProject(projectId: ProjectId) {
+    return this.tipRepository.findByProject(projectId)
+  }
+
   private async refreshProjectTip(projectId: ProjectId) {
     const { boundaries, gaps } = await this.getGapsAndBoundaries(projectId)
     const tipBlockNumber = extractTipNumber(gaps, boundaries)
