@@ -11,7 +11,7 @@ export function BulletIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Bullet point icon"
       {...props}
     >
-      <circle cx="10" cy="15" r="2.75" />
+      <circle cx="10" cy="10" r="2.75" />
     </Icon>
   )
 }

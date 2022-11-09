@@ -44,7 +44,7 @@ export function ContractEntry({
         tooltip="Source code is not verified"
       />
     ) : (
-      <BulletIcon className={cx('fill-black dark:fill-white')} />
+      <BulletIcon className="h-6 md:h-[27px]" />
     )
 
   return (
