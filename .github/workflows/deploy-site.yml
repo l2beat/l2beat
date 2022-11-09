@@ -19,6 +19,8 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn build:dependencies
       - run: cd packages/config && yarn check-verified-contracts
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
       - run: cd packages/frontend && yarn build
         env:
           RPC_URL: ${{ secrets.BC_NODE }}
