@@ -18,7 +18,7 @@ jobs:
           node-version: 16.x
       - run: yarn --frozen-lockfile
       - run: yarn build:dependencies
-      - run: yarn check-verified-contracts
+      - run: cd packages/config && yarn check-verified-contracts
       - run: cd packages/frontend && yarn build
         env:
           RPC_URL: ${{ secrets.BC_NODE }}
