@@ -1,13 +1,13 @@
 import { Bridge, Layer2, ProjectContract } from '@l2beat/config'
+import { VerificationStatus } from '@l2beat/types'
 
-import {
-  ContractsSectionProps,
-  TechnologyContract,
-} from '../../components/project/ContractsSection'
+import { TechnologyContract } from '../../components/project/ContractEntry'
+import { ContractsSectionProps } from '../../components/project/ContractsSection'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
   project: Layer2 | Bridge,
+  verificationStatus: VerificationStatus,
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) =>
     makeTechnologyContract(contract, project),
@@ -28,6 +28,7 @@ export function getContractSection(
     architectureImage,
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
+    verificationStatus,
   }
 }
 
@@ -46,10 +47,12 @@ function makeTechnologyContract(
     links.push({
       name: 'Implementation (Upgradable)',
       href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+      address: item.upgradeability.implementation,
     })
     links.push({
       name: 'Admin',
       href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+      address: item.upgradeability.admin,
     })
   }
 
@@ -57,6 +60,7 @@ function makeTechnologyContract(
     links.push({
       name: 'Implementation (Upgradable)',
       href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+      address: item.upgradeability.implementation,
     })
   }
 
@@ -69,6 +73,7 @@ function makeTechnologyContract(
     links.push({
       name: `Implementation (Upgradable${delay ? ` ${days} days delay` : ''})`,
       href: `https://etherscan.io/address/${implementation}#code`,
+      address: implementation,
     })
   }
 
@@ -76,6 +81,7 @@ function makeTechnologyContract(
     links.push({
       name: 'Code (Upgradable)',
       href: `https://etherscan.io/address/${item.address}#code`,
+      address: item.address,
     })
   }
 
@@ -83,14 +89,17 @@ function makeTechnologyContract(
     links.push({
       name: 'Admin',
       href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+      address: item.upgradeability.admin,
     })
     links.push({
       name: 'Admin logic (Upgradable)',
       href: `https://etherscan.io/address/${item.upgradeability.adminImplementation}#code`,
+      address: item.upgradeability.adminImplementation,
     })
     links.push({
       name: 'User logic (Upgradable)',
       href: `https://etherscan.io/address/${item.upgradeability.userImplementation}#code`,
+      address: item.upgradeability.userImplementation,
     })
   }
 
@@ -98,14 +107,17 @@ function makeTechnologyContract(
     links.push({
       name: 'Beacon',
       href: `https://etherscan.io/address/${item.upgradeability.beacon}#code`,
+      address: item.upgradeability.beacon,
     })
     links.push({
       name: 'Implementation (Upgradable)',
       href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+      address: item.upgradeability.implementation,
     })
     links.push({
       name: 'Beacon Admin',
       href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin}#code`,
+      address: item.upgradeability.beaconAdmin,
     })
   }
 

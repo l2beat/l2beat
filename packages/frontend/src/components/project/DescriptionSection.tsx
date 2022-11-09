@@ -20,10 +20,16 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
+          className="mt-4"
         />
       )}
       {props.warning && (
-        <WarningBar text={props.warning} color="yellow" isCritical={false} />
+        <WarningBar
+          text={props.warning}
+          color="yellow"
+          isCritical={false}
+          className="mt-4"
+        />
       )}
       <p className="mt-4 text-gray-860 dark:text-gray-400">
         {props.description}

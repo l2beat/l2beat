@@ -1,7 +1,7 @@
+import { VerificationStatus } from '@l2beat/types'
 import React from 'react'
 
-import { OutLink } from '../OutLink'
-import { EtherscanLink } from './EtherscanLink'
+import { ContractEntry, TechnologyContract } from './ContractEntry'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { Section } from './Section'
@@ -13,16 +13,7 @@ export interface ContractsSectionProps {
   references: TechnologyReference[]
   architectureImage?: string
   isIncomplete?: boolean
-}
-
-export interface TechnologyContract {
-  name: string
-  address: string
-  description?: string
-  links: {
-    name: string
-    href: string
-  }[]
+  verificationStatus: VerificationStatus
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -48,30 +39,16 @@ export function ContractsSection(props: ContractsSectionProps) {
       <h3 className="font-bold md:text-md">
         The system consists of the following smart contracts:
       </h3>
-      <ul className="list-disc my-4 pl-8 space-y-4">
+      <div className="flex flex-wrap gap-4 my-4">
         {props.contracts.map((contract, i) => (
-          <li key={i}>
-            <strong>{contract.name}</strong>{' '}
-            <EtherscanLink
-              address={contract.address}
-              className="text-xs md:text-base"
+          <React.Fragment key={i}>
+            <ContractEntry
+              contract={contract}
+              verificationStatus={props.verificationStatus}
             />
-            {contract.links.map((x, i) => (
-              <React.Fragment key={i}>
-                {' '}
-                <OutLink className="text-link underline" href={x.href}>
-                  {x.name}
-                </OutLink>
-              </React.Fragment>
-            ))}
-            {contract.description && (
-              <p className="text-gray-860 dark:text-gray-400">
-                {contract.description}
-              </p>
-            )}
-          </li>
+          </React.Fragment>
         ))}
-      </ul>
+      </div>
       {props.risks.length > 0 && (
         <>
           <p className="text-gray-860 dark:text-gray-400">

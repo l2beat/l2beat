@@ -31,8 +31,16 @@ Contracts.args = {
       description:
         "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
       links: [
-        { href: '#', name: 'Implementation (Upgradable)' },
-        { href: '#', name: 'Admin' },
+        {
+          href: '#',
+          name: 'Implementation (Upgradable)',
+          address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA2',
+        },
+        {
+          href: '#',
+          name: 'Admin',
+          address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA3',
+        },
       ],
     },
     {
@@ -56,6 +64,17 @@ Contracts.args = {
     },
   ],
   architectureImage: '/images/optimism-architecture.png',
+  verificationStatus: {
+    projects: {},
+    contracts: {
+      '0x5E4e65926BA27467555EB562121fac00D24E9dD2': true,
+      '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1': true,
+      '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65': false,
+      '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA2': true,
+      '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA3': false,
+      '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15': true,
+    },
+  },
 }
 
 export const NoImage: Story<ContractsSectionProps> = Template.bind({})
