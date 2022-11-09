@@ -21,9 +21,15 @@ describe('checkVerifiedContracts:tasks', () => {
           '0x2222222222222222222222222222222222222222',
           '0x3333333333333333333333333333333333333333',
           '0x4444444444444444444444444444444444444444',
+          '0x5555555555555555555555555555555555555555',
         ].map(EthereumAddress),
+        // previously verified:
         new Set([
           EthereumAddress('0x3333333333333333333333333333333333333333'),
+        ]),
+        // manually verified:
+        new Set([
+          EthereumAddress('0x5555555555555555555555555555555555555555'),
         ]),
         EthereumClientMock as unknown as EtherscanClient,
         2,
@@ -36,6 +42,7 @@ describe('checkVerifiedContracts:tasks', () => {
         '0x2222222222222222222222222222222222222222': false,
         '0x3333333333333333333333333333333333333333': true,
         '0x4444444444444444444444444444444444444444': false,
+        '0x5555555555555555555555555555555555555555': true,
       })
     })
 
@@ -53,6 +60,7 @@ describe('checkVerifiedContracts:tasks', () => {
             '0x3333333333333333333333333333333333333333',
             '0x4444444444444444444444444444444444444444',
           ].map(EthereumAddress),
+          new Set(),
           new Set(),
           EthereumClientMock as unknown as EtherscanClient,
           2,

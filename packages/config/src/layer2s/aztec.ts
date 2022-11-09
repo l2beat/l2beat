@@ -55,6 +55,12 @@ export const aztec: Layer2 = {
         sinceTimestamp: new UnixTime(1614799636),
       },
     ],
+    transactionApi: {
+      type: 'aztec',
+      url: 'https://api.aztec.network/falafel-mainnet',
+      callsPerMinute: 3_000,
+      excludeFromActivityApi: true,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
@@ -85,7 +91,7 @@ export const aztec: Layer2 = {
       references: [
         {
           text: 'TurboVerifier.sol#L37 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x3937f965e824fe4e7885b8662669821966d3f293#code#F1#L37',
+          href: 'https://etherscan.io/address/0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1#code#F1#L37',
         },
       ],
     },
@@ -167,7 +173,7 @@ export const aztec: Layer2 = {
         name: 'AztecFeeDistributor',
       },
       {
-        address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
+        address: '0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1',
         description:
           'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
         name: 'TurboVerifier',

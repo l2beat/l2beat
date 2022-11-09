@@ -5,12 +5,27 @@ import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from '../../scripts/checkVerifiedContracts/addresses'
+import { loadVerifiedJson } from '../../scripts/checkVerifiedContracts/output'
 import { bridges, layer2s } from '../../src'
 import { bridge1WithDups } from './stubs/bridge1WithDups'
 import { bridge2WithDups } from './stubs/bridge2WithDups'
 import { layer2aWithDups } from './stubs/layer2aWithDups'
 
 describe('checkVerifiedContracts:addresses', () => {
+  it('all current contracts are included in verified.json', async () => {
+    const verifiedJson = await loadVerifiedJson('src/verified.json')
+    const allContracts = getUniqueContractsForAllProjects([
+      ...bridges,
+      ...layer2s,
+    ])
+    for (const contract of allContracts) {
+      expect(verifiedJson.contracts[contract.toString()], {
+        extraMessage:
+          '\n\nNot all contracts have been checked for verification.\nGo to packages/config and run `yarn check-verified-contracts`\n',
+      }).toBeDefined()
+    }
+  })
+
   describe('getUniqueContractsForAllProjects()', () => {
     it('can parse all current layer2s and bridges', () => {
       expect(() =>

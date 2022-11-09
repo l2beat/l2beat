@@ -5,6 +5,7 @@ import { UnixTime } from '@l2beat/types'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
+import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(): Config {
   const name = 'Backend/Production'
@@ -38,8 +39,9 @@ export function getProductionConfig(): Config {
     tvlReportSync: true,
     transactionCountSync: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 5,
+      starkexApiDelayHours: 12,
       zkSyncWorkQueueWorkers: 100,
+      aztecWorkQueueWorkers: 100,
       starkexWorkQueueWorkers: 10,
       starkexCallsPerMinute: 200,
       loopringWorkQueueWorkers: 10,
@@ -62,6 +64,11 @@ export function getProductionConfig(): Config {
           },
         },
       },
+    },
+    health: {
+      releasedAt: getEnv('HEROKU_RELEASE_CREATED_AT', ''),
+      startedAt: new Date().toISOString(),
+      commitSha: getEnv('HEROKU_SLUG_COMMIT', getGitCommitHash()),
     },
   }
 }

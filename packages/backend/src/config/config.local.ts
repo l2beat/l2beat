@@ -6,6 +6,7 @@ import { config as dotenv } from 'dotenv'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
+import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(): Config {
   dotenv()
@@ -39,8 +40,9 @@ export function getLocalConfig(): Config {
       false,
     ) && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 5,
+      starkexApiDelayHours: 12,
       zkSyncWorkQueueWorkers: 1,
+      aztecWorkQueueWorkers: 1,
       starkexWorkQueueWorkers: 100,
       starkexCallsPerMinute: 1000,
       loopringWorkQueueWorkers: 1,
@@ -72,6 +74,10 @@ export function getLocalConfig(): Config {
           },
         },
       },
+    },
+    health: {
+      startedAt: new Date().toISOString(),
+      commitSha: getGitCommitHash(),
     },
   }
 }

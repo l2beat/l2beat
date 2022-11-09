@@ -5,10 +5,12 @@ import { compact } from 'lodash'
 import { ApiServer } from './api/ApiServer'
 import { BlocksController } from './api/controllers/BlocksController'
 import { DydxController } from './api/controllers/DydxController'
+import { HealthController } from './api/controllers/HealthController'
 import { StatusController } from './api/controllers/status/StatusController'
 import { TvlController } from './api/controllers/tvl/TvlController'
 import { createBlocksRouter } from './api/routers/BlocksRouter'
 import { createDydxRouter } from './api/routers/DydxRouter'
+import { createHealthRouter } from './api/routers/HealthRouter'
 import { createStatusRouter } from './api/routers/StatusRouter'
 import { createTvlRouter } from './api/routers/TvlRouter'
 import { Config } from './config'
@@ -145,6 +147,7 @@ export class Application {
     )
 
     const dydxController = new DydxController(aggregateReportRepository)
+    const healthController = new HealthController(config.health)
 
     const activityModule = getActivityModule(
       config,
@@ -163,6 +166,7 @@ export class Application {
         createStatusRouter(statusController),
         createDydxRouter(dydxController),
         activityModule?.router,
+        createHealthRouter(healthController),
       ]),
       handleServerError,
     )

@@ -30,6 +30,7 @@ export interface Config {
         starkexApiKey: string
         starkexApiDelayHours: number
         zkSyncWorkQueueWorkers: number
+        aztecWorkQueueWorkers: number
         starkexWorkQueueWorkers: number
         loopringWorkQueueWorkers: number
         loopringCallsPerMinute: number
@@ -44,6 +45,13 @@ export interface Config {
         }
       }
     | false
+  health?: HealthStatus
+}
+
+export interface HealthStatus {
+  releasedAt?: string
+  startedAt: string
+  commitSha: string
 }
 
 export type TransactionCountSyncConfig = Exclude<
