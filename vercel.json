@@ -2,7 +2,47 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "scaling/tvl",
+      "destination": "scaling/tvl/",
+      "permanent": true
+    },
+    {
+      "source": "/project/layer2.finance",
+      "destination": "/scaling/projects/layer2finance",
+      "permanent": true
+    },
+    {
+      "source": "/project/leverj",
+      "destination": "/scaling/projects/gluon",
+      "permanent": true
+    },
+    {
+      "source": "/projects/leverj",
+      "destination": "/scaling/projects/gluon",
+      "permanent": true
+    },
+    {
+      "source": "/projects/fuel",
+      "destination": "/scaling/projects/fuelv1",
+      "permanent": true
+    },
+    {
+      "source": "/projects/zkswapv2",
+      "destination": "/scaling/projects/zkspace",
+      "permanent": true
+    },
+    {
+      "source": "/projects/deversifi",
+      "destination": "/scaling/projects/rhinofi",
+      "permanent": true
+    },
+    {
+      "source": "/project/:name",
+      "destination": "/scaling/projects/:name",
+      "permanent": true
+    },
+    {
+      "source": "/projects/:name",
+      "destination": "/scaling/projects/:name",
       "permanent": true
     }
   ],
