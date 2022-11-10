@@ -173,7 +173,8 @@ export const zkspace: Layer2 = {
       {
         address: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
         name: 'UpgradeGatekeeper',
-        description: 'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+        description:
+          'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       },
     ],
     risks: [
