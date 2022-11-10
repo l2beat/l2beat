@@ -8,6 +8,10 @@ import { DYDX_NAME, getDydxParameters } from '../projects/dYdX'
 import { getHopParameters, HOP_NAME } from '../projects/hop'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
 import {
+  getOmgNetworkParameters,
+  OMG_NETWORK_NAME,
+} from '../projects/omgNetwork'
+import {
   getOrbitBridgeParameters,
   ORBIT_BRIDGE_NAME,
 } from '../projects/orbitBridge'
@@ -55,6 +59,7 @@ export async function analyze(projects: string[]) {
     [SYNAPSE_NAME, getSynapseParameters],
     [CBRIDGE_NAME, getCBridgeParameters],
     [AZTEC_NAME, getAztecParameters],
+    [OMG_NETWORK_NAME, getOmgNetworkParameters],
   ]
 
   const unknownArguments = projects.filter(
