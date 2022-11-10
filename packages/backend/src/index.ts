@@ -32,6 +32,6 @@ async function main() {
   } else {
     console.log('DISCOVER', cli.project)
     const discovery = new Discovery()
-    discovery.discover(cli.project, config)
+    await discovery.discover(cli.project, config)
   }
 }

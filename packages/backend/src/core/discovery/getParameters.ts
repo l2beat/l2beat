@@ -1,10 +1,10 @@
 import { BigNumber, Contract, providers, utils } from 'ethers'
 
-import { readArray } from './utils/array'
 import { DiscoveryOptions } from './DiscoveryOptions'
 import { JsonFragment } from './getAbi'
-import { isRevert } from './utils/isRevert'
 import { ContractValue } from './types'
+import { readArray } from './utils/array'
+import { isRevert } from './utils/isRevert'
 
 export interface Parameter {
   name: string
