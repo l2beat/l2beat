@@ -160,7 +160,7 @@ export const zkswap: Layer2 = {
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: '0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157',
+        address: '0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5',
         name: 'ZkSyncExit',
         description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
