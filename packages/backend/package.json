@@ -11,8 +11,9 @@
     "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
-    "start:dev": "node -r esbuild-register src",
-    "start": "node -r source-map-support/register build/src/index.js",
+    "start:dev": "node -r esbuild-register src server",
+    "start": "node -r source-map-support/register build/src/index.js server",
+    "discover": "node -r esbuild-register src discover",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
