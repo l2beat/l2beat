@@ -34,7 +34,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
       name: '#',
-      alignRight: true,
+      alignCenter: true,
       minimalWidth: true,
       getValue: (entry, index) => (
         <>

@@ -28,7 +28,7 @@ export function ChartHover() {
           'select-none pointer-events-none',
           'flex flex-col justify-center items-start',
         )}
-      ></div>
+      />
     </div>
   )
 }

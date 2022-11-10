@@ -36,6 +36,7 @@ export const aztecconnect: Layer2 = {
         'https://plonk.cafe/',
       ],
     },
+    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [

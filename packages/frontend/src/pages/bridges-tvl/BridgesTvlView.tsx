@@ -41,7 +41,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: '#',
-      alignRight: true,
+      alignCenter: true,
       minimalWidth: true,
       getValue: (entry, index) => (
         <>
