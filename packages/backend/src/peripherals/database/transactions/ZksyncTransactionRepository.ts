@@ -12,7 +12,7 @@ export interface ZksyncTransactionRecord {
   timestamp: UnixTime
 }
 
-export class ZksyncRepository extends BaseRepository {
+export class ZksyncTransactionRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
@@ -37,7 +37,6 @@ export class ZksyncRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    await knex('transactions.zksync_tip').delete()
     return await knex('transactions.zksync').delete()
   }
 }

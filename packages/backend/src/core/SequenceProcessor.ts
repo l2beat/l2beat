@@ -71,9 +71,10 @@ export class SequenceProcessor extends EventEmitter {
 
   private async processRange(from: number, to: number) {
     this.logger.debug('Processing range started', { from, to })
-    const trx = await this.opts.repository.getTransaction()
-    await this.opts.processRange(from, to, trx)
-    await this.opts.repository.addOrUpdate({ id: this.id, tip: to }, trx)
+    await this.opts.repository.runInTransaction(async (trx) => {
+      await this.opts.processRange(from, to, trx)
+      await this.opts.repository.addOrUpdate({ id: this.id, tip: to }, trx)
+    })
     this.logger.debug('Processing range finished', { from, to })
   }
 

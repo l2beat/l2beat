@@ -7,7 +7,7 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { ActivityController } from '../../../../src/api/controllers/activity/ActivityController'
+import { ActivityController } from '../../../../src/api/controllers/ActivityController'
 import { RpcTransactionUpdater } from '../../../../src/core/transaction-count/RpcTransactionUpdater'
 import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/starkex/StarkexTransactionUpdater'
 import { TransactionCounter } from '../../../../src/core/transaction-count/TransactionCounter'

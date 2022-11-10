@@ -4,12 +4,12 @@ import { ProjectId } from '@l2beat/types'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../../peripherals/database/shared/Database'
-import { ZksyncRepository } from '../../../peripherals/database/transactions/ZksyncRepository'
+import { ZksyncTransactionRepository } from '../../../peripherals/database/transactions/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../../peripherals/zksync'
 import { BatchDownloader } from '../../BatchDownloader'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-// ---- ZKSYNC ----
 export function createZksyncProcessor({
   projectId,
   transactionApi,
@@ -25,7 +25,9 @@ export function createZksyncProcessor({
   sequenceProcessorRepository: SequenceProcessorRepository
   database: Database
 }): SequenceProcessor {
-  const batchSize = transactionApi.callsPerMinute * 60
+  const batchSize = getBatchSizeFromCallsPerMinute(
+    transactionApi.callsPerMinute,
+  )
   const client = new ZksyncClient(http, logger, transactionApi.callsPerMinute)
   const batchDownloader = new BatchDownloader(
     batchSize,
@@ -43,13 +45,13 @@ export function createZksyncProcessor({
     },
     logger,
   )
-  const zksyncRepository = new ZksyncRepository(database, logger)
+  const zksyncRepository = new ZksyncTransactionRepository(database, logger)
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
     logger,
     repository: sequenceProcessorRepository,
-    startFrom: 0,
+    startFrom: 1,
     getLast: client.getLatestBlock.bind(client),
     processRange: async (from, to, trx) => {
       const blockTransactions = await batchDownloader.download(from, to)

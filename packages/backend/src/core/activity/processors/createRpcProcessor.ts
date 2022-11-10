@@ -4,12 +4,13 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { BlockRepository } from '../../../peripherals/database/transactions/BlockRepository'
+import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import { assert } from '../../../tools/assert'
 import { BatchDownloader } from '../../BatchDownloader'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createRpcProcessor({
   projectId,
@@ -21,15 +22,14 @@ export function createRpcProcessor({
 }: {
   projectId: ProjectId
   transactionApi: RpcTransactionApi
-  blockRepository: BlockRepository
+  blockRepository: BlockCountRepository
   logger: Logger
   sequenceProcessorRepository: SequenceProcessorRepository
   clock: Clock
 }): SequenceProcessor {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
-  const batchSize = callsPerMinute * 60
+  const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const url = transactionApi.url
-  console.log(projectId, url)
   assert(url, 'Url for rpc client must be defined')
   const provider = new providers.JsonRpcProvider({
     url,

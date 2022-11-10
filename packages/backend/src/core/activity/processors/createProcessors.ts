@@ -6,8 +6,8 @@ import { Config } from '../../../config'
 import { Project } from '../../../model'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../../peripherals/database/shared/Database'
-import { BlockRepository } from '../../../peripherals/database/transactions/BlockRepository'
-import { StarkexRepository } from '../../../peripherals/database/transactions/StarkexRepository'
+import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
+import { StarkexCountRepository } from '../../../peripherals/database/transactions/StarkexCountRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
 import { assert } from '../../../tools/assert'
 import { Clock } from '../../Clock'
@@ -33,6 +33,7 @@ export function createSequenceProcessors(
       starkexCallsPerMinute,
       starkexApiDelayHours,
       projects: activityProjects,
+      allowedProjectIds,
     },
     projects,
   } = config
@@ -46,41 +47,33 @@ export function createSequenceProcessors(
   })
 
   // shared repositories
-  const blockRepository = new BlockRepository(database, logger)
-  const starkexRepository = new StarkexRepository(database, logger)
+  const blockRepository = new BlockCountRepository(database, logger)
+  const starkexRepository = new StarkexCountRepository(database, logger)
   const sequenceProcessorRepository = new SequenceProcessorRepository(
     database,
     logger,
   )
 
   // extra projects
+  const ethereum = activityProjects.ethereum
+  assert(ethereum?.type === 'rpc', 'Ethereum transactionApi config missing')
   const layer1Projects: [
     { projectId: ProjectId; transactionApi: Layer2TransactionApi },
   ] = [
     {
       projectId: ProjectId.ETHEREUM,
       transactionApi: {
-        type: 'rpc',
-        url: activityProjects.ethereum?.url,
-        callsPerMinute: activityProjects.ethereum?.callsPerMinute,
+        ...ethereum,
         startBlock: 8929324,
       },
     },
   ]
 
   return projects
-    .filter(
-      (p): p is Project & { transactionApi: Layer2TransactionApi } =>
-        !!p.transactionApi,
-    )
-    .map(({ projectId, transactionApi }) => ({
-      projectId,
-      transactionApi: {
-        ...transactionApi,
-        ...activityProjects[projectId.toString()],
-      },
-    }))
+    .filter(hasTransactionApi)
+    .map(mergeWithConfig(activityProjects))
     .concat(layer1Projects)
+    .filter(isProjectAllowed(allowedProjectIds, logger))
     .map(({ projectId, transactionApi }) => {
       switch (transactionApi.type) {
         case 'starkex':
@@ -143,4 +136,41 @@ export function createSequenceProcessors(
           })
       }
     })
+}
+
+const hasTransactionApi = (
+  p: Project,
+): p is Project & { transactionApi: Layer2TransactionApi } => !!p.transactionApi
+
+function mergeWithConfig(
+  activityProjects: Record<string, Layer2TransactionApi | undefined>,
+) {
+  return ({
+    projectId,
+    transactionApi,
+  }: {
+    projectId: ProjectId
+    transactionApi: Layer2TransactionApi
+  }) => ({
+    projectId,
+    transactionApi: {
+      ...transactionApi,
+      ...activityProjects[projectId.toString()],
+    },
+  })
+}
+
+function isProjectAllowed(
+  allowedProjectIds: string[] | undefined,
+  logger: Logger,
+) {
+  return (p: { projectId: ProjectId }) => {
+    if (allowedProjectIds === undefined) {
+      return true
+    }
+    if (allowedProjectIds.includes(p.projectId.toString())) {
+      return true
+    }
+    logger.info(`Skipping ${p.projectId.toString()} processor`)
+  }
 }

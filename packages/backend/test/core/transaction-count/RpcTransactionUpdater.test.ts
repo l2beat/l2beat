@@ -7,7 +7,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
 import { RpcTransactionUpdater } from '../../../src/core/transaction-count/RpcTransactionUpdater'
-import { BlockTransactionCountRepository } from '../../../src/peripherals/database/transactions/BlockRepository'
+import { BlockTransactionCountRepository } from '../../../src/peripherals/database/transactions/BlockCountRepository'
 import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
 
 describe(RpcTransactionUpdater.name, () => {

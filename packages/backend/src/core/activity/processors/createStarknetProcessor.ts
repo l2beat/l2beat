@@ -3,13 +3,13 @@ import { StarknetTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { BlockRepository } from '../../../peripherals/database/transactions/BlockRepository'
+import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
 import { BatchDownloader } from '../../BatchDownloader'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-// ---- STARKNET ----
 export function createStarknetProcessor({
   projectId,
   transactionApi,
@@ -21,14 +21,14 @@ export function createStarknetProcessor({
 }: {
   projectId: ProjectId
   transactionApi: StarknetTransactionApi
-  blockRepository: BlockRepository
+  blockRepository: BlockCountRepository
   logger: Logger
   clock: Clock
   http: HttpClient
   sequenceProcessorRepository: SequenceProcessorRepository
 }): SequenceProcessor {
-  const callsPerMinute = transactionApi.callsPerMinute ?? 1
-  const batchSize = callsPerMinute * 60
+  const callsPerMinute = transactionApi.callsPerMinute ?? 60
+  const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const client = new StarkNetClient(transactionApi.url, http, {
     callsPerMinute,
   })

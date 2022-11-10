@@ -43,9 +43,11 @@ export class SequenceProcessorRepository extends BaseRepository {
     return await knex('sequence_processor').delete()
   }
 
-  async getTransaction(): Promise<Knex.Transaction> {
+  async runInTransaction(
+    fun: (trx: Knex.Transaction) => Promise<void>,
+  ): Promise<void> {
     const knex = await this.knex()
-    return knex.transaction()
+    await knex.transaction(fun)
   }
 }
 

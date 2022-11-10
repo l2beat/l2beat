@@ -1,19 +1,19 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
-import { BlockTransactionCountRow } from 'knex/types/tables'
+import { BlockCountRow } from 'knex/types/tables'
 
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
-export interface BlockTransactionCountRecord {
+export interface BlockCountRecord {
   projectId: ProjectId
   blockNumber: number
   count: number
   timestamp: UnixTime
 }
 
-export class BlockRepository extends BaseRepository {
+export class BlockCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */
@@ -22,27 +22,23 @@ export class BlockRepository extends BaseRepository {
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async addOrUpdateMany(
-    records: BlockTransactionCountRecord[],
-    trx?: Knex.Transaction,
-  ) {
+  async addOrUpdateMany(records: BlockCountRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex()
     const rows = records.map(toRow)
     await (trx ?? knex)('transactions.block')
       .insert(rows)
-      .onConflict(['project_id', 'unix_timestamp'])
+      .onConflict(['project_id', 'block_number'])
       .merge()
     return rows.length
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    await knex('transactions.block_tip').delete()
     return await knex('transactions.block').delete()
   }
 }
 
-function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
+function toRow(record: BlockCountRecord): BlockCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),

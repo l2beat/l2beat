@@ -3,13 +3,13 @@ import { StarkexTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { StarkexRepository } from '../../../peripherals/database/transactions/StarkexRepository'
+import { StarkexCountRepository } from '../../../peripherals/database/transactions/StarkexCountRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
 import { BatchDownloader } from '../../BatchDownloader'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-// ---- STARKEX ----
 export function createStarkexProcessor({
   projectId,
   transactionApi,
@@ -24,14 +24,14 @@ export function createStarkexProcessor({
   projectId: ProjectId
   transactionApi: StarkexTransactionApi
   singleStarkexCPM: number
-  starkexRepository: StarkexRepository
+  starkexRepository: StarkexCountRepository
   starkexClient: StarkexClient
   starkexApiDelayHours: number
   logger: Logger
   clock: Clock
   sequenceProcessorRepository: SequenceProcessorRepository
 }): SequenceProcessor {
-  const batchSize = singleStarkexCPM * 60
+  const batchSize = getBatchSizeFromCallsPerMinute(singleStarkexCPM)
   const batchDownloader = new BatchDownloader(
     batchSize,
     async (day) => {

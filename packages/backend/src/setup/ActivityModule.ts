@@ -1,8 +1,8 @@
 import { HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
-import { ActivityController } from '../api/controllers/activity/ActivityController'
-import { createActivityRouter } from '../api/routers/ActivityRouter'
 
+import { ActivityController } from '../api/controllers/ActivityController'
+import { createActivityRouter } from '../api/routers/ActivityRouter'
 import { Config } from '../config'
 import { DailyCountView } from '../core/activity/DailyCountView'
 import { createSequenceProcessors } from '../core/activity/processors/createProcessors'

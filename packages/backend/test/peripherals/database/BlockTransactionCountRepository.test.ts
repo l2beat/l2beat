@@ -4,9 +4,9 @@ import { expect } from 'earljs'
 
 import { BlockTipRepository } from '../../../src/peripherals/database/BlockTipRepository'
 import {
-  BlockTransactionCountRecord,
+  BlockCountRecord,
   BlockTransactionCountRepository,
-} from '../../../src/peripherals/database/transactions/BlockRepository'
+} from '../../../src/peripherals/database/transactions/BlockCountRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(BlockTransactionCountRepository.name, () => {
@@ -272,8 +272,8 @@ describe(BlockTransactionCountRepository.name, () => {
 })
 
 export function fakeTransactionCount(
-  txCount?: Partial<BlockTransactionCountRecord>,
-): BlockTransactionCountRecord {
+  txCount?: Partial<BlockCountRecord>,
+): BlockCountRecord {
   return {
     projectId: ProjectId('fake-project'),
     timestamp: new UnixTime(0),

@@ -1,38 +1,27 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
-import { StarkexTransactionCountRow } from 'knex/types/tables'
+import { StarkexCountRow } from 'knex/types/tables'
 
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
-export interface StarkexTransactionCountRecord {
+export interface StarkexCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   count: number
 }
 
-export class StarkexRepository extends BaseRepository {
+export class StarkexCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.add = this.wrapAdd(this.add)
     this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async add(record: StarkexTransactionCountRecord) {
-    const knex = await this.knex()
-    const row = toRow(record)
-    await knex('transactions.starkex').insert(row)
-    return `${row.project_id}-${row.unix_timestamp.toDateString()}`
-  }
-
-  async addOrUpdateMany(
-    records: StarkexTransactionCountRecord[],
-    trx?: Knex.Transaction,
-  ) {
+  async addOrUpdateMany(records: StarkexCountRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex()
     const rows = records.map(toRow)
     await (trx ?? knex)('transactions.starkex')
@@ -48,9 +37,7 @@ export class StarkexRepository extends BaseRepository {
   }
 }
 
-function toRow(
-  record: StarkexTransactionCountRecord,
-): StarkexTransactionCountRow {
+function toRow(record: StarkexCountRecord): StarkexCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),

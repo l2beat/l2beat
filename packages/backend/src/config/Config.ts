@@ -1,4 +1,5 @@
 import { LogLevel } from '@l2beat/common'
+import { Layer2TransactionApi } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
@@ -30,10 +31,8 @@ export interface Config {
         starkexApiKey: string
         starkexApiDelayHours: number
         starkexCallsPerMinute: number
-        projects: Record<
-          string,
-          { callsPerMinute?: number; url: string } | undefined
-        >
+        allowedProjectIds?: string[]
+        projects: Record<string, Layer2TransactionApi | undefined>
       }
     | false
   health?: HealthStatus

@@ -2,18 +2,16 @@ import {
   ActivityApiChart,
   ActivityApiChartPoint,
   ActivityApiResponse,
-  json,
   ProjectId,
   UnixTime,
 } from '@l2beat/types'
-import { DailyCountView } from '../../../core/activity/DailyCountView'
-import { DailyCountViewRecord } from '../../../peripherals/database/transactions/DailyCountRepository'
 
-import { getTip } from './getTip'
+import { DailyCountView } from '../../core/activity/DailyCountView'
+import { DailyCountRecord } from '../../peripherals/database/transactions/DailyCountRepository'
 
 interface Layer2Count {
   projectId: ProjectId
-  counts: Omit<DailyCountViewRecord, 'projectId'>[]
+  counts: Omit<DailyCountRecord, 'projectId'>[]
 }
 
 export class ActivityController {
@@ -24,7 +22,7 @@ export class ActivityController {
 
   async getDailyCounts() {
     const projectCounts = await this.dailyCountView.getDailyCounts()
-    const result: Record<string, Omit<DailyCountViewRecord, 'projectId'>[]> = {}
+    const result: Record<string, Omit<DailyCountRecord, 'projectId'>[]> = {}
     for (const [projectId, counts] of projectCounts) {
       if (!this.projectIds.includes(projectId)) continue
       result[projectId.toString()] = counts
