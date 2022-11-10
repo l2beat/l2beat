@@ -36,13 +36,13 @@
       "permanent": true
     },
     {
-      "source": "/project/*",
-      "destination": "/scaling/projects/:splat",
+      "source": "/project/:name",
+      "destination": "/scaling/projects/:name",
       "permanent": true
     },
     {
-      "source": "/projects/*",
-      "destination": "/scaling/projects/:splat",
+      "source": "/projects/:name",
+      "destination": "/scaling/projects/:name",
       "permanent": true
     }
   ],
