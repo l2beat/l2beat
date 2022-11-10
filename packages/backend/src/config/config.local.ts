@@ -34,7 +34,7 @@ export function getLocalConfig(): Config {
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: getEnv.boolean('FRESH_START', false),
-    tvlReportSync: true,
+    tvlReportSync: getEnv.boolean('TVL_SYNC_ENABLED', true),
     transactionCountSync: getEnv.boolean(
       'TRANSACTION_COUNT_ENABLED',
       false,
