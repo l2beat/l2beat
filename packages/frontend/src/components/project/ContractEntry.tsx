@@ -12,13 +12,15 @@ export interface TechnologyContract {
   name: string
   address?: string
   description?: string
-  links: {
-    name: string
-    href: string
-    address: string
-  }[]
+  links: TechnologyContractLinks[]
 }
 
+export interface TechnologyContractLinks {
+  name: string
+  href: string
+  address: string
+  isAdmin: boolean
+}
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
@@ -29,6 +31,7 @@ export function ContractEntry({
   verificationStatus,
 }: ContractEntryProps) {
   const areLinksUnverified = contract.links
+    .filter((c) => !c.isAdmin)
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
@@ -68,7 +71,7 @@ export function ContractEntry({
               key={i}
               className={cx(
                 'text-link underline',
-                verificationStatus.contracts[x.address] === false
+                verificationStatus.contracts[x.address] === false && !x.isAdmin
                   ? 'text-red-700 dark:text-red-300'
                   : '',
               )}
