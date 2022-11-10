@@ -9,7 +9,7 @@ export default {
 export function UnverifiedContractsWarning() {
   return (
     <div className="p-10">
-      <UnverifiedContractsWarningComponent />
+      <UnverifiedContractsWarningComponent tooltip="This is tooltip message" />
     </div>
   )
 }

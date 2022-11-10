@@ -39,7 +39,7 @@ export function ActivityView({ items }: ActivityViewProps) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: '#',
-      alignRight: true,
+      alignCenter: true,
       minimalWidth: true,
       getValue: (entry, index) => {
         return <IndexCell entry={entry} index={index + 1} />

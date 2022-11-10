@@ -40,8 +40,8 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
-      alignRight: true,
       minimalWidth: true,
+      alignCenter: true,
       getValue: (entry, index) => {
         return <IndexCell entry={entry} index={index + 1} />
       },
