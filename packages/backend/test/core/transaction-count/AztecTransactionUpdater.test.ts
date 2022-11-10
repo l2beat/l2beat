@@ -5,7 +5,7 @@ import { expect, mockFn } from 'earljs'
 import { Clock } from '../../../src/core/Clock'
 import { AztecTransactionUpdater } from '../../../src/core/transaction-count/AztecTransactionUpdater'
 import { AztecClient } from '../../../src/peripherals/aztec'
-import { BlockTransactionCountRepository } from '../../../src/peripherals/database/BlockTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../../src/peripherals/database/transactions/BlockRepository'
 
 describe(AztecTransactionUpdater.name, () => {
   const TIME_0 = new UnixTime(0)

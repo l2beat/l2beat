@@ -47,12 +47,6 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
-  interface EventRow {
-    unix_timestamp: Date
-    event_name: string
-    project_id: string
-  }
-
   interface BlockTransactionCountRow {
     unix_timestamp: Date
     project_id: string
@@ -72,16 +66,16 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
-  interface TransactionCountViewRow {
+  interface DailyCountViewRow {
     project_id: string
     count: number
     unix_timestamp: Date
   }
 
-  interface BlockTipRow {
-    project_id: string
-    block_number: number | null
-    unix_timestamp: Date | null
+  interface SequenceProcessorRow {
+    id: string
+    tip: number
+    reached_at: Date
   }
 
   interface Tables {
@@ -92,12 +86,10 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    events: EventRow
+    sequence_processors: SequenceProcessorRow
     'transactions.block': BlockTransactionCountRow
-    'transactions.block_count_view': TransactionCountViewRow
-    'transactions.block_tip': BlockTipRow
     'transactions.zksync': ZksyncTransactionRow
-    'transactions.zksync_count_view': TransactionCountViewRow
     'transactions.starkex': StarkexTransactionCountRow
+    'transactions.daily_count_view': DailyCountViewRow
   }
 }

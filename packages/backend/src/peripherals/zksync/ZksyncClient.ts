@@ -25,10 +25,11 @@ export class ZksyncClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    private readonly callsPerMinute: number,
   ) {
     this.logger = logger.for(this)
     const rateLimiter = new RateLimiter({
-      callsPerMinute: 3000,
+      callsPerMinute,
     })
     this.call = rateLimiter.wrap(this.call.bind(this))
   }

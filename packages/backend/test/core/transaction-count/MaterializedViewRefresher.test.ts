@@ -8,8 +8,8 @@ import {
   MaterializedViewRefresherOpts,
 } from '../../../src/core/transaction-count/MaterializedViewRefresher'
 import { TransactionCounter } from '../../../src/core/transaction-count/TransactionCounter'
-import { BlockTransactionCountRepository } from '../../../src/peripherals/database/BlockTransactionCountRepository'
-import { ZksyncTransactionRepository } from '../../../src/peripherals/database/ZksyncTransactionRepository'
+import { BlockTransactionCountRepository } from '../../../src/peripherals/database/transactions/BlockRepository'
+import { ZksyncTransactionRepository } from '../../../src/peripherals/database/TransactionsZksyncRepository'
 
 const projectA = ProjectId('a')
 const projectB = ProjectId('b')

@@ -5,7 +5,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../src/core/Clock'
 import { ZksyncTransactionUpdater } from '../../../src/core/transaction-count/ZksyncTransactionUpdater'
-import { ZksyncTransactionRepository } from '../../../src/peripherals/database/ZksyncTransactionRepository'
+import { ZksyncTransactionRepository } from '../../../src/peripherals/database/TransactionsZksyncRepository'
 import { ZksyncClient } from '../../../src/peripherals/zksync'
 
 describe(ZksyncTransactionUpdater.name, () => {

@@ -5,7 +5,7 @@ import { expect } from 'earljs'
 import {
   StarkexTransactionCountRecord,
   StarkexTransactionCountRepository,
-} from '../../../src/peripherals/database/StarkexTransactionCountRepository'
+} from '../../../src/peripherals/database/TransactionsStarkexRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(StarkexTransactionCountRepository.name, () => {

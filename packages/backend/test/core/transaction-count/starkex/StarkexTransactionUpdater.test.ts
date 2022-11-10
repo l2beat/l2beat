@@ -5,7 +5,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../../src/core/Clock'
 import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/starkex/StarkexTransactionUpdater'
-import { StarkexTransactionCountRepository } from '../../../../src/peripherals/database/StarkexTransactionCountRepository'
+import { StarkexTransactionCountRepository } from '../../../../src/peripherals/database/TransactionsStarkexRepository'
 import { StarkexClient } from '../../../../src/peripherals/starkex'
 
 describe(StarkexTransactionUpdater.name, () => {

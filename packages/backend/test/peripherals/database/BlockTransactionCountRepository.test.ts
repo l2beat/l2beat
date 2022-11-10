@@ -6,7 +6,7 @@ import { BlockTipRepository } from '../../../src/peripherals/database/BlockTipRe
 import {
   BlockTransactionCountRecord,
   BlockTransactionCountRepository,
-} from '../../../src/peripherals/database/BlockTransactionCountRepository'
+} from '../../../src/peripherals/database/transactions/BlockRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(BlockTransactionCountRepository.name, () => {

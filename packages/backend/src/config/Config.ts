@@ -29,20 +29,11 @@ export interface Config {
     | {
         starkexApiKey: string
         starkexApiDelayHours: number
-        zkSyncWorkQueueWorkers: number
-        aztecWorkQueueWorkers: number
-        starkexWorkQueueWorkers: number
-        loopringWorkQueueWorkers: number
-        loopringCallsPerMinute: number
         starkexCallsPerMinute: number
-        rpc: {
-          workQueueLimit: number
-          workQueueWorkers: number
-          projects: Record<
-            string,
-            { callsPerMinute?: number; url: string } | undefined
-          >
-        }
+        projects: Record<
+          string,
+          { callsPerMinute?: number; url: string } | undefined
+        >
       }
     | false
   health?: HealthStatus

@@ -7,7 +7,7 @@ import { BlockTipRepository } from '../../../src/peripherals/database/BlockTipRe
 import {
   ZksyncTransactionRecord,
   ZksyncTransactionRepository,
-} from '../../../src/peripherals/database/ZksyncTransactionRepository'
+} from '../../../src/peripherals/database/TransactionsZksyncRepository'
 import { setupDatabaseTestSuite } from './shared/setup'
 
 describe(ZksyncTransactionRepository.name, () => {

@@ -4,7 +4,7 @@ import { expect, mockFn } from 'earljs'
 
 import { Clock } from '../../../src/core/Clock'
 import { LoopringTransactionUpdater } from '../../../src/core/transaction-count/LoopringTransactionUpdater'
-import { BlockTransactionCountRepository } from '../../../src/peripherals/database/BlockTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../../src/peripherals/database/transactions/BlockRepository'
 import { LoopringClient } from '../../../src/peripherals/loopring/LoopringClient'
 
 describe(LoopringTransactionUpdater.name, () => {
