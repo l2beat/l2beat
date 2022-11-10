@@ -26,7 +26,7 @@ export class SequenceProcessorRepository extends BaseRepository {
     trx?: Knex.Transaction,
   ): Promise<void> {
     const knex = await this.knex()
-    await (trx ?? knex)('sequence_processors')
+    await (trx ?? knex)('sequence_processor')
       .insert(toRow(record))
       .onConflict('id')
       .merge()
@@ -34,13 +34,13 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async getById(id: string): Promise<SequenceProcessorRecord | undefined> {
     const knex = await this.knex()
-    const row = await knex('sequence_processors').where('id', id).first()
+    const row = await knex('sequence_processor').where('id', id).first()
     return row ? toRecord(row) : undefined
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('sequence_processors').delete()
+    return await knex('sequence_processor').delete()
   }
 
   async getTransaction(): Promise<Knex.Transaction> {

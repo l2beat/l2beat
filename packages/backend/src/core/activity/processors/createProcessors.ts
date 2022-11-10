@@ -73,7 +73,13 @@ export function createSequenceProcessors(
       (p): p is Project & { transactionApi: Layer2TransactionApi } =>
         !!p.transactionApi,
     )
-    .map(({ projectId, transactionApi }) => ({ projectId, transactionApi }))
+    .map(({ projectId, transactionApi }) => ({
+      projectId,
+      transactionApi: {
+        ...transactionApi,
+        ...activityProjects[projectId.toString()],
+      },
+    }))
     .concat(layer1Projects)
     .map(({ projectId, transactionApi }) => {
       switch (transactionApi.type) {

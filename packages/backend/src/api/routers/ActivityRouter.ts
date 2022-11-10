@@ -5,13 +5,18 @@ import { ActivityController } from '../controllers/activity/ActivityController'
 export function createActivityRouter(activityController: ActivityController) {
   const router = new Router()
 
-  router.get('/api/activity', async (ctx) => {
-    const data = await activityController.getTransactionActivity()
-    ctx.body = data
-  })
+  // router.get('/api/activity', async (ctx) => {
+  //   const data = await activityController.getTransactionActivity()
+  //   ctx.body = data
+  // })
 
-  router.get('/api/activity/status', async (ctx) => {
-    const data = await activityController.getStatus()
+  // router.get('/api/activity/status', async (ctx) => {
+  //   const data = await activityController.getStatus()
+  //   ctx.body = data
+  // })
+
+  router.get('/api/activity/counts', async (ctx) => {
+    const data = await activityController.getDailyCounts()
     ctx.body = data
   })
 

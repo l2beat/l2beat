@@ -1,4 +1,7 @@
 import { HttpClient, Logger } from '@l2beat/common'
+import { ProjectId } from '@l2beat/types'
+import { ActivityController } from '../api/controllers/activity/ActivityController'
+import { createActivityRouter } from '../api/routers/ActivityRouter'
 
 import { Config } from '../config'
 import { DailyCountView } from '../core/activity/DailyCountView'
@@ -33,19 +36,19 @@ export function getActivityModule(
     clock,
     logger,
   )
-  // const activityController = new ActivityController(
-  //   processors
-  //     .filter((processor) =>
-  //       config.projects.some(
-  //         (p) =>
-  //           p.projectId.toString() === processor.id &&
-  //           !p.transactionApi?.excludeFromActivityApi,
-  //       ),
-  //     )
-  //     .map((p) => ProjectId(p.id)),
-  //   dailyCountView,
-  // )
-  // const router = createActivityRouter(activityController)
+  const activityController = new ActivityController(
+    processors
+      .filter((processor) =>
+        config.projects.some(
+          (p) =>
+            p.projectId.toString() === processor.id &&
+            !p.transactionApi?.excludeFromActivityApi,
+        ),
+      )
+      .map((p) => ProjectId(p.id)),
+    dailyCountView,
+  )
+  const router = createActivityRouter(activityController)
 
   const start = () => {
     logger.info('Starting Activity Module')
@@ -55,7 +58,7 @@ export function getActivityModule(
   }
 
   return {
-    router: undefined,
+    router,
     start,
   }
 }

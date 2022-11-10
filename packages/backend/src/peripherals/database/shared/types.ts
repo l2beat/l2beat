@@ -86,7 +86,7 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    sequence_processors: SequenceProcessorRow
+    sequence_processor: SequenceProcessorRow
     'transactions.block': BlockTransactionCountRow
     'transactions.zksync': ZksyncTransactionRow
     'transactions.starkex': StarkexTransactionCountRow

@@ -10,6 +10,7 @@ export class BatchDownloader<T> {
     private readonly getOne: (number: number) => Promise<T>,
     private readonly logger: Logger,
   ) {
+    this.logger = this.logger.for(this)
     this.queue = new TaskQueue<number>(
       this.getOneAndAddToBatch.bind(this),
       this.logger,

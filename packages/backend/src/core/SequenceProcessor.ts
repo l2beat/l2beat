@@ -86,12 +86,12 @@ export class SequenceProcessor extends EventEmitter {
       !tip || tip < last;
       tip = last, last = await this.opts.getLast(last)
     ) {
-      this.logger.debug('Last not reached.', { last, tip: tip ?? null })
+      this.logger.debug('Last not reached', { last, tip: tip ?? null })
       this.lastReached = false
       await toRepeat(last, tip)
     }
     this.lastReached = true
     this.emit('last reached')
-    this.logger.debug('Last reached.')
+    this.logger.debug('Last reached')
   }
 }
