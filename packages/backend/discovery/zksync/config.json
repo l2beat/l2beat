@@ -1,0 +1,38 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "zksync",
+  "initialAddresses": ["0x38A43F4330f24fe920F943409709fc9A6084C939"],
+  "overrides": {
+    "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": {
+      "fields": {
+        "additional": {
+          "type": "storage",
+          "slot": 19
+        }
+      }
+    },
+    "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": {
+      "fields": {
+        "validators": {
+          "type": "setFromEvents",
+          "event": "ValidatorStatusUpdate",
+          "addressField": "validatorAddress",
+          "actionField": "isActive"
+        }
+      }
+    },
+    "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": {
+      "ignoreMethods": [
+        "tokenURI",
+        "getCreatorFingerprint",
+        "getSerialId",
+        "getContentHash",
+        "getCreatorAccountId",
+        "getCreatorAddress",
+        "tokenByIndex",
+        "getApproved",
+        "ownerOf"
+      ]
+    }
+  }
+}
