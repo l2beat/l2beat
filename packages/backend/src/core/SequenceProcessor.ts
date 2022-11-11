@@ -1,11 +1,10 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
-import { setTimeout } from 'timers/promises'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 
-interface SequenceProcessorOpts {
+export interface SequenceProcessorOpts {
   id: string
   logger: Logger
   repository: SequenceProcessorRepository
@@ -13,6 +12,7 @@ interface SequenceProcessorOpts {
   batchSize: number
   getLast: (previousLast: number) => Promise<number>
   processRange: (
+    // [from, to] <- ranges are inclusive
     from: number,
     to: number,
     trx: Knex.Transaction,
@@ -22,12 +22,13 @@ interface SequenceProcessorOpts {
 
 const HOUR = 1000 * 60 * 60
 
+// todo: use strongly typed event emitter
 export class SequenceProcessor extends EventEmitter {
   readonly id: string
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly logger: Logger
-  private lastReached: boolean | undefined
+  private lastReached = false
 
   constructor(private readonly opts: SequenceProcessorOpts) {
     super()
@@ -49,24 +50,34 @@ export class SequenceProcessor extends EventEmitter {
     ).unref()
   }
 
+  // todo: remove
+  // eslint-disable-next-line @typescript-eslint/require-await
   async isLastReached(): Promise<boolean> {
-    while (this.lastReached === undefined) await setTimeout(50)
     return this.lastReached
   }
 
   private async process(): Promise<void> {
     this.logger.debug('Processing started')
-    await this.repeatUntilLastReached(async (currentLast, tip) => {
-      for (
-        let from = tip ?? this.opts.startFrom;
-        from < currentLast;
-        from += this.opts.batchSize
-      ) {
-        const to = from + this.opts.batchSize - 1
-        await this.processRange(from, to)
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    processing: while (true) {
+      const lastProcessed = (await this.opts.repository.getById(this.id))?.tip
+      const to = await this.opts.getLast(lastProcessed ?? this.opts.startFrom)
+
+      if ((lastProcessed ?? this.opts.startFrom) === to) {
+        break processing
       }
-    })
+      // to avoid processing lastSynced multiple times we need to increment it by one
+      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
+
+      for (; from < to; from += this.opts.batchSize) {
+        await this.processRange(from, from + this.opts.batchSize - 1)
+      }
+    }
+
     this.logger.debug('Processing finished')
+    this.lastReached = true
+    this.emit('Last reached')
   }
 
   private async processRange(from: number, to: number) {
@@ -76,23 +87,5 @@ export class SequenceProcessor extends EventEmitter {
       await this.opts.repository.addOrUpdate({ id: this.id, tip: to }, trx)
     })
     this.logger.debug('Processing range finished', { from, to })
-  }
-
-  private async repeatUntilLastReached(
-    toRepeat: (last: number, tip?: number) => Promise<void>,
-  ): Promise<void> {
-    for (
-      let tip = (await this.opts.repository.getById(this.id))?.tip,
-        last = await this.opts.getLast(tip ?? this.opts.startFrom);
-      !tip || tip < last;
-      tip = last, last = await this.opts.getLast(last)
-    ) {
-      this.logger.debug('Last not reached', { last, tip: tip ?? null })
-      this.lastReached = false
-      await toRepeat(last, tip)
-    }
-    this.lastReached = true
-    this.emit('last reached')
-    this.logger.debug('Last reached')
   }
 }
