@@ -1,18 +1,12 @@
-import {
-  ActivityApiChart,
-  ActivityApiChartPoint,
-  ActivityApiResponse,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/types'
+import { ProjectId } from '@l2beat/types'
 
 import { DailyCountView } from '../../core/activity/DailyCountView'
 import { DailyCountRecord } from '../../peripherals/database/transactions/DailyCountRepository'
 
-interface Layer2Count {
-  projectId: ProjectId
-  counts: Omit<DailyCountRecord, 'projectId'>[]
-}
+// interface Layer2Count {
+//   projectId: ProjectId
+//   counts: Omit<DailyCountRecord, 'projectId'>[]
+// }
 
 export class ActivityController {
   constructor(
@@ -71,47 +65,47 @@ export class ActivityController {
   // }
 }
 
-function toCombinedActivity(
-  layer2s: Layer2Count[],
-): ActivityApiResponse['combined'] {
-  return formatChart(
-    layer2s
-      .map((l2) => l2.counts)
-      .flat()
-      .sort((a, b) => +a.timestamp - +b.timestamp)
-      .reduce<ActivityApiChartPoint[]>((acc, { count, timestamp }) => {
-        const current = acc.at(-1)
-        if (!current?.[0].equals(timestamp)) {
-          acc.push([timestamp, count])
-        } else {
-          current[1] = current[1] + count
-        }
-        return acc
-      }, []),
-  )
-}
+// function toCombinedActivity(
+//   layer2s: Layer2Count[],
+// ): ActivityApiResponse['combined'] {
+//   return formatChart(
+//     layer2s
+//       .map((l2) => l2.counts)
+//       .flat()
+//       .sort((a, b) => +a.timestamp - +b.timestamp)
+//       .reduce<ActivityApiChartPoint[]>((acc, { count, timestamp }) => {
+//         const current = acc.at(-1)
+//         if (!current?.[0].equals(timestamp)) {
+//           acc.push([timestamp, count])
+//         } else {
+//           current[1] = current[1] + count
+//         }
+//         return acc
+//       }, []),
+//   )
+// }
 
-function toProjectsActivity(
-  layer2s: Layer2Count[],
-): ActivityApiResponse['projects'] {
-  const projects: ActivityApiResponse['projects'] = {}
-  for (const { projectId, counts } of layer2s) {
-    projects[projectId.toString()] = countsToChart(counts)
-  }
-  return projects
-}
+// function toProjectsActivity(
+//   layer2s: Layer2Count[],
+// ): ActivityApiResponse['projects'] {
+//   const projects: ActivityApiResponse['projects'] = {}
+//   for (const { projectId, counts } of layer2s) {
+//     projects[projectId.toString()] = countsToChart(counts)
+//   }
+//   return projects
+// }
 
-function countsToChart(counts: DailyTransactionCount[]) {
-  return formatChart(counts.map((c) => [c.timestamp, c.count]))
-}
+// function countsToChart(counts: DailyTransactionCount[]) {
+//   return formatChart(counts.map((c) => [c.timestamp, c.count]))
+// }
 
-function formatChart(data: ActivityApiChartPoint[]): ActivityApiChart {
-  return {
-    types: ['timestamp', 'daily tx count'],
-    data,
-  }
-}
+// function formatChart(data: ActivityApiChartPoint[]): ActivityApiChart {
+//   return {
+//     types: ['timestamp', 'daily tx count'],
+//     data,
+//   }
+// }
 
-function limitCounts(counts: DailyTransactionCount[], tip: UnixTime) {
-  return counts.filter((count) => count.timestamp.lte(tip))
-}
+// function limitCounts(counts: DailyTransactionCount[], tip: UnixTime) {
+//   return counts.filter((count) => count.timestamp.lte(tip))
+// }
