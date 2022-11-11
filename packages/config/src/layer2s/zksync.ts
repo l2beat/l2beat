@@ -63,8 +63,8 @@ export const zksync: Layer2 = {
     ],
     transactionApi: {
       type: 'zksync',
-      callsPerMinute: 3_000
-    }
+      callsPerMinute: 3_000,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
