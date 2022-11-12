@@ -1,9 +1,9 @@
 import { Logger, TaskQueue } from '@l2beat/common'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { assert } from '@l2beat/common/src/tools/assert'
 
 export interface SequenceProcessorOpts {
   id: string
@@ -74,6 +74,7 @@ export class SequenceProcessor extends EventEmitter {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
       const lastProcessed = (await this.opts.repository.getById(this.id))?.tip
+      this.logger.debug('Calling getLast')
       const to = await this.opts.getLast(lastProcessed ?? this.opts.startFrom)
 
       if ((lastProcessed ?? this.opts.startFrom) === to) {

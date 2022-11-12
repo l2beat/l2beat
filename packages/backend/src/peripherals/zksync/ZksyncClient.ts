@@ -4,9 +4,9 @@ import {
   Logger,
   RateLimiter,
 } from '@l2beat/common'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { UnixTime } from '@l2beat/types'
 
-import { assert } from '@l2beat/common/src/tools/assert'
 import {
   ZksyncBlocksResultSchema,
   ZksyncResponse,

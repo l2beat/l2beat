@@ -1,13 +1,13 @@
-import { Logger } from '@l2beat/common'
+import { Logger, promiseAllThrottled } from '@l2beat/common'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { RpcTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
+import { range } from 'lodash'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
-import { assert } from '@l2beat/common/src/tools/assert'
-import { BatchDownloader } from '../../BatchDownloader'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -36,24 +36,6 @@ export function createRpcProcessor({
     timeout: 15_000,
   })
   const client = new EthereumClient(provider, logger, callsPerMinute)
-  const batchDownloader = new BatchDownloader(
-    batchSize,
-    async (blockNumber) => {
-      const block = await client.getBlock(blockNumber)
-      const timestamp = new UnixTime(block.timestamp)
-      return {
-        projectId,
-        blockNumber,
-        timestamp,
-        count:
-          transactionApi.assessCount?.(
-            block.transactions.length,
-            blockNumber,
-          ) ?? block.transactions.length,
-      }
-    },
-    logger,
-  )
 
   return new SequenceProcessor({
     id: projectId.toString(),
@@ -61,10 +43,29 @@ export function createRpcProcessor({
     logger,
     repository: sequenceProcessorRepository,
     startFrom: transactionApi.startBlock ?? 0,
+
     getLast: (prevLast) =>
       client.getBlockNumberAtOrBefore(clock.getLastHour(), prevLast),
+
     processRange: async (from, to, trx) => {
-      const blocks = await batchDownloader.download(from, to)
+      const fns = range(from, to + 1).map((blockNumber) => async () => {
+        const block = await client.getBlock(blockNumber)
+        const timestamp = new UnixTime(block.timestamp)
+
+        return {
+          projectId,
+          blockNumber,
+          timestamp,
+          count:
+            transactionApi.assessCount?.(
+              block.transactions.length,
+              blockNumber,
+            ) ?? block.transactions.length,
+        }
+      })
+
+      const blocks = await promiseAllThrottled(fns, logger)
+
       await blockRepository.addOrUpdateMany(blocks, trx)
     },
   })

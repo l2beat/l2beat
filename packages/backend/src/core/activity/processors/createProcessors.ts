@@ -1,4 +1,5 @@
 import { HttpClient, Logger } from '@l2beat/common'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { Layer2TransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 
@@ -9,7 +10,6 @@ import { Database } from '../../../peripherals/database/shared/Database'
 import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { StarkexCountRepository } from '../../../peripherals/database/transactions/StarkexCountRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
-import { assert } from '@l2beat/common/src/tools/assert'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { createAztecProcessor } from './createAztecProcessor'
