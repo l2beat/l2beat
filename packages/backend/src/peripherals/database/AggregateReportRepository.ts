@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { AggregateReportRow } from 'knex/types/tables'
 
-import { assert } from '../../tools/assert'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 

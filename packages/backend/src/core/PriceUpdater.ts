@@ -9,7 +9,7 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
-import { assert } from '../tools/assert'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { Clock } from './Clock'
 
 export class PriceUpdater {

@@ -3,7 +3,7 @@ import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { assert } from '../tools/assert'
+import { assert } from '@l2beat/common/src/tools/assert'
 
 export interface SequenceProcessorOpts {
   id: string

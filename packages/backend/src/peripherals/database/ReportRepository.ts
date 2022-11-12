@@ -3,7 +3,7 @@ import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
-import { assert } from '../../tools/assert'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
