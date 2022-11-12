@@ -3,6 +3,7 @@ import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
+import { assert } from '../tools/assert'
 
 export interface SequenceProcessorOpts {
   id: string
@@ -20,6 +21,8 @@ export interface SequenceProcessorOpts {
   scheduleIntervalMs?: number
 }
 
+export const ALL_PROCESSED_EVENT = 'Last reached'
+
 const HOUR = 1000 * 60 * 60
 
 // todo: use strongly typed event emitter
@@ -29,9 +32,13 @@ export class SequenceProcessor extends EventEmitter {
   private readonly scheduleInterval: number
   private readonly logger: Logger
   private lastReached = false
+  private refreshId: NodeJS.Timer | undefined
 
   constructor(private readonly opts: SequenceProcessorOpts) {
     super()
+
+    assert(opts.batchSize > 0)
+
     this.id = this.opts.id
     this.logger = this.opts.logger.for(`${SequenceProcessor.name}.${this.id}`)
     this.processQueue = new TaskQueue<void>(
@@ -41,13 +48,19 @@ export class SequenceProcessor extends EventEmitter {
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
   }
 
-  start(): void {
+  public start(): void {
     this.logger.info('Started')
     this.processQueue.addIfEmpty()
-    setInterval(
+    this.refreshId = setInterval(
       () => this.processQueue.addIfEmpty(),
       this.scheduleInterval,
-    ).unref()
+    )
+  }
+
+  public async stop(): Promise<void> {
+    this.logger.info('Stopping')
+    clearInterval(this.refreshId)
+    await this.processQueue.waitTilEmpty()
   }
 
   // todo: remove
@@ -67,17 +80,20 @@ export class SequenceProcessor extends EventEmitter {
       if ((lastProcessed ?? this.opts.startFrom) === to) {
         break processing
       }
-      // to avoid processing lastSynced multiple times we need to increment it by one
       let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
+      // to avoid processing lastSynced multiple times we need to increment it by one
 
-      for (; from < to; from += this.opts.batchSize) {
-        await this.processRange(from, from + this.opts.batchSize - 1)
+      for (; from <= to; from += this.opts.batchSize) {
+        await this.processRange(
+          from,
+          Math.min(from + this.opts.batchSize - 1, to),
+        )
       }
     }
 
     this.logger.debug('Processing finished')
     this.lastReached = true
-    this.emit('Last reached')
+    this.emit(ALL_PROCESSED_EVENT)
   }
 
   private async processRange(from: number, to: number) {
