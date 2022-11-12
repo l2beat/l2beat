@@ -49,7 +49,7 @@ export function createLoopringProcessor({
     getLast: client.getFinalizedBlockNumber.bind(client),
     processRange: async (from, to, trx) => {
       const blocks = await batchDownloader.download(from, to)
-      await blockRepository.addOrUpdateMany(blocks, trx)
+      await blockRepository.addMany(blocks, trx)
     },
   })
 }

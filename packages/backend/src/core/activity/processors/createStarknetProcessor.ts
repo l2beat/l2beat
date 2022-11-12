@@ -58,7 +58,7 @@ export function createStarknetProcessor({
         count: b.transactions.length,
         timestamp: new UnixTime(b.timestamp),
       }))
-      await blockRepository.addOrUpdateMany(toSave, trx)
+      await blockRepository.addMany(toSave, trx)
     },
   })
 }

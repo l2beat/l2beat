@@ -17,18 +17,15 @@ export class BlockCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
+    this.addMany = this.wrapAny(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async addOrUpdateMany(records: BlockCountRecord[], trx?: Knex.Transaction) {
+  async addMany(records: BlockCountRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('transactions.block')
-      .insert(rows)
-      .onConflict(['project_id', 'block_number'])
-      .merge()
+    await (trx ?? knex)('transactions.block').insert(rows)
     return rows.length
   }
 

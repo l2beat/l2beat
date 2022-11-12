@@ -66,7 +66,7 @@ export function createRpcProcessor({
 
       const blocks = await promiseAllThrottled(fns, logger)
 
-      await blockRepository.addOrUpdateMany(blocks, trx)
+      await blockRepository.addMany(blocks, trx)
     },
   })
 }

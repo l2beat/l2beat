@@ -54,7 +54,7 @@ export function createAztecProcessor({
         count: b.transactionCount,
         timestamp: b.timestamp,
       }))
-      await blockRepository.addOrUpdateMany(toSave, trx)
+      await blockRepository.addMany(toSave, trx)
     },
   })
 }
