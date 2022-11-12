@@ -170,7 +170,7 @@ export const orbit: Bridge = {
           'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
         upgradeability: {
           type: 'CustomWithoutAdmin',
-          implementation: '0x9f2E4581d47c2851EA1150AB8126b45C5939d8f5'
+          implementation: '0x9f2E4581d47c2851EA1150AB8126b45C5939d8f5',
         },
       },
       {
