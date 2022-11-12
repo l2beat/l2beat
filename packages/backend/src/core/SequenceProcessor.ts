@@ -25,7 +25,6 @@ export const ALL_PROCESSED_EVENT = 'Last reached'
 
 const HOUR = 1000 * 60 * 60
 
-// todo: use strongly typed event emitter
 export class SequenceProcessor extends EventEmitter {
   readonly id: string
   private readonly processQueue: TaskQueue<void>
@@ -80,8 +79,13 @@ export class SequenceProcessor extends EventEmitter {
       if ((lastProcessed ?? this.opts.startFrom) === to) {
         break processing
       }
-      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
       // to avoid processing lastSynced multiple times we need to increment it by one
+      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
+
+      assert(
+        from <= to,
+        `getLast returned sequence member that was already processed. from=${from}, to=${to}`,
+      )
 
       for (; from <= to; from += this.opts.batchSize) {
         await this.processRange(

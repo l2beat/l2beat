@@ -9,10 +9,11 @@ import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistance: 3_000,
+  maxAttempts: 10,
 })
 
 /**
- * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
+ * Note: by default, queue will retry tasks using exponential back off strategy until limit has been reached.
  */
 export class TaskQueue<T> {
   private readonly queue: Job<T>[] = []
@@ -96,14 +97,17 @@ export class TaskQueue<T> {
     return Date.now() >= job.executeAt
   }
 
-  private handleFailure(job: Job<T>) {
+  private handleFailure(job: Job<T>, error: unknown) {
     job.attempts++
     const result = this.shouldRetry(job)
     if (!result.retry) {
-      this.logger.error({
-        message: 'No more retries',
-        job: JSON.stringify(job),
-      })
+      this.logger.error(
+        {
+          message: 'No more retries',
+          job: JSON.stringify(job),
+        },
+        error,
+      )
       this.eventTracker?.record('error')
       return
     }
@@ -142,7 +146,7 @@ export class TaskQueue<T> {
         job: JSON.stringify(job),
         error: getErrorMessage(error),
       })
-      this.handleFailure(job)
+      this.handleFailure(job, error)
     } finally {
       this.busyWorkers--
       setTimeout(() => this.execute())
