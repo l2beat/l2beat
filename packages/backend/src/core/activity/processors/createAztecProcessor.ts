@@ -1,11 +1,11 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, promiseAllThrottled } from '@l2beat/common'
 import { AztecTransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
+import { range } from 'lodash'
 
 import { AztecClient } from '../../../peripherals/aztec'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
-import { BatchDownloader } from '../../BatchDownloader'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
@@ -31,11 +31,7 @@ export function createAztecProcessor({
     transactionApi.url,
     transactionApi.callsPerMinute,
   )
-  const batchDownloader = new BatchDownloader(
-    batchSize,
-    client.getBlock.bind(client),
-    logger,
-  )
+
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
@@ -47,14 +43,19 @@ export function createAztecProcessor({
       return block.number
     },
     processRange: async (from, to, trx) => {
-      const blocks = await batchDownloader.download(from, to)
-      const toSave = blocks.map((b) => ({
-        projectId,
-        blockNumber: b.number,
-        count: b.transactionCount,
-        timestamp: b.timestamp,
-      }))
-      await blockRepository.addMany(toSave, trx)
+      const fns = range(from, to + 1).map((blockNumber) => async () => {
+        const block = await client.getBlock(blockNumber)
+
+        return {
+          projectId,
+          blockNumber: block.number,
+          count: block.transactionCount,
+          timestamp: block.timestamp,
+        }
+      })
+      const blocks = await promiseAllThrottled(fns, logger)
+
+      await blockRepository.addMany(blocks, trx)
     },
   })
 }

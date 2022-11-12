@@ -1,12 +1,12 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, promiseAllThrottled } from '@l2beat/common'
 import { ZksyncTransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
+import { range } from 'lodash'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../../peripherals/database/shared/Database'
 import { ZksyncTransactionRepository } from '../../../peripherals/database/transactions/ZksyncTransactionRepository'
 import { ZksyncClient } from '../../../peripherals/zksync'
-import { BatchDownloader } from '../../BatchDownloader'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
@@ -29,23 +29,8 @@ export function createZksyncProcessor({
     transactionApi.callsPerMinute,
   )
   const client = new ZksyncClient(http, logger, transactionApi.callsPerMinute)
-  const batchDownloader = new BatchDownloader(
-    batchSize,
-    async (blockNumber) => {
-      const transactions = await client.getTransactionsInBlock(blockNumber)
-      return transactions.map((t) => {
-        // Block 427 has a duplicated blockIndex
-        const blockIndex = blockNumber === 427 ? t.blockIndex + 1 : t.blockIndex
-        return {
-          blockNumber,
-          blockIndex,
-          timestamp: t.createdAt,
-        }
-      })
-    },
-    logger,
-  )
   const zksyncRepository = new ZksyncTransactionRepository(database, logger)
+
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
@@ -54,7 +39,23 @@ export function createZksyncProcessor({
     startFrom: 1,
     getLast: client.getLatestBlock.bind(client),
     processRange: async (from, to, trx) => {
-      const blockTransactions = await batchDownloader.download(from, to)
+      const fns = range(from, to + 1).map((blockNumber) => async () => {
+        const transactions = await client.getTransactionsInBlock(blockNumber)
+
+        return transactions.map((t) => {
+          // Block 427 has a duplicated blockIndex
+          const blockIndex =
+            blockNumber === 427 ? t.blockIndex + 1 : t.blockIndex
+          return {
+            blockNumber,
+            blockIndex,
+            timestamp: t.createdAt,
+          }
+        })
+      })
+
+      const blockTransactions = await promiseAllThrottled(fns, logger)
+
       await zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
     },
   })

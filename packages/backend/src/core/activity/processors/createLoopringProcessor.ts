@@ -1,11 +1,11 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, promiseAllThrottled } from '@l2beat/common'
 import { LoopringTransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
+import { range } from 'lodash'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { LoopringClient } from '../../../peripherals/loopring'
-import { BatchDownloader } from '../../BatchDownloader'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
@@ -27,19 +27,7 @@ export function createLoopringProcessor({
   const callsPerMinute = transactionApi.callsPerMinute
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const client = new LoopringClient(http, logger, { callsPerMinute })
-  const batchDownloader = new BatchDownloader(
-    batchSize,
-    async (blockNumber) => {
-      const block = await client.getBlock(blockNumber)
-      return {
-        projectId,
-        blockNumber,
-        count: block.transactions,
-        timestamp: block.createdAt,
-      }
-    },
-    logger,
-  )
+
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
@@ -48,7 +36,18 @@ export function createLoopringProcessor({
     startFrom: 1,
     getLast: client.getFinalizedBlockNumber.bind(client),
     processRange: async (from, to, trx) => {
-      const blocks = await batchDownloader.download(from, to)
+      const fns = range(from, to + 1).map((blockNumber) => async () => {
+        const block = await client.getBlock(blockNumber)
+
+        return {
+          projectId,
+          blockNumber,
+          count: block.transactions,
+          timestamp: block.createdAt,
+        }
+      })
+
+      const blocks = await promiseAllThrottled(fns, logger)
       await blockRepository.addMany(blocks, trx)
     },
   })

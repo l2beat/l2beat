@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/common'
+import { Logger, promiseAllThrottled } from '@l2beat/common'
 import { StarkexTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
+import { range } from 'lodash'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkexCountRepository } from '../../../peripherals/database/transactions/StarkexCountRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
-import { BatchDownloader } from '../../BatchDownloader'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -32,28 +32,28 @@ export function createStarkexProcessor({
   sequenceProcessorRepository: SequenceProcessorRepository
 }): SequenceProcessor {
   const batchSize = getBatchSizeFromCallsPerMinute(singleStarkexCPM)
-  const batchDownloader = new BatchDownloader(
-    batchSize,
-    async (day) => {
-      const count = await starkexClient.getDailyCount(
-        day,
-        transactionApi.product,
-      )
-      return { count, timestamp: UnixTime.fromDays(day), projectId }
-    },
-    logger,
-  )
+
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
     logger,
     repository: sequenceProcessorRepository,
     startFrom: transactionApi.sinceTimestamp.toStartOf('day').toDays(),
+
     // eslint-disable-next-line @typescript-eslint/require-await
     getLast: async () =>
       getStarkexLastDay(clock.getLastHour(), starkexApiDelayHours),
     processRange: async (from, to, trx) => {
-      const counts = await batchDownloader.download(from, to)
+      const fns = range(from, to + 1).map((day) => async () => {
+        const count = await starkexClient.getDailyCount(
+          day,
+          transactionApi.product,
+        )
+
+        return { count, timestamp: UnixTime.fromDays(day), projectId }
+      })
+      const counts = await promiseAllThrottled(fns, logger)
+
       await starkexRepository.addOrUpdateMany(counts, trx)
     },
   })

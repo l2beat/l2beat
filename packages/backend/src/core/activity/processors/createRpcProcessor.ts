@@ -27,7 +27,7 @@ export function createRpcProcessor({
   sequenceProcessorRepository: SequenceProcessorRepository
   clock: Clock
 }): SequenceProcessor {
-  logger = logger.for(`rpcProcessor.${projectId}`)
+  logger = logger.for(`rpcProcessor.${projectId.toString()}`)
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const url = transactionApi.url

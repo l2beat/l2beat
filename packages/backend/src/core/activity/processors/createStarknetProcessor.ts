@@ -1,11 +1,11 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, promiseAllThrottled } from '@l2beat/common'
 import { StarknetTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
+import { range } from 'lodash'
 
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
-import { BatchDownloader } from '../../BatchDownloader'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -32,11 +32,7 @@ export function createStarknetProcessor({
   const client = new StarkNetClient(transactionApi.url, http, {
     callsPerMinute,
   })
-  const batchDownloader = new BatchDownloader(
-    batchSize,
-    client.getBlock.bind(client),
-    logger,
-  )
+
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
@@ -51,14 +47,20 @@ export function createStarknetProcessor({
       return blockNumber
     },
     processRange: async (from, to, trx) => {
-      const blocks = await batchDownloader.download(from, to)
-      const toSave = blocks.map((b) => ({
-        projectId,
-        blockNumber: b.number,
-        count: b.transactions.length,
-        timestamp: new UnixTime(b.timestamp),
-      }))
-      await blockRepository.addMany(toSave, trx)
+      const fns = range(from, to + 1).map((blockNumber) => async () => {
+        const block = await client.getBlock(blockNumber)
+
+        return {
+          projectId,
+          blockNumber: block.number,
+          count: block.transactions.length,
+          timestamp: new UnixTime(block.timestamp),
+        }
+      })
+
+      const blocks = await promiseAllThrottled(fns, logger)
+
+      await blockRepository.addMany(blocks, trx)
     },
   })
 }
