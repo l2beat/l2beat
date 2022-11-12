@@ -17,8 +17,6 @@ export async function promiseAllThrottled<T>(
 
   const results: T[] = []
   const execute = async (id: number) => {
-    logger.debug('Executing', { id })
-
     results[id] = await fns[id]()
   }
 
