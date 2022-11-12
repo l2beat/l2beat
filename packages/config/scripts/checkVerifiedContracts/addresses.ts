@@ -21,17 +21,10 @@ export function getUniqueContractsForProject(
     .map((c) => c.upgradeability)
     .filter((u): u is ProjectUpgradeability => !!u) // remove undefined
     .flatMap((u) => gatherAddressesFromUpgradeability(u))
-  const permissions = project.permissions ?? []
-  const permissionAddresses = permissions
-    .flatMap((permission) => permission.accounts)
-    .filter((account) => account.type !== 'EOA')
-    .map((account) => account.address)
-    .map(EthereumAddress)
 
   return withoutDuplicates([
     ...mainAddresses,
     ...upgradeabilityAddresses,
-    ...permissionAddresses,
   ])
 }
 
