@@ -18,7 +18,7 @@ export class BatchDownloader<T> {
         trackEvents: true,
         workers: this.batchSize,
         shouldRetry: Retries.exponentialBackOff(100, {
-          maxDistance: 3_000,
+          maxDistanceMs: 3_000,
           maxAttempts: 8,
         }),
       },

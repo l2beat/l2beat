@@ -8,7 +8,7 @@ import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
-  maxDistance: 3_000,
+  maxDistanceMs: 3_000,
   maxAttempts: 10,
 })
 
