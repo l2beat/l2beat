@@ -22,10 +22,7 @@ export function getUniqueContractsForProject(
     .filter((u): u is ProjectUpgradeability => !!u) // remove undefined
     .flatMap((u) => gatherAddressesFromUpgradeability(u))
 
-  return withoutDuplicates([
-    ...mainAddresses,
-    ...upgradeabilityAddresses,
-  ])
+  return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
 function gatherAddressesFromUpgradeability(
