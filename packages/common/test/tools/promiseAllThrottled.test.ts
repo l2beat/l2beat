@@ -1,5 +1,6 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earljs'
+
 import { Logger } from '../../src'
 import { promiseAllThrottled } from '../../src/tools/promiseAllThrottled'
 
