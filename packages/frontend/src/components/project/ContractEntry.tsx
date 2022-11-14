@@ -56,30 +56,33 @@ export function ContractEntry({
       color={color}
       icon={icon}
       body={
-        <div className="flex gap-2 flex-wrap">
-          <strong>{contract.name}</strong>{' '}
-          {contract.address && (
-            <EtherscanLink
-              address={contract.address}
-              className={cx(
-                isVerified === false ? 'text-red-700 dark:text-red-300' : '',
-              )}
-            />
-          )}
-          {contract.links.map((x, i) => (
-            <OutLink
-              key={i}
-              className={cx(
-                'text-link underline',
-                verificationStatus.contracts[x.address] === false && !x.isAdmin
-                  ? 'text-red-700 dark:text-red-300'
-                  : '',
-              )}
-              href={x.href}
-            >
-              {x.name}
-            </OutLink>
-          ))}
+        <>
+          <div className="flex gap-2 flex-wrap">
+            <strong>{contract.name}</strong>{' '}
+            {contract.address && (
+              <EtherscanLink
+                address={contract.address}
+                className={cx(
+                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+                )}
+              />
+            )}
+            {contract.links.map((x, i) => (
+              <OutLink
+                key={i}
+                className={cx(
+                  'text-link underline',
+                  verificationStatus.contracts[x.address] === false &&
+                    !x.isAdmin
+                    ? 'text-red-700 dark:text-red-300'
+                    : '',
+                )}
+                href={x.href}
+              >
+                {x.name}
+              </OutLink>
+            ))}
+          </div>
           {contract.description && (
             <div>
               <p className="text-gray-860 dark:text-gray-400">
@@ -87,7 +90,7 @@ export function ContractEntry({
               </p>
             </div>
           )}
-        </div>
+        </>
       }
     />
   )
