@@ -7,7 +7,7 @@ import { Database } from './shared/Database'
 
 export interface SequenceProcessorRecord {
   id: string
-  tip: number
+  lastProcessed: number
 }
 
 export class SequenceProcessorRepository extends BaseRepository {
@@ -54,14 +54,14 @@ export class SequenceProcessorRepository extends BaseRepository {
 function toRow(record: SequenceProcessorRecord): SequenceProcessorRow {
   return {
     id: record.id,
-    tip: record.tip,
-    reached_at: new Date(),
+    last_processed: record.lastProcessed,
+    finished_processing_at: new Date(),
   }
 }
 
 function toRecord(row: SequenceProcessorRow): SequenceProcessorRecord {
   return {
     id: row.id,
-    tip: row.tip,
+    lastProcessed: row.last_processed,
   }
 }

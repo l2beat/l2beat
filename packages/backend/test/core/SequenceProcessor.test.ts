@@ -81,7 +81,7 @@ describe(SequenceProcessor.name, () => {
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
-        tip: 5,
+        lastProcessed: 5,
       })
     })
 
@@ -106,7 +106,7 @@ describe(SequenceProcessor.name, () => {
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
-        tip: 5,
+        lastProcessed: 5,
       })
     })
 
@@ -134,7 +134,7 @@ describe(SequenceProcessor.name, () => {
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
-        tip: 2,
+        lastProcessed: 2,
       })
     })
 
@@ -160,7 +160,7 @@ describe(SequenceProcessor.name, () => {
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
-        tip: 2,
+        lastProcessed: 2,
       })
     })
 
@@ -236,7 +236,7 @@ describe(SequenceProcessor.name, () => {
       ])
     })
 
-    it('doesnt process anything when already done', async () => {
+    it('does not process anything when already done', async () => {
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
@@ -293,7 +293,7 @@ describe(SequenceProcessor.name, () => {
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
-        tip: 7,
+        lastProcessed: 7,
       })
     })
   })
@@ -339,7 +339,7 @@ describe(SequenceProcessor.name, () => {
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
-        tip: 2,
+        lastProcessed: 2,
       })
     })
   })

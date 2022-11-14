@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { Logger, Retries, TaskQueue } from '@l2beat/common'
 import { assert } from '@l2beat/common/src/tools/assert'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
@@ -43,6 +43,12 @@ export class SequenceProcessor extends EventEmitter {
     this.processQueue = new TaskQueue<void>(
       () => this.process(),
       this.logger.for('updateQueue'),
+      {
+        shouldRetry: Retries.exponentialBackOff(100, {
+          maxDistanceMs: 3_000,
+          maxAttempts: 10,
+        }),
+      },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
   }
@@ -71,7 +77,8 @@ export class SequenceProcessor extends EventEmitter {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const lastProcessed = (await this.opts.repository.getById(this.id))?.tip
+      const lastProcessed = (await this.opts.repository.getById(this.id))
+        ?.lastProcessed
       this.logger.debug('Calling getLast')
       const to = await this.opts.getLast(lastProcessed ?? this.opts.startFrom)
 
@@ -103,7 +110,10 @@ export class SequenceProcessor extends EventEmitter {
     this.logger.debug('Processing range started', { from, to })
     await this.opts.repository.runInTransaction(async (trx) => {
       await this.opts.processRange(from, to, trx)
-      await this.opts.repository.addOrUpdate({ id: this.id, tip: to }, trx)
+      await this.opts.repository.addOrUpdate(
+        { id: this.id, lastProcessed: to },
+        trx,
+      )
     })
     this.logger.debug('Processing range finished', { from, to })
   }

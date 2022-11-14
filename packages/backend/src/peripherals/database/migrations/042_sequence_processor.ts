@@ -16,8 +16,8 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('sequence_processor', function (table) {
     table.string('id').primary()
-    table.integer('tip').notNullable()
-    table.dateTime('reached_at').notNullable()
+    table.integer('last_processed').notNullable()
+    table.dateTime('finished_processing_at').notNullable()
   })
 }
 

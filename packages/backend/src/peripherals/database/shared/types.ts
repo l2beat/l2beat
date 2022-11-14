@@ -80,8 +80,8 @@ declare module 'knex/types/tables' {
 
   interface SequenceProcessorRow {
     id: string
-    tip: number
-    reached_at: Date
+    last_processed: number
+    finished_processing_at: Date
   }
 
   interface DailyTransactionCountRow {
