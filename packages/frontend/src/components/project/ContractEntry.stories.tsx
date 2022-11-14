@@ -26,6 +26,7 @@ Contracts.args = {
         name: 'Admin',
         href: 'https://etherscan.io/address/0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
         address: '0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf',
+        isAdmin: true,
       },
     ],
   },
@@ -33,7 +34,7 @@ Contracts.args = {
     projects: {},
     contracts: {
       '0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf': false,
-      '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf': true,
+      '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf': false,
     },
   },
 }
