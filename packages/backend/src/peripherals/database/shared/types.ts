@@ -47,35 +47,47 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
-  interface BlockCountRow {
-    unix_timestamp: Date
-    project_id: string
-    block_number: number
-    count: number
-  }
-
-  interface StarkexCountRow {
-    unix_timestamp: Date
-    project_id: string
-    count: number
-  }
-
   interface ZksyncTransactionRow {
     block_number: number
     block_index: number
     unix_timestamp: Date
   }
 
-  interface DailyCountRow {
+  interface BlockTransactionCountRow {
+    unix_timestamp: Date
+    project_id: string
+    block_number: number
+    count: number
+  }
+
+  interface StarkexTransactionCountRow {
+    unix_timestamp: Date
+    project_id: string
+    count: number
+  }
+
+  interface TransactionCountViewRow {
     project_id: string
     count: number
     unix_timestamp: Date
+  }
+
+  interface BlockTipRow {
+    project_id: string
+    block_number: number | null
+    unix_timestamp: Date | null
   }
 
   interface SequenceProcessorRow {
     id: string
     tip: number
     reached_at: Date
+  }
+
+  interface DailyTransactionCountRow {
+    project_id: string
+    count: number
+    unix_timestamp: Date
   }
 
   interface Tables {
@@ -86,10 +98,16 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    sequence_processor: SequenceProcessorRow
-    'transactions.block': BlockCountRow
+    'transactions.block': BlockTransactionCountRow
+    'transactions.block_count_view': TransactionCountViewRow
+    'transactions.block_tip': BlockTipRow
     'transactions.zksync': ZksyncTransactionRow
-    'transactions.starkex': StarkexCountRow
-    'transactions.daily_count_view': DailyCountRow
+    'transactions.zksync_count_view': TransactionCountViewRow
+    'transactions.starkex': StarkexTransactionCountRow
+    sequence_processor: SequenceProcessorRow
+    'activity.block': BlockTransactionCountRow
+    'activity.zksync': ZksyncTransactionRow
+    'activity.starkex': StarkexTransactionCountRow
+    'activity.daily_count_view': DailyTransactionCountRow
   }
 }

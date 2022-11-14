@@ -1,17 +1,17 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { DailyCountRow } from 'knex/types/tables'
+import { DailyTransactionCountRow } from 'knex/types/tables'
 
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
-export interface DailyCountRecord {
+export interface DailyTransactionCountRecord {
   projectId: ProjectId
   timestamp: UnixTime
   count: number
 }
 
-export class DailyCountRepository extends BaseRepository {
+export class DailyTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */
@@ -29,7 +29,7 @@ export class DailyCountRepository extends BaseRepository {
     )
   }
 
-  async getDailyCounts(): Promise<DailyCountRecord[]> {
+  async getDailyCounts(): Promise<DailyTransactionCountRecord[]> {
     const knex = await this.knex()
     const rows = await knex('transactions.daily_count_view').orderBy(
       'unix_timestamp',
@@ -45,7 +45,7 @@ export class DailyCountRepository extends BaseRepository {
   }
 }
 
-function toRecord(row: DailyCountRow): DailyCountRecord {
+function toRecord(row: DailyTransactionCountRow): DailyTransactionCountRecord {
   return {
     projectId: ProjectId(row.project_id),
     count: row.count,

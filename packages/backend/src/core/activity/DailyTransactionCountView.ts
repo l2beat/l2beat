@@ -1,31 +1,27 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import {
-  DailyCountRecord,
-  DailyCountRepository,
-} from '../../peripherals/database/transactions/DailyCountRepository'
+import { DailyTransactionCountRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Clock } from '../Clock'
 import { SequenceProcessor } from '../SequenceProcessor'
+import { decideAboutYesterday } from './decideAboutYesterday'
+import { fillMissingCounts } from './fillMissingCounts'
+import { groupByProjectId } from './groupByProjectId'
+import { DailyTransactionCount } from './types'
 
-interface DailyCount {
-  count: number
-  timestamp: UnixTime
-}
-
-export class DailyCountView {
+export class DailyTransactionCountView {
   private readonly refreshQueue: TaskQueue<void>
 
   constructor(
     private readonly processors: SequenceProcessor[],
-    private readonly dailyCountRepository: DailyCountRepository,
+    private readonly dailyTransactionCountRepository: DailyTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
     this.refreshQueue = new TaskQueue<void>(async () => {
       this.logger.info('Refresh started')
-      await this.dailyCountRepository.refresh()
+      await this.dailyTransactionCountRepository.refresh()
       // TODO: check sync correctness
       this.logger.info('Refresh finished')
     }, this.logger.for('refreshQueue'))
@@ -45,8 +41,9 @@ export class DailyCountView {
     this.refreshQueue.addIfEmpty()
   }
 
-  async getDailyCounts(): Promise<Map<ProjectId, DailyCount[]>> {
-    const allCounts = await this.dailyCountRepository.getDailyCounts()
+  async getDailyCounts(): Promise<Map<ProjectId, DailyTransactionCount[]>> {
+    const allCounts =
+      await this.dailyTransactionCountRepository.getDailyCounts()
     const projectCounts = groupByProjectId(allCounts)
 
     for (const [projectId, counts] of projectCounts) {
@@ -69,59 +66,4 @@ export class DailyCountView {
 
     return projectCounts
   }
-}
-
-function decideAboutYesterday(
-  counts: DailyCount[],
-  yesterday: UnixTime,
-  lastReached: boolean,
-): DailyCount[] {
-  if (!lastReached) {
-    return counts.slice(-1)
-  }
-
-  const lastIsYesterday = counts
-    .at(-1)
-    ?.timestamp.toStartOf('day')
-    .equals(yesterday)
-
-  return lastIsYesterday
-    ? counts
-    : counts.concat([{ timestamp: yesterday, count: 0 }])
-}
-
-function groupByProjectId(
-  allCounts: DailyCountRecord[],
-): Map<ProjectId, DailyCount[]> {
-  return allCounts.reduce<Map<ProjectId, DailyCount[]>>(
-    (acc, { projectId, count, timestamp }) => {
-      const counts = acc.get(projectId) ?? []
-      counts.push({ count, timestamp })
-      acc.set(projectId, counts)
-      return acc
-    },
-    new Map(),
-  )
-}
-
-function fillMissingCounts(counts: DailyCount[]): DailyCount[] {
-  if (counts.length === 0) return []
-
-  const result = []
-  const lastTimestamp = counts[counts.length - 1].timestamp
-  let timestamp = counts[0].timestamp
-  let i = 0
-
-  while (timestamp.lte(lastTimestamp)) {
-    const existing = counts.at(i)
-    if (existing?.timestamp.equals(timestamp)) {
-      result.push(existing)
-      i++
-    } else {
-      result.push({ timestamp, count: 0 })
-    }
-    timestamp = timestamp.add(1, 'days')
-  }
-
-  return result
 }

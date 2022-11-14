@@ -62,6 +62,12 @@ export const aztec: Layer2 = {
       callsPerMinute: 3_000,
       excludeFromActivityApi: true,
     },
+    transactionApiV2: {
+      type: 'aztec',
+      url: 'https://api.aztec.network/falafel-mainnet',
+      callsPerMinute: 3_000,
+      excludeFromActivityApi: true,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

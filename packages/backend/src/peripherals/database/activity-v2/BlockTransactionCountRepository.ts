@@ -1,46 +1,48 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
-import { StarkexCountRow } from 'knex/types/tables'
+import { BlockTransactionCountRow } from 'knex/types/tables'
 
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
-export interface StarkexCountRecord {
-  timestamp: UnixTime
+export interface BlockTransactionCountRecord {
   projectId: ProjectId
+  blockNumber: number
   count: number
+  timestamp: UnixTime
 }
 
-export class StarkexCountRepository extends BaseRepository {
+export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
+    this.addMany = this.wrapAny(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async addOrUpdateMany(records: StarkexCountRecord[], trx?: Knex.Transaction) {
+  async addMany(
+    records: BlockTransactionCountRecord[],
+    trx?: Knex.Transaction,
+  ) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('transactions.starkex')
-      .insert(rows)
-      .onConflict(['project_id', 'unix_timestamp'])
-      .merge()
+    await (trx ?? knex)('transactions.block').insert(rows)
     return rows.length
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transactions.starkex').delete()
+    return await knex('transactions.block').delete()
   }
 }
 
-function toRow(record: StarkexCountRecord): StarkexCountRow {
+function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
+    block_number: record.blockNumber,
     count: record.count,
   }
 }

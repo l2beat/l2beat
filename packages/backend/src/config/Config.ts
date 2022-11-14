@@ -1,5 +1,5 @@
 import { LogLevel } from '@l2beat/common'
-import { Layer2TransactionApi } from '@l2beat/config'
+import { Layer2TransactionApiV2 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
@@ -30,9 +30,29 @@ export interface Config {
     | {
         starkexApiKey: string
         starkexApiDelayHours: number
+        zkSyncWorkQueueWorkers: number
+        aztecWorkQueueWorkers: number
+        starkexWorkQueueWorkers: number
+        loopringWorkQueueWorkers: number
+        loopringCallsPerMinute: number
+        starkexCallsPerMinute: number
+        rpc: {
+          workQueueLimit: number
+          workQueueWorkers: number
+          projects: Record<
+            string,
+            { callsPerMinute?: number; url: string } | undefined
+          >
+        }
+      }
+    | false
+  activityV2:
+    | {
+        starkexApiKey: string
+        starkexApiDelayHours: number
         starkexCallsPerMinute: number
         allowedProjectIds?: string[]
-        projects: Record<string, Layer2TransactionApi | undefined>
+        projects: Record<string, Layer2TransactionApiV2 | undefined>
       }
     | false
   health?: HealthStatus
@@ -48,3 +68,5 @@ export type TransactionCountSyncConfig = Exclude<
   Config['transactionCountSync'],
   false
 >
+
+export type ActivityV2Config = Exclude<Config['activityV2'], false>

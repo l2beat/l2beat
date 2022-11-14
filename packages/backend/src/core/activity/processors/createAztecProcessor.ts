@@ -4,8 +4,8 @@ import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
 import { AztecClient } from '../../../peripherals/aztec'
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
@@ -19,7 +19,7 @@ export function createAztecProcessor({
 }: {
   projectId: ProjectId
   transactionApi: AztecTransactionApi
-  blockRepository: BlockCountRepository
+  blockRepository: BlockTransactionCountRepository
   logger: Logger
   http: HttpClient
   sequenceProcessorRepository: SequenceProcessorRepository

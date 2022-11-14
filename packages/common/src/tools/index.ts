@@ -1,3 +1,4 @@
+export * from './assert'
 export * from './EventTracker'
 export * from './Logger'
 export * from './mock'

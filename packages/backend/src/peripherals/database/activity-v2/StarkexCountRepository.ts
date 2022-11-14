@@ -1,45 +1,51 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
-import { BlockCountRow } from 'knex/types/tables'
+import { StarkexTransactionCountRow } from 'knex/types/tables'
 
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
-export interface BlockCountRecord {
-  projectId: ProjectId
-  blockNumber: number
-  count: number
+export interface StarkexTransactionCountRecord {
   timestamp: UnixTime
+  projectId: ProjectId
+  count: number
 }
 
-export class BlockCountRepository extends BaseRepository {
+export class StarkexTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.addMany = this.wrapAny(this.addMany)
+    this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async addMany(records: BlockCountRecord[], trx?: Knex.Transaction) {
+  async addOrUpdateMany(
+    records: StarkexTransactionCountRecord[],
+    trx?: Knex.Transaction,
+  ) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('transactions.block').insert(rows)
+    await (trx ?? knex)('transactions.starkex')
+      .insert(rows)
+      .onConflict(['project_id', 'unix_timestamp'])
+      .merge()
     return rows.length
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transactions.block').delete()
+    return await knex('transactions.starkex').delete()
   }
 }
 
-function toRow(record: BlockCountRecord): BlockCountRow {
+function toRow(
+  record: StarkexTransactionCountRecord,
+): StarkexTransactionCountRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
-    block_number: record.blockNumber,
     count: record.count,
   }
 }

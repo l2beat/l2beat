@@ -5,10 +5,10 @@ import { ProjectId } from '@l2beat/types'
 
 import { Config } from '../../../config'
 import { Project } from '../../../model'
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
+import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity-v2/StarkexCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../../peripherals/database/shared/Database'
-import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
-import { StarkexCountRepository } from '../../../peripherals/database/transactions/StarkexCountRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
@@ -26,9 +26,9 @@ export function createSequenceProcessors(
   database: Database,
   clock: Clock,
 ): SequenceProcessor[] {
-  assert(config.transactionCountSync)
+  assert(config.activityV2)
   const {
-    transactionCountSync: {
+    activityV2: {
       starkexApiKey,
       starkexCallsPerMinute,
       starkexApiDelayHours,
@@ -47,8 +47,11 @@ export function createSequenceProcessors(
   })
 
   // shared repositories
-  const blockRepository = new BlockCountRepository(database, logger)
-  const starkexRepository = new StarkexCountRepository(database, logger)
+  const blockRepository = new BlockTransactionCountRepository(database, logger)
+  const starkexRepository = new StarkexTransactionCountRepository(
+    database,
+    logger,
+  )
   const sequenceProcessorRepository = new SequenceProcessorRepository(
     database,
     logger,

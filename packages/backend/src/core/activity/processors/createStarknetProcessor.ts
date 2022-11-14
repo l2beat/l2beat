@@ -3,8 +3,8 @@ import { StarknetTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
 
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
@@ -21,7 +21,7 @@ export function createStarknetProcessor({
 }: {
   projectId: ProjectId
   transactionApi: StarknetTransactionApi
-  blockRepository: BlockCountRepository
+  blockRepository: BlockTransactionCountRepository
   logger: Logger
   clock: Clock
   http: HttpClient

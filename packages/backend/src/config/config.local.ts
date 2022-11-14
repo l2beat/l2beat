@@ -41,6 +41,43 @@ export function getLocalConfig(): Config {
     ) && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: 12,
+      zkSyncWorkQueueWorkers: 1,
+      aztecWorkQueueWorkers: 1,
+      starkexWorkQueueWorkers: 100,
+      starkexCallsPerMinute: 1000,
+      loopringWorkQueueWorkers: 1,
+      loopringCallsPerMinute: 10,
+      rpc: {
+        workQueueLimit: 10_000,
+        workQueueWorkers: 1,
+        projects: {
+          ethereum: {
+            callsPerMinute: 60 / 5,
+            url: getEnv(
+              'ACTIVITY_ETHEREUM_URL',
+              'https://eth-mainnet.alchemyapi.io/v2/demo',
+            ),
+          },
+          optimism: {
+            callsPerMinute: 60 / 5,
+            url: getEnv(
+              'ACTIVITY_OPTIMISM_URL',
+              'https://mainnet.optimism.io/',
+            ),
+          },
+          arbitrum: {
+            callsPerMinute: 60 / 5,
+            url: getEnv(
+              'ACTIVITY_ARBITRUM_URL',
+              'https://arb1.arbitrum.io/rpc',
+            ),
+          },
+        },
+      },
+    },
+    activityV2: getEnv.boolean('ACTIVITY_V2_ENABLED', false) && {
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 12,
       starkexCallsPerMinute: 1000,
       projects: {
         ethereum: {

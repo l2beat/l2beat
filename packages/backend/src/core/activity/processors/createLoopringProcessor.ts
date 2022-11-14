@@ -3,8 +3,8 @@ import { LoopringTransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { LoopringClient } from '../../../peripherals/loopring'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -19,7 +19,7 @@ export function createLoopringProcessor({
 }: {
   projectId: ProjectId
   transactionApi: LoopringTransactionApi
-  blockRepository: BlockCountRepository
+  blockRepository: BlockTransactionCountRepository
   logger: Logger
   http: HttpClient
   sequenceProcessorRepository: SequenceProcessorRepository

@@ -5,8 +5,8 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { BlockCountRepository } from '../../../peripherals/database/transactions/BlockCountRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
@@ -22,7 +22,7 @@ export function createRpcProcessor({
 }: {
   projectId: ProjectId
   transactionApi: RpcTransactionApi
-  blockRepository: BlockCountRepository
+  blockRepository: BlockTransactionCountRepository
   logger: Logger
   sequenceProcessorRepository: SequenceProcessorRepository
   clock: Clock
