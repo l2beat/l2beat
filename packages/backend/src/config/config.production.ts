@@ -65,28 +65,7 @@ export function getProductionConfig(): Config {
         },
       },
     },
-    activityV2: {
-      starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 12,
-      starkexCallsPerMinute: 200,
-      projects: {
-        ethereum: {
-          type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
-          url: getEnv('ACTIVITY_ETHEREUM_URL'),
-        },
-        optimism: {
-          type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
-          url: getEnv('ACTIVITY_OPTIMISM_URL'),
-        },
-        arbitrum: {
-          type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
-          url: getEnv('ACTIVITY_ARBITRUM_URL'),
-        },
-      },
-    },
+    activityV2: false,
     health: {
       releasedAt: getEnv('HEROKU_RELEASE_CREATED_AT', ''),
       startedAt: new Date().toISOString(),
