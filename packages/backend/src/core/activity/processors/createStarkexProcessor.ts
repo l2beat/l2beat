@@ -1,4 +1,4 @@
-import { Logger, promiseAllThrottled } from '@l2beat/common'
+import { Logger, promiseAllPlus } from '@l2beat/common'
 import { StarkexTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
@@ -51,7 +51,7 @@ export function createStarkexProcessor({
 
         return { count, timestamp: UnixTime.fromDays(day), projectId }
       })
-      const counts = await promiseAllThrottled(fns, logger)
+      const counts = await promiseAllPlus(fns, logger)
 
       await starkexRepository.addOrUpdateMany(counts, trx)
     },

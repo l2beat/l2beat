@@ -1,4 +1,4 @@
-import { HttpClient, Logger, promiseAllThrottled } from '@l2beat/common'
+import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
 import { LoopringTransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
@@ -47,7 +47,7 @@ export function createLoopringProcessor({
         }
       })
 
-      const blocks = await promiseAllThrottled(fns, logger)
+      const blocks = await promiseAllPlus(fns, logger)
       await blockRepository.addMany(blocks, trx)
     },
   })

@@ -1,4 +1,4 @@
-import { Logger, promiseAllThrottled } from '@l2beat/common'
+import { Logger, promiseAllPlus } from '@l2beat/common'
 import { assert } from '@l2beat/common/src/tools/assert'
 import { RpcTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
@@ -63,7 +63,7 @@ export function createRpcProcessor({
         }
       })
 
-      const blocks = await promiseAllThrottled(fns, logger)
+      const blocks = await promiseAllPlus(fns, logger)
 
       await blockRepository.addMany(blocks, trx)
     },

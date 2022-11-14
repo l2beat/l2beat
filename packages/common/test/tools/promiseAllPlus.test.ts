@@ -2,9 +2,9 @@ import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earljs'
 
 import { Logger } from '../../src'
-import { promiseAllThrottled } from '../../src/tools/promiseAllThrottled'
+import { promiseAllPlus } from '../../src/tools/promiseAllPlus'
 
-describe(promiseAllThrottled.name, () => {
+describe(promiseAllPlus.name, () => {
   let time: InstalledClock
   beforeEach(() => {
     time = install({})
@@ -14,7 +14,7 @@ describe(promiseAllThrottled.name, () => {
   })
 
   it('returns results in expected order', async () => {
-    const resultsPromise = promiseAllThrottled(
+    const resultsPromise = promiseAllPlus(
       [
         async () => {
           await delay(3000)
@@ -53,7 +53,7 @@ describe(promiseAllThrottled.name, () => {
         return 3
       }),
     ]
-    const resultsPromise = promiseAllThrottled(fns, Logger.SILENT, {
+    const resultsPromise = promiseAllPlus(fns, Logger.SILENT, {
       maxConcurrency: 2,
     })
 
@@ -73,7 +73,30 @@ describe(promiseAllThrottled.name, () => {
     expect(results).toEqual([1, 2, 3])
   })
 
-  it('retries failed fns')
+  it('retries failed fns', async () => {
+    const mock = mockFn()
+      .rejectsWithOnce(new Error())
+      .rejectsWithOnce(new Error())
+      .resolvesToOnce(1)
+    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
+
+    await time.runAllAsync()
+    const results = await resultsPromise
+
+    expect(results).toEqual([1])
+    // called 3 times in total - retried 2 times and finally succeeded
+    expect(mock).toHaveBeenCalledExactlyWith([[], [], []])
+  })
+
+  it('propagates permanent errors', async () => {
+    const errorMessage = 'permanent error'
+    const mock = mockFn().rejectsWith(new Error(errorMessage))
+    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
+
+    await time.runAllAsync()
+
+    await expect(resultsPromise).toBeRejected(errorMessage)
+  })
 })
 
 // note: sinon doesnt work with promisified style functions from timers/promises so we roll out our own

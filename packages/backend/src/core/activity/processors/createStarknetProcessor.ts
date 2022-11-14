@@ -1,4 +1,4 @@
-import { HttpClient, Logger, promiseAllThrottled } from '@l2beat/common'
+import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
 import { StarknetTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
@@ -58,7 +58,7 @@ export function createStarknetProcessor({
         }
       })
 
-      const blocks = await promiseAllThrottled(fns, logger)
+      const blocks = await promiseAllPlus(fns, logger)
 
       await blockRepository.addMany(blocks, trx)
     },

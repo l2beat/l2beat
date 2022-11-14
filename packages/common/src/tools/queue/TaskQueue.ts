@@ -98,7 +98,7 @@ export class TaskQueue<T> {
 
   private handleFailure(job: Job<T>, error: unknown) {
     job.attempts++
-    const result = this.shouldRetry(job)
+    const result = this.shouldRetry(job, error)
     if (!result.retry) {
       this.logger.error(
         {
