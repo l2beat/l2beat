@@ -23,6 +23,7 @@ export function toTechnologyContract(
     name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
     address: account.address,
     href: `https://etherscan.io/address/${account.address}#code`,
+    isAdmin: false,
   }))
 
   return {

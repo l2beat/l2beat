@@ -43,6 +43,19 @@ async function getUpgradeDelay(
   return BigNumber.from(value).toNumber()
 }
 
+// Web3.solidityKeccak(['string'], ["StarkWare2019.finalization-flag-slot"]).
+const FINALIZED_STATE_SLOT =
+  '0x7184681641399eb4ad2fdb92114857ee6ff239f94ad635a1779978947b8843be'
+
+async function getFinalizedState(
+  provider: providers.Provider,
+  contract: Contract | string,
+) {
+  return !BigNumber.from(
+    await getStorage(provider, contract, FINALIZED_STATE_SLOT),
+  ).eq(0)
+}
+
 async function detect(
   provider: providers.Provider,
   address: string,
@@ -51,9 +64,10 @@ async function detect(
   if (implementation === constants.AddressZero) {
     return
   }
-  const [callImplementation, upgradeDelay] = await Promise.all([
+  const [callImplementation, upgradeDelay, isFinal] = await Promise.all([
     getCallImplementation(provider, address),
     getUpgradeDelay(provider, address),
+    getFinalizedState(provider, address),
   ])
 
   return {
@@ -67,6 +81,7 @@ async function detect(
       implementation,
       callImplementation,
       upgradeDelay,
+      isFinal,
     },
   }
 }

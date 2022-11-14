@@ -1,6 +1,7 @@
 import { AddressAnalyzer } from '@l2beat/common'
 import { providers, utils } from 'ethers'
 
+import { ProxyDetection } from '../common/proxies/types'
 import { ContractParameters } from '../types'
 import { detectProxy } from './detectProxy'
 import { DiscoveryOptions } from './DiscoveryOptions'
@@ -23,7 +24,18 @@ export async function analyzeItem(
   address: string,
   options: DiscoveryOptions,
 ): Promise<{ analyzed: AnalyzedData; relatives: string[] }> {
-  const proxyDetection = await detectProxy(provider, address)
+  const overrideImplementations = options.overrideImplementations[address]
+  const overrideDetection: ProxyDetection | undefined =
+    overrideImplementations && {
+      implementations: overrideImplementations,
+      relatives: [],
+      upgradeability: {
+        type: 'custom proxy',
+        implementations: overrideImplementations,
+      },
+    }
+  const proxyDetection =
+    overrideDetection ?? (await detectProxy(provider, address))
 
   const metadata = await getMetadata(
     addressAnalyzer,
