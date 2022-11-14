@@ -57,7 +57,7 @@ export class DailyTransactionCountView {
         )
         continue
       }
-      const lastReached = await processor.isLastReached()
+      const lastReached = processor.isLastReached()
       const yesterday = UnixTime.now().toStartOf('day').add(-1, 'days')
       const decidedCounts = decideAboutYesterday(counts, yesterday, lastReached)
       const filledCounts = fillMissingCounts(decidedCounts)

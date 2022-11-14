@@ -72,7 +72,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       expect(getLastMock).toHaveBeenCalledExactlyWith([[0], [5]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 1, expect.anything()],
@@ -100,7 +100,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [4, 5, expect.anything()],
       ])
@@ -125,7 +125,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       expect(getLastMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 0, expect.anything()],
@@ -153,7 +153,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       expect(getLastMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 2, expect.anything()],
@@ -251,7 +251,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([])
       // note: we are fine with no entry in repository in this case
     })
@@ -277,7 +277,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       // deep inspect getLastMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLastMock).toHaveBeenCalledExactlyWith([
@@ -326,7 +326,7 @@ describe(SequenceProcessor.name, () => {
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(await sequenceProcessor.isLastReached()).toEqual(true)
+      expect(sequenceProcessor.isLastReached()).toEqual(true)
       // deep inspect getLastMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLastMock).toHaveBeenCalledExactlyWith(

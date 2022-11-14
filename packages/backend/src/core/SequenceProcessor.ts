@@ -62,9 +62,7 @@ export class SequenceProcessor extends EventEmitter {
     await this.processQueue.waitTilEmpty()
   }
 
-  // todo: remove
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async isLastReached(): Promise<boolean> {
+  isLastReached(): boolean {
     return this.lastReached
   }
 
