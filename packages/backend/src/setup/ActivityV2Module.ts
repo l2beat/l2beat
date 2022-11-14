@@ -18,7 +18,7 @@ export function getActivityModule(
   database: Database,
   clock: Clock,
 ) {
-  if (!config.transactionCountSync) {
+  if (!config.activityV2) {
     return undefined
   }
 
