@@ -56,7 +56,7 @@ export function createZksyncProcessor({
 
       const blockTransactions = await promiseAllThrottled(fns, logger)
 
-      await zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
+      await zksyncRepository.addMany(blockTransactions.flat(), trx)
     },
   })
 }

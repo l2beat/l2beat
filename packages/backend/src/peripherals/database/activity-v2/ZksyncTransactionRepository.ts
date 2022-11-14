@@ -17,21 +17,15 @@ export class ZksyncTransactionRepository extends BaseRepository {
     super(database, logger)
 
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
+    this.addMany = this.wrapAddMany(this.addMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
-  async addOrUpdateMany(
-    records: ZksyncTransactionRecord[],
-    trx?: Knex.Transaction,
-  ) {
+  async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('activity_v2.zksync')
-      .insert(rows)
-      .onConflict(['block_number', 'block_index'])
-      .merge()
+    await (trx ?? knex)('activity_v2.zksync').insert(rows)
     return rows.length
   }
 
