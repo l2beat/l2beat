@@ -1,7 +1,7 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { DailyTransactionCountRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
+import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Clock } from '../Clock'
 import { SequenceProcessor } from '../SequenceProcessor'
 import { decideAboutYesterday } from './decideAboutYesterday'
@@ -14,7 +14,7 @@ export class DailyTransactionCountView {
 
   constructor(
     private readonly processors: SequenceProcessor[],
-    private readonly dailyTransactionCountRepository: DailyTransactionCountRepository,
+    private readonly dailyTransactionCountRepository: DailyTransactionCountViewRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {

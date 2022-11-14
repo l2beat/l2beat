@@ -11,7 +11,7 @@ export interface DailyTransactionCountRecord {
   count: number
 }
 
-export class DailyTransactionCountRepository extends BaseRepository {
+export class DailyTransactionCountViewRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     /* eslint-disable @typescript-eslint/unbound-method */

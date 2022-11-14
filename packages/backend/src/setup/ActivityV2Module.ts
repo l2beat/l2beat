@@ -8,7 +8,7 @@ import { DailyTransactionCountView } from '../core/activity/DailyTransactionCoun
 import { createSequenceProcessors } from '../core/activity/processors/createProcessors'
 import { Clock } from '../core/Clock'
 import { SequenceProcessor } from '../core/SequenceProcessor'
-import { DailyTransactionCountRepository } from '../peripherals/database/activity-v2/DailyTransactionCountRepository'
+import { DailyTransactionCountViewRepository } from '../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
 
 export function getActivityV2Module(
@@ -29,7 +29,7 @@ export function getActivityV2Module(
     database,
     clock,
   )
-  const dailyCountRepository = new DailyTransactionCountRepository(
+  const dailyCountRepository = new DailyTransactionCountViewRepository(
     database,
     logger,
   )
