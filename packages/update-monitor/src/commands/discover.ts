@@ -11,7 +11,12 @@ import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
 import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
 import { discoverHop, HOP_NAME } from '../projects/hop'
+import {
+  discoverLayer2FinanceZk,
+  L2FZK_NAME,
+} from '../projects/layer2FinanceZk'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
+import { discoverOmgNetwork, OMG_NETWORK_NAME } from '../projects/omgNetwork'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
 import {
   discoverPolynetworkBridge,
@@ -65,6 +70,8 @@ export async function discover(args: string[]) {
     [ORBIT_BRIDGE_NAME, discoverOrbitBridge],
     [SYNAPSE_NAME, discoverSynapse],
     [CBRIDGE_NAME, discoverCBridge],
+    [OMG_NETWORK_NAME, discoverOmgNetwork],
+    [L2FZK_NAME, discoverLayer2FinanceZk],
   ]
 
   const project = projects.find((x) => x[0] === args[0])
