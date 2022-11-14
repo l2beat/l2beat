@@ -116,6 +116,31 @@ export const layer2financezk: Layer2 = {
           'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
         address: '0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5',
       },
+      {
+        name: 'StrategyCompound',
+        description:
+          'It is through this contract that groups of users interact with the Compound DeFi protocol.',
+        address: '0x5b000954F70B0410685193B0afd3074B744B5C97',
+      },
+      {
+        name: 'GpsFactRegistryAdapter',
+        address: '0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE',
+      },
+      {
+        name: 'GpsStatementVerifier',
+        address: '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+        upgradeability: {
+          type: 'StarkWare',
+          implementation: '0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458',
+          upgradeDelay: 2419200,
+          callImplementation: '0x522B2871c3918B92c165115d862e50e440905068',
+          isFinal: true,
+        },
+      },
+      {
+        name: 'OrderRegistry',
+        address: '0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8',
+      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
