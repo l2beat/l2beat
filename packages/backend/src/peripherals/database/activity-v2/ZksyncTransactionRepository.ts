@@ -28,7 +28,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
   ) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('transactions.zksync')
+    await (trx ?? knex)('activity_v2.zksync')
       .insert(rows)
       .onConflict(['block_number', 'block_index'])
       .merge()
@@ -37,7 +37,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transactions.zksync').delete()
+    return await knex('activity_v2.zksync').delete()
   }
 }
 

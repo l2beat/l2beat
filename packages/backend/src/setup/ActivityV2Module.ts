@@ -11,7 +11,7 @@ import { SequenceProcessor } from '../core/SequenceProcessor'
 import { DailyTransactionCountRepository } from '../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
 
-export function getActivityModule(
+export function getActivityV2Module(
   config: Config,
   logger: Logger,
   http: HttpClient,

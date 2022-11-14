@@ -168,12 +168,13 @@ function isProjectAllowed(
   logger: Logger,
 ) {
   return (p: { projectId: ProjectId }) => {
-    if (allowedProjectIds === undefined) {
+    const noIdsSpecified = allowedProjectIds === undefined
+    const projectIncluded = allowedProjectIds?.includes(p.projectId.toString())
+    if (noIdsSpecified || projectIncluded) {
       return true
+    } else {
+      logger.info(`Skipping ${p.projectId.toString()} processor`)
+      return false
     }
-    if (allowedProjectIds.includes(p.projectId.toString())) {
-      return true
-    }
-    logger.info(`Skipping ${p.projectId.toString()} processor`)
   }
 }

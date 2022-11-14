@@ -28,13 +28,13 @@ export class BlockTransactionCountRepository extends BaseRepository {
   ) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('transactions.block').insert(rows)
+    await (trx ?? knex)('activity_v2.block').insert(rows)
     return rows.length
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transactions.block').delete()
+    return await knex('activity_v2.block').delete()
   }
 }
 

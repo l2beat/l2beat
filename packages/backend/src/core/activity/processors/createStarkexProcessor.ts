@@ -39,7 +39,6 @@ export function createStarkexProcessor({
     logger,
     repository: sequenceProcessorRepository,
     startFrom: transactionApi.sinceTimestamp.toStartOf('day').toDays(),
-
     // eslint-disable-next-line @typescript-eslint/require-await
     getLast: async () =>
       getStarkexLastDay(clock.getLastHour(), starkexApiDelayHours),

@@ -27,7 +27,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
   ) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await (trx ?? knex)('transactions.starkex')
+    await (trx ?? knex)('activity_v2.starkex')
       .insert(rows)
       .onConflict(['project_id', 'unix_timestamp'])
       .merge()
@@ -36,7 +36,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('transactions.starkex').delete()
+    return await knex('activity_v2.starkex').delete()
   }
 }
 

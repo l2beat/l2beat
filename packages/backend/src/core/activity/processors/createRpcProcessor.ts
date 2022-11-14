@@ -44,10 +44,8 @@ export function createRpcProcessor({
     logger,
     repository: sequenceProcessorRepository,
     startFrom: transactionApi.startBlock ?? 0,
-
     getLast: (prevLast) =>
       client.getBlockNumberAtOrBefore(clock.getLastHour(), prevLast),
-
     processRange: async (from, to, trx) => {
       const fns = range(from, to + 1).map((blockNumber) => async () => {
         const block = await client.getBlock(blockNumber)

@@ -24,14 +24,14 @@ export class DailyTransactionCountRepository extends BaseRepository {
   async refresh(): Promise<void> {
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView(
-      'transactions.daily_count_view',
+      'activity_v2.daily_count_view',
       true,
     )
   }
 
   async getDailyCounts(): Promise<DailyTransactionCountRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('transactions.daily_count_view').orderBy(
+    const rows = await knex('activity_v2.daily_count_view').orderBy(
       'unix_timestamp',
       'asc',
     )
@@ -40,8 +40,7 @@ export class DailyTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    await knex('transactions.block_tip').delete()
-    return await knex('transactions.block').delete()
+    return knex('activity.daily_count_view').delete()
   }
 }
 
