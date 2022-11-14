@@ -9,11 +9,10 @@ import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,
-  maxAttempts: 10,
 })
 
 /**
- * Note: by default, queue will retry tasks using exponential back off strategy until limit has been reached.
+ * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
  */
 export class TaskQueue<T> {
   private readonly queue: Job<T>[] = []
