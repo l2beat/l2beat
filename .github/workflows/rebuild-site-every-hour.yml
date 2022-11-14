@@ -1,7 +1,6 @@
-name: Deploy website
+name: Rebuild site every hour
 
 on:
-  pull_request: # to remove
   schedule:
     - cron: "0 * * * *"
 
