@@ -17,7 +17,6 @@ export class DailyTransactionCountRepository extends BaseRepository {
     /* eslint-disable @typescript-eslint/unbound-method */
     this.refresh = this.wrapAny(this.refresh)
     this.getDailyCounts = this.wrapGet(this.getDailyCounts)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 
@@ -36,11 +35,6 @@ export class DailyTransactionCountRepository extends BaseRepository {
       'asc',
     )
     return rows.map(toRecord)
-  }
-
-  async deleteAll() {
-    const knex = await this.knex()
-    return knex('activity.daily_count_view').delete()
   }
 }
 
