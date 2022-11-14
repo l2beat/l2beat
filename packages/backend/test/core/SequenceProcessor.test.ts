@@ -191,15 +191,11 @@ describe(SequenceProcessor.name, () => {
       ])
       time.uninstall()
 
-      // we let queue refresh once more to stop it
-      expect(reportErrorMock).toHaveBeenCalledExactlyWith([
+      expect(reportErrorMock).toHaveBeenCalledWith(
         expect.arrayWith(
           expect.objectWith({ message: expect.stringMatching(errorMessage) }),
         ),
-        expect.arrayWith(
-          expect.objectWith({ message: expect.stringMatching(errorMessage) }),
-        ),
-      ])
+      )
     })
 
     it('works when processRange throws', async () => {
@@ -229,11 +225,9 @@ describe(SequenceProcessor.name, () => {
       ])
       time.uninstall()
 
-      // we let queue refresh once more to stop it
-      expect(reportErrorMock).toHaveBeenCalledExactlyWith([
+      expect(reportErrorMock).toHaveBeenCalledWith(
         expect.arrayWith(expect.objectWith({ message: errorMessage })),
-        expect.arrayWith(expect.objectWith({ message: errorMessage })),
-      ])
+      )
     })
 
     it('does not process anything when already done', async () => {
