@@ -57,7 +57,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-x-2 flex-wrap">
             <strong>{contract.name}</strong>{' '}
             {contract.address && (
               <EtherscanLink
@@ -84,7 +84,7 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <div>
+            <div className="mt-2">
               <p className="text-gray-860 dark:text-gray-400">
                 {contract.description}
               </p>
