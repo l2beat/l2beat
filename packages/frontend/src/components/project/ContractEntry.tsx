@@ -24,11 +24,13 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
+  className?: string
 }
 
 export function ContractEntry({
   contract,
   verificationStatus,
+  className,
 }: ContractEntryProps) {
   const areLinksUnverified = contract.links
     .filter((c) => !c.isAdmin)
@@ -52,7 +54,7 @@ export function ContractEntry({
 
   return (
     <Callout
-      className={cx(color === 'red' ? 'p-4' : 'px-4')}
+      className={cx(color === 'red' ? 'p-4' : 'px-4', className)}
       color={color}
       icon={icon}
       body={
