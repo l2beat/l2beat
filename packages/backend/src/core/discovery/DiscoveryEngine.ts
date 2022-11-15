@@ -12,21 +12,12 @@ export class DiscoveryEngine {
     private readonly addressAnalyzer: AddressAnalyzer,
   ) {}
 
-  async discover(
-    name: string,
-    addresses: string[],
-    options: Partial<DiscoveryOptions> = {},
-  ) {
+  async discover(name: string, addresses: string[], options: DiscoveryOptions) {
     const result = await discover(
       this.provider,
       this.addressAnalyzer,
       addresses,
-      {
-        skipAddresses: [],
-        skipMethods: {},
-        addAbis: {},
-        ...options,
-      },
+      options,
     )
 
     const project: ProjectParameters = {

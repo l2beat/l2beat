@@ -13,23 +13,34 @@ const SECONDARY_IMPLEMENTATION_SLOT =
 export async function getSecondaryImplementation(
   provider: providers.Provider,
   contract: Contract | string,
+  blockNumber: number,
 ) {
   return bytes32ToAddress(
-    await getStorage(provider, contract, SECONDARY_IMPLEMENTATION_SLOT),
+    await getStorage(
+      provider,
+      contract,
+      SECONDARY_IMPLEMENTATION_SLOT,
+      blockNumber,
+    ),
   )
 }
 
 async function detect(
   provider: providers.Provider,
   address: string,
+  blockNumber: number,
 ): Promise<ProxyDetection | undefined> {
-  const userImplementation = await getSecondaryImplementation(provider, address)
+  const userImplementation = await getSecondaryImplementation(
+    provider,
+    address,
+    blockNumber,
+  )
   if (userImplementation === constants.AddressZero) {
     return
   }
   const [adminImplementation, admin] = await Promise.all([
-    Eip1967Proxy.getImplementation(provider, address),
-    Eip1967Proxy.getAdmin(provider, address),
+    Eip1967Proxy.getImplementation(provider, address, blockNumber),
+    Eip1967Proxy.getAdmin(provider, address, blockNumber),
   ])
   return {
     implementations: [adminImplementation, userImplementation],

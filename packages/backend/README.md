@@ -54,6 +54,7 @@ environment variables. One variable per line `KEY=value`.
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `TRANSACTION_COUNT_ENABLED` (default `false`) - When set to `true` activity feature is enabled
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
+- `DISCOVERY_BLOCK_NUMBER` - Override the block number used during local discovery
 
 Example:
 

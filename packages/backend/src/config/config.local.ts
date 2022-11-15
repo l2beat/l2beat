@@ -79,5 +79,6 @@ export function getLocalConfig(): Config {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
     },
+    discoveryBlockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
   }
 }

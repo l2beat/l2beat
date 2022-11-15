@@ -6,13 +6,17 @@ export async function getCallResult<T>(
   provider: providers.Provider,
   contract: Contract | string,
   methodAbi: string,
+  blockNumber: number,
 ) {
   try {
     const address = typeof contract === 'string' ? contract : contract.address
     const abi = new utils.Interface([methodAbi])
     const fragment = Object.values(abi.functions)[0]
     const callData = abi.encodeFunctionData(fragment)
-    const result = await provider.call({ to: address, data: callData })
+    const result = await provider.call(
+      { to: address, data: callData },
+      blockNumber,
+    )
     return abi.decodeFunctionResult(fragment, result)[0] as T
   } catch (e) {
     if (isRevert(e)) {
