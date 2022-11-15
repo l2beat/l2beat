@@ -43,16 +43,5 @@ export class DiscoveryEngine {
       `discovery/${name}/discovered.json`,
       JSON.stringify(project, null, 2),
     )
-
-    // Temporarily commenting out saving abis to separate files.
-
-    // for (const entry of result) {
-    //   if (entry.meta.abi.length > 0) {
-    //     await writeFile(
-    //       `dist/discovery/abi/${entry.address}.json`,
-    //       JSON.stringify(entry.meta.abi, null, 2),
-    //     )
-    //   }
-    // }
   }
 }
