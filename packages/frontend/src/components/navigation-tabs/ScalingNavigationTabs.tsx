@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
-import { NavigationTabs } from './NavigationTabs'
+import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
 interface ScalingNavigationTabsProps {
   selected: 'tvl' | 'risk' | 'activity'
@@ -9,7 +9,7 @@ interface ScalingNavigationTabsProps {
 }
 
 export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
-  const pages = [
+  const pages: NavigationPage[] = [
     {
       fullTitle: 'Total Value Locked',
       shortTitle: 'TVL',
@@ -32,6 +32,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       icon: <ActivityIcon />,
       link: '/scaling/activity',
       selected: props.selected === 'activity',
+      new: true,
     })
   }
   return <NavigationTabs pages={pages} />

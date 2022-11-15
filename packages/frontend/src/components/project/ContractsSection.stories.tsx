@@ -35,11 +35,13 @@ Contracts.args = {
           href: '#',
           name: 'Implementation (Upgradable)',
           address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA2',
+          isAdmin: false,
         },
         {
           href: '#',
           name: 'Admin',
           address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA3',
+          isAdmin: true,
         },
       ],
     },
