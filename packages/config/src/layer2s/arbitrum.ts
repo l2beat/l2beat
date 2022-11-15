@@ -29,6 +29,7 @@ export const arbitrum: Layer2 = {
       explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
       repositories: [
         'https://github.com/OffchainLabs/arbitrum',
+        'https://github.com/OffchainLabs/nitro',
         'https://github.com/OffchainLabs/arb-os',
       ],
       socialMedia: [
