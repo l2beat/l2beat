@@ -36,7 +36,7 @@ export function createStarkexProcessor(
     getLast: async () =>
       getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
     processRange: async (from, to, trx) => {
-      const fns = range(from, to + 1).map((day) => async () => {
+      const queries = range(from, to + 1).map((day) => async () => {
         const count = await starkexClient.getDailyCount(day, options.product)
 
         return {
@@ -45,7 +45,7 @@ export function createStarkexProcessor(
           projectId: projectId,
         }
       })
-      const counts = await promiseAllPlus(fns, logger)
+      const counts = await promiseAllPlus(queries, logger)
 
       await starkexRepository.addOrUpdateMany(counts, trx)
     },

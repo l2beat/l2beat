@@ -39,7 +39,7 @@ export function createRpcProcessor(
     getLast: (prevLast) =>
       client.getBlockNumberAtOrBefore(clock.getLastHour(), prevLast),
     processRange: async (from, to, trx) => {
-      const fns = range(from, to + 1).map((blockNumber) => async () => {
+      const queries = range(from, to + 1).map((blockNumber) => async () => {
         const block = await client.getBlock(blockNumber)
         const timestamp = new UnixTime(block.timestamp)
 
@@ -55,7 +55,7 @@ export function createRpcProcessor(
         }
       })
 
-      const blocks = await promiseAllPlus(fns, logger)
+      const blocks = await promiseAllPlus(queries, logger)
 
       await blockRepository.addMany(blocks, trx)
     },

@@ -32,7 +32,7 @@ export function createZksyncProcessor(
     startFrom: 1,
     getLast: client.getLatestBlock.bind(client),
     processRange: async (from, to, trx) => {
-      const fns = range(from, to + 1).map((blockNumber) => async () => {
+      const queries = range(from, to + 1).map((blockNumber) => async () => {
         const transactions = await client.getTransactionsInBlock(blockNumber)
 
         return transactions.map((t, i) => {
@@ -47,7 +47,7 @@ export function createZksyncProcessor(
         })
       })
 
-      const blockTransactions = await promiseAllPlus(fns, logger)
+      const blockTransactions = await promiseAllPlus(queries, logger)
 
       await zksyncRepository.addMany(blockTransactions.flat(), trx)
     },
