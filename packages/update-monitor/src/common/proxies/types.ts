@@ -32,6 +32,7 @@ export interface StarkWareProxyUpgradeability {
   implementation: string
   callImplementation: string
   upgradeDelay: number
+  isFinal: boolean
 }
 
 export interface ArbitrumProxyUpgradeability {
@@ -49,5 +50,5 @@ export interface EIP897ProxyUpgradeability {
 
 export interface CustomProxyUpgradeability {
   type: 'custom proxy'
-  implementation: string
+  implementations: string[]
 }

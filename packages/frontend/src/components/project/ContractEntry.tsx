@@ -12,23 +12,28 @@ export interface TechnologyContract {
   name: string
   address?: string
   description?: string
-  links: {
-    name: string
-    href: string
-    address: string
-  }[]
+  links: TechnologyContractLinks[]
 }
 
+export interface TechnologyContractLinks {
+  name: string
+  href: string
+  address: string
+  isAdmin: boolean
+}
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
+  className?: string
 }
 
 export function ContractEntry({
   contract,
   verificationStatus,
+  className,
 }: ContractEntryProps) {
   const areLinksUnverified = contract.links
+    .filter((c) => !c.isAdmin)
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
@@ -49,42 +54,45 @@ export function ContractEntry({
 
   return (
     <Callout
-      className={cx(color === 'red' ? 'p-4' : 'px-4')}
+      className={cx(color === 'red' ? 'p-4' : 'px-4', className)}
       color={color}
       icon={icon}
       body={
-        <div className="flex gap-2 flex-wrap">
-          <strong>{contract.name}</strong>{' '}
-          {contract.address && (
-            <EtherscanLink
-              address={contract.address}
-              className={cx(
-                isVerified === false ? 'text-red-700 dark:text-red-300' : '',
-              )}
-            />
-          )}
-          {contract.links.map((x, i) => (
-            <OutLink
-              key={i}
-              className={cx(
-                'text-link underline',
-                verificationStatus.contracts[x.address] === false
-                  ? 'text-red-700 dark:text-red-300'
-                  : '',
-              )}
-              href={x.href}
-            >
-              {x.name}
-            </OutLink>
-          ))}
+        <>
+          <div className="flex gap-x-2 flex-wrap">
+            <strong>{contract.name}</strong>{' '}
+            {contract.address && (
+              <EtherscanLink
+                address={contract.address}
+                className={cx(
+                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+                )}
+              />
+            )}
+            {contract.links.map((x, i) => (
+              <OutLink
+                key={i}
+                className={cx(
+                  'text-link underline',
+                  verificationStatus.contracts[x.address] === false &&
+                    !x.isAdmin
+                    ? 'text-red-700 dark:text-red-300'
+                    : '',
+                )}
+                href={x.href}
+              >
+                {x.name}
+              </OutLink>
+            ))}
+          </div>
           {contract.description && (
-            <div>
+            <div className="mt-2">
               <p className="text-gray-860 dark:text-gray-400">
                 {contract.description}
               </p>
             </div>
           )}
-        </div>
+        </>
       }
     />
   )

@@ -23,9 +23,16 @@ Contracts.args = {
     description: 'This is a smart contract responsible for X in the system Y.',
     links: [
       {
+        name: 'Implementation',
+        href: 'https://etherscan.io/address/0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
+        address: '0x99932133f54e0E8A33A975908C5BA1c14e5BbbDf',
+        isAdmin: true,
+      },
+      {
         name: 'Admin',
         href: 'https://etherscan.io/address/0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
         address: '0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf',
+        isAdmin: true,
       },
     ],
   },
@@ -33,7 +40,8 @@ Contracts.args = {
     projects: {},
     contracts: {
       '0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf': false,
-      '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf': true,
+      '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf': false,
+      '0x99932133f54e0E8A33A975908C5BA1c14e5BbbDf': true,
     },
   },
 }

@@ -157,7 +157,7 @@ export const zkspace: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0x9F09666e45A5ceb9D055e2483885dc613f651898',
+          implementation: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
         },
       },
       {
@@ -167,13 +167,14 @@ export const zkspace: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0xd06FC0D24308378926791AB6c039bf13B916AE01',
+          implementation: '0x41455808B3109AD0f79672C44D75933D3529FEaE',
         },
       },
       {
         address: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
         name: 'UpgradeGatekeeper',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
+        description:
+          'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       },
     ],
     risks: [
