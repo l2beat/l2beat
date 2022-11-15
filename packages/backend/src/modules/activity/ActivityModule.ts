@@ -31,7 +31,7 @@ export function createActivityModule(
   clock: Clock,
 ) {
   if (!config.transactionCountSync) {
-    return undefined
+    return { routers: [] }
   }
 
   const starkexClient = new StarkexClient(
@@ -141,7 +141,7 @@ export function createActivityModule(
     ethereumTransactionUpdater,
   )
 
-  const router = createActivityRouter(activityController)
+  const activityRouter = createActivityRouter(activityController)
 
   const start = () => {
     logger.info('Starting Activity Module')
@@ -159,7 +159,7 @@ export function createActivityModule(
   }
 
   return {
-    router,
+    routers: [activityRouter],
     start,
   }
 }

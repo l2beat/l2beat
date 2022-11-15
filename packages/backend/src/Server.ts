@@ -1,5 +1,5 @@
+import Router from '@koa/router'
 import { HttpClient, Logger } from '@l2beat/common'
-import { compact } from 'lodash'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
@@ -10,6 +10,11 @@ import { createHealthModule } from './modules/health/HealthModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
 import { Database } from './peripherals/database/shared/Database'
 import { handleServerError, reportError } from './tools/ErrorReporter'
+
+interface ApplicationModule {
+  routers: Router[]
+  start?: () => Promise<void> | void
+}
 
 export class Server {
   start: () => Promise<void>
@@ -23,32 +28,17 @@ export class Server {
       config.core.safeTimeOffsetSeconds,
     )
 
-    const healthModule = createHealthModule(config)
-    const tvlModule = createTvlModule(config, logger, http, database, clock)
-    const activityModule = createActivityModule(
-      config,
-      logger,
-      http,
-      database,
-      clock,
-    )
-    const activityV2Module = createActivityV2Module(
-      config,
-      logger,
-      http,
-      database,
-      clock,
-    )
+    const modules: ApplicationModule[] = [
+      createHealthModule(config),
+      createTvlModule(config, logger, http, database, clock),
+      createActivityModule(config, logger, http, database, clock),
+      createActivityV2Module(config, logger, http, database, clock),
+    ]
 
     const apiServer = new ApiServer(
       config.port,
       logger,
-      compact([
-        ...healthModule.routers,
-        ...tvlModule.routers,
-        activityModule?.router,
-        activityV2Module?.router,
-      ]),
+      modules.flatMap((x) => x.routers),
       handleServerError,
     )
 
@@ -60,9 +50,9 @@ export class Server {
       await database.migrateToLatest()
 
       if (config.syncEnabled) {
-        await tvlModule.start()
-        activityModule?.start()
-        activityV2Module?.start()
+        for (const module of modules) {
+          await module.start?.()
+        }
       }
     }
   }

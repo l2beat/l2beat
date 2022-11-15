@@ -19,8 +19,13 @@ export function createActivityV2Module(
   clock: Clock,
 ) {
   if (!config.activityV2) {
-    return undefined
+    return { routers: [] }
   }
+
+  const dailyCountViewRepository = new DailyTransactionCountViewRepository(
+    database,
+    logger,
+  )
 
   const processors: SequenceProcessor[] = createSequenceProcessors(
     config,
@@ -29,16 +34,13 @@ export function createActivityV2Module(
     database,
     clock,
   )
-  const dailyCountViewRepository = new DailyTransactionCountViewRepository(
-    database,
-    logger,
-  )
   const dailyCountService = new DailyTransactionCountService(
     processors,
     dailyCountViewRepository,
     clock,
     logger,
   )
+
   const activityController = new ActivityV2Controller(
     processors
       .filter((processor) =>
@@ -51,7 +53,7 @@ export function createActivityV2Module(
       .map((p) => ProjectId(p.id)),
     dailyCountService,
   )
-  const router = createActivityV2Router(activityController)
+  const activityV2Router = createActivityV2Router(activityController)
 
   const start = () => {
     logger.info('Starting Activity V2 Module')
@@ -61,7 +63,7 @@ export function createActivityV2Module(
   }
 
   return {
-    router,
+    routers: [activityV2Router],
     start,
   }
 }

@@ -35,6 +35,8 @@ export function createTvlModule(
   database: Database,
   clock: Clock,
 ) {
+  // #region database
+
   const blockNumberRepository = new BlockNumberRepository(database, logger)
   const priceRepository = new PriceRepository(database, logger)
   const balanceRepository = new BalanceRepository(database, logger)
@@ -46,24 +48,25 @@ export function createTvlModule(
   const reportStatusRepository = new ReportStatusRepository(database, logger)
   const balanceStatusRepository = new BalanceStatusRepository(database, logger)
 
+  // #endregion
+  // #region peripherals
+
   const ethereumProvider = new providers.AlchemyProvider(
     'mainnet',
     config.alchemyApiKey,
   )
-
   const ethereumClient = new EthereumClient(ethereumProvider, logger)
-
   const multicall = new MulticallClient(ethereumClient)
-
   const coingeckoClient = new CoingeckoClient(http, config.coingeckoApiKey)
-
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-
   const etherscanClient = new EtherscanClient(
     config.etherscanApiKey,
     http,
     logger,
   )
+
+  // #endregion
+  // #region updaters
 
   const blockNumberUpdater = new BlockNumberUpdater(
     etherscanClient,
@@ -71,7 +74,6 @@ export function createTvlModule(
     clock,
     logger,
   )
-
   const priceUpdater = new PriceUpdater(
     coingeckoQueryService,
     priceRepository,
@@ -79,7 +81,6 @@ export function createTvlModule(
     config.tokens,
     logger,
   )
-
   const balanceUpdater = new BalanceUpdater(
     multicall,
     blockNumberUpdater,
@@ -89,7 +90,6 @@ export function createTvlModule(
     config.projects,
     logger,
   )
-
   const reportUpdater = new ReportUpdater(
     priceUpdater,
     balanceUpdater,
@@ -101,8 +101,10 @@ export function createTvlModule(
     logger,
   )
 
-  const blocksController = new BlocksController(blockNumberRepository)
+  // #endregion
+  // #region api
 
+  const blocksController = new BlocksController(blockNumberRepository)
   const tvlController = new TvlController(
     reportStatusRepository,
     aggregateReportRepository,
@@ -111,7 +113,6 @@ export function createTvlModule(
     config.tokens,
     logger,
   )
-
   const statusController = new StatusController(
     priceRepository,
     balanceStatusRepository,
@@ -120,7 +121,6 @@ export function createTvlModule(
     config.tokens,
     config.projects,
   )
-
   const dydxController = new DydxController(aggregateReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
@@ -128,15 +128,19 @@ export function createTvlModule(
   const statusRouter = createStatusRouter(statusController)
   const dydxRouter = createDydxRouter(dydxController)
 
+  // #endregion
+
+  const start = async () => {
+    if (config.tvlReportSync) {
+      priceUpdater.start()
+      await blockNumberUpdater.start()
+      await balanceUpdater.start()
+      await reportUpdater.start()
+    }
+  }
+
   return {
     routers: [blocksRouter, tvlRouter, statusRouter, dydxRouter],
-    start: async () => {
-      if (config.tvlReportSync) {
-        priceUpdater.start()
-        await blockNumberUpdater.start()
-        await balanceUpdater.start()
-        await reportUpdater.start()
-      }
-    },
+    start,
   }
 }
