@@ -26,30 +26,32 @@ export function createStarkexProcessor(
 ): SequenceProcessor {
   const batchSize = getBatchSizeFromCallsPerMinute(options.singleStarkexCPM)
 
-  return new SequenceProcessor({
-    id: projectId.toString(),
-    batchSize,
+  return new SequenceProcessor(
+    projectId.toString(),
     logger,
-    repository: sequenceProcessorRepository,
-    startFrom: options.sinceTimestamp.toStartOf('day').toDays(),
-    // eslint-disable-next-line @typescript-eslint/require-await
-    getLatest: async () =>
-      getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
-    processRange: async (from, to, trx) => {
-      const queries = range(from, to + 1).map((day) => async () => {
-        const count = await starkexClient.getDailyCount(day, options.product)
+    sequenceProcessorRepository,
+    {
+      batchSize,
+      startFrom: options.sinceTimestamp.toStartOf('day').toDays(),
+      // eslint-disable-next-line @typescript-eslint/require-await
+      getLatest: async () =>
+        getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
+      processRange: async (from, to, trx) => {
+        const queries = range(from, to + 1).map((day) => async () => {
+          const count = await starkexClient.getDailyCount(day, options.product)
 
-        return {
-          count,
-          timestamp: UnixTime.fromDays(day),
-          projectId: projectId,
-        }
-      })
+          return {
+            count,
+            timestamp: UnixTime.fromDays(day),
+            projectId: projectId,
+          }
+        })
 
-      const counts = await promiseAllPlus(queries, logger)
-      await starkexRepository.addOrUpdateMany(counts, trx)
+        const counts = await promiseAllPlus(queries, logger)
+        await starkexRepository.addOrUpdateMany(counts, trx)
+      },
     },
-  })
+  )
 }
 function getStarkexLastDay(timestamp: UnixTime, hoursDelay: number) {
   return timestamp

@@ -6,9 +6,6 @@ import { EventEmitter } from 'stream'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 
 export interface SequenceProcessorOpts {
-  id: string
-  logger: Logger
-  repository: SequenceProcessorRepository
   startFrom: number
   batchSize: number
   getLatest: (previousLatest: number) => Promise<number>
@@ -26,20 +23,23 @@ export const ALL_PROCESSED_EVENT = 'All processed'
 const HOUR = 1000 * 60 * 60
 
 export class SequenceProcessor extends EventEmitter {
-  readonly id: string
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly logger: Logger
   private processedAll = false
   private refreshId: NodeJS.Timer | undefined
 
-  constructor(private readonly opts: SequenceProcessorOpts) {
+  constructor(
+    private readonly id: string,
+    logger: Logger,
+    private readonly repository: SequenceProcessorRepository,
+    private readonly opts: SequenceProcessorOpts,
+  ) {
     super()
 
     assert(opts.batchSize > 0)
 
-    this.id = this.opts.id
-    this.logger = this.opts.logger.for(`${SequenceProcessor.name}.${this.id}`)
+    this.logger = logger.for(`${SequenceProcessor.name}[${this.id}]`)
     this.processQueue = new TaskQueue<void>(
       () => this.process(),
       this.logger.for('updateQueue'),
@@ -77,7 +77,7 @@ export class SequenceProcessor extends EventEmitter {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const processorState = await this.opts.repository.getById(this.id)
+      const processorState = await this.repository.getById(this.id)
       const lastProcessed = processorState?.lastProcessed
 
       this.logger.debug('Calling getLatest', {
@@ -112,12 +112,9 @@ export class SequenceProcessor extends EventEmitter {
 
   private async processRange(from: number, to: number) {
     this.logger.debug('Processing range started', { from, to })
-    await this.opts.repository.runInTransaction(async (trx) => {
+    await this.repository.runInTransaction(async (trx) => {
       await this.opts.processRange(from, to, trx)
-      await this.opts.repository.addOrUpdate(
-        { id: this.id, lastProcessed: to },
-        trx,
-      )
+      await this.repository.addOrUpdate({ id: this.id, lastProcessed: to }, trx)
     })
     this.logger.debug('Processing range finished', { from, to })
   }

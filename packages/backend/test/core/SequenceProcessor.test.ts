@@ -32,20 +32,22 @@ describe(SequenceProcessor.name, () => {
     refreshInterval?: number
     reportError?: LoggerOptions['reportError']
   }) {
-    return new SequenceProcessor({
-      id: PROCESSOR_ID,
-      logger: new Logger({
+    return new SequenceProcessor(
+      PROCESSOR_ID,
+      new Logger({
         logLevel: LogLevel.ERROR, // tests rely on error being logged -- do not change
         format: 'pretty',
         reportError,
       }),
       repository,
-      startFrom,
-      batchSize,
-      getLatest,
-      processRange,
-      scheduleIntervalMs: refreshInterval,
-    })
+      {
+        startFrom,
+        batchSize,
+        getLatest,
+        processRange,
+        scheduleIntervalMs: refreshInterval,
+      },
+    )
   }
 
   beforeEach(async () => {

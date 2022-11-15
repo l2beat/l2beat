@@ -21,27 +21,29 @@ export function createLoopringProcessor(
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const client = new LoopringClient(http, logger, { callsPerMinute })
 
-  return new SequenceProcessor({
-    id: projectId.toString(),
-    batchSize,
+  return new SequenceProcessor(
+    projectId.toString(),
     logger,
-    repository: sequenceProcessorRepository,
-    startFrom: 1,
-    getLatest: client.getFinalizedBlockNumber.bind(client),
-    processRange: async (from, to, trx) => {
-      const queries = range(from, to + 1).map((blockNumber) => async () => {
-        const block = await client.getBlock(blockNumber)
+    sequenceProcessorRepository,
+    {
+      batchSize,
+      startFrom: 1,
+      getLatest: client.getFinalizedBlockNumber.bind(client),
+      processRange: async (from, to, trx) => {
+        const queries = range(from, to + 1).map((blockNumber) => async () => {
+          const block = await client.getBlock(blockNumber)
 
-        return {
-          projectId,
-          blockNumber,
-          count: block.transactions,
-          timestamp: block.createdAt,
-        }
-      })
+          return {
+            projectId,
+            blockNumber,
+            count: block.transactions,
+            timestamp: block.createdAt,
+          }
+        })
 
-      const blocks = await promiseAllPlus(queries, logger)
-      await blockRepository.addMany(blocks, trx)
+        const blocks = await promiseAllPlus(queries, logger)
+        await blockRepository.addMany(blocks, trx)
+      },
     },
-  })
+  )
 }

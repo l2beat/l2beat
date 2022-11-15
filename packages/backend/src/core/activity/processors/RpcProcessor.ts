@@ -35,33 +35,35 @@ export function createRpcProcessor(
     callsPerMinute,
   )
 
-  return new SequenceProcessor({
-    id: projectId.toString(),
-    batchSize,
+  return new SequenceProcessor(
+    projectId.toString(),
     logger,
-    repository: sequenceProcessorRepository,
-    startFrom: transactionApi.startBlock ?? 0,
-    getLatest: (previousLatest) =>
-      client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
-    processRange: async (from, to, trx) => {
-      const queries = range(from, to + 1).map((blockNumber) => async () => {
-        const block = await client.getBlock(blockNumber)
-        const timestamp = new UnixTime(block.timestamp)
+    sequenceProcessorRepository,
+    {
+      batchSize,
+      startFrom: transactionApi.startBlock ?? 0,
+      getLatest: (previousLatest) =>
+        client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
+      processRange: async (from, to, trx) => {
+        const queries = range(from, to + 1).map((blockNumber) => async () => {
+          const block = await client.getBlock(blockNumber)
+          const timestamp = new UnixTime(block.timestamp)
 
-        return {
-          projectId,
-          blockNumber,
-          timestamp,
-          count:
-            transactionApi.assessCount?.(
-              block.transactions.length,
-              blockNumber,
-            ) ?? block.transactions.length,
-        }
-      })
+          return {
+            projectId,
+            blockNumber,
+            timestamp,
+            count:
+              transactionApi.assessCount?.(
+                block.transactions.length,
+                blockNumber,
+              ) ?? block.transactions.length,
+          }
+        })
 
-      const blocks = await promiseAllPlus(queries, logger)
-      await blockRepository.addMany(blocks, trx)
+        const blocks = await promiseAllPlus(queries, logger)
+        await blockRepository.addMany(blocks, trx)
+      },
     },
-  })
+  )
 }

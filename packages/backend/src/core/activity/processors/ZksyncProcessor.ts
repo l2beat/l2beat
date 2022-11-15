@@ -24,32 +24,34 @@ export function createZksyncProcessor(
   const client = new ZksyncClient(http, logger, transactionApi.callsPerMinute)
   const zksyncRepository = new ZksyncTransactionRepository(database, logger)
 
-  return new SequenceProcessor({
-    id: projectId.toString(),
-    batchSize,
+  return new SequenceProcessor(
+    projectId.toString(),
     logger,
-    repository: sequenceProcessorRepository,
-    startFrom: 1,
-    getLatest: client.getLatestBlock.bind(client),
-    processRange: async (from, to, trx) => {
-      const queries = range(from, to + 1).map((blockNumber) => async () => {
-        const transactions = await client.getTransactionsInBlock(blockNumber)
+    sequenceProcessorRepository,
+    {
+      batchSize,
+      startFrom: 1,
+      getLatest: client.getLatestBlock.bind(client),
+      processRange: async (from, to, trx) => {
+        const queries = range(from, to + 1).map((blockNumber) => async () => {
+          const transactions = await client.getTransactionsInBlock(blockNumber)
 
-        return transactions.map((t, i) => {
-          // Block 427 has a duplicated blockIndex
-          const blockIndex =
-            blockNumber === 427 && i === 1 ? t.blockIndex + 1 : t.blockIndex
-          return {
-            blockNumber,
-            blockIndex,
-            timestamp: t.createdAt,
-          }
+          return transactions.map((t, i) => {
+            // Block 427 has a duplicated blockIndex
+            const blockIndex =
+              blockNumber === 427 && i === 1 ? t.blockIndex + 1 : t.blockIndex
+            return {
+              blockNumber,
+              blockIndex,
+              timestamp: t.createdAt,
+            }
+          })
         })
-      })
 
-      const blockTransactions = await promiseAllPlus(queries, logger)
+        const blockTransactions = await promiseAllPlus(queries, logger)
 
-      await zksyncRepository.addMany(blockTransactions.flat(), trx)
+        await zksyncRepository.addMany(blockTransactions.flat(), trx)
+      },
     },
-  })
+  )
 }

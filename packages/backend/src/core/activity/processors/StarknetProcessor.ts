@@ -25,33 +25,35 @@ export function createStarknetProcessor(
     callsPerMinute,
   })
 
-  return new SequenceProcessor({
-    id: projectId.toString(),
-    batchSize,
+  return new SequenceProcessor(
+    projectId.toString(),
     logger,
-    repository: sequenceProcessorRepository,
-    startFrom: 0,
-    getLatest: async (previousLatest) => {
-      const blockNumber = await client.getBlockNumberAtOrBefore(
-        clock.getLastHour(),
-        previousLatest,
-      )
-      return blockNumber
-    },
-    processRange: async (from, to, trx) => {
-      const queries = range(from, to + 1).map((blockNumber) => async () => {
-        const block = await client.getBlock(blockNumber)
+    sequenceProcessorRepository,
+    {
+      batchSize,
+      startFrom: 0,
+      getLatest: async (previousLatest) => {
+        const blockNumber = await client.getBlockNumberAtOrBefore(
+          clock.getLastHour(),
+          previousLatest,
+        )
+        return blockNumber
+      },
+      processRange: async (from, to, trx) => {
+        const queries = range(from, to + 1).map((blockNumber) => async () => {
+          const block = await client.getBlock(blockNumber)
 
-        return {
-          projectId,
-          blockNumber: block.number,
-          count: block.transactions.length,
-          timestamp: new UnixTime(block.timestamp),
-        }
-      })
+          return {
+            projectId,
+            blockNumber: block.number,
+            count: block.transactions.length,
+            timestamp: new UnixTime(block.timestamp),
+          }
+        })
 
-      const blocks = await promiseAllPlus(queries, logger)
-      await blockRepository.addMany(blocks, trx)
+        const blocks = await promiseAllPlus(queries, logger)
+        await blockRepository.addMany(blocks, trx)
+      },
     },
-  })
+  )
 }

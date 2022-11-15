@@ -21,30 +21,32 @@ export function createAztecProcessor(
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const client = new AztecClient(http, options.url, options.callsPerMinute)
 
-  return new SequenceProcessor({
-    id: projectId.toString(),
-    batchSize,
+  return new SequenceProcessor(
+    projectId.toString(),
     logger,
-    repository: sequenceProcessorRepository,
-    startFrom: 0,
-    getLatest: async () => {
-      const block = await client.getLatestBlock()
-      return block.number
-    },
-    processRange: async (from, to, trx) => {
-      const queries = range(from, to + 1).map((blockNumber) => async () => {
-        const block = await client.getBlock(blockNumber)
+    sequenceProcessorRepository,
+    {
+      batchSize,
+      startFrom: 0,
+      getLatest: async () => {
+        const block = await client.getLatestBlock()
+        return block.number
+      },
+      processRange: async (from, to, trx) => {
+        const queries = range(from, to + 1).map((blockNumber) => async () => {
+          const block = await client.getBlock(blockNumber)
 
-        return {
-          projectId,
-          blockNumber: block.number,
-          count: block.transactionCount,
-          timestamp: block.timestamp,
-        }
-      })
+          return {
+            projectId,
+            blockNumber: block.number,
+            count: block.transactionCount,
+            timestamp: block.timestamp,
+          }
+        })
 
-      const blocks = await promiseAllPlus(queries, logger)
-      await blockRepository.addMany(blocks, trx)
+        const blocks = await promiseAllPlus(queries, logger)
+        await blockRepository.addMany(blocks, trx)
+      },
     },
-  })
+  )
 }
