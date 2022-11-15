@@ -1,5 +1,6 @@
 import { EtherscanClient, Logger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
+import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
 import { verifyContracts } from '../../scripts/checkVerifiedContracts/tasks'
@@ -47,26 +48,33 @@ describe('checkVerifiedContracts:tasks', () => {
     })
 
     it('fails on any error in any task', async () => {
+      // we need to mock clock here because retries are async
+      const clock = install()
+
       const EthereumClientMock = {
         getContractSource: async (_: EthereumAddress) => {
           throw new Error('An error occured')
         },
       }
-      await expect(
-        verifyContracts(
-          [
-            '0x1111111111111111111111111111111111111111',
-            '0x2222222222222222222222222222222222222222',
-            '0x3333333333333333333333333333333333333333',
-            '0x4444444444444444444444444444444444444444',
-          ].map(EthereumAddress),
-          new Set(),
-          new Set(),
-          EthereumClientMock as unknown as EtherscanClient,
-          2,
-          Logger.SILENT,
-        ),
-      ).toBeRejected()
+
+      const result = verifyContracts(
+        [
+          '0x1111111111111111111111111111111111111111',
+          '0x2222222222222222222222222222222222222222',
+          '0x3333333333333333333333333333333333333333',
+          '0x4444444444444444444444444444444444444444',
+        ].map(EthereumAddress),
+        new Set(),
+        new Set(),
+        EthereumClientMock as unknown as EtherscanClient,
+        2,
+        Logger.SILENT,
+      )
+      await clock.runAllAsync()
+
+      await expect(result).toBeRejected()
+
+      clock.uninstall()
     })
   })
 })
