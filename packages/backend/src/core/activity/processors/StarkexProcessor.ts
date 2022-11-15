@@ -10,46 +10,40 @@ import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createStarkexProcessor({
-  projectId,
-  transactionApi,
-  starkexApiDelayHours,
-  singleStarkexCPM,
-  logger,
-  sequenceProcessorRepository,
-  clock,
-  starkexRepository,
-  starkexClient,
-}: {
-  projectId: ProjectId
-  transactionApi: StarkexTransactionApi
+export interface StarkexProcessorOptions extends StarkexTransactionApi {
   singleStarkexCPM: number
-  starkexRepository: StarkexTransactionCountRepository
-  starkexClient: StarkexClient
   starkexApiDelayHours: number
-  logger: Logger
-  clock: Clock
-  sequenceProcessorRepository: SequenceProcessorRepository
-}): SequenceProcessor {
-  const batchSize = getBatchSizeFromCallsPerMinute(singleStarkexCPM)
+}
+
+export function createStarkexProcessor(
+  projectId: ProjectId,
+  starkexRepository: StarkexTransactionCountRepository,
+  starkexClient: StarkexClient,
+  sequenceProcessorRepository: SequenceProcessorRepository,
+  logger: Logger,
+  clock: Clock,
+  options: StarkexProcessorOptions,
+): SequenceProcessor {
+  const batchSize = getBatchSizeFromCallsPerMinute(options.singleStarkexCPM)
 
   return new SequenceProcessor({
     id: projectId.toString(),
     batchSize,
     logger,
     repository: sequenceProcessorRepository,
-    startFrom: transactionApi.sinceTimestamp.toStartOf('day').toDays(),
+    startFrom: options.sinceTimestamp.toStartOf('day').toDays(),
     // eslint-disable-next-line @typescript-eslint/require-await
     getLast: async () =>
-      getStarkexLastDay(clock.getLastHour(), starkexApiDelayHours),
+      getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
     processRange: async (from, to, trx) => {
       const fns = range(from, to + 1).map((day) => async () => {
-        const count = await starkexClient.getDailyCount(
-          day,
-          transactionApi.product,
-        )
+        const count = await starkexClient.getDailyCount(day, options.product)
 
-        return { count, timestamp: UnixTime.fromDays(day), projectId }
+        return {
+          count,
+          timestamp: UnixTime.fromDays(day),
+          projectId: projectId,
+        }
       })
       const counts = await promiseAllPlus(fns, logger)
 

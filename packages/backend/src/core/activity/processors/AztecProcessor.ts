@@ -1,5 +1,5 @@
 import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { AztecTransactionApi } from '@l2beat/config'
+import { AztecTransactionApiV2 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
@@ -9,28 +9,17 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createAztecProcessor({
-  projectId,
-  transactionApi,
-  logger,
-  sequenceProcessorRepository,
-  http,
-  blockRepository,
-}: {
-  projectId: ProjectId
-  transactionApi: AztecTransactionApi
-  blockRepository: BlockTransactionCountRepository
-  logger: Logger
-  http: HttpClient
-  sequenceProcessorRepository: SequenceProcessorRepository
-}): SequenceProcessor {
-  const callsPerMinute = transactionApi.callsPerMinute ?? 60
+export function createAztecProcessor(
+  projectId: ProjectId,
+  blockRepository: BlockTransactionCountRepository,
+  http: HttpClient,
+  sequenceProcessorRepository: SequenceProcessorRepository,
+  logger: Logger,
+  options: AztecTransactionApiV2,
+): SequenceProcessor {
+  const callsPerMinute = options.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new AztecClient(
-    http,
-    transactionApi.url,
-    transactionApi.callsPerMinute,
-  )
+  const client = new AztecClient(http, options.url, options.callsPerMinute)
 
   return new SequenceProcessor({
     id: projectId.toString(),

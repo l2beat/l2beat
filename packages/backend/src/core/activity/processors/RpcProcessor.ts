@@ -1,6 +1,6 @@
 import { Logger, promiseAllPlus } from '@l2beat/common'
 import { assert } from '@l2beat/common/src/tools/assert'
-import { RpcTransactionApi } from '@l2beat/config'
+import { RpcTransactionApiV2 } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 import { range } from 'lodash'
@@ -12,22 +12,14 @@ import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createRpcProcessor({
-  projectId,
-  transactionApi,
-  logger,
-  sequenceProcessorRepository,
-  blockRepository,
-  clock,
-}: {
-  projectId: ProjectId
-  transactionApi: RpcTransactionApi
-  blockRepository: BlockTransactionCountRepository
-  logger: Logger
-  sequenceProcessorRepository: SequenceProcessorRepository
-  clock: Clock
-}): SequenceProcessor {
-  logger = logger.for(`rpcProcessor.${projectId.toString()}`)
+export function createRpcProcessor(
+  projectId: ProjectId,
+  blockRepository: BlockTransactionCountRepository,
+  sequenceProcessorRepository: SequenceProcessorRepository,
+  logger: Logger,
+  clock: Clock,
+  transactionApi: RpcTransactionApiV2,
+): SequenceProcessor {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const url = transactionApi.url

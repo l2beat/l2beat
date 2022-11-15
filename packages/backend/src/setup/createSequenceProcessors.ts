@@ -80,63 +80,65 @@ export function createSequenceProcessors(
     .map(({ projectId, transactionApi }) => {
       switch (transactionApi.type) {
         case 'starkex':
-          return createStarkexProcessor({
-            transactionApi,
-            starkexApiDelayHours,
-            singleStarkexCPM,
+          return createStarkexProcessor(
+            projectId,
             starkexRepository,
             starkexClient,
-            projectId,
-            logger,
             sequenceProcessorRepository,
+            logger,
             clock,
-          })
+            {
+              ...transactionApi,
+              starkexApiDelayHours,
+              singleStarkexCPM,
+            },
+          )
         case 'aztec':
-          return createAztecProcessor({
+          return createAztecProcessor(
             projectId,
-            transactionApi,
             blockRepository,
+            http,
             sequenceProcessorRepository,
             logger,
-            http,
-          })
+            transactionApi,
+          )
         case 'starknet':
-          return createStarknetProcessor({
+          return createStarknetProcessor(
             projectId,
-            transactionApi,
             blockRepository,
-            sequenceProcessorRepository,
-            logger,
             http,
-            clock,
-          })
-        case 'zksync':
-          return createZksyncProcessor({
-            projectId,
-            transactionApi,
             sequenceProcessorRepository,
             logger,
+            clock,
+            transactionApi,
+          )
+        case 'zksync':
+          return createZksyncProcessor(
+            projectId,
             http,
             database,
-          })
-        case 'loopring':
-          return createLoopringProcessor({
-            projectId,
-            transactionApi,
             sequenceProcessorRepository,
             logger,
+            transactionApi,
+          )
+        case 'loopring':
+          return createLoopringProcessor(
+            projectId,
             http,
             blockRepository,
-          })
-        case 'rpc':
-          return createRpcProcessor({
-            projectId,
-            transactionApi,
             sequenceProcessorRepository,
             logger,
+            transactionApi,
+          )
+        case 'rpc':
+          return createRpcProcessor(
+            projectId,
             blockRepository,
+            sequenceProcessorRepository,
+            logger,
             clock,
-          })
+            transactionApi,
+          )
       }
     })
 }
