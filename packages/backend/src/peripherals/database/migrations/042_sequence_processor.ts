@@ -17,7 +17,7 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('sequence_processor', function (table) {
     table.string('id').primary()
     table.integer('last_processed').notNullable()
-    table.dateTime('finished_processing_at').notNullable()
+    table.dateTime('finished_processing_at', { useTz: false }).notNullable()
   })
 }
 
