@@ -149,12 +149,22 @@ export const aptos: Bridge = {
       accounts: [
         {
           address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327',
-          type: 'EOA',
+          type: 'MultiSig',
         },
       ],
-      name: 'Aptos Bridge EOA owner',
+      name: 'Aptos Bridge owner (multisig)',
       description:
         'Can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
+    },
+    {
+      accounts: [
+        { address: '0xB9539A3CfeC8B6cE1953245204efDd0d8eF8244e', type: 'EOA' },
+        { address: '0x7a69957582661D2e1b0102D00Bc22a44ffe8c5AB', type: 'EOA' },
+        { address: '0x0e1B8B9714830DcC8bBA324eDC5D0F500a78f3b7', type: 'EOA' },
+        { address: '0x9134Ff6E5F2D42ADf0E8Cb7462616f18A8dEF6DC', type: 'EOA' },
+      ],
+      name: 'MultiSig Participants',
+      description: 'Participants of the 2/4 Aptos MultiSig.',
     },
     {
       accounts: [

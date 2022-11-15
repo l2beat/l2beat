@@ -176,7 +176,7 @@ export const stargate: Bridge = {
           type: 'MultiSig',
         },
       ],
-      name: 'StarGate MultiSig',
+      name: 'StarGate Bridge owner (multisig)',
       description: 'Can create new pools, chainpaths, set fees.',
     },
     {
