@@ -34,7 +34,7 @@ export async function up(knex: Knex) {
     .withSchema(schema)
     .createTable(blockTable, function (table) {
       table.string('project_id').notNullable()
-      table.dateTime('unix_timestamp').notNullable()
+      table.dateTime('unix_timestamp', { useTz: false }).notNullable()
       table.integer('count').notNullable()
       table.integer('block_number').notNullable()
       table.primary(['project_id', 'block_number'])
