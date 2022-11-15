@@ -102,6 +102,13 @@ export class BaseRepository {
     )
   }
 
+  protected async runInTransaction(
+    fun: (trx: Knex.Transaction) => Promise<void>,
+  ): Promise<void> {
+    const knex = await this.knex()
+    await knex.transaction(fun)
+  }
+
   private wrap<A extends unknown[], R>(
     method: AnyMethod<A, R>,
     log: (result: R) => void,
