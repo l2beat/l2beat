@@ -34,7 +34,7 @@ export async function getBridgeWithGovernance(
     address: addresses.bridge,
     upgradeability: {
       type: 'custom proxy',
-      implementation: await bridgeProxy.implementation(),
+      implementations: [await bridgeProxy.implementation()],
     },
     values: {
       owners: await bridgeProxy.getOwners(),

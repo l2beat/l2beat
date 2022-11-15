@@ -33,7 +33,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',
-      alignRight: true,
+      alignCenter: true,
       minimalWidth: true,
       getValue: (entry, index) => {
         return <IndexCell entry={entry} index={index + 1} />

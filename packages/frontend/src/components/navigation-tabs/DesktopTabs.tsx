@@ -1,12 +1,15 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { NewItemIcon } from '../icons/NewItemIcon'
+
 export interface DesktopTabsProps {
   pages: {
     fullTitle: ReactNode
     icon?: ReactNode
     link: string
     selected: boolean
+    new?: boolean
   }[]
 }
 
@@ -51,6 +54,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
             )}
           >
             {page.icon} {page.fullTitle}
+            {page.new && <NewItemIcon className="-ml-1" />}
           </a>
         </li>
       ))}

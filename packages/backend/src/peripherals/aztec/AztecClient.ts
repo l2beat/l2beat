@@ -28,14 +28,14 @@ export class AztecClient {
 
   async getLatestBlock(): Promise<Block> {
     const data = await this.queryApi(
-      '{rollups(take:1,skip:0){id mined numTxs}}',
+      '{rollups(take:10,skip:0){id mined numTxs}}',
     )
     const {
-      data: {
-        rollups: [latest],
-      },
+      data: { rollups },
     } = GetRollupsResponseBodySchema.parse(data)
-    return toBlock(latest)
+    const latestMined = rollups.find((r): r is Rollup => r.mined !== null)
+    assert(latestMined, 'No mined block found in first 10 blocks')
+    return toBlock(latestMined)
   }
 
   async getBlock(number: number): Promise<Block> {

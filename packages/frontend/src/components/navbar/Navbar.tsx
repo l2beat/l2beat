@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
+import { NewItemIcon } from '../icons/NewItemIcon'
 import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -91,6 +92,7 @@ export function Navbar(props: NavbarProps) {
                   href="/bridges/tvl"
                 >
                   Bridges
+                  <NewItemIcon className="ml-2" />
                 </PageLink>
               </li>
             </>
