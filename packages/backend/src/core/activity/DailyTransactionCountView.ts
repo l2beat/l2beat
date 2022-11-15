@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Clock } from '../Clock'
-import { SequenceProcessor } from '../SequenceProcessor'
+import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
 import { decideAboutYesterday } from './decideAboutYesterday'
 import { fillMissingCounts } from './fillMissingCounts'
 import { groupByProjectId } from './groupByProjectId'
@@ -30,7 +30,7 @@ export class DailyTransactionCountView {
   start() {
     this.logger.info('Started')
     this.processors.forEach((processor) =>
-      processor.on('last reached', () => {
+      processor.on(ALL_PROCESSED_EVENT, () => {
         this.logger.info(
           `Received 'last reached' event for ${processor.id} - scheduling refresh`,
         )
