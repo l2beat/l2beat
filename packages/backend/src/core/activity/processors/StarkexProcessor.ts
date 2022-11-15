@@ -1,5 +1,5 @@
 import { Logger, promiseAllPlus } from '@l2beat/common'
-import { StarkexTransactionApi } from '@l2beat/config'
+import { StarkexTransactionApiV2 } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
 
@@ -10,7 +10,7 @@ import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export interface StarkexProcessorOptions extends StarkexTransactionApi {
+export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
   singleStarkexCPM: number
   starkexApiDelayHours: number
 }
