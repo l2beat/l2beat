@@ -117,7 +117,7 @@ export const stargate: Bridge = {
       },
       {
         address: '0x902F09715B6303d4173037652FA7377e5b98089E',
-        name: 'Layer Zero Relayer',
+        name: 'LayerZero Relayer',
         upgradeability: {
           type: 'EIP1967',
           admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
@@ -126,7 +126,7 @@ export const stargate: Bridge = {
       },
       {
         address: '0x5a54fe5234E811466D5366846283323c954310B2',
-        name: 'Layer Zero Oracle',
+        name: 'LayerZero Oracle',
         upgradeability: {
           type: 'EIP1967',
           admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
@@ -197,7 +197,7 @@ export const stargate: Bridge = {
           type: 'Contract',
         },
       ],
-      name: 'Layer Zero Relayer',
+      name: 'LayerZero Relayer',
       description:
         'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
     },
@@ -208,8 +208,8 @@ export const stargate: Bridge = {
           type: 'EOA',
         },
       ],
-      name: 'Layer Zero Relayer Admin owner',
-      description: 'Can upgrade Layer Zero relayer contract with no delay.',
+      name: 'LayerZero Relayer Admin owner',
+      description: 'Can upgrade LayerZero relayer contract with no delay.',
     },
     {
       accounts: [
@@ -218,8 +218,8 @@ export const stargate: Bridge = {
           type: 'EOA',
         },
       ],
-      name: 'Layer Zero Oracle Admin owner',
-      description: 'Can upgrade Layer Zero oracle contract with no delay.',
+      name: 'LayerZero Oracle Admin owner',
+      description: 'Can upgrade LayerZero oracle contract with no delay.',
     },
     {
       accounts: [
@@ -228,9 +228,9 @@ export const stargate: Bridge = {
           type: 'MultiSig',
         },
       ],
-      name: 'Layer Zero V2 Endpoint, UltraLightNode and Treasury contracts owner',
+      name: 'LayerZero Multisig',
       description:
-        'Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
+        'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
     },
     {
       accounts: [
@@ -240,7 +240,7 @@ export const stargate: Bridge = {
         { address: '0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e', type: 'EOA' },
         { address: '0x67FC8c432448f9a8d541C17579EF7a142378d5aD', type: 'EOA' },
       ],
-      name: 'MultiSig Participants',
+      name: 'LayerZero MultiSig Participants',
       description: 'Participants of the 2/5 LayerZero MultiSig.',
     },
   ],
