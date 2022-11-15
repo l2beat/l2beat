@@ -13,12 +13,6 @@ main().catch((e) => {
 
 async function main() {
   const cli = getCliParameters()
-  const env =
-    process.env.DEPLOYMENT_ENV ??
-    (process.env.NODE_ENV === 'production' ? 'production' : 'local')
-  console.log('Loading config for:', env)
-  const config = getConfig(env, cli)
-
   if (cli.mode === 'help') {
     if (cli.error) {
       exitWithUsage(cli.error)
@@ -27,6 +21,7 @@ async function main() {
     }
   }
 
+  const config = getConfig(cli)
   const app = new Application(config)
   await app.start()
 }

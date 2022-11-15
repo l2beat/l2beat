@@ -6,7 +6,12 @@ import { getStagingConfig } from './config.staging'
 
 export type { Config }
 
-export function getConfig(env: string, cli: CliParameters): Config {
+export function getConfig(cli: CliParameters): Config {
+  const env =
+    process.env.DEPLOYMENT_ENV ??
+    (process.env.NODE_ENV === 'production' ? 'production' : 'local')
+  console.log('Loading config for:', env)
+
   switch (env) {
     case 'local':
       return getLocalConfig(cli)
@@ -15,5 +20,6 @@ export function getConfig(env: string, cli: CliParameters): Config {
     case 'production':
       return getProductionConfig(cli)
   }
+
   throw new TypeError(`Unrecognized env: ${env}!`)
 }
