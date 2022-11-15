@@ -16,6 +16,7 @@ import { ZksyncTransactionRepository } from '../../peripherals/database/ZksyncTr
 import { LoopringClient } from '../../peripherals/loopring'
 import { StarkexClient } from '../../peripherals/starkex'
 import { ZksyncClient } from '../../peripherals/zksync'
+import { ApplicationModule } from '../ApplicationModule'
 import { createAztecTransactionUpdaters } from './createAztecTransactionUpdaters'
 import {
   createEthereumTransactionUpdater,
@@ -29,9 +30,9 @@ export function createActivityModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
-) {
+): ApplicationModule | undefined {
   if (!config.activity) {
-    return { routers: [] }
+    return
   }
 
   const starkexClient = new StarkexClient(

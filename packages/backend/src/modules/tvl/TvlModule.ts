@@ -27,6 +27,7 @@ import { Database } from '../../peripherals/database/shared/Database'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from '../../peripherals/etherscan'
+import { ApplicationModule } from '../ApplicationModule'
 
 export function createTvlModule(
   config: Config,
@@ -34,7 +35,11 @@ export function createTvlModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
-) {
+): ApplicationModule | undefined {
+  if (!config.tvl) {
+    return
+  }
+
   // #region database
 
   const blockNumberRepository = new BlockNumberRepository(database, logger)
@@ -53,14 +58,14 @@ export function createTvlModule(
 
   const ethereumProvider = new providers.AlchemyProvider(
     'mainnet',
-    config.alchemyApiKey,
+    config.tvl.alchemyApiKey,
   )
   const ethereumClient = new EthereumClient(ethereumProvider, logger)
   const multicall = new MulticallClient(ethereumClient)
-  const coingeckoClient = new CoingeckoClient(http, config.coingeckoApiKey)
+  const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
   const etherscanClient = new EtherscanClient(
-    config.etherscanApiKey,
+    config.tvl.etherscanApiKey,
     http,
     logger,
   )
@@ -78,7 +83,7 @@ export function createTvlModule(
     coingeckoQueryService,
     priceRepository,
     clock,
-    config.tokens,
+    config.tvl.tokens,
     logger,
   )
   const balanceUpdater = new BalanceUpdater(
@@ -110,7 +115,7 @@ export function createTvlModule(
     aggregateReportRepository,
     reportRepository,
     config.projects,
-    config.tokens,
+    config.tvl.tokens,
     logger,
   )
   const statusController = new StatusController(
@@ -118,7 +123,7 @@ export function createTvlModule(
     balanceStatusRepository,
     reportStatusRepository,
     clock,
-    config.tokens,
+    config.tvl.tokens,
     config.projects,
   )
   const dydxController = new DydxController(aggregateReportRepository)
@@ -131,7 +136,7 @@ export function createTvlModule(
   // #endregion
 
   const start = async () => {
-    if (config.tvlReportSync) {
+    if (config.syncEnabled) {
       priceUpdater.start()
       await blockNumberUpdater.start()
       await balanceUpdater.start()

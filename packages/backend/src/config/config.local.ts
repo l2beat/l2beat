@@ -14,97 +14,76 @@ export function getLocalConfig(cli: CliParameters): Config {
   if (cli.mode !== 'server' && cli.mode !== 'discover') {
     throw new Error(`Cannot get config for mode ${cli.mode}`)
   }
+
+  const apiEnabled = cli.mode === 'server'
+  const databaseEnabled = cli.mode === 'server'
+  const tvlEnabled =
+    cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true)
+  const activityEnabled =
+    cli.mode === 'server' && getEnv.boolean('TRANSACTION_COUNT_ENABLED', false)
+  const activityV2Enabled =
+    cli.mode === 'server' && getEnv.boolean('ACTIVITY_V2_ENABLED', false)
+  const discoveryEnabled = cli.mode === 'discover'
+
   return {
     name: 'Backend/Local',
+    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'pretty',
     },
-    port: getEnv.integer('PORT', 3000),
-    coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
-    alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-    etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-    databaseConnection:
-      cli.mode === 'server' ? getEnv('LOCAL_DB_URL') : undefined,
-    core: {
+    clock: {
       // TODO: This should probably be configurable
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      safeBlockRefreshIntervalMs: 30 * 1000,
       safeTimeOffsetSeconds: 60 * 60,
     },
-    tokens: tokenList.map((token) => ({
-      ...token,
-      priceStrategy: { type: 'market' },
-    })),
-    apiEnabled: cli.mode === 'server',
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
-    freshStart: getEnv.boolean('FRESH_START', false),
-    tvlReportSync:
-      cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true),
-    activity: cli.mode === 'server' &&
-      getEnv.boolean('TRANSACTION_COUNT_ENABLED', false) && {
-        starkexApiKey: getEnv('STARKEX_API_KEY'),
-        starkexApiDelayHours: 12,
-        zkSyncWorkQueueWorkers: 1,
-        aztecWorkQueueWorkers: 1,
-        starkexWorkQueueWorkers: 100,
-        starkexCallsPerMinute: 1000,
-        loopringWorkQueueWorkers: 1,
-        loopringCallsPerMinute: 10,
-        rpc: {
-          workQueueLimit: 10_000,
-          workQueueWorkers: 1,
-          projects: {
-            ethereum: {
-              callsPerMinute: 60 / 5,
-              url: getEnv(
-                'ACTIVITY_ETHEREUM_URL',
-                'https://eth-mainnet.alchemyapi.io/v2/demo',
-              ),
-            },
-            optimism: {
-              callsPerMinute: 60 / 5,
-              url: getEnv(
-                'ACTIVITY_OPTIMISM_URL',
-                'https://mainnet.optimism.io/',
-              ),
-            },
-            arbitrum: {
-              callsPerMinute: 60 / 5,
-              url: getEnv(
-                'ACTIVITY_ARBITRUM_URL',
-                'https://arb1.arbitrum.io/rpc',
-              ),
-            },
-          },
-        },
-      },
-    activityV2: cli.mode === 'server' &&
-      getEnv.boolean('ACTIVITY_V2_ENABLED', false) && {
-        starkexApiKey: getEnv('STARKEX_API_KEY'),
-        starkexApiDelayHours: 12,
-        starkexCallsPerMinute: 1000,
+    database: databaseEnabled && {
+      connection: getEnv('LOCAL_DB_URL'),
+      freshStart: getEnv.boolean('FRESH_START', false),
+    },
+    api: apiEnabled && {
+      port: getEnv.integer('PORT', 3000),
+    },
+    health: {
+      startedAt: new Date().toISOString(),
+      commitSha: getGitCommitHash(),
+    },
+    tvl: tvlEnabled && {
+      tokens: tokenList,
+      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
+    },
+    activity: activityEnabled && {
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 12,
+      zkSyncWorkQueueWorkers: 1,
+      aztecWorkQueueWorkers: 1,
+      starkexWorkQueueWorkers: 100,
+      starkexCallsPerMinute: 1000,
+      loopringWorkQueueWorkers: 1,
+      loopringCallsPerMinute: 10,
+      rpc: {
+        workQueueLimit: 10_000,
+        workQueueWorkers: 1,
         projects: {
           ethereum: {
-            type: 'rpc',
-            callsPerMinute: 60,
+            callsPerMinute: 60 / 5,
             url: getEnv(
               'ACTIVITY_ETHEREUM_URL',
               'https://eth-mainnet.alchemyapi.io/v2/demo',
             ),
           },
           optimism: {
-            type: 'rpc',
-            callsPerMinute: 60,
+            callsPerMinute: 60 / 5,
             url: getEnv(
               'ACTIVITY_OPTIMISM_URL',
               'https://mainnet.optimism.io/',
             ),
           },
           arbitrum: {
-            type: 'rpc',
-            callsPerMinute: 60,
+            callsPerMinute: 60 / 5,
             url: getEnv(
               'ACTIVITY_ARBITRUM_URL',
               'https://arb1.arbitrum.io/rpc',
@@ -112,10 +91,36 @@ export function getLocalConfig(cli: CliParameters): Config {
           },
         },
       },
-    health: {
-      startedAt: new Date().toISOString(),
-      commitSha: getGitCommitHash(),
     },
-    discoveryBlockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
+    activityV2: activityV2Enabled && {
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 12,
+      starkexCallsPerMinute: 1000,
+      projects: {
+        ethereum: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv(
+            'ACTIVITY_ETHEREUM_URL',
+            'https://eth-mainnet.alchemyapi.io/v2/demo',
+          ),
+        },
+        optimism: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv('ACTIVITY_OPTIMISM_URL', 'https://mainnet.optimism.io/'),
+        },
+        arbitrum: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv('ACTIVITY_ARBITRUM_URL', 'https://arb1.arbitrum.io/rpc'),
+        },
+      },
+    },
+    discovery: discoveryEnabled && {
+      blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
+      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+    },
   }
 }

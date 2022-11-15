@@ -9,6 +9,7 @@ import { Clock } from '../../core/Clock'
 import { SequenceProcessor } from '../../core/SequenceProcessor'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Database } from '../../peripherals/database/shared/Database'
+import { ApplicationModule } from '../ApplicationModule'
 import { createSequenceProcessors } from './createSequenceProcessors'
 
 export function createActivityV2Module(
@@ -17,9 +18,9 @@ export function createActivityV2Module(
   http: HttpClient,
   database: Database,
   clock: Clock,
-) {
+): ApplicationModule | undefined {
   if (!config.activityV2) {
-    return { routers: [] }
+    return
   }
 
   const dailyCountViewRepository = new DailyTransactionCountViewRepository(

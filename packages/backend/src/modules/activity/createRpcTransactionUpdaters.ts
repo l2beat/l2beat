@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { TransactionCountSyncConfig } from '../../config/Config'
+import { ActivityConfig } from '../../config/Config'
 import { Clock } from '../../core/Clock'
 import { RpcTransactionUpdater } from '../../core/transaction-count/RpcTransactionUpdater'
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
@@ -60,7 +60,7 @@ export function createLayer2RpcTransactionUpdaters(
 }
 
 export function createEthereumTransactionUpdater(
-  config: TransactionCountSyncConfig,
+  config: ActivityConfig,
   blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
   logger: Logger,

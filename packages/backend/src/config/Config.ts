@@ -7,65 +7,84 @@ import { Project, Token } from '../model'
 
 export interface Config {
   name: string
-  logger: {
-    logLevel: LogLevel
-    format: 'pretty' | 'json'
-  }
-  port: number
-  coingeckoApiKey: string | undefined
-  alchemyApiKey: string
-  etherscanApiKey: string
-  databaseConnection: Knex.Config['connection']
-  core: {
-    minBlockTimestamp: UnixTime
-    safeBlockRefreshIntervalMs: number
-    safeTimeOffsetSeconds: number
-  }
-  tokens: Token[]
   projects: Project[]
   syncEnabled: boolean
-  apiEnabled: boolean
-  freshStart: boolean
-  tvlReportSync: boolean
-  activity:
-    | {
-        starkexApiKey: string
-        starkexApiDelayHours: number
-        zkSyncWorkQueueWorkers: number
-        aztecWorkQueueWorkers: number
-        starkexWorkQueueWorkers: number
-        loopringWorkQueueWorkers: number
-        loopringCallsPerMinute: number
-        starkexCallsPerMinute: number
-        rpc: {
-          workQueueLimit: number
-          workQueueWorkers: number
-          projects: Record<
-            string,
-            { callsPerMinute?: number; url: string } | undefined
-          >
-        }
-      }
-    | false
-  activityV2:
-    | {
-        starkexApiKey: string
-        starkexApiDelayHours: number
-        starkexCallsPerMinute: number
-        allowedProjectIds?: string[]
-        projects: Record<string, Layer2TransactionApiV2 | undefined>
-      }
-    | false
-  health?: HealthStatus
-  discoveryBlockNumber?: number
+  logger: LoggerConfig
+  clock: ClockConfig
+  database: DatabaseConfig | false
+  api: ApiConfig | false
+  health: HealthConfig
+  tvl: TvlConfig | false
+  activity: ActivityConfig | false
+  activityV2: ActivityV2Config | false
+  discovery: DiscoveryConfig | false
 }
 
-export interface HealthStatus {
+export interface LoggerConfig {
+  logLevel: LogLevel
+  format: 'pretty' | 'json'
+}
+
+export interface ApiConfig {
+  port: number
+}
+
+export interface DatabaseConfig {
+  connection: Knex.Config['connection']
+  freshStart: boolean
+}
+
+export interface ClockConfig {
+  minBlockTimestamp: UnixTime
+  safeTimeOffsetSeconds: number
+}
+
+export interface TvlConfig {
+  tokens: Token[]
+  alchemyApiKey: string
+  etherscanApiKey: string
+  coingeckoApiKey: string | undefined
+}
+
+export interface HealthConfig {
   releasedAt?: string
   startedAt: string
   commitSha: string
 }
 
-export type TransactionCountSyncConfig = Exclude<Config['activity'], false>
+export interface ActivityConfig {
+  starkexApiKey: string
+  starkexApiDelayHours: number
+  zkSyncWorkQueueWorkers: number
+  aztecWorkQueueWorkers: number
+  starkexWorkQueueWorkers: number
+  loopringWorkQueueWorkers: number
+  loopringCallsPerMinute: number
+  starkexCallsPerMinute: number
+  rpc: {
+    workQueueLimit: number
+    workQueueWorkers: number
+    projects: Record<
+      string,
+      | {
+          callsPerMinute?: number
+          url: string
+        }
+      | undefined
+    >
+  }
+}
 
-export type ActivityV2Config = Exclude<Config['activityV2'], false>
+export interface ActivityV2Config {
+  starkexApiKey: string
+  starkexApiDelayHours: number
+  starkexCallsPerMinute: number
+  allowedProjectIds?: string[]
+  projects: Record<string, Layer2TransactionApiV2 | undefined>
+}
+
+export interface DiscoveryConfig {
+  blockNumber?: number
+  alchemyApiKey: string
+  etherscanApiKey: string
+}
