@@ -5,9 +5,9 @@ import { DailyTransactionCount } from './types'
 export function decideAboutYesterday(
   counts: DailyTransactionCount[],
   yesterday: UnixTime,
-  lastReached: boolean,
+  processedAll: boolean,
 ): DailyTransactionCount[] {
-  if (!lastReached) {
+  if (!processedAll) {
     return counts.slice(-1)
   }
 

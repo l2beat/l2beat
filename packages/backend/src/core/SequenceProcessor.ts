@@ -21,7 +21,7 @@ export interface SequenceProcessorOpts {
   scheduleIntervalMs?: number
 }
 
-export const ALL_PROCESSED_EVENT = 'Last reached'
+export const ALL_PROCESSED_EVENT = 'All processed'
 
 const HOUR = 1000 * 60 * 60
 
@@ -30,7 +30,7 @@ export class SequenceProcessor extends EventEmitter {
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly logger: Logger
-  private lastReached = false
+  private processedAll = false
   private refreshId: NodeJS.Timer | undefined
 
   constructor(private readonly opts: SequenceProcessorOpts) {
@@ -68,8 +68,8 @@ export class SequenceProcessor extends EventEmitter {
     await this.processQueue.waitTilEmpty()
   }
 
-  isLastReached(): boolean {
-    return this.lastReached
+  hasProcessedAll(): boolean {
+    return this.processedAll
   }
 
   private async process(): Promise<void> {
@@ -102,7 +102,7 @@ export class SequenceProcessor extends EventEmitter {
     }
 
     this.logger.debug('Processing finished')
-    this.lastReached = true
+    this.processedAll = true
     this.emit(ALL_PROCESSED_EVENT)
   }
 

@@ -32,7 +32,7 @@ export class DailyTransactionCountView {
     this.processors.forEach((processor) =>
       processor.on(ALL_PROCESSED_EVENT, () => {
         this.logger.info(
-          `Received 'last reached' event for ${processor.id} - scheduling refresh`,
+          `Received ${ALL_PROCESSED_EVENT} event for ${processor.id} - scheduling refresh`,
         )
         this.refreshQueue.addIfEmpty()
       }),
@@ -57,9 +57,13 @@ export class DailyTransactionCountView {
         )
         continue
       }
-      const lastReached = processor.isLastReached()
+      const processedAll = processor.hasProcessedAll()
       const yesterday = UnixTime.now().toStartOf('day').add(-1, 'days')
-      const decidedCounts = decideAboutYesterday(counts, yesterday, lastReached)
+      const decidedCounts = decideAboutYesterday(
+        counts,
+        yesterday,
+        processedAll,
+      )
       const filledCounts = fillMissingCounts(decidedCounts)
       projectCounts.set(projectId, filledCounts)
     }
