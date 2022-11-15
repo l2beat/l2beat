@@ -45,8 +45,8 @@ export function createStarkexProcessor(
           projectId: projectId,
         }
       })
-      const counts = await promiseAllPlus(queries, logger)
 
+      const counts = await promiseAllPlus(queries, logger)
       await starkexRepository.addOrUpdateMany(counts, trx)
     },
   })

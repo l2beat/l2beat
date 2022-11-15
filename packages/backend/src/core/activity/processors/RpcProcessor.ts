@@ -28,7 +28,11 @@ export function createRpcProcessor(
     url,
     timeout: 15_000,
   })
-  const client = new EthereumClient(provider, logger, callsPerMinute)
+  const client = new EthereumClient(
+    provider,
+    logger.for(`RpcProcessor.${projectId.toString()}`),
+    callsPerMinute,
+  )
 
   return new SequenceProcessor({
     id: projectId.toString(),
@@ -56,7 +60,6 @@ export function createRpcProcessor(
       })
 
       const blocks = await promiseAllPlus(queries, logger)
-
       await blockRepository.addMany(blocks, trx)
     },
   })

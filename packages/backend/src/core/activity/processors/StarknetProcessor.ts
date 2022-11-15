@@ -51,7 +51,6 @@ export function createStarknetProcessor(
       })
 
       const blocks = await promiseAllPlus(queries, logger)
-
       await blockRepository.addMany(blocks, trx)
     },
   })

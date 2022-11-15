@@ -42,8 +42,8 @@ export function createAztecProcessor(
           timestamp: block.timestamp,
         }
       })
-      const blocks = await promiseAllPlus(queries, logger)
 
+      const blocks = await promiseAllPlus(queries, logger)
       await blockRepository.addMany(blocks, trx)
     },
   })

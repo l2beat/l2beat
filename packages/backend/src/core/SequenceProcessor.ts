@@ -94,7 +94,7 @@ export class SequenceProcessor extends EventEmitter {
 
       assert(
         from <= to,
-        `getLast returned sequence member that was already processed. from=${from}, to=${to}`,
+        `getLatest returned sequence member that was already processed. from=${from}, to=${to}`,
       )
 
       for (; from <= to; from += this.opts.batchSize) {
