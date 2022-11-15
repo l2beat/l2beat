@@ -1,5 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/common'
-import { assert } from '@l2beat/common/src/tools/assert'
+import { assert, HttpClient, Logger } from '@l2beat/common'
 import { Layer2TransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 

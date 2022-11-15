@@ -1,5 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
-import { assert } from '@l2beat/common/src/tools/assert'
+import { assert, Logger, TaskQueue } from '@l2beat/common'
 import { AssetId, EthereumAddress, Hash256, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
