@@ -4,7 +4,7 @@ import { invertAndPrint } from '../inversion'
 import { ProjectParameters } from '../types'
 import { exitWithUsage } from './usage'
 
-export async function invert(args: string[]) {
+export async function invert(args: string[], useMermaidMarkup = false) {
   if (args.length !== 1) {
     exitWithUsage('Invalid number of arguments')
   }
@@ -17,5 +17,5 @@ export async function invert(args: string[]) {
     exitWithUsage(`Cannot read file ${args[0]}`)
   }
 
-  invertAndPrint(parsed)
+  invertAndPrint(parsed, useMermaidMarkup)
 }
