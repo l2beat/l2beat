@@ -172,6 +172,17 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
+          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+          type: 'Contract',
+        },
+      ],
+      name: 'Aptos Bridge Relayer',
+      description:
+        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+    },
+    {
+      accounts: [
+        {
           address: '0x65bb797c2B9830d891D87288F029ed8dACc19705',
           type: 'MultiSig',
         },
@@ -189,6 +200,48 @@ export const stargate: Bridge = {
       ],
       name: 'MultiSig Participants',
       description: 'Participants of the 2/5 StarGate MultiSig.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
+          type: 'EOA',
+        },
+      ],
+      name: 'Layer Zero Proxy Admin owner',
+      description: 'Can upgrade Layer Zero relayer contract with no delay.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
+          type: 'EOA',
+        },
+      ],
+      name: 'Layer Zero Proxy Admin owner',
+      description: 'Can upgrade Layer Zero oracle contract with no delay.',
+    },
+    {
+      accounts: [
+        {
+          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          type: 'MultiSig',
+        },
+      ],
+      name: 'Layer Zero V2 Endpoint, UltraLightNode and Treasury contracts owner',
+      description:
+        'Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
+    },
+    {
+      accounts: [
+        { address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327', type: 'EOA' },
+        { address: '0xe095F2590eF1Ab39601445025847Ed8E4B40D687', type: 'EOA' },
+        { address: '0xBb6633cc267951E938F9B6421E4F54aa5b2c1936', type: 'EOA' },
+        { address: '0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e', type: 'EOA' },
+        { address: '0x67FC8c432448f9a8d541C17579EF7a142378d5aD', type: 'EOA' },
+      ],
+      name: 'MultiSig Participants',
+      description: 'Participants of the 2/5 LayerZero MultiSig.',
     },
   ],
 }
