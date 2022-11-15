@@ -24,5 +24,10 @@ export async function run() {
     return
   }
 
+  if (args[0] === 'invertAsMermaid') {
+    await invert(args.slice(1), true)
+    return
+  }
+
   await analyze(args)
 }
