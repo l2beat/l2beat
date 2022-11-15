@@ -50,7 +50,7 @@ export function invertAndPrint(
     for (const [key, value] of Object.entries(contract.values ?? {})) {
       if (Array.isArray(value)) {
         for (const [i, entry] of value.entries()) {
-          add(`${key}_${i}`, entry, contract.name, contract.address)
+          add(`${key}.${i}`, entry, contract.name, contract.address)
         }
       } else {
         add(key, value, contract.name, contract.address)
