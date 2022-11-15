@@ -1,12 +1,11 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId } from '@l2beat/types'
+import { groupBy } from 'lodash'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Clock } from '../Clock'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
-import { decideAboutYesterday } from './decideAboutYesterday'
-import { fillMissingCounts } from './fillMissingCounts'
-import { groupByProjectId } from './groupByProjectId'
+import { postprocessCounts } from './postprocessCounts'
 import { DailyTransactionCount } from './types'
 
 export class DailyTransactionCountView {
@@ -44,30 +43,24 @@ export class DailyTransactionCountView {
   async getDailyCounts(): Promise<Map<ProjectId, DailyTransactionCount[]>> {
     const allCounts =
       await this.dailyTransactionCountRepository.getDailyCounts()
-    const projectCounts = groupByProjectId(allCounts)
+    const groupedCounts = groupBy(allCounts, (r) => r.projectId.toString())
+    const result = new Map()
 
-    for (const [projectId, counts] of projectCounts) {
+    for (const [projectId, counts] of Object.entries(groupedCounts)) {
       const processor = this.processors.find(
         (p) => p.id === projectId.toString(),
       )
       if (!processor) {
-        projectCounts.delete(projectId)
         this.logger.debug(
           `Skipping ${projectId.toString()} from daily counts - no processor found`,
         )
         continue
       }
       const processedAll = processor.hasProcessedAll()
-      const yesterday = UnixTime.now().toStartOf('day').add(-1, 'days')
-      const decidedCounts = decideAboutYesterday(
-        counts,
-        yesterday,
-        processedAll,
-      )
-      const filledCounts = fillMissingCounts(decidedCounts)
-      projectCounts.set(projectId, filledCounts)
+      const postprocessed = postprocessCounts(counts, processedAll)
+      result.set(projectId, postprocessed)
     }
 
-    return projectCounts
+    return result
   }
 }
