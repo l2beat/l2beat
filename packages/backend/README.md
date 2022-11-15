@@ -55,6 +55,7 @@ environment variables. One variable per line `KEY=value`.
 - `TRANSACTION_COUNT_ENABLED` (default `false`) - When set to `true` activity feature is enabled
 - `ACTIVITY_V2_ENABLED` (default `false`) - When set to `true` activity v2 feature is enabled
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
+- `DISCOVERY_BLOCK_NUMBER` - Override the block number used during local discovery
 
 Example:
 

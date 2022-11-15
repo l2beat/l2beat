@@ -28,11 +28,14 @@ export class Discovery {
     const projectConfig = await configReader.readConfig(project)
     const overrides = projectConfig.overrides ?? {}
 
+    const blockNumber =
+      config.discoveryBlockNumber ?? (await provider.getBlockNumber())
     // Temporary mapping from new config structure to the old one
     const discoveryOptions: DiscoveryOptions = {
       skipAddresses: [],
       skipMethods: {},
       addAbis: {},
+      blockNumber,
     }
     Object.keys(overrides).forEach((address) => {
       const ignoreMethods = overrides[address].ignoreMethods

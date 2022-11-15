@@ -35,7 +35,7 @@ import { getActivityModule } from './setup/ActivityModule'
 import { getActivityV2Module } from './setup/ActivityV2Module'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
-export class Application {
+export class Server {
   start: () => Promise<void>
 
   constructor(config: Config) {

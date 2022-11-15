@@ -6,4 +6,5 @@ export interface DiscoveryOptions {
   skipMethods: Record<string, string[] | undefined>
   // address -> abi
   addAbis: Record<string, JsonFragment[] | undefined>
+  blockNumber: number
 }
