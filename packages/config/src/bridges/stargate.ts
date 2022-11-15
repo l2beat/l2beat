@@ -208,7 +208,7 @@ export const stargate: Bridge = {
           type: 'EOA',
         },
       ],
-      name: 'Layer Zero Proxy Admin owner',
+      name: 'Layer Zero Relayer Admin owner',
       description: 'Can upgrade Layer Zero relayer contract with no delay.',
     },
     {
@@ -218,7 +218,7 @@ export const stargate: Bridge = {
           type: 'EOA',
         },
       ],
-      name: 'Layer Zero Proxy Admin owner',
+      name: 'Layer Zero Oracle Admin owner',
       description: 'Can upgrade Layer Zero oracle contract with no delay.',
     },
     {
