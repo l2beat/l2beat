@@ -136,17 +136,19 @@ export function createTvlModule(
   // #endregion
 
   const start = async () => {
-    if (config.syncEnabled) {
-      logger = logger.for('TvlModule')
-      logger.info('Starting')
-
-      priceUpdater.start()
-      await blockNumberUpdater.start()
-      await balanceUpdater.start()
-      await reportUpdater.start()
-
-      logger.info('Started')
+    if (!config.syncEnabled) {
+      return
     }
+
+    logger = logger.for('TvlModule')
+    logger.info('Starting')
+
+    priceUpdater.start()
+    await blockNumberUpdater.start()
+    await balanceUpdater.start()
+    await reportUpdater.start()
+
+    logger.info('Started')
   }
 
   return {

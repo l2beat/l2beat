@@ -57,6 +57,10 @@ export function createActivityV2Module(
   const activityV2Router = createActivityV2Router(activityController)
 
   const start = () => {
+    if (!config.syncEnabled) {
+      return
+    }
+
     logger = logger.for('ActivityV2Module')
     logger.info('Starting')
 
