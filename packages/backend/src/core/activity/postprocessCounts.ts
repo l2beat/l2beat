@@ -3,36 +3,45 @@ import { UnixTime } from '@l2beat/types'
 import { fillMissingCounts } from './fillMissingCounts'
 import { DailyTransactionCount } from './types'
 
-// TODO: add tests
 /**
  * Postprocess stored daily counts to accommodate for:
+ * - today (we cannot tell if everything has been processed until the day finishes)
  * - missing days (no activity on the source api should result in 0 for that day)
- * - unfinished days (we haven't finished processing all)
+ * - unfinished days (we haven't finished processing)
+ *
+ * @param counts sorted in ascending order by timestamp. Timestamps are start of days
  */
 export function postprocessCounts(
   counts: DailyTransactionCount[],
   processedAll: boolean,
+  now?: UnixTime,
 ) {
+  const today = (now ?? UnixTime.now()).toStartOf('day')
+  const yesterday = today.add(-1, 'days')
+
   // fill holes before last processed
   const filledBefore = fillMissingCounts(counts)
 
+  // remove last day if there is a chance it is incomplete
+  // do not add 0s after
   if (!processedAll) {
-    // remove last day if there is a change it is incomplete
-    return filledBefore.slice(-1)
+    return filledBefore.slice(0, -1)
   }
 
-  const yesterday = UnixTime.now().toStartOf('day').add(-1, 'days')
-  const last = filledBefore[filledBefore.length - 1]
-  const lastIsYesterday = last.timestamp.toStartOf('day').equals(yesterday)
+  // remove today
+  const lteYesterday = filledBefore.at(-1)?.timestamp.equals(today)
+    ? filledBefore.slice(0, -1)
+    : filledBefore
 
-  // we have all the data we need
-  if (lastIsYesterday) {
-    return filledBefore
+  const lastFull = lteYesterday[lteYesterday.length - 1]
+  // we have data up til yesterday
+  if (lastFull.timestamp.equals(yesterday)) {
+    return lteYesterday
   }
 
   // fill holes after last processed til yesterday
   const filledAfter = fillMissingCounts([
-    last,
+    lastFull,
     { timestamp: yesterday, count: 0 },
   ]).slice(1)
 

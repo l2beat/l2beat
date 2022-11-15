@@ -40,6 +40,9 @@ export class DailyTransactionCountView {
     this.refreshQueue.addIfEmpty()
   }
 
+  /**
+   * Returns counts with timestamps lower than or equal to yesterday.
+   */
   async getDailyCounts(): Promise<Map<ProjectId, DailyTransactionCount[]>> {
     const allCounts =
       await this.dailyTransactionCountRepository.getDailyCounts()
