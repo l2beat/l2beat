@@ -102,7 +102,7 @@ export class BaseRepository {
     )
   }
 
-  protected async runInTransaction(
+  async runInTransaction(
     fun: (trx: Knex.Transaction) => Promise<void>,
   ): Promise<void> {
     const knex = await this.knex()
