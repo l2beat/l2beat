@@ -42,10 +42,10 @@ export function createZksyncProcessor({
       const fns = range(from, to + 1).map((blockNumber) => async () => {
         const transactions = await client.getTransactionsInBlock(blockNumber)
 
-        return transactions.map((t) => {
+        return transactions.map((t, i) => {
           // Block 427 has a duplicated blockIndex
           const blockIndex =
-            blockNumber === 427 ? t.blockIndex + 1 : t.blockIndex
+            blockNumber === 427 && i === 1 ? t.blockIndex + 1 : t.blockIndex
           return {
             blockNumber,
             blockIndex,
