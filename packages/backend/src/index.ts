@@ -1,8 +1,8 @@
-import { Application } from './Application'
 import { getCliParameters } from './cli/getCliParameters'
 import { exitWithUsage, printUsage } from './cli/usage'
 import { getConfig } from './config'
 import { Discovery } from './Discovery'
+import { Server } from './Server'
 import { reportError } from './tools/ErrorReporter'
 
 main().catch((e) => {
@@ -27,7 +27,7 @@ async function main() {
       printUsage()
     }
   } else if (cli.mode === 'server') {
-    const app = new Application(config)
+    const app = new Server(config)
     await app.start()
   } else {
     console.log('DISCOVER', cli.project)

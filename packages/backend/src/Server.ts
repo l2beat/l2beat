@@ -34,7 +34,7 @@ import { EtherscanClient } from './peripherals/etherscan'
 import { getActivityModule } from './setup/ActivityModule'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
-export class Application {
+export class Server {
   start: () => Promise<void>
 
   constructor(config: Config) {
