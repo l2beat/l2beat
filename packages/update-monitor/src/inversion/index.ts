@@ -15,7 +15,10 @@ interface Role {
   atAddress: string
 }
 
-export function invertAndPrint(project: ProjectParameters) {
+export function invertAndPrint(
+  project: ProjectParameters,
+  useMermaidMarkup = false,
+) {
   const addresses = new Map<string, AddressDetails>()
 
   function add(
@@ -47,7 +50,7 @@ export function invertAndPrint(project: ProjectParameters) {
     for (const [key, value] of Object.entries(contract.values ?? {})) {
       if (Array.isArray(value)) {
         for (const [i, entry] of value.entries()) {
-          add(`${key}[${i}]`, entry, contract.name, contract.address)
+          add(`${key}.${i}`, entry, contract.name, contract.address)
         }
       } else {
         add(key, value, contract.name, contract.address)
@@ -55,7 +58,11 @@ export function invertAndPrint(project: ProjectParameters) {
     }
   }
 
-  print(addresses)
+  if (useMermaidMarkup) {
+    printMermaid(addresses)
+  } else {
+    print(addresses)
+  }
 }
 
 function print(addresses: Map<string, AddressDetails>) {
@@ -71,6 +78,26 @@ function print(addresses: Map<string, AddressDetails>) {
         'at',
         chalk.blue(role.atName),
         role.atAddress,
+      )
+    }
+    console.log()
+  }
+}
+
+function printMermaid(addresses: Map<string, AddressDetails>) {
+  console.log('flowchart LR')
+  for (const details of addresses.values()) {
+    for (const role of details.roles) {
+      console.log(
+        details.address.slice(0, 6) +
+          (details.name
+            ? `(${details.name}\\n${details.address.slice(0, 6)})`
+            : ''),
+        '-->|' + role.name + '|',
+        role.atAddress.slice(0, 6) +
+          (role.atName
+            ? `(${role.atName}\\n${role.atAddress.slice(0, 6)})`
+            : ''),
       )
     }
     console.log()

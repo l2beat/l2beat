@@ -107,13 +107,33 @@ export const stargate: Bridge = {
     addresses: [
       {
         address: '0x8731d54E9D02c286767d56ac03e8037C07e01e98',
-        name: 'Router',
-        description: 'StarGate Router.',
+        name: 'StarGate Router',
+        description:
+          'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
       },
       {
         address: '0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97',
-        name: 'Bridge',
-        description: 'StarGate Bridge.',
+        name: 'StarGate Bridge',
+        description:
+          'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
+      },
+      {
+        address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+        name: 'LayerZero Relayer',
+        upgradeability: {
+          type: 'EIP1967',
+          admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
+          implementation: '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
+        },
+      },
+      {
+        address: '0x5a54fe5234E811466D5366846283323c954310B2',
+        name: 'LayerZero Oracle',
+        upgradeability: {
+          type: 'EIP1967',
+          admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
+          implementation: '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
+        },
       },
       {
         address: '0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675',
@@ -158,8 +178,8 @@ export const stargate: Bridge = {
           type: 'MultiSig',
         },
       ],
-      name: 'StarGate MultiSig',
-      description: 'Can create new pools, chainpaths, set fees.',
+      name: 'StarGate Multisig',
+      description: 'Bridge owner, can create new pools, chainpaths, set fees.',
     },
     {
       accounts: [
@@ -169,8 +189,61 @@ export const stargate: Bridge = {
         { address: '0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4', type: 'EOA' },
         { address: '0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0', type: 'EOA' },
       ],
-      name: 'MultiSig Participants',
+      name: 'StarGate MultiSig Participants',
       description: 'Participants of the 2/5 StarGate MultiSig.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+          type: 'Contract',
+        },
+      ],
+      name: 'LayerZero Relayer',
+      description:
+        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
+          type: 'EOA',
+        },
+      ],
+      name: 'LayerZero Relayer Admin owner',
+      description: 'Can upgrade LayerZero relayer contract with no delay.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
+          type: 'EOA',
+        },
+      ],
+      name: 'LayerZero Oracle Admin owner',
+      description: 'Can upgrade LayerZero oracle contract with no delay.',
+    },
+    {
+      accounts: [
+        {
+          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          type: 'MultiSig',
+        },
+      ],
+      name: 'LayerZero Multisig',
+      description:
+        'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
+    },
+    {
+      accounts: [
+        { address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327', type: 'EOA' },
+        { address: '0xe095F2590eF1Ab39601445025847Ed8E4B40D687', type: 'EOA' },
+        { address: '0xBb6633cc267951E938F9B6421E4F54aa5b2c1936', type: 'EOA' },
+        { address: '0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e', type: 'EOA' },
+        { address: '0x67FC8c432448f9a8d541C17579EF7a142378d5aD', type: 'EOA' },
+      ],
+      name: 'LayerZero MultiSig Participants',
+      description: 'Participants of the 2/5 LayerZero MultiSig.',
     },
   ],
 }

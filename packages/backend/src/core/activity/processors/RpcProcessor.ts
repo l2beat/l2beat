@@ -1,5 +1,4 @@
-import { Logger, promiseAllPlus } from '@l2beat/common'
-import { assert } from '@l2beat/common/src/tools/assert'
+import { assert, Logger, promiseAllPlus } from '@l2beat/common'
 import { RpcTransactionApiV2 } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'

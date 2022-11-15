@@ -1,5 +1,4 @@
-import { HttpClient, RateLimiter } from '@l2beat/common'
-import { assert } from '@l2beat/common/src/tools/assert'
+import { assert, HttpClient, RateLimiter } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
