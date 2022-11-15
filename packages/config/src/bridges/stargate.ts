@@ -107,13 +107,13 @@ export const stargate: Bridge = {
     addresses: [
       {
         address: '0x8731d54E9D02c286767d56ac03e8037C07e01e98',
-        name: 'Router',
-        description: 'StarGate Router.',
+        name: 'StarGate Router',
+        description: 'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
       },
       {
         address: '0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97',
-        name: 'Bridge',
-        description: 'StarGate Bridge.',
+        name: 'StarGate Bridge',
+        description: 'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
       },
       {
         address: '0x902F09715B6303d4173037652FA7377e5b98089E',
@@ -187,7 +187,7 @@ export const stargate: Bridge = {
         { address: '0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4', type: 'EOA' },
         { address: '0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0', type: 'EOA' },
       ],
-      name: 'MultiSig Participants',
+      name: 'StarGate MultiSig Participants',
       description: 'Participants of the 2/5 StarGate MultiSig.',
     },
     {
