@@ -43,7 +43,7 @@ export function getActivityModule(
     },
   )
 
-  const zksyncClient = new ZksyncClient(http, logger)
+  const zksyncClient = new ZksyncClient(http, logger, 3000)
   const loopringClient = new LoopringClient(http, logger, {
     callsPerMinute: config.transactionCountSync.loopringCallsPerMinute,
   })

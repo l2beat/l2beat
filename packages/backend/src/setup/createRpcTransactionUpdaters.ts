@@ -1,4 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { assert, HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
@@ -9,7 +9,6 @@ import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionU
 import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
 import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
 import { StarkNetClient } from '../peripherals/starknet/StarkNetClient'
-import { assert } from '../tools/assert'
 
 export function createLayer2RpcTransactionUpdaters(
   config: Config,

@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/common'
 import { BigNumber, providers } from 'ethers'
 
-import { assert } from '../../../tools/assert'
 import { ContractParameters } from '../types'
 import { bytes32ToAddress } from '../utils/address'
 import { getCallResult } from '../utils/getCallResult'

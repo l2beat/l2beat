@@ -32,6 +32,7 @@ import { EthereumClient } from './peripherals/ethereum/EthereumClient'
 import { MulticallClient } from './peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from './peripherals/etherscan'
 import { getActivityModule } from './setup/ActivityModule'
+import { getActivityV2Module } from './setup/ActivityV2Module'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
 export class Server {
@@ -156,6 +157,13 @@ export class Server {
       database,
       clock,
     )
+    const activityV2Module = getActivityV2Module(
+      config,
+      logger,
+      http,
+      database,
+      clock,
+    )
 
     const apiServer = new ApiServer(
       config.port,
@@ -166,6 +174,7 @@ export class Server {
         createStatusRouter(statusController),
         createDydxRouter(dydxController),
         activityModule?.router,
+        activityV2Module?.router,
         createHealthRouter(healthController),
       ]),
       handleServerError,
@@ -190,6 +199,7 @@ export class Server {
         }
 
         activityModule?.start()
+        activityV2Module?.start()
       }
     }
 

@@ -47,10 +47,10 @@ declare module 'knex/types/tables' {
     unix_timestamp: string
   }
 
-  interface EventRow {
+  interface ZksyncTransactionRow {
+    block_number: number
+    block_index: number
     unix_timestamp: Date
-    event_name: string
-    project_id: string
   }
 
   interface BlockTransactionCountRow {
@@ -66,12 +66,6 @@ declare module 'knex/types/tables' {
     count: number
   }
 
-  interface ZksyncTransactionRow {
-    block_number: number
-    block_index: number
-    unix_timestamp: Date
-  }
-
   interface TransactionCountViewRow {
     project_id: string
     count: number
@@ -84,6 +78,18 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date | null
   }
 
+  interface SequenceProcessorRow {
+    id: string
+    last_processed: number
+    finished_processing_at: Date
+  }
+
+  interface DailyTransactionCountRow {
+    project_id: string
+    count: number
+    unix_timestamp: Date
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -92,12 +98,16 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    events: EventRow
     'transactions.block': BlockTransactionCountRow
     'transactions.block_count_view': TransactionCountViewRow
     'transactions.block_tip': BlockTipRow
     'transactions.zksync': ZksyncTransactionRow
     'transactions.zksync_count_view': TransactionCountViewRow
     'transactions.starkex': StarkexTransactionCountRow
+    sequence_processor: SequenceProcessorRow
+    'activity.block': BlockTransactionCountRow
+    'activity.zksync': ZksyncTransactionRow
+    'activity.starkex': StarkexTransactionCountRow
+    'activity.daily_count_view': DailyTransactionCountRow
   }
 }

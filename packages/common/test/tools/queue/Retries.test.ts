@@ -13,7 +13,7 @@ describe('Retries', () => {
 
     it('can respect max distance', () => {
       const result = exponentialBackOff(100, {
-        maxDistance: 200,
+        maxDistanceMs: 200,
       })({
         attempts: 1,
       })
