@@ -22,6 +22,7 @@ export class DiscoveryEngine {
 
     const project: ProjectParameters = {
       name,
+      blockNumber: options.blockNumber,
       contracts: result
         .filter((x) => !x.meta.isEOA)
         .map((x) => ({
