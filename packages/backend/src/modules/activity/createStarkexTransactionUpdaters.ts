@@ -1,10 +1,10 @@
 import { assert, Logger } from '@l2beat/common'
 
-import { Config } from '../config'
-import { Clock } from '../core/Clock'
-import { StarkexTransactionUpdater } from '../core/transaction-count/starkex/StarkexTransactionUpdater'
-import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
-import { StarkexClient } from '../peripherals/starkex'
+import { Config } from '../../config'
+import { Clock } from '../../core/Clock'
+import { StarkexTransactionUpdater } from '../../core/transaction-count/starkex/StarkexTransactionUpdater'
+import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
+import { StarkexClient } from '../../peripherals/starkex'
 
 export function createStarkexTransactionUpdaters(
   config: Config,
