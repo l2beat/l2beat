@@ -104,7 +104,7 @@ export const aptos: Bridge = {
       },
       {
         address: '0x902F09715B6303d4173037652FA7377e5b98089E',
-        name: 'TokenBridge Relayer',
+        name: 'Layer Zero Relayer',
         upgradeability: {
           type: 'EIP1967',
           admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
@@ -113,7 +113,7 @@ export const aptos: Bridge = {
       },
       {
         address: '0x5a54fe5234E811466D5366846283323c954310B2',
-        name: 'TokenBridge Oracle',
+        name: 'Layer Zero Oracle',
         upgradeability: {
           type: 'EIP1967',
           admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
