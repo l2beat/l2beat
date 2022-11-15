@@ -25,8 +25,8 @@ export class SequenceProcessorRepository extends BaseRepository {
     record: SequenceProcessorRecord,
     trx?: Knex.Transaction,
   ): Promise<void> {
-    const knex = await this.knex()
-    await (trx ?? knex)('sequence_processor')
+    const knex = await this.knex(trx)
+    await knex('sequence_processor')
       .insert(toRow(record))
       .onConflict('id')
       .merge()
