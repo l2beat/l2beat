@@ -1,3 +1,4 @@
+import { assert } from '../assert'
 import { ShouldRetry } from './types'
 
 function always() {
@@ -14,7 +15,9 @@ export function exponentialBackOff(
   opts?: ExponentialBackOffOpts,
 ) {
   const maxAttempts = opts?.maxAttempts ?? Infinity
+  assert(maxAttempts > 0)
   const maxDistanceMs = opts?.maxDistanceMs ?? Infinity
+  assert(maxDistanceMs > 0)
 
   return ({ attempts }: { attempts: number }) => {
     if (attempts === maxAttempts) {

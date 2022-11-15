@@ -78,8 +78,8 @@ describe(promiseAllPlus.name, () => {
       .rejectsWithOnce(new Error())
       .rejectsWithOnce(new Error())
       .resolvesToOnce(1)
-    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
 
+    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
     await time.runAllAsync()
     const results = await resultsPromise
 
@@ -91,11 +91,28 @@ describe(promiseAllPlus.name, () => {
   it('propagates permanent errors', async () => {
     const errorMessage = 'permanent error'
     const mock = mockFn().rejectsWith(new Error(errorMessage))
-    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
 
+    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
     await time.runAllAsync()
 
     await expect(resultsPromise).toBeRejected(errorMessage)
+  })
+
+  it('when already errored, skip more work', async () => {
+    const errorMessage = 'permanent error'
+    const mock1 = mockFn().rejectsWith(new Error(errorMessage))
+    const mock2 = mockFn().resolvesTo(undefined)
+
+    const resultsPromise = promiseAllPlus([mock1, mock2], Logger.SILENT, {
+      maxConcurrency: 1,
+      maxAttempts: 1,
+    })
+    await time.runAllAsync()
+
+    await expect(resultsPromise).toBeRejected(errorMessage)
+    expect(mock1).toHaveBeenCalledExactlyWith([[]])
+    // should never been called because whole thing rejects anyway
+    expect(mock2).toHaveBeenCalledExactlyWith([])
   })
 })
 
