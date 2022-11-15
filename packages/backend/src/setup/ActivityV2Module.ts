@@ -5,11 +5,11 @@ import { ActivityV2Controller } from '../api/controllers/ActivityV2Controller'
 import { createActivityV2Router } from '../api/routers/ActivityV2Router'
 import { Config } from '../config'
 import { DailyTransactionCountView } from '../core/activity/DailyTransactionCountView'
-import { createSequenceProcessors } from '../core/activity/processors/createProcessors'
 import { Clock } from '../core/Clock'
 import { SequenceProcessor } from '../core/SequenceProcessor'
 import { DailyTransactionCountViewRepository } from '../peripherals/database/activity-v2/DailyTransactionCountRepository'
 import { Database } from '../peripherals/database/shared/Database'
+import { createSequenceProcessors } from './createSequenceProcessors'
 
 export function getActivityV2Module(
   config: Config,
