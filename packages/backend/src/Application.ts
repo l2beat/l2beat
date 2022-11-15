@@ -33,7 +33,7 @@ export class Application {
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
       createActivityV2Module(config, logger, http, database, clock),
-      createDiscoveryModule(config, 'zksync'),
+      createDiscoveryModule(config, logger, http),
     ]
 
     const apiServer =

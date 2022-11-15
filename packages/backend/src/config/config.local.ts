@@ -118,6 +118,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       },
     },
     discovery: discoveryEnabled && {
+      project: cli.project,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),

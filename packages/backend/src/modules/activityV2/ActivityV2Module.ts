@@ -57,10 +57,13 @@ export function createActivityV2Module(
   const activityV2Router = createActivityV2Router(activityController)
 
   const start = () => {
-    logger.info('Starting Activity V2 Module')
+    logger = logger.for('ActivityV2Module')
+    logger.info('Starting')
+
     processors.forEach((p) => p.start())
     dailyCountService.start()
-    logger.info('Started Activity V2 Module')
+
+    logger.info('Started')
   }
 
   return {

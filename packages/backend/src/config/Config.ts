@@ -6,62 +6,62 @@ import { Knex } from 'knex'
 import { Project, Token } from '../model'
 
 export interface Config {
-  name: string
-  projects: Project[]
-  syncEnabled: boolean
-  logger: LoggerConfig
-  clock: ClockConfig
-  database: DatabaseConfig | false
-  api: ApiConfig | false
-  health: HealthConfig
-  tvl: TvlConfig | false
-  activity: ActivityConfig | false
-  activityV2: ActivityV2Config | false
-  discovery: DiscoveryConfig | false
+  readonly name: string
+  readonly projects: Project[]
+  readonly syncEnabled: boolean
+  readonly logger: LoggerConfig
+  readonly clock: ClockConfig
+  readonly database: DatabaseConfig | false
+  readonly api: ApiConfig | false
+  readonly health: HealthConfig
+  readonly tvl: TvlConfig | false
+  readonly activity: ActivityConfig | false
+  readonly activityV2: ActivityV2Config | false
+  readonly discovery: DiscoveryConfig | false
 }
 
 export interface LoggerConfig {
-  logLevel: LogLevel
-  format: 'pretty' | 'json'
+  readonly logLevel: LogLevel
+  readonly format: 'pretty' | 'json'
 }
 
 export interface ApiConfig {
-  port: number
+  readonly port: number
 }
 
 export interface DatabaseConfig {
-  connection: Knex.Config['connection']
-  freshStart: boolean
+  readonly connection: Knex.Config['connection']
+  readonly freshStart: boolean
 }
 
 export interface ClockConfig {
-  minBlockTimestamp: UnixTime
-  safeTimeOffsetSeconds: number
+  readonly minBlockTimestamp: UnixTime
+  readonly safeTimeOffsetSeconds: number
 }
 
 export interface TvlConfig {
-  tokens: Token[]
-  alchemyApiKey: string
-  etherscanApiKey: string
-  coingeckoApiKey: string | undefined
+  readonly tokens: Token[]
+  readonly alchemyApiKey: string
+  readonly etherscanApiKey: string
+  readonly coingeckoApiKey: string | undefined
 }
 
 export interface HealthConfig {
-  releasedAt?: string
-  startedAt: string
-  commitSha: string
+  readonly releasedAt?: string
+  readonly startedAt: string
+  readonly commitSha: string
 }
 
 export interface ActivityConfig {
-  starkexApiKey: string
-  starkexApiDelayHours: number
-  zkSyncWorkQueueWorkers: number
-  aztecWorkQueueWorkers: number
-  starkexWorkQueueWorkers: number
-  loopringWorkQueueWorkers: number
-  loopringCallsPerMinute: number
-  starkexCallsPerMinute: number
-  rpc: {
+  readonly starkexApiKey: string
+  readonly starkexApiDelayHours: number
+  readonly zkSyncWorkQueueWorkers: number
+  readonly aztecWorkQueueWorkers: number
+  readonly starkexWorkQueueWorkers: number
+  readonly loopringWorkQueueWorkers: number
+  readonly loopringCallsPerMinute: number
+  readonly starkexCallsPerMinute: number
+  readonly rpc: {
     workQueueLimit: number
     workQueueWorkers: number
     projects: Record<
@@ -76,15 +76,16 @@ export interface ActivityConfig {
 }
 
 export interface ActivityV2Config {
-  starkexApiKey: string
-  starkexApiDelayHours: number
-  starkexCallsPerMinute: number
-  allowedProjectIds?: string[]
-  projects: Record<string, Layer2TransactionApiV2 | undefined>
+  readonly starkexApiKey: string
+  readonly starkexApiDelayHours: number
+  readonly starkexCallsPerMinute: number
+  readonly allowedProjectIds?: string[]
+  readonly projects: Record<string, Layer2TransactionApiV2 | undefined>
 }
 
 export interface DiscoveryConfig {
-  blockNumber?: number
-  alchemyApiKey: string
-  etherscanApiKey: string
+  readonly project: string
+  readonly blockNumber?: number
+  readonly alchemyApiKey: string
+  readonly etherscanApiKey: string
 }

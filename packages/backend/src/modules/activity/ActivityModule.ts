@@ -145,7 +145,8 @@ export function createActivityModule(
   const activityRouter = createActivityRouter(activityController)
 
   const start = () => {
-    logger.info('Starting Activity Module')
+    logger = logger.for('ActivityModule')
+    logger.info('Starting')
 
     materializedViewRefresher.start()
 
@@ -157,6 +158,8 @@ export function createActivityModule(
     ]) {
       updater.start()
     }
+
+    logger.info('Started')
   }
 
   return {

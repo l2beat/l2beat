@@ -1,6 +1,7 @@
 import {
   AddressAnalyzer,
   HttpClient,
+  Logger,
   MainnetEtherscanClient,
 } from '@l2beat/common'
 import { providers } from 'ethers'
@@ -13,7 +14,8 @@ import { ApplicationModule } from '../ApplicationModule'
 
 export function createDiscoveryModule(
   config: Config,
-  project: string,
+  logger: Logger,
+  http: HttpClient,
 ): ApplicationModule | undefined {
   if (!config.discovery) {
     return
@@ -23,21 +25,25 @@ export function createDiscoveryModule(
     'mainnet',
     config.discovery.alchemyApiKey,
   )
-  const httpClient = new HttpClient()
   const etherscanClient = new MainnetEtherscanClient(
-    httpClient,
+    http,
     config.discovery.etherscanApiKey,
   )
   const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
   const discoveryEngine = new DiscoveryEngine(provider, addressAnalyzer)
 
   const configReader = new ConfigReader()
-  const configBlockNumber = config.discovery.blockNumber
+
+  // we alias to prevent typescript from thinking it can change
+  const safeConfig = config.discovery
 
   const start = async () => {
-    const projectConfig = await configReader.readConfig(project)
+    logger = logger.for('DiscoveryModule')
+    logger.info('Starting')
+    const projectConfig = await configReader.readConfig(safeConfig.project)
     const overrides = projectConfig.overrides ?? {}
-    const blockNumber = configBlockNumber ?? (await provider.getBlockNumber())
+    const blockNumber =
+      safeConfig.blockNumber ?? (await provider.getBlockNumber())
     // Temporary mapping from new config structure to the old one
     const discoveryOptions: DiscoveryOptions = {
       skipAddresses: [],
@@ -52,7 +58,7 @@ export function createDiscoveryModule(
       }
     })
     await discoveryEngine.discover(
-      project,
+      safeConfig.project,
       projectConfig.initialAddresses.map((x) => x.toString()),
       discoveryOptions,
     )
