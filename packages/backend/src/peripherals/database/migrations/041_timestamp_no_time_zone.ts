@@ -22,35 +22,44 @@ export async function up(knex: Knex) {
   await knex.schema.raw('DROP MATERIALIZED VIEW transactions.zksync_count_view')
   await knex.schema.raw('DROP MATERIALIZED VIEW transactions.block_count_view')
 
-  await knex.schema.raw(
-    'ALTER TABLE transactions.zksync ALTER COLUMN unix_timestamp TYPE timestamp',
-  )
-  await knex.schema.raw(
-    'ALTER TABLE transactions.block ALTER COLUMN unix_timestamp TYPE timestamp',
-  )
+  await knex.schema.alterTable('transactions.block', (table) => {
+    table.dateTime('unix_timestamp', { useTz: false }).alter()
+  })
+
+  await knex.schema.alterTable('transactions.zksync', (table) => {
+    table.dateTime('unix_timestamp', { useTz: false }).alter()
+  })
+
+  await knex.schema.alterTable('transactions.block_tip', (table) => {
+    table.dateTime('unix_timestamp', { useTz: false }).alter()
+  })
+
+  await knex.schema.alterTable('transactions.zksync_tip', (table) => {
+    table.dateTime('unix_timestamp', { useTz: false }).alter()
+  })
 
   await knex.schema.raw(
     `
     CREATE MATERIALIZED VIEW transactions.zksync_count_view AS
       SELECT
-        date_trunc('day', zksync.unix_timestamp, 'UTC') unix_timestamp,
+        date_trunc('day', zksync.unix_timestamp) unix_timestamp,
         count(*) count
       FROM transactions.zksync zksync
       INNER JOIN transactions.block_tip tip ON tip.project_id = 'zksync'
-      WHERE zksync.unix_timestamp < date_trunc('day', tip.unix_timestamp, 'UTC')
-      GROUP BY date_trunc('day', zksync.unix_timestamp, 'UTC')
+      WHERE zksync.unix_timestamp < date_trunc('day', tip.unix_timestamp)
+      GROUP BY date_trunc('day', zksync.unix_timestamp)
   `,
   )
   await knex.schema.raw(`
   CREATE MATERIALIZED VIEW transactions.block_count_view AS
     SELECT
       block.project_id,
-      date_trunc('day', block.unix_timestamp, 'UTC') unix_timestamp,
+      date_trunc('day', block.unix_timestamp) unix_timestamp,
       sum(block.count) count
     FROM transactions.block block
     INNER JOIN transactions.block_tip tip ON block.project_id = tip.project_id
-    WHERE block.unix_timestamp < date_trunc('day', tip.unix_timestamp, 'UTC')
-    GROUP BY block.project_id, date_trunc('day', block.unix_timestamp, 'UTC')
+    WHERE block.unix_timestamp < date_trunc('day', tip.unix_timestamp)
+    GROUP BY block.project_id, date_trunc('day', block.unix_timestamp)
   `)
 
   await oldIndex.up(knex)
