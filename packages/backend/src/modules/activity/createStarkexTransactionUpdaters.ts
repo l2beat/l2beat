@@ -1,10 +1,10 @@
 import { assert, Logger } from '@l2beat/common'
 
-import { Config } from '../config'
-import { Clock } from '../core/Clock'
-import { StarkexTransactionUpdater } from '../core/transaction-count/starkex/StarkexTransactionUpdater'
-import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
-import { StarkexClient } from '../peripherals/starkex'
+import { Config } from '../../config'
+import { Clock } from '../../core/Clock'
+import { StarkexTransactionUpdater } from '../../core/transaction-count/starkex/StarkexTransactionUpdater'
+import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
+import { StarkexClient } from '../../peripherals/starkex'
 
 export function createStarkexTransactionUpdaters(
   config: Config,
@@ -13,7 +13,7 @@ export function createStarkexTransactionUpdaters(
   clock: Clock,
   logger: Logger,
 ) {
-  assert(config.transactionCountSync)
+  assert(config.activity)
 
   const starkexUpdaters = []
   for (const project of config.projects) {
@@ -27,8 +27,8 @@ export function createStarkexTransactionUpdaters(
         project.projectId,
         project.transactionApi.sinceTimestamp,
         {
-          workQueueWorkers: config.transactionCountSync.starkexWorkQueueWorkers,
-          apiDelayHours: config.transactionCountSync.starkexApiDelayHours,
+          workQueueWorkers: config.activity.starkexWorkQueueWorkers,
+          apiDelayHours: config.activity.starkexApiDelayHours,
         },
       )
 

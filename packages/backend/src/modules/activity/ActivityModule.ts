@@ -1,21 +1,22 @@
 import { HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import { ActivityController } from '../api/controllers/activity/ActivityController'
-import { createActivityRouter } from '../api/routers/ActivityRouter'
-import { Config } from '../config'
-import { Clock } from '../core/Clock'
-import { LoopringTransactionUpdater } from '../core/transaction-count/LoopringTransactionUpdater'
-import { MaterializedViewRefresher } from '../core/transaction-count/MaterializedViewRefresher'
-import { ZksyncTransactionUpdater } from '../core/transaction-count/ZksyncTransactionUpdater'
-import { BlockTipRepository } from '../peripherals/database/BlockTipRepository'
-import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
-import { Database } from '../peripherals/database/shared/Database'
-import { StarkexTransactionCountRepository } from '../peripherals/database/StarkexTransactionCountRepository'
-import { ZksyncTransactionRepository } from '../peripherals/database/ZksyncTransactionRepository'
-import { LoopringClient } from '../peripherals/loopring'
-import { StarkexClient } from '../peripherals/starkex'
-import { ZksyncClient } from '../peripherals/zksync'
+import { ActivityController } from '../../api/controllers/activity/ActivityController'
+import { createActivityRouter } from '../../api/routers/ActivityRouter'
+import { Config } from '../../config'
+import { Clock } from '../../core/Clock'
+import { LoopringTransactionUpdater } from '../../core/transaction-count/LoopringTransactionUpdater'
+import { MaterializedViewRefresher } from '../../core/transaction-count/MaterializedViewRefresher'
+import { ZksyncTransactionUpdater } from '../../core/transaction-count/ZksyncTransactionUpdater'
+import { BlockTipRepository } from '../../peripherals/database/BlockTipRepository'
+import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
+import { Database } from '../../peripherals/database/shared/Database'
+import { StarkexTransactionCountRepository } from '../../peripherals/database/StarkexTransactionCountRepository'
+import { ZksyncTransactionRepository } from '../../peripherals/database/ZksyncTransactionRepository'
+import { LoopringClient } from '../../peripherals/loopring'
+import { StarkexClient } from '../../peripherals/starkex'
+import { ZksyncClient } from '../../peripherals/zksync'
+import { ApplicationModule } from '../ApplicationModule'
 import { createAztecTransactionUpdaters } from './createAztecTransactionUpdaters'
 import {
   createEthereumTransactionUpdater,
@@ -23,29 +24,29 @@ import {
 } from './createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './createStarkexTransactionUpdaters'
 
-export function getActivityModule(
+export function createActivityModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
   database: Database,
   clock: Clock,
-) {
-  if (!config.transactionCountSync) {
-    return undefined
+): ApplicationModule | undefined {
+  if (!config.activity) {
+    return
   }
 
   const starkexClient = new StarkexClient(
-    config.transactionCountSync.starkexApiKey,
+    config.activity.starkexApiKey,
     http,
     logger,
     {
-      callsPerMinute: config.transactionCountSync.starkexCallsPerMinute,
+      callsPerMinute: config.activity.starkexCallsPerMinute,
     },
   )
 
   const zksyncClient = new ZksyncClient(http, logger, 3000)
   const loopringClient = new LoopringClient(http, logger, {
-    callsPerMinute: config.transactionCountSync.loopringCallsPerMinute,
+    callsPerMinute: config.activity.loopringCallsPerMinute,
   })
 
   const blockTipRepository = new BlockTipRepository(database, logger)
@@ -76,7 +77,7 @@ export function getActivityModule(
     clock,
     logger,
     ProjectId.LOOPRING,
-    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
+    { workQueueWorkers: config.activity.loopringWorkQueueWorkers },
   )
 
   const aztecTransactionUpdaters = createAztecTransactionUpdaters(
@@ -88,7 +89,7 @@ export function getActivityModule(
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
-    config.transactionCountSync,
+    config.activity,
     blockTransactionCountRepository,
     clock,
     logger,
@@ -107,7 +108,7 @@ export function getActivityModule(
     zksyncTransactionRepository,
     clock,
     logger,
-    { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
+    { workQueueWorkers: config.activity.zkSyncWorkQueueWorkers },
   )
 
   const layer2BlockTransactionUpdaters = [
@@ -123,7 +124,7 @@ export function getActivityModule(
     [...starkexTransactionUpdaters, zksyncTransactionUpdater],
     clock,
     logger,
-    config.transactionCountSync.starkexApiDelayHours,
+    config.activity.starkexApiDelayHours,
   )
 
   const activityController = new ActivityController(
@@ -141,10 +142,15 @@ export function getActivityModule(
     ethereumTransactionUpdater,
   )
 
-  const router = createActivityRouter(activityController)
+  const activityRouter = createActivityRouter(activityController)
 
   const start = () => {
-    logger.info('Starting Activity Module')
+    if (!config.syncEnabled) {
+      return
+    }
+
+    logger = logger.for('ActivityModule')
+    logger.info('Starting')
 
     materializedViewRefresher.start()
 
@@ -156,10 +162,12 @@ export function getActivityModule(
     ]) {
       updater.start()
     }
+
+    logger.info('Started')
   }
 
   return {
-    router,
+    routers: [activityRouter],
     start,
   }
 }

@@ -1,8 +1,7 @@
+import { Application } from './Application'
 import { getCliParameters } from './cli/getCliParameters'
 import { exitWithUsage, printUsage } from './cli/usage'
 import { getConfig } from './config'
-import { Discovery } from './Discovery'
-import { Server } from './Server'
 import { reportError } from './tools/ErrorReporter'
 
 main().catch((e) => {
@@ -14,24 +13,15 @@ main().catch((e) => {
 
 async function main() {
   const cli = getCliParameters()
-  const env =
-    process.env.DEPLOYMENT_ENV ??
-    (process.env.NODE_ENV === 'production' ? 'production' : 'local')
-  console.log('Loading config for:', env)
-  const config = getConfig(env)
-
   if (cli.mode === 'help') {
     if (cli.error) {
       exitWithUsage(cli.error)
     } else {
       printUsage()
     }
-  } else if (cli.mode === 'server') {
-    const app = new Server(config)
-    await app.start()
-  } else {
-    console.log('DISCOVER', cli.project)
-    const discovery = new Discovery()
-    await discovery.discover(cli.project, config)
   }
+
+  const config = getConfig(cli)
+  const app = new Application(config)
+  await app.start()
 }

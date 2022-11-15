@@ -3,42 +3,59 @@ import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { config as dotenv } from 'dotenv'
 
+import { CliParameters } from '../cli/getCliParameters'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 import { getGitCommitHash } from './getGitCommitHash'
 
-export function getLocalConfig(): Config {
+export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
+  if (cli.mode !== 'server' && cli.mode !== 'discover') {
+    throw new Error(`No local config for mode: ${cli.mode}`)
+  }
+
+  const apiEnabled = cli.mode === 'server'
+  const databaseEnabled = cli.mode === 'server'
+  const tvlEnabled =
+    cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true)
+  const activityEnabled =
+    cli.mode === 'server' && getEnv.boolean('TRANSACTION_COUNT_ENABLED', false)
+  const activityV2Enabled =
+    cli.mode === 'server' && getEnv.boolean('ACTIVITY_V2_ENABLED', false)
+  const discoveryEnabled = cli.mode === 'discover'
+
   return {
     name: 'Backend/Local',
+    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'pretty',
     },
-    port: getEnv.integer('PORT', 3000),
-    coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
-    alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-    etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-    databaseConnection: getEnv('LOCAL_DB_URL'),
-    core: {
+    clock: {
       // TODO: This should probably be configurable
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      safeBlockRefreshIntervalMs: 30 * 1000,
       safeTimeOffsetSeconds: 60 * 60,
     },
-    tokens: tokenList.map((token) => ({
-      ...token,
-      priceStrategy: { type: 'market' },
-    })),
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
-    freshStart: getEnv.boolean('FRESH_START', false),
-    tvlReportSync: getEnv.boolean('TVL_SYNC_ENABLED', true),
-    transactionCountSync: getEnv.boolean(
-      'TRANSACTION_COUNT_ENABLED',
-      false,
-    ) && {
+    database: databaseEnabled && {
+      connection: getEnv('LOCAL_DB_URL'),
+      freshStart: getEnv.boolean('FRESH_START', false),
+    },
+    api: apiEnabled && {
+      port: getEnv.integer('PORT', 3000),
+    },
+    health: {
+      startedAt: new Date().toISOString(),
+      commitSha: getGitCommitHash(),
+    },
+    tvl: tvlEnabled && {
+      tokens: tokenList,
+      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
+    },
+    activity: activityEnabled && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: 12,
       zkSyncWorkQueueWorkers: 1,
@@ -75,7 +92,7 @@ export function getLocalConfig(): Config {
         },
       },
     },
-    activityV2: getEnv.boolean('ACTIVITY_V2_ENABLED', false) && {
+    activityV2: activityV2Enabled && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: getEnv.integer('STARKEX_API_DELAY_HOURS', 12),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
@@ -100,10 +117,11 @@ export function getLocalConfig(): Config {
         },
       },
     },
-    health: {
-      startedAt: new Date().toISOString(),
-      commitSha: getGitCommitHash(),
+    discovery: discoveryEnabled && {
+      project: cli.project,
+      blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
+      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     },
-    discoveryBlockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
   }
 }

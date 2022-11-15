@@ -2,13 +2,13 @@ import { assert, HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 import { providers } from 'ethers'
 
-import { Config } from '../config'
-import { TransactionCountSyncConfig } from '../config/Config'
-import { Clock } from '../core/Clock'
-import { RpcTransactionUpdater } from '../core/transaction-count/RpcTransactionUpdater'
-import { BlockTransactionCountRepository } from '../peripherals/database/BlockTransactionCountRepository'
-import { EthereumClient } from '../peripherals/ethereum/EthereumClient'
-import { StarkNetClient } from '../peripherals/starknet/StarkNetClient'
+import { Config } from '../../config'
+import { ActivityConfig } from '../../config/Config'
+import { Clock } from '../../core/Clock'
+import { RpcTransactionUpdater } from '../../core/transaction-count/RpcTransactionUpdater'
+import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
+import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { StarkNetClient } from '../../peripherals/starknet/StarkNetClient'
 
 export function createLayer2RpcTransactionUpdaters(
   config: Config,
@@ -17,7 +17,7 @@ export function createLayer2RpcTransactionUpdaters(
   http: HttpClient,
   logger: Logger,
 ) {
-  const activityConfig = config.transactionCountSync
+  const activityConfig = config.activity
   assert(activityConfig)
   const rpcUpdaters: RpcTransactionUpdater[] = []
   for (const { projectId, transactionApi } of config.projects) {
@@ -60,7 +60,7 @@ export function createLayer2RpcTransactionUpdaters(
 }
 
 export function createEthereumTransactionUpdater(
-  config: TransactionCountSyncConfig,
+  config: ActivityConfig,
   blockTransactionCountRepository: BlockTransactionCountRepository,
   clock: Clock,
   logger: Logger,
