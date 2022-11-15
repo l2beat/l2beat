@@ -137,24 +137,6 @@ export const aptos: Bridge = {
         description: 'LayerZero Treasury V2.',
       },
       {
-        address: '0x902F09715B6303d4173037652FA7377e5b98089E',
-        name: 'ILayerZeroLayerV2 (Implementation Not Verified)',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
-          implementation: '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
-        },
-      },
-      {
-        address: '0x5a54fe5234E811466D5366846283323c954310B2',
-        name: 'ILayerZeroOracleV2 (Implementation Not Verified)',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
-          implementation: '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
-        },
-      },
-      {
         address: '0x07245eEa05826F5984c7c3C8F478b04892e4df89',
         name: 'Layer Zero Proof Library (Not Verified)',
       },
