@@ -100,7 +100,12 @@ export const starknet: Layer2 = {
       },
     ],
     transactionApi: {
-      type: 'rpc',
+      type: 'starknet',
+      callsPerMinute: 60 * 5,
+      url: 'https://alpha-mainnet.starknet.io',
+    },
+    transactionApiV2: {
+      type: 'starknet',
       callsPerMinute: 60 * 5,
       url: 'https://alpha-mainnet.starknet.io',
     },

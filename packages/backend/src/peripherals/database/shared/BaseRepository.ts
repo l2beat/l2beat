@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/common'
+import { Knex } from 'knex'
 
 import { Database } from './Database'
 
@@ -28,8 +29,8 @@ export class BaseRepository {
     this.logger = logger.for(this)
   }
 
-  protected knex() {
-    return this.database.getKnex()
+  protected knex(trx?: Knex.Transaction) {
+    return this.database.getKnex(trx)
   }
 
   protected wrapAny<A extends unknown[], R>(
@@ -99,6 +100,13 @@ export class BaseRepository {
     return this.wrap(method, (updated) =>
       this.logger.debug({ method: method.name, updated }),
     )
+  }
+
+  async runInTransaction(
+    fun: (trx: Knex.Transaction) => Promise<void>,
+  ): Promise<void> {
+    const knex = await this.knex()
+    await knex.transaction(fun)
   }
 
   private wrap<A extends unknown[], R>(

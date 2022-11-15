@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/types'
 
 export type AssessCount = (count: number, blockNumber: number) => number
 
-interface RpcTransactionApi {
+export interface RpcTransactionApi {
   type: 'rpc'
   url?: string
   callsPerMinute?: number
@@ -10,10 +10,25 @@ interface RpcTransactionApi {
   startBlock?: number
 }
 
-interface AztecTransactionApi {
+export interface StarknetTransactionApi {
+  type: 'starknet'
+  url: string
+  callsPerMinute?: number
+}
+
+export interface AztecTransactionApi {
   type: 'aztec'
   url: string
   callsPerMinute?: number
+}
+export interface ZksyncTransactionApi {
+  type: 'zksync'
+  callsPerMinute: number
+}
+
+export interface LoopringTransactionApi {
+  type: 'loopring'
+  callsPerMinute: number
 }
 
 export type StarkexProduct =
@@ -22,7 +37,7 @@ export type StarkexProduct =
   | 'immutable'
   | 'myria'
   | 'deversifi'
-interface StarkexApi {
+export interface StarkexTransactionApi {
   type: 'starkex'
   product: StarkexProduct
   sinceTimestamp: UnixTime
@@ -30,6 +45,9 @@ interface StarkexApi {
 
 export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApi
-  | StarkexApi
+  | StarkexTransactionApi
   | AztecTransactionApi
+  | StarknetTransactionApi
+  | ZksyncTransactionApi
+  | LoopringTransactionApi
 )

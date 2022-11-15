@@ -8,7 +8,7 @@ import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
-  maxDistance: 3_000,
+  maxDistanceMs: 3_000,
 })
 
 /**
@@ -96,14 +96,17 @@ export class TaskQueue<T> {
     return Date.now() >= job.executeAt
   }
 
-  private handleFailure(job: Job<T>) {
+  private handleFailure(job: Job<T>, error: unknown) {
     job.attempts++
-    const result = this.shouldRetry(job)
+    const result = this.shouldRetry(job, error)
     if (!result.retry) {
-      this.logger.error({
-        message: 'No more retries',
-        job: JSON.stringify(job),
-      })
+      this.logger.error(
+        {
+          message: 'No more retries',
+          job: JSON.stringify(job),
+        },
+        error,
+      )
       this.eventTracker?.record('error')
       return
     }
@@ -142,7 +145,7 @@ export class TaskQueue<T> {
         job: JSON.stringify(job),
         error: getErrorMessage(error),
       })
-      this.handleFailure(job)
+      this.handleFailure(job, error)
     } finally {
       this.busyWorkers--
       setTimeout(() => this.execute())

@@ -50,6 +50,11 @@ export const myria: Layer2 = {
       product: 'myria',
       sinceTimestamp: new UnixTime(1659542607),
     },
+    transactionApiV2: {
+      type: 'starkex',
+      product: 'myria',
+      sinceTimestamp: new UnixTime(1659542607),
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

@@ -71,6 +71,11 @@ export const dydx: Layer2 = {
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),
     },
+    transactionApiV2: {
+      type: 'starkex',
+      product: 'dydx',
+      sinceTimestamp: new UnixTime(1613033682),
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

@@ -65,6 +65,7 @@ export function getProductionConfig(): Config {
         },
       },
     },
+    activityV2: false,
     health: {
       releasedAt: getEnv('HEROKU_RELEASE_CREATED_AT', ''),
       startedAt: new Date().toISOString(),

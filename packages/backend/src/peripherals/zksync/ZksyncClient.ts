@@ -4,9 +4,9 @@ import {
   Logger,
   RateLimiter,
 } from '@l2beat/common'
+import { assert } from '@l2beat/common/src/tools/assert'
 import { UnixTime } from '@l2beat/types'
 
-import { assert } from '../../tools/assert'
 import {
   ZksyncBlocksResultSchema,
   ZksyncResponse,
@@ -20,15 +20,17 @@ interface Transaction {
 }
 
 const PAGE_LIMIT = 100
+const CALLS_PER_MINUTE = 60
 
 export class ZksyncClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    callsPerMinute = CALLS_PER_MINUTE,
   ) {
     this.logger = logger.for(this)
     const rateLimiter = new RateLimiter({
-      callsPerMinute: 3000,
+      callsPerMinute,
     })
     this.call = rateLimiter.wrap(this.call.bind(this))
   }

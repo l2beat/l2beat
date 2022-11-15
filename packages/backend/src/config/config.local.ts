@@ -75,6 +75,31 @@ export function getLocalConfig(): Config {
         },
       },
     },
+    activityV2: getEnv.boolean('ACTIVITY_V2_ENABLED', false) && {
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexApiDelayHours: 12,
+      starkexCallsPerMinute: 1000,
+      projects: {
+        ethereum: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv(
+            'ACTIVITY_ETHEREUM_URL',
+            'https://eth-mainnet.alchemyapi.io/v2/demo',
+          ),
+        },
+        optimism: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv('ACTIVITY_OPTIMISM_URL', 'https://mainnet.optimism.io/'),
+        },
+        arbitrum: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv('ACTIVITY_ARBITRUM_URL', 'https://arb1.arbitrum.io/rpc'),
+        },
+      },
+    },
     health: {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
