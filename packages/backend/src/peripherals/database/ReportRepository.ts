@@ -1,5 +1,4 @@
-import { Logger } from '@l2beat/common'
-import { assert } from '@l2beat/common/src/tools/assert'
+import { assert, Logger } from '@l2beat/common'
 import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'

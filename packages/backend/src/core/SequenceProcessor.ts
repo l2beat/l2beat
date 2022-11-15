@@ -1,5 +1,4 @@
-import { Logger, Retries, TaskQueue } from '@l2beat/common'
-import { assert } from '@l2beat/common/src/tools/assert'
+import { assert, Logger, Retries, TaskQueue } from '@l2beat/common'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
