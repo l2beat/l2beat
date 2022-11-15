@@ -31,7 +31,7 @@ export function createRpcProcessor(
   })
   const client = new EthereumClient(
     provider,
-    logger.for(`RpcProcessor.${projectId.toString()}`),
+    logger.for(`RpcProcessor[${projectId.toString()}]`),
     callsPerMinute,
   )
 
