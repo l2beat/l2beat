@@ -8,7 +8,7 @@ import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
 import { postprocessCounts } from './postprocessCounts'
 import { DailyTransactionCount } from './types'
 
-export class DailyTransactionCountView {
+export class DailyTransactionCountService {
   private readonly refreshQueue: TaskQueue<void>
 
   constructor(

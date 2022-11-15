@@ -30,7 +30,7 @@ export class SequenceProcessor extends EventEmitter {
   private refreshId: NodeJS.Timer | undefined
 
   constructor(
-    private readonly id: string,
+    readonly id: string,
     logger: Logger,
     private readonly repository: SequenceProcessorRepository,
     private readonly opts: SequenceProcessorOpts,

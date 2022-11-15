@@ -4,7 +4,7 @@ import { ProjectId } from '@l2beat/types'
 import { ActivityV2Controller } from '../api/controllers/ActivityV2Controller'
 import { createActivityV2Router } from '../api/routers/ActivityV2Router'
 import { Config } from '../config'
-import { DailyTransactionCountView } from '../core/activity/DailyTransactionCountView'
+import { DailyTransactionCountService } from '../core/activity/DailyTransactionCountService'
 import { Clock } from '../core/Clock'
 import { SequenceProcessor } from '../core/SequenceProcessor'
 import { DailyTransactionCountViewRepository } from '../peripherals/database/activity-v2/DailyTransactionCountRepository'
@@ -29,13 +29,13 @@ export function getActivityV2Module(
     database,
     clock,
   )
-  const dailyCountRepository = new DailyTransactionCountViewRepository(
+  const dailyCountViewRepository = new DailyTransactionCountViewRepository(
     database,
     logger,
   )
-  const dailyCountView = new DailyTransactionCountView(
+  const dailyCountService = new DailyTransactionCountService(
     processors,
-    dailyCountRepository,
+    dailyCountViewRepository,
     clock,
     logger,
   )
@@ -49,14 +49,14 @@ export function getActivityV2Module(
         ),
       )
       .map((p) => ProjectId(p.id)),
-    dailyCountView,
+    dailyCountService,
   )
   const router = createActivityV2Router(activityController)
 
   const start = () => {
     logger.info('Starting Activity V2 Module')
     processors.forEach((p) => p.start())
-    dailyCountView.start()
+    dailyCountService.start()
     logger.info('Started Activity V2 Module')
   }
 

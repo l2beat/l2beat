@@ -1,12 +1,12 @@
 import { ProjectId } from '@l2beat/types'
 
-import { DailyTransactionCountView } from '../../core/activity/DailyTransactionCountView'
+import { DailyTransactionCountService } from '../../core/activity/DailyTransactionCountService'
 import { DailyTransactionCountRecord } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
 
 export class ActivityV2Controller {
   constructor(
     private readonly projectIds: ProjectId[],
-    private readonly dailyCountView: DailyTransactionCountView,
+    private readonly dailyCountView: DailyTransactionCountService,
   ) {}
 
   async getDailyCounts() {
