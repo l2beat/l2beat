@@ -108,12 +108,14 @@ export const stargate: Bridge = {
       {
         address: '0x8731d54E9D02c286767d56ac03e8037C07e01e98',
         name: 'StarGate Router',
-        description: 'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
+        description:
+          'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
       },
       {
         address: '0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97',
         name: 'StarGate Bridge',
-        description: 'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
+        description:
+          'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
       },
       {
         address: '0x902F09715B6303d4173037652FA7377e5b98089E',
