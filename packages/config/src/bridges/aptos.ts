@@ -152,9 +152,9 @@ export const aptos: Bridge = {
           type: 'MultiSig',
         },
       ],
-      name: 'Aptos Bridge owner (multisig)',
+      name: 'Aptos Multisig',
       description:
-        'Can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
+        'Bridge owner, can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
     },
     {
       accounts: [
