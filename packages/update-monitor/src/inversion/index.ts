@@ -15,7 +15,10 @@ interface Role {
   atAddress: string
 }
 
-export function invertAndPrint(project: ProjectParameters) {
+export function invertAndPrint(
+  project: ProjectParameters,
+  useMermaidMarkup = false,
+) {
   const addresses = new Map<string, AddressDetails>()
 
   function add(
@@ -55,8 +58,11 @@ export function invertAndPrint(project: ProjectParameters) {
     }
   }
 
-  // print(addresses)
-  printMermaid(addresses)
+  if (useMermaidMarkup) {
+    printMermaid(addresses)
+  } else {
+    print(addresses)
+  }
 }
 
 function print(addresses: Map<string, AddressDetails>) {
