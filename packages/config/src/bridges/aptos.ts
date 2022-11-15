@@ -148,17 +148,6 @@ export const aptos: Bridge = {
     {
       accounts: [
         {
-          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
-          type: 'Contract',
-        },
-      ],
-      name: 'Aptos Bridge Relayer',
-      description:
-        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
-    },
-    {
-      accounts: [
-        {
           address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327',
           type: 'EOA',
         },
@@ -166,6 +155,17 @@ export const aptos: Bridge = {
       name: 'Aptos Bridge EOA owner',
       description:
         'Can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+          type: 'Contract',
+        },
+      ],
+      name: 'Layer Zero Relayer',
+      description:
+        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
     },
     {
       accounts: [

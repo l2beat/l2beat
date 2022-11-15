@@ -172,17 +172,6 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
-          type: 'Contract',
-        },
-      ],
-      name: 'Aptos Bridge Relayer',
-      description:
-        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
-    },
-    {
-      accounts: [
-        {
           address: '0x65bb797c2B9830d891D87288F029ed8dACc19705',
           type: 'MultiSig',
         },
@@ -200,6 +189,17 @@ export const stargate: Bridge = {
       ],
       name: 'MultiSig Participants',
       description: 'Participants of the 2/5 StarGate MultiSig.',
+    },
+    {
+      accounts: [
+        {
+          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+          type: 'Contract',
+        },
+      ],
+      name: 'Layer Zero Relayer',
+      description:
+        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
     },
     {
       accounts: [
