@@ -27,7 +27,7 @@ export async function up(knex: Knex) {
     .createTable(zksyncTable, function (table) {
       table.integer('block_number').notNullable()
       table.integer('block_index').notNullable()
-      table.dateTime('unix_timestamp').notNullable()
+      table.dateTime('unix_timestamp', { useTz: false }).notNullable()
       table.primary(['block_number', 'block_index'])
     })
   await knex.schema
