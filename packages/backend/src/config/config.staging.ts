@@ -18,8 +18,8 @@ export function getStagingConfig(): Config {
     tvlReportSync: true,
     activityV2: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 12,
-      starkexCallsPerMinute: 200,
+      starkexApiDelayHours: getEnv.integer('STARKEX_API_DELAY_HOURS', 12),
+      starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       projects: {
         ethereum: {
           type: 'rpc',

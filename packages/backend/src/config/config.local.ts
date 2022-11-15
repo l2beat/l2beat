@@ -77,8 +77,8 @@ export function getLocalConfig(): Config {
     },
     activityV2: getEnv.boolean('ACTIVITY_V2_ENABLED', false) && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 12,
-      starkexCallsPerMinute: 1000,
+      starkexApiDelayHours: getEnv.integer('STARKEX_API_DELAY_HOURS', 12),
+      starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       projects: {
         ethereum: {
           type: 'rpc',
