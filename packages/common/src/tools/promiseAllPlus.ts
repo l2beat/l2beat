@@ -12,7 +12,7 @@ export interface PromiseAllThrottledOpts {
  * It behaves like Promise.all but:
  * - takes array of functions returning promises instead of promises
  * - can limit concurrency
- * - automatically retries failing tasks couple of times before finally propagating error (just like Promise.all would do).
+ * - automatically retries failing tasks couple of times before finally propagating error (just like Promise.all would do)
  * - once permanent error happens no further function will be executed (fail fast)
  */
 export async function promiseAllPlus<T>(
