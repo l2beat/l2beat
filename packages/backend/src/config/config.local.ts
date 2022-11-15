@@ -12,7 +12,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
   if (cli.mode !== 'server' && cli.mode !== 'discover') {
-    throw new Error(`Cannot get config for mode ${cli.mode}`)
+    throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
   const apiEnabled = cli.mode === 'server'
