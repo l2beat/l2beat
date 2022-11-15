@@ -29,5 +29,6 @@ export function getTestConfig(): Config {
     freshStart: false,
     tvlReportSync: true,
     transactionCountSync: false,
+    activityV2: false,
   }
 }

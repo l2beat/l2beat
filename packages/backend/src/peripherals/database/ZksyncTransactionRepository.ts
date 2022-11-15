@@ -1,8 +1,7 @@
-import { Logger } from '@l2beat/common'
+import { assert, Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 
-import { assert } from '../../tools/assert'
 import { BlockTipRepository } from './BlockTipRepository'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'

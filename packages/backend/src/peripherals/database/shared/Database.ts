@@ -29,11 +29,11 @@ export class Database {
     })
   }
 
-  async getKnex() {
+  async getKnex(trx?: Knex.Transaction) {
     if (!this.migrated) {
       await this.migrationsComplete
     }
-    return this.knex
+    return trx ?? this.knex
   }
 
   getStatus() {
