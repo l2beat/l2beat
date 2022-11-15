@@ -1,10 +1,11 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import * as types from '@l2beat/types'
 
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const connext: Bridge = {
   type: 'bridge',
-  id: ProjectId('connext'),
+  id: types.ProjectId('connext'),
   display: {
     name: 'Connext',
     slug: 'connext',
@@ -16,19 +17,20 @@ export const connext: Bridge = {
       apps: ['https://bridge.connext.network/'],
       explorers: ['https://connextscan.io/'],
       socialMedia: [
-        'http://twitter.com/connextnetwork',
+        'https://twitter.com/connextnetwork',
         'https://discord.gg/pm4TPr4w5g',
         'https://blog.connext.network/',
       ],
       documentation: ['https://docs.connext.network/'],
-      repositories: ['https://github.com/CoinHippo-Labs/connext-bridge'],
     },
+    description:
+      'Connext Bridge is a cross-chain bridge that performs atomic swap between user and a liquidity provider (on separate chains) to perform asset swap. Liquidity Providers (Routers) bid for user requests in an off-chain auction.',
   },
   config: {
     escrows: [
       {
         address: '0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09',
-        sinceTimestamp: new UnixTime(1636004546),
+        sinceTimestamp: new types.UnixTime(1636004546),
         tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
       },
     ],
@@ -57,21 +59,60 @@ export const connext: Bridge = {
         },
         {
           category: 'Funds can be frozen if',
-          text: "liquidity provider (Router) decides to not cooperate, living user's funds locked for a limited period of time."
+          text: "liquidity provider (Router) decides to not cooperate, living user's funds locked for a limited period of time (e.g. 72 hours).",
         },
       ],
     },
     validation: {
       name: 'Validation',
-      description: 
+      description:
         'A user and a Router (liquidity provider) engage in a peer-to-peer atomic swap process and both are expected to monitor each other\'s actions during the "Prepare" (lock) and "Fulfill" (claim) phases. When a Relayer is used to send a message to the destination chain, the user needs to verify that it happens, and that it happens in a timely manner.',
       references: [
         {
           text: 'Docstring for TransactionManager.sol',
-          href: 'https://etherscan.deth.net/address/0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09#code'
-        }
+          href: 'https://etherscan.deth.net/address/0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09#code',
+        },
       ],
-      risks: []
-    }
+      risks: [],
+    },
   },
+  riskView: {
+    validatedBy: {
+      value: 'User',
+      description: 'Transfer is done via peer-to-peer atomic swap',
+    },
+    sourceUpgradeability: {
+      value: 'No',
+      description: '',
+    },
+    destinationToken: {
+      ...RISK_VIEW.CANONICAL,
+      description: RISK_VIEW.CANONICAL.description,
+    },
+  },
+  contracts: {
+    addresses: [
+      {
+        address: '0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09',
+        name: 'TransactionManager',
+        description: 'Escrow and logic for cross-chain transactions.',
+      },
+      {
+        address: '0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a',
+        name: 'FulfillInterpreter',
+        description:
+          'Contract enabling execution of arbitrary calldata on a destination chain.',
+      },
+    ],
+    risks: [],
+  },
+  permissions: [
+    {
+      accounts: [
+        { address: '0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493', type: 'EOA' },
+      ],
+      name: 'Owner of TransactionManager',
+      description: 'Can add and remove Routers and supported assets.',
+    },
+  ],
 }
