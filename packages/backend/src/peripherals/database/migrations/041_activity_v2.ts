@@ -43,7 +43,7 @@ export async function up(knex: Knex) {
     .withSchema(schema)
     .createTable(starkexTable, function (table) {
       table.string('project_id').notNullable()
-      table.dateTime('unix_timestamp').notNullable()
+      table.dateTime('unix_timestamp', { useTz: false }).notNullable()
       table.integer('count').notNullable()
       table.primary(['project_id', 'unix_timestamp'])
     })
