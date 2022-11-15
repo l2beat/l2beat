@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
+import { NewItemIcon } from '../icons/NewItemIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OutLink } from '../OutLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
@@ -47,9 +48,10 @@ export function SidebarMenu(props: SidebarMenuProps) {
                   <a href="/scaling/risk">Risks</a>
                 </li>
                 {props.showActivity && (
-                  <li className="font-medium flex gap-2">
+                  <li className="font-medium flex gap-2 items-center">
                     <ActivityIcon className="w-5 h-auto" />
                     <a href="/scaling/activity">Activity</a>
+                    <NewItemIcon />
                   </li>
                 )}
               </ul>
@@ -58,17 +60,20 @@ export function SidebarMenu(props: SidebarMenuProps) {
           {props.showBridges && (
             <ul className="mt-8">
               <li>
-                <div className="uppercase text-xs mb-4 font-medium text-gray-700 dark:text-gray-300">
-                  Bridges
+                <div className="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300">
+                  <span className="uppercase text-xs font-medium">Bridges</span>
+                  <NewItemIcon />
                 </div>
-                <ul className="flex flex-col gap-4">
-                  <li className="font-medium flex gap-2">
+                <ul className="flex flex-col gap-4 ">
+                  <li className="font-medium flex gap-2 items-center">
                     <TvlIcon className="w-5 h-auto" />
                     <a href="/bridges/tvl">Total Value Locked</a>
+                    <NewItemIcon />
                   </li>
-                  <li className="font-medium flex gap-2">
+                  <li className="font-medium flex gap-2 items-center">
                     <RiskIcon className="w-5 h-auto" />
                     <a href="/bridges/risk">Risks</a>
+                    <NewItemIcon />
                   </li>
                 </ul>
               </li>

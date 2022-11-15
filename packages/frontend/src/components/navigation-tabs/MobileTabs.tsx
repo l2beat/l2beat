@@ -1,11 +1,14 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { NewItemIcon } from '../icons/NewItemIcon'
+
 export interface MobileTabsProps {
   pages: {
     shortTitle: ReactNode
     link: string
     selected: boolean
+    new?: boolean
   }[]
 }
 
@@ -28,7 +31,9 @@ export function MobileTabs({ pages }: MobileTabsProps) {
               !page.selected && 'bg-white dark:bg-gray-850',
             )}
           >
-            {page.shortTitle}
+            <span className={cx(page.new && 'inline-flex items-center gap-1')}>
+              {page.shortTitle} {page.new && <NewItemIcon />}
+            </span>
           </a>
         </li>
       ))}
