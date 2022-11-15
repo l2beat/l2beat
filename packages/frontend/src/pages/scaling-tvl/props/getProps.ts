@@ -1,6 +1,5 @@
-import { TvlApiResponse } from '@l2beat/types'
-
 import { Config } from '../../../build/config'
+import { PagesData } from '../../../build/types'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
@@ -13,8 +12,10 @@ import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  pagesData: PagesData,
 ): Wrapped<TvlPageProps> {
+  const { tvlApiResponse, verificationStatus } = pagesData
+
   const charts = tvlApiResponse.layers2s
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
@@ -28,7 +29,12 @@ export function getProps(
       tvl: formatUSD(tvl),
       tvlWeeklyChange,
       tvlEndpoint,
-      tvlView: getScalingTvlView(ordering, tvlApiResponse, tvl),
+      tvlView: getScalingTvlView(
+        ordering,
+        tvlApiResponse,
+        tvl,
+        verificationStatus,
+      ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

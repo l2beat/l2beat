@@ -1,5 +1,5 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/types'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -10,9 +10,16 @@ export function getBridgesTvlView(
   tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
   combinedTvl: number,
+  verificationStatus: VerificationStatus,
 ): BridgesTvlViewEntry[] {
-  return projects.map((x) =>
-    getBridgesTvlViewEntry(x, tvlApiResponse, bridgesTvl, combinedTvl),
+  return projects.map((project) =>
+    getBridgesTvlViewEntry(
+      project,
+      tvlApiResponse,
+      bridgesTvl,
+      combinedTvl,
+      verificationStatus,
+    ),
   )
 }
 
@@ -21,6 +28,7 @@ function getBridgesTvlViewEntry(
   tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
   combinedTvl: number,
+  verificationStatus: VerificationStatus,
 ): BridgesTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
@@ -28,12 +36,14 @@ function getBridgesTvlViewEntry(
     throw new Error(`Project ${project.display.name} is missing in api`)
   }
   const stats = getTvlStats(apiProject, project.display.name, associatedTokens)
+  const isVerified = verificationStatus.projects[project.id.toString()]
 
   return {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
     warning: project.display.warning,
+    isVerified,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,
     oneDayChange: stats.oneDayChange,

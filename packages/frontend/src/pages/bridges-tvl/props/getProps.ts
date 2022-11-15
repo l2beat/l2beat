@@ -1,6 +1,5 @@
-import { TvlApiResponse } from '@l2beat/types'
-
 import { Config } from '../../../build/config'
+import { PagesData } from '../../../build/types'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
@@ -13,8 +12,10 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  pagesData: PagesData,
 ): Wrapped<BridgesTvlPageProps> {
+  const { tvlApiResponse, verificationStatus } = pagesData
+
   const { tvl: bridgesTvl, tvlWeeklyChange: bridgesTvlSevenDayChange } =
     getTvlWithChange(tvlApiResponse.bridges)
   const { tvl: combinedTvl, tvlWeeklyChange: combinedTvlSevenDayChange } =
@@ -40,6 +41,7 @@ export function getProps(
           tvlApiResponse,
           bridgesTvl,
           combinedTvl,
+          verificationStatus,
         ),
       },
       footer: getFooterProps(config),

@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/types'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/types'
 
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -12,9 +12,17 @@ export function getScalingTvlView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
   tvl: number,
+  verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
   return {
-    items: projects.map((x) => getScalingTvlViewEntry(x, tvlApiResponse, tvl)),
+    items: projects.map((project) =>
+      getScalingTvlViewEntry(
+        project,
+        tvlApiResponse,
+        tvl,
+        verificationStatus.projects[project.id.toString()],
+      ),
+    ),
   }
 }
 
@@ -22,6 +30,7 @@ function getScalingTvlViewEntry(
   project: Layer2,
   tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
+  isVerified?: boolean,
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
@@ -35,6 +44,7 @@ function getScalingTvlViewEntry(
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
+    isVerified,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,
     oneDayChange: stats.oneDayChange,

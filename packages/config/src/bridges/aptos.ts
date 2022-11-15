@@ -110,7 +110,6 @@ export const aptos: Bridge = {
           admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
           implementation: '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
         },
-        description: '???.',
       },
       {
         address: '0x5a54fe5234E811466D5366846283323c954310B2',
@@ -120,7 +119,6 @@ export const aptos: Bridge = {
           admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
           implementation: '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
         },
-        description: '???.',
       },
       {
         address: '0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675',
@@ -146,7 +144,6 @@ export const aptos: Bridge = {
           admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
           implementation: '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
         },
-        description: '???.',
       },
       {
         address: '0x5a54fe5234E811466D5366846283323c954310B2',
@@ -156,12 +153,10 @@ export const aptos: Bridge = {
           admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
           implementation: '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
         },
-        description: '???.',
       },
       {
         address: '0x07245eEa05826F5984c7c3C8F478b04892e4df89',
         name: 'Layer Zero Proof Library (Not Verified)',
-        description: '???.',
       },
     ],
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],

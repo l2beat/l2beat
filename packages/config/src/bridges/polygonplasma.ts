@@ -91,7 +91,7 @@ export const polygonplasma: Bridge = {
         description: 'Escrow contract for MATIC and DAI.',
         upgradeability: {
           type: 'Custom',
-          implementation: '0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf ',
+          implementation: '0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf',
           admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
         },
       },
@@ -102,7 +102,7 @@ export const polygonplasma: Bridge = {
           'Contract handling completion of user withdrawal requests after the 7-day delay.',
         upgradeability: {
           type: 'Custom',
-          implementation: '0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de  ',
+          implementation: '0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de',
           admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
         },
       },

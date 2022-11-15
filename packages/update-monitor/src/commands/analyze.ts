@@ -2,10 +2,19 @@ import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 
 import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
+import { AZTEC_NAME, getAztecParameters } from '../projects/aztec'
 import { CBRIDGE_NAME, getCBridgeParameters } from '../projects/cBridge'
 import { DYDX_NAME, getDydxParameters } from '../projects/dYdX'
 import { getHopParameters, HOP_NAME } from '../projects/hop'
+import {
+  getLayer2FinanceZkParameters,
+  L2FZK_NAME,
+} from '../projects/layer2FinanceZk'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
+import {
+  getOmgNetworkParameters,
+  OMG_NETWORK_NAME,
+} from '../projects/omgNetwork'
 import {
   getOrbitBridgeParameters,
   ORBIT_BRIDGE_NAME,
@@ -53,6 +62,9 @@ export async function analyze(projects: string[]) {
     [ORBIT_BRIDGE_NAME, getOrbitBridgeParameters],
     [SYNAPSE_NAME, getSynapseParameters],
     [CBRIDGE_NAME, getCBridgeParameters],
+    [AZTEC_NAME, getAztecParameters],
+    [OMG_NETWORK_NAME, getOmgNetworkParameters],
+    [L2FZK_NAME, getLayer2FinanceZkParameters],
   ]
 
   const unknownArguments = projects.filter(

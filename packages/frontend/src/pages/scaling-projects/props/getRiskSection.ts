@@ -1,9 +1,13 @@
-import { Layer2, ProjectRisk } from '@l2beat/config'
+import { CONTRACTS, Layer2, ProjectRisk } from '@l2beat/config'
+import { VerificationStatus } from '@l2beat/types'
 
 import { RiskSectionProps } from '../../../components/project/RiskSection'
 import { groupRisks } from '../../../utils/project/groupRisks'
 
-export function getRiskSection(project: Layer2): RiskSectionProps {
+export function getRiskSection(
+  project: Layer2,
+  verificationStatus: VerificationStatus,
+): RiskSectionProps {
   const technology = project.technology
   const exits = technology.exitMechanisms.map((x, i) => ({
     id: `exit-mechanisms-${i + 1}`,
@@ -29,6 +33,13 @@ export function getRiskSection(project: Layer2): RiskSectionProps {
   }
   for (const risk of project.contracts.risks) {
     risks.push({ ...risk, referencedId: 'contracts' })
+  }
+  // Explicit comparison to false because project might not exists in verification map at all.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+  if (verificationStatus.projects[project.id.toString()] === false) {
+    if (!risks.find((r) => r.text === CONTRACTS.UNVERIFIED_RISK.text)) {
+      risks.push({ ...CONTRACTS.UNVERIFIED_RISK, referencedId: 'contracts' })
+    }
   }
 
   return { riskGroups: groupRisks(risks) }

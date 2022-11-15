@@ -1,4 +1,4 @@
-import { ActivityApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, VerificationStatus } from '@l2beat/types'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
@@ -10,8 +10,13 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  activityApiResponse: ActivityApiResponse,
+  pagesData: {
+    activityApiResponse: ActivityApiResponse
+    verificationStatus: VerificationStatus
+  },
 ): Wrapped<ActivityPageProps> {
+  const { activityApiResponse, verificationStatus } = pagesData
+
   const scalingFactor = getScalingFactor(activityApiResponse)
 
   return {
@@ -19,7 +24,11 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       scalingFactor,
       apiEndpoint: '/api/activity/combined.json',
-      activityView: getActivityView(config.layer2s, activityApiResponse),
+      activityView: getActivityView(
+        config.layer2s,
+        activityApiResponse,
+        verificationStatus,
+      ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

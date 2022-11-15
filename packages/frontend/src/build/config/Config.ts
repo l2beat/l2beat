@@ -14,6 +14,7 @@ export interface Config {
     activity: boolean
     banner: boolean
     gitcoinOption: boolean
+    highlightUnverified: boolean
   }
   backend: {
     apiUrl: string

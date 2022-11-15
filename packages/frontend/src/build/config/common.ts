@@ -10,10 +10,11 @@ export const common = {
     forum: 'https://gov.l2beat.com/',
   },
   features: {
-    banner: true,
+    banner: false,
     gitcoinOption: false,
     bridges: true,
     activity: true,
+    highlightUnverified: true,
   },
   layer2s,
   bridges,
