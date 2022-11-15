@@ -49,7 +49,6 @@ export function createZksyncProcessor(
         })
 
         const blockTransactions = await promiseAllPlus(queries, logger)
-
         await zksyncRepository.addMany(blockTransactions.flat(), trx)
       },
     },
