@@ -2,12 +2,16 @@ import { LogLevel } from '@l2beat/common'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 
+import { CliParameters } from '../cli/getCliParameters'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getEnv } from './getEnv'
 import { getGitCommitHash } from './getGitCommitHash'
 
-export function getProductionConfig(): Config {
+export function getProductionConfig(cli: CliParameters): Config {
+  if (cli.mode !== 'server') {
+    throw new Error(`Cannot get config for mode ${cli.mode}`)
+  }
   const name = 'Backend/Production'
   return {
     name,
@@ -16,6 +20,7 @@ export function getProductionConfig(): Config {
       format: 'json',
     },
     port: getEnv.integer('PORT'),
+    apiEnabled: true,
     coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
     etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),

@@ -24,6 +24,7 @@ export interface Config {
   tokens: Token[]
   projects: Project[]
   syncEnabled: boolean
+  apiEnabled: boolean
   freshStart: boolean
   tvlReportSync: boolean
   transactionCountSync:

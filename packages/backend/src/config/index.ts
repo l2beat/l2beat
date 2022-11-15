@@ -1,21 +1,19 @@
+import { CliParameters } from '../cli/getCliParameters'
 import { Config } from './Config'
 import { getLocalConfig } from './config.local'
 import { getProductionConfig } from './config.production'
 import { getStagingConfig } from './config.staging'
-import { getTestConfig } from './config.test'
 
 export type { Config }
 
-export function getConfig(env: string): Config {
+export function getConfig(env: string, cli: CliParameters): Config {
   switch (env) {
     case 'local':
-      return getLocalConfig()
+      return getLocalConfig(cli)
     case 'staging':
-      return getStagingConfig()
+      return getStagingConfig(cli)
     case 'production':
-      return getProductionConfig()
-    case 'test':
-      return getTestConfig()
+      return getProductionConfig(cli)
   }
   throw new TypeError(`Unrecognized env: ${env}!`)
 }

@@ -5,29 +5,29 @@ import {
 } from '@l2beat/common'
 import { providers } from 'ethers'
 
-import { Config } from './config'
-import { ConfigReader } from './core/discovery/ConfigReader'
-import { DiscoveryEngine } from './core/discovery/DiscoveryEngine'
-import { DiscoveryOptions } from './core/discovery/DiscoveryOptions'
+import { Config } from '../../config'
+import { ConfigReader } from '../../core/discovery/ConfigReader'
+import { DiscoveryEngine } from '../../core/discovery/DiscoveryEngine'
+import { DiscoveryOptions } from '../../core/discovery/DiscoveryOptions'
 
-export class Discovery {
-  async discover(project: string, config: Config) {
-    const provider = new providers.AlchemyProvider(
-      'mainnet',
-      config.alchemyApiKey,
-    )
-    const httpClient = new HttpClient()
-    const etherscanClient = new MainnetEtherscanClient(
-      httpClient,
-      config.etherscanApiKey,
-    )
-    const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
-    const discoveryEngine = new DiscoveryEngine(provider, addressAnalyzer)
+export function createDiscoveryModule(config: Config, project: string) {
+  const provider = new providers.AlchemyProvider(
+    'mainnet',
+    config.alchemyApiKey,
+  )
+  const httpClient = new HttpClient()
+  const etherscanClient = new MainnetEtherscanClient(
+    httpClient,
+    config.etherscanApiKey,
+  )
+  const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
+  const discoveryEngine = new DiscoveryEngine(provider, addressAnalyzer)
 
-    const configReader = new ConfigReader()
+  const configReader = new ConfigReader()
+
+  const start = async () => {
     const projectConfig = await configReader.readConfig(project)
     const overrides = projectConfig.overrides ?? {}
-
     const blockNumber =
       config.discoveryBlockNumber ?? (await provider.getBlockNumber())
     // Temporary mapping from new config structure to the old one
@@ -48,5 +48,10 @@ export class Discovery {
       projectConfig.initialAddresses.map((x) => x.toString()),
       discoveryOptions,
     )
+  }
+
+  return {
+    routers: [],
+    start,
   }
 }

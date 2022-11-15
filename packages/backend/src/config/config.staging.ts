@@ -1,12 +1,13 @@
 import { Knex } from 'knex'
 
+import { CliParameters } from '../cli/getCliParameters'
 import { Config } from './Config'
 import { getProductionConfig } from './config.production'
 import { getEnv } from './getEnv'
 
-export function getStagingConfig(): Config {
+export function getStagingConfig(cli: CliParameters): Config {
   const name = 'Backend/Staging'
-  const productionConfig = getProductionConfig()
+  const productionConfig = getProductionConfig(cli)
 
   return {
     ...productionConfig,
@@ -16,6 +17,7 @@ export function getStagingConfig(): Config {
       application_name: name,
     },
     tvlReportSync: true,
+    apiEnabled: true,
     activityV2: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: 12,
