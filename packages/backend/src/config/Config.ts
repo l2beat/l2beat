@@ -27,7 +27,7 @@ export interface Config {
   apiEnabled: boolean
   freshStart: boolean
   tvlReportSync: boolean
-  transactionCountSync:
+  activity:
     | {
         starkexApiKey: string
         starkexApiDelayHours: number
@@ -66,9 +66,6 @@ export interface HealthStatus {
   commitSha: string
 }
 
-export type TransactionCountSyncConfig = Exclude<
-  Config['transactionCountSync'],
-  false
->
+export type TransactionCountSyncConfig = Exclude<Config['activity'], false>
 
 export type ActivityV2Config = Exclude<Config['activityV2'], false>

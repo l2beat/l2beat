@@ -17,7 +17,7 @@ export function createLayer2RpcTransactionUpdaters(
   http: HttpClient,
   logger: Logger,
 ) {
-  const activityConfig = config.transactionCountSync
+  const activityConfig = config.activity
   assert(activityConfig)
   const rpcUpdaters: RpcTransactionUpdater[] = []
   for (const { projectId, transactionApi } of config.projects) {

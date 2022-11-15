@@ -42,7 +42,7 @@ export function getProductionConfig(cli: CliParameters): Config {
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     freshStart: false,
     tvlReportSync: true,
-    transactionCountSync: {
+    activity: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: 12,
       zkSyncWorkQueueWorkers: 100,

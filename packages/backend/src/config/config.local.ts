@@ -42,7 +42,7 @@ export function getLocalConfig(cli: CliParameters): Config {
     freshStart: getEnv.boolean('FRESH_START', false),
     tvlReportSync:
       cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true),
-    transactionCountSync: cli.mode === 'server' &&
+    activity: cli.mode === 'server' &&
       getEnv.boolean('TRANSACTION_COUNT_ENABLED', false) && {
         starkexApiKey: getEnv('STARKEX_API_KEY'),
         starkexApiDelayHours: 12,

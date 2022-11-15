@@ -13,7 +13,7 @@ export function createStarkexTransactionUpdaters(
   clock: Clock,
   logger: Logger,
 ) {
-  assert(config.transactionCountSync)
+  assert(config.activity)
 
   const starkexUpdaters = []
   for (const project of config.projects) {
@@ -27,8 +27,8 @@ export function createStarkexTransactionUpdaters(
         project.projectId,
         project.transactionApi.sinceTimestamp,
         {
-          workQueueWorkers: config.transactionCountSync.starkexWorkQueueWorkers,
-          apiDelayHours: config.transactionCountSync.starkexApiDelayHours,
+          workQueueWorkers: config.activity.starkexWorkQueueWorkers,
+          apiDelayHours: config.activity.starkexApiDelayHours,
         },
       )
 

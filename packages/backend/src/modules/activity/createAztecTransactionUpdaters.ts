@@ -13,8 +13,8 @@ export function createAztecTransactionUpdaters(
   logger: Logger,
   config: Config,
 ) {
-  const workQueueWorkers = config.transactionCountSync
-    ? config.transactionCountSync.aztecWorkQueueWorkers
+  const workQueueWorkers = config.activity
+    ? config.activity.aztecWorkQueueWorkers
     : 1
   const updaters = []
 

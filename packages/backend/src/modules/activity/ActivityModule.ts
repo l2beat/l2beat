@@ -30,22 +30,22 @@ export function createActivityModule(
   database: Database,
   clock: Clock,
 ) {
-  if (!config.transactionCountSync) {
+  if (!config.activity) {
     return { routers: [] }
   }
 
   const starkexClient = new StarkexClient(
-    config.transactionCountSync.starkexApiKey,
+    config.activity.starkexApiKey,
     http,
     logger,
     {
-      callsPerMinute: config.transactionCountSync.starkexCallsPerMinute,
+      callsPerMinute: config.activity.starkexCallsPerMinute,
     },
   )
 
   const zksyncClient = new ZksyncClient(http, logger, 3000)
   const loopringClient = new LoopringClient(http, logger, {
-    callsPerMinute: config.transactionCountSync.loopringCallsPerMinute,
+    callsPerMinute: config.activity.loopringCallsPerMinute,
   })
 
   const blockTipRepository = new BlockTipRepository(database, logger)
@@ -76,7 +76,7 @@ export function createActivityModule(
     clock,
     logger,
     ProjectId.LOOPRING,
-    { workQueueWorkers: config.transactionCountSync.loopringWorkQueueWorkers },
+    { workQueueWorkers: config.activity.loopringWorkQueueWorkers },
   )
 
   const aztecTransactionUpdaters = createAztecTransactionUpdaters(
@@ -88,7 +88,7 @@ export function createActivityModule(
   )
 
   const ethereumTransactionUpdater = createEthereumTransactionUpdater(
-    config.transactionCountSync,
+    config.activity,
     blockTransactionCountRepository,
     clock,
     logger,
@@ -107,7 +107,7 @@ export function createActivityModule(
     zksyncTransactionRepository,
     clock,
     logger,
-    { workQueueWorkers: config.transactionCountSync.zkSyncWorkQueueWorkers },
+    { workQueueWorkers: config.activity.zkSyncWorkQueueWorkers },
   )
 
   const layer2BlockTransactionUpdaters = [
@@ -123,7 +123,7 @@ export function createActivityModule(
     [...starkexTransactionUpdaters, zksyncTransactionUpdater],
     clock,
     logger,
-    config.transactionCountSync.starkexApiDelayHours,
+    config.activity.starkexApiDelayHours,
   )
 
   const activityController = new ActivityController(
