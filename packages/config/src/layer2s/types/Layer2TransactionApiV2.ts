@@ -8,6 +8,7 @@ export interface RpcTransactionApiV2 {
   callsPerMinute?: number
   assessCount?: AssessCountV2
   startBlock?: number
+  timeout?: number
 }
 
 export interface StarknetTransactionApiV2 {

@@ -21,12 +21,13 @@ export function createRpcProcessor(
   transactionApi: RpcTransactionApiV2,
 ): SequenceProcessor {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
+  const timeout = transactionApi.timeout ?? 15_000
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const url = transactionApi.url
   assert(url, 'Url for rpc client must be defined')
   const provider = new providers.JsonRpcProvider({
     url,
-    timeout: 15_000,
+    timeout,
   })
   const client = new EthereumClient(
     provider,
