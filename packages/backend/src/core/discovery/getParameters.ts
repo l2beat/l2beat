@@ -30,8 +30,12 @@ export async function getParameters(
   )
 
   const values = await Promise.all([
-    ...simpleFunctions.map((x) => getRegularParameter(address, x, provider)),
-    ...arrayFunctions.map((x) => getArrayParameter(address, x, provider)),
+    ...simpleFunctions.map((x) =>
+      getRegularParameter(address, x, provider, options.blockNumber),
+    ),
+    ...arrayFunctions.map((x) =>
+      getArrayParameter(address, x, provider, options.blockNumber),
+    ),
   ])
   return values.filter((x): x is Parameter => x !== undefined)
 }
@@ -40,11 +44,14 @@ async function getRegularParameter(
   address: string,
   method: utils.FunctionFragment,
   provider: providers.Provider,
+  blockNumber: number,
 ): Promise<Parameter | undefined> {
   const contract = new Contract(address, [method], provider)
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const result: unknown = await contract[method.name]()
+    const result: unknown = await contract[method.name]({
+      blockTag: blockNumber,
+    })
     console.log(`Called ${address}.${method.name}()`)
     return {
       name: method.name,
@@ -63,11 +70,14 @@ async function getArrayParameter(
   address: string,
   method: utils.FunctionFragment,
   provider: providers.Provider,
+  blockNumber: number,
 ): Promise<Parameter> {
   const contract = new Contract(address, [method], provider)
   const results = await readArray((i) =>
     // eslint-disable-next-line
-    contract[method.name](i).then((x: unknown) => {
+    contract[method.name](i, {
+      blockTag: blockNumber,
+    }).then((x: unknown) => {
       console.log(`Called ${address}.${method.name}(${i})`)
       return x
     }),
