@@ -23,9 +23,9 @@ export class ZksyncTransactionRepository extends BaseRepository {
   }
 
   async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
-    const knex = await this.knex()
+    const knex = await this.knex(trx)
     const rows = records.map(toRow)
-    await (trx ?? knex)('activity_v2.zksync').insert(rows)
+    await knex('activity_v2.zksync').insert(rows)
     return rows.length
   }
 

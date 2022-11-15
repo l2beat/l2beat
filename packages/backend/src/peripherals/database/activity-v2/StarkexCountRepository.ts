@@ -25,9 +25,9 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     records: StarkexTransactionCountRecord[],
     trx?: Knex.Transaction,
   ) {
-    const knex = await this.knex()
+    const knex = await this.knex(trx)
     const rows = records.map(toRow)
-    await (trx ?? knex)('activity_v2.starkex')
+    await knex('activity_v2.starkex')
       .insert(rows)
       .onConflict(['project_id', 'unix_timestamp'])
       .merge()
