@@ -30,7 +30,7 @@ export function createZksyncProcessor(
     logger,
     repository: sequenceProcessorRepository,
     startFrom: 1,
-    getLast: client.getLatestBlock.bind(client),
+    getLatest: client.getLatestBlock.bind(client),
     processRange: async (from, to, trx) => {
       const queries = range(from, to + 1).map((blockNumber) => async () => {
         const transactions = await client.getTransactionsInBlock(blockNumber)

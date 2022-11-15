@@ -31,10 +31,10 @@ export function createStarknetProcessor(
     logger,
     repository: sequenceProcessorRepository,
     startFrom: 0,
-    getLast: async (prevLast) => {
+    getLatest: async (previousLatest) => {
       const blockNumber = await client.getBlockNumberAtOrBefore(
         clock.getLastHour(),
-        prevLast,
+        previousLatest,
       )
       return blockNumber
     },

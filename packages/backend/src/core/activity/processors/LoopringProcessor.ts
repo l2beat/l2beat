@@ -27,7 +27,7 @@ export function createLoopringProcessor(
     logger,
     repository: sequenceProcessorRepository,
     startFrom: 1,
-    getLast: client.getFinalizedBlockNumber.bind(client),
+    getLatest: client.getFinalizedBlockNumber.bind(client),
     processRange: async (from, to, trx) => {
       const queries = range(from, to + 1).map((blockNumber) => async () => {
         const block = await client.getBlock(blockNumber)

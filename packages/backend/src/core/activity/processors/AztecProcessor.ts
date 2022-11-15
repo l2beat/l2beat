@@ -27,7 +27,7 @@ export function createAztecProcessor(
     logger,
     repository: sequenceProcessorRepository,
     startFrom: 0,
-    getLast: async () => {
+    getLatest: async () => {
       const block = await client.getLatestBlock()
       return block.number
     },

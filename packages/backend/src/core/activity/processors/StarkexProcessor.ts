@@ -33,7 +33,7 @@ export function createStarkexProcessor(
     repository: sequenceProcessorRepository,
     startFrom: options.sinceTimestamp.toStartOf('day').toDays(),
     // eslint-disable-next-line @typescript-eslint/require-await
-    getLast: async () =>
+    getLatest: async () =>
       getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
     processRange: async (from, to, trx) => {
       const queries = range(from, to + 1).map((day) => async () => {

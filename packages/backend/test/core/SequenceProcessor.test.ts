@@ -18,7 +18,7 @@ describe(SequenceProcessor.name, () => {
   let sequenceProcessor: SequenceProcessor
 
   function createSequenceProcessor({
-    getLast,
+    getLatest,
     processRange,
     startFrom,
     batchSize,
@@ -27,7 +27,7 @@ describe(SequenceProcessor.name, () => {
   }: {
     startFrom: number
     batchSize: number
-    getLast: SequenceProcessorOpts['getLast']
+    getLatest: SequenceProcessorOpts['getLatest']
     processRange: SequenceProcessorOpts['processRange']
     refreshInterval?: number
     reportError?: LoggerOptions['reportError']
@@ -42,7 +42,7 @@ describe(SequenceProcessor.name, () => {
       repository,
       startFrom,
       batchSize,
-      getLast,
+      getLatest,
       processRange,
       scheduleIntervalMs: refreshInterval,
     })
@@ -58,14 +58,14 @@ describe(SequenceProcessor.name, () => {
 
   describe('simple one off process', () => {
     it('processes in ranges', async () => {
-      const getLastMock =
-        mockFn<SequenceProcessorOpts['getLast']>().resolvesTo(5)
+      const getLatestMock =
+        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(5)
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 2,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
       })
 
@@ -73,7 +73,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLastMock).toHaveBeenCalledExactlyWith([[0], [5]])
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [5]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 1, expect.anything()],
         [2, 3, expect.anything()],
@@ -91,7 +91,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor = createSequenceProcessor({
         startFrom: 4,
         batchSize: 2,
-        async getLast() {
+        async getLatest() {
           return 5
         },
         processRange: processRangeMock,
@@ -111,14 +111,14 @@ describe(SequenceProcessor.name, () => {
     })
 
     it('works with batch size of 1', async () => {
-      const getLastMock =
-        mockFn<SequenceProcessorOpts['getLast']>().resolvesTo(2)
+      const getLatestMock =
+        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(2)
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 1,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
       })
 
@@ -126,7 +126,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLastMock).toHaveBeenCalledExactlyWith([[0], [2]])
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 0, expect.anything()],
         [1, 1, expect.anything()],
@@ -139,14 +139,14 @@ describe(SequenceProcessor.name, () => {
     })
 
     it('works with huge batch sizes', async () => {
-      const getLastMock =
-        mockFn<SequenceProcessorOpts['getLast']>().resolvesTo(2)
+      const getLatestMock =
+        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(2)
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 100,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
       })
 
@@ -154,7 +154,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLastMock).toHaveBeenCalledExactlyWith([[0], [2]])
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 2, expect.anything()],
       ])
@@ -164,20 +164,20 @@ describe(SequenceProcessor.name, () => {
       })
     })
 
-    it('re-processes data when from > getLast', async () => {
+    it('re-processes data when from > getLatest', async () => {
       const time = install()
 
       const errorMessage =
-        'getLast returned sequence member that was already processed'
+        'getLatest returned sequence member that was already processed'
       const reportErrorMock = mockFn().returns(undefined)
-      const getLastMock =
-        mockFn<SequenceProcessorOpts['getLast']>().resolvesTo(0)
+      const getLatestMock =
+        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(0)
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
         startFrom: 2,
         batchSize: 1,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
         reportError: reportErrorMock,
       })
@@ -203,15 +203,15 @@ describe(SequenceProcessor.name, () => {
 
       const errorMessage = 'Force-failing during tests!'
       const reportErrorMock = mockFn().returns(undefined)
-      const getLastMock =
-        mockFn<SequenceProcessorOpts['getLast']>().resolvesTo(5)
+      const getLatestMock =
+        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(5)
       const processRangeMock = mockFn<
         SequenceProcessorOpts['processRange']
       >().rejectsWith(new Error(errorMessage))
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 2,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
         reportError: reportErrorMock,
       })
@@ -236,7 +236,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor = createSequenceProcessor({
         startFrom: 5,
         batchSize: 2,
-        async getLast() {
+        async getLatest() {
           return 5
         },
         processRange: processRangeMock,
@@ -251,20 +251,20 @@ describe(SequenceProcessor.name, () => {
     })
 
     it('continues syncing when more data available', async () => {
-      const getLastMock = mockFn<SequenceProcessorOpts['getLast']>().executes(
-        async (last: any) => {
-          if (last === 0) {
-            return 5
-          }
-          return 7
-        },
-      )
+      const getLatestMock = mockFn<
+        SequenceProcessorOpts['getLatest']
+      >().executes(async (latest: any) => {
+        if (latest === 0) {
+          return 5
+        }
+        return 7
+      })
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 2,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
       })
 
@@ -272,12 +272,12 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      // deep inspect getLastMock. It should be called with [0], [5], and rest is [7]s
+      // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      expect(getLastMock).toHaveBeenCalledExactlyWith([
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([
         [0],
         [5],
-        ...new Array(getLastMock.calls.length - 2).fill([7]),
+        ...new Array(getLatestMock.calls.length - 2).fill([7]),
       ])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 1, expect.anything()],
@@ -295,20 +295,20 @@ describe(SequenceProcessor.name, () => {
   describe('complex processing with refresh', () => {
     it('continues syncing during next schedule', async () => {
       let syncedOnce = false
-      const getLastMock = mockFn<SequenceProcessorOpts['getLast']>().executes(
-        async () => {
-          if (!syncedOnce) {
-            return 1
-          }
-          return 2
-        },
-      )
+      const getLatestMock = mockFn<
+        SequenceProcessorOpts['getLatest']
+      >().executes(async () => {
+        if (!syncedOnce) {
+          return 1
+        }
+        return 2
+      })
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 1,
-        getLast: getLastMock,
+        getLatest: getLatestMock,
         processRange: processRangeMock,
         refreshInterval: 1, // kick refresh right after it's done
       })
@@ -321,9 +321,9 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      // deep inspect getLastMock. It should be called with [0], [5], and rest is [7]s
+      // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      expect(getLastMock).toHaveBeenCalledExactlyWith(
+      expect(getLatestMock).toHaveBeenCalledExactlyWith(
         expect.arrayWith([0], [1], [2]),
       )
       expect(processRangeMock).toHaveBeenCalledExactlyWith([

@@ -11,7 +11,7 @@ export interface SequenceProcessorOpts {
   repository: SequenceProcessorRepository
   startFrom: number
   batchSize: number
-  getLast: (previousLast: number) => Promise<number>
+  getLatest: (previousLatest: number) => Promise<number>
   processRange: (
     // [from, to] <- ranges are inclusive
     from: number,
@@ -77,10 +77,14 @@ export class SequenceProcessor extends EventEmitter {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const lastProcessed = (await this.opts.repository.getById(this.id))
-        ?.lastProcessed
-      this.logger.debug('Calling getLast')
-      const to = await this.opts.getLast(lastProcessed ?? this.opts.startFrom)
+      const processorState = await this.opts.repository.getById(this.id)
+      const lastProcessed = processorState?.lastProcessed
+
+      this.logger.debug('Calling getLatest', {
+        lastProcessed: lastProcessed ?? null,
+        startFrom: this.opts.startFrom,
+      })
+      const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
 
       if ((lastProcessed ?? this.opts.startFrom) === to) {
         break processing
