@@ -44,7 +44,7 @@
     "satellite": true,
     "sollet": true,
     "sorare": true,
-    "stargate": true,
+    "stargate": false,
     "starknet": true,
     "synapse": true,
     "wormholeV1": true,
