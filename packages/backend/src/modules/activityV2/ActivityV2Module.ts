@@ -11,7 +11,7 @@ import { DailyTransactionCountViewRepository } from '../../peripherals/database/
 import { Database } from '../../peripherals/database/shared/Database'
 import { createSequenceProcessors } from './createSequenceProcessors'
 
-export function getActivityV2Module(
+export function createActivityV2Module(
   config: Config,
   logger: Logger,
   http: HttpClient,

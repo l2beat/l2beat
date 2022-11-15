@@ -23,7 +23,7 @@ import {
 } from './createRpcTransactionUpdaters'
 import { createStarkexTransactionUpdaters } from './createStarkexTransactionUpdaters'
 
-export function getActivityModule(
+export function createActivityModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
