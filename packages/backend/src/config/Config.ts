@@ -46,6 +46,7 @@ export interface Config {
       }
     | false
   health?: HealthStatus
+  discoveryBlockNumber?: number
 }
 
 export interface HealthStatus {

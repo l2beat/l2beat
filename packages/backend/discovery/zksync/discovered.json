@@ -1,5 +1,6 @@
 {
   "name": "zksync",
+  "blockNumber": 15975233,
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -77,7 +78,7 @@
         "decimals": 18,
         "name": "Dai Stablecoin",
         "symbol": "DAI",
-        "totalSupply": "5371392791389047822450330109",
+        "totalSupply": "5424370591247298648907182333",
         "version": "1"
       }
     },
@@ -114,7 +115,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 3359
+        "totalSupply": 3419
       }
     },
     {
@@ -127,13 +128,13 @@
       },
       "values": {
         "exodusMode": false,
-        "firstPriorityRequestId": 623549,
+        "firstPriorityRequestId": 629824,
         "getNoticePeriod": 0,
         "isReadyForUpgrade": true,
-        "totalBlocksCommitted": 126578,
-        "totalBlocksExecuted": 126565,
-        "totalBlocksProven": 126573,
-        "totalOpenPriorityRequests": 26,
+        "totalBlocksCommitted": 127764,
+        "totalBlocksExecuted": 127755,
+        "totalBlocksProven": 127757,
+        "totalOpenPriorityRequests": 77,
         "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9"
       }

@@ -12,9 +12,10 @@ const IMPLEMENTATION_SLOT =
 async function getImplementation(
   provider: providers.Provider,
   contract: Contract | string,
+  blockNumber: number,
 ) {
   return bytes32ToAddress(
-    await getStorage(provider, contract, IMPLEMENTATION_SLOT),
+    await getStorage(provider, contract, IMPLEMENTATION_SLOT, blockNumber),
   )
 }
 
@@ -25,9 +26,10 @@ const CALL_IMPLEMENTATION_SLOT =
 async function getCallImplementation(
   provider: providers.Provider,
   contract: Contract | string,
+  blockNumber: number,
 ) {
   return bytes32ToAddress(
-    await getStorage(provider, contract, CALL_IMPLEMENTATION_SLOT),
+    await getStorage(provider, contract, CALL_IMPLEMENTATION_SLOT, blockNumber),
   )
 }
 
@@ -38,22 +40,29 @@ const UPGRADE_DELAY_SLOT =
 async function getUpgradeDelay(
   provider: providers.Provider,
   contract: Contract | string,
+  blockNumber: number,
 ) {
-  const value = await getStorage(provider, contract, UPGRADE_DELAY_SLOT)
+  const value = await getStorage(
+    provider,
+    contract,
+    UPGRADE_DELAY_SLOT,
+    blockNumber,
+  )
   return BigNumber.from(value).toNumber()
 }
 
 async function detect(
   provider: providers.Provider,
   address: string,
+  blockNumber: number,
 ): Promise<ProxyDetection | undefined> {
-  const implementation = await getImplementation(provider, address)
+  const implementation = await getImplementation(provider, address, blockNumber)
   if (implementation === constants.AddressZero) {
     return
   }
   const [callImplementation, upgradeDelay] = await Promise.all([
-    getCallImplementation(provider, address),
-    getUpgradeDelay(provider, address),
+    getCallImplementation(provider, address, blockNumber),
+    getUpgradeDelay(provider, address, blockNumber),
   ])
 
   return {
