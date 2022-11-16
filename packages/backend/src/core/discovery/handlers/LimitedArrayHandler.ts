@@ -42,10 +42,18 @@ export class LimitedArrayHandler implements Handler {
       }
     }
 
-    if (!error && value.length === this.limit) {
-      error = 'Too many values. Update configuration explore fully'
+    if (!error) {
+      if (value.length === this.limit) {
+        return {
+          name: this.name,
+          value,
+          error: 'Too many values. Update configuration explore fully',
+        }
+      } else {
+        return { name: this.name, value }
+      }
     }
 
-    return { name: this.name, value, error }
+    return { name: this.name, error }
   }
 }
