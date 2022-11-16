@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "blockNumber": 15975233,
+  "blockNumber": 15983448,
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -45,11 +45,11 @@
       },
       "values": {
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
+        "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+        "getTarget": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
-        "totalTokens": 173,
-        "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "getTarget": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8"
+        "totalTokens": 173
       }
     },
     {
@@ -78,7 +78,7 @@
         "decimals": 18,
         "name": "Dai Stablecoin",
         "symbol": "DAI",
-        "totalSupply": "5424370591247298648907182333",
+        "totalSupply": "5433915115137464011655788069",
         "version": "1"
       }
     },
@@ -115,7 +115,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 3419
+        "totalSupply": 3442
       }
     },
     {
@@ -128,15 +128,15 @@
       },
       "values": {
         "exodusMode": false,
-        "firstPriorityRequestId": 629824,
-        "getNoticePeriod": 0,
-        "isReadyForUpgrade": true,
-        "totalBlocksCommitted": 127764,
-        "totalBlocksExecuted": 127755,
-        "totalBlocksProven": 127757,
-        "totalOpenPriorityRequests": 77,
+        "firstPriorityRequestId": 631904,
         "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9"
+        "getNoticePeriod": 0,
+        "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+        "isReadyForUpgrade": true,
+        "totalBlocksCommitted": 128134,
+        "totalBlocksExecuted": 128105,
+        "totalBlocksProven": 128109,
+        "totalOpenPriorityRequests": 261
       }
     }
   ]

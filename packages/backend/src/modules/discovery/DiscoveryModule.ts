@@ -1,15 +1,12 @@
-import {
-  AddressAnalyzer,
-  HttpClient,
-  Logger,
-  MainnetEtherscanClient,
-} from '@l2beat/common'
+import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
-import { DiscoveryEngine } from '../../core/discovery/DiscoveryEngine'
+import { discover } from '../../core/discovery/discover'
 import { DiscoveryOptions } from '../../core/discovery/DiscoveryOptions'
+import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvider'
+import { saveDiscoveryResult } from '../../core/discovery/saveDiscoveryResult'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createDiscoveryModule(
@@ -29,8 +26,6 @@ export function createDiscoveryModule(
     http,
     config.discovery.etherscanApiKey,
   )
-  const addressAnalyzer = new AddressAnalyzer(provider, etherscanClient)
-  const discoveryEngine = new DiscoveryEngine(provider, addressAnalyzer)
 
   const configReader = new ConfigReader()
 
@@ -42,14 +37,11 @@ export function createDiscoveryModule(
     logger.info('Starting')
     const projectConfig = await configReader.readConfig(safeConfig.project)
     const overrides = projectConfig.overrides ?? {}
-    const blockNumber =
-      safeConfig.blockNumber ?? (await provider.getBlockNumber())
     // Temporary mapping from new config structure to the old one
     const discoveryOptions: DiscoveryOptions = {
       skipAddresses: [],
       skipMethods: {},
       addAbis: {},
-      blockNumber,
     }
     Object.keys(overrides).forEach((address) => {
       const ignoreMethods = overrides[address].ignoreMethods
@@ -57,11 +49,22 @@ export function createDiscoveryModule(
         discoveryOptions.skipMethods[address] = ignoreMethods
       }
     })
-    await discoveryEngine.discover(
-      safeConfig.project,
-      projectConfig.initialAddresses.map((x) => x.toString()),
+
+    const blockNumber =
+      safeConfig.blockNumber ?? (await provider.getBlockNumber())
+
+    const discoveryProvider = new DiscoveryProvider(
+      provider,
+      etherscanClient,
+      blockNumber,
+    )
+
+    const result = await discover(
+      discoveryProvider,
+      projectConfig.initialAddresses,
       discoveryOptions,
     )
+    await saveDiscoveryResult(result, safeConfig.project, blockNumber)
   }
 
   return {

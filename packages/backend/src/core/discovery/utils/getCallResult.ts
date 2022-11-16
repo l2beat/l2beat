@@ -1,23 +1,20 @@
-import { Contract, providers, utils } from 'ethers'
+import { Bytes, EthereumAddress } from '@l2beat/types'
+import { utils } from 'ethers'
 
+import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { isRevert } from './isRevert'
 
 export async function getCallResult<T>(
-  provider: providers.Provider,
-  contract: Contract | string,
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
   methodAbi: string,
-  blockNumber: number,
 ) {
   try {
-    const address = typeof contract === 'string' ? contract : contract.address
     const abi = new utils.Interface([methodAbi])
     const fragment = Object.values(abi.functions)[0]
-    const callData = abi.encodeFunctionData(fragment)
-    const result = await provider.call(
-      { to: address, data: callData },
-      blockNumber,
-    )
-    return abi.decodeFunctionResult(fragment, result)[0] as T
+    const callData = Bytes.fromHex(abi.encodeFunctionData(fragment))
+    const result = await provider.call(address, callData)
+    return abi.decodeFunctionResult(fragment, result.toString())[0] as T
   } catch (e) {
     if (isRevert(e)) {
       return undefined
