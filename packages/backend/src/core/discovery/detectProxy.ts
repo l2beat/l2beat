@@ -1,6 +1,6 @@
-import { providers } from 'ethers'
+import { EthereumAddress } from '@l2beat/types'
 
-import { DiscoveryOptions } from './DiscoveryOptions'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ArbitrumProxy } from './proxies/ArbitrumProxy'
 import { Eip897Proxy } from './proxies/Eip897Proxy'
 import { Eip1967Proxy } from './proxies/Eip1967Proxy'
@@ -9,21 +9,20 @@ import { StarkWareProxy } from './proxies/StarkWareProxy'
 import { ProxyDetection } from './proxies/types'
 
 export async function detectProxy(
-  provider: providers.Provider,
-  address: string,
-  options: DiscoveryOptions,
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
   const code = await provider.getCode(address)
-  if (!code || code === '0x') {
+  if (code.length === 0) {
     return
   }
   const checks = await Promise.all([
     // the order is important, because some proxies are extensions of others
-    ArbitrumProxy.detect(provider, address, options.blockNumber),
-    Eip1967Proxy.detect(provider, address, options.blockNumber),
-    StarkWareProxy.detect(provider, address, options.blockNumber),
-    GnosisSafe.detect(provider, address, options.blockNumber),
-    Eip897Proxy.detect(provider, address, options.blockNumber),
+    ArbitrumProxy.detect(provider, address),
+    Eip1967Proxy.detect(provider, address),
+    StarkWareProxy.detect(provider, address),
+    GnosisSafe.detect(provider, address),
+    Eip897Proxy.detect(provider, address),
   ])
   return checks.find((x) => x !== undefined)
 }

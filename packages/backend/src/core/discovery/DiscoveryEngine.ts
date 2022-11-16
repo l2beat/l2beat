@@ -1,28 +1,23 @@
-import { AddressAnalyzer } from '@l2beat/common'
-import { providers } from 'ethers'
+import { EthereumAddress } from '@l2beat/types'
 import { writeFile } from 'fs/promises'
 
 import { discover } from './discover'
 import { DiscoveryOptions } from './DiscoveryOptions'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ProjectParameters } from './types'
 
 export class DiscoveryEngine {
-  constructor(
-    readonly provider: providers.Provider,
-    private readonly addressAnalyzer: AddressAnalyzer,
-  ) {}
-
-  async discover(name: string, addresses: string[], options: DiscoveryOptions) {
-    const result = await discover(
-      this.provider,
-      this.addressAnalyzer,
-      addresses,
-      options,
-    )
+  async discover(
+    provider: DiscoveryProvider,
+    name: string,
+    addresses: EthereumAddress[],
+    options: DiscoveryOptions,
+  ) {
+    const result = await discover(provider, addresses, options)
 
     const project: ProjectParameters = {
       name,
-      blockNumber: options.blockNumber,
+      blockNumber: provider.blockNumber,
       contracts: result
         .filter((x) => !x.meta.isEOA)
         .map((x) => ({

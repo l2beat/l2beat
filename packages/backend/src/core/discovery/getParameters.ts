@@ -1,7 +1,8 @@
-import { BigNumber, Contract, providers, utils } from 'ethers'
+import { Bytes, EthereumAddress } from '@l2beat/types'
+import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryOptions } from './DiscoveryOptions'
-import { JsonFragment } from './getAbi'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ContractValue } from './types'
 import { readArray } from './utils/array'
 import { isRevert } from './utils/isRevert'
@@ -12,17 +13,20 @@ export interface Parameter {
 }
 
 export async function getParameters(
-  abiJson: JsonFragment[],
-  address: string,
-  provider: providers.Provider,
+  abiEntries: string[],
+  address: EthereumAddress,
+  provider: DiscoveryProvider,
   options: DiscoveryOptions,
 ): Promise<Parameter[]> {
-  const abi = new utils.Interface(abiJson)
+  const abi = new utils.Interface(abiEntries)
   const functions = Object.entries(abi.functions)
     .map((x) => x[1])
     .filter((x) => x.stateMutability === 'view' || x.constant)
     .filter(
-      (x) => !(options.skipMethods[address] ?? []).some((y) => y === x.name),
+      (x) =>
+        !(options.skipMethods[address.toString()] ?? []).some(
+          (y) => y === x.name,
+        ),
     )
   const simpleFunctions = functions.filter((x) => x.inputs.length === 0)
   const arrayFunctions = functions.filter(
@@ -31,71 +35,62 @@ export async function getParameters(
 
   const values = await Promise.all([
     ...simpleFunctions.map((x) =>
-      getRegularParameter(address, x, provider, options.blockNumber),
+      getRegularParameter(address, abi, x, provider),
     ),
-    ...arrayFunctions.map((x) =>
-      getArrayParameter(address, x, provider, options.blockNumber),
-    ),
+    ...arrayFunctions.map((x) => getArrayParameter(address, abi, x, provider)),
   ])
   return values.filter((x): x is Parameter => x !== undefined)
 }
 
 async function getRegularParameter(
-  address: string,
+  address: EthereumAddress,
+  abi: utils.Interface,
   method: utils.FunctionFragment,
-  provider: providers.Provider,
-  blockNumber: number,
+  provider: DiscoveryProvider,
 ): Promise<Parameter | undefined> {
-  const contract = new Contract(address, [method], provider)
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const result: unknown = await contract[method.name]({
-      blockTag: blockNumber,
-    })
-    console.log(`Called ${address}.${method.name}()`)
+    const callData = Bytes.fromHex(abi.encodeFunctionData(method, []))
+    const result = await provider.call(address, callData)
+    console.log(`Called ${address.toString()}.${method.name}()`)
+    const decoded = abi.decodeFunctionResult(method, result.toString())
+    const mapped = decoded.map(toContractValue)
     return {
       name: method.name,
-      value: toContractValue(result),
+      value: mapped.length === 1 ? mapped[0] : mapped,
     }
   } catch (e) {
     if (isRevert(e)) {
       return undefined
     }
-    console.error(`Failed to call ${address}.${method.name}()`)
+    console.error(`Failed to call ${address.toString()}.${method.name}()`)
     throw e
   }
 }
 
 async function getArrayParameter(
-  address: string,
+  address: EthereumAddress,
+  abi: utils.Interface,
   method: utils.FunctionFragment,
-  provider: providers.Provider,
-  blockNumber: number,
+  provider: DiscoveryProvider,
 ): Promise<Parameter> {
-  const contract = new Contract(address, [method], provider)
-  const results = await readArray((i) =>
-    // eslint-disable-next-line
-    contract[method.name](i, {
-      blockTag: blockNumber,
-    }).then((x: unknown) => {
-      console.log(`Called ${address}.${method.name}(${i})`)
-      return x
-    }),
-  )
+  const results = await readArray(async (i) => {
+    const callData = Bytes.fromHex(abi.encodeFunctionData(method, [i]))
+    const result = await provider.call(address, callData)
+    console.log(`Called ${address.toString()}.${method.name}(${i})`)
+    const decoded = abi.decodeFunctionResult(method, result.toString())
+    const mapped = decoded.map(toContractValue)
+    return mapped.length === 1 ? mapped[0] : mapped
+  })
   return {
     name: method.name,
     value: toContractValue(results),
   }
 }
 
-function toContractValue(value: unknown): ContractValue {
+export function toContractValue(value: unknown): ContractValue {
   if (Array.isArray(value)) {
-    return value.map(toSimpleContractValue)
+    return value.map(toContractValue)
   }
-  return toSimpleContractValue(value)
-}
-
-function toSimpleContractValue(value: unknown): string | number | boolean {
   if (
     typeof value === 'string' ||
     typeof value === 'number' ||
