@@ -3,9 +3,10 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
-import { DiscoveryEngine } from '../../core/discovery/DiscoveryEngine'
+import { discover } from '../../core/discovery/discover'
 import { DiscoveryOptions } from '../../core/discovery/DiscoveryOptions'
 import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvider'
+import { saveDiscoveryResult } from '../../core/discovery/saveDiscoveryResult'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createDiscoveryModule(
@@ -25,7 +26,6 @@ export function createDiscoveryModule(
     http,
     config.discovery.etherscanApiKey,
   )
-  const discoveryEngine = new DiscoveryEngine()
 
   const configReader = new ConfigReader()
 
@@ -58,12 +58,13 @@ export function createDiscoveryModule(
       etherscanClient,
       blockNumber,
     )
-    await discoveryEngine.discover(
+
+    const result = await discover(
       discoveryProvider,
-      safeConfig.project,
       projectConfig.initialAddresses,
       discoveryOptions,
     )
+    await saveDiscoveryResult(result, safeConfig.project, blockNumber)
   }
 
   return {
