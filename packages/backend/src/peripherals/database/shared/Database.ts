@@ -2,7 +2,10 @@ import { Logger } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
+import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
+
+configureUtc()
 
 export class Database {
   private readonly knex: Knex
