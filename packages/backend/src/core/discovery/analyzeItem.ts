@@ -1,11 +1,10 @@
-import { AddressAnalyzer } from '@l2beat/common'
-import { providers, utils } from 'ethers'
+import { EthereumAddress } from '@l2beat/types'
 
 import { detectProxy } from './detectProxy'
 import { DiscoveryOptions } from './DiscoveryOptions'
-import { JsonFragment } from './getAbi'
 import { getMetadata } from './getMetadata'
 import { getParameters } from './getParameters'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ContractParameters } from './types'
 
 export interface AnalyzedData extends ContractParameters {
@@ -13,21 +12,20 @@ export interface AnalyzedData extends ContractParameters {
     isEOA: boolean
     verified: boolean
     implementationVerified: boolean
-    abi: JsonFragment[]
+    abi: string[]
   }
 }
 
 export async function analyzeItem(
-  provider: providers.Provider,
-  addressAnalyzer: AddressAnalyzer,
-  address: string,
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
   options: DiscoveryOptions,
-): Promise<{ analyzed: AnalyzedData; relatives: string[] }> {
-  const proxyDetection = await detectProxy(provider, address, options)
+): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
+  const proxyDetection = await detectProxy(provider, address)
 
   const metadata = await getMetadata(
-    addressAnalyzer,
-    options.addAbis[address] ?? [],
+    provider,
+    options.addAbis[address.toString()] ?? [],
     address,
     proxyDetection?.implementations ?? [],
   )
@@ -43,7 +41,15 @@ export async function analyzeItem(
     .flatMap((x) =>
       Array.isArray(x.value) ? (x.value as unknown[]) : [x.value],
     )
-    .filter((x): x is string => typeof x === 'string' && utils.isAddress(x))
+    .flatMap((x) => {
+      if (typeof x === 'string') {
+        try {
+          return [EthereumAddress(x)]
+          // eslint-disable-next-line no-empty
+        } catch {}
+      }
+      return []
+    })
     .concat(proxyDetection?.relatives ?? [])
     .filter((x) => !proxyDetection?.implementations.includes(x))
     .filter((x, i, a) => a.indexOf(x) === i)

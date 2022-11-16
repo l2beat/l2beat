@@ -1,5 +1,5 @@
 import { assert, HttpClient, Logger } from '@l2beat/common'
-import { Layer2TransactionApi } from '@l2beat/config'
+import { Layer2TransactionApiV2 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 
 import { Config } from '../../config'
@@ -60,7 +60,7 @@ export function createSequenceProcessors(
   const ethereum = activityProjects.ethereum
   assert(ethereum?.type === 'rpc', 'Ethereum transactionApi config missing')
   const layer1Projects: [
-    { projectId: ProjectId; transactionApi: Layer2TransactionApi },
+    { projectId: ProjectId; transactionApi: Layer2TransactionApiV2 },
   ] = [
     {
       projectId: ProjectId.ETHEREUM,
@@ -144,17 +144,18 @@ export function createSequenceProcessors(
 
 const hasTransactionApi = (
   p: Project,
-): p is Project & { transactionApi: Layer2TransactionApi } => !!p.transactionApi
+): p is Project & { transactionApi: Layer2TransactionApiV2 } =>
+  !!p.transactionApi
 
 function mergeWithConfig(
-  activityProjects: Record<string, Layer2TransactionApi | undefined>,
+  activityProjects: Record<string, Layer2TransactionApiV2 | undefined>,
 ) {
   return ({
     projectId,
     transactionApi,
   }: {
     projectId: ProjectId
-    transactionApi: Layer2TransactionApi
+    transactionApi: Layer2TransactionApiV2
   }) => ({
     projectId,
     transactionApi: {
