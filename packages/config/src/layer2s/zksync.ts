@@ -61,6 +61,10 @@ export const zksync: Layer2 = {
         sinceTimestamp: new UnixTime(1592218707),
       },
     ],
+    transactionApiV2: {
+      type: 'zksync',
+      callsPerMinute: 3_000,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

@@ -18,12 +18,18 @@ export class Database {
 
   constructor(
     connection: Knex.Config['connection'],
+    name: string,
     private readonly logger: Logger,
   ) {
+    const connectionWithName =
+      typeof connection === 'object'
+        ? { ...connection, application_name: name }
+        : connection
+
     this.logger = this.logger.for(this)
     this.knex = KnexConstructor({
       client: 'pg',
-      connection,
+      connection: connectionWithName,
       migrations: {
         migrationSource: new PolyglotMigrationSource(
           path.join(__dirname, '..', 'migrations'),
@@ -43,11 +49,11 @@ export class Database {
     })
   }
 
-  async getKnex() {
+  async getKnex(trx?: Knex.Transaction) {
     if (!this.migrated) {
       await this.migrationsComplete
     }
-    return this.knex
+    return trx ?? this.knex
   }
 
   getStatus() {

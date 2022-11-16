@@ -29,6 +29,7 @@ export const arbitrum: Layer2 = {
       explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
       repositories: [
         'https://github.com/OffchainLabs/arbitrum',
+        'https://github.com/OffchainLabs/nitro',
         'https://github.com/OffchainLabs/arb-os',
       ],
       socialMedia: [
@@ -103,6 +104,14 @@ export const arbitrum: Layer2 = {
       },
     ],
     transactionApi: {
+      type: 'rpc',
+      // We need to subtract the Nitro system transactions
+      // after the block of the update
+      assessCount: (count: number, blockNumber: number) =>
+        blockNumber >= 22207818 ? count - 1 : count,
+      startBlock: 1, // block 0 has timestamp of beginning of unix time
+    },
+    transactionApiV2: {
       type: 'rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update

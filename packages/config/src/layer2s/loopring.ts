@@ -61,6 +61,10 @@ export const loopring: Layer2 = {
         sinceTimestamp: new UnixTime(1603950102),
       },
     ],
+    transactionApiV2: {
+      type: 'loopring',
+      callsPerMinute: 240,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
