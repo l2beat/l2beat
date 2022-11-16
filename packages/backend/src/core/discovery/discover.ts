@@ -22,6 +22,7 @@ export async function discover(
     ) {
       continue
     }
+    console.log('Analyzing', address)
     const { analyzed, relatives } = await analyzeItem(
       provider,
       address,

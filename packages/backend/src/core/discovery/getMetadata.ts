@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/types'
 
-import { concatAbis } from './getAbi'
+import { concatAbis } from './concatAbis'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export interface ContractMetadata {

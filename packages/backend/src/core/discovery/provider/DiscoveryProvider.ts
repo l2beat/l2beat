@@ -71,7 +71,7 @@ export class DiscoveryProvider {
 
   async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
     const result = await this.etherscanClient.getContractSource(address)
-    const isVerified = result.ABI === 'Contract source code not verified'
+    const isVerified = result.ABI !== 'Contract source code not verified'
 
     return {
       name: result.ContractName,
