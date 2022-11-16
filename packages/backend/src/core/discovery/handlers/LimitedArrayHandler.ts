@@ -1,15 +1,23 @@
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
+
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ContractValue } from '../types'
-import { callMethod } from './callMethod'
 import { Handler, HandlerResult } from './Handler'
+import { callMethod } from './utils/callMethod'
+import { toFunctionFragment } from './utils/toFunctionFragment'
 
 export class LimitedArrayHandler implements Handler {
   readonly name: string
+  private readonly fragment: utils.FunctionFragment
 
-  constructor(private fragment: utils.FunctionFragment, private limit = 5) {
-    this.name = fragment.name
+  constructor(
+    fragment: string | utils.FunctionFragment,
+    private readonly limit = 5,
+  ) {
+    this.fragment =
+      typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
+    this.name = this.fragment.name
   }
 
   async execute(

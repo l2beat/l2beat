@@ -1,9 +1,10 @@
 import { getErrorMessage } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
-import { toContractValue } from "../toContractValue"
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { isRevert } from '../utils/isRevert'
+
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { isRevert } from '../../utils/isRevert'
+import { toContractValue } from './toContractValue'
 
 export async function callMethod(
   provider: DiscoveryProvider,
