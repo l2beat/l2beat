@@ -23,7 +23,7 @@ export async function analyzeItem(
   address: string,
   options: DiscoveryOptions,
 ): Promise<{ analyzed: AnalyzedData; relatives: string[] }> {
-  const proxyDetection = await detectProxy(provider, address)
+  const proxyDetection = await detectProxy(provider, address, options)
 
   const metadata = await getMetadata(
     addressAnalyzer,

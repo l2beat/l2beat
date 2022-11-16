@@ -104,6 +104,11 @@ export const starknet: Layer2 = {
       callsPerMinute: 60 * 5,
       url: 'https://alpha-mainnet.starknet.io',
     },
+    transactionApiV2: {
+      type: 'starknet',
+      callsPerMinute: 60 * 5,
+      url: 'https://alpha-mainnet.starknet.io',
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

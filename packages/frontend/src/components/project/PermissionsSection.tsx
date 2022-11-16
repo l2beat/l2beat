@@ -18,12 +18,13 @@ export function PermissionsSection({
       <h3 className="mt-4 font-bold md:text-md">
         The system uses the following set of permissioned addresses:
       </h3>
-      <div className="flex flex-wrap gap-4 my-4">
+      <div className="mt-4 mb-4">
         {permissions.map((permission, i) => (
           <ContractEntry
             key={i}
             contract={permission}
             verificationStatus={verificationStatus}
+            className="mt-4 mb-4"
           />
         ))}
       </div>

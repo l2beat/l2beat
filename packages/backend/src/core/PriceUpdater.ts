@@ -1,4 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
+import { assert, Logger, TaskQueue } from '@l2beat/common'
 import { AssetId, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
@@ -9,7 +9,6 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
-import { assert } from '../tools/assert'
 import { Clock } from './Clock'
 
 export class PriceUpdater {

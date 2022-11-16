@@ -38,7 +38,7 @@ export function TechnologyIncompleteShort() {
   return (
     <div
       className={cx(
-        'mt-2 py-1 px-2 text-xs md:text-base rounded-lg',
+        'mt-2 mb-2 py-1 px-2 text-xs md:text-base rounded-lg',
         'bg-blue-450 bg-opacity-20 text-blue-700 dark:text-blue-300',
       )}
     >

@@ -69,6 +69,11 @@ export const rhinofi: Layer2 = {
       product: 'deversifi',
       sinceTimestamp: new UnixTime(1590491810),
     },
+    transactionApiV2: {
+      type: 'starkex',
+      product: 'deversifi',
+      sinceTimestamp: new UnixTime(1590491810),
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

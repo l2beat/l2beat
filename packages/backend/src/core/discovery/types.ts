@@ -2,6 +2,7 @@ import { UpgradeabilityParameters } from './proxies/types'
 
 export interface ProjectParameters {
   name: string
+  blockNumber: number
   contracts: ContractParameters[]
 }
 
