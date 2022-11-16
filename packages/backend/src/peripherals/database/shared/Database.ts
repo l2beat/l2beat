@@ -5,8 +5,6 @@ import path from 'path'
 import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
 
-configureUtc()
-
 export class Database {
   private readonly knex: Knex
   private migrated = false
@@ -21,6 +19,8 @@ export class Database {
     name: string,
     private readonly logger: Logger,
   ) {
+    configureUtc()
+
     const connectionWithName =
       typeof connection === 'object'
         ? { ...connection, application_name: name }
