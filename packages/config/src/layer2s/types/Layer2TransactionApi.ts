@@ -10,25 +10,10 @@ export interface RpcTransactionApi {
   startBlock?: number
 }
 
-export interface StarknetTransactionApi {
-  type: 'starknet'
-  url: string
-  callsPerMinute?: number
-}
-
 export interface AztecTransactionApi {
   type: 'aztec'
   url: string
   callsPerMinute?: number
-}
-export interface ZksyncTransactionApi {
-  type: 'zksync'
-  callsPerMinute: number
-}
-
-export interface LoopringTransactionApi {
-  type: 'loopring'
-  callsPerMinute: number
 }
 
 export type StarkexProduct =
@@ -37,6 +22,7 @@ export type StarkexProduct =
   | 'immutable'
   | 'myria'
   | 'deversifi'
+
 export interface StarkexTransactionApi {
   type: 'starkex'
   product: StarkexProduct
@@ -47,7 +33,4 @@ export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApi
   | StarkexTransactionApi
   | AztecTransactionApi
-  | StarknetTransactionApi
-  | ZksyncTransactionApi
-  | LoopringTransactionApi
 )
