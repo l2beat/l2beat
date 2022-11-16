@@ -1,5 +1,5 @@
-import waitForExpect from 'wait-for-expect'
 import { config } from 'dotenv'
+import waitForExpect from 'wait-for-expect'
 
 config()
 
