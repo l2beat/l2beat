@@ -38,7 +38,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('reports').where(
       'unix_timestamp',
-      timestamp.toString(),
+      timestamp.toDate(),
     )
     return rows.map(toRecord)
   }
@@ -94,7 +94,7 @@ export class ReportRepository extends BaseRepository {
       knex,
       projectId,
       assetId,
-    ).andWhereRaw(`unix_timestamp % ${UnixTime.DAY} = 0`)
+    ).andWhereRaw(`extract(hour from unix_timestamp) = 0`)
 
     return rows.map(toRecord)
   }
@@ -109,7 +109,7 @@ export class ReportRepository extends BaseRepository {
       knex,
       projectId,
       assetId,
-    ).andWhere('unix_timestamp', '>=', from.toString())
+    ).andWhere('unix_timestamp', '>=', from.toDate())
     return rows.map(toRecord)
   }
 
@@ -120,15 +120,15 @@ export class ReportRepository extends BaseRepository {
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
-      .andWhereRaw(`unix_timestamp % ${SIX_HOURS} = 0`)
-      .andWhere('unix_timestamp', '>=', from.toString())
+      .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
+      .andWhere('unix_timestamp', '>=', from.toDate())
     return rows.map(toRecord)
   }
 }
 
 function toRow(record: ReportRecord): ReportRow {
   return {
-    unix_timestamp: record.timestamp.toNumber().toString(),
+    unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
     balance: record.balance.toString(),
@@ -139,7 +139,7 @@ function toRow(record: ReportRecord): ReportRow {
 
 function toRecord(row: ReportRow): ReportRecord {
   return {
-    timestamp: new UnixTime(+row.unix_timestamp),
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
     balance: BigInt(row.balance),

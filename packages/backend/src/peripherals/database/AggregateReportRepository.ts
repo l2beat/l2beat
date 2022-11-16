@@ -38,7 +38,7 @@ export class AggregateReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports')
       .where('is_six_hourly', true)
-      .andWhere('unix_timestamp', '>=', from.toString())
+      .andWhere('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -46,7 +46,7 @@ export class AggregateReportRepository extends BaseRepository {
   async getHourly(from: UnixTime): Promise<AggregateReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregate_reports')
-      .andWhere('unix_timestamp', '>=', from.toString())
+      .andWhere('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -98,7 +98,7 @@ export class AggregateReportRepository extends BaseRepository {
 
 function toRow(record: AggregateReportRecord): AggregateReportRow {
   return {
-    unix_timestamp: record.timestamp.toNumber().toString(),
+    unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     tvl_usd: record.tvlUsd.toString(),
     tvl_eth: record.tvlEth.toString(),
@@ -109,7 +109,7 @@ function toRow(record: AggregateReportRecord): AggregateReportRow {
 
 function toRecord(row: AggregateReportRow): AggregateReportRecord {
   return {
-    timestamp: new UnixTime(+row.unix_timestamp),
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     tvlUsd: BigInt(row.tvl_usd),
     tvlEth: BigInt(row.tvl_eth),
