@@ -10,6 +10,15 @@ export const orbiter: Bridge = {
     slug: 'orbiter',
     links: {
       websites: ['https://orbiter.finance/'],
+      documentation: ['https://docs.orbiter.finance/'],
+      repositories: ['https://github.com/Orbiter-Finance'],
+      socialMedia: [
+        'https://twitter.com/Orbiter_Finance',
+        'https://orbiter-finance.medium.com/',
+        'https://discord.gg/hJJvXP7C73',
+        'https://reddit.com/r/OrbiterFinance/',
+        'https://youtube.com/channel/UC8oEJxM3_4IAYtEeAzR2bog',
+      ]
     },
   },
   config: {
