@@ -5,7 +5,7 @@ import { Config } from '../../config'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
 import { discover } from '../../core/discovery/discover'
 import { DiscoveryOptions } from '../../core/discovery/DiscoveryOptions'
-import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvider'
+import { ProviderWithCache } from '../../core/discovery/provider/ProviderWithCache'
 import { saveDiscoveryResult } from '../../core/discovery/saveDiscoveryResult'
 import { ApplicationModule } from '../ApplicationModule'
 
@@ -53,7 +53,7 @@ export function createDiscoveryModule(
     const blockNumber =
       safeConfig.blockNumber ?? (await provider.getBlockNumber())
 
-    const discoveryProvider = new DiscoveryProvider(
+    const discoveryProvider = new ProviderWithCache(
       provider,
       etherscanClient,
       blockNumber,
