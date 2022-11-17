@@ -1,5 +1,6 @@
 import { assert, HttpClient, RateLimiter } from '@l2beat/common'
 
+import { findMinedBlockOrThrow } from './findMinedBlockOrThrow'
 import {
   AztecGetRollupResponseBody,
   AztecGetRollupsResponseBody,
@@ -7,7 +8,6 @@ import {
   parseWithSchema,
   toBlock,
 } from './schemas'
-import { findLatestBlock } from './utils'
 
 export class AztecClient {
   constructor(
@@ -29,7 +29,7 @@ export class AztecClient {
       data: { rollups },
     } = parseWithSchema(data, AztecGetRollupsResponseBody)
 
-    return findLatestBlock(rollups)
+    return findMinedBlockOrThrow(rollups)
   }
 
   async getBlock(number: number): Promise<Block> {
