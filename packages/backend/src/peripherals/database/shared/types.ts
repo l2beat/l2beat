@@ -2,25 +2,25 @@ export {}
 
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     block_number: number
   }
 
   interface PriceRow {
     asset_id: string
     price_usd: number
-    unix_timestamp: string
+    unix_timestamp: Date
   }
 
   interface BalanceRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     holder_address: string
     asset_id: string
     balance: string
   }
 
   interface ReportRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     project_id: string
     asset_id: string
     balance: string
@@ -29,7 +29,7 @@ declare module 'knex/types/tables' {
   }
 
   interface AggregateReportRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     project_id: string
     tvl_usd: string
     tvl_eth: string
@@ -39,12 +39,12 @@ declare module 'knex/types/tables' {
 
   interface ReportStatusRow {
     config_hash: string
-    unix_timestamp: string
+    unix_timestamp: Date
   }
 
   interface BalanceStatusRow {
     config_hash: string
-    unix_timestamp: string
+    unix_timestamp: Date
   }
 
   interface ZksyncTransactionRow {
