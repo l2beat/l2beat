@@ -3,6 +3,7 @@ import { Layer2TransactionApiV2 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 
 import { Config } from '../../config'
+import { createAztecConnectProcessor } from '../../core/activity/processors/AztecConnectProcessor'
 import { createAztecProcessor } from '../../core/activity/processors/AztecProcessor'
 import { createLoopringProcessor } from '../../core/activity/processors/LoopringProcessor'
 import { createRpcProcessor } from '../../core/activity/processors/RpcProcessor'
@@ -102,7 +103,7 @@ export function createSequenceProcessors(
             transactionApi,
           )
         case 'aztecconnect':
-          return createAztecProcessor(
+          return createAztecConnectProcessor(
             projectId,
             blockRepository,
             http,
