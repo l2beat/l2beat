@@ -34,7 +34,7 @@ export class BalanceRepository extends BaseRepository {
   async getByTimestamp(timestamp: UnixTime): Promise<BalanceRecord[]> {
     const knex = await this.knex()
     const rows = await knex('asset_balances').where({
-      unix_timestamp: timestamp.toDate(),
+      unix_timestamp: timestamp.toString(),
     })
 
     return rows.map(toRecord)
@@ -79,7 +79,7 @@ function toRecord(row: BalanceRow): BalanceRecord {
   return {
     holderAddress: EthereumAddress(row.holder_address),
     assetId: AssetId(row.asset_id),
-    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    timestamp: new UnixTime(+row.unix_timestamp),
     balance: BigInt(row.balance),
   }
 }
@@ -88,7 +88,7 @@ function toRow(record: BalanceRecord): BalanceRow {
   return {
     holder_address: record.holderAddress.toString(),
     asset_id: record.assetId.toString(),
-    unix_timestamp: record.timestamp.toDate(),
+    unix_timestamp: record.timestamp.toString(),
     balance: record.balance.toString(),
   }
 }
