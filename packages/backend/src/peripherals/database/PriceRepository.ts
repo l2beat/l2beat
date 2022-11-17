@@ -42,7 +42,7 @@ export class PriceRepository extends BaseRepository {
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const knex = await this.knex()
     const rows = await knex('coingecko_prices').where({
-      unix_timestamp: timestamp.toDate(),
+      unix_timestamp: timestamp.toString(),
     })
 
     this.logger.debug({
@@ -72,7 +72,7 @@ export class PriceRepository extends BaseRepository {
     const row = await knex('coingecko_prices')
       .where({
         asset_id: assetId.toString(),
-        unix_timestamp: timestamp.toDate(),
+        unix_timestamp: timestamp.toString(),
       })
       .first()
     return row ? toRecord(row) : undefined
@@ -102,8 +102,8 @@ export class PriceRepository extends BaseRepository {
       rows.map((row) => [
         AssetId(row.asset_id),
         {
-          earliest: UnixTime.fromDate(row.min),
-          latest: UnixTime.fromDate(row.max),
+          earliest: new UnixTime(parseInt(row.min)),
+          latest: new UnixTime(parseInt(row.max)),
         },
       ]),
     )
@@ -119,18 +119,21 @@ export class PriceRepository extends BaseRepository {
       .max('unix_timestamp')
       .select('asset_id')
       .groupBy('asset_id')
-      .where('unix_timestamp', '>=', from.toDate())
-      .andWhere('unix_timestamp', '<=', to.toDate())
+      .where('unix_timestamp', '>=', from.toString())
+      .andWhere('unix_timestamp', '<=', to.toString())
 
     return new Map(
-      rows.map((row) => [AssetId(row.asset_id), UnixTime.fromDate(row.max)]),
+      rows.map((row) => [
+        AssetId(row.asset_id),
+        row.max ? new UnixTime(+row.max) : undefined,
+      ]),
     )
   }
 }
 
 function toRecord(row: PriceRow): PriceRecord {
   return {
-    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    timestamp: new UnixTime(+row.unix_timestamp),
     assetId: AssetId(row.asset_id),
     priceUsd: +row.price_usd,
   }
@@ -140,6 +143,6 @@ function toRow(record: PriceRecord): PriceRow {
   return {
     asset_id: record.assetId.toString(),
     price_usd: record.priceUsd,
-    unix_timestamp: record.timestamp.toDate(),
+    unix_timestamp: record.timestamp.toNumber().toString(),
   }
 }
