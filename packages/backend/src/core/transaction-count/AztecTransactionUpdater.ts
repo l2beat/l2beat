@@ -1,7 +1,7 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import { AztecClient } from '../../peripherals/aztec'
+import { AztecClient, AztecConnectClient } from '../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../peripherals/database/BlockTransactionCountRepository'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
@@ -17,7 +17,7 @@ export class AztecTransactionUpdater implements TransactionCounter {
   private latestBlock?: number
 
   constructor(
-    private readonly aztecClient: AztecClient,
+    private readonly aztecClient: AztecClient | AztecConnectClient,
     private readonly blockTransactionCountRepository: BlockTransactionCountRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,

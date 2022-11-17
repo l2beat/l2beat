@@ -18,7 +18,7 @@ export interface StarknetTransactionApiV2 {
 }
 
 export interface AztecTransactionApiV2 {
-  type: 'aztec'
+  type: 'aztec' | 'aztecconnect'
   url: string
   callsPerMinute?: number
 }

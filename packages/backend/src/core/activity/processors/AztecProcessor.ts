@@ -3,11 +3,17 @@ import { AztecTransactionApiV2 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
-import { AztecClient } from '../../../peripherals/aztec'
+import { AztecClient, AztecConnectClient } from '../../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
+
+function getClient(
+  type: AztecTransactionApiV2['type'],
+): typeof AztecClient | typeof AztecConnectClient {
+  return type === 'aztec' ? AztecClient : AztecConnectClient
+}
 
 export function createAztecProcessor(
   projectId: ProjectId,
@@ -19,7 +25,8 @@ export function createAztecProcessor(
 ): SequenceProcessor {
   const callsPerMinute = options.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new AztecClient(http, options.url, options.callsPerMinute)
+  const Client = getClient(options.type)
+  const client = new Client(http, options.url, callsPerMinute)
 
   return new SequenceProcessor(
     projectId.toString(),

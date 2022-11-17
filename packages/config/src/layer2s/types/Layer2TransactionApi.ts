@@ -11,7 +11,7 @@ export interface RpcTransactionApi {
 }
 
 export interface AztecTransactionApi {
-  type: 'aztec'
+  type: 'aztec' | 'aztecconnect'
   url: string
   callsPerMinute?: number
 }

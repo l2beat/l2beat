@@ -5,18 +5,21 @@ import { stringAs } from '../../tools/types'
 
 export type Rollup = z.infer<typeof Rollup>
 const mined = stringAs((s) => UnixTime.fromDate(new Date(s)))
-const Rollup = z.object({
+export const Rollup = z.object({
   id: z.number().int(),
   mined,
   numTxs: z.number().int(),
 })
+
+export type Rollups = z.infer<typeof Rollups>
+export const Rollups = z.array(Rollup.extend({ mined: mined.nullable() }))
 
 export type GetRollupsResponseBodySchema = z.infer<
   typeof GetRollupsResponseBodySchema
 >
 export const GetRollupsResponseBodySchema = z.object({
   data: z.object({
-    rollups: z.array(Rollup.extend({ mined: mined.nullable() })),
+    rollups: Rollups,
   }),
 })
 
@@ -28,3 +31,32 @@ export const GetRollupResponseBodySchema = z.object({
     rollup: Rollup,
   }),
 })
+
+export function parseWithSchema<T extends z.ZodType<unknown>>(
+  data: unknown,
+  schema: T,
+): z.TypeOf<T> {
+  const result = schema.safeParse(data)
+  if (!result.success) {
+    throw new Error(
+      `ZodError: ${JSON.stringify(result.error.issues)}, Data: ${JSON.stringify(
+        data,
+      )}`,
+    )
+  }
+  return result.data
+}
+
+export interface Block {
+  number: number
+  timestamp: UnixTime
+  transactionCount: number
+}
+
+export function toBlock(rollup: Rollup): Block {
+  return {
+    number: rollup.id,
+    timestamp: rollup.mined,
+    transactionCount: rollup.numTxs,
+  }
+}

@@ -101,6 +101,15 @@ export function createSequenceProcessors(
             logger,
             transactionApi,
           )
+        case 'aztecconnect':
+          return createAztecProcessor(
+            projectId,
+            blockRepository,
+            http,
+            sequenceProcessorRepository,
+            logger,
+            transactionApi,
+          )
         case 'starknet':
           return createStarknetProcessor(
             projectId,
