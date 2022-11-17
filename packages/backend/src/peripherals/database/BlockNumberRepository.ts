@@ -44,7 +44,7 @@ export class BlockNumberRepository extends BaseRepository {
   ): Promise<BlockNumberRecord | undefined> {
     const knex = await this.knex()
     const row = await knex('block_numbers')
-      .where('unix_timestamp', '=', timestamp.toString())
+      .where('unix_timestamp', '=', timestamp.toDate())
       .first()
     return row ? toRecord(row) : undefined
   }
@@ -57,14 +57,14 @@ export class BlockNumberRepository extends BaseRepository {
 
 function toRow(record: BlockNumberRecord): BlockNumberRow {
   return {
-    unix_timestamp: record.timestamp.toString(),
+    unix_timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
   }
 }
 
 function toRecord(row: BlockNumberRow): BlockNumberRecord {
   return {
-    timestamp: new UnixTime(+row.unix_timestamp),
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
     blockNumber: row.block_number,
   }
 }
