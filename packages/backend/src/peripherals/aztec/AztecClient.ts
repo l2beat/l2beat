@@ -1,9 +1,9 @@
 import { assert, HttpClient, RateLimiter } from '@l2beat/common'
 
 import {
+  AztecGetRollupResponseBody,
+  AztecGetRollupsResponseBody,
   Block,
-  GetRollupResponseBodySchema,
-  GetRollupsResponseBodySchema,
   parseWithSchema,
   toBlock,
 } from './schemas'
@@ -27,7 +27,7 @@ export class AztecClient {
     )
     const {
       data: { rollups },
-    } = parseWithSchema(data, GetRollupsResponseBodySchema)
+    } = parseWithSchema(data, AztecGetRollupsResponseBody)
 
     return findLatestBlock(rollups)
   }
@@ -36,7 +36,7 @@ export class AztecClient {
     const data = await this.queryApi(`{rollup(id:${number}){id mined numTxs}}`)
     const {
       data: { rollup },
-    } = parseWithSchema(data, GetRollupResponseBodySchema)
+    } = parseWithSchema(data, AztecGetRollupResponseBody)
     return toBlock(rollup)
   }
 

@@ -14,19 +14,19 @@ export const Rollup = z.object({
 export type Rollups = z.infer<typeof Rollups>
 export const Rollups = z.array(Rollup.extend({ mined: mined.nullable() }))
 
-export type GetRollupsResponseBodySchema = z.infer<
-  typeof GetRollupsResponseBodySchema
+export type AztecGetRollupsResponseBody = z.infer<
+  typeof AztecGetRollupsResponseBody
 >
-export const GetRollupsResponseBodySchema = z.object({
+export const AztecGetRollupsResponseBody = z.object({
   data: z.object({
     rollups: Rollups,
   }),
 })
 
-export type GetRollupResponseBodySchema = z.infer<
-  typeof GetRollupResponseBodySchema
+export type AztecGetRollupResponseBody = z.infer<
+  typeof AztecGetRollupResponseBody
 >
-export const GetRollupResponseBodySchema = z.object({
+export const AztecGetRollupResponseBody = z.object({
   data: z.object({
     rollup: Rollup,
   }),
