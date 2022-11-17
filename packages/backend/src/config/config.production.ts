@@ -16,7 +16,7 @@ export function getProductionConfig(cli: CliParameters): Config {
   return {
     name: 'Backend/Production',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    syncEnabled: true,
+    syncEnabled: false,
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'json',

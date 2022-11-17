@@ -13,7 +13,7 @@ export function getStagingConfig(cli: CliParameters): Config {
   return {
     ...productionConfig,
     name: 'Backend/Staging',
-    syncEnabled: false,
+    syncEnabled: true,
     activityV2: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: getEnv.integer('STARKEX_API_DELAY_HOURS', 12),
