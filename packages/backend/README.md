@@ -15,10 +15,10 @@ yarn build
 
 ### Database
 
-After the nodejs dependencies have been installed you should also install a Postgres database. The recommended way is through docker using the commands below.
+After the nodejs dependencies have been installed you should also install a Postgres database (v14). The recommended way is through docker using the commands below.
 
 ```
-docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres
+docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:14
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
