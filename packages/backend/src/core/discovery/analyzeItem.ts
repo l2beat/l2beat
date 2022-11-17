@@ -56,12 +56,24 @@ export async function analyzeItem(
 
   const upgradeability = proxyDetection?.upgradeability ?? { type: 'immutable' }
 
+  const values: ContractParameters['values'] = {}
+  const errors: ContractParameters['errors'] = {}
+  for (const parameter of parameters) {
+    if (parameter.value !== undefined) {
+      values[parameter.name] = parameter.value
+    }
+    if (parameter.error !== undefined) {
+      errors[parameter.name] = parameter.error
+    }
+  }
+
   return {
     analyzed: {
       name: metadata.name,
       address,
       upgradeability,
-      values: Object.fromEntries(parameters.map((x) => [x.name, x.value])),
+      values: Object.entries(values).length !== 0 ? values : undefined,
+      errors: Object.entries(errors).length !== 0 ? errors : undefined,
       meta: {
         isEOA: metadata.isEOA,
         verified: metadata.isVerified,

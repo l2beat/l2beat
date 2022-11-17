@@ -13,6 +13,7 @@ export interface ContractParameters {
   address: EthereumAddress
   upgradeability: UpgradeabilityParameters
   values?: Record<string, ContractValue>
+  errors?: Record<string, string>
 }
 
 export type ContractValue = string | number | boolean | ContractValue[]
