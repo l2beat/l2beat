@@ -17,6 +17,7 @@ export interface DatabaseOpts {
 }
 
 const REQUIRED_MAJOR_VERSION = 14
+
 export class Database {
   private readonly knex: Knex
   private migrated = false
