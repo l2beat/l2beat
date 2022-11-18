@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
+import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
 
 export class Database {
@@ -15,12 +16,20 @@ export class Database {
 
   constructor(
     connection: Knex.Config['connection'],
+    name: string,
     private readonly logger: Logger,
   ) {
+    configureUtc()
+
+    const connectionWithName =
+      typeof connection === 'object'
+        ? { ...connection, application_name: name }
+        : connection
+
     this.logger = this.logger.for(this)
     this.knex = KnexConstructor({
       client: 'pg',
-      connection,
+      connection: connectionWithName,
       migrations: {
         migrationSource: new PolyglotMigrationSource(
           path.join(__dirname, '..', 'migrations'),

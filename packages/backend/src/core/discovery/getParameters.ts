@@ -1,115 +1,39 @@
-import { BigNumber, Contract, providers, utils } from 'ethers'
+import { EthereumAddress } from '@l2beat/types'
+import { utils } from 'ethers'
 
 import { DiscoveryOptions } from './DiscoveryOptions'
-import { JsonFragment } from './getAbi'
-import { ContractValue } from './types'
-import { readArray } from './utils/array'
-import { isRevert } from './utils/isRevert'
-
-export interface Parameter {
-  name: string
-  value: ContractValue
-}
+import { Handler, HandlerResult } from './handlers/Handler'
+import { LimitedArrayHandler } from './handlers/LimitedArrayHandler'
+import { SimpleMethodHandler } from './handlers/SimpleMethodHandler'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export async function getParameters(
-  abiJson: JsonFragment[],
-  address: string,
-  provider: providers.Provider,
+  abiEntries: string[],
+  address: EthereumAddress,
+  provider: DiscoveryProvider,
   options: DiscoveryOptions,
-): Promise<Parameter[]> {
-  const abi = new utils.Interface(abiJson)
-  const functions = Object.entries(abi.functions)
+): Promise<HandlerResult[]> {
+  const abi = new utils.Interface(abiEntries)
+  const viewFunctions = Object.entries(abi.functions)
     .map((x) => x[1])
     .filter((x) => x.stateMutability === 'view' || x.constant)
     .filter(
-      (x) => !(options.skipMethods[address] ?? []).some((y) => y === x.name),
+      (x) =>
+        !(options.skipMethods[address.toString()] ?? []).some(
+          (y) => y === x.name,
+        ),
     )
-  const simpleFunctions = functions.filter((x) => x.inputs.length === 0)
-  const arrayFunctions = functions.filter(
-    (x) => x.inputs.length === 1 && x.inputs[0].type === 'uint256',
+
+  const handlers: Handler[] = [
+    ...viewFunctions
+      .filter((x) => x.inputs.length === 0)
+      .map((x) => new SimpleMethodHandler(x)),
+    ...viewFunctions
+      .filter((x) => x.inputs.length === 1 && x.inputs[0].type === 'uint256')
+      .map((x) => new LimitedArrayHandler(x)),
+  ]
+
+  return Promise.all(
+    handlers.map((h) => h.execute(provider, address, abiEntries)),
   )
-
-  const values = await Promise.all([
-    ...simpleFunctions.map((x) =>
-      getRegularParameter(address, x, provider, options.blockNumber),
-    ),
-    ...arrayFunctions.map((x) =>
-      getArrayParameter(address, x, provider, options.blockNumber),
-    ),
-  ])
-  return values.filter((x): x is Parameter => x !== undefined)
-}
-
-async function getRegularParameter(
-  address: string,
-  method: utils.FunctionFragment,
-  provider: providers.Provider,
-  blockNumber: number,
-): Promise<Parameter | undefined> {
-  const contract = new Contract(address, [method], provider)
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const result: unknown = await contract[method.name]({
-      blockTag: blockNumber,
-    })
-    console.log(`Called ${address}.${method.name}()`)
-    return {
-      name: method.name,
-      value: toContractValue(result),
-    }
-  } catch (e) {
-    if (isRevert(e)) {
-      return undefined
-    }
-    console.error(`Failed to call ${address}.${method.name}()`)
-    throw e
-  }
-}
-
-async function getArrayParameter(
-  address: string,
-  method: utils.FunctionFragment,
-  provider: providers.Provider,
-  blockNumber: number,
-): Promise<Parameter> {
-  const contract = new Contract(address, [method], provider)
-  const results = await readArray((i) =>
-    // eslint-disable-next-line
-    contract[method.name](i, {
-      blockTag: blockNumber,
-    }).then((x: unknown) => {
-      console.log(`Called ${address}.${method.name}(${i})`)
-      return x
-    }),
-  )
-  return {
-    name: method.name,
-    value: toContractValue(results),
-  }
-}
-
-function toContractValue(value: unknown): ContractValue {
-  if (Array.isArray(value)) {
-    return value.map(toSimpleContractValue)
-  }
-  return toSimpleContractValue(value)
-}
-
-function toSimpleContractValue(value: unknown): string | number | boolean {
-  if (
-    typeof value === 'string' ||
-    typeof value === 'number' ||
-    typeof value === 'boolean'
-  ) {
-    return value
-  }
-  if (BigNumber.isBigNumber(value)) {
-    if (value.gt(Number.MAX_SAFE_INTEGER.toString())) {
-      return value.toString()
-    } else {
-      return value.toNumber()
-    }
-  }
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  return `${value}`
 }
