@@ -21,6 +21,8 @@ export const orbiter: Bridge = {
         'https://youtube.com/channel/UC8oEJxM3_4IAYtEeAzR2bog',
       ],
     },
+    description:
+      'Orbiter Bridge is a cross-rollup bridge that uses liquidity provided by Makers on supported chains to perform swaps.',
   },
   config: {
     // In Orbiter the escrows are EOAs
@@ -69,7 +71,7 @@ export const orbiter: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        "Orbiter Bridge is a cross-rollup bridge that uses liquidity provided by Makers to perform swaps. Makers provide liquidity to their own accounts (EOAs) on supported chains. A user performing a swap deposits tokens to Maker's EOA on source chain and that Maker is supposed to release corresponding tokens from their EOA on the destination chain. Currently only Orbiter team is acting as Makers. In the future additional set of contracts is planned to be deployed that will require independent makers to post bonds to be used as safeguard against.",
+        "Orbiter Bridge is a cross-rollup bridge that uses liquidity provided by Makers to perform swaps. Makers provide liquidity to their own accounts (EOAs) on supported chains. A user performing a swap deposits tokens to Maker's EOA on source chain and that Maker is supposed to release corresponding tokens from their EOA on the destination chain. Currently only Orbiter team is acting as Makers.",
       references: [
         {
           text: 'Documentation - Maker System',
@@ -85,7 +87,7 @@ export const orbiter: Bridge = {
     validation: {
       name: 'Validation',
       description:
-        "Even though the Orbiter team has plans on deploying a set of contracts that will i.e. require independent makers to post bonds as safeguard against not meeting their obligations, currently the system relies on trust that Orbiter Makers will disburse required tokens on the destination chain after seeing user's deposit on the source chain.",
+        "Even though the Orbiter team has plans to deploy a set of contracts that will i.e. require independent makers to post bonds as safeguard against not meeting their obligations, currently the system relies on trust that Orbiter Makers will disburse required tokens on the destination chain after seeing user's deposit on the source chain.",
       references: [
         {
           text: 'Documentation - Maker System',
@@ -114,7 +116,7 @@ export const orbiter: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'Withdrawals are validated by an EOA.',
+      description: 'Withdrawals are validated by EOA.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
