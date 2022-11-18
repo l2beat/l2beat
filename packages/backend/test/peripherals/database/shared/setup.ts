@@ -1,6 +1,9 @@
 import { Logger } from '@l2beat/common'
 
-import { Database } from '../../../../src/peripherals/database/shared/Database'
+import {
+  Database,
+  DatabaseOpts,
+} from '../../../../src/peripherals/database/shared/Database'
 
 export function setupDatabaseTestSuite() {
   const { database, skip } = getTestDatabase()
@@ -20,9 +23,9 @@ export function setupDatabaseTestSuite() {
   return { database }
 }
 
-export function getTestDatabase() {
+export function getTestDatabase(opts?: DatabaseOpts) {
   const connection = process.env.TEST_DB_URL
-  const database = new Database(connection, 'Backend/Test', Logger.SILENT)
+  const database = new Database(connection, 'Backend/Test', Logger.SILENT, opts)
   return {
     database,
     skip: connection === undefined,
