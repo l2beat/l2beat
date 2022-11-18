@@ -22,7 +22,7 @@ export function setupDatabaseTestSuite() {
 
 export function getTestDatabase() {
   const connection = process.env.TEST_DB_URL
-  const database = new Database(connection, 'Backend/Test', Logger.DEBUG)
+  const database = new Database(connection, 'Backend/Test', Logger.SILENT)
   return {
     database,
     skip: connection === undefined,
