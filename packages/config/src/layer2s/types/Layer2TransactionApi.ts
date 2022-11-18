@@ -16,6 +16,12 @@ export interface AztecTransactionApi {
   callsPerMinute?: number
 }
 
+export interface AztecConnectTransactionApi {
+  type: 'aztecconnect'
+  url: string
+  callsPerMinute?: number
+}
+
 export type StarkexProduct =
   | 'dydx'
   | 'sorare'
@@ -33,4 +39,5 @@ export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApi
   | StarkexTransactionApi
   | AztecTransactionApi
+  | AztecConnectTransactionApi
 )

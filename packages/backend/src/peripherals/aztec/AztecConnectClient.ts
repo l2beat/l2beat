@@ -1,15 +1,10 @@
-import { assert, HttpClient, RateLimiter } from '@l2beat/common'
+import { HttpClient, RateLimiter } from '@l2beat/common'
+import assert from 'assert'
 
 import { findMinedBlockOrThrow } from './findMinedBlockOrThrow'
-import {
-  AztecGetRollupResponseBody,
-  AztecGetRollupsResponseBody,
-  Block,
-  parseWithSchema,
-  toBlock,
-} from './schemas'
+import { Block, parseWithSchema, Rollup, Rollups, toBlock } from './schemas'
 
-export class AztecClient {
+export class AztecConnectClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly url: string,
@@ -22,26 +17,19 @@ export class AztecClient {
   }
 
   async getLatestBlock(): Promise<Block> {
-    const data = await this.queryApi(
-      '{rollups(take:10,skip:0){id mined numTxs}}',
-    )
-    const {
-      data: { rollups },
-    } = parseWithSchema(data, AztecGetRollupsResponseBody)
-
+    const data = await this.queryApi(`rollups?take=10&skip=0`)
+    const rollups = parseWithSchema(data, Rollups)
     return findMinedBlockOrThrow(rollups)
   }
 
   async getBlock(number: number): Promise<Block> {
-    const data = await this.queryApi(`{rollup(id:${number}){id mined numTxs}}`)
-    const {
-      data: { rollup },
-    } = parseWithSchema(data, AztecGetRollupResponseBody)
+    const data = await this.queryApi(`rollup/${number}`)
+    const rollup = parseWithSchema(data, Rollup)
     return toBlock(rollup)
   }
 
   private async queryApi(query: string): Promise<unknown> {
-    const url = `${this.url}/graphql?query=${query}`
+    const url = `${this.url}/${query}`
     const response = await this.httpClient.fetch(url)
     assert(
       response.ok,
