@@ -12,7 +12,9 @@ export const Rollup = z.object({
 })
 
 export type Rollups = z.infer<typeof Rollups>
-export const Rollups = z.array(Rollup.extend({ mined: mined.nullable() }))
+export const Rollups = z.array(
+  Rollup.extend({ mined: mined.nullable().optional() }),
+)
 
 export type AztecGetRollupsResponseBody = z.infer<
   typeof AztecGetRollupsResponseBody
