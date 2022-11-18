@@ -2,6 +2,7 @@ import { assert, Logger } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 import { Client } from 'pg'
+import { callbackify } from 'util'
 
 import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
@@ -51,7 +52,7 @@ export class Database {
         ),
       },
       pool: {
-        afterCreate: this.onConnection.bind(this),
+        afterCreate: callbackify(this.ensureServerVersion.bind(this)),
       },
     })
   }
@@ -93,19 +94,7 @@ export class Database {
     this.logger.debug('Connection closed')
   }
 
-  private async onConnection(
-    connection: Client,
-    done: (error: unknown, connection: Client) => void,
-  ) {
-    try {
-      await this.ensureServerVersion(connection)
-      done(undefined, connection)
-    } catch (error) {
-      done(error, connection)
-    }
-  }
-
-  private async ensureServerVersion(connection: Client): Promise<void> {
+  private async ensureServerVersion(connection: Client): Promise<Client> {
     const result: VersionQueryResult = await connection.query(
       'show server_version',
     )
@@ -115,5 +104,6 @@ export class Database {
       major === this.requiredMajorVersion,
       `Postgres server major version ${major} different than required ${this.requiredMajorVersion}`,
     )
+    return connection
   }
 }
