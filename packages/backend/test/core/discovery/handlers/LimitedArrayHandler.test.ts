@@ -34,7 +34,7 @@ describe(LimitedArrayHandler.name, () => {
     })
 
     const handler = new LimitedArrayHandler(method, 3)
-    expect(handler.name).toEqual('owners')
+    expect(handler.field).toEqual('owners')
 
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({

@@ -21,7 +21,7 @@ describe(SimpleMethodHandler.name, () => {
     const handler = new SimpleMethodHandler(
       'function balanceOf() view returns (uint256)',
     )
-    expect(handler.name).toEqual('balanceOf')
+    expect(handler.field).toEqual('balanceOf')
 
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({

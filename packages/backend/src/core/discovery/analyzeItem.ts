@@ -59,10 +59,10 @@ export async function analyzeItem(
   const errors: ContractParameters['errors'] = {}
   for (const parameter of parameters) {
     if (parameter.value !== undefined) {
-      values[parameter.name] = parameter.value
+      values[parameter.field] = parameter.value
     }
     if (parameter.error !== undefined) {
-      errors[parameter.name] = parameter.error
+      errors[parameter.field] = parameter.error
     }
   }
 
