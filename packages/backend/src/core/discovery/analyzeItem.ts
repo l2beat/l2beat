@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/types'
 
 import { detectProxy } from './detectProxy'
-import { DiscoveryOptions } from './DiscoveryOptions'
+import { DiscoveryConfig } from './DiscoveryConfig'
 import { getMetadata } from './getMetadata'
 import { getParameters } from './getParameters'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
@@ -19,13 +19,12 @@ export interface AnalyzedData extends ContractParameters {
 export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-  options: DiscoveryOptions,
+  config: DiscoveryConfig,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
   const proxyDetection = await detectProxy(provider, address)
 
   const metadata = await getMetadata(
     provider,
-    options.addAbis[address.toString()] ?? [],
     address,
     proxyDetection?.implementations ?? [],
   )
@@ -34,7 +33,7 @@ export async function analyzeItem(
     metadata.abi,
     address,
     provider,
-    options,
+    config,
   )
 
   const relatives = parameters

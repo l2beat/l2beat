@@ -14,6 +14,14 @@ export function EthereumAddress(value: string) {
 
 EthereumAddress.ZERO = EthereumAddress(constants.AddressZero)
 
+EthereumAddress.check = function check(value: string) {
+  try {
+    return EthereumAddress(value).toString() === value
+  } catch {
+    return false
+  }
+}
+
 EthereumAddress.isBefore = function isBefore(
   a: EthereumAddress,
   b: EthereumAddress,

@@ -3,8 +3,8 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
-import { ApplicationModule } from '../ApplicationModule'
 import { runDiscovery } from '../../core/discovery/runDiscovery'
+import { ApplicationModule } from '../ApplicationModule'
 
 export function createDiscoveryModule(
   config: Config,
