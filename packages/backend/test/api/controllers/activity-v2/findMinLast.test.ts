@@ -4,7 +4,7 @@ import { expect } from 'earljs'
 import { findMinLast } from '../../../../src/api/controllers/activity-v2/findMinLast'
 
 describe(findMinLast.name, () => {
-  it('returns now if no data', () => {
+  it('returns undefined if no data', () => {
     expect(findMinLast([[], []])).toEqual(undefined)
   })
 
