@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { DailyTransactionCountMap } from './types'
+import { DailyTransactionCountProjectsMap } from './types'
 
 export interface LaggingProject {
   projectId: ProjectId
@@ -8,7 +8,7 @@ export interface LaggingProject {
 }
 
 export function getLaggingProjects(
-  counts: DailyTransactionCountMap,
+  counts: DailyTransactionCountProjectsMap,
   expectedTip: UnixTime,
 ): LaggingProject[] {
   const lagging = []

@@ -7,10 +7,10 @@ import { Clock } from '../Clock'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
 import { getLaggingProjects, LaggingProject } from './getLaggingProjects'
 import { postprocessCounts } from './postprocessCounts'
-import { DailyTransactionCountMap } from './types'
+import { DailyTransactionCountProjectsMap } from './types'
 
 interface DailyTransactionCountServiceOpts {
-  delayHours: number
+  syncCheckDelayHours: number
 }
 
 export class DailyTransactionCountService {
@@ -25,7 +25,7 @@ export class DailyTransactionCountService {
     opts?: DailyTransactionCountServiceOpts,
   ) {
     this.logger = logger.for(this)
-    this.delayHours = opts?.delayHours ?? 2
+    this.delayHours = opts?.syncCheckDelayHours ?? 2
     this.refreshQueue = new TaskQueue<void>(async () => {
       this.logger.info('Refresh started')
       await this.dailyTransactionCountRepository.refresh()
@@ -51,7 +51,7 @@ export class DailyTransactionCountService {
   /**
    * Returns counts with timestamps lower than or equal to yesterday.
    */
-  async getDailyCounts(): Promise<DailyTransactionCountMap> {
+  async getDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
     const allCounts =
       await this.dailyTransactionCountRepository.getDailyCounts()
     const groupedCounts = groupBy(allCounts, (r) => r.projectId.toString())

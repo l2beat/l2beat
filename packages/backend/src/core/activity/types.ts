@@ -5,4 +5,7 @@ export interface DailyTransactionCount {
   timestamp: UnixTime
 }
 
-export type DailyTransactionCountMap = Map<ProjectId, DailyTransactionCount[]>
+export type DailyTransactionCountProjectsMap = Map<
+  ProjectId,
+  DailyTransactionCount[]
+>
