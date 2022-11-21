@@ -24,7 +24,7 @@ export function createRpcProcessor(
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const url = transactionApi.url
   assert(url, 'Url for rpc client must be defined')
-  const provider = new providers.JsonRpcProvider({
+  const provider = new providers.StaticJsonRpcProvider({
     url,
     timeout,
   })
