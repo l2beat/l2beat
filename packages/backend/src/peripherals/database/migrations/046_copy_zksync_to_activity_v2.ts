@@ -13,6 +13,14 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
+export async function up(knex: Knex) {
+  await knex.schema.raw(copyZksyncTransactions)
+  await knex.schema.raw(updateZksyncProcessor)
+  await knex.schema.raw(assertZksyncMatchProcessor)
+}
+
+export async function down(_knex: Knex) {}
+
 const copyZksyncTransactions = `
   insert into activity_v2.zksync (block_number, block_index, unix_timestamp)
   select block_number, block_index, unix_timestamp
@@ -47,11 +55,3 @@ const assertZksyncMatchProcessor = `
     end loop;
   end; $$
 `
-
-export async function up(knex: Knex) {
-  await knex.schema.raw(copyZksyncTransactions)
-  await knex.schema.raw(updateZksyncProcessor)
-  await knex.schema.raw(assertZksyncMatchProcessor)
-}
-
-export async function down(_knex: Knex) {}

@@ -13,6 +13,14 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
+export async function up(knex: Knex) {
+  await knex.schema.raw(copyBlockTransactionCounts)
+  await knex.schema.raw(updateBlockProcessors)
+  await knex.schema.raw(assertBlockTransactionCountsMatchProcessors)
+}
+
+export async function down(_knex: Knex) {}
+
 const copyBlockTransactionCounts = `
   insert into activity_v2.block (project_id, block_number, count, unix_timestamp)
   select project_id, block_number, count, unix_timestamp
@@ -49,11 +57,3 @@ const assertBlockTransactionCountsMatchProcessors = `
     end loop;
   end; $$
 `
-
-export async function up(knex: Knex) {
-  await knex.schema.raw(copyBlockTransactionCounts)
-  await knex.schema.raw(updateBlockProcessors)
-  await knex.schema.raw(assertBlockTransactionCountsMatchProcessors)
-}
-
-export async function down(_knex: Knex) {}
