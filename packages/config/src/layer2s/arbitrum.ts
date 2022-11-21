@@ -444,7 +444,7 @@ export const arbitrum: Layer2 = {
   },
   milestones: [
     {
-      name: 'Launch on Ethereum Mainnet',
+      name: 'Mainnet launch',
       description: '',
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: new Date('2021-08-31'),
