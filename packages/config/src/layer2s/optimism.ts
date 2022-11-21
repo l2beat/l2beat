@@ -343,25 +343,13 @@ export const optimism: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
-<<<<<<< HEAD
-=======
-      description: '',
->>>>>>> cea07539 (optimism and dydx)
       link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
       date: new Date('2021-12-16'),
     },
     {
       name: 'OP Token airdrop #1',
-<<<<<<< HEAD
       link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
       date: new Date('2022-05-31'),
     },
   ],
-=======
-      description: '',
-      link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
-      date: new Date('2022-05-31'),
-    },
-  ]
->>>>>>> cea07539 (optimism and dydx)
 }
