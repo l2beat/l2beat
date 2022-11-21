@@ -13,6 +13,7 @@ import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute
 export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
   singleStarkexCPM: number
   starkexApiDelayHours: number
+  starkexRepeatLastDays: number
 }
 
 export function createStarkexProcessor(
@@ -25,6 +26,7 @@ export function createStarkexProcessor(
   options: StarkexProcessorOptions,
 ): SequenceProcessor {
   const batchSize = getBatchSizeFromCallsPerMinute(options.singleStarkexCPM)
+  const startDay = options.sinceTimestamp.toStartOf('day').toDays()
 
   return new SequenceProcessor(
     projectId.toString(),
@@ -32,11 +34,12 @@ export function createStarkexProcessor(
     sequenceProcessorRepository,
     {
       batchSize,
-      startFrom: options.sinceTimestamp.toStartOf('day').toDays(),
+      startFrom: startDay,
       // eslint-disable-next-line @typescript-eslint/require-await
       getLatest: async () =>
         getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
       processRange: async (from, to, trx) => {
+        from = Math.max(from - options.starkexRepeatLastDays, startDay)
         const queries = range(from, to + 1).map((day) => async () => {
           const count = await starkexClient.getDailyCount(day, options.product)
 
