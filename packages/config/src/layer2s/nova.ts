@@ -1,6 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { arbitrum } from './arbitrum'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -319,5 +318,4 @@ export const nova: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: arbitrum.news,
 }

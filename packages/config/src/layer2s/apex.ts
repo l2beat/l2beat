@@ -132,11 +132,4 @@ export const apex: Layer2 = {
         'Can approve fast withdrawal from the bridge. At least 2 signatures are needed in order for the withdrawal to be valid.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-01',
-      name: 'Introducing ApeXPro',
-      link: 'https://twitter.com/OfficialApeXdex/status/1565282539463270400',
-    },
-  ],
 }

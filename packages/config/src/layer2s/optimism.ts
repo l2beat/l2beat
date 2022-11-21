@@ -340,21 +340,4 @@ export const optimism: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2022-08-23',
-      name: 'OP Summer Summary',
-      link: 'https://optimism.mirror.xyz/BdCGX9klPs2MpT8zywJhNIiTdD3zFpRBb8a4WZc5AKs',
-    },
-    {
-      date: '2022-05-31',
-      name: 'Let the Claims Begin',
-      link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
-    },
-    {
-      date: '2022-05-17',
-      name: 'This Governance Will Self Destruct',
-      link: 'https://optimism.mirror.xyz/r888e4B5iiNQi-3_mO26ixgv-plQ099XWgqEOv9iWKA',
-    },
-  ],
 }

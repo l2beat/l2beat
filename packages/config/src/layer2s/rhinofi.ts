@@ -189,21 +189,4 @@ export const rhinofi: Layer2 = {
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-14',
-      name: 'Merge Bonus, Earn an extra 2% yield on stETH',
-      link: 'https://rhino.fi/blog/the-ethereum-merge-our-special-yield-boost/',
-    },
-    {
-      date: '2022-09-09',
-      name: 'The Ethereum Merge, 6 Biggest Questions Answered',
-      link: 'https://rhino.fi/blog/the-ethereum-merge-the-six-biggest-questions-answered/',
-    },
-    {
-      date: '2022-08-31',
-      name: 'The first fully trustless AMM pools on StarkEx L2',
-      link: 'https://rhino.fi/blog/a-new-chapter-for-amms-the-first-fully-trustless-pools-on-starkex-layer-2-are-live-on-rhino-fi/',
-    },
-  ],
 }

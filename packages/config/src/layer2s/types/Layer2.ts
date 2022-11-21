@@ -1,7 +1,6 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
-  News,
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
@@ -30,7 +29,6 @@ export interface Layer2 {
   /** List of permissioned addresses */
   permissions?: ProjectPermission[]
   /** Links to recent developments */
-  news: News[]
 }
 
 export interface Layer2Display {

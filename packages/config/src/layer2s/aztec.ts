@@ -193,21 +193,4 @@ export const aztec: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2022-09-20',
-      name: 'Explaining the “Network” in Aztec Network',
-      link: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
-    },
-    {
-      date: '2022-09-15',
-      name: 'Proof Compression using zk-SNARKs',
-      link: 'https://medium.com/aztec-protocol/proof-compression-a318f478d575',
-    },
-    {
-      date: '2022-07-07',
-      name: 'Aztec Connect is live on mainnet',
-      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
-    },
-  ],
 }

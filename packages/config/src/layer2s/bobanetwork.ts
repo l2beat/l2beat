@@ -336,21 +336,4 @@ export const bobanetwork: Layer2 = {
       description: 'Central actor to post new L2 state roots to L1.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-21',
-      name: 'Boba Network is launching on Avalanche',
-      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
-    },
-    {
-      date: '2022-09-09',
-      name: 'Boba Network’s veTokenomics Campaign',
-      link: 'https://boba.network/vetokenomics-boba-101/',
-    },
-    {
-      date: '2022-09-06',
-      name: 'Sushi is coming to Boba Network',
-      link: 'https://boba.network/sushi-coming-to-boba-network/',
-    },
-  ],
 }

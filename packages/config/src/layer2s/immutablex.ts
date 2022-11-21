@@ -176,21 +176,4 @@ export const immutablex: Layer2 = {
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-19',
-      name: 'Automated Metadata Refresh is live',
-      link: 'https://immutablex.medium.com/automated-metadata-refresh-is-live-on-immutable-x-aa630097db32',
-    },
-    {
-      date: '2022-09-13',
-      name: 'Immutable’s Tokenomics and Staking Principles',
-      link: 'https://immutablex.medium.com/immutables-tokenomics-and-staking-principles-5b42f1c66f83',
-    },
-    {
-      date: '2022-09-07',
-      name: 'Immutable & The Merge',
-      link: 'https://immutablex.medium.com/immutable-the-merge-51c88bdae656',
-    },
-  ],
 }
