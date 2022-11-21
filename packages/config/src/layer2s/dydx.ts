@@ -190,16 +190,28 @@ export const dydx: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
+<<<<<<< HEAD
+=======
+      description: '',
+>>>>>>> cea07539 (optimism and dydx)
       link: 'https://dydx.exchange/blog/public',
       date: new Date('2021-04-06'),
     },
     {
       name: 'dYdX Foundation established',
+<<<<<<< HEAD
+=======
+      description: '',
+>>>>>>> cea07539 (optimism and dydx)
       link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: new Date('2021-08-03'),
     },
     {
       name: 'dYdX v4 announced',
+<<<<<<< HEAD
+=======
+      description: '',
+>>>>>>> cea07539 (optimism and dydx)
       link: 'https://dydx.exchange/blog/dydx-chain',
       date: new Date('2022-06-22'),
     },

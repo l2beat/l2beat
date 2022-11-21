@@ -445,6 +445,10 @@ export const arbitrum: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
+<<<<<<< HEAD
+=======
+      description: '',
+>>>>>>> cea07539 (optimism and dydx)
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: new Date('2021-08-31'),
     },
