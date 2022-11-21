@@ -39,19 +39,13 @@ const assertZksyncMatchProcessor = `
   declare
     r record;
   begin
-    for r in
-      select
-        min(block_number),
-        max(block_number),
-        count(distinct block_number),
-        last_processed
-      from activity_v2.zksync
-      join sequence_processor
-      on id = 'zksync'
-      group by last_processed
-    loop
-      assert r.count = (r.max - r.min + 1)::bigint, 'Incorrect count';
-      assert r.max = r.last_processed, 'Incorrect max';
-    end loop;
+    select min(block_number), max(block_number), count(distinct block_number), last_processed
+    into r
+    from activity_v2.zksync
+    join sequence_processor
+    on id = 'zksync'
+    group by last_processed;
+    assert r.count = (r.max - r.min + 1)::bigint, 'Incorrect count';
+    assert r.max = r.last_processed, 'Incorrect max';
   end; $$
 `
