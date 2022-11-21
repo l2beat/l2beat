@@ -49,7 +49,12 @@
   "rewrites": [
     {
       "source": "/api/projects/:project/tvl/assets/:asset",
-      "destination": "https://l2beat-staging.herokuapp.com/api/projects/:project/tvl/assets/:asset"
+      "has": [{ "type": "host", "value": ".*l2beat-staging.*" }],
+      "destination": "https://staging.l2beat.com/api/projects/:project/tvl/assets/:asset"
+    },
+    {
+      "source": "/api/projects/:project/tvl/assets/:asset",
+      "destination": "https://api.l2beat.com/api/projects/:project/tvl/assets/:asset"
     }
   ]
 }
