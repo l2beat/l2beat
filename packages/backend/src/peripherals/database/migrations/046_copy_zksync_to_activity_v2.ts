@@ -45,7 +45,12 @@ const assertZksyncMatchProcessor = `
     join sequence_processor
     on id = 'zksync'
     group by last_processed;
-    assert r.count = (r.max - r.min + 1)::bigint, 'Incorrect count';
-    assert r.max = r.last_processed, 'Incorrect max';
+
+    if not found then
+      raise notice 'no zksync data to copy';
+    else
+      assert r.count = (r.max - r.min + 1)::bigint, 'Incorrect count';
+      assert r.max = r.last_processed, 'Incorrect max';
+    end if;
   end; $$
 `
