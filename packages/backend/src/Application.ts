@@ -53,6 +53,7 @@ export class Application {
       }
 
       if (config.database) {
+        await database.assertRequiredServerVersion()
         if (config.database.freshStart) {
           await database.rollbackAll()
         }
