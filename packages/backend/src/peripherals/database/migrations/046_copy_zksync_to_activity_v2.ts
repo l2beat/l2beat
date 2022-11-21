@@ -29,7 +29,7 @@ const copyZksyncTransactions = `
 `
 const updateZksyncProcessor = `
   insert into sequence_processor (id, last_processed, finished_processing_at)
-  values ('zksync', (select max(block_number) from activity_v2.zksync), now()::timestamp)
+  select 'zksync', coalesce(max(block_number), 0), now()::timestamp from activity_v2.zksync
   on conflict (id) do update set
     last_processed = excluded.last_processed,
     finished_processing_at = excluded.finished_processing_at
