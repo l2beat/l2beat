@@ -340,4 +340,18 @@ export const metis: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      description: '',
+      link: 'https://twitter.com/MetisDAO/status/1461751817902170125',
+      date: new Date('2021-11-19'),
+    },
+    {
+      name: 'Off-chain data availability',
+      description: '',
+      link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
+      date: new Date('2022-04-12'),
+    },
+  ],
 }

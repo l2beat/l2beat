@@ -353,5 +353,5 @@ export const optimism: Layer2 = {
       link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
       date: new Date('2022-05-31'),
     },
-  ]
+  ],
 }
