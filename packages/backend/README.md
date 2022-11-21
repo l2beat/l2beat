@@ -41,29 +41,48 @@ Optionally if you want to speed up the price collection obtain an api key from:
 Once you have everything create a `.env` file that configures the app's
 environment variables. One variable per line `KEY=value`.
 
-- `ETHERSCAN_API_KEY` - Api key for Etherscan
-- `ALCHEMY_API_KEY` - Api key for Alchemy
-- `DATABASE_URL` - Database url used in production deployment
+#### Required
+
 - `LOCAL_DB_URL` - Database url used in `yarn start`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_local`
-- `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgresql://postgres:password@localhost:5432/l2beat_test`
-- `STARKEX_API_KEY` - Starkex api key
-- `COINGECKO_API_KEY` - (Optional) Api key for Coingecko
-- `LOG_LEVEL` - (Optional) Integer specifying the log level. `0` - none, `1` - error, `2` - warn, `3` - info, `4` - debug
-- `PORT` - (Optional) The port on which the application exposes the api
+- `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
+- `DATABASE_URL` - Database url used in production deployment
+- `ETHERSCAN_API_KEY` - API key for Etherscan
+- `ALCHEMY_API_KEY` - API key for Alchemy
+- `STARKEX_API_KEY` - Starkex API key
+
+#### Optional
+
+- `COINGECKO_API_KEY` (Optional) - API key for Coingecko
+- `LOG_LEVEL` (Optional) - Integer specifying the log level. `0` - none, `1` - error, `2` - warn, `3` - info, `4` - debug
+- `PORT` (Optional) - The port on which the application exposes the api
 - `SYNC_DISABLED` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `TRANSACTION_COUNT_ENABLED` (default `false`) - When set to `true` activity feature is enabled
 - `ACTIVITY_V2_ENABLED` (default `false`) - When set to `true` activity v2 feature is enabled
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
-- `DISCOVERY_BLOCK_NUMBER` - Override the block number used during local discovery
+- `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 
-Example:
+#### .env boilerplate:
 
-```
-ETHERSCAN_API_KEY=your_etherscan_key
-ALCHEMY_API_KEY=your_alchemy_key
+```bash
 LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
 TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
+DATABASE_URL=
+
+ETHERSCAN_API_KEY=
+ALCHEMY_API_KEY=
+STARKEX_API_KEY=
+
+#-----OPTIONAL-----
+#COINGECKO_API_KEY=
+#LOG_LEVEL=
+#PORT=
+#SYNC_DISABLED=
+#FRESH_START=
+#TRANSACTION_COUNT_ENABLED=
+#ACTIVITY_V2_ENABLED=
+#TVL_SYNC_ENABLED=
+#DISCOVERY_BLOCK_NUMBER=
 ```
 
 ## Scripts
