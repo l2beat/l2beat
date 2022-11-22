@@ -130,7 +130,11 @@ export const arbitrum: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    validatorFailure: {
+      value: 'Propose blocks',
+      description:
+        'Anyone can become a Validator after 7-days of inactivity from the currently whitelisted Validators.',
+    },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
@@ -206,7 +210,7 @@ export const arbitrum: Layer2 = {
             href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
           },
         ],
-        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+        risks: [],
       },
       {
         name: 'Tradeable Bridge Exit',
