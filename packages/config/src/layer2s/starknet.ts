@@ -191,7 +191,7 @@ export const starknet: Layer2 = {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: '0x659a00c33263d9254Fed382dE81349426C795BB6',
+        address: '0x9F96fE0633eE838D0298E8b8980E6716bE81388d',
       },
       {
         name: 'L1Escrow',
