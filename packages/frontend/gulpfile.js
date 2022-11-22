@@ -66,7 +66,10 @@ function generateMetaImages() {
 }
 
 async function updateVerifiedContracts() {
-  if (process.env.DEPLOYMENT_ENV !== 'production') {
+  if (
+    process.env.DEPLOYMENT_ENV !== 'production' &&
+    process.env.DEPLOYMENT_ENV !== 'staging'
+  ) {
     return
   }
   const cwd = process.cwd()
