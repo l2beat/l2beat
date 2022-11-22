@@ -44,13 +44,24 @@ export function invertAndPrint(
   }
 
   for (const contract of project.contracts) {
-    add(contract.address)
     const upgradeabilityValues = contract.upgradeability as unknown as Record<
       string,
       ContractValue
     >
 
-    const values = { ...contract.values, ...upgradeabilityValues }
+    add(contract.address)
+    const values: Record<string, ContractValue | undefined> = {
+      ...contract.values,
+      ...upgradeabilityValues,
+
+      // We don't want to show the implementation as nodes in the diagram
+      implementation: undefined,
+      callImplementation: undefined,
+      adminImplementation: undefined,
+      userImplementation: undefined,
+      implementations: undefined,
+    }
+
     for (const [key, value] of Object.entries(values)) {
       if (Array.isArray(value)) {
         for (const [i, entry] of value.entries()) {
@@ -60,7 +71,7 @@ export function invertAndPrint(
             atAddress: contract.address,
           })
         }
-      } else {
+      } else if (value) {
         add(value, {
           name: key,
           atName: contract.name,
@@ -113,7 +124,7 @@ function printMermaid(addresses: Map<string, AddressDetails>) {
             (details.name
               ? `(${details.name}\\n${details.address.slice(0, 6)})`
               : ''),
-          '-->|' + role.name + '|',
+          '-->|is ' + role.name + '|',
           role.atAddress.slice(0, 6) +
             (role.atName
               ? `(${role.atName}\\n${role.atAddress.slice(0, 6)})`
