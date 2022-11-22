@@ -45,7 +45,7 @@ export function invertAndPrint(
 
   for (const contract of project.contracts) {
     const upgradeabilityValues = {
-      ...contract.upgradeability as unknown as Record<string, ContractValue>
+      ...(contract.upgradeability as unknown as Record<string, ContractValue>),
 
       // We don't want to show the implementation as nodes in the diagram
       implementation: undefined,
