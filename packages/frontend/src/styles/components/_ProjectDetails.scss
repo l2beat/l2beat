@@ -9,7 +9,7 @@
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
     grid-template-rows: unset;
-    grid-template-areas: 'links' 'tech' 'news';
+    grid-template-areas: 'links' 'tech';
   }
 
   .LinkSection {
@@ -18,9 +18,5 @@
 
   .ProjectDetails-Content {
     grid-area: tech;
-  }
-
-  .NewsSection {
-    grid-area: news;
   }
 }

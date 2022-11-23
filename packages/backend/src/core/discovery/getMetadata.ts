@@ -1,55 +1,53 @@
-import { AddressAnalyzer } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 
-import { getAbi, JsonFragment } from './getAbi'
+import { concatAbis } from './concatAbis'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export interface ContractMetadata {
   name: string
   isEOA: boolean
   isVerified: boolean
   implementationVerified: boolean
-  abi: JsonFragment[]
+  abi: string[]
 }
 
 export async function getMetadata(
-  addressAnalyzer: AddressAnalyzer,
-  additionalAbiEntries: JsonFragment[],
-  address: string,
-  implementations: string[],
+  provider: DiscoveryProvider,
+  additionalAbiEntries: string[],
+  address: EthereumAddress,
+  implementations: EthereumAddress[],
 ): Promise<ContractMetadata> {
-  const [analysis, ...implementationAnalyses] = await Promise.all([
-    addressAnalyzer.analyze(EthereumAddress(address)),
-    ...implementations.map((address) =>
-      addressAnalyzer.analyze(EthereumAddress(address)),
-    ),
+  const [code, metadata] = await Promise.all([
+    provider.getCode(address),
+    provider.getMetadata(address),
   ])
 
-  if (analysis.type === 'EOA') {
+  if (code.length === 0) {
     return {
-      name: analysis.name,
+      name: 'EOA',
       isEOA: true,
       isVerified: true,
       implementationVerified: true,
       abi: [],
     }
-  } else {
-    const name =
-      implementationAnalyses.length === 1
-        ? implementationAnalyses[0].name
-        : analysis.name
-    const abi = getAbi(
-      analysis,
-      ...implementationAnalyses,
-      additionalAbiEntries,
-    )
-    return {
-      name,
-      isEOA: false,
-      isVerified: analysis.verified,
-      implementationVerified: implementationAnalyses.every(
-        (x) => x.type === 'Contract' && x.verified,
-      ),
-      abi,
-    }
+  }
+
+  const implementationMeta = await Promise.all(
+    implementations.map((address) => provider.getMetadata(address)),
+  )
+
+  const name =
+    implementationMeta.length === 1 ? implementationMeta[0].name : metadata.name
+  const abi = concatAbis(
+    ...metadata.abi,
+    ...implementationMeta.flatMap((x) => x.abi),
+    ...additionalAbiEntries,
+  )
+  return {
+    name,
+    isEOA: false,
+    isVerified: metadata.isVerified,
+    implementationVerified: implementationMeta.every((x) => x.isVerified),
+    abi,
   }
 }

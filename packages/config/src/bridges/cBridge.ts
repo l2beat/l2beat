@@ -129,12 +129,7 @@ export const cBridge: Bridge = {
           href: 'https://curve.fi/files/stableswap-paper.pdf',
         },
       ],
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'destination token contract is implemented incorrectly.',
-        },
-      ],
+      risks: [],
     },
   },
   riskView: {

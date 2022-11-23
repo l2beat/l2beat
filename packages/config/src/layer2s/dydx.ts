@@ -75,6 +75,7 @@ export const dydx: Layer2 = {
       type: 'starkex',
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({
@@ -186,21 +187,21 @@ export const dydx: Layer2 = {
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-09',
-      name: 'Testnet migration from Ropsten to Goerli',
-      link: 'https://dydx.exchange/blog/staging-testnet-migration-to-goerli',
+      name: 'Mainnet launch',
+      link: 'https://dydx.exchange/blog/public',
+      date: new Date('2021-04-06'),
     },
     {
-      date: '2022-09-09',
-      name: 'Trading Leagues update',
-      link: 'https://dydx.exchange/blog/trading-leagues-update',
+      name: 'dYdX Foundation established',
+      link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+      date: new Date('2021-08-03'),
     },
     {
-      date: '2022-09-07',
-      name: 'No disruption to trading during The Merge',
-      link: 'https://dydx.exchange/blog/the-merge',
+      name: 'dYdX v4 announced',
+      link: 'https://dydx.exchange/blog/dydx-chain',
+      date: new Date('2022-06-22'),
     },
   ],
 }

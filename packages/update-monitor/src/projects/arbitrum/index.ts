@@ -21,7 +21,6 @@ export async function getArbitrumParameters(
       ArbitrumProxy.getContract(provider, addresses.rollup, 'Rollup'),
       getProxyAdmin(provider, addresses.proxyAdmin1, 'ProxyAdmin1'),
       getProxyAdmin(provider, addresses.proxyAdmin2, 'ProxyAdmin2'),
-      getProxyAdmin(provider, addresses.proxyAdmin3, 'ProxyAdmin3'),
       Eip1967Proxy.getContract(provider, addresses.bridge, 'Bridge'),
       Eip1967Proxy.getContract(
         provider,
@@ -56,14 +55,14 @@ export async function getArbitrumParameters(
     ['Rollup.upgradeability.admin', 'Multisig'],
     ['ProxyAdmin1.owner', 'Multisig'],
     ['ProxyAdmin2.owner', 'Multisig'],
-    ['Inbox.upgradeability.admin', 'ProxyAdmin2'],
+    ['Inbox.upgradeability.admin', 'ProxyAdmin1'],
     ['SequencerInbox.upgradeability.admin', 'ProxyAdmin1'],
     ['Outbox.upgradeability.admin', 'ProxyAdmin1'],
     ['Bridge.upgradeability.admin', 'ProxyAdmin1'],
     ['ChallengeManager.upgradeability.admin', 'ProxyAdmin1'],
-    ['L1CustomGateway.upgradeability.admin', 'ProxyAdmin3'],
-    ['L1ERC20Gateway.upgradeability.admin', 'ProxyAdmin3'],
-    ['L1GatewayRouter.upgradeability.admin', 'ProxyAdmin3'],
+    ['L1CustomGateway.upgradeability.admin', 'ProxyAdmin2'],
+    ['L1ERC20Gateway.upgradeability.admin', 'ProxyAdmin2'],
+    ['L1GatewayRouter.upgradeability.admin', 'ProxyAdmin2'],
   ])
   return parameters
 }

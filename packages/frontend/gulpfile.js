@@ -65,6 +65,19 @@ function generateMetaImages() {
   return exec('node -r esbuild-register src/build/buildMetaImages.ts')
 }
 
+async function updateVerifiedContracts() {
+  if (
+    process.env.DEPLOYMENT_ENV !== 'production' &&
+    process.env.DEPLOYMENT_ENV !== 'staging'
+  ) {
+    return
+  }
+  const cwd = process.cwd()
+  process.chdir('../config')
+  await exec('yarn check-verified-contracts')
+  process.chdir(cwd)
+}
+
 function serve() {
   const app = express()
   app.use(express.static('build'))
@@ -90,6 +103,7 @@ function serve() {
 
 const build = gulp.series(
   clean,
+  updateVerifiedContracts,
   gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
   generateMetaImages,
 )

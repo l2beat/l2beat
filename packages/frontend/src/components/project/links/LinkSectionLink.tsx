@@ -13,7 +13,7 @@ export function LinkSectionLink({ href, social }: Props) {
     const parsed = parseSocial(href)
     return (
       <OutLink
-        className="text-link mt-1 first:mt-0 flex gap-1 items-center"
+        className="text-link mt-1 first:mt-0 flex gap-1 items-center text-ellipsis"
         href={href}
       >
         {parsed.platform ? (
@@ -29,7 +29,7 @@ export function LinkSectionLink({ href, social }: Props) {
     )
   }
   return (
-    <OutLink className="text-link underline block" href={href}>
+    <OutLink className="text-link underline block text-ellipsis" href={href}>
       {simplify(href)}
     </OutLink>
   )

@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
-import { aztec } from './aztec'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -63,13 +62,13 @@ export const aztecconnect: Layer2 = {
       },
     ],
     transactionApi: {
-      type: 'aztec',
+      type: 'aztecconnect',
       url: 'https://api.aztec.network/aztec-connect-prod/falafel',
       callsPerMinute: 3_000,
       excludeFromActivityApi: true,
     },
     transactionApiV2: {
-      type: 'aztec',
+      type: 'aztecconnect',
       url: 'https://api.aztec.network/aztec-connect-prod/falafel',
       callsPerMinute: 3_000,
       excludeFromActivityApi: true,
@@ -206,5 +205,4 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: aztec.news,
 }

@@ -33,7 +33,7 @@ export function createLayer2RpcTransactionUpdaters(
         projectId === ProjectId.STARKNET
           ? new StarkNetClient(url, http, { callsPerMinute })
           : new EthereumClient(
-              new providers.JsonRpcProvider({
+              new providers.StaticJsonRpcProvider({
                 url,
                 timeout: 10_000,
               }),

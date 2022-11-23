@@ -16,9 +16,14 @@ export interface StarknetTransactionApiV2 {
   url: string
   callsPerMinute?: number
 }
-
 export interface AztecTransactionApiV2 {
   type: 'aztec'
+  url: string
+  callsPerMinute?: number
+}
+
+export interface AztecConnectTransactionApiV2 {
+  type: 'aztecconnect'
   url: string
   callsPerMinute?: number
 }
@@ -42,12 +47,14 @@ export interface StarkexTransactionApiV2 {
   type: 'starkex'
   product: StarkexProductV2
   sinceTimestamp: UnixTime
+  resyncLastDays: number
 }
 
 export type Layer2TransactionApiV2 = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApiV2
   | StarkexTransactionApiV2
   | AztecTransactionApiV2
+  | AztecConnectTransactionApiV2
   | StarknetTransactionApiV2
   | ZksyncTransactionApiV2
   | LoopringTransactionApiV2

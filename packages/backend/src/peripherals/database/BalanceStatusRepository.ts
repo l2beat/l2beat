@@ -29,7 +29,7 @@ export class BalanceStatusRepository extends BaseRepository {
       .where({ config_hash: configHash.toString() })
       .select('unix_timestamp')
 
-    return rows.map((r) => new UnixTime(+r.unix_timestamp))
+    return rows.map((r) => UnixTime.fromDate(r.unix_timestamp))
   }
 
   async add(record: BalanceStatusRecord): Promise<Hash256> {
@@ -37,12 +37,12 @@ export class BalanceStatusRepository extends BaseRepository {
     await knex.transaction(async (trx) => {
       await trx('balance_status')
         .where({
-          unix_timestamp: record.timestamp.toString(),
+          unix_timestamp: record.timestamp.toDate(),
         })
         .delete()
       await trx('balance_status').insert({
         config_hash: record.configHash.toString(),
-        unix_timestamp: record.timestamp.toString(),
+        unix_timestamp: record.timestamp.toDate(),
       })
     })
     return record.configHash
@@ -60,11 +60,11 @@ export class BalanceStatusRepository extends BaseRepository {
     const knex = await this.knex()
 
     const rows = await knex('balance_status')
-      .where('unix_timestamp', '>=', from.toString())
-      .andWhere('unix_timestamp', '<=', to.toString())
+      .where('unix_timestamp', '>=', from.toDate())
+      .andWhere('unix_timestamp', '<=', to.toDate())
 
     return rows.map((r) => ({
-      timestamp: new UnixTime(+r.unix_timestamp),
+      timestamp: UnixTime.fromDate(r.unix_timestamp),
       configHash: Hash256(r.config_hash),
     }))
   }

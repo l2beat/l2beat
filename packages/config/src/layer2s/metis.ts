@@ -340,21 +340,16 @@ export const metis: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
+  milestones: [
     {
-      date: '2022-09-14',
-      name: 'What does The Merge mean for Metis Andromeda',
-      link: 'https://metisdao.medium.com/what-is-the-ethereum-merge-and-what-does-it-mean-for-metis-andromeda-b6f96809bdd3',
+      name: 'Mainnet launch',
+      link: 'https://twitter.com/MetisDAO/status/1461751817902170125',
+      date: new Date('2021-11-19'),
     },
     {
-      date: '2022-09-06',
-      name: 'Relay Chain will be joining the Metis marathon',
-      link: 'https://metisdao.medium.com/relay-chain-becomes-joins-the-metis-marathon-as-a-bridge-21fcd2e9b3e8',
-    },
-    {
-      date: '2022-09-06',
-      name: 'QiDAO has joined the Metis Marathon',
-      link: 'https://metisdao.medium.com/qidao-has-oficially-joined-the-metis-marathon-d41a385d9fcb',
+      name: 'Off-chain data availability',
+      link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
+      date: new Date('2022-04-12'),
     },
   ],
 }

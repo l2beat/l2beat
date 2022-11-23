@@ -19,7 +19,7 @@ export function createAztecProcessor(
 ): SequenceProcessor {
   const callsPerMinute = options.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new AztecClient(http, options.url, options.callsPerMinute)
+  const client = new AztecClient(http, options.url, callsPerMinute)
 
   return new SequenceProcessor(
     projectId.toString(),

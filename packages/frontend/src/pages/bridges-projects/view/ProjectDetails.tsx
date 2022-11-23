@@ -13,10 +13,6 @@ import {
   LinkSectionProps,
 } from '../../../components/project/links/LinkSection'
 import {
-  NewsSection,
-  NewsSectionProps,
-} from '../../../components/project/NewsSection'
-import {
   PermissionsSection,
   PermissionsSectionProps,
 } from '../../../components/project/PermissionsSection'
@@ -35,7 +31,6 @@ import {
 
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps
-  newsSection: NewsSectionProps
   descriptionSection: DescriptionSectionProps
   riskSection: RiskSectionProps
   incomplete?: TechnologyIncompleteProps
@@ -48,7 +43,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <main className="ProjectDetails">
       <LinkSection {...props.linkSection} />
-      <NewsSection {...props.newsSection} />
       <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
         <RiskSection {...props.riskSection} />

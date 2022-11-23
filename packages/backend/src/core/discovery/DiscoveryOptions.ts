@@ -1,10 +1,9 @@
-import { JsonFragment } from './getAbi'
+import { EthereumAddress } from '@l2beat/types'
 
 export interface DiscoveryOptions {
-  skipAddresses: string[]
+  skipAddresses: EthereumAddress[]
   // address -> method names
   skipMethods: Record<string, string[] | undefined>
   // address -> abi
-  addAbis: Record<string, JsonFragment[] | undefined>
-  blockNumber: number
+  addAbis: Record<string, string[] | undefined>
 }

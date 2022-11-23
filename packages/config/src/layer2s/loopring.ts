@@ -312,21 +312,4 @@ export const loopring: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2022-09-16',
-      name: 'Loophead Drop #4: NFT Marketplace Challenge',
-      link: 'https://medium.loopring.io/loophead-drop-4-nft-marketplace-challenge-a122f96aa3b5',
-    },
-    {
-      date: '2022-08-25',
-      name: 'Lido Staked ETH on Loopring L2',
-      link: 'https://medium.loopring.io/lido-staked-eth-on-loopring-l2-6b23b1e56212',
-    },
-    {
-      date: '2022-08-17',
-      name: 'Introducing DAO Voting',
-      link: 'https://medium.loopring.io/introducing-dao-voting-46a210c373bc',
-    },
-  ],
 }

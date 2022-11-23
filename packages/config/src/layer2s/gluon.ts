@@ -196,21 +196,4 @@ export const gluon: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2021-08-02',
-      name: 'Funding Rates: July 16–31, 2021',
-      link: 'https://blog.leverj.io/funding-rates-july-16-31-2021-610f3506b4d8',
-    },
-    {
-      date: '2020-07-26',
-      name: 'Funding Rates: July 1–15, 2021',
-      link: 'https://blog.leverj.io/funding-rates-july-1-15-2021-5595b7e5ffcd',
-    },
-    {
-      date: '2021-07-22',
-      name: 'Where to see the referral reward I earned?',
-      link: 'https://blog.leverj.io/where-to-see-the-referral-reward-i-earned-246758dc7d0a',
-    },
-  ],
 }

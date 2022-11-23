@@ -1,31 +1,30 @@
-import { AddressAnalyzer } from '@l2beat/common'
-import { constants, providers } from 'ethers'
+import { EthereumAddress } from '@l2beat/types'
 
 import { AnalyzedData, analyzeItem } from './analyzeItem'
 import { DiscoveryOptions } from './DiscoveryOptions'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export async function discover(
-  provider: providers.Provider,
-  addressAnalyzer: AddressAnalyzer,
-  startingPoints: string[],
+  provider: DiscoveryProvider,
+  startingPoints: EthereumAddress[],
   options: DiscoveryOptions,
 ) {
-  const resolved = new Map<string, AnalyzedData>()
+  const resolved = new Map<EthereumAddress, AnalyzedData>()
 
   const stack = [...startingPoints]
   while (stack.length !== 0) {
     const address = stack.pop()
     if (
       !address ||
-      address === constants.AddressZero ||
+      address === EthereumAddress.ZERO ||
       resolved.has(address) ||
       options.skipAddresses.includes(address)
     ) {
       continue
     }
+    console.log('Analyzing', address)
     const { analyzed, relatives } = await analyzeItem(
       provider,
-      addressAnalyzer,
       address,
       options,
     )

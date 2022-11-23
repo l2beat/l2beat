@@ -1,7 +1,9 @@
+import { EthereumAddress } from '@l2beat/types'
+
 export interface ProxyDetection {
   upgradeability: UpgradeabilityParameters
-  implementations: string[]
-  relatives: string[]
+  implementations: EthereumAddress[]
+  relatives: EthereumAddress[]
 }
 
 export type UpgradeabilityParameters =
@@ -23,31 +25,31 @@ export interface GnosisSafeUpgradeability {
 
 export interface EIP1967ProxyUpgradeability {
   type: 'EIP1967 proxy'
-  admin: string
-  implementation: string
+  admin: EthereumAddress
+  implementation: EthereumAddress
 }
 
 export interface StarkWareProxyUpgradeability {
   type: 'StarkWare proxy'
-  implementation: string
-  callImplementation: string
+  implementation: EthereumAddress
+  callImplementation: EthereumAddress
   upgradeDelay: number
 }
 
 export interface ArbitrumProxyUpgradeability {
   type: 'arbitrum proxy'
-  admin: string
-  adminImplementation: string
-  userImplementation: string
+  admin: EthereumAddress
+  adminImplementation: EthereumAddress
+  userImplementation: EthereumAddress
 }
 
 export interface EIP897ProxyUpgradeability {
   type: 'EIP897 proxy'
   isUpgradable: boolean
-  implementation: string
+  implementation: EthereumAddress
 }
 
 export interface CustomProxyUpgradeability {
   type: 'custom proxy'
-  implementation: string
+  implementation: EthereumAddress
 }
