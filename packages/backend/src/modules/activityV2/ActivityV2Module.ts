@@ -35,6 +35,7 @@ export function createActivityV2Module(
     database,
     clock,
   )
+
   const dailyCountService = new DailyTransactionCountService(
     processors,
     dailyCountViewRepository,
