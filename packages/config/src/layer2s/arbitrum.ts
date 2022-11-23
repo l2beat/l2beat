@@ -445,25 +445,21 @@ export const arbitrum: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
-      description: '',
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: new Date('2021-08-31'),
     },
     {
       name: 'Arbitrum Odyssey start',
-      description: '',
       link: 'https://twitter.com/arbitrum/status/1539292126105706496',
       date: new Date('2022-06-21'),
     },
     {
       name: 'Arbitrum Odyssey cancelled',
-      description: '',
       link: 'https://twitter.com/arbitrum/status/1542159109511847937',
       date: new Date('2022-06-29'),
     },
     {
       name: 'Nitro Upgrade',
-      description: '',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
       date: new Date('2022-08-31'),
     },

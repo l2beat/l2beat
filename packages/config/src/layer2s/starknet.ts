@@ -283,13 +283,11 @@ export const starknet: Layer2 = {
   milestones: [
     {
       name: 'StarkNet Alpha on Mainnet',
-      description: '',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: new Date('2021-11-29'),
     },
     {
       name: 'StarkGate Alpha on Mainnet',
-      description: '',
       link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
       date: new Date('2022-05-09'),
     },

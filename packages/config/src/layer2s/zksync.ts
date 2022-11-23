@@ -345,13 +345,11 @@ export const zksync: Layer2 = {
   milestones: [
     {
       name: 'zkSync 1.0 launch',
-      description: '',
       link: 'https://twitter.com/the_matter_labs/status/1273617094031138825',
       date: new Date('2020-06-18'),
     },
     {
       name: 'zkEVM alpha on mainnet',
-      description: '',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
       date: new Date('2022-10-28'),
     },
