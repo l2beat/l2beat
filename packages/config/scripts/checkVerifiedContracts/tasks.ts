@@ -1,9 +1,4 @@
-import {
-  EtherscanClient,
-  Logger,
-  promiseAllPlus,
-  TaskQueue,
-} from '@l2beat/common'
+import { EtherscanClient, Logger, promiseAllPlus } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 
 import { isContractVerified } from './etherscan'
