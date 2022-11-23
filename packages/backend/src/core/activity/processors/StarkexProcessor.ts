@@ -14,7 +14,6 @@ import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute
 export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
   singleStarkexCPM: number
   starkexApiDelayHours: number
-  starkexResyncLastDays: number
 }
 
 export function createStarkexProcessor(
@@ -61,15 +60,17 @@ export function createStarkexProcessor(
     },
   )
 
+  const handleAllProcessedEvent = async () => {
+    const state = await sequenceProcessorRepository.getById(processor.id)
+    assert(state)
+    await processRange(
+      state.lastProcessed - options.resyncLastDays,
+      state.lastProcessed,
+    )
+  }
+
   processor.on(ALL_PROCESSED_EVENT, () => {
-    void (async function () {
-      const state = await sequenceProcessorRepository.getById(processor.id)
-      assert(state)
-      await processRange(
-        state.lastProcessed - options.starkexResyncLastDays,
-        state.lastProcessed,
-      )
-    })()
+    handleAllProcessedEvent().catch(logger.error.bind(logger))
   })
 
   return processor

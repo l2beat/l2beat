@@ -32,7 +32,6 @@ export function createSequenceProcessors(
       starkexApiKey,
       starkexCallsPerMinute,
       starkexApiDelayHours,
-      starkexResyncLastDays,
       projects: activityProjects,
       allowedProjectIds,
     },
@@ -92,7 +91,6 @@ export function createSequenceProcessors(
               ...transactionApi,
               starkexApiDelayHours,
               singleStarkexCPM,
-              starkexResyncLastDays,
             },
           )
         case 'aztec':

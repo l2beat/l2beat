@@ -96,7 +96,6 @@ export function getLocalConfig(cli: CliParameters): Config {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexApiDelayHours: getEnv.integer('STARKEX_API_DELAY_HOURS', 12),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
-      starkexResyncLastDays: 7,
       projects: {
         ethereum: {
           type: 'rpc',
