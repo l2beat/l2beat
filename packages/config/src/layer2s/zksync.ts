@@ -172,7 +172,7 @@ export const zksync: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd',
+          implementation: '0x8e972b354E6933275513C355Ee14D44A832aD2d9',
         },
       },
       {
@@ -199,7 +199,7 @@ export const zksync: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x934ef5836E78d93125317034f5CF855A97B13f43',
+          implementation: '0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8',
         },
       },
     ],
