@@ -150,21 +150,4 @@ export const sorare: Layer2 = {
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-22',
-      name: 'Here We Scout: Liverpool FC',
-      link: 'https://medium.com/sorare/here-we-scout-liverpool-fc-770dfb25bfb8',
-    },
-    {
-      date: '2022-09-19',
-      name: 'Sorare Android App is Now Available',
-      link: 'https://medium.com/sorare/sorare-android-app-is-now-available-b2208f475dd4',
-    },
-    {
-      date: '2021-07-22',
-      name: 'Sorare: MLB Weekly Unique Card Auction Schedule',
-      link: 'https://medium.com/sorare/sorare-mlb-weekly-unique-card-auction-schedule-cbad45722a7d',
-    },
-  ],
 }

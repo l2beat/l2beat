@@ -86,7 +86,7 @@ declare module 'knex/types/tables' {
 
   interface DailyTransactionCountRow {
     project_id: string
-    count: number
+    count: string // postgres keeps it as bigint, because it is a sum of integers
     unix_timestamp: Date
   }
 
@@ -105,9 +105,9 @@ declare module 'knex/types/tables' {
     'transactions.zksync_count_view': TransactionCountViewRow
     'transactions.starkex': StarkexTransactionCountRow
     sequence_processor: SequenceProcessorRow
-    'activity.block': BlockTransactionCountRow
-    'activity.zksync': ZksyncTransactionRow
-    'activity.starkex': StarkexTransactionCountRow
-    'activity.daily_count_view': DailyTransactionCountRow
+    'activity_v2.block': BlockTransactionCountRow
+    'activity_v2.zksync': ZksyncTransactionRow
+    'activity_v2.starkex': StarkexTransactionCountRow
+    'activity_v2.daily_count_view': DailyTransactionCountRow
   }
 }

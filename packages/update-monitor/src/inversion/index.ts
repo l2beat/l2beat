@@ -21,12 +21,7 @@ export function invertAndPrint(
 ) {
   const addresses = new Map<string, AddressDetails>()
 
-  function add(
-    role: string,
-    address: ContractValue,
-    atName: string,
-    atAddress: string,
-  ) {
+  function add(address: ContractValue, role?: Role) {
     if (
       typeof address !== 'string' ||
       !utils.isAddress(address) ||
@@ -43,17 +38,44 @@ export function invertAndPrint(
       }
       addresses.set(address, details)
     }
-    details.roles.push({ name: role, atName, atAddress })
+    if (role) {
+      details.roles.push(role)
+    }
   }
 
   for (const contract of project.contracts) {
-    for (const [key, value] of Object.entries(contract.values ?? {})) {
+    const upgradeabilityValues = {
+      ...(contract.upgradeability as unknown as Record<string, ContractValue>),
+
+      // We don't want to show the implementation as nodes in the diagram
+      implementation: undefined,
+      callImplementation: undefined,
+      adminImplementation: undefined,
+      userImplementation: undefined,
+      implementations: undefined,
+    }
+
+    add(contract.address)
+    const values: Record<string, ContractValue | undefined> = {
+      ...upgradeabilityValues,
+      ...contract.values,
+    }
+
+    for (const [key, value] of Object.entries(values)) {
       if (Array.isArray(value)) {
         for (const [i, entry] of value.entries()) {
-          add(`${key}.${i}`, entry, contract.name, contract.address)
+          add(entry, {
+            name: `${key}.${i}`,
+            atName: contract.name,
+            atAddress: contract.address,
+          })
         }
-      } else {
-        add(key, value, contract.name, contract.address)
+      } else if (value) {
+        add(value, {
+          name: key,
+          atName: contract.name,
+          atAddress: contract.address,
+        })
       }
     }
   }
@@ -87,18 +109,27 @@ function print(addresses: Map<string, AddressDetails>) {
 function printMermaid(addresses: Map<string, AddressDetails>) {
   console.log('flowchart LR')
   for (const details of addresses.values()) {
-    for (const role of details.roles) {
+    if (details.roles.length === 0) {
       console.log(
         details.address.slice(0, 6) +
           (details.name
             ? `(${details.name}\\n${details.address.slice(0, 6)})`
             : ''),
-        '-->|' + role.name + '|',
-        role.atAddress.slice(0, 6) +
-          (role.atName
-            ? `(${role.atName}\\n${role.atAddress.slice(0, 6)})`
-            : ''),
       )
+    } else {
+      for (const role of details.roles) {
+        console.log(
+          details.address.slice(0, 6) +
+            (details.name
+              ? `(${details.name}\\n${details.address.slice(0, 6)})`
+              : ''),
+          '-->|is ' + role.name + '|',
+          role.atAddress.slice(0, 6) +
+            (role.atName
+              ? `(${role.atName}\\n${role.atAddress.slice(0, 6)})`
+              : ''),
+        )
+      }
     }
     console.log()
   }

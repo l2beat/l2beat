@@ -1,0 +1,12 @@
+import { UnixTime } from '@l2beat/types'
+
+import { DailyTransactionCount } from '../../../core/transaction-count/TransactionCounter'
+
+export function findMinLast(
+  layer2sCounts: DailyTransactionCount[][],
+): UnixTime | undefined {
+  const lasts = layer2sCounts
+    .map((counts) => counts.at(-1)?.timestamp.toNumber())
+    .filter((t): t is number => t !== undefined)
+  return lasts.length > 0 ? new UnixTime(Math.min(...lasts)) : undefined
+}

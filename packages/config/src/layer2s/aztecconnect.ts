@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
-import { aztec } from './aztec'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -206,5 +205,4 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: aztec.news,
 }

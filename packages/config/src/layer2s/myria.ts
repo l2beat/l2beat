@@ -159,21 +159,4 @@ export const myria: Layer2 = {
         'Validity proof must be signed by at least 2 of these 5 addresses to approve state update.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-22',
-      name: 'Coinary and Myria team up',
-      link: 'https://medium.com/@myriagames/myrias-layer-2-breathes-fire-into-dragonary-through-new-blockchain-partnership-7e945af90f97',
-    },
-    {
-      date: '2022-09-16',
-      name: 'Carnage Carnival builds on Myria. Here’s why',
-      link: 'https://medium.com/@myriagames/carnage-carnival-builds-on-myria-heres-why-bbb57d813a79',
-    },
-    {
-      date: '2022-09-16',
-      name: 'Meta Nomads — why they chose Myria',
-      link: 'https://medium.com/@myriagames/meta-nomads-why-they-chose-myria-7a86c534e5ed',
-    },
-  ],
 }

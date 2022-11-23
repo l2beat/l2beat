@@ -132,21 +132,4 @@ export const omgnetwork: Layer2 = {
     ],
     risks: [CONTRACTS.UNVERIFIED_RISK],
   },
-  news: [
-    {
-      date: '2021-04-13',
-      name: 'OMG Labs Update #03: The Road Ahead For Layer-2s',
-      link: 'https://omg.network/omg-labs-update-03-the-road-ahead-for-layer-2s/',
-    },
-    {
-      date: '2021-04-06',
-      name: 'The Bigger Picture: Varna, Hashcast, and Quasar',
-      link: 'https://omg.network/bigger-picture-varna-hashcast-quasar/',
-    },
-    {
-      date: '2021-03-19',
-      name: 'OMG Labs: Engineering Update #02 (ft. Varna!)',
-      link: 'https://omg.network/omg-labs-engineering-update-02-ft-varna/',
-    },
-  ],
 }

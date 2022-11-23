@@ -41,7 +41,7 @@ export class DailyTransactionCountViewRepository extends BaseRepository {
 function toRecord(row: DailyTransactionCountRow): DailyTransactionCountRecord {
   return {
     projectId: ProjectId(row.project_id),
-    count: row.count,
+    count: Number(row.count),
     timestamp: UnixTime.fromDate(row.unix_timestamp),
   }
 }

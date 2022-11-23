@@ -114,21 +114,4 @@ export const fuelv1: Layer2 = {
     ],
     risks: [],
   },
-  news: [
-    {
-      date: '2020-09-15',
-      name: 'Inside Fuel — Summer 2022',
-      link: 'https://fuel-labs.ghost.io/introducing-beta-1-testnet/',
-    },
-    {
-      date: '2020-09-08',
-      name: 'Launch of the new Fuel "Beta-1" testnet',
-      link: 'https://fuel-labs.ghost.io/introducing-beta-1-testnet/',
-    },
-    {
-      date: '2022-09-06',
-      name: 'Fuel Labs Announces $80 Million of Support',
-      link: 'https://fuel-labs.ghost.io/fuel-labs-announces-80-million-of-support-for-the-fastest-modular-execution-layer/',
-    },
-  ],
 }

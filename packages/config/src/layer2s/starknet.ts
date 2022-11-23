@@ -191,7 +191,7 @@ export const starknet: Layer2 = {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: '0x659a00c33263d9254Fed382dE81349426C795BB6',
+        address: '0x9F96fE0633eE838D0298E8b8980E6716bE81388d',
       },
       {
         name: 'L1Escrow',
@@ -278,23 +278,6 @@ export const starknet: Layer2 = {
       ],
       description:
         'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
-    },
-  ],
-  news: [
-    {
-      date: '2022-09-12',
-      name: 'Cairo 1.0',
-      link: 'https://medium.com/starkware/cairo-1-0-aa96eefb19a0',
-    },
-    {
-      date: '2022-08-11',
-      name: 'Recursive STARKs',
-      link: 'https://medium.com/starkware/recursive-starks-78f8dd401025',
-    },
-    {
-      date: '2022-09-05',
-      name: 'StarkNet Alpha 0.10.0',
-      link: 'https://medium.com/starkware/starknet-alpha-0-10-0-923007290470',
     },
   ],
 }
