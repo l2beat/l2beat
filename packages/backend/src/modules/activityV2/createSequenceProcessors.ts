@@ -32,7 +32,7 @@ export function createSequenceProcessors(
       starkexApiKey,
       starkexCallsPerMinute,
       starkexApiDelayHours,
-      projects: activityProjects,
+      projects: activityV2ConfigProjects,
       allowedProjectIds,
     },
     projects,
@@ -40,7 +40,7 @@ export function createSequenceProcessors(
 
   // shared clients
   const numberOfStarkexProjects =
-    projects.filter((p) => p.transactionApi?.type === 'starkex').length || 1
+    projects.filter((p) => p.transactionApiV2?.type === 'starkex').length || 1
   const singleStarkexCPM = starkexCallsPerMinute / numberOfStarkexProjects
   const starkexClient = new StarkexClient(starkexApiKey, http, logger, {
     callsPerMinute: singleStarkexCPM,
@@ -57,28 +57,27 @@ export function createSequenceProcessors(
     logger,
   )
 
-  // extra projects
-  const ethereum = activityProjects.ethereum
-  assert(ethereum?.type === 'rpc', 'Ethereum transactionApi config missing')
-  const layer1Projects: [
-    { projectId: ProjectId; transactionApi: Layer2TransactionApiV2 },
-  ] = [
-    {
-      projectId: ProjectId.ETHEREUM,
-      transactionApi: {
-        ...ethereum,
-        startBlock: 8929324,
-      },
+  // ethereum is kept separately in backend config, because it is not a layer 2 project
+  const ethereumConfig = activityV2ConfigProjects.ethereum
+  assert(
+    ethereumConfig?.type === 'rpc',
+    'Ethereum transactionApi config missing',
+  )
+  const ethereum = {
+    projectId: ProjectId.ETHEREUM,
+    transactionApiV2: {
+      ...ethereumConfig,
+      startBlock: 8929324,
     },
-  ]
+  }
 
-  return projects
-    .filter(hasTransactionApi)
-    .map(mergeWithConfig(activityProjects))
-    .concat(layer1Projects)
+  const processors = projects
+    .filter(hasTransactionApiV2)
+    .map(mergeWithActivityV2ConfigProjects(activityV2ConfigProjects))
+    .concat([ethereum])
     .filter(isProjectAllowed(allowedProjectIds, logger))
-    .map(({ projectId, transactionApi }) => {
-      switch (transactionApi.type) {
+    .map(({ projectId, transactionApiV2 }) => {
+      switch (transactionApiV2.type) {
         case 'starkex':
           return createStarkexProcessor(
             projectId,
@@ -88,7 +87,7 @@ export function createSequenceProcessors(
             logger,
             clock,
             {
-              ...transactionApi,
+              ...transactionApiV2,
               starkexApiDelayHours,
               singleStarkexCPM,
             },
@@ -100,7 +99,7 @@ export function createSequenceProcessors(
             http,
             sequenceProcessorRepository,
             logger,
-            transactionApi,
+            transactionApiV2,
           )
         case 'aztecconnect':
           return createAztecConnectProcessor(
@@ -109,7 +108,7 @@ export function createSequenceProcessors(
             http,
             sequenceProcessorRepository,
             logger,
-            transactionApi,
+            transactionApiV2,
           )
         case 'starknet':
           return createStarknetProcessor(
@@ -119,7 +118,7 @@ export function createSequenceProcessors(
             sequenceProcessorRepository,
             logger,
             clock,
-            transactionApi,
+            transactionApiV2,
           )
         case 'zksync':
           return createZksyncProcessor(
@@ -128,7 +127,7 @@ export function createSequenceProcessors(
             database,
             sequenceProcessorRepository,
             logger,
-            transactionApi,
+            transactionApiV2,
           )
         case 'loopring':
           return createLoopringProcessor(
@@ -137,7 +136,7 @@ export function createSequenceProcessors(
             blockRepository,
             sequenceProcessorRepository,
             logger,
-            transactionApi,
+            transactionApiV2,
           )
         case 'rpc':
           return createRpcProcessor(
@@ -146,31 +145,33 @@ export function createSequenceProcessors(
             sequenceProcessorRepository,
             logger,
             clock,
-            transactionApi,
+            transactionApiV2,
           )
       }
     })
+
+  return processors
 }
 
-const hasTransactionApi = (
+const hasTransactionApiV2 = (
   p: Project,
-): p is Project & { transactionApi: Layer2TransactionApiV2 } =>
-  !!p.transactionApi
+): p is Project & { transactionApiV2: Layer2TransactionApiV2 } =>
+  !!p.transactionApiV2
 
-function mergeWithConfig(
-  activityProjects: Record<string, Layer2TransactionApiV2 | undefined>,
+function mergeWithActivityV2ConfigProjects(
+  activityV2ConfigProjects: Record<string, Layer2TransactionApiV2 | undefined>,
 ) {
   return ({
     projectId,
-    transactionApi,
+    transactionApiV2,
   }: {
     projectId: ProjectId
-    transactionApi: Layer2TransactionApiV2
+    transactionApiV2: Layer2TransactionApiV2
   }) => ({
     projectId,
-    transactionApi: {
-      ...transactionApi,
-      ...activityProjects[projectId.toString()],
+    transactionApiV2: {
+      ...transactionApiV2,
+      ...activityV2ConfigProjects[projectId.toString()],
     },
   })
 }
