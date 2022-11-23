@@ -26,43 +26,6 @@ export const multichain: Bridge = {
       ],
     },
   },
-  news: [
-    {
-      date: '2022-09-29',
-      name: 'Go deep into Multichain Cross-chain Mechanism',
-      link: 'https://multichainorg.medium.com/go-deep-into-multichain-cross-chain-mechanism-4a47836be250',
-    },
-    {
-      date: '2022-04-11',
-      name: 'anyCall, for your cross-chain Dapps',
-      link: 'https://medium.com/multichainorg/anycall-for-your-cross-chain-dapps-ac0ece9140e9',
-    },
-    {
-      date: '2022-09-28',
-      name: 'Multichain fastMPC, a ground breaking improvement in decentralization',
-      link: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
-    },
-    {
-      date: '2021-12-16',
-      name: 'Anyswap to officially rebrand as Multichain',
-      link: 'https://medium.com/multichainorg/anyswap-to-officially-rebrand-as-multichain-16ee7b961ffa',
-    },
-    {
-      date: '2021-07-11',
-      name: 'Anyswap Multichain Router V3 Exploit Statement',
-      link: 'https://medium.com/multichainorg/anyswap-multichain-router-v3-exploit-statement-6833f1b7e6fb',
-    },
-    {
-      date: '2021-06-04',
-      name: 'Anyswap Multichain Router V3 Beta mainnet is Live!',
-      link: 'https://medium.com/multichainorg/anyswap-multichain-router-v3-beta-mainnet-is-live-b41079f7335f',
-    },
-    {
-      date: '2020-07-12',
-      name: 'Introducing Anyswap — Fully Decentralized Cross Chain Swap Protocol',
-      link: 'https://medium.com/multichainorg/introducing-anyswap-fully-decentralized-cross-chain-swap-protocol-82db1155b7a9',
-    },
-  ],
   config: {
     escrows: config.escrows.map((escrow) => ({
       address: escrow.address,

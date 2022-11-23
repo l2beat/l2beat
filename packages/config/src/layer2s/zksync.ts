@@ -342,21 +342,4 @@ export const zksync: Layer2 = {
         'Account receiving fees for listing tokens. Can be updated by zkSync MultiSig.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-21',
-      name: 'Accessible DeFi with Hashflow',
-      link: 'https://blog.matter-labs.io/accessible-defi-with-hashflow-32e28f22f443',
-    },
-    {
-      date: '2022-09-14',
-      name: 'Peace of Mind With Nexus Mutual',
-      link: 'https://blog.matter-labs.io/peace-of-mind-with-nexus-mutual-250365d0cf9e',
-    },
-    {
-      date: '2022-09-07',
-      name: 'Web3 Cybersecurity Auditing With Hacken',
-      link: 'https://blog.matter-labs.io/web3-cybersecurity-auditing-with-hacken-3d19a365607c',
-    },
-  ],
 }

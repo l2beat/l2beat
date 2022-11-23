@@ -1,4 +1,3 @@
-export * from './News'
 export * from './ProjectContracts'
 export * from './ProjectEscrow'
 export * from './ProjectLinks'

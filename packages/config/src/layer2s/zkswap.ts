@@ -240,21 +240,4 @@ export const zkswap: Layer2 = {
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 1.0 Admin.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-13',
-      name: 'How does ZKSpace face the Ethereum Merge',
-      link: 'https://medium.com/zkswap/how-does-zkspace-face-the-ethereum-merge-8b4a29c432f9',
-    },
-    {
-      date: '2022-09-09',
-      name: 'The evolution and current progress of Layer-1 public blockchains',
-      link: 'https://medium.com/zkswap/the-evolution-and-current-progress-of-layer-1-public-blockchains-29533780af23',
-    },
-    {
-      date: '2022-09-01',
-      name: 'ZNS is Coming! — The First Layer 2 Domain Name System',
-      link: 'https://medium.com/zkswap/zns-is-coming-the-first-layer-2-domain-name-system-c115c1358fa5',
-    },
-  ],
 }

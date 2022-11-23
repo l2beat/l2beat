@@ -442,21 +442,4 @@ export const arbitrum: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
-    {
-      date: '2022-08-31',
-      name: 'Arbitrum One is now running on Nitro',
-      link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
-    },
-    {
-      date: '2022-08-09',
-      name: 'The gates of Arbitrum Nova are now open',
-      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
-    },
-    {
-      date: '2022-08-05',
-      name: 'Arbitrum One is migrating to Nitro on August 31st',
-      link: 'https://medium.com/offchainlabs/prepare-your-engines-nitro-is-imminent-a46af99b9e60',
-    },
-  ],
 }

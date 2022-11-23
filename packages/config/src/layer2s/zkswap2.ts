@@ -175,5 +175,4 @@ export const zkswap2: Layer2 = {
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
     },
   ],
-  news: zkswap.news,
 }
