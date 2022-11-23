@@ -19,15 +19,23 @@ export const Milestone: Story<MilestonesProps> = Template.bind({})
 Milestone.args = {
   milestones: [
     {
-      name: 'Milestone One',
+      name: 'Creation of Arbitrum One',
       link: 'https://l2beat.com',
-      date: new Date('2022-11-23'),
-      description: 'some very important description',
+      date: new Date('2019-11-14'),
     },
     {
-      name: 'Milestone Two',
+      name: 'Arbitrum Odyssey begins',
       link: 'https://l2beat.com',
-      date: new Date('2022-12-23'),
+      date: new Date('2022-06-25'),
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis dui eu odio aliquam, in sodales dolor lacinia. Aliquam pharetra malesuada urna turpis.',
+    },
+    {
+      name: 'Nitro upgrade is activated',
+      link: 'https://l2beat.com',
+      date: new Date('2022-08-31'),
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis dui eu odio aliquam, in sodales dolor lacinia. Aliquam pharetra malesuada urna turpis.',
     },
   ],
 }
