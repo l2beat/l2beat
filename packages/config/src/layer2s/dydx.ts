@@ -191,27 +191,36 @@ export const dydx: Layer2 = {
     {
       name: 'Mainnet launch',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       description: '',
 >>>>>>> cea07539 (optimism and dydx)
+=======
+>>>>>>> 5093592c (make description optional)
       link: 'https://dydx.exchange/blog/public',
       date: new Date('2021-04-06'),
     },
     {
       name: 'dYdX Foundation established',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       description: '',
 >>>>>>> cea07539 (optimism and dydx)
+=======
+>>>>>>> 5093592c (make description optional)
       link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: new Date('2021-08-03'),
     },
     {
       name: 'dYdX v4 announced',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       description: '',
 >>>>>>> cea07539 (optimism and dydx)
+=======
+>>>>>>> 5093592c (make description optional)
       link: 'https://dydx.exchange/blog/dydx-chain',
       date: new Date('2022-06-22'),
     },
