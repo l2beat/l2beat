@@ -21,12 +21,12 @@
       "name": "zkSync",
       "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd"
+        "type": "EIP1967 proxy",
+        "implementation": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
       "values": {
-        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "additional": "0x080812701c94087F1DEE425EbD7CBF9EFAF878e2",
+        "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
         "securityCouncil": [
           "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
           "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
@@ -50,11 +50,11 @@
       "name": "Governance",
       "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x934ef5836E78d93125317034f5CF855A97B13f43"
+        "type": "EIP1967 proxy",
+        "implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
       "values": {
-        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "validators": [
           "0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
         ],
@@ -66,10 +66,8 @@
       "name": "Verifier",
       "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       }
     },

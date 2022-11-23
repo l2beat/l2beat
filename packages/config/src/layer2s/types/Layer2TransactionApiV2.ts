@@ -47,6 +47,7 @@ export interface StarkexTransactionApiV2 {
   type: 'starkex'
   product: StarkexProductV2
   sinceTimestamp: UnixTime
+  resyncLastDays: number
 }
 
 export type Layer2TransactionApiV2 = { excludeFromActivityApi?: boolean } & (
