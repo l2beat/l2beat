@@ -24,11 +24,9 @@
       "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
       "upgradeability": {
         "type": "arbitrum proxy",
-        "adminImplementation": "0x309f49bD32B1098F4dF20a9DD51954e8680d77B1",
-        "userImplementation": "0xFb333bac71f639de467872aFE02F7896F22F368d"
-      },
-      "values": {
-        "admin": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+        "admin": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
+        "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
+        "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
       }
     },
     {
@@ -55,10 +53,8 @@
       "name": "Inbox",
       "address": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0xB46e8571760Da0CFaEB9c9689C449Eb7dD7cB3e7"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       }
     },
@@ -66,10 +62,8 @@
       "name": "SequencerInbox",
       "address": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x16242595cAfA3a207E9354E3bdb000B59bA82875"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       }
     },
@@ -77,10 +71,8 @@
       "name": "Outbox",
       "address": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       }
     },
@@ -88,10 +80,8 @@
       "name": "Bridge",
       "address": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       }
     },
@@ -99,10 +89,8 @@
       "name": "ChallengeManager",
       "address": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       }
     },
@@ -110,10 +98,8 @@
       "name": "L1CustomGateway",
       "address": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       }
     },
@@ -121,10 +107,8 @@
       "name": "L1ERC20Gateway",
       "address": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       }
     },
@@ -132,10 +116,8 @@
       "name": "L1GatewayRouter",
       "address": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x6D1c576Fe3e54313990450f5Fa322306B4cCB47B"
-      },
-      "values": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       }
     }

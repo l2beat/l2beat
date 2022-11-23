@@ -86,7 +86,11 @@ export const nova: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    validatorFailure: {
+      value: 'Propose blocks',
+      description:
+        'Anyone can become a Validator after 7-days of inactivity from the currently whitelisted Validators.',
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -154,7 +158,7 @@ export const nova: Layer2 = {
             href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
           },
         ],
-        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+        risks: [],
       },
       {
         name: 'Tradeable Bridge Exit',
@@ -203,8 +207,8 @@ export const nova: Layer2 = {
         upgradeability: {
           type: 'Arbitrum',
           admin: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-          adminImplementation: '0x309f49bD32B1098F4dF20a9DD51954e8680d77B1',
-          userImplementation: '0xFb333bac71f639de467872aFE02F7896F22F368d',
+          adminImplementation: '0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f',
+          userImplementation: '0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff',
         },
       },
       {
@@ -215,7 +219,7 @@ export const nova: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0x16242595cAfA3a207E9354E3bdb000B59bA82875',
+          implementation: '0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9',
         },
       },
       {
@@ -226,7 +230,7 @@ export const nova: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0xB46e8571760Da0CFaEB9c9689C449Eb7dD7cB3e7',
+          implementation: '0x1b2676D32E2f7430a564DD4560641F990dFE3D6a',
         },
       },
       {
@@ -279,7 +283,7 @@ export const nova: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-          implementation: '0x6D1c576Fe3e54313990450f5Fa322306B4cCB47B',
+          implementation: '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
         },
       },
       {
