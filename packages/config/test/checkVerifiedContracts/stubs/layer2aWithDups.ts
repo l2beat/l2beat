@@ -229,5 +229,4 @@ export const layer2aWithDups: Layer2 = {
     ],
     risks: [],
   },
-  news: [],
 }

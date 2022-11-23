@@ -218,21 +218,4 @@ export const hermez: Layer2 = {
       CONTRACTS.UNVERIFIED_RISK,
     ],
   },
-  news: [
-    {
-      date: '2022-07-20',
-      name: 'Introducing Polygon zkEVM',
-      link: 'https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/',
-    },
-    {
-      date: '2022-05-13',
-      name: 'Polygon Hermez 2.0',
-      link: 'https://blog.polygon.technology/zkverse-deep-dive-into-polygon-hermez-2-0/',
-    },
-    {
-      date: '2021-08-13',
-      name: 'Polygon and Hermez Merge',
-      link: 'https://blog.hermez.io/polygon-hermez-merge/',
-    },
-  ],
 }

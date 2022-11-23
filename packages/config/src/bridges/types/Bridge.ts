@@ -1,7 +1,6 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
-  News,
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
@@ -19,7 +18,6 @@ export interface Bridge {
   technology: BridgeTechnology
   contracts?: ProjectContracts
   permissions?: ProjectPermission[]
-  news?: News[]
 }
 
 export interface BridgeDisplay {

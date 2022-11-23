@@ -280,21 +280,4 @@ export const starknet: Layer2 = {
         'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
     },
   ],
-  news: [
-    {
-      date: '2022-09-12',
-      name: 'Cairo 1.0',
-      link: 'https://medium.com/starkware/cairo-1-0-aa96eefb19a0',
-    },
-    {
-      date: '2022-08-11',
-      name: 'Recursive STARKs',
-      link: 'https://medium.com/starkware/recursive-starks-78f8dd401025',
-    },
-    {
-      date: '2022-09-05',
-      name: 'StarkNet Alpha 0.10.0',
-      link: 'https://medium.com/starkware/starknet-alpha-0-10-0-923007290470',
-    },
-  ],
 }
