@@ -20,7 +20,7 @@ export async function getErc20Bridge(
     ),
     values: {
       isFrozen: await erc20Bridge.isFrozen(),
-      maxDeposit: (await erc20Bridge.maxDeposit()).toNumber(),
+      //maxDeposit: (await erc20Bridge.maxDeposit()).toNumber(),
       maxTotalBalance: (await erc20Bridge.maxTotalBalance()).toNumber(),
     },
   }
