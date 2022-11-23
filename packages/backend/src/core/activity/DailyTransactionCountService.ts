@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { groupBy } from 'lodash'
 
-import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountRepository'
+import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
 import { getLaggingProjects, LaggingProject } from './getLaggingProjects'

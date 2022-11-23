@@ -40,22 +40,16 @@ export async function saveResult(
   addressVerificationMap: VerificationMap,
   projectVerificationMap: VerificationMap,
 ) {
-  // We need to have a deterministic order of addresses to avoid unnecessary git diff changes in the file.
-  // There's no simple way to do that with JSON.stringify for nested map, so we sort each internal map.
-  const output = [
-    '{',
-    '  "projects": ' +
-      jsonStringifySorted(projectVerificationMap, 4).slice(0, -1) +
-      '  },',
-    '  "contracts": ' +
-      jsonStringifySorted(addressVerificationMap, 4).slice(0, -1) +
-      '  }',
-    '}',
-    '',
-  ].join('\n')
-  await writeFile(filePath, output)
+  const output = {
+    updatedAt: new Date().toISOString(),
+    projects: sortObjectKeys(projectVerificationMap),
+    contracts: sortObjectKeys(addressVerificationMap),
+  }
+  await writeFile(filePath, JSON.stringify(output, null, 2) + '\n')
 }
 
-function jsonStringifySorted(m: VerificationMap, space: number) {
-  return JSON.stringify(m, Object.keys(m).sort(), space)
+function sortObjectKeys<T>(object: Record<string, T>): Record<string, T> {
+  return Object.fromEntries(
+    Object.entries(object).sort(([a], [b]) => a.localeCompare(b)),
+  )
 }
