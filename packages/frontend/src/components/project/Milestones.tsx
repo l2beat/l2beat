@@ -22,7 +22,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
       <div>
         <div className="absolute left-[15.4px] h-[100%] mt-2">
           <div className="h-[70%] w-[1px] bg-green-500 " />
-          <div className="h-[30%] w-[1px] bg-gradient-to-b from-green-500 to-black" />
+          <div className="h-[30%] w-[1px] bg-gradient-to-b from-green-500" />
         </div>
         <div className="ml-10">
           {milestones.map((milestone) => (
