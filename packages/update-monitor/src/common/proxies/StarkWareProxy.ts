@@ -147,7 +147,7 @@ async function getStarkWareDiamond(
   const abi = new utils.Interface([
     'function upgradeTo(address newImplementation, bytes data, bool finalize)',
   ])
-  const data: string = abi.decodeFunctionData('upgradeTo', tx.data).data
+  const data = abi.decodeFunctionData('upgradeTo', tx.data).data as string
 
   // we subtract 2 for '0x' and 1 for an external initializer contract
   const maxAddresses = Math.floor((data.length - 2) / 64) - 1
