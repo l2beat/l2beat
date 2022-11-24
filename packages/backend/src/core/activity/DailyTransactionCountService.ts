@@ -1,16 +1,21 @@
-import { Logger, TaskQueue } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { assert, Logger, TaskQueue } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/types'
 import { groupBy } from 'lodash'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
-import { getLaggingProjects, LaggingProject } from './getLaggingProjects'
 import { postprocessCounts } from './postprocessCounts'
 import { DailyTransactionCountProjectsMap } from './types'
 
 interface DailyTransactionCountServiceOpts {
   syncCheckDelayHours: number
+}
+
+interface SyncInfo {
+  lastDayWithData: string
+  hasProcessedAll: boolean
+  synced: boolean
 }
 
 export class DailyTransactionCountService {
@@ -19,7 +24,7 @@ export class DailyTransactionCountService {
 
   constructor(
     private readonly processors: SequenceProcessor[],
-    private readonly dailyTransactionCountRepository: DailyTransactionCountViewRepository,
+    private readonly viewRepository: DailyTransactionCountViewRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     opts?: DailyTransactionCountServiceOpts,
@@ -28,9 +33,9 @@ export class DailyTransactionCountService {
     this.delayHours = opts?.syncCheckDelayHours ?? 2
     this.refreshQueue = new TaskQueue<void>(async () => {
       this.logger.info('Refresh started')
-      await this.dailyTransactionCountRepository.refresh()
-      await this.checkSyncCorrectness()
+      await this.viewRepository.refresh()
       this.logger.info('Refresh finished')
+      await this.checkSyncCorrectness()
     }, this.logger.for('refreshQueue'))
   }
 
@@ -52,8 +57,7 @@ export class DailyTransactionCountService {
    * Returns counts with timestamps lower than or equal to yesterday.
    */
   async getDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
-    const allCounts =
-      await this.dailyTransactionCountRepository.getDailyCounts()
+    const allCounts = await this.viewRepository.getDailyCounts()
     const groupedCounts = groupBy(allCounts, (r) => r.projectId.toString())
     const result = new Map()
 
@@ -77,43 +81,53 @@ export class DailyTransactionCountService {
 
   async checkSyncCorrectness() {
     const lastHour = this.clock.getLastHour()
-    const startOfDay = lastHour.toStartOf('day')
-    const timeToCheck = lastHour.gte(startOfDay.add(this.delayHours, 'hours'))
-    if (!timeToCheck) {
-      this.logger.info('Skipping fully sync check - too early')
+    if (!this.isTimeToCheck(lastHour)) {
+      this.logger.info('Skipping sync check - too early')
       return
     }
-    const expectedTip = startOfDay.add(-1, 'days')
-    this.logger.info('Fully sync check started', {
-      day: expectedTip.toYYYYMMDD(),
-    })
-    const counts = await this.getDailyCounts()
-    const lagging = getLaggingProjects(counts, expectedTip)
-    if (lagging.length > 0) {
-      this.logLaggingError(lagging, expectedTip)
+    const today = lastHour.toYYYYMMDD()
+    this.logger.info('Sync check started', { today })
+    const syncInfos = await this.getProcessorSyncInfos(today)
+    if (syncInfos.some((i) => !i.synced)) {
+      this.logLaggingError(syncInfos, today)
     } else {
-      this.logger.info('Transaction counters are fully synced', {
-        day: expectedTip.toYYYYMMDD(),
-      })
+      this.logger.info('Transaction counters are synced', { today })
     }
-    this.logger.info('Fully sync check finished', {
-      day: expectedTip.toYYYYMMDD(),
-    })
+    this.logger.info('Sync check finished', { today })
   }
 
-  private logLaggingError(lagging: LaggingProject[], expectedTip: UnixTime) {
+  private isTimeToCheck(lastHour: UnixTime): boolean {
+    return lastHour.gte(lastHour.toStartOf('day').add(this.delayHours, 'hours'))
+  }
+
+  private async getProcessorSyncInfos(today: string): Promise<SyncInfo[]> {
+    return Promise.all(
+      this.processors.map(async (processor) => {
+        const counts = await this.viewRepository.getDailyCountsByProject(
+          ProjectId(processor.id),
+        )
+        const lastTimestamp = counts.at(-1)?.timestamp
+        assert(lastTimestamp)
+        const lastDayWithData = lastTimestamp.toYYYYMMDD()
+        return {
+          processorId: processor.id,
+          hasProcessedAll: processor.hasProcessedAll(),
+          lastDayWithData,
+          synced: lastDayWithData === today || processor.hasProcessedAll(),
+        }
+      }),
+    )
+  }
+
+  private logLaggingError(syncInfos: SyncInfo[], today: string) {
     this.logger.error(
       {
-        ...lagging.reduce(
-          (acc, p) => ({
-            ...acc,
-            [p.projectId.toString()]: p.tip?.toYYYYMMDD() ?? null,
-          }),
-          {},
-        ),
-        expectedTip: expectedTip.toYYYYMMDD(),
+        syncInfo: {
+          processors: syncInfos.map((i) => ({ ...i })),
+          today,
+        },
       },
-      new Error('Transaction counters are not fully synced'),
+      new Error('Transaction counters are not synced'),
     )
   }
 }
