@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
+  Milestone,
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
@@ -18,6 +19,7 @@ export interface Bridge {
   technology: BridgeTechnology
   contracts?: ProjectContracts
   permissions?: ProjectPermission[]
+  milestones?: Milestone[]
 }
 
 export interface BridgeDisplay {

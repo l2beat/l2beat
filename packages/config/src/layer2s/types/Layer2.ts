@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
+  Milestone,
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
@@ -29,6 +30,8 @@ export interface Layer2 {
   /** List of permissioned addresses */
   permissions?: ProjectPermission[]
   /** Links to recent developments */
+  /** Milestones achieved by the project */
+  milestones?: Milestone[]
 }
 
 export interface Layer2Display {

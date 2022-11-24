@@ -13,7 +13,6 @@ import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute
 
 export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
   singleStarkexCPM: number
-  starkexApiDelayHours: number
 }
 
 export function createStarkexProcessor(
@@ -54,8 +53,7 @@ export function createStarkexProcessor(
       batchSize,
       startFrom: startDay,
       // eslint-disable-next-line @typescript-eslint/require-await
-      getLatest: async () =>
-        getStarkexLastDay(clock.getLastHour(), options.starkexApiDelayHours),
+      getLatest: async () => getStarkexLastDay(clock.getLastHour()),
       processRange,
     },
   )
@@ -75,10 +73,7 @@ export function createStarkexProcessor(
 
   return processor
 }
-function getStarkexLastDay(timestamp: UnixTime, hoursDelay: number) {
-  return timestamp
-    .add(-hoursDelay, 'hours')
-    .toStartOf('day')
-    .add(-1, 'days')
-    .toDays()
+
+function getStarkexLastDay(timestamp: UnixTime) {
+  return timestamp.toStartOf('day').add(-1, 'days').toDays()
 }
