@@ -9,6 +9,7 @@ export type UpgradeabilityParameters =
   | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
   | StarkWareProxyUpgradeability
+  | StarkWareDiamondUpgradeability
   | ArbitrumProxyUpgradeability
   | EIP897ProxyUpgradeability
   | CustomProxyUpgradeability
@@ -33,6 +34,14 @@ export interface StarkWareProxyUpgradeability {
   callImplementation: string
   upgradeDelay: number
   isFinal: boolean
+}
+
+export interface StarkWareDiamondUpgradeability {
+  type: 'StarkWare diamond'
+  implementation: string
+  upgradeDelay: number
+  isFinal: boolean
+  facets: Record<string, string>
 }
 
 export interface ArbitrumProxyUpgradeability {
