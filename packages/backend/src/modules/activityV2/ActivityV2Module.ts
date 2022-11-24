@@ -43,16 +43,13 @@ export function createActivityV2Module(
     logger,
   )
 
+  const includedInApiProjectIds = getIncludedInApiProjectIds(
+    processors,
+    config,
+    logger,
+  )
   const activityController = new ActivityV2Controller(
-    processors
-      .filter((processor) =>
-        config.projects.some(
-          (p) =>
-            p.projectId.toString() === processor.id &&
-            !p.transactionApi?.excludeFromActivityApi,
-        ),
-      )
-      .map((p) => ProjectId(p.id)),
+    includedInApiProjectIds,
     dailyCountService,
   )
   const activityV2Router = createActivityV2Router(activityController)
@@ -75,4 +72,26 @@ export function createActivityV2Module(
     routers: [activityV2Router],
     start,
   }
+}
+
+function getIncludedInApiProjectIds(
+  processors: SequenceProcessor[],
+  config: Config,
+  logger: Logger,
+): ProjectId[] {
+  return processors
+    .filter((processor) => {
+      const explicitlyExcluded = config.projects.some(
+        (p) =>
+          p.projectId.toString() === processor.id &&
+          p.transactionApi?.excludeFromActivityApi === true,
+      )
+      if (explicitlyExcluded) {
+        logger.info(
+          `Project ${processor.id} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
+        )
+      }
+      return !explicitlyExcluded
+    })
+    .map((p) => ProjectId(p.id))
 }
