@@ -31,7 +31,6 @@ export function createSequenceProcessors(
     activityV2: {
       starkexApiKey,
       starkexCallsPerMinute,
-      starkexApiDelayHours,
       projects: activityV2ConfigProjects,
       allowedProjectIds,
     },
@@ -88,7 +87,6 @@ export function createSequenceProcessors(
             clock,
             {
               ...transactionApiV2,
-              starkexApiDelayHours,
               singleStarkexCPM,
             },
           )
