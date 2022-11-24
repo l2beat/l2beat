@@ -9,16 +9,17 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { TransactionCounter } from '../types'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createRpcProcessor(
+export function createRpcCounter(
   projectId: ProjectId,
   blockRepository: BlockTransactionCountRepository,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   clock: Clock,
   transactionApi: RpcTransactionApiV2,
-): SequenceProcessor {
+): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const timeout = transactionApi.timeout ?? 15_000
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
@@ -34,7 +35,7 @@ export function createRpcProcessor(
     callsPerMinute,
   )
 
-  return new SequenceProcessor(
+  const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
     sequenceProcessorRepository,
@@ -65,4 +66,10 @@ export function createRpcProcessor(
       },
     },
   )
+
+  return {
+    processor,
+    getLastProcessedTimestamp: () =>
+      blockRepository.getLastTimestampByProjectId(projectId),
+  }
 }

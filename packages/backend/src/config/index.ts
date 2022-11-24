@@ -1,8 +1,8 @@
 import { CliParameters } from '../cli/getCliParameters'
-import { Config } from './Config'
-import { getLocalConfig } from './config.local'
-import { getProductionConfig } from './config.production'
-import { getStagingConfig } from './config.staging'
+import { Config } from '../config/Config'
+import { getLocalConfig } from '../config/config.local'
+import { getProductionConfig } from '../config/config.production'
+import { getStagingConfig } from '../config/config.staging'
 
 export type { Config }
 

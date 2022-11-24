@@ -7,7 +7,7 @@ import { SequenceProcessorRepository } from '../peripherals/database/SequencePro
 export interface SequenceProcessorOpts {
   startFrom: number
   batchSize: number
-  getLatest: (previousLatest: number) => Promise<number>
+  getLatest: (previousLatest: number) => Promise<number> | number
   processRange: (
     // [from, to] <- ranges are inclusive
     from: number,

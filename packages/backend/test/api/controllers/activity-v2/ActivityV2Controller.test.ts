@@ -22,7 +22,7 @@ describe(ActivityV2Controller.name, () => {
       const controller = new ActivityV2Controller(
         [],
         mock<DailyTransactionCountService>({
-          async getDailyCounts() {
+          async getPostprocessedDailyCounts() {
             return new Map()
           },
         }),
@@ -36,7 +36,7 @@ describe(ActivityV2Controller.name, () => {
       const controller = new ActivityV2Controller(
         [],
         mock<DailyTransactionCountService>({
-          async getDailyCounts() {
+          async getPostprocessedDailyCounts() {
             const result = new Map()
             result.set(ProjectId.ETHEREUM, [
               { timestamp: YESTERDAY_2.add(-1, 'days'), count: 1 },
@@ -66,7 +66,7 @@ describe(ActivityV2Controller.name, () => {
       const controller = new ActivityV2Controller(
         [PROJECT_A, PROJECT_B],
         mock<DailyTransactionCountService>({
-          async getDailyCounts() {
+          async getPostprocessedDailyCounts() {
             const result = new Map<ProjectId, DailyTransactionCount[]>()
             result.set(PROJECT_A, [
               {

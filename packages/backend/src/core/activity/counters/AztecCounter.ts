@@ -7,21 +7,22 @@ import { AztecClient } from '../../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { TransactionCounter } from '../types'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createAztecProcessor(
+export function createAztecCounter(
   projectId: ProjectId,
   blockRepository: BlockTransactionCountRepository,
   http: HttpClient,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   options: AztecTransactionApiV2,
-): SequenceProcessor {
+): TransactionCounter {
   const callsPerMinute = options.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const client = new AztecClient(http, options.url, callsPerMinute)
 
-  return new SequenceProcessor(
+  const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
     sequenceProcessorRepository,
@@ -49,4 +50,10 @@ export function createAztecProcessor(
       },
     },
   )
+
+  return {
+    processor,
+    getLastProcessedTimestamp: () =>
+      blockRepository.getLastTimestampByProjectId(projectId),
+  }
 }

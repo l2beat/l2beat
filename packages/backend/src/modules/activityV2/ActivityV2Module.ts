@@ -5,12 +5,14 @@ import { ActivityV2Controller } from '../../api/controllers/activity-v2/Activity
 import { createActivityV2Router } from '../../api/routers/ActivityV2Router'
 import { Config } from '../../config'
 import { DailyTransactionCountService } from '../../core/activity/DailyTransactionCountService'
+import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
+import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
 import { SequenceProcessor } from '../../core/SequenceProcessor'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
-import { createSequenceProcessors } from './createSequenceProcessors'
+import { createTransactionCounters } from './createTransactionCounters'
 
 export function createActivityV2Module(
   config: Config,
@@ -28,18 +30,31 @@ export function createActivityV2Module(
     logger,
   )
 
-  const processors: SequenceProcessor[] = createSequenceProcessors(
+  const counters = createTransactionCounters(
     config,
     logger,
     http,
     database,
     clock,
   )
+  const processors = counters.map((c) => c.processor)
+
+  const viewRefresher = new DailyTransactionCountViewRefresher(
+    processors,
+    dailyCountViewRepository,
+    clock,
+    logger,
+  )
+
+  const transactionCountingMonitor = new TransactionCountingMonitor(
+    counters,
+    clock,
+    logger,
+  )
 
   const dailyCountService = new DailyTransactionCountService(
     processors,
     dailyCountViewRepository,
-    clock,
     logger,
   )
 
@@ -63,7 +78,8 @@ export function createActivityV2Module(
     logger.info('Starting')
 
     processors.forEach((p) => p.start())
-    dailyCountService.start()
+    viewRefresher.start()
+    transactionCountingMonitor.start()
 
     logger.info('Started')
   }

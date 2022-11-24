@@ -1,43 +1,54 @@
 import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { LoopringTransactionApiV2 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/types'
+import { StarknetTransactionApiV2 } from '@l2beat/config'
+import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { LoopringClient } from '../../../peripherals/loopring'
+import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
+import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { TransactionCounter } from '../types'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createLoopringProcessor(
+export function createStarknetCounter(
   projectId: ProjectId,
-  http: HttpClient,
   blockRepository: BlockTransactionCountRepository,
+  http: HttpClient,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  transactionApi: LoopringTransactionApiV2,
-): SequenceProcessor {
-  const callsPerMinute = transactionApi.callsPerMinute
+  clock: Clock,
+  transactionApi: StarknetTransactionApiV2,
+): TransactionCounter {
+  const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new LoopringClient(http, logger, { callsPerMinute })
+  const client = new StarkNetClient(transactionApi.url, http, {
+    callsPerMinute,
+  })
 
-  return new SequenceProcessor(
+  const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
     sequenceProcessorRepository,
     {
       batchSize,
-      startFrom: 1,
-      getLatest: client.getFinalizedBlockNumber.bind(client),
+      startFrom: 0,
+      getLatest: async (previousLatest) => {
+        const blockNumber = await client.getBlockNumberAtOrBefore(
+          clock.getLastHour(),
+          previousLatest,
+        )
+        return blockNumber
+      },
       processRange: async (from, to, trx) => {
         const queries = range(from, to + 1).map((blockNumber) => async () => {
           const block = await client.getBlock(blockNumber)
 
           return {
             projectId,
-            blockNumber,
-            count: block.transactions,
-            timestamp: block.createdAt,
+            blockNumber: block.number,
+            count: block.transactions.length,
+            timestamp: new UnixTime(block.timestamp),
           }
         })
 
@@ -46,4 +57,10 @@ export function createLoopringProcessor(
       },
     },
   )
+
+  return {
+    processor,
+    getLastProcessedTimestamp: () =>
+      blockRepository.getLastTimestampByProjectId(projectId),
+  }
 }
