@@ -166,6 +166,8 @@ describe(TransactionCountingMonitor.name, () => {
   })
 })
 
+// Not ideal, because looses type information
+// I could not make it work with mock<Logger> - it kept requiring specific overload type of `Logger.info`
 function mockLogger(): Logger & {
   info: ReturnType<typeof mockFn>
   error: ReturnType<typeof mockFn>
