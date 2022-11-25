@@ -13,6 +13,7 @@ export function getStagingConfig(cli: CliParameters): Config {
   return {
     ...productionConfig,
     name: 'Backend/Staging',
+    activity: false,
     activityV2: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
