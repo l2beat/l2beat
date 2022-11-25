@@ -36,6 +36,17 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const knex = await this.knex()
     return await knex('activity_v2.block').delete()
   }
+
+  async getLastTimestampByProjectId(
+    projectId: ProjectId,
+  ): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = await knex('activity_v2.block')
+      .where('project_id', projectId.toString())
+      .max('unix_timestamp')
+      .first()
+    return row ? UnixTime.fromDate(row.max) : undefined
+  }
 }
 
 function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {

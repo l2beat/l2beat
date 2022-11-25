@@ -3,15 +3,15 @@ import { Layer2TransactionApiV2 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 
 import { Config } from '../../config'
-import { createAztecConnectProcessor } from '../../core/activity/processors/AztecConnectProcessor'
-import { createAztecProcessor } from '../../core/activity/processors/AztecProcessor'
-import { createLoopringProcessor } from '../../core/activity/processors/LoopringProcessor'
-import { createRpcProcessor } from '../../core/activity/processors/RpcProcessor'
-import { createStarkexProcessor } from '../../core/activity/processors/StarkexProcessor'
-import { createStarknetProcessor } from '../../core/activity/processors/StarknetProcessor'
-import { createZksyncProcessor } from '../../core/activity/processors/ZksyncProcessor'
+import { createAztecConnectCounter } from '../../core/activity/counters/AztecConnectCounter'
+import { createAztecCounter } from '../../core/activity/counters/AztecCounter'
+import { createLoopringCounter } from '../../core/activity/counters/LoopringCounter'
+import { createRpcCounter } from '../../core/activity/counters/RpcCounter'
+import { createStarkexCounter } from '../../core/activity/counters/StarkexCounter'
+import { createStarknetCounter } from '../../core/activity/counters/StarknetCounter'
+import { createZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
+import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { Clock } from '../../core/Clock'
-import { SequenceProcessor } from '../../core/SequenceProcessor'
 import { Project } from '../../model'
 import { BlockTransactionCountRepository } from '../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/activity-v2/StarkexCountRepository'
@@ -19,13 +19,13 @@ import { SequenceProcessorRepository } from '../../peripherals/database/Sequence
 import { Database } from '../../peripherals/database/shared/Database'
 import { StarkexClient } from '../../peripherals/starkex'
 
-export function createSequenceProcessors(
+export function createTransactionCounters(
   config: Config,
   logger: Logger,
   http: HttpClient,
   database: Database,
   clock: Clock,
-): SequenceProcessor[] {
+): TransactionCounter[] {
   assert(config.activityV2)
   const {
     activityV2: {
@@ -78,7 +78,7 @@ export function createSequenceProcessors(
     .map(({ projectId, transactionApiV2 }) => {
       switch (transactionApiV2.type) {
         case 'starkex':
-          return createStarkexProcessor(
+          return createStarkexCounter(
             projectId,
             starkexRepository,
             starkexClient,
@@ -91,7 +91,7 @@ export function createSequenceProcessors(
             },
           )
         case 'aztec':
-          return createAztecProcessor(
+          return createAztecCounter(
             projectId,
             blockRepository,
             http,
@@ -100,7 +100,7 @@ export function createSequenceProcessors(
             transactionApiV2,
           )
         case 'aztecconnect':
-          return createAztecConnectProcessor(
+          return createAztecConnectCounter(
             projectId,
             blockRepository,
             http,
@@ -109,7 +109,7 @@ export function createSequenceProcessors(
             transactionApiV2,
           )
         case 'starknet':
-          return createStarknetProcessor(
+          return createStarknetCounter(
             projectId,
             blockRepository,
             http,
@@ -119,7 +119,7 @@ export function createSequenceProcessors(
             transactionApiV2,
           )
         case 'zksync':
-          return createZksyncProcessor(
+          return createZksyncCounter(
             projectId,
             http,
             database,
@@ -128,7 +128,7 @@ export function createSequenceProcessors(
             transactionApiV2,
           )
         case 'loopring':
-          return createLoopringProcessor(
+          return createLoopringCounter(
             projectId,
             http,
             blockRepository,
@@ -137,7 +137,7 @@ export function createSequenceProcessors(
             transactionApiV2,
           )
         case 'rpc':
-          return createRpcProcessor(
+          return createRpcCounter(
             projectId,
             blockRepository,
             sequenceProcessorRepository,

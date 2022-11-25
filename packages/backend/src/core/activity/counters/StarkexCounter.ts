@@ -9,13 +9,14 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../../SequenceProcessor'
+import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
   singleStarkexCPM: number
 }
 
-export function createStarkexProcessor(
+export function createStarkexCounter(
   projectId: ProjectId,
   starkexRepository: StarkexTransactionCountRepository,
   starkexClient: StarkexClient,
@@ -23,7 +24,7 @@ export function createStarkexProcessor(
   logger: Logger,
   clock: Clock,
   options: StarkexProcessorOptions,
-): SequenceProcessor {
+): TransactionCounter {
   const batchSize = getBatchSizeFromCallsPerMinute(options.singleStarkexCPM)
   const startDay = options.sinceTimestamp.toStartOf('day').toDays()
   const processRange = async (
@@ -52,8 +53,7 @@ export function createStarkexProcessor(
     {
       batchSize,
       startFrom: startDay,
-      // eslint-disable-next-line @typescript-eslint/require-await
-      getLatest: async () => getStarkexLastDay(clock.getLastHour()),
+      getLatest: () => getStarkexLastDay(clock.getLastHour()),
       processRange,
     },
   )
@@ -71,7 +71,9 @@ export function createStarkexProcessor(
     handleAllProcessedEvent().catch(logger.error.bind(logger))
   })
 
-  return processor
+  return new TransactionCounter(projectId, processor, () =>
+    starkexRepository.getLastTimestampByProjectId(projectId),
+  )
 }
 
 function getStarkexLastDay(timestamp: UnixTime) {

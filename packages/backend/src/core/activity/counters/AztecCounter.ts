@@ -1,43 +1,48 @@
 import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { LoopringTransactionApiV2 } from '@l2beat/config'
+import { AztecTransactionApiV2 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
+import { AztecClient } from '../../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { LoopringClient } from '../../../peripherals/loopring'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { TransactionCounter } from '../TransactionCounter'
+import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createLoopringProcessor(
+export function createAztecCounter(
   projectId: ProjectId,
-  http: HttpClient,
   blockRepository: BlockTransactionCountRepository,
+  http: HttpClient,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  transactionApi: LoopringTransactionApiV2,
-): SequenceProcessor {
-  const callsPerMinute = transactionApi.callsPerMinute
+  options: AztecTransactionApiV2,
+): TransactionCounter {
+  const callsPerMinute = options.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new LoopringClient(http, logger, { callsPerMinute })
+  const client = new AztecClient(http, options.url, callsPerMinute)
 
-  return new SequenceProcessor(
+  const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
     sequenceProcessorRepository,
     {
       batchSize,
-      startFrom: 1,
-      getLatest: client.getFinalizedBlockNumber.bind(client),
+      startFrom: 0,
+      getLatest: async () => {
+        const block = await client.getLatestBlock()
+        return block.number
+      },
       processRange: async (from, to, trx) => {
         const queries = range(from, to + 1).map((blockNumber) => async () => {
           const block = await client.getBlock(blockNumber)
 
           return {
             projectId,
-            blockNumber,
-            count: block.transactions,
-            timestamp: block.createdAt,
+            blockNumber: block.number,
+            count: block.transactionCount,
+            timestamp: block.timestamp,
           }
         })
 
@@ -46,4 +51,6 @@ export function createLoopringProcessor(
       },
     },
   )
+
+  return createBlockTransactionCounter(projectId, processor, blockRepository)
 }
