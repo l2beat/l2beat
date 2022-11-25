@@ -17,14 +17,14 @@ export function Milestones({ milestones, className }: MilestonesProps) {
   }
 
   return (
-    <div className={cx('relative', className)}>
+    <div className={cx(className)}>
       <div>
         <span className="text-2xl font-bold">Milestones</span>
       </div>
-      <div>
+      <div className="h-auto relative">
         <div className="absolute left-[15.4px] h-[100%] mt-2">
           <div className="h-[60%] w-[1.7px] dark:w-px bg-green-400 dark:bg-green-500 " />
-          <div className="h-[35%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
+          <div className="h-[40%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
         </div>
         <div className="ml-10 mt-4">
           {milestones.map((milestone, i) => (
