@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { fillMissingCounts } from '../../../src/core/activity/fillMissingCounts'
+import { fillMissingCounts } from '../../../src/api/controllers/activity-v2/fillMissingCounts'
 
 describe(fillMissingCounts.name, () => {
   it('handles empty counts', () => {

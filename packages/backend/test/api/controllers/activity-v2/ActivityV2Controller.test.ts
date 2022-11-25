@@ -8,115 +8,171 @@ import {
 import { expect } from 'earljs'
 
 import { ActivityV2Controller } from '../../../../src/api/controllers/activity-v2/ActivityV2Controller'
-import { DailyTransactionCountService } from '../../../../src/core/activity/DailyTransactionCountService'
-import { DailyTransactionCount } from '../../../../src/core/transaction-count/TransactionCounter'
+import { TransactionCounter } from '../../../../src/core/activity/TransactionCounter'
+import {
+  DailyTransactionCountRecord,
+  DailyTransactionCountViewRepository,
+} from '../../../../src/peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
-const YESTERDAY = UnixTime.now().toStartOf('day').add(-1, 'days')
-const YESTERDAY_2 = YESTERDAY.add(-1, 'days')
+const TODAY = UnixTime.now().toStartOf('day')
 
 describe(ActivityV2Controller.name, () => {
   describe(ActivityV2Controller.prototype.getActivity.name, () => {
-    it('throws if ethereum not present', async () => {
-      const controller = new ActivityV2Controller(
-        [],
-        mock<DailyTransactionCountService>({
-          async getPostprocessedDailyCounts() {
-            return new Map()
-          },
+    it('throws if ethereum not present in db', async () => {
+      const includedIds: ProjectId[] = [PROJECT_A, ProjectId.ETHEREUM]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
         }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+      ]
+      const controller = new ActivityV2Controller(
+        includedIds,
+        counters,
+        mockRepository([]),
       )
+
       await expect(controller.getActivity()).toBeRejected(
         'Assertion Error: Ethereum missing in daily transaction count',
       )
     })
 
-    it('returns empty if no projects track activity', async () => {
-      const controller = new ActivityV2Controller(
-        [],
-        mock<DailyTransactionCountService>({
-          async getPostprocessedDailyCounts() {
-            const result = new Map()
-            result.set(ProjectId.ETHEREUM, [
-              { timestamp: YESTERDAY_2.add(-1, 'days'), count: 1 },
-              { timestamp: YESTERDAY_2, count: 0 },
-            ])
-            result.set(PROJECT_A, [
-              { timestamp: YESTERDAY_2.add(-2, 'days'), count: 2 },
-              { timestamp: YESTERDAY_2.add(-1, 'days'), count: 0 },
-            ])
-            return result
-          },
+    it('returns only included projects', async () => {
+      const includedIds: ProjectId[] = [ProjectId.ETHEREUM]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
         }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: false,
+        }),
+      ]
+
+      const controller = new ActivityV2Controller(
+        includedIds,
+        counters,
+        mockRepository([
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2137,
+          },
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 420,
+          },
+          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-3, 'days'),
+            count: 2,
+          },
+        ]),
       )
+
       expect(await controller.getActivity()).toEqual(
         formatActivity({
           combined: [],
           projects: {},
           ethereum: [
-            [YESTERDAY_2.add(-1, 'days'), 1],
-            [YESTERDAY_2, 0],
+            [TODAY.add(-2, 'days'), 2137],
+            [TODAY.add(-1, 'days'), 420],
           ],
         }),
       )
     })
 
     it('groups data', async () => {
-      const controller = new ActivityV2Controller(
-        [PROJECT_A, PROJECT_B],
-        mock<DailyTransactionCountService>({
-          async getPostprocessedDailyCounts() {
-            const result = new Map<ProjectId, DailyTransactionCount[]>()
-            result.set(PROJECT_A, [
-              {
-                timestamp: YESTERDAY_2,
-                count: 420,
-              },
-              {
-                timestamp: YESTERDAY,
-                count: 69,
-              },
-            ])
-            result.set(PROJECT_B, [
-              {
-                timestamp: YESTERDAY_2,
-                count: 1337,
-              },
-              {
-                timestamp: YESTERDAY,
-                count: 2137,
-              },
-            ])
-            result.set(ProjectId.ETHEREUM, [
-              { timestamp: YESTERDAY_2, count: 1 },
-              { timestamp: YESTERDAY, count: 2 },
-            ])
-
-            return result
-          },
+      const includedIds: ProjectId[] = [
+        PROJECT_A,
+        PROJECT_B,
+        ProjectId.ETHEREUM,
+      ]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
         }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: false,
+        }),
+      ]
+
+      const controller = new ActivityV2Controller(
+        includedIds,
+        counters,
+        mockRepository([
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2137,
+          },
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 420,
+          },
+          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2,
+          },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 1,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 1337,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 69,
+          },
+        ]),
       )
 
       expect(await controller.getActivity()).toEqual(
         formatActivity({
           combined: [
-            [YESTERDAY_2, 1757],
-            [YESTERDAY, 2206],
+            [TODAY.add(-2, 'days'), 1339],
+            [TODAY.add(-1, 'days'), 70],
           ],
           projects: {
             [PROJECT_A.toString()]: [
-              [YESTERDAY_2, 420],
-              [YESTERDAY, 69],
+              [TODAY.add(-2, 'days'), 2],
+              [TODAY.add(-1, 'days'), 1],
             ],
             [PROJECT_B.toString()]: [
-              [YESTERDAY_2, 1337],
-              [YESTERDAY, 2137],
+              [TODAY.add(-2, 'days'), 1337],
+              [TODAY.add(-1, 'days'), 69],
             ],
           },
           ethereum: [
-            [YESTERDAY_2, 1],
-            [YESTERDAY, 2],
+            [TODAY.add(-2, 'days'), 2137],
+            [TODAY.add(-1, 'days'), 420],
           ],
         }),
       )
@@ -152,4 +208,23 @@ function formatActivity({
       }
     }, {}),
   }
+}
+
+function mockCounter({
+  hasProcessedAll,
+  projectId,
+}: {
+  hasProcessedAll: boolean
+  projectId: ProjectId
+}) {
+  return mock<TransactionCounter>({
+    hasProcessedAll: () => hasProcessedAll,
+    projectId,
+  })
+}
+
+function mockRepository(counts: DailyTransactionCountRecord[]) {
+  return mock<DailyTransactionCountViewRepository>({
+    getDailyCounts: async () => counts,
+  })
 }
