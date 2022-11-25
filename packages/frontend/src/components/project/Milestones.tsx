@@ -27,8 +27,8 @@ export function Milestones({ milestones, className }: MilestonesProps) {
           <div className="h-[35%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
         </div>
         <div className="ml-10 mt-4">
-          {milestones.map((milestone) => (
-            <div className="mb-7">
+          {milestones.map((milestone, i) => (
+            <div key={i} className="mb-7">
               <MilestoneIcon className="absolute left-1.5 fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500" />
               <div className="font-bold text-lg leading-none">
                 {milestone.name}
