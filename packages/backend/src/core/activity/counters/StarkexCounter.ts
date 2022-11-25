@@ -9,8 +9,7 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../../SequenceProcessor'
-import { createStarkexTransactionCounter } from '../transaction-counter/StarkexTransactionCounter'
-import { TransactionCounter } from '../transaction-counter/TransactionCounter'
+import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
@@ -72,10 +71,8 @@ export function createStarkexCounter(
     handleAllProcessedEvent().catch(logger.error.bind(logger))
   })
 
-  return createStarkexTransactionCounter(
-    projectId,
-    processor,
-    starkexRepository,
+  return new TransactionCounter(projectId, processor, () =>
+    starkexRepository.getLastTimestampByProjectId(projectId),
   )
 }
 

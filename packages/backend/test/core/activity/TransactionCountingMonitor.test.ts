@@ -2,7 +2,7 @@ import { Logger, mock, MockedObject } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
-import { TransactionCounter } from '../../../src/core/activity/transaction-counter/TransactionCounter'
+import { TransactionCounter } from '../../../src/core/activity/TransactionCounter'
 import { TransactionCountingMonitor } from '../../../src/core/activity/TransactionCountingMonitor'
 import { Clock } from '../../../src/core/Clock'
 import { SequenceProcessor } from '../../../src/core/SequenceProcessor'

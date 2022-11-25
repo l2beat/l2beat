@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { json, UnixTime } from '@l2beat/types'
 
 import { Clock } from '../Clock'
-import { TransactionCounter } from './transaction-counter/TransactionCounter'
+import { TransactionCounter } from './TransactionCounter'
 
 interface TransactionCountingMonitorOpts {
   syncCheckDelayHours: number

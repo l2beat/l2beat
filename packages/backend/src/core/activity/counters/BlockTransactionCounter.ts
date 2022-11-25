@@ -2,7 +2,7 @@ import { ProjectId } from '@l2beat/types'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { TransactionCounter } from './TransactionCounter'
+import { TransactionCounter } from '../TransactionCounter'
 
 export function createBlockTransactionCounter(
   projectId: ProjectId,

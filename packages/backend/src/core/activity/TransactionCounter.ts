@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
-import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../../SequenceProcessor'
+import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
 
 export class TransactionCounter {
   constructor(

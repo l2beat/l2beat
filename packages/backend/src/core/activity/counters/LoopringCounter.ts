@@ -7,8 +7,8 @@ import { BlockTransactionCountRepository } from '../../../peripherals/database/a
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { LoopringClient } from '../../../peripherals/loopring'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { createBlockTransactionCounter } from '../transaction-counter/BlockTransactionCounter'
-import { TransactionCounter } from '../transaction-counter/TransactionCounter'
+import { TransactionCounter } from '../TransactionCounter'
+import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createLoopringCounter(

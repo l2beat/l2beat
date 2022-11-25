@@ -7,8 +7,8 @@ import { AztecConnectClient } from '../../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { createBlockTransactionCounter } from '../transaction-counter/BlockTransactionCounter'
-import { TransactionCounter } from '../transaction-counter/TransactionCounter'
+import { TransactionCounter } from '../TransactionCounter'
+import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createAztecConnectCounter(

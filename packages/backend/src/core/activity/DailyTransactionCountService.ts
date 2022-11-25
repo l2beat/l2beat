@@ -3,7 +3,7 @@ import { groupBy } from 'lodash'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { postprocessCounts } from './postprocessCounts'
-import { TransactionCounter } from './transaction-counter/TransactionCounter'
+import { TransactionCounter } from './TransactionCounter'
 import { DailyTransactionCountProjectsMap } from './types'
 
 export class DailyTransactionCountService {

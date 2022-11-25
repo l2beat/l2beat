@@ -2,7 +2,7 @@ import { Logger, TaskQueue } from '@l2beat/common'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'
-import { TransactionCounter } from './transaction-counter/TransactionCounter'
+import { TransactionCounter } from './TransactionCounter'
 
 export class DailyTransactionCountViewRefresher {
   private readonly refreshQueue: TaskQueue<void>
