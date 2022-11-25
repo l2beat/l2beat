@@ -4,7 +4,6 @@ import { ProjectId } from '@l2beat/types'
 import { ActivityV2Controller } from '../../api/controllers/activity-v2/ActivityV2Controller'
 import { createActivityV2Router } from '../../api/routers/ActivityV2Router'
 import { Config } from '../../config'
-import { DailyTransactionCountService } from '../../core/activity/DailyTransactionCountService'
 import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
@@ -51,12 +50,6 @@ export function createActivityV2Module(
     logger,
   )
 
-  const dailyCountService = new DailyTransactionCountService(
-    counters,
-    dailyCountViewRepository,
-    logger,
-  )
-
   const includedInApiProjectIds = getIncludedInApiProjectIds(
     counters,
     config,
@@ -64,7 +57,8 @@ export function createActivityV2Module(
   )
   const activityController = new ActivityV2Controller(
     includedInApiProjectIds,
-    dailyCountService,
+    counters,
+    dailyCountViewRepository,
   )
   const activityV2Router = createActivityV2Router(activityController)
 
