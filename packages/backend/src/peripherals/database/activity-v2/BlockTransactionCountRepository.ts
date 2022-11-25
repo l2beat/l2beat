@@ -43,9 +43,9 @@ export class BlockTransactionCountRepository extends BaseRepository {
     const knex = await this.knex()
     const row = await knex('activity_v2.block')
       .where('project_id', projectId.toString())
-      .max('unix_timestamp')
+      .orderBy('block_number', 'desc')
       .first()
-    return row ? UnixTime.fromDate(row.max) : undefined
+    return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
   }
 }
 

@@ -36,8 +36,11 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async getLastTimestamp(): Promise<UnixTime | undefined> {
     const knex = await this.knex()
-    const row = await knex('activity_v2.zksync').max('unix_timestamp').first()
-    return row ? UnixTime.fromDate(row.max) : undefined
+    const row = await knex('activity_v2.zksync')
+      .orderBy('block_number', 'desc')
+      .orderBy('block_index', 'desc')
+      .first()
+    return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
   }
 }
 
