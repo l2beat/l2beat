@@ -74,7 +74,27 @@ export function getProductionConfig(cli: CliParameters): Config {
         },
       },
     },
-    activityV2: false,
+    activityV2: {
+      starkexApiKey: getEnv('STARKEX_API_KEY'),
+      starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
+      projects: {
+        ethereum: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
+          url: getEnv('ACTIVITY_ETHEREUM_URL'),
+        },
+        optimism: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
+          url: getEnv('ACTIVITY_OPTIMISM_URL'),
+        },
+        arbitrum: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
+          url: getEnv('ACTIVITY_ARBITRUM_URL'),
+        },
+      },
+    },
     discovery: false,
   }
 }
