@@ -19,8 +19,8 @@ export function Milestones({ milestones, className }: MilestonesProps) {
       </div>
       <div>
         <div className="absolute left-[15.4px] h-[100%] mt-2">
-          <div className="h-[60%] w-[1.7px] dark:w-[1px] bg-green-400 dark:bg-green-500 " />
-          <div className="h-[35%] w-[1.7px] dark:w-[1px] bg-gradient-to-b from-green-400 dark:from-green-500" />
+          <div className="h-[60%] w-[1.7px] dark:w-px bg-green-400 dark:bg-green-500 " />
+          <div className="h-[35%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
         </div>
         <div className="ml-10 mt-4">
           {milestones.map((milestone) => (
