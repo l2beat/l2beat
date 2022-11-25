@@ -30,7 +30,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
                 {milestone.name}
               </div>
               <div className="dark:text-gray-400 text-sm">
-                {transformDate(milestone.date)}
+                {formatDate(milestone.date)}
               </div>
               <div className="mt-3">
                 {milestone.description && (
@@ -60,7 +60,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
     </div>
   )
 }
-function transformDate(date: Date): string {
+function formatDate(date: Date): string {
   const year = date.getFullYear()
   const month = date.toLocaleDateString('en', {
     month: 'short',
