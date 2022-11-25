@@ -10,7 +10,7 @@ const now = UnixTime.now()
 
 describe(TransactionCounter.name, () => {
   describe(
-    TransactionCounter.prototype.hasDataUpToYesterdayInclusive.name,
+    TransactionCounter.prototype.isSyncedUpToYesterdayInclusive.name,
     () => {
       it('returns false if no last timestamp', async () => {
         const counter = new TransactionCounter(
@@ -18,7 +18,7 @@ describe(TransactionCounter.name, () => {
           mockProcessor(true),
           async () => undefined,
         )
-        expect(await counter.hasDataUpToYesterdayInclusive(now)).toEqual(false)
+        expect(await counter.isSyncedUpToYesterdayInclusive(now)).toEqual(false)
       })
 
       it('returns true if last is not today but processed all', async () => {
@@ -28,7 +28,7 @@ describe(TransactionCounter.name, () => {
           async () => now.add(-1, 'days'),
         )
         expect(
-          await counter.hasDataUpToYesterdayInclusive(UnixTime.now()),
+          await counter.isSyncedUpToYesterdayInclusive(UnixTime.now()),
         ).toEqual(true)
       })
 
@@ -39,7 +39,7 @@ describe(TransactionCounter.name, () => {
           async () => now,
         )
         expect(
-          await counter.hasDataUpToYesterdayInclusive(UnixTime.now()),
+          await counter.isSyncedUpToYesterdayInclusive(UnixTime.now()),
         ).toEqual(true)
       })
 
@@ -50,7 +50,7 @@ describe(TransactionCounter.name, () => {
           async () => now.add(-1, 'days'),
         )
         expect(
-          await counter.hasDataUpToYesterdayInclusive(UnixTime.now()),
+          await counter.isSyncedUpToYesterdayInclusive(UnixTime.now()),
         ).toEqual(false)
       })
     },
