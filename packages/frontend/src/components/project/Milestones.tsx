@@ -19,7 +19,9 @@ export function Milestones({ milestones, className }: MilestonesProps) {
   return (
     <div className={cx(className)}>
       <div>
-        <span className="text-[28px] leading-[32.81px] font-bold">Milestones</span>
+        <span className="text-[28px] leading-[32.81px] font-bold">
+          Milestones
+        </span>
       </div>
       <div className="h-auto relative">
         <div className="absolute left-[15.4px] h-[100%] mt-2">
