@@ -78,7 +78,7 @@ export class TransactionCountingMonitor {
     const lastTimestamp = await counter.getLastProcessedTimestamp()
     const lastDayWithData = lastTimestamp?.toYYYYMMDD() ?? null
     const hasProcessedAll = counter.hasProcessedAll()
-    const isSynced = await counter.isSynced(lastHour)
+    const isSynced = await counter.hasDataUpToYesterdayInclusive(lastHour)
     return {
       projectId: counter.projectId.toString(),
       hasProcessedAll,

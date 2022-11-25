@@ -21,10 +21,7 @@ export class TransactionCounter {
     this.processor.on(ALL_PROCESSED_EVENT, listener)
   }
 
-  /**
-   * Returns `true` if we processed all the data up to yesterday inclusive
-   */
-  async isSynced(now: UnixTime): Promise<boolean> {
+  async hasDataUpToYesterdayInclusive(now: UnixTime): Promise<boolean> {
     const lastTimestamp = await this.getLastProcessedTimestamp()
     if (!lastTimestamp) return false
     const lastDayWithData = lastTimestamp.toYYYYMMDD()
