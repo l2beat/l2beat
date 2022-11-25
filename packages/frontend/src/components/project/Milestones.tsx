@@ -7,11 +7,15 @@ import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { OutLink } from '../OutLink'
 
 export interface MilestonesProps {
-  milestones: Milestone[]
+  milestones?: Milestone[]
   className?: string
 }
 
 export function Milestones({ milestones, className }: MilestonesProps) {
+  if (milestones === undefined) {
+    return <></>
+  }
+
   return (
     <div className={cx('relative', className)}>
       <div>

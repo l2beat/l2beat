@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -12,6 +13,8 @@ import {
   LinkSection,
   LinkSectionProps,
 } from '../../../components/project/links/LinkSection'
+import { Milestones } from '../../../components/project/Milestones'
+import { Milestone } from '../../../components/project/Milestones.stories'
 import {
   PermissionsSection,
   PermissionsSectionProps,
@@ -37,11 +40,13 @@ export interface ProjectDetailsProps {
   sections: TechnologySectionProps[]
   permissionsSection?: PermissionsSectionProps
   contractsSection: ContractsSectionProps
+  milestones?: Milestone[]
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <main className="ProjectDetails">
+      <Milestones milestones={props.milestones} />
       <LinkSection {...props.linkSection} />
       <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
