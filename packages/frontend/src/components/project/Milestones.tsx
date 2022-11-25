@@ -29,38 +29,40 @@ export function Milestones({ milestones, className }: MilestonesProps) {
           <div className="h-[40%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
         </div>
         <div className="ml-10 mt-6">
-          {milestones.map((milestone, i) => (
-            <div key={i} className="pb-7">
-              <MilestoneIcon className="absolute left-1.5 fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500" />
-              <div className="font-bold text-lg leading-none">
-                {milestone.name}
-              </div>
-              <div className="dark:text-gray-400 text-sm">
-                {formatDate(milestone.date)}
-              </div>
-              <div className="mt-3">
-                {milestone.description && (
-                  <div className="dark:text-gray-400 text-sm leading-none">
-                    {milestone.description}
-                  </div>
-                )}
-                <div>
-                  <OutLink
-                    className="text-sm underline font-bold dark:text-blue-475 text-purple-900"
-                    href={milestone.link}
-                  >
-                    <div className="flex flex-wrap">
-                      Learn more{' '}
-                      <ArrowRightIcon
-                        className="dark:fill-blue-475 fill-purple-900"
-                        transform="translate(4,3.2)"
-                      />
+          {milestones
+            .sort((a, b) => Number(b.date) - Number(a.date))
+            .map((milestone, i) => (
+              <div key={i} className="pb-7">
+                <MilestoneIcon className="absolute left-1.5 fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500" />
+                <div className="font-bold text-lg leading-none">
+                  {milestone.name}
+                </div>
+                <div className="dark:text-gray-400 text-sm">
+                  {formatDate(milestone.date)}
+                </div>
+                <div className="mt-3">
+                  {milestone.description && (
+                    <div className="dark:text-gray-400 text-sm leading-none">
+                      {milestone.description}
                     </div>
-                  </OutLink>
+                  )}
+                  <div>
+                    <OutLink
+                      className="text-sm underline font-bold dark:text-blue-475 text-purple-900"
+                      href={milestone.link}
+                    >
+                      <div className="flex flex-wrap">
+                        Learn more{' '}
+                        <ArrowRightIcon
+                          className="dark:fill-blue-475 fill-purple-900"
+                          transform="translate(4,3.2)"
+                        />
+                      </div>
+                    </OutLink>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>
