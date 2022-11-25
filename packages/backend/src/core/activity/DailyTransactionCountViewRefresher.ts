@@ -2,12 +2,12 @@ import { Logger, TaskQueue } from '@l2beat/common'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'
-import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
+import { TransactionCounter } from './transaction-counter/TransactionCounter'
 
 export class DailyTransactionCountViewRefresher {
   private readonly refreshQueue: TaskQueue<void>
   constructor(
-    private readonly processors: SequenceProcessor[],
+    private readonly counters: TransactionCounter[],
     private readonly viewRepository: DailyTransactionCountViewRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
@@ -22,10 +22,10 @@ export class DailyTransactionCountViewRefresher {
 
   start() {
     this.logger.info('Started')
-    this.processors.forEach((processor) =>
-      processor.on(ALL_PROCESSED_EVENT, () => {
+    this.counters.forEach((counter) =>
+      counter.onProcessedAll(() => {
         this.logger.info(
-          `Received ${ALL_PROCESSED_EVENT} event for ${processor.id} - scheduling refresh`,
+          `Processed all for project ${counter.projectId.toString()} - scheduling refresh`,
         )
         this.refreshQueue.addIfEmpty()
       }),

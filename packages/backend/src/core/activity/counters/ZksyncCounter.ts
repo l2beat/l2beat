@@ -8,7 +8,8 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { Database } from '../../../peripherals/database/shared/Database'
 import { ZksyncClient } from '../../../peripherals/zksync'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { TransactionCounter } from '../types'
+import { TransactionCounter } from '../transaction-counter/TransactionCounter'
+import { createZksyncTransactionCounter } from '../transaction-counter/ZksyncTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createZksyncCounter(
@@ -55,8 +56,5 @@ export function createZksyncCounter(
     },
   )
 
-  return {
-    processor,
-    getLastProcessedTimestamp: () => zksyncRepository.getLastTimestamp(),
-  }
+  return createZksyncTransactionCounter(projectId, processor, zksyncRepository)
 }

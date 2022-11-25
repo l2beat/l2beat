@@ -1,8 +1,8 @@
-import { assert, Logger, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { json, UnixTime } from '@l2beat/types'
 
 import { Clock } from '../Clock'
-import { TransactionCounter } from './types'
+import { TransactionCounter } from './transaction-counter/TransactionCounter'
 
 interface TransactionCountingMonitorOpts {
   syncCheckDelayHours: number
@@ -10,9 +10,9 @@ interface TransactionCountingMonitorOpts {
 
 interface SyncInfo extends Record<string, json> {
   projectId: string
-  lastDayWithData: string
+  lastDayWithData: string | null
   hasProcessedAll: boolean
-  synced: boolean
+  isSynced: boolean
 }
 
 export class TransactionCountingMonitor {
@@ -47,13 +47,13 @@ export class TransactionCountingMonitor {
       return
     }
     this.logger.info('Sync check started')
+    const syncInfos = await this.getSyncInfos(lastHour)
     const today = lastHour.toYYYYMMDD()
-    const syncInfos = await this.getSyncInfos(today)
     this.logger.info('Transaction counter sync check result', {
       today,
       syncInfos,
     })
-    if (syncInfos.some((i) => !i.synced)) {
+    if (syncInfos.some((i) => !i.isSynced)) {
       this.logLagging(syncInfos, today)
     } else {
       this.logger.info('All transaction counters are synced', { today })
@@ -65,25 +65,25 @@ export class TransactionCountingMonitor {
     return lastHour.gte(lastHour.toStartOf('day').add(this.delayHours, 'hours'))
   }
 
-  private async getSyncInfos(today: string): Promise<SyncInfo[]> {
+  private async getSyncInfos(lastHour: UnixTime): Promise<SyncInfo[]> {
     return Promise.all(
-      this.counters.map((counter) => this.getSyncInfo(counter, today)),
+      this.counters.map((counter) => this.getSyncInfo(counter, lastHour)),
     )
   }
 
   private async getSyncInfo(
     counter: TransactionCounter,
-    today: string,
+    lastHour: UnixTime,
   ): Promise<SyncInfo> {
     const lastTimestamp = await counter.getLastProcessedTimestamp()
-    assert(lastTimestamp)
-    const lastDayWithData = lastTimestamp.toYYYYMMDD()
-    const hasProcessedAll = counter.processor.hasProcessedAll()
+    const lastDayWithData = lastTimestamp?.toYYYYMMDD() ?? null
+    const hasProcessedAll = counter.hasProcessedAll()
+    const isSynced = await counter.isSynced(lastHour)
     return {
-      projectId: counter.processor.id,
+      projectId: counter.projectId.toString(),
       hasProcessedAll,
       lastDayWithData,
-      synced: lastDayWithData === today || hasProcessedAll,
+      isSynced,
     }
   }
 

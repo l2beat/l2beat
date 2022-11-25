@@ -8,7 +8,8 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { TransactionCounter } from '../types'
+import { createBlockTransactionCounter } from '../transaction-counter/BlockTransactionCounter'
+import { TransactionCounter } from '../transaction-counter/TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createStarknetCounter(
@@ -58,9 +59,5 @@ export function createStarknetCounter(
     },
   )
 
-  return {
-    processor,
-    getLastProcessedTimestamp: () =>
-      blockRepository.getLastTimestampByProjectId(projectId),
-  }
+  return createBlockTransactionCounter(projectId, processor, blockRepository)
 }

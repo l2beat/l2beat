@@ -1,16 +1,16 @@
 import { Logger, mock, MockedObject } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
+import { TransactionCounter } from '../../../src/core/activity/transaction-counter/TransactionCounter'
 import { TransactionCountingMonitor } from '../../../src/core/activity/TransactionCountingMonitor'
-import { TransactionCounter } from '../../../src/core/activity/types'
 import { Clock } from '../../../src/core/Clock'
 import { SequenceProcessor } from '../../../src/core/SequenceProcessor'
 
 const startOfToday = UnixTime.now().toStartOf('day')
 const lastProcessedTimestampA = startOfToday.add(-1, 'days')
-const idA = 'a'
-const idB = 'b'
+const projectIdA = ProjectId('a')
+const projectIdB = ProjectId('b')
 
 describe(TransactionCountingMonitor.name, () => {
   describe(TransactionCountingMonitor.prototype.checkIfSynced.name, () => {
@@ -39,13 +39,13 @@ describe(TransactionCountingMonitor.name, () => {
       const clock = mockClock(lastHour)
       const logger = mockLogger()
       const counters = [
-        mockCounter({
-          id: idA,
+        fakeCounter({
+          projectId: projectIdA,
           hasProcessedAll: true,
           lastProcessedTimestamp: lastProcessedTimestampA,
         }),
-        mockCounter({
-          id: idB,
+        fakeCounter({
+          projectId: projectIdB,
           hasProcessedAll: false,
           lastProcessedTimestamp: startOfToday,
         }),
@@ -66,14 +66,14 @@ describe(TransactionCountingMonitor.name, () => {
               {
                 hasProcessedAll: true,
                 lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
-                projectId: idA,
-                synced: true,
+                projectId: projectIdA,
+                isSynced: true,
               },
               {
                 hasProcessedAll: false,
                 lastDayWithData: startOfToday.toYYYYMMDD(),
-                projectId: idB,
-                synced: true,
+                projectId: projectIdB,
+                isSynced: true,
               },
             ],
             today: startOfToday.toYYYYMMDD(),
@@ -96,13 +96,13 @@ describe(TransactionCountingMonitor.name, () => {
       const clock = mockClock(lastHour)
       const logger = mockLogger()
       const counters = [
-        mockCounter({
-          id: idA,
+        fakeCounter({
+          projectId: projectIdA,
           hasProcessedAll: false,
           lastProcessedTimestamp: lastProcessedTimestampA,
         }),
-        mockCounter({
-          id: idB,
+        fakeCounter({
+          projectId: projectIdB,
           hasProcessedAll: false,
           lastProcessedTimestamp: startOfToday,
         }),
@@ -121,14 +121,14 @@ describe(TransactionCountingMonitor.name, () => {
                 {
                   hasProcessedAll: false,
                   lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
-                  projectId: idA,
-                  synced: false,
+                  projectId: projectIdA,
+                  isSynced: false,
                 },
                 {
                   hasProcessedAll: false,
                   lastDayWithData: startOfToday.toYYYYMMDD(),
-                  projectId: idB,
-                  synced: true,
+                  projectId: projectIdB,
+                  isSynced: true,
                 },
               ],
               today: startOfToday.toYYYYMMDD(),
@@ -147,14 +147,14 @@ describe(TransactionCountingMonitor.name, () => {
               {
                 hasProcessedAll: false,
                 lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
-                projectId: idA,
-                synced: false,
+                projectId: projectIdA,
+                isSynced: false,
               },
               {
                 hasProcessedAll: false,
                 lastDayWithData: startOfToday.toYYYYMMDD(),
-                projectId: idB,
-                synced: true,
+                projectId: projectIdB,
+                isSynced: true,
               },
             ],
             today: startOfToday.toYYYYMMDD(),
@@ -183,20 +183,21 @@ function mockClock(lastHour: UnixTime): MockedObject<Clock> {
   return mock<Clock>({ getLastHour: () => lastHour })
 }
 
-function mockCounter({
-  id,
+function fakeCounter({
+  projectId,
   hasProcessedAll,
   lastProcessedTimestamp,
 }: {
-  id: string
+  projectId: ProjectId
   hasProcessedAll: boolean
   lastProcessedTimestamp: UnixTime
-}): MockedObject<TransactionCounter> {
-  return mock<TransactionCounter>({
-    processor: mock<SequenceProcessor>({
-      id,
-      hasProcessedAll: () => hasProcessedAll,
-    }),
-    getLastProcessedTimestamp: async () => lastProcessedTimestamp,
+}): TransactionCounter {
+  const processor = mock<SequenceProcessor>({
+    hasProcessedAll: () => hasProcessedAll,
   })
+  return new TransactionCounter(
+    projectId,
+    processor,
+    async () => lastProcessedTimestamp,
+  )
 }

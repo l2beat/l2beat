@@ -7,7 +7,8 @@ import { BlockTransactionCountRepository } from '../../../peripherals/database/a
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { LoopringClient } from '../../../peripherals/loopring'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { TransactionCounter } from '../types'
+import { createBlockTransactionCounter } from '../transaction-counter/BlockTransactionCounter'
+import { TransactionCounter } from '../transaction-counter/TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createLoopringCounter(
@@ -48,9 +49,5 @@ export function createLoopringCounter(
     },
   )
 
-  return {
-    processor,
-    getLastProcessedTimestamp: () =>
-      blockRepository.getLastTimestampByProjectId(projectId),
-  }
+  return createBlockTransactionCounter(projectId, processor, blockRepository)
 }

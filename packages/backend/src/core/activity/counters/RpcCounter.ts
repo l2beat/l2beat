@@ -9,7 +9,8 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../../Clock'
 import { SequenceProcessor } from '../../SequenceProcessor'
-import { TransactionCounter } from '../types'
+import { createBlockTransactionCounter } from '../transaction-counter/BlockTransactionCounter'
+import { TransactionCounter } from '../transaction-counter/TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createRpcCounter(
@@ -67,9 +68,5 @@ export function createRpcCounter(
     },
   )
 
-  return {
-    processor,
-    getLastProcessedTimestamp: () =>
-      blockRepository.getLastTimestampByProjectId(projectId),
-  }
+  return createBlockTransactionCounter(projectId, processor, blockRepository)
 }

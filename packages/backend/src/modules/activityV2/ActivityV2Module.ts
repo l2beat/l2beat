@@ -6,9 +6,9 @@ import { createActivityV2Router } from '../../api/routers/ActivityV2Router'
 import { Config } from '../../config'
 import { DailyTransactionCountService } from '../../core/activity/DailyTransactionCountService'
 import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
+import { TransactionCounter } from '../../core/activity/transaction-counter/TransactionCounter'
 import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
-import { SequenceProcessor } from '../../core/SequenceProcessor'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
@@ -37,10 +37,9 @@ export function createActivityV2Module(
     database,
     clock,
   )
-  const processors = counters.map((c) => c.processor)
 
   const viewRefresher = new DailyTransactionCountViewRefresher(
-    processors,
+    counters,
     dailyCountViewRepository,
     clock,
     logger,
@@ -53,13 +52,13 @@ export function createActivityV2Module(
   )
 
   const dailyCountService = new DailyTransactionCountService(
-    processors,
+    counters,
     dailyCountViewRepository,
     logger,
   )
 
   const includedInApiProjectIds = getIncludedInApiProjectIds(
-    processors,
+    counters,
     config,
     logger,
   )
@@ -77,7 +76,7 @@ export function createActivityV2Module(
     logger = logger.for('ActivityV2Module')
     logger.info('Starting')
 
-    processors.forEach((p) => p.start())
+    counters.forEach((c) => c.start())
     viewRefresher.start()
     transactionCountingMonitor.start()
 
@@ -91,23 +90,23 @@ export function createActivityV2Module(
 }
 
 function getIncludedInApiProjectIds(
-  processors: SequenceProcessor[],
+  counters: TransactionCounter[],
   config: Config,
   logger: Logger,
 ): ProjectId[] {
-  return processors
-    .filter((processor) => {
+  return counters
+    .filter((counter) => {
       const explicitlyExcluded = config.projects.some(
         (p) =>
-          p.projectId.toString() === processor.id &&
+          p.projectId === counter.projectId &&
           p.transactionApi?.excludeFromActivityApi === true,
       )
       if (explicitlyExcluded) {
         logger.info(
-          `Project ${processor.id} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
+          `Project ${counter.projectId.toString()} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
         )
       }
       return !explicitlyExcluded
     })
-    .map((p) => ProjectId(p.id))
+    .map((c) => c.projectId)
 }
