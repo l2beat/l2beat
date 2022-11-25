@@ -306,22 +306,56 @@ export const arbitrum: Layer2 = {
       name: 'Validators',
       accounts: [
         {
-          address: '0xa8C3E94015f1F91FF60e4E939E0A4D14B8d9Fc4F',
+          address: '0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398',
+          type: 'Contract',
+        },
+        {
+          address: '0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b',
+          type: 'Contract',
+        },
+        {
+          address: '0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104',
           type: 'EOA',
         },
         {
-          address: '0x9919dbF38e05C6496D852d8e5705EB101308f089',
+          address: '0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4',
           type: 'EOA',
         },
         {
-          // owner of 0xdcc298Dd0041341aE679a77740601Fbc87B02f2d
-          address: '0xF76d5fd2465ea5df336C2DB2c7B17f5F99890858',
+          address: '0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78',
+          type: 'Contract',
+        },
+        {
+          address: '0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0',
+          type: 'Contract',
+        },
+        {
+          address: '0x610Aa279989F440820e14248BD3879B148717974',
           type: 'EOA',
         },
         {
-          // owner of 0x51de512AA5dfb02143a91c6F772261623AE64564
-          address: '0xDdfFDAF55326B9765a2e69ebf0e6Dca11ae669cD',
+          address: '0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E',
           type: 'EOA',
+        },
+        {
+          address: '0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c',
+          type: 'EOA',
+        },
+        {
+          address: '0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5',
+          type: 'EOA',
+        },
+        {
+          address: '0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5',
+          type: 'Contract',
+        },
+        {
+          address: '0xAB1A39332e934300eBCc57B5f95cA90631a347FF',
+          type: 'EOA',
+        },
+        {
+          address: '0x7CF3d537733F6Ba4183A833c9B021265716cE9d0',
+          type: 'Contract',
         },
       ],
       description:

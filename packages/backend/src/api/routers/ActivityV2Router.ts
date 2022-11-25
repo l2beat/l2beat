@@ -12,10 +12,5 @@ export function createActivityV2Router(
     ctx.body = data
   })
 
-  router.get('/api/activity/v2/counts', async (ctx) => {
-    const data = await activityController.getDailyCounts()
-    ctx.body = data
-  })
-
   return router
 }

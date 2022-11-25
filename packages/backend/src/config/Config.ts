@@ -77,7 +77,6 @@ export interface ActivityConfig {
 
 export interface ActivityV2Config {
   readonly starkexApiKey: string
-  readonly starkexApiDelayHours: number
   readonly starkexCallsPerMinute: number
   readonly allowedProjectIds?: string[]
   readonly projects: Record<string, Layer2TransactionApiV2 | undefined>
