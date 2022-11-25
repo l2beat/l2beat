@@ -34,7 +34,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
               </div>
               <div className="mt-3">
                 {milestone.description && (
-                  <div className="dark:text-gray-400 text-[15px] leading-[15px]">
+                  <div className="dark:text-gray-400 text-sm leading-none">
                     {milestone.description}
                   </div>
                 )}
