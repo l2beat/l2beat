@@ -28,7 +28,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
         </div>
         <div className="ml-10 mt-6">
           {milestones.map((milestone, i) => (
-            <div key={i} className="mb-7">
+            <div key={i} className="pb-7">
               <MilestoneIcon className="absolute left-1.5 fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500" />
               <div className="font-bold text-lg leading-none">
                 {milestone.name}
