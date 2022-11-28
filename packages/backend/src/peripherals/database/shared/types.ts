@@ -50,7 +50,8 @@ declare module 'knex/types/tables' {
   interface SequenceProcessorRow {
     id: string
     last_processed: number
-    finished_processing_at: Date
+    latest: number
+    updated_at: Date
   }
 
   interface ZksyncTransactionRow {

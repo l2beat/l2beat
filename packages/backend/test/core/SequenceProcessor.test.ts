@@ -74,7 +74,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [5]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 1, expect.anything()],
@@ -84,6 +84,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
+        latest: 5,
       })
     })
 
@@ -102,13 +103,14 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [4, 5, expect.anything()],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
+        latest: 5,
       })
     })
 
@@ -127,7 +129,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 0, expect.anything()],
@@ -137,6 +139,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
+        latest: 2,
       })
     })
 
@@ -155,7 +158,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 2, expect.anything()],
@@ -163,6 +166,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
+        latest: 2,
       })
     })
 
@@ -247,7 +251,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([])
       // note: we are fine with no entry in repository in this case
     })
@@ -273,7 +277,7 @@ describe(SequenceProcessor.name, () => {
       sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLatestMock).toHaveBeenCalledExactlyWith([
@@ -290,6 +294,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 7,
+        latest: 7,
       })
     })
   })
@@ -322,7 +327,7 @@ describe(SequenceProcessor.name, () => {
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(await sequenceProcessor.hasProcessedAll()).toEqual(true)
       // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLatestMock).toHaveBeenCalledExactlyWith(
@@ -336,6 +341,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
+        latest: 2,
       })
     })
   })

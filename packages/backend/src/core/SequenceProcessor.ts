@@ -2,7 +2,10 @@ import { assert, Logger, Retries, TaskQueue } from '@l2beat/common'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
-import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
+import {
+  SequenceProcessorRecord,
+  SequenceProcessorRepository,
+} from '../peripherals/database/SequenceProcessorRepository'
 
 export interface SequenceProcessorOpts {
   startFrom: number
@@ -25,7 +28,6 @@ export class SequenceProcessor extends EventEmitter {
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly logger: Logger
-  private processedAll = false
   private refreshId: NodeJS.Timer | undefined
 
   constructor(
@@ -52,7 +54,7 @@ export class SequenceProcessor extends EventEmitter {
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
   }
 
-  public start(): void {
+  start(): void {
     this.logger.info('Started')
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(
@@ -61,14 +63,15 @@ export class SequenceProcessor extends EventEmitter {
     )
   }
 
-  public async stop(): Promise<void> {
+  async stop(): Promise<void> {
     this.logger.info('Stopping')
     clearInterval(this.refreshId)
     await this.processQueue.waitTilEmpty()
   }
 
-  hasProcessedAll(): boolean {
-    return this.processedAll
+  async hasProcessedAll(): Promise<boolean> {
+    const state = await this.getState()
+    return state !== undefined && state.lastProcessed === state.latest
   }
 
   private async process(): Promise<void> {
@@ -76,7 +79,7 @@ export class SequenceProcessor extends EventEmitter {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const processorState = await this.repository.getById(this.id)
+      const processorState = await this.getState()
       const lastProcessed = processorState?.lastProcessed
 
       this.logger.debug('Calling getLatest', {
@@ -100,21 +103,28 @@ export class SequenceProcessor extends EventEmitter {
         await this.processRange(
           from,
           Math.min(from + this.opts.batchSize - 1, to),
+          to,
         )
       }
     }
 
     this.logger.debug('Processing finished')
-    this.processedAll = true
     this.emit(ALL_PROCESSED_EVENT)
   }
 
-  private async processRange(from: number, to: number) {
+  private async processRange(from: number, to: number, latest: number) {
     this.logger.debug('Processing range started', { from, to })
     await this.repository.runInTransaction(async (trx) => {
       await this.opts.processRange(from, to, trx)
-      await this.repository.addOrUpdate({ id: this.id, lastProcessed: to }, trx)
+      await this.repository.addOrUpdate(
+        { id: this.id, lastProcessed: to, latest },
+        trx,
+      )
     })
     this.logger.debug('Processing range finished', { from, to })
+  }
+
+  private getState(): Promise<SequenceProcessorRecord | undefined> {
+    return this.repository.getById(this.id)
   }
 }
