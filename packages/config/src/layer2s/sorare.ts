@@ -55,7 +55,7 @@ export const sorare: Layer2 = {
         sinceTimestamp: new UnixTime(1626352527),
       },
     ],
-    transactionApiV2: {
+    transactionApi: {
       type: 'starkex',
       product: 'sorare',
       sinceTimestamp: new UnixTime(1626352527),

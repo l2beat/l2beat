@@ -58,7 +58,7 @@ export const nova: Layer2 = {
       },
     ],
     events: [],
-    transactionApiV2: {
+    transactionApi: {
       type: 'rpc',
       url: 'https://nova.arbitrum.io/rpc',
       callsPerMinute: 200,

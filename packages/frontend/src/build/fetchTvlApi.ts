@@ -7,8 +7,6 @@ export async function fetchTvlApi(
   http: JsonHttpClient,
 ): Promise<TvlApiResponse> {
   const url = apiUrl + '/api/tvl'
-
   const json = await http.fetchJson(url)
-
   return TvlApiResponse.parse(json)
 }

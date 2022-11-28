@@ -1,5 +1,5 @@
 import { LogLevel } from '@l2beat/common'
-import { Layer2TransactionApiV2 } from '@l2beat/config'
+import { Layer2TransactionApi } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
@@ -15,7 +15,7 @@ export interface Config {
   readonly api: ApiConfig | false
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
-  readonly activityV2: ActivityV2Config | false
+  readonly activity: ActivityConfig | false
   readonly discovery: DiscoveryConfig | false
 }
 
@@ -51,11 +51,11 @@ export interface HealthConfig {
   readonly commitSha: string
 }
 
-export interface ActivityV2Config {
+export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
   readonly allowedProjectIds?: string[]
-  readonly projects: Record<string, Layer2TransactionApiV2 | undefined>
+  readonly projects: Record<string, Layer2TransactionApi | undefined>
 }
 
 export interface DiscoveryConfig {

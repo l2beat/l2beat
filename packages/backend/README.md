@@ -57,8 +57,7 @@ environment variables. One variable per line `KEY=value`.
 - `PORT` (Optional) - The port on which the application exposes the api
 - `SYNC_DISABLED` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
-- `TRANSACTION_COUNT_ENABLED` (default `false`) - When set to `true` activity feature is enabled
-- `ACTIVITY_V2_ENABLED` (default `false`) - When set to `true` activity v2 feature is enabled
+- `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
 - `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 
@@ -79,8 +78,7 @@ STARKEX_API_KEY=
 #PORT=
 #SYNC_DISABLED=
 #FRESH_START=
-#TRANSACTION_COUNT_ENABLED=
-#ACTIVITY_V2_ENABLED=
+#ACTIVITY_ENABLED=
 #TVL_SYNC_ENABLED=
 #DISCOVERY_BLOCK_NUMBER=
 ```

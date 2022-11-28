@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { postprocessCounts } from '../../../src/api/controllers/activity-v2/postprocessCounts'
+import { postprocessCounts } from '../../../src/api/controllers/activity/postprocessCounts'
 
 const startOfDay = UnixTime.now().toStartOf('day')
 

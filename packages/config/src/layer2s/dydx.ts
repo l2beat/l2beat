@@ -66,7 +66,7 @@ export const dydx: Layer2 = {
         sinceTimestamp: new UnixTime(1613033682),
       },
     ],
-    transactionApiV2: {
+    transactionApi: {
       type: 'starkex',
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),

@@ -1,9 +1,9 @@
 import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { LoopringTransactionApiV2 } from '@l2beat/config'
+import { LoopringTransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
-import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { LoopringClient } from '../../../peripherals/loopring'
 import { SequenceProcessor } from '../../SequenceProcessor'
@@ -17,7 +17,7 @@ export function createLoopringCounter(
   blockRepository: BlockTransactionCountRepository,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  transactionApi: LoopringTransactionApiV2,
+  transactionApi: LoopringTransactionApi,
 ): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)

@@ -28,20 +28,20 @@ export class BlockTransactionCountRepository extends BaseRepository {
   ) {
     const knex = await this.knex(trx)
     const rows = records.map(toRow)
-    await knex('activity_v2.block').insert(rows)
+    await knex('activity.block').insert(rows)
     return rows.length
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('activity_v2.block').delete()
+    return await knex('activity.block').delete()
   }
 
   async getLastTimestampByProjectId(
     projectId: ProjectId,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()
-    const row = await knex('activity_v2.block')
+    const row = await knex('activity.block')
       .where('project_id', projectId.toString())
       .orderBy('block_number', 'desc')
       .first()

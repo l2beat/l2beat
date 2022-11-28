@@ -2,7 +2,7 @@ import { assert } from '@l2beat/common'
 import { ActivityApiResponse, ProjectId } from '@l2beat/types'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
-import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
+import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { countsToChart } from './countsToChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
@@ -12,7 +12,7 @@ import {
   DailyTransactionCountProjectsMap,
 } from './types'
 
-export class ActivityV2Controller {
+export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
     private readonly counters: TransactionCounter[],
