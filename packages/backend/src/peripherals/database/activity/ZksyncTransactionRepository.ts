@@ -25,18 +25,18 @@ export class ZksyncTransactionRepository extends BaseRepository {
   async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     const rows = records.map(toRow)
-    await knex('activity_v2.zksync').insert(rows)
+    await knex('activity.zksync').insert(rows)
     return rows.length
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('activity_v2.zksync').delete()
+    return await knex('activity.zksync').delete()
   }
 
   async getLastTimestamp(): Promise<UnixTime | undefined> {
     const knex = await this.knex()
-    const row = await knex('activity_v2.zksync')
+    const row = await knex('activity.zksync')
       .orderBy('block_number', 'desc')
       .orderBy('block_index', 'desc')
       .first()
