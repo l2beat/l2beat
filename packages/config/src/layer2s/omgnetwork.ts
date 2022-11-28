@@ -110,12 +110,10 @@ export const omgnetwork: Layer2 = {
       },
       {
         name: 'ETHDepositVerifier',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0x649f37203c365DE759c8fc8CA35beBF5448F70Be',
       },
       {
         name: 'ERC20DepositVerifier',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0xD876aeb3a443FBC03B7349AAc115E9054563CD82',
       },
       {

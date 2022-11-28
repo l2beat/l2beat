@@ -1,4 +1,4 @@
-import { Bridge, Layer2, ProjectContract } from '@l2beat/config'
+import { Bridge, CONTRACTS, Layer2, ProjectContract } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/types'
 
 import {
@@ -13,7 +13,11 @@ export function getContractSection(
   verificationStatus: VerificationStatus,
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) =>
-    makeTechnologyContract(contract, project),
+    makeTechnologyContract(
+      contract,
+      project,
+      verificationStatus.contracts[contract.address],
+    ),
   )
 
   const risks = project.contracts?.risks.map((risk) => ({
@@ -38,6 +42,7 @@ export function getContractSection(
 function makeTechnologyContract(
   item: ProjectContract,
   project: Layer2 | Bridge,
+  isVerified?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
 
@@ -135,10 +140,19 @@ function makeTechnologyContract(
     })
   }
 
+  let description = item.description
+
+  if (!isVerified) {
+    if (!item.description) {
+      description = CONTRACTS.UNVERIFIED_DESCRIPTION
+    } else {
+      description += ' ' + CONTRACTS.UNVERIFIED_DESCRIPTION
+    }
+  }
+
   const tokens = project.config.escrows.find(
     (x) => x.address === item.address,
   )?.tokens
-  let description = item.description
   if (tokens) {
     const tokenText =
       tokens === '*'

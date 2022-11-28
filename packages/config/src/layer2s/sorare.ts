@@ -95,7 +95,6 @@ export const sorare: Layer2 = {
       },
       {
         name: 'Committee',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0x879cD57975d596004863D30c59d579ef78BBbe32',
       },
       SHARP_VERIFIER_CONTRACT,
