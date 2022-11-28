@@ -1,6 +1,8 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
 
-export const common = {
+import { Config } from './Config'
+
+export const common: Omit<Config, 'backend'> = {
   links: {
     twitter: 'https://twitter.com/l2beat',
     discord: 'https://discord.gg/eaVKXPmtWk',
@@ -14,7 +16,6 @@ export const common = {
     gitcoinOption: false,
     bridges: true,
     activity: true,
-    highlightUnverified: true,
   },
   layer2s,
   bridges,
