@@ -338,7 +338,7 @@ export const metis: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
-      link: 'https://www.crowdfundinsider.com/2021/11/183165-metis-launches-platforms-mainnet-andromeda-confirms-commitment-to-decentralization-announces-100m-ecosystem-fund/',
+      link: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
       date: new Date('2021-11-19'),
       description:
         'Public launch of Metis Layer 2 Andromeda, based on the Optimism codebase.',
