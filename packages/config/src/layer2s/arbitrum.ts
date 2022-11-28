@@ -108,14 +108,6 @@ export const arbitrum: Layer2 = {
         sinceTimestamp: new UnixTime(1661457944),
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      // We need to subtract the Nitro system transactions
-      // after the block of the update
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber >= 22207818 ? count - 1 : count,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
     transactionApiV2: {
       type: 'rpc',
       // We need to subtract the Nitro system transactions

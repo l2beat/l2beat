@@ -15,7 +15,6 @@ export interface Config {
   readonly api: ApiConfig | false
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
-  readonly activity: ActivityConfig | false
   readonly activityV2: ActivityV2Config | false
   readonly discovery: DiscoveryConfig | false
 }
@@ -50,29 +49,6 @@ export interface HealthConfig {
   readonly releasedAt?: string
   readonly startedAt: string
   readonly commitSha: string
-}
-
-export interface ActivityConfig {
-  readonly starkexApiKey: string
-  readonly starkexApiDelayHours: number
-  readonly zkSyncWorkQueueWorkers: number
-  readonly aztecWorkQueueWorkers: number
-  readonly starkexWorkQueueWorkers: number
-  readonly loopringWorkQueueWorkers: number
-  readonly loopringCallsPerMinute: number
-  readonly starkexCallsPerMinute: number
-  readonly rpc: {
-    workQueueLimit: number
-    workQueueWorkers: number
-    projects: Record<
-      string,
-      | {
-          callsPerMinute?: number
-          url: string
-        }
-      | undefined
-    >
-  }
 }
 
 export interface ActivityV2Config {

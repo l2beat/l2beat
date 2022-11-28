@@ -19,8 +19,6 @@ export function getLocalConfig(cli: CliParameters): Config {
   const databaseEnabled = cli.mode === 'server'
   const tvlEnabled =
     cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true)
-  const activityEnabled =
-    cli.mode === 'server' && getEnv.boolean('TRANSACTION_COUNT_ENABLED', false)
   const activityV2Enabled =
     cli.mode === 'server' && getEnv.boolean('ACTIVITY_V2_ENABLED', false)
   const discoveryEnabled = cli.mode === 'discover'
@@ -54,43 +52,6 @@ export function getLocalConfig(cli: CliParameters): Config {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
-    },
-    activity: activityEnabled && {
-      starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 12,
-      zkSyncWorkQueueWorkers: 1,
-      aztecWorkQueueWorkers: 1,
-      starkexWorkQueueWorkers: 100,
-      starkexCallsPerMinute: 1000,
-      loopringWorkQueueWorkers: 1,
-      loopringCallsPerMinute: 10,
-      rpc: {
-        workQueueLimit: 10_000,
-        workQueueWorkers: 1,
-        projects: {
-          ethereum: {
-            callsPerMinute: 60 / 5,
-            url: getEnv(
-              'ACTIVITY_ETHEREUM_URL',
-              'https://eth-mainnet.alchemyapi.io/v2/demo',
-            ),
-          },
-          optimism: {
-            callsPerMinute: 60 / 5,
-            url: getEnv(
-              'ACTIVITY_OPTIMISM_URL',
-              'https://mainnet.optimism.io/',
-            ),
-          },
-          arbitrum: {
-            callsPerMinute: 60 / 5,
-            url: getEnv(
-              'ACTIVITY_ARBITRUM_URL',
-              'https://arb1.arbitrum.io/rpc',
-            ),
-          },
-        },
-      },
     },
     activityV2: activityV2Enabled && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),

@@ -68,6 +68,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
     </div>
   )
 }
+
 function formatDate(date: Date): string {
   const year = date.getFullYear()
   const month = date.toLocaleDateString('en', {
@@ -77,12 +78,13 @@ function formatDate(date: Date): string {
     day: 'numeric',
   })
 
-  const ending = getEnding(date.getDate())
+  const ending = getOrdinalSuffix(date.getDate())
 
   return `${year} ${month} ${day}${ending}`
 }
 
-function getEnding(days: number) {
+
+function getOrdinalSuffix(days: number) {
   if (days > 3 && days < 21) return 'th'
   switch (days % 10) {
     case 1:

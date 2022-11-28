@@ -16,6 +16,8 @@ export function postprocessCounts(
   processedAll: boolean,
   now?: UnixTime,
 ): DailyTransactionCount[] {
+  if (counts.length === 0) return []
+
   const today = (now ?? UnixTime.now()).toStartOf('day')
   const yesterday = today.add(-1, 'days')
 

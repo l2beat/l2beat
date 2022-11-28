@@ -99,11 +99,6 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1657029433),
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      callsPerMinute: 60 * 5,
-      url: 'https://alpha-mainnet.starknet.io',
-    },
     transactionApiV2: {
       type: 'starknet',
       callsPerMinute: 60 * 5,
