@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/types'
 
-import { DailyTransactionCount } from '../../../core/transaction-count/TransactionCounter'
+import { DailyTransactionCount } from './types'
 
 export function findMinLast(
   layer2sCounts: DailyTransactionCount[][],

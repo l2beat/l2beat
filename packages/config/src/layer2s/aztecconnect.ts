@@ -61,12 +61,6 @@ export const aztecconnect: Layer2 = {
         sinceTimestamp: new UnixTime(1654638194),
       },
     ],
-    transactionApi: {
-      type: 'aztecconnect',
-      url: 'https://api.aztec.network/aztec-connect-prod/falafel',
-      callsPerMinute: 3_000,
-      excludeFromActivityApi: true,
-    },
     transactionApiV2: {
       type: 'aztecconnect',
       url: 'https://api.aztec.network/aztec-connect-prod/falafel',

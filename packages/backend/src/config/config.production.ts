@@ -46,34 +46,6 @@ export function getProductionConfig(cli: CliParameters): Config {
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     },
-    activity: {
-      starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexApiDelayHours: 12,
-      zkSyncWorkQueueWorkers: 100,
-      aztecWorkQueueWorkers: 100,
-      starkexWorkQueueWorkers: 10,
-      starkexCallsPerMinute: 200,
-      loopringWorkQueueWorkers: 10,
-      loopringCallsPerMinute: 200,
-      rpc: {
-        workQueueLimit: 200_000,
-        workQueueWorkers: getEnv.integer('ACTIVITY_RPC_WORKERS'),
-        projects: {
-          ethereum: {
-            callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
-            url: getEnv('ACTIVITY_ETHEREUM_URL'),
-          },
-          optimism: {
-            callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
-            url: getEnv('ACTIVITY_OPTIMISM_URL'),
-          },
-          arbitrum: {
-            callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
-            url: getEnv('ACTIVITY_ARBITRUM_URL'),
-          },
-        },
-      },
-    },
     activityV2: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),

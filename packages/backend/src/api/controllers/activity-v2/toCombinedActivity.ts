@@ -4,9 +4,9 @@ import {
   ProjectId,
 } from '@l2beat/types'
 
-import { DailyTransactionCount } from '../../../core/transaction-count/TransactionCounter'
 import { findMinLast } from './findMinLast'
 import { formatChart } from './formatChart'
+import { DailyTransactionCount } from './types'
 
 export function toCombinedActivity(
   projectCounts: Map<ProjectId, DailyTransactionCount[]>,
