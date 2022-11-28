@@ -318,7 +318,7 @@ export const nova: Layer2 = {
     {
       ...MILESTONES.MAINNET_OPEN,
       date: new Date('2022-08-09'),
-      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2.',
+      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
     },
   ],
 }
