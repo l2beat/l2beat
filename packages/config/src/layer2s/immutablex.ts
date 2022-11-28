@@ -54,11 +54,6 @@ export const immutablex: Layer2 = {
         sinceTimestamp: new UnixTime(1615389188),
       },
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: 'immutable',
-      sinceTimestamp: new UnixTime(1615389188),
-    },
     transactionApiV2: {
       type: 'starkex',
       product: 'immutable',

@@ -1,7 +1,7 @@
 import { ActivityApiResponse, ProjectId } from '@l2beat/types'
 
-import { DailyTransactionCount } from '../../../core/transaction-count/TransactionCounter'
 import { countsToChart } from './countsToChart'
+import { DailyTransactionCount } from './types'
 
 export function toProjectsActivity(
   projectCounts: Map<ProjectId, DailyTransactionCount[]>,

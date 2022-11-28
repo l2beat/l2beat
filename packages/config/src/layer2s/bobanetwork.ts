@@ -72,12 +72,6 @@ export const bobanetwork: Layer2 = {
         sinceTimestamp: new UnixTime(1635386025),
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      url: 'https://mainnet.boba.network/',
-      callsPerMinute: 200,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
     transactionApiV2: {
       type: 'rpc',
       url: 'https://mainnet.boba.network/',

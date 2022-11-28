@@ -68,11 +68,6 @@ export const metis: Layer2 = {
         sinceTimestamp: new UnixTime(1637070766),
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      url: 'https://andromeda.metis.io/',
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
     transactionApiV2: {
       type: 'rpc',
       url: 'https://andromeda.metis.io/',

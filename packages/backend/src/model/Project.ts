@@ -3,7 +3,6 @@ import {
   getTokenBySymbol,
   Layer2,
   Layer2Event,
-  Layer2TransactionApi,
   Layer2TransactionApiV2,
   TokenInfo,
   tokenList,
@@ -15,7 +14,6 @@ export interface Project {
   type: 'layer2' | 'bridge'
   escrows: ProjectEscrow[]
   events: Layer2Event[]
-  transactionApi?: Layer2TransactionApi
   transactionApiV2?: Layer2TransactionApiV2
 }
 
@@ -36,7 +34,6 @@ export function layer2ToProject(layer2: Layer2): Project {
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
     })),
     events: layer2.config.events,
-    transactionApi: layer2.config.transactionApi,
     transactionApiV2: layer2.config.transactionApiV2,
   }
 }

@@ -2,13 +2,15 @@ import { assert } from '@l2beat/common'
 import { ActivityApiResponse, ProjectId } from '@l2beat/types'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
-import { DailyTransactionCount } from '../../../core/transaction-count/TransactionCounter'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { countsToChart } from './countsToChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
 import { toProjectsActivity } from './toProjectsActivity'
-import { DailyTransactionCountProjectsMap } from './types'
+import {
+  DailyTransactionCount,
+  DailyTransactionCountProjectsMap,
+} from './types'
 
 export class ActivityV2Controller {
   constructor(

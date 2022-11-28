@@ -93,7 +93,7 @@ function getIncludedInApiProjectIds(
       const explicitlyExcluded = config.projects.some(
         (p) =>
           p.projectId === counter.projectId &&
-          p.transactionApi?.excludeFromActivityApi === true,
+          p.transactionApiV2?.excludeFromActivityApi === true,
       )
       if (explicitlyExcluded) {
         logger.info(
