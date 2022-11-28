@@ -190,7 +190,8 @@ export const rhinofi: Layer2 = {
       name: 'Rebranding',
       date: new Date('2022-07-13'),
       link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
-      description: 'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi opportunities in one place.',
+      description:
+        'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi opportunities in one place.',
     },
   ],
 }

@@ -33,9 +33,9 @@ async function main() {
 
   let activityApiResponse: ActivityApiResponse | undefined = undefined
   if (config.features.activity) {
-    activityApiResponse = await fetchActivityApi(config.backend.apiUrl, http)
-    printActivityInfo(activityApiResponse)
-    activitySanityCheck(activityApiResponse)
+    // activityApiResponse = await fetchActivityApi(config.backend.apiUrl, http)
+    // printActivityInfo(activityApiResponse)
+    // activitySanityCheck(activityApiResponse)
   }
 
   createApi(config, tvlApiResponse, activityApiResponse)

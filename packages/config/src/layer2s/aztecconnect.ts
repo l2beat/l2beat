@@ -204,7 +204,8 @@ export const aztecconnect: Layer2 = {
       name: 'Mainnet Launch',
       date: new Date('2022-07-07'),
       link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
-      description: 'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.'
-    }
-  ]
+      description:
+        'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
+    },
+  ],
 }
