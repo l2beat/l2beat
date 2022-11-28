@@ -1,5 +1,5 @@
 import { assert, HttpClient, Logger } from '@l2beat/common'
-import { Layer2TransactionApiV2 } from '@l2beat/config'
+import { Layer2TransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/types'
 
 import { Config } from '../../config'
@@ -13,8 +13,8 @@ import { createZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { Clock } from '../../core/Clock'
 import { Project } from '../../model'
-import { BlockTransactionCountRepository } from '../../peripherals/database/activity-v2/BlockTransactionCountRepository'
-import { StarkexTransactionCountRepository } from '../../peripherals/database/activity-v2/StarkexCountRepository'
+import { BlockTransactionCountRepository } from '../../peripherals/database/activity/BlockTransactionCountRepository'
+import { StarkexTransactionCountRepository } from '../../peripherals/database/activity/StarkexCountRepository'
 import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { StarkexClient } from '../../peripherals/starkex'
@@ -26,12 +26,12 @@ export function createTransactionCounters(
   database: Database,
   clock: Clock,
 ): TransactionCounter[] {
-  assert(config.activityV2)
+  assert(config.activity)
   const {
-    activityV2: {
+    activity: {
       starkexApiKey,
       starkexCallsPerMinute,
-      projects: activityV2ConfigProjects,
+      projects: activityConfigProjects,
       allowedProjectIds,
     },
     projects,
@@ -39,7 +39,7 @@ export function createTransactionCounters(
 
   // shared clients
   const numberOfStarkexProjects =
-    projects.filter((p) => p.transactionApiV2?.type === 'starkex').length || 1
+    projects.filter((p) => p.transactionApi?.type === 'starkex').length || 1
   const singleStarkexCPM = starkexCallsPerMinute / numberOfStarkexProjects
   const starkexClient = new StarkexClient(starkexApiKey, http, logger, {
     callsPerMinute: singleStarkexCPM,
@@ -57,26 +57,26 @@ export function createTransactionCounters(
   )
 
   // ethereum is kept separately in backend config, because it is not a layer 2 project
-  const ethereumConfig = activityV2ConfigProjects.ethereum
+  const ethereumConfig = activityConfigProjects.ethereum
   assert(
     ethereumConfig?.type === 'rpc',
     'Ethereum transactionApi config missing',
   )
   const ethereum = {
     projectId: ProjectId.ETHEREUM,
-    transactionApiV2: {
+    transactionApi: {
       ...ethereumConfig,
       startBlock: 8929324,
     },
   }
 
   const processors = projects
-    .filter(hasTransactionApiV2)
-    .map(mergeWithActivityV2ConfigProjects(activityV2ConfigProjects))
+    .filter(hasTransactionApi)
+    .map(mergeWithActivityConfigProjects(activityConfigProjects))
     .concat([ethereum])
     .filter(isProjectAllowed(allowedProjectIds, logger))
-    .map(({ projectId, transactionApiV2 }) => {
-      switch (transactionApiV2.type) {
+    .map(({ projectId, transactionApi }) => {
+      switch (transactionApi.type) {
         case 'starkex':
           return createStarkexCounter(
             projectId,
@@ -86,7 +86,7 @@ export function createTransactionCounters(
             logger,
             clock,
             {
-              ...transactionApiV2,
+              ...transactionApi,
               singleStarkexCPM,
             },
           )
@@ -97,7 +97,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
-            transactionApiV2,
+            transactionApi,
           )
         case 'aztecconnect':
           return createAztecConnectCounter(
@@ -106,7 +106,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
-            transactionApiV2,
+            transactionApi,
           )
         case 'starknet':
           return createStarknetCounter(
@@ -116,7 +116,7 @@ export function createTransactionCounters(
             sequenceProcessorRepository,
             logger,
             clock,
-            transactionApiV2,
+            transactionApi,
           )
         case 'zksync':
           return createZksyncCounter(
@@ -125,7 +125,7 @@ export function createTransactionCounters(
             database,
             sequenceProcessorRepository,
             logger,
-            transactionApiV2,
+            transactionApi,
           )
         case 'loopring':
           return createLoopringCounter(
@@ -134,7 +134,7 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
-            transactionApiV2,
+            transactionApi,
           )
         case 'rpc':
           return createRpcCounter(
@@ -143,7 +143,7 @@ export function createTransactionCounters(
             sequenceProcessorRepository,
             logger,
             clock,
-            transactionApiV2,
+            transactionApi,
           )
       }
     })
@@ -151,24 +151,23 @@ export function createTransactionCounters(
   return processors
 }
 
-const hasTransactionApiV2 = (
+const hasTransactionApi = (
   p: Project,
-): p is Project & { transactionApiV2: Layer2TransactionApiV2 } =>
-  !!p.transactionApiV2
+): p is Project & { transactionApi: Layer2TransactionApi } => !!p.transactionApi
 
-function mergeWithActivityV2ConfigProjects(
-  activityV2ConfigProjects: Record<string, Layer2TransactionApiV2 | undefined>,
+function mergeWithActivityConfigProjects(
+  activityV2ConfigProjects: Record<string, Layer2TransactionApi | undefined>,
 ) {
   return ({
     projectId,
-    transactionApiV2,
+    transactionApi,
   }: {
     projectId: ProjectId
-    transactionApiV2: Layer2TransactionApiV2
+    transactionApi: Layer2TransactionApi
   }) => ({
     projectId,
-    transactionApiV2: {
-      ...transactionApiV2,
+    transactionApi: {
+      ...transactionApi,
       ...activityV2ConfigProjects[projectId.toString()],
     },
   })

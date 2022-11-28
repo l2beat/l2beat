@@ -46,7 +46,7 @@ export function getProductionConfig(cli: CliParameters): Config {
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     },
-    activityV2: {
+    activity: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       projects: {

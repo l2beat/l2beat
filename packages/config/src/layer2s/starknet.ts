@@ -99,7 +99,7 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1657029433),
       },
     ],
-    transactionApiV2: {
+    transactionApi: {
       type: 'starknet',
       callsPerMinute: 60 * 5,
       url: 'https://alpha-mainnet.starknet.io',
