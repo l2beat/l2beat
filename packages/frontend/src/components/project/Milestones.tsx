@@ -83,7 +83,6 @@ function formatDate(date: Date): string {
   return `${year} ${month} ${day}${ending}`
 }
 
-
 function getOrdinalSuffix(days: number) {
   if (days > 3 && days < 21) return 'th'
   switch (days % 10) {
