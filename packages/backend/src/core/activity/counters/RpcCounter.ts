@@ -1,10 +1,10 @@
 import { assert, Logger, promiseAllPlus } from '@l2beat/common'
-import { RpcTransactionApiV2 } from '@l2beat/config'
+import { RpcTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 
-import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../../Clock'
@@ -19,7 +19,7 @@ export function createRpcCounter(
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   clock: Clock,
-  transactionApi: RpcTransactionApiV2,
+  transactionApi: RpcTransactionApi,
 ): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const timeout = transactionApi.timeout ?? 15_000

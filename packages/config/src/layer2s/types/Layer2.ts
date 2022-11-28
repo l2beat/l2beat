@@ -10,7 +10,7 @@ import {
 import { Layer2Event } from './Layer2Event'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
-import { Layer2TransactionApiV2 } from './Layer2TransactionApiV2'
+import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
   type: 'layer2'
@@ -58,5 +58,5 @@ export interface Layer2Config {
   /** Metadata about events emitted by the system */
   events: Layer2Event[]
   /** API parameters used to get transaction count */
-  transactionApiV2?: Layer2TransactionApiV2
+  transactionApi?: Layer2TransactionApi
 }

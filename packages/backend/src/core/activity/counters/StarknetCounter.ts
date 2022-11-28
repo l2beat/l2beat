@@ -1,9 +1,9 @@
 import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { StarknetTransactionApiV2 } from '@l2beat/config'
+import { StarknetTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
 
-import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
+import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
 import { Clock } from '../../Clock'
@@ -19,7 +19,7 @@ export function createStarknetCounter(
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   clock: Clock,
-  transactionApi: StarknetTransactionApiV2,
+  transactionApi: StarknetTransactionApi,
 ): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)

@@ -19,8 +19,8 @@ export function getLocalConfig(cli: CliParameters): Config {
   const databaseEnabled = cli.mode === 'server'
   const tvlEnabled =
     cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true)
-  const activityV2Enabled =
-    cli.mode === 'server' && getEnv.boolean('ACTIVITY_V2_ENABLED', false)
+  const activityEnabled =
+    cli.mode === 'server' && getEnv.boolean('ACTIVITY_ENABLED', false)
   const discoveryEnabled = cli.mode === 'discover'
 
   return {
@@ -53,7 +53,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
     },
-    activityV2: activityV2Enabled && {
+    activity: activityEnabled && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       projects: {
