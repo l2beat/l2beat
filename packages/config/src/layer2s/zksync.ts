@@ -172,7 +172,7 @@ export const zksync: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd',
+          implementation: '0x8e972b354E6933275513C355Ee14D44A832aD2d9',
         },
       },
       {
@@ -199,7 +199,7 @@ export const zksync: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x934ef5836E78d93125317034f5CF855A97B13f43',
+          implementation: '0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8',
         },
       },
     ],
@@ -340,6 +340,18 @@ export const zksync: Layer2 = {
       ],
       description:
         'Account receiving fees for listing tokens. Can be updated by zkSync MultiSig.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'zkSync 1.0 launch',
+      link: 'https://twitter.com/the_matter_labs/status/1273617094031138825',
+      date: new Date('2020-06-18'),
+    },
+    {
+      name: 'zkEVM alpha on mainnet',
+      link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
+      date: new Date('2022-10-28'),
     },
   ],
 }

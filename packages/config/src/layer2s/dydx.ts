@@ -75,6 +75,7 @@ export const dydx: Layer2 = {
       type: 'starkex',
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({
@@ -184,6 +185,23 @@ export const dydx: Layer2 = {
       ],
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      link: 'https://dydx.exchange/blog/public',
+      date: new Date('2021-04-06'),
+    },
+    {
+      name: 'dYdX Foundation established',
+      link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+      date: new Date('2021-08-03'),
+    },
+    {
+      name: 'dYdX v4 announced',
+      link: 'https://dydx.exchange/blog/dydx-chain',
+      date: new Date('2022-06-22'),
     },
   ],
 }

@@ -1,53 +1,45 @@
 import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { StarknetTransactionApiV2 } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { LoopringTransactionApiV2 } from '@l2beat/config'
+import { ProjectId } from '@l2beat/types'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity-v2/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
-import { Clock } from '../../Clock'
+import { LoopringClient } from '../../../peripherals/loopring'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { TransactionCounter } from '../TransactionCounter'
+import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createStarknetProcessor(
+export function createLoopringCounter(
   projectId: ProjectId,
-  blockRepository: BlockTransactionCountRepository,
   http: HttpClient,
+  blockRepository: BlockTransactionCountRepository,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  clock: Clock,
-  transactionApi: StarknetTransactionApiV2,
-): SequenceProcessor {
-  const callsPerMinute = transactionApi.callsPerMinute ?? 60
+  transactionApi: LoopringTransactionApiV2,
+): TransactionCounter {
+  const callsPerMinute = transactionApi.callsPerMinute
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new StarkNetClient(transactionApi.url, http, {
-    callsPerMinute,
-  })
+  const client = new LoopringClient(http, logger, { callsPerMinute })
 
-  return new SequenceProcessor(
+  const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
     sequenceProcessorRepository,
     {
       batchSize,
-      startFrom: 0,
-      getLatest: async (previousLatest) => {
-        const blockNumber = await client.getBlockNumberAtOrBefore(
-          clock.getLastHour(),
-          previousLatest,
-        )
-        return blockNumber
-      },
+      startFrom: 1,
+      getLatest: client.getFinalizedBlockNumber.bind(client),
       processRange: async (from, to, trx) => {
         const queries = range(from, to + 1).map((blockNumber) => async () => {
           const block = await client.getBlock(blockNumber)
 
           return {
             projectId,
-            blockNumber: block.number,
-            count: block.transactions.length,
-            timestamp: new UnixTime(block.timestamp),
+            blockNumber,
+            count: block.transactions,
+            timestamp: block.createdAt,
           }
         })
 
@@ -56,4 +48,6 @@ export function createStarknetProcessor(
       },
     },
   )
+
+  return createBlockTransactionCounter(projectId, processor, blockRepository)
 }

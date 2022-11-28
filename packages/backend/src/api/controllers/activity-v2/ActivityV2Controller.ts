@@ -1,21 +1,25 @@
 import { assert } from '@l2beat/common'
 import { ActivityApiResponse, ProjectId } from '@l2beat/types'
 
-import { DailyTransactionCountService } from '../../../core/activity/DailyTransactionCountService'
+import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { DailyTransactionCount } from '../../../core/transaction-count/TransactionCounter'
+import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
 import { countsToChart } from './countsToChart'
+import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
 import { toProjectsActivity } from './toProjectsActivity'
+import { DailyTransactionCountProjectsMap } from './types'
 
 export class ActivityV2Controller {
   constructor(
     private readonly projectIds: ProjectId[],
-    private readonly dailyCountView: DailyTransactionCountService,
+    private readonly counters: TransactionCounter[],
+    private readonly viewRepository: DailyTransactionCountViewRepository,
   ) {}
 
   async getActivity(): Promise<ActivityApiResponse> {
-    const projectsCounts = await this.dailyCountView.getDailyCounts()
-    const layer2sCounts = new Map<ProjectId, DailyTransactionCount[]>()
+    const projectsCounts = await this.getPostprocessedDailyCounts()
+    const layer2sCounts: DailyTransactionCountProjectsMap = new Map()
     let ethereumCounts: DailyTransactionCount[] | undefined
     for (const [projectId, counts] of projectsCounts) {
       if (projectId === ProjectId.ETHEREUM) {
@@ -36,12 +40,18 @@ export class ActivityV2Controller {
     }
   }
 
-  async getDailyCounts() {
-    const projectCounts = await this.dailyCountView.getDailyCounts()
-    const result: Record<string, DailyTransactionCount[]> = {}
-    for (const [projectId, counts] of projectCounts) {
+  private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
+    const counts = await this.viewRepository.getDailyCounts()
+    const result: DailyTransactionCountProjectsMap = new Map()
+    for (const counter of this.counters) {
+      const projectId = counter.projectId
       if (!this.projectIds.includes(projectId)) continue
-      result[projectId.toString()] = counts
+      const projectCounts = counts.filter((c) => c.projectId === projectId)
+      const postprocessedCounts = postprocessCounts(
+        projectCounts,
+        counter.hasProcessedAll(),
+      )
+      result.set(projectId, postprocessedCounts)
     }
     return result
   }

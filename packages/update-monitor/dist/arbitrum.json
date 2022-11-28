@@ -41,16 +41,6 @@
     },
     {
       "name": "ProxyAdmin2",
-      "address": "0x171a2624302775eF943f4f62E76fd22A6813d7c4",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
-      }
-    },
-    {
-      "name": "ProxyAdmin3",
       "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "upgradeability": {
         "type": "immutable"

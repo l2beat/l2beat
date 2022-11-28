@@ -5,17 +5,23 @@
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
       "upgradeability": {
-        "type": "eip1967 proxy",
-        "admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-        "implementation": "0x31fe393815822edacBd81C2262467402199EFD0D"
+        "type": "EIP1967 proxy",
+        "implementation": "0x31fe393815822edacBd81C2262467402199EFD0D",
+        "admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
       },
       "values": {
         "ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GOVERNANCE_ROLE": "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1",
         "NODEGROUP_ROLE": "0xb5c00e6706c3d213edd70ff33717fac657eacc5fe161f07180cf1fcab13cc4cd",
-        "admins": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
-        "governors": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
-        "nodes": ["0x230A1AC45690B9Ae1176389434610B9526d2f21b"],
+        "admins": [
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
+        "governors": [
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
+        "nodes": [
+          "0x230A1AC45690B9Ae1176389434610B9526d2f21b"
+        ],
         "adminRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "governorRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "nodeRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -63,8 +69,12 @@
           "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
         ],
         "defaultAdmins": [],
-        "executors": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
-        "proposers": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"],
+        "executors": [
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
+        "proposers": [
+          "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        ],
         "timelockAdminRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "defaultAdminRoleAdmin": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "proposerRoleAdmin": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
