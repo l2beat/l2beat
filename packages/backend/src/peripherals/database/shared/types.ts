@@ -47,6 +47,12 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  interface SequenceProcessorRow {
+    id: string
+    last_processed: number
+    finished_processing_at: Date
+  }
+
   interface ZksyncTransactionRow {
     block_number: number
     block_index: number
@@ -66,24 +72,6 @@ declare module 'knex/types/tables' {
     count: number
   }
 
-  interface TransactionCountViewRow {
-    project_id: string
-    count: number
-    unix_timestamp: Date
-  }
-
-  interface BlockTipRow {
-    project_id: string
-    block_number: number | null
-    unix_timestamp: Date | null
-  }
-
-  interface SequenceProcessorRow {
-    id: string
-    last_processed: number
-    finished_processing_at: Date
-  }
-
   interface DailyTransactionCountRow {
     project_id: string
     count: string // postgres keeps it as bigint, because it is a sum of integers
@@ -98,16 +86,10 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    'transactions.block': BlockTransactionCountRow
-    'transactions.block_count_view': TransactionCountViewRow
-    'transactions.block_tip': BlockTipRow
-    'transactions.zksync': ZksyncTransactionRow
-    'transactions.zksync_count_view': TransactionCountViewRow
-    'transactions.starkex': StarkexTransactionCountRow
     sequence_processor: SequenceProcessorRow
-    'activity_v2.block': BlockTransactionCountRow
-    'activity_v2.zksync': ZksyncTransactionRow
-    'activity_v2.starkex': StarkexTransactionCountRow
-    'activity_v2.daily_count_view': DailyTransactionCountRow
+    'activity.zksync': ZksyncTransactionRow
+    'activity.block': BlockTransactionCountRow
+    'activity.starkex': StarkexTransactionCountRow
+    'activity.daily_count_view': DailyTransactionCountRow
   }
 }
