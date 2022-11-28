@@ -207,10 +207,7 @@ export const zkswap: Layer2 = {
           'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       },
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
   permissions: [
     {

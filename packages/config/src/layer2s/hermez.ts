@@ -213,9 +213,6 @@ export const hermez: Layer2 = {
         description: 'Enforces a 7 day delay on upgrades.',
       },
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
 }

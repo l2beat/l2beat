@@ -99,10 +99,7 @@ export const sorare: Layer2 = {
       },
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
   },
   permissions: [
     {

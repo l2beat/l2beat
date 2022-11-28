@@ -190,7 +190,7 @@ export const orbit: Bridge = {
         name: 'WBTC Compound Farm',
       },
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {

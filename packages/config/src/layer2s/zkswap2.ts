@@ -142,10 +142,7 @@ export const zkswap2: Layer2 = {
         name: 'UpgradeGatekeeper',
       },
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
   permissions: [
     {

@@ -128,6 +128,6 @@ export const omgnetwork: Layer2 = {
         address: '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
       },
     ],
-    risks: [CONTRACTS.UNVERIFIED_RISK],
+    risks: [],
   },
 }
