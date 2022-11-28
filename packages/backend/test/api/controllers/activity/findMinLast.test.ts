@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { findMinLast } from '../../../../src/api/controllers/activity-v2/findMinLast'
+import { findMinLast } from '../../../../src/api/controllers/activity/findMinLast'
 
 describe(findMinLast.name, () => {
   it('returns undefined if no data', () => {

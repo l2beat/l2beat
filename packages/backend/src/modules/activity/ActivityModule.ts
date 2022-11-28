@@ -1,26 +1,26 @@
 import { HttpClient, Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 
-import { ActivityV2Controller } from '../../api/controllers/activity-v2/ActivityV2Controller'
-import { createActivityV2Router } from '../../api/routers/ActivityV2Router'
+import { ActivityController } from '../../api/controllers/activity/ActivityController'
+import { createActivityRouter } from '../../api/routers/ActivityRouter'
 import { Config } from '../../config'
 import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
-import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
+import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
 import { createTransactionCounters } from './createTransactionCounters'
 
-export function createActivityV2Module(
+export function createActivityModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
   database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.activityV2) {
+  if (!config.activity) {
     return
   }
 
@@ -55,19 +55,19 @@ export function createActivityV2Module(
     config,
     logger,
   )
-  const activityController = new ActivityV2Controller(
+  const activityController = new ActivityController(
     includedInApiProjectIds,
     counters,
     dailyCountViewRepository,
   )
-  const activityV2Router = createActivityV2Router(activityController)
+  const activityV2Router = createActivityRouter(activityController)
 
   const start = () => {
     if (!config.syncEnabled) {
       return
     }
 
-    logger = logger.for('ActivityV2Module')
+    logger = logger.for('ActivityModule')
     logger.info('Starting')
 
     counters.forEach((c) => c.start())
@@ -93,7 +93,7 @@ function getIncludedInApiProjectIds(
       const explicitlyExcluded = config.projects.some(
         (p) =>
           p.projectId === counter.projectId &&
-          p.transactionApiV2?.excludeFromActivityApi === true,
+          p.transactionApi?.excludeFromActivityApi === true,
       )
       if (explicitlyExcluded) {
         logger.info(

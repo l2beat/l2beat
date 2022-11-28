@@ -7,19 +7,19 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { ActivityV2Controller } from '../../../../src/api/controllers/activity-v2/ActivityV2Controller'
+import { ActivityController } from '../../../../src/api/controllers/activity/ActivityController'
 import { TransactionCounter } from '../../../../src/core/activity/TransactionCounter'
 import {
   DailyTransactionCountRecord,
   DailyTransactionCountViewRepository,
-} from '../../../../src/peripherals/database/activity-v2/DailyTransactionCountViewRepository'
+} from '../../../../src/peripherals/database/activity/DailyTransactionCountViewRepository'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 const TODAY = UnixTime.now().toStartOf('day')
 
-describe(ActivityV2Controller.name, () => {
-  describe(ActivityV2Controller.prototype.getActivity.name, () => {
+describe(ActivityController.name, () => {
+  describe(ActivityController.prototype.getActivity.name, () => {
     it('throws if ethereum not present in db', async () => {
       const includedIds: ProjectId[] = [PROJECT_A, ProjectId.ETHEREUM]
       const counters: TransactionCounter[] = [
@@ -32,7 +32,7 @@ describe(ActivityV2Controller.name, () => {
           hasProcessedAll: true,
         }),
       ]
-      const controller = new ActivityV2Controller(
+      const controller = new ActivityController(
         includedIds,
         counters,
         mockRepository([]),
@@ -60,7 +60,7 @@ describe(ActivityV2Controller.name, () => {
         }),
       ]
 
-      const controller = new ActivityV2Controller(
+      const controller = new ActivityController(
         includedIds,
         counters,
         mockRepository([
@@ -116,7 +116,7 @@ describe(ActivityV2Controller.name, () => {
         }),
       ]
 
-      const controller = new ActivityV2Controller(
+      const controller = new ActivityController(
         includedIds,
         counters,
         mockRepository([

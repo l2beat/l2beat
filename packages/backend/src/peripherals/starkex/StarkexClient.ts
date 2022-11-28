@@ -4,7 +4,7 @@ import {
   Logger,
   RateLimiter,
 } from '@l2beat/common'
-import { StarkexProductV2 } from '@l2beat/config'
+import { StarkexProduct } from '@l2beat/config'
 import { json } from '@l2beat/types'
 
 import { parseStarkexApiResponse } from './parseStarkexApiResponse'
@@ -38,7 +38,7 @@ export class StarkexClient {
     }
   }
 
-  async getDailyCount(day: number, product: StarkexProductV2): Promise<number> {
+  async getDailyCount(day: number, product: StarkexProduct): Promise<number> {
     const body = {
       day_start: day,
       day_end: day + 1,
