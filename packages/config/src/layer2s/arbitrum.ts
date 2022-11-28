@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -490,11 +491,9 @@ export const arbitrum: Layer2 = {
       description: 'Incentives program to onboard new users has started.',
     },
     {
-      name: 'Mainnet for everyone',
+      ...MILESTONES.MAINNET_OPEN,
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: new Date('2021-08-31'),
-      description:
-        'Whitelist got removed, there are restrictions on who can transact with the network.',
     },
   ],
 }
