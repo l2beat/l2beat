@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import {
-  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
