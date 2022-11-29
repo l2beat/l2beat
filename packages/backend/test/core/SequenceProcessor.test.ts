@@ -266,11 +266,12 @@ describe(SequenceProcessor.name, () => {
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
       const latest = 5
-      await repository.addOrUpdate({
+      const initialState = {
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest,
-      })
+      }
+      await repository.addOrUpdate(initialState)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 1,
         batchSize: 2,
@@ -285,11 +286,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
-        id: PROCESSOR_ID,
-        latest: latest,
-        lastProcessed: latest,
-      })
+      expect(await repository.getById(PROCESSOR_ID)).toEqual(initialState)
     })
 
     it('continues syncing when more data available', async () => {
