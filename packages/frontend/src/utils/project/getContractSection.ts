@@ -1,4 +1,4 @@
-import { Bridge, Layer2, ProjectContract } from '@l2beat/config'
+import { Bridge, CONTRACTS, Layer2, ProjectContract } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/types'
 
 import {
@@ -12,14 +12,24 @@ export function getContractSection(
   project: Layer2 | Bridge,
   verificationStatus: VerificationStatus,
 ): ContractsSectionProps {
-  const contracts = project.contracts?.addresses.map((contract) =>
-    makeTechnologyContract(contract, project),
-  )
+  const contracts = project.contracts?.addresses.map((contract) => {
+    const isUnverified =
+      verificationStatus.contracts[contract.address] === false
+    return makeTechnologyContract(contract, project, isUnverified)
+  })
 
-  const risks = project.contracts?.risks.map((risk) => ({
-    text: `${risk.category} ${risk.text}`,
-    isCritical: !!risk.isCritical,
-  }))
+  const risks =
+    project.contracts?.risks.map((risk) => ({
+      text: `${risk.category} ${risk.text}`,
+      isCritical: !!risk.isCritical,
+    })) ?? []
+
+  if (verificationStatus.projects[project.id.toString()] === false) {
+    risks.push({
+      text: CONTRACTS.UNVERIFIED_RISK.text,
+      isCritical: !!CONTRACTS.UNVERIFIED_RISK.isCritical,
+    })
+  }
 
   const architectureImage = hasArchitectureImage(project.display.slug)
     ? `/images/${project.display.slug}-architecture.png`
@@ -27,7 +37,7 @@ export function getContractSection(
 
   return {
     contracts: contracts ?? [],
-    risks: risks ?? [],
+    risks: risks,
     architectureImage,
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
@@ -38,6 +48,7 @@ export function getContractSection(
 function makeTechnologyContract(
   item: ProjectContract,
   project: Layer2 | Bridge,
+  isUnverified: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
 
@@ -135,10 +146,19 @@ function makeTechnologyContract(
     })
   }
 
+  let description = item.description
+
+  if (isUnverified) {
+    if (!description) {
+      description = CONTRACTS.UNVERIFIED_DESCRIPTION
+    } else {
+      description += ' ' + CONTRACTS.UNVERIFIED_DESCRIPTION
+    }
+  }
+
   const tokens = project.config.escrows.find(
     (x) => x.address === item.address,
   )?.tokens
-  let description = item.description
   if (tokens) {
     const tokenText =
       tokens === '*'

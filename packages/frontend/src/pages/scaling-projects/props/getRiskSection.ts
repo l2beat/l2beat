@@ -35,7 +35,6 @@ export function getRiskSection(
     risks.push({ ...risk, referencedId: 'contracts' })
   }
   // Explicit comparison to false because project might not exists in verification map at all.
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
   if (verificationStatus.projects[project.id.toString()] === false) {
     if (!risks.find((r) => r.text === CONTRACTS.UNVERIFIED_RISK.text)) {
       risks.push({ ...CONTRACTS.UNVERIFIED_RISK, referencedId: 'contracts' })

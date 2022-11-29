@@ -132,7 +132,6 @@ export const zkspace: Layer2 = {
       {
         address: '0xc07f850b60E0EEd49a09E455b01a869C25963735',
         name: 'PairManager',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         upgradeability: {
           type: 'EIP1967',
           admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
@@ -177,10 +176,7 @@ export const zkspace: Layer2 = {
           'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       },
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
   permissions: [
     {
