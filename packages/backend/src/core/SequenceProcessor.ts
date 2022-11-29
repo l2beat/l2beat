@@ -85,34 +85,34 @@ export class SequenceProcessor extends EventEmitter {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
       const lastProcessed = this.state?.lastProcessed
-      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
-      this.logger.debug('Calling getLatest', {
-        lastProcessed: lastProcessed ?? null,
-        startFrom: this.opts.startFrom,
-      })
-      const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
+      const startFrom = this.opts.startFrom
+      let from = lastProcessed ? lastProcessed + 1 : startFrom
 
-      if (from === to + 1) {
+      const previousLatest = this.state?.latest ?? startFrom
+      this.logger.debug('Calling getLatest', {
+        previousLatest,
+        startFrom,
+      })
+      const latest = await this.opts.getLatest(previousLatest)
+
+      if (from === latest + 1) {
         if (!this.state) {
           await this.setState({
-            lastProcessed: to,
-            latest: to,
+            lastProcessed: latest,
+            latest,
           })
         }
         break processing
       }
 
       assert(
-        from <= to,
-        `getLatest returned sequence member that was already processed. from=${from}, to=${to}`,
+        from <= latest,
+        `getLatest returned sequence member that was already processed. from=${from}, latest=${latest}`,
       )
 
-      for (; from <= to; from += this.opts.batchSize) {
-        await this.processRange(
-          from,
-          Math.min(from + this.opts.batchSize - 1, to),
-          to,
-        )
+      for (; from <= latest; from += this.opts.batchSize) {
+        const to = Math.min(from + this.opts.batchSize - 1, latest)
+        await this.processRange(from, to, latest)
       }
     }
 
