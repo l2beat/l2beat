@@ -45,9 +45,7 @@ export interface ProjectDetailsProps {
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <main className="ProjectDetails">
-      <Milestones
-        milestones={props.milestones}
-      />
+      <Milestones milestones={props.milestones} />
       <LinkSection {...props.linkSection} />
       <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
