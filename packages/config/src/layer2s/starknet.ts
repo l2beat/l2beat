@@ -277,14 +277,18 @@ export const starknet: Layer2 = {
   ],
   milestones: [
     {
-      name: 'StarkNet Alpha on Mainnet',
+      name: 'StarkNet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: new Date('2021-11-29'),
+      description:
+        'Rollup is live on mainnet, enabling general computation smart contracts using zkRollup technology.',
     },
     {
-      name: 'StarkGate Alpha on Mainnet',
+      name: 'StarkGate Alpha',
       link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
       date: new Date('2022-05-09'),
+      description:
+        'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
 }

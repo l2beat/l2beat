@@ -330,4 +330,13 @@ export const bobanetwork: Layer2 = {
       description: 'Central actor to post new L2 state roots to L1.',
     },
   ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      date: new Date('2021-09-20'),
+      link: 'https://www.enya.ai/press/public-mainnet',
+      description:
+        'Layer 2 Optimistic Rollup based on the Optimism codebase is live on Ethereum.',
+    },
+  ],
 }

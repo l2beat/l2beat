@@ -81,4 +81,20 @@ describe('layer2s', () => {
       }
     }
   })
+
+  describe('milestones', () => {
+    for (const project of layer2s) {
+      if (project.milestones === undefined) {
+        continue
+      }
+      for (const milestone of project.milestones) {
+        if (milestone.description === undefined) {
+          continue
+        }
+        it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+          expect(milestone.description?.endsWith('.')).toEqual(true)
+        })
+      }
+    }
+  })
 })

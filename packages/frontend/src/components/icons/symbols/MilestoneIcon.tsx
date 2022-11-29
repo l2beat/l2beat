@@ -12,7 +12,7 @@ export function MilestoneIcon(props: SVGAttributes<SVGElement>) {
         height="12"
         rx="1"
         transform="rotate(45 9.89941 1.41421)"
-        stroke-width="2"
+        strokeWidth="2"
       />
     </Icon>
   )
