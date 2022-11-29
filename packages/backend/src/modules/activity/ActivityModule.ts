@@ -62,18 +62,16 @@ export function createActivityModule(
   )
   const activityV2Router = createActivityRouter(activityController)
 
-  const start = () => {
+  const start = async () => {
     if (!config.syncEnabled) {
       return
     }
 
     logger = logger.for('ActivityModule')
     logger.info('Starting')
-
-    counters.forEach((c) => c.start())
+    await Promise.all(counters.map((c) => c.start()))
     viewRefresher.start()
     transactionCountingMonitor.start()
-
     logger.info('Started')
   }
 

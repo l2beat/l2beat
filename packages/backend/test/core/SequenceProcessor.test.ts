@@ -71,7 +71,7 @@ describe(SequenceProcessor.name, () => {
         processRange: processRangeMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
@@ -84,6 +84,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
+        latest: 5,
       })
     })
 
@@ -99,7 +100,7 @@ describe(SequenceProcessor.name, () => {
         processRange: processRangeMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
@@ -109,6 +110,33 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
+        latest: 5,
+      })
+    })
+
+    it('works with a single-element sequence', async () => {
+      const processRangeMock =
+        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      sequenceProcessor = createSequenceProcessor({
+        startFrom: 4,
+        batchSize: 2,
+        async getLatest() {
+          return 4
+        },
+        processRange: processRangeMock,
+      })
+
+      await sequenceProcessor.start()
+      await once(sequenceProcessor, ALL_PROCESSED_EVENT)
+
+      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(processRangeMock).toHaveBeenCalledExactlyWith([
+        [4, 4, expect.anything()],
+      ])
+      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+        id: PROCESSOR_ID,
+        lastProcessed: 4,
+        latest: 4,
       })
     })
 
@@ -124,7 +152,7 @@ describe(SequenceProcessor.name, () => {
         processRange: processRangeMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
@@ -137,6 +165,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
+        latest: 2,
       })
     })
 
@@ -152,7 +181,7 @@ describe(SequenceProcessor.name, () => {
         processRange: processRangeMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
@@ -163,6 +192,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
+        latest: 2,
       })
     })
 
@@ -184,7 +214,7 @@ describe(SequenceProcessor.name, () => {
         reportError: reportErrorMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await waitForErrorReport(time, reportErrorMock)
 
       await Promise.all([
@@ -218,7 +248,7 @@ describe(SequenceProcessor.name, () => {
         reportError: reportErrorMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await waitForErrorReport(time, reportErrorMock)
 
       await Promise.all([
@@ -235,21 +265,28 @@ describe(SequenceProcessor.name, () => {
     it('does not process anything when already done', async () => {
       const processRangeMock =
         mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const latest = 5
+      const initialState = {
+        id: PROCESSOR_ID,
+        lastProcessed: latest,
+        latest,
+      }
+      await repository.addOrUpdate(initialState)
       sequenceProcessor = createSequenceProcessor({
-        startFrom: 5,
+        startFrom: 1,
         batchSize: 2,
         async getLatest() {
-          return 5
+          return latest
         },
         processRange: processRangeMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([])
-      // note: we are fine with no entry in repository in this case
+      expect(await repository.getById(PROCESSOR_ID)).toEqual(initialState)
     })
 
     it('continues syncing when more data available', async () => {
@@ -270,7 +307,7 @@ describe(SequenceProcessor.name, () => {
         processRange: processRangeMock,
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
@@ -290,6 +327,7 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 7,
+        latest: 7,
       })
     })
   })
@@ -315,7 +353,7 @@ describe(SequenceProcessor.name, () => {
         refreshInterval: 1, // kick refresh right after it's done
       })
 
-      sequenceProcessor.start()
+      await sequenceProcessor.start()
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
       syncedOnce = true
@@ -336,7 +374,42 @@ describe(SequenceProcessor.name, () => {
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
+        latest: 2,
       })
+    })
+  })
+
+  describe('state management', () => {
+    it('loads empty state on start', async () => {
+      sequenceProcessor = createSequenceProcessor({
+        startFrom: 0,
+        batchSize: 2,
+        getLatest: mockFn(() => 1),
+        processRange: mockFn(async () => {}),
+      })
+
+      await sequenceProcessor.start()
+
+      expect(sequenceProcessor.hasProcessedAll()).toEqual(false)
+    })
+
+    it('loads existing state on start', async () => {
+      const latest = 3
+      await repository.addOrUpdate({
+        id: PROCESSOR_ID,
+        lastProcessed: latest,
+        latest: latest,
+      })
+      sequenceProcessor = createSequenceProcessor({
+        startFrom: 0,
+        batchSize: 1,
+        getLatest: mockFn(() => latest),
+        processRange: mockFn(async () => {}),
+      })
+
+      await sequenceProcessor.start()
+
+      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
     })
   })
 })
