@@ -12,7 +12,7 @@ export interface MilestonesProps {
 
 export function Milestones({ milestones, className }: MilestonesProps) {
   if (milestones === undefined) {
-    return <></>
+    return null
   }
 
   return (
