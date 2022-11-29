@@ -185,4 +185,13 @@ export const rhinofi: Layer2 = {
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },
   ],
+  milestones: [
+    {
+      name: 'Rebranding',
+      date: new Date('2022-07-13'),
+      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      description:
+        'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi opportunities in one place.',
+    },
+  ],
 }

@@ -146,4 +146,13 @@ export const sorare: Layer2 = {
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },
   ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      date: new Date('2021-07-26'),
+      link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      description:
+        'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
+    },
+  ],
 }

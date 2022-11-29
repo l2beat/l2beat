@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -470,24 +471,29 @@ export const arbitrum: Layer2 = {
   },
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://twitter.com/arbitrum/status/1432817424752128008',
-      date: new Date('2021-08-31'),
-    },
-    {
-      name: 'Arbitrum Odyssey start',
-      link: 'https://twitter.com/arbitrum/status/1539292126105706496',
-      date: new Date('2022-06-21'),
-    },
-    {
-      name: 'Arbitrum Odyssey cancelled',
-      link: 'https://twitter.com/arbitrum/status/1542159109511847937',
-      date: new Date('2022-06-29'),
-    },
-    {
       name: 'Nitro Upgrade',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
       date: new Date('2022-08-31'),
+      description:
+        'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
+    },
+    {
+      name: 'Odyssey paused',
+      link: 'https://twitter.com/arbitrum/status/1542159109511847937',
+      date: new Date('2022-06-29'),
+      description:
+        'Due of the heavy load being put on the chain, Odyssey program got paused.',
+    },
+    {
+      name: 'Odyssey started',
+      link: 'https://twitter.com/arbitrum/status/1539292126105706496',
+      date: new Date('2022-06-21'),
+      description: 'Incentives program to onboard new users has started.',
+    },
+    {
+      ...MILESTONES.MAINNET_OPEN,
+      link: 'https://twitter.com/arbitrum/status/1432817424752128008',
+      date: new Date('2021-08-31'),
     },
   ],
 }
