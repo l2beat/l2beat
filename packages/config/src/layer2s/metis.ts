@@ -338,13 +338,17 @@ export const metis: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
-      link: 'https://twitter.com/MetisDAO/status/1461751817902170125',
+      link: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
       date: new Date('2021-11-19'),
+      description:
+        'Public launch of Metis Layer 2 Andromeda, based on the Optimism codebase.',
     },
     {
-      name: 'Off-chain data availability',
+      name: 'Data availability change',
       link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
       date: new Date('2022-04-12'),
+      description:
+        'Update results in the system no longer posting data on-chain, instead data is kept off-chain by a committee.',
     },
   ],
 }

@@ -178,7 +178,9 @@ describe('projects', () => {
             )
           } else if (link.includes('medium')) {
             expect(link).toEqual(
-              expect.stringMatching(/^https:\/\/(\w+\.)?medium\.com\/[@\w-]*$/),
+              expect.stringMatching(
+                /^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/,
+              ),
             )
           } else if (link.includes('twitter')) {
             expect(link).toEqual(
