@@ -21,11 +21,16 @@ export const ALL_PROCESSED_EVENT = 'All processed'
 
 const HOUR = 1000 * 60 * 60
 
+interface State {
+  latest: number
+  lastProcessed: number
+}
+
 export class SequenceProcessor extends EventEmitter {
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly logger: Logger
-  private processedAll = false
+  private state?: State
   private refreshId: NodeJS.Timer | undefined
 
   constructor(
@@ -52,8 +57,9 @@ export class SequenceProcessor extends EventEmitter {
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
   }
 
-  public start(): void {
+  async start(): Promise<void> {
     this.logger.info('Started')
+    await this.loadState()
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(
       () => this.processQueue.addIfEmpty(),
@@ -61,14 +67,16 @@ export class SequenceProcessor extends EventEmitter {
     )
   }
 
-  public async stop(): Promise<void> {
+  async stop(): Promise<void> {
     this.logger.info('Stopping')
     clearInterval(this.refreshId)
     await this.processQueue.waitTilEmpty()
   }
 
   hasProcessedAll(): boolean {
-    return this.processedAll
+    return (
+      this.state !== undefined && this.state.lastProcessed === this.state.latest
+    )
   }
 
   private async process(): Promise<void> {
@@ -76,45 +84,65 @@ export class SequenceProcessor extends EventEmitter {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const processorState = await this.repository.getById(this.id)
-      const lastProcessed = processorState?.lastProcessed
+      const lastProcessed = this.state?.lastProcessed
+      const startFrom = this.opts.startFrom
+      let from = lastProcessed ? lastProcessed + 1 : startFrom
 
+      const previousLatest = this.state?.latest ?? startFrom
       this.logger.debug('Calling getLatest', {
-        lastProcessed: lastProcessed ?? null,
-        startFrom: this.opts.startFrom,
+        previousLatest,
+        startFrom,
+        from,
       })
-      const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
+      const latest = await this.opts.getLatest(previousLatest)
 
-      if ((lastProcessed ?? this.opts.startFrom) === to) {
+      if (from === latest + 1) {
+        if (!this.state) {
+          await this.setState({
+            lastProcessed: latest,
+            latest,
+          })
+        }
         break processing
       }
-      // to avoid processing lastSynced multiple times we need to increment it by one
-      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
 
       assert(
-        from <= to,
-        `getLatest returned sequence member that was already processed. from=${from}, to=${to}`,
+        from <= latest,
+        `getLatest returned sequence member that was already processed. from=${from}, latest=${latest}`,
       )
 
-      for (; from <= to; from += this.opts.batchSize) {
-        await this.processRange(
-          from,
-          Math.min(from + this.opts.batchSize - 1, to),
-        )
+      for (; from <= latest; from += this.opts.batchSize) {
+        const to = Math.min(from + this.opts.batchSize - 1, latest)
+        await this.processRange(from, to, latest)
       }
     }
 
     this.logger.debug('Processing finished')
-    this.processedAll = true
     this.emit(ALL_PROCESSED_EVENT)
   }
 
-  private async processRange(from: number, to: number) {
+  private async processRange(from: number, to: number, latest: number) {
     this.logger.debug('Processing range started', { from, to })
     await this.repository.runInTransaction(async (trx) => {
       await this.opts.processRange(from, to, trx)
-      await this.repository.addOrUpdate({ id: this.id, lastProcessed: to }, trx)
+      await this.setState({ lastProcessed: to, latest }, trx)
     })
     this.logger.debug('Processing range finished', { from, to })
+  }
+
+  private async loadState(): Promise<void> {
+    const state = await this.repository.getById(this.id)
+    this.state = state
+  }
+
+  private async setState(state: State, trx?: Knex.Transaction): Promise<void> {
+    await this.repository.addOrUpdate(
+      {
+        id: this.id,
+        ...state,
+      },
+      trx,
+    )
+    this.state = state
   }
 }

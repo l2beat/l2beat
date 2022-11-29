@@ -9,7 +9,7 @@ export class TransactionCounter {
     readonly getLastProcessedTimestamp: () => Promise<UnixTime | undefined>,
   ) {}
 
-  start(): void {
+  start(): Promise<void> {
     return this.processor.start()
   }
 

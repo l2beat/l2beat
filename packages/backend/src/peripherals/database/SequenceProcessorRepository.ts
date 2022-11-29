@@ -8,6 +8,7 @@ import { Database } from './shared/Database'
 export interface SequenceProcessorRecord {
   id: string
   lastProcessed: number
+  latest: number
 }
 
 export class SequenceProcessorRepository extends BaseRepository {
@@ -48,7 +49,8 @@ function toRow(record: SequenceProcessorRecord): SequenceProcessorRow {
   return {
     id: record.id,
     last_processed: record.lastProcessed,
-    finished_processing_at: new Date(),
+    latest: record.latest,
+    updated_at: new Date(),
   }
 }
 
@@ -56,5 +58,6 @@ function toRecord(row: SequenceProcessorRow): SequenceProcessorRecord {
   return {
     id: row.id,
     lastProcessed: row.last_processed,
+    latest: row.latest,
   }
 }
