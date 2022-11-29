@@ -1,4 +1,5 @@
 import { Milestone } from '@l2beat/config'
+import cx from 'classnames'
 import React from 'react'
 
 import { ArrowRightIcon } from '../icons/Arrows'
@@ -16,7 +17,12 @@ export function Milestones({ milestones, className }: MilestonesProps) {
   }
 
   return (
-    <div className={className}>
+    <div
+      className={cx(
+        'Milestones py-12 px-4 md:px-0 bg-gray-900 md:bg-transparent',
+        className,
+      )}
+    >
       <div>
         <span className="text-[28px] leading-[32.81px] font-bold">
           Milestones
