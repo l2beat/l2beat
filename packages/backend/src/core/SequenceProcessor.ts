@@ -92,7 +92,7 @@ export class SequenceProcessor extends EventEmitter {
       })
       const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
 
-      if ((lastProcessed ?? this.opts.startFrom) === to) {
+      if ((lastProcessed ?? this.opts.startFrom - 1) === to) {
         if (!this.state) {
           await this.setState({
             lastProcessed: lastProcessed ?? this.opts.startFrom,
