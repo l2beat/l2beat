@@ -40,7 +40,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
             )
             .map((milestone, i) => (
               <div key={i} className="pb-7">
-                <MilestoneIcon className="absolute left-1.5 fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500" />
+                <MilestoneIcon className="absolute left-1.5" />
                 <div className="font-bold text-lg leading-none">
                   {milestone.name}
                 </div>

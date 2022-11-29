@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
+import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'

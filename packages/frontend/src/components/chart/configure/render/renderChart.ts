@@ -1,8 +1,9 @@
+import { layer2s } from '@l2beat/config'
+
 import { State } from '../state/State'
 import { fillBelowChart } from './fillBelowChart'
 import { strokeChartLine } from './strokeChartLine'
 import { getMainStyle, getSecondaryStyle } from './style'
-
 export function renderChart(
   state: State,
   canvas: HTMLCanvasElement,
@@ -37,5 +38,29 @@ export function renderChart(
     const mainPoints = state.view.chart.points
     fillBelowChart(ctx, mainPoints, canvas, mainStyle.fillGradient)
     strokeChartLine(ctx, mainPoints, canvas, mainStyle.strokeGradient)
+  }
+  // eslint-disable-next-line @typescript-eslint/prefer-for-of
+  console.clear()
+  for (let i = 0; i < state.view.chart.points.length; i++) {
+    const m = state.view.chart.points[i]
+    const tt = layer2s[1].milestones?.find((mil) => {
+      // if (
+      //   Math.abs(new Date(m.date).getTime() - mil.date.getTime()) === 7200000
+      // ) {
+      //   console.log(mil.name)
+      // }
+      return (
+        Math.abs(new Date(m.date).getTime() - mil.date.getTime()) === 7200000
+      )
+    })
+    if (tt !== undefined) {
+      ctx.beginPath()
+      console.log(canvas.height)
+      ctx.rect(state.view.chart.points[i].x * canvas.width, canvas.height-10, 10, 10)
+      ctx.fillStyle = "white";
+      ctx.fill()
+      ctx.closePath()
+      console.log(state.view.chart.points[i])
+    }
   }
 }

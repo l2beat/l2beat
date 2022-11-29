@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import { z } from 'zod'
 
 export interface State {
@@ -45,6 +46,7 @@ export interface AggregateTvlChart {
     date: string
     usd: number
     eth: number
+    milestone?: boolean
   }[]
 }
 
@@ -57,6 +59,7 @@ export interface TokenTvlChart {
     balance: number
     symbol: string
     usd: number
+    milestone?: boolean
   }[]
 }
 
@@ -69,6 +72,7 @@ export interface ActivityChart {
     date: string
     tps: number
     ethereumTps: number
+    milestone?: boolean
   }[]
 }
 
