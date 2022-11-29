@@ -3,13 +3,13 @@
   display: grid;
   grid-template-columns: 1fr 400px;
   grid-template-rows: auto 1fr;
-  grid-template-areas: 'tech links' 'tech news';
+  grid-template-areas: 'tech links' 'tech milestones';
   column-gap: 16px;
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
     grid-template-rows: unset;
-    grid-template-areas: 'links' 'tech';
+    grid-template-areas: 'links' 'milestones' 'tech';
   }
 
   .LinkSection {
@@ -18,5 +18,9 @@
 
   .ProjectDetails-Content {
     grid-area: tech;
+  }
+
+  .Milestones {
+    grid-area: milestones;
   }
 }
