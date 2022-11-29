@@ -85,24 +85,22 @@ export class SequenceProcessor extends EventEmitter {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
       const lastProcessed = this.state?.lastProcessed
-
+      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
       this.logger.debug('Calling getLatest', {
         lastProcessed: lastProcessed ?? null,
         startFrom: this.opts.startFrom,
       })
       const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
 
-      if ((lastProcessed ?? this.opts.startFrom - 1) === to) {
+      if (from === to + 1) {
         if (!this.state) {
           await this.setState({
-            lastProcessed: lastProcessed ?? this.opts.startFrom,
+            lastProcessed: to,
             latest: to,
           })
         }
         break processing
       }
-      // to avoid processing lastSynced multiple times we need to increment it by one
-      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
 
       assert(
         from <= to,
