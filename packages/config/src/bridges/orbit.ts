@@ -176,25 +176,21 @@ export const orbit: Bridge = {
       {
         address: '0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9',
         name: 'USDT Compound Farm',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
       {
         address: '0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0',
         name: 'DAI Compound Farm',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
       {
         address: '0x830433dE03ABedE062660CC629e1A2c714272474',
         name: 'USDC Compound Farm',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
       {
         address: '0xd910f6F23889919fAd9C8cE3171dd557cE0308Da',
         name: 'WBTC Compound Farm',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK, CONTRACTS.UNVERIFIED_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {

@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import {
-  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -110,12 +109,10 @@ export const omgnetwork: Layer2 = {
       },
       {
         name: 'ETHDepositVerifier',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0x649f37203c365DE759c8fc8CA35beBF5448F70Be',
       },
       {
         name: 'ERC20DepositVerifier',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0xD876aeb3a443FBC03B7349AAc115E9054563CD82',
       },
       {
@@ -130,6 +127,6 @@ export const omgnetwork: Layer2 = {
         address: '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
       },
     ],
-    risks: [CONTRACTS.UNVERIFIED_RISK],
+    risks: [],
   },
 }

@@ -40,9 +40,7 @@ async function main() {
 
   createApi(config, tvlApiResponse, activityApiResponse)
 
-  const verificationStatus = getVerificationStatus(
-    config.features.highlightUnverified,
-  )
+  const verificationStatus = getVerificationStatus()
 
   const pagesData = {
     tvlApiResponse,
