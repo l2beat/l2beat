@@ -92,6 +92,7 @@ export class SequenceProcessor extends EventEmitter {
       this.logger.debug('Calling getLatest', {
         previousLatest,
         startFrom,
+        from,
       })
       const latest = await this.opts.getLatest(previousLatest)
 
