@@ -45,7 +45,11 @@ export async function down(knex: Knex) {
       table.string('project_id').primary()
       table.dateTime('unix_timestamp', { useTz: false })
       table.integer('block_number').notNullable()
-      table.integer('count').notNullable()
+    })
+    .createTable('zksync_tip', function (table) {
+      table.dateTime('unix_timestamp', { useTz: false })
+      table.integer('block_number').notNullable()
+      table.integer('block_index').notNullable()
     })
 
   await knex.schema.raw(
