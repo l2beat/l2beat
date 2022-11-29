@@ -7,7 +7,7 @@ import { SequenceProcessorRepository } from '../peripherals/database/SequencePro
 export interface SequenceProcessorOpts {
   startFrom: number
   batchSize: number
-  getLatest: (nextFrom: number) => Promise<number> | number
+  getLatest: (previousLatest: number) => Promise<number> | number
   processRange: (
     // [from, to] <- ranges are inclusive
     from: number,
@@ -85,34 +85,35 @@ export class SequenceProcessor extends EventEmitter {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
       const lastProcessed = this.state?.lastProcessed
-      const nextFrom = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
+
       this.logger.debug('Calling getLatest', {
         lastProcessed: lastProcessed ?? null,
         startFrom: this.opts.startFrom,
-        nextFrom,
       })
-      const latest = await this.opts.getLatest(nextFrom)
+      const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
 
-      assert(
-        nextFrom - 1 <= latest,
-        `getLatest returned sequence member that was already processed. nextFrom=${nextFrom}, latest=${latest}`,
-      )
-
-      if (nextFrom - 1 === latest) {
+      if ((lastProcessed ?? this.opts.startFrom) === to) {
         if (!this.state) {
           await this.setState({
-            lastProcessed: nextFrom - 1,
-            latest,
+            lastProcessed: lastProcessed ?? this.opts.startFrom,
+            latest: to,
           })
         }
         break processing
       }
+      // to avoid processing lastSynced multiple times we need to increment it by one
+      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
 
-      for (let from = nextFrom; from <= latest; from += this.opts.batchSize) {
+      assert(
+        from <= to,
+        `getLatest returned sequence member that was already processed. from=${from}, to=${to}`,
+      )
+
+      for (; from <= to; from += this.opts.batchSize) {
         await this.processRange(
           from,
-          Math.min(from + this.opts.batchSize - 1, latest),
-          latest,
+          Math.min(from + this.opts.batchSize - 1, to),
+          to,
         )
       }
     }

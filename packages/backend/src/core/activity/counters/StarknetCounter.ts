@@ -34,10 +34,10 @@ export function createStarknetCounter(
     {
       batchSize,
       startFrom: 0,
-      getLatest: async (nextFrom) => {
+      getLatest: async (previousLatest) => {
         const blockNumber = await client.getBlockNumberAtOrBefore(
           clock.getLastHour(),
-          nextFrom,
+          previousLatest,
         )
         return blockNumber
       },

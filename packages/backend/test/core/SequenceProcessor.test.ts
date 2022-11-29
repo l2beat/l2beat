@@ -75,7 +75,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [6]])
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [5]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 1, expect.anything()],
         [2, 3, expect.anything()],
@@ -130,7 +130,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [3]])
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 0, expect.anything()],
         [1, 1, expect.anything()],
@@ -159,7 +159,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [3]])
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 2, expect.anything()],
       ])
@@ -243,29 +243,6 @@ describe(SequenceProcessor.name, () => {
         startFrom: 5,
         batchSize: 2,
         async getLatest() {
-          return 4
-        },
-        processRange: processRangeMock,
-      })
-
-      await sequenceProcessor.start()
-      await once(sequenceProcessor, ALL_PROCESSED_EVENT)
-
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
-        id: PROCESSOR_ID,
-        latest: 4,
-        lastProcessed: 4,
-      })
-    })
-
-    it('processes startFrom if equal to latest', async () => {
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
-      sequenceProcessor = createSequenceProcessor({
-        startFrom: 5,
-        batchSize: 2,
-        async getLatest() {
           return 5
         },
         processRange: processRangeMock,
@@ -274,9 +251,8 @@ describe(SequenceProcessor.name, () => {
       await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [5, 5, expect.anything()],
-      ])
+      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(processRangeMock).toHaveBeenCalledExactlyWith([])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         latest: 5,
@@ -306,12 +282,12 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      // deep inspect getLatestMock. It should be called with [0], [6], and rest is [8]s
+      // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLatestMock).toHaveBeenCalledExactlyWith([
         [0],
-        [6],
-        ...new Array(getLatestMock.calls.length - 2).fill([8]),
+        [5],
+        ...new Array(getLatestMock.calls.length - 2).fill([7]),
       ])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 1, expect.anything()],
@@ -356,9 +332,10 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLatestMock).toHaveBeenCalledExactlyWith(
-        expect.arrayWith([0], [2], [3]),
+        expect.arrayWith([0], [1], [2]),
       )
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 0, expect.anything()],
