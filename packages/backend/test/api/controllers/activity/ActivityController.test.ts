@@ -8,97 +8,171 @@ import {
 import { expect } from 'earljs'
 
 import { ActivityController } from '../../../../src/api/controllers/activity/ActivityController'
-import { RpcTransactionUpdater } from '../../../../src/core/transaction-count/RpcTransactionUpdater'
-import { StarkexTransactionUpdater } from '../../../../src/core/transaction-count/starkex/StarkexTransactionUpdater'
-import { TransactionCounter } from '../../../../src/core/transaction-count/TransactionCounter'
-import { ZksyncTransactionUpdater } from '../../../../src/core/transaction-count/ZksyncTransactionUpdater'
+import { TransactionCounter } from '../../../../src/core/activity/TransactionCounter'
+import {
+  DailyTransactionCountRecord,
+  DailyTransactionCountViewRepository,
+} from '../../../../src/peripherals/database/activity/DailyTransactionCountViewRepository'
+
+const PROJECT_A = ProjectId('project-a')
+const PROJECT_B = ProjectId('project-b')
+const TODAY = UnixTime.now().toStartOf('day')
 
 describe(ActivityController.name, () => {
-  describe(ActivityController.prototype.getTransactionActivity.name, () => {
-    it('returns empty if no projects track activity', async () => {
-      const controller = new ActivityController(
-        [],
-        mock<TransactionCounter>({
-          async getDailyCounts() {
-            return []
-          },
+  describe(ActivityController.prototype.getActivity.name, () => {
+    it('throws if ethereum not present in db', async () => {
+      const includedIds: ProjectId[] = [PROJECT_A, ProjectId.ETHEREUM]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
         }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+      ]
+      const controller = new ActivityController(
+        includedIds,
+        counters,
+        mockRepository([]),
       )
-      expect(await controller.getTransactionActivity()).toEqual(
-        formatActivity({ combined: [], projects: {}, ethereum: [] }),
+
+      await expect(controller.getActivity()).toBeRejected(
+        'Assertion Error: Ethereum missing in daily transaction count',
+      )
+    })
+
+    it('returns only included projects', async () => {
+      const includedIds: ProjectId[] = [ProjectId.ETHEREUM]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: false,
+        }),
+      ]
+
+      const controller = new ActivityController(
+        includedIds,
+        counters,
+        mockRepository([
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2137,
+          },
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 420,
+          },
+          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-3, 'days'),
+            count: 2,
+          },
+        ]),
+      )
+
+      expect(await controller.getActivity()).toEqual(
+        formatActivity({
+          combined: [],
+          projects: {},
+          ethereum: [
+            [TODAY.add(-2, 'days'), 2137],
+            [TODAY.add(-1, 'days'), 420],
+          ],
+        }),
       )
     })
 
     it('groups data', async () => {
-      const controller = new ActivityController(
-        [
-          mock<RpcTransactionUpdater>({
-            projectId: ProjectId('optimism'),
-            async getDailyCounts() {
-              return [
-                { count: 1, timestamp: new UnixTime(0).add(1, 'days') },
-                { count: 2, timestamp: new UnixTime(0).add(2, 'days') },
-                { count: 3, timestamp: new UnixTime(0).add(3, 'days') },
-              ]
-            },
-          }),
-          mock<StarkexTransactionUpdater>({
-            projectId: ProjectId('dydx'),
-            async getDailyCounts() {
-              return [
-                { count: 4, timestamp: new UnixTime(0) },
-                { count: 5, timestamp: new UnixTime(0).add(1, 'days') },
-                { count: 6, timestamp: new UnixTime(0).add(2, 'days') },
-              ]
-            },
-          }),
-          mock<ZksyncTransactionUpdater>({
-            projectId: ProjectId('zksync'),
-            async getDailyCounts() {
-              return [
-                { count: 7, timestamp: new UnixTime(0).add(2, 'days') },
-                { count: 8, timestamp: new UnixTime(0).add(3, 'days') },
-                { count: 9, timestamp: new UnixTime(0).add(4, 'days') },
-              ]
-            },
-          }),
-        ],
-        mock<TransactionCounter>({
-          async getDailyCounts() {
-            return [
-              { count: 100, timestamp: new UnixTime(0) },
-              { count: 200, timestamp: new UnixTime(0).add(1, 'days') },
-              { count: 300, timestamp: new UnixTime(0).add(2, 'days') },
-              { count: 400, timestamp: new UnixTime(0).add(3, 'days') },
-              { count: 500, timestamp: new UnixTime(0).add(4, 'days') },
-            ]
-          },
+      const includedIds: ProjectId[] = [
+        PROJECT_A,
+        PROJECT_B,
+        ProjectId.ETHEREUM,
+      ]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
         }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: false,
+        }),
+      ]
+
+      const controller = new ActivityController(
+        includedIds,
+        counters,
+        mockRepository([
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2137,
+          },
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 420,
+          },
+          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2,
+          },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 1,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 1337,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 69,
+          },
+        ]),
       )
 
-      expect(await controller.getTransactionActivity()).toEqual(
+      expect(await controller.getActivity()).toEqual(
         formatActivity({
           combined: [
-            [new UnixTime(0), 4],
-            [new UnixTime(0).add(1, 'days'), 6],
-            [new UnixTime(0).add(2, 'days'), 15],
+            [TODAY.add(-2, 'days'), 1339],
+            [TODAY.add(-1, 'days'), 70],
           ],
           projects: {
-            dydx: [
-              [new UnixTime(0), 4],
-              [new UnixTime(0).add(1, 'days'), 5],
-              [new UnixTime(0).add(2, 'days'), 6],
+            [PROJECT_A.toString()]: [
+              [TODAY.add(-2, 'days'), 2],
+              [TODAY.add(-1, 'days'), 1],
             ],
-            optimism: [
-              [new UnixTime(0).add(1, 'days'), 1],
-              [new UnixTime(0).add(2, 'days'), 2],
+            [PROJECT_B.toString()]: [
+              [TODAY.add(-2, 'days'), 1337],
+              [TODAY.add(-1, 'days'), 69],
             ],
-            zksync: [[new UnixTime(0).add(2, 'days'), 7]],
           },
           ethereum: [
-            [new UnixTime(0), 100],
-            [new UnixTime(0).add(1, 'days'), 200],
-            [new UnixTime(0).add(2, 'days'), 300],
+            [TODAY.add(-2, 'days'), 2137],
+            [TODAY.add(-1, 'days'), 420],
           ],
         }),
       )
@@ -134,4 +208,23 @@ function formatActivity({
       }
     }, {}),
   }
+}
+
+function mockCounter({
+  hasProcessedAll,
+  projectId,
+}: {
+  hasProcessedAll: boolean
+  projectId: ProjectId
+}) {
+  return mock<TransactionCounter>({
+    hasProcessedAll: () => hasProcessedAll,
+    projectId,
+  })
+}
+
+function mockRepository(counts: DailyTransactionCountRecord[]) {
+  return mock<DailyTransactionCountViewRepository>({
+    getDailyCounts: async () => counts,
+  })
 }

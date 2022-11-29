@@ -1,10 +1,10 @@
 import { assert, Logger, promiseAllPlus } from '@l2beat/common'
-import { StarkexTransactionApiV2 } from '@l2beat/config'
+import { StarkexTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity-v2/StarkexCountRepository'
+import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
@@ -12,7 +12,7 @@ import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export interface StarkexProcessorOptions extends StarkexTransactionApiV2 {
+export interface StarkexProcessorOptions extends StarkexTransactionApi {
   singleStarkexCPM: number
 }
 

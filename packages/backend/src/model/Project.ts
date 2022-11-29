@@ -4,7 +4,6 @@ import {
   Layer2,
   Layer2Event,
   Layer2TransactionApi,
-  Layer2TransactionApiV2,
   TokenInfo,
   tokenList,
 } from '@l2beat/config'
@@ -16,7 +15,6 @@ export interface Project {
   escrows: ProjectEscrow[]
   events: Layer2Event[]
   transactionApi?: Layer2TransactionApi
-  transactionApiV2?: Layer2TransactionApiV2
 }
 
 export interface ProjectEscrow {
@@ -37,7 +35,6 @@ export function layer2ToProject(layer2: Layer2): Project {
     })),
     events: layer2.config.events,
     transactionApi: layer2.config.transactionApi,
-    transactionApiV2: layer2.config.transactionApiV2,
   }
 }
 

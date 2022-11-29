@@ -1,6 +1,6 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 
-import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity-v2/DailyTransactionCountViewRepository'
+import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'
 import { TransactionCounter } from './TransactionCounter'
 

@@ -7,7 +7,6 @@ export async function fetchActivityApi(
   http: JsonHttpClient,
 ): Promise<ActivityApiResponse> {
   const url = apiUrl + '/api/activity'
-
   const json = await http.fetchJson(url)
   return ActivityApiResponse.parse(json)
 }

@@ -49,11 +49,6 @@ export const myria: Layer2 = {
       type: 'starkex',
       product: 'myria',
       sinceTimestamp: new UnixTime(1659542607),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'myria',
-      sinceTimestamp: new UnixTime(1659542607),
       resyncLastDays: 7,
     },
   },

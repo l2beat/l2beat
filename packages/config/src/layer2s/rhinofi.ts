@@ -68,11 +68,6 @@ export const rhinofi: Layer2 = {
       type: 'starkex',
       product: 'deversifi',
       sinceTimestamp: new UnixTime(1590491810),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'deversifi',
-      sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },
   },
