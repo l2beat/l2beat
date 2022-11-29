@@ -155,4 +155,13 @@ export const myria: Layer2 = {
         'Validity proof must be signed by at least 2 of these 5 addresses to approve state update.',
     },
   ],
+  milestones: [
+    {
+      name: 'Mainnet Launch',
+      date: new Date(),
+      link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      description:
+        'Layer 2 scaling solution powered by Starware is live on Ethereum.',
+    },
+  ],
 }

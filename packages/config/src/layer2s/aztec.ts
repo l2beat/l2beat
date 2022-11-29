@@ -187,4 +187,13 @@ export const aztec: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      name: 'Aztec 2.0',
+      date: new Date('2021-03-15'),
+      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      description:
+        'Private Rollup is live on mainnet, allowing user to access DeFi.',
+    },
+  ],
 }

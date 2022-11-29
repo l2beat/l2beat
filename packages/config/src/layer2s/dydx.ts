@@ -184,19 +184,25 @@ export const dydx: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet launch',
+      name: 'Public launch',
       link: 'https://dydx.exchange/blog/public',
       date: new Date('2021-04-06'),
+      description:
+        'Layer 2 cross-margined Perpetuals are now live in production for all traders.',
     },
     {
-      name: 'dYdX Foundation established',
+      name: 'dYdX Foundation',
       link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: new Date('2021-08-03'),
+      description:
+        'Independent foundation, headquartered in Zug, Switzerland, was created to participate in propelling the Protocol into the future.',
     },
     {
-      name: 'dYdX v4 announced',
+      name: 'dYdX v4 announcement',
       link: 'https://dydx.exchange/blog/dydx-chain',
       date: new Date('2022-06-22'),
+      description:
+        'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK and Tendermint Proof-of-stake consensus protocol.',
     },
   ],
 }

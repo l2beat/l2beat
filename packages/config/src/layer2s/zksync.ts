@@ -345,13 +345,17 @@ export const zksync: Layer2 = {
   milestones: [
     {
       name: 'zkSync 1.0 launch',
-      link: 'https://twitter.com/the_matter_labs/status/1273617094031138825',
+      link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       date: new Date('2020-06-18'),
+      description:
+        'zkSync is live, bringing trustless, scalable payments to Ethereum using zkRollup technology.',
     },
     {
-      name: 'zkEVM alpha on mainnet',
+      name: 'zkEVM alpha',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
       date: new Date('2022-10-28'),
+      description:
+        'Deployment of the system to mainnet, for the testing purposes.',
     },
   ],
 }
