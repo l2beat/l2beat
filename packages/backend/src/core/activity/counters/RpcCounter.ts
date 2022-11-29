@@ -43,8 +43,8 @@ export function createRpcCounter(
     {
       batchSize,
       startFrom: transactionApi.startBlock ?? 0,
-      getLatest: (previousLatest) =>
-        client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
+      getLatest: (nextFrom) =>
+        client.getBlockNumberAtOrBefore(clock.getLastHour(), nextFrom),
       processRange: async (from, to, trx) => {
         const queries = range(from, to + 1).map((blockNumber) => async () => {
           const block = await client.getBlock(blockNumber)

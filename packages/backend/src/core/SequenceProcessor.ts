@@ -2,15 +2,12 @@ import { assert, Logger, Retries, TaskQueue } from '@l2beat/common'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
-import {
-  SequenceProcessorRecord,
-  SequenceProcessorRepository,
-} from '../peripherals/database/SequenceProcessorRepository'
+import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 
 export interface SequenceProcessorOpts {
   startFrom: number
   batchSize: number
-  getLatest: (previousLatest: number) => Promise<number> | number
+  getLatest: (nextFrom: number) => Promise<number> | number
   processRange: (
     // [from, to] <- ranges are inclusive
     from: number,
@@ -24,10 +21,16 @@ export const ALL_PROCESSED_EVENT = 'All processed'
 
 const HOUR = 1000 * 60 * 60
 
+interface State {
+  latest: number
+  lastProcessed: number
+}
+
 export class SequenceProcessor extends EventEmitter {
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly logger: Logger
+  private state?: State
   private refreshId: NodeJS.Timer | undefined
 
   constructor(
@@ -54,8 +57,9 @@ export class SequenceProcessor extends EventEmitter {
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
   }
 
-  start(): void {
+  async start(): Promise<void> {
     this.logger.info('Started')
+    await this.loadState()
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(
       () => this.processQueue.addIfEmpty(),
@@ -69,9 +73,10 @@ export class SequenceProcessor extends EventEmitter {
     await this.processQueue.waitTilEmpty()
   }
 
-  async hasProcessedAll(): Promise<boolean> {
-    const state = await this.getState()
-    return state !== undefined && state.lastProcessed === state.latest
+  hasProcessedAll(): boolean {
+    return (
+      this.state !== undefined && this.state.lastProcessed === this.state.latest
+    )
   }
 
   private async process(): Promise<void> {
@@ -79,31 +84,35 @@ export class SequenceProcessor extends EventEmitter {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const processorState = await this.getState()
-      const lastProcessed = processorState?.lastProcessed
-
+      const lastProcessed = this.state?.lastProcessed
+      const nextFrom = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
       this.logger.debug('Calling getLatest', {
         lastProcessed: lastProcessed ?? null,
         startFrom: this.opts.startFrom,
+        nextFrom,
       })
-      const to = await this.opts.getLatest(lastProcessed ?? this.opts.startFrom)
-
-      if ((lastProcessed ?? this.opts.startFrom) === to) {
-        break processing
-      }
-      // to avoid processing lastSynced multiple times we need to increment it by one
-      let from = lastProcessed ? lastProcessed + 1 : this.opts.startFrom
+      const latest = await this.opts.getLatest(nextFrom)
 
       assert(
-        from <= to,
-        `getLatest returned sequence member that was already processed. from=${from}, to=${to}`,
+        nextFrom - 1 <= latest,
+        `getLatest returned sequence member that was already processed. nextFrom=${nextFrom}, latest=${latest}`,
       )
 
-      for (; from <= to; from += this.opts.batchSize) {
+      if (nextFrom - 1 === latest) {
+        if (!this.state) {
+          await this.setState({
+            lastProcessed: nextFrom - 1,
+            latest,
+          })
+        }
+        break processing
+      }
+
+      for (let from = nextFrom; from <= latest; from += this.opts.batchSize) {
         await this.processRange(
           from,
-          Math.min(from + this.opts.batchSize - 1, to),
-          to,
+          Math.min(from + this.opts.batchSize - 1, latest),
+          latest,
         )
       }
     }
@@ -116,15 +125,24 @@ export class SequenceProcessor extends EventEmitter {
     this.logger.debug('Processing range started', { from, to })
     await this.repository.runInTransaction(async (trx) => {
       await this.opts.processRange(from, to, trx)
-      await this.repository.addOrUpdate(
-        { id: this.id, lastProcessed: to, latest },
-        trx,
-      )
+      await this.setState({ lastProcessed: to, latest }, trx)
     })
     this.logger.debug('Processing range finished', { from, to })
   }
 
-  private getState(): Promise<SequenceProcessorRecord | undefined> {
-    return this.repository.getById(this.id)
+  private async loadState(): Promise<void> {
+    const state = await this.repository.getById(this.id)
+    this.state = state
+  }
+
+  private async setState(state: State, trx?: Knex.Transaction): Promise<void> {
+    await this.repository.addOrUpdate(
+      {
+        id: this.id,
+        ...state,
+      },
+      trx,
+    )
+    this.state = state
   }
 }
