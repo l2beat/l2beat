@@ -14,11 +14,11 @@ import { DailyTransactionCount } from './types'
 export function postprocessCounts(
   counts: DailyTransactionCount[],
   processedAll: boolean,
-  now?: UnixTime,
+  now: UnixTime,
 ): DailyTransactionCount[] {
   if (counts.length === 0) return []
 
-  const today = (now ?? UnixTime.now()).toStartOf('day')
+  const today = now.toStartOf('day')
   const yesterday = today.add(-1, 'days')
 
   // fill holes before last processed

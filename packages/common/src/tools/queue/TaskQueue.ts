@@ -66,15 +66,15 @@ export class TaskQueue<T> {
     }
   }
 
-  getStats(): json {
+  getStatus(): json {
     return {
       busyWorkers: this.busyWorkers,
       queuedTasks: this.queue.length,
-      events: this.eventTracker?.getStats() ?? null,
+      events: this.eventTracker?.getStatus() ?? null,
     }
   }
 
-  private isEmpty() {
+  isEmpty(): boolean {
     return this.queue.length === 0 && this.busyWorkers === 0
   }
 

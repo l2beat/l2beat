@@ -1,7 +1,8 @@
 import { assert } from '@l2beat/common'
-import { ActivityApiResponse, ProjectId } from '@l2beat/types'
+import { ActivityApiResponse, json, ProjectId } from '@l2beat/types'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
+import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { countsToChart } from './countsToChart'
 import { postprocessCounts } from './postprocessCounts'
@@ -17,6 +18,7 @@ export class ActivityController {
     private readonly projectIds: ProjectId[],
     private readonly counters: TransactionCounter[],
     private readonly viewRepository: DailyTransactionCountViewRepository,
+    private readonly clock: Clock,
   ) {}
 
   async getActivity(): Promise<ActivityApiResponse> {
@@ -42,9 +44,27 @@ export class ActivityController {
     }
   }
 
+  async getStatus(): Promise<json> {
+    const now = this.clock.getLastHour()
+    const projects = await Promise.all(
+      this.counters.map(async (counter) => {
+        return {
+          projectId: counter.projectId.toString(),
+          includedInApi: this.projectIds.includes(counter.projectId),
+          ...(await counter.getStatus(now)),
+        }
+      }),
+    )
+    return {
+      systemNow: now.toDate().toISOString(),
+      projects,
+    }
+  }
+
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
     const counts = await this.viewRepository.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
+    const now = this.clock.getLastHour()
     for (const counter of this.counters) {
       const projectId = counter.projectId
       if (!this.projectIds.includes(projectId)) continue
@@ -52,6 +72,7 @@ export class ActivityController {
       const postprocessedCounts = postprocessCounts(
         projectCounts,
         counter.hasProcessedAll(),
+        now,
       )
       result.set(projectId, postprocessedCounts)
     }
