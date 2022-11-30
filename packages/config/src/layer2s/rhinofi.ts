@@ -188,7 +188,7 @@ export const rhinofi: Layer2 = {
   milestones: [
     {
       name: 'Rebranding',
-      date: new Date('2022-07-13'),
+      date: '2022-07-13T00:00:00Z',
       link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
       description:
         'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi opportunities in one place.',

@@ -158,7 +158,7 @@ export const myria: Layer2 = {
   milestones: [
     {
       name: 'Mainnet Launch',
-      date: new Date(),
+      date: '2022-08-26T00:00:00Z',
       link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
