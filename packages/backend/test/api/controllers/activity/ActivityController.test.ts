@@ -9,6 +9,7 @@ import { expect } from 'earljs'
 
 import { ActivityController } from '../../../../src/api/controllers/activity/ActivityController'
 import { TransactionCounter } from '../../../../src/core/activity/TransactionCounter'
+import { Clock } from '../../../../src/core/Clock'
 import {
   DailyTransactionCountRecord,
   DailyTransactionCountViewRepository,
@@ -36,6 +37,7 @@ describe(ActivityController.name, () => {
         includedIds,
         counters,
         mockRepository([]),
+        mock<Clock>(),
       )
 
       await expect(controller.getActivity()).toBeRejected(
@@ -81,6 +83,7 @@ describe(ActivityController.name, () => {
             count: 2,
           },
         ]),
+        mock<Clock>(),
       )
 
       expect(await controller.getActivity()).toEqual(
@@ -152,6 +155,7 @@ describe(ActivityController.name, () => {
             count: 69,
           },
         ]),
+        mock<Clock>(),
       )
 
       expect(await controller.getActivity()).toEqual(

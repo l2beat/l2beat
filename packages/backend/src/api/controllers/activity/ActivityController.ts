@@ -2,6 +2,7 @@ import { assert } from '@l2beat/common'
 import { ActivityApiResponse, json, ProjectId } from '@l2beat/types'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
+import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { countsToChart } from './countsToChart'
 import { postprocessCounts } from './postprocessCounts'
@@ -17,6 +18,7 @@ export class ActivityController {
     private readonly projectIds: ProjectId[],
     private readonly counters: TransactionCounter[],
     private readonly viewRepository: DailyTransactionCountViewRepository,
+    private readonly clock: Clock,
   ) {}
 
   async getActivity(): Promise<ActivityApiResponse> {
@@ -43,7 +45,22 @@ export class ActivityController {
   }
 
   async getStatus(): Promise<json> {
-    return Promise.resolve(null)
+    return Promise.all(
+      this.counters.map(async (counter) => {
+        const lastProcessedTimestamp = await counter.getLastProcessedTimestamp()
+        return {
+          projectId: counter.projectId.toString(),
+          lastProcessedTimestamp:
+            lastProcessedTimestamp?.toDate().toISOString() ?? null,
+          hasProcessedAll: counter.hasProcessedAll(),
+          isSyncedUpToYesterdayInclusive:
+            await counter.isSyncedUpToYesterdayInclusive(
+              this.clock.getLastHour(),
+            ),
+          includedInApi: this.projectIds.includes(counter.projectId),
+        }
+      }),
+    )
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
