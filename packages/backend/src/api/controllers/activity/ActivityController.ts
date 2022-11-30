@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/common'
-import { ActivityApiResponse, ProjectId } from '@l2beat/types'
+import { ActivityApiResponse, json, ProjectId } from '@l2beat/types'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
@@ -40,6 +40,10 @@ export class ActivityController {
       projects: toProjectsActivity(layer2sCounts),
       ethereum: countsToChart(ethereumCounts),
     }
+  }
+
+  async getStatus(): Promise<json> {
+    return Promise.resolve(null)
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
