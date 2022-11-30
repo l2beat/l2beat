@@ -64,6 +64,7 @@ export class ActivityController {
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
     const counts = await this.viewRepository.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
+    const now = this.clock.getLastHour()
     for (const counter of this.counters) {
       const projectId = counter.projectId
       if (!this.projectIds.includes(projectId)) continue
@@ -71,6 +72,7 @@ export class ActivityController {
       const postprocessedCounts = postprocessCounts(
         projectCounts,
         counter.hasProcessedAll(),
+        now,
       )
       result.set(projectId, postprocessedCounts)
     }
