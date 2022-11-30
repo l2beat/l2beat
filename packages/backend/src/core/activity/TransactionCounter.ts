@@ -1,13 +1,18 @@
 import { json, ProjectId, UnixTime } from '@l2beat/types'
 
-import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
+import {
+  ALL_PROCESSED_EVENT,
+  SequenceProcessor,
+  SequenceProcessorStatus,
+} from '../SequenceProcessor'
 
-type Status = Record<
+type TransactionCounterStatus = Record<
   | 'lastProcessedTimestamp'
   | 'hasProcessedAll'
   | 'isSyncedUpToYesterdayInclusive',
   json
->
+> &
+  SequenceProcessorStatus
 
 export class TransactionCounter {
   constructor(
@@ -34,7 +39,7 @@ export class TransactionCounter {
     return this.processedAllOrToday(now, lastTimestamp)
   }
 
-  async getStatus(now: UnixTime): Promise<Status> {
+  async getStatus(now: UnixTime): Promise<TransactionCounterStatus> {
     const lastProcessedTimestamp = await this.getLastProcessedTimestamp()
     return {
       lastProcessedTimestamp:
@@ -44,6 +49,7 @@ export class TransactionCounter {
         now,
         lastProcessedTimestamp,
       ),
+      ...this.processor.getStatus(),
     }
   }
 

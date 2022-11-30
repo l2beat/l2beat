@@ -74,7 +74,7 @@ export class TaskQueue<T> {
     }
   }
 
-  private isEmpty() {
+  isEmpty(): boolean {
     return this.queue.length === 0 && this.busyWorkers === 0
   }
 

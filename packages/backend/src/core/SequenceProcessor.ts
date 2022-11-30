@@ -1,4 +1,5 @@
 import { assert, Logger, Retries, TaskQueue } from '@l2beat/common'
+import { json } from '@l2beat/types'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
@@ -18,6 +19,11 @@ export interface SequenceProcessorOpts {
 }
 
 export const ALL_PROCESSED_EVENT = 'All processed'
+
+export type SequenceProcessorStatus = Record<
+  'latest' | 'lastProcessed' | 'scheduleIntervalMs' | 'isProcessing',
+  json
+>
 
 const HOUR = 1000 * 60 * 60
 
@@ -77,6 +83,15 @@ export class SequenceProcessor extends EventEmitter {
     return (
       this.state !== undefined && this.state.lastProcessed === this.state.latest
     )
+  }
+
+  getStatus(): SequenceProcessorStatus {
+    return {
+      latest: this.state?.latest ?? null,
+      lastProcessed: this.state?.lastProcessed ?? null,
+      scheduleIntervalMs: this.scheduleInterval,
+      isProcessing: !this.processQueue.isEmpty(),
+    }
   }
 
   private async process(): Promise<void> {
