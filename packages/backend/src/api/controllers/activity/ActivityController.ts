@@ -46,7 +46,7 @@ export class ActivityController {
 
   async getStatus(): Promise<json> {
     const now = this.clock.getLastHour()
-    const counters = await Promise.all(
+    const projects = await Promise.all(
       this.counters.map(async (counter) => {
         return {
           projectId: counter.projectId.toString(),
@@ -57,7 +57,7 @@ export class ActivityController {
     )
     return {
       systemNow: now.toDate().toISOString(),
-      counters,
+      projects,
     }
   }
 
