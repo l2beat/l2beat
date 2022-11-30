@@ -57,8 +57,9 @@ export function renderChart(
       ctx.beginPath()
       console.log(canvas.height)
       ctx.rect(state.view.chart.points[i].x * canvas.width, canvas.height-10, 10, 10)
-      ctx.fillStyle = "white";
+      ctx.fillStyle = "#34762F";
       ctx.fill()
+      // ctx.rotate(45 * Math.PI / 180)
       ctx.closePath()
       console.log(state.view.chart.points[i])
     }
