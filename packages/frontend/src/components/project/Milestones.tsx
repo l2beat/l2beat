@@ -74,7 +74,8 @@ export function Milestones({ milestones, className }: MilestonesProps) {
   )
 }
 
-function formatDate(date: Date): string {
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
   const year = date.getFullYear()
   const month = date.toLocaleDateString('en', {
     month: 'short',
