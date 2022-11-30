@@ -493,7 +493,7 @@ export const arbitrum: Layer2 = {
     {
       ...MILESTONES.MAINNET_OPEN,
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
-      date: '2021-08-3T00:00:00Z1',
+      date: '2021-08-31T00:00:00Z',
     },
   ],
 }
