@@ -1,6 +1,13 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { json, ProjectId, UnixTime } from '@l2beat/types'
 
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from '../SequenceProcessor'
+
+type Status = Record<
+  | 'lastProcessedTimestamp'
+  | 'hasProcessedAll'
+  | 'isSyncedUpToYesterdayInclusive',
+  json
+>
 
 export class TransactionCounter {
   constructor(
@@ -24,7 +31,28 @@ export class TransactionCounter {
   async isSyncedUpToYesterdayInclusive(now: UnixTime): Promise<boolean> {
     const lastTimestamp = await this.getLastProcessedTimestamp()
     if (!lastTimestamp) return false
-    const lastDayWithData = lastTimestamp.toYYYYMMDD()
+    return this.processedAllOrToday(now, lastTimestamp)
+  }
+
+  async getStatus(now: UnixTime): Promise<Status> {
+    const lastProcessedTimestamp = await this.getLastProcessedTimestamp()
+    return {
+      lastProcessedTimestamp:
+        lastProcessedTimestamp?.toDate().toISOString() ?? null,
+      hasProcessedAll: this.hasProcessedAll(),
+      isSyncedUpToYesterdayInclusive: this.processedAllOrToday(
+        now,
+        lastProcessedTimestamp,
+      ),
+    }
+  }
+
+  private processedAllOrToday(
+    now: UnixTime,
+    lastProcessedTimestamp: UnixTime | undefined,
+  ): boolean {
+    if (!lastProcessedTimestamp) return false
+    const lastDayWithData = lastProcessedTimestamp.toYYYYMMDD()
     const today = now.toYYYYMMDD()
     return lastDayWithData === today || this.hasProcessedAll()
   }

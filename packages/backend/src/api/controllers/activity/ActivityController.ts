@@ -45,22 +45,20 @@ export class ActivityController {
   }
 
   async getStatus(): Promise<json> {
-    return Promise.all(
+    const now = this.clock.getLastHour()
+    const counters = await Promise.all(
       this.counters.map(async (counter) => {
-        const lastProcessedTimestamp = await counter.getLastProcessedTimestamp()
         return {
           projectId: counter.projectId.toString(),
-          lastProcessedTimestamp:
-            lastProcessedTimestamp?.toDate().toISOString() ?? null,
-          hasProcessedAll: counter.hasProcessedAll(),
-          isSyncedUpToYesterdayInclusive:
-            await counter.isSyncedUpToYesterdayInclusive(
-              this.clock.getLastHour(),
-            ),
           includedInApi: this.projectIds.includes(counter.projectId),
+          ...(await counter.getStatus(now)),
         }
       }),
     )
+    return {
+      systemNow: now.toDate().toISOString(),
+      counters,
+    }
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
