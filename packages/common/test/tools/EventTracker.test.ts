@@ -17,8 +17,9 @@ describe(EventTracker.name, () => {
   it('has empty history by default', () => {
     const tracker = new EventTracker()
 
-    expect(tracker.getStats()).toEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {},
+      lastFiveSeconds: {},
       lastMinuteAverage: {},
       lastHourAverage: {},
     })
@@ -29,8 +30,11 @@ describe(EventTracker.name, () => {
 
     tracker.record('a')
 
-    expect(tracker.getStats()).toEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {
+        a: 1,
+      },
+      lastFiveSeconds: {
         a: 1,
       },
       lastMinuteAverage: {
@@ -54,9 +58,13 @@ describe(EventTracker.name, () => {
     time.tick(1000)
     tracker.record('c')
 
-    expect(tracker.getStats()).toEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {
         c: 1,
+      },
+      lastFiveSeconds: {
+        b: 2,
+        c: 2,
       },
       lastMinuteAverage: {
         b: 2 / 60,
@@ -80,8 +88,11 @@ describe(EventTracker.name, () => {
     time.tick(historySize)
     tracker.record('d')
 
-    expect(tracker.getStats()).toEqual({
+    expect(tracker.getStatus()).toEqual({
       lastSecond: {
+        d: 1,
+      },
+      lastFiveSeconds: {
         d: 1,
       },
       lastMinuteAverage: {

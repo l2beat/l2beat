@@ -66,11 +66,11 @@ export class TaskQueue<T> {
     }
   }
 
-  getStats(): json {
+  getStatus(): json {
     return {
       busyWorkers: this.busyWorkers,
       queuedTasks: this.queue.length,
-      events: this.eventTracker?.getStats() ?? null,
+      events: this.eventTracker?.getStatus() ?? null,
     }
   }
 
