@@ -8,8 +8,7 @@ Implementation address is resolved by calling the libAddressManager.getAddress(i
 It does not have an owner
 
 */
-import { constants, Contract, providers } from 'ethers'
-import { keccak256, toUtf8String } from 'ethers/lib/utils'
+import { constants, Contract, providers, utils } from 'ethers'
 
 import { Lib_AddressManager__factory } from '../../typechain'
 import { bytes32ToAddress } from '../address'
@@ -26,7 +25,7 @@ async function getAddressManager(
     .toLowerCase()
     .slice(2) // change to lower case and remove trailing 0x
   const s = '0x' + address.padStart(64, '0') + slot.padStart(64, '0')
-  return bytes32ToAddress(await getStorage(provider, contract, keccak256(s)))
+  return bytes32ToAddress(await getStorage(provider, contract, utils.keccak256(s)))
 }
 
 async function getImplementationName(
@@ -38,9 +37,9 @@ async function getImplementationName(
     .toLowerCase()
     .slice(2) // change to lower case and remove trailing 0x
   const s = '0x' + address.padStart(64, '0') + slot.padStart(64, '0')
-  let implName = await getStorage(provider, contract, keccak256(s))
+  let implName = await getStorage(provider, contract, utils.keccak256(s))
   implName = implName.slice(0, -2).replace(/0+$/, '') // remove last byte + trailing 00s
-  return toUtf8String(implName)
+  return utils.toUtf8String(implName)
 }
 
 async function getImplementation(
