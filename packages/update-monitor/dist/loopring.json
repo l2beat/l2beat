@@ -16,7 +16,9 @@
       "name": "ExchangeV3",
       "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
       "upgradeability": {
-        "type": "LoopringProxy"
+        "type": "Loopring proxy",
+        "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
+        "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
       },
       "values": {
         "agentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",

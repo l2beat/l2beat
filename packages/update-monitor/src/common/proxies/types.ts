@@ -8,6 +8,7 @@ export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
+  | LoopringProxyUpgradeability
   | StarkWareProxyUpgradeability
   | ArbitrumProxyUpgradeability
   | EIP897ProxyUpgradeability
@@ -24,6 +25,12 @@ export interface GnosisSafeUpgradeability {
 export interface EIP1967ProxyUpgradeability {
   type: 'EIP1967 proxy'
   admin: string
+  implementation: string
+}
+
+export interface LoopringProxyUpgradeability {
+  type: 'Loopring proxy'
+  owner: string
   implementation: string
 }
 
