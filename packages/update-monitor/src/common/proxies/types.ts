@@ -11,6 +11,7 @@ export type UpgradeabilityParameters =
   | LoopringProxyUpgradeability
   | StarkWareProxyUpgradeability
   | ArbitrumProxyUpgradeability
+  | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
   | CustomProxyUpgradeability
 
@@ -47,6 +48,13 @@ export interface ArbitrumProxyUpgradeability {
   admin: string
   adminImplementation: string
   userImplementation: string
+}
+
+export interface ResolvedDelegateProxyUpgradeability {
+  type: 'resolved delegate proxy'
+  addressManager: string
+  implementationName: string
+  implementation: string
 }
 
 export interface EIP897ProxyUpgradeability {

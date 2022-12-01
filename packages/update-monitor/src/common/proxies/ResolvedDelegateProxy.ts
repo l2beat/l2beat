@@ -10,8 +10,8 @@ It does not have an owner
 */
 import { constants, Contract, providers, utils } from 'ethers'
 
-import { Lib_AddressManager__factory } from '../../typechain'
 import { bytes32ToAddress } from '../address'
+import { getCallResult } from '../getCallResult'
 import { getStorage } from '../getStorage'
 import { extendDetect } from './extendDetect'
 import { ProxyDetection } from './types'
@@ -20,38 +20,44 @@ async function getAddressManager(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
-  const slot = '1' // // addressManager is stored in libAddressManager[address(this)]
-  const address = (typeof contract === 'string' ? contract : contract.address)
-    .toLowerCase()
-    .slice(2) // change to lower case and remove trailing 0x
-  const s = '0x' + address.padStart(64, '0') + slot.padStart(64, '0')
-  return bytes32ToAddress(await getStorage(provider, contract, utils.keccak256(s)))
+  const address = typeof contract === 'string' ? contract : contract.address
+  // addressManager is stored in libAddressManager[address(this)] (slot 1)
+  const slot = utils.keccak256(
+    new utils.AbiCoder().encode(['address', 'uint'], [address, 1]),
+  )
+  return bytes32ToAddress(await getStorage(provider, contract, slot))
 }
 
 async function getImplementationName(
   provider: providers.Provider,
   contract: Contract | string,
 ) {
-  const slot = '0' // implementationName is stored in implementationName[address(this)]
-  const address = (typeof contract === 'string' ? contract : contract.address)
-    .toLowerCase()
-    .slice(2) // change to lower case and remove trailing 0x
-  const s = '0x' + address.padStart(64, '0') + slot.padStart(64, '0')
-  let implName = await getStorage(provider, contract, utils.keccak256(s))
-  implName = implName.slice(0, -2).replace(/0+$/, '') // remove last byte + trailing 00s
-  return utils.toUtf8String(implName)
+  const address = typeof contract === 'string' ? contract : contract.address
+  // implementationName is stored in implementationName[address(this)] (slot 0)
+  const slot = utils.keccak256(
+    new utils.AbiCoder().encode(['address', 'uint'], [address, 0]),
+  )
+  const nameEncoded = await getStorage(provider, contract, slot)
+  const length = parseInt(nameEncoded.slice(-2), 16) / 2
+  if (length > 31) {
+    throw new Error(
+      'Unsupported long string. Please add more code to handle this case',
+    )
+  }
+  return utils.toUtf8String(nameEncoded.slice(0, 2 + length * 2))
 }
 
 async function getImplementation(
   provider: providers.Provider,
-  contract: Contract | string,
+  addressManager: string,
   implementationName: string,
 ) {
-  const libManager = Lib_AddressManager__factory.connect(
-    (typeof contract === 'string' ? contract : contract.address).toString(),
+  return getCallResult<string>(
     provider,
+    addressManager,
+    'function getAddress(string implementationName) view returns(address)',
+    [implementationName],
   )
-  return await libManager.getAddress(implementationName)
 }
 
 async function detect(
@@ -71,18 +77,24 @@ async function detect(
     addressManager,
     implementationName,
   )
+  if (!implementation) {
+    return
+  }
 
   return {
     implementations: [implementation],
     relatives: [addressManager],
     upgradeability: {
-      type: 'custom proxy',
-      implementations: [implementation],
+      type: 'resolved delegate proxy',
+      addressManager,
+      implementationName,
+      implementation,
     },
   }
 }
 
 export const ResolvedDelegateProxy = {
-  getImplementation,
+  getAddressManager,
+  getImplementationName,
   ...extendDetect(detect),
 }
