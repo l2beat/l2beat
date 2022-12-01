@@ -333,7 +333,7 @@ export const bobanetwork: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
-      date: new Date('2021-09-20'),
+      date: '2021-09-20T00:00:00Z',
       link: 'https://www.enya.ai/press/public-mainnet',
       description:
         'Layer 2 Optimistic Rollup based on the Optimism codebase is live on Ethereum.',

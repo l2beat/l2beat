@@ -145,7 +145,7 @@ export const sorare: Layer2 = {
   milestones: [
     {
       name: 'Mainnet launch',
-      date: new Date('2021-07-26'),
+      date: '2021-07-26T00:00:00Z',
       link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       description:
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',

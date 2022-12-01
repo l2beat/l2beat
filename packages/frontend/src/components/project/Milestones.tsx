@@ -35,7 +35,9 @@ export function Milestones({ milestones, className }: MilestonesProps) {
         </div>
         <div className="ml-10 mt-6">
           {milestones
-            .sort((a, b) => Number(b.date) - Number(a.date))
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
             .map((milestone, i) => (
               <div key={i} className="pb-7">
                 <MilestoneIcon className="absolute left-1.5 fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500" />
@@ -74,7 +76,8 @@ export function Milestones({ milestones, className }: MilestonesProps) {
   )
 }
 
-function formatDate(date: Date): string {
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
   const year = date.getFullYear()
   const month = date.toLocaleDateString('en', {
     month: 'short',

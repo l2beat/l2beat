@@ -1,6 +1,6 @@
 export interface Milestone {
   name: string
   link: string
-  date: Date
+  date: string
   description?: string
 }
