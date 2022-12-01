@@ -5,6 +5,7 @@ import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
 import { ProjectParameters } from '../../types'
 import { verify } from '../../verify/verify'
 import { addresses } from './constants'
+import { getBondManager } from './contracts/getBondManager'
 import { getCanonicalTransactionChain } from './contracts/getCanonicalTransactionChain'
 import { getLibAddressManager } from './contracts/getLibAddressManager'
 import { getStateCommitmentChain } from './contracts/getStateCommitmentChain'
@@ -25,11 +26,13 @@ export async function getOptimismParameters(
       getStateCommitmentChain(provider),
       getCanonicalTransactionChain(provider),
       getLibAddressManager(provider),
+      getBondManager(provider),
     ]),
   }
   verify(parameters, [
     ['CanonicalTransactionChain.libAddressManager', 'LibAddressManager'],
     ['StateCommitmentChain.libAddressManager', 'LibAddressManager'],
+    ['BondManager.libAddressManager', 'LibAddressManager'],
   ])
   return parameters
 }
