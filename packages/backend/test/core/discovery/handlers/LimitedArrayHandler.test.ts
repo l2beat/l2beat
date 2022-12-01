@@ -38,7 +38,7 @@ describe(LimitedArrayHandler.name, () => {
 
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({
-      name: 'owners',
+      field: 'owners',
       value: owners,
       error: 'Too many values. Update configuration explore fully',
     })
@@ -69,7 +69,7 @@ describe(LimitedArrayHandler.name, () => {
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({
-      name: 'owners',
+      field: 'owners',
       value: owners.slice(0, 2),
     })
   })
@@ -99,7 +99,7 @@ describe(LimitedArrayHandler.name, () => {
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({
-      name: 'owners',
+      field: 'owners',
       error: 'foo bar',
     })
   })
