@@ -1,4 +1,11 @@
-import { assert, Logger, Retries, TaskQueue } from '@l2beat/common'
+import {
+  assert,
+  EventTracker,
+  Logger,
+  Retries,
+  TaskQueue,
+} from '@l2beat/common'
+import { json } from '@l2beat/types'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
@@ -19,6 +26,17 @@ export interface SequenceProcessorOpts {
 
 export const ALL_PROCESSED_EVENT = 'All processed'
 
+export type SequenceProcessorStatus = Record<
+  | 'latest'
+  | 'lastProcessed'
+  | 'scheduleIntervalMs'
+  | 'isProcessing'
+  | 'batchSize'
+  | 'events'
+  | 'processedLastFiveSeconds',
+  json
+>
+
 const HOUR = 1000 * 60 * 60
 
 interface State {
@@ -32,6 +50,9 @@ export class SequenceProcessor extends EventEmitter {
   private readonly logger: Logger
   private state?: State
   private refreshId: NodeJS.Timer | undefined
+  private readonly eventTracker = new EventTracker<
+    'range started' | 'range succeeded' | 'range failed'
+  >()
 
   constructor(
     readonly id: string,
@@ -79,6 +100,20 @@ export class SequenceProcessor extends EventEmitter {
     )
   }
 
+  getStatus(): SequenceProcessorStatus {
+    const events = this.eventTracker.getStatus()
+    return {
+      latest: this.state?.latest ?? null,
+      lastProcessed: this.state?.lastProcessed ?? null,
+      scheduleIntervalMs: this.scheduleInterval,
+      isProcessing: !this.processQueue.isEmpty(),
+      batchSize: this.opts.batchSize,
+      processedLastFiveSeconds:
+        events.lastFiveSeconds['range succeeded'] * this.opts.batchSize,
+      events,
+    }
+  }
+
   private async process(): Promise<void> {
     this.logger.debug('Processing started')
 
@@ -123,10 +158,17 @@ export class SequenceProcessor extends EventEmitter {
 
   private async processRange(from: number, to: number, latest: number) {
     this.logger.debug('Processing range started', { from, to })
-    await this.repository.runInTransaction(async (trx) => {
-      await this.opts.processRange(from, to, trx)
-      await this.setState({ lastProcessed: to, latest }, trx)
-    })
+    try {
+      this.eventTracker.record('range started')
+      await this.repository.runInTransaction(async (trx) => {
+        await this.opts.processRange(from, to, trx)
+        await this.setState({ lastProcessed: to, latest }, trx)
+      })
+      this.eventTracker.record('range succeeded')
+    } catch (error) {
+      this.eventTracker.record('range failed')
+      throw error
+    }
     this.logger.debug('Processing range finished', { from, to })
   }
 

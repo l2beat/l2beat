@@ -59,6 +59,7 @@ export function createActivityModule(
     includedInApiProjectIds,
     counters,
     dailyCountViewRepository,
+    clock,
   )
   const activityV2Router = createActivityRouter(activityController)
 
