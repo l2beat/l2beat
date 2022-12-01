@@ -10,6 +10,7 @@ export type UpgradeabilityParameters =
   | EIP1967ProxyUpgradeability
   | LoopringProxyUpgradeability
   | StarkWareProxyUpgradeability
+  | StarkWareDiamondUpgradeability
   | ArbitrumProxyUpgradeability
   | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
@@ -41,6 +42,14 @@ export interface StarkWareProxyUpgradeability {
   callImplementation: string
   upgradeDelay: number
   isFinal: boolean
+}
+
+export interface StarkWareDiamondUpgradeability {
+  type: 'StarkWare diamond'
+  implementation: string
+  upgradeDelay: number
+  isFinal: boolean
+  facets: Record<string, string>
 }
 
 export interface ArbitrumProxyUpgradeability {

@@ -3,8 +3,8 @@ import fs from 'fs'
 
 const PATH = '../config/src/verified.json'
 
-export function getVerificationStatus(isEnabled: boolean): VerificationStatus {
-  if (!isEnabled || !fs.existsSync(PATH)) {
+export function getVerificationStatus(): VerificationStatus {
+  if (!fs.existsSync(PATH)) {
     return {
       projects: {},
       contracts: {},

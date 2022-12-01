@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -58,15 +59,6 @@ export const nova: Layer2 = {
     ],
     events: [],
     transactionApi: {
-      type: 'rpc',
-      url: 'https://nova.arbitrum.io/rpc',
-      callsPerMinute: 200,
-      // We need to subtract the Nitro system transaction in every block except for genesis
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber !== 0 ? count - 1 : count,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
-    transactionApiV2: {
       type: 'rpc',
       url: 'https://nova.arbitrum.io/rpc',
       callsPerMinute: 200,
@@ -322,4 +314,11 @@ export const nova: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      ...MILESTONES.MAINNET_OPEN,
+      date: '2022-08-09T00:00:00Z',
+      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+    },
+  ],
 }

@@ -100,11 +100,6 @@ export const starknet: Layer2 = {
       },
     ],
     transactionApi: {
-      type: 'rpc',
-      callsPerMinute: 60 * 5,
-      url: 'https://alpha-mainnet.starknet.io',
-    },
-    transactionApiV2: {
       type: 'starknet',
       callsPerMinute: 60 * 5,
       url: 'https://alpha-mainnet.starknet.io',
@@ -278,6 +273,22 @@ export const starknet: Layer2 = {
       ],
       description:
         'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'StarkNet Alpha',
+      link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      date: '2021-11-29T00:00:00Z',
+      description:
+        'Rollup is live on mainnet, enabling general computation smart contracts using zkRollup technology.',
+    },
+    {
+      name: 'StarkGate Alpha',
+      link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      date: '2022-05-09T00:00:00Z',
+      description:
+        'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
 }

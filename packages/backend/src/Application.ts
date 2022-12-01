@@ -4,7 +4,6 @@ import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
-import { createActivityV2Module } from './modules/activityV2/ActivityV2Module'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -32,7 +31,6 @@ export class Application {
       createHealthModule(config),
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
-      createActivityV2Module(config, logger, http, database, clock),
       createDiscoveryModule(config, logger, http),
     ]
 

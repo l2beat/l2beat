@@ -59,11 +59,6 @@ export const sorare: Layer2 = {
       type: 'starkex',
       product: 'sorare',
       sinceTimestamp: new UnixTime(1626352527),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'sorare',
-      sinceTimestamp: new UnixTime(1626352527),
       resyncLastDays: 7,
     },
   },
@@ -100,15 +95,11 @@ export const sorare: Layer2 = {
       },
       {
         name: 'Committee',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0x879cD57975d596004863D30c59d579ef78BBbe32',
       },
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
   },
   permissions: [
     {
@@ -149,6 +140,15 @@ export const sorare: Layer2 = {
       ],
       description:
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      date: '2021-07-26T00:00:00Z',
+      link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      description:
+        'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
     },
   ],
 }

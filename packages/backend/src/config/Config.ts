@@ -1,5 +1,5 @@
 import { LogLevel } from '@l2beat/common'
-import { Layer2TransactionApiV2 } from '@l2beat/config'
+import { Layer2TransactionApi } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 
@@ -16,7 +16,6 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
-  readonly activityV2: ActivityV2Config | false
   readonly discovery: DiscoveryConfig | false
 }
 
@@ -54,33 +53,9 @@ export interface HealthConfig {
 
 export interface ActivityConfig {
   readonly starkexApiKey: string
-  readonly starkexApiDelayHours: number
-  readonly zkSyncWorkQueueWorkers: number
-  readonly aztecWorkQueueWorkers: number
-  readonly starkexWorkQueueWorkers: number
-  readonly loopringWorkQueueWorkers: number
-  readonly loopringCallsPerMinute: number
-  readonly starkexCallsPerMinute: number
-  readonly rpc: {
-    workQueueLimit: number
-    workQueueWorkers: number
-    projects: Record<
-      string,
-      | {
-          callsPerMinute?: number
-          url: string
-        }
-      | undefined
-    >
-  }
-}
-
-export interface ActivityV2Config {
-  readonly starkexApiKey: string
-  readonly starkexApiDelayHours: number
   readonly starkexCallsPerMinute: number
   readonly allowedProjectIds?: string[]
-  readonly projects: Record<string, Layer2TransactionApiV2 | undefined>
+  readonly projects: Record<string, Layer2TransactionApi | undefined>
 }
 
 export interface DiscoveryConfig {

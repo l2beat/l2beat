@@ -49,11 +49,6 @@ export const myria: Layer2 = {
       type: 'starkex',
       product: 'myria',
       sinceTimestamp: new UnixTime(1659542607),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'myria',
-      sinceTimestamp: new UnixTime(1659542607),
       resyncLastDays: 7,
     },
   },
@@ -158,6 +153,15 @@ export const myria: Layer2 = {
       ],
       description:
         'Validity proof must be signed by at least 2 of these 5 addresses to approve state update.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Mainnet Launch',
+      date: '2022-08-26T00:00:00Z',
+      link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      description:
+        'Layer 2 scaling solution powered by Starware is live on Ethereum.',
     },
   ],
 }

@@ -68,11 +68,6 @@ export const rhinofi: Layer2 = {
       type: 'starkex',
       product: 'deversifi',
       sinceTimestamp: new UnixTime(1590491810),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'deversifi',
-      sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },
   },
@@ -188,6 +183,15 @@ export const rhinofi: Layer2 = {
       ],
       description:
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Rebranding',
+      date: '2022-07-13T00:00:00Z',
+      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      description:
+        'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi opportunities in one place.',
     },
   ],
 }

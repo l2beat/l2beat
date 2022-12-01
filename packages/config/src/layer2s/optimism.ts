@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -88,10 +89,6 @@ export const optimism: Layer2 = {
       },
     ],
     transactionApi: {
-      type: 'rpc',
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
-    transactionApiV2: {
       type: 'rpc',
       startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
@@ -340,4 +337,17 @@ export const optimism: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      ...MILESTONES.MAINNET_OPEN,
+      link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
+      date: '2021-12-16T00:00:00Z',
+    },
+    {
+      name: 'Token airdrop',
+      link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
+      date: '2022-05-31T00:00:00Z',
+      description: 'The first round of OP token airdrop.',
+    },
+  ],
 }

@@ -67,12 +67,6 @@ export const aztecconnect: Layer2 = {
       callsPerMinute: 3_000,
       excludeFromActivityApi: true,
     },
-    transactionApiV2: {
-      type: 'aztecconnect',
-      url: 'https://api.aztec.network/aztec-connect-prod/falafel',
-      callsPerMinute: 3_000,
-      excludeFromActivityApi: true,
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
@@ -205,4 +199,13 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      name: 'Mainnet Launch',
+      date: '2022-07-07T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
+      description:
+        'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
+    },
+  ],
 }

@@ -62,12 +62,6 @@ export const aztec: Layer2 = {
       callsPerMinute: 3_000,
       excludeFromActivityApi: true,
     },
-    transactionApiV2: {
-      type: 'aztec',
-      url: 'https://api.aztec.network/falafel-mainnet',
-      callsPerMinute: 3_000,
-      excludeFromActivityApi: true,
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
@@ -193,4 +187,13 @@ export const aztec: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      name: 'Aztec 2.0',
+      date: '2021-03-15T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      description:
+        'Private Rollup is live on mainnet, allowing user to access DeFi.',
+    },
+  ],
 }

@@ -61,7 +61,7 @@ export const loopring: Layer2 = {
         sinceTimestamp: new UnixTime(1603950102),
       },
     ],
-    transactionApiV2: {
+    transactionApi: {
       type: 'loopring',
       callsPerMinute: 240,
     },

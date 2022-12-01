@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
+  Milestone,
   ProjectContracts,
   ProjectEscrow,
   ProjectLinks,
@@ -10,7 +11,6 @@ import { Layer2Event } from './Layer2Event'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
-import { Layer2TransactionApiV2 } from './Layer2TransactionApiV2'
 
 export interface Layer2 {
   type: 'layer2'
@@ -29,6 +29,8 @@ export interface Layer2 {
   /** List of permissioned addresses */
   permissions?: ProjectPermission[]
   /** Links to recent developments */
+  /** Milestones achieved by the project */
+  milestones?: Milestone[]
 }
 
 export interface Layer2Display {
@@ -55,8 +57,6 @@ export interface Layer2Config {
   escrows: ProjectEscrow[]
   /** Metadata about events emitted by the system */
   events: Layer2Event[]
-  /** RPC or API url used to get transaction count */
-  transactionApi?: Layer2TransactionApi
   /** API parameters used to get transaction count */
-  transactionApiV2?: Layer2TransactionApiV2
+  transactionApi?: Layer2TransactionApi
 }

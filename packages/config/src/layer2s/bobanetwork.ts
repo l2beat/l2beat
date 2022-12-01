@@ -78,12 +78,6 @@ export const bobanetwork: Layer2 = {
       callsPerMinute: 200,
       startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
-    transactionApiV2: {
-      type: 'rpc',
-      url: 'https://mainnet.boba.network/',
-      callsPerMinute: 200,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -334,6 +328,15 @@ export const bobanetwork: Layer2 = {
         },
       ],
       description: 'Central actor to post new L2 state roots to L1.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      date: '2021-09-20T00:00:00Z',
+      link: 'https://www.enya.ai/press/public-mainnet',
+      description:
+        'Layer 2 Optimistic Rollup based on the Optimism codebase is live on Ethereum.',
     },
   ],
 }

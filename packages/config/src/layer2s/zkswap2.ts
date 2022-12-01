@@ -98,7 +98,6 @@ export const zkswap2: Layer2 = {
       {
         address: '0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0',
         name: 'ZkSyncExit',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
       {
         address: '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
@@ -113,7 +112,6 @@ export const zkswap2: Layer2 = {
       {
         address: '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
         name: 'PairManager',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         upgradeability: {
           type: 'EIP1967',
           admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
@@ -133,7 +131,6 @@ export const zkswap2: Layer2 = {
       {
         address: '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
         name: 'VerifierExit',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         upgradeability: {
           type: 'EIP1967',
           admin: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
@@ -143,13 +140,9 @@ export const zkswap2: Layer2 = {
       {
         address: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
         name: 'UpgradeGatekeeper',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
       },
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
   permissions: [
     {
