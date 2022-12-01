@@ -8,9 +8,11 @@ export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
+  | LoopringProxyUpgradeability
   | StarkWareProxyUpgradeability
   | StarkWareDiamondUpgradeability
   | ArbitrumProxyUpgradeability
+  | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
   | CustomProxyUpgradeability
 
@@ -25,6 +27,12 @@ export interface GnosisSafeUpgradeability {
 export interface EIP1967ProxyUpgradeability {
   type: 'EIP1967 proxy'
   admin: string
+  implementation: string
+}
+
+export interface LoopringProxyUpgradeability {
+  type: 'Loopring proxy'
+  owner: string
   implementation: string
 }
 
@@ -49,6 +57,13 @@ export interface ArbitrumProxyUpgradeability {
   admin: string
   adminImplementation: string
   userImplementation: string
+}
+
+export interface ResolvedDelegateProxyUpgradeability {
+  type: 'resolved delegate proxy'
+  addressManager: string
+  implementationName: string
+  implementation: string
 }
 
 export interface EIP897ProxyUpgradeability {
