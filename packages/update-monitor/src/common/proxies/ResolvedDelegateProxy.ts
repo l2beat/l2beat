@@ -22,8 +22,10 @@ async function getAddressManager(
   contract: Contract | string,
 ) {
   const slot = '1' // // addressManager is stored in libAddressManager[address(this)]
-  const address = contract.toLowerCase().slice(2) // change to lower case and remove trailing 0x
-  const s = '0x' + address.padStart(64, 0) + slot.padStart(64, 0)
+  const address = (typeof contract === 'string' ? contract : contract.address)
+    .toLowerCase()
+    .slice(2) // change to lower case and remove trailing 0x
+  const s = '0x' + address.padStart(64, '0') + slot.padStart(64, '0')
   return bytes32ToAddress(await getStorage(provider, contract, keccak256(s)))
 }
 
@@ -32,8 +34,10 @@ async function getImplementationName(
   contract: Contract | string,
 ) {
   const slot = '0' // implementationName is stored in implementationName[address(this)]
-  const address = contract.toLowerCase().slice(2) // change to lower case and remove leading 0x
-  const s = '0x' + address.padStart(64, 0) + slot.padStart(64, 0)
+  const address = (typeof contract === 'string' ? contract : contract.address)
+    .toLowerCase()
+    .slice(2) // change to lower case and remove trailing 0x
+  const s = '0x' + address.padStart(64, '0') + slot.padStart(64, '0')
   let implName = await getStorage(provider, contract, keccak256(s))
   implName = implName.slice(0, -2).replace(/0+$/, '') // remove last byte + trailing 00s
   return toUtf8String(implName)
@@ -45,7 +49,7 @@ async function getImplementation(
   implementationName: string,
 ) {
   const libManager = Lib_AddressManager__factory.connect(
-    contract.toString(),
+    (typeof contract === 'string' ? contract : contract.address).toString(),
     provider,
   )
   return await libManager.getAddress(implementationName)
@@ -73,8 +77,8 @@ async function detect(
     implementations: [implementation],
     relatives: [addressManager],
     upgradeability: {
-      type: 'ResolvedDelegateProxy',
-      implementation,
+      type: 'custom proxy',
+      implementations: [implementation],
     },
   }
 }

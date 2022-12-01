@@ -5,7 +5,7 @@ import { Eip897Proxy } from '../common/proxies/Eip897Proxy'
 import { Eip1967Proxy } from '../common/proxies/Eip1967Proxy'
 import { GnosisSafe } from '../common/proxies/GnosisSafe'
 import { LoopringProxy } from '../common/proxies/LoopringProxy'
-import { ResolvedDelegateProxy} from '../common/proxies/ResolvedDelegateProxy'
+import { ResolvedDelegateProxy } from '../common/proxies/ResolvedDelegateProxy'
 import { StarkWareProxy } from '../common/proxies/StarkWareProxy'
 import { ProxyDetection } from '../common/proxies/types'
 

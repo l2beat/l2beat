@@ -12,7 +12,7 @@ export async function getExchangeV3(
   return {
     name: 'ExchangeV3',
     address: exchangeV3.address,
-    upgradeability: { type: 'LoopringProxy' },
+    upgradeability: { type: 'custom proxy', implementations: [] },
     values: {
       agentRegistry: await exchangeV3.getAgentRegistry(),
       depositContract: await exchangeV3.getDepositContract(),

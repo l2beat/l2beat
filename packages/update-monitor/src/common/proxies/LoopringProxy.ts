@@ -7,10 +7,10 @@ import { extendDetect } from './extendDetect'
 import { ProxyDetection } from './types'
 
 async function getProxyType(
-  provider: providers.Provider,
-  contract: Contract | string,
+  _provider: providers.Provider,
+  _contract: Contract | string,
 ) {
-  return 2 //upgradable Proxy
+  return Promise.resolve(2) //upgradable Proxy
 }
 
 async function getImplementation(

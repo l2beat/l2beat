@@ -16,7 +16,7 @@ import {
   getOmgNetworkParameters,
   OMG_NETWORK_NAME,
 } from '../projects/omgNetwork'
-import { getOptimismParameters,getOptimismParameters,OPTIMISM_NAME  } from '../projects/optimism'
+import { getOptimismParameters, OPTIMISM_NAME } from '../projects/optimism'
 import {
   getOrbitBridgeParameters,
   ORBIT_BRIDGE_NAME,
