@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { getCallResult } from '../../../common/getCallResult'
+import { getCallResultWithRevert } from '../../../common/getCallResult'
 import { CanonicalTransactionChain__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -15,7 +15,7 @@ export async function getCanonicalTransactionChain(
   const addressManager: string =
     await canonicalTransactionChain.libAddressManager()
 
-  const sequencerAddress = await getCallResult<string>(
+  const sequencerAddress = await getCallResultWithRevert<string>(
     provider,
     addressManager,
     'function getAddress(string implementationName) view returns(address)',
