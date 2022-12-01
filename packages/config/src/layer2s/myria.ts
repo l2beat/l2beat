@@ -49,11 +49,7 @@ export const myria: Layer2 = {
       type: 'starkex',
       product: 'myria',
       sinceTimestamp: new UnixTime(1659542607),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'myria',
-      sinceTimestamp: new UnixTime(1659542607),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({
@@ -159,21 +155,13 @@ export const myria: Layer2 = {
         'Validity proof must be signed by at least 2 of these 5 addresses to approve state update.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-22',
-      name: 'Coinary and Myria team up',
-      link: 'https://medium.com/@myriagames/myrias-layer-2-breathes-fire-into-dragonary-through-new-blockchain-partnership-7e945af90f97',
-    },
-    {
-      date: '2022-09-16',
-      name: 'Carnage Carnival builds on Myria. Here’s why',
-      link: 'https://medium.com/@myriagames/carnage-carnival-builds-on-myria-heres-why-bbb57d813a79',
-    },
-    {
-      date: '2022-09-16',
-      name: 'Meta Nomads — why they chose Myria',
-      link: 'https://medium.com/@myriagames/meta-nomads-why-they-chose-myria-7a86c534e5ed',
+      name: 'Mainnet Launch',
+      date: '2022-08-26T00:00:00Z',
+      link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      description:
+        'Layer 2 scaling solution powered by Starware is live on Ethereum.',
     },
   ],
 }

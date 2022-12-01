@@ -15,8 +15,10 @@ import {
   discoverLayer2FinanceZk,
   L2FZK_NAME,
 } from '../projects/layer2FinanceZk'
+import { discoverLoopring, LOOPRING_NAME } from '../projects/loopring'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOmgNetwork, OMG_NETWORK_NAME } from '../projects/omgNetwork'
+import { discoverOptimism, OPTIMISM_NAME } from '../projects/optimism'
 import { discoverOrbitBridge, ORBIT_BRIDGE_NAME } from '../projects/orbitBridge'
 import {
   discoverPolynetworkBridge,
@@ -61,6 +63,8 @@ export async function discover(args: string[]) {
     [ZK_SWAP_2_NAME, discoverZkSwap2],
     [ZK_SPACE_NAME, discoverZkSpace],
     [ARBITRUM_NAME, discoverArbitrum],
+    [OPTIMISM_NAME, discoverOptimism],
+    [LOOPRING_NAME, discoverLoopring],
     [STARK_NET_NAME, discoverStarkNet],
     [NOVA_NAME, discoverNova],
     [HOP_NAME, discoverHop],

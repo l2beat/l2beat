@@ -44,7 +44,7 @@ export class TaskQueue<T> {
   }
 
   addIfEmpty(task: T) {
-    if (!this.isEmpty) {
+    if (!this.isEmpty()) {
       return
     }
     this.addToBack(task)
@@ -61,24 +61,24 @@ export class TaskQueue<T> {
   }
 
   async waitTilEmpty() {
-    while (!this.isEmpty) {
+    while (!this.isEmpty()) {
       await wait(100)
     }
   }
 
-  getStats(): json {
+  getStatus(): json {
     return {
       busyWorkers: this.busyWorkers,
       queuedTasks: this.queue.length,
-      events: this.eventTracker?.getStats() ?? null,
+      events: this.eventTracker?.getStatus() ?? null,
     }
   }
 
-  private get isEmpty() {
+  isEmpty(): boolean {
     return this.queue.length === 0 && this.busyWorkers === 0
   }
 
-  private get allWorkersBusy() {
+  private allWorkersBusy() {
     return this.busyWorkers === this.workers
   }
 
@@ -124,7 +124,7 @@ export class TaskQueue<T> {
   }
 
   private async executeUnchecked() {
-    if (this.allWorkersBusy || this.queue.length === 0) {
+    if (this.allWorkersBusy() || this.queue.length === 0) {
       return
     }
     const jobIndex = this.queue.findIndex((job) => this.shouldExecute(job))

@@ -100,11 +100,6 @@ export const starknet: Layer2 = {
       },
     ],
     transactionApi: {
-      type: 'rpc',
-      callsPerMinute: 60 * 5,
-      url: 'https://alpha-mainnet.starknet.io',
-    },
-    transactionApiV2: {
       type: 'starknet',
       callsPerMinute: 60 * 5,
       url: 'https://alpha-mainnet.starknet.io',
@@ -191,7 +186,7 @@ export const starknet: Layer2 = {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: '0x659a00c33263d9254Fed382dE81349426C795BB6',
+        address: '0x9F96fE0633eE838D0298E8b8980E6716bE81388d',
       },
       {
         name: 'L1Escrow',
@@ -280,21 +275,20 @@ export const starknet: Layer2 = {
         'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-12',
-      name: 'Cairo 1.0',
-      link: 'https://medium.com/starkware/cairo-1-0-aa96eefb19a0',
+      name: 'StarkNet Alpha',
+      link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      date: '2021-11-29T00:00:00Z',
+      description:
+        'Rollup is live on mainnet, enabling general computation smart contracts using zkRollup technology.',
     },
     {
-      date: '2022-08-11',
-      name: 'Recursive STARKs',
-      link: 'https://medium.com/starkware/recursive-starks-78f8dd401025',
-    },
-    {
-      date: '2022-09-05',
-      name: 'StarkNet Alpha 0.10.0',
-      link: 'https://medium.com/starkware/starknet-alpha-0-10-0-923007290470',
+      name: 'StarkGate Alpha',
+      link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      date: '2022-05-09T00:00:00Z',
+      description:
+        'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
 }

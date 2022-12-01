@@ -59,11 +59,7 @@ export const sorare: Layer2 = {
       type: 'starkex',
       product: 'sorare',
       sinceTimestamp: new UnixTime(1626352527),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'sorare',
-      sinceTimestamp: new UnixTime(1626352527),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({
@@ -99,15 +95,11 @@ export const sorare: Layer2 = {
       },
       {
         name: 'Committee',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0x879cD57975d596004863D30c59d579ef78BBbe32',
       },
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
   },
   permissions: [
     {
@@ -150,21 +142,13 @@ export const sorare: Layer2 = {
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-22',
-      name: 'Here We Scout: Liverpool FC',
-      link: 'https://medium.com/sorare/here-we-scout-liverpool-fc-770dfb25bfb8',
-    },
-    {
-      date: '2022-09-19',
-      name: 'Sorare Android App is Now Available',
-      link: 'https://medium.com/sorare/sorare-android-app-is-now-available-b2208f475dd4',
-    },
-    {
-      date: '2021-07-22',
-      name: 'Sorare: MLB Weekly Unique Card Auction Schedule',
-      link: 'https://medium.com/sorare/sorare-mlb-weekly-unique-card-auction-schedule-cbad45722a7d',
+      name: 'Mainnet launch',
+      date: '2021-07-26T00:00:00Z',
+      link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      description:
+        'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
     },
   ],
 }

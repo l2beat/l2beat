@@ -1,6 +1,7 @@
-import { BigNumber, constants, Contract, providers } from 'ethers'
+import { BigNumber, constants, Contract, providers, utils } from 'ethers'
 
 import { bytes32ToAddress } from '../address'
+import { getCallResult, getCallResultWithRevert } from '../getCallResult'
 import { getStorage } from '../getStorage'
 import { extendDetect } from './extendDetect'
 import { ProxyDetection } from './types'
@@ -56,6 +57,25 @@ async function getFinalizedState(
   ).eq(0)
 }
 
+async function getDiamondStatus(
+  provider: providers.Provider,
+  contract: Contract | string,
+) {
+  try {
+    await getCallResultWithRevert(
+      provider,
+      contract,
+      'function nonExistentMethodName() view returns (uint)',
+    )
+    // This should actually never succeed
+    return false
+  } catch (e) {
+    return (
+      e instanceof Error && e.message.includes('"NO_CONTRACT_FOR_FUNCTION"')
+    )
+  }
+}
+
 async function detect(
   provider: providers.Provider,
   address: string,
@@ -64,11 +84,24 @@ async function detect(
   if (implementation === constants.AddressZero) {
     return
   }
-  const [callImplementation, upgradeDelay, isFinal] = await Promise.all([
-    getCallImplementation(provider, address),
-    getUpgradeDelay(provider, address),
-    getFinalizedState(provider, address),
-  ])
+  const [callImplementation, upgradeDelay, isFinal, isDiamond] =
+    await Promise.all([
+      getCallImplementation(provider, address),
+      getUpgradeDelay(provider, address),
+      getFinalizedState(provider, address),
+      getDiamondStatus(provider, address),
+    ])
+
+  if (isDiamond) {
+    console.log('StarkWare diamond detected for', address)
+    return await getStarkWareDiamond(
+      provider,
+      address,
+      implementation,
+      upgradeDelay,
+      isFinal,
+    )
+  }
 
   return {
     implementations:
@@ -82,6 +115,71 @@ async function detect(
       callImplementation,
       upgradeDelay,
       isFinal,
+    },
+  }
+}
+
+async function getStarkWareDiamond(
+  provider: providers.Provider,
+  address: string,
+  implementation: string,
+  upgradeDelay: number,
+  isFinal: boolean,
+): Promise<ProxyDetection> {
+  const upgrades = await provider.getLogs({
+    fromBlock: 0,
+    toBlock: 'latest',
+    address,
+    topics: [
+      // Upgraded (address indexed implementation)
+      '0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b',
+    ],
+  })
+
+  const lastUpgrade = upgrades.at(-1)?.transactionHash
+  if (!lastUpgrade) {
+    throw new Error('Diamond without upgrades!?')
+  }
+
+  const tx = await provider.getTransaction(lastUpgrade)
+  console.log('Got last upgrade data')
+
+  const abi = new utils.Interface([
+    'function upgradeTo(address newImplementation, bytes data, bool finalize)',
+  ])
+  const data = abi.decodeFunctionData('upgradeTo', tx.data).data as string
+
+  // we subtract 2 for '0x' and 1 for an external initializer contract
+  const maxAddresses = Math.floor((data.length - 2) / 64) - 1
+
+  const facets: Record<string, string> = {}
+  for (let i = 0; i < maxAddresses; i++) {
+    const bytes32 = data.slice(2 + 64 * i, 2 + 64 * (i + 1))
+    if (!bytes32.startsWith('0'.repeat(24))) {
+      break
+    }
+    const facet = utils.getAddress('0x' + bytes32.slice(24))
+    const name = await getCallResult<string>(
+      provider,
+      facet,
+      'function identify() view returns (string)',
+    )
+    if (!name) {
+      break
+    }
+    console.log(`${address}.${name} =`, facet)
+    facets[name] = facet
+  }
+
+  return {
+    implementations: [implementation, ...Object.values(facets)],
+    relatives: [],
+    upgradeability: {
+      type: 'StarkWare diamond',
+      implementation,
+      upgradeDelay,
+      isFinal,
+      facets,
     },
   }
 }

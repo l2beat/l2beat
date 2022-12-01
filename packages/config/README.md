@@ -2,6 +2,21 @@
 
 This is the shared config for the L2BEAT website. It contains layer2 definitions and a list of tokens.
 
+### Environment variables
+
+Once you have everything create a `.env` file that configures the app's
+environment variables. One variable per line `KEY=value`.
+
+- `ETHERSCAN_API_KEY` - API key for Etherscan
+- `CONFIG_ALCHEMY_API_KEY` - API key for Alchemy
+
+#### .env boilerplate:
+
+```bash
+ETHERSCAN_API_KEY=
+CONFIG_ALCHEMY_API_KEY=
+```
+
 ## Scripts
 
 - `yarn build` - build the project
@@ -11,6 +26,7 @@ This is the shared config for the L2BEAT website. It contains layer2 definitions
 - `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
+- `check-verified-contracts` - verify whether source code of given address is verified on Etherscan
 
 ### Tests dependencies
 

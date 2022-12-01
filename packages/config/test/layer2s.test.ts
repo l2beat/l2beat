@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { ProjectTechnologyChoice } from '../src/common'
@@ -80,5 +81,38 @@ describe('layer2s', () => {
         })
       }
     }
+  })
+
+  describe('milestones', () => {
+    describe('description', () => {
+      for (const project of layer2s) {
+        if (project.milestones === undefined) {
+          continue
+        }
+        for (const milestone of project.milestones) {
+          if (milestone.description === undefined) {
+            continue
+          }
+          it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+            expect(milestone.description?.endsWith('.')).toEqual(true)
+          })
+        }
+      }
+    })
+
+    describe('date', () => {
+      for (const project of layer2s) {
+        if (project.milestones === undefined) {
+          continue
+        }
+        for (const milestone of project.milestones) {
+          it(`Milestone: ${milestone.name} (${project.display.name}) date is full day`, () => {
+            expect(
+              UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+            ).toEqual(true)
+          })
+        }
+      }
+    })
   })
 })

@@ -1,5 +1,6 @@
 import { expect } from 'earljs'
 import { readdirSync } from 'fs'
+import { afterEach } from 'mocha'
 import path from 'path'
 
 import { Database } from '../../../../src/peripherals/database/shared/Database'
@@ -38,5 +39,25 @@ describe(Database.name, () => {
       const expected = i >= 20 ? i : i + 1
       expect(number).toEqual(expected)
     }
+  })
+
+  describe(Database.prototype.assertRequiredServerVersion.name, () => {
+    let database: Database
+
+    afterEach(async () => {
+      await database.closeConnection()
+    })
+
+    it('throws for mismatching version', async () => {
+      database = getTestDatabase({ requiredMajorVersion: 15 }).database
+      await expect(database.assertRequiredServerVersion()).toBeRejected(
+        'Assertion Error: Postgres server major version 14 different than required 15',
+      )
+    })
+
+    it('does not throw for matching version', async () => {
+      database = getTestDatabase().database
+      await expect(database.assertRequiredServerVersion()).not.toBeRejected()
+    })
   })
 })

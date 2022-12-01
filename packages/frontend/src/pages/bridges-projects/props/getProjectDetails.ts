@@ -6,7 +6,6 @@ import { getPermissionsSection } from '../../../utils/project/getPermissionsSect
 import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getLinkSection } from './getLinkSection'
-import { getNewsSection } from './getNewsSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -15,12 +14,12 @@ export function getProjectDetails(
   verificationStatus: VerificationStatus,
 ): ProjectDetailsProps {
   return {
-    newsSection: getNewsSection(bridge),
     linkSection: getLinkSection(bridge),
     descriptionSection: getDescriptionSection(bridge, verificationStatus),
     riskSection: getRiskSection(bridge, verificationStatus),
     permissionsSection: getPermissionsSection(bridge, verificationStatus),
     contractsSection: getContractSection(bridge, verificationStatus),
+    milestones: bridge.milestones,
     ...getTechnologyOverview(bridge),
   }
 }

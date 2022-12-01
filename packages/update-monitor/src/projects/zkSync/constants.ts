@@ -5,7 +5,7 @@ export const addresses = {
   zkSync: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
   tokenGovernance: '0x35cc31f63deef017c38d51B038891bAE7d614e86',
   multisig: '0xE24f4870Ab85DE8E356C5fC56138587206c70d99',
-  additional: '0x080812701c94087F1DEE425EbD7CBF9EFAF878e2',
+  additional: '0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD',
 }
 
 // https://etherscan.io/address/0x080812701c94087F1DEE425EbD7CBF9EFAF878e2#code#F1#L125

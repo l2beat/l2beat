@@ -18,5 +18,18 @@ export async function getDydxParameters(
 }
 
 export async function discoverDydx(discoveryEngine: DiscoveryEngine) {
-  await discoveryEngine.discover(DYDX_NAME, [addresses.starkPerpetual])
+  await discoveryEngine.discover(
+    DYDX_NAME,
+    [addresses.starkPerpetual, '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C'],
+    {
+      skipMethods: {
+        '0xD54f502e184B6B739d7D27a6410a67dc462D69c8': [
+          'configurationHash',
+          'isQuantum',
+          'getQuantum',
+          'isAssetRegistered',
+        ],
+      },
+    },
+  )
 }
