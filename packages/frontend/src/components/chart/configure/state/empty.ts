@@ -16,7 +16,7 @@ export const EMPTY_STATE: State = {
     alternativeTvl: undefined,
     activity: undefined,
     tokenTvl: {},
-    milestones: [],
+    milestones: {},
   },
   controls: {
     view: 'tvl',

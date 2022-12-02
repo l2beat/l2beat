@@ -36,6 +36,7 @@ export function calculateTokenTvlView(
     balance,
     symbol: token,
     usd,
+    milestone: data.milestones[timestamp],
   }))
 
   return {

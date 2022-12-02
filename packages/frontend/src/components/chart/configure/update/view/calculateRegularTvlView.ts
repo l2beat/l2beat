@@ -31,6 +31,7 @@ export function calculateRegularTvlView(
     date: formatTimestamp(timestamp, true),
     usd,
     eth,
+    milestone: data.milestones[timestamp],
   }))
 
   return {

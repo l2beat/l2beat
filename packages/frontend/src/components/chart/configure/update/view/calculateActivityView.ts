@@ -31,6 +31,7 @@ export function calculateActivityView(
       date: formatTimestamp(timestamp, false),
       tps: getTps(transactions),
       ethereumTps: getTps(ethereumTransactions),
+      milestone: data.milestones[timestamp],
     }),
   )
 

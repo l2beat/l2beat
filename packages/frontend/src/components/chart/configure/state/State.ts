@@ -17,7 +17,7 @@ export interface State {
     alternativeTvl: AggregateTvlResponse | undefined
     activity: ActivityResponse | undefined
     tokenTvl: Record<string, TokenTvlResponse | undefined>
-    milestones: Milestone[]
+    milestones: Record<number, Milestone>
   }
   controls: {
     view: 'tvl' | 'activity'
@@ -47,7 +47,7 @@ export interface AggregateTvlChart {
     date: string
     usd: number
     eth: number
-    milestone?: boolean
+    milestone?: Milestone
   }[]
 }
 
@@ -60,7 +60,7 @@ export interface TokenTvlChart {
     balance: number
     symbol: string
     usd: number
-    milestone?: boolean
+    milestone?: Milestone
   }[]
 }
 
@@ -73,7 +73,7 @@ export interface ActivityChart {
     date: string
     tps: number
     ethereumTps: number
-    milestone?: boolean
+    milestone?: Milestone
   }[]
 }
 

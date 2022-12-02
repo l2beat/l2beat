@@ -1,3 +1,5 @@
+import type { Milestone } from '@l2beat/config'
+
 import { Effect } from '../effects/effects'
 import { InitMessage } from '../messages'
 import { State } from '../state/State'
@@ -41,7 +43,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         alternativeTvl: undefined,
         activity: undefined,
         tokenTvl: {},
-        milestones: message.milestones,
+        milestones: milestonesToRecord(message.milestones),
       },
       controls: {
         view: message.initialView,
@@ -64,4 +66,13 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
     },
     [fetchEffect],
   ]
+}
+
+function milestonesToRecord(milestones: Milestone[]): Record<number, Milestone> {
+  const result: Record<number, Milestone> = {}
+  for (const milestone of milestones) {
+    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
+    result[timestamp] = milestone
+  }
+  return result
 }
