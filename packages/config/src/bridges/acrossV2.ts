@@ -168,7 +168,6 @@ export const acrossV2: Bridge = {
     },
     {
       accounts: [
-        { address: '0xDFB0A775A44d309d939DCaEA081552aa4FE4025f', type: 'EOA' },
         { address: '0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05', type: 'EOA' },
         { address: '0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe', type: 'EOA' },
         { address: '0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9', type: 'EOA' },
@@ -176,7 +175,7 @@ export const acrossV2: Bridge = {
         { address: '0x1f11D8B72fc1B534448436BA60B4B371276DAb33', type: 'EOA' },
       ],
       name: 'MultiSig Participants',
-      description: 'Participants of 2/6 MultiSig',
+      description: 'Participants of 3/5 MultiSig',
     },
   ],
 }
