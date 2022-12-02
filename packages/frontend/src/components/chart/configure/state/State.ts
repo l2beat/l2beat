@@ -12,13 +12,13 @@ export interface State {
     isFetching: boolean
     showLoader: boolean
   }
-  responses: {
+  data: {
     aggregateTvl: AggregateTvlResponse | undefined
     alternativeTvl: AggregateTvlResponse | undefined
     activity: ActivityResponse | undefined
     tokenTvl: Record<string, TokenTvlResponse | undefined>
+    milestones: Milestone[]
   }
-  milestones: Milestone[]
   controls: {
     view: 'tvl' | 'activity'
     days: number

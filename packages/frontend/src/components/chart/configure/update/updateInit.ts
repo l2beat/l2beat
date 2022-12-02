@@ -36,13 +36,13 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         isFetching: true,
         showLoader: false,
       },
-      responses: {
+      data: {
         aggregateTvl: undefined,
         alternativeTvl: undefined,
         activity: undefined,
         tokenTvl: {},
+        milestones: message.milestones,
       },
-      milestones: message.milestones,
       controls: {
         view: message.initialView,
         days: message.days,

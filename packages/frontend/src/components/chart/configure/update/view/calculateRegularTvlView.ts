@@ -6,12 +6,12 @@ import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
 
 export function calculateRegularTvlView(
-  responses: State['responses'],
+  data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
   const response = controls.showAlternativeTvl
-    ? responses.alternativeTvl
-    : responses.aggregateTvl
+    ? data.alternativeTvl
+    : data.aggregateTvl
   if (!response) {
     return undefined
   }
