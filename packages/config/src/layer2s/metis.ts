@@ -179,15 +179,46 @@ export const metis: Layer2 = {
   },
   permissions: [
     {
-      name: 'Metis manager',
+      name: 'Metis manager MultiSig',
       accounts: [
         {
-          address: '0xDD6FFC7D9a4Fb420b637747edc6456340d12d377',
-          type: 'EOA',
+          address: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+          type: 'MultiSig',
         },
       ],
       description:
         'This address is the owner of the following contracts: MVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    },
+    {
+      name: 'Metis MultiSig participants',
+      accounts: [
+        {
+          address: '0x217fD54d336f710F8aee19572dBfBf0B2297ed69',
+          type: 'EOA',
+        },
+        {
+          address: '0xB383E1331dEE29864b68f7D84b0dC289F770d846',
+          type: 'EOA',
+        },
+        {
+          address: '0x7a9059F4A6e50090e4f55994d465918200AB4454',
+          type: 'EOA',
+        },
+        {
+          address: '0x02058Bb1d98D88087008F2ac1273584591380e3F',
+          type: 'EOA',
+        },
+        {
+          address: '0xB961047013F974C5b6B6F8dA4402379525316550',
+          type: 'EOA',
+        },
+        {
+          address: '0xa6D8941F935932a531A856C2e48046DA73a1098E',
+          type: 'EOA',
+        },
+      ],
+      description:
+        'These addresses are the participants of the 4/6 Metis MultiSig.',
     },
     {
       name: 'Sequencer',
