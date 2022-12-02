@@ -77,7 +77,7 @@ export function Chart({
             <YAxisLabels />
             <div
               data-role="chart-milestones"
-              className="absolute bottom-0 w-[100%] bg-yellow-200 h-1"
+              className="absolute bottom-0 w-[100%]"
             />
           </div>
           <div className="flex justify-between items-center">

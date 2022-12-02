@@ -71,7 +71,6 @@ export function render(
 
     if (elements.view.milestones) {
       if ((previousState.controls.days !== state.controls.days) || !previousState.view.chart?.points) {
-        console.log('attempting to render milestones')
         renderMilestones(state, elements.view.milestones)
       }
     }

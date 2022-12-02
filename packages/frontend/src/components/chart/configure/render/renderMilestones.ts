@@ -13,9 +13,26 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
       continue
     }
     console.log('found', point.milestone)
-    const x = point.x * width
-    innerHtml += `<div class="bg-purple-300 absolute top-0 w-4 h-4" style="left: ${x}px"></div>`
+    const x = point.x * width - 8
+    innerHtml += `<div class="absolute top-[-8px] z-50" style="left: ${x}px">${a}</div>`
   }
   console.log('innerHtml=',innerHtml)
   milestones.innerHTML = innerHtml
 }
+
+const a = `<svg
+width="24"
+height="24"
+viewBox="0 0 24 24"
+role="img"
+>      <rect
+fill="#34762F"
+stroke="#5BFF4D"
+x="9.89941"
+y="1.41421"
+width="12"
+height="12"
+rx="1"
+transform="rotate(45 9.89941 1.41421)"
+strokeWidth="2"
+/> <svg>`
