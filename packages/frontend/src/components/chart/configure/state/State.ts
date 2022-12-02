@@ -1,4 +1,4 @@
-import { Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { z } from 'zod'
 
 export interface State {
@@ -18,6 +18,7 @@ export interface State {
     activity: ActivityResponse | undefined
     tokenTvl: Record<string, TokenTvlResponse | undefined>
   }
+  milestones: Milestone[]
   controls: {
     view: 'tvl' | 'activity'
     days: number

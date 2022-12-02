@@ -1,3 +1,5 @@
+import type { Milestone } from '@l2beat/config'
+
 import {
   ActivityResponse,
   AggregateTvlResponse,
@@ -13,6 +15,7 @@ export interface InitMessage {
   activityEndpoint?: string
   showEthereum?: boolean
   labelCount: number
+  milestones: Milestone[]
 }
 
 export interface ViewChangedMessage {

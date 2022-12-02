@@ -42,6 +42,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         activity: undefined,
         tokenTvl: {},
       },
+      milestones: message.milestones,
       controls: {
         view: message.initialView,
         days: message.days,

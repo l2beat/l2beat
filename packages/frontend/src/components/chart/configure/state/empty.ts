@@ -17,6 +17,7 @@ export const EMPTY_STATE: State = {
     activity: undefined,
     tokenTvl: {},
   },
+  milestones: [],
   controls: {
     view: 'tvl',
     days: 0,

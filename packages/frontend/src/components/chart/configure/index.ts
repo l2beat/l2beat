@@ -59,5 +59,15 @@ function getInitMessage(elements: ChartElements): InitMessage {
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
     labelCount: elements.view.labels.length,
+    // we don't yet know how we obtain this
+    milestones: [
+      {
+        name: 'Nitro Upgrade',
+        link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
+        date: '2022-08-31T00:00:00Z',
+        description:
+          'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
+      },
+    ],
   }
 }
