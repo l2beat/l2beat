@@ -21,11 +21,11 @@ describe(SimpleMethodHandler.name, () => {
     const handler = new SimpleMethodHandler(
       'function balanceOf() view returns (uint256)',
     )
-    expect(handler.name).toEqual('balanceOf')
+    expect(handler.field).toEqual('balanceOf')
 
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({
-      name: 'balanceOf',
+      field: 'balanceOf',
       value: 0x123,
     })
   })
@@ -43,7 +43,7 @@ describe(SimpleMethodHandler.name, () => {
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({
-      name: 'balanceOf',
+      field: 'balanceOf',
       error: 'Execution reverted',
     })
   })
@@ -61,7 +61,7 @@ describe(SimpleMethodHandler.name, () => {
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address)
     expect(result as unknown).toEqual({
-      name: 'balanceOf',
+      field: 'balanceOf',
       error: 'foo bar',
     })
   })

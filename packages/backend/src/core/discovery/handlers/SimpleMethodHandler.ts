@@ -7,13 +7,13 @@ import { callMethod } from './utils/callMethod'
 import { toFunctionFragment } from './utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
-  readonly name: string
+  readonly field: string
   private readonly fragment: utils.FunctionFragment
 
   constructor(fragment: string | utils.FunctionFragment) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
-    this.name = this.fragment.name
+    this.field = this.fragment.name
   }
 
   async execute(
@@ -21,6 +21,6 @@ export class SimpleMethodHandler implements Handler {
     address: EthereumAddress,
   ): Promise<HandlerResult> {
     const callResult = await callMethod(provider, address, this.fragment, [])
-    return { name: this.name, ...callResult }
+    return { field: this.field, ...callResult }
   }
 }
