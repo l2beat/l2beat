@@ -76,6 +76,7 @@ export function Chart({
               className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
             />
             <YAxisLabels />
+            <div className="bg-red h-1 w-100" />
           </div>
           <div className="flex justify-between items-center">
             {hasActivity && (
