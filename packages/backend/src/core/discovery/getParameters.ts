@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { DiscoveryOptions } from './DiscoveryOptions'
+import { DiscoveryConfig } from './DiscoveryConfig'
 import { Handler, HandlerResult } from './handlers/Handler'
 import { LimitedArrayHandler } from './handlers/LimitedArrayHandler'
 import { SimpleMethodHandler } from './handlers/SimpleMethodHandler'
@@ -11,18 +11,15 @@ export async function getParameters(
   abiEntries: string[],
   address: EthereumAddress,
   provider: DiscoveryProvider,
-  options: DiscoveryOptions,
+  config: DiscoveryConfig,
 ): Promise<HandlerResult[]> {
+  const overrides = config.overrides?.[address.toString()]
+
   const abi = new utils.Interface(abiEntries)
   const viewFunctions = Object.entries(abi.functions)
     .map((x) => x[1])
     .filter((x) => x.stateMutability === 'view' || x.constant)
-    .filter(
-      (x) =>
-        !(options.skipMethods[address.toString()] ?? []).some(
-          (y) => y === x.name,
-        ),
-    )
+    .filter((x) => !overrides?.ignoreMethods?.includes(x.name))
 
   const handlers: Handler[] = [
     ...viewFunctions

@@ -8,7 +8,7 @@ import { callMethod } from './utils/callMethod'
 import { toFunctionFragment } from './utils/toFunctionFragment'
 
 export class LimitedArrayHandler implements Handler {
-  readonly name: string
+  readonly field: string
   private readonly fragment: utils.FunctionFragment
 
   constructor(
@@ -17,7 +17,7 @@ export class LimitedArrayHandler implements Handler {
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
-    this.name = this.fragment.name
+    this.field = this.fragment.name
   }
 
   async execute(
@@ -45,15 +45,15 @@ export class LimitedArrayHandler implements Handler {
     if (!error) {
       if (value.length === this.limit) {
         return {
-          name: this.name,
+          field: this.field,
           value,
           error: 'Too many values. Update configuration explore fully',
         }
       } else {
-        return { name: this.name, value }
+        return { field: this.field, value }
       }
     }
 
-    return { name: this.name, error }
+    return { field: this.field, error }
   }
 }

@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 
+import { getCallResultWithRevert } from '../../../common/getCallResult'
 import { CanonicalTransactionChain__factory } from '../../../typechain'
 import { ContractParameters } from '../../../types'
 import { addresses } from '../constants'
@@ -11,13 +12,21 @@ export async function getCanonicalTransactionChain(
     addresses.canonicalTransactionChain,
     provider,
   )
+  const addressManager: string =
+    await canonicalTransactionChain.libAddressManager()
 
+  const sequencerAddress = await getCallResultWithRevert<string>(
+    provider,
+    addressManager,
+    'function getAddress(string implementationName) view returns(address)',
+    ['OVM_Sequencer'],
+  )
   return {
     name: 'CanonicalTransactionChain',
     address: canonicalTransactionChain.address,
     upgradeability: { type: 'immutable' },
     values: {
-      libAddressManager: await canonicalTransactionChain.libAddressManager(),
+      libAddressManager: addressManager,
       maxTransactionGasLimit: (
         await canonicalTransactionChain.maxTransactionGasLimit()
       ).toString(),
@@ -30,6 +39,7 @@ export async function getCanonicalTransactionChain(
       minRollupTxGas: (
         await canonicalTransactionChain.MIN_ROLLUP_TX_GAS()
       ).toString(),
+      sequencer: sequencerAddress,
     },
   }
 }

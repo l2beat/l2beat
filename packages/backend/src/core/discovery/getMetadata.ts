@@ -13,7 +13,6 @@ export interface ContractMetadata {
 
 export async function getMetadata(
   provider: DiscoveryProvider,
-  additionalAbiEntries: string[],
   address: EthereumAddress,
   implementations: EthereumAddress[],
 ): Promise<ContractMetadata> {
@@ -41,7 +40,6 @@ export async function getMetadata(
   const abi = concatAbis(
     ...metadata.abi,
     ...implementationMeta.flatMap((x) => x.abi),
-    ...additionalAbiEntries,
   )
   return {
     name,

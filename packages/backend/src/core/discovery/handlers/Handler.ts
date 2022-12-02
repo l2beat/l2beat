@@ -4,13 +4,13 @@ import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ContractValue } from '../types'
 
 export interface HandlerResult {
-  name: string
+  field: string
   value?: ContractValue
   error?: string
 }
 
 export interface Handler {
-  name: string
+  field: string
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
