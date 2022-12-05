@@ -20,8 +20,6 @@ export const StorageHandlerDefinition = z.strictObject({
 })
 
 export class StorageHandler implements Handler {
-  static type = 'storage' as const
-
   constructor(
     readonly field: string,
     private readonly definition: StorageHandlerDefinition,
