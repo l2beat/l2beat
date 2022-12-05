@@ -1,6 +1,7 @@
 import { common } from './common'
+import { Config } from './Config'
 
-export function getProductionConfig() {
+export function getProductionConfig(): Config {
   return {
     ...common,
     backend: {
