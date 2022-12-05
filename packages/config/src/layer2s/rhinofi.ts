@@ -68,11 +68,7 @@ export const rhinofi: Layer2 = {
       type: 'starkex',
       product: 'deversifi',
       sinceTimestamp: new UnixTime(1590491810),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'deversifi',
-      sinceTimestamp: new UnixTime(1590491810),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({
@@ -189,21 +185,13 @@ export const rhinofi: Layer2 = {
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-14',
-      name: 'Merge Bonus, Earn an extra 2% yield on stETH',
-      link: 'https://rhino.fi/blog/the-ethereum-merge-our-special-yield-boost/',
-    },
-    {
-      date: '2022-09-09',
-      name: 'The Ethereum Merge, 6 Biggest Questions Answered',
-      link: 'https://rhino.fi/blog/the-ethereum-merge-the-six-biggest-questions-answered/',
-    },
-    {
-      date: '2022-08-31',
-      name: 'The first fully trustless AMM pools on StarkEx L2',
-      link: 'https://rhino.fi/blog/a-new-chapter-for-amms-the-first-fully-trustless-pools-on-starkex-layer-2-are-live-on-rhino-fi/',
+      name: 'Rebranding',
+      date: '2022-07-13T00:00:00Z',
+      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      description:
+        'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi opportunities in one place.',
     },
   ],
 }

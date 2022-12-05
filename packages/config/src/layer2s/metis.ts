@@ -73,11 +73,6 @@ export const metis: Layer2 = {
       url: 'https://andromeda.metis.io/',
       startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
-    transactionApiV2: {
-      type: 'rpc',
-      url: 'https://andromeda.metis.io/',
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -184,15 +179,46 @@ export const metis: Layer2 = {
   },
   permissions: [
     {
-      name: 'Metis manager',
+      name: 'Metis manager MultiSig',
       accounts: [
         {
-          address: '0xDD6FFC7D9a4Fb420b637747edc6456340d12d377',
-          type: 'EOA',
+          address: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+          type: 'MultiSig',
         },
       ],
       description:
         'This address is the owner of the following contracts: MVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    },
+    {
+      name: 'Metis MultiSig participants',
+      accounts: [
+        {
+          address: '0x217fD54d336f710F8aee19572dBfBf0B2297ed69',
+          type: 'EOA',
+        },
+        {
+          address: '0xB383E1331dEE29864b68f7D84b0dC289F770d846',
+          type: 'EOA',
+        },
+        {
+          address: '0x7a9059F4A6e50090e4f55994d465918200AB4454',
+          type: 'EOA',
+        },
+        {
+          address: '0x02058Bb1d98D88087008F2ac1273584591380e3F',
+          type: 'EOA',
+        },
+        {
+          address: '0xB961047013F974C5b6B6F8dA4402379525316550',
+          type: 'EOA',
+        },
+        {
+          address: '0xa6D8941F935932a531A856C2e48046DA73a1098E',
+          type: 'EOA',
+        },
+      ],
+      description:
+        'These addresses are the participants of the 4/6 Metis MultiSig.',
     },
     {
       name: 'Sequencer',
@@ -340,21 +366,20 @@ export const metis: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
+  milestones: [
     {
-      date: '2022-09-14',
-      name: 'What does The Merge mean for Metis Andromeda',
-      link: 'https://metisdao.medium.com/what-is-the-ethereum-merge-and-what-does-it-mean-for-metis-andromeda-b6f96809bdd3',
+      name: 'Mainnet launch',
+      link: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
+      date: '2021-11-19T00:00:00Z',
+      description:
+        'Public launch of Metis Layer 2 Andromeda, based on the Optimism codebase.',
     },
     {
-      date: '2022-09-06',
-      name: 'Relay Chain will be joining the Metis marathon',
-      link: 'https://metisdao.medium.com/relay-chain-becomes-joins-the-metis-marathon-as-a-bridge-21fcd2e9b3e8',
-    },
-    {
-      date: '2022-09-06',
-      name: 'QiDAO has joined the Metis Marathon',
-      link: 'https://metisdao.medium.com/qidao-has-oficially-joined-the-metis-marathon-d41a385d9fcb',
+      name: 'Data availability change',
+      link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
+      date: '2022-04-12T00:00:00Z',
+      description:
+        'Update results in the system no longer posting data on-chain, instead data is kept off-chain by a committee.',
     },
   ],
 }

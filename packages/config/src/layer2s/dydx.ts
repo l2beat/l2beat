@@ -70,11 +70,7 @@ export const dydx: Layer2 = {
       type: 'starkex',
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),
-    },
-    transactionApiV2: {
-      type: 'starkex',
-      product: 'dydx',
-      sinceTimestamp: new UnixTime(1613033682),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({
@@ -186,21 +182,27 @@ export const dydx: Layer2 = {
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-09',
-      name: 'Testnet migration from Ropsten to Goerli',
-      link: 'https://dydx.exchange/blog/staging-testnet-migration-to-goerli',
+      name: 'Public launch',
+      link: 'https://dydx.exchange/blog/public',
+      date: '2021-04-06T00:00:00Z',
+      description:
+        'Layer 2 cross-margined Perpetuals are now live in production for all traders.',
     },
     {
-      date: '2022-09-09',
-      name: 'Trading Leagues update',
-      link: 'https://dydx.exchange/blog/trading-leagues-update',
+      name: 'dYdX Foundation',
+      link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+      date: '2021-08-03T00:00:00Z',
+      description:
+        'Independent foundation, headquartered in Zug, Switzerland, was created to participate in propelling the Protocol into the future.',
     },
     {
-      date: '2022-09-07',
-      name: 'No disruption to trading during The Merge',
-      link: 'https://dydx.exchange/blog/the-merge',
+      name: 'dYdX v4 announcement',
+      link: 'https://dydx.exchange/blog/dydx-chain',
+      date: '2022-06-22T00:00:00Z',
+      description:
+        'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK and Tendermint Proof-of-stake consensus protocol.',
     },
   ],
 }

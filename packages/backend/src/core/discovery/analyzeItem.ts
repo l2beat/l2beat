@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/types'
 
 import { detectProxy } from './detectProxy'
-import { DiscoveryOptions } from './DiscoveryOptions'
+import { DiscoveryConfig } from './DiscoveryConfig'
 import { getMetadata } from './getMetadata'
-import { getParameters } from './getParameters'
+import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ContractParameters } from './types'
 
@@ -19,22 +19,20 @@ export interface AnalyzedData extends ContractParameters {
 export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-  options: DiscoveryOptions,
+  config: DiscoveryConfig,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
   const proxyDetection = await detectProxy(provider, address)
 
   const metadata = await getMetadata(
     provider,
-    options.addAbis[address.toString()] ?? [],
     address,
     proxyDetection?.implementations ?? [],
   )
 
-  const parameters = await getParameters(
-    metadata.abi,
-    address,
-    provider,
-    options,
+  const overrides = config.overrides?.[address.toLowerCase()]
+  const handlers = getHandlers(metadata.abi, overrides)
+  const parameters = await Promise.all(
+    handlers.map((h) => h.execute(provider, address, metadata.abi)),
   )
 
   const relatives = parameters
@@ -56,12 +54,24 @@ export async function analyzeItem(
 
   const upgradeability = proxyDetection?.upgradeability ?? { type: 'immutable' }
 
+  const values: ContractParameters['values'] = {}
+  const errors: ContractParameters['errors'] = {}
+  for (const parameter of parameters) {
+    if (parameter.value !== undefined) {
+      values[parameter.field] = parameter.value
+    }
+    if (parameter.error !== undefined) {
+      errors[parameter.field] = parameter.error
+    }
+  }
+
   return {
     analyzed: {
       name: metadata.name,
       address,
       upgradeability,
-      values: Object.fromEntries(parameters.map((x) => [x.name, x.value])),
+      values: Object.entries(values).length !== 0 ? values : undefined,
+      errors: Object.entries(errors).length !== 0 ? errors : undefined,
       meta: {
         isEOA: metadata.isEOA,
         verified: metadata.isVerified,

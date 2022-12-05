@@ -10,11 +10,13 @@ import {
   getLayer2FinanceZkParameters,
   L2FZK_NAME,
 } from '../projects/layer2FinanceZk'
+import { getLoopringParameters, LOOPRING_NAME } from '../projects/loopring'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
 import {
   getOmgNetworkParameters,
   OMG_NETWORK_NAME,
 } from '../projects/omgNetwork'
+import { getOptimismParameters, OPTIMISM_NAME } from '../projects/optimism'
 import {
   getOrbitBridgeParameters,
   ORBIT_BRIDGE_NAME,
@@ -55,6 +57,8 @@ export async function analyze(projects: string[]) {
     [ARBITRUM_NAME, getArbitrumParameters],
     [STARK_NET_NAME, getStarkNetParameters],
     [HOP_NAME, getHopParameters],
+    [LOOPRING_NAME, getLoopringParameters],
+    [OPTIMISM_NAME, getOptimismParameters],
     [NOVA_NAME, getNovaParameters],
     [DYDX_NAME, getDydxParameters],
     [POLYNETWORK_BRIDGE_NAME, getPolynetworkBridgeParameters],

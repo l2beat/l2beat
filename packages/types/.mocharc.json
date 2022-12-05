@@ -1,7 +1,7 @@
 {
-  "spec": "test/**/*.test.ts",
+  "spec": "{src,test}/**/*.test.ts",
   "require": "esbuild-register",
   "watchExtensions": "ts",
   "extension": "ts",
-  "file": "test/setup.ts"
+  "file": "src/test/setup.ts"
 }

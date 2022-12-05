@@ -213,26 +213,6 @@ export const hermez: Layer2 = {
         description: 'Enforces a 7 day delay on upgrades.',
       },
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days'),
-      CONTRACTS.UNVERIFIED_RISK,
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
-  news: [
-    {
-      date: '2022-07-20',
-      name: 'Introducing Polygon zkEVM',
-      link: 'https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/',
-    },
-    {
-      date: '2022-05-13',
-      name: 'Polygon Hermez 2.0',
-      link: 'https://blog.polygon.technology/zkverse-deep-dive-into-polygon-hermez-2-0/',
-    },
-    {
-      date: '2021-08-13',
-      name: 'Polygon and Hermez Merge',
-      link: 'https://blog.hermez.io/polygon-hermez-merge/',
-    },
-  ],
 }

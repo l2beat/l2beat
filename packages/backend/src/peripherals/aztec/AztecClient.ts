@@ -1,18 +1,13 @@
-import { HttpClient, RateLimiter } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
-import assert from 'assert'
+import { assert, HttpClient, RateLimiter } from '@l2beat/common'
 
+import { findMinedBlockOrThrow } from './findMinedBlockOrThrow'
 import {
-  GetRollupResponseBodySchema,
-  GetRollupsResponseBodySchema,
-  Rollup,
+  AztecGetRollupResponseBody,
+  AztecGetRollupsResponseBody,
+  Block,
+  parseWithSchema,
+  toBlock,
 } from './schemas'
-
-export interface Block {
-  number: number
-  timestamp: UnixTime
-  transactionCount: number
-}
 
 export class AztecClient {
   constructor(
@@ -32,17 +27,16 @@ export class AztecClient {
     )
     const {
       data: { rollups },
-    } = GetRollupsResponseBodySchema.parse(data)
-    const latestMined = rollups.find((r): r is Rollup => r.mined !== null)
-    assert(latestMined, 'No mined block found in first 10 blocks')
-    return toBlock(latestMined)
+    } = parseWithSchema(data, AztecGetRollupsResponseBody)
+
+    return findMinedBlockOrThrow(rollups)
   }
 
   async getBlock(number: number): Promise<Block> {
     const data = await this.queryApi(`{rollup(id:${number}){id mined numTxs}}`)
     const {
       data: { rollup },
-    } = GetRollupResponseBodySchema.parse(data)
+    } = parseWithSchema(data, AztecGetRollupResponseBody)
     return toBlock(rollup)
   }
 
@@ -55,13 +49,5 @@ export class AztecClient {
     )
     const data: unknown = await response.json()
     return data
-  }
-}
-
-function toBlock(rollup: Rollup): Block {
-  return {
-    number: rollup.id,
-    timestamp: rollup.mined,
-    transactionCount: rollup.numTxs,
   }
 }

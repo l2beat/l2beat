@@ -1,9 +1,20 @@
-import { Logger } from '@l2beat/common'
+import { assert, Logger } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
 import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
+interface VersionQueryResult {
+  rows: {
+    server_version: string
+  }[]
+}
+
+export interface DatabaseOpts {
+  requiredMajorVersion?: number
+}
+
+const REQUIRED_MAJOR_VERSION = 14
 
 export class Database {
   private readonly knex: Knex
@@ -13,11 +24,13 @@ export class Database {
   private readonly migrationsComplete = new Promise<void>((resolve) => {
     this.onMigrationsComplete = resolve
   })
+  private readonly requiredMajorVersion: number
 
   constructor(
     connection: Knex.Config['connection'],
     name: string,
     private readonly logger: Logger,
+    readonly opts?: DatabaseOpts,
   ) {
     configureUtc()
 
@@ -27,6 +40,8 @@ export class Database {
         : connection
 
     this.logger = this.logger.for(this)
+    this.requiredMajorVersion =
+      opts?.requiredMajorVersion ?? REQUIRED_MAJOR_VERSION
     this.knex = KnexConstructor({
       client: 'pg',
       connection: connectionWithName,
@@ -73,5 +88,17 @@ export class Database {
   async closeConnection() {
     await this.knex.destroy()
     this.logger.debug('Connection closed')
+  }
+
+  async assertRequiredServerVersion(): Promise<void> {
+    const result: VersionQueryResult = await this.knex.raw(
+      'show server_version',
+    )
+    const version = result.rows[0]?.server_version
+    const major = Number(version.split('.')[0])
+    assert(
+      major === this.requiredMajorVersion,
+      `Postgres server major version ${major} different than required ${this.requiredMajorVersion}`,
+    )
   }
 }

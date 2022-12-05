@@ -1,0 +1,42 @@
+{
+  "name": "loopring",
+  "contracts": [
+    {
+      "name": "LoopringIOExchangeOwner",
+      "address": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
+      }
+    },
+    {
+      "name": "ExchangeV3",
+      "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+      "upgradeability": {
+        "type": "Loopring proxy",
+        "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
+        "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
+      },
+      "values": {
+        "agentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
+        "depositContract": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+        "owner": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+        "version": "3.6.0"
+      }
+    },
+    {
+      "name": "DefaultDepositContract",
+      "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+        "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97"
+      }
+    }
+  ]
+}
