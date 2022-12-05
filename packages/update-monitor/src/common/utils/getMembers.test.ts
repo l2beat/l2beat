@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { getMembers } from '../../../src/common/utils/getMembers'
+import { getMembers } from './getMembers'
 
 describe(getMembers.name, () => {
   it('member revoked', () => {
