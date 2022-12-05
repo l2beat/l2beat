@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { stringAsInt } from '../../src/tools/types'
+import { stringAsInt } from './types'
 
 describe(stringAsInt.name, () => {
   describe('parses correct input', () => {

@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { hashJson } from '../../src/tools/hashJson'
+import { hashJson } from './hashJson'
 
 describe(hashJson.name, () => {
   it('returns same hash for similar objects', () => {
