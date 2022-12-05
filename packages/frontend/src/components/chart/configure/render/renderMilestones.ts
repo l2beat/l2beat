@@ -5,18 +5,15 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
   if (!points) {
     return
   }
-  console.log(state.data.milestones)
   let innerHtml = ''
   const width = milestones.getBoundingClientRect().width
   for (const point of points) {
     if (!point.milestone) {
       continue
     }
-    console.log('found', point.milestone)
     const x = point.x * width - 8
     innerHtml += `<div class="absolute top-[-8px] z-50" style="left: ${x}px">${a}</div>`
   }
-  console.log('innerHtml=',innerHtml)
   milestones.innerHTML = innerHtml
 }
 

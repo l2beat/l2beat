@@ -50,6 +50,11 @@ function getInitMessage(elements: ChartElements): InitMessage {
 
   const showEthereum = !!elements.controls.showEthereum?.checked
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const milestones = elements.chart.dataset.milestones ? JSON.parse(elements.chart.dataset.milestones) : []
+
+  console.log(milestones)
+
   return {
     type: 'Init',
     initialView,
@@ -59,22 +64,7 @@ function getInitMessage(elements: ChartElements): InitMessage {
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
     labelCount: elements.view.labels.length,
-    // we don't yet know how we obtain this
-    milestones: [
-      {
-        name: 'Nitro Upgrade',
-        link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
-        date: '2022-08-31T00:00:00Z',
-        description:
-          'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
-      },
-      {
-        name: 'Nitro Upgrade',
-        link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
-        date: '2022-11-30T00:00:00Z',
-        description:
-          'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
-      },
-    ],
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    milestones
   }
 }
