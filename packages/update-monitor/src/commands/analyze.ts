@@ -1,5 +1,9 @@
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
+import {
+  ACROSS_BRIDGE_NAME,
+  getAcrossBridgeParameters,
+} from '../projects/acrossBridge'
 
 import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
 import { AZTEC_NAME, getAztecParameters } from '../projects/aztec'
@@ -69,6 +73,7 @@ export async function analyze(projects: string[]) {
     [AZTEC_NAME, getAztecParameters],
     [OMG_NETWORK_NAME, getOmgNetworkParameters],
     [L2FZK_NAME, getLayer2FinanceZkParameters],
+    [ACROSS_BRIDGE_NAME, getAcrossBridgeParameters],
   ]
 
   const unknownArguments = projects.filter(

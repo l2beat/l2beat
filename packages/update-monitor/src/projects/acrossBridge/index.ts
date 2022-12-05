@@ -1,6 +1,33 @@
+import { providers } from 'ethers'
+
+import { GnosisSafe } from '../../common/proxies/GnosisSafe'
 import { DiscoveryEngine } from '../../discovery/DiscoveryEngine'
+import { ProjectParameters } from '../../types'
+import { addresses } from './constants'
+import { getFinder } from './contracts/finder'
+import { getGovernor } from './contracts/governor'
+import { getHubPool } from './contracts/hubPool'
+import { getProposer } from './contracts/proposer'
+import { getVotingToken } from './contracts/votingToken'
 
 export const ACROSS_BRIDGE_NAME = 'acrossBridge'
+
+export async function getAcrossBridgeParameters(
+  provider: providers.JsonRpcProvider,
+): Promise<ProjectParameters> {
+  const parameters: ProjectParameters = {
+    name: ACROSS_BRIDGE_NAME,
+    contracts: await Promise.all([
+      getHubPool(provider),
+      GnosisSafe.getContract(provider, addresses.multisig, 'Multisig'),
+      getFinder(provider),
+      getGovernor(provider),
+      getProposer(provider),
+      getVotingToken(provider),
+    ]),
+  }
+  return parameters
+}
 
 export async function discoverAcrossBridge(discoveryEngine: DiscoveryEngine) {
   await discoveryEngine.discover(
