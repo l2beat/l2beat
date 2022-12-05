@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -20,7 +21,12 @@ export const arbitrum: Layer2 = {
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description:
-      'Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.',
+      "Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
+      Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Validators (currently whitelisted)\
+      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any other Validator can challenge the state root within the challenge window (7-days). \
+      The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
+      eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Validator publishes\
+      L2 state root within 7 days, the Validator whitelist is dropped and anyone can take over as a new Validator.",
     purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
@@ -111,14 +117,6 @@ export const arbitrum: Layer2 = {
         blockNumber >= 22207818 ? count - 1 : count,
       startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
-    transactionApiV2: {
-      type: 'rpc',
-      // We need to subtract the Nitro system transactions
-      // after the block of the update
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber >= 22207818 ? count - 1 : count,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -130,7 +128,11 @@ export const arbitrum: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    validatorFailure: {
+      value: 'Propose blocks',
+      description:
+        'Anyone can become a Validator after 7-days of inactivity from the currently whitelisted Validators.',
+    },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
@@ -206,7 +208,7 @@ export const arbitrum: Layer2 = {
             href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
           },
         ],
-        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+        risks: [],
       },
       {
         name: 'Tradeable Bridge Exit',
@@ -297,22 +299,56 @@ export const arbitrum: Layer2 = {
       name: 'Validators',
       accounts: [
         {
-          address: '0xa8C3E94015f1F91FF60e4E939E0A4D14B8d9Fc4F',
+          address: '0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398',
+          type: 'Contract',
+        },
+        {
+          address: '0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b',
+          type: 'Contract',
+        },
+        {
+          address: '0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104',
           type: 'EOA',
         },
         {
-          address: '0x9919dbF38e05C6496D852d8e5705EB101308f089',
+          address: '0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4',
           type: 'EOA',
         },
         {
-          // owner of 0xdcc298Dd0041341aE679a77740601Fbc87B02f2d
-          address: '0xF76d5fd2465ea5df336C2DB2c7B17f5F99890858',
+          address: '0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78',
+          type: 'Contract',
+        },
+        {
+          address: '0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0',
+          type: 'Contract',
+        },
+        {
+          address: '0x610Aa279989F440820e14248BD3879B148717974',
           type: 'EOA',
         },
         {
-          // owner of 0x51de512AA5dfb02143a91c6F772261623AE64564
-          address: '0xDdfFDAF55326B9765a2e69ebf0e6Dca11ae669cD',
+          address: '0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E',
           type: 'EOA',
+        },
+        {
+          address: '0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c',
+          type: 'EOA',
+        },
+        {
+          address: '0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5',
+          type: 'EOA',
+        },
+        {
+          address: '0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5',
+          type: 'Contract',
+        },
+        {
+          address: '0xAB1A39332e934300eBCc57B5f95cA90631a347FF',
+          type: 'EOA',
+        },
+        {
+          address: '0x7CF3d537733F6Ba4183A833c9B021265716cE9d0',
+          type: 'Contract',
         },
       ],
       description:
@@ -328,12 +364,6 @@ export const arbitrum: Layer2 = {
           'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
       },
       {
-        address: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-        name: 'ProxyAdmin (2)',
-        description:
-          'This contract is an admin of Inbox contract. It is owned by a 4-of-6 multisig.',
-      },
-      {
         address: '0x5eF0D09d1E6204141B4d37530808eD19f60FBa35',
         name: 'Rollup',
         description:
@@ -341,8 +371,8 @@ export const arbitrum: Layer2 = {
         upgradeability: {
           type: 'Arbitrum',
           admin: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-          adminImplementation: '0x75fc5465c4BaD74B367ac917f7298aD66c308Fb8',
-          userImplementation: '0x4C5960936f1635765e37Ff1a220D7344b27D7046',
+          adminImplementation: '0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f',
+          userImplementation: '0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff',
         },
       },
       {
@@ -353,7 +383,7 @@ export const arbitrum: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0x16242595cAfA3a207E9354E3bdb000B59bA82875',
+          implementation: '0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9',
         },
       },
       {
@@ -363,8 +393,8 @@ export const arbitrum: Layer2 = {
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
         upgradeability: {
           type: 'EIP1967',
-          admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-          implementation: '0x3E2198A77FC6B266082b92859092170763548730',
+          admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+          implementation: '0x931E1770BEC7827841f3989bda43319adACD62db',
         },
       },
       {
@@ -379,15 +409,6 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        address: '0xc8C3194eD3BE7B2393fEfE811a2Cc39297442c0B',
-        name: 'Deprecated RollupEventBridge',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x171a2624302775eF943f4f62E76fd22A6813d7c4',
-          implementation: '0xb872Ea300eDba3872873fa1Aa33DB897c4D2cB66',
-        },
-      },
-      {
         address: '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
         name: 'Outbox',
         upgradeability: {
@@ -398,7 +419,7 @@ export const arbitrum: Layer2 = {
       },
       {
         address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-        name: 'ProxyAdmin (3)',
+        name: 'ProxyAdmin (2)',
         description:
           'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
       },
@@ -409,7 +430,7 @@ export const arbitrum: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-          implementation: '0x6D1c576Fe3e54313990450f5Fa322306B4cCB47B',
+          implementation: '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
         },
       },
       {
@@ -448,21 +469,31 @@ export const arbitrum: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
+  milestones: [
     {
-      date: '2022-08-31',
-      name: 'Arbitrum One is now running on Nitro',
+      name: 'Nitro Upgrade',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
+      date: '2022-08-31T00:00:00Z',
+      description:
+        'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
     },
     {
-      date: '2022-08-09',
-      name: 'The gates of Arbitrum Nova are now open',
-      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+      name: 'Odyssey paused',
+      link: 'https://twitter.com/arbitrum/status/1542159109511847937',
+      date: '2022-06-29T00:00:00Z',
+      description:
+        'Due of the heavy load being put on the chain, Odyssey program got paused.',
     },
     {
-      date: '2022-08-05',
-      name: 'Arbitrum One is migrating to Nitro on August 31st',
-      link: 'https://medium.com/offchainlabs/prepare-your-engines-nitro-is-imminent-a46af99b9e60',
+      name: 'Odyssey started',
+      link: 'https://twitter.com/arbitrum/status/1539292126105706496',
+      date: '2022-06-21T00:00:00Z',
+      description: 'Incentives program to onboard new users has started.',
+    },
+    {
+      ...MILESTONES.MAINNET_OPEN,
+      link: 'https://twitter.com/arbitrum/status/1432817424752128008',
+      date: '2021-08-31T00:00:00Z',
     },
   ],
 }

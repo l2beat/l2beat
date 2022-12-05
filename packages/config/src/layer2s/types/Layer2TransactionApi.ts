@@ -8,6 +8,7 @@ export interface RpcTransactionApi {
   callsPerMinute?: number
   assessCount?: AssessCount
   startBlock?: number
+  timeout?: number
 }
 
 export interface StarknetTransactionApi {
@@ -21,6 +22,13 @@ export interface AztecTransactionApi {
   url: string
   callsPerMinute?: number
 }
+
+export interface AztecConnectTransactionApi {
+  type: 'aztecconnect'
+  url: string
+  callsPerMinute?: number
+}
+
 export interface ZksyncTransactionApi {
   type: 'zksync'
   callsPerMinute: number
@@ -37,16 +45,19 @@ export type StarkexProduct =
   | 'immutable'
   | 'myria'
   | 'deversifi'
+
 export interface StarkexTransactionApi {
   type: 'starkex'
   product: StarkexProduct
   sinceTimestamp: UnixTime
+  resyncLastDays: number
 }
 
 export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApi
   | StarkexTransactionApi
   | AztecTransactionApi
+  | AztecConnectTransactionApi
   | StarknetTransactionApi
   | ZksyncTransactionApi
   | LoopringTransactionApi

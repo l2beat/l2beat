@@ -2,25 +2,25 @@ export {}
 
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     block_number: number
   }
 
   interface PriceRow {
     asset_id: string
     price_usd: number
-    unix_timestamp: string
+    unix_timestamp: Date
   }
 
   interface BalanceRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     holder_address: string
     asset_id: string
     balance: string
   }
 
   interface ReportRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     project_id: string
     asset_id: string
     balance: string
@@ -29,7 +29,7 @@ declare module 'knex/types/tables' {
   }
 
   interface AggregateReportRow {
-    unix_timestamp: string
+    unix_timestamp: Date
     project_id: string
     tvl_usd: string
     tvl_eth: string
@@ -39,12 +39,19 @@ declare module 'knex/types/tables' {
 
   interface ReportStatusRow {
     config_hash: string
-    unix_timestamp: string
+    unix_timestamp: Date
   }
 
   interface BalanceStatusRow {
     config_hash: string
-    unix_timestamp: string
+    unix_timestamp: Date
+  }
+
+  interface SequenceProcessorRow {
+    id: string
+    last_processed: number
+    latest: number
+    updated_at: Date
   }
 
   interface ZksyncTransactionRow {
@@ -66,27 +73,9 @@ declare module 'knex/types/tables' {
     count: number
   }
 
-  interface TransactionCountViewRow {
-    project_id: string
-    count: number
-    unix_timestamp: Date
-  }
-
-  interface BlockTipRow {
-    project_id: string
-    block_number: number | null
-    unix_timestamp: Date | null
-  }
-
-  interface SequenceProcessorRow {
-    id: string
-    last_processed: number
-    finished_processing_at: Date
-  }
-
   interface DailyTransactionCountRow {
     project_id: string
-    count: number
+    count: string // postgres keeps it as bigint, because it is a sum of integers
     unix_timestamp: Date
   }
 
@@ -98,15 +87,9 @@ declare module 'knex/types/tables' {
     reports: ReportRow
     aggregate_reports: AggregateReportRow
     report_status: ReportStatusRow
-    'transactions.block': BlockTransactionCountRow
-    'transactions.block_count_view': TransactionCountViewRow
-    'transactions.block_tip': BlockTipRow
-    'transactions.zksync': ZksyncTransactionRow
-    'transactions.zksync_count_view': TransactionCountViewRow
-    'transactions.starkex': StarkexTransactionCountRow
     sequence_processor: SequenceProcessorRow
-    'activity.block': BlockTransactionCountRow
     'activity.zksync': ZksyncTransactionRow
+    'activity.block': BlockTransactionCountRow
     'activity.starkex': StarkexTransactionCountRow
     'activity.daily_count_view': DailyTransactionCountRow
   }

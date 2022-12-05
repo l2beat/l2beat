@@ -141,7 +141,7 @@ export const aptos: Bridge = {
         name: 'LayerZero Proof Library',
       },
     ],
-    risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
   permissions: [

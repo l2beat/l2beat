@@ -1,5 +1,5 @@
-import { utils } from 'ethers'
+import { Bytes, EthereumAddress } from '@l2beat/types'
 
-export function bytes32ToAddress(bytes32: string) {
-  return utils.getAddress('0x' + bytes32.slice(-40))
+export function bytes32ToAddress(bytes32: Bytes) {
+  return EthereumAddress(bytes32.slice(12, 32).toString())
 }

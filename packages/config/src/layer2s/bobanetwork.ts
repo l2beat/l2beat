@@ -78,12 +78,6 @@ export const bobanetwork: Layer2 = {
       callsPerMinute: 200,
       startBlock: 1, // block 0 has timestamp of beginning of unix time
     },
-    transactionApiV2: {
-      type: 'rpc',
-      url: 'https://mainnet.boba.network/',
-      callsPerMinute: 200,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -336,21 +330,13 @@ export const bobanetwork: Layer2 = {
       description: 'Central actor to post new L2 state roots to L1.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-21',
-      name: 'Boba Network is launching on Avalanche',
-      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
-    },
-    {
-      date: '2022-09-09',
-      name: 'Boba Network’s veTokenomics Campaign',
-      link: 'https://boba.network/vetokenomics-boba-101/',
-    },
-    {
-      date: '2022-09-06',
-      name: 'Sushi is coming to Boba Network',
-      link: 'https://boba.network/sushi-coming-to-boba-network/',
+      name: 'Mainnet launch',
+      date: '2021-09-20T00:00:00Z',
+      link: 'https://www.enya.ai/press/public-mainnet',
+      description:
+        'Layer 2 Optimistic Rollup based on the Optimism codebase is live on Ethereum.',
     },
   ],
 }

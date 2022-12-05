@@ -16,8 +16,8 @@
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": "false",
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xcf6cc25e9197682fae73318f99df17b16f67a1843a2443ed311b12117ec2f47a",
-        "triggerTime": "1666607084",
+        "ssHash": "0x7365a4cb2a3d976f6f1c30ee944a5887f08a10591f5ac9343846351e6010205d",
+        "triggerTime": "1669101916",
         "pausers": [
           "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
           "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
@@ -51,7 +51,13 @@
           "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
         ],
-        "votersPowers": [10000, 10000, 10000, 10000, 10000]
+        "votersPowers": [
+          10000,
+          10000,
+          10000,
+          10000,
+          10000
+        ]
       }
     },
     {

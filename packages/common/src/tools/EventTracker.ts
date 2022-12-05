@@ -17,13 +17,14 @@ export class EventTracker<T extends string> {
     this.events.push({ timestamp: Date.now(), name })
   }
 
-  getStats() {
+  getStatus() {
     this.pruneOldEvents()
     const now = Date.now()
     return {
-      lastSecond: this.getSecondsAverage(now, 1),
-      lastMinuteAverage: this.getSecondsAverage(now, 60),
-      lastHourAverage: this.getSecondsAverage(now, 60 * 60),
+      lastSecond: this.getSecondsAverages(now, 1),
+      lastFiveSeconds: this.getSecondsTotals(now, 5),
+      lastMinuteAverage: this.getSecondsAverages(now, 60),
+      lastHourAverage: this.getSecondsAverages(now, 60 * 60),
     }
   }
 
@@ -41,25 +42,34 @@ export class EventTracker<T extends string> {
     intervalId.unref()
   }
 
-  private getSecondsAverage(
+  private getSecondsAverages(
+    now: number,
+    secondsBack: number,
+  ): Record<T, number> {
+    const totals = this.getSecondsTotals(now, secondsBack)
+    const totalsEntries: [string, number][] = Object.entries(totals)
+    const averages = totalsEntries.reduce<Record<string, number>>(
+      (acc, [name, total]) => ({
+        ...acc,
+        [name]: total / secondsBack,
+      }),
+      {},
+    )
+    return averages
+  }
+
+  private getSecondsTotals(
     now: number,
     secondsBack: number,
   ): Record<T, number> {
     const beginning = now - secondsBack * 1_000
-    const sums = this.events
+    const totals = this.events
       .filter(({ timestamp }) => timestamp > beginning)
       .reduce<Record<string, number>>(
         (acc, { name }) => ({ ...acc, [name]: (acc[name] || 0) + 1 }),
         {},
       )
-    const averages = Object.entries(sums).reduce<Record<string, number>>(
-      (acc, [name, count]) => ({
-        ...acc,
-        [name]: count / secondsBack,
-      }),
-      {},
-    )
-    return averages
+    return totals
   }
 
   private pruneOldEvents() {

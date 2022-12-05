@@ -62,12 +62,6 @@ export const aztec: Layer2 = {
       callsPerMinute: 3_000,
       excludeFromActivityApi: true,
     },
-    transactionApiV2: {
-      type: 'aztec',
-      url: 'https://api.aztec.network/falafel-mainnet',
-      callsPerMinute: 3_000,
-      excludeFromActivityApi: true,
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
@@ -193,21 +187,13 @@ export const aztec: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  news: [
+  milestones: [
     {
-      date: '2022-09-20',
-      name: 'Explaining the “Network” in Aztec Network',
-      link: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
-    },
-    {
-      date: '2022-09-15',
-      name: 'Proof Compression using zk-SNARKs',
-      link: 'https://medium.com/aztec-protocol/proof-compression-a318f478d575',
-    },
-    {
-      date: '2022-07-07',
-      name: 'Aztec Connect is live on mainnet',
-      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
+      name: 'Aztec 2.0',
+      date: '2021-03-15T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      description:
+        'Private Rollup is live on mainnet, allowing user to access DeFi.',
     },
   ],
 }

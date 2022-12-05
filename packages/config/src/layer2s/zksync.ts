@@ -61,7 +61,7 @@ export const zksync: Layer2 = {
         sinceTimestamp: new UnixTime(1592218707),
       },
     ],
-    transactionApiV2: {
+    transactionApi: {
       type: 'zksync',
       callsPerMinute: 3_000,
     },
@@ -172,7 +172,7 @@ export const zksync: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x59a5E7c08be8356193Cd9F92CA8Ac95C42aB0Bdd',
+          implementation: '0x8e972b354E6933275513C355Ee14D44A832aD2d9',
         },
       },
       {
@@ -199,7 +199,7 @@ export const zksync: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x934ef5836E78d93125317034f5CF855A97B13f43',
+          implementation: '0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8',
         },
       },
     ],
@@ -342,21 +342,20 @@ export const zksync: Layer2 = {
         'Account receiving fees for listing tokens. Can be updated by zkSync MultiSig.',
     },
   ],
-  news: [
+  milestones: [
     {
-      date: '2022-09-21',
-      name: 'Accessible DeFi with Hashflow',
-      link: 'https://blog.matter-labs.io/accessible-defi-with-hashflow-32e28f22f443',
+      name: 'zkSync 1.0 launch',
+      link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+      date: '2020-06-18T00:00:00Z',
+      description:
+        'zkSync is live, bringing trustless, scalable payments to Ethereum using zkRollup technology.',
     },
     {
-      date: '2022-09-14',
-      name: 'Peace of Mind With Nexus Mutual',
-      link: 'https://blog.matter-labs.io/peace-of-mind-with-nexus-mutual-250365d0cf9e',
-    },
-    {
-      date: '2022-09-07',
-      name: 'Web3 Cybersecurity Auditing With Hacken',
-      link: 'https://blog.matter-labs.io/web3-cybersecurity-auditing-with-hacken-3d19a365607c',
+      name: 'zkEVM alpha',
+      link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
+      date: '2022-10-28T00:00:00Z',
+      description:
+        'Deployment of the system to mainnet, for the testing purposes.',
     },
   ],
 }

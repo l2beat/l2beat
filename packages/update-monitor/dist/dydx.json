@@ -5,8 +5,11 @@
       "name": "StarkPerpetual",
       "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
       "upgradeability": {
-        "type": "proxy",
-        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3"
+        "type": "StarkWare proxy",
+        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
+        "callImplementation": "0x0000000000000000000000000000000000000000",
+        "upgradeDelay": 0,
+        "isFinal": false
       },
       "values": {
         "subContracts": [

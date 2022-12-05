@@ -12,7 +12,6 @@ import {
   SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
-import { layer2finance } from './layer2finance'
 import { Layer2 } from './types'
 
 export const layer2financezk: Layer2 = {
@@ -106,7 +105,6 @@ export const layer2financezk: Layer2 = {
       },
       {
         name: 'Committee',
-        description: CONTRACTS.UNVERIFIED_DESCRIPTION,
         address: '0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9',
       },
       SHARP_VERIFIER_CONTRACT,
@@ -196,5 +194,4 @@ export const layer2financezk: Layer2 = {
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },
   ],
-  news: layer2finance.news,
 }

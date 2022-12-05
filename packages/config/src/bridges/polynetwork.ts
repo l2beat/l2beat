@@ -206,7 +206,7 @@ export const polynetwork: Bridge = {
           'Contract unverified on Etherscan. Used to proxy requests from LockProxy to EthCrossChainManager.',
       },
     ],
-    risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {

@@ -1,19 +1,18 @@
-import { BigNumber, Contract, providers } from 'ethers'
+import { EthereumAddress } from '@l2beat/types'
+import { BigNumber } from 'ethers'
 
+import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { getCallResult } from '../utils/getCallResult'
-import { extendDetect } from './extendDetect'
 import { ProxyDetection } from './types'
 
 async function getProxyType(
-  provider: providers.Provider,
-  contract: Contract | string,
-  blockNumber: number,
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
 ) {
   const type = await getCallResult<BigNumber>(
     provider,
-    contract,
+    address,
     'function proxyType() public pure returns (uint256 proxyTypeId)',
-    blockNumber,
   )
   if (type?.eq(1)) {
     return 1
@@ -23,28 +22,26 @@ async function getProxyType(
 }
 
 async function getImplementation(
-  provider: providers.Provider,
-  contract: Contract | string,
-  blockNumber: number,
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
 ) {
-  return getCallResult<string>(
+  const result = await getCallResult<string>(
     provider,
-    contract,
+    address,
     'function implementation() public view returns (address codeAddr)',
-    blockNumber,
   )
+  return result && EthereumAddress(result)
 }
 
 async function detect(
-  provider: providers.Provider,
-  address: string,
-  blockNumber: number,
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
-  const type = await getProxyType(provider, address, blockNumber)
+  const type = await getProxyType(provider, address)
   if (!type) {
     return
   }
-  const implementation = await getImplementation(provider, address, blockNumber)
+  const implementation = await getImplementation(provider, address)
   if (!implementation) {
     return
   }
@@ -62,5 +59,5 @@ async function detect(
 export const Eip897Proxy = {
   getProxyType,
   getImplementation,
-  ...extendDetect(detect),
+  detect,
 }
