@@ -14,7 +14,6 @@ export async function getBondManager(
 
   const addressManager: string = await bondManager.libAddressManager()
 
-
   return {
     name: 'BondManager',
     address: bondManager.address,
