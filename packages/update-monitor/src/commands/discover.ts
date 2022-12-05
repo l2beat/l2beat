@@ -12,6 +12,10 @@ import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
 import { discoverHop, HOP_NAME } from '../projects/hop'
 import {
+  discoverHyphenBridge,
+  HYPHEN_BRIDGE_NAME,
+} from '../projects/hyphenBridge'
+import {
   discoverLayer2FinanceZk,
   L2FZK_NAME,
 } from '../projects/layer2FinanceZk'
@@ -76,6 +80,7 @@ export async function discover(args: string[]) {
     [CBRIDGE_NAME, discoverCBridge],
     [OMG_NETWORK_NAME, discoverOmgNetwork],
     [L2FZK_NAME, discoverLayer2FinanceZk],
+    [HYPHEN_BRIDGE_NAME, discoverHyphenBridge],
   ]
 
   const project = projects.find((x) => x[0] === args[0])
