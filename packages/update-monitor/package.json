@@ -9,7 +9,7 @@
     "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .ts --max-warnings 0 src",
     "start": "node -r esbuild-register src",
-    "test": "mocha -r esbuild-register 'test/**/*.ts'",
+    "test": "mocha",
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
     "typechain": "rm -rf src/typechain && typechain --target ethers-v5 --out-dir src/typechain  abi/**/*.json"

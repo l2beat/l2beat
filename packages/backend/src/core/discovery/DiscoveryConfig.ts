@@ -1,6 +1,8 @@
 import { branded, EthereumAddress } from '@l2beat/types'
 import * as z from 'zod'
 
+import { UserHandlerDefinition } from './handlers/UserHandlerDefinition'
+
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   ignoreDiscovery: z.optional(z.boolean()),
@@ -8,14 +10,7 @@ export const DiscoveryContract = z.object({
   proxyType: z.optional(z.string()),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
-  fields: z.optional(
-    z.record(
-      // TODO: union?
-      z.object({
-        type: z.string(),
-      }),
-    ),
-  ),
+  fields: z.optional(z.record(UserHandlerDefinition)),
 })
 
 export type DiscoveryConfig = z.infer<typeof DiscoveryConfig>

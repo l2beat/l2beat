@@ -87,7 +87,8 @@ export class Bytes {
   }
 }
 
-const HEX_REGEX = /^(0x)?[a-f\d]*$/i
+export const HEX_REGEX = /^(0x)?[a-f\d]*$/i
+
 function isHexString(value: unknown): value is string {
   return typeof value === 'string' && HEX_REGEX.test(value)
 }
