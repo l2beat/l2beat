@@ -70,7 +70,10 @@ export function render(
     }
 
     if (elements.view.milestones) {
-      if ((previousState.controls.days !== state.controls.days) || !previousState.view.chart?.points) {
+      if (
+        previousState.controls.days !== state.controls.days ||
+        !previousState.view.chart?.points
+      ) {
         renderMilestones(state, elements.view.milestones)
       }
     }

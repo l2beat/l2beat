@@ -68,7 +68,9 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
   ]
 }
 
-function milestonesToRecord(milestones: Milestone[]): Record<number, Milestone> {
+function milestonesToRecord(
+  milestones: Milestone[],
+): Record<number, Milestone> {
   const result: Record<number, Milestone> = {}
   for (const milestone of milestones) {
     const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)

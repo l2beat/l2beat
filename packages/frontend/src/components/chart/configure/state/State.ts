@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import { z } from 'zod'
 
 export interface State {
@@ -112,11 +113,12 @@ export const ActivityResponse = z.object({
   }),
 })
 
-
 export type Milestones = z.infer<typeof Milestones>
-export const Milestones = z.array(z.object({
-  name: z.string(),
-  link: z.string(),
-  date: z.string(),
-  description: z.optional(z.string())
-}))
+export const Milestones = z.array(
+  z.object({
+    name: z.string(),
+    link: z.string(),
+    date: z.string(),
+    description: z.optional(z.string()),
+  }),
+)

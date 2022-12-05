@@ -6,7 +6,7 @@ export function getLocalConfig(): Config {
     ...common,
     features: {
       ...common.features,
-      milestones: true
+      milestones: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',
