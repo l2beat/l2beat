@@ -3,10 +3,7 @@ import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import {
-  EtherscanClient,
-  EtherscanError,
-} from '../../../src/peripherals/etherscan'
+import { EtherscanClient, EtherscanError } from './EtherscanClient'
 
 describe(EtherscanClient.name, () => {
   describe(EtherscanClient.prototype.call.name, () => {

@@ -3,7 +3,7 @@ import { StarkexProduct } from '@l2beat/config'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { StarkexClient } from '../../../src/peripherals/starkex'
+import { StarkexClient } from './StarkexClient'
 
 describe(StarkexClient.name, () => {
   const API_URL = 'xXStarkexApiUrlXx'

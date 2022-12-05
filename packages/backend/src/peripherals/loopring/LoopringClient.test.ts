@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { LoopringClient } from '../../../src/peripherals/loopring'
+import { LoopringClient } from './LoopringClient'
 
 describe(LoopringClient.name, () => {
   describe(LoopringClient.prototype.getBlock.name, () => {

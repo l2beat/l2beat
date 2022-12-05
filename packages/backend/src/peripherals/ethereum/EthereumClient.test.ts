@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
 
-import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
+import { EthereumClient } from './EthereumClient'
 
 describe(EthereumClient.name, () => {
   describe(EthereumClient.prototype.getAllLogs.name, () => {

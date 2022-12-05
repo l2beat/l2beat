@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { getBlockNumberAtOrBefore } from '../../src/peripherals/getBlockNumberAtOrBefore'
+import { getBlockNumberAtOrBefore } from './getBlockNumberAtOrBefore'
 
 describe(getBlockNumberAtOrBefore.name, () => {
   it('works properly', async () => {

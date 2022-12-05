@@ -3,8 +3,8 @@ import { AssetId, Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { utils } from 'ethers'
 
-import { BalanceCall } from '../../../../src/peripherals/ethereum/calls/BalanceCall'
-import { MULTICALL_V1_ADDRESS } from '../../../../src/peripherals/ethereum/MulticallClient'
+import { MULTICALL_V1_ADDRESS } from '../MulticallClient'
+import { BalanceCall } from './BalanceCall'
 
 describe('BalanceCall', () => {
   const coder = new utils.Interface([

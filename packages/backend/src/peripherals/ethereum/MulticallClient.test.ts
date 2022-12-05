@@ -2,7 +2,7 @@ import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { EthereumClient } from '../../../src/peripherals/ethereum/EthereumClient'
+import { EthereumClient } from './EthereumClient'
 import {
   encodeMulticallV1,
   encodeMulticallV2,
@@ -13,8 +13,8 @@ import {
   MULTICALL_V2_BLOCK,
   MulticallClient,
   multicallInterface,
-} from '../../../src/peripherals/ethereum/MulticallClient'
-import { BlockTag } from '../../../src/peripherals/ethereum/types'
+} from './MulticallClient'
+import { BlockTag } from './types'
 
 describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))

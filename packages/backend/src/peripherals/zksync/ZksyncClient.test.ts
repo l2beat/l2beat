@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { ZksyncClient } from '../../../src/peripherals/zksync'
+import { ZksyncClient } from './ZksyncClient'
 
 describe(ZksyncClient.name, () => {
   describe(ZksyncClient.prototype.getTransactionsInBlock.name, () => {
