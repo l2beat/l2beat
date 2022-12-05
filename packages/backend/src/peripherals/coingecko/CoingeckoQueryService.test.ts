@@ -13,7 +13,7 @@ import {
   generateRangesToCallHourly,
   pickPrices,
   PriceHistoryPoint,
-} from '../../../src/peripherals/coingecko/CoingeckoQueryService'
+} from './CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {
   describe(CoingeckoQueryService.prototype.getUsdPriceHistory.name, () => {
