@@ -1,10 +1,10 @@
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
+
 import {
   ACROSS_BRIDGE_NAME,
   getAcrossBridgeParameters,
 } from '../projects/acrossBridge'
-
 import { ARBITRUM_NAME, getArbitrumParameters } from '../projects/arbitrum'
 import { AZTEC_NAME, getAztecParameters } from '../projects/aztec'
 import { CBRIDGE_NAME, getCBridgeParameters } from '../projects/cBridge'
