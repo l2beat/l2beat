@@ -2,8 +2,8 @@ import { expect } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { Logger } from '../../../src/tools/Logger'
-import { UniqueTaskQueue } from '../../../src/tools/queue/UniqueTaskQueue'
+import { Logger } from '../Logger'
+import { UniqueTaskQueue } from './UniqueTaskQueue'
 
 describe(UniqueTaskQueue.name, () => {
   it('adds only unique tasks', async () => {

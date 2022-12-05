@@ -1,9 +1,9 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
-import { Logger } from '../../../src/tools/Logger'
-import { Retries } from '../../../src/tools/queue/Retries'
-import { TaskQueue } from '../../../src/tools/queue/TaskQueue'
+import { Logger } from '../Logger'
+import { Retries } from './Retries'
+import { TaskQueue } from './TaskQueue'
 
 describe(TaskQueue.name, () => {
   let time: InstalledClock

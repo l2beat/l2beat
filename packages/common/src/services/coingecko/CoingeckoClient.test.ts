@@ -2,11 +2,10 @@ import { CoingeckoId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { CoingeckoClient, HttpClient, mock } from '../../../src'
-import {
-  CoinMarketChartRangeData,
-  CoinMarketChartRangeResult,
-} from '../../../src/services/coingecko/model'
+import { mock } from '../../tools'
+import { HttpClient } from '../HttpClient'
+import { CoingeckoClient } from './CoingeckoClient'
+import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'
 
 //add names
 describe(CoingeckoClient.name, () => {

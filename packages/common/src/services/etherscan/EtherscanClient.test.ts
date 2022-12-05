@@ -2,7 +2,9 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { EtherscanClient, HttpClient, mock } from '../../../src'
+import { mock } from '../../tools'
+import { HttpClient } from '../HttpClient'
+import { EtherscanClient } from './EtherscanClient'
 
 describe(EtherscanClient.name, () => {
   describe(EtherscanClient.prototype.call.name, () => {

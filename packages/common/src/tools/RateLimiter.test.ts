@@ -1,7 +1,7 @@
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
-import { RateLimiter } from '../../src/tools/RateLimiter'
+import { RateLimiter } from './RateLimiter'
 
 describe(RateLimiter.name, () => {
   const cases = [

@@ -1,7 +1,7 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
-import { EventTracker } from '../../src/tools/EventTracker'
+import { EventTracker } from './EventTracker'
 
 describe(EventTracker.name, () => {
   let time: InstalledClock

@@ -1,8 +1,8 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earljs'
 
-import { Logger } from '../../src'
-import { promiseAllPlus } from '../../src/tools/promiseAllPlus'
+import { Logger } from './Logger'
+import { promiseAllPlus } from './promiseAllPlus'
 
 describe(promiseAllPlus.name, () => {
   let time: InstalledClock

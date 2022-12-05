@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { exponentialBackOff } from '../../../src/tools/queue/Retries'
+import { exponentialBackOff } from './Retries'
 
 describe('Retries', () => {
   describe(exponentialBackOff.name, () => {

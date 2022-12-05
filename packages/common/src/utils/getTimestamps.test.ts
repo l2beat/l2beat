@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { getTimestamps } from '../../src/utils/getTimestamps'
+import { getTimestamps } from './getTimestamps'
 
 describe(getTimestamps.name, () => {
   describe('hourly', () => {
