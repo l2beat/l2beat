@@ -3,8 +3,8 @@ import { readdirSync } from 'fs'
 import { afterEach } from 'mocha'
 import path from 'path'
 
-import { Database } from '../../../../src/peripherals/database/shared/Database'
-import { getTestDatabase } from './setup'
+import { getTestDatabase } from '../../../test/database'
+import { Database } from './Database'
 
 describe(Database.name, () => {
   it('can run and rollback all migrations', async function () {
@@ -28,10 +28,7 @@ describe(Database.name, () => {
   })
 
   it('migrations have consecutive numbering except for 20', () => {
-    const migrationsDirectory = path.resolve(
-      __dirname,
-      '../../../../src/peripherals/database/migrations',
-    )
+    const migrationsDirectory = path.resolve(__dirname, '../migrations')
     const fileNames = readdirSync(migrationsDirectory).sort()
     for (const [i, fileName] of fileNames.entries()) {
       const number = parseInt(fileName.slice(0, 3))

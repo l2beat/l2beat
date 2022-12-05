@@ -9,7 +9,7 @@ import {
   SequenceProcessorOpts,
 } from '../../src/core/SequenceProcessor'
 import { SequenceProcessorRepository } from '../../src/peripherals/database/SequenceProcessorRepository'
-import { setupDatabaseTestSuite } from '../peripherals/database/shared/setup'
+import { setupDatabaseTestSuite } from '../../src/test/database'
 
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()

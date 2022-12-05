@@ -2,11 +2,8 @@ import { Logger } from '@l2beat/common'
 import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import {
-  ReportRecord,
-  ReportRepository,
-} from '../../../src/peripherals/database/ReportRepository'
-import { setupDatabaseTestSuite } from './shared/setup'
+import { setupDatabaseTestSuite } from '../../test/database'
+import { ReportRecord, ReportRepository } from './ReportRepository'
 
 describe(ReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()

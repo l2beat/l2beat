@@ -2,11 +2,8 @@ import { Logger } from '@l2beat/common'
 import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import {
-  BalanceRecord,
-  BalanceRepository,
-} from '../../../src/peripherals/database/BalanceRepository'
-import { setupDatabaseTestSuite } from './shared/setup'
+import { setupDatabaseTestSuite } from '../../test/database'
+import { BalanceRecord, BalanceRepository } from './BalanceRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockBalance = (

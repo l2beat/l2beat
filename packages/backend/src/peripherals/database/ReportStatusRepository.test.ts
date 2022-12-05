@@ -2,12 +2,12 @@ import { Logger } from '@l2beat/common'
 import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { BalanceStatusRepository } from '../../../src/peripherals/database/BalanceStatusRepository'
-import { setupDatabaseTestSuite } from './shared/setup'
+import { setupDatabaseTestSuite } from '../../test/database'
+import { ReportStatusRepository } from './ReportStatusRepository'
 
-describe(BalanceStatusRepository.name, () => {
+describe(ReportStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new BalanceStatusRepository(database, Logger.SILENT)
+  const repository = new ReportStatusRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -42,7 +42,7 @@ describe(BalanceStatusRepository.name, () => {
     expect(timestampsTwo).toBeAnArrayWith(TIME_ONE, TIME_TWO)
   })
 
-  it('can add the same value multiple times ', async () => {
+  it('can add the same value multiple times', async () => {
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
     await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
@@ -51,12 +51,19 @@ describe(BalanceStatusRepository.name, () => {
     expect(timestamps).toEqual([TIME_ONE])
   })
 
-  it(BalanceStatusRepository.prototype.getBetween.name, async () => {
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_TWO })
+  it('gets statuses between timestamps', async () => {
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
 
     const result = await repository.getBetween(TIME_THREE, TIME_TWO)
+    expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
+  })
 
-    expect(result).toEqual([{ configHash: HASH_ONE, timestamp: TIME_TWO }])
+  it('finds latest timestamp', async () => {
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
+    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
+
+    const result = await repository.findLatestTimestamp()
+    expect(result).toEqual(TIME_ONE)
   })
 })

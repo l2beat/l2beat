@@ -1,9 +1,6 @@
 import { Logger } from '@l2beat/common'
 
-import {
-  Database,
-  DatabaseOpts,
-} from '../../../../src/peripherals/database/shared/Database'
+import { Database, DatabaseOpts } from '../peripherals/database/shared/Database'
 
 export function setupDatabaseTestSuite() {
   const { database, skip } = getTestDatabase()

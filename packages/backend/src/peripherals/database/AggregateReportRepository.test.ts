@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
+import { setupDatabaseTestSuite } from '../../test/database'
 import {
   AggregateReportRecord,
   AggregateReportRepository,
-} from '../../../src/peripherals/database/AggregateReportRepository'
-import { setupDatabaseTestSuite } from './shared/setup'
+} from './AggregateReportRepository'
 
 describe(AggregateReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
