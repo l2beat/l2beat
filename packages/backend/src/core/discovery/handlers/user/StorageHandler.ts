@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@l2beat/common'
 import { Bytes, EthereumAddress, HEX_REGEX } from '@l2beat/types'
 import * as z from 'zod'
 
@@ -30,7 +31,12 @@ export class StorageHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    const storage = await provider.getStorage(address, this.definition.slot)
+    let storage: Bytes
+    try {
+      storage = await provider.getStorage(address, this.definition.slot)
+    } catch (e) {
+      return { field: this.field, error: getErrorMessage(e) }
+    }
     return {
       field: this.field,
       value: bytes32ToContractValue(
