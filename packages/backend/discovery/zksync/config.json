@@ -7,17 +7,8 @@
       "fields": {
         "additional": {
           "type": "storage",
-          "slot": 19
-        }
-      }
-    },
-    "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": {
-      "fields": {
-        "validators": {
-          "type": "setFromEvents",
-          "event": "ValidatorStatusUpdate",
-          "addressField": "validatorAddress",
-          "actionField": "isActive"
+          "slot": 19,
+          "returnType": "address"
         }
       }
     },
