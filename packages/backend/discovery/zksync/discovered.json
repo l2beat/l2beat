@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "blockNumber": 15988861,
+  "blockNumber": 16118497,
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -11,15 +11,15 @@
       "values": {
         "getMaster": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "mainContract": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-        "noticePeriodFinishTimestamp": 0,
-        "upgradeStatus": 0,
-        "versionId": 10,
         "managedContracts": [
           "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
           "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
           "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
         ],
-        "nextTargets": []
+        "nextTargets": [],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 10
       }
     },
     {
@@ -49,7 +49,7 @@
         "getTarget": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
-        "totalTokens": 173
+        "totalTokens": 174
       }
     },
     {
@@ -73,12 +73,12 @@
         "type": "immutable"
       },
       "values": {
-        "DOMAIN_SEPARATOR": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7",
-        "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7",
         "name": "Dai Stablecoin",
+        "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "DAI",
-        "totalSupply": "5431156050081538604447986299",
+        "totalSupply": "5224357990340715427822674560",
         "version": "1"
       }
     },
@@ -89,8 +89,6 @@
         "type": "gnosis safe"
       },
       "values": {
-        "NAME": "Gnosis Safe",
-        "VERSION": "1.1.1",
         "domainSeparator": "0xcd86f82218dc46b5501da06e0b96a9cf73cd8f35153e9da3a481f79b6be5ff63",
         "getModules": [],
         "getOwners": [
@@ -102,7 +100,9 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 3,
-        "nonce": 104
+        "NAME": "Gnosis Safe",
+        "nonce": 104,
+        "VERSION": "1.1.1"
       }
     },
     {
@@ -115,7 +115,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 3497
+        "totalSupply": 6709
       }
     },
     {
@@ -127,16 +127,32 @@
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
       "values": {
+        "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
         "exodusMode": false,
-        "firstPriorityRequestId": 635932,
+        "firstPriorityRequestId": 694049,
         "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "getNoticePeriod": 0,
         "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
         "isReadyForUpgrade": true,
-        "totalBlocksCommitted": 128708,
-        "totalBlocksExecuted": 128675,
-        "totalBlocksProven": 128677,
-        "totalOpenPriorityRequests": 311
+        "totalBlocksCommitted": 138468,
+        "totalBlocksExecuted": 138449,
+        "totalBlocksProven": 138453,
+        "totalOpenPriorityRequests": 74
+      }
+    },
+    {
+      "name": "AdditionalZkSync",
+      "address": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "exodusMode": false,
+        "firstPriorityRequestId": 0,
+        "totalBlocksCommitted": 0,
+        "totalBlocksExecuted": 0,
+        "totalBlocksProven": 0,
+        "totalOpenPriorityRequests": 0
       }
     }
   ]

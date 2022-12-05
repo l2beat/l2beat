@@ -11,7 +11,7 @@ export function getHandlers(
   config: DiscoveryConfig,
 ) {
   const systemHandlers = getSystemHandlers(metadata.abi, address, config)
-  const fields = config.overrides?.[address.toString()].fields
+  const fields = config.overrides?.[address.toString()]?.fields
   const userHandlers = Object.entries(fields ?? {}).map(([field, definition]) =>
     getUserHandler(field, definition),
   )
