@@ -68,6 +68,13 @@ function getInitMessage(elements: ChartElements): InitMessage {
         description:
           'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
       },
+      {
+        name: 'Nitro Upgrade',
+        link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
+        date: '2022-11-30T00:00:00Z',
+        description:
+          'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
+      },
     ],
   }
 }
