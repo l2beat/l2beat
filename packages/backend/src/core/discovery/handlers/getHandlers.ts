@@ -1,19 +1,14 @@
-import { EthereumAddress } from '@l2beat/types'
-
-import { DiscoveryConfig } from '../DiscoveryConfig'
-import { ContractMetadata } from '../getMetadata'
+import { DiscoveryContract } from '../DiscoveryConfig'
 import { getSystemHandlers } from './getSystemHandlers'
 import { getUserHandler } from './getUserHandler'
 
 export function getHandlers(
-  metadata: ContractMetadata,
-  address: EthereumAddress,
-  config: DiscoveryConfig,
+  abi: string[],
+  overrides: DiscoveryContract | undefined,
 ) {
-  const systemHandlers = getSystemHandlers(metadata.abi, address, config)
-  const fields = config.overrides?.[address.toString()]?.fields
-  const userHandlers = Object.entries(fields ?? {}).map(([field, definition]) =>
-    getUserHandler(field, definition),
+  const systemHandlers = getSystemHandlers(abi, overrides)
+  const userHandlers = Object.entries(overrides?.fields ?? {}).map(
+    ([field, definition]) => getUserHandler(field, definition),
   )
 
   const handlers = userHandlers

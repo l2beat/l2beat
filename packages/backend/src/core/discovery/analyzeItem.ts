@@ -29,7 +29,8 @@ export async function analyzeItem(
     proxyDetection?.implementations ?? [],
   )
 
-  const handlers = getHandlers(metadata, address, config)
+  const overrides = config.overrides?.[address.toLowerCase()]
+  const handlers = getHandlers(metadata.abi, overrides)
   const parameters = await Promise.all(
     handlers.map((h) => h.execute(provider, address, metadata.abi)),
   )

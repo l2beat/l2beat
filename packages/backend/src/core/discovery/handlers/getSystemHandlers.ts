@@ -1,20 +1,18 @@
-import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { DiscoveryConfig } from '../DiscoveryConfig'
+import { DiscoveryContract } from '../DiscoveryConfig'
 import { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 
 export function getSystemHandlers(
   abiEntries: string[],
-  address: EthereumAddress,
-  config: DiscoveryConfig,
+  overrides: DiscoveryContract | undefined,
 ) {
-  const overrides = config.overrides?.[address.toString()]
   const abi = new utils.Interface(abiEntries)
 
-  const handlers: Handler[] = []
+  const methodHandlers: Handler[] = []
+  const arrayHandlers: Handler[] = []
 
   for (const fn of Object.values(abi.functions)) {
     if (
@@ -23,11 +21,11 @@ export function getSystemHandlers(
     ) {
       continue
     } else if (fn.inputs.length === 0) {
-      handlers.push(new SimpleMethodHandler(fn))
-    } else if (fn.inputs[0].type === 'uint256') {
-      handlers.push(new LimitedArrayHandler(fn))
+      methodHandlers.push(new SimpleMethodHandler(fn))
+    } else if (fn.inputs.length === 1 && fn.inputs[0].type === 'uint256') {
+      arrayHandlers.push(new LimitedArrayHandler(fn))
     }
   }
 
-  return handlers
+  return methodHandlers.concat(arrayHandlers)
 }
