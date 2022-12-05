@@ -55,7 +55,7 @@
   },
   "overrides": [
     {
-      "files": ["test/**/*.ts"],
+      "files": ["test/**/*.ts", "src/test/**/*.ts", "src/**/*.test.ts"],
       "rules": {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",

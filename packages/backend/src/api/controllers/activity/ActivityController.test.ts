@@ -7,13 +7,13 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { ActivityController } from '../../../../src/api/controllers/activity/ActivityController'
-import { TransactionCounter } from '../../../../src/core/activity/TransactionCounter'
-import { Clock } from '../../../../src/core/Clock'
+import { TransactionCounter } from '../../../core/activity/TransactionCounter'
+import { Clock } from '../../../core/Clock'
 import {
   DailyTransactionCountRecord,
   DailyTransactionCountViewRepository,
-} from '../../../../src/peripherals/database/activity/DailyTransactionCountViewRepository'
+} from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
+import { ActivityController } from './ActivityController'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')

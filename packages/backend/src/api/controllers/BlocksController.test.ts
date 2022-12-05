@@ -2,8 +2,8 @@ import { mock } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { BlocksController } from '../../../src/api/controllers/BlocksController'
-import { BlockNumberRepository } from '../../../src/peripherals/database/BlockNumberRepository'
+import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
+import { BlocksController } from './BlocksController'
 
 describe(BlocksController.name, () => {
   it('returns transformed blocks', async () => {

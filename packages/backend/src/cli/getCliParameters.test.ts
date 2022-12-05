@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { getCliParameters } from '../../src/cli/getCliParameters'
+import { getCliParameters } from './getCliParameters'
 
 describe(getCliParameters.name, () => {
   it('no parameters', () => {

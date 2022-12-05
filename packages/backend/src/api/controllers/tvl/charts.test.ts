@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { addMissingTimestamps } from '../../../../src/api/controllers/tvl/charts'
+import { addMissingTimestamps } from './charts'
 
 const now = UnixTime.now().toStartOf('day')
 

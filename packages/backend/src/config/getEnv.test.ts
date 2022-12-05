@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { getEnv } from '../../src/config/getEnv'
+import { getEnv } from './getEnv'
 
 describe(getEnv.name, () => {
   it('returns the environment variable', () => {

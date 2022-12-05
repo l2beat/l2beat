@@ -9,14 +9,14 @@ import {
 } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { TvlController } from '../../../../src/api/controllers/tvl/TvlController'
-import { ReportProject } from '../../../../src/core/reports/ReportProject'
-import { AggregateReportRepository } from '../../../../src/peripherals/database/AggregateReportRepository'
+import { ReportProject } from '../../../core/reports/ReportProject'
+import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
 import {
   ReportRecord,
   ReportRepository,
-} from '../../../../src/peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../../src/peripherals/database/ReportStatusRepository'
+} from '../../../peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import { TvlController } from './TvlController'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
 const DAI = tokenList.find((x) => x.symbol === 'DAI')!
