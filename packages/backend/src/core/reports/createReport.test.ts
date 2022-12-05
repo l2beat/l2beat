@@ -1,11 +1,7 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import {
-  convertBalance,
-  createReport,
-  getBigIntPrice,
-} from '../../../src/core/reports/createReport'
+import { convertBalance, createReport, getBigIntPrice } from './createReport'
 
 describe(createReport.name, () => {
   it('price: 3.20 $ || balance: 22.123456', async () => {

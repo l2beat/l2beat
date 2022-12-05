@@ -7,9 +7,9 @@ import {
   UnixTime,
 } from '@l2beat/types'
 
-import { ReportProject } from '../../../src/core/reports/ReportProject'
-import { BalanceRecord } from '../../../src/peripherals/database/BalanceRepository'
-import { PriceRecord } from '../../../src/peripherals/database/PriceRepository'
+import { ReportProject } from '../core/reports/ReportProject'
+import { BalanceRecord } from '../peripherals/database/BalanceRepository'
+import { PriceRecord } from '../peripherals/database/PriceRepository'
 
 export const NOW = UnixTime.now().toStartOf('hour')
 const ARBITRUM_ESCROW_ONE = EthereumAddress.random()

@@ -2,8 +2,8 @@ import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { StorageHandler } from '../../../../../src/core/discovery/handlers/user/StorageHandler'
-import { DiscoveryProvider } from '../../../../../src/core/discovery/provider/DiscoveryProvider'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { StorageHandler } from './StorageHandler'
 
 describe(StorageHandler.name, () => {
   it('can returns storage as bytes', async () => {

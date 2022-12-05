@@ -4,14 +4,14 @@ import { expect, mockFn } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../../src/core/Clock'
-import { PriceUpdater } from '../../src/core/PriceUpdater'
-import { Token } from '../../src/model'
-import { CoingeckoQueryService } from '../../src/peripherals/coingecko/CoingeckoQueryService'
+import { Token } from '../model'
+import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   PriceRecord,
   PriceRepository,
-} from '../../src/peripherals/database/PriceRepository'
+} from '../peripherals/database/PriceRepository'
+import { Clock } from './Clock'
+import { PriceUpdater } from './PriceUpdater'
 
 describe(PriceUpdater.name, () => {
   const HOUR_09 = UnixTime.fromDate(new Date('2021-09-07T09:00:00Z'))

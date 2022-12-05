@@ -1,7 +1,7 @@
 import { expect } from 'earljs'
 import { readdirSync } from 'fs'
 
-import { ConfigReader } from '../../../src/core/discovery/ConfigReader'
+import { ConfigReader } from './ConfigReader'
 
 describe(ConfigReader.name, () => {
   const configs = readdirSync('discovery').filter(

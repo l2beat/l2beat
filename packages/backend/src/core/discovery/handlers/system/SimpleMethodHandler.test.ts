@@ -2,8 +2,8 @@ import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { SimpleMethodHandler } from '../../../../../src/core/discovery/handlers/system/SimpleMethodHandler'
-import { DiscoveryProvider } from '../../../../../src/core/discovery/provider/DiscoveryProvider'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { SimpleMethodHandler } from './SimpleMethodHandler'
 
 describe(SimpleMethodHandler.name, () => {
   it('can correctly call balanceOf', async () => {

@@ -2,8 +2,8 @@ import { mock } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { TransactionCounter } from '../../../src/core/activity/TransactionCounter'
-import { SequenceProcessor } from '../../../src/core/SequenceProcessor'
+import { SequenceProcessor } from '../SequenceProcessor'
+import { TransactionCounter } from './TransactionCounter'
 
 const projectId = ProjectId('a')
 const now = UnixTime.now()

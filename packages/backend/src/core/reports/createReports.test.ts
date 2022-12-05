@@ -1,11 +1,8 @@
 import { AssetId, ProjectId } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import {
-  aggregateBalancesPerProject,
-  createReports,
-} from '../../../src/core/reports/createReports'
-import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
+import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
+import { aggregateBalancesPerProject, createReports } from './createReports'
 
 describe(createReports.name, () => {
   it('correctly aggregates many calculated balances', () => {

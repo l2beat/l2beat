@@ -2,21 +2,18 @@ import { Logger, mock } from '@l2beat/common'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { BalanceUpdater } from '../../../src/core/balances/BalanceUpdater'
-import { Clock } from '../../../src/core/Clock'
-import { PriceUpdater } from '../../../src/core/PriceUpdater'
-import { aggregateReports } from '../../../src/core/reports/aggregateReports'
-import { createReports } from '../../../src/core/reports/createReports'
-import { getReportConfigHash } from '../../../src/core/reports/getReportConfigHash'
-import {
-  OP_TOKEN_ID,
-  OPTIMISM_PROJECT_ID,
-} from '../../../src/core/reports/optimism'
-import { ReportUpdater } from '../../../src/core/reports/ReportUpdater'
-import { AggregateReportRepository } from '../../../src/peripherals/database/AggregateReportRepository'
-import { ReportRepository } from '../../../src/peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../src/peripherals/database/ReportStatusRepository'
-import { BALANCES, NOW, PRICES, PROJECTS } from './projects'
+import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
+import { ReportRepository } from '../../peripherals/database/ReportRepository'
+import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
+import { BalanceUpdater } from '../balances/BalanceUpdater'
+import { Clock } from '../Clock'
+import { PriceUpdater } from '../PriceUpdater'
+import { aggregateReports } from './aggregateReports'
+import { createReports } from './createReports'
+import { getReportConfigHash } from './getReportConfigHash'
+import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './optimism'
+import { ReportUpdater } from './ReportUpdater'
 
 describe(ReportUpdater.name, () => {
   const FUTURE_PRICES = PRICES.map((price) => ({

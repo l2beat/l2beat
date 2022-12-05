@@ -3,13 +3,13 @@ import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, Mock, mockFn } from 'earljs'
 import { once } from 'events'
 
+import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
+import { setupDatabaseTestSuite } from '../test/database'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
   SequenceProcessorOpts,
-} from '../../src/core/SequenceProcessor'
-import { SequenceProcessorRepository } from '../../src/peripherals/database/SequenceProcessorRepository'
-import { setupDatabaseTestSuite } from '../../src/test/database'
+} from './SequenceProcessor'
 
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()

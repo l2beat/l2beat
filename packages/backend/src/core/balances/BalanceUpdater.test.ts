@@ -11,20 +11,17 @@ import {
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
-import { BalanceProject } from '../../../src/core/balances/BalanceProject'
-import {
-  BalanceUpdater,
-  getMissingData,
-} from '../../../src/core/balances/BalanceUpdater'
-import { getBalanceConfigHash } from '../../../src/core/balances/getBalanceConfigHash'
-import { BlockNumberUpdater } from '../../../src/core/BlockNumberUpdater'
-import { Clock } from '../../../src/core/Clock'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../../../src/peripherals/database/BalanceRepository'
-import { BalanceStatusRepository } from '../../../src/peripherals/database/BalanceStatusRepository'
-import { MulticallClient } from '../../../src/peripherals/ethereum/MulticallClient'
+} from '../../peripherals/database/BalanceRepository'
+import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
+import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { BlockNumberUpdater } from '../BlockNumberUpdater'
+import { Clock } from '../Clock'
+import { BalanceProject } from './BalanceProject'
+import { BalanceUpdater, getMissingData } from './BalanceUpdater'
+import { getBalanceConfigHash } from './getBalanceConfigHash'
 
 describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.start.name, () => {

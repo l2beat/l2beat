@@ -1,10 +1,10 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { aggregateReports } from '../../../src/core/reports/aggregateReports'
-import { ReportProject } from '../../../src/core/reports/ReportProject'
-import { AggregateReportRecord } from '../../../src/peripherals/database/AggregateReportRepository'
-import { ReportRecord } from '../../../src/peripherals/database/ReportRepository'
+import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
+import { ReportRecord } from '../../peripherals/database/ReportRepository'
+import { aggregateReports } from './aggregateReports'
+import { ReportProject } from './ReportProject'
 
 describe(aggregateReports.name, () => {
   const NOW = UnixTime.now().toStartOf('hour')

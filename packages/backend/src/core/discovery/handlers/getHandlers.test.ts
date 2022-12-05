@@ -1,10 +1,10 @@
 import { expect } from 'earljs'
 
-import { getHandlers } from '../../../../src/core/discovery/handlers/getHandlers'
-import { LimitedArrayHandler } from '../../../../src/core/discovery/handlers/system/LimitedArrayHandler'
-import { SimpleMethodHandler } from '../../../../src/core/discovery/handlers/system/SimpleMethodHandler'
-import { ArrayHandler } from '../../../../src/core/discovery/handlers/user/ArrayHandler'
-import { StorageHandler } from '../../../../src/core/discovery/handlers/user/StorageHandler'
+import { getHandlers } from './getHandlers'
+import { LimitedArrayHandler } from './system/LimitedArrayHandler'
+import { SimpleMethodHandler } from './system/SimpleMethodHandler'
+import { ArrayHandler } from './user/ArrayHandler'
+import { StorageHandler } from './user/StorageHandler'
 
 describe(getHandlers.name, () => {
   it('returns empty handlers', () => {

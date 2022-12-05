@@ -1,13 +1,13 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
+import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import {
   addOpTokenReport,
   OP_TOKEN_ID,
   OP_TOKEN_SINCE_TIMESTAMP,
   OPTIMISM_PROJECT_ID,
-} from '../../../src/core/reports/optimism'
-import { ReportRecord } from '../../../src/peripherals/database/ReportRepository'
+} from './optimism'
 
 describe(addOpTokenReport.name, () => {
   it('returns untouched if op price missing', () => {

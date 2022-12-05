@@ -4,10 +4,10 @@ import { expect, mockFn } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { BlockNumberUpdater } from '../../src/core/BlockNumberUpdater'
-import { Clock } from '../../src/core/Clock'
-import { BlockNumberRepository } from '../../src/peripherals/database/BlockNumberRepository'
-import { EtherscanClient } from '../../src/peripherals/etherscan/EtherscanClient'
+import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
+import { EtherscanClient } from '../peripherals/etherscan/EtherscanClient'
+import { BlockNumberUpdater } from './BlockNumberUpdater'
+import { Clock } from './Clock'
 
 describe(BlockNumberUpdater.name, () => {
   describe(BlockNumberUpdater.prototype.start.name, () => {

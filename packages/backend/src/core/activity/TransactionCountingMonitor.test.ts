@@ -2,10 +2,10 @@ import { Logger, mock, MockedObject } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 
-import { TransactionCounter } from '../../../src/core/activity/TransactionCounter'
-import { TransactionCountingMonitor } from '../../../src/core/activity/TransactionCountingMonitor'
-import { Clock } from '../../../src/core/Clock'
-import { SequenceProcessor } from '../../../src/core/SequenceProcessor'
+import { Clock } from '../Clock'
+import { SequenceProcessor } from '../SequenceProcessor'
+import { TransactionCounter } from './TransactionCounter'
+import { TransactionCountingMonitor } from './TransactionCountingMonitor'
 
 const startOfToday = UnixTime.now().toStartOf('day')
 const lastProcessedTimestampA = startOfToday.add(-1, 'days')
