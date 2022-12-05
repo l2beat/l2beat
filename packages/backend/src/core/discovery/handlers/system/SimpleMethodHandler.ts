@@ -1,10 +1,10 @@
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from './Handler'
-import { callMethod } from './utils/callMethod'
-import { toFunctionFragment } from './utils/toFunctionFragment'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { Handler, HandlerResult } from '../Handler'
+import { callMethod } from '../utils/callMethod'
+import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
   readonly field: string

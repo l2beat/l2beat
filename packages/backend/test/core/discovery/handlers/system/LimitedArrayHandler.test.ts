@@ -2,8 +2,8 @@ import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { LimitedArrayHandler } from '../../../../src/core/discovery/handlers/LimitedArrayHandler'
-import { DiscoveryProvider } from '../../../../src/core/discovery/provider/DiscoveryProvider'
+import { LimitedArrayHandler } from '../../../../../src/core/discovery/handlers/system/LimitedArrayHandler'
+import { DiscoveryProvider } from '../../../../../src/core/discovery/provider/DiscoveryProvider'
 
 describe(LimitedArrayHandler.name, () => {
   const method = 'function owners(uint256 index) view returns (address)'
