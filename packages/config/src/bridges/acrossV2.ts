@@ -120,19 +120,19 @@ export const acrossV2: Bridge = {
       },
       {
         address: '0x40f941E48A552bF496B154Af6bf55725f18D77c3',
-        name: 'Finder'
+        name: 'Finder',
       },
       {
         address: '0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc',
-        name: 'Governor'
+        name: 'Governor',
       },
       {
         address: '0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5',
-        name: 'Proposer'
+        name: 'Proposer',
       },
       {
         address: '0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828',
-        name: 'VotingToken'
+        name: 'VotingToken',
       },
       {
         address: '0x22eD83A9eE26236486F57cE8385A247E5bFB71fF',
