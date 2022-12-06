@@ -1,29 +1,88 @@
 import { EthereumAddress } from '@l2beat/types'
+import { FunctionFragment } from 'ethers/lib/utils'
 import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
+import { getReferencedName, Reference, resolveReference } from '../reference'
+import { callMethod } from '../utils/callMethod'
+import { toFunctionFragment } from '../utils/toFunctionFragment'
+import { valueToNumber } from '../utils/valueToNumber'
 
 export type ArrayHandlerDefinition = z.infer<typeof ArrayHandlerDefinition>
 export const ArrayHandlerDefinition = z.strictObject({
   type: z.literal('array'),
+  method: z.optional(z.string()),
+  length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
 })
 
 export class ArrayHandler implements Handler {
-  readonly dependencies = []
+  readonly dependencies: string[] = []
+  readonly fragment: FunctionFragment
 
   constructor(
     readonly field: string,
-    private readonly _definition: ArrayHandlerDefinition,
-  ) {}
+    private readonly definition: ArrayHandlerDefinition,
+    abi: string[],
+  ) {
+    const dependency = getReferencedName(definition.length)
+    if (dependency) {
+      this.dependencies.push(dependency)
+    }
+    const method = definition.method ?? field
+    if (method.includes(' ')) {
+      this.fragment = toFunctionFragment(method)
+    } else {
+      const fragment = abi
+        .filter((x) => x.startsWith(`function ${method}`))
+        .map(toFunctionFragment)
+        .find((x) => x.inputs.length === 1 && x.inputs[0].type === 'uint256')
+      if (!fragment) {
+        throw new Error(`Cannot find an array method for ${method}`)
+      }
+      this.fragment = fragment
+    }
+  }
 
   async execute(
-    _provider: DiscoveryProvider,
-    _address: EthereumAddress,
+    provider: DiscoveryProvider,
+    address: EthereumAddress,
+    previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    return Promise.resolve({
-      field: this.field,
-      value: [],
-    })
+    let length: number | undefined
+    if (this.definition.length !== undefined) {
+      const resolved = resolveReference(this.definition.length, previousResults)
+      length = valueToNumber(resolved)
+    }
+
+    if (length) {
+      const results = await Promise.all(
+        Array.from({ length }).map((_, index) =>
+          callMethod(provider, address, this.fragment, [index]),
+        ),
+      )
+      const errorResult = results.find((x) => x.error)
+      if (errorResult) {
+        return { field: this.field, error: errorResult.error }
+      }
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const value = results.map((x) => x.value!)
+      return { field: this.field, value }
+    } else {
+      const value: ContractValue[] = []
+      for (let i = 0; i++; ) {
+        const current = await callMethod(provider, address, this.fragment, [i])
+        if (current.error) {
+          if (current.error !== 'Execution reverted') {
+            return { field: this.field, error: current.error }
+          }
+          break
+        }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        value.push(current.value!)
+      }
+      return { field: this.field, value }
+    }
   }
 }

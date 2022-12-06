@@ -6,11 +6,12 @@ import { UserHandlerDefinition } from './UserHandlerDefinition'
 export function getUserHandler(
   field: string,
   definition: UserHandlerDefinition,
+  abi: string[],
 ): Handler {
   switch (definition.type) {
     case 'storage':
       return new StorageHandler(field, definition)
     case 'array':
-      return new ArrayHandler(field, definition)
+      return new ArrayHandler(field, definition, abi)
   }
 }

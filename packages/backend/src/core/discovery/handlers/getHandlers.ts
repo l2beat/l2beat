@@ -8,7 +8,7 @@ export function getHandlers(
 ) {
   const systemHandlers = getSystemHandlers(abi, overrides)
   const userHandlers = Object.entries(overrides?.fields ?? {}).map(
-    ([field, definition]) => getUserHandler(field, definition),
+    ([field, definition]) => getUserHandler(field, definition, abi),
   )
 
   const handlers = userHandlers
