@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from './Handler'
 

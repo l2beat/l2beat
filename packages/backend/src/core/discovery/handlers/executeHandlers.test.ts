@@ -1,6 +1,7 @@
 import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
+
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { executeHandlers } from './executeHandlers'
 import { StorageHandler } from './user/StorageHandler'
