@@ -69,9 +69,9 @@ export function renderHover(
   if (elements.hover.contents) {
     const rows: string[] = []
 
-    if (state.view.showMilestoneHover) {
-      rows.push(renderDateRow(point.date))
-      rows.push('milestone is here')
+    if (state.view.showMilestoneHover && point.milestone) {
+      rows.push(renderDateRow(formatDate(point.date)))
+      rows.push(renderNameRow(point.milestone.name))
     } else {
       rows.push(renderDateRow(point.date))
       if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
@@ -142,4 +142,38 @@ function renderTpsRow(value: number, source: 'L2' | 'ETH') {
   const circleClass = `inline-block mr-1 w-2 h-2 relative -top-px border-2 border-current ${customStyles}`
   const circleHTML = `<div class="${circleClass}"></div>`
   return `<div>${circleHTML} ${sourceHTML} avg. TPS: ${formattedHTML}</div>`
+}
+
+function renderNameRow(name: string) {
+  return `<div class="mb-1 font-bold">${name}</div>`
+}
+
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = date.toLocaleDateString('en', {
+    month: 'short',
+  })
+  const day = date.toLocaleDateString('en', {
+    day: 'numeric',
+  })
+
+  const ending = getOrdinalSuffix(date.getDate())
+
+  return `${year} ${month} ${day}${ending}`
+}
+
+function getOrdinalSuffix(days: number) {
+  if (days > 3 && days < 21) return 'th'
+  switch (days % 10) {
+    case 1:
+      return 'st'
+    case 2:
+      return 'nd'
+    case 3:
+      return 'rd'
+    default:
+      return 'th'
+  }
 }
