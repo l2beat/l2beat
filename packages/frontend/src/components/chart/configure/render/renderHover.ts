@@ -68,32 +68,38 @@ export function renderHover(
 
   if (elements.hover.contents) {
     const rows: string[] = []
-    rows.push(renderDateRow(point.date))
-    if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
-      if (state.controls.currency === 'eth') {
-        rows.push(renderCurrencyRow(point.eth, 'ETH'))
+
+    if (state.view.showMilestoneHover) {
+      rows.push(renderDateRow(point.date))
+      rows.push('milestone is here')
+    } else {
+      rows.push(renderDateRow(point.date))
+      if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
+        if (state.controls.currency === 'eth') {
+          rows.push(renderCurrencyRow(point.eth, 'ETH'))
+          rows.push(renderCurrencyRow(point.usd, 'USD'))
+        } else {
+          rows.push(renderCurrencyRow(point.usd, 'USD'))
+          rows.push(renderCurrencyRow(point.eth, 'ETH'))
+        }
+      } else if (
+        state.view.chart.type === 'TokenTvlChart' &&
+        'balance' in point
+      ) {
+        rows.push(renderCurrencyRow(point.balance, point.symbol))
         rows.push(renderCurrencyRow(point.usd, 'USD'))
-      } else {
-        rows.push(renderCurrencyRow(point.usd, 'USD'))
-        rows.push(renderCurrencyRow(point.eth, 'ETH'))
-      }
-    } else if (
-      state.view.chart.type === 'TokenTvlChart' &&
-      'balance' in point
-    ) {
-      rows.push(renderCurrencyRow(point.balance, point.symbol))
-      rows.push(renderCurrencyRow(point.usd, 'USD'))
-    } else if (state.view.chart.type === 'ActivityChart' && 'tps' in point) {
-      if (state.controls.showEthereum) {
-        if (point.ethereumTps > point.tps) {
-          rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
-          rows.push(renderTpsRow(point.tps, 'L2'))
+      } else if (state.view.chart.type === 'ActivityChart' && 'tps' in point) {
+        if (state.controls.showEthereum) {
+          if (point.ethereumTps > point.tps) {
+            rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
+            rows.push(renderTpsRow(point.tps, 'L2'))
+          } else {
+            rows.push(renderTpsRow(point.tps, 'L2'))
+            rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
+          }
         } else {
           rows.push(renderTpsRow(point.tps, 'L2'))
-          rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
         }
-      } else {
-        rows.push(renderTpsRow(point.tps, 'L2'))
       }
     }
 
