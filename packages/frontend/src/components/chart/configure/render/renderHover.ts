@@ -72,6 +72,9 @@ export function renderHover(
     if (state.view.showMilestoneHover && point.milestone) {
       rows.push(renderDateRow(formatDate(point.date)))
       rows.push(renderNameRow(point.milestone.name))
+      if (point.milestone.description) {
+        rows.push(renderDescriptionRow(point.milestone.description))
+      }
     } else {
       rows.push(renderDateRow(point.date))
       if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
@@ -145,9 +148,14 @@ function renderTpsRow(value: number, source: 'L2' | 'ETH') {
 }
 
 function renderNameRow(name: string) {
-  return `<div class="mb-1 font-bold">${name}</div>`
+  return `<div class="mb-2 font-bold flex flex-wrap"><svg class="mt-[4.5px]" width="11" height="10" viewBox="0 0 11 10" fill="none">
+  <rect x="5.24268" y="0.0502174" width="7" height="7" rx="1.5" transform="rotate(45 5.24268 0.0502174)" fill="#5BFF4D" stroke="white"/>
+  </svg><span class='ml-1'>${name}</span></div>`
 }
 
+function renderDescriptionRow(description: string) {
+  return `<div class="max-w-[216px] text-left">${description}</div>`
+}
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
