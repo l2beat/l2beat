@@ -15,7 +15,7 @@ export function updateTokenChanged(
   const request: State['request'] = { ...state.request }
   const effects: Effect[] = []
 
-  if (state.responses.tokenTvl[message.token] === undefined) {
+  if (state.data.tokenTvl[message.token] === undefined) {
     request.isFetching = true
     request.lastId++
     effects.push({
@@ -30,7 +30,7 @@ export function updateTokenChanged(
     ...state,
     request,
     controls,
-    view: calculateView(state.responses, controls) ?? state.view,
+    view: calculateView(state.data, controls) ?? state.view,
   }
 
   return [newState, effects]

@@ -18,7 +18,7 @@ export function getProps(
 ): Wrapped<ProjectPageProps> {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const chart = getChart(bridge, tvlApiResponse)
+  const chart = getChart(bridge, tvlApiResponse, config)
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
