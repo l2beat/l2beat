@@ -49,11 +49,21 @@ export function renderHover(
 
   if (elements.hover.line) {
     elements.hover.line.style.left = `${left - 1}px`
+    elements.hover.line.classList.remove('bg-[#5BFF4C]')
+    if (state.view.showMilestoneHover) {
+      elements.hover.line.classList.add('bg-[#5BFF4C]')
+    }
   }
 
   if (elements.hover.circle) {
     elements.hover.circle.style.left = `${left - 4}px`
     elements.hover.circle.style.bottom = `${bottom1 - 4}px`
+    elements.hover.circle.classList.remove('hidden')
+    elements.hover.greenSquare?.classList.add('hidden')
+    if (state.view.showMilestoneHover) {
+    elements.hover.greenSquare?.classList.remove('hidden')
+    elements.hover.circle.classList.add('hidden')
+    }
   }
 
   if (elements.hover.redCircle) {
@@ -64,6 +74,11 @@ export function renderHover(
   if (elements.hover.blueSquare) {
     elements.hover.blueSquare.style.left = `${left - 4}px`
     elements.hover.blueSquare.style.bottom = `${bottom2 - 4}px`
+  }
+
+  if (elements.hover.greenSquare) {
+    elements.hover.greenSquare.style.left = `${left - 4}px`
+    elements.hover.greenSquare.style.bottom = `${bottom2 - 4}px`
   }
 
   if (elements.hover.contents) {
