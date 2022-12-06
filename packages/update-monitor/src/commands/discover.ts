@@ -9,8 +9,16 @@ import { DiscoveryEngine } from '../discovery/DiscoveryEngine'
 import { APTOS_NAME, discoverAptos } from '../projects/aptosBridge'
 import { ARBITRUM_NAME, discoverArbitrum } from '../projects/arbitrum'
 import { CBRIDGE_NAME, discoverCBridge } from '../projects/cBridge'
+import {
+  CONNEXT_BRIDGE_NAME,
+  discoverConnextBridge,
+} from '../projects/connextBridge'
 import { discoverDydx, DYDX_NAME } from '../projects/dYdX'
 import { discoverHop, HOP_NAME } from '../projects/hop'
+import {
+  discoverHyphenBridge,
+  HYPHEN_BRIDGE_NAME,
+} from '../projects/hyphenBridge'
 import {
   discoverLayer2FinanceZk,
   L2FZK_NAME,
@@ -76,6 +84,8 @@ export async function discover(args: string[]) {
     [CBRIDGE_NAME, discoverCBridge],
     [OMG_NETWORK_NAME, discoverOmgNetwork],
     [L2FZK_NAME, discoverLayer2FinanceZk],
+    [HYPHEN_BRIDGE_NAME, discoverHyphenBridge],
+    [CONNEXT_BRIDGE_NAME, discoverConnextBridge],
   ]
 
   const project = projects.find((x) => x[0] === args[0])

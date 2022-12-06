@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/types'
 import { detectProxy } from './detectProxy'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { getMetadata } from './getMetadata'
-import { getParameters } from './getParameters'
+import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ContractParameters } from './types'
 
@@ -29,11 +29,10 @@ export async function analyzeItem(
     proxyDetection?.implementations ?? [],
   )
 
-  const parameters = await getParameters(
-    metadata.abi,
-    address,
-    provider,
-    config,
+  const overrides = config.overrides?.[address.toLowerCase()]
+  const handlers = getHandlers(metadata.abi, overrides)
+  const parameters = await Promise.all(
+    handlers.map((h) => h.execute(provider, address, metadata.abi)),
   )
 
   const relatives = parameters

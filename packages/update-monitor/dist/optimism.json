@@ -20,7 +20,8 @@
       "values": {
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "fraudProofWindow": "604800",
-        "sequencerPublishWindow": "12592000"
+        "sequencerPublishWindow": "12592000",
+        "bondManager": "0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1"
       }
     },
     {
@@ -34,7 +35,8 @@
         "maxTransactionGasLimit": "15000000",
         "l2GasDiscountDivisor": "32",
         "maxRollupTxSize": "50000",
-        "minRollupTxGas": "100000"
+        "minRollupTxGas": "100000",
+        "sequencer": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985"
       }
     },
     {
@@ -45,6 +47,17 @@
       },
       "values": {
         "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      }
+    },
+    {
+      "name": "BondManager",
+      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "proposer": "0x473300df21D047806A082244b417f96b32f13A33"
       }
     }
   ]
