@@ -29,6 +29,7 @@ export function onMouseMove(
       dispatch({
         type: 'MouseMoved',
         mouseX: Math.min(1, Math.max(0, position)),
+        mouseY: Math.abs(e.clientY - rect.top - rect.height),
       })
     } else if (wasInside) {
       dispatch({ type: 'MouseExited' })
