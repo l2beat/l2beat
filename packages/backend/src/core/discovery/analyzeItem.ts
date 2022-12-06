@@ -32,7 +32,7 @@ export async function analyzeItem(
   const overrides = config.overrides?.[address.toLowerCase()]
   const handlers = getHandlers(metadata.abi, overrides)
   const parameters = await Promise.all(
-    handlers.map((h) => h.execute(provider, address, metadata.abi)),
+    handlers.map((h) => h.execute(provider, address, {})),
   )
 
   const relatives = parameters

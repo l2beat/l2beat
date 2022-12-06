@@ -11,9 +11,10 @@ export interface HandlerResult {
 
 export interface Handler {
   field: string
+  dependencies: string[]
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    abi: string[],
+    previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult>
 }

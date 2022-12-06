@@ -10,7 +10,9 @@ export const DiscoveryContract = z.object({
   proxyType: z.optional(z.string()),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
-  fields: z.optional(z.record(UserHandlerDefinition)),
+  fields: z.optional(
+    z.record(z.string().regex(/^[a-z_][a-z\d_]*$/i), UserHandlerDefinition),
+  ),
 })
 
 export type DiscoveryConfig = z.infer<typeof DiscoveryConfig>
