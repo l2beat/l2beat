@@ -11,11 +11,12 @@ export const EMPTY_STATE: State = {
     isFetching: false,
     showLoader: false,
   },
-  responses: {
+  data: {
     aggregateTvl: undefined,
     alternativeTvl: undefined,
     activity: undefined,
     tokenTvl: {},
+    milestones: {},
   },
   controls: {
     view: 'tvl',

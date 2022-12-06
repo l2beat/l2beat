@@ -5,14 +5,14 @@ import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
 
 export function calculateActivityView(
-  responses: State['responses'],
+  data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
-  if (!responses.activity) {
+  if (!data.activity) {
     return undefined
   }
 
-  const entries = responses.activity.daily.data.slice(-controls.days)
+  const entries = data.activity.daily.data.slice(-controls.days)
   const dateRange = formatRange(entries[0][0], entries[entries.length - 1][0])
   const { labels, getY } = getYAxis(
     controls.showEthereum
@@ -31,6 +31,7 @@ export function calculateActivityView(
       date: formatTimestamp(timestamp, false),
       tps: getTps(transactions),
       ethereumTps: getTps(ethereumTransactions),
+      milestone: data.milestones[timestamp],
     }),
   )
 

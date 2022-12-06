@@ -44,7 +44,7 @@ export function updateControlsChanged(
   const newState: State = {
     ...state,
     controls,
-    view: calculateView(state.responses, controls) ?? state.view,
+    view: calculateView(state.data, controls) ?? state.view,
   }
 
   return [newState, []]
