@@ -4,16 +4,16 @@ import { calculateRegularTvlView } from './calculateRegularTvlView'
 import { calculateTokenTvlView } from './calculateTokenTvlView'
 
 export function calculateView(
-  responses: State['responses'],
+  data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
   if (controls.view === 'tvl') {
     if (controls.token) {
-      return calculateTokenTvlView(responses, controls)
+      return calculateTokenTvlView(data, controls)
     } else {
-      return calculateRegularTvlView(responses, controls)
+      return calculateRegularTvlView(data, controls)
     }
   } else {
-    return calculateActivityView(responses, controls)
+    return calculateActivityView(data, controls)
   }
 }

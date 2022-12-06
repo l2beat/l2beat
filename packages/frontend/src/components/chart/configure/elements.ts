@@ -54,6 +54,9 @@ export function getChartElements(chart: HTMLElement) {
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
       ),
+      milestones: chart.querySelector<HTMLElement>(
+        '[data-role="chart-milestones"]',
+      ),
     },
     hover: {
       hover: chart.querySelector<HTMLElement>('[data-role="chart-hover"'),

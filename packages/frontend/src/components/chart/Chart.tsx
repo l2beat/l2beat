@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
@@ -23,6 +24,7 @@ export interface ChartProps {
   hasTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
+  milestones?: Milestone[]
 }
 
 export function Chart({
@@ -34,6 +36,7 @@ export function Chart({
   hasTvl = true,
   metaChart = false,
   mobileFull: fullWidth = false,
+  milestones,
 }: ChartProps) {
   const days = metaChart || type === 'activity' ? 30 : 7
   return (
@@ -43,6 +46,7 @@ export function Chart({
         data-type={type}
         data-tvl-endpoint={tvlEndpoint}
         data-activity-endpoint={activityEndpoint}
+        data-milestones={JSON.stringify(milestones)}
         className={cx(
           fullWidth
             ? 'px-4 py-6 bg-gray-100 dark:bg-gray-950 md:bg-transparent md:dark:bg-transparent md:p-0'
@@ -75,6 +79,10 @@ export function Chart({
               className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
             />
             <YAxisLabels />
+            <div
+              data-role="chart-milestones"
+              className="absolute bottom-0 w-[100%]"
+            />
           </div>
           <div className="flex justify-between items-center">
             {hasActivity && (

@@ -5,7 +5,7 @@ import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
-import { State } from './state/State'
+import { Milestones, State } from './state/State'
 import { update } from './update/update'
 
 export function configureCharts() {
@@ -50,6 +50,10 @@ function getInitMessage(elements: ChartElements): InitMessage {
 
   const showEthereum = !!elements.controls.showEthereum?.checked
 
+  const milestones = elements.chart.dataset.milestones
+    ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))
+    : []
+
   return {
     type: 'Init',
     initialView,
@@ -59,5 +63,6 @@ function getInitMessage(elements: ChartElements): InitMessage {
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
     labelCount: elements.view.labels.length,
+    milestones,
   }
 }

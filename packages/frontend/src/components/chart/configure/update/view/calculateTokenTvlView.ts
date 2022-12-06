@@ -6,7 +6,7 @@ import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
 
 export function calculateTokenTvlView(
-  responses: State['responses'],
+  data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
   if (!controls.token) {
@@ -15,7 +15,7 @@ export function calculateTokenTvlView(
   // reassigned for callbacks. Thanks typescript :(
   const token = controls.token
 
-  const response = controls.token && responses.tokenTvl[controls.token]
+  const response = controls.token && data.tokenTvl[controls.token]
   if (!response) {
     return undefined
   }
@@ -36,6 +36,7 @@ export function calculateTokenTvlView(
     balance,
     symbol: token,
     usd,
+    milestone: data.milestones[timestamp],
   }))
 
   return {
