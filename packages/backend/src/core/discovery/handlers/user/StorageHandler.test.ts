@@ -1,9 +1,11 @@
 import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
+import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { StorageHandler } from './StorageHandler'
+import { HandlerResult } from '../Handler'
+import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 
 describe(StorageHandler.name, () => {
   describe('return types', () => {
@@ -141,6 +143,146 @@ describe(StorageHandler.name, () => {
       })
 
       expect(handler.dependencies).toEqual(['bar', 'foo', 'baz'])
+    })
+  })
+
+  describe('computing the slot', () => {
+    // Please read this:
+    // https://docs.soliditylang.org/en/latest/internals/layout_in_storage.html#mappings-and-dynamic-arrays
+
+    async function testComputeSlot(options: {
+      definition: StorageHandlerDefinition
+      previousResults?: Record<string, HandlerResult | undefined>
+      expectedSlot?: bigint
+      expectedError?: string
+    }) {
+      const handler = new StorageHandler('someName', options.definition)
+      let slot: bigint | number | Bytes | undefined
+      const provider = mock<DiscoveryProvider>({
+        async getStorage(passedAddress, receivedSlot) {
+          slot = receivedSlot
+          return Bytes.fromHex('0'.repeat(64))
+        },
+      })
+      const result = await handler.execute(
+        provider,
+        EthereumAddress.random(),
+        options.previousResults ?? {},
+      )
+      if (options.expectedSlot !== undefined) {
+        expect(slot).toEqual(options.expectedSlot)
+      }
+      if (options.expectedError) {
+        expect(result.error).toEqual(options.expectedError)
+      }
+    }
+
+    it('computes the simple slot with offset', async () => {
+      await testComputeSlot({
+        definition: {
+          type: 'storage',
+          slot: 1,
+          offset: 1,
+        },
+        expectedSlot: 2n,
+      })
+    })
+
+    it('computes an array entry', async () => {
+      await testComputeSlot({
+        definition: {
+          type: 'storage',
+          slot: [1],
+          offset: 1,
+        },
+        expectedSlot:
+          BigInt(
+            utils.keccak256(utils.defaultAbiCoder.encode(['uint256'], [1])),
+          ) + 1n,
+      })
+    })
+
+    it('computes a mapping entry', async () => {
+      const address = EthereumAddress.random()
+
+      await testComputeSlot({
+        definition: {
+          type: 'storage',
+          slot: [1, address.toString()],
+          offset: 1,
+        },
+        expectedSlot:
+          BigInt(
+            utils.keccak256(
+              utils.defaultAbiCoder.encode(
+                ['address', 'uint256'],
+                [address, 1],
+              ),
+            ),
+          ) + 1n,
+      })
+    })
+
+    it('computes a nested mapping entry', async () => {
+      const address = EthereumAddress.random()
+
+      await testComputeSlot({
+        definition: {
+          type: 'storage',
+          slot: [1, address.toString(), 5],
+          offset: 1,
+        },
+        expectedSlot:
+          BigInt(
+            utils.keccak256(
+              utils.defaultAbiCoder.encode(
+                ['uint256', 'bytes32'],
+                [
+                  5,
+                  utils.keccak256(
+                    utils.defaultAbiCoder.encode(
+                      ['address', 'uint256'],
+                      [address, 1],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ) + 1n,
+      })
+    })
+
+    it('resolves simple values', async () => {
+      await testComputeSlot({
+        definition: {
+          type: 'storage',
+          slot: '{{ foo }}',
+          offset: '{{ bar }}',
+        },
+        expectedSlot: 3n,
+        previousResults: {
+          foo: { field: 'foo', value: 1 },
+          bar: { field: 'bar', value: 2 },
+        },
+      })
+    })
+
+    it('resolves nested values', async () => {
+      await testComputeSlot({
+        definition: {
+          type: 'storage',
+          slot: ['{{ foo }}'],
+          offset: '{{ bar }}',
+        },
+        expectedSlot:
+          BigInt(
+            utils.keccak256(utils.defaultAbiCoder.encode(['uint256'], [1])),
+          ) + 2n,
+        previousResults: {
+          foo: { field: 'foo', value: 1 },
+          bar: { field: 'bar', value: 2 },
+        },
+      })
     })
   })
 

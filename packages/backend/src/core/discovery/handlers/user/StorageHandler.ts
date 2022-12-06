@@ -20,7 +20,7 @@ const SingleSlot = z.union([
 export type StorageHandlerDefinition = z.infer<typeof StorageHandlerDefinition>
 export const StorageHandlerDefinition = z.strictObject({
   type: z.literal('storage'),
-  slot: z.union([SingleSlot, z.array(SingleSlot)]),
+  slot: z.union([SingleSlot, z.array(SingleSlot).min(1)]),
   offset: z.optional(z.union([z.number(), NumberFromString, Reference])),
   returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
 })
@@ -73,19 +73,31 @@ function computeSlot(
       const resolved = resolveReference(x, previousResults)
       return contractValueToBigInt(resolved)
     })
-    const hash = utils.keccak256(
-      utils.defaultAbiCoder.encode(
-        parts.map(() => 'uint256'),
-        parts,
-      ),
-    )
-    slot += BigInt(hash)
+    while (parts.length >= 3) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const a = parts.shift()!
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const b = parts.shift()!
+      parts.unshift(hashBigints([b, a]))
+    }
+    slot += hashBigints(parts.reverse())
   } else {
     const resolved = resolveReference(definition.slot, previousResults)
     slot += contractValueToBigInt(resolved)
   }
 
   return slot
+}
+
+function hashBigints(values: bigint[]) {
+  return BigInt(
+    utils.keccak256(
+      utils.defaultAbiCoder.encode(
+        values.map(() => 'uint256'),
+        values,
+      ),
+    ),
+  )
 }
 
 function contractValueToBigInt(value: bigint | Bytes | ContractValue) {
