@@ -54,8 +54,6 @@ function getInitMessage(elements: ChartElements): InitMessage {
     ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))
     : []
 
-  console.log(milestones)
-
   return {
     type: 'Init',
     initialView,
