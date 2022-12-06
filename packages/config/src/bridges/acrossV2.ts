@@ -107,7 +107,6 @@ export const acrossV2: Bridge = {
     },
   },
   contracts: {
-    // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
       {
         address: '0xc186fA914353c44b2E33eBE05f21846F1048bEda',
@@ -118,6 +117,22 @@ export const acrossV2: Bridge = {
       {
         address: '0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d',
         name: 'LpTokenFactory',
+      },
+      {
+        address: '0x40f941E48A552bF496B154Af6bf55725f18D77c3',
+        name: 'Finder'
+      },
+      {
+        address: '0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc',
+        name: 'Governor'
+      },
+      {
+        address: '0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5',
+        name: 'Proposer'
+      },
+      {
+        address: '0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828',
+        name: 'VotingToken'
       },
       {
         address: '0x22eD83A9eE26236486F57cE8385A247E5bFB71fF',
