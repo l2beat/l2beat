@@ -27,7 +27,7 @@ function getMilestoneHtml(x: number) {
       view-box="0 0 ${iconHeight} ${iconHeight}"
       role="img"
       aria-label="Milestone icon"
-      class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500"
+      class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500 cursor-pointer"
     >      
       <rect
         x="9.89941"
