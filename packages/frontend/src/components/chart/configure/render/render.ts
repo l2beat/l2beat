@@ -3,6 +3,7 @@ import { ChartElements } from '../elements'
 import { State } from '../state/State'
 import { renderChart } from './renderChart'
 import { renderHover } from './renderHover'
+import { renderMilestones } from './renderMilestones'
 
 export function render(
   elements: ChartElements,
@@ -66,6 +67,15 @@ export function render(
     const ctx = elements.view.canvas?.getContext('2d')
     if (elements.view.canvas && ctx) {
       renderChart(state, elements.view.canvas, ctx)
+    }
+
+    if (elements.view.milestones) {
+      if (
+        previousState.controls.days !== state.controls.days ||
+        !previousState.view.chart?.points
+      ) {
+        renderMilestones(state, elements.view.milestones)
+      }
     }
   }
 

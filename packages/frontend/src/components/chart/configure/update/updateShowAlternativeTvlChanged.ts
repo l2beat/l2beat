@@ -15,10 +15,7 @@ export function updateShowAlternativeTvlChanged(
   const request: State['request'] = { ...state.request }
   const effects: Effect[] = []
 
-  if (
-    message.showAlternativeTvl &&
-    state.responses.alternativeTvl === undefined
-  ) {
+  if (message.showAlternativeTvl && state.data.alternativeTvl === undefined) {
     if (!state.endpoints.alternativeTvl) {
       throw new Error('Invalid state: alternative tvl endpoint missing')
     }
@@ -35,7 +32,7 @@ export function updateShowAlternativeTvlChanged(
     ...state,
     request,
     controls,
-    view: calculateView(state.responses, controls) ?? state.view,
+    view: calculateView(state.data, controls) ?? state.view,
   }
 
   return [newState, effects]

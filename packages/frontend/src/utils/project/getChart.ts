@@ -17,6 +17,7 @@ export function getChart(
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
+    milestones: config?.features.milestones ? project.milestones : [],
   }
 }
 

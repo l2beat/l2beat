@@ -8,6 +8,7 @@ import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
   readonly field: string
+  readonly dependencies = []
   private readonly fragment: utils.FunctionFragment
 
   constructor(fragment: string | utils.FunctionFragment) {

@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import { z } from 'zod'
 
 export interface State {
@@ -11,11 +12,12 @@ export interface State {
     isFetching: boolean
     showLoader: boolean
   }
-  responses: {
+  data: {
     aggregateTvl: AggregateTvlResponse | undefined
     alternativeTvl: AggregateTvlResponse | undefined
     activity: ActivityResponse | undefined
     tokenTvl: Record<string, TokenTvlResponse | undefined>
+    milestones: Record<number, Milestone>
   }
   controls: {
     view: 'tvl' | 'activity'
@@ -45,6 +47,7 @@ export interface AggregateTvlChart {
     date: string
     usd: number
     eth: number
+    milestone?: Milestone
   }[]
 }
 
@@ -57,6 +60,7 @@ export interface TokenTvlChart {
     balance: number
     symbol: string
     usd: number
+    milestone?: Milestone
   }[]
 }
 
@@ -69,6 +73,7 @@ export interface ActivityChart {
     date: string
     tps: number
     ethereumTps: number
+    milestone?: Milestone
   }[]
 }
 
@@ -107,3 +112,13 @@ export const ActivityResponse = z.object({
     data: z.array(z.tuple([z.number(), z.number(), z.number()])),
   }),
 })
+
+export type Milestones = z.infer<typeof Milestones>
+export const Milestones = z.array(
+  z.object({
+    name: z.string(),
+    link: z.string(),
+    date: z.string(),
+    description: z.optional(z.string()),
+  }),
+)

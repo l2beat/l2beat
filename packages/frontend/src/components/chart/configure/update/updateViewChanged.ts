@@ -16,7 +16,7 @@ export function updateViewChanged(
   const request: State['request'] = { ...state.request }
   const effects: Effect[] = []
 
-  if (message.view === 'activity' && state.responses.activity === undefined) {
+  if (message.view === 'activity' && state.data.activity === undefined) {
     if (!state.endpoints.activity) {
       throw new Error('Invalid state: activity endpoint missing')
     }
@@ -32,7 +32,7 @@ export function updateViewChanged(
   if (
     message.view === 'tvl' &&
     state.controls.showAlternativeTvl &&
-    state.responses.alternativeTvl === undefined
+    state.data.alternativeTvl === undefined
   ) {
     if (!state.endpoints.alternativeTvl) {
       throw new Error('Invalid state: alternative tvl endpoint missing')
@@ -49,7 +49,7 @@ export function updateViewChanged(
   if (
     message.view === 'tvl' &&
     !state.controls.showAlternativeTvl &&
-    state.responses.aggregateTvl === undefined
+    state.data.aggregateTvl === undefined
   ) {
     if (!state.endpoints.aggregateTvl) {
       throw new Error('Invalid state: aggregate tvl endpoint missing')
@@ -70,7 +70,7 @@ export function updateViewChanged(
     ...state,
     request,
     controls,
-    view: calculateView(state.responses, controls) ?? state.view,
+    view: calculateView(state.data, controls) ?? state.view,
   }
 
   return [newState, effects]
