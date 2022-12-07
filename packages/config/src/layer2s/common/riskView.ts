@@ -45,7 +45,7 @@ export const STATE_ZKP_ST: ProjectRiskViewEntry = {
 export const STATE_EXITS_ONLY: ProjectRiskViewEntry = {
   value: 'Exits only',
   description:
-    'Exits from the network are subject to a period when they can be challenged. The internat network state is left unchecked.',
+    'Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked.',
   sentiment: 'bad',
 }
 
