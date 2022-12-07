@@ -17,10 +17,7 @@ export function getActivityView(
   activityApiResponse: ActivityApiResponse,
   verificationStatus: VerificationStatus,
 ): ActivityViewProps {
-  const included = getIncludedProjects(projects, activityApiResponse, [
-    ProjectId('aztec'),
-    ProjectId('aztecconnect'),
-  ])
+  const included = getIncludedProjects(projects, activityApiResponse, [])
   const items = included.map((x) =>
     getActivityViewEntry(x, activityApiResponse, verificationStatus),
   )
