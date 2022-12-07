@@ -101,7 +101,8 @@ function resolveDependencies(
 
 function isArrayFragment(fragment: utils.FunctionFragment) {
   return (
-    fragment.stateMutability === 'view' &&
+    (fragment.stateMutability === 'view' ||
+      fragment.stateMutability === 'pure') &&
     fragment.inputs.length === 1 &&
     fragment.inputs[0].type === 'uint256'
   )
