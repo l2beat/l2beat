@@ -1,5 +1,9 @@
 import { setupControls } from './controls/setupControls'
 import { toDays } from './controls/toDays'
+import {
+  ChartElementsWithDynamic,
+  getDynamicChartElements,
+} from './dynamicElements'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
@@ -15,7 +19,7 @@ export function configureCharts() {
 }
 
 function configureChart(chart: HTMLElement) {
-  const elements = getChartElements(chart)
+  const staticElements = getChartElements(chart)
 
   let previousState: State = EMPTY_STATE
   let currentState: State = EMPTY_STATE
@@ -28,6 +32,7 @@ function configureChart(chart: HTMLElement) {
   }
 
   function renderUpdates() {
+    const elements = getDynamicChartElements(staticElements)
     render(elements, previousState, currentState)
     previousState = currentState
   }
@@ -37,8 +42,8 @@ function configureChart(chart: HTMLElement) {
     requestAnimationFrame(renderUpdates)
   })
 
-  setupControls(elements, dispatch)
-  dispatch(getInitMessage(elements))
+  setupControls(getDynamicChartElements(staticElements), dispatch)
+  dispatch(getInitMessage(getDynamicChartElements(staticElements)))
 }
 
 function getInitMessage(elements: ChartElements): InitMessage {
