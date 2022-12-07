@@ -119,6 +119,7 @@ export interface LoaderTimedOutMessage {
 
 export interface MilestoneClickedMessage {
   type: 'MilestoneClicked'
+  index: number
 }
 
 export type Message =

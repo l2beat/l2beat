@@ -6,18 +6,20 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
     return
   }
   let innerHtml = ''
+  let i = -1
   const width = milestones.getBoundingClientRect().width
   for (const point of points) {
+    i++
     if (!point.milestone) {
       continue
     }
     const x = point.x * width
-    innerHtml += getMilestoneHtml(x)
+    innerHtml += getMilestoneHtml(x, i)
   }
   milestones.innerHTML = innerHtml
 }
 
-function getMilestoneHtml(x: number) {
+function getMilestoneHtml(x: number, index: number) {
   return `
   <div class="absolute z-50" 
         style="left: ${x + offset}px; top: ${offset}px">
@@ -28,6 +30,7 @@ function getMilestoneHtml(x: number) {
       role="img"
       aria-label="Milestone icon"
       data-role="chart-milestone-icon"
+      data-index="${index}"
     >      
       <rect
         fill="#34762F"

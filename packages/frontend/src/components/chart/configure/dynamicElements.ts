@@ -18,10 +18,12 @@ export function attachDynamicElements(
     : []
 
   if (elements.milestoneIcons.length !== milestoneIcons.length) {
-    milestoneIcons.map((element) => {
-      element.addEventListener('click', () => {
+    milestoneIcons.map((icon) => {
+      icon.addEventListener('click', (e) => {
+        console.log('icon clicked', icon, e)
         dispatch({
           type: 'MilestoneClicked',
+          index: Number(icon.dataset.index)
         })
       })
     })

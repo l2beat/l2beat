@@ -46,6 +46,16 @@ export function update(state: State, message: Message): [State, Effect[]] {
       return updateLoaderTimedOut(state, message)
     case 'MilestoneClicked':
       console.log('update triggered')
-      return [state, []]
+      return [
+        {
+          ...state,
+          view: {
+            ...state.view,
+            showHoverAtIndex: message.index,
+            showMilestoneHoverAtIndex: message.index
+          },
+        },
+        [],
+      ]
   }
 }

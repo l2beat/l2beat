@@ -18,6 +18,7 @@ export function updateMouseMoved(
     view: {
       ...state.view,
       showHoverAtIndex,
+      showMilestoneHoverAtIndex: undefined,
     },
   }
   return [newState, []]

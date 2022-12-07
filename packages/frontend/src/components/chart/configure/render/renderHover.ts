@@ -49,6 +49,10 @@ export function renderHover(
 
   if (elements.hover.line) {
     elements.hover.line.style.left = `${left - 1}px`
+    elements.hover.line.classList.remove('bg-[#5BFF4C]')
+    if (state.view.showMilestoneHoverAtIndex) {
+      elements.hover.line.classList.add('bg-[#5BFF4C]')
+    }
   }
 
   if (elements.hover.circle) {
@@ -68,32 +72,41 @@ export function renderHover(
 
   if (elements.hover.contents) {
     const rows: string[] = []
-    rows.push(renderDateRow(point.date))
-    if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
-      if (state.controls.currency === 'eth') {
-        rows.push(renderCurrencyRow(point.eth, 'ETH'))
-        rows.push(renderCurrencyRow(point.usd, 'USD'))
-      } else {
-        rows.push(renderCurrencyRow(point.usd, 'USD'))
-        rows.push(renderCurrencyRow(point.eth, 'ETH'))
+
+    if (state.view.showMilestoneHoverAtIndex && point.milestone) {
+      rows.push(renderDateRow(formatDate(point.date)))
+      rows.push(renderNameRow(point.milestone.name))
+      if (point.milestone.description) {
+        rows.push(renderDescriptionRow(point.milestone.description))
       }
-    } else if (
-      state.view.chart.type === 'TokenTvlChart' &&
-      'balance' in point
-    ) {
-      rows.push(renderCurrencyRow(point.balance, point.symbol))
-      rows.push(renderCurrencyRow(point.usd, 'USD'))
-    } else if (state.view.chart.type === 'ActivityChart' && 'tps' in point) {
-      if (state.controls.showEthereum) {
-        if (point.ethereumTps > point.tps) {
-          rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
-          rows.push(renderTpsRow(point.tps, 'L2'))
+    } else {
+      rows.push(renderDateRow(point.date))
+      if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
+        if (state.controls.currency === 'eth') {
+          rows.push(renderCurrencyRow(point.eth, 'ETH'))
+          rows.push(renderCurrencyRow(point.usd, 'USD'))
+        } else {
+          rows.push(renderCurrencyRow(point.usd, 'USD'))
+          rows.push(renderCurrencyRow(point.eth, 'ETH'))
+        }
+      } else if (
+        state.view.chart.type === 'TokenTvlChart' &&
+        'balance' in point
+      ) {
+        rows.push(renderCurrencyRow(point.balance, point.symbol))
+        rows.push(renderCurrencyRow(point.usd, 'USD'))
+      } else if (state.view.chart.type === 'ActivityChart' && 'tps' in point) {
+        if (state.controls.showEthereum) {
+          if (point.ethereumTps > point.tps) {
+            rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
+            rows.push(renderTpsRow(point.tps, 'L2'))
+          } else {
+            rows.push(renderTpsRow(point.tps, 'L2'))
+            rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
+          }
         } else {
           rows.push(renderTpsRow(point.tps, 'L2'))
-          rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
         }
-      } else {
-        rows.push(renderTpsRow(point.tps, 'L2'))
       }
     }
 
@@ -136,4 +149,43 @@ function renderTpsRow(value: number, source: 'L2' | 'ETH') {
   const circleClass = `inline-block mr-1 w-2 h-2 relative -top-px border-2 border-current ${customStyles}`
   const circleHTML = `<div class="${circleClass}"></div>`
   return `<div>${circleHTML} ${sourceHTML} avg. TPS: ${formattedHTML}</div>`
+}
+
+function renderNameRow(name: string) {
+  return `<div class="mb-2 font-bold flex flex-wrap"><svg class="mt-[4.5px]" width="11" height="10" viewBox="0 0 11 10" fill="none">
+  <rect x="5.24268" y="0.0502174" width="7" height="7" rx="1.5" transform="rotate(45 5.24268 0.0502174)" fill="#5BFF4D" stroke="white"/>
+  </svg><span class='ml-1'>${name}</span></div>`
+}
+
+function renderDescriptionRow(description: string) {
+  return `<div class="max-w-[216px] text-left">${description}</div>`
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = date.toLocaleDateString('en', {
+    month: 'short',
+  })
+  const day = date.toLocaleDateString('en', {
+    day: 'numeric',
+  })
+
+  const ending = getOrdinalSuffix(date.getDate())
+
+  return `${year} ${month} ${day}${ending}`
+}
+
+function getOrdinalSuffix(days: number) {
+  if (days > 3 && days < 21) return 'th'
+  switch (days % 10) {
+    case 1:
+      return 'st'
+    case 2:
+      return 'nd'
+    case 3:
+      return 'rd'
+    default:
+      return 'th'
+  }
 }
