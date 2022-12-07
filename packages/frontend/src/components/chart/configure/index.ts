@@ -42,8 +42,8 @@ function configureChart(chart: HTMLElement) {
     requestAnimationFrame(renderUpdates)
   })
 
-  setupControls(getDynamicChartElements(staticElements), dispatch)
-  dispatch(getInitMessage(getDynamicChartElements(staticElements)))
+  setupControls(staticElements, dispatch)
+  dispatch(getInitMessage(staticElements))
 }
 
 function getInitMessage(elements: ChartElements): InitMessage {
