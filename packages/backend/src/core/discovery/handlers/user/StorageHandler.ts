@@ -4,14 +4,14 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { BytesFromString, NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
+import { valueToBigInt } from '../utils/valueToBigInt'
 
 const SingleSlot = z.union([
-  z.number(),
+  z.number().int().nonnegative(),
   BytesFromString,
   NumberFromString,
   Reference,
@@ -21,7 +21,9 @@ export type StorageHandlerDefinition = z.infer<typeof StorageHandlerDefinition>
 export const StorageHandlerDefinition = z.strictObject({
   type: z.literal('storage'),
   slot: z.union([SingleSlot, z.array(SingleSlot).min(1)]),
-  offset: z.optional(z.union([z.number(), NumberFromString, Reference])),
+  offset: z.optional(
+    z.union([z.number().int().nonnegative(), NumberFromString, Reference]),
+  ),
   returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
 })
 
@@ -65,13 +67,13 @@ function computeSlot(
 
   if (definition.offset) {
     const resolved = resolveReference(definition.offset, previousResults)
-    slot = contractValueToBigInt(resolved)
+    slot = valueToBigInt(resolved)
   }
 
   if (Array.isArray(definition.slot)) {
     const parts = definition.slot.map((x) => {
       const resolved = resolveReference(x, previousResults)
-      return contractValueToBigInt(resolved)
+      return valueToBigInt(resolved)
     })
     while (parts.length >= 3) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -83,7 +85,7 @@ function computeSlot(
     slot += hashBigints(parts.reverse())
   } else {
     const resolved = resolveReference(definition.slot, previousResults)
-    slot += contractValueToBigInt(resolved)
+    slot += valueToBigInt(resolved)
   }
 
   return slot
@@ -98,20 +100,6 @@ function hashBigints(values: bigint[]) {
       ),
     ),
   )
-}
-
-function contractValueToBigInt(value: bigint | Bytes | ContractValue) {
-  if (Array.isArray(value)) {
-    throw new Error('Cannot convert value to bigint')
-  }
-  if (value instanceof Bytes) {
-    return BigInt(value.toString())
-  }
-  try {
-    return BigInt(value)
-  } catch (e) {
-    throw new Error('Cannot convert value to bigint')
-  }
 }
 
 function getDependencies(definition: StorageHandlerDefinition) {
