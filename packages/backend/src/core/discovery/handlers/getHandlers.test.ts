@@ -3,7 +3,6 @@ import { expect } from 'earljs'
 import { getHandlers } from './getHandlers'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
-import { ArrayHandler } from './user/ArrayHandler'
 import { StorageHandler } from './user/StorageHandler'
 
 describe(getHandlers.name, () => {
@@ -92,11 +91,11 @@ describe(getHandlers.name, () => {
     const handlers = getHandlers([], {
       fields: {
         foo: { type: 'storage', slot: 1 },
-        bar: { type: 'array' },
+        bar: { type: 'storage', slot: 2 },
       },
     })
     expect(handlers).toEqual([
-      new ArrayHandler('bar', { type: 'array' }),
+      new StorageHandler('bar', { type: 'storage', slot: 2 }),
       new StorageHandler('foo', { type: 'storage', slot: 1 }),
     ])
   })
@@ -110,12 +109,12 @@ describe(getHandlers.name, () => {
       {
         fields: {
           foo: { type: 'storage', slot: 1 },
-          bar: { type: 'array' },
+          bar: { type: 'storage', slot: 2 },
         },
       },
     )
     expect(handlers).toEqual([
-      new ArrayHandler('bar', { type: 'array' }),
+      new StorageHandler('bar', { type: 'storage', slot: 2 }),
       new SimpleMethodHandler('function baz() view returns (address)'),
       new StorageHandler('foo', { type: 'storage', slot: 1 }),
     ])

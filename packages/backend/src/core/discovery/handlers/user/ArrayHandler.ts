@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+import { utils } from 'ethers'
 import { FunctionFragment } from 'ethers/lib/utils'
 import * as z from 'zod'
 
@@ -33,16 +34,23 @@ export class ArrayHandler implements Handler {
     const method = definition.method ?? field
     if (method.includes(' ')) {
       this.fragment = toFunctionFragment(method)
+      if (!isArrayFragment(this.fragment)) {
+        throw new Error('Invalid method abi')
+      }
     } else {
       const fragment = abi
         .filter((x) => x.startsWith(`function ${method}`))
         .map(toFunctionFragment)
-        .find((x) => x.inputs.length === 1 && x.inputs[0].type === 'uint256')
+        .find(isArrayFragment)
       if (!fragment) {
         throw new Error(`Cannot find an array method for ${method}`)
       }
       this.fragment = fragment
     }
+  }
+
+  getMethod() {
+    return this.fragment.format(utils.FormatTypes.full)
   }
 
   async execute(
@@ -71,7 +79,7 @@ export class ArrayHandler implements Handler {
       return { field: this.field, value }
     } else {
       const value: ContractValue[] = []
-      for (let i = 0; i++; ) {
+      for (let i = 0; ; i++) {
         const current = await callMethod(provider, address, this.fragment, [i])
         if (current.error) {
           if (current.error !== 'Execution reverted') {
@@ -85,4 +93,8 @@ export class ArrayHandler implements Handler {
       return { field: this.field, value }
     }
   }
+}
+
+function isArrayFragment(fragment: utils.FunctionFragment) {
+  return fragment.inputs.length === 1 && fragment.inputs[0].type === 'uint256'
 }
