@@ -85,7 +85,7 @@ describe(CallHandler.name, () => {
     })
 
     it('finds the method by field name', () => {
-      const handler = new CallHandler('someName', { type: 'call' }, [
+      const handler = new CallHandler('someName', { type: 'call', args: [] }, [
         'function foo() view returns (uint256)',
         'function someName(uint256 i) view returns (uint256)',
         'function someName(uint256 a, uint256 b) view returns (uint256)',
@@ -117,7 +117,7 @@ describe(CallHandler.name, () => {
     it('throws if it cannot find the method by field name', () => {
       expect(
         () =>
-          new CallHandler('someName', { type: 'call' }, [
+          new CallHandler('someName', { type: 'call', args: [] }, [
             'function foo(uint256 i) view returns (uint256)',
             'function someName(uint256 i) view returns (uint256)',
             'function someName(uint256 a, uint256 b) view returns (uint256)',
@@ -128,7 +128,7 @@ describe(CallHandler.name, () => {
     it('finds the method by method name', () => {
       const handler = new CallHandler(
         'someName',
-        { type: 'call', method: 'bar' },
+        { type: 'call', method: 'bar', args: [] },
         [
           'function foo(uint256 i) view returns (uint256)',
           'function someName(uint256 i) view returns (uint256)',
@@ -148,14 +148,18 @@ describe(CallHandler.name, () => {
     it('throws if it cannot find the method by method name', () => {
       expect(
         () =>
-          new CallHandler('someName', { type: 'call', method: 'bar' }, [
-            'function foo(uint256 i) view returns (uint256)',
-            'function someName(uint256 i) view returns (uint256)',
-            'function someName(uint256 a, uint256 b) view returns (uint256)',
-            'function someName() view returns (uint256)',
-            'function bar(uint256 i) view returns (uint256)',
-            'function bar(uint256 a, uint256 b) view returns (uint256)',
-          ]),
+          new CallHandler(
+            'someName',
+            { type: 'call', method: 'bar', args: [] },
+            [
+              'function foo(uint256 i) view returns (uint256)',
+              'function someName(uint256 i) view returns (uint256)',
+              'function someName(uint256 a, uint256 b) view returns (uint256)',
+              'function someName() view returns (uint256)',
+              'function bar(uint256 i) view returns (uint256)',
+              'function bar(uint256 a, uint256 b) view returns (uint256)',
+            ],
+          ),
       ).toThrow('Cannot find a matching method for bar')
     })
   })

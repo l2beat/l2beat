@@ -13,7 +13,7 @@ export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>
 export const CallHandlerDefinition = z.strictObject({
   type: z.literal('call'),
   method: z.optional(z.string()),
-  args: z.optional(z.array(z.union([z.string(), z.number()]))),
+  args: z.array(z.union([z.string(), z.number()])),
 })
 
 export class CallHandler implements Handler {
@@ -25,13 +25,13 @@ export class CallHandler implements Handler {
     private readonly definition: CallHandlerDefinition,
     abi: string[],
   ) {
-    for (const arg of this.definition.args ?? []) {
+    for (const arg of this.definition.args) {
       const dependency = getReferencedName(arg)
       if (dependency) {
         this.dependencies.push(dependency)
       }
     }
-    const arity = definition.args?.length ?? 0
+    const arity = definition.args.length
     this.fragment = getFragment(
       definition.method ?? field,
       abi,
@@ -63,9 +63,7 @@ function resolveDependencies(
   definition: CallHandlerDefinition,
   previousResults: Record<string, HandlerResult | undefined>,
 ) {
-  const args = (definition.args ?? []).map((x) =>
-    resolveReference(x, previousResults),
-  )
+  const args = definition.args.map((x) => resolveReference(x, previousResults))
   return {
     method: definition.method,
     args,
