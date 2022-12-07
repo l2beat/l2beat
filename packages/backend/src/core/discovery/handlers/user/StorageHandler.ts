@@ -94,7 +94,7 @@ function resolveDependencies(
     slot = valueToBigInt(resolved)
   }
 
-  const returnType: NonNullable<StorageHandlerDefinition['returnType']> =
+  const returnType: 'number' | 'address' | 'bytes' =
     definition.returnType ?? 'bytes'
 
   return {
