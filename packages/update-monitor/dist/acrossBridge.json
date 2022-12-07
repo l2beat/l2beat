@@ -21,7 +21,13 @@
           "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
           "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
           "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
-          "0xa420b2d1c0841415A695b81E5B867BCD07Dff8C9"
+          "0xa420b2d1c0841415A695b81E5B867BCD07Dff8C9",
+          "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
+          "0x69B5c72837769eF1e7C164Abc6515DcFf217F920",
+          "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+          "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
+          "0x937958992799bF4A9a656E6596FD10d7Da5c2216",
+          "0xB88690461dDbaB6f04Dfad7df66B7725942FEb9C"
         ]
       }
     },
@@ -91,7 +97,7 @@
         "decimals": 18,
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "109255415960795223577436909",
+        "totalSupply": "109258777595912025226846667",
         "members": [
           "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
         ]
