@@ -157,8 +157,6 @@ describe(ArrayHandler.name, () => {
         { type: 'array', method, length: 3 },
         [],
       )
-      expect(handler.field).toEqual('owners')
-
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
@@ -182,8 +180,6 @@ describe(ArrayHandler.name, () => {
         { type: 'array', method, length: '{{ foo }}' },
         [],
       )
-      expect(handler.field).toEqual('owners')
-
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 3 },
       })
@@ -212,8 +208,6 @@ describe(ArrayHandler.name, () => {
         { type: 'array', method, length: 3 },
         [],
       )
-      expect(handler.field).toEqual('owners')
-
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
@@ -236,8 +230,6 @@ describe(ArrayHandler.name, () => {
       })
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
-      expect(handler.field).toEqual('owners')
-
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
@@ -260,12 +252,46 @@ describe(ArrayHandler.name, () => {
       })
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
-      expect(handler.field).toEqual('owners')
-
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
         error: 'oops',
+      })
+    })
+
+    it('has a builtin limit of 100', async () => {
+      const provider = mock<DiscoveryProvider>({
+        async call() {
+          return Bytes.fromHex('0'.repeat(64))
+        },
+      })
+
+      const handler = new ArrayHandler('owners', { type: 'array', method }, [])
+      const result = await handler.execute(provider, address, {})
+      expect<unknown>(result).toEqual({
+        field: 'owners',
+        error: 'Too many values. Provide a higher maxLength value',
+        value: new Array(100).fill('0x' + '0'.repeat(40)),
+      })
+    })
+
+    it('can have a different maxLength', async () => {
+      const provider = mock<DiscoveryProvider>({
+        async call() {
+          return Bytes.fromHex('0'.repeat(64))
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method, maxLength: 15 },
+        [],
+      )
+      const result = await handler.execute(provider, address, {})
+      expect<unknown>(result).toEqual({
+        field: 'owners',
+        error: 'Too many values. Provide a higher maxLength value',
+        value: new Array(15).fill('0x' + '0'.repeat(40)),
       })
     })
   })

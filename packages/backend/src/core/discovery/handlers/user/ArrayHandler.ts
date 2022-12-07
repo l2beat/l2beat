@@ -16,7 +16,10 @@ export const ArrayHandlerDefinition = z.strictObject({
   type: z.literal('array'),
   method: z.optional(z.string()),
   length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
+  maxLength: z.optional(z.number().int().nonnegative()),
 })
+
+const DEFAULT_MAX_LENGTH = 100
 
 export class ArrayHandler implements Handler {
   readonly dependencies: string[] = []
@@ -79,7 +82,8 @@ export class ArrayHandler implements Handler {
       return { field: this.field, value }
     } else {
       const value: ContractValue[] = []
-      for (let i = 0; ; i++) {
+      const maxLength = this.definition.maxLength ?? DEFAULT_MAX_LENGTH
+      for (let i = 0; i < maxLength; i++) {
         const current = await callMethod(provider, address, this.fragment, [i])
         if (current.error) {
           if (current.error !== 'Execution reverted') {
@@ -89,6 +93,13 @@ export class ArrayHandler implements Handler {
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         value.push(current.value!)
+      }
+      if (value.length === maxLength) {
+        return {
+          field: this.field,
+          value,
+          error: 'Too many values. Provide a higher maxLength value',
+        }
       }
       return { field: this.field, value }
     }
