@@ -29,7 +29,9 @@ export async function getHubPool(
       weth: await contract.weth(),
       crossChainContracts: (
         await Promise.all(
-          new Array(20).fill(0).map(async (_, i) => {
+          // https://docs.across.to/v/developer-docs/developers/contract-addresses
+          // https://github.com/across-protocol/relayer-v2/blob/519e54ee2d635a17899eeba37a7029803da95f18/src/common/Constants.ts#L8
+          [1, 10, 137, 288, 42161].map(async (i) => {
             const res = await contract.crossChainContracts(i)
             return [res.adapter, res.spokePool]
           }),
