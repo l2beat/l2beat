@@ -5,9 +5,9 @@ export interface ChartElementsWithDynamic extends ChartElements {
   milestoneIcons: HTMLElement[]
 }
 
-export function getDynamicChartElements(
+export function attachDynamicElements(
   elements: ChartElementsWithDynamic,
-  dispatch?: (message: Message) => void,
+  dispatch: (message: Message) => void,
 ): ChartElementsWithDynamic {
   const milestoneIcons = elements.view.milestones
     ? Array.from(
@@ -17,21 +17,14 @@ export function getDynamicChartElements(
       )
     : []
 
-  if (dispatch) {
-    console.log(elements.milestoneIcons)
-    console.log(milestoneIcons)
-    if (elements.milestoneIcons.length !== milestoneIcons.length) {
-      console.log('unequal')
-      milestoneIcons.map((element, i) => {
-        console.log('added listener to event #', i)
-        element.addEventListener('click', (e) => {
-          console.log('clicked milestone', e)
-          dispatch({
-            type: 'MilestoneClicked',
-          })
+  if (elements.milestoneIcons.length !== milestoneIcons.length) {
+    milestoneIcons.map((element) => {
+      element.addEventListener('click', () => {
+        dispatch({
+          type: 'MilestoneClicked',
         })
       })
-    }
+    })
   }
 
   return {

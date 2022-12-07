@@ -1,9 +1,8 @@
 import { setupControls } from './controls/setupControls'
-import { setupDynamicControls } from './controls/setupDynamicControls'
 import { toDays } from './controls/toDays'
 import {
+  attachDynamicElements,
   ChartElementsWithDynamic,
-  getDynamicChartElements,
 } from './dynamicElements'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
@@ -21,6 +20,10 @@ export function configureCharts() {
 
 function configureChart(chart: HTMLElement) {
   const staticElements = getChartElements(chart)
+  let elements: ChartElementsWithDynamic = {
+    ...staticElements,
+    milestoneIcons: [],
+  }
 
   let previousState: State = EMPTY_STATE
   let currentState: State = EMPTY_STATE
@@ -32,12 +35,8 @@ function configureChart(chart: HTMLElement) {
     requestAnimationFrame(renderUpdates)
   }
 
-  let elements = getDynamicChartElements(
-    staticElements as ChartElementsWithDynamic,
-  )
-
   function renderUpdates() {
-    elements = getDynamicChartElements(elements, dispatch)
+    elements = attachDynamicElements(elements, dispatch)
     render(elements, previousState, currentState)
     previousState = currentState
   }
