@@ -50,7 +50,7 @@ export function renderHover(
   if (elements.hover.line) {
     elements.hover.line.style.left = `${left - 1}px`
     elements.hover.line.classList.remove('bg-[#5BFF4C]')
-    if (state.view.showMilestoneHover) {
+    if (state.view.showMilestoneHoverAtIndex) {
       elements.hover.line.classList.add('bg-[#5BFF4C]')
     }
   }
@@ -60,7 +60,7 @@ export function renderHover(
     elements.hover.circle.style.bottom = `${bottom1 - 4}px`
     elements.hover.circle.classList.remove('hidden')
     elements.hover.greenSquare?.classList.add('hidden')
-    if (state.view.showMilestoneHover) {
+    if (state.view.showMilestoneHoverAtIndex) {
     elements.hover.greenSquare?.classList.remove('hidden')
     elements.hover.circle.classList.add('hidden')
     }
@@ -84,7 +84,7 @@ export function renderHover(
   if (elements.hover.contents) {
     const rows: string[] = []
 
-    if (state.view.showMilestoneHover && point.milestone) {
+    if (state.view.showMilestoneHoverAtIndex && point.milestone) {
       rows.push(renderDateRow(formatDate(point.date)))
       rows.push(renderNameRow(point.milestone.name))
       if (point.milestone.description) {
