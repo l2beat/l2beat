@@ -66,6 +66,20 @@ describe(ArrayHandler.name, () => {
       ).toThrow('Invalid method abi')
     })
 
+    it('rejects a non-view array method abi', () => {
+      expect(
+        () =>
+          new ArrayHandler(
+            'someName',
+            {
+              type: 'array',
+              method: 'function foo(uint256 i) returns (uint)',
+            },
+            [],
+          ),
+      ).toThrow('Invalid method abi')
+    })
+
     it('finds the method by field name', () => {
       const handler = new ArrayHandler('someName', { type: 'array' }, [
         'function foo(uint256 i) view returns (uint256)',
@@ -87,7 +101,7 @@ describe(ArrayHandler.name, () => {
             'function someName(uint256 a, uint256 b) view returns (uint256)',
             'function someName() view returns (uint256)',
           ]),
-      ).toThrow('Cannot find an array method for someName')
+      ).toThrow('Cannot find a matching method for someName')
     })
 
     it('finds the method by method name', () => {
@@ -121,7 +135,7 @@ describe(ArrayHandler.name, () => {
             'function bar(uint256 a, uint256 b) view returns (uint256)',
             'function bar() view returns (uint256)',
           ]),
-      ).toThrow('Cannot find an array method for bar')
+      ).toThrow('Cannot find a matching method for bar')
     })
   })
 

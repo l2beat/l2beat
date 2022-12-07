@@ -8,7 +8,7 @@ import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
+import { getFragment } from '../utils/getFragment'
 import { valueToNumber } from '../utils/valueToNumber'
 
 export type ArrayHandlerDefinition = z.infer<typeof ArrayHandlerDefinition>
@@ -34,22 +34,11 @@ export class ArrayHandler implements Handler {
     if (dependency) {
       this.dependencies.push(dependency)
     }
-    const method = definition.method ?? field
-    if (method.includes(' ')) {
-      this.fragment = toFunctionFragment(method)
-      if (!isArrayFragment(this.fragment)) {
-        throw new Error('Invalid method abi')
-      }
-    } else {
-      const fragment = abi
-        .filter((x) => x.startsWith(`function ${method}`))
-        .map(toFunctionFragment)
-        .find(isArrayFragment)
-      if (!fragment) {
-        throw new Error(`Cannot find an array method for ${method}`)
-      }
-      this.fragment = fragment
-    }
+    this.fragment = getFragment(
+      definition.method ?? field,
+      abi,
+      isArrayFragment,
+    )
   }
 
   getMethod() {
@@ -61,51 +50,60 @@ export class ArrayHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    let length: number | undefined
-    if (this.definition.length !== undefined) {
-      const resolved = resolveReference(this.definition.length, previousResults)
-      length = valueToNumber(resolved)
-    }
+    const resolved = resolveDependencies(this.definition, previousResults)
 
-    if (length) {
-      const results = await Promise.all(
-        Array.from({ length }).map((_, index) =>
-          callMethod(provider, address, this.fragment, [index]),
-        ),
-      )
-      const errorResult = results.find((x) => x.error)
-      if (errorResult) {
-        return { field: this.field, error: errorResult.error }
+    const value: ContractValue[] = []
+    const maxLength = Math.min(resolved.maxLength, resolved.length ?? Infinity)
+    for (let i = 0; i < maxLength; i++) {
+      const current = await callMethod(provider, address, this.fragment, [i])
+      if (current.error) {
+        if (
+          current.error !== 'Execution reverted' ||
+          resolved.length !== undefined
+        ) {
+          return { field: this.field, error: current.error }
+        }
+        break
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const value = results.map((x) => x.value!)
-      return { field: this.field, value }
-    } else {
-      const value: ContractValue[] = []
-      const maxLength = this.definition.maxLength ?? DEFAULT_MAX_LENGTH
-      for (let i = 0; i < maxLength; i++) {
-        const current = await callMethod(provider, address, this.fragment, [i])
-        if (current.error) {
-          if (current.error !== 'Execution reverted') {
-            return { field: this.field, error: current.error }
-          }
-          break
-        }
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        value.push(current.value!)
-      }
-      if (value.length === maxLength) {
-        return {
-          field: this.field,
-          value,
-          error: 'Too many values. Provide a higher maxLength value',
-        }
-      }
-      return { field: this.field, value }
+      value.push(current.value!)
     }
+    if (
+      value.length === resolved.maxLength &&
+      value.length !== resolved.length
+    ) {
+      return {
+        field: this.field,
+        value,
+        error: 'Too many values. Provide a higher maxLength value',
+      }
+    }
+    return { field: this.field, value }
+  }
+}
+
+function resolveDependencies(
+  definition: ArrayHandlerDefinition,
+  previousResults: Record<string, HandlerResult | undefined>,
+) {
+  let length: number | undefined
+  if (definition.length !== undefined) {
+    const resolved = resolveReference(definition.length, previousResults)
+    length = valueToNumber(resolved)
+  }
+
+  return {
+    method: definition.method,
+    length,
+    maxLength: definition.maxLength ?? DEFAULT_MAX_LENGTH,
   }
 }
 
 function isArrayFragment(fragment: utils.FunctionFragment) {
-  return fragment.inputs.length === 1 && fragment.inputs[0].type === 'uint256'
+  return (
+    (fragment.stateMutability === 'view' ||
+      fragment.stateMutability === 'pure') &&
+    fragment.inputs.length === 1 &&
+    fragment.inputs[0].type === 'uint256'
+  )
 }
