@@ -38,7 +38,7 @@ export class DiscoveryProvider {
 
   async getStorage(
     address: EthereumAddress,
-    slot: number | Bytes,
+    slot: number | bigint | Bytes,
   ): Promise<Bytes> {
     console.log('getStorage', address, slot)
     const result = await this.provider.getStorageAt(

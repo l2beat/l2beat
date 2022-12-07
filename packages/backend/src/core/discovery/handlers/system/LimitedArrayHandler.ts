@@ -9,6 +9,7 @@ import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class LimitedArrayHandler implements Handler {
   readonly field: string
+  readonly dependencies = []
   private readonly fragment: utils.FunctionFragment
 
   constructor(

@@ -10,6 +10,8 @@ export const ArrayHandlerDefinition = z.strictObject({
 })
 
 export class ArrayHandler implements Handler {
+  readonly dependencies = []
+
   constructor(
     readonly field: string,
     private readonly _definition: ArrayHandlerDefinition,
