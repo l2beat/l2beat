@@ -1,12 +1,12 @@
 import { toDays } from '../controls/toDays'
-import { ChartElements } from '../elements'
+import { ChartElementsWithDynamic } from '../dynamicElements'
 import { State } from '../state/State'
 import { renderChart } from './renderChart'
 import { renderHover } from './renderHover'
 import { renderMilestones } from './renderMilestones'
 
 export function render(
-  elements: ChartElements,
+  elements: ChartElementsWithDynamic,
   previousState: State,
   state: State,
 ) {

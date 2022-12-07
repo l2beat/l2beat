@@ -117,6 +117,10 @@ export interface LoaderTimedOutMessage {
   requestId: number
 }
 
+export interface MilestoneClickedMessage {
+  type: 'MilestoneClicked'
+}
+
 export type Message =
   | InitMessage
   | ViewChangedMessage
@@ -138,3 +142,4 @@ export type Message =
   | ActivityLoadedMessage
   | ActivityFailedMessage
   | LoaderTimedOutMessage
+  | MilestoneClickedMessage

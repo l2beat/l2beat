@@ -1,4 +1,5 @@
 import { setupControls } from './controls/setupControls'
+import { setupDynamicControls } from './controls/setupDynamicControls'
 import { toDays } from './controls/toDays'
 import {
   ChartElementsWithDynamic,
@@ -31,8 +32,12 @@ function configureChart(chart: HTMLElement) {
     requestAnimationFrame(renderUpdates)
   }
 
+  let elements = getDynamicChartElements(
+    staticElements as ChartElementsWithDynamic,
+  )
+
   function renderUpdates() {
-    const elements = getDynamicChartElements(staticElements)
+    elements = getDynamicChartElements(elements, dispatch)
     render(elements, previousState, currentState)
     previousState = currentState
   }

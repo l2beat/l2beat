@@ -44,5 +44,8 @@ export function update(state: State, message: Message): [State, Effect[]] {
       return updateLoadedOrFailed(state, message)
     case 'LoaderTimedOut':
       return updateLoaderTimedOut(state, message)
+    case 'MilestoneClicked':
+      console.log('update triggered')
+      return [state, []]
   }
 }
