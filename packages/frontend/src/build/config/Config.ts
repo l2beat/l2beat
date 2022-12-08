@@ -22,5 +22,6 @@ export interface Config {
   }
   layer2s: Layer2[]
   bridges: Bridge[]
+  milestones: Milestone[]
   tokens: TokenInfo[]
 }

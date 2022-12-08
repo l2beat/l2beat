@@ -21,4 +21,12 @@ export const common: Omit<Config, 'backend'> = {
   layer2s,
   bridges,
   tokens: tokenList,
+  milestones: [
+    {
+      name: 'Rollup centric roadmap for Ethereum',
+      description: '',
+      date: '2020-10-02T00:00:00Z',
+      link: 'https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698',
+    },
+  ],
 }
