@@ -50,9 +50,9 @@ export function renderHover(
 
   if (elements.hover.line) {
     elements.hover.line.style.left = `${left - 1}px`
-    elements.hover.line.classList.remove('bg-[#5BFF4C]')
+    elements.hover.line.classList.remove('dark:bg-green-500', 'bg-green-600')
     if (state.view.showMilestoneHover) {
-      elements.hover.line.classList.add('bg-[#5BFF4C]')
+      elements.hover.line.classList.add('dark:bg-green-500', 'bg-green-600')
     }
   }
 
