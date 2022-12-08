@@ -11,6 +11,10 @@ export function getStagingConfig(cli: CliParameters): Config {
 
   return {
     ...productionConfig,
+    activity: productionConfig.activity && {
+      ...productionConfig.activity,
+      skipExplicitExclusion: true,
+    },
     name: 'Backend/Staging',
   }
 }
