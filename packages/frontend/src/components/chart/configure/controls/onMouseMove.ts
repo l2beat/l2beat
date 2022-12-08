@@ -22,14 +22,14 @@ export function onMouseMove(
       e.clientX >= rect.left - HOVER_AREA_EXTENSION_PX &&
       e.clientX <= rect.right + HOVER_AREA_EXTENSION_PX &&
       e.clientY >= rect.top &&
-      e.clientY <= rect.bottom
+      e.clientY <= rect.bottom + 10
     const position = (e.clientX - rect.left) / rect.width
 
     if (isInside) {
       dispatch({
         type: 'MouseMoved',
         mouseX: Math.min(1, Math.max(0, position)),
-        mouseY: Math.abs(e.clientY - rect.top - rect.height),
+        mouseY: Math.abs(e.clientY - rect.top - rect.height - 10),
       })
     } else if (wasInside) {
       dispatch({ type: 'MouseExited' })
