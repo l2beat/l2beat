@@ -495,5 +495,11 @@ export const arbitrum: Layer2 = {
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: '2021-08-31T00:00:00Z',
     },
+    {
+      name: 'Hubi Update',
+      link: 'youtube.com',
+      date: '2022-12-08T00:00:00Z',
+      description: 'Hubi is making milestones guide',
+    },
   ],
 }
