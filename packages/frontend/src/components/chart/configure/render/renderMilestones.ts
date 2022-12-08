@@ -19,7 +19,7 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
 
 function getMilestoneHtml(x: number) {
   return `
-  <div class="absolute z-50" 
+  <div class="absolute z-40" 
         style="left: ${x + offset}px; top: ${offset}px">
     <svg
       width="${iconHeight}"
