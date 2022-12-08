@@ -9,15 +9,15 @@ export function updateMouseMoved(
   message: MouseMovedMessage,
 ): [State, Effect[]] {
   const points = state.view.chart?.points.length
+
   let showHoverAtIndex = getHoverIndex(message.mouseX, points)
+  let showMilestoneHover: boolean | undefined = undefined
 
   const milestoneHoverAtIndex = getMilestoneHover(
     message.mouseX,
     message.mouseY,
-    state.view.chart?.points, 
+    state.view.chart?.points,
   )
-
-  let showMilestoneHover: boolean | undefined = undefined
   if (milestoneHoverAtIndex) {
     showHoverAtIndex = milestoneHoverAtIndex
     showMilestoneHover = true

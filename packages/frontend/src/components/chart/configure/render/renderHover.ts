@@ -10,6 +10,7 @@ export function renderHover(
 ) {
   if (
     state.view.showHoverAtIndex === previousState.view.showHoverAtIndex &&
+    state.view.showMilestoneHover === previousState.view.showMilestoneHover &&
     state.view.chart === previousState.view.chart
   ) {
     return
@@ -59,10 +60,12 @@ export function renderHover(
     elements.hover.circle.style.left = `${left - 4}px`
     elements.hover.circle.style.bottom = `${bottom1 - 4}px`
     elements.hover.circle.classList.remove('hidden')
-    elements.hover.greenSquare?.classList.add('hidden')
-    if (state.view.showMilestoneHover) {
-    elements.hover.greenSquare?.classList.remove('hidden')
-    elements.hover.circle.classList.add('hidden')
+    if (elements.hover.greenSquare) {
+      elements.hover.greenSquare.classList.add('hidden')
+      if (state.view.showMilestoneHover) {
+        elements.hover.greenSquare.classList.remove('hidden')
+        elements.hover.circle.classList.add('hidden')
+      }
     }
   }
 
@@ -78,7 +81,7 @@ export function renderHover(
 
   if (elements.hover.greenSquare) {
     elements.hover.greenSquare.style.left = `${left - 4}px`
-    elements.hover.greenSquare.style.bottom = `${bottom2 - 4}px`
+    elements.hover.greenSquare.style.bottom = `${bottom1 - 4}px`
   }
 
   if (elements.hover.contents) {

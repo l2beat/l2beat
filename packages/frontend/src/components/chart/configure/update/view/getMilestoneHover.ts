@@ -8,18 +8,13 @@ export function getMilestoneHover(
   if (points === undefined) {
     return undefined
   }
-  let index = 0
-  for (const point of points) {
+  for (const [index, point] of points.entries()) {
     if (point.milestone) {
       const milestoneProximity = Math.abs(point.x - mouseX)
-      console.log(milestoneProximity)
-      console.log(mouseY)
       if (mouseY < 16 && milestoneProximity < 0.015) {
-        console.log('hovered milestone')
         return index
       }
     }
-    index++
   }
   return undefined
 }
