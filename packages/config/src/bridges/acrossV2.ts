@@ -107,7 +107,6 @@ export const acrossV2: Bridge = {
     },
   },
   contracts: {
-    // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
       {
         address: '0xc186fA914353c44b2E33eBE05f21846F1048bEda',
@@ -118,6 +117,22 @@ export const acrossV2: Bridge = {
       {
         address: '0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d',
         name: 'LpTokenFactory',
+      },
+      {
+        address: '0x40f941E48A552bF496B154Af6bf55725f18D77c3',
+        name: 'Finder',
+      },
+      {
+        address: '0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc',
+        name: 'Governor',
+      },
+      {
+        address: '0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5',
+        name: 'Proposer',
+      },
+      {
+        address: '0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828',
+        name: 'VotingToken',
       },
       {
         address: '0x22eD83A9eE26236486F57cE8385A247E5bFB71fF',
@@ -168,7 +183,6 @@ export const acrossV2: Bridge = {
     },
     {
       accounts: [
-        { address: '0xDFB0A775A44d309d939DCaEA081552aa4FE4025f', type: 'EOA' },
         { address: '0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05', type: 'EOA' },
         { address: '0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe', type: 'EOA' },
         { address: '0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9', type: 'EOA' },
@@ -176,7 +190,7 @@ export const acrossV2: Bridge = {
         { address: '0x1f11D8B72fc1B534448436BA60B4B371276DAb33', type: 'EOA' },
       ],
       name: 'MultiSig Participants',
-      description: 'Participants of 2/6 MultiSig',
+      description: 'Participants of 3/5 MultiSig',
     },
   ],
 }
