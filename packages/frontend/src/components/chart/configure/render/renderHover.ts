@@ -88,7 +88,7 @@ export function renderHover(
     const rows: string[] = []
 
     if (state.view.showMilestoneHover && point.milestone) {
-      rows.push(renderDateRow(formatDate(point.date)))
+      rows.push(renderDateRow(point.date.slice(0,11)))
       rows.push(renderNameRow(point.milestone.name))
       if (point.milestone.description) {
         rows.push(renderDescriptionRow(point.milestone.description))
@@ -173,33 +173,4 @@ function renderNameRow(name: string) {
 
 function renderDescriptionRow(description: string) {
   return `<div class="max-w-[216px] text-left">${description}</div>`
-}
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString)
-  const year = date.getFullYear()
-  const month = date.toLocaleDateString('en', {
-    month: 'short',
-  })
-  const day = date.toLocaleDateString('en', {
-    day: 'numeric',
-  })
-
-  const ending = getOrdinalSuffix(date.getDate())
-
-  return `${year} ${month} ${day}${ending}`
-}
-
-function getOrdinalSuffix(days: number) {
-  if (days > 3 && days < 21) return 'th'
-  switch (days % 10) {
-    case 1:
-      return 'st'
-    case 2:
-      return 'nd'
-    case 3:
-      return 'rd'
-    default:
-      return 'th'
-  }
 }
