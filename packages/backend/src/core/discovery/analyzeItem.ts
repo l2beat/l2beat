@@ -30,7 +30,7 @@ export async function analyzeItem(
     proxyDetection?.implementations ?? [],
   )
 
-  const overrides = config.overrides?.[address.toLowerCase()]
+  const overrides = config.overrides?.[address.toString()]
   const handlers = getHandlers(metadata.abi, overrides)
   const parameters = await executeHandlers(provider, address, handlers)
 
