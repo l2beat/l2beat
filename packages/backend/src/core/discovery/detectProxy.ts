@@ -5,6 +5,8 @@ import { ArbitrumProxy } from './proxies/ArbitrumProxy'
 import { Eip897Proxy } from './proxies/Eip897Proxy'
 import { Eip1967Proxy } from './proxies/Eip1967Proxy'
 import { GnosisSafe } from './proxies/GnosisSafe'
+import { LoopringProxy } from './proxies/LoopringProxy'
+import { ResolvedDelegateProxy } from './proxies/ResolvedDelegateProxy'
 import { StarkWareProxy } from './proxies/StarkWareProxy'
 import { ProxyDetection } from './proxies/types'
 
@@ -18,11 +20,13 @@ export async function detectProxy(
   }
   const checks = await Promise.all([
     // the order is important, because some proxies are extensions of others
+    ResolvedDelegateProxy.detect(provider, address),
     ArbitrumProxy.detect(provider, address),
     Eip1967Proxy.detect(provider, address),
     StarkWareProxy.detect(provider, address),
     GnosisSafe.detect(provider, address),
     Eip897Proxy.detect(provider, address),
+    LoopringProxy.detect(provider, address),
   ])
   return checks.find((x) => x !== undefined)
 }

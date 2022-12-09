@@ -10,8 +10,10 @@ export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
+  | LoopringProxyUpgradeability
   | StarkWareProxyUpgradeability
   | ArbitrumProxyUpgradeability
+  | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
   | CustomProxyUpgradeability
 
@@ -29,6 +31,12 @@ export interface EIP1967ProxyUpgradeability {
   implementation: EthereumAddress
 }
 
+export interface LoopringProxyUpgradeability {
+  type: 'Loopring proxy'
+  owner: EthereumAddress
+  implementation: EthereumAddress
+}
+
 export interface StarkWareProxyUpgradeability {
   type: 'StarkWare proxy'
   implementation: EthereumAddress
@@ -41,6 +49,13 @@ export interface ArbitrumProxyUpgradeability {
   admin: EthereumAddress
   adminImplementation: EthereumAddress
   userImplementation: EthereumAddress
+}
+
+export interface ResolvedDelegateProxyUpgradeability {
+  type: 'resolved delegate proxy'
+  addressManager: EthereumAddress
+  implementationName: string
+  implementation: EthereumAddress
 }
 
 export interface EIP897ProxyUpgradeability {
