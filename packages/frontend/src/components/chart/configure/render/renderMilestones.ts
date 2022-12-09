@@ -19,7 +19,7 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
 
 function getMilestoneHtml(x: number) {
   return `
-  <div class="absolute z-50" 
+  <div class="absolute z-40" 
         style="left: ${x + offset}px; top: ${offset}px">
     <svg
       width="${iconHeight}"
@@ -27,10 +27,9 @@ function getMilestoneHtml(x: number) {
       view-box="0 0 ${iconHeight} ${iconHeight}"
       role="img"
       aria-label="Milestone icon"
+      class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500"
     >      
       <rect
-        fill="#34762F"
-        stroke="#5BFF4D"
         x="9.89941"
         y="1.41421"
         width="12"

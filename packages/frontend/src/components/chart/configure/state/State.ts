@@ -35,6 +35,7 @@ export interface State {
     dateRange: string | undefined
     labels: string[] | undefined
     showHoverAtIndex: number | undefined
+    showMilestoneHover: boolean | undefined
     chart: AggregateTvlChart | TokenTvlChart | ActivityChart | undefined
   }
 }

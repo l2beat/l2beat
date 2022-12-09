@@ -70,6 +70,9 @@ export function getChartElements(chart: HTMLElement) {
       blueSquare: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-square-blue"]',
       ),
+      greenSquare: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-square-green"]',
+      ),
       contents: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-contents"]',
       ),

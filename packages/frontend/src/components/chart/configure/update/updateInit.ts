@@ -61,6 +61,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         dateRange: undefined,
         labels: undefined,
         showHoverAtIndex: undefined,
+        showMilestoneHover: undefined,
         chart: undefined,
       },
     },

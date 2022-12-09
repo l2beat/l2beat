@@ -1,7 +1,6 @@
 import { formatRange, formatTimestamp } from '../../../../../utils'
 import { formatTpsWithUnit } from '../../../../../utils/formatTps'
 import { State } from '../../state/State'
-import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
 
 export function calculateActivityView(
@@ -39,7 +38,8 @@ export function calculateActivityView(
     chart: { type: 'ActivityChart', points },
     dateRange,
     labels,
-    showHoverAtIndex: getHoverIndex(controls.mouseX, points.length),
+    showHoverAtIndex: undefined,
+    showMilestoneHover: undefined,
   }
 }
 
