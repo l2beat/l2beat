@@ -88,7 +88,7 @@ export function renderHover(
     const rows: string[] = []
 
     if (state.view.showMilestoneHover && point.milestone) {
-      rows.push(renderDateRow(point.date.slice(0,11)))
+      rows.push(renderDateRow(point.date.slice(0, 11)))
       rows.push(renderNameRow(point.milestone.name))
       if (point.milestone.description) {
         rows.push(renderDescriptionRow(point.milestone.description))
