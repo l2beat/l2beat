@@ -12,6 +12,7 @@ export type UpgradeabilityParameters =
   | EIP1967ProxyUpgradeability
   | LoopringProxyUpgradeability
   | StarkWareProxyUpgradeability
+  | StarkWareDiamondUpgradeability
   | ArbitrumProxyUpgradeability
   | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
@@ -42,6 +43,15 @@ export interface StarkWareProxyUpgradeability {
   implementation: EthereumAddress
   callImplementation: EthereumAddress
   upgradeDelay: number
+  isFinal: boolean
+}
+
+export interface StarkWareDiamondUpgradeability {
+  type: 'StarkWare diamond'
+  implementation: EthereumAddress
+  upgradeDelay: number
+  isFinal: boolean
+  facets: Record<string, EthereumAddress>
 }
 
 export interface ArbitrumProxyUpgradeability {

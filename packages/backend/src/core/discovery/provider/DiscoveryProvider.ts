@@ -1,5 +1,5 @@
 import { EtherscanClient } from '@l2beat/common'
-import { Bytes, EthereumAddress } from '@l2beat/types'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
@@ -51,7 +51,7 @@ export class DiscoveryProvider {
 
   async getLogs(
     address: EthereumAddress,
-    topics: string[][],
+    topics: (string | string[])[],
     fromBlock = 0,
   ): Promise<providers.Log[]> {
     console.log('getLogs', address, topics)
@@ -61,6 +61,11 @@ export class DiscoveryProvider {
       toBlock: this.blockNumber,
       topics,
     })
+  }
+
+  async getTransaction(transactionHash: Hash256) {
+    console.log('getTransaction', transactionHash)
+    return this.provider.getTransaction(transactionHash.toString())
   }
 
   async getCode(address: EthereumAddress): Promise<Bytes> {
