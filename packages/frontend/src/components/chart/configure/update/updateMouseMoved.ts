@@ -4,6 +4,8 @@ import { State } from '../state/State'
 import { getHoverIndex } from './view/getHoverIndex'
 import { getMilestoneHover } from './view/getMilestoneHover'
 
+const HOVER_BELOW_CHART = 12
+
 export function updateMouseMoved(
   state: State,
   message: MouseMovedMessage,
@@ -21,6 +23,12 @@ export function updateMouseMoved(
   if (milestoneHoverAtIndex) {
     showHoverAtIndex = milestoneHoverAtIndex
     showMilestoneHover = true
+  }
+  if (
+    milestoneHoverAtIndex === undefined &&
+    message.mouseY < HOVER_BELOW_CHART
+  ) {
+    showHoverAtIndex = undefined
   }
 
   const newState: State = {
