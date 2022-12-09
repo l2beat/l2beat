@@ -1,7 +1,7 @@
 import { branded, EthereumAddress } from '@l2beat/types'
 import * as z from 'zod'
 
-import { UserHandlerDefinition } from './handlers/UserHandlerDefinition'
+import { UserHandlerDefinition } from './handlers/user'
 
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({

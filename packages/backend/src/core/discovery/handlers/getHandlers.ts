@@ -1,6 +1,6 @@
 import { DiscoveryContract } from '../DiscoveryConfig'
 import { getSystemHandlers } from './getSystemHandlers'
-import { getUserHandler } from './getUserHandler'
+import { getUserHandler } from './user'
 
 export function getHandlers(
   abi: string[],
