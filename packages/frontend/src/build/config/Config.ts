@@ -1,4 +1,4 @@
-import { Bridge, Layer2, TokenInfo } from '@l2beat/config'
+import { Bridge, Layer2, Milestone, TokenInfo } from '@l2beat/config'
 
 export interface Config {
   links: {
