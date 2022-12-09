@@ -63,6 +63,7 @@ Read the value of a slot and return it as address:
   "type": "storage",
   "slot": 5,
   "returnType": "address"
+}
 ```
 
 ### Array handler
@@ -235,4 +236,5 @@ Read the stored value and return it as address:
   "type": "starkWareNamedStorage",
   "tag": "EXAMPLE_TAG_NAME",
   "returnType": "address"
+}
 ```
