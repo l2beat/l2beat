@@ -16,4 +16,9 @@ export interface ContractParameters {
   errors?: Record<string, string>
 }
 
-export type ContractValue = string | number | boolean | ContractValue[]
+export type ContractValue =
+  | string
+  | number
+  | boolean
+  | ContractValue[]
+  | { [key: string]: ContractValue }

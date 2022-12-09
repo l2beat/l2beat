@@ -6,7 +6,7 @@ import { getMetadata } from './getMetadata'
 import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
-import { ContractParameters } from './types'
+import { ContractParameters, ContractValue } from './types'
 
 export interface AnalyzedData extends ContractParameters {
   meta: {
@@ -35,18 +35,7 @@ export async function analyzeItem(
   const parameters = await executeHandlers(provider, address, handlers)
 
   const relatives = parameters
-    .flatMap((x) =>
-      Array.isArray(x.value) ? (x.value as unknown[]) : [x.value],
-    )
-    .flatMap((x) => {
-      if (typeof x === 'string') {
-        try {
-          return [EthereumAddress(x)]
-          // eslint-disable-next-line no-empty
-        } catch {}
-      }
-      return []
-    })
+    .flatMap((x) => getRelatives(x.value))
     .concat(proxyDetection?.relatives ?? [])
     .filter((x) => !proxyDetection?.implementations.includes(x))
     .filter((x, i, a) => a.indexOf(x) === i)
@@ -80,4 +69,19 @@ export async function analyzeItem(
     },
     relatives,
   }
+}
+
+function getRelatives(value: ContractValue | undefined): EthereumAddress[] {
+  if (Array.isArray(value)) {
+    return value.flatMap(getRelatives)
+  } else if (typeof value === 'object') {
+    return Object.values(value).flatMap(getRelatives)
+  } else if (typeof value === 'string') {
+    try {
+      return [EthereumAddress(value)]
+    } catch {
+      return []
+    }
+  }
+  return []
 }

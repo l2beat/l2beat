@@ -177,9 +177,39 @@ Call a method and reference other fields in arguments:
 }
 ```
 
+### Access control handler
+
+This handler allows you to analyze a contract using OpenZeppelin's AccessControl pattern.
+
+**Parameters:**
+
+- `type` - always the literal: `"accessControl"`
+- `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. Usually this handler is pretty good at guessing, so this is often unnecessary
+
+**Examples:**
+
+Analyze the contract:
+
+```json
+{
+  "type": "accessControl"
+}
+```
+
+Specify some names:
+
+```json
+{
+  "type": "accessControl",
+  "roleNames": {
+    "0x3f3b3bf06419b25db8f1ac3dfb014d79b6fb633e65d1ca540c6a3c665e32e106": "GOBLIN_ROLE"
+  }
+}
+```
+
 ### StarkWare named storage handler
 
-The call handler allows you to read values from contracts using StarkWare's named storage pattern. This handler only supports simple values and does not support mappings and other possible types.
+This handler allows you to read values from contracts using StarkWare's named storage pattern. This handler only supports simple values and does not support mappings and other possible types.
 
 **Parameters:**
 
