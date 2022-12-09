@@ -56,6 +56,15 @@ Read the value of a mapping at slot `2` using an address returned from another f
 }
 ```
 
+Read the value of a slot and return it as address:
+
+```json
+{
+  "type": "storage",
+  "slot": 5,
+  "returnType": "address"
+```
+
 ### Array handler
 
 The array handler allows you to read values by repeatedly calling an array method, that is a method that takes only one argument of type `uint256`.
@@ -166,4 +175,34 @@ Call a method and reference other fields in arguments:
   "method": "function balanceOf(address owner) view returns (uint256)",
   "args": ["{{ admin }}"]
 }
+```
+
+### StarkWare named storage handler
+
+The call handler allows you to read values from contracts using StarkWare's named storage pattern. This handler only supports simple values and does not support mappings and other possible types.
+
+**Parameters:**
+
+- `type` - always the literal: `"starkWareNamedStorage"`
+- `tag` - the string tag of the named storage slot
+- `returnType` - (optional) specifies how to interpret the resulting `bytes32` result. Possible options are `"address"`, `"bytes"` (default), `"number"`.
+
+**Examples:**
+
+Read the stored value:
+
+```json
+{
+  "type": "starkWareNamedStorage",
+  "tag": "EXAMPLE_TAG_NAME"
+}
+```
+
+Read the stored value and return it as address:
+
+```json
+{
+  "type": "starkWareNamedStorage",
+  "tag": "EXAMPLE_TAG_NAME",
+  "returnType": "address"
 ```
