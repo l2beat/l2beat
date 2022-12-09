@@ -23,30 +23,44 @@ export const common: Omit<Config, 'backend'> = {
   tokens: tokenList,
   milestones: [
     {
-      name: 'Rollup centric roadmap for Ethereum',
+      name: 'ZK rollup (payments)',
+      date: '2020-06-18T00:00:00Z',
+      link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+    },
+    {
+      name: 'Rollup centric vision for Ethereum',
       date: '2020-10-02T00:00:00Z',
       link: 'https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698',
     },
     {
-      name: 'Optimism launch',
-      link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
-      date: '2021-12-16T00:00:00Z',
+      name: 'Optimistic Rollup (payments)',
+      date: '2020-12-31T00:00:00Z',
+      link: 'https://twitter.com/fuellabs_/status/1344707195250896899',
     },
     {
-      name: 'Arbitrum launch',
-      link: 'https://twitter.com/arbitrum/status/1432817424752128008',
+      name: 'Optimistic Rollup (universal)',
+      link: 'https://medium.com/ethereum-optimism/mainnet-soft-launch-7cacc0143cd5',
+      date: '2021-01-16T00:00:00Z',
+    },
+    {
+      name: 'ZK Rollup (privacy)',
+      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      date: '2021-03-15T00:00:00Z',
+    },
+    {
+      name: 'Public Optimistic Rollup (universal)',
+      link: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
       date: '2021-08-31T00:00:00Z',
     },
     {
-      name: 'zkEMV day on ETHcc',
-      link: 'https://twitter.com/sandeepnailwal/status/1549868882638389248',
-      date: '2022-07-20T00:00:00Z',
+      name: 'ZK Rollup (universal)',
+      link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      date: '2021-11-29T00:00:00Z',
     },
     {
-      name: 'Aave on Optimism',
-      link: 'https://governance.aave.com/t/launch-aave-v3-on-optimism/6871',
-      date: '2022-01-11T00:00:00Z'
-    }
-    
+      name: 'Optimistic Chain (universal)',
+      link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
+      date: '2022-04-12T00:00:00Z',
+    },
   ],
 }
