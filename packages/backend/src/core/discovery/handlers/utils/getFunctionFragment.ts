@@ -1,11 +1,11 @@
-import { FunctionFragment } from 'ethers/lib/utils'
+import { utils } from 'ethers'
 
 import { toFunctionFragment } from './toFunctionFragment'
 
-export function getFragment(
+export function getFunctionFragment(
   method: string,
   abi: string[],
-  predicate: (fragment: FunctionFragment) => boolean,
+  predicate: (fragment: utils.FunctionFragment) => boolean,
 ) {
   if (method.includes(' ')) {
     const fragment = toFunctionFragment(method)

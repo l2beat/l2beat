@@ -7,7 +7,7 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
-import { getFragment } from '../utils/getFragment'
+import { getFunctionFragment } from '../utils/getFunctionFragment'
 
 export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>
 export const CallHandlerDefinition = z.strictObject({
@@ -32,7 +32,7 @@ export class CallHandler implements Handler {
       }
     }
     const arity = definition.args.length
-    this.fragment = getFragment(
+    this.fragment = getFunctionFragment(
       definition.method ?? field,
       abi,
       (x) => isViewFragment(x) && x.inputs.length === arity,

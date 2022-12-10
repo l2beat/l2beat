@@ -8,7 +8,7 @@ import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
-import { getFragment } from '../utils/getFragment'
+import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
 
 export type ArrayHandlerDefinition = z.infer<typeof ArrayHandlerDefinition>
@@ -34,7 +34,7 @@ export class ArrayHandler implements Handler {
     if (dependency) {
       this.dependencies.push(dependency)
     }
-    this.fragment = getFragment(
+    this.fragment = getFunctionFragment(
       definition.method ?? field,
       abi,
       isArrayFragment,
