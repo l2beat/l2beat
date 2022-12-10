@@ -5,6 +5,7 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
+import { logHandler } from '../utils/logHandler'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class LimitedArrayHandler implements Handler {
@@ -25,6 +26,12 @@ export class LimitedArrayHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
+    logHandler(this.field, [
+      'Calling array (max: ',
+      this.limit.toString(),
+      ') ',
+      this.fragment.name + '(i)',
+    ])
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
         callMethod(provider, address, this.fragment, [index]),

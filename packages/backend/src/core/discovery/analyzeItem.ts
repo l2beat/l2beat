@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+import chalk from 'chalk'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { getMetadata } from './getMetadata'
@@ -25,11 +26,24 @@ export async function analyzeItem(
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
   const proxyDetection = await detectProxy(provider, address)
 
+  if (proxyDetection) {
+    console.log(
+      '  Proxy detected:',
+      chalk.bgRed.whiteBright(' ' + proxyDetection.upgradeability.type + ' '),
+    )
+  }
+
   const metadata = await getMetadata(
     provider,
     address,
     proxyDetection?.implementations ?? [],
   )
+
+  if (metadata.isEOA) {
+    console.log('  Type:', chalk.blue('EOA'))
+  } else {
+    console.log('  Name:', chalk.bold(metadata.name))
+  }
 
   const overrides = config.overrides?.[address.toString()]
   const handlers = getHandlers(metadata.abi, overrides)

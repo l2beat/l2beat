@@ -6,6 +6,7 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
+import { logHandler } from '../utils/logHandler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ArrayFromTwoEventsHandlerDefinition = z.infer<
@@ -54,6 +55,12 @@ export class ArrayFromTwoEventsHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
+    logHandler(this.field, [
+      'Querying ',
+      this.addFragment.name,
+      ' and ',
+      this.removeFragment.name,
+    ])
     const logs = await provider.getLogs(address, [
       [
         this.abi.getEventTopic(this.addFragment),

@@ -4,6 +4,7 @@ import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { logHandler } from '../utils/logHandler'
 
 export type AccessControlHandlerDefinition = z.infer<
   typeof AccessControlHandlerDefinition
@@ -52,6 +53,7 @@ export class AccessControlHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
+    logHandler(this.field, ['Checking AccessControl'])
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

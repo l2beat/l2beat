@@ -28,7 +28,6 @@ export class DiscoveryProvider {
   ) {}
 
   async call(address: EthereumAddress, data: Bytes): Promise<Bytes> {
-    console.log('call', address, data)
     const result = await this.provider.call(
       { to: address.toString(), data: data.toString() },
       this.blockNumber,
@@ -40,7 +39,6 @@ export class DiscoveryProvider {
     address: EthereumAddress,
     slot: number | bigint | Bytes,
   ): Promise<Bytes> {
-    console.log('getStorage', address, slot)
     const result = await this.provider.getStorageAt(
       address.toString(),
       slot instanceof Bytes ? slot.toString() : slot,
@@ -54,7 +52,6 @@ export class DiscoveryProvider {
     topics: (string | string[])[],
     fromBlock = 0,
   ): Promise<providers.Log[]> {
-    console.log('getLogs', address, topics)
     return this.provider.getLogs({
       address: address.toString(),
       fromBlock,
@@ -64,12 +61,10 @@ export class DiscoveryProvider {
   }
 
   async getTransaction(transactionHash: Hash256) {
-    console.log('getTransaction', transactionHash)
     return this.provider.getTransaction(transactionHash.toString())
   }
 
   async getCode(address: EthereumAddress): Promise<Bytes> {
-    console.log('getCode', address)
     const result = await this.provider.getCode(
       address.toString(),
       this.blockNumber,
@@ -78,7 +73,6 @@ export class DiscoveryProvider {
   }
 
   async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
-    console.log('getMetadata', address)
     const result = await this.etherscanClient.getContractSource(address)
     const isVerified = result.ABI !== 'Contract source code not verified'
 
