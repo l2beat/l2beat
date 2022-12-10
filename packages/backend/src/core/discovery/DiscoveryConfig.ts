@@ -19,6 +19,8 @@ export type DiscoveryConfig = z.infer<typeof DiscoveryConfig>
 export const DiscoveryConfig = z.object({
   name: z.string().min(1),
   initialAddresses: z.array(branded(z.string(), EthereumAddress)),
+  maxAddresses: z.optional(z.number().positive()),
+  maxDepth: z.optional(z.number().positive()),
   overrides: z.optional(
     z.record(z.string().refine(EthereumAddress.check), DiscoveryContract),
   ),
