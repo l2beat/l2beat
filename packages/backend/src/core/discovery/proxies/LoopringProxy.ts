@@ -27,7 +27,7 @@ async function getOwner(provider: DiscoveryProvider, address: EthereumAddress) {
   return bytes32ToAddress(await provider.getStorage(address, OWNER_SLOT))
 }
 
-async function detect(
+export async function detectLoopringProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
@@ -45,10 +45,4 @@ async function detect(
       owner,
     },
   }
-}
-
-export const LoopringProxy = {
-  getImplementation,
-  getOwner,
-  detect,
 }

@@ -5,7 +5,7 @@ import { bytes32ToAddress } from '../utils/address'
 import { getCallResult } from '../utils/getCallResult'
 import { ProxyDetection } from './types'
 
-async function detect(
+export async function detectGnosisSafe(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
@@ -38,9 +38,4 @@ async function getMasterCopy(
   if (callResult && slot0Address === EthereumAddress(callResult)) {
     return slot0Address
   }
-}
-
-export const GnosisSafe = {
-  getMasterCopy,
-  detect,
 }

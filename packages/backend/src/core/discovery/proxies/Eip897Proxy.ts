@@ -33,7 +33,7 @@ async function getImplementation(
   return result && EthereumAddress(result)
 }
 
-async function detect(
+export async function detectEip897Proxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
@@ -54,10 +54,4 @@ async function detect(
       implementation,
     },
   }
-}
-
-export const Eip897Proxy = {
-  getProxyType,
-  getImplementation,
-  detect,
 }

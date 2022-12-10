@@ -80,7 +80,7 @@ async function getDiamondStatus(
   }
 }
 
-async function detect(
+export async function detectStarkWareProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
@@ -181,11 +181,4 @@ async function getStarkWareDiamond(
       facets,
     },
   }
-}
-
-export const StarkWareProxy = {
-  getImplementation,
-  getCallImplementation,
-  getUpgradeDelay,
-  detect,
 }
