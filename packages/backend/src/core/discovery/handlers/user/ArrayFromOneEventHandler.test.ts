@@ -14,8 +14,8 @@ describe(ArrayFromOneEventHandler.name, () => {
         {
           type: 'arrayFromOneEvent',
           event: 'OwnerChanged',
-          value: 'account',
-          flag: 'status',
+          valueKey: 'account',
+          flagKey: 'status',
         },
         ['event OwnerChanged(address indexed account, bool indexed status)'],
       )
@@ -32,8 +32,8 @@ describe(ArrayFromOneEventHandler.name, () => {
             {
               type: 'arrayFromOneEvent',
               event: 'OwnerChanged',
-              value: 'foo',
-              flag: 'status',
+              valueKey: 'foo',
+              flagKey: 'status',
             },
             [
               'event OwnerChanged(address indexed account, bool indexed status)',
@@ -50,8 +50,8 @@ describe(ArrayFromOneEventHandler.name, () => {
             {
               type: 'arrayFromOneEvent',
               event: 'OwnerChanged',
-              value: 'account',
-              flag: 'foo',
+              valueKey: 'account',
+              flagKey: 'foo',
             },
             [
               'event OwnerChanged(address indexed account, bool indexed status)',
@@ -68,8 +68,8 @@ describe(ArrayFromOneEventHandler.name, () => {
             {
               type: 'arrayFromOneEvent',
               event: 'event OwnerChanged()',
-              value: 'account',
-              flag: 'status',
+              valueKey: 'account',
+              flagKey: 'status',
             },
             [],
           ),
@@ -108,8 +108,8 @@ describe(ArrayFromOneEventHandler.name, () => {
         {
           type: 'arrayFromOneEvent',
           event,
-          value: 'account',
-          flag: 'status',
+          valueKey: 'account',
+          flagKey: 'status',
         },
         [],
       )
@@ -144,8 +144,8 @@ describe(ArrayFromOneEventHandler.name, () => {
         {
           type: 'arrayFromOneEvent',
           event,
-          value: 'account',
-          flag: 'status',
+          valueKey: 'account',
+          flagKey: 'status',
         },
         [],
       )
@@ -180,8 +180,8 @@ describe(ArrayFromOneEventHandler.name, () => {
         {
           type: 'arrayFromOneEvent',
           event,
-          value: 'account',
-          flag: 'status',
+          valueKey: 'account',
+          flagKey: 'status',
           invert: true,
         },
         [],
