@@ -238,3 +238,88 @@ Read the stored value and return it as address:
   "returnType": "address"
 }
 ```
+
+### Array from one event handler
+
+This handler allows you to collect values emitted by a smart contract through a single event type. It can either collect all values or use a flag to determine whether to add/remove a value.
+
+**Parameters:**
+
+- `type` - always the literal: `"arrayFromOneEvent"`
+- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `valueKey` - the key of the event member to collect. The event must actually have a member with this name
+- `flagKey` - (optional) the key of the event member to use to decide whether to add or remove a given value. That member must be a `bool`, where `true` means add, `false` means remove
+- `invert` - (optional) inverts the behavior of the flag, `false` means add, `true` means remove
+
+**Examples:**
+
+Assumes there is an event `event OwnerChanged(address account, bool added)` in the abi. Collects the list of current owners:
+
+```json
+{
+  "type": "arrayFromOneEvent",
+  "event": "OwnerChanged",
+  "valueKey": "account",
+  "flagKey": "added"
+}
+```
+
+Get a list of all high scorers:
+
+```json
+{
+  "type": "arrayFromOneEvent",
+  "event": "event HighScore(address winner, uint256 score)",
+  "valueKey": "winner"
+}
+```
+
+Use the invert option to handle a tricky case, where the flag means remove:
+
+```json
+{
+  "type": "arrayFromOneEvent",
+  "event": "event WeirdEvent(address person, bool removed)",
+  "valueKey": "person",
+  "flagKey": "removed",
+  "invert": true
+}
+```
+
+### Array from two events handler
+
+This handler allows you to collect values emitted by a smart contract through a pair of events. One event signifies the addition of a value and another the removal.
+
+**Parameters:**
+
+- `type` - always the literal: `"arrayFromTwoEvents"`
+- `addEvent` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `addKey` - the key of the event member to collect in the add event. The event must actually have a member with this name
+- `removeEvent` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `removeKey` - the key of the event member to collect in the remove event. The event must actually have a member with this name
+
+**Examples:**
+
+Assumes there are two events: `event MinterAdded(address minter)` and `event MinterRemoved(address minter)` in the abi. Collects the list of current minters:
+
+```json
+{
+  "type": "arrayFromTwoEvents",
+  "addEvent": "MinterAdded",
+  "addKey": "minter",
+  "removeEvent": "MinterRemoved",
+  "removeKey": "minter"
+}
+```
+
+Same example, but the abis are explicit:
+
+```json
+{
+  "type": "arrayFromTwoEvents",
+  "addEvent": "event MinterAdded(address minter)",
+  "addKey": "minter",
+  "removeEvent": "event MinterRemoved(address minter)",
+  "removeKey": "minter"
+}
+```
