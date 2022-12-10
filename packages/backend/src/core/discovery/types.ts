@@ -6,6 +6,7 @@ export interface ProjectParameters {
   name: string
   blockNumber: number
   contracts: ContractParameters[]
+  abis: Record<string, string[]>
 }
 
 export interface ContractParameters {

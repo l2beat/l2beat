@@ -14,6 +14,7 @@ export interface AnalyzedData extends ContractParameters {
     verified: boolean
     implementationVerified: boolean
     abi: string[]
+    abis: Record<string, string[]>
   }
 }
 
@@ -65,6 +66,7 @@ export async function analyzeItem(
         verified: metadata.isVerified,
         implementationVerified: metadata.implementationVerified,
         abi: metadata.abi,
+        abis: metadata.abis,
       },
     },
     relatives,
