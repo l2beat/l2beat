@@ -158,6 +158,23 @@
       }
     },
     {
+      "name": "Optimism_Adapter",
+      "address": "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "daiOptimismBridge": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "l1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2GasLimit": 2000000,
+        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "snx": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "snxOptimismBridge": "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068"
+      }
+    },
+    {
       "name": "Ethereum_SpokePool",
       "address": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
       "upgradeability": {
@@ -266,6 +283,21 @@
       "function timerAddress() view returns (address)",
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function dai() view returns (address)",
+      "function daiOptimismBridge() view returns (address)",
+      "function l1StandardBridge() view returns (address)",
+      "function l1Weth() view returns (address)",
+      "function l2GasLimit() view returns (uint32)",
+      "function messenger() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function snx() view returns (address)",
+      "function snxOptimismBridge() view returns (address)"
     ],
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
