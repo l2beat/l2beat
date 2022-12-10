@@ -6,6 +6,7 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
+import { toContractValue } from '../utils/toContractValue'
 
 export type ArrayFromTwoEventsHandlerDefinition = z.infer<
   typeof ArrayFromTwoEventsHandlerDefinition
@@ -63,9 +64,9 @@ export class ArrayFromTwoEventsHandler implements Handler {
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
       if (parsed.name === this.addFragment.name) {
-        values.add(parsed.args[this.definition.addKey])
+        values.add(toContractValue(parsed.args[this.definition.addKey]))
       } else {
-        values.delete(parsed.args[this.definition.removeKey])
+        values.delete(toContractValue(parsed.args[this.definition.removeKey]))
       }
     }
     return {
