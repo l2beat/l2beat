@@ -15,7 +15,7 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   type: z.literal('arrayFromOneEvent'),
   event: z.string(),
   valueKey: z.string(),
-  flagKey: z.string(),
+  flagKey: z.optional(z.string()),
   invert: z.optional(z.boolean()),
 })
 
@@ -33,9 +33,11 @@ export class ArrayFromOneEventHandler implements Handler {
       definition.event,
       abi,
       (fragment) =>
-        fragment.inputs.some(
-          (x) => x.type === 'bool' && x.name === definition.flagKey,
-        ) && fragment.inputs.some((x) => x.name === definition.valueKey),
+        (!definition.flagKey ||
+          fragment.inputs.some(
+            (x) => x.type === 'bool' && x.name === definition.flagKey,
+          )) &&
+        fragment.inputs.some((x) => x.name === definition.valueKey),
     )
     this.abi = new utils.Interface([this.fragment])
   }
@@ -55,7 +57,9 @@ export class ArrayFromOneEventHandler implements Handler {
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
       const value = toContractValue(parsed.args[this.definition.valueKey])
-      let flag = Boolean(parsed.args[this.definition.flagKey])
+      let flag =
+        !this.definition.flagKey ||
+        Boolean(parsed.args[this.definition.flagKey])
       if (this.definition.invert) {
         flag = !flag
       }
