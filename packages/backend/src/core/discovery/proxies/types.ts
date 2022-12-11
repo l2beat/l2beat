@@ -1,10 +1,14 @@
 import { EthereumAddress } from '@l2beat/types'
+import * as z from 'zod'
 
 export interface ProxyDetection {
   upgradeability: UpgradeabilityParameters
   implementations: EthereumAddress[]
   relatives: EthereumAddress[]
 }
+
+export type ManualProxyType = z.infer<typeof ManualProxyType>
+export const ManualProxyType = z.enum(['new Arbitrum proxy'])
 
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
@@ -14,6 +18,7 @@ export type UpgradeabilityParameters =
   | StarkWareProxyUpgradeability
   | StarkWareDiamondUpgradeability
   | ArbitrumProxyUpgradeability
+  | NewArbitrumProxyUpgradeability
   | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
   | CustomProxyUpgradeability
@@ -56,8 +61,16 @@ export interface StarkWareDiamondUpgradeability {
 }
 
 export interface ArbitrumProxyUpgradeability {
-  type: 'arbitrum proxy'
+  type: 'Arbitrum proxy'
   admin: EthereumAddress
+  adminImplementation: EthereumAddress
+  userImplementation: EthereumAddress
+}
+
+export interface NewArbitrumProxyUpgradeability {
+  type: 'new Arbitrum proxy'
+  admin: EthereumAddress
+  implementation: EthereumAddress
   adminImplementation: EthereumAddress
   userImplementation: EthereumAddress
 }

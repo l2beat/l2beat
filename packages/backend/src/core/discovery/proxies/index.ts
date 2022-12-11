@@ -1,22 +1,27 @@
 import { EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { detectArbitrumProxy } from './ArbitrumProxy'
-import { detectEip897Proxy } from './Eip897Proxy'
-import { detectEip1967Proxy } from './Eip1967Proxy'
-import { detectGnosisSafe } from './GnosisSafe'
-import { detectLoopringProxy } from './LoopringProxy'
-import { detectResolvedDelegateProxy } from './ResolvedDelegateProxy'
-import { detectStarkWareProxy } from './StarkWareProxy'
-import { ProxyDetection } from './types'
+import { detectArbitrumProxy } from './auto/ArbitrumProxy'
+import { detectEip897Proxy } from './auto/Eip897Proxy'
+import { detectEip1967Proxy } from './auto/Eip1967Proxy'
+import { detectGnosisSafe } from './auto/GnosisSafe'
+import { detectLoopringProxy } from './auto/LoopringProxy'
+import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
+import { detectStarkWareProxy } from './auto/StarkWareProxy'
+import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
+import { ManualProxyType, ProxyDetection } from './types'
 
 export async function detectProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  manualProxyType: ManualProxyType | undefined,
 ): Promise<ProxyDetection | undefined> {
   const code = await provider.getCode(address)
   if (code.length === 0) {
     return
+  }
+  if (manualProxyType) {
+    return getManualProxy(provider, address, manualProxyType)
   }
   const checks = await Promise.all([
     // the order is important, because some proxies are extensions of others
@@ -29,4 +34,15 @@ export async function detectProxy(
     detectLoopringProxy(provider, address),
   ])
   return checks.find((x) => x !== undefined)
+}
+
+function getManualProxy(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  manualProxyType: ManualProxyType,
+) {
+  switch (manualProxyType) {
+    case 'new Arbitrum proxy':
+      return getNewArbitrumProxy(provider, address)
+  }
 }

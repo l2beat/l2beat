@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/types'
 import { BigNumber } from 'ethers'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { getCallResult } from '../utils/getCallResult'
-import { ProxyDetection } from './types'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { getCallResult } from '../../utils/getCallResult'
+import { ProxyDetection } from '../types'
 
 async function getProxyType(
   provider: DiscoveryProvider,

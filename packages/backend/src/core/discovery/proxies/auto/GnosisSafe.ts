@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/types'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../utils/address'
-import { getCallResult } from '../utils/getCallResult'
-import { ProxyDetection } from './types'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { bytes32ToAddress } from '../../utils/address'
+import { getCallResult } from '../../utils/getCallResult'
+import { ProxyDetection } from '../types'
 
 async function getMasterCopy(
   provider: DiscoveryProvider,

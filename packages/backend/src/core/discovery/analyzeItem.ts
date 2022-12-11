@@ -24,12 +24,23 @@ export async function analyzeItem(
   address: EthereumAddress,
   config: DiscoveryConfig,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
-  const proxyDetection = await detectProxy(provider, address)
+  const overrides = config.overrides?.[address.toString()]
+
+  const proxyDetection = await detectProxy(
+    provider,
+    address,
+    overrides?.proxyType,
+  )
 
   if (proxyDetection) {
     console.log(
       '  Proxy detected:',
       chalk.bgRed.whiteBright(' ' + proxyDetection.upgradeability.type + ' '),
+    )
+  } else if (overrides?.proxyType) {
+    console.log(
+      '  Manual proxy detection failed:',
+      chalk.bgRed.whiteBright(' ' + overrides.proxyType + ' '),
     )
   }
 
@@ -45,7 +56,6 @@ export async function analyzeItem(
     console.log('  Name:', chalk.bold(metadata.name))
   }
 
-  const overrides = config.overrides?.[address.toString()]
   const handlers = getHandlers(metadata.abi, overrides)
   const parameters = await executeHandlers(provider, address, handlers)
 

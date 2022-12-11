@@ -11,10 +11,10 @@ It does not have an owner
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../utils/address'
-import { getCallResultWithRevert } from '../utils/getCallResult'
-import { ProxyDetection } from './types'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { bytes32ToAddress } from '../../utils/address'
+import { getCallResultWithRevert } from '../../utils/getCallResult'
+import { ProxyDetection } from '../types'
 
 async function getAddressManager(
   provider: DiscoveryProvider,
