@@ -6,6 +6,7 @@ export interface ProjectParameters {
   name: string
   blockNumber: number
   contracts: ContractParameters[]
+  eoas: EthereumAddress[]
   abis: Record<string, string[]>
 }
 

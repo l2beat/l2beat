@@ -104,6 +104,12 @@
       }
     }
   ],
+  "eoas": [
+    "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
+    "0x230A1AC45690B9Ae1176389434610B9526d2f21b",
+    "0x42980E3e602178354E065723d9652BEf79Ae3673",
+    "0xb3DAD3C24A861b84fDF380B212662620627D4e15"
+  ],
   "abis": {
     "0x2796317b0fF8538F253012862c06787Adfb8cEb6": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",

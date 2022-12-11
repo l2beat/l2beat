@@ -22,6 +22,10 @@ export async function saveDiscoveryResult(
     contracts: results
       .filter((x) => !x.meta.isEOA)
       .map((x) => ({ ...x, meta: undefined })),
+    eoas: results
+      .filter((x) => x.meta.isEOA)
+      .map((x) => x.address)
+      .sort((a, b) => a.localeCompare(b.toString())),
     abis,
   }
 
