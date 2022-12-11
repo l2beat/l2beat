@@ -14,7 +14,7 @@ export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
-  | LoopringProxyUpgradeability
+  | ZeppelinOSProxyUpgradeability
   | StarkWareProxyUpgradeability
   | StarkWareDiamondUpgradeability
   | ArbitrumProxyUpgradeability
@@ -38,9 +38,10 @@ export interface EIP1967ProxyUpgradeability {
   implementation: EthereumAddress
 }
 
-export interface LoopringProxyUpgradeability {
-  type: 'Loopring proxy'
-  owner: EthereumAddress
+export interface ZeppelinOSProxyUpgradeability {
+  type: 'ZeppelinOS proxy'
+  admin?: EthereumAddress
+  owner?: EthereumAddress
   implementation: EthereumAddress
 }
 

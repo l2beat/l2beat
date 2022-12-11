@@ -5,9 +5,9 @@ import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
-import { detectLoopringProxy } from './auto/LoopringProxy'
 import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
+import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { ManualProxyType, ProxyDetection } from './types'
 
@@ -31,7 +31,7 @@ export async function detectProxy(
     detectStarkWareProxy(provider, address),
     detectGnosisSafe(provider, address),
     detectEip897Proxy(provider, address),
-    detectLoopringProxy(provider, address),
+    detectZeppelinOSProxy(provider, address),
   ])
   return checks.find((x) => x !== undefined)
 }

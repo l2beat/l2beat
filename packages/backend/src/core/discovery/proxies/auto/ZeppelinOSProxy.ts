@@ -27,7 +27,16 @@ async function getOwner(provider: DiscoveryProvider, address: EthereumAddress) {
   return bytes32ToAddress(await provider.getStorage(address, OWNER_SLOT))
 }
 
-export async function detectLoopringProxy(
+// keccak256("org.zeppelinos.proxy.admin")
+const ADMIN_SLOT = Bytes.fromHex(
+  '0x10d6a54a4754c8869d6886b5f5d7fbfa5b4522237ea5c60d11bc4e7a1ff9390b',
+)
+
+async function getAdmin(provider: DiscoveryProvider, address: EthereumAddress) {
+  return bytes32ToAddress(await provider.getStorage(address, ADMIN_SLOT))
+}
+
+export async function detectZeppelinOSProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
@@ -35,14 +44,18 @@ export async function detectLoopringProxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
-  const owner = await getOwner(provider, address)
+  const [owner, admin] = await Promise.all([
+    getOwner(provider, address),
+    getAdmin(provider, address),
+  ])
   return {
     implementations: [implementation],
-    relatives: [owner],
+    relatives: [owner, admin].filter((x) => x !== EthereumAddress.ZERO),
     upgradeability: {
-      type: 'Loopring proxy',
+      type: 'ZeppelinOS proxy',
       implementation,
-      owner,
+      owner: owner !== EthereumAddress.ZERO ? owner : undefined,
+      admin: admin !== EthereumAddress.ZERO ? admin : undefined,
     },
   }
 }
