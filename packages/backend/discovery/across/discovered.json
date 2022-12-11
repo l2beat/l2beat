@@ -58,7 +58,8 @@
       "name": "GnosisSafe",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
       "upgradeability": {
-        "type": "gnosis safe"
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
       "values": {
         "domainSeparator": "0xbb022dfb1fe065f2a2c6ea647af6240343ff4b980bc3c1183ecd630958c3b59e",

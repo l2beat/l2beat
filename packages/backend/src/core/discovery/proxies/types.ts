@@ -24,6 +24,7 @@ export interface ImmutableUpgradeability {
 
 export interface GnosisSafeUpgradeability {
   type: 'gnosis safe'
+  masterCopy: EthereumAddress
 }
 
 export interface EIP1967ProxyUpgradeability {

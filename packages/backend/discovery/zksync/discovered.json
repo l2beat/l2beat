@@ -67,22 +67,6 @@
       }
     },
     {
-      "name": "Dai",
-      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7",
-        "name": "Dai Stablecoin",
-        "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
-        "symbol": "DAI",
-        "totalSupply": "5181013869657561471862353925",
-        "version": "1"
-      }
-    },
-    {
       "name": "ZkSyncNFTFactory",
       "address": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
       "upgradeability": {
@@ -136,7 +120,8 @@
       "name": "GnosisSafe",
       "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
       "upgradeability": {
-        "type": "gnosis safe"
+        "type": "gnosis safe",
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
       "values": {
         "domainSeparator": "0xcd86f82218dc46b5501da06e0b96a9cf73cd8f35153e9da3a481f79b6be5ff63",
@@ -336,34 +321,6 @@
       "function upgradeNoticePeriodStarted()",
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F": [
-      "constructor(uint256 chainId_)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes32 indexed arg2, bytes data) anonymous",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address usr, uint256 wad) returns (bool)",
-      "function balanceOf(address) view returns (uint256)",
-      "function burn(address usr, uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function deny(address guy)",
-      "function mint(address usr, uint256 wad)",
-      "function move(address src, address dst, uint256 wad)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address holder, address spender, uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s)",
-      "function pull(address usr, uint256 wad)",
-      "function push(address usr, uint256 wad)",
-      "function rely(address guy)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function version() view returns (string)",
-      "function wards(address) view returns (uint256)"
     ],
     "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": [
       "constructor(string name, string symbol, address zkSyncAddress)",

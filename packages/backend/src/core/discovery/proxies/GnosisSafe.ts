@@ -5,23 +5,6 @@ import { bytes32ToAddress } from '../utils/address'
 import { getCallResult } from '../utils/getCallResult'
 import { ProxyDetection } from './types'
 
-export async function detectGnosisSafe(
-  provider: DiscoveryProvider,
-  address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
-  const masterCopy = await getMasterCopy(provider, address)
-  if (!masterCopy) {
-    return
-  }
-  return {
-    implementations: [masterCopy],
-    relatives: [],
-    upgradeability: {
-      type: 'gnosis safe',
-    },
-  }
-}
-
 async function getMasterCopy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -37,5 +20,23 @@ async function getMasterCopy(
   const slot0Address = bytes32ToAddress(slot0)
   if (callResult && slot0Address === EthereumAddress(callResult)) {
     return slot0Address
+  }
+}
+
+export async function detectGnosisSafe(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+): Promise<ProxyDetection | undefined> {
+  const masterCopy = await getMasterCopy(provider, address)
+  if (!masterCopy) {
+    return
+  }
+  return {
+    implementations: [masterCopy],
+    relatives: [],
+    upgradeability: {
+      type: 'gnosis safe',
+      masterCopy,
+    },
   }
 }
