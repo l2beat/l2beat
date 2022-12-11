@@ -60,7 +60,7 @@ async function getFinalizedState(
   address: EthereumAddress,
 ) {
   return !BigNumber.from(
-    await provider.getStorage(address, FINALIZED_STATE_SLOT),
+    (await provider.getStorage(address, FINALIZED_STATE_SLOT)).toString(),
   ).eq(0)
 }
 
