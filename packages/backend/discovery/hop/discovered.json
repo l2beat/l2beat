@@ -5,6 +5,7 @@
     {
       "name": "L1_ERC20_Bridge",
       "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
+      "code": "https://etherscan.deth.net/address/0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
       "upgradeability": {
         "type": "immutable"
       },
@@ -22,6 +23,7 @@
     {
       "name": "Timelock",
       "address": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
+      "code": "https://etherscan.deth.net/address/0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
       "upgradeability": {
         "type": "immutable"
       },
@@ -37,6 +39,7 @@
     {
       "name": "GnosisSafe",
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
+      "code": "https://etherscan.deth.net/address/0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
@@ -58,6 +61,7 @@
     {
       "name": "L1_ERC20_Bridge",
       "address": "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1",
+      "code": "https://etherscan.deth.net/address/0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1",
       "upgradeability": {
         "type": "immutable"
       },
@@ -75,6 +79,7 @@
     {
       "name": "L1_ERC20_Bridge",
       "address": "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6",
+      "code": "https://etherscan.deth.net/address/0x3E4a3a4796d16c0Cd582C382691998f7c06420B6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -92,6 +97,7 @@
     {
       "name": "L1_ETH_Bridge",
       "address": "0xb8901acB165ed027E32754E0FFe830802919727f",
+      "code": "https://etherscan.deth.net/address/0xb8901acB165ed027E32754E0FFe830802919727f",
       "upgradeability": {
         "type": "immutable"
       },
@@ -108,6 +114,7 @@
     {
       "name": "L1_ERC20_Bridge",
       "address": "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
+      "code": "https://etherscan.deth.net/address/0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -125,6 +132,7 @@
     {
       "name": "L1_ERC20_Bridge",
       "address": "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849",
+      "code": "https://etherscan.deth.net/address/0xb98454270065A31D71Bf635F6F7Ee6A518dFb849",
       "upgradeability": {
         "type": "immutable"
       },

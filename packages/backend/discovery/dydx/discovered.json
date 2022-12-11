@@ -5,6 +5,7 @@
     {
       "name": "Proxy",
       "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
+      "code": "https://etherscan.deth.net/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8,0x2C0df87E073755139101b35c0A51e065291cc2d3,0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5,0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545,0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0,0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
@@ -57,6 +58,7 @@
     {
       "name": "FinalizableGpsFactAdapter",
       "address": "0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4",
+      "code": "https://etherscan.deth.net/address/0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4",
       "upgradeability": {
         "type": "immutable"
       },
@@ -71,6 +73,7 @@
     {
       "name": "Proxy",
       "address": "0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C",
+      "code": "https://etherscan.deth.net/address/0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C,0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2,0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2",
@@ -94,6 +97,7 @@
     {
       "name": "Committee",
       "address": "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
+      "code": "https://etherscan.deth.net/address/0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
       "upgradeability": {
         "type": "immutable"
       },

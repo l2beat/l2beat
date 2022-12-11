@@ -86,6 +86,9 @@ export async function analyzeItem(
           ? true
           : undefined,
       address,
+      code: !metadata.isEOA
+        ? getCodeLink(address, proxyDetection?.implementations)
+        : undefined,
       upgradeability,
       values: Object.entries(values).length !== 0 ? values : undefined,
       errors: Object.entries(errors).length !== 0 ? errors : undefined,
@@ -114,4 +117,15 @@ function getRelatives(value: ContractValue | undefined): EthereumAddress[] {
     }
   }
   return []
+}
+
+function getCodeLink(
+  address: EthereumAddress,
+  implementations: EthereumAddress[] | undefined,
+) {
+  const addresses = [address]
+  if (implementations) {
+    addresses.push(...implementations)
+  }
+  return `https://etherscan.deth.net/address/${addresses.join(',')}`
 }

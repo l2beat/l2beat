@@ -5,6 +5,7 @@
     {
       "name": "Bridge",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
+      "code": "https://etherscan.deth.net/address/0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
       "upgradeability": {
         "type": "immutable"
       },
@@ -39,6 +40,7 @@
     {
       "name": "SimpleGovernance",
       "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "code": "https://etherscan.deth.net/address/0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
       "upgradeability": {
         "type": "immutable"
       },
@@ -68,6 +70,7 @@
     {
       "name": "OriginalTokenVault",
       "address": "0xB37D31b2A74029B5951a2778F959282E2D518595",
+      "code": "https://etherscan.deth.net/address/0xB37D31b2A74029B5951a2778F959282E2D518595",
       "upgradeability": {
         "type": "immutable"
       },

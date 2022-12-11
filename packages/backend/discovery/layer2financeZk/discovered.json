@@ -5,6 +5,7 @@
     {
       "name": "Broker",
       "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+      "code": "https://etherscan.deth.net/address/0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
       "upgradeability": {
         "type": "immutable"
       },
@@ -20,6 +21,7 @@
     {
       "name": "Proxy",
       "address": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+      "code": "https://etherscan.deth.net/address/0x82123571C8a5e0910280C066bc634c4945FFcbC8,0x4EDD62189732e9fF476ABa880b48c29432A7AC9B,0x62BCA4DB742A99c834e2c24b609656A70EA25379,0x8536850750956c2FEebeCAB786d82271a5467687,0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2,0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1,0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339,0xB3788a88F063B217227E27ae16Ba550db3132bE6",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
@@ -74,6 +76,7 @@
     {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "code": "https://etherscan.deth.net/address/0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -85,6 +88,7 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "code": "https://etherscan.deth.net/address/0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -98,6 +102,7 @@
     {
       "name": "Proxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458,0x522B2871c3918B92c165115d862e50e440905068",
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
@@ -132,6 +137,7 @@
       "name": "",
       "unverified": true,
       "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
+      "code": "https://etherscan.deth.net/address/0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
       "upgradeability": {
         "type": "immutable"
       }
