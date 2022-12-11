@@ -22,7 +22,9 @@ export async function discover(
   let totalAddresses = 0
 
   const stack = [
-    ...config.initialAddresses.map((address) => ({ address, depth: 0 })),
+    ...config.initialAddresses
+      .map((address) => ({ address, depth: 0 }))
+      .reverse(),
   ]
   while (stack.length !== 0) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
