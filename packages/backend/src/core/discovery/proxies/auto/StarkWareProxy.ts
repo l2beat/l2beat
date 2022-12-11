@@ -126,6 +126,11 @@ export async function detectStarkWareProxy(
   }
 }
 
+const coder = new utils.Interface([
+  'event Upgraded(address indexed implementation)',
+  'event ImplementationUpgraded(address indexed implementation, bytes initializer)',
+])
+
 async function getStarkWareDiamond(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -134,8 +139,10 @@ async function getStarkWareDiamond(
   isFinal: boolean,
 ): Promise<ProxyDetection> {
   const upgrades = await provider.getLogs(address, [
-    // Upgraded (address indexed implementation)
-    '0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b',
+    [
+      coder.getEventTopic('Upgraded'),
+      coder.getEventTopic('ImplementationUpgraded'),
+    ],
   ])
 
   const lastUpgrade = upgrades.at(-1)?.transactionHash
@@ -169,7 +176,7 @@ async function getStarkWareDiamond(
     if (!name) {
       break
     }
-    console.log(`${address.toString()}.${name} =`, facet)
+    console.log(`${name} =`, facet)
     facets[name] = facet
   }
 
