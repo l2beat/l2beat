@@ -5,6 +5,14 @@ import {
   AccessControlHandler,
   AccessControlHandlerDefinition,
 } from './AccessControlHandler'
+import {
+  ArrayFromOneEventHandler,
+  ArrayFromOneEventHandlerDefinition,
+} from './ArrayFromOneEventHandler'
+import {
+  ArrayFromTwoEventsHandler,
+  ArrayFromTwoEventsHandlerDefinition,
+} from './ArrayFromTwoEventsHandler'
 import { ArrayHandler, ArrayHandlerDefinition } from './ArrayHandler'
 import { CallHandler, CallHandlerDefinition } from './CallHandler'
 import {
@@ -20,6 +28,8 @@ export const UserHandlerDefinition = z.union([
   CallHandlerDefinition,
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
+  ArrayFromOneEventHandlerDefinition,
+  ArrayFromTwoEventsHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -38,5 +48,9 @@ export function getUserHandler(
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
       return new AccessControlHandler(field, definition, abi)
+    case 'arrayFromOneEvent':
+      return new ArrayFromOneEventHandler(field, definition, abi)
+    case 'arrayFromTwoEvents':
+      return new ArrayFromTwoEventsHandler(field, definition, abi)
   }
 }

@@ -6,6 +6,42 @@
     "0xB37D31b2A74029B5951a2778F959282E2D518595"
   ],
   "overrides": {
+    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": {
+      "fields": {
+        "pausers": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "PauserAdded",
+          "addKey": "account",
+          "removeEvent": "PauserRemoved",
+          "removeKey": "account"
+        },
+        "governors": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "GovernorAdded",
+          "addKey": "account",
+          "removeEvent": "GovernorRemoved",
+          "removeKey": "account"
+        }
+      }
+    },
+    "0xB37D31b2A74029B5951a2778F959282E2D518595": {
+      "fields": {
+        "pausers": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "PauserAdded",
+          "addKey": "account",
+          "removeEvent": "PauserRemoved",
+          "removeKey": "account"
+        },
+        "governors": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "GovernorAdded",
+          "addKey": "account",
+          "removeEvent": "GovernorRemoved",
+          "removeKey": "account"
+        }
+      }
+    },
     "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": {
       "ignoreMethods": ["voters", "proposals"]
     },
