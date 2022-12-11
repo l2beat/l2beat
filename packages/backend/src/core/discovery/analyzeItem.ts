@@ -81,6 +81,10 @@ export async function analyzeItem(
   return {
     analyzed: {
       name: metadata.name,
+      unverified:
+        !metadata.isVerified || !metadata.implementationVerified
+          ? true
+          : undefined,
       address,
       upgradeability,
       values: Object.entries(values).length !== 0 ? values : undefined,

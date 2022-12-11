@@ -58,6 +58,7 @@
     },
     {
       "name": "",
+      "unverified": true,
       "address": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "upgradeability": {
         "type": "immutable"
@@ -80,6 +81,7 @@
     },
     {
       "name": "",
+      "unverified": true,
       "address": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "upgradeability": {
         "type": "immutable"

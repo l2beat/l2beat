@@ -8,6 +8,7 @@ import { detectGnosisSafe } from './auto/GnosisSafe'
 import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
+import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { ManualProxyType, ProxyDetection } from './types'
 
@@ -44,5 +45,7 @@ function getManualProxy(
   switch (manualProxyType) {
     case 'new Arbitrum proxy':
       return getNewArbitrumProxy(provider, address)
+    case 'call implementation proxy':
+      return getCallImplementationProxy(provider, address)
   }
 }

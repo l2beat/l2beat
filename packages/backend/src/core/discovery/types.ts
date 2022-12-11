@@ -12,6 +12,7 @@ export interface ProjectParameters {
 
 export interface ContractParameters {
   name: string
+  unverified?: true
   address: EthereumAddress
   upgradeability: UpgradeabilityParameters
   values?: Record<string, ContractValue>

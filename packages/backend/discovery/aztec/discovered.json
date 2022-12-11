@@ -125,6 +125,11 @@
       }
     }
   ],
+  "eoas": [
+    "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
+    "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
+    "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"
+  ],
   "abis": {
     "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": [
       "constructor(address _rollupProcessor, address _router)",

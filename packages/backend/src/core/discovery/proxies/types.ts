@@ -8,7 +8,10 @@ export interface ProxyDetection {
 }
 
 export type ManualProxyType = z.infer<typeof ManualProxyType>
-export const ManualProxyType = z.enum(['new Arbitrum proxy'])
+export const ManualProxyType = z.enum([
+  'new Arbitrum proxy',
+  'call implementation proxy',
+])
 
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
@@ -21,7 +24,7 @@ export type UpgradeabilityParameters =
   | NewArbitrumProxyUpgradeability
   | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
-  | CustomProxyUpgradeability
+  | CallImplementationProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -89,7 +92,7 @@ export interface EIP897ProxyUpgradeability {
   implementation: EthereumAddress
 }
 
-export interface CustomProxyUpgradeability {
-  type: 'custom proxy'
+export interface CallImplementationProxyUpgradeability {
+  type: 'call implementation proxy'
   implementation: EthereumAddress
 }
