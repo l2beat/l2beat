@@ -34,32 +34,35 @@ export async function discover(
 
     const overrides = config.overrides?.[address.toString()]
     if (overrides?.ignoreDiscovery) {
-      console.log('\nSkipping', address)
+      console.log('Skipping', address)
+      console.log()
       continue
     }
 
     if (depth > maxDepth) {
-      console.log('\nSkipping', address)
+      console.log('Skipping', address)
       console.log(
         '  Error:',
         chalk.red(`Depth ${depth} exceeded max = ${maxDepth}`),
       )
+      console.log()
       continue
     }
 
     totalAddresses++
     if (totalAddresses > maxAddresses) {
-      console.log('\nSkipping', address)
+      console.log('Skipping', address)
       console.log(
         '  Error:',
         chalk.red(
           `Total addresses ${totalAddresses} exceeded max = ${maxAddresses}`,
         ),
       )
+      console.log()
       continue
     }
 
-    console.log('\nAnalyzing', address)
+    console.log('Analyzing', address)
     const { analyzed, relatives } = await analyzeItem(provider, address, config)
     resolved.set(address, analyzed)
 
@@ -72,7 +75,19 @@ export async function discover(
       }
     }
 
+    console.log()
+
     stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
+  }
+
+  for (const override of Object.keys(config.overrides ?? {})) {
+    if (!known.has(EthereumAddress(override))) {
+      console.log(
+        chalk.red('Override for'),
+        chalk.bold(override),
+        chalk.red("was configured, but the address wasn't discovered!"),
+      )
+    }
   }
 
   return [...resolved.values()]
