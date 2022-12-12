@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+import { zip } from 'lodash'
 
 import { concatAbis } from './concatAbis'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
@@ -9,6 +10,7 @@ export interface ContractMetadata {
   isVerified: boolean
   implementationVerified: boolean
   abi: string[]
+  abis: Record<string, string[]>
 }
 
 export async function getMetadata(
@@ -28,6 +30,7 @@ export async function getMetadata(
       isVerified: true,
       implementationVerified: true,
       abi: [],
+      abis: {},
     }
   }
 
@@ -41,11 +44,26 @@ export async function getMetadata(
     ...metadata.abi,
     ...implementationMeta.flatMap((x) => x.abi),
   )
+
+  const abis: Record<string, string[]> = {}
+  if (metadata.abi.length > 0) {
+    abis[address.toString()] = metadata.abi
+  }
+  for (const [implementation, metadata] of zip(
+    implementations,
+    implementationMeta,
+  )) {
+    if (implementation && metadata && metadata.abi.length > 0) {
+      abis[implementation.toString()] = metadata.abi
+    }
+  }
+
   return {
     name,
     isEOA: false,
     isVerified: metadata.isVerified,
     implementationVerified: implementationMeta.every((x) => x.isVerified),
     abi,
+    abis,
   }
 }

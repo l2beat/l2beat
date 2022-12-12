@@ -4,6 +4,7 @@ import { expect } from 'earljs'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { executeHandlers } from './executeHandlers'
+import { Handler, HandlerResult } from './Handler'
 import { StorageHandler } from './user/StorageHandler'
 
 describe(executeHandlers.name, () => {
@@ -155,5 +156,21 @@ describe(executeHandlers.name, () => {
       new StorageHandler('b', { type: 'storage', slot: '{{ a }}' }),
     ])
     await expect(promise).toBeRejected('Impossible to resolve dependencies')
+  })
+
+  it('handles handlers with errors', async () => {
+    class FunkyHandler implements Handler {
+      dependencies: string[] = []
+      field = 'foo'
+      async execute(): Promise<HandlerResult> {
+        throw new Error('oops')
+      }
+    }
+
+    const provider = mock<DiscoveryProvider>()
+    const values = await executeHandlers(provider, EthereumAddress.random(), [
+      new FunkyHandler(),
+    ])
+    expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
   })
 })

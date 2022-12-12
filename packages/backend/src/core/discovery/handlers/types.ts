@@ -8,5 +8,5 @@ export const BytesFromString = z
 
 export const NumberFromString = z
   .string()
-  .regex(/^[1-9]\d*$/)
+  .regex(/^([1-9]\d*|0)$/)
   .transform((x) => BigInt(x))

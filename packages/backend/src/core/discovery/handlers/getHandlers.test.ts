@@ -1,6 +1,7 @@
 import { expect } from 'earljs'
 
 import { getHandlers } from './getHandlers'
+import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { StorageHandler } from './user/StorageHandler'
@@ -117,6 +118,17 @@ describe(getHandlers.name, () => {
       new StorageHandler('bar', { type: 'storage', slot: 2 }),
       new SimpleMethodHandler('function baz() view returns (address)'),
       new StorageHandler('foo', { type: 'storage', slot: 1 }),
+    ])
+  })
+
+  it('handles constructor errors', () => {
+    const handlers = getHandlers([], {
+      fields: {
+        foo: { type: 'call', args: [] },
+      },
+    })
+    expect(handlers).toEqual([
+      new ErrorHandler('foo', 'Cannot find a matching method for foo'),
     ])
   })
 })
