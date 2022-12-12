@@ -12,33 +12,35 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
       continue
     }
     const x = point.x * width
-    innerHtml += getMilestoneHtml(x)
+    innerHtml += getMilestoneHtml(x, point.milestone.link)
   }
   milestones.innerHTML = innerHtml
 }
 
-function getMilestoneHtml(x: number) {
+function getMilestoneHtml(x: number, url: string) {
   return `
   <div class="absolute z-40" 
         style="left: ${x + offset}px; top: ${offset}px">
-    <svg
-      width="${iconHeight}"
-      height="${iconHeight}"
-      view-box="0 0 ${iconHeight} ${iconHeight}"
-      role="img"
-      aria-label="Milestone icon"
-      class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500"
-    >      
-      <rect
-        x="9.89941"
-        y="1.41421"
-        width="12"
-        height="12"
-        rx="1"
-        transform="rotate(45 9.89941 1.41421)"
-        stroke-width="2"
-      /> 
-    <svg>
+    <a href="${url}" target="_blank">
+      <svg
+        width="${iconHeight}"
+        height="${iconHeight}"
+        view-box="0 0 ${iconHeight} ${iconHeight}"
+        role="img"
+        aria-label="Milestone icon"
+        class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500"
+      >      
+        <rect
+          x="9.89941"
+          y="1.41421"
+          width="12"
+          height="12"
+          rx="1"
+          transform="rotate(45 9.89941 1.41421)"
+          stroke-width="2"
+        /> 
+      <svg>
+    </a>
   </div>`
 }
 
