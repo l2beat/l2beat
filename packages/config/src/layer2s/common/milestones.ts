@@ -37,10 +37,10 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     link: 'https://medium.com/ethereum-optimism/mainnet-soft-launch-7cacc0143cd5',
     date: '2021-01-16T00:00:00Z',
     description:
-      'Optimism sof launch is live, bringing first universal rollup based on optimistic architecture.',
+      'Optimism soft launch is live, bringing first universal rollup based on optimistic architecture.',
   },
   {
-    name: 'ZK Rollup (privacy)',
+    name: 'ZK Rollup (anonymous payments)',
     link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
     date: '2021-03-15T00:00:00Z',
     description:
