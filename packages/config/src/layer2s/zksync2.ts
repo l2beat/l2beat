@@ -1,10 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
-  FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
@@ -93,7 +92,11 @@ export const zksync2: Layer2 = {
       references: [],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.NO_MECHANISM,
+      name: 'Users can force any transaction via L1',
+      description:
+        'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
+        transactions from L1 queue in an L1 block.',
+      risks: [],
       references: [
         {
           text: "L1 - L2 interoperability - Developer's documentation'",
