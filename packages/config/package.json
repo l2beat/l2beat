@@ -10,7 +10,7 @@
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
-    "lint": "eslint --ext .ts --max-warnings 0 src test",
+    "lint": "eslint --ext .ts --max-warnings 0 src test scripts",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "update-multichain": "node -r esbuild-register scripts/multichain",
@@ -20,10 +20,10 @@
     "@l2beat/types": "*",
     "@l2beat/common": "*",
     "dotenv": "^16.0.3",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
-    "ethers": "^5.6.8",
-    "node-fetch": "^2.6.7"
+    "ethers": "^5.6.8"
   }
 }
