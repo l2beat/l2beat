@@ -30,7 +30,7 @@ export class StarkWareNamedStorageHandler implements Handler {
     address: EthereumAddress,
   ): Promise<HandlerResult> {
     logHandler(this.field, [
-      'Reading named storage at',
+      'Reading named storage at ',
       JSON.stringify(this.definition.tag),
     ])
     let storage: Bytes

@@ -111,11 +111,9 @@ export async function detectStarkWareProxy(
   }
 
   return {
-    implementations:
-      callImplementation !== EthereumAddress.ZERO
-        ? [implementation, callImplementation]
-        : [implementation],
-    relatives: [],
+    implementations: [implementation],
+    relatives:
+      callImplementation !== EthereumAddress.ZERO ? [callImplementation] : [],
     upgradeability: {
       type: 'StarkWare proxy',
       implementation,

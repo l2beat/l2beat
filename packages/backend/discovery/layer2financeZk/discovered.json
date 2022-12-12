@@ -1,5 +1,5 @@
 {
-  "name": "layer2FinanceZk",
+  "name": "layer2financeZk",
   "blockNumber": 16154924,
   "contracts": [
     {
@@ -100,9 +100,9 @@
       }
     },
     {
-      "name": "Proxy",
+      "name": "CallProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458,0x522B2871c3918B92c165115d862e50e440905068",
+      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
@@ -113,24 +113,34 @@
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x522B2871c3918B92c165115d862e50e440905068",
+        "getUpgradeActivationDelay": 2419200,
+        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.0",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      }
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "address": "0x522B2871c3918B92c165115d862e50e440905068",
+      "code": "https://etherscan.deth.net/address/0x522B2871c3918B92c165115d862e50e440905068",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
         "getBootloaderConfig": [
           "211961207453635756308931579519600615486611873783603481462301991964165542501",
           "748288457286353186729521711023016300332686128124596730496173577358613350710"
         ],
-        "getUpgradeActivationDelay": 2419200,
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2022_5",
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "isFrozen": false,
-        "isNotFinalized": true,
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1,
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "PROXY_VERSION": "3.0.0",
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "PAGE_INFO_SIZE_OFFSET": 1
       }
     },
     {
