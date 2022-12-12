@@ -34,6 +34,7 @@ export const EMPTY_STATE: State = {
     dateRange: undefined,
     labels: undefined,
     showHoverAtIndex: undefined,
+    showMilestoneHover: undefined,
     chart: undefined,
   },
 }

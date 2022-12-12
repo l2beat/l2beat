@@ -1,6 +1,7 @@
-import { layer2s, ProjectTechnologyChoice } from '../src'
 import fs from 'fs'
 import path from 'path'
+
+import { layer2s, ProjectTechnologyChoice } from '../src'
 
 const keys = [
   'stateCorrectness',
@@ -21,7 +22,7 @@ for (const key of keys) {
 
   const options = new Map<string, string[]>()
   for (const layer2 of layer2s) {
-    const item = layer2.technology?.[key]
+    const item = layer2.technology[key]
     if (item) {
       const signature = JSON.stringify({
         name: item.name,
@@ -38,8 +39,10 @@ for (const key of keys) {
   }
 
   for (const [signature, names] of options.entries()) {
-    const decoded: Omit<ProjectTechnologyChoice, 'references'> =
-      JSON.parse(signature)
+    const decoded = JSON.parse(signature) as Omit<
+      ProjectTechnologyChoice,
+      'references'
+    >
     report += `  [${names.join(', ')}]\n`
     report += `    ${decoded.name}\n\n`
     report += `    ${decoded.description}\n\n`

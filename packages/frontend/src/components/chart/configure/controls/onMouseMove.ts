@@ -1,6 +1,7 @@
 import { Message } from '../messages'
 
 const HOVER_AREA_EXTENSION_PX = 16
+const HOVER_BELOW_CHART = 15
 
 export function onMouseMove(
   view: HTMLElement,
@@ -22,13 +23,16 @@ export function onMouseMove(
       e.clientX >= rect.left - HOVER_AREA_EXTENSION_PX &&
       e.clientX <= rect.right + HOVER_AREA_EXTENSION_PX &&
       e.clientY >= rect.top &&
-      e.clientY <= rect.bottom
+      e.clientY <= rect.bottom + HOVER_BELOW_CHART
     const position = (e.clientX - rect.left) / rect.width
 
     if (isInside) {
       dispatch({
         type: 'MouseMoved',
         mouseX: Math.min(1, Math.max(0, position)),
+        mouseY: Math.abs(
+          e.clientY - rect.top - rect.height - HOVER_BELOW_CHART,
+        ),
       })
     } else if (wasInside) {
       dispatch({ type: 'MouseExited' })
