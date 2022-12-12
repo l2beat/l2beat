@@ -22,7 +22,7 @@ function getMilestoneHtml(x: number, url: string) {
   return `
   <div class="absolute z-40" 
         style="left: ${x + offset}px; top: ${offset}px">
-    ${isMobile ? '' : `<a href="${url}" target="_blank" disabled>`}
+    ${isMobile ? '' : `<a href="${url}" target="_blank">`}
       <svg
         width="${iconHeight}"
         height="${iconHeight}"

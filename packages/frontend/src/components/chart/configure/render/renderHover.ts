@@ -93,6 +93,11 @@ export function renderHover(
       if (point.milestone.description) {
         rows.push(renderDescriptionRow(point.milestone.description))
       }
+      if (window.innerWidth < 750) {
+        rows.push(
+          `<div class="z-60 text-link"><a href="${point.milestone.link}" target="blank">Learn more</a></div>`,
+        )
+      }
     } else {
       rows.push(renderDateRow(point.date))
       if (state.view.chart.type === 'AggregateTvlChart' && 'eth' in point) {
@@ -172,5 +177,5 @@ function renderNameRow(name: string) {
 }
 
 function renderDescriptionRow(description: string) {
-  return `<div class="max-w-[216px] text-left">${description}</div>`
+  return `<div class="max-w-[216px] mb-1 text-left">${description}</div>`
 }
