@@ -12,6 +12,13 @@ export const MILESTONES = {
 
 export const HOMEPAGE_MILESTONES: Milestone[] = [
   {
+    name: 'STARK-based Validium (STARKex)',
+    date: '2020-06-03T00:00:00Z',
+    link: 'https://medium.com/starkware/starks-over-mainnet-b83e63db04c0',
+    description:
+      'DeversiFi is live, bringing first STARKex Validium for spot trading.',
+  },
+  {
     name: 'zkRollup (payments)',
     date: '2020-06-18T00:00:00Z',
     link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
@@ -45,7 +52,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     description: 'Aztec is live, bringing first private zkRollup for payments.',
   },
   {
-    name: 'STARK-based Rollup',
+    name: 'STARK-based Rollup (STARKex)',
     date: '2021-04-06T00:00:00Z',
     link: 'https://dydx.exchange/blog/public',
     description:
@@ -59,7 +66,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'Arbitrum removed whitelist, becoming first publicly open universal Optimistic Rollup.',
   },
   {
-    name: 'zkRollup (universal)',
+    name: 'STARK-based Rollup (universal)',
     link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
     date: '2021-11-29T00:00:00Z',
     description:
