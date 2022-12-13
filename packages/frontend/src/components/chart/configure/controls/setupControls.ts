@@ -3,6 +3,7 @@ import { Message } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
 import { onMouseMove } from './onMouseMove'
 import { onRadioChange } from './onRadioChange'
+import { stopEventsPropagation } from './stopEventsPropagation'
 import { toDays } from './toDays'
 
 export function setupControls(
@@ -54,4 +55,6 @@ export function setupControls(
   if (elements.view.view) {
     onMouseMove(elements.view.view, dispatch)
   }
+
+  stopEventsPropagation(elements)
 }
