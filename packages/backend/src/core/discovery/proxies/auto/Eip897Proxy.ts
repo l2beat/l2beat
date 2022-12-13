@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/types'
 import { BigNumber } from 'ethers'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { getCallResult } from '../utils/getCallResult'
-import { ProxyDetection } from './types'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { getCallResult } from '../../utils/getCallResult'
+import { ProxyDetection } from '../types'
 
 async function getProxyType(
   provider: DiscoveryProvider,
@@ -33,7 +33,7 @@ async function getImplementation(
   return result && EthereumAddress(result)
 }
 
-async function detect(
+export async function detectEip897Proxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetection | undefined> {
@@ -54,10 +54,4 @@ async function detect(
       implementation,
     },
   }
-}
-
-export const Eip897Proxy = {
-  getProxyType,
-  getImplementation,
-  detect,
 }

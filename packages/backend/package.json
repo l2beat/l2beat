@@ -32,6 +32,7 @@
     "chalk": "^4.1.2",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
+    "jsonc-parser": "^3.2.0",
     "knex": "^2.1.0",
     "koa": "^2.13.4",
     "koa-conditional-get": "^3.0.0",

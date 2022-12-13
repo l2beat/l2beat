@@ -7,7 +7,8 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
-import { getFragment } from '../utils/getFragment'
+import { getFunctionFragment } from '../utils/getFunctionFragment'
+import { logHandler } from '../utils/logHandler'
 
 export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>
 export const CallHandlerDefinition = z.strictObject({
@@ -32,7 +33,7 @@ export class CallHandler implements Handler {
       }
     }
     const arity = definition.args.length
-    this.fragment = getFragment(
+    this.fragment = getFunctionFragment(
       definition.method ?? field,
       abi,
       (x) => isViewFragment(x) && x.inputs.length === arity,
@@ -49,6 +50,13 @@ export class CallHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
+    logHandler(this.field, [
+      'Calling ',
+      `${this.fragment.name}(${resolved.args
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        .map((x) => x.toString())
+        .join(', ')})`,
+    ])
     const callResult = await callMethod(
       provider,
       address,
