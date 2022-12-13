@@ -85,20 +85,20 @@ describe('layer2s', () => {
 
   describe('milestones', () => {
     describe('name', () => {
-      describe('no longer than 30 characters', () => {
+      describe('no longer than 50 characters', () => {
         for (const project of layer2s) {
           if (project.milestones === undefined) {
             continue
           }
           for (const milestone of project.milestones) {
-            it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 30 characters`, () => {
-              expect(milestone.name.length).toBeLessThanOrEqualTo(30)
+            it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 50 characters`, () => {
+              expect(milestone.name.length).toBeLessThanOrEqualTo(50)
             })
           }
         }
         for (const milestone of milestonesLayer2s) {
-          it(`Milestone: ${milestone.name} (main page) name is no longer than 30 characters`, () => {
-            expect(milestone.name.length).toBeLessThanOrEqualTo(30)
+          it(`Milestone: ${milestone.name} (main page) name is no longer than 50 characters`, () => {
+            expect(milestone.name.length).toBeLessThanOrEqualTo(50)
           })
         }
       })
@@ -128,7 +128,7 @@ describe('layer2s', () => {
           })
         }
       })
-      describe('no longer that 90 characters', () => {
+      describe('no longer that 100 characters', () => {
         for (const project of layer2s) {
           if (project.milestones === undefined) {
             continue
@@ -137,8 +137,8 @@ describe('layer2s', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 90 characters`, () => {
-              expect(milestone.description?.length).toBeLessThanOrEqualTo(90)
+            it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 100 characters`, () => {
+              expect(milestone.description?.length).toBeLessThanOrEqualTo(100)
             })
           }
         }
@@ -146,8 +146,8 @@ describe('layer2s', () => {
           if (milestone.description === undefined) {
             continue
           }
-          it(`Milestone: ${milestone.name} (main page) description is no longer than 90 characters`, () => {
-            expect(milestone.description?.length).toBeLessThanOrEqualTo(90)
+          it(`Milestone: ${milestone.name} (main page) description is no longer than 100 characters`, () => {
+            expect(milestone.description?.length).toBeLessThanOrEqualTo(100)
           })
         }
       })
