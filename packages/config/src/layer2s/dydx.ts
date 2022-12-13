@@ -195,7 +195,7 @@ export const dydx: Layer2 = {
       link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: '2021-08-03T00:00:00Z',
       description:
-        'Independent foundation was created to participate in propelling the Protocol into the future.',
+        'Independent foundation was created to participate in the Protocol governance.',
     },
     {
       name: 'dYdX v4 announcement',
