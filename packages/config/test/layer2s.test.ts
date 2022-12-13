@@ -84,28 +84,73 @@ describe('layer2s', () => {
   })
 
   describe('milestones', () => {
-    describe('description', () => {
-      for (const project of layer2s) {
-        if (project.milestones === undefined) {
-          continue
+    describe('name', () => {
+      describe('no longer than 30 characters', () => {
+        for (const project of layer2s) {
+          if (project.milestones === undefined) {
+            continue
+          }
+          for (const milestone of project.milestones) {
+            it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 30 characters`, () => {
+              expect(milestone.name.length).toBeLessThanOrEqualTo(30)
+            })
+          }
         }
-        for (const milestone of project.milestones) {
+        for (const milestone of milestonesLayer2s) {
+          it(`Milestone: ${milestone.name} (main page) name is no longer than 30 characters`, () => {
+            expect(milestone.name.length).toBeLessThanOrEqualTo(30)
+          })
+        }
+      })
+    })
+
+    describe('description', () => {
+      describe('ends with dot', () => {
+        for (const project of layer2s) {
+          if (project.milestones === undefined) {
+            continue
+          }
+          for (const milestone of project.milestones) {
+            if (milestone.description === undefined) {
+              continue
+            }
+            it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+              expect(milestone.description?.endsWith('.')).toEqual(true)
+            })
+          }
+        }
+        for (const milestone of milestonesLayer2s) {
           if (milestone.description === undefined) {
             continue
           }
-          it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+          it(`Milestone: ${milestone.name} (main page) description ends with a dot`, () => {
             expect(milestone.description?.endsWith('.')).toEqual(true)
           })
         }
-      }
-      for (const milestone of milestonesLayer2s) {
-        if (milestone.description === undefined) {
-          continue
+      })
+      describe('no longer that 90 characters', () => {
+        for (const project of layer2s) {
+          if (project.milestones === undefined) {
+            continue
+          }
+          for (const milestone of project.milestones) {
+            if (milestone.description === undefined) {
+              continue
+            }
+            it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 90 characters`, () => {
+              expect(milestone.description?.length).toBeLessThanOrEqualTo(90)
+            })
+          }
         }
-        it(`Milestone: ${milestone.name} (main page) description ends with a dot`, () => {
-          expect(milestone.description?.endsWith('.')).toEqual(true)
-        })
-      }
+        for (const milestone of milestonesLayer2s) {
+          if (milestone.description === undefined) {
+            continue
+          }
+          it(`Milestone: ${milestone.name} (main page) description is no longer than 90 characters`, () => {
+            expect(milestone.description?.length).toBeLessThanOrEqualTo(90)
+          })
+        }
+      })
     })
 
     describe('date', () => {
