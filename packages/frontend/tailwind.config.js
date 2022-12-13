@@ -8,8 +8,8 @@ module.exports = {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
       zIndex: {
-        '41': '41'
-      }
+        41: '41',
+      },
     },
     fontSize: {
       '3xs': ['8px', '12px'],
