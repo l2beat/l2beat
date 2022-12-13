@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { ProjectTechnologyChoice } from '../src/common'
-import { layer2s, Layer2Technology } from '../src/layer2s'
+import { layer2s, Layer2Technology, milestonesLayer2s } from '../src/layer2s'
 import { checkRisk } from './checkRisk'
 
 describe('layer2s', () => {
@@ -98,6 +98,14 @@ describe('layer2s', () => {
           })
         }
       }
+      for (const milestone of milestonesLayer2s) {
+        if (milestone.description === undefined) {
+          continue
+        }
+        it(`Milestone: ${milestone.name} (main page) description ends with a dot`, () => {
+          expect(milestone.description?.endsWith('.')).toEqual(true)
+        })
+      }
     })
 
     describe('date', () => {
@@ -112,6 +120,13 @@ describe('layer2s', () => {
             ).toEqual(true)
           })
         }
+      }
+      for (const milestone of milestonesLayer2s) {
+        it(`Milestone: ${milestone.name} (main page) date is full day`, () => {
+          expect(
+            UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+          ).toEqual(true)
+        })
       }
     })
   })
