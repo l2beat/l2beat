@@ -3,6 +3,7 @@ import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { bobanetwork } from './bobanetwork'
+import { HOMEPAGE_MILESTONES } from './common'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -54,3 +55,5 @@ export const layer2s: Layer2[] = [
   zkspace,
   zksync,
 ]
+
+export const milestonesLayer2s = HOMEPAGE_MILESTONES
