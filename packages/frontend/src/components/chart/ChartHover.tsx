@@ -28,7 +28,7 @@ export function ChartHover() {
       <div
         data-role="chart-hover-contents"
         className={cx(
-          'absolute z-40 py-2 md:py-3 px-3 md:px-4 text-right text-2xs md:text-xs rounded-lg',
+          'absolute z-41 py-2 md:py-3 px-3 md:px-4 text-right text-2xs md:text-xs rounded-lg',
           'bg-gray-100 dark:bg-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.25)]',
           'select-none',
           'flex flex-col justify-center items-start',
