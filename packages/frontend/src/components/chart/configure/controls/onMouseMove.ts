@@ -10,7 +10,6 @@ export function onMouseMove(
   let wasInside = false
 
   window.addEventListener('mousemove', (e) => onEvent(e))
-  window.addEventListener('touchstart', (e) => onEvent(e.touches[0]))
   window.addEventListener('touchmove', (e) => onEvent(e.touches[0]))
 
   function onEvent(e: MouseEvent | Touch) {

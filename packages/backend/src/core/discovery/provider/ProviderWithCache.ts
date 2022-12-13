@@ -1,5 +1,5 @@
 import { EtherscanClient } from '@l2beat/common'
-import { Bytes, EthereumAddress } from '@l2beat/types'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { isRevert } from '../utils/isRevert'
@@ -92,6 +92,17 @@ export class ProviderWithCache extends DiscoveryProvider {
       () => super.getCode(address),
       (result) => result.toString(),
       (cached) => Bytes.fromHex(cached),
+    )
+  }
+
+  override async getTransaction(
+    hash: Hash256,
+  ): Promise<providers.TransactionResponse> {
+    return this.cacheOrFetch(
+      `getTransaction.${hash.toString()}`,
+      () => super.getTransaction(hash),
+      identity,
+      identity,
     )
   }
 
