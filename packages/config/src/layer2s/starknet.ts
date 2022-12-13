@@ -281,7 +281,7 @@ export const starknet: Layer2 = {
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
       description:
-        'Rollup is live on mainnet, enabling general computation smart contracts using zkRollup technology.',
+        'Rollup is live on mainnet, enabling general computation using zkRollup technology.',
     },
     {
       name: 'StarkGate Alpha',
