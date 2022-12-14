@@ -51,7 +51,7 @@
     },
     {
       "name": "BondManager",
-      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
+      "address": "0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1",
       "upgradeability": {
         "type": "immutable"
       },

@@ -18,10 +18,11 @@ export function renderMilestones(state: State, milestones: HTMLElement) {
 }
 
 function getMilestoneHtml(x: number, url: string) {
+  const isMobile = window.innerWidth < 750
   return `
-  <div class="absolute z-40" 
+  <div class="absolute z-40 select-none" 
         style="left: ${x + offset}px; top: ${offset}px">
-    <a href="${url}" target="_blank">
+    ${isMobile ? '' : `<a href="${url}" target="_blank">`}
       <svg
         width="${iconHeight}"
         height="${iconHeight}"
@@ -40,7 +41,7 @@ function getMilestoneHtml(x: number, url: string) {
           stroke-width="2"
         /> 
       <svg>
-    </a>
+    ${isMobile ? '' : '</a>'}
   </div>`
 }
 

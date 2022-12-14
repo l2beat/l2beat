@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -22,6 +23,7 @@ export interface TvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
+  milestones?: Milestone[]
 }
 
 export function ScalingTvlPage(props: TvlPageProps) {
@@ -35,7 +37,10 @@ export function ScalingTvlPage(props: TvlPageProps) {
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
-          <Chart tvlEndpoint={props.tvlEndpoint} />
+          <Chart
+            tvlEndpoint={props.tvlEndpoint}
+            milestones={props.milestones}
+          />
           <ScalingTvlView {...props.tvlView} />
           <OtherSites />
           <About />
