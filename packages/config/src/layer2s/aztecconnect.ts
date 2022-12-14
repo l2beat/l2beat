@@ -65,7 +65,6 @@ export const aztecconnect: Layer2 = {
       type: 'aztecconnect',
       url: 'https://api.aztec.network/aztec-connect-prod/falafel',
       callsPerMinute: 3_000,
-      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({

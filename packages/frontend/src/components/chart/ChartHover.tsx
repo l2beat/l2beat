@@ -21,11 +21,16 @@ export function ChartHover() {
         className="absolute block w-2 h-2 rounded-full border-2 border-current bg-red-300 z-40"
       />
       <div
+        data-role="chart-hover-square-green"
+        className="absolute block w-2 h-2 border-2 dark:border-current dark:bg-green-500  border-green-200 bg-green-600 z-40 rotate-45"
+      />
+
+      <div
         data-role="chart-hover-contents"
         className={cx(
-          'absolute z-40 py-2 md:py-3 px-3 md:px-4 text-right text-2xs md:text-xs rounded-lg',
+          'absolute z-41 py-2 md:py-3 px-3 md:px-4 text-right text-2xs md:text-xs rounded-lg',
           'bg-gray-100 dark:bg-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.25)]',
-          'select-none pointer-events-none',
+          'select-none',
           'flex flex-col justify-center items-start',
         )}
       />

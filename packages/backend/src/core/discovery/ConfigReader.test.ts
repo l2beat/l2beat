@@ -5,7 +5,7 @@ import { ConfigReader } from './ConfigReader'
 
 describe(ConfigReader.name, () => {
   const configs = readdirSync('discovery').filter(
-    (x) => x !== 'config.schema.json',
+    (x) => x !== 'config.schema.json' && x !== 'README.md',
   )
 
   const configReader = new ConfigReader()

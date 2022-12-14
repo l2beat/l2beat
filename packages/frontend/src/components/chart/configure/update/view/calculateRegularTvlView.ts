@@ -2,7 +2,6 @@ import { formatRange, formatTimestamp } from '../../../../../utils'
 import { State } from '../../state/State'
 import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
-import { getHoverIndex } from './getHoverIndex'
 import { getYAxis } from './getYAxis'
 
 export function calculateRegularTvlView(
@@ -38,6 +37,7 @@ export function calculateRegularTvlView(
     chart: { type: 'AggregateTvlChart', points },
     dateRange,
     labels,
-    showHoverAtIndex: getHoverIndex(controls.mouseX, points.length),
+    showHoverAtIndex: undefined,
+    showMilestoneHover: undefined,
   }
 }

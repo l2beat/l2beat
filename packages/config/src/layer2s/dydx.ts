@@ -195,14 +195,14 @@ export const dydx: Layer2 = {
       link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: '2021-08-03T00:00:00Z',
       description:
-        'Independent foundation, headquartered in Zug, Switzerland, was created to participate in propelling the Protocol into the future.',
+        'Independent foundation was created to participate in the Protocol governance.',
     },
     {
       name: 'dYdX v4 announcement',
       link: 'https://dydx.exchange/blog/dydx-chain',
       date: '2022-06-22T00:00:00Z',
       description:
-        'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK and Tendermint Proof-of-stake consensus protocol.',
+        'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',
     },
   ],
 }

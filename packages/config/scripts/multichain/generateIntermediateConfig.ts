@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+
 import { chainIdNames } from './chainIdNames'
 import { MultichainConfig } from './types'
 
@@ -57,7 +58,7 @@ export function generateIntermediateConfig(config: MultichainConfig) {
             const escrowAddress = EthereumAddress(route.fromanytoken.address)
             if (tokenAddress !== escrowAddress) {
               escrows.push({
-                chainId: source !== ETHEREUM ? source : destination,
+                chainId: destination,
                 type: 'any',
                 token: {
                   address: tokenAddress,

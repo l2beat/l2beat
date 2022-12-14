@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
@@ -13,7 +14,13 @@ export async function executeHandlers(
   for (const batch of batches) {
     const fields = Object.fromEntries(results.map((r) => [r.field, r]))
     const batchResults = await Promise.all(
-      batch.map((x) => x.execute(provider, address, fields)),
+      batch.map(async (x) => {
+        try {
+          return await x.execute(provider, address, fields)
+        } catch (e) {
+          return { field: x.field, error: getErrorMessage(e) }
+        }
+      }),
     )
     results.push(...batchResults)
   }

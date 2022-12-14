@@ -4,14 +4,15 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { BytesFromString, NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
+import { logHandler } from '../utils/logHandler'
+import { valueToBigInt } from '../utils/valueToBigInt'
 
 const SingleSlot = z.union([
-  z.number(),
+  z.number().int().nonnegative(),
   BytesFromString,
   NumberFromString,
   Reference,
@@ -21,7 +22,9 @@ export type StorageHandlerDefinition = z.infer<typeof StorageHandlerDefinition>
 export const StorageHandlerDefinition = z.strictObject({
   type: z.literal('storage'),
   slot: z.union([SingleSlot, z.array(SingleSlot).min(1)]),
-  offset: z.optional(z.union([z.number(), NumberFromString, Reference])),
+  offset: z.optional(
+    z.union([z.number().int().nonnegative(), NumberFromString, Reference]),
+  ),
   returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
 })
 
@@ -40,77 +43,20 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
+    logHandler(this.field, ['Reading storage'])
+    const resolved = resolveDependencies(this.definition, previousResults)
+
     let storage: Bytes
     try {
-      const slot = computeSlot(this.definition, previousResults)
+      const slot = computeSlot(resolved)
       storage = await provider.getStorage(address, slot)
     } catch (e) {
       return { field: this.field, error: getErrorMessage(e) }
     }
     return {
       field: this.field,
-      value: bytes32ToContractValue(
-        storage,
-        this.definition.returnType ?? 'bytes',
-      ),
+      value: bytes32ToContractValue(storage, resolved.returnType),
     }
-  }
-}
-
-function computeSlot(
-  definition: StorageHandlerDefinition,
-  previousResults: Record<string, HandlerResult | undefined>,
-) {
-  let slot = 0n
-
-  if (definition.offset) {
-    const resolved = resolveReference(definition.offset, previousResults)
-    slot = contractValueToBigInt(resolved)
-  }
-
-  if (Array.isArray(definition.slot)) {
-    const parts = definition.slot.map((x) => {
-      const resolved = resolveReference(x, previousResults)
-      return contractValueToBigInt(resolved)
-    })
-    while (parts.length >= 3) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const a = parts.shift()!
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const b = parts.shift()!
-      parts.unshift(hashBigints([b, a]))
-    }
-    slot += hashBigints(parts.reverse())
-  } else {
-    const resolved = resolveReference(definition.slot, previousResults)
-    slot += contractValueToBigInt(resolved)
-  }
-
-  return slot
-}
-
-function hashBigints(values: bigint[]) {
-  return BigInt(
-    utils.keccak256(
-      utils.defaultAbiCoder.encode(
-        values.map(() => 'uint256'),
-        values,
-      ),
-    ),
-  )
-}
-
-function contractValueToBigInt(value: bigint | Bytes | ContractValue) {
-  if (Array.isArray(value)) {
-    throw new Error('Cannot convert value to bigint')
-  }
-  if (value instanceof Bytes) {
-    return BigInt(value.toString())
-  }
-  try {
-    return BigInt(value)
-  } catch (e) {
-    throw new Error('Cannot convert value to bigint')
   }
 }
 
@@ -126,4 +72,64 @@ function getDependencies(definition: StorageHandlerDefinition) {
     }
   }
   return dependencies
+}
+
+type ResolvedDefinition = ReturnType<typeof resolveDependencies>
+function resolveDependencies(
+  definition: StorageHandlerDefinition,
+  previousResults: Record<string, HandlerResult | undefined>,
+) {
+  let offset = 0n
+  if (definition.offset) {
+    const resolved = resolveReference(definition.offset, previousResults)
+    offset = valueToBigInt(resolved)
+  }
+
+  let slot: bigint | bigint[]
+  if (Array.isArray(definition.slot)) {
+    slot = definition.slot.map((x) => {
+      const resolved = resolveReference(x, previousResults)
+      return valueToBigInt(resolved)
+    })
+  } else {
+    const resolved = resolveReference(definition.slot, previousResults)
+    slot = valueToBigInt(resolved)
+  }
+
+  const returnType: 'number' | 'address' | 'bytes' =
+    definition.returnType ?? 'bytes'
+
+  return {
+    slot,
+    offset,
+    returnType,
+  }
+}
+
+function computeSlot(resolved: ResolvedDefinition) {
+  if (!Array.isArray(resolved.slot)) {
+    return resolved.slot + resolved.offset
+  }
+
+  const parts = [...resolved.slot]
+  while (parts.length >= 3) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const a = parts.shift()!
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const b = parts.shift()!
+    parts.unshift(hashBigints([b, a]))
+  }
+  const slot = hashBigints(parts.reverse())
+  return slot + resolved.offset
+}
+
+function hashBigints(values: bigint[]) {
+  return BigInt(
+    utils.keccak256(
+      utils.defaultAbiCoder.encode(
+        values.map(() => 'uint256'),
+        values,
+      ),
+    ),
+  )
 }

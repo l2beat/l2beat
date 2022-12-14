@@ -54,6 +54,7 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
+  readonly skipExplicitExclusion: boolean
   readonly allowedProjectIds?: string[]
   readonly projects: Record<string, Layer2TransactionApi | undefined>
 }

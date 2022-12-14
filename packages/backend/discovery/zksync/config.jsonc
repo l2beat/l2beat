@@ -3,12 +3,30 @@
   "name": "zksync",
   "initialAddresses": ["0x38A43F4330f24fe920F943409709fc9A6084C939"],
   "overrides": {
+    "0x38A43F4330f24fe920F943409709fc9A6084C939": {
+      "ignoreMethods": ["nextTargets"],
+      "fields": {
+        "managedContracts": {
+          "type": "array"
+        }
+      }
+    },
     "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": {
       "fields": {
         "additional": {
           "type": "storage",
           "slot": 19,
           "returnType": "address"
+        }
+      }
+    },
+    "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": {
+      "fields": {
+        "validators": {
+          "type": "arrayFromOneEvent",
+          "event": "ValidatorStatusUpdate",
+          "valueKey": "validatorAddress",
+          "flagKey": "isActive"
         }
       }
     },
@@ -24,6 +42,10 @@
         "getApproved",
         "ownerOf"
       ]
+    },
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      // Dai
+      "ignoreDiscovery": true
     }
   }
 }

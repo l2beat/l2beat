@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
+      zIndex: {
+        41: '41',
+      },
     },
     fontSize: {
       '3xs': ['8px', '12px'],
@@ -65,6 +68,7 @@ module.exports = {
         300: '#4EAB58',
         400: '#13E000',
         500: '#5BFF4D',
+        600: '#11CC00',
         700: '#007408',
         800: '#34762F',
       },
