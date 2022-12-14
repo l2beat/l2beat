@@ -39,7 +39,6 @@ import { getZkSpaceParameters, ZK_SPACE_NAME } from '../projects/zkSpace'
 import { getZkSwap1Parameters, ZK_SWAP_1_NAME } from '../projects/zkSwap1'
 import { getZkSwap2Parameters, ZK_SWAP_2_NAME } from '../projects/zkSwap2'
 import { getZkSyncParameters, ZK_SYNC_NAME } from '../projects/zkSync'
-import { getZkSync2Parameters, ZK_SYNC2_NAME } from '../projects/zkSync2'
 import { ProjectParameters } from '../types'
 import { getEnv } from './getEnv'
 import { exitWithUsage } from './usage'
@@ -56,7 +55,6 @@ export async function analyze(projects: string[]) {
 
   const items: [string, GetParameters][] = [
     [ZK_SYNC_NAME, getZkSyncParameters],
-    [ZK_SYNC2_NAME, getZkSync2Parameters],
     [ZK_SWAP_1_NAME, getZkSwap1Parameters],
     [ZK_SWAP_2_NAME, getZkSwap2Parameters],
     [ZK_SPACE_NAME, getZkSpaceParameters],
