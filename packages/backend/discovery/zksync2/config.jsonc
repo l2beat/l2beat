@@ -1,0 +1,5 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "zksync2",
+  "initialAddresses": ["0x324000e0c256B806548b307aF600aFFF3D000324"]
+}
