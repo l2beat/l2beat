@@ -2,6 +2,7 @@ import { EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
+import { detectEip2535proxy } from './auto/Eip2535Proxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
@@ -33,6 +34,7 @@ export async function detectProxy(
     detectGnosisSafe(provider, address),
     detectEip897Proxy(provider, address),
     detectZeppelinOSProxy(provider, address),
+    detectEip2535proxy(provider, address),
   ])
   return checks.find((x) => x !== undefined)
 }
