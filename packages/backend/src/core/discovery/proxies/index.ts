@@ -4,6 +4,7 @@ import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
+import { detectEip2535proxy } from './auto/Eip2535Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
 import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
@@ -33,6 +34,7 @@ export async function detectProxy(
     detectGnosisSafe(provider, address),
     detectEip897Proxy(provider, address),
     detectZeppelinOSProxy(provider, address),
+    detectEip2535proxy(provider, address),
   ])
   return checks.find((x) => x !== undefined)
 }
