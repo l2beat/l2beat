@@ -1,5 +1,19 @@
 # Discovery documentation
 
+## Cache
+
+Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
+
+### env variable
+
+Set the proper environmental variable to prevent script from fetching the same data multiple times:
+
+`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
+
+### proposed usage
+
+`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`
+
 ## Handlers
 
 ### Storage handler
