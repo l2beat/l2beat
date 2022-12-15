@@ -8,7 +8,8 @@ import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
-import { getFragment } from '../utils/getFragment'
+import { getFunctionFragment } from '../utils/getFunctionFragment'
+import { logHandler } from '../utils/logHandler'
 import { valueToNumber } from '../utils/valueToNumber'
 
 export type ArrayHandlerDefinition = z.infer<typeof ArrayHandlerDefinition>
@@ -34,7 +35,7 @@ export class ArrayHandler implements Handler {
     if (dependency) {
       this.dependencies.push(dependency)
     }
-    this.fragment = getFragment(
+    this.fragment = getFunctionFragment(
       definition.method ?? field,
       abi,
       isArrayFragment,
@@ -50,6 +51,7 @@ export class ArrayHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
+    logHandler(this.field, ['Calling array ', this.fragment.name + '(i)'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     const value: ContractValue[] = []

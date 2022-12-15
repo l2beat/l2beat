@@ -15,6 +15,7 @@ import {
   L2FZK_NAME,
 } from '../projects/layer2FinanceZk'
 import { getLoopringParameters, LOOPRING_NAME } from '../projects/loopring'
+import { getMetisParameters, METIS_NAME } from '../projects/metis'
 import { getNovaParameters, NOVA_NAME } from '../projects/nova'
 import {
   getOmgNetworkParameters,
@@ -61,6 +62,7 @@ export async function analyze(projects: string[]) {
     [ARBITRUM_NAME, getArbitrumParameters],
     [STARK_NET_NAME, getStarkNetParameters],
     [HOP_NAME, getHopParameters],
+    [METIS_NAME, getMetisParameters],
     [LOOPRING_NAME, getLoopringParameters],
     [OPTIMISM_NAME, getOptimismParameters],
     [NOVA_NAME, getNovaParameters],

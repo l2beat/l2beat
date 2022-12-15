@@ -1,6 +1,7 @@
 import { DiscoveryContract } from '../DiscoveryConfig'
 import { getSystemHandlers } from './getSystemHandlers'
-import { getUserHandler } from './getUserHandler'
+import { ErrorHandler } from './system/ErrorHandler'
+import { getUserHandler } from './user'
 
 export function getHandlers(
   abi: string[],
@@ -8,7 +9,13 @@ export function getHandlers(
 ) {
   const systemHandlers = getSystemHandlers(abi, overrides)
   const userHandlers = Object.entries(overrides?.fields ?? {}).map(
-    ([field, definition]) => getUserHandler(field, definition, abi),
+    ([field, definition]) => {
+      try {
+        return getUserHandler(field, definition, abi)
+      } catch (error) {
+        return new ErrorHandler(field, error)
+      }
+    },
   )
 
   const handlers = userHandlers

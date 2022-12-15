@@ -9,7 +9,7 @@ export async function getBondManager(
   provider: providers.JsonRpcProvider,
 ): Promise<ContractParameters> {
   const bondManager = BondManager__factory.connect(
-    addresses.stateCommitmentChain,
+    addresses.bondManager,
     provider,
   )
 

@@ -7,6 +7,8 @@ export function getLocalConfig(): Config {
     features: {
       ...common.features,
       milestones: true,
+      // The local backend doesn't suport activity
+      activity: false,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

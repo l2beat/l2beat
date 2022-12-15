@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -20,6 +21,7 @@ export interface ActivityPageProps {
   footer: FooterProps
   navbar: NavbarProps
   showActivity: boolean
+  milestones?: Milestone[]
 }
 
 export function ActivityPage(props: ActivityPageProps) {
@@ -38,6 +40,7 @@ export function ActivityPage(props: ActivityPageProps) {
             activityEndpoint={props.apiEndpoint}
             hasTvl={false}
             hasActivity
+            milestones={props.milestones}
           />
           <ActivityView {...props.activityView} />
           <About />

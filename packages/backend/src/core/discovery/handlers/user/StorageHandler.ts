@@ -8,6 +8,7 @@ import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { BytesFromString, NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
+import { logHandler } from '../utils/logHandler'
 import { valueToBigInt } from '../utils/valueToBigInt'
 
 const SingleSlot = z.union([
@@ -42,6 +43,7 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
+    logHandler(this.field, ['Reading storage'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes
