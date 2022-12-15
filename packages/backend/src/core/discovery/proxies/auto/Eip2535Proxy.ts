@@ -26,7 +26,7 @@ export async function detectEip2535proxy(
     implementations: facets,
     relatives: [],
     upgradeability: {
-      type: 'EIP2535 proxy diamond',
+      type: 'EIP2535 diamond proxy',
       facets: facets,
     },
   }

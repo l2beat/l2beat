@@ -99,6 +99,6 @@ export interface CallImplementationProxyUpgradeability {
 }
 
 export interface EIP2535ProxyUpgradeability {
-  type: 'EIP2535 proxy diamond'
+  type: 'EIP2535 diamond proxy'
   facets: EthereumAddress[]
 }

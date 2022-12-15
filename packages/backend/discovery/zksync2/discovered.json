@@ -1,13 +1,13 @@
 {
   "name": "zksync2",
-  "blockNumber": 16189674,
+  "blockNumber": 16189994,
   "contracts": [
     {
       "name": "DiamondProxy",
       "address": "0x324000e0c256B806548b307aF600aFFF3D000324",
       "code": "https://etherscan.deth.net/address/0x324000e0c256B806548b307aF600aFFF3D000324,0xdf6358251654052987EFeD2EC9d2ae3511CdaaC9,0x20fB418401e9C4eef6E366Ae15166e4fe3eA7E42,0x4CEAD04841F444c9df49FbF8120Be8a3f7057758,0x2765Bb092DFD1AEe58c068407e643a380C8eC202,0x261881b557e2eE82DA689576B04e3f7Ad8E651c9",
       "upgradeability": {
-        "type": "EIP2535 proxy diamond",
+        "type": "EIP2535 diamond proxy",
         "facets": [
           "0xdf6358251654052987EFeD2EC9d2ae3511CdaaC9",
           "0x20fB418401e9C4eef6E366Ae15166e4fe3eA7E42",
