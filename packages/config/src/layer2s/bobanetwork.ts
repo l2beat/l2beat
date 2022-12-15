@@ -20,15 +20,16 @@ export const bobanetwork: Layer2 = {
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation. Boba is an Optimistic Rollup \
-      forked from Optimism. Amongst other features it adds standard fast withdrawal facility that allows users to remove funds immediately without waiting \
-      for the end of the 7-day fraud proof window. This facility is using funds from liquidity providers.',
+      'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the Boba Foundation. Boba is an EVM-compatible Optimistic Rollup chain \
+    forked from Optimism. Two notable features are fast withdrawal facility that allows users to remove funds immediately without waiting for the end of the 7-day fraud proof window. \
+    This facility is using funds from liquidity providers. The second is Hybrid Compute technology that enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure. \
+    Boba Network operates on multiple Layer 1 blockchains.',
     purpose: 'Universal',
     links: {
       websites: ['https://boba.network'],
       apps: [],
       documentation: ['https://docs.boba.network/'],
-      explorers: ['https://blockexplorer.boba.network/'],
+      explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
         'https://boba.network/#news',
@@ -176,17 +177,12 @@ export const bobanetwork: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Boba Network uses the Optimistic Virtual Machine (OVM) to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex OVM implementation.',
-        },
-      ],
+        'Boba Network is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Boba Network.',
+      risks: [],
       references: [
         {
-          text: 'Execution Contracts - Learn more about the Boba Network execution contracts',
-          href: 'https://docs.boba.network/developer-docs/chain-contracts/execution-contracts',
+          text: 'Introducing EVM Equivalence',
+          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
         },
       ],
     },
@@ -331,6 +327,13 @@ export const bobanetwork: Layer2 = {
     },
   ],
   milestones: [
+    {
+      name: 'Hybrid Compute',
+      date: '2022-03-18T00:00:00Z',
+      link: 'https://boba.network/turing-hybrid-compute/',
+      description:
+        'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
+    },
     {
       name: 'Mainnet launch',
       date: '2021-09-20T00:00:00Z',
