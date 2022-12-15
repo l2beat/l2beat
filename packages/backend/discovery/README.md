@@ -1,6 +1,7 @@
 # Discovery documentation
 
 ## Cache
+
 Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
 
 ### env variable
