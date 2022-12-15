@@ -29,7 +29,7 @@ export const bobanetwork: Layer2 = {
       websites: ['https://boba.network'],
       apps: [],
       documentation: ['https://docs.boba.network/'],
-      explorers: ['http://bobascan.com'],
+      explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
         'https://boba.network/#news',
@@ -332,7 +332,7 @@ export const bobanetwork: Layer2 = {
       date: '2022-03-18T00:00:00Z',
       link: 'https://boba.network/turing-hybrid-compute/',
       description:
-        'Boba’s proprietary Hybrid Compute technology enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure.',
+        'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
     },
     {
       name: 'Mainnet launch',
