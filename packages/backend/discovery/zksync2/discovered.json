@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "blockNumber": 16183993,
+  "blockNumber": 16189531,
   "contracts": [
     {
       "name": "DiamondProxy",
@@ -142,8 +142,7 @@
       "address": "0xccEF0dAF4727Cc36171dc90A7efDef87A88a70bA",
       "code": "https://etherscan.deth.net/address/0xccEF0dAF4727Cc36171dc90A7efDef87A88a70bA",
       "upgradeability": {
-        "type": "EIP2535 proxy diamond",
-        "facets": []
+        "type": "immutable"
       }
     },
     {
