@@ -25,6 +25,7 @@ export type UpgradeabilityParameters =
   | ResolvedDelegateProxyUpgradeability
   | EIP897ProxyUpgradeability
   | CallImplementationProxyUpgradeability
+  | EIP2535ProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -95,4 +96,9 @@ export interface EIP897ProxyUpgradeability {
 export interface CallImplementationProxyUpgradeability {
   type: 'call implementation proxy'
   implementation: EthereumAddress
+}
+
+export interface EIP2535ProxyUpgradeability {
+  type: 'EIP2535 diamond proxy'
+  facets: EthereumAddress[]
 }
