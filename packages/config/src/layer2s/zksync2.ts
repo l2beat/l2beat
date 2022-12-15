@@ -29,7 +29,7 @@ export const zksync2: Layer2 = {
       websites: ['https://zksync.io/'],
       apps: ['https://portal.zksync.io/'],
       documentation: ['https://v2-docs.zksync.io/dev/'],
-      explorers: [' https://explorer.zksync.io/'],
+      explorers: ['https://explorer.zksync.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
         'https://blog.matter-labs.io/',
@@ -154,7 +154,7 @@ export const zksync2: Layer2 = {
       {
         address: '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
         name: 'L1EthBridge',
-        description: 'Standard bridge for depositing ETH to zkSync 2.0',
+        description: 'Standard bridge for depositing ETH to zkSync 2.0.',
         upgradeability: {
           type: 'EIP1967',
           admin: '0x4e4943346848c4867F81dFb37c4cA9C5715A7828',
