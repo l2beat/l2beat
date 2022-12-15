@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "blockNumber": 16189645,
+  "blockNumber": 16189674,
   "contracts": [
     {
       "name": "DiamondProxy",
@@ -143,9 +143,23 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "L1EthBridge",
+      "address": "0x027C8a79075F96a8cdE315b495949e5f1D92f1D6",
+      "code": "https://etherscan.deth.net/address/0x027C8a79075F96a8cdE315b495949e5f1D92f1D6,0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED",
+        "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      },
+      "values": {
+        "l2Bridge": "0x2F77dc80286e95508d37F688De83E8124795F8f7"
+      }
     }
   ],
   "eoas": [
+    "0x2F77dc80286e95508d37F688De83E8124795F8f7",
     "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
     "0x474D2b82E02D9712A077574E7764dEfA182653D4",
     "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
@@ -154,6 +168,17 @@
     "0xA5F3C860441c0EeD02BF8A6472AF32B68884b0FF"
   ],
   "abis": {
+    "0x027C8a79075F96a8cdE315b495949e5f1D92f1D6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x20fB418401e9C4eef6E366Ae15166e4fe3eA7E42": [
       "function facetAddress(bytes4 _selector) view returns (address)",
       "function facetAddresses() view returns (address[])",
@@ -294,6 +319,19 @@
       "function executeDiamondCutProposal(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "function proposeDiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] _facetCuts, address _initAddress)",
       "function unfreezeDiamond()"
+    ],
+    "0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED": [
+      "constructor(address _mailbox, address _allowList)",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(address indexed from, address indexed to, address indexed l1Token, uint256 amount)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount) payable returns (bytes32 txHash)",
+      "function finalizeWithdrawal(uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(bytes _l2BridgeBytecode)",
+      "function isWithdrawalFinalized(uint256, uint256) view returns (bool)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address) pure returns (address)"
     ]
   }
 }
