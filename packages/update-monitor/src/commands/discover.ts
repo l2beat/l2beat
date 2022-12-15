@@ -28,6 +28,7 @@ import {
   L2FZK_NAME,
 } from '../projects/layer2FinanceZk'
 import { discoverLoopring, LOOPRING_NAME } from '../projects/loopring'
+import { discoverMetis, METIS_NAME } from '../projects/metis'
 import { discoverNova, NOVA_NAME } from '../projects/nova'
 import { discoverOmgNetwork, OMG_NETWORK_NAME } from '../projects/omgNetwork'
 import { discoverOptimism, OPTIMISM_NAME } from '../projects/optimism'
@@ -76,6 +77,7 @@ export async function discover(args: string[]) {
     [ZK_SPACE_NAME, discoverZkSpace],
     [ARBITRUM_NAME, discoverArbitrum],
     [OPTIMISM_NAME, discoverOptimism],
+    [METIS_NAME, discoverMetis],
     [LOOPRING_NAME, discoverLoopring],
     [STARK_NET_NAME, discoverStarkNet],
     [NOVA_NAME, discoverNova],
