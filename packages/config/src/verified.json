@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2022-12-06T12:30:21.152Z",
+  "updatedAt": "2022-12-15T08:57:32.068Z",
   "projects": {
     "across-v2": true,
     "apex": true,
@@ -53,9 +53,11 @@
     "zkspace": true,
     "zkswap": false,
     "zkswap2": false,
-    "zksync": true
+    "zksync": true,
+    "zksync2": true
   },
   "contracts": {
+    "0x027C8a79075F96a8cdE315b495949e5f1D92f1D6": true,
     "0x02ecef526f806f06357659fFD14834fe82Ef4B04": true,
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": true,
     "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF": true,
@@ -129,6 +131,7 @@
     "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": true,
     "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": true,
     "0x31fe393815822edacBd81C2262467402199EFD0D": true,
+    "0x324000e0c256B806548b307aF600aFFF3D000324": true,
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": true,
     "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": true,
     "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a": true,
@@ -366,6 +369,7 @@
     "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94": true,
     "0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58": true,
     "0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2": true,
+    "0xccEF0dAF4727Cc36171dc90A7efDef87A88a70bA": true,
     "0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1": true,
     "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068": true,
     "0xcEc158A719d11005Bd9339865965bed938BEafA3": true,
@@ -408,6 +412,7 @@
     "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": true,
     "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE": true,
     "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a": true,
+    "0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED": true,
     "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": true,
     "0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0": true,
     "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": true,

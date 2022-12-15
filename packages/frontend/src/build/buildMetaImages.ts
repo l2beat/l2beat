@@ -1,7 +1,9 @@
 import { bridges, layer2s } from '@l2beat/config'
 import express from 'express'
+import { existsSync } from 'fs'
 import { mkdirpSync } from 'fs-extra'
 import { Server } from 'http'
+import path from 'path'
 import puppeteer from 'puppeteer'
 
 import { getConfig } from './config'
@@ -27,6 +29,10 @@ async function main() {
 
   const slugs = [...layer2s, ...bridges]
     .map((x) => x.display.slug)
+    .filter((slug) =>
+      // only screenshot those that were actually generated
+      existsSync(path.join('build/meta-images', slug, 'index.html')),
+    )
     .concat('overview-scaling', 'overview-bridges')
 
   if (config.features.activity) {

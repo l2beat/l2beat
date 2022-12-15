@@ -47,6 +47,7 @@ import { discoverZkSpace, ZK_SPACE_NAME } from '../projects/zkSpace'
 import { discoverZkSwap1, ZK_SWAP_1_NAME } from '../projects/zkSwap1'
 import { discoverZkSwap2, ZK_SWAP_2_NAME } from '../projects/zkSwap2'
 import { discoverZkSync, ZK_SYNC_NAME } from '../projects/zkSync'
+import { discoverZkSync2, ZK_SYNC2_NAME } from '../projects/zkSync2'
 import { getEnv } from './getEnv'
 import { exitWithUsage } from './usage'
 
@@ -72,6 +73,7 @@ export async function discover(args: string[]) {
   const projects: [string, Discover][] = [
     [APTOS_NAME, discoverAptos],
     [ZK_SYNC_NAME, discoverZkSync],
+    [ZK_SYNC2_NAME, discoverZkSync2],
     [ZK_SWAP_1_NAME, discoverZkSwap1],
     [ZK_SWAP_2_NAME, discoverZkSwap2],
     [ZK_SPACE_NAME, discoverZkSpace],

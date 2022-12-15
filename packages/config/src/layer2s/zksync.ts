@@ -350,12 +350,5 @@ export const zksync: Layer2 = {
       description:
         'zkSync is live, bringing scalable payments to Ethereum using zkRollup technology.',
     },
-    {
-      name: 'zkEVM alpha',
-      link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
-      date: '2022-10-28T00:00:00Z',
-      description:
-        'Deployment of the system to mainnet, for the testing purposes.',
-    },
   ],
 }
