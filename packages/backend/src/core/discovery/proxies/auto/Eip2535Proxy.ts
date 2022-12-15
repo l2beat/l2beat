@@ -1,3 +1,7 @@
+// EIP-2535: Diamonds, Multi-Facet Proxy
+// https://eips.ethereum.org/EIPS/eip-2535#a-note-on-implementing-interfaces
+// every contract implementing this standard needs to have facetAddresses() view function
+
 import { EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -14,12 +18,16 @@ export async function detectEip2535proxy(
     'function facetAddresses() external view returns (address[] memory facetAd)',
   )
 
+  if (facets === undefined) {
+    return
+  }
+
   return {
-    implementations: facets ?? [],
+    implementations: facets,
     relatives: [],
     upgradeability: {
       type: 'EIP2535 proxy diamond',
-      facets: facets ?? [],
+      facets: facets,
     },
   }
 }
