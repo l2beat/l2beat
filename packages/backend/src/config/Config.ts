@@ -64,4 +64,5 @@ export interface DiscoveryConfig {
   readonly blockNumber?: number
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
+  readonly watchMode: boolean
 }

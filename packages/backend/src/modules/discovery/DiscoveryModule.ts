@@ -4,6 +4,7 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
 import { runDiscovery } from '../../core/discovery/runDiscovery'
+import { runWatchMode } from '../../core/discovery/runWatchMode1'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createDiscoveryModule(
@@ -27,13 +28,29 @@ export function createDiscoveryModule(
   const configReader = new ConfigReader()
 
   // we alias to prevent typescript from thinking it can change
-  const safeConfig = config.discovery
+  const discoveryConfig = config.discovery
 
   const start = async () => {
     logger = logger.for('DiscoveryModule')
-    logger.info('Starting')
+    logger.info('Starting', {
+      mode: discoveryConfig.watchMode ? 'watchmode' : 'discovery',
+    })
 
-    await runDiscovery(provider, etherscanClient, configReader, safeConfig)
+    if (!discoveryConfig.watchMode) {
+      await runDiscovery(
+        provider,
+        etherscanClient,
+        configReader,
+        discoveryConfig,
+      )
+    } else {
+      await runWatchMode(
+        provider,
+        etherscanClient,
+        configReader,
+        discoveryConfig,
+      )
+    }
   }
 
   return {

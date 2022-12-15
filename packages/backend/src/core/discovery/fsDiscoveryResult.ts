@@ -1,4 +1,4 @@
-import { writeFile } from 'fs/promises'
+import { readFile, writeFile } from 'fs/promises'
 
 import { AnalyzedData } from './analyzeItem'
 import { ProjectParameters } from './types'
@@ -7,6 +7,7 @@ export async function saveDiscoveryResult(
   results: AnalyzedData[],
   name: string,
   blockNumber: number,
+  postfix: string = '',
 ) {
   let abis: Record<string, string[]> = {}
   for (const result of results) {
@@ -30,7 +31,15 @@ export async function saveDiscoveryResult(
   }
 
   await writeFile(
-    `discovery/${name}/discovered.json`,
+    `discovery/${name}/discovered${postfix}.json`,
     JSON.stringify(project, null, 2),
   )
+}
+
+export async function readDiscoveryResult(
+  name: string,
+): Promise<ProjectParameters> {
+  const rawResult = await readFile(`discovery/${name}/discovered.json`, 'utf-8')
+
+  return JSON.parse(rawResult)
 }

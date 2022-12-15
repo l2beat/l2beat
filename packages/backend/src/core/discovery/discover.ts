@@ -4,10 +4,12 @@ import chalk from 'chalk'
 import { AnalyzedData, analyzeItem } from './analyzeItem'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { ProjectParameters } from './types'
 
 export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
+  previousDiscoveryResult?: ProjectParameters,
 ) {
   const maxAddresses = config.maxAddresses ?? 100
   const maxDepth = config.maxDepth ?? 6
@@ -21,14 +23,23 @@ export async function discover(
 
   let totalAddresses = 0
 
-  const stack = [
+  let stack: { address: EthereumAddress; depth: number }[] = [
     ...config.initialAddresses
       .map((address) => ({ address, depth: 0 }))
       .reverse(),
   ]
+  if (previousDiscoveryResult) {
+    const c = previousDiscoveryResult.contracts.map((c) => {
+      return { address: c.address, depth: 0 } // @todo: depth 0? depth 1?
+    })
+    stack = [...stack, ...c].reverse()
+  }
+  console.log('stack size: ', stack.length)
+
   while (stack.length !== 0) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const { address, depth } = stack.pop()!
+    console.log('checking: ', address)
 
     if (address === EthereumAddress.ZERO || resolved.has(address)) {
       continue
@@ -79,7 +90,9 @@ export async function discover(
 
     console.log()
 
-    stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
+    if (!previousDiscoveryResult) {
+      stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
+    }
   }
 
   for (const override of Object.keys(config.overrides ?? {})) {

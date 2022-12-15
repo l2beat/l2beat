@@ -3,6 +3,7 @@ import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
+import { MetadataProvider } from './MetadataProvider'
 
 export interface ContractMetadata {
   name: string
@@ -23,7 +24,7 @@ export interface ContractMetadata {
 export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.Provider,
-    private readonly etherscanClient: EtherscanClient,
+    private readonly metadataProvider: MetadataProvider,
     readonly blockNumber: number,
   ) {}
 
@@ -73,13 +74,6 @@ export class DiscoveryProvider {
   }
 
   async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
-    const result = await this.etherscanClient.getContractSource(address)
-    const isVerified = result.ABI !== 'Contract source code not verified'
-
-    return {
-      name: result.ContractName,
-      isVerified,
-      abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
-    }
+    return await this.metadataProvider.getMetadata(address)
   }
 }

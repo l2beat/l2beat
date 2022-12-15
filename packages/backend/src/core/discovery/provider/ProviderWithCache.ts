@@ -5,6 +5,7 @@ import { providers } from 'ethers'
 import { isRevert } from '../utils/isRevert'
 import { ProviderCache } from './Cache'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
+import { MetadataProvider } from './MetadataProvider'
 
 const identity = <T>(x: T) => x
 
@@ -13,10 +14,10 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   constructor(
     provider: providers.Provider,
-    etherscanClient: EtherscanClient,
+    metadataProvider: MetadataProvider,
     blockNumber: number,
   ) {
-    super(provider, etherscanClient, blockNumber)
+    super(provider, metadataProvider, blockNumber)
     this.cache = new ProviderCache(blockNumber)
   }
 
