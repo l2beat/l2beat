@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "blockNumber": 16189531,
+  "blockNumber": 16189645,
   "contracts": [
     {
       "name": "DiamondProxy",
@@ -102,39 +102,14 @@
           ]
         ],
         "getCurrentProposalId": 1,
-        "getFirstUnprocessedPriorityTx": 9,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getLastDiamondFreezeTimestamp": 0,
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
         "getProposedDiamondCutHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedDiamondCutTimestamp": 0,
         "getSecurityCouncilEmergencyApprovals": 0,
-        "getTotalBlocksCommitted": 31,
-        "getTotalBlocksExecuted": 31,
-        "getTotalBlocksVerified": 31,
-        "getTotalPriorityTxs": 9,
         "getVerifier": "0xccEF0dAF4727Cc36171dc90A7efDef87A88a70bA",
-        "isDiamondStorageFrozen": false,
-        "l2LogsRootHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x3c4fe6ff10458d0096bcb1329c5ea42347d5a05235b45fc01e13fcacfa79c24b",
-          "0xa5acd083897595227a87956f9436b9052692d38a106e21cc2a376c67d4445384",
-          "0x80621c79e1a61da771f24caf273aa7f282384a392ba26924076f6d6216b5a0ce",
-          "0x47e1cc2910672ecfa338c6b787d2237f75f4d15811f5451e181bd9abb9650fe6"
-        ],
-        "storedBlockHash": [
-          "0x8d2b0a7c129e46d8916753e83387a2409dfecb9c7a3584bd628b6b503d9583c4",
-          "0x29ef4e8f0656bb044b207fa07d1e2339bee64be9a65e0e641c263f65d8c0b7e0",
-          "0x7f98983ec511e1a1f222a8441fe2216d7fd9f50826c7364f1c0bd41d45aef572",
-          "0xd8a0be7395b8a4cbf69cc37e2d667c63fc5f6575da0138b2428ffefe9ba36cb6",
-          "0x0a22a7eb71b561aee2814355595df3979a12a3b0964e29c728a843fefc652b1b"
-        ]
-      },
-      "errors": {
-        "l2LogsRootHash": "Too many values. Update configuration explore fully",
-        "priorityQueueFrontOperation": "Execution reverted",
-        "storedBlockHash": "Too many values. Update configuration explore fully"
+        "isDiamondStorageFrozen": false
       }
     },
     {

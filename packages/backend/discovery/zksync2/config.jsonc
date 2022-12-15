@@ -1,5 +1,19 @@
 {
   "$schema": "../config.schema.json",
   "name": "zksync2",
-  "initialAddresses": ["0x324000e0c256B806548b307aF600aFFF3D000324"]
+  "initialAddresses": ["0x324000e0c256B806548b307aF600aFFF3D000324"],
+  "overrides": {
+    "0x324000e0c256B806548b307aF600aFFF3D000324": {
+      "ignoreMethods": [
+        "getFirstUnprocessedPriorityTx",
+        "getTotalBlocksCommitted",
+        "getTotalBlocksExecuted",
+        "getTotalBlocksVerified",
+        "getTotalPriorityTxs",
+        "l2LogsRootHash",
+        "storedBlockHash",
+        "priorityQueueFrontOperation","getFirstUnprocessedPriorityTx","getPriorityQueueSize"
+      ]
+    }
+  }
 }
