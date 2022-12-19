@@ -136,16 +136,16 @@ export function renderHover(
     const { height } = elements.hover.contents.getBoundingClientRect()
     const bottom = (bottom1 + bottom2) / 2
     const contentsBottom = Math.min(
-      rect.height - height - 8,
-      Math.max(bottom - height / 2, 8),
+      rect.height - height - 16,
+      Math.max(bottom - height / 2, 16),
     )
     elements.hover.contents.style.bottom = `${contentsBottom}px`
     if (point.x < 0.5) {
       elements.hover.contents.style.removeProperty('right')
-      elements.hover.contents.style.left = `${left + 8}px`
+      elements.hover.contents.style.left = `${left + 16}px`
     } else {
       elements.hover.contents.style.removeProperty('left')
-      elements.hover.contents.style.right = `${rect.width - left + 8}px`
+      elements.hover.contents.style.right = `${rect.width - left + 16}px`
     }
   }
 }
