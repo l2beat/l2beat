@@ -312,4 +312,27 @@ export const loopring: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  milestones: [
+    {
+      name: 'Loopring Protocol 3.0 has launched',
+      link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
+      date: '2019-12-04T00:00:00Z',
+      description:
+        'Deployed new contracts, added SNARK proving and Verification Keys.',
+    },
+    {
+      name: 'Loopring Protocol 3.6 Pre-release',
+      link: 'https://medium.loopring.io/loopring-3-6-is-code-complete-and-security-audit-has-begun-68a642506e31',
+      date: '2020-09-22T00:00:00Z',
+      description:
+        'Enhancements in transfers, order-book trading and AMM swap.',
+    },
+    {
+      name: 'Loopring’s zkRollup AMM is Live',
+      link: 'https://medium.loopring.io/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
+      date: '2020-12-02T00:00:00Z',
+      description:
+        'Improved implementation, enaibling gas-free instant swaps and liquidity changes.',
+    },
+  ],
 }
