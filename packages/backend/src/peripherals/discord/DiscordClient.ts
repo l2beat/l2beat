@@ -9,20 +9,20 @@ export class DiscordClient {
   ) {}
 
   async sendMessage(message: string) {
-    const endpoint = `channels/${this.channelId}/messages`
+    const endpoint = `/channels/${this.channelId}/messages`
     const body = {
       content: message,
     }
 
-    const res = await this.discordRequest(endpoint, {
+    const res = await this.query(endpoint, {
       method: 'POST',
       //@ts-expect-error
       body,
     })
   }
 
-  async discordRequest(endpoint: string, options: RequestInit) {
-    const url = 'https://discord.com/api/v10/' + endpoint
+  async query(endpoint: string, options: RequestInit) {
+    const url = 'https://discord.com/api/v10' + endpoint
     if (options.body) options.body = JSON.stringify(options.body)
     const res = await this.httpClient.fetch(url, {
       headers: {

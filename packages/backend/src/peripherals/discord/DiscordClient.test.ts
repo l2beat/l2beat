@@ -10,6 +10,23 @@ const DISCORD_TOKEN =
 const CHANNEL_ID = '932763329498337374'
 
 describe(DiscordClient.name, () => {
+  describe(DiscordClient.prototype.query.name, () => {
+    it('constructs a correct url', async () => {
+      const httpClient = mock<HttpClient>({
+        async fetch(url) {
+          expect(url).toEqual(
+            `https://discord.com/api/v10/foo/bar`,
+          )
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        },
+      })
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+
+      await discord.query('/foo/bar', {})
+    })
+  })
+
+
   describe(DiscordClient.prototype.sendMessage.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mock<HttpClient>({
