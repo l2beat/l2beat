@@ -20,6 +20,7 @@ export interface SequenceProcessorOpts {
     from: number,
     to: number,
     trx: Knex.Transaction,
+    logger: Logger, // logger with properly set name
   ) => Promise<void>
   scheduleIntervalMs?: number
 }
@@ -161,7 +162,7 @@ export class SequenceProcessor extends EventEmitter {
     try {
       this.eventTracker.record('range started')
       await this.repository.runInTransaction(async (trx) => {
-        await this.opts.processRange(from, to, trx)
+        await this.opts.processRange(from, to, trx, this.logger)
         await this.setState({ lastProcessed: to, latest }, trx)
       })
       this.eventTracker.record('range succeeded')
