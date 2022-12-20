@@ -14,7 +14,7 @@ export class DiscordClient {
       content: message,
     }
 
-    const res = await this.query(endpoint, {
+    return this.query(endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
     })
