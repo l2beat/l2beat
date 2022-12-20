@@ -14,7 +14,11 @@ export function createMetricsRouter(config: Config, metrics: Metrics) {
     if (
       config.metricsAuth &&
       (!credentials ||
-        !check(config.metricsAuth, credentials.name, credentials.pass))
+        !checkCredentials(
+          config.metricsAuth,
+          credentials.name,
+          credentials.pass,
+        ))
     ) {
       ctx.status = 401
       ctx.set('WWW-Authenticate', 'Basic realm="metrics"')
@@ -27,11 +31,10 @@ export function createMetricsRouter(config: Config, metrics: Metrics) {
   return router
 }
 
-function check(metricsAuth: MetricsAuthConfig, name: string, pass: string) {
-  let valid = true
-
-  valid = name === metricsAuth.user && valid
-  valid = pass === metricsAuth.pass && valid
-
-  return valid
+function checkCredentials(
+  metricsAuth: MetricsAuthConfig,
+  name: string,
+  pass: string,
+) {
+  return name === metricsAuth.user && pass === metricsAuth.pass
 }
