@@ -1,4 +1,6 @@
-import { HttpClient } from '@l2beat/common'
+import { HttpClient, mock } from '@l2beat/common'
+import { expect } from 'earljs'
+import { Response } from 'node-fetch'
 
 import { DiscordClient } from './DiscordClient'
 
@@ -9,11 +11,18 @@ const CHANNEL_ID = '932763329498337374'
 
 describe(DiscordClient.name, () => {
   describe(DiscordClient.prototype.sendMessage.name, () => {
-    it('is called', async () => {
-      const http = new HttpClient()
-      const discord = new DiscordClient(http, DISCORD_TOKEN, CHANNEL_ID)
+    it('constructs a correct url', async () => {
+      const httpClient = mock<HttpClient>({
+        async fetch(url) {
+          expect(url).toEqual(
+            `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`,
+          )
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        },
+      })
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
 
-      await discord.sendMessage("test message")
+      await discord.sendMessage('')
     })
   })
 })

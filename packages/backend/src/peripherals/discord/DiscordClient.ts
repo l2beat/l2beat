@@ -14,15 +14,11 @@ export class DiscordClient {
       content: message,
     }
 
-    try {
-      const res = await this.discordRequest(endpoint, {
-        method: 'POST',
-        //@ts-expect-error
-        body,
-      })
-    } catch (err) {
-      console.log('Error sending dsicord message', err)
-    }
+    const res = await this.discordRequest(endpoint, {
+      method: 'POST',
+      //@ts-expect-error
+      body,
+    })
   }
 
   async discordRequest(endpoint: string, options: RequestInit) {
