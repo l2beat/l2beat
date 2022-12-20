@@ -1,7 +1,6 @@
 import { Logger, promiseAllPlus } from '@l2beat/common'
 import { StarkexTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'

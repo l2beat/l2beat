@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { ProjectId } from '@l2beat/types'
 import { expect } from 'earljs'
+
 import { setupDatabaseTestSuite } from '../../../test/database'
 import { StarkexTransactionCountRepository } from './StarkexCountRepository'
 
