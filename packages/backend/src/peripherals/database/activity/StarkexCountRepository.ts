@@ -47,7 +47,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
       .where('project_id', projectId.toString())
       .max('unix_timestamp')
       .first()
-    return row ? UnixTime.fromDate(row.max) : undefined
+    return row && row.max ? UnixTime.fromDate(row.max) : undefined
   }
 }
 
