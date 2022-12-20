@@ -40,6 +40,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "pg": "^8.7.3",
+    "prom-client": "^14.1.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rollbar": "^2.25.2",
