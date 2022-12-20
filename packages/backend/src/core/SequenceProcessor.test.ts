@@ -77,9 +77,9 @@ describe(SequenceProcessor.name, () => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [5]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 1, expect.anything()],
-        [2, 3, expect.anything()],
-        [4, 5, expect.anything()],
+        [0, 1, expect.anything(), expect.a(Logger)],
+        [2, 3, expect.anything(), expect.a(Logger)],
+        [4, 5, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -105,7 +105,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [4, 5, expect.anything()],
+        [4, 5, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -131,7 +131,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [4, 4, expect.anything()],
+        [4, 4, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -158,9 +158,9 @@ describe(SequenceProcessor.name, () => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything()],
-        [1, 1, expect.anything()],
-        [2, 2, expect.anything()],
+        [0, 0, expect.anything(), expect.a(Logger)],
+        [1, 1, expect.anything(), expect.a(Logger)],
+        [2, 2, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -187,7 +187,7 @@ describe(SequenceProcessor.name, () => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 2, expect.anything()],
+        [0, 2, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -319,10 +319,10 @@ describe(SequenceProcessor.name, () => {
         ...new Array(getLatestMock.calls.length - 2).fill([7]),
       ])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 1, expect.anything()],
-        [2, 3, expect.anything()],
-        [4, 5, expect.anything()],
-        [6, 7, expect.anything()],
+        [0, 1, expect.anything(), expect.a(Logger)],
+        [2, 3, expect.anything(), expect.a(Logger)],
+        [4, 5, expect.anything(), expect.a(Logger)],
+        [6, 7, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -367,9 +367,9 @@ describe(SequenceProcessor.name, () => {
         expect.arrayWith([0], [1], [2]),
       )
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything()],
-        [1, 1, expect.anything()],
-        [2, 2, expect.anything()],
+        [0, 0, expect.anything(), expect.a(Logger)],
+        [1, 1, expect.anything(), expect.a(Logger)],
+        [2, 2, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
