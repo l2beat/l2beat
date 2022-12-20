@@ -138,7 +138,7 @@ export function getErrorStackTrace(error: unknown): string | null {
     return null
   }
 
-  return error.stack || null
+  return error.stack ?? null
 }
 
 function combine(
