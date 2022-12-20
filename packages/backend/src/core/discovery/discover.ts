@@ -23,18 +23,22 @@ export async function discover(
 
   let totalAddresses = 0
 
-  let stack: { address: EthereumAddress; depth: number }[] = [
-    ...config.initialAddresses
-      .map((address) => ({ address, depth: 0 }))
-      .reverse(),
-  ]
-  if (previousDiscoveryResult) {
-    const c = previousDiscoveryResult.contracts.map((c) => {
-      return { address: c.address, depth: 0 } // @todo: depth 0? depth 1?
-    })
-    stack = [...stack, ...c].reverse()
-  }
-  console.log('stack size: ', stack.length)
+  const stack: { address: EthereumAddress; depth: number }[] =
+    previousDiscoveryResult
+      ? [
+          ...previousDiscoveryResult.contracts.map(
+            (c) => ({ address: c.address, depth: 0 }), // @todo: depth 0? depth 1?
+          ),
+          ...previousDiscoveryResult.eoas.map((a) => ({
+            address: a,
+            depth: 0,
+          })),
+        ].reverse()
+      : [
+          ...config.initialAddresses
+            .map((address) => ({ address, depth: 0 }))
+            .reverse(),
+        ]
 
   while (stack.length !== 0) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

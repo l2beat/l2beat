@@ -27,20 +27,16 @@ export class LocalMetadataProvider implements MetadataProvider {
   constructor(private readonly discoveryResult: ProjectParameters) {}
 
   async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
+    // note: not all contracts will be stored in discoveryResults.contracts. For example implementations of proxies are omitted
     const contract = this.discoveryResult.contracts.find(
       (c) => c.address === address,
     )
-    if (!contract) {
-      console.log("ERROR: can't find abi!")
-    }
-    // assert(contract, `Can't find ${address} in previous discovery result`)
 
-    const abi = this.discoveryResult.abis[address.toString()]
-    // assert(abi, `Can't find abi for ${address} in previous discovery result`)
+    const abi = this.discoveryResult.abis[address.toString()] ?? []
 
     return {
-      name: contract?.name || 'unknown',
-      isVerified: !!abi,
+      name: contract?.name || 'Unknown',
+      isVerified: !contract?.unverified,
       abi,
     }
   }
