@@ -20,8 +20,6 @@ export const starknet: Layer2 = {
   display: {
     name: 'StarkNet',
     slug: 'starknet',
-    warning:
-      'Currently only whitelisted contracts can be deployed on StarkNet.',
     description:
       'StarkNet is a general purpose ZK-Rollup built using STARK cryptographic proof system. StarkNet uses the Cairo programming language both for its \
       infrastructure and for writing StarkNet contracts. L2 <--> L1 messaging infrastructure \
