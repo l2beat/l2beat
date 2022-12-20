@@ -16,14 +16,13 @@ export class DiscordClient {
 
     const res = await this.query(endpoint, {
       method: 'POST',
-      //@ts-expect-error
-      body,
+      body: JSON.stringify(body),
     })
   }
 
-  async query(endpoint: string, options: RequestInit) {
+  async query(endpoint: string, options?: RequestInit) {
     const url = 'https://discord.com/api/v10' + endpoint
-    if (options.body) options.body = JSON.stringify(options.body)
+
     const res = await this.httpClient.fetch(url, {
       headers: {
         Authorization: `Bot ${this.discordToken}`,
@@ -31,12 +30,12 @@ export class DiscordClient {
       },
       ...options,
     })
+
     if (!res.ok) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data = await res.json()
-      console.log(res.status)
-      throw new Error(JSON.stringify(data))
+      const error = JSON.stringify(await res.json())
+      throw new Error(`Discord error: ${error}`)
     }
-    return res
+
+    return res.json() as unknown
   }
 }
