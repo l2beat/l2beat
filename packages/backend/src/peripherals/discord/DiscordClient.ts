@@ -1,3 +1,8 @@
+/*
+To send messages you need to create a Discord Bot first and give it appropriate permissions
+https://discord.com/developers/docs/getting-started#configuring-a-bot
+*/
+
 import { HttpClient } from '@l2beat/common'
 import { RequestInit } from 'node-fetch'
 
