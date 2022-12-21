@@ -24,10 +24,12 @@ export function createApiMetrics(metrics: Metrics): Middleware {
 
       const timeMs = Date.now() - start
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const path = (ctx._matchedRoute as string | undefined) ?? ctx.path
+
       apiHistogam
         .labels({
-          // TODO: normalizePath
-          path: ctx.path,
+          path,
           method: ctx.method,
           status_code: ctx.status,
         })
