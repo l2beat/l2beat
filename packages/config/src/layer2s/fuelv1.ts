@@ -114,4 +114,26 @@ export const fuelv1: Layer2 = {
     ],
     risks: [],
   },
+  milestones: [
+    {
+      name: 'Fuel v1 is live on Mainnet',
+      link: 'https://twitter.com/fuellabs_/status/1344707195250896899',
+      date: '2020-12-31T00:00:00Z',
+      description:
+        'First trustless Optimistic Rollup is live on Mainnet.',
+    },
+    {
+      name: 'Beta-1 introduced',
+      link: 'https://fuel-labs.ghost.io/introducing-beta-1-testnet/',
+      date: '2022-09-08T00:00:00Z',
+      description:
+        'First Modular Execution Layer Developer-facing Fuel Testnet introduced',
+    },
+    {
+      name: 'Beta-2 announced',
+      link: 'https://fuel-labs.ghost.io/announcing-beta-2-testnet/',
+      date: '2022-11-15T00:00:00Z',
+      description: 'Second Public Testnet announced.',
+    },
+  ],
 }
