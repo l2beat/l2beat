@@ -34,6 +34,7 @@ export function createStarkexCounter(
     {
       batchSize,
       startFrom: startDay,
+      uncertaintyBuffer: options.resyncLastDays, // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
       getLatest: () => getStarkexLastDay(clock.getLastHour()),
       processRange: async (from, to, trx, logger) => {
         const queries = range(from, to + 1).map((day) => async () => {
@@ -49,7 +50,6 @@ export function createStarkexCounter(
         const counts = await promiseAllPlus(queries, logger)
         await starkexRepository.addOrUpdateMany(counts, trx)
       },
-      uncertaintyBuffer: options.resyncLastDays,
     },
   )
 
