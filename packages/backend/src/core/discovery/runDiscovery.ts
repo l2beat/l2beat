@@ -4,9 +4,8 @@ import { providers } from 'ethers'
 import { DiscoveryConfig } from '../../config/Config'
 import { ConfigReader } from './ConfigReader'
 import { discover } from './discover'
-import { ProviderWithCache } from './provider/ProviderWithCache'
 import { saveDiscoveryResult } from './fsDiscoveryResult'
-import { EtherscanMetadataProvider } from './provider/MetadataProvider'
+import { ProviderWithCache } from './provider/ProviderWithCache'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,
@@ -15,12 +14,11 @@ export async function runDiscovery(
   config: DiscoveryConfig,
 ) {
   const projectConfig = await configReader.readConfig(config.project)
-  const etherscanProvider = new EtherscanMetadataProvider(etherscanClient)
   const blockNumber = config.blockNumber ?? (await provider.getBlockNumber())
   const discoveryProvider = new ProviderWithCache(
     provider,
-    etherscanProvider,
     blockNumber,
+    etherscanClient,
   )
 
   const result = await discover(discoveryProvider, projectConfig)

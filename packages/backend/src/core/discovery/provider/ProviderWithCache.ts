@@ -2,10 +2,10 @@ import { EtherscanClient } from '@l2beat/common'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
 import { providers } from 'ethers'
 
+import { ProjectParameters } from '../types'
 import { isRevert } from '../utils/isRevert'
 import { ProviderCache } from './Cache'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
-import { MetadataProvider } from './MetadataProvider'
 
 const identity = <T>(x: T) => x
 
@@ -14,10 +14,11 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   constructor(
     provider: providers.Provider,
-    metadataProvider: MetadataProvider,
     blockNumber: number,
+    etherscanClient?: EtherscanClient,
+    previousDiscovery?: ProjectParameters,
   ) {
-    super(provider, metadataProvider, blockNumber)
+    super(provider, blockNumber, etherscanClient, previousDiscovery)
     this.cache = new ProviderCache(blockNumber)
   }
 

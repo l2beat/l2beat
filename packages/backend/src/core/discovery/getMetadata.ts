@@ -18,12 +18,12 @@ export async function getMetadata(
   address: EthereumAddress,
   implementations: EthereumAddress[],
 ): Promise<ContractMetadata> {
-  const [code, metadata] = await Promise.all([
-    provider.getCode(address),
+  const [isEOA, metadata] = await Promise.all([
+    provider.isEOA(address),
     provider.getMetadata(address),
   ])
 
-  if (code.length === 0) {
+  if (isEOA) {
     return {
       name: 'EOA',
       isEOA: true,

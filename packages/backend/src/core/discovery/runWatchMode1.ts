@@ -4,9 +4,8 @@ import { providers } from 'ethers'
 import { DiscoveryConfig } from '../../config/Config'
 import { ConfigReader } from './ConfigReader'
 import { discover } from './discover'
-import { LocalMetadataProvider } from './provider/MetadataProvider'
-import { ProviderWithCache } from './provider/ProviderWithCache'
 import { readDiscoveryResult, saveDiscoveryResult } from './fsDiscoveryResult'
+import { ProviderWithCache } from './provider/ProviderWithCache'
 
 export async function runWatchMode(
   provider: providers.AlchemyProvider,
@@ -16,12 +15,12 @@ export async function runWatchMode(
 ) {
   const projectConfig = await configReader.readConfig(config.project)
   const discoveryResult = await readDiscoveryResult(config.project)
-  const metadataProvider = new LocalMetadataProvider(discoveryResult)
   const blockNumber = config.blockNumber ?? (await provider.getBlockNumber())
   const discoveryProvider = new ProviderWithCache(
     provider,
-    metadataProvider,
     blockNumber,
+    undefined,
+    discoveryResult,
   )
 
   const result = await discover(

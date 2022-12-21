@@ -7,7 +7,7 @@ export async function saveDiscoveryResult(
   results: AnalyzedData[],
   name: string,
   blockNumber: number,
-  postfix: string = '',
+  postfix = '',
 ) {
   let abis: Record<string, string[]> = {}
   for (const result of results) {
@@ -41,5 +41,5 @@ export async function readDiscoveryResult(
 ): Promise<ProjectParameters> {
   const rawResult = await readFile(`discovery/${name}/discovered.json`, 'utf-8')
 
-  return JSON.parse(rawResult)
+  return JSON.parse(rawResult) as ProjectParameters
 }

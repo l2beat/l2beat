@@ -1,9 +1,9 @@
-import { EtherscanClient } from '@l2beat/common'
+import { assert, EtherscanClient } from '@l2beat/common'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
 import { providers } from 'ethers'
 
+import { ProjectParameters } from '../types'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
-import { MetadataProvider } from './MetadataProvider'
 
 export interface ContractMetadata {
   name: string
@@ -24,8 +24,9 @@ export interface ContractMetadata {
 export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.Provider,
-    private readonly metadataProvider: MetadataProvider,
     readonly blockNumber: number,
+    readonly etherscanClient?: EtherscanClient,
+    readonly previousDiscovery?: ProjectParameters,
   ) {}
 
   async call(address: EthereumAddress, data: Bytes): Promise<Bytes> {
@@ -73,7 +74,40 @@ export class DiscoveryProvider {
     return Bytes.fromHex(result)
   }
 
+  async isEOA(address: EthereumAddress): Promise<boolean> {
+    if (this.previousDiscovery) {
+      return this.previousDiscovery.eoas.includes(address)
+    } else {
+      const code = await this.getCode(address)
+      return code.length === 0
+    }
+  }
+
   async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
-    return await this.metadataProvider.getMetadata(address)
+    if (this.previousDiscovery) {
+      // note: not all contracts will be stored in discoveryResults.contracts. For example implementations of proxies are omitted
+      const contract = this.previousDiscovery.contracts.find(
+        (c) => c.address === address,
+      )
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      const abi = this.previousDiscovery.abis[address.toString()] ?? []
+
+      return {
+        name: contract?.name ?? 'Unknown',
+        isVerified: !contract?.unverified,
+        abi,
+      }
+    } else {
+      assert(this.etherscanClient)
+      const result = await this.etherscanClient.getContractSource(address)
+      const isVerified = result.ABI !== 'Contract source code not verified'
+
+      return {
+        name: result.ContractName,
+        isVerified,
+        abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
+      }
+    }
   }
 }
