@@ -63,7 +63,7 @@ describe(DiscordClient.name, () => {
     })
 
     it('return response JSON', async () => {
-      const data = { message: 'error', code: '0001' }
+      const data = { message: 'OK' }
 
       const httpClient = mock<HttpClient>({
         async fetch() {
