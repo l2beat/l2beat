@@ -7,7 +7,7 @@ export function createMetricsModule(metrics: Metrics): ApplicationModule {
   return {
     routers: [router],
     start: () => {
-      metrics.init()
+      metrics.collectDefaultMetrics()
     },
   }
 }

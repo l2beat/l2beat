@@ -12,7 +12,7 @@ import {
 } from 'prom-client'
 
 export class Metrics {
-  init(): void {
+  collectDefaultMetrics(): void {
     collectDefaultMetrics()
   }
 
