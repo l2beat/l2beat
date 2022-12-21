@@ -37,8 +37,10 @@ export class DiscordClient {
     })
 
     if (!res.ok) {
-      const error = JSON.stringify(await res.json())
-      throw new Error(`Discord error: ${error}`)
+      // Discord API returns pretty useful errors
+      // this functionality aims to preserve them
+      const body = (await res.json()) as unknown
+      throw new Error(`Discord error: ${JSON.stringify(body)}`)
     }
 
     return res.json() as unknown
