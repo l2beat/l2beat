@@ -352,7 +352,7 @@ export const optimism: Layer2 = {
     {
       name: 'EVM Equivalence is live',
       link: 'https://twitter.com/optimismfnd/status/1458953238867165192?s=21&t=cQ0NPREYt-u1rP7OiPFKUg',
-      date: '2021-12-11T00:00:00Z',
+      date: '2021-11-12T00:00:00Z',
       description: 'Network upgrade completed.',
     },
   ],

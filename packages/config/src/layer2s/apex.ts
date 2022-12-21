@@ -142,7 +142,7 @@ export const apex: Layer2 = {
     },
     {
       name: 'ApeX Pro live on Mainnet',
-      date: '2021-08-31T00:00:00Z',
+      date: '2022-08-31T00:00:00Z',
       link: 'https://twitter.com/officialapexdex/status/1594722304537288706?s=21&t=c-SqpS1PL2KOns-2K7myJA',
       description:
         'ApeX Pro, a non-custodial decentralized exchange is now live on Mainnet.',
