@@ -215,7 +215,7 @@ export const zkspace: Layer2 = {
       link: 'https://medium.com/@zkspaceofficial/zkspace-releases-token-deposit-campaign-with-fascinating-zks-rewards-151e2492549e',
       date: '2022-02-21T00:00:00Z',
       description:
-        'Incentives program to onboard new users has started',
+        'Incentives program to onboard new users has started.',
     },
     
   ],

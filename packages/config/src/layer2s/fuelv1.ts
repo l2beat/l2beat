@@ -127,7 +127,7 @@ export const fuelv1: Layer2 = {
       link: 'https://fuel-labs.ghost.io/introducing-beta-1-testnet/',
       date: '2022-09-08T00:00:00Z',
       description:
-        'First Modular Execution Layer Developer-facing Fuel Testnet introduced',
+        'First Modular Execution Layer Developer-facing Fuel Testnet introduced.',
     },
     {
       name: 'Beta-2 announced',
