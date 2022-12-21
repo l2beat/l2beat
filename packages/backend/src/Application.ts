@@ -44,6 +44,7 @@ export class Application {
       new ApiServer(
         config.api.port,
         logger,
+        metrics,
         modules.flatMap((x) => x?.routers ?? []),
         handleServerError,
       )

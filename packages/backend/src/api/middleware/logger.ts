@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/common'
-import { Context, Next } from 'koa'
+import { Context, Middleware, Next } from 'koa'
 
-export function createApiLogger(logger: Logger) {
-  return async function (ctx: Context, next: Next) {
+export function createApiLogger(logger: Logger): Middleware {
+  return async function (ctx: Context, next: Next): Promise<void> {
     const key = Symbol.for('request-received.startTime')
     // eslint-disable-next-line
     const start: number = ctx[key as any]?.getTime?.() ?? Date.now()
