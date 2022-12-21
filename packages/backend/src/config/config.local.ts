@@ -43,6 +43,7 @@ export function getLocalConfig(cli: CliParameters): Config {
     api: apiEnabled && {
       port: getEnv.integer('PORT', 3000),
     },
+    metricsAuth: false,
     health: {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),

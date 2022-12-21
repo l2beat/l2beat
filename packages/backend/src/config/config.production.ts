@@ -40,6 +40,10 @@ export function getProductionConfig(cli: CliParameters): Config {
       startedAt: new Date().toISOString(),
       commitSha: getEnv('HEROKU_SLUG_COMMIT', getGitCommitHash()),
     },
+    metricsAuth: {
+      user: getEnv('METRICS_AUTH_USER'),
+      pass: getEnv('METRICS_AUTH_PASS'),
+    },
     tvl: {
       tokens: tokenList,
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
