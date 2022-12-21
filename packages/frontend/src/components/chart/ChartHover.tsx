@@ -14,7 +14,7 @@ export function ChartHover() {
       />
       <div
         data-role="chart-hover-square-blue"
-        className="absolute block w-2 h-2 border-2 border-current bg-blue-600 z-40 rotate-45"
+        className="absolute block w-2 h-2 border-2 border-current bg-blue-600 z-40"
       />
       <div
         data-role="chart-hover-circle-red"
