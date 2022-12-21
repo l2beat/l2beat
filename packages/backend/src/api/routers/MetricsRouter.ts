@@ -8,6 +8,12 @@ import { Metrics } from '../../Metrics'
 export function createMetricsRouter(config: Config, metrics: Metrics) {
   const router = new Router()
 
+  if (!config.metricsAuth) {
+    console.warn(
+      '/metrics accessible without any authorization. This is fine for local environment but not for production',
+    )
+  }
+
   router.get('/metrics', async (ctx) => {
     const credentials = auth(ctx.req)
 
