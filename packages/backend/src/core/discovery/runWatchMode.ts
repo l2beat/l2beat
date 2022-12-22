@@ -24,5 +24,5 @@ export async function runWatchMode(
   )
 
   const result = await discover(discoveryProvider, projectConfig)
-  await saveDiscoveryResult(result, config.project, blockNumber, 'watched')
+  await saveDiscoveryResult(result, config.project, blockNumber, '_watched')
 }
