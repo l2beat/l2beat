@@ -94,7 +94,6 @@ export async function discover(
 
     console.log()
 
-    // todo can we verify if there are any unknown contracts here?
     if (!provider.previousDiscovery) {
       stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
     }

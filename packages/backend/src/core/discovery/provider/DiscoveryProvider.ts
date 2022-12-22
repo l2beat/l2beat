@@ -12,8 +12,8 @@ export interface ContractMetadata {
 }
 
 /**
- * This class is meant as a wrapper for all interactions with the blockchain
- * and Etherscan for the purposes of discovery.
+ * This class is meant as a wrapper for all interactions with the blockchain, Etherscan
+ *  or previous discovery result for the purposes of discovery.
  *
  * The ultimate goal is for it to automatically handle batching, rate limiting,
  * error parsing and more low level stuff, so that the rest of the code can
@@ -83,19 +83,35 @@ export class DiscoveryProvider {
     }
   }
 
-  async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
+  async getMetadata(
+    address: EthereumAddress,
+  ): Promise<ContractMetadata | undefined> {
     if (this.previousDiscovery) {
-      // note: not all contracts will be stored in discoveryResults.contracts. For example implementations of proxies are omitted
-      const contract = this.previousDiscovery.contracts.find(
+      // due to optimization in getMetadata we dont have guarantee that address is a smart contract address.
+      // With previous discovery result its "cheap" to verify it again
+      if (await this.isEOA(address)) {
+        return undefined
+      }
+
+      let contract = this.previousDiscovery.contracts.find(
         (c) => c.address === address,
       )
+      // note: not all contracts will be stored in discoveryResults.contracts. For example implementations of proxies are omitted so we try to match upgradeability too
+      if (!contract) {
+        contract = this.previousDiscovery.contracts.find((c) =>
+          Object.values(c.upgradeability).includes(address),
+        )
+      }
+      if (!contract) {
+        return undefined
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       const abi = this.previousDiscovery.abis[address.toString()] ?? []
 
       return {
-        name: contract?.name ?? 'Unknown',
-        isVerified: !contract?.unverified,
+        name: contract.name,
+        isVerified: !contract.unverified,
         abi,
       }
     } else {

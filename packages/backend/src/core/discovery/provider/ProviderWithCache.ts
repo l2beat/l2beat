@@ -110,7 +110,7 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   override async getMetadata(
     address: EthereumAddress,
-  ): Promise<ContractMetadata> {
+  ): Promise<ContractMetadata | undefined> {
     return this.cacheOrFetch(
       `getMetadata.${address.toString()}`,
       () => super.getMetadata(address),

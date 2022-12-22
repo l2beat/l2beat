@@ -34,9 +34,32 @@ export async function getMetadata(
     }
   }
 
-  const implementationMeta = await Promise.all(
+  if (!metadata) {
+    return {
+      name: 'unknwon',
+      isEOA: false,
+      isVerified: false,
+      implementationVerified: false,
+      abi: [],
+      abis: {},
+    }
+  }
+
+  const _implementationMeta = await Promise.all(
     implementations.map((address) => provider.getMetadata(address)),
   )
+
+  if (_implementationMeta.includes(undefined)) {
+    return {
+      name: 'unknwon',
+      isEOA: false,
+      isVerified: false,
+      implementationVerified: false,
+      abi: [],
+      abis: {},
+    }
+  }
+  const implementationMeta = _implementationMeta as ContractMetadata[]
 
   const name =
     implementationMeta.length === 1 ? implementationMeta[0].name : metadata.name
