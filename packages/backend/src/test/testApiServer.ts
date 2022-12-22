@@ -23,6 +23,6 @@ export function createTestApiServer(routers: Router[], metrics?: Metrics) {
 
 export function createMockHistogram() {
   return mock<Histogram>({
-    observe: () => {},
+    labels: () => mock<Histogram>({ observe: () => {} }),
   })
 }
