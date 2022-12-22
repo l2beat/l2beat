@@ -5,9 +5,9 @@ import { Metrics } from '../../Metrics'
 export function createApiMetrics(metrics: Metrics): Middleware {
   const labels = ['path', 'method', 'status_code']
   const apiHistogam = metrics.createHistogram({
-    name: 'api_request_duration_seconds_sum',
+    name: 'api_request_duration_seconds',
     help:
-      'duration histogram of  api http responses labeled with: ' +
+      'duration histogram of api http responses labeled with: ' +
       labels.join(', '),
     labelNames: labels,
   })
@@ -27,6 +27,7 @@ export function createApiMetrics(metrics: Metrics): Middleware {
 
       const timeMs = Date.now() - start
 
+      // ctx._matchedRoute will include parameter range like /user/:id
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const path = (ctx._matchedRoute as string | undefined) ?? ctx.path
 
