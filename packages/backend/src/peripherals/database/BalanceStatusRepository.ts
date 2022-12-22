@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { Hash256, UnixTime } from '@l2beat/types'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, RepositoryHistogram } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface BalanceStatusRecord {
@@ -10,8 +10,12 @@ export interface BalanceStatusRecord {
 }
 
 export class BalanceStatusRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(
+    database: Database,
+    logger: Logger,
+    histogram: RepositoryHistogram,
+  ) {
+    super(database, logger, histogram)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 

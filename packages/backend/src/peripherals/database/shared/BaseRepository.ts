@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/common'
 import { Knex } from 'knex'
+import { Histogram } from 'prom-client'
 
 import { Database } from './Database'
 
@@ -21,10 +22,13 @@ type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 
 type SaveMethod<T> = (record: T) => Promise<boolean>
 
+export type RepositoryHistogram = Histogram<'module' | 'repository' | 'method'>
+
 export class BaseRepository {
   constructor(
     protected readonly database: Database,
     protected readonly logger: Logger,
+    protected readonly histogram: RepositoryHistogram,
   ) {
     this.logger = logger.for(this)
   }
@@ -114,7 +118,12 @@ export class BaseRepository {
     log: (result: R) => void,
   ): AnyMethod<A, R> {
     const fn = async (...args: A) => {
+      const start = Date.now()
       const result = await method.call(this, ...args)
+      const timeMs = Date.now() - start
+      this.histogram
+        .labels({ repository: this.constructor.name, method: method.name })
+        .observe(timeMs / 1000)
       log(result)
       return result
     }

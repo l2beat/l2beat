@@ -23,6 +23,7 @@ import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRep
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { RepositoryHistogram } from '../../peripherals/database/shared/BaseRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
@@ -35,6 +36,7 @@ export function createTvlModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
+  histogram: RepositoryHistogram,
 ): ApplicationModule | undefined {
   if (!config.tvl) {
     return
@@ -42,16 +44,29 @@ export function createTvlModule(
 
   // #region database
 
-  const blockNumberRepository = new BlockNumberRepository(database, logger)
-  const priceRepository = new PriceRepository(database, logger)
-  const balanceRepository = new BalanceRepository(database, logger)
-  const reportRepository = new ReportRepository(database, logger)
+  const blockNumberRepository = new BlockNumberRepository(
+    database,
+    logger,
+    histogram,
+  )
+  const priceRepository = new PriceRepository(database, logger, histogram)
+  const balanceRepository = new BalanceRepository(database, logger, histogram)
+  const reportRepository = new ReportRepository(database, logger, histogram)
   const aggregateReportRepository = new AggregateReportRepository(
     database,
     logger,
+    histogram,
   )
-  const reportStatusRepository = new ReportStatusRepository(database, logger)
-  const balanceStatusRepository = new BalanceStatusRepository(database, logger)
+  const reportStatusRepository = new ReportStatusRepository(
+    database,
+    logger,
+    histogram,
+  )
+  const balanceStatusRepository = new BalanceStatusRepository(
+    database,
+    logger,
+    histogram,
+  )
 
   // #endregion
   // #region peripherals

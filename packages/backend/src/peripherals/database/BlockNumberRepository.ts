@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { BlockNumberRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, RepositoryHistogram } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface BlockNumberRecord {
@@ -11,8 +11,12 @@ export interface BlockNumberRecord {
 }
 
 export class BlockNumberRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(
+    database: Database,
+    logger: Logger,
+    histogram: RepositoryHistogram,
+  ) {
+    super(database, logger, histogram)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 

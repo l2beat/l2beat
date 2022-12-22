@@ -3,11 +3,17 @@ import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
+import { createMockHistogram } from '../../test/mocks/Histogram'
 import { ReportRecord, ReportRepository } from './ReportRepository'
 
 describe(ReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new ReportRepository(database, Logger.SILENT)
+  const mockHistogram = createMockHistogram()
+  const repository = new ReportRepository(
+    database,
+    Logger.SILENT,
+    mockHistogram,
+  )
 
   const TIME_0 = UnixTime.now().toStartOf('day')
   const TIME_1 = TIME_0.add(1, 'hours')

@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 import { SequenceProcessorRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, RepositoryHistogram } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface SequenceProcessorRecord {
@@ -12,8 +12,12 @@ export interface SequenceProcessorRecord {
 }
 
 export class SequenceProcessorRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(
+    database: Database,
+    logger: Logger,
+    histogram: RepositoryHistogram,
+  ) {
+    super(database, logger, histogram)
 
     /* eslint-disable @typescript-eslint/unbound-method */
     this.addOrUpdate = this.wrapAny(this.addOrUpdate)

@@ -3,7 +3,7 @@ import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, RepositoryHistogram } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface ReportRecord {
@@ -18,8 +18,12 @@ export interface ReportRecord {
 export const SIX_HOURS = UnixTime.HOUR * 6
 
 export class ReportRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(
+    database: Database,
+    logger: Logger,
+    histogram: RepositoryHistogram,
+  ) {
+    super(database, logger, histogram)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 

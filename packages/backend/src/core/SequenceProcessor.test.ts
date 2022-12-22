@@ -5,6 +5,7 @@ import { once } from 'events'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 import { setupDatabaseTestSuite } from '../test/database'
+import { createMockHistogram } from '../test/mocks/Histogram'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
@@ -13,7 +14,12 @@ import {
 
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new SequenceProcessorRepository(database, Logger.SILENT)
+  const mockHistogram = createMockHistogram()
+  const repository = new SequenceProcessorRepository(
+    database,
+    Logger.SILENT,
+    mockHistogram,
+  )
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 

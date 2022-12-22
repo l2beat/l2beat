@@ -2,7 +2,7 @@ import { assert, Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { AggregateReportRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, RepositoryHistogram } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface AggregateReportRecord {
@@ -13,8 +13,12 @@ export interface AggregateReportRecord {
 }
 
 export class AggregateReportRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(
+    database: Database,
+    logger: Logger,
+    histogram: RepositoryHistogram,
+  ) {
+    super(database, logger, histogram)
 
     /* eslint-disable @typescript-eslint/unbound-method */
     this.getDaily = this.wrapGet(this.getDaily)

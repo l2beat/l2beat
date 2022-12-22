@@ -15,7 +15,9 @@ import { Clock } from '../../core/Clock'
 import { Project } from '../../model'
 import { BlockTransactionCountRepository } from '../../peripherals/database/activity/BlockTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/activity/StarkexCountRepository'
+import { ZksyncTransactionRepository } from '../../peripherals/database/activity/ZksyncTransactionRepository'
 import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
+import { RepositoryHistogram } from '../../peripherals/database/shared/BaseRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { StarkexClient } from '../../peripherals/starkex'
 
@@ -25,6 +27,7 @@ export function createTransactionCounters(
   http: HttpClient,
   database: Database,
   clock: Clock,
+  histogram: RepositoryHistogram,
 ): TransactionCounter[] {
   assert(config.activity)
   const {
@@ -46,14 +49,25 @@ export function createTransactionCounters(
   })
 
   // shared repositories
-  const blockRepository = new BlockTransactionCountRepository(database, logger)
+  const blockRepository = new BlockTransactionCountRepository(
+    database,
+    logger,
+    histogram,
+  )
   const starkexRepository = new StarkexTransactionCountRepository(
     database,
     logger,
+    histogram,
   )
   const sequenceProcessorRepository = new SequenceProcessorRepository(
     database,
     logger,
+    histogram,
+  )
+  const zksyncRepository = new ZksyncTransactionRepository(
+    database,
+    logger,
+    histogram,
   )
 
   // ethereum is kept separately in backend config, because it is not a layer 2 project
@@ -122,7 +136,7 @@ export function createTransactionCounters(
           return createZksyncCounter(
             projectId,
             http,
-            database,
+            zksyncRepository,
             sequenceProcessorRepository,
             logger,
             transactionApi,
