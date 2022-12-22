@@ -2,13 +2,17 @@ import { mock } from '@l2beat/common'
 
 import { Config } from '../../config'
 import { Metrics } from '../../Metrics'
-import { createTestApiServer } from '../../test/testApiServer'
+import {
+  createMockHistogram,
+  createTestApiServer,
+} from '../../test/testApiServer'
 import { createMetricsRouter } from './MetricsRouter'
 
 describe(createMetricsRouter.name, () => {
   describe('can be configured', () => {
     const metrics = mock<Metrics>({
       getMetrics: async () => 'metrics',
+      createHistogram: createMockHistogram,
     })
 
     it('to require auth', async () => {
@@ -19,7 +23,7 @@ describe(createMetricsRouter.name, () => {
         },
       })
       const router = createMetricsRouter(config, metrics)
-      const server = createTestApiServer([router])
+      const server = createTestApiServer([router], metrics)
 
       await server.get('/metrics').expect(401)
       await server.get('/metrics').auth('user', 'pass').expect(200)
@@ -30,7 +34,7 @@ describe(createMetricsRouter.name, () => {
         metricsAuth: false,
       })
       const router = createMetricsRouter(config, metrics)
-      const server = createTestApiServer([router])
+      const server = createTestApiServer([router], metrics)
 
       await server.get('/metrics').expect(200)
     })
