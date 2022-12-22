@@ -4,7 +4,7 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
 import { runDiscovery } from '../../core/discovery/runDiscovery'
-import { runWatchMode } from '../../core/discovery/runWatchMode1'
+import { runWatchMode } from '../../core/discovery/runWatchMode'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createDiscoveryModule(

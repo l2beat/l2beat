@@ -4,12 +4,10 @@ import chalk from 'chalk'
 import { AnalyzedData, analyzeItem } from './analyzeItem'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
-import { ProjectParameters } from './types'
 
 export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
-  previousDiscoveryResult?: ProjectParameters,
 ) {
   const maxAddresses = config.maxAddresses ?? 100
   const maxDepth = config.maxDepth ?? 6
@@ -23,22 +21,24 @@ export async function discover(
 
   let totalAddresses = 0
 
-  const stack: { address: EthereumAddress; depth: number }[] =
-    previousDiscoveryResult
-      ? [
-          ...previousDiscoveryResult.contracts.map(
-            (c) => ({ address: c.address, depth: 0 }), // @todo: depth 0? depth 1?
-          ),
-          ...previousDiscoveryResult.eoas.map((a) => ({
-            address: a,
-            depth: 0,
-          })),
-        ].reverse()
-      : [
-          ...config.initialAddresses
-            .map((address) => ({ address, depth: 0 }))
-            .reverse(),
-        ]
+  let stack: { address: EthereumAddress; depth: number }[]
+  if (provider.previousDiscovery) {
+    stack = [
+      ...provider.previousDiscovery.contracts.map(
+        (c) => ({ address: c.address, depth: 0 }), // @todo: depth 0? depth 1?
+      ),
+      ...provider.previousDiscovery.eoas.map((a) => ({
+        address: a,
+        depth: 0,
+      })),
+    ].reverse()
+  } else {
+    stack = [
+      ...config.initialAddresses
+        .map((address) => ({ address, depth: 0 }))
+        .reverse(),
+    ]
+  }
 
   while (stack.length !== 0) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -94,7 +94,8 @@ export async function discover(
 
     console.log()
 
-    if (!previousDiscoveryResult) {
+    // todo can we verify if there are any unknown contracts here?
+    if (!provider.previousDiscovery) {
       stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
     }
   }
