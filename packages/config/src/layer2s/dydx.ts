@@ -71,6 +71,7 @@ export const dydx: Layer2 = {
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
+      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({
