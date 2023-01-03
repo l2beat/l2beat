@@ -36,7 +36,7 @@ async function main() {
     .concat('overview-scaling', 'overview-bridges')
 
   if (config.features.activity) {
-    slugs.concat('overview-scaling-activity')
+    slugs.push('overview-scaling-activity')
   }
 
   const browser = await puppeteer.launch({

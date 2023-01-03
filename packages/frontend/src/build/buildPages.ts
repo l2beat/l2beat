@@ -175,7 +175,7 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 
   const importantProjects = [
     'ethereum',
-    'dydx',
+    // 'dydx',
     'arbitrum',
     'immutablex',
     'optimism',

@@ -11,6 +11,7 @@ export interface Config {
   readonly syncEnabled: boolean
   readonly logger: LoggerConfig
   readonly clock: ClockConfig
+  readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig | false
   readonly api: ApiConfig | false
   readonly health: HealthConfig
@@ -64,4 +65,9 @@ export interface DiscoveryConfig {
   readonly blockNumber?: number
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
+}
+
+export interface MetricsAuthConfig {
+  readonly user: string
+  readonly pass: string
 }
