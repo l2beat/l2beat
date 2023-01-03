@@ -345,7 +345,7 @@ export const optimism: Layer2 = {
       description: 'Whitelist got removed, there are no restrictions on who can transact with the network.',
     },
     {
-      name: 'Token airdrop',
+      name: 'OP token airdrop',
       link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
       date: '2022-05-31T00:00:00Z',
       description: 'The first round of OP token airdrop.',
