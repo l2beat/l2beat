@@ -551,7 +551,7 @@ export const tokenList: TokenInfo[] = [
   {
     id: AssetId('cro-cro'),
     name: 'CRO',
-    coingeckoId: CoingeckoId('crypto-com-chain'),
+    coingeckoId: CoingeckoId('wrapped-cro'),
     address: EthereumAddress('0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b'),
     symbol: 'CRO',
     decimals: 8,
@@ -730,7 +730,7 @@ export const tokenList: TokenInfo[] = [
   {
     id: AssetId('ftm-fantom-token'),
     name: 'Fantom Token',
-    coingeckoId: CoingeckoId('fantom'),
+    coingeckoId: CoingeckoId('wrapped-fantom'),
     address: EthereumAddress('0x4E15361FD6b4BB609Fa63C81A2be19d873717870'),
     symbol: 'FTM',
     decimals: 18,
