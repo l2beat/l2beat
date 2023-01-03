@@ -46,6 +46,7 @@
     "react-dom": "^18.1.0",
     "rollbar": "^2.25.2",
     "source-map-support": "^0.5.21",
+    "twitter-api-v2": "^1.12.10",
     "zod": "^3.17.3"
   },
   "devDependencies": {
