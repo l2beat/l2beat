@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/types'
 import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
-import { verifyContracts } from '../../scripts/checkVerifiedContracts/tasks'
+import { verifyContracts } from './tasks'
 
 describe('checkVerifiedContracts:tasks', () => {
   describe('verifyContracts()', () => {
