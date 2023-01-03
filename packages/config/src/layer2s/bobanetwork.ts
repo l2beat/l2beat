@@ -345,8 +345,7 @@ export const bobanetwork: Layer2 = {
       name: 'BOBA Token launched',
       date: '2021-11-18T00:00:00Z',
       link: 'https://boba.network/Boba-airdrop-live/',
-      description:
-        'BOBA token launched by OMG Foundation.',
+      description: 'BOBA token launched by OMG Foundation.',
     },
   ],
 }
