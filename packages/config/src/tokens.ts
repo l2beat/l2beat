@@ -730,7 +730,7 @@ export const tokenList: TokenInfo[] = [
   {
     id: AssetId('ftm-fantom-token'),
     name: 'Fantom Token',
-    coingeckoId: CoingeckoId('fantom'),
+    coingeckoId: CoingeckoId('wrapped-fantom'),
     address: EthereumAddress('0x4E15361FD6b4BB609Fa63C81A2be19d873717870'),
     symbol: 'FTM',
     decimals: 18,
