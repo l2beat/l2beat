@@ -223,7 +223,7 @@ export const zksync2: Layer2 = {
     {
       name: 'zkSync 2.0 baby alpha launch',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
-      date: '2020-10-28T00:00:00Z',
+      date: '2022-10-28T00:00:00Z',
       description: 'zkSync 2.0 baby alpha is launched on mainnet.',
     },
   ],
