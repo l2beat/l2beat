@@ -46,7 +46,7 @@ function watchStyles() {
 }
 
 function copyStatic() {
-  return gulp.src(['src/static/**/*', '!**/*.test.ts']).pipe(gulp.dest('build'))
+  return gulp.src(['src/static/**/*']).pipe(gulp.dest('build'))
 }
 
 function watchStatic() {
