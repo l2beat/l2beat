@@ -11,8 +11,10 @@ import {
   SummaryConfiguration,
 } from 'prom-client'
 
+export type RepositoryHistogram = Histogram<'repository' | 'method'>
+
 export class Metrics {
-  repositoryHistogram: Histogram
+  readonly repositoryHistogram: RepositoryHistogram
 
   constructor() {
     this.repositoryHistogram = this.createHistogram({

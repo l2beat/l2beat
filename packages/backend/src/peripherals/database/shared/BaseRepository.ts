@@ -1,8 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { Knex } from 'knex'
-import { Histogram } from 'prom-client'
 
-import { Metrics } from '../../../Metrics'
+import { Metrics, RepositoryHistogram } from '../../../Metrics'
 import { Database } from './Database'
 
 type AnyMethod<A extends unknown[], R> = (...args: A) => Promise<R>
@@ -22,8 +21,6 @@ type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T | undefined>
 type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 
 type SaveMethod<T> = (record: T) => Promise<boolean>
-
-type RepositoryHistogram = Histogram<'module' | 'repository' | 'method'>
 
 export class BaseRepository {
   protected histogram: RepositoryHistogram
