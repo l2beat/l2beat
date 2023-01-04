@@ -314,11 +314,11 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'Loopring Protocol 3.0 has launched',
+      name: 'First zkRollup is live',
       link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
       date: '2019-12-04T00:00:00Z',
       description:
-        'Deployed new contracts, added SNARK proving and Verification Keys.',
+        'Loopring is live, launching the first zkRollup on Ethereum mainnet.',
     },
     {
       name: 'Loopring Protocol 3.6 Pre-release',
@@ -333,6 +333,26 @@ export const loopring: Layer2 = {
       date: '2020-12-02T00:00:00Z',
       description:
         'Improved implementation, enaibling gas-free instant swaps and liquidity changes.',
+    },  
+    {
+      name: 'First zkRollup Payments',
+      link: 'https://medium.loopring.io/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
+      date: '2020-06-06T00:00:00Z',
+      description:
+        'Loopring supports ERC20 transfers.',
     },
-  ],
+    {
+      name: 'DeFi Port is Live on Loopring',
+      link: 'https://medium.loopring.io/loopring-l2-defi-port-cd6e811250a9',
+      date: '2022-09-27T00:00:00Z',
+      description:
+        'Loopring introduced a feature that enabled dutch auctions, lending, and other DeFi functions to be performed on its zkRollup platform.',
+    },
+  ], {
+    name: 'Loopring Supports NFTs',
+    link: 'https://medium.loopring.io/loopring-now-supports-nfts-on-l2-29174a343d0d',
+    date: '2021-08-24T00:00:00Z',
+    description:
+      'Loopring supports NFT minting, trading, and transfers.',
+  },
 }
