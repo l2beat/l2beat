@@ -1,4 +1,5 @@
 import { CoingeckoId, UnixTime } from '@l2beat/types'
+import { getTokenByCoingeckoId } from '@l2beat/config'
 
 import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
@@ -49,33 +50,67 @@ export class CoingeckoClient {
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
-  ): Promise<CoinMarketChartRangeData> {
-    const data = await this.query(
-      `/coins/${coinId.toString()}/market_chart/range`,
-      {
-        vs_currency: vs_currency.toLowerCase(),
-        from: from.toString(),
-        to: to.toString(),
-      },
-    )
-
-    const parsedData = CoinMarketChartRangeResult.parse(data)
-
-    return {
-      prices: parsedData.prices.map(([timestamp, price]) => ({
-        date: new Date(timestamp),
-        price,
-      })),
-      marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
-        date: new Date(timestamp),
-        marketCap,
-      })),
-      totalVolumes: parsedData.total_volumes.map(
-        ([timestamp, totalVolume]) => ({
+  ): Promise<CoinMarketChartRangeData | undefined> {
+    try {
+      const data = await this.query(
+        `/coins/${coinId.toString()}/market_chart/range`,
+        {
+          vs_currency: vs_currency.toLowerCase(),
+          from: from.toString(),
+          to: to.toString(),
+        },
+      )
+      const parsedData = CoinMarketChartRangeResult.parse(data)
+      return {
+        prices: parsedData.prices.map(([timestamp, price]) => ({
           date: new Date(timestamp),
-          totalVolume,
-        }),
-      ),
+          price,
+        })),
+        marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
+          date: new Date(timestamp),
+          marketCap,
+        })),
+        totalVolumes: parsedData.total_volumes.map(
+          ([timestamp, totalVolume]) => ({
+            date: new Date(timestamp),
+            totalVolume,
+          }),
+        ),
+      }
+    } catch {
+      const list = await this.getCoinList({ includePlatform: true })
+      const t = getTokenByCoingeckoId(coinId)
+      const token = list.find((item) => {
+        const addr = item.platforms.ethereum
+        return addr?.toLocaleLowerCase() === t.address?.toString().toLocaleLowerCase()
+      })
+      console.log(list)
+      const data = await this.query(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        `/coins/${token?.id.toString()}/market_chart/range`,
+        {
+          vs_currency: vs_currency.toLowerCase(),
+          from: from.toString(),
+          to: to.toString(),
+        },
+      )
+      const parsedData = CoinMarketChartRangeResult.parse(data)
+      return {
+        prices: parsedData.prices.map(([timestamp, price]) => ({
+          date: new Date(timestamp),
+          price,
+        })),
+        marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
+          date: new Date(timestamp),
+          marketCap,
+        })),
+        totalVolumes: parsedData.total_volumes.map(
+          ([timestamp, totalVolume]) => ({
+            date: new Date(timestamp),
+            totalVolume,
+          }),
+        ),
+      }
     }
   }
 

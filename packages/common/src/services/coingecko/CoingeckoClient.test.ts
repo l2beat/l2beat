@@ -1,5 +1,5 @@
 import { CoingeckoId, UnixTime } from '@l2beat/types'
-import { expect } from 'earljs'
+import { expect, mockFn } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { mock } from '../../tools'
@@ -207,6 +207,67 @@ describe(CoingeckoClient.name, () => {
         new UnixTime(1592577232),
         new UnixTime(1622577232),
       )
+    })
+
+    it('tries to obtain new id when coingecko changes it', async function () {
+      this.timeout(100000)
+
+      const idInConfig = 'dai'
+      const idSupportedByAPI = 'dai-supported'
+
+      const httpClient = mock<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce(
+            new Response(JSON.stringify({ error: 'coin not found' }), {
+              status: 404,
+            }),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify([
+                {
+                  id: idSupportedByAPI,
+                  symbol: 'dai',
+                  name: 'Dai',
+                  platforms: {
+                    ethereum: '0x6b175474e89094c44da98b954eedeac495271d0f',
+                  },
+                },
+              ]),
+              {
+                status: 200,
+              },
+            ),
+          )
+          .resolvesToOnce(
+            new Response(JSON.stringify(MOCK_PARSED_DATA), {
+              status: 200,
+            }),
+          ),
+      })
+      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
+
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('dai'),
+        'usd',
+        new UnixTime(1592577232),
+        new UnixTime(1622577232),
+      )
+
+      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
+        [
+          `https://api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232`,
+          { timeout: 10000 },
+        ],
+        [
+          'https://api.coingecko.com/api/v3/coins/list?include_platform=true',
+          { timeout: 10000 },
+        ],
+        [
+          `https://api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232`,
+          { timeout: 10000 },
+        ],
+      ])
     })
   })
 })
