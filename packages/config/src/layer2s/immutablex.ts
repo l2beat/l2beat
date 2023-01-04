@@ -172,4 +172,20 @@ export const immutablex: Layer2 = {
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },
   ],
+  milestones: [
+    {
+      name: 'Trading is live on Immutable X Marketplace',
+      link: 'https://twitter.com/immutable/status/1380269810525872131?s=21&t=kyMdE6ORI9f76e8aqizlpg',
+      date: '2021-04-08T00:00:00Z',
+      description:
+        'Immutable has launched the first phase of its Layer 2 scaling protocol.',
+    },
+    {
+      name: 'IMX Token introduced',
+      link: 'https://www.immutable.com/blog/introducing-imx-to-power-ethereums-first-layer-2-for-nfts',
+      date: '2022-06-29T00:00:00Z',
+      description:
+        'Immutable announce IMX, the native ERC-20 utility token of Immutable X.',
+    },
+  ],
 }
