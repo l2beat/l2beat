@@ -1,5 +1,4 @@
-import { getTokenByCoingeckoId } from '@l2beat/config'
-import { CoingeckoId, UnixTime } from '@l2beat/types'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/types'
 
 import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
@@ -50,7 +49,8 @@ export class CoingeckoClient {
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
-  ): Promise<CoinMarketChartRangeData | undefined> {
+    address?: EthereumAddress,
+  ): Promise<CoinMarketChartRangeData> {
     try {
       const data = await this.query(
         `/coins/${coinId.toString()}/market_chart/range`,
@@ -79,12 +79,10 @@ export class CoingeckoClient {
       }
     } catch {
       const list = await this.getCoinList({ includePlatform: true })
-      const token = getTokenByCoingeckoId(coinId)
       const coingeckoSupported = list.find((item) => {
         const addr = item.platforms.ethereum
         return (
-          addr?.toLocaleLowerCase() ===
-          token.address?.toString().toLocaleLowerCase()
+          addr?.toLocaleLowerCase() === address?.toString().toLocaleLowerCase()
         )
       })
       if (coingeckoSupported?.id === undefined) {

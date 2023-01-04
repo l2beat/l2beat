@@ -1,5 +1,5 @@
 import { assert, Logger, TaskQueue } from '@l2beat/common'
-import { AssetId, UnixTime } from '@l2beat/types'
+import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
 import { Token } from '../model'
@@ -109,7 +109,7 @@ export class PriceUpdater {
     return coingeckoId
   }
 
-  async fetchAndSave(assetId: AssetId, from: UnixTime, to: UnixTime) {
+  async fetchAndSave(assetId: AssetId, from: UnixTime, to: UnixTime, address?: EthereumAddress) {
     const coingeckoId = this.getCoingeckoId(assetId)
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       coingeckoId,
@@ -117,6 +117,7 @@ export class PriceUpdater {
       from.add(-7, 'days'),
       to,
       'hourly',
+      address
     )
     const priceRecords: PriceRecord[] = prices
       .filter((x) => x.timestamp.gte(from))

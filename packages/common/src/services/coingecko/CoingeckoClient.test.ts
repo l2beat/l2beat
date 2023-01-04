@@ -1,4 +1,4 @@
-import { CoingeckoId, UnixTime } from '@l2beat/types'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { Response } from 'node-fetch'
 
@@ -214,6 +214,7 @@ describe(CoingeckoClient.name, () => {
 
       const idInConfig = 'dai'
       const idSupportedByAPI = 'dai-supported'
+      const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
 
       const httpClient = mock<HttpClient>({
         fetch: mockFn()
@@ -230,7 +231,7 @@ describe(CoingeckoClient.name, () => {
                   symbol: 'dai',
                   name: 'Dai',
                   platforms: {
-                    ethereum: '0x6b175474e89094c44da98b954eedeac495271d0f',
+                    ethereum: tokenAddress,
                   },
                 },
               ]),
@@ -252,6 +253,7 @@ describe(CoingeckoClient.name, () => {
         'usd',
         new UnixTime(1592577232),
         new UnixTime(1622577232),
+        EthereumAddress(tokenAddress),
       )
 
       expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
