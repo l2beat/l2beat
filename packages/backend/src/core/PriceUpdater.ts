@@ -109,7 +109,12 @@ export class PriceUpdater {
     return coingeckoId
   }
 
-  async fetchAndSave(assetId: AssetId, from: UnixTime, to: UnixTime, address?: EthereumAddress) {
+  async fetchAndSave(
+    assetId: AssetId,
+    from: UnixTime,
+    to: UnixTime,
+    address?: EthereumAddress,
+  ) {
     const coingeckoId = this.getCoingeckoId(assetId)
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       coingeckoId,
@@ -117,7 +122,7 @@ export class PriceUpdater {
       from.add(-7, 'days'),
       to,
       'hourly',
-      address
+      address,
     )
     const priceRecords: PriceRecord[] = prices
       .filter((x) => x.timestamp.gte(from))

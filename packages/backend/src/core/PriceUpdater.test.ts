@@ -216,7 +216,13 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_09.add(-7, 'days'), HOUR_13, 'hourly', undefined],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_09.add(-7, 'days'),
+            HOUR_13,
+            'hourly',
+            undefined,
+          ],
         ])
       })
     })
@@ -233,7 +239,13 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_09.add(-7, 'days'), HOUR_09, 'hourly', undefined],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_09.add(-7, 'days'),
+            HOUR_09,
+            'hourly',
+            undefined,
+          ],
         ])
       })
 
@@ -243,7 +255,13 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_13.add(-7, 'days'), HOUR_13, 'hourly', undefined],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_13.add(-7, 'days'),
+            HOUR_13,
+            'hourly',
+            undefined,
+          ],
         ])
       })
 
@@ -259,8 +277,20 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_09.add(-7, 'days'), HOUR_09, 'hourly', undefined],
-          [TOKEN_COINGECKO_ID, HOUR_13.add(-7, 'days'), HOUR_13, 'hourly', undefined],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_09.add(-7, 'days'),
+            HOUR_09,
+            'hourly',
+            undefined,
+          ],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_13.add(-7, 'days'),
+            HOUR_13,
+            'hourly',
+            undefined,
+          ],
         ])
       })
 
@@ -307,7 +337,7 @@ describe(PriceUpdater.name, () => {
           from.add(-7, 'days'),
           from.add(2, 'hours'),
           'hourly',
-          undefined
+          undefined,
         ],
       ])
 
