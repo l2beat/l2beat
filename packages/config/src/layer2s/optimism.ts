@@ -342,12 +342,34 @@ export const optimism: Layer2 = {
       ...MILESTONES.MAINNET_OPEN,
       link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
       date: '2021-12-16T00:00:00Z',
+      description:
+        'Whitelist got removed, there are no restrictions on who can transact with the network.',
     },
     {
-      name: 'Token airdrop',
+      name: 'OP token airdrop',
       link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
       date: '2022-05-31T00:00:00Z',
       description: 'The first round of OP token airdrop.',
+    },
+    {
+      name: 'OVM 2.0 is live',
+      link: 'https://twitter.com/optimismfnd/status/1458953238867165192?s=21&t=cQ0NPREYt-u1rP7OiPFKUg',
+      date: '2021-11-12T00:00:00Z',
+      description:
+        'Network upgrade to OVM 2.0 and removal of fraud-proof system.',
+    },
+    {
+      name: 'Mainnet Soft Launch',
+      link: 'https://medium.com/ethereum-optimism/mainnet-soft-launch-7cacc0143cd5',
+      date: '2021-01-16T00:00:00Z',
+      description:
+        'Only selected contracts like Synthetix and Uniswap are available.',
+    },
+    {
+      name: 'Community Launch',
+      link: 'https://medium.com/ethereum-optimism/community-launch-7c9a2a9d3e84',
+      date: '2021-08-19T00:00:00Z',
+      description: 'All smart contracts allowed after prior approval.',
     },
   ],
 }
