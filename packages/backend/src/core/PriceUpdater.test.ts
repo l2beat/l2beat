@@ -158,28 +158,28 @@ describe(PriceUpdater.name, () => {
           HOUR_09.add(-7, 'days'),
           HOUR_09,
           'hourly',
-          undefined,
+          tokens[0].address,
         ],
         [
           tokens[1].coingeckoId,
           HOUR_13.add(-7, 'days'),
           HOUR_13,
           'hourly',
-          undefined,
+          tokens[1].address,
         ],
         [
           tokens[2].coingeckoId,
           HOUR_09.add(-7, 'days'),
           HOUR_13,
           'hourly',
-          undefined,
+          tokens[2].address,
         ],
         [
           tokens[0].coingeckoId,
           HOUR_13.add(-7, 'days'),
           HOUR_13,
           'hourly',
-          undefined,
+          tokens[0].address,
         ],
       ])
     })
