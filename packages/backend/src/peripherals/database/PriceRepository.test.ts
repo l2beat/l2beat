@@ -3,13 +3,13 @@ import { AssetId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockHistogram } from '../../test/mocks/Histogram'
+import { createMockMetrics } from '../../test/mocks/Metrics'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describe(PriceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockHistogram = createMockHistogram()
-  const repository = new PriceRepository(database, Logger.SILENT, mockHistogram)
+  const mockMetrics = createMockMetrics()
+  const repository = new PriceRepository(database, Logger.SILENT, mockMetrics)
 
   const START = UnixTime.now()
   const DATA = [

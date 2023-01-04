@@ -15,6 +15,7 @@ import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
+import { Metrics } from '../../Metrics'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
@@ -23,7 +24,6 @@ import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRep
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { RepositoryHistogram } from '../../peripherals/database/shared/BaseRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
@@ -36,7 +36,7 @@ export function createTvlModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
-  histogram: RepositoryHistogram,
+  metrics: Metrics,
 ): ApplicationModule | undefined {
   if (!config.tvl) {
     return
@@ -47,25 +47,25 @@ export function createTvlModule(
   const blockNumberRepository = new BlockNumberRepository(
     database,
     logger,
-    histogram,
+    metrics,
   )
-  const priceRepository = new PriceRepository(database, logger, histogram)
-  const balanceRepository = new BalanceRepository(database, logger, histogram)
-  const reportRepository = new ReportRepository(database, logger, histogram)
+  const priceRepository = new PriceRepository(database, logger, metrics)
+  const balanceRepository = new BalanceRepository(database, logger, metrics)
+  const reportRepository = new ReportRepository(database, logger, metrics)
   const aggregateReportRepository = new AggregateReportRepository(
     database,
     logger,
-    histogram,
+    metrics,
   )
   const reportStatusRepository = new ReportStatusRepository(
     database,
     logger,
-    histogram,
+    metrics,
   )
   const balanceStatusRepository = new BalanceStatusRepository(
     database,
     logger,
-    histogram,
+    metrics,
   )
 
   // #endregion

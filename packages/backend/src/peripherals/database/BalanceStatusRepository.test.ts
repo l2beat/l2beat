@@ -3,16 +3,16 @@ import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockHistogram } from '../../test/mocks/Histogram'
+import { createMockMetrics } from '../../test/mocks/Metrics'
 import { BalanceStatusRepository } from './BalanceStatusRepository'
 
 describe(BalanceStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockHistogram = createMockHistogram()
+  const mockMetrics = createMockMetrics()
   const repository = new BalanceStatusRepository(
     database,
     Logger.SILENT,
-    mockHistogram,
+    mockMetrics,
   )
 
   beforeEach(async () => {

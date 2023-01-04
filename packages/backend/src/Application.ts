@@ -10,7 +10,6 @@ import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
-import { RepositoryHistogram } from './peripherals/database/shared/BaseRepository'
 import { Database } from './peripherals/database/shared/Database'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
@@ -31,31 +30,12 @@ export class Application {
     )
 
     const metrics = new Metrics()
-    const repositoryHistogram: RepositoryHistogram = metrics.createHistogram({
-      name: 'repository_method_duration_seconds',
-      help: 'duration histogram of repository methods',
-      labelNames: ['repository', 'method'],
-    })
 
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config, metrics),
-      createTvlModule(
-        config,
-        logger,
-        http,
-        database,
-        clock,
-        repositoryHistogram,
-      ),
-      createActivityModule(
-        config,
-        logger,
-        http,
-        database,
-        clock,
-        repositoryHistogram,
-      ),
+      createTvlModule(config, logger, http, database, clock, metrics),
+      createActivityModule(config, logger, http, database, clock, metrics),
       createDiscoveryModule(config, logger, http),
     ]
 

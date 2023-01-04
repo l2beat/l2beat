@@ -3,7 +3,7 @@ import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockHistogram } from '../../test/mocks/Histogram'
+import { createMockMetrics } from '../../test/mocks/Metrics'
 import { BalanceRecord, BalanceRepository } from './BalanceRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
@@ -23,12 +23,8 @@ const mockBalance = (
 
 describe(BalanceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockHistogram = createMockHistogram()
-  const repository = new BalanceRepository(
-    database,
-    Logger.SILENT,
-    mockHistogram,
-  )
+  const mockMetrics = createMockMetrics()
+  const repository = new BalanceRepository(database, Logger.SILENT, mockMetrics)
 
   const HOLDER_A = EthereumAddress.random()
   const HOLDER_B = EthereumAddress.random()

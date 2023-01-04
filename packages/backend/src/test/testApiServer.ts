@@ -4,7 +4,7 @@ import { agent } from 'supertest'
 
 import { ApiServer } from '../../src/api/ApiServer'
 import { Metrics } from '../Metrics'
-import { createMockHistogram } from './mocks/Histogram'
+import { createMockHistogram } from './mocks/Metrics'
 
 export function createTestApiServer(routers: Router[], metrics?: Metrics) {
   if (!metrics) {

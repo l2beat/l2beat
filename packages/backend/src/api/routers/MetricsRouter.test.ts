@@ -2,7 +2,7 @@ import { mock } from '@l2beat/common'
 
 import { Config } from '../../config'
 import { Metrics } from '../../Metrics'
-import { createMockHistogram } from '../../test/mocks/Histogram'
+import { createMockHistogram } from '../../test/mocks/Metrics'
 import { createTestApiServer } from '../../test/testApiServer'
 import { createMetricsRouter } from './MetricsRouter'
 

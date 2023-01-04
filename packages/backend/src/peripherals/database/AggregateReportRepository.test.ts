@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockHistogram } from '../../test/mocks/Histogram'
+import { createMockMetrics } from '../../test/mocks/Metrics'
 import {
   AggregateReportRecord,
   AggregateReportRepository,
@@ -11,11 +11,11 @@ import {
 
 describe(AggregateReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockHistogram = createMockHistogram()
+  const mockMetrics = createMockMetrics()
   const repository = new AggregateReportRepository(
     database,
     Logger.SILENT,
-    mockHistogram,
+    mockMetrics,
   )
 
   const TIME_0 = UnixTime.now().toStartOf('day')
