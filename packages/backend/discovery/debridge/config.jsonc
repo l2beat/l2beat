@@ -1,0 +1,7 @@
+{
+    "$schema": "../config.schema.json",
+    "name": "debridge",
+    "initialAddresses": ["0x43dE2d77BF8027e25dBD179B491e8d64f38398aA", "0x24455aa55DED7728783c9474bE8eA2f5C935f8EB"],
+    "overrides": {}
+  }
+  
