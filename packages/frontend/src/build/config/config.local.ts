@@ -6,8 +6,7 @@ export function getLocalConfig(): Config {
     ...common,
     features: {
       ...common.features,
-      milestones: true,
-      // The local backend doesn't suport activity
+      // The local backend doesn't support activity
       activity: false,
     },
     backend: {
