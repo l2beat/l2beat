@@ -551,7 +551,7 @@ export const tokenList: TokenInfo[] = [
   {
     id: AssetId('cro-cro'),
     name: 'CRO',
-    coingeckoId: CoingeckoId('wrapped-cro'),
+    coingeckoId: CoingeckoId('crypto-com-chain'),
     address: EthereumAddress('0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b'),
     symbol: 'CRO',
     decimals: 8,
