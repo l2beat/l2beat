@@ -1,5 +1,5 @@
-import { CoingeckoId, UnixTime } from '@l2beat/types'
 import { getTokenByCoingeckoId } from '@l2beat/config'
+import { CoingeckoId, UnixTime } from '@l2beat/types'
 
 import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
@@ -79,15 +79,22 @@ export class CoingeckoClient {
       }
     } catch {
       const list = await this.getCoinList({ includePlatform: true })
-      const t = getTokenByCoingeckoId(coinId)
-      const token = list.find((item) => {
+      const token = getTokenByCoingeckoId(coinId)
+      const coingeckoSupported = list.find((item) => {
         const addr = item.platforms.ethereum
-        return addr?.toLocaleLowerCase() === t.address?.toString().toLocaleLowerCase()
+        return (
+          addr?.toLocaleLowerCase() ===
+          token.address?.toString().toLocaleLowerCase()
+        )
       })
-      console.log(list)
+      if (coingeckoSupported?.id === undefined) {
+        throw new Error(
+          `Server responded with non-2XX result: Could not fetch the prices for ${coinId.toString()}`,
+        )
+      }
+
       const data = await this.query(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `/coins/${token?.id.toString()}/market_chart/range`,
+        `/coins/${coingeckoSupported.id.toString()}/market_chart/range`,
         {
           vs_currency: vs_currency.toLowerCase(),
           from: from.toString(),
