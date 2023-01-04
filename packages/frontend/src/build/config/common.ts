@@ -16,7 +16,7 @@ export const common: Omit<Config, 'backend'> = {
     gitcoinOption: false,
     bridges: true,
     activity: true,
-    milestones: false,
+    milestones: true,
   },
   layer2s,
   bridges,
