@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { CONTRACTS } from '../layer2s'
 
+import { CONTRACTS } from '../layer2s'
 import { Bridge } from './types'
 
 export const debridge: Bridge = {
@@ -24,7 +24,7 @@ export const debridge: Bridge = {
       apps: ['https://app.debridge.finance'],
     },
     description:
-      'deBridge is an interoperability layer that enables decentralized transfers of arbitrary messages between various blockchains.',
+      'deBridge is an interoperability layer that enables messaging between various blockchains.',
   },
   config: {
     escrows: [
@@ -36,15 +36,8 @@ export const debridge: Bridge = {
     ],
   },
   technology: {
-    destination: [
-      'Arbitrum',
-      'Avalanche',
-      'BNB Chain',
-      'Polygon',
-      'Fantom',
-      'HECO',
-    ],
-    category: 'Hybrid',
+    destination: ['Arbitrum', 'Avalanche', 'BNB Chain', 'Polygon'],
+    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
@@ -82,8 +75,17 @@ export const debridge: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'Signed off-chain by 2/3 of deBridge validators.',
+      description: 'Signed off-chain by 8 or more deBridge validators.',
       sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description: 'The bridge can be upgraded by 2/3 MSig.',
+      sentiment: 'bad',
+    },
+    destinationToken: {
+      value: '',
+       description: 'To be continued...'
     },
   },
   contracts: {
@@ -101,9 +103,15 @@ export const debridge: Bridge = {
       },
       {
         name: 'SignatureVerifier',
-        description: 'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
-        address: '0xfe7de3c1e1bd252c67667b56347cabfc6df08df4'
-      }
+        description:
+          'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
+        address: '0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c',
+        upgradeability: {
+          type: 'EIP1967',
+          implementation: '0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4',
+          admin: '0xE4427af3555CD9303D728C491364FAdFDD7494Fe',
+        },
+      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
