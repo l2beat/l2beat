@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 
+import { Metrics } from '../../../Metrics'
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
@@ -13,8 +14,8 @@ export interface StarkexTransactionCountRecord {
 }
 
 export class StarkexTransactionCountRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
     /* eslint-disable @typescript-eslint/unbound-method */
     this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)

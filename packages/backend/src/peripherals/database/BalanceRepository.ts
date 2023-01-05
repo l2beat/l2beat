@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/common'
 import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { BalanceRow } from 'knex/types/tables'
 
+import { Metrics } from '../../Metrics'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -18,8 +19,8 @@ export interface DataBoundary {
 }
 
 export class BalanceRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 

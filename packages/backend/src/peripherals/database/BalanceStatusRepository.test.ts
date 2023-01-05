@@ -3,11 +3,17 @@ import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
+import { createMockMetrics } from '../../test/mocks/Metrics'
 import { BalanceStatusRepository } from './BalanceStatusRepository'
 
 describe(BalanceStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new BalanceStatusRepository(database, Logger.SILENT)
+  const mockMetrics = createMockMetrics()
+  const repository = new BalanceStatusRepository(
+    database,
+    Logger.SILENT,
+    mockMetrics,
+  )
 
   beforeEach(async () => {
     await repository.deleteAll()
