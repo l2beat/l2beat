@@ -42,7 +42,7 @@ export const debridge: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'deBridge leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The validation of cross-chain transactions is performed by a network of oracles signing the transaction, which would be later evaluated by the smart contract. ',
+        'deBridge leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The validation of cross-chain transactions is performed by a network of oracles signing the transaction, which would be later evaluated by the smart contract.',
       references: [],
       risks: [],
     },
@@ -62,7 +62,7 @@ export const debridge: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Tokens transferred end up a their wrapped representation (deTokens)',
+        'Tokens transferred end up a their wrapped representation (deTokens).',
       references: [],
       risks: [
         {
@@ -127,8 +127,21 @@ export const debridge: Bridge = {
     },
     {
       name: 'Oracles',
-      description: '',
-      accounts: [{ address: '', type: 'EOA' }],
+      description: 'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
+      accounts: [
+        { address: '0x4bC16662A2cE381E7bb54Dc577c05619C5E67526', type: 'EOA' },
+        { address: '0x1c0720B124e7251e881a0fbCfe259d085C59f205', type: 'EOA' },
+        { address: '0x573F5E2940789B378BA09cf7d3fD010C422a9ff5', type: 'EOA' },
+        { address: '0x59CE95b8955F0E7Be128d5Af77161B36f6084214', type: 'EOA' },
+        { address: '0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC', type: 'EOA' },
+        { address: '0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8', type: 'EOA' },
+        { address: '0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426', type: 'EOA' },
+        { address: '0x874f46124C1DAaD4749B94f82eD142754826240E', type: 'EOA' },
+        { address: '0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0', type: 'EOA' },
+        { address: '0x83f81E7f9E284AAFFEDED797008663595f7342bF', type: 'EOA' },
+        { address: '0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D', type: 'EOA' },
+        { address: '0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54', type: 'EOA' },
+      ],
     },
   ],
 }
