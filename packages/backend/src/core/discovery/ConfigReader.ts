@@ -1,3 +1,4 @@
+import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
 
@@ -16,7 +17,27 @@ export class ConfigReader {
     return DiscoveryConfig.parse(parsed)
   }
 
-  readAllConfigs(): DiscoveryConfig[] {
-    return []
+  async readAllConfigs(): Promise<DiscoveryConfig[]> {
+    const result: DiscoveryConfig[] = []
+    const configs = readdirSync('discovery').filter(
+      (x) => x !== 'config.schema.json' && x !== 'README.md',
+    )
+    const errors: ParseError[] = []
+    for (const config of configs) {
+      const contents = await readFile(
+        `discovery/${config}/config.jsonc`,
+        'utf-8',
+      )
+
+      const parsed: unknown = parse(contents, errors, {
+        allowTrailingComma: true,
+      })
+
+      result.push(DiscoveryConfig.parse(parsed))
+    }
+    if (errors.length !== 0) {
+      throw new Error('Cannot parse file')
+    }
+    return result
   }
 }

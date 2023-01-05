@@ -43,7 +43,7 @@ export class WatchModeUpdater {
 
     const configReader = new ConfigReader()
 
-    const projectConfigs = configReader.readAllConfigs()
+    const projectConfigs = await configReader.readAllConfigs()
 
     for (const projectConfig of projectConfigs) {
       await discover(discoveryProvider, projectConfig)
