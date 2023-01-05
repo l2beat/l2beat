@@ -18,6 +18,7 @@ export interface Config {
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
   readonly discovery: DiscoveryConfig | false
+  readonly watchModeEnabled: boolean
 }
 
 export interface LoggerConfig {

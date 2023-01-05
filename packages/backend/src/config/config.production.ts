@@ -73,5 +73,6 @@ export function getProductionConfig(cli: CliParameters): Config {
       },
     },
     discovery: false,
+    watchModeEnabled: getEnv.boolean('WATCHMODE_ENABLED', false),
   }
 }
