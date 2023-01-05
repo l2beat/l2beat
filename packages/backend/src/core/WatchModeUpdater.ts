@@ -46,8 +46,9 @@ export class WatchModeUpdater {
     const projectConfigs = await configReader.readAllConfigs()
 
     for (const projectConfig of projectConfigs) {
-      await discover(discoveryProvider, projectConfig)
-      this.logger.info('Discovery performed', { project: projectConfig.name })
+      this.logger.info('Discovery started', { project: projectConfig.name })
+      await discover(discoveryProvider, projectConfig, { disableLogs: true })
+      this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
     if (this.discordClient) {

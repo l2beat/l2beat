@@ -23,7 +23,12 @@ export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   config: DiscoveryConfig,
+  options?: {
+    disableLogs: boolean
+  },
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
+  const showLogs = options?.disableLogs ? false : true
+
   const overrides = config.overrides?.[address.toString()]
 
   const proxyDetection = await detectProxy(
@@ -33,15 +38,19 @@ export async function analyzeItem(
   )
 
   if (proxyDetection) {
-    console.log(
-      '  Proxy detected:',
-      chalk.bgRed.whiteBright(' ' + proxyDetection.upgradeability.type + ' '),
-    )
+    if (showLogs) {
+      console.log(
+        '  Proxy detected:',
+        chalk.bgRed.whiteBright(' ' + proxyDetection.upgradeability.type + ' '),
+      )
+    }
   } else if (overrides?.proxyType) {
-    console.log(
-      '  Manual proxy detection failed:',
-      chalk.bgRed.whiteBright(' ' + overrides.proxyType + ' '),
-    )
+    if (showLogs) {
+      console.log(
+        '  Manual proxy detection failed:',
+        chalk.bgRed.whiteBright(' ' + overrides.proxyType + ' '),
+      )
+    }
   }
 
   const metadata = await getMetadata(
@@ -51,9 +60,13 @@ export async function analyzeItem(
   )
 
   if (metadata.isEOA) {
-    console.log('  Type:', chalk.blue('EOA'))
+    if (showLogs) {
+      console.log('  Type:', chalk.blue('EOA'))
+    }
   } else {
-    console.log('  Name:', chalk.bold(metadata.name))
+    if (showLogs) {
+      console.log('  Name:', chalk.bold(metadata.name))
+    }
   }
 
   const handlers = getHandlers(metadata.abi, overrides)

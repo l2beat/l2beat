@@ -8,7 +8,12 @@ import { DiscoveryProvider } from './provider/DiscoveryProvider'
 export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
+  options?: {
+    disableLogs: boolean
+  },
 ) {
+  const showLogs = options?.disableLogs ? false : true
+
   const maxAddresses = config.maxAddresses ?? 100
   const maxDepth = config.maxDepth ?? 6
 
@@ -36,59 +41,79 @@ export async function discover(
 
     const overrides = config.overrides?.[address.toString()]
     if (overrides?.ignoreDiscovery) {
-      console.log('Skipping', address)
-      console.log()
+      if (showLogs) {
+        console.log('Skipping', address)
+        console.log()
+      }
       continue
     }
 
     if (depth > maxDepth) {
-      console.log('Skipping', address)
-      console.log(
-        '  Error:',
-        chalk.red(`Depth ${depth} exceeded max = ${maxDepth}`),
-      )
-      console.log()
+      if (showLogs) {
+        console.log('Skipping', address)
+        console.log(
+          '  Error:',
+          chalk.red(`Depth ${depth} exceeded max = ${maxDepth}`),
+        )
+        console.log()
+      }
       continue
     }
 
     totalAddresses++
     if (totalAddresses > maxAddresses) {
-      console.log('Skipping', address)
-      console.log(
-        '  Error:',
-        chalk.red(
-          `Total addresses ${totalAddresses} exceeded max = ${maxAddresses}`,
-        ),
-      )
-      console.log()
+      if (showLogs) {
+        console.log('Skipping', address)
+        console.log(
+          '  Error:',
+          chalk.red(
+            `Total addresses ${totalAddresses} exceeded max = ${maxAddresses}`,
+          ),
+        )
+        console.log()
+      }
       continue
     }
-
-    console.log('Analyzing', address)
-    const { analyzed, relatives } = await analyzeItem(provider, address, config)
+    if (showLogs) {
+      console.log('Analyzing', address)
+    }
+    const { analyzed, relatives } = await analyzeItem(
+      provider,
+      address,
+      config,
+      options,
+    )
     resolved.set(address, analyzed)
 
     const unknown = relatives.filter((x) => !known.has(x))
     if (unknown.length > 0) {
-      console.log('  New relatives found:', unknown.length)
+      if (showLogs) {
+        console.log('  New relatives found:', unknown.length)
+      }
       for (const relative of unknown) {
         known.add(relative)
-        console.log('    -', relative)
+        if (showLogs) {
+          console.log('    -', relative)
+        }
       }
     }
 
-    console.log()
+    if (showLogs) {
+      console.log()
+    }
 
     stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
   }
 
   for (const override of Object.keys(config.overrides ?? {})) {
     if (!known.has(EthereumAddress(override))) {
-      console.log(
-        chalk.red('Override for'),
-        chalk.bold(override),
-        chalk.red("was configured, but the address wasn't discovered!"),
-      )
+      if (showLogs) {
+        console.log(
+          chalk.red('Override for'),
+          chalk.bold(override),
+          chalk.red("was configured, but the address wasn't discovered!"),
+        )
+      }
     }
   }
 
