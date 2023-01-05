@@ -346,7 +346,7 @@ export const loopring: Layer2 = {
       link: 'https://medium.loopring.io/loopring-l2-defi-port-cd6e811250a9',
       date: '2022-09-27T00:00:00Z',
       description:
-        'Loopring introduced a feature that enabled dutch auctions, lending, and other DeFi functions to be performed on its zkRollup platform.',
+        'Loopring introduced a feature that enables dutch auctions, lending, and other DeFi functions to be performed on its zkRollup platform.',
     },
   ], {
     name: 'Loopring Supports NFTs',
