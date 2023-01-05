@@ -33,6 +33,7 @@ export class WatchModeUpdater {
 
   async update() {
     const blockNumber = await this.provider.getBlockNumber()
+    this.logger.info('Update started', { blockNumber })
 
     const discoveryProvider = new DiscoveryProvider(
       this.provider,
@@ -46,6 +47,7 @@ export class WatchModeUpdater {
 
     for (const projectConfig of projectConfigs) {
       await discover(discoveryProvider, projectConfig)
+      this.logger.info('Discovery performed', { project: projectConfig.name })
     }
 
     if (this.discordClient) {
@@ -58,5 +60,7 @@ export class WatchModeUpdater {
         'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
       )
     }
+
+    this.logger.info('Update finished', { blockNumber })
   }
 }
