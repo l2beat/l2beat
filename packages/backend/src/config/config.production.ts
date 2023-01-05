@@ -13,6 +13,8 @@ export function getProductionConfig(cli: CliParameters): Config {
     throw new Error(`No production config for mode: ${cli.mode}`)
   }
 
+  const watchModeEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+
   return {
     name: 'Backend/Production',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
@@ -73,6 +75,11 @@ export function getProductionConfig(cli: CliParameters): Config {
       },
     },
     discovery: false,
-    watchModeEnabled: getEnv.boolean('WATCHMODE_ENABLED', false),
+    watchMode: watchModeEnabled && {
+      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      discordToken: process.env.DISCORD_TOKEN,
+      discordChannelId: process.env.DISCORD_CHANNEL_ID,
+    },
   }
 }

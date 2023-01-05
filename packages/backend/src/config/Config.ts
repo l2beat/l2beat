@@ -18,7 +18,7 @@ export interface Config {
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
   readonly discovery: DiscoveryConfig | false
-  readonly watchModeEnabled: boolean
+  readonly watchMode: WatchModeConfig | false
 }
 
 export interface LoggerConfig {
@@ -71,4 +71,11 @@ export interface DiscoveryConfig {
 export interface MetricsAuthConfig {
   readonly user: string
   readonly pass: string
+}
+
+export interface WatchModeConfig {
+  readonly alchemyApiKey: string
+  readonly etherscanApiKey: string
+  readonly discordToken: string | undefined
+  readonly discordChannelId: string | undefined
 }

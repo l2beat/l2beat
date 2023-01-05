@@ -4,7 +4,7 @@ import { parse, ParseError } from 'jsonc-parser'
 import { DiscoveryConfig } from './DiscoveryConfig'
 
 export class ConfigReader {
-  async readConfig(name: string) {
+  async readConfig(name: string): Promise<DiscoveryConfig> {
     const contents = await readFile(`discovery/${name}/config.jsonc`, 'utf-8')
     const errors: ParseError[] = []
     const parsed: unknown = parse(contents, errors, {
@@ -14,5 +14,9 @@ export class ConfigReader {
       throw new Error('Cannot parse file')
     }
     return DiscoveryConfig.parse(parsed)
+  }
+
+  readAllConfigs(): DiscoveryConfig[] {
+    return []
   }
 }
