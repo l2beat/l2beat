@@ -348,11 +348,18 @@ export const loopring: Layer2 = {
       description:
         'Loopring introduced a feature that enables dutch auctions, lending, and other DeFi functions to be performed on its zkRollup platform.',
     },
-  ], {
-    name: 'Loopring Supports NFTs',
+    {
+      name: 'Loopring Supports NFTs',
     link: 'https://medium.loopring.io/loopring-now-supports-nfts-on-l2-29174a343d0d',
     date: '2021-08-24T00:00:00Z',
     description:
       'Loopring supports NFT minting, trading, and transfers.',
-  },
+    },
+    {
+      name: 'The first zkRollup DEX is live',
+    link: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+    date: '2020-02-27T00:00:00Z',
+    description:
+      'zkRollup trading is live, as Loopring launches their order book based exchange.',
+    },
 }
