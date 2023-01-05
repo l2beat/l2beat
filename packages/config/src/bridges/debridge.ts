@@ -127,7 +127,8 @@ export const debridge: Bridge = {
     },
     {
       name: 'Oracles',
-      description: 'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
+      description:
+        'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
       accounts: [
         { address: '0x4bC16662A2cE381E7bb54Dc577c05619C5E67526', type: 'EOA' },
         { address: '0x1c0720B124e7251e881a0fbCfe259d085C59f205', type: 'EOA' },
