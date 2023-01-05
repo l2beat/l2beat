@@ -47,16 +47,21 @@ export class CallHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
-    logHandler(this.field, [
-      'Calling ',
-      `${this.fragment.name}(${resolved.args
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        .map((x) => x.toString())
-        .join(', ')})`,
-    ])
+    logHandler(
+      this.field,
+      [
+        'Calling ',
+        `${this.fragment.name}(${resolved.args
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          .map((x) => x.toString())
+          .join(', ')})`,
+      ],
+      options,
+    )
     const callResult = await callMethod(
       provider,
       address,

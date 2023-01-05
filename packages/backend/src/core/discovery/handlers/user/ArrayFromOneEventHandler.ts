@@ -50,8 +50,9 @@ export class ArrayFromOneEventHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Querying ', this.fragment.name])
+    logHandler(this.field, ['Querying ', this.fragment.name], options)
     const logs = await provider.getLogs(address, [
       this.abi.getEventTopic(this.fragment),
     ])

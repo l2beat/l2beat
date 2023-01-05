@@ -52,8 +52,9 @@ export class AccessControlHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Checking AccessControl'])
+    logHandler(this.field, ['Checking AccessControl'], options)
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

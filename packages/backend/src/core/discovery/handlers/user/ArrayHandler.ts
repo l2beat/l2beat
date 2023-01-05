@@ -49,9 +49,10 @@ export class ArrayHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Calling array ', this.fragment.name + '(i)'])
+    logHandler(this.field, ['Calling array ', this.fragment.name + '(i)'], options)
     const resolved = resolveDependencies(this.definition, previousResults)
 
     const value: ContractValue[] = []

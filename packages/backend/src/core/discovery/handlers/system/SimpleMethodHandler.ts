@@ -21,8 +21,9 @@ export class SimpleMethodHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Calling ', this.fragment.name + '()'])
+    logHandler(this.field, ['Calling ', this.fragment.name + '()'], options)
     const callResult = await callMethod(provider, address, this.fragment, [])
     return { field: this.field, ...callResult }
   }

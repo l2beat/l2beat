@@ -15,6 +15,7 @@ export interface Handler {
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    previousResults: Record<string, HandlerResult | undefined>,
+    options?: { disableLogs: boolean },
+    previousResults?: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult>
 }

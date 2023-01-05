@@ -41,9 +41,10 @@ export class StorageHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Reading storage'])
+    logHandler(this.field, ['Reading storage'], options)
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes

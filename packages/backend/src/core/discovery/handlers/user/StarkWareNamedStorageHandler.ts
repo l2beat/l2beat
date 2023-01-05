@@ -28,11 +28,13 @@ export class StarkWareNamedStorageHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, [
-      'Reading named storage at ',
-      JSON.stringify(this.definition.tag),
-    ])
+    logHandler(
+      this.field,
+      ['Reading named storage at ', JSON.stringify(this.definition.tag)],
+      options,
+    )
     let storage: Bytes
     try {
       const slot = Bytes.fromHex(

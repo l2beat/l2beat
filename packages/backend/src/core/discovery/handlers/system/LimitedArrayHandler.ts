@@ -25,13 +25,18 @@ export class LimitedArrayHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, [
-      'Calling array (max: ',
-      this.limit.toString(),
-      ') ',
-      this.fragment.name + '(i)',
-    ])
+    logHandler(
+      this.field,
+      [
+        'Calling array (max: ',
+        this.limit.toString(),
+        ') ',
+        this.fragment.name + '(i)',
+      ],
+      options,
+    )
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
         callMethod(provider, address, this.fragment, [index]),
