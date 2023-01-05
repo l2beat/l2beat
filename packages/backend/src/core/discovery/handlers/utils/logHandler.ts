@@ -5,5 +5,6 @@ export function logHandler(field: string, values: string[]) {
   const content = values
     .map((v, i) => (i % 2 === 0 ? v : chalk.blue(v)))
     .join('')
-  console.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
+
+  // console.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
 }

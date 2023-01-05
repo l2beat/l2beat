@@ -100,7 +100,6 @@ export async function detectStarkWareProxy(
     ])
 
   if (isDiamond) {
-    console.log('StarkWare diamond detected for', address)
     return await getStarkWareDiamond(
       provider,
       address,
@@ -149,7 +148,6 @@ async function getStarkWareDiamond(
   }
 
   const tx = await provider.getTransaction(Hash256(lastUpgrade))
-  console.log('Got last upgrade data')
 
   const abi = new utils.Interface([
     'function upgradeTo(address newImplementation, bytes data, bool finalize)',
@@ -174,7 +172,6 @@ async function getStarkWareDiamond(
     if (!name) {
       break
     }
-    console.log(`${name} =`, facet)
     facets[name] = facet
   }
 
