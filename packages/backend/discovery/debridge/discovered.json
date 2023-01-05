@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "blockNumber": 16334334,
+  "blockNumber": 16340182,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -22,76 +22,18 @@
         "feeProxy": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
         "gap0": 0,
         "gap1": "0x0000000000000000000000000000000000000000",
-        "getChainFromConfig": [
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ]
-        ],
         "getChainId": 1,
-        "getChainToConfig": [
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ]
-        ],
         "globalFixedNativeFee": 1000000000000000,
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "lockedClaim": 1,
-        "nonce": 10329,
+        "nonce": 10343,
         "paused": false,
         "signatureVerifier": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
         "version": 421,
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wethGate": "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59"
-      },
-      "errors": {
-        "getChainFromConfig": "Too many values. Update configuration explore fully",
-        "getChainToConfig": "Too many values. Update configuration explore fully"
       }
     },
     {
@@ -127,32 +69,6 @@
       }
     },
     {
-      "name": "WethGate",
-      "address": "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59",
-      "code": "https://etherscan.deth.net/address/0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "version": 101,
-        "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
-    },
-    {
-      "name": "WETH9",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "code": "https://etherscan.deth.net/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "3809058122217981023756478"
-      }
-    },
-    {
       "name": "SignatureVerifier",
       "address": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
       "code": "https://etherscan.deth.net/address/0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c,0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4",
@@ -163,24 +79,28 @@
       },
       "values": {
         "confirmationThreshold": 3,
-        "currentBlock": 16334259,
+        "currentBlock": 16340161,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "excessConfirmations": 3,
         "minConfirmations": 8,
-        "oracleAddresses": [
+        "oracles": [
           "0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
           "0x1c0720B124e7251e881a0fbCfe259d085C59f205",
           "0x573F5E2940789B378BA09cf7d3fD010C422a9ff5",
           "0x59CE95b8955F0E7Be128d5Af77161B36f6084214",
-          "0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC"
+          "0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
+          "0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8",
+          "0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426",
+          "0x874f46124C1DAaD4749B94f82eD142754826240E",
+          "0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0",
+          "0x83f81E7f9E284AAFFEDED797008663595f7342bF",
+          "0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D",
+          "0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"
         ],
         "requiredOraclesCount": 0,
         "submissionsInBlock": 1,
         "version": 201
-      },
-      "errors": {
-        "oracleAddresses": "Too many values. Update configuration explore fully"
       }
     },
     {
@@ -295,61 +215,7 @@
         "feeContractUpdater": "0x0000000000000000000000000000000000000000",
         "feeProxy": "0x0000000000000000000000000000000000000000",
         "flashFeeBps": 0,
-        "getChainFromConfig": [
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ]
-        ],
         "getChainId": 1,
-        "getChainToConfig": [
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ],
-          [
-            0,
-            false,
-            0
-          ]
-        ],
         "globalFixedNativeFee": 0,
         "globalTransferFeeBps": 0,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
@@ -361,10 +227,6 @@
         "version": 410,
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wethGate": "0x0000000000000000000000000000000000000000"
-      },
-      "errors": {
-        "getChainFromConfig": "Too many values. Update configuration explore fully",
-        "getChainToConfig": "Too many values. Update configuration explore fully"
       }
     }
   ],
@@ -373,11 +235,18 @@
     "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96",
     "0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0",
     "0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
+    "0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D",
     "0x573F5E2940789B378BA09cf7d3fD010C422a9ff5",
     "0x59CE95b8955F0E7Be128d5Af77161B36f6084214",
+    "0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426",
     "0x6f572a24c5C009fC8C844Fab5352edf79F132FBD",
+    "0x83f81E7f9E284AAFFEDED797008663595f7342bF",
+    "0x874f46124C1DAaD4749B94f82eD142754826240E",
     "0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
-    "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
+    "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
+    "0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0",
+    "0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54",
+    "0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8"
   ],
   "abis": {
     "0x24455aa55DED7728783c9474bE8eA2f5C935f8EB": [
@@ -743,23 +612,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() pure returns (uint256)"
     ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
-    ],
     "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -871,14 +723,6 @@
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function unpause()"
-    ],
-    "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59": [
-      "constructor(address _weth)",
-      "error EthTransferFailed()",
-      "event Withdrawal(address indexed receiver, uint256 wad)",
-      "function version() pure returns (uint256)",
-      "function weth() view returns (address)",
-      "function withdraw(address _receiver, uint256 _wad)"
     ],
     "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": [
       "error AdminBadRole()",

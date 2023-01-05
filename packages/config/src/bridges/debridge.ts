@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const debridge: Bridge = {
@@ -41,14 +42,14 @@ export const debridge: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'deBridge leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The validation of cross-chain transactions is performed by a network of independent validators. deSwap is a solution built on top of deBridge infrastructure that enables capital-efficient cross-chain swaps between arbitrary liquid assets. dePort is a native bridge for assets that allows protocols to bridge tokens and create utility for their synthetic representation (deTokens) in other chains.',
+        'deBridge leverages cross-chain messaging to transfer tokens from Ethereum to other chains and vice-versa. The validation of cross-chain transactions is performed by a network of oracles signing the transaction, which would be later evaluated by the smart contract. ',
       references: [],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'External validators observe events on deBridge supported chains and transfer funds to other chains.',
+        'External validators observe events on deBridge supported chains and transfer signed messages to other chains. Message is considered valid when it contains at least minimum amount of signature, currently set to 8.',
       references: [],
       risks: [
         {
@@ -61,7 +62,7 @@ export const debridge: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Type of the token received on the destination chain depends on the application. For deSwap, users will receive the canonical token. For dePort, user will end up with wrapped version (deAsset).',
+        'Tokens transferred end up a their wrapped representation (deTokens)',
       references: [],
       risks: [
         {
@@ -75,7 +76,7 @@ export const debridge: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'Signed off-chain by 8 or more deBridge validators.',
+      description: 'Signed off-chain by 8 or more deBridge oracles.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -83,10 +84,7 @@ export const debridge: Bridge = {
       description: 'The bridge can be upgraded by 2/3 MSig.',
       sentiment: 'bad',
     },
-    destinationToken: {
-      value: '',
-       description: 'To be continued...'
-    },
+    destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
     addresses: [
@@ -126,6 +124,11 @@ export const debridge: Bridge = {
           type: 'MultiSig',
         },
       ],
+    },
+    {
+      name: 'Oracles',
+      description: '',
+      accounts: [{ address: '', type: 'EOA' }],
     },
   ],
 }
