@@ -5,7 +5,6 @@ import { range } from 'lodash'
 
 import { ZksyncTransactionRepository } from '../../../peripherals/database/activity/ZksyncTransactionRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { Database } from '../../../peripherals/database/shared/Database'
 import { ZksyncClient } from '../../../peripherals/zksync'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
@@ -14,7 +13,7 @@ import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute
 export function createZksyncCounter(
   projectId: ProjectId,
   http: HttpClient,
-  database: Database,
+  zksyncRepository: ZksyncTransactionRepository,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   transactionApi: ZksyncTransactionApi,
@@ -23,7 +22,6 @@ export function createZksyncCounter(
     transactionApi.callsPerMinute,
   )
   const client = new ZksyncClient(http, logger, transactionApi.callsPerMinute)
-  const zksyncRepository = new ZksyncTransactionRepository(database, logger)
 
   const processor = new SequenceProcessor(
     projectId.toString(),
