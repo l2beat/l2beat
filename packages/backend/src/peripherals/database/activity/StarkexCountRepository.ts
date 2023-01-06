@@ -5,7 +5,7 @@ import { StarkexTransactionCountRow } from 'knex/types/tables'
 
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
-import { OptionalDict } from '../shared/types'
+import { NullableDict } from '../shared/types'
 
 export interface StarkexTransactionCountRecord {
   timestamp: UnixTime
@@ -48,7 +48,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     const row = (await knex('activity.starkex')
       .where('project_id', projectId.toString())
       .max('unix_timestamp')
-      .first()) as OptionalDict<Date> | undefined
+      .first()) as NullableDict<Date> | undefined
 
     if (!row || row.max === null) {
       return undefined

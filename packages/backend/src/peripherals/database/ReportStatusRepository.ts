@@ -3,7 +3,7 @@ import { Hash256, UnixTime } from '@l2beat/types'
 
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
-import { OptionalDict } from './shared/types'
+import { NullableDict } from './shared/types'
 
 export interface ReportStatusRecord {
   configHash: Hash256
@@ -78,7 +78,7 @@ export class ReportStatusRepository extends BaseRepository {
     const knex = await this.knex()
     // note: we need to provide better types manually here
     const row = (await knex('report_status').max('unix_timestamp').first()) as
-      | OptionalDict<Date>
+      | NullableDict<Date>
       | undefined
     if (!row || row.max === null) {
       return undefined
