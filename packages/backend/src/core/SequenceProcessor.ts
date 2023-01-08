@@ -20,7 +20,9 @@ export interface SequenceProcessorOpts {
     from: number,
     to: number,
     trx: Knex.Transaction,
+    logger: Logger, // logger with properly set name
   ) => Promise<void>
+  uncertaintyBuffer?: number // resync from lastProcessed - uncertaintyBuffer
   scheduleIntervalMs?: number
 }
 
@@ -47,6 +49,7 @@ interface State {
 export class SequenceProcessor extends EventEmitter {
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
+  private readonly uncertaintyBuffer: number
   private readonly logger: Logger
   private state?: State
   private refreshId: NodeJS.Timer | undefined
@@ -76,6 +79,7 @@ export class SequenceProcessor extends EventEmitter {
       },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
+    this.uncertaintyBuffer = opts.uncertaintyBuffer ?? 0
   }
 
   async start(): Promise<void> {
@@ -117,9 +121,14 @@ export class SequenceProcessor extends EventEmitter {
   private async process(): Promise<void> {
     this.logger.debug('Processing started')
 
+    let firstRun = true
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
-      const lastProcessed = this.state?.lastProcessed
+      let lastProcessed = this.state?.lastProcessed
+      // we need to adjust starting block if its first run and uncertaintyBuffer is set
+      if (firstRun && lastProcessed && this.uncertaintyBuffer > 0) {
+        lastProcessed -= this.uncertaintyBuffer
+      }
       const startFrom = this.opts.startFrom
       let from = lastProcessed ? lastProcessed + 1 : startFrom
 
@@ -132,12 +141,6 @@ export class SequenceProcessor extends EventEmitter {
       const latest = await this.opts.getLatest(previousLatest)
 
       if (from === latest + 1) {
-        if (!this.state) {
-          await this.setState({
-            lastProcessed: latest,
-            latest,
-          })
-        }
         break processing
       }
 
@@ -150,6 +153,7 @@ export class SequenceProcessor extends EventEmitter {
         const to = Math.min(from + this.opts.batchSize - 1, latest)
         await this.processRange(from, to, latest)
       }
+      firstRun = false
     }
 
     this.logger.debug('Processing finished')
@@ -161,7 +165,7 @@ export class SequenceProcessor extends EventEmitter {
     try {
       this.eventTracker.record('range started')
       await this.repository.runInTransaction(async (trx) => {
-        await this.opts.processRange(from, to, trx)
+        await this.opts.processRange(from, to, trx, this.logger)
         await this.setState({ lastProcessed: to, latest }, trx)
       })
       this.eventTracker.record('range succeeded')

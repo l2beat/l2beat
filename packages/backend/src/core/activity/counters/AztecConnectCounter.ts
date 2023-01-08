@@ -34,7 +34,7 @@ export function createAztecConnectCounter(
         const block = await client.getLatestBlock()
         return block.number
       },
-      processRange: async (from, to, trx) => {
+      processRange: async (from, to, trx, logger) => {
         const queries = range(from, to + 1).map((blockNumber) => async () => {
           const block = await client.getBlock(blockNumber)
 

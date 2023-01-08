@@ -94,3 +94,7 @@ declare module 'knex/types/tables' {
     'activity.daily_count_view': DailyTransactionCountRow
   }
 }
+
+// Some aggregations return not empty row with null values. Use this type to explicitly type them.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type NullableDict<T = any> = Record<string, T | null>

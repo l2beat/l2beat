@@ -72,4 +72,9 @@ describe(ReportStatusRepository.name, () => {
     const result = await repository.findLatestTimestamp()
     expect(result).toEqual(TIME_ONE)
   })
+
+  it('finds latest timestamp when database is empty', async () => {
+    const result = await repository.findLatestTimestamp()
+    expect(result).toEqual(undefined)
+  })
 })

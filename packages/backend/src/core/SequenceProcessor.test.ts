@@ -30,12 +30,14 @@ describe(SequenceProcessor.name, () => {
     batchSize,
     refreshInterval,
     reportError,
+    uncertaintyBuffer,
   }: {
     startFrom: number
     batchSize: number
     getLatest: SequenceProcessorOpts['getLatest']
     processRange: SequenceProcessorOpts['processRange']
     refreshInterval?: number
+    uncertaintyBuffer?: number
     reportError?: LoggerOptions['reportError']
   }) {
     return new SequenceProcessor(
@@ -52,6 +54,7 @@ describe(SequenceProcessor.name, () => {
         getLatest,
         processRange,
         scheduleIntervalMs: refreshInterval,
+        uncertaintyBuffer,
       },
     )
   }
@@ -83,9 +86,9 @@ describe(SequenceProcessor.name, () => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [5]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 1, expect.anything()],
-        [2, 3, expect.anything()],
-        [4, 5, expect.anything()],
+        [0, 1, expect.anything(), expect.a(Logger)],
+        [2, 3, expect.anything(), expect.a(Logger)],
+        [4, 5, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -111,7 +114,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [4, 5, expect.anything()],
+        [4, 5, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -137,7 +140,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [4, 4, expect.anything()],
+        [4, 4, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -164,9 +167,9 @@ describe(SequenceProcessor.name, () => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything()],
-        [1, 1, expect.anything()],
-        [2, 2, expect.anything()],
+        [0, 0, expect.anything(), expect.a(Logger)],
+        [1, 1, expect.anything(), expect.a(Logger)],
+        [2, 2, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -193,7 +196,7 @@ describe(SequenceProcessor.name, () => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 2, expect.anything()],
+        [0, 2, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -325,10 +328,10 @@ describe(SequenceProcessor.name, () => {
         ...new Array(getLatestMock.calls.length - 2).fill([7]),
       ])
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 1, expect.anything()],
-        [2, 3, expect.anything()],
-        [4, 5, expect.anything()],
-        [6, 7, expect.anything()],
+        [0, 1, expect.anything(), expect.a(Logger)],
+        [2, 3, expect.anything(), expect.a(Logger)],
+        [4, 5, expect.anything(), expect.a(Logger)],
+        [6, 7, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -367,20 +370,68 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(getLatestMock).toHaveBeenCalledExactlyWith(
         expect.arrayWith([0], [1], [2]),
       )
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything()],
-        [1, 1, expect.anything()],
-        [2, 2, expect.anything()],
+        [0, 0, expect.anything(), expect.a(Logger)],
+        [1, 1, expect.anything(), expect.a(Logger)],
+        [2, 2, expect.anything(), expect.a(Logger)],
       ])
       expect(await repository.getById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+      })
+    })
+
+    it('continues syncing during next schedule and respects uncertainty buffer', async () => {
+      let syncedOnce = false
+      const getLatestMock = mockFn<
+        SequenceProcessorOpts['getLatest']
+      >().executes(async () => {
+        if (!syncedOnce) {
+          return 4
+        }
+        return 5
+      })
+      const processRangeMock =
+        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      sequenceProcessor = createSequenceProcessor({
+        startFrom: 0,
+        batchSize: 1,
+        getLatest: getLatestMock,
+        processRange: processRangeMock,
+        refreshInterval: 1, // kick refresh right after it's done
+        uncertaintyBuffer: 2,
+      })
+
+      await sequenceProcessor.start()
+
+      await once(sequenceProcessor, ALL_PROCESSED_EVENT)
+      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [4]])
+      syncedOnce = true
+
+      await once(sequenceProcessor, ALL_PROCESSED_EVENT)
+      expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+      expect(getLatestMock).toHaveBeenCalledExactlyWith(
+        expect.arrayWith([0], [4], [4], [5]),
+      )
+      expect(processRangeMock).toHaveBeenCalledExactlyWith([
+        [0, 0, expect.anything(), expect.a(Logger)],
+        [1, 1, expect.anything(), expect.a(Logger)],
+        [2, 2, expect.anything(), expect.a(Logger)],
+        [3, 3, expect.anything(), expect.a(Logger)],
+        [4, 4, expect.anything(), expect.a(Logger)],
+        [3, 3, expect.anything(), expect.a(Logger)],
+        [4, 4, expect.anything(), expect.a(Logger)],
+        [5, 5, expect.anything(), expect.a(Logger)],
+      ])
+      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+        id: PROCESSOR_ID,
+        lastProcessed: 5,
+        latest: 5,
       })
     })
   })
