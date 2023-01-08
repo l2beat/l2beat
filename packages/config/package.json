@@ -10,7 +10,7 @@
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
-    "lint": "eslint --ext .ts --max-warnings 0 src test scripts",
+    "lint": "eslint --ext .ts --max-warnings 0 src scripts",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "update-multichain": "node -r esbuild-register scripts/multichain",

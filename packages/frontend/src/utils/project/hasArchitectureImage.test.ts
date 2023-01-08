@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
 
-import { hasArchitectureImage } from '../../../src/utils/project/hasArchitectureImage'
+import { hasArchitectureImage } from './hasArchitectureImage'
 
 describe(hasArchitectureImage.name, () => {
   it('returns true for nova', () => {
