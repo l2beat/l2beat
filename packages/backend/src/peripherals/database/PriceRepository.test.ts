@@ -3,11 +3,13 @@ import { AssetId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
+import { createMockMetrics } from '../../test/mocks/Metrics'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describe(PriceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new PriceRepository(database, Logger.SILENT)
+  const mockMetrics = createMockMetrics()
+  const repository = new PriceRepository(database, Logger.SILENT, mockMetrics)
 
   const START = UnixTime.now()
   const DATA = [
@@ -143,6 +145,14 @@ describe(PriceRepository.name, () => {
         ]),
       )
     })
+
+    it('works with empty database', async () => {
+      await repository.deleteAll()
+
+      const result = await repository.calcDataBoundaries()
+
+      expect(result).toEqual(new Map())
+    })
   })
 
   describe(PriceRepository.prototype.getLatestByTokenBetween.name, () => {
@@ -167,6 +177,17 @@ describe(PriceRepository.name, () => {
       )
 
       expect(result).toEqual(new Map([[AssetId.ETH, START.add(-1, 'days')]]))
+    })
+
+    it('works with empty database', async () => {
+      await repository.deleteAll()
+
+      const result = await repository.getLatestByTokenBetween(
+        START.add(-1, 'days'),
+        START.add(-1, 'hours'),
+      )
+
+      expect(result).toEqual(new Map())
     })
   })
 })

@@ -202,4 +202,19 @@ export const zkspace: Layer2 = {
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSpace Admin.',
     },
   ],
+  milestones: [
+    {
+      name: 'ZKSpace launched',
+      link: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      date: '2021-12-20T00:00:00Z',
+      description:
+        'All-in-One Layer2 Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',
+    },
+    {
+      name: 'Token Deposit Campaign started',
+      link: 'https://medium.com/@zkspaceofficial/zkspace-releases-token-deposit-campaign-with-fascinating-zks-rewards-151e2492549e',
+      date: '2022-02-21T00:00:00Z',
+      description: 'Incentives program to onboard new users has started.',
+    },
+  ],
 }
