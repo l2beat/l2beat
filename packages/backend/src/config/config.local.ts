@@ -22,7 +22,8 @@ export function getLocalConfig(cli: CliParameters): Config {
   const activityEnabled =
     cli.mode === 'server' && getEnv.boolean('ACTIVITY_ENABLED', false)
   const discoveryEnabled = cli.mode === 'discover'
-  const watchModeEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+  const discoveryWatcherEnabled =
+    cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL_ID ? true : false
 
@@ -88,7 +89,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     },
-    discoveryWatcher: watchModeEnabled && {
+    discoveryWatcher: discoveryWatcherEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {

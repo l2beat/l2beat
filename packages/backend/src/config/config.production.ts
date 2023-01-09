@@ -13,7 +13,7 @@ export function getProductionConfig(cli: CliParameters): Config {
     throw new Error(`No production config for mode: ${cli.mode}`)
   }
 
-  const watchModeEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+  const discoveryWatcherEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL_ID ? true : false
 
@@ -77,7 +77,7 @@ export function getProductionConfig(cli: CliParameters): Config {
       },
     },
     discovery: false,
-    discoveryWatcher: watchModeEnabled && {
+    discoveryWatcher: discoveryWatcherEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
