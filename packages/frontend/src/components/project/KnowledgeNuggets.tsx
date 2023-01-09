@@ -9,11 +9,10 @@ export interface KnowledgeNuggetsProps {
 }
 
 export function KnowledgeNuggets({ knowledgeNuggets }: KnowledgeNuggetsProps) {
-
   if (!knowledgeNuggets) return null
 
   return (
-    <div className="KnowledgeNuggets px-4 md:px-0">
+    <div className="px-4 md:px-0">
       <span className="text-[28px] leading-[32.81px] font-bold">
         Knowledge nuggets
       </span>
