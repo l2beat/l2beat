@@ -3,6 +3,7 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
+import { ConfigReader } from '../../core/discovery/ConfigReader'
 import { WatchModeUpdater } from '../../core/WatchModeUpdater'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -34,15 +35,17 @@ export function createWatchModeModule(
       )
     : undefined
 
-  //implement readAllConfigs and add tests
+  const configReader = new ConfigReader()
 
   const watchModeUpdater = new WatchModeUpdater(
     provider,
     etherscanClient,
     discordClient,
+    configReader,
     clock,
     logger,
   )
+
   const start = () => {
     logger = logger.for('WatchModeModule')
     logger.info('Starting')

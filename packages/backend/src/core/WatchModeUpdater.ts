@@ -15,11 +15,11 @@ export class WatchModeUpdater {
     private readonly provider: providers.AlchemyProvider,
     private readonly etherscanClient: MainnetEtherscanClient,
     private readonly discordClient: DiscordClient | undefined,
+    private readonly configReader: ConfigReader,
     private readonly clock: Clock,
     private readonly logger: Logger,
-    // discovery logger
-    // config reader
-  ) {
+  ) // discovery logger
+  {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       () => this.update(),
@@ -45,9 +45,7 @@ export class WatchModeUpdater {
       blockNumber,
     )
 
-    const configReader = new ConfigReader()
-
-    const projectConfigs = await configReader.readAllConfigs()
+    const projectConfigs = await this.configReader.readAllConfigs()
 
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
@@ -56,7 +54,9 @@ export class WatchModeUpdater {
       this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
-    await this.notify(`Run discovery for all projects | block_number = ${blockNumber}`)
+    await this.notify(
+      `Run discovery for all projects | block_number = ${blockNumber}`,
+    )
 
     this.logger.info('Update finished', { blockNumber })
   }
@@ -72,7 +72,7 @@ export class WatchModeUpdater {
 
     await this.discordClient.sendMessage(message).then(
       () => this.logger.info('Notification to Discord has been sent'),
-      e => this.logger.error(e)
+      (e) => this.logger.error(e),
     )
   }
 }
