@@ -54,9 +54,13 @@ export class DiscoveryWatcher {
 
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
-      // try catch
-      await discover(discoveryProvider, projectConfig, this.discoveryLogger)
-      this.logger.info('Discovery finished', { project: projectConfig.name })
+
+      try {
+        await discover(discoveryProvider, projectConfig, this.discoveryLogger)
+        this.logger.info('Discovery finished', { project: projectConfig.name })
+      } catch (error) {
+        this.logger.error(error)
+      }
     }
 
     await this.notify(
@@ -68,7 +72,7 @@ export class DiscoveryWatcher {
 
   async notify(message: string) {
     if (!this.discordClient) {
-      // maybe only once?
+      // TODO: maybe only once? rethink
       this.logger.info(
         'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
       )
