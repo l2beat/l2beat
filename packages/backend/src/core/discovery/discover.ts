@@ -67,7 +67,7 @@ export async function discover(
       provider,
       address,
       config,
-      discoveryLogger
+      discoveryLogger,
     )
     resolved.set(address, analyzed)
 

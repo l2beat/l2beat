@@ -76,8 +76,10 @@ export interface MetricsAuthConfig {
 export interface DiscoveryWatcherConfig {
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
-  readonly discord: {
-    readonly token: string
-    readonly channelId: string
-  } | false
+  readonly discord:
+    | {
+        readonly token: string
+        readonly channelId: string
+      }
+    | false
 }
