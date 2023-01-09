@@ -10,6 +10,9 @@ module.exports = {
       zIndex: {
         41: '41',
       },
+      spacing: {
+        '2/3': '66.666666%',
+      },
     },
     fontSize: {
       '3xs': ['8px', '12px'],

@@ -19,7 +19,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
   return (
     <div
       className={cx(
-        'Milestones py-12 px-4 md:px-0 bg-gray-900 md:bg-transparent',
+        'Milestones px-4 md:px-0 bg-gray-900 md:bg-transparent',
         className,
       )}
     >

@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
+  KnowledgeNugget,
   Milestone,
   ProjectContracts,
   ProjectEscrow,
@@ -31,6 +32,9 @@ export interface Layer2 {
   /** Links to recent developments */
   /** Milestones achieved by the project */
   milestones?: Milestone[]
+  /** List of knowledge nuggets */
+  /** Useful articles worth to read*/
+  knowledgeNuggets?: KnowledgeNugget[]
 }
 
 export interface Layer2Display {
