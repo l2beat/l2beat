@@ -314,11 +314,11 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'First zkRollup is live',
+      name: 'Loopring zkRollup is live',
       link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
       date: '2019-12-04T00:00:00Z',
       description:
-        'Loopring is live, launching the first zkRollup on Ethereum mainnet.',
+        'Loopring Protocol 3.0 is fully operational with support for orderbook trading on WeDex.',
     },
     {
       name: 'Loopring Protocol 3.6 Pre-release',
@@ -335,11 +335,11 @@ export const loopring: Layer2 = {
         'Improved implementation, enaibling gas-free instant swaps and liquidity changes.',
     },  
     {
-      name: 'First zkRollup Payments',
+      name: 'Loopring Supports Payments',
       link: 'https://medium.loopring.io/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
       date: '2020-06-06T00:00:00Z',
       description:
-        'Loopring supports ERC20 transfers.',
+        'Support for ERC20 transfers is live on Loopring.',
     },
     {
       name: 'DeFi Port is Live on Loopring',
@@ -356,7 +356,7 @@ export const loopring: Layer2 = {
       'Loopring supports NFT minting, trading, and transfers.',
     },
     {
-      name: 'The first zkRollup DEX is live',
+      name: 'Loopring DEX is online',
     link: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
     date: '2020-02-27T00:00:00Z',
     description:
