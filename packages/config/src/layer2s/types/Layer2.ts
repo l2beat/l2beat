@@ -29,11 +29,9 @@ export interface Layer2 {
   contracts: ProjectContracts
   /** List of permissioned addresses */
   permissions?: ProjectPermission[]
-  /** Links to recent developments */
-  /** Milestones achieved by the project */
+  /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
-  /** List of knowledge nuggets */
-  /** Useful articles worth to read*/
+  /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
