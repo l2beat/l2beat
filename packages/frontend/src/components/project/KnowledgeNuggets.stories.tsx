@@ -12,21 +12,21 @@ export default {
 const knowledgeNuggetsExample = [
   {
     title: 'Arbitrum fraud proofs tested on POW ETH',
-    url: 'https://www.wp.pl',
+    url: 'https://www.somelink.com',
     thumbnailUrl:
-      'https://img.freepik.com/free-vector/cryptocurrency-bitcoin-golden-coin-with-digital-circuit-lines-background_1017-33592.jpg?w=2000',
+      'https://w0.peakpx.com/wallpaper/551/1016/HD-wallpaper-ethereum-blue-logo-blue-brickwall-ethereum-logo-cryptocurrency-ethereum-neon-logo-cryptocurrency-signs-ethereum-thumbnail.jpg',
   },
   {
     title: "Fuel's fraud proofs tested by L2BEAT team",
-    url: 'https://www.wp.pl',
+    url: 'https://www.somelink.com',
     thumbnailUrl:
-      'https://velog.velcdn.com/images/dhlee91/post/f2418376-eacc-40cb-b7c8-73473580da3e/html_.png',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNmfsMWOpFJnj9IJ_6FHILHXGKduuZoCIpnA&usqp=CAU',
   },
   {
     title: 'Layer Zero contracts',
-    url: 'https://www.wp.pl',
+    url: 'https://www.somelink.com',
     thumbnailUrl:
-      'https://edyoda.s3.amazonaws.com/media/video-thumbnail/qaifi-html-episode-28-html-form-nput-attributes.png',
+      'https://i0.wp.com/marketbusinessnews.com/wp-content/uploads/2022/09/Ethereum-Thumbnail-403.jpg',
   },
 ]
 
