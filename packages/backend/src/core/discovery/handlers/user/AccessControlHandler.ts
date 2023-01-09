@@ -4,7 +4,7 @@ import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { logHandler } from '../utils/logHandler'
+import { LogHandler } from '../LogHandler'
 
 export type AccessControlHandlerDefinition = z.infer<
   typeof AccessControlHandlerDefinition
@@ -30,6 +30,7 @@ export class AccessControlHandler implements Handler {
     readonly field: string,
     definition: AccessControlHandlerDefinition,
     abi: string[],
+    readonly logHandler: LogHandler = LogHandler.SILENT,
   ) {
     this.knownNames.set('0x' + '0'.repeat(64), 'DEFAULT_ADMIN_ROLE')
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
@@ -52,9 +53,8 @@ export class AccessControlHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Checking AccessControl'], options)
+    this.logHandler.log(this.field, ['Checking AccessControl'])
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

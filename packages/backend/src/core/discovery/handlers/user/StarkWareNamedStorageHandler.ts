@@ -5,8 +5,8 @@ import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { LogHandler } from '../LogHandler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
-import { logHandler } from '../utils/logHandler'
 
 export type StarkWareNamedStorageHandlerDefinition = z.infer<
   typeof StarkWareNamedStorageHandlerDefinition
@@ -23,18 +23,17 @@ export class StarkWareNamedStorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StarkWareNamedStorageHandlerDefinition,
+    readonly logHandler: LogHandler = LogHandler.SILENT,
   ) {}
 
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(
-      this.field,
-      ['Reading named storage at ', JSON.stringify(this.definition.tag)],
-      options,
-    )
+    this.logHandler.log(this.field, [
+      'Reading named storage at ',
+      JSON.stringify(this.definition.tag),
+    ])
     let storage: Bytes
     try {
       const slot = Bytes.fromHex(

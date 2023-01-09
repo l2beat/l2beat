@@ -2,12 +2,14 @@ import { utils } from 'ethers'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
 import { Handler } from './Handler'
+import { LogHandler } from './LogHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 
 export function getSystemHandlers(
   abiEntries: string[],
   overrides: DiscoveryContract | undefined,
+  logHandler: LogHandler = LogHandler.SILENT,
 ) {
   const abi = new utils.Interface(abiEntries)
 
@@ -21,9 +23,9 @@ export function getSystemHandlers(
     ) {
       continue
     } else if (fn.inputs.length === 0) {
-      methodHandlers.push(new SimpleMethodHandler(fn))
+      methodHandlers.push(new SimpleMethodHandler(fn, logHandler))
     } else if (fn.inputs.length === 1 && fn.inputs[0].type === 'uint256') {
-      arrayHandlers.push(new LimitedArrayHandler(fn))
+      arrayHandlers.push(new LimitedArrayHandler(fn, 5, logHandler))
     }
   }
 

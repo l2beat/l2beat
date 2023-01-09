@@ -69,10 +69,12 @@ export async function analyzeItem(
     }
   }
 
-  const handlers = getHandlers(metadata.abi, overrides)
-  const parameters = await executeHandlers(provider, address, handlers, {
-    disableLogs: !showLogs,
-  })
+  const handlers = getHandlers(metadata.abi, overrides, showLogs)
+  const parameters = await executeHandlers(
+    provider,
+    address,
+    handlers,
+  )
 
   const relatives = parameters
     .flatMap((x) => getRelatives(x.value))

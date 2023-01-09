@@ -1,6 +1,7 @@
 import * as z from 'zod'
 
 import { Handler } from '../Handler'
+import { LogHandler } from '../LogHandler'
 import {
   AccessControlHandler,
   AccessControlHandlerDefinition,
@@ -36,21 +37,22 @@ export function getUserHandler(
   field: string,
   definition: UserHandlerDefinition,
   abi: string[],
+  logHandler: LogHandler = LogHandler.SILENT,
 ): Handler {
   switch (definition.type) {
     case 'storage':
-      return new StorageHandler(field, definition)
+      return new StorageHandler(field, definition, logHandler)
     case 'array':
-      return new ArrayHandler(field, definition, abi)
+      return new ArrayHandler(field, definition, abi, logHandler)
     case 'call':
-      return new CallHandler(field, definition, abi)
+      return new CallHandler(field, definition, abi, logHandler)
     case 'starkWareNamedStorage':
-      return new StarkWareNamedStorageHandler(field, definition)
+      return new StarkWareNamedStorageHandler(field, definition, logHandler)
     case 'accessControl':
-      return new AccessControlHandler(field, definition, abi)
+      return new AccessControlHandler(field, definition, abi, logHandler)
     case 'arrayFromOneEvent':
-      return new ArrayFromOneEventHandler(field, definition, abi)
+      return new ArrayFromOneEventHandler(field, definition, abi, logHandler)
     case 'arrayFromTwoEvents':
-      return new ArrayFromTwoEventsHandler(field, definition, abi)
+      return new ArrayFromTwoEventsHandler(field, definition, abi, logHandler)
   }
 }

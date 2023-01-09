@@ -2,6 +2,7 @@ import { EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ContractValue } from '../types'
+import { LogHandler } from './LogHandler'
 
 export interface HandlerResult {
   field: string
@@ -12,10 +13,10 @@ export interface HandlerResult {
 export interface Handler {
   field: string
   dependencies: string[]
+  logHandler: LogHandler
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options?: { disableLogs: boolean },
-    previousResults?: Record<string, HandlerResult | undefined>,
+    previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult>
 }

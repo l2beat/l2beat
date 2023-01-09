@@ -3,8 +3,8 @@ import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { LogHandler } from '../LogHandler'
 import { callMethod } from '../utils/callMethod'
-import { logHandler } from '../utils/logHandler'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
@@ -12,7 +12,10 @@ export class SimpleMethodHandler implements Handler {
   readonly dependencies = []
   private readonly fragment: utils.FunctionFragment
 
-  constructor(fragment: string | utils.FunctionFragment) {
+  constructor(
+    fragment: string | utils.FunctionFragment,
+    readonly logHandler: LogHandler = LogHandler.SILENT,
+  ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
     this.field = this.fragment.name
@@ -21,9 +24,8 @@ export class SimpleMethodHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Calling ', this.fragment.name + '()'], options)
+    this.logHandler.log(this.field, ['Calling ', this.fragment.name + '()'])
     const callResult = await callMethod(provider, address, this.fragment, [])
     return { field: this.field, ...callResult }
   }

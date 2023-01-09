@@ -5,10 +5,10 @@ import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { LogHandler } from '../LogHandler'
 import { getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
-import { logHandler } from '../utils/logHandler'
 
 export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>
 export const CallHandlerDefinition = z.strictObject({
@@ -25,6 +25,7 @@ export class CallHandler implements Handler {
     readonly field: string,
     private readonly definition: CallHandlerDefinition,
     abi: string[],
+    readonly logHandler: LogHandler = LogHandler.SILENT,
   ) {
     for (const arg of this.definition.args) {
       const dependency = getReferencedName(arg)
@@ -47,21 +48,16 @@ export class CallHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options: { disableLogs: boolean },
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
-    logHandler(
-      this.field,
-      [
-        'Calling ',
-        `${this.fragment.name}(${resolved.args
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
-          .map((x) => x.toString())
-          .join(', ')})`,
-      ],
-      options,
-    )
+    this.logHandler.log(this.field, [
+      'Calling ',
+      `${this.fragment.name}(${resolved.args
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        .map((x) => x.toString())
+        .join(', ')})`,
+    ])
     const callResult = await callMethod(
       provider,
       address,

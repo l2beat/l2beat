@@ -5,8 +5,8 @@ import * as z from 'zod'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
+import { LogHandler } from '../LogHandler'
 import { getEventFragment } from '../utils/getEventFragment'
-import { logHandler } from '../utils/logHandler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ArrayFromOneEventHandlerDefinition = z.infer<
@@ -29,6 +29,7 @@ export class ArrayFromOneEventHandler implements Handler {
     readonly field: string,
     readonly definition: ArrayFromOneEventHandlerDefinition,
     abi: string[],
+    readonly logHandler: LogHandler = LogHandler.SILENT,
   ) {
     this.fragment = getEventFragment(
       definition.event,
@@ -50,9 +51,8 @@ export class ArrayFromOneEventHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options: { disableLogs: boolean },
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Querying ', this.fragment.name], options)
+    this.logHandler.log(this.field, ['Querying ', this.fragment.name])
     const logs = await provider.getLogs(address, [
       this.abi.getEventTopic(this.fragment),
     ])

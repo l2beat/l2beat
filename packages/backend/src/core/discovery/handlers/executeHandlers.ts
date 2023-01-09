@@ -8,7 +8,6 @@ export async function executeHandlers(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   handlers: Handler[],
-  options: { disableLogs: boolean },
 ) {
   const results: HandlerResult[] = []
   const batches = orderByDependencies(handlers)
@@ -17,7 +16,7 @@ export async function executeHandlers(
     const batchResults = await Promise.all(
       batch.map(async (x) => {
         try {
-          return await x.execute(provider, address, options, fields)
+          return await x.execute(provider, address, fields)
         } catch (e) {
           return { field: x.field, error: getErrorMessage(e) }
         }

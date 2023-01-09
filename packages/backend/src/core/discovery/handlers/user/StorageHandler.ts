@@ -5,10 +5,10 @@ import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { LogHandler } from '../LogHandler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { BytesFromString, NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
-import { logHandler } from '../utils/logHandler'
 import { valueToBigInt } from '../utils/valueToBigInt'
 
 const SingleSlot = z.union([
@@ -34,6 +34,7 @@ export class StorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StorageHandlerDefinition,
+    readonly logHandler: LogHandler = LogHandler.SILENT,
   ) {
     this.dependencies = getDependencies(definition)
   }
@@ -41,10 +42,9 @@ export class StorageHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
-    options: { disableLogs: boolean },
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Reading storage'], options)
+    this.logHandler.log(this.field, ['Reading storage'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes
