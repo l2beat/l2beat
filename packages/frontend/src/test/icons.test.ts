@@ -8,7 +8,7 @@ describe('icons', () => {
     it(`${project.display.name} has an associated icon`, () => {
       const iconPath = path.join(
         __dirname,
-        `../../src/static/icons/${project.display.slug}.png`,
+        `../static/icons/${project.display.slug}.png`,
       )
       expect(existsSync(iconPath)).toEqual(true)
     })

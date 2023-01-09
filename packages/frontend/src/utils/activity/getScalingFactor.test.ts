@@ -1,7 +1,7 @@
 import { ActivityApiResponse, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { getScalingFactor } from '../../../src/utils/activity/getScalingFactor'
+import { getScalingFactor } from './getScalingFactor'
 
 const ONE_TPS = 24 * 60 * 60
 

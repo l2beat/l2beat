@@ -1,7 +1,8 @@
 import { expect } from 'earljs'
 
-import { bridges, BridgeTechnology, ProjectTechnologyChoice } from '../src'
-import { checkRisk } from './checkRisk'
+import { ProjectTechnologyChoice } from '../common/ProjectTechnologyChoice'
+import { checkRisk } from '../test/helpers'
+import { bridges, BridgeTechnology } from './index'
 
 describe('bridges', () => {
   describe('technology', () => {

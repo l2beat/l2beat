@@ -1,1 +1,3 @@
-module.exports = require('../../.eslintrc.json')
+module.exports = {
+  extends: '../../.eslintrc.json',
+}
