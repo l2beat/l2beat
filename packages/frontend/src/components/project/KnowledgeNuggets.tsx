@@ -4,7 +4,7 @@ import React from 'react'
 import { ArrowRightIcon } from '../icons/Arrows'
 import { OutLink } from '../OutLink'
 
-interface KnowledgeNuggetsProps {
+export interface KnowledgeNuggetsProps {
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
@@ -31,10 +31,10 @@ interface KnowledgeNuggetProps {
   knowledgeNugget: KnowledgeNugget
 }
 
-export function KnowledgeNuggetItem(props: KnowledgeNuggetProps) {
+function KnowledgeNuggetItem(props: KnowledgeNuggetProps) {
   const { knowledgeNugget } = props
   return (
-    <div className="group grid grid-cols-5 gap-3 rounded-md items-center transition-all hover:bg-gray-400 dark:hover:bg-gray-900">
+    <div className="group grid grid-cols-5 gap-3 max-w-md rounded-md items-center transition-all hover:bg-gray-400 dark:hover:bg-gray-900 ">
       <div className="relative col-span-2 pb-2/3 overflow-hidden rounded-md drop-shadow-md">
         <img
           src={knowledgeNugget.thumbnailUrl}
