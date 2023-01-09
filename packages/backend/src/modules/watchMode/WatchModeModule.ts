@@ -13,27 +13,26 @@ export function createWatchModeModule(
   http: HttpClient,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.watchMode) {
+  if (!config.discoveryWatcher) {
     return
   }
 
   const provider = new providers.AlchemyProvider(
     'mainnet',
-    config.watchMode.alchemyApiKey,
+    config.discoveryWatcher.alchemyApiKey,
   )
   const etherscanClient = new MainnetEtherscanClient(
     http,
-    config.watchMode.etherscanApiKey,
+    config.discoveryWatcher.etherscanApiKey,
   )
 
-  const discordClient =
-    config.watchMode.discordToken && config.watchMode.discordChannelId
-      ? new DiscordClient(
-          http,
-          config.watchMode.discordToken,
-          config.watchMode.discordChannelId,
-        )
-      : undefined
+  const discordClient = config.discoveryWatcher.discord
+    ? new DiscordClient(
+        http,
+        config.discoveryWatcher.discord.token,
+        config.discoveryWatcher.discord.channelId,
+      )
+    : undefined
 
   //implement readAllConfigs and add tests
 

@@ -14,6 +14,8 @@ export function getProductionConfig(cli: CliParameters): Config {
   }
 
   const watchModeEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+  const discordEnabled =
+    process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL_ID ? true : false
 
   return {
     name: 'Backend/Production',
@@ -75,11 +77,13 @@ export function getProductionConfig(cli: CliParameters): Config {
       },
     },
     discovery: false,
-    watchMode: watchModeEnabled && {
+    discoveryWatcher: watchModeEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-      discordToken: process.env.DISCORD_TOKEN,
-      discordChannelId: process.env.DISCORD_CHANNEL_ID,
+      discord: discordEnabled && {
+        token: getEnv('DISCORD_TOKEN'),
+        channelId: getEnv('DISCORD_CHANNEL_ID'),
+      },
     },
   }
 }
