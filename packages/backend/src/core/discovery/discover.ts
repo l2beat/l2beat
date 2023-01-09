@@ -8,6 +8,7 @@ import { DiscoveryProvider } from './provider/DiscoveryProvider'
 export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
+  // logger
   options?: {
     disableLogs: boolean
   },

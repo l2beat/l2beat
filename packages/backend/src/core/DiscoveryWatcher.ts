@@ -8,7 +8,7 @@ import { discover } from './discovery/discover'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 
 // discovery watcher
-export class WatchModeUpdater {
+export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
 
   constructor(

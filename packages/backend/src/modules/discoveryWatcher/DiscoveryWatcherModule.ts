@@ -4,11 +4,11 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
-import { WatchModeUpdater } from '../../core/WatchModeUpdater'
+import { DiscoveryWatcher } from '../../core/DiscoveryWatcher'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
 
-export function createWatchModeModule(
+export function createDiscoveryWatcherModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
@@ -37,7 +37,7 @@ export function createWatchModeModule(
 
   const configReader = new ConfigReader()
 
-  const watchModeUpdater = new WatchModeUpdater(
+  const discoveryWatcher = new DiscoveryWatcher(
     provider,
     etherscanClient,
     discordClient,
@@ -47,10 +47,10 @@ export function createWatchModeModule(
   )
 
   const start = () => {
-    logger = logger.for('WatchModeModule')
+    logger = logger.for('DiscoveryWatcherModule')
     logger.info('Starting')
 
-    watchModeUpdater.start()
+    discoveryWatcher.start()
   }
 
   return {

@@ -7,10 +7,10 @@ import { Metrics } from './Metrics'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
+import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
-import { createWatchModeModule } from './modules/watchMode/WatchModeModule'
 import { Database } from './peripherals/database/shared/Database'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
@@ -38,7 +38,7 @@ export class Application {
       createTvlModule(config, logger, http, database, clock, metrics),
       createActivityModule(config, logger, http, database, clock, metrics),
       createDiscoveryModule(config, logger, http),
-      createWatchModeModule(config, logger, http, clock),
+      createDiscoveryWatcherModule(config, logger, http, clock),
     ]
 
     const apiServer =
