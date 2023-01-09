@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/common'
+import { DiscoveryLogger, mock } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { providers, utils } from 'ethers'
@@ -60,6 +60,7 @@ describe(AccessControlHandler.name, () => {
         type: 'accessControl',
       },
       [],
+      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect<unknown>(value).toEqual({
@@ -114,6 +115,7 @@ describe(AccessControlHandler.name, () => {
         'function WARRIOR_ROLE() view returns (bytes32)',
         'function ROGUE_ROLE() view returns (bytes32)',
       ],
+      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect<unknown>(value).toEqual({

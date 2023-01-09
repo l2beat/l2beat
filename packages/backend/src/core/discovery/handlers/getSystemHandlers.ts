@@ -1,15 +1,15 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { utils } from 'ethers'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
 import { Handler } from './Handler'
-import { LogHandler } from './LogHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 
 export function getSystemHandlers(
   abiEntries: string[],
   overrides: DiscoveryContract | undefined,
-  logHandler: LogHandler = LogHandler.SILENT,
+  logHandler: DiscoveryLogger,
 ) {
   const abi = new utils.Interface(abiEntries)
 

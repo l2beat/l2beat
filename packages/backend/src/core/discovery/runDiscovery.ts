@@ -1,4 +1,4 @@
-import { MainnetEtherscanClient } from '@l2beat/common'
+import { DiscoveryLogger, MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { DiscoveryConfig } from '../../config/Config'
@@ -23,6 +23,12 @@ export async function runDiscovery(
     blockNumber,
   )
 
-  const result = await discover(discoveryProvider, projectConfig)
+  const discoveryLogger = new DiscoveryLogger({ enabled: true })
+
+  const result = await discover(
+    discoveryProvider,
+    projectConfig,
+    discoveryLogger,
+  )
   await saveDiscoveryResult(result, config.project, blockNumber)
 }

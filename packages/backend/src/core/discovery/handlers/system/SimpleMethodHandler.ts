@@ -1,9 +1,9 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { LogHandler } from '../LogHandler'
 import { callMethod } from '../utils/callMethod'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
@@ -13,7 +13,7 @@ export class SimpleMethodHandler implements Handler {
   private readonly fragment: utils.FunctionFragment
   constructor(
     fragment: string | utils.FunctionFragment,
-    readonly logHandler: LogHandler = LogHandler.SILENT,
+    readonly discoveryLogger: DiscoveryLogger,
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
@@ -24,7 +24,10 @@ export class SimpleMethodHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logHandler.log(this.field, ['Calling ', this.fragment.name + '()'])
+    this.discoveryLogger.handleLog(this.field, [
+      'Calling ',
+      this.fragment.name + '()',
+    ])
     const callResult = await callMethod(provider, address, this.fragment, [])
     return { field: this.field, ...callResult }
   }

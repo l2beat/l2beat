@@ -1,4 +1,9 @@
-import { Logger, MainnetEtherscanClient, TaskQueue } from '@l2beat/common'
+import {
+  DiscoveryLogger,
+  Logger,
+  MainnetEtherscanClient,
+  TaskQueue,
+} from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -18,8 +23,8 @@ export class DiscoveryWatcher {
     private readonly configReader: ConfigReader,
     private readonly clock: Clock,
     private readonly logger: Logger,
-  ) // discovery logger
-  {
+    private readonly discoveryLogger: DiscoveryLogger,
+  ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       () => this.update(),
@@ -50,7 +55,7 @@ export class DiscoveryWatcher {
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
       // try catch
-      await discover(discoveryProvider, projectConfig, { disableLogs: true })
+      await discover(discoveryProvider, projectConfig, this.discoveryLogger)
       this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 

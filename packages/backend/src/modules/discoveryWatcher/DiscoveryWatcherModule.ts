@@ -1,4 +1,4 @@
-import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/common'
+import { DiscoveryLogger, HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
@@ -37,6 +37,8 @@ export function createDiscoveryWatcherModule(
 
   const configReader = new ConfigReader()
 
+  const discoveryLogger = DiscoveryLogger.SILENT
+
   const discoveryWatcher = new DiscoveryWatcher(
     provider,
     etherscanClient,
@@ -44,7 +46,8 @@ export function createDiscoveryWatcherModule(
     configReader,
     clock,
     logger,
-  )
+    discoveryLogger
+    )
 
   const start = () => {
     logger = logger.for('DiscoveryWatcherModule')

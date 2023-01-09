@@ -1,22 +1,22 @@
+import { DiscoveryLogger } from '@l2beat/common'
+
 import { DiscoveryContract } from '../DiscoveryConfig'
 import { getSystemHandlers } from './getSystemHandlers'
-import { LogHandler } from './LogHandler'
 import { ErrorHandler } from './system/ErrorHandler'
 import { getUserHandler } from './user'
 
 export function getHandlers(
   abi: string[],
   overrides: DiscoveryContract | undefined,
-  showLogs = false,
+  discoveryLogger: DiscoveryLogger,
 ) {
-  const logHandler = new LogHandler({ enabled: showLogs })
-  const systemHandlers = getSystemHandlers(abi, overrides, logHandler)
+  const systemHandlers = getSystemHandlers(abi, overrides, discoveryLogger)
   const userHandlers = Object.entries(overrides?.fields ?? {}).map(
     ([field, definition]) => {
       try {
-        return getUserHandler(field, definition, abi, logHandler)
+        return getUserHandler(field, definition, abi, discoveryLogger)
       } catch (error) {
-        return new ErrorHandler(field, error)
+        return new ErrorHandler(field, error, discoveryLogger)
       }
     },
   )

@@ -1,3 +1,4 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import { FunctionFragment } from 'ethers/lib/utils'
@@ -5,7 +6,6 @@ import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { LogHandler } from '../LogHandler'
 import { getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
@@ -25,7 +25,7 @@ export class CallHandler implements Handler {
     readonly field: string,
     private readonly definition: CallHandlerDefinition,
     abi: string[],
-    readonly logHandler: LogHandler = LogHandler.SILENT,
+    readonly discoveryLogger: DiscoveryLogger,
   ) {
     for (const arg of this.definition.args) {
       const dependency = getReferencedName(arg)
@@ -51,7 +51,7 @@ export class CallHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
-    this.logHandler.log(this.field, [
+    this.discoveryLogger.handleLog(this.field, [
       'Calling ',
       `${this.fragment.name}(${resolved.args
         // eslint-disable-next-line @typescript-eslint/no-base-to-string

@@ -1,11 +1,10 @@
-import { getErrorMessage } from '@l2beat/common'
+import { DiscoveryLogger, getErrorMessage } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { LogHandler } from '../LogHandler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { BytesFromString, NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -34,7 +33,7 @@ export class StorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StorageHandlerDefinition,
-    readonly logHandler: LogHandler = LogHandler.SILENT,
+    readonly discoveryLogger: DiscoveryLogger,
   ) {
     this.dependencies = getDependencies(definition)
   }
@@ -44,7 +43,7 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.logHandler.log(this.field, ['Reading storage'])
+    this.discoveryLogger.handleLog(this.field, ['Reading storage'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes

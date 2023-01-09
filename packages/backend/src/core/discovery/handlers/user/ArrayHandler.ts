@@ -1,3 +1,4 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import { FunctionFragment } from 'ethers/lib/utils'
@@ -6,7 +7,6 @@ import * as z from 'zod'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
-import { LogHandler } from '../LogHandler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
@@ -30,7 +30,7 @@ export class ArrayHandler implements Handler {
     readonly field: string,
     private readonly definition: ArrayHandlerDefinition,
     abi: string[],
-    readonly logHandler: LogHandler = LogHandler.SILENT,
+    readonly discoveryLogger: DiscoveryLogger,
   ) {
     const dependency = getReferencedName(definition.length)
     if (dependency) {
@@ -52,7 +52,10 @@ export class ArrayHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.logHandler.log(this.field, ['Calling array ', this.fragment.name + '(i)'])
+    this.discoveryLogger.handleLog(this.field, [
+      'Calling array ',
+      this.fragment.name + '(i)',
+    ])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     const value: ContractValue[] = []

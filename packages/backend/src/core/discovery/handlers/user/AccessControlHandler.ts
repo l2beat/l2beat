@@ -1,10 +1,10 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { LogHandler } from '../LogHandler'
 
 export type AccessControlHandlerDefinition = z.infer<
   typeof AccessControlHandlerDefinition
@@ -30,7 +30,7 @@ export class AccessControlHandler implements Handler {
     readonly field: string,
     definition: AccessControlHandlerDefinition,
     abi: string[],
-    readonly logHandler: LogHandler = LogHandler.SILENT,
+    readonly discoveryLogger: DiscoveryLogger,
   ) {
     this.knownNames.set('0x' + '0'.repeat(64), 'DEFAULT_ADMIN_ROLE')
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
@@ -54,7 +54,7 @@ export class AccessControlHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logHandler.log(this.field, ['Checking AccessControl'])
+    this.discoveryLogger.handleLog(this.field, ['Checking AccessControl'])
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

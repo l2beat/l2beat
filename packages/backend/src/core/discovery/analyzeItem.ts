@@ -1,5 +1,5 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
-import chalk from 'chalk'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { getMetadata } from './getMetadata'
@@ -23,12 +23,8 @@ export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   config: DiscoveryConfig,
-  options?: {
-    disableLogs: boolean
-  },
+  discoveryLogger: DiscoveryLogger,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
-  const showLogs = options?.disableLogs ? false : true
-
   const overrides = config.overrides?.[address.toString()]
 
   const proxyDetection = await detectProxy(
@@ -38,19 +34,13 @@ export async function analyzeItem(
   )
 
   if (proxyDetection) {
-    if (showLogs) {
-      console.log(
-        '  Proxy detected:',
-        chalk.bgRed.whiteBright(' ' + proxyDetection.upgradeability.type + ' '),
-      )
-    }
+    discoveryLogger.redBackground(
+      `  Proxy detected:  ${proxyDetection.upgradeability.type}  `,
+    )
   } else if (overrides?.proxyType) {
-    if (showLogs) {
-      console.log(
-        '  Manual proxy detection failed:',
-        chalk.bgRed.whiteBright(' ' + overrides.proxyType + ' '),
-      )
-    }
+    discoveryLogger.redBackground(
+      `  Manual proxy detection failed: ${overrides.proxyType} `,
+    )
   }
 
   const metadata = await getMetadata(
@@ -60,21 +50,13 @@ export async function analyzeItem(
   )
 
   if (metadata.isEOA) {
-    if (showLogs) {
-      console.log('  Type:', chalk.blue('EOA'))
-    }
+    discoveryLogger.blue('  Type: EOA')
   } else {
-    if (showLogs) {
-      console.log('  Name:', chalk.bold(metadata.name))
-    }
+    discoveryLogger.bold(`  Name: ${metadata.name}`)
   }
 
-  const handlers = getHandlers(metadata.abi, overrides, showLogs)
-  const parameters = await executeHandlers(
-    provider,
-    address,
-    handlers,
-  )
+  const handlers = getHandlers(metadata.abi, overrides, discoveryLogger)
+  const parameters = await executeHandlers(provider, address, handlers)
 
   const relatives = parameters
     .flatMap((x) => getRelatives(x.value))

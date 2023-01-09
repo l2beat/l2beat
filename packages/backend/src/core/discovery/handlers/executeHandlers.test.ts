@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/common'
+import { DiscoveryLogger, mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
@@ -28,12 +28,12 @@ describe(executeHandlers.name, () => {
         type: 'storage',
         slot: 1,
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('bar', {
         type: 'storage',
         slot: 2,
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
     ])
     expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123 },
@@ -53,22 +53,22 @@ describe(executeHandlers.name, () => {
         type: 'storage',
         slot: '{{ foo }}',
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('yyy', {
         type: 'storage',
         slot: '{{ bar }}',
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('foo', {
         type: 'storage',
         slot: 1,
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('bar', {
         type: 'storage',
         slot: 2,
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
     ])
     expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123 },
@@ -93,35 +93,35 @@ describe(executeHandlers.name, () => {
         slot: '{{ a }}',
         offset: '{{ ab }}',
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('ab', {
         type: 'storage',
         slot: '{{ a }}',
         offset: '{{ b }}',
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('bb', {
         type: 'storage',
         slot: '{{ b }}',
         offset: '{{ b }}',
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('a', {
         type: 'storage',
         slot: 1,
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('aabbb', {
         type: 'storage',
         slot: '{{ aab }}',
         offset: '{{ bb }}',
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
       new StorageHandler('b', {
         type: 'storage',
         slot: 2,
         returnType: 'number',
-      }),
+      }, DiscoveryLogger.SILENT),
     ])
     expect<unknown[]>(values).toEqual([
       { field: 'a', value: 100 },
@@ -136,7 +136,7 @@ describe(executeHandlers.name, () => {
   it('unresolvable self', async () => {
     const provider = mock<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
-      new StorageHandler('a', { type: 'storage', slot: '{{ a }}' }),
+      new StorageHandler('a', { type: 'storage', slot: '{{ a }}' }, DiscoveryLogger.SILENT),
     ])
     await expect(promise).toBeRejected('Impossible to resolve dependencies')
   })
@@ -144,7 +144,7 @@ describe(executeHandlers.name, () => {
   it('unresolvable unknown', async () => {
     const provider = mock<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
-      new StorageHandler('a', { type: 'storage', slot: '{{ foo }}' }),
+      new StorageHandler('a', { type: 'storage', slot: '{{ foo }}' }, DiscoveryLogger.SILENT),
     ])
     await expect(promise).toBeRejected('Impossible to resolve dependencies')
   })
@@ -152,8 +152,8 @@ describe(executeHandlers.name, () => {
   it('unresolvable cycle', async () => {
     const provider = mock<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
-      new StorageHandler('a', { type: 'storage', slot: '{{ b }}' }),
-      new StorageHandler('b', { type: 'storage', slot: '{{ a }}' }),
+      new StorageHandler('a', { type: 'storage', slot: '{{ b }}' }, DiscoveryLogger.SILENT),
+      new StorageHandler('b', { type: 'storage', slot: '{{ a }}' }, DiscoveryLogger.SILENT),
     ])
     await expect(promise).toBeRejected('Impossible to resolve dependencies')
   })
@@ -162,6 +162,7 @@ describe(executeHandlers.name, () => {
     class FunkyHandler implements Handler {
       dependencies: string[] = []
       field = 'foo'
+      discoveryLogger = DiscoveryLogger.SILENT
       async execute(): Promise<HandlerResult> {
         throw new Error('oops')
       }

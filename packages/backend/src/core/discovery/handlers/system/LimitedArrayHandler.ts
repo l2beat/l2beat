@@ -1,10 +1,10 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
-import { LogHandler } from '../LogHandler'
 import { callMethod } from '../utils/callMethod'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
@@ -16,7 +16,7 @@ export class LimitedArrayHandler implements Handler {
   constructor(
     fragment: string | utils.FunctionFragment,
     private readonly limit = 5,
-    readonly logHandler: LogHandler = LogHandler.SILENT,
+    readonly discoveryLogger: DiscoveryLogger,
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
@@ -27,7 +27,7 @@ export class LimitedArrayHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logHandler.log(this.field, [
+    this.discoveryLogger.handleLog(this.field, [
       'Calling array (max: ',
       this.limit.toString(),
       ') ',

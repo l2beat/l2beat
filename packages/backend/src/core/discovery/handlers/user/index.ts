@@ -1,7 +1,7 @@
+import { DiscoveryLogger } from '@l2beat/common'
 import * as z from 'zod'
 
 import { Handler } from '../Handler'
-import { LogHandler } from '../LogHandler'
 import {
   AccessControlHandler,
   AccessControlHandlerDefinition,
@@ -37,7 +37,7 @@ export function getUserHandler(
   field: string,
   definition: UserHandlerDefinition,
   abi: string[],
-  logHandler: LogHandler = LogHandler.SILENT,
+  logHandler: DiscoveryLogger,
 ): Handler {
   switch (definition.type) {
     case 'storage':

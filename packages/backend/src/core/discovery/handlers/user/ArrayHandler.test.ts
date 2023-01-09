@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/common'
+import { DiscoveryLogger, mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
@@ -16,6 +16,7 @@ describe(ArrayHandler.name, () => {
           length: 1,
         },
         [],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.dependencies).toEqual([])
@@ -30,6 +31,7 @@ describe(ArrayHandler.name, () => {
           length: '{{ foo }}',
         },
         [],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.dependencies).toEqual(['foo'])
@@ -45,6 +47,7 @@ describe(ArrayHandler.name, () => {
           method: 'function foo(uint i) view returns (uint)',
         },
         [],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.getMethod()).toEqual(
@@ -62,6 +65,7 @@ describe(ArrayHandler.name, () => {
               method: 'function foo() view returns (uint)',
             },
             [],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid method abi')
     })
@@ -76,17 +80,23 @@ describe(ArrayHandler.name, () => {
               method: 'function foo(uint256 i) returns (uint)',
             },
             [],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid method abi')
     })
 
     it('finds the method by field name', () => {
-      const handler = new ArrayHandler('someName', { type: 'array' }, [
-        'function foo(uint256 i) view returns (uint256)',
-        'function someName(uint256 i) view returns (uint256)',
-        'function someName(uint256 a, uint256 b) view returns (uint256)',
-        'function someName() view returns (uint256)',
-      ])
+      const handler = new ArrayHandler(
+        'someName',
+        { type: 'array' },
+        [
+          'function foo(uint256 i) view returns (uint256)',
+          'function someName(uint256 i) view returns (uint256)',
+          'function someName(uint256 a, uint256 b) view returns (uint256)',
+          'function someName() view returns (uint256)',
+        ],
+        DiscoveryLogger.SILENT,
+      )
 
       expect(handler.getMethod()).toEqual(
         'function someName(uint256 i) view returns (uint256)',
@@ -96,11 +106,16 @@ describe(ArrayHandler.name, () => {
     it('throws if it cannot find the method by field name', () => {
       expect(
         () =>
-          new ArrayHandler('someName', { type: 'array' }, [
-            'function foo(uint256 i) view returns (uint256)',
-            'function someName(uint256 a, uint256 b) view returns (uint256)',
-            'function someName() view returns (uint256)',
-          ]),
+          new ArrayHandler(
+            'someName',
+            { type: 'array' },
+            [
+              'function foo(uint256 i) view returns (uint256)',
+              'function someName(uint256 a, uint256 b) view returns (uint256)',
+              'function someName() view returns (uint256)',
+            ],
+            DiscoveryLogger.SILENT,
+          ),
       ).toThrow('Cannot find a matching method for someName')
     })
 
@@ -117,6 +132,7 @@ describe(ArrayHandler.name, () => {
           'function bar(uint256 a, uint256 b) view returns (uint256)',
           'function bar() view returns (uint256)',
         ],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.getMethod()).toEqual(
@@ -127,14 +143,19 @@ describe(ArrayHandler.name, () => {
     it('throws if it cannot find the method by method name', () => {
       expect(
         () =>
-          new ArrayHandler('someName', { type: 'array', method: 'bar' }, [
-            'function foo(uint256 i) view returns (uint256)',
-            'function someName(uint256 i) view returns (uint256)',
-            'function someName(uint256 a, uint256 b) view returns (uint256)',
-            'function someName() view returns (uint256)',
-            'function bar(uint256 a, uint256 b) view returns (uint256)',
-            'function bar() view returns (uint256)',
-          ]),
+          new ArrayHandler(
+            'someName',
+            { type: 'array', method: 'bar' },
+            [
+              'function foo(uint256 i) view returns (uint256)',
+              'function someName(uint256 i) view returns (uint256)',
+              'function someName(uint256 a, uint256 b) view returns (uint256)',
+              'function someName() view returns (uint256)',
+              'function bar(uint256 a, uint256 b) view returns (uint256)',
+              'function bar() view returns (uint256)',
+            ],
+            DiscoveryLogger.SILENT,
+          ),
       ).toThrow('Cannot find a matching method for bar')
     })
   })
@@ -170,6 +191,7 @@ describe(ArrayHandler.name, () => {
         'owners',
         { type: 'array', method, length: 3 },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
@@ -193,6 +215,7 @@ describe(ArrayHandler.name, () => {
         'owners',
         { type: 'array', method, length: '{{ foo }}' },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 3 },
@@ -221,6 +244,7 @@ describe(ArrayHandler.name, () => {
         'owners',
         { type: 'array', method, length: 3 },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
@@ -243,7 +267,12 @@ describe(ArrayHandler.name, () => {
         },
       })
 
-      const handler = new ArrayHandler('owners', { type: 'array', method }, [])
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method },
+        [],
+        DiscoveryLogger.SILENT,
+      )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
@@ -265,7 +294,12 @@ describe(ArrayHandler.name, () => {
         },
       })
 
-      const handler = new ArrayHandler('owners', { type: 'array', method }, [])
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method },
+        [],
+        DiscoveryLogger.SILENT,
+      )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
@@ -280,7 +314,12 @@ describe(ArrayHandler.name, () => {
         },
       })
 
-      const handler = new ArrayHandler('owners', { type: 'array', method }, [])
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method },
+        [],
+        DiscoveryLogger.SILENT,
+      )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
         field: 'owners',
@@ -300,6 +339,7 @@ describe(ArrayHandler.name, () => {
         'owners',
         { type: 'array', method, maxLength: 15 },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
