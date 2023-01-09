@@ -7,6 +7,7 @@ import { ConfigReader } from './discovery/ConfigReader'
 import { discover } from './discovery/discover'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 
+// discovery watcher
 export class WatchModeUpdater {
   private readonly taskQueue: TaskQueue<void>
 
@@ -16,6 +17,8 @@ export class WatchModeUpdater {
     private readonly discordClient: DiscordClient | undefined,
     private readonly clock: Clock,
     private readonly logger: Logger,
+    // discovery logger
+    // config reader
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -32,6 +35,7 @@ export class WatchModeUpdater {
   }
 
   async update() {
+    // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     this.logger.info('Update started', { blockNumber })
 
@@ -47,21 +51,28 @@ export class WatchModeUpdater {
 
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
+      // try catch
       await discover(discoveryProvider, projectConfig, { disableLogs: true })
       this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
-    if (this.discordClient) {
-      await this.discordClient.sendMessage(
-        `Run discovery for all projects | block_number = ${blockNumber}`,
-      )
-      this.logger.info('Notification to Discord has been sent')
-    } else {
+    await this.notify(`Run discovery for all projects | block_number = ${blockNumber}`)
+
+    this.logger.info('Update finished', { blockNumber })
+  }
+
+  async notify(message: string) {
+    if (!this.discordClient) {
+      // maybe only once?
       this.logger.info(
         'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
       )
+      return
     }
 
-    this.logger.info('Update finished', { blockNumber })
+    await this.discordClient.sendMessage(message).then(
+      () => this.logger.info('Notification to Discord has been sent'),
+      e => this.logger.error(e)
+    )
   }
 }
