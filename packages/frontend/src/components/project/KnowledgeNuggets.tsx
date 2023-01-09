@@ -8,8 +8,7 @@ export interface KnowledgeNuggetsProps {
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
-export function KnowledgeNuggets(props: KnowledgeNuggetsProps) {
-  const { knowledgeNuggets } = props
+export function KnowledgeNuggets({ knowledgeNuggets }: KnowledgeNuggetsProps) {
 
   if (!knowledgeNuggets) return null
 
