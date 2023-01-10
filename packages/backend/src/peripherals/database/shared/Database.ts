@@ -101,4 +101,14 @@ export class Database {
       `Postgres server major version ${major} different than required ${this.requiredMajorVersion}`,
     )
   }
+
+  enableQueryLogging(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.knex.on('query', (queryCtx: { sql: string; bindings: any[] }) => {
+      this.logger.debug('SQL Query', {
+        query: queryCtx.sql,
+        vars: queryCtx.bindings,
+      })
+    })
+  }
 }

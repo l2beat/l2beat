@@ -1,4 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, LogLevel } from '@l2beat/common'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
@@ -64,6 +64,10 @@ export class Application {
           await database.rollbackAll()
         }
         await database.migrateToLatest()
+
+        if (config.logger.logLevel >= LogLevel.DEBUG) {
+          database.enableQueryLogging()
+        }
       }
 
       for (const module of modules) {

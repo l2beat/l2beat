@@ -62,19 +62,24 @@ export class BaseRepository {
   protected wrapAddMany<T, R>(
     method: AddManyMethod<T, R>,
   ): AddManyMethod<T, R> {
+    const log = (idsOrCount: number | R[]) => {
+      const count =
+        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
+
+      this.logger.debug({ method: method.name, count })
+    }
+
     const fn = async (records: T[]) => {
       if (records.length === 0) {
-        this.logger.debug({ method: method.name, count: 0 })
         return []
       }
       const idsOrCount = await method.call(this, records)
-      const count =
-        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
-      this.logger.debug({ method: method.name, count })
+
       return idsOrCount
     }
     Object.defineProperty(fn, 'name', { value: method.name })
-    return fn
+
+    return this.wrap(fn, log)
   }
 
   protected wrapGet<A extends unknown[], T>(
@@ -114,6 +119,7 @@ export class BaseRepository {
     await knex.transaction(fun)
   }
 
+  // adds execution time tracking
   private wrap<A extends unknown[], R>(
     method: AnyMethod<A, R>,
     log: (result: R) => void,
