@@ -1418,16 +1418,6 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
-    id: AssetId('rai-rai-reflex-index'),
-    name: 'Rai Reflex Index',
-    coingeckoId: CoingeckoId('rai'),
-    address: EthereumAddress('0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919'),
-    symbol: 'RAI',
-    decimals: 18,
-    sinceTimestamp: new UnixTime(1613221351),
-    category: 'stablecoin',
-  },
-  {
     id: AssetId('rad-radicle'),
     name: 'Radicle',
     coingeckoId: CoingeckoId('radicle'),
@@ -1446,6 +1436,16 @@ export const tokenList: TokenInfo[] = [
     decimals: 18,
     sinceTimestamp: new UnixTime(1629616433),
     category: 'other',
+  },
+  {
+    id: AssetId('rai-rai-reflex-index'),
+    name: 'Rai Reflex Index',
+    coingeckoId: CoingeckoId('rai'),
+    address: EthereumAddress('0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919'),
+    symbol: 'RAI',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1613221351),
+    category: 'stablecoin',
   },
   {
     id: AssetId('rly-rally'),
