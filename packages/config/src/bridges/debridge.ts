@@ -25,14 +25,24 @@ export const debridge: Bridge = {
       apps: ['https://app.debridge.finance'],
     },
     description:
-      'deBridge is an interoperability layer that enables messaging between various blockchains.',
+      'deBridge is an interoperability layer that enables messaging between various blockchains. For the typical token transfer, "deToken" is minted on the destination chain.',
   },
   config: {
     escrows: [
       {
         address: '0x43dE2d77BF8027e25dBD179B491e8d64f38398aA',
         sinceTimestamp: new UnixTime(1637595390),
-        tokens: ['USDC', 'WETH', 'FRAX'],
+        tokens: [
+          'USDC',
+          'WETH',
+          'FRAX',
+          'ETH',
+          'USDT',
+          'WBTC',
+          'DAI',
+          'MATIC',
+          'RAI',
+        ],
       },
     ],
   },
