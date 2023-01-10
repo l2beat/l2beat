@@ -10,3 +10,5 @@ export const config: Config = {
   alchemyApiKey:
     process.env.CONFIG_ALCHEMY_API_KEY ?? 'mlGD422scpwVOpn3lye_swHEebbKQy0D',
 }
+
+console.log('alchemy api key: ', config.alchemyApiKey)
