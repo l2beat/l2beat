@@ -34,13 +34,9 @@ export async function analyzeItem(
   )
 
   if (proxyDetection) {
-    logger.redBackground(
-      `  Proxy detected:  ${proxyDetection.upgradeability.type}  `,
-    )
+    logger.proxyDetected(proxyDetection.upgradeability.type)
   } else if (overrides?.proxyType) {
-    logger.redBackground(
-      `  Manual proxy detection failed: ${overrides.proxyType} `,
-    )
+    logger.proxyDetectionFailed(overrides.proxyType)
   }
 
   const metadata = await getMetadata(
@@ -50,9 +46,9 @@ export async function analyzeItem(
   )
 
   if (metadata.isEOA) {
-    logger.blue('  Type: EOA')
+    logger.eoa()
   } else {
-    logger.bold(`  Name: ${metadata.name}`)
+    logger.name(metadata.name)
   }
 
   const handlers = getHandlers(metadata.abi, overrides, logger)

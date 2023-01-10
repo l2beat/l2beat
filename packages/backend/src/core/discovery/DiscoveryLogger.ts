@@ -17,22 +17,6 @@ export class DiscoveryLogger {
     console.log(message)
   }
 
-  red(message: string) {
-    this.log(chalk.red(message))
-  }
-
-  bold(message: string) {
-    this.log(chalk.bold(message))
-  }
-
-  blue(message: string) {
-    this.log(chalk.blue(message))
-  }
-
-  redBackground(message: string) {
-    this.log(chalk.bgRed.whiteBright(message))
-  }
-
   logExecution(field: string, values: string[]) {
     if (!this.options.enabled) {
       return
@@ -44,5 +28,37 @@ export class DiscoveryLogger {
       .join('')
 
     console.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
+  }
+
+  error(message: string) {
+    this.log(`  Error: ${chalk.red(message)}`)
+  }
+
+  eoa() {
+    this.log(`  Type: ${chalk.blue('EOA')}`)
+  }
+
+  name(name: string) {
+    this.log(`  Name: ${chalk.bold(name)}`)
+  }
+
+  configuredButUndiscovered(override: string) {
+    this.log(
+      `${chalk.red('Override for')} ${chalk.bold(override)} ${chalk.red(
+        'was configured, but the address was not discovered',
+      )}`,
+    )
+  }
+
+  proxyDetected(type: string) {
+    this.log(`  Proxy detected: ${chalk.bgRed.whiteBright(` ${type} `)}`)
+  }
+
+  proxyDetectionFailed(type: string) {
+    this.log(
+      `  Manual proxy detection failed: ${chalk.bgRed.whiteBright(
+        ` ${type} `,
+      )}`,
+    )
   }
 }

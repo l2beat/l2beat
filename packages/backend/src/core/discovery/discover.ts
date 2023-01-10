@@ -45,7 +45,7 @@ export async function discover(
 
     if (depth > maxDepth) {
       logger.log(`Skipping ${address.toString()}`)
-      logger.red(`  Error: Depth ${depth} exceeded max = ${maxDepth}`)
+      logger.error(`Depth ${depth} exceeded max = ${maxDepth}`)
       logger.log('')
 
       continue
@@ -54,8 +54,8 @@ export async function discover(
     totalAddresses++
     if (totalAddresses > maxAddresses) {
       logger.log(`Skipping ${address.toString()}`)
-      logger.red(
-        `  Error: Total addresses ${totalAddresses} exceeded max = ${maxAddresses}`,
+      logger.error(
+        `Total addresses ${totalAddresses} exceeded max = ${maxAddresses}`,
       )
       logger.log('')
 
@@ -88,9 +88,7 @@ export async function discover(
 
   for (const override of Object.keys(config.overrides ?? {})) {
     if (!known.has(EthereumAddress(override))) {
-      logger.red(
-        `Override for ${override.toString()} was configured, but the address wasn't discovered!`,
-      )
+      logger.configuredButUndiscovered(override.toString())
     }
   }
 
