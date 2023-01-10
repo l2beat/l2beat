@@ -2,25 +2,21 @@
   line-height: 1.5;
   display: grid;
   grid-template-columns: 1fr 400px;
-  grid-template-rows: auto 1fr;
-  grid-template-areas: 'tech links' 'tech milestones';
+  grid-template-areas: 'content side';
   column-gap: 16px;
+  row-gap: 3rem;
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
     grid-template-rows: unset;
-    grid-template-areas: 'links' 'milestones' 'tech';
+    grid-template-areas: 'side' 'content';
   }
 
-  .LinkSection {
-    grid-area: links;
+  .ProjectDetails-Side {
+    grid-area: side;
   }
 
   .ProjectDetails-Content {
-    grid-area: tech;
-  }
-
-  .Milestones {
-    grid-area: milestones;
+    grid-area: content;
   }
 }
