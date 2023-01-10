@@ -35,7 +35,7 @@ export const starknet: Layer2 = {
         'https://community.starknet.io/',
       ],
       documentation: ['https://starknet.io/what-is-starknet/'],
-      explorers: ['https://voyager.online/'],
+      explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
         'https://discord.gg/uJ9HZTUk2Y',
