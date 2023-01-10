@@ -49,7 +49,7 @@ export class BaseRepository {
     method: AddMethod<T, R>,
   ): AddMethod<T, R> {
     return this.wrap(method, (id) =>
-      this.logger.debug({ method: method.name, id: id.valueOf() }),
+      this.logger.info({ method: method.name, id: id.valueOf() }),
     )
   }
 
@@ -66,7 +66,7 @@ export class BaseRepository {
       const count =
         typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
 
-      this.logger.debug({ method: method.name, count })
+      this.logger.info({ method: method.name, count })
     }
 
     const fn = async (records: T[]) => {
@@ -102,13 +102,13 @@ export class BaseRepository {
     method: DeleteMethod<A>,
   ): DeleteMethod<A> {
     return this.wrap(method, (count) =>
-      this.logger.debug({ method: method.name, count }),
+      this.logger.info({ method: method.name, count }),
     )
   }
 
   protected wrapSave<T>(method: SaveMethod<T>): SaveMethod<T> {
     return this.wrap(method, (updated) =>
-      this.logger.debug({ method: method.name, updated }),
+      this.logger.info({ method: method.name, updated }),
     )
   }
 
