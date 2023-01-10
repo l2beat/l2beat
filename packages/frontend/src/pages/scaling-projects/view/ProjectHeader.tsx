@@ -47,7 +47,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         ),
     },
     {
-      title: '30D ts count',
+      title: '30D tx count',
       value: props.transactionMonthlyCount ?? <NoDataCell />,
     },
     {
