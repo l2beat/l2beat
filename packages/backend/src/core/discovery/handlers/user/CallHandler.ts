@@ -25,7 +25,7 @@ export class CallHandler implements Handler {
     readonly field: string,
     private readonly definition: CallHandlerDefinition,
     abi: string[],
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     for (const arg of this.definition.args) {
       const dependency = getReferencedName(arg)
@@ -51,7 +51,7 @@ export class CallHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
-    this.discoveryLogger.logExecution(this.field, [
+    this.logger.logExecution(this.field, [
       'Calling ',
       `${this.fragment.name}(${resolved.args
         // eslint-disable-next-line @typescript-eslint/no-base-to-string

@@ -30,7 +30,7 @@ export class ArrayHandler implements Handler {
     readonly field: string,
     private readonly definition: ArrayHandlerDefinition,
     abi: string[],
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     const dependency = getReferencedName(definition.length)
     if (dependency) {
@@ -52,7 +52,7 @@ export class ArrayHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, [
+    this.logger.logExecution(this.field, [
       'Calling array ',
       this.fragment.name + '(i)',
     ])

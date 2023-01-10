@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/types'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 
@@ -30,7 +30,7 @@ export class AccessControlHandler implements Handler {
     readonly field: string,
     definition: AccessControlHandlerDefinition,
     abi: string[],
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     this.knownNames.set('0x' + '0'.repeat(64), 'DEFAULT_ADMIN_ROLE')
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
@@ -54,7 +54,7 @@ export class AccessControlHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, ['Checking AccessControl'])
+    this.logger.logExecution(this.field, ['Checking AccessControl'])
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

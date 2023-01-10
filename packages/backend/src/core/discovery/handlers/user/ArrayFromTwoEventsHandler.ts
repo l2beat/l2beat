@@ -30,7 +30,7 @@ export class ArrayFromTwoEventsHandler implements Handler {
     readonly field: string,
     readonly definition: ArrayFromTwoEventsHandlerDefinition,
     abi: string[],
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     this.addFragment = getEventFragment(definition.addEvent, abi, (fragment) =>
       fragment.inputs.some((x) => x.name === definition.addKey),
@@ -56,7 +56,7 @@ export class ArrayFromTwoEventsHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, [
+    this.logger.logExecution(this.field, [
       'Querying ',
       this.addFragment.name,
       ' and ',

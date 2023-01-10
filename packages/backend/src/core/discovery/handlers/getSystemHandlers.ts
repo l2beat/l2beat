@@ -9,7 +9,7 @@ import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 export function getSystemHandlers(
   abiEntries: string[],
   overrides: DiscoveryContract | undefined,
-  logHandler: DiscoveryLogger,
+  logger: DiscoveryLogger,
 ) {
   const abi = new utils.Interface(abiEntries)
 
@@ -23,9 +23,9 @@ export function getSystemHandlers(
     ) {
       continue
     } else if (fn.inputs.length === 0) {
-      methodHandlers.push(new SimpleMethodHandler(fn, logHandler))
+      methodHandlers.push(new SimpleMethodHandler(fn, logger))
     } else if (fn.inputs.length === 1 && fn.inputs[0].type === 'uint256') {
-      arrayHandlers.push(new LimitedArrayHandler(fn, 5, logHandler))
+      arrayHandlers.push(new LimitedArrayHandler(fn, 5, logger))
     }
   }
 

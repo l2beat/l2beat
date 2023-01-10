@@ -13,7 +13,7 @@ export class SimpleMethodHandler implements Handler {
   private readonly fragment: utils.FunctionFragment
   constructor(
     fragment: string | utils.FunctionFragment,
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
@@ -24,7 +24,7 @@ export class SimpleMethodHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, [
+    this.logger.logExecution(this.field, [
       'Calling ',
       this.fragment.name + '()',
     ])

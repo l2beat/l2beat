@@ -23,7 +23,7 @@ export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   config: DiscoveryConfig,
-  discoveryLogger: DiscoveryLogger,
+  logger: DiscoveryLogger,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
   const overrides = config.overrides?.[address.toString()]
 
@@ -34,11 +34,11 @@ export async function analyzeItem(
   )
 
   if (proxyDetection) {
-    discoveryLogger.redBackground(
+    logger.redBackground(
       `  Proxy detected:  ${proxyDetection.upgradeability.type}  `,
     )
   } else if (overrides?.proxyType) {
-    discoveryLogger.redBackground(
+    logger.redBackground(
       `  Manual proxy detection failed: ${overrides.proxyType} `,
     )
   }
@@ -50,12 +50,12 @@ export async function analyzeItem(
   )
 
   if (metadata.isEOA) {
-    discoveryLogger.blue('  Type: EOA')
+    logger.blue('  Type: EOA')
   } else {
-    discoveryLogger.bold(`  Name: ${metadata.name}`)
+    logger.bold(`  Name: ${metadata.name}`)
   }
 
-  const handlers = getHandlers(metadata.abi, overrides, discoveryLogger)
+  const handlers = getHandlers(metadata.abi, overrides, logger)
   const parameters = await executeHandlers(provider, address, handlers)
 
   const relatives = parameters

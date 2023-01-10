@@ -37,22 +37,22 @@ export function getUserHandler(
   field: string,
   definition: UserHandlerDefinition,
   abi: string[],
-  logHandler: DiscoveryLogger,
+  logger: DiscoveryLogger,
 ): Handler {
   switch (definition.type) {
     case 'storage':
-      return new StorageHandler(field, definition, logHandler)
+      return new StorageHandler(field, definition, logger)
     case 'array':
-      return new ArrayHandler(field, definition, abi, logHandler)
+      return new ArrayHandler(field, definition, abi, logger)
     case 'call':
-      return new CallHandler(field, definition, abi, logHandler)
+      return new CallHandler(field, definition, abi, logger)
     case 'starkWareNamedStorage':
-      return new StarkWareNamedStorageHandler(field, definition, logHandler)
+      return new StarkWareNamedStorageHandler(field, definition, logger)
     case 'accessControl':
-      return new AccessControlHandler(field, definition, abi, logHandler)
+      return new AccessControlHandler(field, definition, abi, logger)
     case 'arrayFromOneEvent':
-      return new ArrayFromOneEventHandler(field, definition, abi, logHandler)
+      return new ArrayFromOneEventHandler(field, definition, abi, logger)
     case 'arrayFromTwoEvents':
-      return new ArrayFromTwoEventsHandler(field, definition, abi, logHandler)
+      return new ArrayFromTwoEventsHandler(field, definition, abi, logger)
   }
 }

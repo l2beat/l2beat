@@ -1,6 +1,6 @@
 import { expect } from 'earljs'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
@@ -187,10 +187,7 @@ describe(getHandlers.name, () => {
       DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([
-      new ErrorHandler(
-        'foo',
-        'Cannot find a matching method for foo',
-      ),
+      new ErrorHandler('foo', 'Cannot find a matching method for foo'),
     ])
   })
 })

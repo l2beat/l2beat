@@ -13,7 +13,7 @@ export interface HandlerResult {
 export interface Handler {
   field: string
   dependencies: string[]
-  discoveryLogger?: DiscoveryLogger
+  logger?: DiscoveryLogger
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,

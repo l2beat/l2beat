@@ -1,8 +1,4 @@
-import {
-  Logger,
-  MainnetEtherscanClient,
-  TaskQueue,
-} from '@l2beat/common'
+import { Logger, MainnetEtherscanClient, TaskQueue } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -30,7 +26,7 @@ export class DiscoveryWatcher {
       this.logger.for('taskQueue'),
     )
   }
-  
+
   start() {
     this.taskQueue.addToFront()
     this.logger.info('Started')

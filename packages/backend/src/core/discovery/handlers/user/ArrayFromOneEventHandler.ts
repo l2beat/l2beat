@@ -29,7 +29,7 @@ export class ArrayFromOneEventHandler implements Handler {
     readonly field: string,
     readonly definition: ArrayFromOneEventHandlerDefinition,
     abi: string[],
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     this.fragment = getEventFragment(
       definition.event,
@@ -52,10 +52,7 @@ export class ArrayFromOneEventHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, [
-      'Querying ',
-      this.fragment.name,
-    ])
+    this.logger.logExecution(this.field, ['Querying ', this.fragment.name])
     const logs = await provider.getLogs(address, [
       this.abi.getEventTopic(this.fragment),
     ])

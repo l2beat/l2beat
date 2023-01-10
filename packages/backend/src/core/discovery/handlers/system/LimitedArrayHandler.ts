@@ -16,7 +16,7 @@ export class LimitedArrayHandler implements Handler {
   constructor(
     fragment: string | utils.FunctionFragment,
     private readonly limit = 5,
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
@@ -27,7 +27,7 @@ export class LimitedArrayHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, [
+    this.logger.logExecution(this.field, [
       'Calling array (max: ',
       this.limit.toString(),
       ') ',

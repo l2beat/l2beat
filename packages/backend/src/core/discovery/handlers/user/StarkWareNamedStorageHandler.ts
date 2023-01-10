@@ -23,14 +23,14 @@ export class StarkWareNamedStorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StarkWareNamedStorageHandlerDefinition,
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, [
+    this.logger.logExecution(this.field, [
       'Reading named storage at ',
       JSON.stringify(this.definition.tag),
     ])

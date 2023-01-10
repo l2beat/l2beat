@@ -2,8 +2,8 @@ import { mock } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { providers, utils } from 'ethers'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { AccessControlHandler } from './AccessControlHandler'
 

@@ -227,7 +227,7 @@ describe(executeHandlers.name, () => {
     class FunkyHandler implements Handler {
       dependencies: string[] = []
       field = 'foo'
-      discoveryLogger = DiscoveryLogger.SILENT
+      logger = DiscoveryLogger.SILENT
       async execute(): Promise<HandlerResult> {
         throw new Error('oops')
       }

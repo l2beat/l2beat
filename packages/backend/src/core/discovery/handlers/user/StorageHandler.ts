@@ -34,7 +34,7 @@ export class StorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StorageHandlerDefinition,
-    readonly discoveryLogger: DiscoveryLogger,
+    readonly logger: DiscoveryLogger,
   ) {
     this.dependencies = getDependencies(definition)
   }
@@ -44,7 +44,7 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.logExecution(this.field, ['Reading storage'])
+    this.logger.logExecution(this.field, ['Reading storage'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes
