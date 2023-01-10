@@ -5,7 +5,8 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "prebuild": "yarn clean",
     "clean": "rm -rf build",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",

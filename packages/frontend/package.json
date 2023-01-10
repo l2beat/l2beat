@@ -7,6 +7,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "NODE_ENV=production gulp build",
+    "prebuild": "yarn clean",
     "clean": "rm -rf build",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",

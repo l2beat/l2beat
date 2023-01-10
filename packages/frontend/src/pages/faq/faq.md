@@ -106,3 +106,5 @@ If you want to check TVL for Nahmii you can do that [on etherscan](https://ether
 
 Everything is [open source](https://github.com/l2beat/l2beat) &ndash; just create a PR. If you want
 to add a new project you should read our [contributing guidelines](https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md).
+
+🔍 Here is also a visual step-by-step guide for creating a Pull Request - [link](https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf)
