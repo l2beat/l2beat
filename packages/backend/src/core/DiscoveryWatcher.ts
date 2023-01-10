@@ -12,7 +12,6 @@ import { discover } from './discovery/discover'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 
-// discovery watcher
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
 
@@ -31,6 +30,7 @@ export class DiscoveryWatcher {
       this.logger.for('taskQueue'),
     )
   }
+  
   start() {
     this.taskQueue.addToFront()
     this.logger.info('Started')
