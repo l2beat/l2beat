@@ -12,7 +12,7 @@ export interface LinkSectionProps {
 
 export function LinkSection(props: LinkSectionProps) {
   return (
-    <section className="LinkSection px-4 pt-3 md:p-0 md:bg-gray-100 md:dark:bg-gray-900 md:rounded-lg md:mt-6">
+    <section className="px-4 pt-3 md:p-0 md:bg-gray-100 md:dark:bg-gray-900 md:rounded-lg md:mt-6">
       <div className="hidden my-6 px-6 md:flex items-center">
         <img
           src={props.icon}
