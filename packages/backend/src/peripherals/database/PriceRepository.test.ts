@@ -145,6 +145,14 @@ describe(PriceRepository.name, () => {
         ]),
       )
     })
+
+    it('works with empty database', async () => {
+      await repository.deleteAll()
+
+      const result = await repository.calcDataBoundaries()
+
+      expect(result).toEqual(new Map())
+    })
   })
 
   describe(PriceRepository.prototype.getLatestByTokenBetween.name, () => {
@@ -169,6 +177,17 @@ describe(PriceRepository.name, () => {
       )
 
       expect(result).toEqual(new Map([[AssetId.ETH, START.add(-1, 'days')]]))
+    })
+
+    it('works with empty database', async () => {
+      await repository.deleteAll()
+
+      const result = await repository.getLatestByTokenBetween(
+        START.add(-1, 'days'),
+        START.add(-1, 'hours'),
+      )
+
+      expect(result).toEqual(new Map())
     })
   })
 })

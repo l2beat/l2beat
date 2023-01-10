@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
 
 export interface ActivityHeaderProps {
@@ -49,7 +50,7 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           </span>
         </p>
       </div>
-      <hr className="md:hidden mt-2 border-gray-300 dark:border-gray-850" />
+      <HorizontalSeparator className="md:hidden mt-2" />
     </header>
   )
 }

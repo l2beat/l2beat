@@ -11,7 +11,7 @@
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
     "lint:fix": "yarn lint --fix",
-    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src test",
+    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
     "start": "yarn start:staging",
     "start:local": "DEPLOYMENT_ENV=local gulp watch",
     "start:staging": "DEPLOYMENT_ENV=staging gulp watch",

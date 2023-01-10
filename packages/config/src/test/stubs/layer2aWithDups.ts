@@ -5,8 +5,8 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-} from '../../../src/layer2s/common'
-import { Layer2 } from '../../../src/layer2s/types'
+} from '../../layer2s/common'
+import { Layer2 } from '../../layer2s/types'
 
 export const layer2aWithDups: Layer2 = {
   type: 'layer2',

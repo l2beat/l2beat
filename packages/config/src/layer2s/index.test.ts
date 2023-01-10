@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
-import { ProjectTechnologyChoice } from '../src/common'
-import { layer2s, Layer2Technology, milestonesLayer2s } from '../src/layer2s'
-import { checkRisk } from './checkRisk'
+import { ProjectTechnologyChoice } from '../common'
+import { checkRisk } from '../test/helpers'
+import { layer2s, Layer2Technology, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
   describe('sentences', () => {

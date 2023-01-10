@@ -1,15 +1,15 @@
 import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
+import { bridges, layer2s } from '../../src/'
+import { bridge1WithDups } from '../../src/test/stubs/bridge1WithDups'
+import { bridge2WithDups } from '../../src/test/stubs/bridge2WithDups'
+import { layer2aWithDups } from '../../src/test/stubs/layer2aWithDups'
 import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
-} from '../../scripts/checkVerifiedContracts/addresses'
-import { loadVerifiedJson } from '../../scripts/checkVerifiedContracts/output'
-import { bridges, layer2s } from '../../src'
-import { bridge1WithDups } from './stubs/bridge1WithDups'
-import { bridge2WithDups } from './stubs/bridge2WithDups'
-import { layer2aWithDups } from './stubs/layer2aWithDups'
+} from './addresses'
+import { loadVerifiedJson } from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
   it('all current contracts are included in verified.json', async () => {
