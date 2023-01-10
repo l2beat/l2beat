@@ -2,6 +2,7 @@ import { Milestone } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
@@ -97,7 +98,7 @@ export function Chart({
           {hasTvl && <TokenControls tokens={tokens} />}
         </div>
       </section>
-      <hr className="w-full mt-4 md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />
+      <HorizontalSeparator className="hidden md:block mt-4 md:mt-6" />
     </>
   )
 }
