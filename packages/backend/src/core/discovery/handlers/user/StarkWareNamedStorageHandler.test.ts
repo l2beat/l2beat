@@ -3,6 +3,7 @@ import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
 
@@ -22,10 +23,14 @@ describe(StarkWareNamedStorageHandler.name, () => {
         },
       })
 
-      const handler = new StarkWareNamedStorageHandler('someName', {
-        type: 'starkWareNamedStorage',
-        tag: 'foo',
-      })
+      const handler = new StarkWareNamedStorageHandler(
+        'someName',
+        {
+          type: 'starkWareNamedStorage',
+          tag: 'foo',
+        },
+        DiscoveryLogger.SILENT,
+      )
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
@@ -46,11 +51,15 @@ describe(StarkWareNamedStorageHandler.name, () => {
         },
       })
 
-      const handler = new StarkWareNamedStorageHandler('someName', {
-        type: 'starkWareNamedStorage',
-        tag: 'foo',
-        returnType: 'number',
-      })
+      const handler = new StarkWareNamedStorageHandler(
+        'someName',
+        {
+          type: 'starkWareNamedStorage',
+          tag: 'foo',
+          returnType: 'number',
+        },
+        DiscoveryLogger.SILENT,
+      )
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
@@ -72,11 +81,15 @@ describe(StarkWareNamedStorageHandler.name, () => {
         },
       })
 
-      const handler = new StarkWareNamedStorageHandler('someName', {
-        type: 'starkWareNamedStorage',
-        tag: 'foo',
-        returnType: 'address',
-      })
+      const handler = new StarkWareNamedStorageHandler(
+        'someName',
+        {
+          type: 'starkWareNamedStorage',
+          tag: 'foo',
+          returnType: 'address',
+        },
+        DiscoveryLogger.SILENT,
+      )
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
@@ -88,10 +101,14 @@ describe(StarkWareNamedStorageHandler.name, () => {
   })
 
   it('handles provider errors', async () => {
-    const handler = new StarkWareNamedStorageHandler('someName', {
-      type: 'starkWareNamedStorage',
-      tag: 'foo',
-    })
+    const handler = new StarkWareNamedStorageHandler(
+      'someName',
+      {
+        type: 'starkWareNamedStorage',
+        tag: 'foo',
+      },
+      DiscoveryLogger.SILENT,
+    )
 
     const provider = mock<DiscoveryProvider>({
       async getStorage() {

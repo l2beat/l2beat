@@ -2,11 +2,11 @@ import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
-import { logHandler } from '../utils/logHandler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ArrayFromTwoEventsHandlerDefinition = z.infer<
@@ -30,6 +30,7 @@ export class ArrayFromTwoEventsHandler implements Handler {
     readonly field: string,
     readonly definition: ArrayFromTwoEventsHandlerDefinition,
     abi: string[],
+    readonly logger: DiscoveryLogger,
   ) {
     this.addFragment = getEventFragment(definition.addEvent, abi, (fragment) =>
       fragment.inputs.some((x) => x.name === definition.addKey),
@@ -55,7 +56,7 @@ export class ArrayFromTwoEventsHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    logHandler(this.field, [
+    this.logger.logExecution(this.field, [
       'Querying ',
       this.addFragment.name,
       ' and ',

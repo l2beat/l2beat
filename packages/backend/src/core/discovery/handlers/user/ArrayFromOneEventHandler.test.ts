@@ -3,6 +3,7 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { providers, utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ArrayFromOneEventHandler } from './ArrayFromOneEventHandler'
 
@@ -18,6 +19,7 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagKey: 'status',
         },
         ['event OwnerChanged(address indexed account, bool indexed status)'],
+        DiscoveryLogger.SILENT,
       )
       expect(handler.getEvent()).toEqual(
         'event OwnerChanged(address indexed account, bool indexed status)',
@@ -38,6 +40,7 @@ describe(ArrayFromOneEventHandler.name, () => {
             [
               'event OwnerChanged(address indexed account, bool indexed status)',
             ],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for OwnerChanged')
     })
@@ -56,6 +59,7 @@ describe(ArrayFromOneEventHandler.name, () => {
             [
               'event OwnerChanged(address indexed account, bool indexed status)',
             ],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for OwnerChanged')
     })
@@ -72,6 +76,7 @@ describe(ArrayFromOneEventHandler.name, () => {
               flagKey: 'status',
             },
             [],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid event abi')
     })
@@ -112,6 +117,7 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagKey: 'status',
         },
         [],
+        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect<unknown>(value).toEqual({
@@ -148,6 +154,7 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagKey: 'status',
         },
         [],
+        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect<unknown>(value).toEqual({
@@ -185,6 +192,7 @@ describe(ArrayFromOneEventHandler.name, () => {
           invert: true,
         },
         [],
+        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect<unknown>(value).toEqual({
@@ -220,6 +228,7 @@ describe(ArrayFromOneEventHandler.name, () => {
           valueKey: 'account',
         },
         [],
+        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect<unknown>(value).toEqual({

@@ -35,9 +35,9 @@ export const hermez: Layer2 = {
       repositories: ['https://github.com/0xpolygonhermez'],
       socialMedia: [
         'https://blog.hermez.io/',
-        'https://t.me/hermez_network',
+        'https://t.me/PolygonHermez',
         'https://discord.gg/AczuUXDA2N',
-        'https://twitter.com/0xPolygonHermez',
+        'https://twitter.com/0xPolygonZK',
       ],
     },
   },
