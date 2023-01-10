@@ -29,11 +29,12 @@ export const optimism: Layer2 = {
       websites: ['https://optimism.io/'],
       apps: [],
       documentation: ['https://community.optimism.io'],
-      explorers: ['https://explorer.optimism.io'],
+      explorers: ['https://optimistic.etherscan.io'],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OptimismFND',
+        'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
