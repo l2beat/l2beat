@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 
+import { Metrics, RepositoryHistogram } from '../../../Metrics'
 import { Database } from './Database'
 
 type AnyMethod<A extends unknown[], R> = (...args: A) => Promise<R>
@@ -22,11 +23,15 @@ type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 type SaveMethod<T> = (record: T) => Promise<boolean>
 
 export class BaseRepository {
+  protected histogram: RepositoryHistogram
+
   constructor(
     protected readonly database: Database,
     protected readonly logger: Logger,
+    readonly metrics: Metrics,
   ) {
     this.logger = logger.for(this)
+    this.histogram = metrics.repositoryHistogram
   }
 
   protected knex(trx?: Knex.Transaction) {
@@ -114,7 +119,12 @@ export class BaseRepository {
     log: (result: R) => void,
   ): AnyMethod<A, R> {
     const fn = async (...args: A) => {
+      const start = Date.now()
       const result = await method.call(this, ...args)
+      const timeMs = Date.now() - start
+      this.histogram
+        .labels({ repository: this.constructor.name, method: method.name })
+        .observe(timeMs / 1000)
       log(result)
       return result
     }

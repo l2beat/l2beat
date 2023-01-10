@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/types'
 
-import { Bridge } from '../../../src/bridges/types'
+import { Bridge } from '../../bridges/types'
 
 export const bridge2WithDups: Bridge = {
   type: 'bridge',

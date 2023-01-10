@@ -3,8 +3,8 @@ import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { Contract, providers, utils } from 'ethers'
 
-import { tokenList } from '../src/tokens'
-import { config } from './config'
+import { config } from './test/config'
+import { tokenList } from './tokens'
 
 describe('tokens', () => {
   const addresses = tokenList.map((x) => x.address)

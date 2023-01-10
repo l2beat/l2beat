@@ -45,7 +45,7 @@ export function createRpcCounter(
       startFrom: transactionApi.startBlock ?? 0,
       getLatest: (previousLatest) =>
         client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
-      processRange: async (from, to, trx) => {
+      processRange: async (from, to, trx, logger) => {
         const queries = range(from, to + 1).map((blockNumber) => async () => {
           const block = await client.getBlock(blockNumber)
           const timestamp = new UnixTime(block.timestamp)

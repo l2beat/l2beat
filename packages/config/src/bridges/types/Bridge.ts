@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/types'
 
 import {
+  KnowledgeNugget,
   Milestone,
   ProjectContracts,
   ProjectEscrow,
@@ -20,6 +21,7 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: ProjectPermission[]
   milestones?: Milestone[]
+  knowledgeNuggets?: KnowledgeNugget[]
 }
 
 export interface BridgeDisplay {

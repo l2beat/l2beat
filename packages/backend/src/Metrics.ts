@@ -11,7 +11,19 @@ import {
   SummaryConfiguration,
 } from 'prom-client'
 
+export type RepositoryHistogram = Histogram<'repository' | 'method'>
+
 export class Metrics {
+  readonly repositoryHistogram: RepositoryHistogram
+
+  constructor() {
+    this.repositoryHistogram = this.createHistogram({
+      name: 'repository_method_duration_seconds',
+      help: 'duration histogram of repository methods',
+      labelNames: ['repository', 'method'],
+    })
+  }
+
   collectDefaultMetrics(): void {
     collectDefaultMetrics()
   }

@@ -1,18 +1,12 @@
 import { EthereumAddress, ProjectId } from '@l2beat/types'
 import { expect } from 'earljs'
-import { utils } from 'ethers'
 
-import { bridges, getTokenBySymbol, layer2s } from '../src'
-import { checkRisk } from './checkRisk'
+import { bridges, getTokenBySymbol, layer2s } from '../'
+import { checkRisk, testAddress } from './helpers'
 
 describe('projects', () => {
   describe('addresses', () => {
     describe('every addresses is valid and formatted', () => {
-      const testAddress = (address: string) =>
-        it(address, () => {
-          expect(utils.getAddress(address)).toEqual(address)
-        })
-
       describe('escrows', () => {
         const escrows = [...layer2s, ...bridges].flatMap((x) =>
           x.config.escrows.map((x) => x.address),

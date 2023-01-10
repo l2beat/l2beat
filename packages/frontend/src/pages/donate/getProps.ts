@@ -49,6 +49,10 @@ export async function getProps(
             name: 'zkSync 1.0',
             linkURL: `https://zkscan.io/explorer/accounts/${address}`,
           },
+          {
+            name: 'Gitcoin',
+            linkURL: 'https://gitcoin.co/grants/3857/l2beat',
+          },
         ],
       },
       footer: getFooterProps(config),

@@ -1,6 +1,8 @@
-import { Milestone } from '@l2beat/config'
+import { KnowledgeNugget, Milestone } from '@l2beat/config'
+import { isEmpty } from 'lodash'
 import React from 'react'
 
+import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
 import {
   ContractsSection,
   ContractsSectionProps,
@@ -9,6 +11,7 @@ import {
   DescriptionSection,
   DescriptionSectionProps,
 } from '../../../components/project/DescriptionSection'
+import { KnowledgeNuggets } from '../../../components/project/KnowledgeNuggets'
 import {
   LinkSection,
   LinkSectionProps,
@@ -40,13 +43,12 @@ export interface ProjectDetailsProps {
   permissionsSection?: PermissionsSectionProps
   contractsSection: ContractsSectionProps
   milestones?: Milestone[]
+  knowledgeNuggets?: KnowledgeNugget[]
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <main className="ProjectDetails">
-      <Milestones milestones={props.milestones} />
-      <LinkSection {...props.linkSection} />
       <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
         <RiskSection {...props.riskSection} />
@@ -58,6 +60,18 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           <PermissionsSection {...props.permissionsSection} />
         )}
         <ContractsSection {...props.contractsSection} />
+      </div>
+      <div className="ProjectDetails-Side flex flex-col">
+        <LinkSection {...props.linkSection} />
+        <div className="flex flex-col py-12 gap-12 bg-gray-100 dark:bg-gray-900 md:!bg-transparent">
+          <Milestones milestones={props.milestones} />
+          {!isEmpty(props.knowledgeNuggets) && (
+            <div className="md:hidden px-4">
+              <HorizontalSeparator />
+            </div>
+          )}
+          <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
+        </div>
       </div>
     </main>
   )

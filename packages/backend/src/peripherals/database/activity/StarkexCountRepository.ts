@@ -3,8 +3,10 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 
+import { Metrics } from '../../../Metrics'
 import { BaseRepository } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
+import { NullableDict } from '../shared/types'
 
 export interface StarkexTransactionCountRecord {
   timestamp: UnixTime
@@ -13,8 +15,8 @@ export interface StarkexTransactionCountRecord {
 }
 
 export class StarkexTransactionCountRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
     /* eslint-disable @typescript-eslint/unbound-method */
     this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
@@ -43,11 +45,17 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()
-    const row = await knex('activity.starkex')
+    // note: we need to provide better types manually here
+    const row = (await knex('activity.starkex')
       .where('project_id', projectId.toString())
       .max('unix_timestamp')
-      .first()
-    return row ? UnixTime.fromDate(row.max) : undefined
+      .first()) as NullableDict<Date> | undefined
+
+    if (!row || row.max === null) {
+      return undefined
+    }
+
+    return UnixTime.fromDate(row.max)
   }
 }
 

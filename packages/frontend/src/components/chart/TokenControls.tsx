@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChartButton } from './ChartButton'
 
 export interface TokenControl {
@@ -19,7 +20,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
       data-role="chart-token-controls"
       className="col-span-4 flex items-baseline justify-start flex-wrap gap-x-4"
     >
-      <hr className="w-full mb-4 md:hidden border-gray-300 dark:border-gray-850" />
+      <HorizontalSeparator className="mb-4 md:hidden" />
       <span>Tokens:</span>
       {tokens.map((x, i) => (
         <ChartButton

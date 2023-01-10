@@ -1,8 +1,10 @@
 import { Logger } from '@l2beat/common'
 import { Hash256, UnixTime } from '@l2beat/types'
 
+import { Metrics } from '../../Metrics'
 import { BaseRepository } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import { NullableDict } from './shared/types'
 
 export interface ReportStatusRecord {
   configHash: Hash256
@@ -10,8 +12,8 @@ export interface ReportStatusRecord {
 }
 
 export class ReportStatusRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
@@ -75,10 +77,14 @@ export class ReportStatusRepository extends BaseRepository {
 
   async findLatestTimestamp(): Promise<UnixTime | undefined> {
     const knex = await this.knex()
-    const row = await knex('report_status').max('unix_timestamp').first()
-    if (!row) {
+    // note: we need to provide better types manually here
+    const row = (await knex('report_status').max('unix_timestamp').first()) as
+      | NullableDict<Date>
+      | undefined
+    if (!row || row.max === null) {
       return undefined
     }
+
     return UnixTime.fromDate(row.max)
   }
 }
