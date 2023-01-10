@@ -3,8 +3,7 @@ import React from 'react'
 export interface SeparatorProps {
   className?: string
 }
-export function HorizontalSeparator(props: SeparatorProps) {
-  const { className } = props
+export function HorizontalSeparator({ className }: SeparatorProps) {
   return (
     <hr
       className={cx(
