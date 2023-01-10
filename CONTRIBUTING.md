@@ -1,5 +1,7 @@
 # Contributing to this repository
 
+🔍 step-by-step guide for creating a Pull Request - [link](https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e)
+
 ## Don't see your issue? Open one
 
 You can browse [existing issues](https://github.com/l2beat/l2beat/issues) on our github repository.
