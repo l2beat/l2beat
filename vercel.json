@@ -56,5 +56,6 @@
       "source": "/api/projects/:project/tvl/assets/:asset",
       "destination": "https://api.l2beat.com/api/projects/:project/tvl/assets/:asset"
     }
-  ]
+  ],
+  "trailingSlash": false
 }
