@@ -18,10 +18,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
 
   return (
     <div
-      className={cx(
-        'Milestones py-12 px-4 md:px-0 bg-gray-900 md:bg-transparent',
-        className,
-      )}
+      className={cx('px-4 md:px-0 bg-gray-900 md:bg-transparent', className)}
     >
       <div>
         <span className="text-[28px] leading-[32.81px] font-bold">
