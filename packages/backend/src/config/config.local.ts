@@ -25,7 +25,7 @@ export function getLocalConfig(cli: CliParameters): Config {
   const discoveryWatcherEnabled =
     cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
-    process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL_ID ? true : false
+    !!process.env.DISCORD_TOKEN && !!process.env.DISCORD_CHANNEL_ID
 
   return {
     name: 'Backend/Local',
