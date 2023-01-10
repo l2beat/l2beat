@@ -1,5 +1,4 @@
 export * from './assert'
-export * from './DiscoveryLogger'
 export * from './EventTracker'
 export * from './Logger'
 export * from './mock'

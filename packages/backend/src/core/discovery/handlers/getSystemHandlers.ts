@@ -1,7 +1,7 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { utils } from 'ethers'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'

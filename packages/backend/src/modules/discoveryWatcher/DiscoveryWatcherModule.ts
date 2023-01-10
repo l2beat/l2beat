@@ -1,14 +1,10 @@
-import {
-  DiscoveryLogger,
-  HttpClient,
-  Logger,
-  MainnetEtherscanClient,
-} from '@l2beat/common'
+import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { ConfigReader } from '../../core/discovery/ConfigReader'
+import { DiscoveryLogger } from '../../core/discovery/DiscoveryLogger'
 import { DiscoveryWatcher } from '../../core/DiscoveryWatcher'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'

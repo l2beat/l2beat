@@ -33,7 +33,7 @@ export class DiscoveryLogger {
     this.log(chalk.bgRed.whiteBright(message))
   }
 
-  handleLog(field: string, values: string[]) {
+  logExecution(field: string, values: string[]) {
     if (!this.options.enabled) {
       return
     }

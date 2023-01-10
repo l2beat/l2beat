@@ -1,8 +1,9 @@
-import { DiscoveryLogger, getErrorMessage } from '@l2beat/common'
+import { getErrorMessage } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
@@ -43,7 +44,7 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.handleLog(this.field, ['Reading storage'])
+    this.discoveryLogger.logExecution(this.field, ['Reading storage'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes

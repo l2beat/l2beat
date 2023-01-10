@@ -1,6 +1,6 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { Handler } from '../Handler'
 import {
   AccessControlHandler,

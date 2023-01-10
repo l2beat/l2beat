@@ -1,7 +1,7 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { getMetadata } from './getMetadata'
 import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'

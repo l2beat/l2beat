@@ -1,7 +1,7 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
@@ -54,7 +54,7 @@ export class AccessControlHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.handleLog(this.field, ['Checking AccessControl'])
+    this.discoveryLogger.logExecution(this.field, ['Checking AccessControl'])
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

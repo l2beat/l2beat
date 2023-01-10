@@ -1,5 +1,4 @@
 import {
-  DiscoveryLogger,
   Logger,
   MainnetEtherscanClient,
   TaskQueue,
@@ -10,6 +9,7 @@ import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
 import { discover } from './discovery/discover'
+import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 
 // discovery watcher

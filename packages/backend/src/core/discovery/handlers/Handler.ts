@@ -1,6 +1,6 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ContractValue } from '../types'
 
@@ -13,7 +13,7 @@ export interface HandlerResult {
 export interface Handler {
   field: string
   dependencies: string[]
-  discoveryLogger: DiscoveryLogger
+  discoveryLogger?: DiscoveryLogger
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,

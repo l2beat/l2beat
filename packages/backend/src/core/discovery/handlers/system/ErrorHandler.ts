@@ -1,4 +1,4 @@
-import { DiscoveryLogger, getErrorMessage } from '@l2beat/common'
+import { getErrorMessage } from '@l2beat/common'
 
 import { Handler, HandlerResult } from '../Handler'
 
@@ -6,11 +6,7 @@ export class ErrorHandler implements Handler {
   readonly dependencies = []
   private readonly errorMessage: string
 
-  constructor(
-    readonly field: string,
-    error: unknown,
-    readonly discoveryLogger: DiscoveryLogger,
-  ) {
+  constructor(readonly field: string, error: unknown) {
     this.errorMessage = getErrorMessage(error)
   }
 

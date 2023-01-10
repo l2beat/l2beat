@@ -1,7 +1,7 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
@@ -24,7 +24,7 @@ export class SimpleMethodHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.handleLog(this.field, [
+    this.discoveryLogger.logExecution(this.field, [
       'Calling ',
       this.fragment.name + '()',
     ])

@@ -1,6 +1,6 @@
-import { DiscoveryLogger } from '@l2beat/common'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getSystemHandlers } from './getSystemHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { getUserHandler } from './user'
@@ -16,7 +16,7 @@ export function getHandlers(
       try {
         return getUserHandler(field, definition, abi, discoveryLogger)
       } catch (error) {
-        return new ErrorHandler(field, error, discoveryLogger)
+        return new ErrorHandler(field, error)
       }
     },
   )

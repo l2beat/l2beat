@@ -1,8 +1,9 @@
-import { DiscoveryLogger, getErrorMessage } from '@l2beat/common'
+import { getErrorMessage } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -29,7 +30,7 @@ export class StarkWareNamedStorageHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.handleLog(this.field, [
+    this.discoveryLogger.logExecution(this.field, [
       'Reading named storage at ',
       JSON.stringify(this.definition.tag),
     ])

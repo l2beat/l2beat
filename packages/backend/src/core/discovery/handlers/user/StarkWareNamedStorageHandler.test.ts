@@ -1,8 +1,9 @@
-import { DiscoveryLogger, mock } from '@l2beat/common'
+import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
 

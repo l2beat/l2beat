@@ -1,8 +1,8 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
@@ -52,7 +52,7 @@ export class ArrayFromOneEventHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.discoveryLogger.handleLog(this.field, [
+    this.discoveryLogger.logExecution(this.field, [
       'Querying ',
       this.fragment.name,
     ])

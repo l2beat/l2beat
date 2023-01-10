@@ -1,9 +1,10 @@
-import { DiscoveryLogger, MainnetEtherscanClient } from '@l2beat/common'
+import { MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { DiscoveryConfig } from '../../config/Config'
 import { ConfigReader } from './ConfigReader'
 import { discover } from './discover'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { saveDiscoveryResult } from './saveDiscoveryResult'
 

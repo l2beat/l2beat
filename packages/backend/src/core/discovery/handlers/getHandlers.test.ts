@@ -1,5 +1,5 @@
-import { DiscoveryLogger } from '@l2beat/common'
 import { expect } from 'earljs'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
@@ -190,7 +190,6 @@ describe(getHandlers.name, () => {
       new ErrorHandler(
         'foo',
         'Cannot find a matching method for foo',
-        DiscoveryLogger.SILENT,
       ),
     ])
   })
