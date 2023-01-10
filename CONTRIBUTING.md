@@ -1,6 +1,6 @@
 # Contributing to this repository
 
-🔍 step-by-step guide for creating a Pull Request - [link](https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e)
+🔍 step-by-step guide for creating a Pull Request - [link](https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf)
 
 ## Don't see your issue? Open one
 
