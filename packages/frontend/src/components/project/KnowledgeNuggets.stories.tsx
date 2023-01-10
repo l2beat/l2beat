@@ -1,9 +1,6 @@
 import React from 'react'
 
-import {
-  KnowledgeNuggets as KnowledgeNuggetsComponent,
-  KnowledgeNuggetsProps,
-} from './KnowledgeNuggets'
+import { KnowledgeNuggets as KnowledgeNuggetsComponent } from './KnowledgeNuggets'
 
 export default {
   title: 'Components/Project/KnowledgeNuggets',
@@ -30,14 +27,10 @@ const knowledgeNuggetsExample = [
   },
 ]
 
-export function KnowledgeNuggets(props: KnowledgeNuggetsProps) {
+export function KnowledgeNuggets() {
   return (
     <div className="p-4">
-      <KnowledgeNuggetsComponent {...props} />
+      <KnowledgeNuggetsComponent knowledgeNuggets={knowledgeNuggetsExample} />
     </div>
   )
-}
-
-KnowledgeNuggets.args = {
-  knowledgeNuggets: knowledgeNuggetsExample,
 }

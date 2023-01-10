@@ -1,9 +1,6 @@
 import React from 'react'
 
-import {
-  KnowledgeNuggetItem,
-  KnowledgeNuggetProps,
-} from './KnowledgeNuggetItem'
+import { KnowledgeNuggetItem } from './KnowledgeNuggetItem'
 
 export default {
   title: 'Components/Project/KnowledgeNugget',
@@ -16,14 +13,10 @@ const knowledgeNuggetExample = {
     'https://w0.peakpx.com/wallpaper/551/1016/HD-wallpaper-ethereum-blue-logo-blue-brickwall-ethereum-logo-cryptocurrency-ethereum-neon-logo-cryptocurrency-signs-ethereum-thumbnail.jpg',
 }
 
-export function KnowledgeNugget(props: KnowledgeNuggetProps) {
+export function KnowledgeNugget() {
   return (
     <div className="p-4">
-      <KnowledgeNuggetItem {...props} />
+      <KnowledgeNuggetItem knowledgeNugget={knowledgeNuggetExample} />
     </div>
   )
-}
-
-KnowledgeNugget.args = {
-  knowledgeNugget: knowledgeNuggetExample,
 }
