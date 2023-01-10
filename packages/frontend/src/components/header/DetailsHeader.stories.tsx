@@ -32,7 +32,7 @@ function Template({ projectId }: TemplateProps) {
       value: <StatWithChange stat="2.21" change="-10.23%" />,
     },
     {
-      title: '30D ts count',
+      title: '30D tx count',
       value: formatLargeNumber(800321),
     },
     {
