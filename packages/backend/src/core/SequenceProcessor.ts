@@ -82,6 +82,14 @@ export class SequenceProcessor extends EventEmitter {
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
     this.uncertaintyBuffer = opts.uncertaintyBuffer ?? 0
+    this.metrics.activityConfig
+      .labels({
+        project: this.id,
+        scheduleIntervalMs: this.scheduleInterval,
+        uncertaintyBuffer: this.uncertaintyBuffer,
+        batchSize: this.opts.batchSize,
+      })
+      .set(1)
   }
 
   async start(): Promise<void> {

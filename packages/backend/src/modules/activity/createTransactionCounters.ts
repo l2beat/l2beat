@@ -197,15 +197,18 @@ function mergeWithActivityConfigProjects(
 function isProjectAllowed(
   allowedProjectIds: string[] | undefined,
   logger: Logger,
+  metrics: Metrics,
 ) {
   return (p: { projectId: ProjectId }) => {
     const noIdsSpecified = allowedProjectIds === undefined
     const projectIncluded = allowedProjectIds?.includes(p.projectId.toString())
-    if (noIdsSpecified || projectIncluded) {
-      return true
-    } else {
+    const includedInApi = !!(noIdsSpecified || projectIncluded)
+    if (!includedInApi) {
       logger.info(`Skipping ${p.projectId.toString()} processor`)
-      return false
     }
+    metrics.activityIncludedInApi
+      .labels({ project: p.projectId.toString() })
+      .set(Number(includedInApi))
+    return includedInApi
   }
 }

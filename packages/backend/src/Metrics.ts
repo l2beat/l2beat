@@ -18,6 +18,10 @@ export class Metrics {
   readonly repositoryHistogram: RepositoryHistogram
   readonly activityLast: ProjectGauge
   readonly activityLatest: ProjectGauge
+  readonly activityIncludedInApi: ProjectGauge
+  readonly activityConfig: Gauge<
+    'project' | 'scheduleIntervalMs' | 'batchSize' | 'uncertaintyBuffer'
+  >
 
   constructor() {
     this.repositoryHistogram = this.createHistogram({
@@ -36,6 +40,23 @@ export class Metrics {
       name: 'activity_latest',
       help: 'Latest existing unit to be synced to',
       labelNames: ['project'],
+    })
+
+    this.activityIncludedInApi = this.createGauge({
+      name: 'activity_included_in_api',
+      help: 'Boolean value 1 when this project is included in activity api response',
+      labelNames: ['project'],
+    })
+
+    this.activityConfig = this.createGauge({
+      name: 'activity_config',
+      help: 'Activity config info',
+      labelNames: [
+        'project',
+        'scheduleIntervalMs',
+        'batchSize',
+        'uncertaintyBuffer',
+      ],
     })
   }
 

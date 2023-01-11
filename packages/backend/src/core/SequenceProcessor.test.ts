@@ -18,6 +18,7 @@ function createMockMetrics() {
     repositoryHistogram: createMockHistogram(),
     activityLast: createMockGauge(),
     activityLatest: createMockGauge(),
+    activityConfig: createMockGauge(),
   })
 }
 
