@@ -12,15 +12,30 @@ import {
 } from 'prom-client'
 
 export type RepositoryHistogram = Histogram<'repository' | 'method'>
+export type ProjectGauge = Gauge<'project'>
 
 export class Metrics {
   readonly repositoryHistogram: RepositoryHistogram
+  readonly activityLast: ProjectGauge
+  readonly activityLatest: ProjectGauge
 
   constructor() {
     this.repositoryHistogram = this.createHistogram({
       name: 'repository_method_duration_seconds',
       help: 'duration histogram of repository methods',
       labelNames: ['repository', 'method'],
+    })
+
+    this.activityLast = this.createGauge({
+      name: 'activity_last_synced',
+      help: 'Last unit (block or day) synced by the sequence processor',
+      labelNames: ['project'],
+    })
+
+    this.activityLatest = this.createGauge({
+      name: 'activity_latest',
+      help: 'Latest existing unit to be synced to',
+      labelNames: ['project'],
     })
   }
 

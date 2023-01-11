@@ -98,6 +98,7 @@ export function createTransactionCounters(
             starkexClient,
             sequenceProcessorRepository,
             logger,
+            metrics,
             clock,
             {
               ...transactionApi,
@@ -111,6 +112,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'aztecconnect':
@@ -120,6 +122,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'starknet':
@@ -129,6 +132,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
+            metrics,
             clock,
             transactionApi,
           )
@@ -139,6 +143,7 @@ export function createTransactionCounters(
             zksyncRepository,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'loopring':
@@ -148,6 +153,7 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'rpc':
@@ -156,6 +162,7 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
+            metrics,
             clock,
             transactionApi,
           )
