@@ -37,8 +37,8 @@
 
   --link: #3000b5;
   --link-rgb: 48 0 181;
-  --tooltip-border: var(--text);
   --tooltip-background: #ffffff;
+  --tooltip-text-color: #565656;
   --shadow: rgba(0, 0, 0, 0.2);
 
   --font-xs: 14px;
@@ -55,7 +55,8 @@
   --background-2: #2f2f2f;
   --background-3: #424242;
   --background-4: #565656;
-  --tooltip-background: #000000;
+  --tooltip-background: #565656;
+  --tooltip-text-color: #ffffff;
   --text: var(--light-text);
   --text-muted: #848484;
   --link: #7bc1ff;
