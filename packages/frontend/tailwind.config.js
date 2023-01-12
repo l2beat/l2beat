@@ -8,6 +8,7 @@ module.exports = {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
       zIndex: {
+        1: '1',
         41: '41',
       },
       spacing: {
