@@ -5,10 +5,15 @@ import { DiscoveryContract } from '../DiscoveryConfig'
 import { ContractParameters } from '../types'
 
 export interface DiscoveryDiff {
+  name: string,
   address: EthereumAddress
-  // creation or deletion should not happen in ideal world
-  // but AFAIK we do not have any check on CI to validate that discovered.json is and output of config.jsonc
-  diff: string[] | 'created' | 'deleted'
+  diff: FieldDiff[]
+}
+
+export interface FieldDiff {
+    key: string,
+    before?: string,
+    after?: string
 }
 
 export function diffDiscovery(
@@ -51,7 +56,7 @@ export function diffContract(
   before: ContractParameters,
   after: ContractParameters,
   ignoreInWatchMode: string[],
-): string[] {
+): FieldDiff[] {
   const differences = diff(before, after)
 
   if (differences === undefined) {

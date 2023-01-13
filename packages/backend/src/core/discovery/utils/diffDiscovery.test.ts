@@ -56,20 +56,29 @@ describe(diffDiscovery.name, () => {
 
 describe(diffContract.name, () => {
   it('returns keys of changed fields', () => {
+    const OLD_ADDRESS = EthereumAddress.random()
+    const NEW_ADDRESS = EthereumAddress.random()
+
+    const OLD_ADMIN = EthereumAddress.random()
+    const NEW_ADMIN = EthereumAddress.random()
+
     const committed: ContractParameters = {
       name: 'A',
-      address: EthereumAddress.random(),
-      upgradeability: {},
+      address: OLD_ADDRESS,
+      upgradeability: {
+        type: 'proxy',
+        admin: OLD_ADMIN.toString()
+      },
       values: {
         A: true,
-        B: 'true',
+        B: true,
         C: 1,
         D: [1, 2, 3],
       },
     }
     const discovered: ContractParameters = {
       name: 'A',
-      address: EthereumAddress.random(),
+      address: NEW_ADMIN,
       upgradeability: {},
       values: {
         A: false,
@@ -83,10 +92,14 @@ describe(diffContract.name, () => {
     const result = diffContract(committed, discovered, ignoreInWatchMode)
 
     expect(result).toEqual([
-      'address',
-      'upgradeability.admin',
-      'values.A',
-      'values.B',
+      {
+        key: 'address',
+        before: OLD_ADDRESS.toString(),
+        after: NEW_ADDRESS.toString()
+      },
+      {key: 'upgradeability.admin', before: OLD_ADMIN.toString(), after: NEW_ADMIN.toString()},
+      {key: 'values.A', before: 'true', after: 'false'},
+      {key: 'values.B', before: 'true'},
     ])
   })
 })
