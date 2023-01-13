@@ -17,8 +17,8 @@ export async function saveDiscoveryResult(
 
 export function prepareDiscoveryFile(
   results: AnalyzedData[],
-  name: string,
-  blockNumber: number,
+  name = 'undefined',
+  blockNumber= -1,
 ): ProjectParameters {
   let abis: Record<string, string[]> = {}
   for (const result of results) {

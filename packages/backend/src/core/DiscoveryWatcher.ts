@@ -8,6 +8,7 @@ import { discover } from './discovery/discover'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
+import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
 import { AnalyzedData } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 
@@ -96,18 +97,18 @@ export class DiscoveryWatcher {
   async compareWithCommitted(
     name: string,
     discoveredContracts: AnalyzedData[],
-    ignoreInWatchMode?: Record<string, DiscoveryContract>,
+    overrides?: Record<string, DiscoveryContract>,
   ) {
     const committed = await this.configReader.readDiscovered(name)
 
     const diff = diffDiscovery(
       committed.contracts,
-      discoveredContracts,
-      ignoreInWatchMode,
+      prepareDiscoveryFile(discoveredContracts).contracts,
+      overrides ?? {},
     )
 
     if (diff.length > 0) {
-      await this.notify('aaaa')
+      console.log(diff)
     }
   }
 }

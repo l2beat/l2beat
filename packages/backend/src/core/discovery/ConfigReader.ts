@@ -35,7 +35,10 @@ export class ConfigReader {
   }
 
   async readDiscovered(name: string): Promise<ProjectParameters> {
-    const contents = await readFile(`discovery/${name}/discovered.json`, 'utf-8')
+    const contents = await readFile(
+      `discovery/${name}/discovered.json`,
+      'utf-8',
+    )
     const errors: ParseError[] = []
     const parsed: unknown = parse(contents, errors, {
       allowTrailingComma: true,
