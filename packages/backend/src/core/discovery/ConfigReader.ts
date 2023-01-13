@@ -3,6 +3,7 @@ import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { ProjectParameters } from './types'
 
 export class ConfigReader {
   async readConfig(name: string): Promise<DiscoveryConfig> {
@@ -31,5 +32,17 @@ export class ConfigReader {
     }
 
     return result
+  }
+
+  async readDiscovered(name: string): Promise<ProjectParameters> {
+    const contents = await readFile(`discovery/${name}/discovered.json`, 'utf-8')
+    const errors: ParseError[] = []
+    const parsed: unknown = parse(contents, errors, {
+      allowTrailingComma: true,
+    })
+    if (errors.length !== 0) {
+      throw new Error('Cannot parse file')
+    }
+    return ProjectParameters.parse(parsed)
   }
 }
