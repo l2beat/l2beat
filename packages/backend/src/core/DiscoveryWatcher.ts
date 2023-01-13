@@ -10,7 +10,7 @@ import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
 import { AnalyzedData } from './discovery/types'
-import { diffDiscovery } from './discovery/utils/diffDiscovery'
+import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -108,7 +108,28 @@ export class DiscoveryWatcher {
     )
 
     if (diff.length > 0) {
-      console.log(diff)
+      const message = `Detected changes for ${name}\n\n${diff
+        .filter(d => {
+          if(d.diff.length > 0 || d.diff === 'created' || d.diff === 'deleted') {
+            return true
+          } else {
+            return false
+          }
+        })
+        .map(diffToString)
+        .join('\n')}`
+      console.log(message)
     }
   }
+}
+
+export function diffToString(diff: DiscoveryDiff): string {
+  let m = `${diff.address.toString()}\n`
+  if(diff.diff === 'created' || diff.diff === 'deleted') {
+    m += `${diff.diff}\n\n`
+  } else {
+    m += `${diff.diff.join('\n')}\n\n`
+  }
+
+  return m
 }
