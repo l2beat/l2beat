@@ -20,13 +20,20 @@ export const ContractValue: z.ZodType<ContractValue> = z.lazy(() =>
   ]),
 )
 
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Literal = z.infer<typeof literalSchema>;
+type Json = Literal | { [key: string]: Json } | Json[];
+const jsonSchema: z.ZodType<Json> = z.lazy(() =>
+  z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+);
+
 export type ContractParameters = z.infer<typeof ContractParameters>
 export const ContractParameters = z.object({
   name: z.string(),
   unverified: z.optional(z.boolean()),
   address: branded(z.string(), (n) => EthereumAddress(n)),
   code: z.optional(z.string()),
-  upgradeability: z.object({}),
+  upgradeability: jsonSchema,
   values: z.optional(z.record(ContractValue)),
   errors: z.optional(z.record(z.string())),
 })
@@ -46,7 +53,7 @@ export const AnalyzedData = z.object({
   unverified: z.optional(z.boolean()),
   address: branded(z.string(), (n) => EthereumAddress(n)),
   code: z.optional(z.string()),
-  upgradeability: z.object({}),
+  upgradeability:jsonSchema,
   values: z.optional(z.record(ContractValue)),
   errors: z.optional(z.record(z.string())),
   meta: z.object({
@@ -57,3 +64,6 @@ export const AnalyzedData = z.object({
     abis: z.record(z.array(z.string())),
   }),
 })
+
+
+
