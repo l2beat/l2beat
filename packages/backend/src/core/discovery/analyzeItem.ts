@@ -7,17 +7,8 @@ import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
-import { ContractParameters, ContractValue } from './types'
+import { AnalyzedData, ContractParameters, ContractValue } from './types'
 
-export interface AnalyzedData extends ContractParameters {
-  meta: {
-    isEOA: boolean
-    verified: boolean
-    implementationVerified: boolean
-    abi: string[]
-    abis: Record<string, string[]>
-  }
-}
 
 export async function analyzeItem(
   provider: DiscoveryProvider,
