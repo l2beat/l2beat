@@ -5,8 +5,11 @@ import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
 import { discover } from './discovery/discover'
+import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
+import { AnalyzedData } from './discovery/types'
+import { diffDiscovery } from './discovery/utils/diffDiscovery'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -52,7 +55,16 @@ export class DiscoveryWatcher {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
       try {
-        await discover(discoveryProvider, projectConfig, this.discoveryLogger)
+        const discovered = await discover(
+          discoveryProvider,
+          projectConfig,
+          this.discoveryLogger,
+        )
+        await this.compareWithCommitted(
+          projectConfig.name,
+          discovered,
+          projectConfig.overrides,
+        )
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
@@ -79,5 +91,23 @@ export class DiscoveryWatcher {
       () => this.logger.info('Notification to Discord has been sent'),
       (e) => this.logger.error(e),
     )
+  }
+
+  async compareWithCommitted(
+    name: string,
+    discoveredContracts: AnalyzedData[],
+    ignoreInWatchMode?: Record<string, DiscoveryContract>,
+  ) {
+    const committed = await this.configReader.readDiscovered(name)
+
+    const diff = diffDiscovery(
+      committed.contracts,
+      discoveredContracts,
+      ignoreInWatchMode,
+    )
+
+    if (diff.length > 0) {
+      await this.notify('aaaa')
+    }
   }
 }

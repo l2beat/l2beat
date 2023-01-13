@@ -35,7 +35,7 @@ export type ProjectParameters = z.infer<typeof ProjectParameters>
 export const ProjectParameters = z.object({
   name: z.string().min(1),
   blockNumber: z.number(),
-  contracts: z.array(ContractValue),
+  contracts: z.array(ContractParameters),
   eoas: z.array(branded(z.string(), (n) => EthereumAddress(n))),
   abis: z.record(z.array(z.string())),
 })

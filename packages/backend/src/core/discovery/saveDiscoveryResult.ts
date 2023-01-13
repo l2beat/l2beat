@@ -42,7 +42,7 @@ export function prepareDiscoveryFile(
   }
 }
 
-function toContractParameters(analyzedData: AnalyzedData): ContractParameters {
+export function toContractParameters(analyzedData: AnalyzedData): ContractParameters {
   return {
     name: analyzedData.name,
     unverified: analyzedData.unverified,
