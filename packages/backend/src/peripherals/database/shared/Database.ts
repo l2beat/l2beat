@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/common'
+import { assert, Logger, LogLevel } from '@l2beat/common'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
@@ -103,12 +103,14 @@ export class Database {
   }
 
   enableQueryLogging(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.knex.on('query', (queryCtx: { sql: string; bindings: any[] }) => {
-      this.logger.debug('SQL Query', {
-        query: queryCtx.sql,
-        vars: queryCtx.bindings,
+    if (this.logger.getLogLevel() >= LogLevel.DEBUG) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.knex.on('query', (queryCtx: { sql: string; bindings: any[] }) => {
+        this.logger.debug('SQL Query', {
+          query: queryCtx.sql,
+          vars: queryCtx.bindings,
+        })
       })
-    })
+    }
   }
 }
