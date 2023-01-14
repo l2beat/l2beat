@@ -110,27 +110,31 @@ export class DiscoveryWatcher {
 
     if (diff.length > 0) {
       const message = `Detected changes for ${name}\n\n${diff
-        .filter(d => {
-          if(d.diff.length > 0 || d.diff === 'created' || d.diff === 'deleted') {
-            return true
-          } else {
-            return false
-          }
-        })
         .map(diffToString)
         .join('\n')}`
-      console.log(message)
+      await this.notify(message)
     }
   }
 }
 
 export function diffToString(diff: DiscoveryDiff): string {
-  let m = `${diff.address.toString()}\n`
-  if(diff.diff === 'created' || diff.diff === 'deleted') {
-    m += `${diff.diff}\n\n`
-  } else {
-    m += `${diff.diff.join('\n')}\n\n`
+  if (diff.type === 'created') {
+    return `\`\`\`diff\n+New contract: ${
+      diff.name
+    } | ${diff.address.toString()}\n\`\`\``
   }
 
-  return m
+  if (diff.type === 'deleted') {
+    return `\`\`\`diff\n-Deleted contract: ${
+      diff.name
+    } | ${diff.address.toString()}\n\`\`\``
+  }
+
+  let message = `\`\`\`diff\n${diff.name} | ${diff.address.toString()}\n\n`
+
+  for (const d of diff.diff ?? []) {
+    message += `${d.key ?? ''}\n-${d.before ?? ''}\n+${d.after ?? ''}\n\n`
+  }
+
+  return message + '```'
 }
