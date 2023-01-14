@@ -5,15 +5,15 @@ import { DiscoveryContract } from '../DiscoveryConfig'
 import { ContractParameters } from '../types'
 
 export interface DiscoveryDiff {
-  name: string,
+  name: string
   address: EthereumAddress
   diff: FieldDiff[]
 }
 
 export interface FieldDiff {
-    key: string,
-    before?: string,
-    after?: string
+  key: string | undefined
+  before?: string
+  after?: string
 }
 
 export function diffDiscovery(
@@ -53,7 +53,7 @@ export function diffDiscovery(
 }
 
 export function diffContract(
-  before: ContractParameters,
+  before: unknown,
   after: ContractParameters,
   ignoreInWatchMode: string[],
 ): FieldDiff[] {
@@ -63,16 +63,60 @@ export function diffContract(
     return []
   }
 
-  const differentKeys = differences.map((d) => d.path?.join('.') ?? '')
+  const result: FieldDiff[] = []
 
-  for (const ignored of ignoreInWatchMode) {
-    const index = differentKeys.findIndex((d) =>
-      d.includes(`values.${ignored}`),
-    )
-    if (index > -1) {
-      differentKeys.splice(index)
+  for (const difference of differences) {
+    switch (difference.kind) {
+      case 'N':
+        result.push({
+          key: difference.path?.join('.'),
+          after: JSON.stringify(difference.rhs),
+        })
+        break
+      case 'D':
+        result.push({
+          key: difference.path?.join('.'),
+          before: JSON.stringify(difference.lhs),
+        })
+        break
+      case 'E':
+        result.push({
+          key: difference.path?.join('.'),
+          before: JSON.stringify(difference.lhs),
+          after: JSON.stringify(difference.rhs),
+        })
+        break
+      case 'A':
+        {
+          const r: FieldDiff = {
+            key: `${difference.path?.join('.') ?? 'undefined'}[${
+              difference.index  
+            }]`
+          }
+          if(difference.item.kind === 'N') {
+            r.after = JSON.stringify(difference.item.rhs)
+          }
+          if(difference.item.kind === 'D') {
+            r.before = JSON.stringify(difference.item.lhs)
+          }
+          if(difference.item.kind === 'E') {
+            r.before = JSON.stringify(difference.item.lhs)
+            r.after = JSON.stringify(difference.item.rhs)
+          }
+          result.push(r)
+        }
+        break
     }
   }
 
-  return differentKeys
+  for (const ignored of ignoreInWatchMode) {
+    const index = result.findIndex((r) => r.key?.includes(`values.${ignored}`))
+    if (index > -1) {
+      result.splice(index, 1)
+    }
+  }
+
+  //ignore
+
+  return result
 }

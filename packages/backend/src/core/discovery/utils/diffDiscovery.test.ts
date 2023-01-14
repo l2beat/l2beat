@@ -47,9 +47,9 @@ describe(diffDiscovery.name, () => {
     const result = diffDiscovery(committed, discovered, ignoreInWatchMode)
 
     expect(result).toEqual([
-        {address: addressA, diff: ['values.A']},
-        {address: addressB, diff: 'deleted'},
-        {address: addressC, diff: 'created'}
+      { address: addressA, diff: ['values.A'] },
+      { address: addressB, diff: 'deleted' },
+      { address: addressC, diff: 'created' },
     ])
   })
 })
@@ -62,44 +62,56 @@ describe(diffContract.name, () => {
     const OLD_ADMIN = EthereumAddress.random()
     const NEW_ADMIN = EthereumAddress.random()
 
-    const committed: ContractParameters = {
+    const IMPLEMENTATION = EthereumAddress.random()
+
+    const committed = {
       name: 'A',
-      address: OLD_ADDRESS,
+      address: OLD_ADDRESS.toString(),
       upgradeability: {
-        type: 'proxy',
-        admin: OLD_ADMIN.toString()
+        type: 'EIP1967 proxy',
+        admin: OLD_ADMIN.toString(),
+        implementation: IMPLEMENTATION,
       },
       values: {
         A: true,
         B: true,
         C: 1,
         D: [1, 2, 3],
+        E: 'ignoreMe',
       },
     }
     const discovered: ContractParameters = {
       name: 'A',
-      address: NEW_ADMIN,
-      upgradeability: {},
+      address: NEW_ADDRESS,
+      upgradeability: {
+        type: 'EIP1967 proxy',
+        admin: NEW_ADMIN,
+        implementation: IMPLEMENTATION,
+      },
       values: {
         A: false,
         C: 1,
         D: [1, 2, 3, 4],
+        E: 'ignoreMePlease',
       },
     }
-
-    const ignoreInWatchMode = ['D']
-
+    const ignoreInWatchMode = ['E']
     const result = diffContract(committed, discovered, ignoreInWatchMode)
 
     expect(result).toEqual([
       {
         key: 'address',
-        before: OLD_ADDRESS.toString(),
-        after: NEW_ADDRESS.toString()
+        before: JSON.stringify(OLD_ADDRESS),
+        after: JSON.stringify(NEW_ADDRESS),
       },
-      {key: 'upgradeability.admin', before: OLD_ADMIN.toString(), after: NEW_ADMIN.toString()},
-      {key: 'values.A', before: 'true', after: 'false'},
-      {key: 'values.B', before: 'true'},
+      {
+        key: 'upgradeability.admin',
+        before: JSON.stringify(OLD_ADMIN),
+        after: JSON.stringify(NEW_ADMIN),
+      },
+      { key: 'values.A', before: 'true', after: 'false' },
+      { key: 'values.B', before: 'true' },
+      { key: 'values.D[3]', after: '4' },
     ])
   })
 })
