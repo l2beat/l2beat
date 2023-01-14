@@ -46,6 +46,6 @@ export class ConfigReader {
     if (errors.length !== 0) {
       throw new Error('Cannot parse file')
     }
-    return ProjectParameters.parse(parsed)
+    return parsed as ProjectParameters
   }
 }

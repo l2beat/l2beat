@@ -3,13 +3,13 @@ import { providers } from 'ethers'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
+import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { discover } from './discovery/discover'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
-import { AnalyzedData } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 
 export class DiscoveryWatcher {
@@ -94,6 +94,7 @@ export class DiscoveryWatcher {
     )
   }
 
+  //TODO: add test
   async compareWithCommitted(
     name: string,
     discoveredContracts: AnalyzedData[],
