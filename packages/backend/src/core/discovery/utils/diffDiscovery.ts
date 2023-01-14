@@ -7,7 +7,8 @@ import { ContractParameters } from '../types'
 export interface DiscoveryDiff {
   name: string
   address: EthereumAddress
-  diff: FieldDiff[]
+  diff?: FieldDiff[]
+  type?: 'created' | 'deleted'
 }
 
 export interface FieldDiff {
@@ -17,42 +18,53 @@ export interface FieldDiff {
 }
 
 export function diffDiscovery(
-  committed: ContractParameters[],
+  committed: unknown[],
   discovered: ContractParameters[],
   overrides: Record<string, DiscoveryContract>,
 ): DiscoveryDiff[] {
-  const modifiedOrDeleted: DiscoveryDiff[] = committed.map((c) => {
+  const modifiedOrDeleted: DiscoveryDiff[] = []
+
+  const committedCasted = committed as ContractParameters[]
+
+  for (const c of committedCasted) {
     const i = discovered.find((d) => d.address === c.address)
     if (i === undefined) {
-      return {
+      modifiedOrDeleted.push({
+        name: c.name,
         address: c.address,
-        diff: 'deleted',
-      }
+        type: 'deleted',
+      })
+      continue
     }
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const ignored: string[] = overrides[c.address.toString()]
       ? overrides[c.address.toString()].ignoreInWatchMode ?? []
       : []
 
-    return {
-      address: c.address,
-      diff: diffContract(c, i, ignored),
+    const difference = diffObjects(c, i, ignored)
+
+    if (difference.length > 0) {
+      modifiedOrDeleted.push({
+        name: c.name,
+        address: c.address,
+        diff: diffObjects(c, i, ignored),
+      })
     }
-  })
+  }
 
   const created: DiscoveryDiff[] = []
 
   for (const d of discovered) {
-    const i = committed.find((c) => c.address === d.address)
+    const i = committedCasted.find((c) => c.address === d.address)
     if (i === undefined) {
-      created.push({ address: d.address, diff: 'created' })
+      created.push({ name: d.name, address: d.address, type: 'created' })
     }
   }
 
   return modifiedOrDeleted.concat(created)
 }
 
-export function diffContract(
+export function diffObjects(
   before: unknown,
   after: ContractParameters,
   ignoreInWatchMode: string[],
@@ -90,16 +102,16 @@ export function diffContract(
         {
           const r: FieldDiff = {
             key: `${difference.path?.join('.') ?? 'undefined'}[${
-              difference.index  
-            }]`
+              difference.index
+            }]`,
           }
-          if(difference.item.kind === 'N') {
+          if (difference.item.kind === 'N') {
             r.after = JSON.stringify(difference.item.rhs)
           }
-          if(difference.item.kind === 'D') {
+          if (difference.item.kind === 'D') {
             r.before = JSON.stringify(difference.item.lhs)
           }
-          if(difference.item.kind === 'E') {
+          if (difference.item.kind === 'E') {
             r.before = JSON.stringify(difference.item.lhs)
             r.after = JSON.stringify(difference.item.rhs)
           }
@@ -115,8 +127,6 @@ export function diffContract(
       result.splice(index, 1)
     }
   }
-
-  //ignore
 
   return result
 }
