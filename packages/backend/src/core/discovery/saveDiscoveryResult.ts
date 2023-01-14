@@ -1,6 +1,7 @@
 import { writeFile } from 'fs/promises'
 
-import { AnalyzedData, ContractParameters, ProjectParameters } from './types'
+import { AnalyzedData } from './analyzeItem'
+import { ContractParameters, ProjectParameters } from './types'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],

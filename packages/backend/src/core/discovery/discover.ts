@@ -1,10 +1,9 @@
 import { EthereumAddress } from '@l2beat/types'
 
-import { analyzeItem } from './analyzeItem'
+import { AnalyzedData, analyzeItem } from './analyzeItem'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
-import { AnalyzedData } from './types'
 
 export async function discover(
   provider: DiscoveryProvider,
