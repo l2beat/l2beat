@@ -41,7 +41,7 @@ describe(ConfigReader.name, () => {
     })
   })
 
-  describe(ConfigReader.prototype.readDiscoveryJson.name, () => {
+  describe(ConfigReader.prototype.readDiscovery.name, () => {
     const configs = readdirSync('discovery').filter(
       (x) => x !== 'config.schema.json' && x !== 'README.md',
     )
@@ -50,7 +50,7 @@ describe(ConfigReader.name, () => {
 
     for (const project of configs) {
       it(`can read discovered.json for ${project}`, async () => {
-        const result = await configReader.readDiscoveryJson(project)
+        const result = await configReader.readDiscovery(project)
         expect(result.name).toEqual(project)
       })
     }

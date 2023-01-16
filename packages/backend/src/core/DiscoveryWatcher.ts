@@ -84,7 +84,7 @@ export class DiscoveryWatcher {
     discovered: AnalyzedData[],
     overrides?: Record<string, DiscoveryContract>,
   ) {
-    const committed = await this.configReader.readDiscoveryJson(name)
+    const committed = await this.configReader.readDiscovery(name)
     const discoveredAsCommitted = prepareDiscoveryFile(discovered)
 
     const diff = diffDiscovery(
