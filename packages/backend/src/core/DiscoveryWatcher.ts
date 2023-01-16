@@ -11,7 +11,7 @@ import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
-import { diffToString } from './discovery/utils/diffToString'
+import { diffToMessage } from './discovery/utils/diffToMessage'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -94,9 +94,7 @@ export class DiscoveryWatcher {
     )
 
     if (diff.length > 0) {
-      const message = `Detected changes for ${name}\n\n${diff
-        .map(diffToString)
-        .join('\n')}`
+      const message = diffToMessage(name, diff)
       await this.notify(message)
     }
   }

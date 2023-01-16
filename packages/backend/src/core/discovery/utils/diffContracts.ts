@@ -9,7 +9,7 @@ export interface FieldDiff {
 }
 
 export function diffContracts(
-  before: unknown,
+  before: ContractParameters,
   after: ContractParameters,
   ignoreInWatchMode: string[],
 ): FieldDiff[] {

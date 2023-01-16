@@ -14,12 +14,12 @@ describe(diffContracts.name, () => {
   const IMPLEMENTATION = EthereumAddress.random()
 
   it('returns difference between two objects', () => {
-    const committed = {
+    const committed: ContractParameters = {
       name: 'A',
-      address: OLD_ADDRESS.toString(),
+      address: OLD_ADDRESS,
       upgradeability: {
         type: 'EIP1967 proxy',
-        admin: OLD_ADMIN.toString(),
+        admin: OLD_ADMIN,
         implementation: IMPLEMENTATION,
       },
       values: {

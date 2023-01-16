@@ -14,14 +14,14 @@ describe(diffDiscovery.name, () => {
   const ADMIN = EthereumAddress.random()
   const IMPLEMENTATION = EthereumAddress.random()
   it('finds changes, deleted and created contracts', () => {
-    const committed: unknown[] = [
+    const committed: ContractParameters[] = [
       //finds changes
       {
         name: 'A',
-        address: ADDRESS_A.toString(),
+        address: ADDRESS_A,
         upgradeability: {
           type: 'EIP1967 proxy',
-          admin: ADMIN.toString(),
+          admin: ADMIN,
           implementation: IMPLEMENTATION,
         },
         values: {
@@ -33,10 +33,10 @@ describe(diffDiscovery.name, () => {
       //finds deleted contracts
       {
         name: 'B',
-        address: ADDRESS_B.toString(),
+        address: ADDRESS_B,
         upgradeability: {
           type: 'EIP1967 proxy',
-          admin: ADMIN.toString(),
+          admin: ADMIN,
           implementation: IMPLEMENTATION,
         },
         values: {},
@@ -44,10 +44,10 @@ describe(diffDiscovery.name, () => {
       //skips unchanged contracts
       {
         name: 'D',
-        address: ADDRESS_D.toString(),
+        address: ADDRESS_D,
         upgradeability: {
           type: 'EIP1967 proxy',
-          admin: ADMIN.toString(),
+          admin: ADMIN,
           implementation: IMPLEMENTATION,
         },
         values: {},

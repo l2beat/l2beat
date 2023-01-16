@@ -12,15 +12,13 @@ export interface DiscoveryDiff {
 }
 
 export function diffDiscovery(
-  committed: unknown[],
+  committed: ContractParameters[],
   discovered: ContractParameters[],
   overrides: Record<string, DiscoveryContract>,
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
-  const committedCasted = committed as ContractParameters[]
-
-  for (const committedContract of committedCasted) {
+  for (const committedContract of committed) {
     const discoveredContract = discovered.find(
       (d) => d.address === committedContract.address,
     )
@@ -51,7 +49,7 @@ export function diffDiscovery(
   const created: DiscoveryDiff[] = []
 
   for (const discoveredContract of discovered) {
-    const committedContract = committedCasted.find(
+    const committedContract = committed.find(
       (c) => c.address === discoveredContract.address,
     )
     if (committedContract === undefined) {
