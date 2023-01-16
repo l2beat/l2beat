@@ -3,10 +3,15 @@ import { providers } from 'ethers'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
+import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { discover } from './discovery/discover'
+import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
+import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
+import { diffDiscovery } from './discovery/utils/diffDiscovery'
+import { diffToMessage } from './discovery/utils/diffToMessage'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -28,7 +33,6 @@ export class DiscoveryWatcher {
   }
 
   start() {
-    this.taskQueue.addToFront()
     this.logger.info('Started')
     return this.clock.onNewHour(() => {
       this.taskQueue.addToFront()
@@ -52,7 +56,16 @@ export class DiscoveryWatcher {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
       try {
-        await discover(discoveryProvider, projectConfig, this.discoveryLogger)
+        const discovered = await discover(
+          discoveryProvider,
+          projectConfig,
+          this.discoveryLogger,
+        )
+        await this.compareWithCommitted(
+          projectConfig.name,
+          discovered,
+          projectConfig.overrides,
+        )
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
@@ -64,6 +77,26 @@ export class DiscoveryWatcher {
     )
 
     this.logger.info('Update finished', { blockNumber })
+  }
+
+  async compareWithCommitted(
+    name: string,
+    discovered: AnalyzedData[],
+    overrides?: Record<string, DiscoveryContract>,
+  ) {
+    const committed = await this.configReader.readDiscovery(name)
+    const discoveredAsCommitted = prepareDiscoveryFile(discovered)
+
+    const diff = diffDiscovery(
+      committed.contracts,
+      discoveredAsCommitted.contracts,
+      overrides ?? {},
+    )
+
+    if (diff.length > 0) {
+      const message = diffToMessage(name, diff)
+      await this.notify(message)
+    }
   }
 
   async notify(message: string) {
