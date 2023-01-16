@@ -65,12 +65,20 @@ export function diffContracts(
     }
   }
 
-  for (const ignored of ignoreInWatchMode) {
-    const index = result.findIndex((r) => r.key?.includes(`values.${ignored}`))
-    if (index > -1) {
-      result.splice(index, 1)
+  const filteredResult = result.filter((r) => {
+    if (r.key === undefined) {
+      return true
     }
-  }
+    if (r.key.includes('values.')) {
+      for (const i of ignoreInWatchMode) {
+        if (r.key.includes(`values.${i}`)) {
+          return false
+        }
+        return true
+      }
+    }
+    return true
+  })
 
-  return result
+  return filteredResult
 }
