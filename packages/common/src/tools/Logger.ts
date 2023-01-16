@@ -25,6 +25,10 @@ export class Logger {
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
   static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
 
+  getLogLevel(): LogLevel {
+    return this.options.logLevel
+  }
+
   configure(options: Partial<LoggerOptions>) {
     return new Logger({ ...this.options, ...options })
   }
