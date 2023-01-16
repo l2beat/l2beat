@@ -38,11 +38,13 @@ describe(diffToMessage.name, () => {
     const expected = [
       `Detected changes for ${name}\n\n`,
       '```diff',
+      '\n',
       diffToString(diff[0]),
       '\n',
       diffToString(diff[1]),
       '\n',
       diffToString(diff[2]),
+      '\n',
       '```',
     ]
 
