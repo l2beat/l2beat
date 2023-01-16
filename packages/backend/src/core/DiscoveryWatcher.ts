@@ -10,7 +10,8 @@ import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
-import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
+import { diffDiscovery } from './discovery/utils/diffDiscovery'
+import { diffToString } from './discovery/utils/diffToString'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -115,26 +116,4 @@ export class DiscoveryWatcher {
       await this.notify(message)
     }
   }
-}
-
-export function diffToString(diff: DiscoveryDiff): string {
-  if (diff.type === 'created') {
-    return `\`\`\`diff\n+New contract: ${
-      diff.name
-    } | ${diff.address.toString()}\n\`\`\``
-  }
-
-  if (diff.type === 'deleted') {
-    return `\`\`\`diff\n-Deleted contract: ${
-      diff.name
-    } | ${diff.address.toString()}\n\`\`\``
-  }
-
-  let message = `\`\`\`diff\n${diff.name} | ${diff.address.toString()}\n\n`
-
-  for (const d of diff.diff ?? []) {
-    message += `${d.key ?? ''}\n-${d.before ?? ''}\n+${d.after ?? ''}\n\n`
-  }
-
-  return message + '```'
 }
