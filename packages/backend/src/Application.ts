@@ -64,6 +64,8 @@ export class Application {
           await database.rollbackAll()
         }
         await database.migrateToLatest()
+
+        database.enableQueryLogging()
       }
 
       for (const module of modules) {

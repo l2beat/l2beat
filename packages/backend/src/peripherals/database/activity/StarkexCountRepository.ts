@@ -18,7 +18,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
+    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
     this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
