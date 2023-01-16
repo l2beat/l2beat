@@ -20,38 +20,46 @@ export function diffDiscovery(
 
   const committedCasted = committed as ContractParameters[]
 
-  for (const c of committedCasted) {
-    const i = discovered.find((d) => d.address === c.address)
-    if (i === undefined) {
+  for (const committedContract of committedCasted) {
+    const discoveredContract = discovered.find(
+      (d) => d.address === committedContract.address,
+    )
+    if (discoveredContract === undefined) {
       modifiedOrDeleted.push({
-        name: c.name,
-        address: c.address,
+        name: committedContract.name,
+        address: committedContract.address,
         type: 'deleted',
       })
       continue
     }
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const ignored: string[] = overrides[c.address.toString()]
-      ? overrides[c.address.toString()].ignoreInWatchMode ?? []
+    const ignored: string[] = overrides[committedContract.address.toString()]
+      ? overrides[committedContract.address.toString()].ignoreInWatchMode ?? []
       : []
 
-    const difference = diffContracts(c, i, ignored)
+    const diff = diffContracts(committedContract, discoveredContract, ignored)
 
-    if (difference.length > 0) {
+    if (diff.length > 0) {
       modifiedOrDeleted.push({
-        name: c.name,
-        address: c.address,
-        diff: diffContracts(c, i, ignored),
+        name: committedContract.name,
+        address: committedContract.address,
+        diff,
       })
     }
   }
 
   const created: DiscoveryDiff[] = []
 
-  for (const d of discovered) {
-    const i = committedCasted.find((c) => c.address === d.address)
-    if (i === undefined) {
-      created.push({ name: d.name, address: d.address, type: 'created' })
+  for (const discoveredContract of discovered) {
+    const committedContract = committedCasted.find(
+      (c) => c.address === discoveredContract.address,
+    )
+    if (committedContract === undefined) {
+      created.push({
+        name: discoveredContract.name,
+        address: discoveredContract.address,
+        type: 'created',
+      })
     }
   }
 

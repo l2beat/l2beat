@@ -34,7 +34,7 @@ export class ConfigReader {
     return result
   }
 
-  async readDiscovered(name: string): Promise<ProjectParameters> {
+  async readDiscoveryJson(name: string): Promise<ProjectParameters> {
     const contents = await readFile(
       `discovery/${name}/discovered.json`,
       'utf-8',

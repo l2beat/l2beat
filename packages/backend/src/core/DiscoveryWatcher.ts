@@ -80,6 +80,28 @@ export class DiscoveryWatcher {
     this.logger.info('Update finished', { blockNumber })
   }
 
+  async compareWithCommitted(
+    name: string,
+    discovered: AnalyzedData[],
+    overrides?: Record<string, DiscoveryContract>,
+  ) {
+    const committed = await this.configReader.readDiscoveryJson(name)
+    const discoveredAsCommitted = prepareDiscoveryFile(discovered)
+
+    const diff = diffDiscovery(
+      committed.contracts,
+      discoveredAsCommitted.contracts,
+      overrides ?? {},
+    )
+
+    if (diff.length > 0) {
+      const message = `Detected changes for ${name}\n\n${diff
+        .map(diffToString)
+        .join('\n')}`
+      await this.notify(message)
+    }
+  }
+
   async notify(message: string) {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
@@ -93,27 +115,5 @@ export class DiscoveryWatcher {
       () => this.logger.info('Notification to Discord has been sent'),
       (e) => this.logger.error(e),
     )
-  }
-
-  //TODO: add test
-  async compareWithCommitted(
-    name: string,
-    discoveredContracts: AnalyzedData[],
-    overrides?: Record<string, DiscoveryContract>,
-  ) {
-    const committed = await this.configReader.readDiscovered(name)
-
-    const diff = diffDiscovery(
-      committed.contracts,
-      prepareDiscoveryFile(discoveredContracts).contracts,
-      overrides ?? {},
-    )
-
-    if (diff.length > 0) {
-      const message = `Detected changes for ${name}\n\n${diff
-        .map(diffToString)
-        .join('\n')}`
-      await this.notify(message)
-    }
   }
 }
