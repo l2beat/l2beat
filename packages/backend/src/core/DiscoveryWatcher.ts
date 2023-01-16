@@ -33,7 +33,6 @@ export class DiscoveryWatcher {
   }
 
   start() {
-    this.taskQueue.addToFront()
     this.logger.info('Started')
     return this.clock.onNewHour(() => {
       this.taskQueue.addToFront()
