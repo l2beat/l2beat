@@ -63,23 +63,12 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  private getByProjectAndAssetQuery(
-    knex: Knex,
-    projectId: ProjectId,
-    assetId: AssetId,
-  ) {
-    return knex('reports')
-      .where('asset_id', assetId.toString())
-      .andWhere('project_id', projectId.toString())
-      .orderBy('unix_timestamp')
-  }
-
   async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await this.getByProjectAndAssetQuery(
+    const rows = await this._getByProjectAndAssetQuery(
       knex,
       projectId,
       assetId,
@@ -94,7 +83,7 @@ export class ReportRepository extends BaseRepository {
     from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await this.getByProjectAndAssetQuery(
+    const rows = await this._getByProjectAndAssetQuery(
       knex,
       projectId,
       assetId,
@@ -108,10 +97,21 @@ export class ReportRepository extends BaseRepository {
     from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
+    const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
     return rows.map(toRecord)
+  }
+
+  private _getByProjectAndAssetQuery(
+    knex: Knex,
+    projectId: ProjectId,
+    assetId: AssetId,
+  ) {
+    return knex('reports')
+      .where('asset_id', assetId.toString())
+      .andWhere('project_id', projectId.toString())
+      .orderBy('unix_timestamp')
   }
 }
 
