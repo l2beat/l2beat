@@ -60,7 +60,7 @@ describe(diffToMessage.name, () => {
     }
     const differences: DiscoveryDiff[] = []
 
-    while(differences.length < 27) {
+    while (differences.length < 27) {
       differences.push(diff)
     }
 
@@ -69,7 +69,7 @@ describe(diffToMessage.name, () => {
     const firstPart = [
       `Detected changes for system\n\n`,
       '```diff\n',
-      differences.slice(0,26).map(diffToString).join('\n'),
+      differences.slice(0, 26).map(diffToString).join('\n'),
       '\n```',
     ]
 
