@@ -49,36 +49,26 @@ export abstract class BaseRepository {
     for (const methodName of this.getChildMethodNames()) {
       const method = prototype[methodName]
       if (methodName.startsWith('get')) {
-        prototype[methodName] = this.wrapGet(
-          method as GetMethod<unknown[], unknown>,
-        )
+        prototype[methodName] = this.wrapGet(method)
         continue
       }
 
       if (methodName.startsWith('add')) {
         if (methodName.endsWith('Many')) {
-          prototype[methodName] = this.wrapAddMany(
-            method as AddManyMethodWithCount<unknown>,
-          )
+          prototype[methodName] = this.wrapAddMany(method)
           continue
         }
-        prototype[methodName] = this.wrapAdd(
-          method as AddMethod<unknown, string | number | string | number>,
-        )
+        prototype[methodName] = this.wrapAdd(method)
         continue
       }
 
       if (methodName.startsWith('find')) {
-        prototype[methodName] = this.wrapFind(
-          method as FindMethod<unknown[], unknown>,
-        )
+        prototype[methodName] = this.wrapFind(method)
         continue
       }
 
       if (methodName.startsWith('delete')) {
-        prototype[methodName] = this.wrapDelete(
-          method as DeleteMethod<unknown[]>,
-        )
+        prototype[methodName] = this.wrapDelete(method)
         continue
       }
 
