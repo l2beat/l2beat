@@ -46,13 +46,13 @@ export abstract class BaseRepository {
 
   private wrapChildMethods() {
     const prototype = Object.getPrototypeOf(this)
-    this.getChildMethodNames().forEach((methodName) => {
+    for (const methodName of this.getChildMethodNames()) {
       const method = prototype[methodName]
       if (methodName.startsWith('get')) {
         prototype[methodName] = this.wrapGet(
           method as GetMethod<unknown[], unknown>,
         )
-        return
+        continue
       }
 
       if (methodName.startsWith('add')) {
@@ -60,30 +60,34 @@ export abstract class BaseRepository {
           prototype[methodName] = this.wrapAddMany(
             method as AddManyMethodWithCount<unknown>,
           )
-          return
+          continue
         }
         prototype[methodName] = this.wrapAdd(
           method as AddMethod<unknown, string | number | string | number>,
         )
-        return
+        continue
       }
 
       if (methodName.startsWith('find')) {
         prototype[methodName] = this.wrapFind(
           method as FindMethod<unknown[], unknown>,
         )
-        return
+        continue
       }
 
       if (methodName.startsWith('delete')) {
         prototype[methodName] = this.wrapDelete(
           method as DeleteMethod<unknown[]>,
         )
-        return
+        continue
+      }
+
+      if (methodName.startsWith('_')) {
+        continue
       }
 
       throw new Error(`Wrong method naming convention: ${methodName}`)
-    })
+    }
   }
 
   private getChildMethodNames() {

@@ -63,4 +63,25 @@ describe(BaseRepository.name, () => {
       new DummyRepository(database, Logger.SILENT, mockMetrics)
     }).toThrow(Error, 'Wrong method naming convention: wrongNameMethod')
   })
+
+  it('should not wrap the function if it is prefixed with _', () => {
+    class DummyRepository extends BaseRepository {
+      getValue() {
+        return [1]
+      }
+
+      _notWrappedFunction() {
+        return [1]
+      }
+    }
+    const dummyRepository = new DummyRepository(
+      database,
+      Logger.SILENT,
+      mockMetrics,
+    )
+
+    const prototype = Object.getPrototypeOf(dummyRepository)
+    expect(prototype.getValue.wrapped).toEqual(true)
+    expect(prototype._notWrappedFunction.wrapped).toBeFalsy()
+  })
 })
