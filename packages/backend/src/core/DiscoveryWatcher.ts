@@ -94,8 +94,10 @@ export class DiscoveryWatcher {
     )
 
     if (diff.length > 0) {
-      const message = diffToMessage(name, diff)
-      await this.notify(message)
+      const messages = diffToMessage(name, diff)
+      for (const message of messages) {
+        await this.notify(message)
+      }
     }
   }
 

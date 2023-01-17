@@ -1,11 +1,27 @@
 import { DiscoveryDiff } from './diffDiscovery'
 
-export function diffToMessage(name: string, diff: DiscoveryDiff[]): string {
-  const message = `Detected changes for ${name}\n\n\`\`\`diff\n${diff
-    .map(diffToString)
-    .join('\n')}`
+export function diffToMessage(name: string, diff: DiscoveryDiff[]): string[] {
+  const beginning = `Detected changes for ${name}\n\n\`\`\`diff\n`
+  const end = '```'
 
-  return message + '\n```'
+  const messages: string[][] = []
+  let index = 0
+  messages[index] = []
+
+  for(const d of diff) {
+    const l = messages[index].join('').length
+    if(beginning.length + l + end.length + diffToString(d).length < 2000) {
+      messages[index].push(`${diffToString(d)}\n`)
+    } else {
+      index += 1
+      messages[index] = []
+      messages[index].push(`${diffToString(d)}\n`)
+    }
+  }
+
+  const result = messages.map(m => `${beginning}${m.join('')}${end}`)
+
+  return result
 }
 
 export function diffToString(diff: DiscoveryDiff): string {

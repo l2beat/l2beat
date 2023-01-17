@@ -48,7 +48,41 @@ describe(diffToMessage.name, () => {
       '```',
     ]
 
-    expect(result).toEqual(expected.join(''))
+    expect(result).toEqual([expected.join('')])
+  })
+
+  it('truncates message larger than 2000 characters', () => {
+    const name = 'system'
+    const diff: DiscoveryDiff = {
+      name: 'Contract',
+      address: ADDRESS,
+      type: 'deleted',
+    }
+    const differences: DiscoveryDiff[] = []
+
+    while(differences.length < 27) {
+      differences.push(diff)
+    }
+
+    const result = diffToMessage(name, differences)
+
+    const firstPart = [
+      `Detected changes for system\n\n`,
+      '```diff\n',
+      differences.slice(0,26).map(diffToString).join('\n'),
+      '\n```',
+    ]
+
+    const secondPart = [
+      `Detected changes for system\n\n`,
+      '```diff\n',
+      differences.slice(26).map(diffToString).join('\n'),
+      '\n```',
+    ]
+
+    expect(result).toEqual([firstPart.join(''), secondPart.join('')])
+    expect(firstPart.join('').length).toEqual(1990)
+    expect(secondPart.join('').length).toEqual(115)
   })
 })
 
