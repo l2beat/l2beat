@@ -19,12 +19,12 @@ describe(StarkexTransactionCountRepository.name, () => {
   })
 
   describe(
-    StarkexTransactionCountRepository.prototype.getLastTimestampByProjectId
+    StarkexTransactionCountRepository.prototype.findLastTimestampByProjectId
       .name,
     () => {
       it('works with empty database', async () => {
         expect(
-          await repository.getLastTimestampByProjectId(ProjectId.STARKNET),
+          await repository.findLastTimestampByProjectId(ProjectId.STARKNET),
         ).toEqual(undefined)
       })
     },

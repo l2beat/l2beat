@@ -54,7 +54,7 @@ export function createStarkexCounter(
   )
 
   return new TransactionCounter(projectId, processor, () =>
-    starkexRepository.getLastTimestampByProjectId(projectId),
+    starkexRepository.findLastTimestampByProjectId(projectId),
   )
 }
 

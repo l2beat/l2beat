@@ -155,7 +155,7 @@ describe(PriceRepository.name, () => {
     })
   })
 
-  describe(PriceRepository.prototype.getLatestByTokenBetween.name, () => {
+  describe(PriceRepository.prototype.findLatestByTokenBetween.name, () => {
     it('gets most recent record of each token', async () => {
       await repository.deleteAll()
       await repository.addMany([
@@ -171,7 +171,7 @@ describe(PriceRepository.name, () => {
         },
       ])
 
-      const result = await repository.getLatestByTokenBetween(
+      const result = await repository.findLatestByTokenBetween(
         START.add(-1, 'days'),
         START.add(-1, 'hours'),
       )
@@ -182,7 +182,7 @@ describe(PriceRepository.name, () => {
     it('works with empty database', async () => {
       await repository.deleteAll()
 
-      const result = await repository.getLatestByTokenBetween(
+      const result = await repository.findLatestByTokenBetween(
         START.add(-1, 'days'),
         START.add(-1, 'hours'),
       )

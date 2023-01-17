@@ -10,6 +10,6 @@ export function createBlockTransactionCounter(
   blockRepository: BlockTransactionCountRepository,
 ): TransactionCounter {
   return new TransactionCounter(projectId, processor, () =>
-    blockRepository.getLastTimestampByProjectId(projectId),
+    blockRepository.findLastTimestampByProjectId(projectId),
   )
 }

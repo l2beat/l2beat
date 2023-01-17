@@ -21,17 +21,6 @@ export const SIX_HOURS = UnixTime.HOUR * 6
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.getAll = this.wrapGet(this.getAll)
-    this.getDailyByProjectAndAsset = this.wrapGet(
-      this.getDailyByProjectAndAsset,
-    )
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {

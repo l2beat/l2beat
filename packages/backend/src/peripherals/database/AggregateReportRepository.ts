@@ -16,14 +16,6 @@ export interface AggregateReportRecord {
 export class AggregateReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.getDaily = this.wrapGet(this.getDaily)
-    this.getAll = this.wrapGet(this.getAll)
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
-    this.findLatest = this.wrapFind(this.findLatest)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getDaily(): Promise<AggregateReportRecord[]> {

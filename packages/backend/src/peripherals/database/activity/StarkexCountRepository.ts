@@ -17,10 +17,6 @@ export interface StarkexTransactionCountRecord {
 export class StarkexTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdateMany = this.wrapAny(this.addOrUpdateMany)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async addOrUpdateMany(
@@ -41,7 +37,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     return await knex('activity.starkex').delete()
   }
 
-  async getLastTimestampByProjectId(
+  async findLastTimestampByProjectId(
     projectId: ProjectId,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()

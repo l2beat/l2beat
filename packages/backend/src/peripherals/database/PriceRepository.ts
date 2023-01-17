@@ -23,13 +23,9 @@ export class PriceRepository extends BaseRepository {
 
     /* eslint-disable @typescript-eslint/unbound-method */
 
-    this.getAll = this.wrapGet(this.getAll)
-    this.getByTimestamp = this.wrapGet(this.getByTimestamp)
-    this.getByToken = this.wrapGet(this.getByToken)
     this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
-    this.addMany = this.wrapAddMany(this.addMany)
-    this.getLatestByTokenBetween = this.wrapAny(this.getLatestByTokenBetween)
-    this.findByTimestampAndToken = this.wrapFind(this.findByTimestampAndToken)
+    this.findLatestByTokenBetween = this.wrapFind(this.findLatestByTokenBetween)
+    // TODO: REVIEW
 
     /* eslint-enable @typescript-eslint/unbound-method */
   }
@@ -46,11 +42,6 @@ export class PriceRepository extends BaseRepository {
       unix_timestamp: timestamp.toDate(),
     })
 
-    this.logger.debug({
-      method: 'getByTimestamp',
-      timestamp: timestamp.toString(),
-      amount: rows.length,
-    })
     return rows.map(toRecord)
   }
 
@@ -60,11 +51,6 @@ export class PriceRepository extends BaseRepository {
       asset_id: assetId.toString(),
     })
 
-    this.logger.debug({
-      method: 'getByToken',
-      coin: assetId.toString(),
-      amount: rows.length,
-    })
     return rows.map(toRecord)
   }
 
@@ -88,7 +74,7 @@ export class PriceRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    await knex('coingecko_prices').delete()
+    return await knex('coingecko_prices').delete()
   }
 
   async calcDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
@@ -110,7 +96,7 @@ export class PriceRepository extends BaseRepository {
     )
   }
 
-  async getLatestByTokenBetween(
+  async findLatestByTokenBetween(
     from: UnixTime,
     to: UnixTime,
   ): Promise<Map<AssetId, UnixTime | undefined>> {

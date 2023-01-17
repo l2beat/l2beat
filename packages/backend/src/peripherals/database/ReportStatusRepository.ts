@@ -14,16 +14,6 @@ export interface ReportStatusRecord {
 export class ReportStatusRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.getByConfigHash = this.wrapGet(this.getByConfigHash)
-    this.add = this.wrapAdd(this.add)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getBetween = this.wrapGet(this.getBetween)
-    this.findLatestTimestamp = this.wrapFind(this.findLatestTimestamp)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {

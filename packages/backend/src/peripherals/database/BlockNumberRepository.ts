@@ -14,14 +14,6 @@ export interface BlockNumberRecord {
 export class BlockNumberRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.add = this.wrapAdd(this.add)
-    this.getAll = this.wrapGet(this.getAll)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async add(record: BlockNumberRecord) {

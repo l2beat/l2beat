@@ -17,7 +17,7 @@ export class DailyTransactionCountViewRepository extends BaseRepository {
     super(database, logger, metrics)
     /* eslint-disable @typescript-eslint/unbound-method */
     this.refresh = this.wrapAny(this.refresh)
-    this.getDailyCounts = this.wrapGet(this.getDailyCounts)
+    //TODO: REVIEW
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 

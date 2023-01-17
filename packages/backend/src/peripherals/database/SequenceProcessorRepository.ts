@@ -17,9 +17,7 @@ export class SequenceProcessorRepository extends BaseRepository {
     super(database, logger, metrics)
 
     /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdate = this.wrapAny(this.addOrUpdate)
     this.getById = this.wrapAny(this.getById)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
     /* eslint-enable @typescript-eslint/unbound-method */
   }
 

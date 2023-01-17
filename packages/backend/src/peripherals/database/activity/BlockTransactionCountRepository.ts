@@ -17,10 +17,6 @@ export interface BlockTransactionCountRecord {
 export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.addMany = this.wrapAny(this.addMany)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async addMany(
@@ -38,7 +34,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return await knex('activity.block').delete()
   }
 
-  async getLastTimestampByProjectId(
+  async findLastTimestampByProjectId(
     projectId: ProjectId,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()
