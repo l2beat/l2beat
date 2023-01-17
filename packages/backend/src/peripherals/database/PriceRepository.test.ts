@@ -115,9 +115,9 @@ describe(PriceRepository.name, () => {
     expect(results).toBeAnArrayOfLength(0)
   })
 
-  describe(PriceRepository.prototype.calcDataBoundaries.name, () => {
+  describe(PriceRepository.prototype.findDataBoundaries.name, () => {
     it('boundary of single and multi row data', async () => {
-      const result = await repository.calcDataBoundaries()
+      const result = await repository.findDataBoundaries()
 
       expect(result).toEqual(
         new Map([
@@ -149,7 +149,7 @@ describe(PriceRepository.name, () => {
     it('works with empty database', async () => {
       await repository.deleteAll()
 
-      const result = await repository.calcDataBoundaries()
+      const result = await repository.findDataBoundaries()
 
       expect(result).toEqual(new Map())
     })

@@ -16,7 +16,7 @@ type AddManyMethodWithCount<T> = (records: T[]) => Promise<number>
 
 type GetMethod<A extends unknown[], T> = (...args: A) => Promise<T[]>
 
-type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T | undefined>
+type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T>
 
 type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 

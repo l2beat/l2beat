@@ -20,14 +20,6 @@ export interface DataBoundary {
 export class PriceRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
-    this.findLatestByTokenBetween = this.wrapFind(this.findLatestByTokenBetween)
-    // TODO: REVIEW
-
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   async getAll(): Promise<PriceRecord[]> {
@@ -77,7 +69,7 @@ export class PriceRepository extends BaseRepository {
     return await knex('coingecko_prices').delete()
   }
 
-  async calcDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
+  async findDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
     const knex = await this.knex()
     const rows = await knex('coingecko_prices')
       .min('unix_timestamp')
