@@ -2,6 +2,7 @@ import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { CallHandler } from './CallHandler'
 
@@ -16,6 +17,7 @@ describe(CallHandler.name, () => {
           args: [1, 2],
         },
         [],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.dependencies).toEqual([])
@@ -31,6 +33,7 @@ describe(CallHandler.name, () => {
           args: [1, '{{ foo }}', 2, '{{ bar }}'],
         },
         [],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.dependencies).toEqual(['foo', 'bar'])
@@ -47,6 +50,7 @@ describe(CallHandler.name, () => {
           args: [1],
         },
         [],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.getMethod()).toEqual(
@@ -65,6 +69,7 @@ describe(CallHandler.name, () => {
               args: [1],
             },
             [],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid method abi')
     })
@@ -80,17 +85,23 @@ describe(CallHandler.name, () => {
               args: [1, 2],
             },
             [],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid method abi')
     })
 
     it('finds the method by field name', () => {
-      const handler = new CallHandler('someName', { type: 'call', args: [] }, [
-        'function foo() view returns (uint256)',
-        'function someName(uint256 i) view returns (uint256)',
-        'function someName(uint256 a, uint256 b) view returns (uint256)',
-        'function someName() view returns (uint256)',
-      ])
+      const handler = new CallHandler(
+        'someName',
+        { type: 'call', args: [] },
+        [
+          'function foo() view returns (uint256)',
+          'function someName(uint256 i) view returns (uint256)',
+          'function someName(uint256 a, uint256 b) view returns (uint256)',
+          'function someName() view returns (uint256)',
+        ],
+        DiscoveryLogger.SILENT,
+      )
 
       expect(handler.getMethod()).toEqual(
         'function someName() view returns (uint256)',
@@ -107,6 +118,7 @@ describe(CallHandler.name, () => {
           'function someName(uint256 a, uint256 b) view returns (uint256)',
           'function someName() view returns (uint256)',
         ],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.getMethod()).toEqual(
@@ -117,11 +129,16 @@ describe(CallHandler.name, () => {
     it('throws if it cannot find the method by field name', () => {
       expect(
         () =>
-          new CallHandler('someName', { type: 'call', args: [] }, [
-            'function foo(uint256 i) view returns (uint256)',
-            'function someName(uint256 i) view returns (uint256)',
-            'function someName(uint256 a, uint256 b) view returns (uint256)',
-          ]),
+          new CallHandler(
+            'someName',
+            { type: 'call', args: [] },
+            [
+              'function foo(uint256 i) view returns (uint256)',
+              'function someName(uint256 i) view returns (uint256)',
+              'function someName(uint256 a, uint256 b) view returns (uint256)',
+            ],
+            DiscoveryLogger.SILENT,
+          ),
       ).toThrow('Cannot find a matching method for someName')
     })
 
@@ -138,6 +155,7 @@ describe(CallHandler.name, () => {
           'function bar(uint256 a, uint256 b) view returns (uint256)',
           'function bar() view returns (uint256)',
         ],
+        DiscoveryLogger.SILENT,
       )
 
       expect(handler.getMethod()).toEqual(
@@ -159,6 +177,7 @@ describe(CallHandler.name, () => {
               'function bar(uint256 i) view returns (uint256)',
               'function bar(uint256 a, uint256 b) view returns (uint256)',
             ],
+            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching method for bar')
     })
@@ -187,6 +206,7 @@ describe(CallHandler.name, () => {
         'add',
         { type: 'call', method, args: [1, 2] },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({
@@ -213,6 +233,7 @@ describe(CallHandler.name, () => {
         'add',
         { type: 'call', method, args: ['{{ foo }}', '{{ bar }}'] },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 1 },
@@ -235,6 +256,7 @@ describe(CallHandler.name, () => {
         'add',
         { type: 'call', method, args: [1, 2] },
         [],
+        DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
       expect<unknown>(result).toEqual({

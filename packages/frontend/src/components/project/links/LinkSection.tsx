@@ -1,7 +1,6 @@
 import { ProjectLinks } from '@l2beat/config'
 import React from 'react'
 
-import { HorizontalBar } from '../../navbar/HorizontalBar'
 import { LinkSectionLinks } from './LinkSectionLinks'
 
 export interface LinkSectionProps {
@@ -12,7 +11,7 @@ export interface LinkSectionProps {
 
 export function LinkSection(props: LinkSectionProps) {
   return (
-    <section className="px-4 pt-3 md:p-0 md:bg-gray-100 md:dark:bg-gray-900 md:rounded-lg md:mt-6">
+    <section className="px-4 py-3 md:p-0 md:bg-gray-100 md:dark:bg-gray-900 md:rounded-lg md:mt-6">
       <div className="hidden my-6 px-6 md:flex items-center">
         <img
           src={props.icon}
@@ -44,7 +43,6 @@ export function LinkSection(props: LinkSectionProps) {
           />
         </tbody>
       </table>
-      <HorizontalBar className="md:hidden mt-3" />
     </section>
   )
 }

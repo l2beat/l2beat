@@ -3,12 +3,12 @@ import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { BytesFromString, NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
-import { logHandler } from '../utils/logHandler'
 import { valueToBigInt } from '../utils/valueToBigInt'
 
 const SingleSlot = z.union([
@@ -34,6 +34,7 @@ export class StorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StorageHandlerDefinition,
+    readonly logger: DiscoveryLogger,
   ) {
     this.dependencies = getDependencies(definition)
   }
@@ -43,7 +44,7 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    logHandler(this.field, ['Reading storage'])
+    this.logger.logExecution(this.field, ['Reading storage'])
     const resolved = resolveDependencies(this.definition, previousResults)
 
     let storage: Bytes

@@ -1,6 +1,8 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
+
 export interface HeaderProps {
   title: string
   titleLength?: 'long' | 'very-long'
@@ -32,7 +34,7 @@ export function DetailsHeader(props: HeaderProps) {
         </h1>
         <DetailsHeaderStats stats={props.stats} />
       </header>
-      <hr className="mt-2 md:mt-6 md:border-t-2 border-gray-300 dark:border-gray-850" />
+      <HorizontalSeparator className="mt-2 md:mt-6" />
     </>
   )
 }
