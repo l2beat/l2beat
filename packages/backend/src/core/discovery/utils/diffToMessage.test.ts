@@ -89,14 +89,14 @@ describe(diffToMessage.name, () => {
 describe(wrapCodeBlock.name, () => {
   it('wraps messages correctly', () => {
     const name = 'project'
-    const messages = ['a','b','c']
+    const messages = ['a', 'b', 'c']
 
     const expected = [
       `Detected changes for ${name}\n\n\`\`\`diff\n`,
       'a\n',
       'b\n',
       'c',
-      '\n```'
+      '\n```',
     ]
 
     const result = wrapCodeBlock(name, messages)
