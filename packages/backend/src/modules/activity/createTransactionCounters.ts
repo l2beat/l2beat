@@ -88,7 +88,7 @@ export function createTransactionCounters(
     .filter(hasTransactionApi)
     .map(mergeWithActivityConfigProjects(activityConfigProjects))
     .concat([ethereum])
-    .filter(isProjectAllowed(allowedProjectIds, logger))
+    .filter(isProjectAllowed(allowedProjectIds, logger, metrics))
     .map(({ projectId, transactionApi }) => {
       switch (transactionApi.type) {
         case 'starkex':
