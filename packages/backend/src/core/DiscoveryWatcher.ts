@@ -71,11 +71,6 @@ export class DiscoveryWatcher {
         this.logger.error(error)
       }
     }
-
-    await this.notify(
-      `Run discovery for all projects | block_number = ${blockNumber}`,
-    )
-
     this.logger.info('Update finished', { blockNumber })
   }
 
@@ -95,13 +90,11 @@ export class DiscoveryWatcher {
 
     if (diff.length > 0) {
       const messages = diffToMessage(name, diff)
-      for (const message of messages) {
-        await this.notify(message)
-      }
+      await this.notify(messages)
     }
   }
 
-  async notify(message: string) {
+  async notify(messages: string[]) {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -110,9 +103,11 @@ export class DiscoveryWatcher {
       return
     }
 
-    await this.discordClient.sendMessage(message).then(
-      () => this.logger.info('Notification to Discord has been sent'),
-      (e) => this.logger.error(e),
-    )
+    for (const message of messages) {
+      await this.discordClient.sendMessage(message).then(
+        () => this.logger.info('Notification to Discord has been sent'),
+        (e) => this.logger.error(e),
+      )
+    }
   }
 }
