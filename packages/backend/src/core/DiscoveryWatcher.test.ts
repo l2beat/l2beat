@@ -65,11 +65,7 @@ describe(DiscoveryWatcher.name, () => {
       )
 
       const name = 'project'
-
       await discoveryWatcher.compareWithCommitted(name, [DISCOVERED], {})
-
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([[name]])
-
       const expectedMessage = diffToMessage(
         name,
         diffDiscovery(
@@ -78,6 +74,9 @@ describe(DiscoveryWatcher.name, () => {
           {},
         ),
       )
+
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([[name]])
+
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
         [expectedMessage[0]],
       ])
