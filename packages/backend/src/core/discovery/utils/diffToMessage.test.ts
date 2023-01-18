@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { DiscoveryDiff } from './diffDiscovery'
-import { diffToMessage, diffToString } from './diffToMessage'
+import { diffToMessage, diffToString, wrapCodeBlock } from './diffToMessage'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 
@@ -83,6 +83,25 @@ describe(diffToMessage.name, () => {
     expect(result).toEqual([firstPart.join(''), secondPart.join('')])
     expect(firstPart.join('').length).toEqual(1990)
     expect(secondPart.join('').length).toEqual(115)
+  })
+})
+
+describe(wrapCodeBlock.name, () => {
+  it('wraps messages correctly', () => {
+    const name = 'project'
+    const messages = ['a','b','c']
+
+    const expected = [
+      `Detected changes for ${name}\n\n\`\`\`diff\n`,
+      'a\n',
+      'b\n',
+      'c',
+      '\n```'
+    ]
+
+    const result = wrapCodeBlock(name, messages)
+
+    expect(result).toEqual(expected.join(''))
   })
 })
 
