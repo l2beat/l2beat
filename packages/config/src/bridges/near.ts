@@ -43,7 +43,7 @@ export const near: Bridge = {
         address: '0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52',
         sinceTimestamp: new UnixTime(1624579200),
         tokens: ['ETH'],
-      }
+      },
     ],
   },
   riskView: {
