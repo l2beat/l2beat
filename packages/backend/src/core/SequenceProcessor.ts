@@ -177,7 +177,7 @@ export class SequenceProcessor extends EventEmitter {
   }
 
   private async loadState(): Promise<void> {
-    const state = await this.repository.getById(this.id)
+    const state = await this.repository.findById(this.id)
     this.state = state
   }
 

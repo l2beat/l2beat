@@ -20,6 +20,24 @@ type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T>
 
 type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 
+type Keys<T, U> = Extract<keyof T, U>
+type Match<T, U> = T extends U ? T : never
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export type CheckConvention<T extends BaseRepository> = {
+  [K in Keys<T, `add${string}`>]: Match<T[K], AddMethod<any, any>>
+} & {
+  [K in Keys<T, `addMany${string}`>]: Match<T[K], AddManyMethod<any, any>>
+} & {
+  [K in Keys<T, `find${string}`>]: Match<T[K], FindMethod<any[], any>>
+} & {
+  [K in Keys<T, `get${string}`>]: Match<T[K], GetMethod<any[], any>>
+} & {
+  [K in Keys<T, `delete${string}`>]: Match<T[K], DeleteMethod<any[]>>
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
 export abstract class BaseRepository {
   protected histogram: RepositoryHistogram
 
@@ -30,7 +48,6 @@ export abstract class BaseRepository {
   ) {
     this.logger = logger.for(this)
     this.histogram = metrics.repositoryHistogram
-    this.wrapChildMethods()
   }
 
   async runInTransaction(
@@ -44,20 +61,34 @@ export abstract class BaseRepository {
     return this.database.getKnex(trx)
   }
 
-  private wrapChildMethods() {
-    const prototype = Object.getPrototypeOf(this)
-    for (const methodName of this.getChildMethodNames()) {
-      const method = prototype[methodName]
+  autoWrap<T extends Record<string, AnyMethod<any, any>>>(obj: T) {
+    const prototype = Object.getPrototypeOf(obj) as Record<
+      string,
+      AnyMethod<any, any>
+    >
+    const methodNames = Object.getOwnPropertyNames(prototype)
+
+    for (const methodName of methodNames) {
+      const method = obj[methodName]
+      if (
+        methodName === 'constructor' ||
+        Object.prototype.hasOwnProperty.call(method, 'wrapped') ||
+        methodName.startsWith('_')
+      ) {
+        continue
+      }
+
       if (methodName.startsWith('get')) {
         prototype[methodName] = this.wrapGet(method)
         continue
       }
 
+      if (methodName.startsWith('addMany')) {
+        prototype[methodName] = this.wrapAddMany(method)
+        continue
+      }
+
       if (methodName.startsWith('add')) {
-        if (methodName.endsWith('Many')) {
-          prototype[methodName] = this.wrapAddMany(method)
-          continue
-        }
         prototype[methodName] = this.wrapAdd(method)
         continue
       }
@@ -72,19 +103,8 @@ export abstract class BaseRepository {
         continue
       }
 
-      if (methodName.startsWith('_')) {
-        continue
-      }
-
       throw new Error(`Wrong method naming convention: ${methodName}`)
     }
-  }
-
-  private getChildMethodNames() {
-    const prototype = Object.getPrototypeOf(this)
-    return Object.getOwnPropertyNames(prototype).filter(
-      (name) => name !== 'constructor',
-    )
   }
 
   protected wrapAny<A extends unknown[], R>(

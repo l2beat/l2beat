@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/types'
 import { BlockNumberRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface BlockNumberRecord {
@@ -14,6 +14,7 @@ export interface BlockNumberRecord {
 export class BlockNumberRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
+    this.autoWrap<CheckConvention<BlockNumberRepository>>(this)
   }
 
   async add(record: BlockNumberRecord) {

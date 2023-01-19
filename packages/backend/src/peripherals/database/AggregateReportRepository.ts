@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { AggregateReportRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface AggregateReportRecord {
@@ -16,6 +16,7 @@ export interface AggregateReportRecord {
 export class AggregateReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
+    this.autoWrap<CheckConvention<AggregateReportRepository>>(this)
   }
 
   async getDaily(): Promise<AggregateReportRecord[]> {

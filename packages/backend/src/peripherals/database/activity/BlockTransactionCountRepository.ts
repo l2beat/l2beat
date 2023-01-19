@@ -4,7 +4,7 @@ import { Knex } from 'knex'
 import { BlockTransactionCountRow } from 'knex/types/tables'
 
 import { Metrics } from '../../../Metrics'
-import { BaseRepository } from '../shared/BaseRepository'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
 export interface BlockTransactionCountRecord {
@@ -17,6 +17,7 @@ export interface BlockTransactionCountRecord {
 export class BlockTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
+    this.autoWrap<CheckConvention<BlockTransactionCountRepository>>(this)
   }
 
   async addMany(

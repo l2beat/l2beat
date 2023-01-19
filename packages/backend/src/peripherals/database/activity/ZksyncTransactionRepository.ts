@@ -4,7 +4,7 @@ import { Knex } from 'knex'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 
 import { Metrics } from '../../../Metrics'
-import { BaseRepository } from '../shared/BaseRepository'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
 export interface ZksyncTransactionRecord {
@@ -16,6 +16,7 @@ export interface ZksyncTransactionRecord {
 export class ZksyncTransactionRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
+    this.autoWrap<CheckConvention<ZksyncTransactionRepository>>(this)
   }
 
   async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
