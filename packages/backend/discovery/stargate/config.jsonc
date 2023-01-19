@@ -3,20 +3,12 @@
   "name": "stargate",
   "initialAddresses": ["0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
   "overrides": {
-    "0x853d955aCEf822Db058eb8505911ED77F175b99e": {
-      // FRAX
-      "ignoreDiscovery": true
-    },
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
-      // FRAX
-      "ignoreDiscovery": true
-    },
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
-      // FRAX
-      "ignoreDiscovery": true
-    },
+    // "0x853d955aCEf822Db058eb8505911ED77F175b99e": {
+    //   // FRAX
+    //   "ignoreDiscovery": true
+    // },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
-      // FRAX
+      // DAI
       "ignoreDiscovery": true
     },
     "0xdAC17F958D2ee523a2206206994597C13D831ec7": {
@@ -26,6 +18,28 @@
     "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6": {
       // USDD
       "ignoreDiscovery": true
+    },
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      // USDC
+      "ignoreDiscovery": true
+    },
+    "0xB0D502E938ed5f4df2E681fE6E419ff29631d62b": {
+      "ignoreDiscovery": true
+    },
+    "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d": {
+      "ignoreMethods": ["amountLPtoLD"]
+    },
+    "0x101816545F6bd2b1076434B54383a1E633390A2E": {
+      "ignoreMethods": ["amountLPtoLD"]
+    },
+    "0x692953e758c3669290cb1677180c64183cEe374e": {
+      "ignoreMethods": ["amountLPtoLD"]
+    },
+    "0x38EA452219524Bb87e18dE1C24D3bB59510BD783": {
+      "ignoreMethods": ["amountLPtoLD", "chainPaths"]
+    },
+    "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": {
+      "ignoreMethods": ["amountLPtoLD", "chainPaths"]
     }
   }
 }
