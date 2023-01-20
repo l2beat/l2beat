@@ -48,8 +48,6 @@ describe(BaseRepository.name, () => {
     })
 
     it('should throw error', () => {
-      // This test will fail until all wrong naming convention will get resolved (refresh, calcDataBoundaries)
-
       class DummyRepository extends BaseRepository {
         constructor(database: Database, logger: Logger, metrics: Metrics) {
           super(database, logger, metrics)
@@ -69,7 +67,7 @@ describe(BaseRepository.name, () => {
         new DummyRepository(database, Logger.SILENT, mockMetrics)
       }).toThrow(
         Error,
-        'Wrong method naming convention: unconventionalMethodName',
+        'Wrong repository method naming convention: unconventionalMethodName',
       )
     })
 

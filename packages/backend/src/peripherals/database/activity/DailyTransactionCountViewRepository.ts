@@ -16,12 +16,12 @@ export class DailyTransactionCountViewRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
     /* eslint-disable @typescript-eslint/unbound-method */
-    this._refresh = this.wrapAny(this._refresh)
+    this.refresh = this.wrapAny(this.refresh)
     /* eslint-enable @typescript-eslint/unbound-method */
     this.autoWrap<CheckConvention<DailyTransactionCountViewRepository>>(this)
   }
 
-  async _refresh(): Promise<void> {
+  async refresh(): Promise<void> {
     const knex = await this.knex()
     await knex.schema.refreshMaterializedView('activity.daily_count_view', true)
   }

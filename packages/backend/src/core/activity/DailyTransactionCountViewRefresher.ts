@@ -15,7 +15,7 @@ export class DailyTransactionCountViewRefresher {
     this.logger = logger.for(this)
     this.refreshQueue = new TaskQueue<void>(async () => {
       this.logger.info('Refresh started')
-      await this.viewRepository._refresh()
+      await this.viewRepository.refresh()
       this.logger.info('Refresh finished')
     }, this.logger.for('refreshQueue'))
   }

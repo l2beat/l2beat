@@ -103,7 +103,9 @@ export abstract class BaseRepository {
         continue
       }
 
-      throw new Error(`Wrong method naming convention: ${methodName}`)
+      throw new Error(
+        `Wrong repository method naming convention: ${methodName}`,
+      )
     }
   }
 
@@ -170,9 +172,7 @@ export abstract class BaseRepository {
       return idsOrCount
     }
     Object.defineProperty(fn, 'name', { value: method.name })
-    if (process.env.NODE_ENV === 'test') {
-      Object.defineProperty(fn, 'wrapped', { value: true })
-    }
+    Object.defineProperty(fn, 'wrapped', { value: true })
     return fn
   }
 
@@ -191,9 +191,7 @@ export abstract class BaseRepository {
       return result
     }
     Object.defineProperty(fn, 'name', { value: method.name })
-    if (process.env.NODE_ENV === 'test') {
-      Object.defineProperty(fn, 'wrapped', { value: true })
-    }
+    Object.defineProperty(fn, 'wrapped', { value: true })
     return fn
   }
 }
