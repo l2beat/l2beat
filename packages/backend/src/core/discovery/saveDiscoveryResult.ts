@@ -23,7 +23,7 @@ export function parseDiscoveryOutput(
   return JSON.parse(JSON.stringify(prepared)) as ProjectParameters
 }
 
-function prepareDiscoveryFile(
+export function prepareDiscoveryFile(
   results: AnalyzedData[],
   name = 'undefined',
   blockNumber = -1,

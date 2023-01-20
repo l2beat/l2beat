@@ -11,7 +11,7 @@ import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
-import { diffToMessage } from './discovery/utils/diffToMessage'
+import { diffToMessages } from './discovery/utils/diffToMessages'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -39,6 +39,7 @@ export class DiscoveryWatcher {
     })
   }
 
+  //TODO: test (it will probably require changing discover to object)
   async update() {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
@@ -71,11 +72,6 @@ export class DiscoveryWatcher {
         this.logger.error(error)
       }
     }
-
-    await this.notify(
-      `Run discovery for all projects | block_number = ${blockNumber}`,
-    )
-
     this.logger.info('Update finished', { blockNumber })
   }
 
@@ -94,12 +90,12 @@ export class DiscoveryWatcher {
     )
 
     if (diff.length > 0) {
-      const message = diffToMessage(name, diff)
-      await this.notify(message)
+      const messages = diffToMessages(name, diff)
+      await this.notify(messages)
     }
   }
 
-  async notify(message: string) {
+  async notify(messages: string[]) {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -108,9 +104,11 @@ export class DiscoveryWatcher {
       return
     }
 
-    await this.discordClient.sendMessage(message).then(
-      () => this.logger.info('Notification to Discord has been sent'),
-      (e) => this.logger.error(e),
-    )
+    for (const message of messages) {
+      await this.discordClient.sendMessage(message).then(
+        () => this.logger.info('Notification to Discord has been sent'),
+        (e) => this.logger.error(e),
+      )
+    }
   }
 }
