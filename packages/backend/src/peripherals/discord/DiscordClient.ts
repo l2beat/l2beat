@@ -6,7 +6,7 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 import { HttpClient } from '@l2beat/common'
 import { RequestInit } from 'node-fetch'
 
-const MAX_MESSAGE_LENGTH = 2000
+export const MAX_MESSAGE_LENGTH = 2000
 
 export class DiscordClient {
   constructor(

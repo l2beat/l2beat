@@ -1,3 +1,4 @@
+import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 import { DiscoveryDiff } from './diffDiscovery'
 
 export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
@@ -10,7 +11,7 @@ export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
       wrapDiffCodeBlock(messages[index]).length + header.length
     const nextDiff = diffToString(diff)
 
-    if (currentLength + nextDiff.length >= 2000) {
+    if (currentLength + nextDiff.length >= MAX_MESSAGE_LENGTH) {
       index += 1
       messages.push('')
     }
