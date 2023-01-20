@@ -6,7 +6,7 @@ import {
   diffToMessage,
   diffToString,
   wrapBoldAndItalic,
-  wrapDiffCodeBlock,
+  wrapMessagesInDiffCodeBlock,
 } from './diffToMessage'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
@@ -87,13 +87,13 @@ describe(diffToMessage.name, () => {
   })
 })
 
-describe(wrapDiffCodeBlock.name, () => {
+describe(wrapMessagesInDiffCodeBlock.name, () => {
   it('wraps content correctly', () => {
     const messages = ['a', 'b', 'c']
 
     const expected = ['```diff\n', 'a\n', 'b\n', 'c', '```']
 
-    const result = wrapDiffCodeBlock(messages)
+    const result = wrapMessagesInDiffCodeBlock(messages)
 
     expect(result).toEqual(expected.join(''))
   })
