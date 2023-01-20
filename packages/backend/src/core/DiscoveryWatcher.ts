@@ -9,7 +9,7 @@ import { discover } from './discovery/discover'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
-import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
+import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessage } from './discovery/utils/diffToMessage'
 
@@ -85,11 +85,11 @@ export class DiscoveryWatcher {
     overrides?: Record<string, DiscoveryContract>,
   ) {
     const committed = await this.configReader.readDiscovery(name)
-    const discoveredAsCommitted = prepareDiscoveryFile(discovered)
+    const parsedDiscovery = parseDiscoveryOutput(discovered)
 
     const diff = diffDiscovery(
       committed.contracts,
-      discoveredAsCommitted.contracts,
+      parsedDiscovery.contracts,
       overrides ?? {},
     )
 
