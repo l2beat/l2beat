@@ -394,7 +394,7 @@ export const arbitrum: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0x931E1770BEC7827841f3989bda43319adACD62db',
+          implementation: '0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94',
         },
       },
       {

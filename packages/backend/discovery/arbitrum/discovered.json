@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16154924,
+  "blockNumber": 16448426,
   "contracts": [
     {
       "name": "RollupProxy",
@@ -20,12 +20,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1483,
+        "firstUnresolvedNode": 2459,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 1482,
-        "latestNodeCreated": 1632,
+        "latestConfirmed": 2458,
+        "latestNodeCreated": 2598,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -43,7 +43,7 @@
         "validatorUtils": "0x9E40625F52829Cf04bC4839F186D621ee33b0E67",
         "validatorWalletCreator": "0x960953f7c69cd2BC2322Db9223A815C680ccc7ea",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xd1842bfbe047322b3f3b3635b5fe62eb611557784d17ac1d2b1ce9c170af6544",
+        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -90,7 +90,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 41107,
+        "batchCount": 57625,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -101,7 +101,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 317307
+        "totalDelayedMessagesRead": 411190
       }
     },
     {
@@ -141,15 +141,15 @@
         "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
         "getChainId": 1,
         "getOwners": [
-          "0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e",
-          "0x68aF7F698aA20A1B804833654E82D8d7b6816e12",
-          "0x80420B3216E87e4ed25489ef392901Aafc10951B",
-          "0xf7FAf474aB8c503CF1786FfE708c861b438A59c6",
-          "0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972",
-          "0xc73b82AC141ce46D8987135E57D0ead1BFB35075"
+          "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
+          "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
+          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+          "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
         "getThreshold": 4,
-        "nonce": 100,
+        "nonce": 124,
         "VERSION": "1.3.0"
       }
     },
@@ -177,10 +177,10 @@
     {
       "name": "Inbox",
       "address": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
-      "code": "https://etherscan.deth.net/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f,0x931E1770BEC7827841f3989bda43319adACD62db",
+      "code": "https://etherscan.deth.net/address/0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f,0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x931E1770BEC7827841f3989bda43319adACD62db",
+        "implementation": "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
@@ -273,11 +273,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 317344,
+        "delayedMessageCount": 411227,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 41107,
-        "sequencerReportedSubMessageCount": 22889351
+        "sequencerMessageCount": 57625,
+        "sequencerReportedSubMessageCount": 32086852
       }
     },
     {
@@ -646,17 +646,17 @@
   ],
   "eoas": [
     "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
-    "0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e",
+    "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
     "0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
     "0x3fE38087A94903A9D946fa1915e1772fe611000f",
+    "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
     "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
     "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
-    "0x68aF7F698aA20A1B804833654E82D8d7b6816e12",
-    "0x80420B3216E87e4ed25489ef392901Aafc10951B",
-    "0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972",
-    "0xc73b82AC141ce46D8987135E57D0ead1BFB35075",
+    "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+    "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
+    "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
     "0xcCe5c6cFF61C49b4d53dd6024f8295F3c5230513",
-    "0xf7FAf474aB8c503CF1786FfE708c861b438A59c6"
+    "0xfE2bf40f2A9183774BF8E871d634A4E50255158B"
   ],
   "abis": {
     "0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515": [
@@ -1129,6 +1129,52 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94": [
+      "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
+      "error GasLimitTooLarge()",
+      "error InsufficientSubmissionCost(uint256 expected, uint256 actual)",
+      "error InsufficientValue(uint256 expected, uint256 actual)",
+      "error L1Forked()",
+      "error NotAllowedOrigin(address origin)",
+      "error NotForked()",
+      "error NotOrigin()",
+      "error NotOwner(address sender, address owner)",
+      "error NotRollupOrOwner(address sender, address rollup, address owner)",
+      "error RetryableData(address from, address to, uint256 l2CallValue, uint256 deposit, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)",
+      "event AllowListAddressSet(address indexed user, bool val)",
+      "event AllowListEnabledUpdated(bool isEnabled)",
+      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
+      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function allowListEnabled() view returns (bool)",
+      "function bridge() view returns (address)",
+      "function calculateRetryableSubmissionFee(uint256 dataLength, uint256 baseFee) view returns (uint256)",
+      "function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)",
+      "function createRetryableTicketNoRefundAliasRewrite(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)",
+      "function depositEth(uint256) payable returns (uint256)",
+      "function depositEth() payable returns (uint256)",
+      "function initialize(address _bridge, address _sequencerInbox)",
+      "function isAllowed(address) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function postUpgradeInit(address)",
+      "function sendContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, uint256 value, bytes data) returns (uint256)",
+      "function sendL1FundedContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, bytes data) payable returns (uint256)",
+      "function sendL1FundedUnsignedTransaction(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, bytes data) payable returns (uint256)",
+      "function sendL1FundedUnsignedTransactionToFork(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, bytes data) payable returns (uint256)",
+      "function sendL2Message(bytes messageData) returns (uint256)",
+      "function sendL2MessageFromOrigin(bytes messageData) returns (uint256)",
+      "function sendUnsignedTransaction(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, uint256 value, bytes data) returns (uint256)",
+      "function sendUnsignedTransactionToFork(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, uint256 value, bytes data) returns (uint256)",
+      "function sendWithdrawEthToFork(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, uint256 value, address withdrawTo) returns (uint256)",
+      "function sequencerInbox() view returns (address)",
+      "function setAllowList(address[] user, bool[] val)",
+      "function setAllowListEnabled(bool _allowListEnabled)",
+      "function uniswapCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)",
+      "function unpause()",
+      "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)"
+    ],
     "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021": [
       "error BadArrayLength(uint256 expected, uint256 actual)",
       "error NotExecutorOrOwner(address actual)",
@@ -1339,50 +1385,6 @@
       "function sequencerInbox() view returns (address)",
       "function transferOtherContractOwnership(address ownable, address newOwner)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0x931E1770BEC7827841f3989bda43319adACD62db": [
-      "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
-      "error InsufficientSubmissionCost(uint256 expected, uint256 actual)",
-      "error InsufficientValue(uint256 expected, uint256 actual)",
-      "error L1Forked()",
-      "error NotAllowedOrigin(address origin)",
-      "error NotForked()",
-      "error NotOrigin()",
-      "error NotOwner(address sender, address owner)",
-      "error NotRollupOrOwner(address sender, address rollup, address owner)",
-      "error RetryableData(address from, address to, uint256 l2CallValue, uint256 deposit, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)",
-      "event AllowListAddressSet(address indexed user, bool val)",
-      "event AllowListEnabledUpdated(bool isEnabled)",
-      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
-      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function allowListEnabled() view returns (bool)",
-      "function bridge() view returns (address)",
-      "function calculateRetryableSubmissionFee(uint256 dataLength, uint256 baseFee) view returns (uint256)",
-      "function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)",
-      "function createRetryableTicketNoRefundAliasRewrite(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)",
-      "function depositEth(uint256) payable returns (uint256)",
-      "function depositEth() payable returns (uint256)",
-      "function initialize(address _bridge, address _sequencerInbox)",
-      "function isAllowed(address) view returns (bool)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function postUpgradeInit(address)",
-      "function sendContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, uint256 value, bytes data) returns (uint256)",
-      "function sendL1FundedContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, bytes data) payable returns (uint256)",
-      "function sendL1FundedUnsignedTransaction(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, bytes data) payable returns (uint256)",
-      "function sendL1FundedUnsignedTransactionToFork(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, bytes data) payable returns (uint256)",
-      "function sendL2Message(bytes messageData) returns (uint256)",
-      "function sendL2MessageFromOrigin(bytes messageData) returns (uint256)",
-      "function sendUnsignedTransaction(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, uint256 value, bytes data) returns (uint256)",
-      "function sendUnsignedTransactionToFork(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, address to, uint256 value, bytes data) returns (uint256)",
-      "function sendWithdrawEthToFork(uint256 gasLimit, uint256 maxFeePerGas, uint256 nonce, uint256 value, address withdrawTo) returns (uint256)",
-      "function sequencerInbox() view returns (address)",
-      "function setAllowList(address[] user, bool[] val)",
-      "function setAllowListEnabled(bool _allowListEnabled)",
-      "function unpause()",
-      "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)"
     ],
     "0x960953f7c69cd2BC2322Db9223A815C680ccc7ea": [
       "constructor()",
