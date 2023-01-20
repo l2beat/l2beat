@@ -3,15 +3,15 @@ import { expect } from 'earljs'
 
 import { DiscoveryDiff } from './diffDiscovery'
 import {
-  diffToMessage,
+  diffToMessages,
   diffToString,
   wrapBoldAndItalic,
   wrapMessagesInDiffCodeBlock,
-} from './diffToMessage'
+} from './diffToMessages'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 
-describe(diffToMessage.name, () => {
+describe(diffToMessages.name, () => {
   it('correctly formats a message', () => {
     const name = 'system'
     const diff: DiscoveryDiff[] = [
@@ -38,7 +38,7 @@ describe(diffToMessage.name, () => {
       },
     ]
 
-    const result = diffToMessage(name, diff)
+    const result = diffToMessages(name, diff)
 
     const expected = [
       `***${name}*** | detected changes\`\`\`diff`,
@@ -67,7 +67,7 @@ describe(diffToMessage.name, () => {
       differences.push(diff)
     }
 
-    const result = diffToMessage(name, differences)
+    const result = diffToMessages(name, differences)
 
     const firstPart = [
       `***${name}*** | detected changes\`\`\`diff\n`,

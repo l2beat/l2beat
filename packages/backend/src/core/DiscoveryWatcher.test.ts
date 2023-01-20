@@ -10,7 +10,7 @@ import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
 import { ContractParameters, ContractValue } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
-import { diffToMessage } from './discovery/utils/diffToMessage'
+import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
 
 const CONTRACT_NAME = 'contract'
@@ -66,7 +66,7 @@ describe(DiscoveryWatcher.name, () => {
 
       const name = 'project'
       await discoveryWatcher.compareWithCommitted(name, [DISCOVERED], {})
-      const expectedMessage = diffToMessage(
+      const expectedMessage = diffToMessages(
         name,
         diffDiscovery(
           [COMMITTED],

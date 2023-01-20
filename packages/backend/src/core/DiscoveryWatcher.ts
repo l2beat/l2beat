@@ -11,7 +11,7 @@ import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
-import { diffToMessage } from './discovery/utils/diffToMessage'
+import { diffToMessages } from './discovery/utils/diffToMessages'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -90,7 +90,7 @@ export class DiscoveryWatcher {
     )
 
     if (diff.length > 0) {
-      const messages = diffToMessage(name, diff)
+      const messages = diffToMessages(name, diff)
       await this.notify(messages)
     }
   }

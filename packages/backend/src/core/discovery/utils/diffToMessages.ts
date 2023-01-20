@@ -1,6 +1,6 @@
 import { DiscoveryDiff } from './diffDiscovery'
 
-export function diffToMessage(name: string, diffs: DiscoveryDiff[]): string[] {
+export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
   const header = `${wrapBoldAndItalic(name)} | detected changes`
   const messages: string[][] = [[]]
   let index = 0
