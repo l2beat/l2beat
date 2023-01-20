@@ -1,31 +1,37 @@
 import { DiscoveryDiff } from './diffDiscovery'
 
 export function diffToMessage(name: string, diffs: DiscoveryDiff[]): string[] {
+  const header = `${wrapBoldAndItalic(name)} | detected changes`
   const messages: string[][] = [[]]
   let index = 0
 
   for (const diff of diffs) {
-    const currentLength = wrapCodeBlock(name, messages[index]).length
+    const currentLength =
+      wrapDiffCodeBlock(messages[index]).length + header.length
     const nextDiff = diffToString(diff)
 
-    if (currentLength + nextDiff.length < 2000) {
-      messages[index].push(nextDiff)
-    } else {
+    if (currentLength + nextDiff.length >= 2000) {
       index += 1
       messages[index] = []
-      messages[index].push(nextDiff)
     }
+
+    messages[index].push(nextDiff)
   }
 
-  const result = messages.map((m) => wrapCodeBlock(name, m))
+  const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
   return result
 }
 
-export function wrapCodeBlock(name: string, messages: string[]) {
-  const prefix = `Detected changes for ${name}\n\n\`\`\`diff\n`
-  const postfix = '\n```'
+export function wrapBoldAndItalic(content: string) {
+  const affix = '***'
+  return `${affix}${content}${affix}`
+}
 
-  return `${prefix}${messages.join('\n')}${postfix}`
+export function wrapDiffCodeBlock(content: string[]) {
+  const prefix = '```diff\n'
+  const postfix = '```'
+
+  return `${prefix}${content.join('\n')}${postfix}`
 }
 
 export function diffToString(diff: DiscoveryDiff): string {
