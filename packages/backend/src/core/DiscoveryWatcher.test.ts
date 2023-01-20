@@ -1,4 +1,4 @@
-import { Logger, MainnetEtherscanClient, mock } from '@l2beat/common'
+import { Logger, mock } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
@@ -6,7 +6,7 @@ import { providers } from 'ethers'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
-import { DiscoveryLogger } from './discovery/DiscoveryLogger'
+import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { ContractParameters, ContractValue } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
@@ -56,12 +56,11 @@ describe(DiscoveryWatcher.name, () => {
 
       const discoveryWatcher = new DiscoveryWatcher(
         mock<providers.AlchemyProvider>({}),
-        mock<MainnetEtherscanClient>({}),
+        mock<DiscoveryEngine>({}),
         discordClient,
         configReader,
         mock<Clock>({}),
         Logger.SILENT,
-        DiscoveryLogger.SILENT,
       )
 
       const name = 'project'
@@ -96,12 +95,11 @@ describe(DiscoveryWatcher.name, () => {
 
     const discoveryWatcher = new DiscoveryWatcher(
       mock<providers.AlchemyProvider>({}),
-      mock<MainnetEtherscanClient>({}),
+      mock<DiscoveryEngine>({}),
       discordClient,
       configReader,
       mock<Clock>({}),
       Logger.SILENT,
-      DiscoveryLogger.SILENT,
     )
 
     it('sends discord messages', async () => {
