@@ -5,9 +5,12 @@ import { providers } from 'ethers'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
+import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
+import {
+  parseDiscoveryOutput, prepareDiscoveryFile,
+} from './discovery/saveDiscoveryResult'
 import { ContractParameters, ContractValue } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
@@ -15,23 +18,26 @@ import { DiscoveryWatcher } from './DiscoveryWatcher'
 
 const CONTRACT_NAME = 'contract'
 const ADDRESS = EthereumAddress.random()
+const name = 'project'
 
-const mockContract = (
-  values: Record<string, ContractValue>,
-): ContractParameters => {
-  return {
-    name: CONTRACT_NAME,
-    address: ADDRESS,
-    upgradeability: {
-      type: 'immutable',
-    },
-    values,
-  }
+const mockContract: ContractParameters = {
+  name: CONTRACT_NAME,
+  address: ADDRESS,
+  code: '',
+  upgradeability: {
+    type: 'immutable',
+  },
 }
 
-const COMMITTED = mockContract({ a: true, b: true })
-const DISCOVERED = {
-  ...mockContract({ a: true, b: false }),
+const COMMITTED: ContractParameters = {
+  ...mockContract,
+  values: { a: true, b: true },
+}
+const DISCOVERED: AnalyzedData = {
+  ...mockContract,
+  values: { a: true, b: false },
+  unverified: undefined,
+  errors: undefined,
   meta: {
     isEOA: false,
     verified: true,
@@ -41,9 +47,71 @@ const DISCOVERED = {
   },
 }
 
+const expectedMessage = diffToMessages(
+  name,
+  [
+    {
+      address: ADDRESS,
+      name: CONTRACT_NAME,
+      diff: [
+        {
+          key: 'values.b',
+          before: 'true',
+          after: 'false'
+        }
+      ]
+    }
+  ]
+)
+
 describe(DiscoveryWatcher.name, () => {
+  describe(DiscoveryWatcher.prototype.update.name, () => {
+    it('runs discovery and finds diff', async () => {
+      const discordClient = mock<DiscordClient>({
+        sendMessage: mockFn().resolvesTo({}),
+      })
+
+      const configReader = mock<ConfigReader>({
+        readDiscovery: mockFn().resolvesTo({
+          contracts: [COMMITTED],
+        }),
+        readAllConfigs: mockFn().resolvesTo([
+          {
+            name,
+          },
+        ]),
+      })
+
+      const discoveryEngine = mock<DiscoveryEngine>({
+        run: mockFn().resolvesTo([DISCOVERED]),
+      })
+
+      const provider = mock<providers.AlchemyProvider>({
+        getBlockNumber: mockFn().resolvesTo(1),
+      })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        mock<Clock>({}),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.update()
+
+      expect(configReader.readAllConfigs).toHaveBeenCalledExactlyWith([[]])
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([[name]])
+
+      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
+        [expectedMessage[0]],
+      ])
+    })
+  })
+
   describe(DiscoveryWatcher.prototype.compareWithCommitted.name, () => {
-    it('works', async () => {
+    it('finds changes and sends discord notification', async () => {
       const discordClient = mock<DiscordClient>({
         sendMessage: mockFn().resolvesTo({}),
       })
@@ -63,16 +131,7 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      const name = 'project'
       await discoveryWatcher.compareWithCommitted(name, [DISCOVERED], {})
-      const expectedMessage = diffToMessages(
-        name,
-        diffDiscovery(
-          [COMMITTED],
-          [parseDiscoveryOutput([DISCOVERED]).contracts[0]],
-          {},
-        ),
-      )
 
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([[name]])
 
