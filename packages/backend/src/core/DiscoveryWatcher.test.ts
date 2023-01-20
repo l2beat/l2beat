@@ -8,86 +8,115 @@ import { Clock } from './Clock'
 import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import {
-  parseDiscoveryOutput, prepareDiscoveryFile,
-} from './discovery/saveDiscoveryResult'
-import { ContractParameters, ContractValue } from './discovery/types'
-import { diffDiscovery } from './discovery/utils/diffDiscovery'
+import { ContractParameters } from './discovery/types'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
 
-const CONTRACT_NAME = 'contract'
-const ADDRESS = EthereumAddress.random()
-const name = 'project'
+const PROJECT_A = 'project-a'
+const PROJECT_B = 'project-b'
 
-const mockContract: ContractParameters = {
-  name: CONTRACT_NAME,
-  address: ADDRESS,
-  code: '',
-  upgradeability: {
-    type: 'immutable',
+const NAME_A = 'contract-a'
+const ADDRESS_A = EthereumAddress.random()
+
+const NAME_B = 'contract-b'
+const ADDRESS_B = EthereumAddress.random()
+
+const BLOCK_NUMBER = 1
+
+const mockCommitted = (
+  name: string,
+  address: EthereumAddress,
+): ContractParameters => {
+  return {
+    name,
+    address,
+    code: '',
+    upgradeability: {
+      type: 'immutable',
+    },
+  }
+}
+
+const mockDiscovered = (contract: ContractParameters): AnalyzedData => {
+  return {
+    ...contract,
+    unverified: undefined,
+    errors: undefined,
+    meta: {
+      isEOA: false,
+      verified: true,
+      implementationVerified: true,
+      abi: [],
+      abis: {},
+    },
+  }
+}
+
+const COMMITTED: ContractParameters[] = [
+  {
+    ...mockCommitted(NAME_A, ADDRESS_A),
+    values: { a: true },
   },
-}
-
-const COMMITTED: ContractParameters = {
-  ...mockContract,
-  values: { a: true, b: true },
-}
-const DISCOVERED: AnalyzedData = {
-  ...mockContract,
-  values: { a: true, b: false },
-  unverified: undefined,
-  errors: undefined,
-  meta: {
-    isEOA: false,
-    verified: true,
-    implementationVerified: true,
-    abi: [],
-    abis: {},
+  {
+    ...mockCommitted(NAME_B, ADDRESS_B),
   },
-}
+]
 
-const expectedMessage = diffToMessages(
-  name,
-  [
-    {
-      address: ADDRESS,
-      name: CONTRACT_NAME,
-      diff: [
-        {
-          key: 'values.b',
-          before: 'true',
-          after: 'false'
-        }
-      ]
-    }
-  ]
-)
+const DISCOVERED: AnalyzedData[] = [
+  {
+    ...mockDiscovered(COMMITTED[0]),
+    values: { a: false },
+  },
+  {
+    ...mockDiscovered(COMMITTED[1]),
+  },
+]
+
+const expectedMessage = diffToMessages(PROJECT_A, [
+  {
+    address: ADDRESS_A,
+    name: NAME_A,
+    diff: [
+      {
+        key: 'values.a',
+        before: 'true',
+        after: 'false',
+      },
+    ],
+  },
+])
 
 describe(DiscoveryWatcher.name, () => {
   describe(DiscoveryWatcher.prototype.update.name, () => {
-    it('runs discovery and finds diff', async () => {
+    it('iterates over projects and finds diff', async () => {
       const discordClient = mock<DiscordClient>({
         sendMessage: mockFn().resolvesTo({}),
       })
 
       const configReader = mock<ConfigReader>({
-        readDiscovery: mockFn().resolvesTo({
-          contracts: [COMMITTED],
-        }),
+        readDiscovery: mockFn()
+          .resolvesToOnce({
+            contracts: COMMITTED,
+          })
+          .resolvesToOnce({ contracts: [] }),
         readAllConfigs: mockFn().resolvesTo([
           {
-            name,
+            name: PROJECT_A,
+            initialAddresses: [],
+          },
+          {
+            name: PROJECT_B,
+            initialAddresses: [],
           },
         ]),
       })
 
       const discoveryEngine = mock<DiscoveryEngine>({
-        run: mockFn().resolvesTo([DISCOVERED]),
+        run: mockFn().resolvesToOnce(DISCOVERED).resolvesToOnce([]),
       })
 
       const provider = mock<providers.AlchemyProvider>({
-        getBlockNumber: mockFn().resolvesTo(1),
+        getBlockNumber: mockFn().resolvesTo(BLOCK_NUMBER),
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -101,9 +130,21 @@ describe(DiscoveryWatcher.name, () => {
 
       await discoveryWatcher.update()
 
-      expect(configReader.readAllConfigs).toHaveBeenCalledExactlyWith([[]])
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([[name]])
-
+      //gets block number
+      expect(provider.getBlockNumber.calls.length).toEqual(1)
+      //reads all the configs
+      expect(configReader.readAllConfigs.calls.length).toEqual(1)
+      //iterates over projects
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
+        [PROJECT_A],
+        [PROJECT_B],
+      ])
+      //iterates over projects
+      expect(discoveryEngine.run).toHaveBeenCalledExactlyWith([
+        [{ name: PROJECT_A, initialAddresses: [] }, BLOCK_NUMBER],
+        [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
+      ])
+      //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
         [expectedMessage[0]],
       ])
@@ -118,7 +159,7 @@ describe(DiscoveryWatcher.name, () => {
 
       const configReader = mock<ConfigReader>({
         readDiscovery: mockFn().resolvesTo({
-          contracts: [COMMITTED],
+          contracts: COMMITTED,
         }),
       })
 
@@ -131,9 +172,11 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      await discoveryWatcher.compareWithCommitted(name, [DISCOVERED], {})
+      await discoveryWatcher.compareWithCommitted(PROJECT_A, DISCOVERED, {})
 
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([[name]])
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
+        [PROJECT_A],
+      ])
 
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
         [expectedMessage[0]],
@@ -148,7 +191,7 @@ describe(DiscoveryWatcher.name, () => {
 
     const configReader = mock<ConfigReader>({
       readDiscovery: mockFn().resolvesTo({
-        contracts: [COMMITTED],
+        contracts: COMMITTED,
       }),
     })
 

@@ -36,7 +36,6 @@ export class DiscoveryWatcher {
     })
   }
 
-  //TODO: test (it will probably require changing discover to object)
   async update() {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
