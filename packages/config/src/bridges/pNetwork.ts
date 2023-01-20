@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/types'
-import { chainIdNames } from '../../scripts/multichain/chainIdNames'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
