@@ -16,7 +16,7 @@ type AddManyMethodWithCount<T> = (records: T[]) => Promise<number>
 
 type GetMethod<A extends unknown[], T> = (...args: A) => Promise<T[]>
 
-type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T>
+type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T | undefined>
 
 type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 
@@ -61,17 +61,18 @@ export abstract class BaseRepository {
     return this.database.getKnex(trx)
   }
 
-  autoWrap<T extends Record<string, AnyMethod<any, any>>>(obj: T) {
-    const prototype = Object.getPrototypeOf(obj) as Record<
-      string,
-      AnyMethod<any, any>
-    >
-    const methodNames = Object.getOwnPropertyNames(prototype)
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  autoWrap<T>(obj: T) {
+    const methodNames = Object.getOwnPropertyNames(
+      Object.getPrototypeOf(obj),
+    ) as unknown as (keyof T)[]
 
     for (const methodName of methodNames) {
       const method = obj[methodName]
       if (
         methodName === 'constructor' ||
+        typeof method !== 'function' ||
+        typeof methodName !== 'string' ||
         Object.prototype.hasOwnProperty.call(method, 'wrapped') ||
         methodName.startsWith('_')
       ) {
@@ -79,27 +80,37 @@ export abstract class BaseRepository {
       }
 
       if (methodName.startsWith('get')) {
-        prototype[methodName] = this.wrapGet(method)
+        obj[methodName] = this.wrapGet(
+          method as GetMethod<any, any>,
+        ) as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('addMany')) {
-        prototype[methodName] = this.wrapAddMany(method)
+        obj[methodName] = this.wrapAddMany(
+          method as AddManyMethod<any, any>,
+        ) as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('add')) {
-        prototype[methodName] = this.wrapAdd(method)
+        obj[methodName] = this.wrapAdd(
+          method as AddMethod<any, any>,
+        ) as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('find')) {
-        prototype[methodName] = this.wrapFind(method)
+        obj[methodName] = this.wrapFind(
+          method as FindMethod<any, any>,
+        ) as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('delete')) {
-        prototype[methodName] = this.wrapDelete(method)
+        obj[methodName] = this.wrapDelete(
+          method as DeleteMethod<any>,
+        ) as T[keyof T & string]
         continue
       }
 
@@ -108,6 +119,7 @@ export abstract class BaseRepository {
       )
     }
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   protected wrapAny<A extends unknown[], R>(
     method: AnyMethod<A, R>,
@@ -157,6 +169,7 @@ export abstract class BaseRepository {
   protected wrapAddMany<T>(
     method: AddManyMethodWithCount<T>,
   ): AddManyMethodWithCount<T>
+  protected wrapAddMany<T, R>(method: AddManyMethod<T, R>): AddManyMethod<T, R>
   protected wrapAddMany<T, R>(
     method: AddManyMethod<T, R>,
   ): AddManyMethod<T, R> {
