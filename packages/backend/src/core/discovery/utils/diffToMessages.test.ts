@@ -6,7 +6,7 @@ import {
   diffToMessages,
   diffToString,
   wrapBoldAndItalic,
-  wrapMessagesInDiffCodeBlock,
+  wrapDiffCodeBlock,
 } from './diffToMessages'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
@@ -48,6 +48,7 @@ describe(diffToMessages.name, () => {
       diffToString(diff[1]),
       '\n',
       diffToString(diff[2]),
+      '\n',
       '```',
     ]
 
@@ -72,30 +73,30 @@ describe(diffToMessages.name, () => {
     const firstPart = [
       `***${name}*** | detected changes\`\`\`diff\n`,
       differences.slice(0, 26).map(diffToString).join('\n'),
-      '```',
+      '\n```',
     ]
 
     const secondPart = [
       `***${name}*** | detected changes\`\`\`diff\n`,
       differences.slice(26).map(diffToString).join('\n'),
-      '```',
+      '\n```',
     ]
 
     expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-    expect(firstPart.join('').length).toEqual(1991)
-    expect(secondPart.join('').length).toEqual(116)
+    expect(firstPart.join('').length).toEqual(1992)
+    expect(secondPart.join('').length).toEqual(117)
   })
 })
 
-describe(wrapMessagesInDiffCodeBlock.name, () => {
+describe(wrapDiffCodeBlock.name, () => {
   it('wraps content correctly', () => {
-    const messages = ['a', 'b', 'c']
+    const messages = 'a\nb\nc'
 
-    const expected = ['```diff\n', 'a\n', 'b\n', 'c', '```']
+    const expected = '```diff\na\nb\nc```'
 
-    const result = wrapMessagesInDiffCodeBlock(messages)
+    const result = wrapDiffCodeBlock(messages)
 
-    expect(result).toEqual(expected.join(''))
+    expect(result).toEqual(expected)
   })
 })
 

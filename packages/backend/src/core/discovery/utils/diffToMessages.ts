@@ -2,25 +2,23 @@ import { DiscoveryDiff } from './diffDiscovery'
 
 export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
   const header = `${wrapBoldAndItalic(name)} | detected changes`
-  const messages: string[][] = [[]]
+  const messages: string[] = ['']
   let index = 0
 
   for (const diff of diffs) {
     const currentLength =
-      wrapMessagesInDiffCodeBlock(messages[index]).length + header.length
+      wrapDiffCodeBlock(messages[index]).length + header.length
     const nextDiff = diffToString(diff)
 
     if (currentLength + nextDiff.length >= 2000) {
       index += 1
-      messages[index] = []
+      messages.push('')
     }
 
-    messages[index].push(nextDiff)
+    messages[index] += nextDiff + '\n'
   }
 
-  const result = messages.map(
-    (m) => `${header}${wrapMessagesInDiffCodeBlock(m)}`,
-  )
+  const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
   return result
 }
 
@@ -29,11 +27,11 @@ export function wrapBoldAndItalic(content: string) {
   return `${affix}${content}${affix}`
 }
 
-export function wrapMessagesInDiffCodeBlock(content: string[]) {
+export function wrapDiffCodeBlock(content: string) {
   const prefix = '```diff\n'
   const postfix = '```'
 
-  return `${prefix}${content.join('\n')}${postfix}`
+  return `${prefix}${content}${postfix}`
 }
 
 export function diffToString(diff: DiscoveryDiff): string {
