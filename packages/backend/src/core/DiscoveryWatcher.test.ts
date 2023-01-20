@@ -7,7 +7,7 @@ import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryLogger } from './discovery/DiscoveryLogger'
-import { prepareDiscoveryFile } from './discovery/saveDiscoveryResult'
+import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { ContractParameters, ContractValue } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
@@ -70,7 +70,7 @@ describe(DiscoveryWatcher.name, () => {
         name,
         diffDiscovery(
           [COMMITTED],
-          [prepareDiscoveryFile([DISCOVERED]).contracts[0]],
+          [parseDiscoveryOutput([DISCOVERED]).contracts[0]],
           {},
         ),
       )
