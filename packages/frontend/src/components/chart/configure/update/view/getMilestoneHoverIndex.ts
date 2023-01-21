@@ -3,7 +3,7 @@ import { Milestone } from '@l2beat/config'
 const ICON_HEIGHT = 25
 const MAX_TRIGGER_PROXIMITY = 0.014
 
-export function getMilestoneHover(
+export function getMilestoneHoverIndex(
   mouseX: number,
   mouseY: number,
   points: { x: number; y: number; milestone?: Milestone }[] | undefined,
