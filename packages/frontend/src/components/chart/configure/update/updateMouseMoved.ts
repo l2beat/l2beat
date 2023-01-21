@@ -20,7 +20,8 @@ export function updateMouseMoved(
     message.mouseY,
     state.view.chart?.points,
   )
-  if (milestoneHoverAtIndex) {
+
+  if (milestoneHoverAtIndex !== undefined) {
     showHoverAtIndex = milestoneHoverAtIndex
     showMilestoneHover = true
   }
