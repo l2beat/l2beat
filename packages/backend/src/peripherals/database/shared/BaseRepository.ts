@@ -49,7 +49,7 @@ export class BaseRepository {
     method: AddMethod<T, R>,
   ): AddMethod<T, R> {
     return this.wrap(method, (id) =>
-      this.logger.debug({ method: method.name, id: id.valueOf() }),
+      this.logger.info({ method: method.name, id: id.valueOf() }),
     )
   }
 
@@ -62,19 +62,24 @@ export class BaseRepository {
   protected wrapAddMany<T, R>(
     method: AddManyMethod<T, R>,
   ): AddManyMethod<T, R> {
+    const log = (idsOrCount: number | R[]) => {
+      const count =
+        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
+
+      this.logger.info({ method: method.name, count })
+    }
+
     const fn = async (records: T[]) => {
       if (records.length === 0) {
-        this.logger.debug({ method: method.name, count: 0 })
         return []
       }
       const idsOrCount = await method.call(this, records)
-      const count =
-        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
-      this.logger.debug({ method: method.name, count })
+
       return idsOrCount
     }
     Object.defineProperty(fn, 'name', { value: method.name })
-    return fn
+
+    return this.wrap(fn, log)
   }
 
   protected wrapGet<A extends unknown[], T>(
@@ -97,13 +102,13 @@ export class BaseRepository {
     method: DeleteMethod<A>,
   ): DeleteMethod<A> {
     return this.wrap(method, (count) =>
-      this.logger.debug({ method: method.name, count }),
+      this.logger.info({ method: method.name, count }),
     )
   }
 
   protected wrapSave<T>(method: SaveMethod<T>): SaveMethod<T> {
     return this.wrap(method, (updated) =>
-      this.logger.debug({ method: method.name, updated }),
+      this.logger.info({ method: method.name, updated }),
     )
   }
 
@@ -114,6 +119,7 @@ export class BaseRepository {
     await knex.transaction(fun)
   }
 
+  // adds execution time tracking
   private wrap<A extends unknown[], R>(
     method: AnyMethod<A, R>,
     log: (result: R) => void,

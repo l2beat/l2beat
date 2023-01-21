@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
-import { createMockMetrics } from '../../../test/mocks/Metrics'
+import { createMockRepoMetrics } from '../../../test/mocks/Metrics'
 import { StarkexTransactionCountRepository } from './StarkexCountRepository'
 
 describe(StarkexTransactionCountRepository.name, () => {
@@ -11,7 +11,7 @@ describe(StarkexTransactionCountRepository.name, () => {
   const repository = new StarkexTransactionCountRepository(
     database,
     Logger.SILENT,
-    createMockMetrics(),
+    createMockRepoMetrics(),
   )
 
   beforeEach(async () => {
