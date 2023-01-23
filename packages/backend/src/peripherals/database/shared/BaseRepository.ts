@@ -24,7 +24,7 @@ type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T | undefined>
 type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
 
 type Keys<T, U> = Extract<keyof T, U>
-type Match<T, U> = T extends U ? T : never
+type Match<T, U> = T extends U ? T : Exclude<U, T>
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
