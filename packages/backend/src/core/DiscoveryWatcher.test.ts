@@ -103,7 +103,7 @@ describe(DiscoveryWatcher.name, () => {
             contracts: COMMITTED,
           })
           .resolvesToOnce({ contracts: [] }),
-        readAllConfigs:  mockFn().resolvesTo([
+        readAllConfigs: mockFn().resolvesTo([
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
         ]),
