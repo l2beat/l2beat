@@ -257,27 +257,27 @@ export const arbitrum: Layer2 = {
       name: 'MultiSig participants',
       accounts: [
         {
-          address: '0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e',
+          address: '0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b',
           type: 'EOA',
         },
         {
-          address: '0x68aF7F698aA20A1B804833654E82D8d7b6816e12',
+          address: '0xfE2bf40f2A9183774BF8E871d634A4E50255158B',
           type: 'EOA',
         },
         {
-          address: '0x80420B3216E87e4ed25489ef392901Aafc10951B',
+          address: '0x64379Dee676ab442B48925Ed603771f386510Ee7',
           type: 'EOA',
         },
         {
-          address: '0xf7FAf474aB8c503CF1786FfE708c861b438A59c6',
+          address: '0x290Aa3E7533c873B3326DabFe7579e86ed951428',
           type: 'EOA',
         },
         {
-          address: '0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972',
+          address: '0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C',
           type: 'EOA',
         },
         {
-          address: '0xc73b82AC141ce46D8987135E57D0ead1BFB35075',
+          address: '0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe',
           type: 'EOA',
         },
       ],
@@ -394,7 +394,7 @@ export const arbitrum: Layer2 = {
         upgradeability: {
           type: 'EIP1967',
           admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0x931E1770BEC7827841f3989bda43319adACD62db',
+          implementation: '0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94',
         },
       },
       {
