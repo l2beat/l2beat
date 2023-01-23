@@ -109,7 +109,7 @@ export abstract class BaseRepository {
         continue
       }
 
-      if (methodName.startsWith('addMany')) {
+      if (methodName.startsWith('add') && methodName.includes('Many')) {
         obj[methodName] = this.wrapAddMany(
           method as unknown as AddManyMethod<any, any>,
         ) as unknown as T[keyof T & string]
