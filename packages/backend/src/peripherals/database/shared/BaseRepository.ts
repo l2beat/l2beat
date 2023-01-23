@@ -104,36 +104,36 @@ export abstract class BaseRepository {
 
       if (methodName.startsWith('get')) {
         obj[methodName] = this.wrapGet(
-          method as GetMethod<any, any>,
-        ) as T[keyof T & string]
+          method as unknown as GetMethod<any, any>,
+        ) as unknown as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('addMany')) {
         obj[methodName] = this.wrapAddMany(
-          method as AddManyMethod<any, any>,
-        ) as T[keyof T & string]
+          method as unknown as AddManyMethod<any, any>,
+        ) as unknown as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('add')) {
         obj[methodName] = this.wrapAdd(
-          method as AddMethod<any, any>,
-        ) as T[keyof T & string]
+          method as unknown as AddMethod<any, any>,
+        ) as unknown as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('find')) {
         obj[methodName] = this.wrapFind(
-          method as FindMethod<any, any>,
-        ) as T[keyof T & string]
+          method as unknown as FindMethod<any, any>,
+        ) as unknown as T[keyof T & string]
         continue
       }
 
       if (methodName.startsWith('delete')) {
         obj[methodName] = this.wrapDelete(
-          method as DeleteMethod<any>,
-        ) as T[keyof T & string]
+          method as unknown as DeleteMethod<any>,
+        ) as unknown as T[keyof T & string]
         continue
       }
 
