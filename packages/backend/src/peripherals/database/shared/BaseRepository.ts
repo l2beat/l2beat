@@ -6,7 +6,10 @@ import { Database } from './Database'
 
 type AnyMethod<A extends unknown[], R> = (...args: A) => Promise<R>
 
-type AddMethod<T, R> = (record: T) => Promise<R>
+// eslint-disable-next-line @typescript-eslint/ban-types
+type AddMethod<T, R extends number | string | String | Number> = (
+  record: T,
+) => Promise<R>
 
 type AddManyMethod<T, R> = (records: T[]) => Promise<R[] | number>
 

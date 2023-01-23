@@ -21,12 +21,13 @@ export class SequenceProcessorRepository extends BaseRepository {
   async addOrUpdate(
     record: SequenceProcessorRecord,
     trx?: Knex.Transaction,
-  ): Promise<void> {
+  ): Promise<string> {
     const knex = await this.knex(trx)
     await knex('sequence_processor')
       .insert(toRow(record))
       .onConflict('id')
       .merge()
+    return record.id
   }
 
   async findById(id: string): Promise<SequenceProcessorRecord | undefined> {
