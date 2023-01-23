@@ -59,6 +59,7 @@ export async function promiseAllPlus<T>(
   await taskQueue.waitTilEmpty()
 
   if (permanentError) {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw permanentError
   }
 
