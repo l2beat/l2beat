@@ -3,6 +3,7 @@ import { aptos } from './aptos'
 import { avalanche } from './avalanche'
 import { cBridge } from './cBridge'
 import { connext } from './connext'
+import { debridge } from './debridge'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
 import { hop } from './hop'
@@ -36,6 +37,7 @@ export const bridges: Bridge[] = [
   aptos,
   cBridge,
   connext,
+  debridge,
   gravity,
   harmony,
   hop,

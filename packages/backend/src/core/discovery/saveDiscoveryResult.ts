@@ -8,6 +8,26 @@ export async function saveDiscoveryResult(
   name: string,
   blockNumber: number,
 ) {
+  const project = prepareDiscoveryFile(results, name, blockNumber)
+
+  await writeFile(
+    `discovery/${name}/discovered.json`,
+    JSON.stringify(project, null, 2),
+  )
+}
+
+export function parseDiscoveryOutput(
+  results: AnalyzedData[],
+): ProjectParameters {
+  const prepared = prepareDiscoveryFile(results)
+  return JSON.parse(JSON.stringify(prepared)) as ProjectParameters
+}
+
+export function prepareDiscoveryFile(
+  results: AnalyzedData[],
+  name = 'undefined',
+  blockNumber = -1,
+): ProjectParameters {
   let abis: Record<string, string[]> = {}
   for (const result of results) {
     abis = { ...abis, ...result.meta.abis }
@@ -16,7 +36,7 @@ export async function saveDiscoveryResult(
     Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),
   )
 
-  const project: ProjectParameters = {
+  return {
     name,
     blockNumber,
     contracts: results
@@ -28,9 +48,4 @@ export async function saveDiscoveryResult(
       .sort((a, b) => a.localeCompare(b.toString())),
     abis,
   }
-
-  await writeFile(
-    `discovery/${name}/discovered.json`,
-    JSON.stringify(project, null, 2),
-  )
 }

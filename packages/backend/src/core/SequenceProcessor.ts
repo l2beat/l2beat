@@ -9,6 +9,7 @@ import { json } from '@l2beat/types'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
+import { Metrics } from '../Metrics'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 
 export interface SequenceProcessorOpts {
@@ -60,6 +61,7 @@ export class SequenceProcessor extends EventEmitter {
   constructor(
     readonly id: string,
     logger: Logger,
+    private readonly metrics: Metrics,
     private readonly repository: SequenceProcessorRepository,
     private readonly opts: SequenceProcessorOpts,
   ) {
@@ -80,6 +82,14 @@ export class SequenceProcessor extends EventEmitter {
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
     this.uncertaintyBuffer = opts.uncertaintyBuffer ?? 0
+    this.metrics.activityConfig
+      .labels({
+        project: this.id,
+        scheduleIntervalMs: this.scheduleInterval,
+        uncertaintyBuffer: this.uncertaintyBuffer,
+        batchSize: this.opts.batchSize,
+      })
+      .set(1)
   }
 
   async start(): Promise<void> {
@@ -189,6 +199,10 @@ export class SequenceProcessor extends EventEmitter {
       },
       trx,
     )
+    this.metrics.activityLast
+      .labels({ project: this.id })
+      .set(state.lastProcessed)
+    this.metrics.activityLatest.labels({ project: this.id }).set(state.latest)
     this.state = state
   }
 }

@@ -1,16 +1,26 @@
-import { Logger, LoggerOptions, LogLevel } from '@l2beat/common'
+import { Logger, LoggerOptions, LogLevel, mock } from '@l2beat/common'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, Mock, mockFn } from 'earljs'
 import { once } from 'events'
 
+import { Metrics } from '../Metrics'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 import { setupDatabaseTestSuite } from '../test/database'
-import { createMockMetrics } from '../test/mocks/Metrics'
+import { createMockGauge, createMockHistogram } from '../test/mocks/Metrics'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
   SequenceProcessorOpts,
 } from './SequenceProcessor'
+
+function createMockMetrics() {
+  return mock<Metrics>({
+    repositoryHistogram: createMockHistogram(),
+    activityLast: createMockGauge(),
+    activityLatest: createMockGauge(),
+    activityConfig: createMockGauge(),
+  })
+}
 
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()
@@ -47,6 +57,7 @@ describe(SequenceProcessor.name, () => {
         format: 'pretty',
         reportError,
       }),
+      mockMetrics,
       repository,
       {
         startFrom,

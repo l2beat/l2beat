@@ -132,7 +132,7 @@ export abstract class BaseRepository {
     method: AddMethod<T, R>,
   ): AddMethod<T, R> {
     return this.wrap(method, (id) =>
-      this.logger.debug({ method: method.name, id: id.valueOf() }),
+      this.logger.info({ method: method.name, id: id.valueOf() }),
     )
   }
 
@@ -159,7 +159,7 @@ export abstract class BaseRepository {
     method: DeleteMethod<A>,
   ): DeleteMethod<A> {
     return this.wrap(method, (count) =>
-      this.logger.debug({ method: method.name, count }),
+      this.logger.info({ method: method.name, count }),
     )
   }
 
@@ -189,6 +189,7 @@ export abstract class BaseRepository {
     return fn
   }
 
+  // adds execution time tracking
   private wrap<A extends unknown[], R>(
     method: AnyMethod<A, R>,
     log: (result: R) => void,

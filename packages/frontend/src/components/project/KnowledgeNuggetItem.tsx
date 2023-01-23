@@ -8,8 +8,7 @@ export interface KnowledgeNuggetProps {
   knowledgeNugget: KnowledgeNugget
 }
 
-export function KnowledgeNuggetItem(props: KnowledgeNuggetProps) {
-  const { knowledgeNugget } = props
+export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
   return (
     <div className="group grid grid-cols-5 gap-3 pr-4 max-w-md rounded-md items-center transition-all hover:bg-gray-400 dark:hover:bg-gray-900 ">
       <div className="relative col-span-2 pb-2/3 overflow-hidden rounded-md drop-shadow-md">

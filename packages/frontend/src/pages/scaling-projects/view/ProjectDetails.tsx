@@ -1,6 +1,8 @@
 import { KnowledgeNugget, Milestone } from '@l2beat/config'
+import { isEmpty } from 'lodash'
 import React from 'react'
 
+import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
 import {
   ContractsSection,
   ContractsSectionProps,
@@ -59,10 +61,17 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         )}
         <ContractsSection {...props.contractsSection} />
       </div>
-      <div className="ProjectDetails-Side flex flex-col gap-12">
+      <div className="ProjectDetails-Side flex flex-col">
         <LinkSection {...props.linkSection} />
-        <Milestones milestones={props.milestones} />
-        <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
+        <div className="flex flex-col py-12 gap-12 bg-gray-100 dark:bg-gray-900 md:!bg-transparent">
+          <Milestones milestones={props.milestones} />
+          {!isEmpty(props.knowledgeNuggets) && (
+            <div className="md:hidden px-4">
+              <HorizontalSeparator />
+            </div>
+          )}
+          <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
+        </div>
       </div>
     </main>
   )

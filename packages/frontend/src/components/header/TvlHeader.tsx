@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { PercentChange } from '../PercentChange'
 
 export interface TvlHeaderProps {
@@ -22,7 +23,7 @@ export function TvlHeader(props: TvlHeaderProps) {
           <PercentChange value={props.tvlWeeklyChange} /> / 7 days
         </p>
       </div>
-      <hr className="md:hidden mt-2 border-gray-300 dark:border-gray-850" />
+      <HorizontalSeparator className="md:hidden mt-2" />
     </header>
   )
 }

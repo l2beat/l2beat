@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockMetrics } from '../../test/mocks/Metrics'
+import { createMockRepoMetrics } from '../../test/mocks/Metrics'
 import {
   AggregateReportRecord,
   AggregateReportRepository,
@@ -11,7 +11,7 @@ import {
 
 describe(AggregateReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockMetrics()
+  const mockMetrics = createMockRepoMetrics()
   const repository = new AggregateReportRepository(
     database,
     Logger.SILENT,
