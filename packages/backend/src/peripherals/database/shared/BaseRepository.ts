@@ -39,7 +39,7 @@ export type CheckConvention<T extends BaseRepository> = {
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 /* 
-  This class enforces its child classes to persist given naming convention of methods and wrap them with logger and metrics.
+  This class requires its child classes to persist given naming convention of methods and wraps them with logger and metrics.
   
   The CheckConvention will make sure if you are using naming convention correctly. So in the child class' constructor you should always use this.autoWrap<CheckConvention<RepositoryName>>().
 
