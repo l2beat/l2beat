@@ -7,6 +7,7 @@ import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
+import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { ContractParameters } from './discovery/types'
 import { diffToMessages } from './discovery/utils/diffToMessages'
@@ -23,10 +24,10 @@ const ADDRESS_B = EthereumAddress.random()
 
 const BLOCK_NUMBER = 1
 
-const mockCommitted = (
+function mockCommitted(
   name: string,
   address: EthereumAddress,
-): ContractParameters => {
+): ContractParameters {
   return {
     name,
     address,
@@ -37,7 +38,7 @@ const mockCommitted = (
   }
 }
 
-const mockDiscovered = (contract: ContractParameters): AnalyzedData => {
+function mockDiscovered(contract: ContractParameters): AnalyzedData {
   return {
     ...contract,
     unverified: undefined,
@@ -52,14 +53,19 @@ const mockDiscovered = (contract: ContractParameters): AnalyzedData => {
   }
 }
 
+function mockConfig(name: string): DiscoveryConfig {
+  return {
+    name,
+    initialAddresses: [],
+  }
+}
+
 const COMMITTED: ContractParameters[] = [
   {
     ...mockCommitted(NAME_A, ADDRESS_A),
     values: { a: true },
   },
-  {
-    ...mockCommitted(NAME_B, ADDRESS_B),
-  },
+  mockCommitted(NAME_B, ADDRESS_B),
 ]
 
 const DISCOVERED: AnalyzedData[] = [
@@ -67,9 +73,7 @@ const DISCOVERED: AnalyzedData[] = [
     ...mockDiscovered(COMMITTED[0]),
     values: { a: false },
   },
-  {
-    ...mockDiscovered(COMMITTED[1]),
-  },
+  mockDiscovered(COMMITTED[1]),
 ]
 
 const expectedMessage = diffToMessages(PROJECT_A, [
@@ -99,15 +103,9 @@ describe(DiscoveryWatcher.name, () => {
             contracts: COMMITTED,
           })
           .resolvesToOnce({ contracts: [] }),
-        readAllConfigs: mockFn().resolvesTo([
-          {
-            name: PROJECT_A,
-            initialAddresses: [],
-          },
-          {
-            name: PROJECT_B,
-            initialAddresses: [],
-          },
+        readAllConfigs:  mockFn().resolvesTo([
+          mockConfig(PROJECT_A),
+          mockConfig(PROJECT_B),
         ]),
       })
 
@@ -116,7 +114,7 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const provider = mock<providers.AlchemyProvider>({
-        getBlockNumber: mockFn().resolvesTo(BLOCK_NUMBER),
+        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -124,7 +122,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryEngine,
         discordClient,
         configReader,
-        mock<Clock>({}),
+        mock<Clock>(),
         Logger.SILENT,
       )
 
@@ -152,11 +150,7 @@ describe(DiscoveryWatcher.name, () => {
   })
 
   describe(DiscoveryWatcher.prototype.compareWithCommitted.name, () => {
-    it('finds changes and sends discord notification', async () => {
-      const discordClient = mock<DiscordClient>({
-        sendMessage: mockFn().resolvesTo({}),
-      })
-
+    it('finds changes', async () => {
       const configReader = mock<ConfigReader>({
         readDiscovery: mockFn().resolvesTo({
           contracts: COMMITTED,
@@ -164,11 +158,11 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
-        mock<providers.AlchemyProvider>({}),
-        mock<DiscoveryEngine>({}),
-        discordClient,
+        mock<providers.AlchemyProvider>(),
+        mock<DiscoveryEngine>(),
+        mock<DiscordClient>(),
         configReader,
-        mock<Clock>({}),
+        mock<Clock>(),
         Logger.SILENT,
       )
 
@@ -177,30 +171,20 @@ describe(DiscoveryWatcher.name, () => {
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
       ])
-
-      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        [expectedMessage[0]],
-      ])
     })
   })
 
   describe(DiscoveryWatcher.prototype.notify.name, () => {
     const discordClient = mock<DiscordClient>({
-      sendMessage: mockFn().resolvesTo({}),
-    })
-
-    const configReader = mock<ConfigReader>({
-      readDiscovery: mockFn().resolvesTo({
-        contracts: COMMITTED,
-      }),
+      sendMessage: async () => ({}),
     })
 
     const discoveryWatcher = new DiscoveryWatcher(
-      mock<providers.AlchemyProvider>({}),
-      mock<DiscoveryEngine>({}),
+      mock<providers.AlchemyProvider>(),
+      mock<DiscoveryEngine>(),
       discordClient,
-      configReader,
-      mock<Clock>({}),
+      mock<ConfigReader>(),
+      mock<Clock>(),
       Logger.SILENT,
     )
 

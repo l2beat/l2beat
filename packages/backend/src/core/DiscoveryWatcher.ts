@@ -8,7 +8,7 @@ import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
-import { diffDiscovery } from './discovery/utils/diffDiscovery'
+import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 
 export class DiscoveryWatcher {
@@ -51,11 +51,16 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
-        await this.compareWithCommitted(
+        const diff = await this.compareWithCommitted(
           projectConfig.name,
           discovered,
           projectConfig.overrides,
         )
+
+        if (diff.length > 0) {
+          const messages = diffToMessages(projectConfig.name, diff)
+          await this.notify(messages)
+        }
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
@@ -68,20 +73,15 @@ export class DiscoveryWatcher {
     name: string,
     discovered: AnalyzedData[],
     overrides?: Record<string, DiscoveryContract>,
-  ) {
+  ): Promise<DiscoveryDiff[]> {
     const committed = await this.configReader.readDiscovery(name)
     const parsedDiscovery = parseDiscoveryOutput(discovered)
 
-    const diff = diffDiscovery(
+    return diffDiscovery(
       committed.contracts,
       parsedDiscovery.contracts,
       overrides ?? {},
     )
-
-    if (diff.length > 0) {
-      const messages = diffToMessages(name, diff)
-      await this.notify(messages)
-    }
   }
 
   async notify(messages: string[]) {
