@@ -2,11 +2,16 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { DiscoveryDiff } from './diffDiscovery'
-import { diffToMessage, diffToString } from './diffToMessage'
+import {
+  diffToMessages,
+  diffToString,
+  wrapBoldAndItalic,
+  wrapDiffCodeBlock,
+} from './diffToMessages'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 
-describe(diffToMessage.name, () => {
+describe(diffToMessages.name, () => {
   it('correctly formats a message', () => {
     const name = 'system'
     const diff: DiscoveryDiff[] = [
@@ -33,11 +38,10 @@ describe(diffToMessage.name, () => {
       },
     ]
 
-    const result = diffToMessage(name, diff)
+    const result = diffToMessages(name, diff)
 
     const expected = [
-      `Detected changes for ${name}\n\n`,
-      '```diff',
+      `***${name}*** | detected changes\`\`\`diff`,
       '\n',
       diffToString(diff[0]),
       '\n',
@@ -48,7 +52,61 @@ describe(diffToMessage.name, () => {
       '```',
     ]
 
-    expect(result).toEqual(expected.join(''))
+    expect(result).toEqual([expected.join('')])
+  })
+
+  it('truncates message larger than 2000 characters', () => {
+    const name = 'system'
+    const diff: DiscoveryDiff = {
+      name: 'Contract',
+      address: ADDRESS,
+      type: 'deleted',
+    }
+    const differences: DiscoveryDiff[] = []
+
+    while (differences.length < 27) {
+      differences.push(diff)
+    }
+
+    const result = diffToMessages(name, differences)
+
+    const firstPart = [
+      `***${name}*** | detected changes\`\`\`diff\n`,
+      differences.slice(0, 26).map(diffToString).join('\n'),
+      '\n```',
+    ]
+
+    const secondPart = [
+      `***${name}*** | detected changes\`\`\`diff\n`,
+      differences.slice(26).map(diffToString).join('\n'),
+      '\n```',
+    ]
+
+    expect(result).toEqual([firstPart.join(''), secondPart.join('')])
+    expect(firstPart.join('').length).toEqual(1992)
+    expect(secondPart.join('').length).toEqual(117)
+  })
+})
+
+describe(wrapDiffCodeBlock.name, () => {
+  it('wraps content correctly', () => {
+    const messages = 'a\nb\nc'
+
+    const expected = '```diff\na\nb\nc```'
+
+    const result = wrapDiffCodeBlock(messages)
+
+    expect(result).toEqual(expected)
+  })
+})
+
+describe(wrapBoldAndItalic.name, () => {
+  it('wraps content correctly', () => {
+    const content = 'projectName'
+
+    const result = wrapBoldAndItalic(content)
+
+    expect(result).toEqual(`***${content}***`)
   })
 })
 
