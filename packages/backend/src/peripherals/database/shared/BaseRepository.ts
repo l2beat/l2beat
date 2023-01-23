@@ -38,6 +38,29 @@ export type CheckConvention<T extends BaseRepository> = {
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
+/* 
+  This class enforces its child classes to persist given naming convention of methods and wrap them with logger and metrics.
+  
+  The CheckConvention will make sure if you are using naming convention correctly. So in the child class' constructor you should always use this.autoWrap<CheckConvention<RepositoryName>>().
+
+  Methods that should be auto wrapped needs to start with add, addMany, find, get or delete prefix.
+  If you do not want to wrap some method then you should prefix the method name with "_".
+  If you do not want to use autoWrap on some method then you have to wrap it manually before calling autoWrap.
+
+  Naming convention:
+    * add... -> 
+      * Arguments: record that you want to add 
+      * Return type: any
+    * add...Many -> 
+      * Arguments: array of records that you want to add 
+      * Return type: array of records or count of added records
+    * find... ->
+      * Return type: record or undefined
+    * get... -> 
+      * Return type: array of records
+    * delete... ->
+      * Return type: count of deleted records  
+*/
 export abstract class BaseRepository {
   protected histogram: RepositoryHistogram
 
