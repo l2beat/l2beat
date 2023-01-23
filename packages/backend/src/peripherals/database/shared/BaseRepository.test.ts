@@ -4,13 +4,13 @@ import { describe } from 'mocha'
 
 import { Metrics } from '../../../Metrics'
 import { setupDatabaseTestSuite } from '../../../test/database'
-import { createMockMetrics } from '../../../test/mocks/Metrics'
+import { createMockRepoMetrics } from '../../../test/mocks/Metrics'
 import { BaseRepository, CheckConvention } from './BaseRepository'
 import { Database } from './Database'
 
 describe(BaseRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockMetrics()
+  const mockMetrics = createMockRepoMetrics()
 
   describe(BaseRepository.prototype.autoWrap.name, () => {
     it('should wrap all methods', () => {
