@@ -2,6 +2,8 @@ import { bridges, layer2s, milestonesLayer2s, tokenList } from '@l2beat/config'
 
 import { Config } from './Config'
 
+const END_OF_GITCOIN_ROUND = new Date(2023, 0, 31)
+
 export const common: Omit<Config, 'backend'> = {
   links: {
     twitter: 'https://twitter.com/l2beat',
@@ -12,7 +14,7 @@ export const common: Omit<Config, 'backend'> = {
     forum: 'https://gov.l2beat.com/',
   },
   features: {
-    banner: false,
+    banner: new Date() < END_OF_GITCOIN_ROUND,
     gitcoinOption: false,
     bridges: true,
     activity: true,
