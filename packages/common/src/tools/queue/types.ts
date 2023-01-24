@@ -1,3 +1,5 @@
+import type { Histogram } from 'prom-client'
+
 export interface Job<T> {
   task: T
   attempts: number
@@ -16,4 +18,5 @@ export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
+  histogram?: Histogram
 }

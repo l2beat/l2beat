@@ -1,5 +1,6 @@
 import { json } from '@l2beat/types'
 import assert from 'assert'
+import type { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
 import { EventTracker } from '../EventTracker'
@@ -11,10 +12,12 @@ const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,
 })
 
+type Task<T> = (task: T) => Promise<void>
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
  */
 export class TaskQueue<T> {
+  private readonly executeTask: Task<T>
   private readonly queue: Job<T>[] = []
   private busyWorkers = 0
   private readonly workers: number
@@ -22,9 +25,10 @@ export class TaskQueue<T> {
   private readonly eventTracker?: EventTracker<
     'started' | 'success' | 'error' | 'retry'
   >
+  private readonly histogram?: Histogram
 
   constructor(
-    private readonly executeTask: (task: T) => Promise<void>,
+    executeTask: Task<T>,
     private readonly logger: Logger,
     opts?: TaskQueueOpts<T>,
   ) {
@@ -37,6 +41,10 @@ export class TaskQueue<T> {
     if (opts?.trackEvents) {
       this.eventTracker = new EventTracker()
     }
+
+    this.executeTask = opts?.histogram
+      ? wrapAndMeasure(executeTask, opts.histogram)
+      : executeTask
   }
 
   get length() {
@@ -151,5 +159,17 @@ export class TaskQueue<T> {
       this.busyWorkers--
       setTimeout(() => this.execute())
     }
+  }
+}
+
+function wrapAndMeasure<T extends unknown[], U>(
+  fn: (...args: T) => Promise<U>,
+  histogram: Histogram,
+): (...args: T) => Promise<U> {
+  return async (...args: T) => {
+    const done = histogram.startTimer()
+    const result = await fn(...args)
+    done()
+    return result
   }
 }
