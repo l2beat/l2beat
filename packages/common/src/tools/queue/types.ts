@@ -16,7 +16,6 @@ export type ShouldRetry<T> = (
 
 type HistogramLabel = 'updater'
 export type TaskQueueHistogram = Histogram<HistogramLabel>
-
 export interface Metrics {
   histogram: TaskQueueHistogram
   labels: LabelValues<HistogramLabel>

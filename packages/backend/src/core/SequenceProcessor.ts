@@ -69,8 +69,7 @@ export class SequenceProcessor extends EventEmitter {
 
     assert(opts.batchSize > 0)
 
-    const name = `${SequenceProcessor.name}[${this.id}]`
-    this.logger = logger.for(name)
+    this.logger = logger.for(`${SequenceProcessor.name}[${this.id}]`)
     this.processQueue = new TaskQueue<void>(
       () => this.process(),
       this.logger.for('updateQueue'),
