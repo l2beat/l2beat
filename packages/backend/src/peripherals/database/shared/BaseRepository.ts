@@ -5,7 +5,7 @@ import { Metrics, RepositoryHistogram } from '../../../Metrics'
 import { Database } from './Database'
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
-type IdType = number | string | string | number
+type IdType = number | string | String | Number
 
 type AnyMethod = (...args: any[]) => Promise<any>
 type AddMethod = (record: any) => Promise<IdType>
@@ -185,7 +185,10 @@ export abstract class BaseRepository {
       if (records.length === 0) {
         return []
       }
-      return method.call(this, records)
+      const idsOrCount = await method.call(this, records)
+      const count =
+        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
+      return count
     }
 
     return this.wrap(fn, (result) =>
