@@ -340,6 +340,19 @@ export const optimism: Layer2 = {
   },
   milestones: [
     {
+      name: 'Optimism’s Goerli Testnet migrated to Bedrock',
+      link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
+      date: '2023-01-13T00:00:00Z',
+      description: 'OP on Goerli, since Jan 2023 is running Bedrock.',
+    },
+    {
+      name: 'OP Stack Introduced',
+      link: 'https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs',
+      date: '2022-10-17T00:00:00Z',
+      description:
+        'OP Stack, modular, open-sourced blueprint o how to build scalable blockchains.',
+    },
+    {
       ...MILESTONES.MAINNET_OPEN,
       link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
       date: '2021-12-16T00:00:00Z',
