@@ -50,7 +50,7 @@ export class PriceUpdater {
 
     this.logger.info('Update started', { timestamp: to.toNumber() })
 
-    const boundaries = await this.priceRepository.calcDataBoundaries()
+    const boundaries = await this.priceRepository.findDataBoundaries()
 
     const results = await Promise.allSettled(
       this.tokens.map(({ id: assetId }) => {
