@@ -93,6 +93,7 @@ export function createTvlModule(
     blockNumberRepository,
     clock,
     logger,
+    metrics
   )
   const priceUpdater = new PriceUpdater(
     coingeckoQueryService,
@@ -100,6 +101,7 @@ export function createTvlModule(
     clock,
     config.tvl.tokens,
     logger,
+    metrics
   )
   const balanceUpdater = new BalanceUpdater(
     multicall,
@@ -120,6 +122,7 @@ export function createTvlModule(
     clock,
     config.projects,
     logger,
+    metrics
   )
 
   // #endregion

@@ -1,3 +1,4 @@
+import { TaskQueueHistogram } from '@l2beat/common'
 import {
   collectDefaultMetrics,
   Counter,
@@ -22,7 +23,7 @@ export class Metrics {
   readonly activityConfig: Gauge<
     'project' | 'scheduleIntervalMs' | 'batchSize' | 'uncertaintyBuffer'
   >
-  readonly tvlHistogram: Histogram
+  readonly tvlHistogram: TaskQueueHistogram
 
   constructor() {
     this.repositoryHistogram = this.createHistogram({
@@ -62,8 +63,9 @@ export class Metrics {
 
     this.tvlHistogram = this.createHistogram({
       name: 'tvl_sync_histogram',
-      help: 'Histogram showing tvl sync speed',
+      help: 'Histogram showing tvl core sync speed',
       buckets: [0.25, 0.5, 1, 2.5, 5, 10, 25, 50],
+      labelNames: ['updater'],
     })
   }
 

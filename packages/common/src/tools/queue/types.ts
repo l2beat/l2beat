@@ -1,4 +1,4 @@
-import type { Histogram } from 'prom-client'
+import type { Histogram, LabelValues } from 'prom-client'
 
 export interface Job<T> {
   task: T
@@ -14,9 +14,17 @@ export type ShouldRetry<T> = (
   executeAfter?: number
 }
 
+type HistogramLabel = 'updater'
+export type TaskQueueHistogram = Histogram<HistogramLabel>
+
+export interface Metrics {
+  histogram: TaskQueueHistogram
+  labels: LabelValues<HistogramLabel>
+}
+
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
-  histogram?: Histogram
+  metrics?: Metrics
 }

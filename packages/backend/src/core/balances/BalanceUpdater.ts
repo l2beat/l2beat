@@ -41,7 +41,10 @@ export class BalanceUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        histogram: metrics.tvlHistogram,
+        metrics: {
+          histogram: metrics.tvlHistogram,
+          labels: { updater: this.constructor.name },
+        },
       },
     )
   }
