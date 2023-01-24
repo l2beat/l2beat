@@ -203,12 +203,10 @@ export abstract class BaseRepository {
   ): T {
     /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
     const fn = async (...args: Parameters<T>) => {
-      const start = Date.now()
+      const labels = { repository: this.constructor.name, method: method.name }
+      const done = this.histogram.startTimer(labels)
       const result: Awaited<ReturnType<T>> = await method.call(this, ...args)
-      const timeMs = Date.now() - start
-      this.histogram
-        .labels({ repository: this.constructor.name, method: method.name })
-        .observe(timeMs / 1000)
+      done(labels)
       log(result)
       return result
     }

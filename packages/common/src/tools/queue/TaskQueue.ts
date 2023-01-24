@@ -6,7 +6,7 @@ import { EventTracker } from '../EventTracker'
 import { getErrorMessage, getErrorStackTrace, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, Metrics, ShouldRetry, TaskQueueOpts } from './types'
-export type  {TaskQueueHistogram} from './types'
+export type { TaskQueueHistogram } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,

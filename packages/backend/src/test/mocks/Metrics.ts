@@ -11,14 +11,12 @@ export function createMockRepoMetrics() {
 
 export function createMockTvlMetrics() {
   return mock<Metrics>({
-    tvlHistogram: mock<Histogram>({ startTimer: () => () => 0 }),
+    tvlHistogram: createMockHistogram(),
   })
 }
 
 export function createMockHistogram() {
-  return mock<Histogram>({
-    labels: () => mock<Histogram>({ observe: () => {} }),
-  })
+  return mock<Histogram>({ startTimer: () => () => 0 })
 }
 
 export function createMockGauge() {
