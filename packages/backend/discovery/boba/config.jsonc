@@ -1,0 +1,90 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "boba",
+  "initialAddresses": ["0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"],
+  "overrides": {
+    "0xfBd2541e316948B259264c02f370eD088E04c3Db": {
+      "ignoreMethods": ["getQueueElement"]
+    },
+    "0x17148284d2da2f38c96346f1776C1BF7D7691231": {
+      "ignoreMethods": ["get"]
+    },
+    "0x13992B9f327faCA11568BE18a8ad3E9747e87d93": {
+      "ignoreMethods": ["get"]
+    },
+    "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": {
+      "fields": {
+        "OVM_Proposer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_Proposer"]
+        },
+        "OVM_Sequencer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_Sequencer"]
+        },
+        "L1NFTBridge": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1NFTBridge"]
+        },
+        "Boba_GasPriceOracle": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Boba_GasPriceOracle"]
+        },
+        "BobaBillingContract": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BobaBillingContract"]
+        },
+        "L1LiquidityPool": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1LiquidityPool"]
+        },
+        "L1MultiMessageRelayerFast": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1MultiMessageRelayerFast"]
+        },
+        "Timelock": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Timelock"]
+        },
+        "L1CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1CrossDomainMessenger"]
+        },
+        "BondManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BondManager"]
+        },
+        "StateCommitmentChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["StateCommitmentChain"]
+        },
+        "CanonicalTransactionChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["CanonicalTransactionChain"]
+        },
+        "ChainStorageContainerCTCbatches": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-CTC-batches"]
+        },
+        "ChainStorageContainerSCCbatches": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-SCC-batches"]
+        }
+      }
+    }
+  }
+}

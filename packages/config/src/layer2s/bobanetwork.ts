@@ -33,6 +33,7 @@ export const bobanetwork: Layer2 = {
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
         'https://boba.network/#news',
+        'https://boba.network/blog/',
         'https://www.enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
@@ -327,6 +328,31 @@ export const bobanetwork: Layer2 = {
     },
   ],
   milestones: [
+    {
+      name: 'Boba launches L2 on BNB',
+      date: '2022-11-01T00:00:00Z',
+      link: 'https://boba.network/boba-network-bnb-chain-l2-live/',
+      description: 'Boba launches on BnB.',
+    },
+    {
+      name: 'Boba launches L2 on Avalanche',
+      date: '2022-09-21T00:00:00Z',
+      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
+      description: 'Boba launches on Avalanche.',
+    },
+    {
+      name: 'Boba launches L2 on Moonbeam and Fantom',
+      date: '2022-06-02T00:00:00Z',
+      link: 'https://boba.network/boba-network-multichain-announcement/',
+      description: 'Boba launches on Moonbeam and Fantom.',
+    },
+    {
+      name: 'Call data compression',
+      date: '2022-10-08T00:00:00Z',
+      link: 'https://boba.network/boba-call-data-compression/',
+      description:
+        'The Boba Tree From (v0.1.0) release introduces Brotli compression for call data.',
+    },
     {
       name: 'Hybrid Compute',
       date: '2022-03-18T00:00:00Z',
