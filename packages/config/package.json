@@ -20,6 +20,7 @@
   "dependencies": {
     "@l2beat/types": "*",
     "@l2beat/common": "*",
+    "@l2beat/backend": "*",
     "dotenv": "^16.0.3",
     "zod": "^3.17.3",
     "node-fetch": "^2.6.7"

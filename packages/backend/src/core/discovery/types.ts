@@ -20,7 +20,7 @@ export interface ContractParameters {
   errors?: Record<string, string>
 }
 
-export type ContractValue =
+export type ContractValue = 
   | string
   | number
   | boolean

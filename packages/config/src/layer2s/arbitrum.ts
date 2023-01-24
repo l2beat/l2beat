@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
 
+import { ProjectUpgradeability } from './../common/ProjectContracts'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -10,7 +11,10 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { Discovery } from './common/Discovery'
 import { Layer2 } from './types'
+
+const discovery = new Discovery('arbitrum')
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -246,7 +250,10 @@ export const arbitrum: Layer2 = {
       name: 'Arbitrum MultiSig',
       accounts: [
         {
-          address: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          address: discovery.getValue<string>(
+            discovery.getContractByName('RollupProxy').upgradeability,
+            'admin',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -255,32 +262,18 @@ export const arbitrum: Layer2 = {
     },
     {
       name: 'MultiSig participants',
-      accounts: [
-        {
-          address: '0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e',
+
+      accounts: discovery
+        .getValue<string[]>(
+          discovery.getContractByAddress(
+            '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          ).values,
+          'getOwners',
+        )
+        .map((owner) => ({
+          address: owner,
           type: 'EOA',
-        },
-        {
-          address: '0x68aF7F698aA20A1B804833654E82D8d7b6816e12',
-          type: 'EOA',
-        },
-        {
-          address: '0x80420B3216E87e4ed25489ef392901Aafc10951B',
-          type: 'EOA',
-        },
-        {
-          address: '0xf7FAf474aB8c503CF1786FfE708c861b438A59c6',
-          type: 'EOA',
-        },
-        {
-          address: '0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972',
-          type: 'EOA',
-        },
-        {
-          address: '0xc73b82AC141ce46D8987135E57D0ead1BFB35075',
-          type: 'EOA',
-        },
-      ],
+        })),
       description:
         'These addresses are the participants of the 4/6 Arbitrum MultiSig.',
     },
@@ -359,12 +352,14 @@ export const arbitrum: Layer2 = {
     addresses: [
       {
         address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+        // two contracts
+        // getContractByName('ProxyAdmin', discovery).address.toString() ??
         name: 'ProxyAdmin (1)',
         description:
           'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
       },
       {
-        address: '0x5eF0D09d1E6204141B4d37530808eD19f60FBa35',
+        address: discovery.getContractByName('RollupProxy').address.toString(),
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
@@ -376,65 +371,84 @@ export const arbitrum: Layer2 = {
         },
       },
       {
+        // address: getContractByName(
+        //   'SequencerInbox',
+        //   discovery,
+        // ).address.toString(),
         address: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9',
-        },
+        upgradeability: discovery.getValue<ProjectUpgradeability>(
+          discovery.getContractByAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          'upgradeability',
+        ),
       },
       {
-        address: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+        address: discovery.getContractByName('Inbox').address.toString(),
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0x931E1770BEC7827841f3989bda43319adACD62db',
-        },
+        upgradeability: discovery.getValue<ProjectUpgradeability>(
+          discovery.getContractByName('Inbox'),
+          'upgradeability',
+        ),
       },
       {
         address: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0x1066CEcC8880948FE55e427E94F1FF221d626591',
-        },
+        upgradeability: discovery.getValue<ProjectUpgradeability>(
+          discovery.getContractByAddress(
+            '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+          ),
+          'upgradeability',
+        ),
       },
       {
-        address: '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
+        address: discovery.getValue<string>(
+          discovery.getContractByName('RollupProxy').values,
+          'outbox',
+        ),
         name: 'Outbox',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-          implementation: '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
-        },
+        upgradeability:
+          // getContractByAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840', discovery).upgradeability,
+          {
+            type: 'EIP1967',
+            admin: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+            implementation: '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
+          },
       },
       {
+        // TODO: 2 contracts with name ProxyAdmin
         address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
         name: 'ProxyAdmin (2)',
         description:
           'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
       },
       {
-        address: '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef',
+        address: discovery
+          .getContractByName('L1GatewayRouter')
+          .address.toString(),
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-          implementation: '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
-        },
+        upgradeability:
+          // TODO: types problem
+          // getContractByName('L1GatewayRouter', discovery)
+          // ?.upgradeability
+          {
+            type: 'EIP1967',
+            admin: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
+            implementation: '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
+          },
       },
       {
-        address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+        address: discovery
+          .getContractByName('L1ERC20Gateway')
+          .address.toString(),
         name: 'L1ERC20Gateway',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
