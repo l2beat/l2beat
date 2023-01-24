@@ -109,6 +109,7 @@ export function createTvlModule(
     clock,
     config.projects,
     logger,
+    metrics,
   )
   const reportUpdater = new ReportUpdater(
     priceUpdater,

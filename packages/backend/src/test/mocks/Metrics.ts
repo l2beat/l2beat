@@ -9,6 +9,12 @@ export function createMockRepoMetrics() {
   })
 }
 
+export function createMockTvlMetrics() {
+  return mock<Metrics>({
+    tvlHistogram: mock<Histogram>({ startTimer: () => () => 0 }),
+  })
+}
+
 export function createMockHistogram() {
   return mock<Histogram>({
     labels: () => mock<Histogram>({ observe: () => {} }),

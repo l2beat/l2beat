@@ -25,7 +25,6 @@ export class TaskQueue<T> {
   private readonly eventTracker?: EventTracker<
     'started' | 'success' | 'error' | 'retry'
   >
-  private readonly histogram?: Histogram
 
   constructor(
     executeTask: Task<T>,
