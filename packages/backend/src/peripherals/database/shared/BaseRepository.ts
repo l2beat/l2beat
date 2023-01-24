@@ -185,14 +185,14 @@ export abstract class BaseRepository {
       if (records.length === 0) {
         return []
       }
-      const idsOrCount = await method.call(this, records)
-      const count =
-        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
-      return count
+      return method.call(this, records)
     }
 
     return this.wrap(fn, (result) =>
-      this.logger.debug({ method: method.name, count: result }),
+      this.logger.debug({
+        method: method.name,
+        count: typeof result === 'number' ? result : result.length,
+      }),
     ) as T
   }
 
