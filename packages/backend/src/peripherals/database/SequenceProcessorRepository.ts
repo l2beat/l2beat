@@ -18,10 +18,7 @@ export class SequenceProcessorRepository extends BaseRepository {
     this.autoWrap<CheckConvention<SequenceProcessorRepository>>(this)
   }
 
-  async addOrUpdate(
-    record: SequenceProcessorRecord,
-    trx?: Knex.Transaction,
-  ): Promise<string> {
+  async addOrUpdate(record: SequenceProcessorRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     await knex('sequence_processor')
       .insert(toRow(record))
