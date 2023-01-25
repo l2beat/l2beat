@@ -1,15 +1,18 @@
 import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
+import { FieldDiff } from './diffContracts'
 
 import { DiscoveryDiff } from './diffDiscovery'
 import {
   diffToMessages,
   diffToString,
+  fieldDiffToString,
   wrapBoldAndItalic,
   wrapDiffCodeBlock,
 } from './diffToMessages'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
+const PROJECT = 'system'
 
 describe(diffToMessages.name, () => {
   it('correctly formats a message', () => {
@@ -86,7 +89,44 @@ describe(diffToMessages.name, () => {
     expect(firstPart.join('').length).toEqual(1992)
     expect(secondPart.join('').length).toEqual(117)
   })
-})
+
+  it('truncates contract with diff larger than 2000 characters', () => {
+    const diff: FieldDiff[] = []
+
+    while (diff.length < 200) {
+      diff.push({
+        key: 'a',
+        before: 'true',
+        after: 'false',
+      })
+    }
+
+    const contractDiff: DiscoveryDiff = {
+      name: 'Contract',
+      address: ADDRESS,
+      diff,
+    }
+
+    const firstPart = [
+      `***${PROJECT}*** | detected changes\`\`\`diff\n`,
+      'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
+      diff.slice(0, 105).map(fieldDiffToString).join(''),
+      '\n```',
+    ]
+
+    const secondPart = [
+      `***${PROJECT}*** | detected changes\`\`\`diff\n`,
+      'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
+      diff.slice(105).map(fieldDiffToString).join(''),
+      '\n```',
+    ]
+
+    const result = diffToMessages(PROJECT, [contractDiff])
+
+    expect(result).toEqual([firstPart.join(''), secondPart.join('')])
+    expect(firstPart.join('').length).toEqual(1988)
+    expect(secondPart.join('').length).toEqual(1808)
+  })
 
 describe(wrapDiffCodeBlock.name, () => {
   it('wraps content correctly', () => {
@@ -145,7 +185,7 @@ describe(diffToString.name, () => {
       `+ true\n\n`,
     ]
 
-    expect(result).toEqual(expected.join(''))
+    expect(result).toEqual([expected.join('')])
   })
 
   it('contract deleted', () => {
@@ -159,7 +199,7 @@ describe(diffToString.name, () => {
 
     const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
 
-    expect(result).toEqual(expected)
+    expect(result).toEqual([expected])
   })
 
   it('contract created', () => {
@@ -173,6 +213,8 @@ describe(diffToString.name, () => {
 
     const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
 
-    expect(result).toEqual(expected)
+    expect(result).toEqual([expected])
   })
+})
+
 })

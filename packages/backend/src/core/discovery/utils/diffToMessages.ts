@@ -1,4 +1,5 @@
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
+import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 
 export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
@@ -11,12 +12,18 @@ export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
       wrapDiffCodeBlock(messages[index]).length + header.length
     const nextDiff = diffToString(diff)
 
-    if (currentLength + nextDiff.length >= MAX_MESSAGE_LENGTH) {
-      index += 1
-      messages.push('')
+    for(const next of nextDiff){
+      if (currentLength + next.length + '\n'.length >= MAX_MESSAGE_LENGTH) {
+        index += 1
+        messages.push('')
+      }
+
+      messages[index] += next +'\n'
+
     }
 
-    messages[index] += nextDiff + '\n'
+    
+
   }
 
   const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
@@ -35,13 +42,13 @@ export function wrapDiffCodeBlock(content: string) {
   return `${prefix}${content}${postfix}`
 }
 
-export function diffToString(diff: DiscoveryDiff): string {
+export function diffToString(diff: DiscoveryDiff): string[] {
   if (diff.type === 'created') {
-    return `+ New contract: ${diff.name} | ${diff.address.toString()}\n`
+    return [`+ New contract: ${diff.name} | ${diff.address.toString()}\n`]
   }
 
   if (diff.type === 'deleted') {
-    return `- Deleted contract: ${diff.name} | ${diff.address.toString()}\n`
+    return [`- Deleted contract: ${diff.name} | ${diff.address.toString()}\n`]
   }
 
   let message = `${diff.name} | ${diff.address.toString()}\n\n`
@@ -58,6 +65,23 @@ export function diffToString(diff: DiscoveryDiff): string {
     }
     message += '\n'
   }
+
+  return [message]
+}
+
+export function fieldDiffToString(diff: FieldDiff): string {
+  let message = ''
+
+    if (diff.key !== undefined) {
+      message += `${diff.key}\n`
+    }
+    if (diff.before) {
+      message += `- ${diff.before}\n`
+    }
+    if (diff.after) {
+      message += `+ ${diff.after}\n`
+    }
+    message += '\n'
 
   return message
 }
