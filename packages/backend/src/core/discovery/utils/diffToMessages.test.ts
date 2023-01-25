@@ -46,11 +46,11 @@ describe(diffToMessages.name, () => {
     const expected = [
       `***${name}*** | detected changes\`\`\`diff`,
       '\n',
-      diffToString(diff[0]),
+      diffToString(diff[0]).join(''),
       '\n',
-      diffToString(diff[1]),
+      diffToString(diff[1]).join(''),
       '\n',
-      diffToString(diff[2]),
+      diffToString(diff[2]).join(''),
       '\n',
       '```',
     ]
@@ -90,7 +90,8 @@ describe(diffToMessages.name, () => {
     expect(secondPart.join('').length).toEqual(117)
   })
 
-  it('truncates contract with diff larger than 2000 characters', () => {
+  it.only('truncates contract with diff larger than 2000 characters', () => {
+    console.log('running')
     const diff: FieldDiff[] = []
 
     while (diff.length < 200) {
@@ -127,94 +128,94 @@ describe(diffToMessages.name, () => {
     expect(firstPart.join('').length).toEqual(1988)
     expect(secondPart.join('').length).toEqual(1808)
   })
-
-describe(wrapDiffCodeBlock.name, () => {
-  it('wraps content correctly', () => {
-    const messages = 'a\nb\nc'
-
-    const expected = '```diff\na\nb\nc```'
-
-    const result = wrapDiffCodeBlock(messages)
-
-    expect(result).toEqual(expected)
-  })
 })
 
-describe(wrapBoldAndItalic.name, () => {
-  it('wraps content correctly', () => {
-    const content = 'projectName'
+  describe(wrapDiffCodeBlock.name, () => {
+    it('wraps content correctly', () => {
+      const messages = 'a\nb\nc'
 
-    const result = wrapBoldAndItalic(content)
+      const expected = '```diff\na\nb\nc```'
 
-    expect(result).toEqual(`***${content}***`)
-  })
-})
+      const result = wrapDiffCodeBlock(messages)
 
-describe(diffToString.name, () => {
-  it('values edited', () => {
-    const diff: DiscoveryDiff = {
-      name: 'Contract',
-      address: ADDRESS,
-      diff: [
-        {
-          key: 'count',
-          before: '1',
-          after: '2',
-        },
-        {
-          key: 'important',
-          before: 'true',
-        },
-        {
-          key: 'new',
-          after: 'true',
-        },
-      ],
-    }
-
-    const result = diffToString(diff)
-
-    const expected = [
-      `Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`,
-      `count\n`,
-      `- 1\n`,
-      `+ 2\n\n`,
-      `important\n`,
-      `- true\n\n`,
-      `new\n`,
-      `+ true\n\n`,
-    ]
-
-    expect(result).toEqual([expected.join('')])
+      expect(result).toEqual(expected)
+    })
   })
 
-  it('contract deleted', () => {
-    const diff: DiscoveryDiff = {
-      name: 'Contract',
-      address: ADDRESS,
-      type: 'deleted',
-    }
+  describe(wrapBoldAndItalic.name, () => {
+    it('wraps content correctly', () => {
+      const content = 'projectName'
 
-    const result = diffToString(diff)
+      const result = wrapBoldAndItalic(content)
 
-    const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
-
-    expect(result).toEqual([expected])
+      expect(result).toEqual(`***${content}***`)
+    })
   })
 
-  it('contract created', () => {
-    const diff: DiscoveryDiff = {
-      name: 'Contract',
-      address: ADDRESS,
-      type: 'created',
-    }
+  describe(diffToString.name, () => {
+    it('values edited', () => {
+      const diff: DiscoveryDiff = {
+        name: 'Contract',
+        address: ADDRESS,
+        diff: [
+          {
+            key: 'count',
+            before: '1',
+            after: '2',
+          },
+          {
+            key: 'important',
+            before: 'true',
+          },
+          {
+            key: 'new',
+            after: 'true',
+          },
+        ],
+      }
 
-    const result = diffToString(diff)
+      const result = diffToString(diff)
 
-    const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
+      const expected = [
+        `Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`,
+        `count\n`,
+        `- 1\n`,
+        `+ 2\n\n`,
+        `important\n`,
+        `- true\n\n`,
+        `new\n`,
+        `+ true\n\n`,
+      ]
 
-    expect(result).toEqual([expected])
+      expect(result).toEqual([expected.join('')])
+    })
+
+    it('contract deleted', () => {
+      const diff: DiscoveryDiff = {
+        name: 'Contract',
+        address: ADDRESS,
+        type: 'deleted',
+      }
+
+      const result = diffToString(diff)
+
+      const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
+
+      expect(result).toEqual([expected])
+    })
+
+    it('contract created', () => {
+      const diff: DiscoveryDiff = {
+        name: 'Contract',
+        address: ADDRESS,
+        type: 'created',
+      }
+
+      const result = diffToString(diff)
+
+      const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
+
+      expect(result).toEqual([expected])
+    })
   })
-})
-
-})
+ 

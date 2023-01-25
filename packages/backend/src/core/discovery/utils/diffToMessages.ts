@@ -8,22 +8,19 @@ export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
   let index = 0
 
   for (const diff of diffs) {
-    const currentLength =
-      wrapDiffCodeBlock(messages[index]).length + header.length
+    
     const nextDiff = diffToString(diff)
 
     for(const next of nextDiff){
+      const currentLength =
+      wrapDiffCodeBlock(messages[index]).length + header.length
+      console.log(currentLength + next.length + '\n'.length)
       if (currentLength + next.length + '\n'.length >= MAX_MESSAGE_LENGTH) {
         index += 1
         messages.push('')
       }
-
       messages[index] += next +'\n'
-
     }
-
-    
-
   }
 
   const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
@@ -51,22 +48,21 @@ export function diffToString(diff: DiscoveryDiff): string[] {
     return [`- Deleted contract: ${diff.name} | ${diff.address.toString()}\n`]
   }
 
-  let message = `${diff.name} | ${diff.address.toString()}\n\n`
+  const prefic =`${diff.name} | ${diff.address.toString()}\n\n` 
+  const messages = ['']
+  let index = 0
 
   for (const d of diff.diff ?? []) {
-    if (d.key !== undefined) {
-      message += `${d.key}\n`
+    const message = fieldDiffToString(d)
+    if(prefic.length + messages[index].length + message.length + 12 + 31 >= MAX_MESSAGE_LENGTH) {
+      index += 1
+        messages.push('')
     }
-    if (d.before) {
-      message += `- ${d.before}\n`
-    }
-    if (d.after) {
-      message += `+ ${d.after}\n`
-    }
-    message += '\n'
+    messages[index] += message
+
   }
 
-  return [message]
+  return messages.map(m => `${prefic}${m}`)
 }
 
 export function fieldDiffToString(diff: FieldDiff): string {
