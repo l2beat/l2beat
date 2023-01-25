@@ -1,7 +1,10 @@
 import React from 'react'
-
-import { GrayCell } from './GrayCell'
+import { Badge, BadgeType } from '../Badge'
 
 export function ComingSoonCell() {
-  return <GrayCell title="This item will be added soon.">Coming soon</GrayCell>
+  return (
+    <Badge type={BadgeType.GRAY} title="This item will be added soon.">
+      Coming soon
+    </Badge>
+  )
 }

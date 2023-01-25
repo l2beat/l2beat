@@ -2,8 +2,8 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { HiringIcon } from '../icons/HiringIcon'
-import { NewItemIcon } from '../icons/NewItemIcon'
+import { Badge, BadgeType } from '../Badge'
+import { NewItemBadge } from '../icons/NewItemIcon'
 import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -96,7 +96,7 @@ export function Navbar(props: NavbarProps) {
                   href="/bridges/tvl"
                 >
                   Bridges
-                  <NewItemIcon className="ml-2" />
+                  <NewItemBadge className="ml-2" />
                 </PageLink>
               </li>
             </>
@@ -141,7 +141,9 @@ export function Navbar(props: NavbarProps) {
                   href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
                 >
                   Jobs
-                  <HiringIcon className="ml-2" />
+                  <Badge className="ml-2" type={BadgeType.PURPLE}>
+                    We're hiring
+                  </Badge>
                 </OutLink>
               </li>
             )}

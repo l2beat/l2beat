@@ -1,16 +1,10 @@
-import cx from 'classnames'
 import React from 'react'
+import { Badge, BadgeSize, BadgeType } from '../Badge'
 
-export function HiringIcon({ className }: { className?: string }) {
+export function HiringBadge({ className }: { className?: string }) {
   return (
-    <span
-      className={cx(
-        ' bg-pink-900 text-white px-1 rounded-sm',
-        'text-xs leading-tight font-bold',
-        className,
-      )}
-    >
+    <Badge type={BadgeType.PURPLE} size={BadgeSize.XS} className={className}>
       We're hiring
-    </span>
+    </Badge>
   )
 }
