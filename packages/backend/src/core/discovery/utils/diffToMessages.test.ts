@@ -14,6 +14,9 @@ import {
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 const PROJECT = 'system'
 
+describe('Discord message formatting', () => {
+
+
 describe(diffToMessages.name, () => {
   it('correctly formats a message', () => {
     const name = 'system'
@@ -47,11 +50,8 @@ describe(diffToMessages.name, () => {
       `***${name}*** | detected changes\`\`\`diff`,
       '\n',
       diffToString(diff[0]).join(''),
-      '\n',
       diffToString(diff[1]).join(''),
-      '\n',
       diffToString(diff[2]).join(''),
-      '\n',
       '```',
     ]
 
@@ -75,14 +75,14 @@ describe(diffToMessages.name, () => {
 
     const firstPart = [
       `***${name}*** | detected changes\`\`\`diff\n`,
-      differences.slice(0, 26).map(diffToString).join('\n'),
-      '\n```',
+      differences.slice(0, 26).map(diffToString).join(''),
+      '```',
     ]
 
     const secondPart = [
       `***${name}*** | detected changes\`\`\`diff\n`,
-      differences.slice(26).map(diffToString).join('\n'),
-      '\n```',
+      differences.slice(26).map(diffToString).join(''),
+      '```',
     ]
 
     expect(result).toEqual([firstPart.join(''), secondPart.join('')])
@@ -90,7 +90,7 @@ describe(diffToMessages.name, () => {
     expect(secondPart.join('').length).toEqual(117)
   })
 
-  it.only('truncates contract with diff larger than 2000 characters', () => {
+  it('truncates contract with diff larger than 2000 characters', () => {
     console.log('running')
     const diff: FieldDiff[] = []
 
@@ -112,21 +112,21 @@ describe(diffToMessages.name, () => {
       `***${PROJECT}*** | detected changes\`\`\`diff\n`,
       'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
       diff.slice(0, 105).map(fieldDiffToString).join(''),
-      '\n```',
+      '```',
     ]
 
     const secondPart = [
       `***${PROJECT}*** | detected changes\`\`\`diff\n`,
       'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
       diff.slice(105).map(fieldDiffToString).join(''),
-      '\n```',
+      '```',
     ]
 
     const result = diffToMessages(PROJECT, [contractDiff])
 
     expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-    expect(firstPart.join('').length).toEqual(1988)
-    expect(secondPart.join('').length).toEqual(1808)
+    expect(firstPart.join('').length).toEqual(1987)
+    expect(secondPart.join('').length).toEqual(1807)
   })
 })
 
@@ -199,7 +199,7 @@ describe(diffToMessages.name, () => {
 
       const result = diffToString(diff)
 
-      const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
+      const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`
 
       expect(result).toEqual([expected])
     })
@@ -213,9 +213,10 @@ describe(diffToMessages.name, () => {
 
       const result = diffToString(diff)
 
-      const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`
+      const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`
 
       expect(result).toEqual([expected])
     })
   })
  
+})
