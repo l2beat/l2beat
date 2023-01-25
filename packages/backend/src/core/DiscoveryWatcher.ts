@@ -1,16 +1,14 @@
-import { Logger, MainnetEtherscanClient, TaskQueue } from '@l2beat/common'
+import { Logger, TaskQueue } from '@l2beat/common'
 import { providers } from 'ethers'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
-import { discover } from './discovery/discover'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
-import { DiscoveryLogger } from './discovery/DiscoveryLogger'
-import { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
+import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
-import { diffDiscovery } from './discovery/utils/diffDiscovery'
+import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 
 export class DiscoveryWatcher {
@@ -18,12 +16,11 @@ export class DiscoveryWatcher {
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
-    private readonly etherscanClient: MainnetEtherscanClient,
+    private readonly discoveryEngine: DiscoveryEngine,
     private readonly discordClient: DiscordClient | undefined,
     private readonly configReader: ConfigReader,
     private readonly clock: Clock,
     private readonly logger: Logger,
-    private readonly discoveryLogger: DiscoveryLogger,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -39,17 +36,10 @@ export class DiscoveryWatcher {
     })
   }
 
-  //TODO: test (it will probably require changing discover to object)
   async update() {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     this.logger.info('Update started', { blockNumber })
-
-    const discoveryProvider = new DiscoveryProvider(
-      this.provider,
-      this.etherscanClient,
-      blockNumber,
-    )
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
@@ -57,16 +47,20 @@ export class DiscoveryWatcher {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
       try {
-        const discovered = await discover(
-          discoveryProvider,
+        const discovered = await this.discoveryEngine.run(
           projectConfig,
-          this.discoveryLogger,
+          blockNumber,
         )
-        await this.compareWithCommitted(
+        const diff = await this.compareWithCommitted(
           projectConfig.name,
           discovered,
           projectConfig.overrides,
         )
+
+        if (diff.length > 0) {
+          const messages = diffToMessages(projectConfig.name, diff)
+          await this.notify(messages)
+        }
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
@@ -79,20 +73,15 @@ export class DiscoveryWatcher {
     name: string,
     discovered: AnalyzedData[],
     overrides?: Record<string, DiscoveryContract>,
-  ) {
+  ): Promise<DiscoveryDiff[]> {
     const committed = await this.configReader.readDiscovery(name)
     const parsedDiscovery = parseDiscoveryOutput(discovered)
 
-    const diff = diffDiscovery(
+    return diffDiscovery(
       committed.contracts,
       parsedDiscovery.contracts,
       overrides ?? {},
     )
-
-    if (diff.length > 0) {
-      const messages = diffToMessages(name, diff)
-      await this.notify(messages)
-    }
   }
 
   async notify(messages: string[]) {
