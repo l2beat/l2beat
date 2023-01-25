@@ -77,6 +77,7 @@ export function getProductionConfig(cli: CliParameters): Config {
       },
     },
     discovery: false,
+    discoveryFindChange: false,
     discoveryWatcher: discoveryWatcherEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),

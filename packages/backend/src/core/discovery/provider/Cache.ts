@@ -1,14 +1,11 @@
 import fs from 'fs'
 import { debounce } from 'lodash'
 
-export class ProviderCache {
-  private readonly fileName
+abstract class Cache {
   private initialized = false
   private cache: Record<string, unknown> = {}
 
-  constructor(blockNumber: number) {
-    this.fileName = `cache/discovery/${blockNumber}.json`
-  }
+  constructor( private readonly fileName: string) {}
 
   init() {
     if (this.initialized || !fs.existsSync(this.fileName)) {
@@ -43,5 +40,17 @@ export class ProviderCache {
       fs.mkdirSync('cache/discovery')
     }
     fs.writeFileSync(this.fileName, JSON.stringify(this.cache, null, 2))
+  }
+}
+
+export class ProviderBlockCache extends Cache {
+  constructor(blockNumber: number) {
+    super(`cache/discovery/${blockNumber}.json`)
+  }
+}
+
+export class ProviderAbiCache extends Cache {
+  constructor() {
+    super(`cache/discovery/abis.json`)
   }
 }

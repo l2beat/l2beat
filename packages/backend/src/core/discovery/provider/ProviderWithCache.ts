@@ -3,13 +3,14 @@ import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { isRevert } from '../utils/isRevert'
-import { ProviderCache } from './Cache'
+import { ProviderAbiCache, ProviderBlockCache } from './Cache'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
 
 const identity = <T>(x: T) => x
 
 export class ProviderWithCache extends DiscoveryProvider {
-  private readonly cache: ProviderCache
+  private readonly blockCache: ProviderBlockCache
+  private readonly abiCache: ProviderAbiCache
 
   constructor(
     provider: providers.Provider,
@@ -17,7 +18,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     blockNumber: number,
   ) {
     super(provider, etherscanClient, blockNumber)
-    this.cache = new ProviderCache(blockNumber)
+    this.blockCache = new ProviderBlockCache(blockNumber)
+    this.abiCache = new ProviderAbiCache()
   }
 
   private async cacheOrFetch<R, S>(
@@ -25,14 +27,17 @@ export class ProviderWithCache extends DiscoveryProvider {
     fetch: () => Promise<R>,
     toCache: (value: R) => S,
     fromCache: (value: S) => R,
+    isAbi?: boolean,
   ) {
-    const known = this.cache.get(key)
+    const cache = isAbi ? this.abiCache : this.blockCache
+
+    const known = cache.get(key)
     if (known !== undefined) {
       return fromCache(known as S)
     }
 
     const result = await fetch()
-    this.cache.set(key, toCache(result))
+    cache.set(key, toCache(result))
 
     return result
   }
@@ -114,6 +119,7 @@ export class ProviderWithCache extends DiscoveryProvider {
       () => super.getMetadata(address),
       identity,
       identity,
+      true,
     )
   }
 }

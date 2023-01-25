@@ -11,7 +11,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
-  if (cli.mode !== 'server' && cli.mode !== 'discover') {
+  if (cli.mode !== 'server' && cli.mode !== 'discover' && cli.mode !== 'findChange') {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
@@ -22,6 +22,8 @@ export function getLocalConfig(cli: CliParameters): Config {
   const activityEnabled =
     cli.mode === 'server' && getEnv.boolean('ACTIVITY_ENABLED', false)
   const discoveryEnabled = cli.mode === 'discover'
+  const discoveryFindChangeEnabled = cli.mode === 'findChange'
+
   const discoveryWatcherEnabled =
     cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -82,6 +84,12 @@ export function getLocalConfig(cli: CliParameters): Config {
           url: getEnv('ACTIVITY_ARBITRUM_URL', 'https://arb1.arbitrum.io/rpc'),
         },
       },
+    },
+    discoveryFindChange: discoveryFindChangeEnabled && {
+      project: cli.project,
+      blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
+      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     },
     discovery: discoveryEnabled && {
       project: cli.project,

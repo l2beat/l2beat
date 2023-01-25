@@ -18,6 +18,7 @@ export interface Config {
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
   readonly discovery: DiscoveryConfig | false
+  readonly discoveryFindChange: DiscoveryFindChangeConfig | false
   readonly discoveryWatcher: DiscoveryWatcherConfig | false
 }
 
@@ -62,6 +63,13 @@ export interface ActivityConfig {
 }
 
 export interface DiscoveryConfig {
+  readonly project: string
+  readonly blockNumber?: number
+  readonly alchemyApiKey: string
+  readonly etherscanApiKey: string
+}
+
+export interface DiscoveryFindChangeConfig {
   readonly project: string
   readonly blockNumber?: number
   readonly alchemyApiKey: string
