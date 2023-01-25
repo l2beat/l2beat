@@ -4,6 +4,7 @@ import { expect } from 'earljs'
 import { Metrics } from '../../../Metrics'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
+import { createMockRepoMetrics } from '../../../test/mocks/Metrics'
 import {
   DiscoveryWatcherRecord,
   DiscoveryWatcherRepository,
@@ -14,7 +15,7 @@ describe(DiscoveryWatcherRepository.name, () => {
   const repository = new DiscoveryWatcherRepository(
     database,
     Logger.SILENT,
-    mock<Metrics>({}),
+    createMockRepoMetrics(),
   )
 
   beforeEach(async () => {
