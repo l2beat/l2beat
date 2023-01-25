@@ -16,7 +16,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     date: '2019-12-04T00:00:00Z',
     link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
     description:
-      'Loopring is live, launching the first zkRollup on Ethereum mainnet.',
+      'Loopring is live, launching the first zkRollup DEX protocol on Ethereum mainnet.',
   },
   {
     name: 'First StarkEx Validium',
