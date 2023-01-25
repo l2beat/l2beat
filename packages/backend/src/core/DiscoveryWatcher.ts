@@ -1,4 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 
@@ -8,7 +9,10 @@ import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
+import {
+  parseDiscoveryOutput,
+  prepareDiscoveryFile,
+} from './discovery/saveDiscoveryResult'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 
@@ -41,6 +45,7 @@ export class DiscoveryWatcher {
   async update() {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
+    const timestamp = UnixTime.now()
     this.logger.info('Update started', { blockNumber })
 
     const projectConfigs = await this.configReader.readAllConfigs()
@@ -55,6 +60,8 @@ export class DiscoveryWatcher {
         )
         const diff = await this.compareWithCommitted(
           projectConfig.name,
+          blockNumber,
+          timestamp,
           discovered,
           projectConfig.overrides,
         )
@@ -73,17 +80,40 @@ export class DiscoveryWatcher {
 
   async compareWithCommitted(
     name: string,
+    blockNumber: number,
+    timestamp: UnixTime,
     discovered: AnalyzedData[],
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
-    const committed = await this.configReader.readDiscovery(name)
     const parsedDiscovery = parseDiscoveryOutput(discovered)
+    const committed = await this.configReader.readDiscovery(name)
+    const [databaseEntry] = await this.repository.getLatest(name)
 
-    return diffDiscovery(
-      committed.contracts,
-      parsedDiscovery.contracts,
-      overrides ?? {},
-    )
+    let diff = []
+    if (databaseEntry === undefined) {
+      diff = diffDiscovery(
+        committed.contracts,
+        parsedDiscovery.contracts,
+        overrides ?? {},
+      )
+    } else {
+      diff = diffDiscovery(
+        databaseEntry.discovery.contracts,
+        parsedDiscovery.contracts,
+        overrides ?? {},
+      )
+    }
+
+    if (diff.length > 0) {
+      await this.repository.addOrUpdate({
+        projectName: name,
+        timestamp,
+        blockNumber,
+        discovery: parsedDiscovery,
+      })
+    }
+
+    return diff
   }
 
   async notify(messages: string[]) {
