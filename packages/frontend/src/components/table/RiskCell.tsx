@@ -1,6 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
+
 import { Badge, BadgeType } from '../badge/Badge'
 import { NoInfoCell } from './NoInfoCell'
 

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Badge, BadgeType } from './Badge'
 
 export function NewItemBadge({ className }: { className?: string }) {

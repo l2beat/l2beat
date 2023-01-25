@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Badge, BadgeSize, BadgeType } from '../badge/Badge'
 
 export function HiringBadge({ className }: { className?: string }) {
