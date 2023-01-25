@@ -39,6 +39,8 @@ export function contractDiffToMessages(
   return bundledMessages.map((m) => `${contractHeader}${m}`)
 }
 
+// current implementation of message bundling works based on the assumption
+// that every element of messages array is no longer than MAX_MESSAGE_LENGTH
 export function bundleMessages(
   messages: string[],
   maxLength: number,
@@ -57,8 +59,6 @@ export function bundleMessages(
   return bundle
 }
 
-// current implementation of message truncing works based on the assumption
-// that this function will not return string longer that MAX_MESSAGE_LENGTH
 export function fieldDiffToMessage(diff: FieldDiff): string {
   let message = ''
 
