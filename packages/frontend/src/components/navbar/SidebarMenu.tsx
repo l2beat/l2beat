@@ -3,6 +3,7 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
+import { HiringIcon } from '../icons/HiringIcon'
 import { NewItemIcon } from '../icons/NewItemIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OutLink } from '../OutLink'
@@ -89,6 +90,15 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </li>
             <li>
               <a href="/faq">FAQ</a>
+            </li>
+            <li>
+              <OutLink
+                className="flex items-center"
+                href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+              >
+                Jobs
+                <HiringIcon className="ml-2" />
+              </OutLink>
             </li>
           </ul>
           <HorizontalSeparator className="my-6" />

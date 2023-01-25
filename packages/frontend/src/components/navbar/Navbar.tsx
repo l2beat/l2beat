@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
+import { HiringIcon } from '../icons/HiringIcon'
 import { NewItemIcon } from '../icons/NewItemIcon'
 import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
 import { Logo } from '../Logo'
@@ -108,7 +109,7 @@ export function Navbar(props: NavbarProps) {
             <SocialLinks {...props.socialLinks} />
           </ul>
           {props.showBridges && <VerticalBar />}
-          <ul className="h-full flex items-center">
+          <ul className="h-full flex items-center gap-2">
             <li className="h-full">
               <OutLink
                 className="flex items-center h-full px-2 font-medium"
@@ -129,6 +130,15 @@ export function Navbar(props: NavbarProps) {
               <PageLink selected={props.selectedPage === 'faq'} href="/faq">
                 FAQ
               </PageLink>
+            </li>
+            <li className="h-full">
+              <OutLink
+                className="flex items-center h-full px-2 font-medium"
+                href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+              >
+                Jobs
+                <HiringIcon className="ml-2" />
+              </OutLink>
             </li>
           </ul>
           <VerticalBar />
