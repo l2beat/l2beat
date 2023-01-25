@@ -16,6 +16,7 @@ export const common: Omit<Config, 'backend'> = {
   features: {
     banner: new Date() < END_OF_GITCOIN_ROUND,
     gitcoinOption: false,
+    hiring: true,
     bridges: true,
     activity: true,
     milestones: true,

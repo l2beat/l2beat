@@ -24,6 +24,7 @@ export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showBridges: boolean
+  showHiring: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -36,6 +37,7 @@ export function getNavbarProps(
   return {
     showBanner: config.features.banner,
     forumLink: config.links.forum,
+    showHiring: config.features.hiring,
     showBridges: config.features.bridges,
     showActivity: config.features.activity,
     socialLinks: getSocialLinksProps(config),
@@ -50,6 +52,7 @@ export function Navbar(props: NavbarProps) {
         showBanner={props.showBanner}
         showActivity={props.showActivity}
         showBridges={props.showBridges}
+        showHiring={props.showHiring}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
@@ -131,15 +134,17 @@ export function Navbar(props: NavbarProps) {
                 FAQ
               </PageLink>
             </li>
-            <li className="h-full">
-              <OutLink
-                className="flex items-center h-full px-2 font-medium"
-                href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
-              >
-                Jobs
-                <HiringIcon className="ml-2" />
-              </OutLink>
-            </li>
+            {props.showHiring && (
+              <li className="h-full">
+                <OutLink
+                  className="flex items-center h-full px-2 font-medium"
+                  href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+                >
+                  Jobs
+                  <HiringIcon className="ml-2" />
+                </OutLink>
+              </li>
+            )}
           </ul>
           <VerticalBar />
           <DarkThemeToggle />
