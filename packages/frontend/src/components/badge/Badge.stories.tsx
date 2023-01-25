@@ -53,3 +53,9 @@ Gray.args = {
   type: BadgeType.GRAY,
   size: BadgeSize.MD,
 }
+
+export const Small: Story<BadgeProps> = Template.bind({})
+Small.args = {
+  type: BadgeType.BRIGHT_YELLOW,
+  size: BadgeSize.SM,
+}
