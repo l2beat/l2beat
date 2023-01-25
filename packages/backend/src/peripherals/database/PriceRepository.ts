@@ -3,7 +3,7 @@ import { AssetId, UnixTime } from '@l2beat/types'
 import { PriceRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface PriceRecord {
@@ -20,18 +20,7 @@ export interface DataBoundary {
 export class PriceRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.getAll = this.wrapGet(this.getAll)
-    this.getByTimestamp = this.wrapGet(this.getByTimestamp)
-    this.getByToken = this.wrapGet(this.getByToken)
-    this.calcDataBoundaries = this.wrapAny(this.calcDataBoundaries)
-    this.addMany = this.wrapAddMany(this.addMany)
-    this.getLatestByTokenBetween = this.wrapAny(this.getLatestByTokenBetween)
-    this.findByTimestampAndToken = this.wrapFind(this.findByTimestampAndToken)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
   async getAll(): Promise<PriceRecord[]> {
@@ -46,11 +35,6 @@ export class PriceRepository extends BaseRepository {
       unix_timestamp: timestamp.toDate(),
     })
 
-    this.logger.debug({
-      method: 'getByTimestamp',
-      timestamp: timestamp.toString(),
-      amount: rows.length,
-    })
     return rows.map(toRecord)
   }
 
@@ -60,11 +44,6 @@ export class PriceRepository extends BaseRepository {
       asset_id: assetId.toString(),
     })
 
-    this.logger.debug({
-      method: 'getByToken',
-      coin: assetId.toString(),
-      amount: rows.length,
-    })
     return rows.map(toRecord)
   }
 
@@ -88,10 +67,10 @@ export class PriceRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    await knex('coingecko_prices').delete()
+    return await knex('coingecko_prices').delete()
   }
 
-  async calcDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
+  async findDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
     const knex = await this.knex()
     const rows = await knex('coingecko_prices')
       .min('unix_timestamp')
@@ -110,7 +89,7 @@ export class PriceRepository extends BaseRepository {
     )
   }
 
-  async getLatestByTokenBetween(
+  async findLatestByTokenBetween(
     from: UnixTime,
     to: UnixTime,
   ): Promise<Map<AssetId, UnixTime | undefined>> {

@@ -54,7 +54,7 @@ describe(PriceUpdater.name, () => {
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(
+        findDataBoundaries: mockFn().returns(
           new Map([[AssetId.ETH, { earliest: HOUR_10, latest: HOUR_12 }]]),
         ),
         getByTimestamp: async () => prices,
@@ -81,7 +81,7 @@ describe(PriceUpdater.name, () => {
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(
+        findDataBoundaries: mockFn().returns(
           new Map([[AssetId.ETH, { earliest: HOUR_10, latest: HOUR_12 }]]),
         ),
         getByTimestamp: async () => prices,
@@ -123,7 +123,7 @@ describe(PriceUpdater.name, () => {
       ]
 
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(
+        findDataBoundaries: mockFn().returns(
           new Map([
             [tokens[0].id, { earliest: HOUR_10, latest: HOUR_12 }],
             [tokens[1].id, { earliest: HOUR_09, latest: HOUR_12 }],
@@ -170,7 +170,7 @@ describe(PriceUpdater.name, () => {
 
     beforeEach(() => {
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(new Map()),
+        findDataBoundaries: mockFn().returns(new Map()),
         addMany: mockFn().returns([]),
       })
       coingeckoQueryService = mock<CoingeckoQueryService>({

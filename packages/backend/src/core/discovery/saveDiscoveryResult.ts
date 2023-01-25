@@ -1,7 +1,7 @@
 import { writeFile } from 'fs/promises'
 
 import { AnalyzedData } from './analyzeItem'
-import { ContractParameters, ProjectParameters } from './types'
+import { ProjectParameters } from './types'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],
@@ -14,6 +14,13 @@ export async function saveDiscoveryResult(
     `discovery/${name}/discovered.json`,
     JSON.stringify(project, null, 2),
   )
+}
+
+export function parseDiscoveryOutput(
+  results: AnalyzedData[],
+): ProjectParameters {
+  const prepared = prepareDiscoveryFile(results)
+  return JSON.parse(JSON.stringify(prepared)) as ProjectParameters
 }
 
 export function prepareDiscoveryFile(
@@ -32,39 +39,13 @@ export function prepareDiscoveryFile(
   return {
     name,
     blockNumber,
-    contracts: results.filter((x) => !x.meta.isEOA).map(toContractParameters),
+    contracts: results
+      .filter((x) => !x.meta.isEOA)
+      .map((x) => ({ ...x, meta: undefined })),
     eoas: results
       .filter((x) => x.meta.isEOA)
       .map((x) => x.address)
       .sort((a, b) => a.localeCompare(b.toString())),
     abis,
   }
-}
-
-export function toContractParameters(
-  analyzedData: AnalyzedData,
-): ContractParameters {
-  const contract: ContractParameters = {
-    name: analyzedData.name,
-    address: analyzedData.address,
-    upgradeability: analyzedData.upgradeability,
-  }
-
-  if (analyzedData.unverified !== undefined) {
-    contract.unverified = analyzedData.unverified
-  }
-
-  if (analyzedData.code !== undefined) {
-    contract.code = analyzedData.code
-  }
-
-  if (analyzedData.values !== undefined) {
-    contract.values = analyzedData.values
-  }
-
-  if (analyzedData.errors !== undefined) {
-    contract.errors = analyzedData.errors
-  }
-
-  return contract
 }

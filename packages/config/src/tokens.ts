@@ -1358,6 +1358,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('pnt-pnetwork'),
+    name: 'pNetwork Token',
+    coingeckoId: CoingeckoId('pnetwork'),
+    address: EthereumAddress('0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD'),
+    symbol: 'PNT',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1592411070),
+    category: 'other',
+  },
+  {
     id: AssetId('poly-polymath'),
     name: 'Polymath',
     coingeckoId: CoingeckoId('polymath'),

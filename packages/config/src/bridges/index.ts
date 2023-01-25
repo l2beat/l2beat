@@ -16,6 +16,7 @@ import { opticsV1 } from './opticsV1'
 import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
+import { pNetwork } from './pNetwork'
 import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
@@ -53,6 +54,7 @@ export const bridges: Bridge[] = [
   polygonplasma,
   polygonpos,
   polynetwork,
+  pNetwork,
   ronin,
   satellite,
   sollet,
