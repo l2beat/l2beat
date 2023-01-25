@@ -2,23 +2,28 @@ import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 
-export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
+export function diffToWrappedMessages(
+  name: string,
+  diffs: DiscoveryDiff[],
+): string[] {
   const header = `${wrapBoldAndItalic(name)} | detected changes`
   const overheadLength = header.length + wrapDiffCodeBlock('').length
   const messages: string[] = ['']
   let index = 0
 
   for (const diff of diffs) {
-    const nextDiff = diffToString(diff, overheadLength)
+    const contractDiffs = diffToMessages(diff, overheadLength)
 
-    for (const next of nextDiff) {
+    for (const contractDiff of contractDiffs) {
       const currentLength =
         wrapDiffCodeBlock(messages[index]).length + header.length
-      if (currentLength + next.length >= MAX_MESSAGE_LENGTH) {
+
+      if (currentLength + contractDiff.length >= MAX_MESSAGE_LENGTH) {
         index += 1
         messages.push('')
       }
-      messages[index] += next
+    
+      messages[index] += contractDiff
     }
   }
 
@@ -38,7 +43,7 @@ export function wrapDiffCodeBlock(content: string) {
   return `${prefix}${content}${postfix}`
 }
 
-export function diffToString(
+export function diffToMessages(
   diff: DiscoveryDiff,
   overheadLength = 0,
 ): string[] {
@@ -86,5 +91,5 @@ export function fieldDiffToString(diff: FieldDiff): string {
   }
   message += '\n'
 
-  return message 
+  return message
 }

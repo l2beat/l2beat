@@ -9,7 +9,7 @@ import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
-import { diffToMessages } from './discovery/utils/diffToMessages'
+import { diffToWrappedMessages } from './discovery/utils/diffToMessages'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -58,7 +58,7 @@ export class DiscoveryWatcher {
         )
 
         if (diff.length > 0) {
-          const messages = diffToMessages(projectConfig.name, diff)
+          const messages = diffToWrappedMessages(projectConfig.name, diff)
           await this.notify(messages)
         }
         this.logger.info('Discovery finished', { project: projectConfig.name })
