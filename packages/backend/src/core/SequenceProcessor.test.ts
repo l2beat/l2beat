@@ -101,7 +101,7 @@ describe(SequenceProcessor.name, () => {
         [2, 3, expect.anything(), expect.a(Logger)],
         [4, 5, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
@@ -127,7 +127,7 @@ describe(SequenceProcessor.name, () => {
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [4, 5, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
@@ -153,7 +153,7 @@ describe(SequenceProcessor.name, () => {
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [4, 4, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 4,
         latest: 4,
@@ -182,7 +182,7 @@ describe(SequenceProcessor.name, () => {
         [1, 1, expect.anything(), expect.a(Logger)],
         [2, 2, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
@@ -209,7 +209,7 @@ describe(SequenceProcessor.name, () => {
       expect(processRangeMock).toHaveBeenCalledExactlyWith([
         [0, 2, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
@@ -306,7 +306,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRangeMock).toHaveBeenCalledExactlyWith([])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual(initialState)
+      expect(await repository.findById(PROCESSOR_ID)).toEqual(initialState)
     })
 
     it('continues syncing when more data available', async () => {
@@ -344,7 +344,7 @@ describe(SequenceProcessor.name, () => {
         [4, 5, expect.anything(), expect.a(Logger)],
         [6, 7, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 7,
         latest: 7,
@@ -390,7 +390,7 @@ describe(SequenceProcessor.name, () => {
         [1, 1, expect.anything(), expect.a(Logger)],
         [2, 2, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
@@ -439,7 +439,7 @@ describe(SequenceProcessor.name, () => {
         [4, 4, expect.anything(), expect.a(Logger)],
         [5, 5, expect.anything(), expect.a(Logger)],
       ])
-      expect(await repository.getById(PROCESSOR_ID)).toEqual({
+      expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
