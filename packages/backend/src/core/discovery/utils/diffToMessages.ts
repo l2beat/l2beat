@@ -7,18 +7,18 @@ export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
   const overheadLength = header.length + wrapDiffCodeBlock('').length
 
   const maxLength = MAX_MESSAGE_LENGTH - overheadLength
-  const messages = bundleMessages(
-    diffs.flatMap((diff) => contractDiffToMessages(diff, overheadLength)),
-    maxLength,
+  const messages = diffs.flatMap((diff) =>
+    contractDiffToMessages(diff, maxLength),
   )
 
-  const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
-  return result
+  const bundledMessages = bundleMessages(messages, maxLength)
+
+  return bundledMessages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
 }
 
 export function contractDiffToMessages(
   diff: DiscoveryDiff,
-  overheadLength = 0,
+  maxLength = MAX_MESSAGE_LENGTH,
 ): string[] {
   if (diff.type === 'created') {
     return [`+ New contract: ${diff.name} | ${diff.address.toString()}\n\n`]
@@ -29,15 +29,14 @@ export function contractDiffToMessages(
   }
 
   const contractHeader = `${diff.name} | ${diff.address.toString()}\n\n`
-  const maxLength = MAX_MESSAGE_LENGTH - contractHeader.length - overheadLength
+  const messages = diff.diff?.map(fieldDiffToMessage) ?? []
+
   //bundle message is called second time to handle situation when
   //diff in a single contract would result in a message larger than MAX_MESSAGE_LENGTH
-  const messages = bundleMessages(
-    diff.diff?.map(fieldDiffToMessage) ?? [],
-    maxLength,
-  )
+  const maxLengthAdjusted = maxLength - contractHeader.length
+  const bundledMessages = bundleMessages(messages, maxLengthAdjusted)
 
-  return messages.map((m) => `${contractHeader}${m}`)
+  return bundledMessages.map((m) => `${contractHeader}${m}`)
 }
 
 export function bundleMessages(
