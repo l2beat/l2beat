@@ -12,7 +12,7 @@ export const MILESTONES = {
 
 export const HOMEPAGE_MILESTONES: Milestone[] = [
   {
-    name: 'First zkRollup is live',
+    name: 'First zkRollup (DEX),
     date: '2019-12-04T00:00:00Z',
     link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
     description:
