@@ -10,7 +10,7 @@ import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { ContractParameters } from './discovery/types'
-import { diffToWrappedMessages } from './discovery/utils/diffToMessages'
+import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
@@ -76,7 +76,7 @@ const DISCOVERED: AnalyzedData[] = [
   mockDiscovered(COMMITTED[1]),
 ]
 
-const expectedMessage = diffToWrappedMessages(PROJECT_A, [
+const expectedMessage = diffToMessages(PROJECT_A, [
   {
     address: ADDRESS_A,
     name: NAME_A,
