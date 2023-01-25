@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { NewItemBadge } from '../icons/NewItemIcon'
+import { NewItemBadge } from '../badge/NewItemBadge'
 
 export interface MobileTabsProps {
   pages: {

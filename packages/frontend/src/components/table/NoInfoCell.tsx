@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, BadgeType } from '../Badge'
+import { Badge, BadgeType } from '../badge/Badge'
 
 export function NoInfoCell() {
   return (

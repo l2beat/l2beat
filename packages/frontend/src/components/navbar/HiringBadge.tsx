@@ -1,10 +1,11 @@
 import React from 'react'
-import { Badge, BadgeSize, BadgeType } from '../Badge'
+import { Badge, BadgeSize, BadgeType } from '../badge/Badge'
 
 export function HiringBadge({ className }: { className?: string }) {
   return (
     <Badge type={BadgeType.PURPLE} size={BadgeSize.XS} className={className}>
-      We're hiring
+      <span className="md:hidden">We're hiring</span>
+      <span className="hidden md:inline">Hiring</span>
     </Badge>
   )
 }

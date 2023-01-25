@@ -1,13 +1,13 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { NewItemBadge } from '../badge/NewItemBadge'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
-import { HiringBadge } from '../icons/HiringIcon'
-import { NewItemBadge } from '../icons/NewItemIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OutLink } from '../OutLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
+import { HiringBadge } from './HiringBadge'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
 
 export interface SidebarMenuProps {
