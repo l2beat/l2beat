@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/common'
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
