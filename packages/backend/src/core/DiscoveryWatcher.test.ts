@@ -2,6 +2,7 @@ import { Logger, mock } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
+import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
@@ -122,6 +123,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryEngine,
         discordClient,
         configReader,
+        mock<DiscoveryWatcherRepository>({}),
         mock<Clock>(),
         Logger.SILENT,
       )
@@ -147,6 +149,59 @@ describe(DiscoveryWatcher.name, () => {
         [expectedMessage[0]],
       ])
     })
+
+    it('does not send notification about the same change', async () => {
+      const discordClient = mock<DiscordClient>({
+        sendMessage: mockFn().resolvesTo({}),
+      })
+
+      const configReader = mock<ConfigReader>({
+        readAllConfigs: mockFn().resolvesTo([mockConfig(PROJECT_A)]),
+        readDiscovery: mockFn().resolvesTo({ contracts: [] }),
+      })
+
+      const discoveryWatcherRepository = mock<DiscoveryWatcherRepository>({
+        getLatest: mockFn().resolvesTo([
+          {
+            contracts: DISCOVERED,
+          },
+        ]),
+      })
+
+      const discoveryEngine = mock<DiscoveryEngine>({
+        run: mockFn().resolvesToOnce(DISCOVERED),
+      })
+
+      const provider = mock<providers.AlchemyProvider>({
+        getBlockNumber: async () => BLOCK_NUMBER,
+      })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        discoveryWatcherRepository,
+        mock<Clock>(),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.update()
+
+      //gets block number
+      expect(provider.getBlockNumber.calls.length).toEqual(1)
+      //reads all the configs
+      expect(configReader.readAllConfigs).toHaveBeenCalledExactlyWith([[]])
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([])
+
+      expect(discoveryWatcherRepository.getLatest).toHaveBeenCalledExactlyWith([
+        [PROJECT_A],
+      ])
+
+      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([])
+    })
+
+    it('saves to db', async () => {})
   })
 
   describe(DiscoveryWatcher.prototype.compareWithCommitted.name, () => {
@@ -162,6 +217,7 @@ describe(DiscoveryWatcher.name, () => {
         mock<DiscoveryEngine>(),
         mock<DiscordClient>(),
         configReader,
+        mock<DiscoveryWatcherRepository>({}),
         mock<Clock>(),
         Logger.SILENT,
       )
@@ -184,6 +240,7 @@ describe(DiscoveryWatcher.name, () => {
       mock<DiscoveryEngine>(),
       discordClient,
       mock<ConfigReader>(),
+      mock<DiscoveryWatcherRepository>({}),
       mock<Clock>(),
       Logger.SILENT,
     )

@@ -4,7 +4,7 @@ import { DiscoveryWatcherRow } from 'knex/types/tables'
 
 import { ProjectParameters } from '../../../core/discovery/types'
 import { Metrics } from '../../../Metrics'
-import { BaseRepository } from '../shared/BaseRepository'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
 export interface DiscoveryWatcherRecord {
@@ -13,26 +13,20 @@ export interface DiscoveryWatcherRecord {
   timestamp: UnixTime
   discovery: ProjectParameters
 }
-
 export class DiscoveryWatcherRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
 
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.getLatest = this.wrapFind(this.getLatest)
-    this.addOrUpdate = this.wrapAdd(this.addOrUpdate)
-    this.getAll = this.wrapGet(this.getAll)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<DiscoveryWatcherRepository>>(this)
   }
 
-  async getLatest(name: string): Promise<DiscoveryWatcherRecord | undefined> {
+  async getLatest(name: string): Promise<DiscoveryWatcherRecord[]> {
     const knex = await this.knex()
     const row = await knex('discovery_watcher')
       .where('project_name', name)
       .first()
 
-    return row ? toRecord(row) : undefined
+    return row ? [toRecord(row)] : []
   }
 
   async addOrUpdate(record: DiscoveryWatcherRecord): Promise<string> {

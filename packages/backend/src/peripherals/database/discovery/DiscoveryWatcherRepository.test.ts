@@ -1,7 +1,6 @@
 import { Logger, mock } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
-import { Metrics } from '../../../Metrics'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import { createMockRepoMetrics } from '../../../test/mocks/Metrics'
@@ -41,7 +40,7 @@ describe(DiscoveryWatcherRepository.name, () => {
     await repository.addOrUpdate(expected)
     const result = await repository.getLatest(projectName)
 
-    expect(result).toEqual(expected)
+    expect(result).toEqual([expected])
   })
 
   it(DiscoveryWatcherRepository.prototype.addOrUpdate.name, async () => {
@@ -63,13 +62,13 @@ describe(DiscoveryWatcherRepository.name, () => {
     await repository.addOrUpdate(expected)
     const added = await repository.getLatest(projectName)
 
-    expect(added).toEqual(expected)
+    expect(added).toEqual([expected])
 
     expected.blockNumber = 1
     await repository.addOrUpdate(expected)
 
     const updated = await repository.getLatest(projectName)
-    expect(updated).toEqual(expected)
+    expect(updated).toEqual([expected])
 
 
   })

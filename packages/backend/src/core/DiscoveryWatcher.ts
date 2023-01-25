@@ -1,5 +1,6 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { providers } from 'ethers'
+import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
@@ -19,6 +20,7 @@ export class DiscoveryWatcher {
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly discordClient: DiscordClient | undefined,
     private readonly configReader: ConfigReader,
+    private readonly repository: DiscoveryWatcherRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
