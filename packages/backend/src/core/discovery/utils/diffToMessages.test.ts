@@ -211,6 +211,20 @@ describe('Discord message formatting', () => {
     })
   })
 
+  describe(fieldDiffToString.name, () => {
+    it('correctly formats diff', () => {
+      const diff: FieldDiff = {
+        key: 'count',
+        before: '1',
+        after: '2',
+      }
+
+      const result = fieldDiffToString(diff)
+
+      expect(result).toEqual('count\n- 1\n+ 2\n\n')
+    })
+  })
+
   describe(wrapDiffCodeBlock.name, () => {
     it('wraps content correctly', () => {
       const messages = 'a\nb\nc'

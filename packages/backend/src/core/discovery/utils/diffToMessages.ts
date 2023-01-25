@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/common'
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
@@ -59,7 +58,6 @@ export function bundleMessages(
 
 // diffToWrapped(...) works based on the assumption
 // that this function will not return string longer that MAX_MESSAGE_LENGTH
-// this should not happen, but the assert is added just in case
 export function fieldDiffToString(diff: FieldDiff): string {
   let message = ''
 
@@ -72,12 +70,8 @@ export function fieldDiffToString(diff: FieldDiff): string {
   if (diff.after) {
     message += `+ ${diff.after}\n`
   }
-  message += '\n'
 
-  assert(
-    message.length <= MAX_MESSAGE_LENGTH,
-    'DiscordBot: diff in a single field is longer than Discord API message size limit.',
-  )
+  message += '\n'
 
   return message
 }
