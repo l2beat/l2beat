@@ -16,6 +16,13 @@ export async function saveDiscoveryResult(
   )
 }
 
+export function parseDiscoveryOutput(
+  results: AnalyzedData[],
+): ProjectParameters {
+  const prepared = prepareDiscoveryFile(results)
+  return JSON.parse(JSON.stringify(prepared)) as ProjectParameters
+}
+
 export function prepareDiscoveryFile(
   results: AnalyzedData[],
   name = 'undefined',

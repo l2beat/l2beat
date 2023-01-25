@@ -3,12 +3,12 @@ import { AssetId, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockMetrics } from '../../test/mocks/Metrics'
+import { createMockRepoMetrics } from '../../test/mocks/Metrics'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describe(PriceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockMetrics()
+  const mockMetrics = createMockRepoMetrics()
   const repository = new PriceRepository(database, Logger.SILENT, mockMetrics)
 
   const START = UnixTime.now()
@@ -115,9 +115,9 @@ describe(PriceRepository.name, () => {
     expect(results).toBeAnArrayOfLength(0)
   })
 
-  describe(PriceRepository.prototype.calcDataBoundaries.name, () => {
+  describe(PriceRepository.prototype.findDataBoundaries.name, () => {
     it('boundary of single and multi row data', async () => {
-      const result = await repository.calcDataBoundaries()
+      const result = await repository.findDataBoundaries()
 
       expect(result).toEqual(
         new Map([
@@ -149,13 +149,13 @@ describe(PriceRepository.name, () => {
     it('works with empty database', async () => {
       await repository.deleteAll()
 
-      const result = await repository.calcDataBoundaries()
+      const result = await repository.findDataBoundaries()
 
       expect(result).toEqual(new Map())
     })
   })
 
-  describe(PriceRepository.prototype.getLatestByTokenBetween.name, () => {
+  describe(PriceRepository.prototype.findLatestByTokenBetween.name, () => {
     it('gets most recent record of each token', async () => {
       await repository.deleteAll()
       await repository.addMany([
@@ -171,7 +171,7 @@ describe(PriceRepository.name, () => {
         },
       ])
 
-      const result = await repository.getLatestByTokenBetween(
+      const result = await repository.findLatestByTokenBetween(
         START.add(-1, 'days'),
         START.add(-1, 'hours'),
       )
@@ -182,7 +182,7 @@ describe(PriceRepository.name, () => {
     it('works with empty database', async () => {
       await repository.deleteAll()
 
-      const result = await repository.getLatestByTokenBetween(
+      const result = await repository.findLatestByTokenBetween(
         START.add(-1, 'days'),
         START.add(-1, 'hours'),
       )

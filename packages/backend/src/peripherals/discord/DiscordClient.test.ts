@@ -105,5 +105,15 @@ describe(DiscordClient.name, () => {
 
       await discord.sendMessage(message)
     })
+
+    it('throws when message is too long', async () => {
+      const httpClient = mock<HttpClient>({})
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+
+      const message = 'a'.repeat(2001)
+      await expect(discord.sendMessage(message)).toBeRejected(
+        `Discord error: Message size exceeded (2000 characters)`,
+      )
+    })
   })
 })

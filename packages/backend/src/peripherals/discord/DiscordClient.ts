@@ -6,6 +6,8 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 import { HttpClient } from '@l2beat/common'
 import { RequestInit } from 'node-fetch'
 
+export const MAX_MESSAGE_LENGTH = 2000
+
 export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
@@ -14,6 +16,10 @@ export class DiscordClient {
   ) {}
 
   async sendMessage(message: string) {
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      throw new Error(`Discord error: Message size exceeded (2000 characters)`)
+    }
+
     const endpoint = `/channels/${this.channelId}/messages`
     const body = {
       content: message,
