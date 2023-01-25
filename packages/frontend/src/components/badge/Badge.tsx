@@ -11,7 +11,7 @@ export enum BadgeType {
 
 export enum BadgeSize {
   MD = 'MD',
-  XS = 'XS',
+  SM = 'SM',
 }
 
 export interface BadgeProps {
@@ -30,7 +30,7 @@ const badgeClassnames: { [key in BadgeType | BadgeSize]: string } = {
   [BadgeType.BRIGHT_YELLOW]: 'bg-yellow-200 text-purple-700',
   [BadgeType.PURPLE]: 'bg-pink-900 text-white',
   [BadgeSize.MD]: 'text-sm',
-  [BadgeSize.XS]: 'text-xs',
+  [BadgeSize.SM]: 'text-xs',
 }
 
 export function Badge({
