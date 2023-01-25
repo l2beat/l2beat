@@ -5,7 +5,7 @@ abstract class Cache {
   private initialized = false
   private cache: Record<string, unknown> = {}
 
-  constructor( private readonly fileName: string) {}
+  constructor(private readonly fileName: string) {}
 
   init() {
     if (this.initialized || !fs.existsSync(this.fileName)) {

@@ -11,7 +11,11 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
-  if (cli.mode !== 'server' && cli.mode !== 'discover' && cli.mode !== 'findChange') {
+  if (
+    cli.mode !== 'server' &&
+    cli.mode !== 'discover' &&
+    cli.mode !== 'findChange'
+  ) {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 

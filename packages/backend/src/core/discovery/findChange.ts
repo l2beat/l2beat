@@ -44,7 +44,7 @@ export async function findChange(
     return diff.length === 0
   }
 
-  if(await checkIfNoChanges(blockNumber)) {
+  if (await checkIfNoChanges(blockNumber)) {
     console.log('No changes!')
     return
   }
@@ -54,6 +54,6 @@ export async function findChange(
     blockNumber,
     checkIfNoChanges,
   )
-  
+
   console.log('First change detected on block number', result)
 }

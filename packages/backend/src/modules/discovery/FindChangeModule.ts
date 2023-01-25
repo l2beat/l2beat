@@ -32,7 +32,7 @@ export function createDiscoveryFindChangeModule(
   const start = async () => {
     logger = logger.for('DiscoveryDetectChangeModule')
     logger.info('Starting')
-    
+
     await findChange(provider, etherscanClient, configReader, safeConfig)
   }
 
