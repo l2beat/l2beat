@@ -8,26 +8,24 @@ export function diffToWrappedMessages(
 ): string[] {
   const header = `${wrapBoldAndItalic(name)} | detected changes`
   const overheadLength = header.length + wrapDiffCodeBlock('').length
-  const messages: string[] = ['']
-  let index = 0
-
-  for (const diff of diffs) {
-    const contractDiffs = diffToMessages(diff, overheadLength)
-
-    for (const contractDiff of contractDiffs) {
-      const currentLength =
-        wrapDiffCodeBlock(messages[index]).length + header.length
-
-      if (currentLength + contractDiff.length >= MAX_MESSAGE_LENGTH) {
-        index += 1
-        messages.push('')
-      }
-    
-      messages[index] += contractDiff
-    }
-  }
+  const messages = truncateString(diffs.flatMap((diff) => diffToMessages(diff,overheadLength)), MAX_MESSAGE_LENGTH, overheadLength)
 
   const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
+  return result
+}
+
+export function truncateString(values: string[], maxLength: number, overheadLength:number  = 0): string[]{
+  const result: string[] = ['']
+  let index = 0
+
+  for(const value of values){
+    if(value.length + result[index].length + overheadLength > maxLength){
+      index++
+      result.push('')
+    }
+
+    result[index] += value
+  }
   return result
 }
 
@@ -56,24 +54,8 @@ export function diffToMessages(
   }
 
   const prefix = `${diff.name} | ${diff.address.toString()}\n\n`
-  const messages = ['']
-  let index = 0
-
-  for (const d of diff.diff ?? []) {
-    const message = fieldDiffToString(d)
-    if (
-      prefix.length +
-        messages[index].length +
-        message.length +
-        overheadLength >=
-      MAX_MESSAGE_LENGTH
-    ) {
-      index += 1
-      messages.push('')
-    }
-    messages[index] += message
-  }
-
+  const messages = truncateString(diff.diff?.map(fieldDiffToString) ?? [], MAX_MESSAGE_LENGTH, prefix.length + overheadLength)
+  
   return messages.map((m) => `${prefix}${m}`)
 }
 

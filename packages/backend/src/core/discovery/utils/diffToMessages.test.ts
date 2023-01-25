@@ -1,11 +1,11 @@
 import { EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
-import { FieldDiff } from './diffContracts'
 
+import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 import {
-  diffToWrappedMessages,
   diffToMessages,
+  diffToWrappedMessages,
   fieldDiffToString,
   wrapBoldAndItalic,
   wrapDiffCodeBlock,
