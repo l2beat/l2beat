@@ -10,11 +10,11 @@ export enum BadgeType {
 }
 
 export enum BadgeSize {
-  MD,
-  XS,
+  MD = 'MD',
+  XS = 'XS',
 }
 
-interface BadgeProps {
+export interface BadgeProps {
   type: BadgeType
   size?: BadgeSize
   className?: string
