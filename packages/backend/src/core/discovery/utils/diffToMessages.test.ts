@@ -7,7 +7,7 @@ import {
   bundleMessages,
   contractDiffToMessages,
   diffToMessages,
-  fieldDiffToString,
+  fieldDiffToMessage,
   wrapBoldAndItalic,
   wrapDiffCodeBlock,
 } from './diffToMessages'
@@ -109,14 +109,14 @@ describe('Discord message formatting', () => {
       const firstPart = [
         `***${PROJECT}*** | detected changes\`\`\`diff\n`,
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
-        diff.slice(0, 105).map(fieldDiffToString).join(''),
+        diff.slice(0, 105).map(fieldDiffToMessage).join(''),
         '```',
       ]
 
       const secondPart = [
         `***${PROJECT}*** | detected changes\`\`\`diff\n`,
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
-        diff.slice(105).map(fieldDiffToString).join(''),
+        diff.slice(105).map(fieldDiffToMessage).join(''),
         '```',
       ]
 
@@ -211,7 +211,7 @@ describe('Discord message formatting', () => {
     })
   })
 
-  describe(fieldDiffToString.name, () => {
+  describe(fieldDiffToMessage.name, () => {
     it('correctly formats diff', () => {
       const diff: FieldDiff = {
         key: 'count',
@@ -219,7 +219,7 @@ describe('Discord message formatting', () => {
         after: '2',
       }
 
-      const result = fieldDiffToString(diff)
+      const result = fieldDiffToMessage(diff)
 
       expect(result).toEqual('count\n- 1\n+ 2\n\n')
     })

@@ -30,8 +30,10 @@ export function contractDiffToMessages(
 
   const contractHeader = `${diff.name} | ${diff.address.toString()}\n\n`
   const maxLength = MAX_MESSAGE_LENGTH - contractHeader.length - overheadLength
+  //bundle message is called second time to handle situation when
+  //diff in a single contract would result in a message larger than MAX_MESSAGE_LENGTH
   const messages = bundleMessages(
-    diff.diff?.map(fieldDiffToString) ?? [],
+    diff.diff?.map(fieldDiffToMessage) ?? [],
     maxLength,
   )
 
@@ -42,23 +44,23 @@ export function bundleMessages(
   messages: string[],
   maxLength: number,
 ): string[] {
-  const result: string[] = ['']
+  const bundle: string[] = ['']
   let index = 0
 
-  for (const value of messages) {
-    if (value.length + result[index].length > maxLength) {
+  for (const message of messages) {
+    if (message.length + bundle[index].length > maxLength) {
       index++
-      result.push('')
+      bundle.push('')
     }
 
-    result[index] += value
+    bundle[index] += message
   }
-  return result
+  return bundle
 }
 
-// diffToWrapped(...) works based on the assumption
+// current implementation of message truncing works based on the assumption
 // that this function will not return string longer that MAX_MESSAGE_LENGTH
-export function fieldDiffToString(diff: FieldDiff): string {
+export function fieldDiffToMessage(diff: FieldDiff): string {
   let message = ''
 
   if (diff.key !== undefined) {
