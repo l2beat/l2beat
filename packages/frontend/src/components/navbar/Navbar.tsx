@@ -2,13 +2,13 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { Badge, BadgeType } from '../badge/Badge'
+import { NewItemBadge } from '../badge/NewItemBadge'
 import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
 import { Logo } from '../Logo'
-import { NewItemBadge } from '../badge/NewItemBadge'
 import { OutLink } from '../OutLink'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
+import { HiringBadge } from './HiringBadge'
 import { PageLink } from './PageLink'
 import { SidebarMenu } from './SidebarMenu'
 import {
@@ -17,7 +17,6 @@ import {
   SocialLinksProps,
 } from './SocialLinks'
 import { VerticalBar } from './VerticalBar'
-import { HiringBadge } from './HiringBadge'
 
 export type NavbarPage = 'scaling' | 'bridges' | 'donate' | 'faq'
 
@@ -113,7 +112,7 @@ export function Navbar(props: NavbarProps) {
             <SocialLinks {...props.socialLinks} />
           </ul>
           {props.showBridges && <VerticalBar />}
-          <ul className="h-full flex items-center gap-2">
+          <ul className="h-full flex items-center gap-1">
             <li className="h-full">
               <OutLink
                 className="flex items-center h-full px-2 font-medium"
@@ -142,7 +141,7 @@ export function Navbar(props: NavbarProps) {
                   href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
                 >
                   Jobs
-                  <HiringBadge className="ml-2"/>
+                  <HiringBadge className="ml-2" />
                 </OutLink>
               </li>
             )}
