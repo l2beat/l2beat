@@ -1,47 +1,23 @@
+import { assert } from '@l2beat/common'
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 
-export function diffToWrappedMessages(
-  name: string,
-  diffs: DiscoveryDiff[],
-): string[] {
-  const header = `${wrapBoldAndItalic(name)} | detected changes`
+export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
+  const header = getHeader(name)
   const overheadLength = header.length + wrapDiffCodeBlock('').length
-  const messages = truncateString(diffs.flatMap((diff) => diffToMessages(diff,overheadLength)), MAX_MESSAGE_LENGTH, overheadLength)
+
+  const maxLength = MAX_MESSAGE_LENGTH - overheadLength
+  const messages = bundleMessages(
+    diffs.flatMap((diff) => contractDiffToMessages(diff, overheadLength)),
+    maxLength,
+  )
 
   const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
   return result
 }
 
-export function truncateString(values: string[], maxLength: number, overheadLength:number  = 0): string[]{
-  const result: string[] = ['']
-  let index = 0
-
-  for(const value of values){
-    if(value.length + result[index].length + overheadLength > maxLength){
-      index++
-      result.push('')
-    }
-
-    result[index] += value
-  }
-  return result
-}
-
-export function wrapBoldAndItalic(content: string) {
-  const affix = '***'
-  return `${affix}${content}${affix}`
-}
-
-export function wrapDiffCodeBlock(content: string) {
-  const prefix = '```diff\n'
-  const postfix = '```'
-
-  return `${prefix}${content}${postfix}`
-}
-
-export function diffToMessages(
+export function contractDiffToMessages(
   diff: DiscoveryDiff,
   overheadLength = 0,
 ): string[] {
@@ -53,12 +29,37 @@ export function diffToMessages(
     return [`- Deleted contract: ${diff.name} | ${diff.address.toString()}\n\n`]
   }
 
-  const prefix = `${diff.name} | ${diff.address.toString()}\n\n`
-  const messages = truncateString(diff.diff?.map(fieldDiffToString) ?? [], MAX_MESSAGE_LENGTH, prefix.length + overheadLength)
-  
-  return messages.map((m) => `${prefix}${m}`)
+  const contractHeader = `${diff.name} | ${diff.address.toString()}\n\n`
+  const maxLength = MAX_MESSAGE_LENGTH - contractHeader.length - overheadLength
+  const messages = bundleMessages(
+    diff.diff?.map(fieldDiffToString) ?? [],
+    maxLength,
+  )
+
+  return messages.map((m) => `${contractHeader}${m}`)
 }
 
+export function bundleMessages(
+  messages: string[],
+  maxLength: number,
+): string[] {
+  const result: string[] = ['']
+  let index = 0
+
+  for (const value of messages) {
+    if (value.length + result[index].length > maxLength) {
+      index++
+      result.push('')
+    }
+
+    result[index] += value
+  }
+  return result
+}
+
+// diffToWrapped(...) works based on the assumption
+// that this function will not return string longer that MAX_MESSAGE_LENGTH
+// this should not happen, but the assert is added just in case
 export function fieldDiffToString(diff: FieldDiff): string {
   let message = ''
 
@@ -73,5 +74,26 @@ export function fieldDiffToString(diff: FieldDiff): string {
   }
   message += '\n'
 
+  assert(
+    message.length <= MAX_MESSAGE_LENGTH,
+    'DiscordBot: diff in a single field is longer than Discord API message size limit.',
+  )
+
   return message
+}
+
+function getHeader(name: string) {
+  return `${wrapBoldAndItalic(name)} | detected changes`
+}
+
+export function wrapBoldAndItalic(content: string) {
+  const affix = '***'
+  return `${affix}${content}${affix}`
+}
+
+export function wrapDiffCodeBlock(content: string) {
+  const prefix = '```diff\n'
+  const postfix = '```'
+
+  return `${prefix}${content}${postfix}`
 }

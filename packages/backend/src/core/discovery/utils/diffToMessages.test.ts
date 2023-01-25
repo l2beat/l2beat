@@ -4,8 +4,9 @@ import { expect } from 'earljs'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 import {
+  bundleMessages,
+  contractDiffToMessages,
   diffToMessages,
-  diffToWrappedMessages,
   fieldDiffToString,
   wrapBoldAndItalic,
   wrapDiffCodeBlock,
@@ -15,7 +16,7 @@ const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 const PROJECT = 'system'
 
 describe('Discord message formatting', () => {
-  describe(diffToWrappedMessages.name, () => {
+  describe(diffToMessages.name, () => {
     it('correctly formats a message', () => {
       const name = 'system'
       const diff: DiscoveryDiff[] = [
@@ -42,14 +43,14 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToWrappedMessages(name, diff)
+      const result = diffToMessages(name, diff)
 
       const expected = [
         `***${name}*** | detected changes\`\`\`diff`,
         '\n',
-        diffToMessages(diff[0])[0],
-        diffToMessages(diff[1])[0],
-        diffToMessages(diff[2])[0],
+        contractDiffToMessages(diff[0])[0],
+        contractDiffToMessages(diff[1])[0],
+        contractDiffToMessages(diff[2])[0],
         '```',
       ]
 
@@ -69,17 +70,17 @@ describe('Discord message formatting', () => {
         differences.push(diff)
       }
 
-      const result = diffToWrappedMessages(name, differences)
+      const result = diffToMessages(name, differences)
 
       const firstPart = [
         `***${name}*** | detected changes\`\`\`diff\n`,
-        differences.slice(0, 26).map(diffToMessages).join(''),
+        differences.slice(0, 26).map(contractDiffToMessages).join(''),
         '```',
       ]
 
       const secondPart = [
         `***${name}*** | detected changes\`\`\`diff\n`,
-        differences.slice(26).map(diffToMessages).join(''),
+        differences.slice(26).map(contractDiffToMessages).join(''),
         '```',
       ]
 
@@ -119,7 +120,7 @@ describe('Discord message formatting', () => {
         '```',
       ]
 
-      const result = diffToWrappedMessages(PROJECT, [contractDiff])
+      const result = diffToMessages(PROJECT, [contractDiff])
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
       expect(firstPart.join('').length).toEqual(1987)
@@ -127,29 +128,7 @@ describe('Discord message formatting', () => {
     })
   })
 
-  describe(wrapDiffCodeBlock.name, () => {
-    it('wraps content correctly', () => {
-      const messages = 'a\nb\nc'
-
-      const expected = '```diff\na\nb\nc```'
-
-      const result = wrapDiffCodeBlock(messages)
-
-      expect(result).toEqual(expected)
-    })
-  })
-
-  describe(wrapBoldAndItalic.name, () => {
-    it('wraps content correctly', () => {
-      const content = 'projectName'
-
-      const result = wrapBoldAndItalic(content)
-
-      expect(result).toEqual(`***${content}***`)
-    })
-  })
-
-  describe(diffToMessages.name, () => {
+  describe(contractDiffToMessages.name, () => {
     it('values edited', () => {
       const diff: DiscoveryDiff = {
         name: 'Contract',
@@ -171,7 +150,7 @@ describe('Discord message formatting', () => {
         ],
       }
 
-      const result = diffToMessages(diff)
+      const result = contractDiffToMessages(diff)
 
       const expected = [
         `Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`,
@@ -194,7 +173,7 @@ describe('Discord message formatting', () => {
         type: 'deleted',
       }
 
-      const result = diffToMessages(diff)
+      const result = contractDiffToMessages(diff)
 
       const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`
 
@@ -208,11 +187,49 @@ describe('Discord message formatting', () => {
         type: 'created',
       }
 
-      const result = diffToMessages(diff)
+      const result = contractDiffToMessages(diff)
 
       const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`
 
       expect(result).toEqual([expected])
+    })
+  })
+
+  describe(bundleMessages.name, () => {
+    it('correctly groups messages into bundles smaller than maxLength', () => {
+      const messages = [
+        'a'.repeat(500),
+        'a'.repeat(1000),
+        'a'.repeat(1000),
+        'a'.repeat(1000),
+      ]
+      const maxLength = 2000
+
+      const result = bundleMessages(messages, maxLength)
+
+      expect(result).toEqual(['a'.repeat(1500), 'a'.repeat(2000)])
+    })
+  })
+
+  describe(wrapDiffCodeBlock.name, () => {
+    it('wraps content correctly', () => {
+      const messages = 'a\nb\nc'
+
+      const expected = '```diff\na\nb\nc```'
+
+      const result = wrapDiffCodeBlock(messages)
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe(wrapBoldAndItalic.name, () => {
+    it('wraps content correctly', () => {
+      const content = 'projectName'
+
+      const result = wrapBoldAndItalic(content)
+
+      expect(result).toEqual(`***${content}***`)
     })
   })
 })
