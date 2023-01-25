@@ -1,18 +1,15 @@
 import { Logger, TaskQueue } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
-import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 
+import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import {
-  parseDiscoveryOutput,
-  prepareDiscoveryFile,
-} from './discovery/saveDiscoveryResult'
+import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 
@@ -58,7 +55,7 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
-        const diff = await this.compareWithCommitted(
+        const diff = await this.findChanges(
           projectConfig.name,
           blockNumber,
           timestamp,
@@ -78,7 +75,7 @@ export class DiscoveryWatcher {
     this.logger.info('Update finished', { blockNumber })
   }
 
-  async compareWithCommitted(
+  async findChanges(
     name: string,
     blockNumber: number,
     timestamp: UnixTime,
@@ -87,10 +84,10 @@ export class DiscoveryWatcher {
   ): Promise<DiscoveryDiff[]> {
     const parsedDiscovery = parseDiscoveryOutput(discovered)
     const committed = await this.configReader.readDiscovery(name)
-    const [databaseEntry] = await this.repository.getLatest(name)
+    const databaseEntry = await this.repository.getLatest(name)
 
     let diff = []
-    if (databaseEntry === undefined) {
+    if (databaseEntry.length === 0) {
       diff = diffDiscovery(
         committed.contracts,
         parsedDiscovery.contracts,
@@ -98,7 +95,7 @@ export class DiscoveryWatcher {
       )
     } else {
       diff = diffDiscovery(
-        databaseEntry.discovery.contracts,
+        databaseEntry[0].discovery.contracts,
         parsedDiscovery.contracts,
         overrides ?? {},
       )

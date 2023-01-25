@@ -2,8 +2,8 @@ import { Logger, mock } from '@l2beat/common'
 import { EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
-import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 
+import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { AnalyzedData } from './discovery/analyzeItem'
@@ -151,14 +151,14 @@ describe(DiscoveryWatcher.name, () => {
         [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
       ])
       expect(repository.getLatest.calls.length).toEqual(2)
-      expect(repository.addOrUpdate.calls.length).toEqual(2)
+      expect(repository.addOrUpdate.calls.length).toEqual(1)
       //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
         [expectedMessage[0]],
       ])
     })
 
-    it.only('does not send notification about the same change', async () => {
+    it('does not send notification about the same change', async () => {
       const discordClient = mock<DiscordClient>({
         sendMessage: mockFn().resolvesTo({}),
       })
@@ -213,12 +213,10 @@ describe(DiscoveryWatcher.name, () => {
 
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([])
     })
-
-    it('saves to db', async () => {})
   })
 
-  describe(DiscoveryWatcher.prototype.compareWithCommitted.name, () => {
-    it('finds changes', async () => {
+  describe(DiscoveryWatcher.prototype.findChanges.name, () => {
+    it('uses repository and local files to find changes', async () => {
       const configReader = mock<ConfigReader>({
         readDiscovery: mockFn().resolvesTo({
           contracts: COMMITTED,
@@ -240,7 +238,7 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      await discoveryWatcher.compareWithCommitted(
+      await discoveryWatcher.findChanges(
         PROJECT_A,
         0,
         UnixTime.now(),
@@ -251,6 +249,8 @@ describe(DiscoveryWatcher.name, () => {
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
       ])
+      expect(repository.addOrUpdate.calls.length).toEqual(1)
+      expect(repository.getLatest.calls.length).toEqual(1)
     })
   })
 
