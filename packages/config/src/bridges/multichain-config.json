@@ -74,6 +74,14 @@
     },
     {
       "type": "any",
+      "address": "0x0aC06321050Defb485340c3509A5405F9d7655c7",
+      "tokens": [
+        "WOO"
+      ],
+      "sinceTimestamp": 1669715063
+    },
+    {
+      "type": "any",
       "address": "0x0bd19f6447cd676255C7C7B00428462B3dA67e3a",
       "tokens": [
         "TUSD"
@@ -133,6 +141,14 @@
         "ETH"
       ],
       "sinceTimestamp": 1603963154
+    },
+    {
+      "type": "any",
+      "address": "0x15a3FE3e6B8a5C01b1BfE72C76660C897368Eec0",
+      "tokens": [
+        "VLX"
+      ],
+      "sinceTimestamp": 1666256651
     },
     {
       "type": "any",
@@ -217,11 +233,27 @@
     },
     {
       "type": "any",
+      "address": "0x37C24675E4a0DFCE683c51e1746599F1E2517Eb5",
+      "tokens": [
+        "AURORA"
+      ],
+      "sinceTimestamp": 1669713143
+    },
+    {
+      "type": "any",
       "address": "0x3D632d9e1a60a0880Dd45E61f279D919b5748377",
       "tokens": [
         "C98"
       ],
       "sinceTimestamp": 1665051467
+    },
+    {
+      "type": "any",
+      "address": "0x403BEB734e0C7E87D632a4EA1B290059E3B3A3c9",
+      "tokens": [
+        "RAI"
+      ],
+      "sinceTimestamp": 1656565231
     },
     {
       "type": "basic",
@@ -407,6 +439,7 @@
       "type": "basic",
       "address": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
       "tokens": [
+        "RAI",
         "FXS",
         "ANKR",
         "FRAX",
@@ -605,6 +638,7 @@
       "address": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
       "tokens": [
         "TUSD",
+        "RAI",
         "GUSD",
         "YFI",
         "BFC",
@@ -662,6 +696,14 @@
     },
     {
       "type": "any",
+      "address": "0xCfa8F0Aed0414A98f99f1Ea29ddF23f6E1370c13",
+      "tokens": [
+        "CVX"
+      ],
+      "sinceTimestamp": 1665307331
+    },
+    {
+      "type": "any",
       "address": "0xcFD5868fbF612bd8907827f012d71f3C7BA6C943",
       "tokens": [
         "WBTC"
@@ -675,6 +717,14 @@
         "BUSD"
       ],
       "sinceTimestamp": 1648780783
+    },
+    {
+      "type": "any",
+      "address": "0xD22e210785902c39B579565e931517E5Bd34A69a",
+      "tokens": [
+        "MATIC"
+      ],
+      "sinceTimestamp": 1666318835
     },
     {
       "type": "basic",
