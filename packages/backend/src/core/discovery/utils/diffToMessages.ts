@@ -81,25 +81,6 @@ function getHeader(name: string) {
   return `${wrapBoldAndItalic(name)} | detected changes`
 }
 
-export function truncateString(
-  values: string[],
-  maxLength: number,
-  overheadLength = 0,
-): string[] {
-  const result: string[] = ['']
-  let index = 0
-
-  for (const value of values) {
-    if (value.length + result[index].length + overheadLength > maxLength) {
-      index++
-      result.push('')
-    }
-
-    result[index] += value
-  }
-  return result
-}
-
 export function wrapBoldAndItalic(content: string) {
   const affix = '***'
   return `${affix}${content}${affix}`
