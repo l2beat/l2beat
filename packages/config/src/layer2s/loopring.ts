@@ -314,13 +314,6 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'Loopring zkRollup is live',
-      link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
-      date: '2019-12-04T00:00:00Z',
-      description:
-        'Loopring Protocol 3.0 is fully operational with support for orderbook trading on WeDex.',
-    },
-    {
       name: 'Loopring Protocol 3.6 Pre-release',
       link: 'https://medium.loopring.io/loopring-3-6-is-code-complete-and-security-audit-has-begun-68a642506e31',
       date: '2020-09-22T00:00:00Z',
