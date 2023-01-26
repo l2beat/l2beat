@@ -11,7 +11,7 @@ export interface BadgeProps {
   oneSize?: boolean
 }
 
-const badgeClassnames: { [key in BadgeType]: string } = {
+const badgeClassnames: Record<BadgeType, string> = {
   error: 'text-white bg-red-500',
   gray: 'text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-800',
   warning: 'text-black bg-yellow-500',
