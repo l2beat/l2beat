@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/common'
 import { Hash256, UnixTime } from '@l2beat/types'
 
 import { Metrics } from '../../Metrics'
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 import { NullableDict } from './shared/types'
 
@@ -14,16 +14,7 @@ export interface ReportStatusRecord {
 export class ReportStatusRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.getByConfigHash = this.wrapGet(this.getByConfigHash)
-    this.add = this.wrapAdd(this.add)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    this.getBetween = this.wrapGet(this.getBetween)
-    this.findLatestTimestamp = this.wrapFind(this.findLatestTimestamp)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<ReportStatusRepository>>(this)
   }
 
   async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {

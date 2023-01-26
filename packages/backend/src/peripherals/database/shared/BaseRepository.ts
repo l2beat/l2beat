@@ -4,25 +4,65 @@ import { Knex } from 'knex'
 import { Metrics, RepositoryHistogram } from '../../../Metrics'
 import { Database } from './Database'
 
-type AnyMethod<A extends unknown[], R> = (...args: A) => Promise<R>
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
+type IdType = number | string | String | Number
 
-type AddMethod<T, R> = (record: T) => Promise<R>
+type AnyMethod = (...args: any[]) => Promise<any>
+type AddMethod = (record: any) => Promise<IdType>
+type AddManyMethod = (records: any[]) => Promise<IdType[] | number>
+type GetMethod = (...args: any[]) => Promise<{}[]>
+type FindMethod = (...args: any[]) => Promise<{} | undefined>
+type DeleteMethod = (...args: any[]) => Promise<number>
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
 
-type AddManyMethod<T, R> = (records: T[]) => Promise<R[] | number>
+type Keys<T, U> = Extract<keyof T, U>
+type Match<T, U> = T extends U ? T : Exclude<U, T>
 
-type AddManyMethodWithIds<T, R> = (records: T[]) => Promise<R[]>
+type AddKeys<T> = Exclude<Keys<T, `add${string}`>, AddManyKeys<T>>
+type AddManyKeys<T> = Keys<T, `addMany${string}` | `add${string}Many`>
+type FindKeys<T> = Keys<T, `find${string}`>
+type GetKeys<T> = Keys<T, `get${string}`>
+type DeleteKeys<T> = Keys<T, `delete${string}`>
 
-type AddManyMethodWithCount<T> = (records: T[]) => Promise<number>
+export type CheckConvention<T extends BaseRepository> = {
+  [K in AddKeys<T>]: Match<T[K], AddMethod>
+} & {
+  [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
+} & {
+  [K in FindKeys<T>]: Match<T[K], FindMethod>
+} & {
+  [K in GetKeys<T>]: Match<T[K], GetMethod>
+} & {
+  [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
+}
 
-type GetMethod<A extends unknown[], T> = (...args: A) => Promise<T[]>
+/* 
+  This class requires its child classes to persist given naming convention of methods and wraps them with logger and metrics.
+  
+  The CheckConvention will make sure if you are using naming convention correctly. So in the child class' constructor you should always use this.autoWrap<CheckConvention<RepositoryName>>().
 
-type FindMethod<A extends unknown[], T> = (...args: A) => Promise<T | undefined>
+  Methods that should be auto wrapped needs to start with add, addMany, find, get or delete prefix.
+  If you do not want to wrap some method then you should prefix the method name with "_".
+  If you do not want to use autoWrap on some method then you have to wrap it manually before calling autoWrap.
 
-type DeleteMethod<A extends unknown[]> = (...args: A) => Promise<number>
-
-type SaveMethod<T> = (record: T) => Promise<boolean>
-
-export class BaseRepository {
+  Naming convention:
+    * add... -> 
+      * Arguments: record that you want to add 
+      * Return type: IdType
+    * add...Many || addMany... -> 
+      * Arguments: array of records that you want to add 
+      * Return type: array of IdType or count of added records
+    * find... ->
+      * Arguments: any   
+      * Return type: record or undefined
+    * get... -> 
+      * Arguments: any
+      * Return type: array of records
+    * delete... ->
+      * Arguments: any
+      * Return type: count of deleted records  
+*/
+export abstract class BaseRepository {
   protected histogram: RepositoryHistogram
 
   constructor(
@@ -34,84 +74,6 @@ export class BaseRepository {
     this.histogram = metrics.repositoryHistogram
   }
 
-  protected knex(trx?: Knex.Transaction) {
-    return this.database.getKnex(trx)
-  }
-
-  protected wrapAny<A extends unknown[], R>(
-    method: AnyMethod<A, R>,
-  ): AnyMethod<A, R> {
-    return this.wrap(method, () => this.logger.debug({ method: method.name }))
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  protected wrapAdd<T, R extends number | string | String | Number>(
-    method: AddMethod<T, R>,
-  ): AddMethod<T, R> {
-    return this.wrap(method, (id) =>
-      this.logger.info({ method: method.name, id: id.valueOf() }),
-    )
-  }
-
-  protected wrapAddMany<T, R>(
-    method: AddManyMethodWithIds<T, R>,
-  ): AddManyMethodWithIds<T, R>
-  protected wrapAddMany<T>(
-    method: AddManyMethodWithCount<T>,
-  ): AddManyMethodWithCount<T>
-  protected wrapAddMany<T, R>(
-    method: AddManyMethod<T, R>,
-  ): AddManyMethod<T, R> {
-    const log = (idsOrCount: number | R[]) => {
-      const count =
-        typeof idsOrCount === 'number' ? idsOrCount : idsOrCount.length
-
-      this.logger.info({ method: method.name, count })
-    }
-
-    const fn = async (records: T[]) => {
-      if (records.length === 0) {
-        return []
-      }
-      const idsOrCount = await method.call(this, records)
-
-      return idsOrCount
-    }
-    Object.defineProperty(fn, 'name', { value: method.name })
-
-    return this.wrap(fn, log)
-  }
-
-  protected wrapGet<A extends unknown[], T>(
-    method: GetMethod<A, T>,
-  ): GetMethod<A, T> {
-    return this.wrap(method, (records) =>
-      this.logger.debug({ method: method.name, count: records.length }),
-    )
-  }
-
-  protected wrapFind<A extends unknown[], T>(
-    method: FindMethod<A, T>,
-  ): FindMethod<A, T> {
-    return this.wrap(method, (record) =>
-      this.logger.debug({ method: method.name, count: record ? 1 : 0 }),
-    )
-  }
-
-  protected wrapDelete<A extends unknown[]>(
-    method: DeleteMethod<A>,
-  ): DeleteMethod<A> {
-    return this.wrap(method, (count) =>
-      this.logger.info({ method: method.name, count }),
-    )
-  }
-
-  protected wrapSave<T>(method: SaveMethod<T>): SaveMethod<T> {
-    return this.wrap(method, (updated) =>
-      this.logger.info({ method: method.name, updated }),
-    )
-  }
-
   async runInTransaction(
     fun: (trx: Knex.Transaction) => Promise<void>,
   ): Promise<void> {
@@ -119,14 +81,130 @@ export class BaseRepository {
     await knex.transaction(fun)
   }
 
+  protected knex(trx?: Knex.Transaction) {
+    return this.database.getKnex(trx)
+  }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  autoWrap<T>(obj: T) {
+    const methodNames = Object.getOwnPropertyNames(
+      Object.getPrototypeOf(obj),
+    ) as unknown as (keyof T)[]
+
+    for (const methodName of methodNames) {
+      const method = obj[methodName]
+      if (
+        methodName === 'constructor' ||
+        typeof method !== 'function' ||
+        typeof methodName !== 'string' ||
+        Object.prototype.hasOwnProperty.call(method, 'wrapped') ||
+        methodName.startsWith('_')
+      ) {
+        continue
+      }
+
+      if (methodName.startsWith('get')) {
+        obj[methodName] = this.wrapGet(
+          method as unknown as GetMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (
+        methodName.startsWith('addMany') ||
+        (methodName.startsWith('add') && methodName.endsWith('Many'))
+      ) {
+        obj[methodName] = this.wrapAddMany(
+          method as unknown as AddManyMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (methodName.startsWith('add')) {
+        obj[methodName] = this.wrapAdd(
+          method as unknown as AddMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (methodName.startsWith('find')) {
+        obj[methodName] = this.wrapFind(
+          method as unknown as FindMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (methodName.startsWith('delete')) {
+        obj[methodName] = this.wrapDelete(
+          method as unknown as DeleteMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      throw new Error(
+        `Wrong repository method naming convention: ${methodName}`,
+      )
+    }
+  }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
+  protected wrapAny<T extends AnyMethod>(method: T): T {
+    return this.wrap(method, () => this.logger.debug({ method: method.name }))
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  protected wrapAdd<T extends AddMethod>(method: T): T {
+    return this.wrap(method, (id) =>
+      this.logger.info({ method: method.name, id: id.valueOf() }),
+    )
+  }
+
+  protected wrapGet<T extends GetMethod>(method: T): T {
+    return this.wrap(method, (records) =>
+      this.logger.debug({
+        method: method.name,
+        count: Array.isArray(records) ? records.length : 1,
+      }),
+    )
+  }
+
+  protected wrapFind<T extends FindMethod>(method: T): T {
+    return this.wrap(method, (record) =>
+      this.logger.debug({ method: method.name, count: record ? 1 : 0 }),
+    )
+  }
+
+  protected wrapDelete<T extends DeleteMethod>(method: T): T {
+    return this.wrap(method, (count) =>
+      this.logger.info({ method: method.name, count }),
+    )
+  }
+
+  protected wrapAddMany<T extends AddManyMethod>(method: T): T {
+    const fn = async (records: T[]) => {
+      if (records.length === 0) {
+        return []
+      }
+      return method.call(this, records)
+    }
+
+    return this.wrap(fn, (result) =>
+      this.logger.debug({
+        method: method.name,
+        count: typeof result === 'number' ? result : result.length,
+      }),
+    ) as T
+  }
+
   // adds execution time tracking
-  private wrap<A extends unknown[], R>(
-    method: AnyMethod<A, R>,
-    log: (result: R) => void,
-  ): AnyMethod<A, R> {
-    const fn = async (...args: A) => {
+  private wrap<T extends AnyMethod>(
+    method: T,
+    log: (result: Awaited<ReturnType<T>>) => void,
+  ): T {
+    /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
+    const fn = async (...args: Parameters<T>) => {
       const start = Date.now()
-      const result = await method.call(this, ...args)
+      const result: Awaited<ReturnType<T>> = await method.call(this, ...args)
       const timeMs = Date.now() - start
       this.histogram
         .labels({ repository: this.constructor.name, method: method.name })
@@ -134,7 +212,9 @@ export class BaseRepository {
       log(result)
       return result
     }
+    /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
     Object.defineProperty(fn, 'name', { value: method.name })
-    return fn
+    Object.defineProperty(fn, 'wrapped', { value: true })
+    return fn as T
   }
 }

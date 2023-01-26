@@ -4,7 +4,7 @@ import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface ReportRecord {
@@ -21,17 +21,7 @@ export const SIX_HOURS = UnixTime.HOUR * 6
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.getAll = this.wrapGet(this.getAll)
-    this.getDailyByProjectAndAsset = this.wrapGet(
-      this.getDailyByProjectAndAsset,
-    )
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<ReportRepository>>(this)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
@@ -74,23 +64,12 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  private getByProjectAndAssetQuery(
-    knex: Knex,
-    projectId: ProjectId,
-    assetId: AssetId,
-  ) {
-    return knex('reports')
-      .where('asset_id', assetId.toString())
-      .andWhere('project_id', projectId.toString())
-      .orderBy('unix_timestamp')
-  }
-
   async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await this.getByProjectAndAssetQuery(
+    const rows = await this._getByProjectAndAssetQuery(
       knex,
       projectId,
       assetId,
@@ -105,7 +84,7 @@ export class ReportRepository extends BaseRepository {
     from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await this.getByProjectAndAssetQuery(
+    const rows = await this._getByProjectAndAssetQuery(
       knex,
       projectId,
       assetId,
@@ -119,10 +98,21 @@ export class ReportRepository extends BaseRepository {
     from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
-    const rows = await this.getByProjectAndAssetQuery(knex, projectId, assetId)
+    const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
     return rows.map(toRecord)
+  }
+
+  private _getByProjectAndAssetQuery(
+    knex: Knex,
+    projectId: ProjectId,
+    assetId: AssetId,
+  ) {
+    return knex('reports')
+      .where('asset_id', assetId.toString())
+      .andWhere('project_id', projectId.toString())
+      .orderBy('unix_timestamp')
   }
 }
 

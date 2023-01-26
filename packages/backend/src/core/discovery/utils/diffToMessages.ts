@@ -1,26 +1,84 @@
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
+import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 
 export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
-  const header = `${wrapBoldAndItalic(name)} | detected changes`
-  const messages: string[] = ['']
-  let index = 0
+  const header = getHeader(name)
+  const overheadLength = header.length + wrapDiffCodeBlock('').length
 
-  for (const diff of diffs) {
-    const currentLength =
-      wrapDiffCodeBlock(messages[index]).length + header.length
-    const nextDiff = diffToString(diff)
+  const maxLength = MAX_MESSAGE_LENGTH - overheadLength
+  const messages = diffs.flatMap((diff) =>
+    contractDiffToMessages(diff, maxLength),
+  )
 
-    if (currentLength + nextDiff.length >= MAX_MESSAGE_LENGTH) {
-      index += 1
-      messages.push('')
-    }
+  const bundledMessages = bundleMessages(messages, maxLength)
 
-    messages[index] += nextDiff + '\n'
+  return bundledMessages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
+}
+
+export function contractDiffToMessages(
+  diff: DiscoveryDiff,
+  maxLength = MAX_MESSAGE_LENGTH,
+): string[] {
+  if (diff.type === 'created') {
+    return [`+ New contract: ${diff.name} | ${diff.address.toString()}\n\n`]
   }
 
-  const result = messages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
-  return result
+  if (diff.type === 'deleted') {
+    return [`- Deleted contract: ${diff.name} | ${diff.address.toString()}\n\n`]
+  }
+
+  const contractHeader = `${diff.name} | ${diff.address.toString()}\n\n`
+  const messages = diff.diff?.map(fieldDiffToMessage) ?? []
+
+  //bundle message is called second time to handle situation when
+  //diff in a single contract would result in a message larger than MAX_MESSAGE_LENGTH
+  const maxLengthAdjusted = maxLength - contractHeader.length
+  const bundledMessages = bundleMessages(messages, maxLengthAdjusted)
+
+  return bundledMessages.map((m) => `${contractHeader}${m}`)
+}
+
+// current implementation of message bundling works based on the assumption
+// that every element of messages array is no longer than MAX_MESSAGE_LENGTH
+export function bundleMessages(
+  messages: string[],
+  maxLength: number,
+): string[] {
+  const bundle: string[] = ['']
+  let index = 0
+
+  for (const message of messages) {
+    if (message.length + bundle[index].length > maxLength) {
+      index++
+      bundle.push('')
+    }
+
+    bundle[index] += message
+  }
+  return bundle
+}
+
+export function fieldDiffToMessage(diff: FieldDiff): string {
+  let message = ''
+
+  if (diff.key !== undefined) {
+    message += `${diff.key}\n`
+  }
+  if (diff.before) {
+    message += `- ${diff.before}\n`
+  }
+  if (diff.after) {
+    message += `+ ${diff.after}\n`
+  }
+
+  message += '\n'
+
+  return message
+}
+
+function getHeader(name: string) {
+  return `${wrapBoldAndItalic(name)} | detected changes`
 }
 
 export function wrapBoldAndItalic(content: string) {
@@ -33,31 +91,4 @@ export function wrapDiffCodeBlock(content: string) {
   const postfix = '```'
 
   return `${prefix}${content}${postfix}`
-}
-
-export function diffToString(diff: DiscoveryDiff): string {
-  if (diff.type === 'created') {
-    return `+ New contract: ${diff.name} | ${diff.address.toString()}\n`
-  }
-
-  if (diff.type === 'deleted') {
-    return `- Deleted contract: ${diff.name} | ${diff.address.toString()}\n`
-  }
-
-  let message = `${diff.name} | ${diff.address.toString()}\n\n`
-
-  for (const d of diff.diff ?? []) {
-    if (d.key !== undefined) {
-      message += `${d.key}\n`
-    }
-    if (d.before) {
-      message += `- ${d.before}\n`
-    }
-    if (d.after) {
-      message += `+ ${d.after}\n`
-    }
-    message += '\n'
-  }
-
-  return message
 }
