@@ -2,7 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { Badge, BadgeType } from '../badge/Badge'
+import { Badge } from '../badge/Badge'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
@@ -29,8 +29,9 @@ export function RiskCell({ item }: Props) {
       ) : (
         <Badge
           className={cx(item.description !== '' && 'Tooltip')}
-          type={item.sentiment === 'bad' ? BadgeType.ERROR : BadgeType.WARNING}
+          type={item.sentiment === 'bad' ? 'error' : 'warning'}
           title={item.description !== '' ? item.description : undefined}
+          oneSize
         >
           {item.value}
         </Badge>

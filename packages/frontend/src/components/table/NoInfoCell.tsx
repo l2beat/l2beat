@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Badge, BadgeType } from '../badge/Badge'
+import { Badge } from '../badge/Badge'
 
 export function NoInfoCell() {
   return (
-    <Badge type={BadgeType.GRAY} title="This item is still under review.">
+    <Badge type="gray" title="This item is still under review." oneSize>
       No info
     </Badge>
   )

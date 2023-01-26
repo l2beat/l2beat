@@ -1,52 +1,38 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-export enum BadgeType {
-  WARNING = 'WARNING',
-  ERROR = 'ERROR',
-  GRAY = 'GRAY',
-  BRIGHT_YELLOW = 'BRIGHT_YELLOW',
-  PURPLE = 'PURPLE',
-}
-
-export enum BadgeSize {
-  MD = 'MD',
-  SM = 'SM',
-}
+type BadgeType = 'error' | 'warning' | 'brightYellow' | 'gray' | 'purple'
 
 export interface BadgeProps {
   type: BadgeType
-  size?: BadgeSize
   className?: string
   children: ReactNode
   title?: string
+  oneSize?: boolean
 }
 
-const badgeClassnames: { [key in BadgeType | BadgeSize]: string } = {
-  [BadgeType.ERROR]: 'text-white bg-red-500',
-  [BadgeType.GRAY]:
-    'text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-800',
-  [BadgeType.WARNING]: 'text-black bg-yellow-500',
-  [BadgeType.BRIGHT_YELLOW]: 'bg-yellow-200 text-purple-700',
-  [BadgeType.PURPLE]: 'bg-pink-900 text-white',
-  [BadgeSize.MD]: 'text-sm',
-  [BadgeSize.SM]: 'text-xs',
+const badgeClassnames: { [key in BadgeType]: string } = {
+  error: 'text-white bg-red-500',
+  gray: 'text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-800',
+  warning: 'text-black bg-yellow-500',
+  brightYellow: 'bg-yellow-200 text-purple-700',
+  purple: 'bg-pink-900 text-white',
 }
 
 export function Badge({
   type,
-  size = BadgeSize.MD,
   className,
   children,
   title,
+  oneSize,
 }: BadgeProps) {
   return (
     <span
       className={cx(
         'px-1.5 py-px rounded font-medium',
+        oneSize ? 'text-sm' : 'text-2xs md:text-sm',
         title && 'Tooltip',
         badgeClassnames[type],
-        badgeClassnames[size],
         className,
       )}
       title={title}
