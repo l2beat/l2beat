@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { NewItemIcon } from '../icons/NewItemIcon'
+import { NewItemBadge } from '../badge/NewItemBadge'
 
 export interface MobileTabsProps {
   pages: {
@@ -32,7 +32,7 @@ export function MobileTabs({ pages }: MobileTabsProps) {
             )}
           >
             <span className={cx(page.new && 'inline-flex items-center gap-1')}>
-              {page.shortTitle} {page.new && <NewItemIcon />}
+              {page.shortTitle} {page.new && <NewItemBadge />}
             </span>
           </a>
         </li>

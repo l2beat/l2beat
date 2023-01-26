@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { NewItemIcon } from '../icons/NewItemIcon'
+import { NewItemBadge } from '../badge/NewItemBadge'
 
 export interface DesktopTabsProps {
   pages: {
@@ -54,7 +54,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
             )}
           >
             {page.icon} {page.fullTitle}
-            {page.new && <NewItemIcon className="-ml-1" />}
+            {page.new && <NewItemBadge className="-ml-1" />}
           </a>
         </li>
       ))}
