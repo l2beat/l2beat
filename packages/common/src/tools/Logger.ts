@@ -2,6 +2,7 @@ import { json } from '@l2beat/types'
 import chalk from 'chalk'
 import { inspect } from 'util'
 
+import { LogThrottler } from './LogThrottler'
 export enum LogLevel {
   NONE = 0,
   ERROR = 1,
@@ -20,7 +21,11 @@ export interface LoggerOptions {
 export type LoggerParameters = Record<string, json>
 
 export class Logger {
-  constructor(private readonly options: LoggerOptions) {}
+  private readonly logThrottler: LogThrottler
+
+  constructor(private readonly options: LoggerOptions) {
+    this.logThrottler = new LogThrottler(5, 10000, 20000)
+  }
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
   static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
@@ -83,6 +88,11 @@ export class Logger {
   }
 
   private print(level: string, parameters: LoggerParameters) {
+    const logKey = `${this.options.service} ${parameters.message ?? ''}`.trim()
+
+    this.logThrottler.add(logKey)
+    if (this.logThrottler.isThrottling(logKey)) return
+
     switch (this.options.format) {
       case 'json':
         return this.printJson(level, parameters)
@@ -113,11 +123,12 @@ export class Logger {
     const service = getPrettyService(this.options.service)
     let messageOut = ''
     if (typeof parameters.message === 'string') {
-      messageOut = ` ${parameters.message}`
+      messageOut = `${parameters.message}`
       delete parameters.message
     }
     const params = getPrettyParameters(parameters)
-    const str = `${time} ${levelOut}${service}${messageOut}${params}`
+    const str = `${time} ${levelOut}${service} ${messageOut}${params}`
+
     if (parameters.level === 'error') {
       console.error(str)
     } else {
