@@ -52,12 +52,12 @@ describe(CoingeckoClient.name, () => {
 
     it('throws on non-2XX result', async () => {
       const httpClient = mock<HttpClient>({
-        fetch: async () => new Response('', { status: 404 }),
+        fetch: async () => new Response('{}', { status: 404 }),
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 Not Found',
+        'Server responded with non-2XX result: 404 Not Found {}',
       )
     })
 
