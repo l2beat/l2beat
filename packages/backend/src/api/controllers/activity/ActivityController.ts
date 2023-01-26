@@ -25,6 +25,7 @@ export class ActivityController {
     const projectsCounts = await this.getPostprocessedDailyCounts()
     const layer2sCounts: DailyTransactionCountProjectsMap = new Map()
     let ethereumCounts: DailyTransactionCount[] | undefined
+
     for (const [projectId, counts] of projectsCounts) {
       if (projectId === ProjectId.ETHEREUM) {
         ethereumCounts = counts

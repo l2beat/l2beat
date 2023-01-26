@@ -56,11 +56,6 @@ export const aztec: Layer2 = {
         sinceTimestamp: new UnixTime(1614799636),
       },
     ],
-    transactionApi: {
-      type: 'aztec',
-      url: 'https://api.aztec.network/falafel-mainnet',
-      callsPerMinute: 3_000,
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
