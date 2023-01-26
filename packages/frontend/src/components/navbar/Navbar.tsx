@@ -112,7 +112,7 @@ export function Navbar(props: NavbarProps) {
             <SocialLinks {...props.socialLinks} />
           </ul>
           {props.showBridges && <VerticalBar />}
-          <ul className="h-full flex items-center gap-1">
+          <ul className="h-full flex items-center gap-1.5">
             <li className="h-full">
               <OutLink
                 className="flex items-center h-full px-2 font-medium"
