@@ -16,6 +16,7 @@ const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
 export class CoingeckoClient {
   private readonly timeoutMs = 10_000
+  private readonly newIds = new Map<string, CoingeckoId>()
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -52,7 +53,8 @@ export class CoingeckoClient {
     address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData> {
     try {
-      return await this.callMarketChartRange(coinId, vs_currency, from, to)
+      const id = this.newIds.get(address?.toString() ?? '') ?? coinId
+      return await this.callMarketChartRange(id, vs_currency, from, to)
     } catch (e) {
       if (!isCoingeckoIdError(e)) {
         throw e
@@ -117,6 +119,8 @@ export class CoingeckoClient {
         `Server responded with non-2XX result: Could not fetch the prices for ${oldId.toString()}`,
       )
     }
+
+    this.newIds.set(address.toString(), coingeckoSupported.id)
     return coingeckoSupported.id
   }
 
