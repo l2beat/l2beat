@@ -209,9 +209,7 @@ describe(CoingeckoClient.name, () => {
       )
     })
 
-    it('tries to obtain new id when coingecko changes it', async function () {
-      this.timeout(100000)
-
+    it('tries to obtain new id when coingecko changes it', async () => {
       const idInConfig = 'dai'
       const idSupportedByAPI = 'dai-supported'
       const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
@@ -246,7 +244,8 @@ describe(CoingeckoClient.name, () => {
             }),
           ),
       })
-      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
+      const apiKey = 'password'
+      const coingeckoClient = new CoingeckoClient(httpClient, apiKey)
 
       await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('dai'),
@@ -258,15 +257,15 @@ describe(CoingeckoClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
         [
-          `https://api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232`,
+          `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
           { timeout: 10000 },
         ],
         [
-          'https://api.coingecko.com/api/v3/coins/list?include_platform=true',
+          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
           { timeout: 10000 },
         ],
         [
-          `https://api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232`,
+          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
           { timeout: 10000 },
         ],
       ])
