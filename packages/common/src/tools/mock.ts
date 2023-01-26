@@ -43,7 +43,7 @@ export function mock<T>(overrides: Partial<T> = {}): MockedObject<T> {
   return proxy
 }
 
-function replaceFunctionsWithMocks<T>(object: T) {
+function replaceFunctionsWithMocks<T extends object>(object: T) {
   const clone = { ...object }
   for (const key of Object.keys(clone) as (keyof T)[]) {
     const value = clone[key]

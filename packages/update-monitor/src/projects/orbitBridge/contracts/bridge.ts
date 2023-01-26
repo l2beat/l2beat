@@ -11,7 +11,7 @@ import { addresses } from '../constants'
 
 function getTokenAddress(symbol: string): EthereumAddress {
   const tokenInfo = tokenList.find((t) => t.symbol === symbol)
-  if (!tokenInfo || !tokenInfo.address) {
+  if (!tokenInfo?.address) {
     throw new Error(`Token ${symbol} not found`)
   }
   return tokenInfo.address

@@ -2,7 +2,7 @@ import { Effect } from '../effects/effects'
 import { MouseMovedMessage } from '../messages'
 import { State } from '../state/State'
 import { getHoverIndex } from './view/getHoverIndex'
-import { getMilestoneHover } from './view/getMilestoneHover'
+import { getMilestoneHoverIndex } from './view/getMilestoneHoverIndex'
 
 const HOVER_BELOW_CHART = 12
 
@@ -15,12 +15,13 @@ export function updateMouseMoved(
   let showHoverAtIndex = getHoverIndex(message.mouseX, points)
   let showMilestoneHover: boolean | undefined = undefined
 
-  const milestoneHoverAtIndex = getMilestoneHover(
+  const milestoneHoverAtIndex = getMilestoneHoverIndex(
     message.mouseX,
     message.mouseY,
     state.view.chart?.points,
   )
-  if (milestoneHoverAtIndex) {
+
+  if (milestoneHoverAtIndex !== undefined) {
     showHoverAtIndex = milestoneHoverAtIndex
     showMilestoneHover = true
   }

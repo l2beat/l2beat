@@ -3,7 +3,7 @@ import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockMetrics } from '../../test/mocks/Metrics'
+import { createMockRepoMetrics } from '../../test/mocks/Metrics'
 import { BalanceRecord, BalanceRepository } from './BalanceRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
@@ -23,7 +23,7 @@ const mockBalance = (
 
 describe(BalanceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockMetrics()
+  const mockMetrics = createMockRepoMetrics()
   const repository = new BalanceRepository(database, Logger.SILENT, mockMetrics)
 
   const HOLDER_A = EthereumAddress.random()
