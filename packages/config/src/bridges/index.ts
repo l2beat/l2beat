@@ -3,6 +3,7 @@ import { aptos } from './aptos'
 import { avalanche } from './avalanche'
 import { cBridge } from './cBridge'
 import { connext } from './connext'
+import { debridge } from './debridge'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
 import { hop } from './hop'
@@ -15,6 +16,7 @@ import { opticsV1 } from './opticsV1'
 import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
+import { pNetwork } from './pNetwork'
 import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
@@ -36,6 +38,7 @@ export const bridges: Bridge[] = [
   aptos,
   cBridge,
   connext,
+  debridge,
   gravity,
   harmony,
   hop,
@@ -51,6 +54,7 @@ export const bridges: Bridge[] = [
   polygonplasma,
   polygonpos,
   polynetwork,
+  pNetwork,
   ronin,
   satellite,
   sollet,

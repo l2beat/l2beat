@@ -1,12 +1,12 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
 import { NewItemIcon } from '../icons/NewItemIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OutLink } from '../OutLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
-import { HorizontalBar } from './HorizontalBar'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
 
 export interface SidebarMenuProps {
@@ -79,7 +79,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </li>
             </ul>
           )}
-          <HorizontalBar className="my-6" />
+          <HorizontalSeparator className="my-6" />
           <ul className="font-medium flex flex-col gap-4">
             <li>
               <OutLink href={props.forumLink}>Forum</OutLink>
@@ -91,7 +91,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               <a href="/faq">FAQ</a>
             </li>
           </ul>
-          <HorizontalBar className="my-6" />
+          <HorizontalSeparator className="my-6" />
           <ul className="flex gap-4 mb-12">
             <SocialLinks {...props.socialLinks} />
           </ul>

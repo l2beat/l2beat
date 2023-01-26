@@ -20,6 +20,7 @@ export function getProjectDetails(
     permissionsSection: getPermissionsSection(project, verificationStatus),
     contractsSection: getContractSection(project, verificationStatus),
     milestones: project.milestones,
+    knowledgeNuggets: project.knowledgeNuggets,
     ...getTechnologyOverview(project),
   }
 }

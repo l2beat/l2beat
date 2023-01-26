@@ -3,11 +3,17 @@ import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
+import { createMockRepoMetrics } from '../../test/mocks/Metrics'
 import { ReportStatusRepository } from './ReportStatusRepository'
 
 describe(ReportStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new ReportStatusRepository(database, Logger.SILENT)
+  const mockMetrics = createMockRepoMetrics()
+  const repository = new ReportStatusRepository(
+    database,
+    Logger.SILENT,
+    mockMetrics,
+  )
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -65,5 +71,10 @@ describe(ReportStatusRepository.name, () => {
 
     const result = await repository.findLatestTimestamp()
     expect(result).toEqual(TIME_ONE)
+  })
+
+  it('finds latest timestamp when database is empty', async () => {
+    const result = await repository.findLatestTimestamp()
+    expect(result).toEqual(undefined)
   })
 })

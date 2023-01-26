@@ -29,11 +29,12 @@ export const optimism: Layer2 = {
       websites: ['https://optimism.io/'],
       apps: [],
       documentation: ['https://community.optimism.io'],
-      explorers: ['https://explorer.optimism.io'],
+      explorers: ['https://optimistic.etherscan.io'],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OptimismFND',
+        'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
@@ -338,6 +339,19 @@ export const optimism: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
+    {
+      name: 'Optimism’s Goerli Testnet migrated to Bedrock',
+      link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
+      date: '2023-01-13T00:00:00Z',
+      description: 'OP on Goerli, since Jan 2023 is running Bedrock.',
+    },
+    {
+      name: 'OP Stack Introduced',
+      link: 'https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs',
+      date: '2022-10-17T00:00:00Z',
+      description:
+        'OP Stack, modular, open-sourced blueprint o how to build scalable blockchains.',
+    },
     {
       ...MILESTONES.MAINNET_OPEN,
       link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',

@@ -28,7 +28,10 @@ export const nova: Layer2 = {
         'https://developer.offchainlabs.com/',
         'https://github.com/OffchainLabs/nitro/blob/master/docs/inside_anytrust.md',
       ],
-      explorers: ['https://a4ba-explorer.arbitrum.io/'],
+      explorers: [
+        'https://nova.arbiscan.io/',
+        'https://a4ba-explorer.arbitrum.io/',
+      ],
       repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: [
         'https://twitter.com/OffchainLabs',

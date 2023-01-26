@@ -3,7 +3,8 @@ import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 
-import { BaseRepository } from '../shared/BaseRepository'
+import { Metrics } from '../../../Metrics'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
 export interface ZksyncTransactionRecord {
@@ -13,13 +14,9 @@ export interface ZksyncTransactionRecord {
 }
 
 export class ZksyncTransactionRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.addMany = this.wrapAddMany(this.addMany)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
+    this.autoWrap<CheckConvention<ZksyncTransactionRepository>>(this)
   }
 
   async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
@@ -34,7 +31,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
     return await knex('activity.zksync').delete()
   }
 
-  async getLastTimestamp(): Promise<UnixTime | undefined> {
+  async findLastTimestamp(): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     const row = await knex('activity.zksync')
       .orderBy('block_number', 'desc')

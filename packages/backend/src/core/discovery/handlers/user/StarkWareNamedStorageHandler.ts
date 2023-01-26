@@ -3,10 +3,10 @@ import { Bytes, EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
-import { logHandler } from '../utils/logHandler'
 
 export type StarkWareNamedStorageHandlerDefinition = z.infer<
   typeof StarkWareNamedStorageHandlerDefinition
@@ -23,13 +23,14 @@ export class StarkWareNamedStorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StarkWareNamedStorageHandlerDefinition,
+    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    logHandler(this.field, [
+    this.logger.logExecution(this.field, [
       'Reading named storage at ',
       JSON.stringify(this.definition.tag),
     ])

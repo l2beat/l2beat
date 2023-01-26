@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/common'
 import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { BalanceRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { Metrics } from '../../Metrics'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface BalanceRecord {
@@ -18,17 +19,9 @@ export interface DataBoundary {
 }
 
 export class BalanceRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.getByHolderAndAsset = this.wrapGet(this.getByHolderAndAsset)
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
-    this.getAll = this.wrapGet(this.getAll)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
+    this.autoWrap<CheckConvention<BalanceRepository>>(this)
   }
 
   async getByTimestamp(timestamp: UnixTime): Promise<BalanceRecord[]> {

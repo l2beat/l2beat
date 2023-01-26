@@ -2,7 +2,8 @@ import { assert, Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { AggregateReportRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { Metrics } from '../../Metrics'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface AggregateReportRecord {
@@ -13,16 +14,9 @@ export interface AggregateReportRecord {
 }
 
 export class AggregateReportRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.getDaily = this.wrapGet(this.getDaily)
-    this.getAll = this.wrapGet(this.getAll)
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
-    this.findLatest = this.wrapFind(this.findLatest)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
+    this.autoWrap<CheckConvention<AggregateReportRepository>>(this)
   }
 
   async getDaily(): Promise<AggregateReportRecord[]> {

@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { BlockNumberRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { Metrics } from '../../Metrics'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface BlockNumberRecord {
@@ -11,16 +12,9 @@ export interface BlockNumberRecord {
 }
 
 export class BlockNumberRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-
-    this.add = this.wrapAdd(this.add)
-    this.getAll = this.wrapGet(this.getAll)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-
-    /* eslint-enable @typescript-eslint/unbound-method */
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
+    this.autoWrap<CheckConvention<BlockNumberRepository>>(this)
   }
 
   async add(record: BlockNumberRecord) {

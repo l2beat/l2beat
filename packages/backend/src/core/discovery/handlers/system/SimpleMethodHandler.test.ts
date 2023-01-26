@@ -2,6 +2,7 @@ import { mock } from '@l2beat/common'
 import { Bytes, EthereumAddress } from '@l2beat/types'
 import { expect } from 'earljs'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { SimpleMethodHandler } from './SimpleMethodHandler'
 
@@ -20,6 +21,7 @@ describe(SimpleMethodHandler.name, () => {
 
     const handler = new SimpleMethodHandler(
       'function balanceOf() view returns (uint256)',
+      DiscoveryLogger.SILENT,
     )
     expect(handler.field).toEqual('balanceOf')
 
@@ -33,6 +35,7 @@ describe(SimpleMethodHandler.name, () => {
   it('handles a revert', async () => {
     const handler = new SimpleMethodHandler(
       'function balanceOf() view returns (uint256)',
+      DiscoveryLogger.SILENT,
     )
 
     const provider = mock<DiscoveryProvider>({
@@ -51,6 +54,7 @@ describe(SimpleMethodHandler.name, () => {
   it('handles any other error', async () => {
     const handler = new SimpleMethodHandler(
       'function balanceOf() view returns (uint256)',
+      DiscoveryLogger.SILENT,
     )
 
     const provider = mock<DiscoveryProvider>({

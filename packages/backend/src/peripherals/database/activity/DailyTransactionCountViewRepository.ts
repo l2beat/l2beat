@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/common'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { DailyTransactionCountRow } from 'knex/types/tables'
 
-import { BaseRepository } from '../shared/BaseRepository'
+import { Metrics } from '../../../Metrics'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
 export interface DailyTransactionCountRecord {
@@ -12,12 +13,12 @@ export interface DailyTransactionCountRecord {
 }
 
 export class DailyTransactionCountViewRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
     /* eslint-disable @typescript-eslint/unbound-method */
     this.refresh = this.wrapAny(this.refresh)
-    this.getDailyCounts = this.wrapGet(this.getDailyCounts)
     /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<DailyTransactionCountViewRepository>>(this)
   }
 
   async refresh(): Promise<void> {

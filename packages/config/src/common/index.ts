@@ -1,3 +1,4 @@
+export * from './KnowledgeNugget'
 export * from './Milestone'
 export * from './ProjectContracts'
 export * from './ProjectEscrow'

@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/common'
 import { Knex } from 'knex'
 import { SequenceProcessorRow } from 'knex/types/tables'
 
-import { BaseRepository } from './shared/BaseRepository'
+import { Metrics } from '../../Metrics'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface SequenceProcessorRecord {
@@ -12,28 +13,21 @@ export interface SequenceProcessorRecord {
 }
 
 export class SequenceProcessorRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
-    super(database, logger)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdate = this.wrapAny(this.addOrUpdate)
-    this.getById = this.wrapAny(this.getById)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
+    this.autoWrap<CheckConvention<SequenceProcessorRepository>>(this)
   }
 
-  async addOrUpdate(
-    record: SequenceProcessorRecord,
-    trx?: Knex.Transaction,
-  ): Promise<void> {
+  async addOrUpdate(record: SequenceProcessorRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     await knex('sequence_processor')
       .insert(toRow(record))
       .onConflict('id')
       .merge()
+    return record.id
   }
 
-  async getById(id: string): Promise<SequenceProcessorRecord | undefined> {
+  async findById(id: string): Promise<SequenceProcessorRecord | undefined> {
     const knex = await this.knex()
     const row = await knex('sequence_processor').where('id', id).first()
     return row ? toRecord(row) : undefined

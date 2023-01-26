@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/types'
-import chalk from 'chalk'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { getMetadata } from './getMetadata'
 import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
@@ -23,6 +23,7 @@ export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   config: DiscoveryConfig,
+  logger: DiscoveryLogger,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
   const overrides = config.overrides?.[address.toString()]
 
@@ -33,15 +34,9 @@ export async function analyzeItem(
   )
 
   if (proxyDetection) {
-    console.log(
-      '  Proxy detected:',
-      chalk.bgRed.whiteBright(' ' + proxyDetection.upgradeability.type + ' '),
-    )
+    logger.proxyDetected(proxyDetection.upgradeability.type)
   } else if (overrides?.proxyType) {
-    console.log(
-      '  Manual proxy detection failed:',
-      chalk.bgRed.whiteBright(' ' + overrides.proxyType + ' '),
-    )
+    logger.proxyDetectionFailed(overrides.proxyType)
   }
 
   const metadata = await getMetadata(
@@ -51,12 +46,12 @@ export async function analyzeItem(
   )
 
   if (metadata.isEOA) {
-    console.log('  Type:', chalk.blue('EOA'))
+    logger.eoa()
   } else {
-    console.log('  Name:', chalk.bold(metadata.name))
+    logger.name(metadata.name)
   }
 
-  const handlers = getHandlers(metadata.abi, overrides)
+  const handlers = getHandlers(metadata.abi, overrides, logger)
   const parameters = await executeHandlers(provider, address, handlers)
 
   const relatives = parameters

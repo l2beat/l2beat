@@ -1,5 +1,7 @@
 # Contributing to this repository
 
+🔍 step-by-step guide for creating a Pull Request - [link](https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf)
+
 ## Don't see your issue? Open one
 
 You can browse [existing issues](https://github.com/l2beat/l2beat/issues) on our github repository.

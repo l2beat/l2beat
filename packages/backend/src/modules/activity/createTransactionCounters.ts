@@ -12,9 +12,11 @@ import { createStarknetCounter } from '../../core/activity/counters/StarknetCoun
 import { createZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { Clock } from '../../core/Clock'
+import { Metrics } from '../../Metrics'
 import { Project } from '../../model'
 import { BlockTransactionCountRepository } from '../../peripherals/database/activity/BlockTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/activity/StarkexCountRepository'
+import { ZksyncTransactionRepository } from '../../peripherals/database/activity/ZksyncTransactionRepository'
 import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { StarkexClient } from '../../peripherals/starkex'
@@ -25,6 +27,7 @@ export function createTransactionCounters(
   http: HttpClient,
   database: Database,
   clock: Clock,
+  metrics: Metrics,
 ): TransactionCounter[] {
   assert(config.activity)
   const {
@@ -46,14 +49,25 @@ export function createTransactionCounters(
   })
 
   // shared repositories
-  const blockRepository = new BlockTransactionCountRepository(database, logger)
+  const blockRepository = new BlockTransactionCountRepository(
+    database,
+    logger,
+    metrics,
+  )
   const starkexRepository = new StarkexTransactionCountRepository(
     database,
     logger,
+    metrics,
   )
   const sequenceProcessorRepository = new SequenceProcessorRepository(
     database,
     logger,
+    metrics,
+  )
+  const zksyncRepository = new ZksyncTransactionRepository(
+    database,
+    logger,
+    metrics,
   )
 
   // ethereum is kept separately in backend config, because it is not a layer 2 project
@@ -74,7 +88,7 @@ export function createTransactionCounters(
     .filter(hasTransactionApi)
     .map(mergeWithActivityConfigProjects(activityConfigProjects))
     .concat([ethereum])
-    .filter(isProjectAllowed(allowedProjectIds, logger))
+    .filter(isProjectAllowed(allowedProjectIds, logger, metrics))
     .map(({ projectId, transactionApi }) => {
       switch (transactionApi.type) {
         case 'starkex':
@@ -84,6 +98,7 @@ export function createTransactionCounters(
             starkexClient,
             sequenceProcessorRepository,
             logger,
+            metrics,
             clock,
             {
               ...transactionApi,
@@ -97,6 +112,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'aztecconnect':
@@ -106,6 +122,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'starknet':
@@ -115,6 +132,7 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
+            metrics,
             clock,
             transactionApi,
           )
@@ -122,9 +140,10 @@ export function createTransactionCounters(
           return createZksyncCounter(
             projectId,
             http,
-            database,
+            zksyncRepository,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'loopring':
@@ -134,6 +153,7 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
+            metrics,
             transactionApi,
           )
         case 'rpc':
@@ -142,6 +162,7 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
+            metrics,
             clock,
             transactionApi,
           )
@@ -176,15 +197,18 @@ function mergeWithActivityConfigProjects(
 function isProjectAllowed(
   allowedProjectIds: string[] | undefined,
   logger: Logger,
+  metrics: Metrics,
 ) {
   return (p: { projectId: ProjectId }) => {
     const noIdsSpecified = allowedProjectIds === undefined
     const projectIncluded = allowedProjectIds?.includes(p.projectId.toString())
-    if (noIdsSpecified || projectIncluded) {
-      return true
-    } else {
+    const includedInApi = !!(noIdsSpecified || projectIncluded)
+    if (!includedInApi) {
       logger.info(`Skipping ${p.projectId.toString()} processor`)
-      return false
     }
+    metrics.activityIncludedInApi
+      .labels({ project: p.projectId.toString() })
+      .set(Number(includedInApi))
+    return includedInApi
   }
 }

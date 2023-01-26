@@ -3,7 +3,7 @@ import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
 import { EventTracker } from '../EventTracker'
-import { getErrorMessage, Logger } from '../Logger'
+import { getErrorMessage, getErrorStackTrace, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
 
@@ -144,6 +144,7 @@ export class TaskQueue<T> {
       this.logger.warn('Error during task execution', {
         job: JSON.stringify(job),
         error: getErrorMessage(error),
+        stack: getErrorStackTrace(error),
       })
       this.handleFailure(job, error)
     } finally {
