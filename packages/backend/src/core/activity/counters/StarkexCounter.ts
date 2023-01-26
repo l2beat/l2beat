@@ -57,10 +57,12 @@ export function createStarkexCounter(
   )
 
   return new TransactionCounter(projectId, processor, () =>
-    starkexRepository.getLastTimestampByProjectId(projectId),
+    starkexRepository.findLastTimestampByProjectId(projectId),
   )
 }
 
-function getStarkexLastDay(timestamp: UnixTime) {
-  return timestamp.toStartOf('day').add(-1, 'days').toDays()
+/** @internal */
+export function getStarkexLastDay(timestamp: UnixTime) {
+  // StarkEx APIs have inherent delay
+  return timestamp.add(-1, 'days').add(-4, 'hours').toStartOf('day').toDays()
 }

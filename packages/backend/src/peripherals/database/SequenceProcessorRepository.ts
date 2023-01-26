@@ -3,7 +3,7 @@ import { Knex } from 'knex'
 import { SequenceProcessorRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'
-import { BaseRepository } from './shared/BaseRepository'
+import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface SequenceProcessorRecord {
@@ -15,26 +15,19 @@ export interface SequenceProcessorRecord {
 export class SequenceProcessorRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdate = this.wrapAny(this.addOrUpdate)
-    this.getById = this.wrapAny(this.getById)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<SequenceProcessorRepository>>(this)
   }
 
-  async addOrUpdate(
-    record: SequenceProcessorRecord,
-    trx?: Knex.Transaction,
-  ): Promise<void> {
+  async addOrUpdate(record: SequenceProcessorRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     await knex('sequence_processor')
       .insert(toRow(record))
       .onConflict('id')
       .merge()
+    return record.id
   }
 
-  async getById(id: string): Promise<SequenceProcessorRecord | undefined> {
+  async findById(id: string): Promise<SequenceProcessorRecord | undefined> {
     const knex = await this.knex()
     const row = await knex('sequence_processor').where('id', id).first()
     return row ? toRecord(row) : undefined
