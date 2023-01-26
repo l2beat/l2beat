@@ -131,7 +131,7 @@ export class CoingeckoClient {
     }
     const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
     if (!res.ok) {
-      const body = JSON.stringify(await res.json())
+      const body = await res.text()
       throw new Error(
         `Server responded with non-2XX result: ${res.status} ${res.statusText} ${body}`,
       )
