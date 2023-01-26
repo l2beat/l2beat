@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
 function nullish<T extends z.ZodTypeAny>(schema: T) {
-  return z.union([z.undefined(), z.null(), schema]);
+  return z.union([z.undefined(), z.null(), schema])
 }
 
 export type RouteConfig = z.infer<typeof RouteConfig>
