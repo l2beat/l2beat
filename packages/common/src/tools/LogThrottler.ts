@@ -1,4 +1,4 @@
-type LogInfo = {
+interface LogInfo {
   count: number
   throttleCount: number
   isThrottling: boolean
@@ -42,7 +42,7 @@ export class LogThrottler {
     logInfo.isThrottling = true
 
     setTimeout(() => {
-      if (logInfo.throttleCount != 0) {
+      if (logInfo.throttleCount !== 0) {
         console.log(
           `[LOG THROTTLER] ${logKey} was logged ${
             logInfo.throttleCount
