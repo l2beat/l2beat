@@ -2,12 +2,13 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { NewItemIcon } from '../icons/NewItemIcon'
+import { NewItemBadge } from '../badge/NewItemBadge'
 import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
+import { HiringBadge } from './HiringBadge'
 import { PageLink } from './PageLink'
 import { SidebarMenu } from './SidebarMenu'
 import {
@@ -23,6 +24,7 @@ export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showBridges: boolean
+  showHiring: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -35,6 +37,7 @@ export function getNavbarProps(
   return {
     showBanner: config.features.banner,
     forumLink: config.links.forum,
+    showHiring: config.features.hiring,
     showBridges: config.features.bridges,
     showActivity: config.features.activity,
     socialLinks: getSocialLinksProps(config),
@@ -49,6 +52,7 @@ export function Navbar(props: NavbarProps) {
         showBanner={props.showBanner}
         showActivity={props.showActivity}
         showBridges={props.showBridges}
+        showHiring={props.showHiring}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
@@ -92,7 +96,7 @@ export function Navbar(props: NavbarProps) {
                   href="/bridges/tvl"
                 >
                   Bridges
-                  <NewItemIcon className="ml-2" />
+                  <NewItemBadge className="ml-2" />
                 </PageLink>
               </li>
             </>
@@ -108,7 +112,7 @@ export function Navbar(props: NavbarProps) {
             <SocialLinks {...props.socialLinks} />
           </ul>
           {props.showBridges && <VerticalBar />}
-          <ul className="h-full flex items-center">
+          <ul className="h-full flex items-center gap-1.5">
             <li className="h-full">
               <OutLink
                 className="flex items-center h-full px-2 font-medium"
@@ -130,6 +134,17 @@ export function Navbar(props: NavbarProps) {
                 FAQ
               </PageLink>
             </li>
+            {props.showHiring && (
+              <li className="h-full">
+                <OutLink
+                  className="flex items-center h-full px-2 font-medium"
+                  href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+                >
+                  Jobs
+                  <HiringBadge className="ml-2" />
+                </OutLink>
+              </li>
+            )}
           </ul>
           <VerticalBar />
           <DarkThemeToggle />
