@@ -1,7 +1,12 @@
 {
   "$schema": "../config.schema.json",
   "name": "boba",
-  "initialAddresses": ["0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"],
+  "initialAddresses": [
+    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00", //Boba Rollup
+    "0x1A26ef6575B7BBB864d984D9255C069F6c361a14", //L1LiquidityPool
+    "0xC891F466e53f40603250837282eAE4e22aD5b088", //L1 NFT Bridge
+    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00" // L1StandardBridge
+  ],
   "overrides": {
     "0xfBd2541e316948B259264c02f370eD088E04c3Db": {
       "ignoreMethods": ["getQueueElement"]
@@ -43,6 +48,11 @@
           "type": "call",
           "method": "getAddress",
           "args": ["L1LiquidityPool"]
+        },
+        "L1MultiMessageRelayer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1MultiMessageRelayer"]
         },
         "L1MultiMessageRelayerFast": {
           "type": "call",

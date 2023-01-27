@@ -1,6 +1,6 @@
 {
   "name": "boba",
-  "blockNumber": 16470529,
+  "blockNumber": 16497084,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -12,11 +12,11 @@
         "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
       },
       "values": {
-        "currentDepositInfoHash": "0xe4898f7ccb096b476708c24b2817cd53f77412f153db70e0a38e4c1de7357ad9",
+        "currentDepositInfoHash": "0x8077bc4b0e2255a14a8da77546d2f47b4b7cca955e4124e4a0b79f97f7927837",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "lastHashUpdateBlock": 16466637,
+        "lastHashUpdateBlock": 16495830,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
-        "priorDepositInfoHash": "0x690984050b8240ca7d0746291a4aed81fd169a2b36a7b55c5dabad231135908c"
+        "priorDepositInfoHash": "0x8e12e71f4a777e27d34867b2beb784f3c3f06691639c5bd92cc6c94109bdfafd"
       }
     },
     {
@@ -54,6 +54,7 @@
         "ChainStorageContainerSCCbatches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "L1CrossDomainMessenger": "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
         "L1LiquidityPool": "0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0",
+        "L1MultiMessageRelayer": "0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
         "L1MultiMessageRelayerFast": "0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
         "L1NFTBridge": "0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82",
         "OVM_Proposer": "0x5558c63d5bf229450995adc160c023C9F4d4bE80",
@@ -73,9 +74,9 @@
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1674485603,
-        "getTotalBatches": 13102,
-        "getTotalElements": 947764,
+        "getLastSequencerTimestamp": 1674808079,
+        "getTotalBatches": 13188,
+        "getTotalElements": 951514,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "SEQUENCER_PUBLISH_WINDOW": 1800
       }
@@ -99,6 +100,17 @@
       "name": "L1MultiMessageRelayerFast",
       "address": "0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
       "code": "https://etherscan.deth.net/address/0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      }
+    },
+    {
+      "name": "L1MultiMessageRelayer",
+      "address": "0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
+      "code": "https://etherscan.deth.net/address/0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -155,8 +167,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x00000000000000000000000000000000000063ce9f6300000e7634",
-        "length": 13102,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000063d38b0f00000e84da",
+        "length": 13188,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "StateCommitmentChain"
       }
@@ -169,8 +181,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000fb51ed0063ceacde0000005c6000000e7676",
-        "length": 14854,
+        "getGlobalMetadata": "0x000000000000000000fbb8f80063d3880e0000005c7c00000e84da",
+        "length": 14943,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
       }
@@ -186,13 +198,13 @@
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 16470509,
-        "getLastTimestamp": 1674489054,
-        "getNextQueueIndex": 23648,
+        "getLastBlockNumber": 16496888,
+        "getLastTimestamp": 1674807310,
+        "getNextQueueIndex": 23676,
         "getNumPendingQueueElements": 0,
-        "getQueueLength": 23648,
-        "getTotalBatches": 14854,
-        "getTotalElements": 947830,
+        "getQueueLength": 23676,
+        "getTotalBatches": 14943,
+        "getTotalElements": 951514,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -225,6 +237,22 @@
       },
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      }
+    },
+    {
+      "name": "Proxy__L1LiquidityPoolArguments",
+      "address": "0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
+      "code": "https://etherscan.deth.net/address/0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "Lib_ResolvedDelegateProxy",
+      "address": "0xC891F466e53f40603250837282eAE4e22aD5b088",
+      "code": "https://etherscan.deth.net/address/0xC891F466e53f40603250837282eAE4e22aD5b088",
+      "upgradeability": {
+        "type": "immutable"
       }
     }
   ],
@@ -295,6 +323,12 @@
       "function resolve(string _name) view returns (address)",
       "function setGlobalMetadata(bytes27 _globalMetadata)"
     ],
+    "0x1A26ef6575B7BBB864d984D9255C069F6c361a14": [
+      "constructor(address _proxyTarget)",
+      "function addressManager(string) view returns (address)",
+      "function setTargetContract(address _proxyTarget)",
+      "function transferProxyOwnership()"
+    ],
     "0x2d6134Ac3e480fBDD263B7163d333dCA285f9622": [
       "constructor(address _libAddressManager)",
       "function batchRelayMessages(tuple(address target, address sender, bytes message, uint256 messageNonce, tuple(bytes32 stateRoot, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) stateRootBatchHeader, tuple(uint256 index, bytes32[] siblings) stateRootProof, bytes stateTrieWitness, bytes storageTrieWitness) proof)[] _messages)",
@@ -315,6 +349,12 @@
       "function push(bytes32 _object)",
       "function resolve(string _name) view returns (address)",
       "function setGlobalMetadata(bytes27 _globalMetadata)"
+    ],
+    "0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B": [
+      "constructor(address _libAddressManager)",
+      "function batchRelayMessages(tuple(address target, address sender, bytes message, uint256 messageNonce, tuple(bytes32 stateRoot, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) stateRootBatchHeader, tuple(uint256 index, bytes32[] siblings) stateRootProof, bytes stateTrieWitness, bytes storageTrieWitness) proof)[] _messages)",
+      "function libAddressManager() view returns (address)",
+      "function resolve(string _name) view returns (address)"
     ],
     "0x60660e6CDEb423cf847dD11De4C473130D65b627": [
       "constructor(address _libAddressManager)",
@@ -381,6 +421,12 @@
       "function lastHashUpdateBlock() view returns (uint256)",
       "function messenger() view returns (address)",
       "function priorDepositInfoHash() view returns (bytes32)"
+    ],
+    "0xC891F466e53f40603250837282eAE4e22aD5b088": [
+      "constructor(address _proxyTarget)",
+      "function addressManager(string) view returns (address)",
+      "function setTargetContract(address _proxyTarget)",
+      "function transferProxyOwnership(address _newOwner)"
     ],
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": [
       "constructor(address _owner)",

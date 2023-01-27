@@ -260,7 +260,7 @@ export const bobanetwork: Layer2 = {
         description: 'Liquidity Pool manager for fast withdrawal facility.',
         upgradeability: {
           type: 'EIP1967',
-          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+          admin: '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
           implementation: '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
         },
       },
@@ -270,6 +270,7 @@ export const bobanetwork: Layer2 = {
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
         address: '0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089',
       },
+      // This Proxy is a L1ChugSplashProxy with a typical EIP1967 pattern. 
       {
         name: 'L1StandardBridge',
         address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
@@ -281,13 +282,14 @@ export const bobanetwork: Layer2 = {
           admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
         },
       },
+      // L1NFTBridge Proxy even though is called ResolvedDelegateProxy it does not use external lib manager
       {
         name: 'L1NFTBridge',
         address: '0xC891F466e53f40603250837282eAE4e22aD5b088',
         description: 'Standard NFT bridge.',
         upgradeability: {
           type: 'EIP1967',
-          implementation: '0xb8888346C0caBF99b6F9C35d028590Dee32684aE',
+          implementation: '0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82',
           admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
         },
       },
