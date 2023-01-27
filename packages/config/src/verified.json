@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-01-20T14:41:04.816Z",
+  "updatedAt": "2023-01-27T12:38:01.005Z",
   "projects": {
     "across-v2": true,
     "apex": true,
@@ -38,6 +38,7 @@
     "optimism": true,
     "orbit": true,
     "orbiter": true,
+    "pNetwork": true,
     "polygon-plasma": true,
     "polygon-pos": true,
     "polynetwork": false,
@@ -294,6 +295,7 @@
     "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD": true,
     "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": true,
     "0x8C3B53F450E53FF14D8C9449465F79ff40668966": true,
+    "0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82": true,
     "0x8e972b354E6933275513C355Ee14D44A832aD2d9": true,
     "0x8eB3b7D8498a6716904577b2579e1c313d48E347": true,
     "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": true,
@@ -350,7 +352,6 @@
     "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00": true,
     "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af": true,
     "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC": true,
-    "0xb8888346C0caBF99b6F9C35d028590Dee32684aE": true,
     "0xb8901acB165ed027E32754E0FFe830802919727f": true,
     "0xB92336759618F55bd0F8313bd843604592E27bd8": true,
     "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": true,
