@@ -270,7 +270,7 @@ export const bobanetwork: Layer2 = {
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
         address: '0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089',
       },
-      // This Proxy is a L1ChugSplashProxy with a typical EIP1967 pattern. 
+      // This Proxy is a L1ChugSplashProxy with a typical EIP1967 pattern.
       {
         name: 'L1StandardBridge',
         address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
