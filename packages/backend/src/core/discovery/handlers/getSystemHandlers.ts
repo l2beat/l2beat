@@ -17,10 +17,10 @@ export function getSystemHandlers(
   const arrayHandlers: Handler[] = []
 
   for (const fn of Object.values(abi.functions)) {
-    if (
-      (fn.stateMutability !== 'view' && !fn.constant) ||
-      overrides?.ignoreMethods?.includes(fn.name)
-    ) {
+    if (fn.stateMutability !== 'view' && !fn.constant) {
+      continue
+    } else if (overrides?.ignoreMethods?.includes(fn.name)) {
+      logger.log(`  Skipping ${fn.name}`)
       continue
     } else if (fn.inputs.length === 0) {
       methodHandlers.push(new SimpleMethodHandler(fn, logger))
