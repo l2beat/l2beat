@@ -1,0 +1,25 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "polygonpos",
+  "initialAddresses": [
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+    "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+  ],
+  "overrides": {
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": {
+      "ignoreMethods": ["headerBlocks"],
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "currentHeaderBlock",
+        "getLastChildBlock"
+      ]
+    },
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": {
+      "ignoreInWatchMode": ["counter"]
+    },
+    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}
