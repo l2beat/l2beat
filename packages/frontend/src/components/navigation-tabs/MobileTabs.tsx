@@ -16,12 +16,12 @@ export function MobileTabs({ pages }: MobileTabsProps) {
   return (
     <ul
       className={cx(
-        'flex md:hidden gap-2 py-2 justify-center items-center -mx-4',
+        'flex md:hidden gap-2 py-2 px-4 justify-center items-center -mx-4',
         'bg-gray-100 dark:bg-gray-950 border-b border-b-gray-200 dark:border-b-gray-850',
       )}
     >
       {pages.map((page, i) => (
-        <li key={i} className={cx('w-28 max-w-[27vw]')}>
+        <li key={i} className="w-28">
           <a
             href={page.link}
             className={cx(
