@@ -1,0 +1,78 @@
+{
+  "name": "allbridge",
+  "blockNumber": 16519515,
+  "contracts": [
+    {
+      "name": "Bridge",
+      "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
+      "code": "https://etherscan.deth.net/address/0xA314330482f325D38A83B492EF6B006224a3bea9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+        "chainId": 1,
+        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "wormholeMessenger": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "code": "https://etherscan.deth.net/address/0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+      "code": "https://etherscan.deth.net/address/0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    }
+  ],
+  "eoas": [
+    "0x01a494079DCB715f622340301463cE50cd69A4D0"
+  ],
+  "abis": {
+    "0xA314330482f325D38A83B492EF6B006224a3bea9": [
+      "constructor(uint8 _chainId, address _allbridgeMessenger, address _wormholeMessenger, address _gasOracle)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Received(address, uint256)",
+      "event TokensSent(uint256 amount, bytes32 recipient, uint8 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger)",
+      "function addBridgeToken(uint8 chainId_, bytes32 tokenAddress_)",
+      "function addPool(address pool, bytes32 token)",
+      "function allbridgeMessenger() view returns (address)",
+      "function chainId() view returns (uint8)",
+      "function gasUsage(uint8) view returns (uint256)",
+      "function getMessageCost(uint8 chainId, uint8 protocol) view returns (uint256)",
+      "function getTransactionCost(uint8 chainId_) view returns (uint256)",
+      "function hasReceivedMessage(bytes32 message, uint8 protocol) view returns (bool)",
+      "function hasSentMessage(bytes32 message) view returns (bool)",
+      "function hashMessage(uint256 amount, bytes32 recipient, uint8 sourceChainId, uint8 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger) pure returns (bytes32)",
+      "function otherBridgeTokens(uint8, bytes32) view returns (bool)",
+      "function otherBridges(uint8) view returns (bytes32)",
+      "function owner() view returns (address)",
+      "function pools(bytes32) view returns (address)",
+      "function processedMessages(bytes32) view returns (bool)",
+      "function receiveTokens(uint256 amount, bytes32 recipient, uint8 sourceChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger)",
+      "function registerBridge(uint8 chainId_, bytes32 bridgeAddress_)",
+      "function removeBridgeToken(uint8 chainId_, bytes32 tokenAddress_)",
+      "function renounceOwnership()",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function setAllbridgeMessenger(address _allbridgeMessenger)",
+      "function setGasOracle(address gasOracle_)",
+      "function setGasUsage(uint8 chainId_, uint256 gasUsage_)",
+      "function setWormholeMessenger(address _wormholeMessenger)",
+      "function swap(uint256 amount, bytes32 token, bytes32 receiveToken, address recipient)",
+      "function swapAndBridge(bytes32 token, uint256 amount, bytes32 recipient, uint8 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger) payable",
+      "function transferOwnership(address newOwner)",
+      "function withdrawGasTokens(uint256 amount)",
+      "function wormholeMessenger() view returns (address)"
+    ]
+  }
+}
