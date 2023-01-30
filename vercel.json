@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://protocolbeat.herokuapp.com/:match*"
+    }
+  ],
+  "trailingSlash": false
+}
