@@ -15,7 +15,7 @@ export class LogThrottler {
     this.recentLogs = new Map<string, LogInfo>()
   }
 
-  add(logKey: string) {
+  add(logKey: string): void {
     let logInfo = this.recentLogs.get(logKey)
 
     if (!logInfo) {
@@ -34,11 +34,11 @@ export class LogThrottler {
     }
   }
 
-  isThrottling(logKey: string) {
+  isThrottling(logKey: string): boolean | undefined {
     return this.recentLogs.get(logKey)?.isThrottling
   }
 
-  private throttle(logKey: string, logInfo: LogInfo) {
+  private throttle(logKey: string, logInfo: LogInfo): void {
     logInfo.isThrottling = true
 
     setTimeout(() => {
@@ -54,7 +54,7 @@ export class LogThrottler {
     }, this.throttleTimeInMs)
   }
 
-  private incrementCount(logInfo: LogInfo) {
+  private incrementCount(logInfo: LogInfo): void {
     if (logInfo.isThrottling) {
       logInfo.throttleCount += 1
       return
@@ -65,7 +65,7 @@ export class LogThrottler {
     setTimeout(() => this.decrementCount(logInfo), this.thresholdTimeInMs)
   }
 
-  private decrementCount(logInfo: LogInfo) {
+  private decrementCount(logInfo: LogInfo): void {
     logInfo.count -= 1
   }
 }
