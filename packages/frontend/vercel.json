@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://protocolbeat.herokuapp.com/:match*"
+      "destination": "https://protocolbeat.herokuapp.com/api/:match*"
     }
   ],
   "trailingSlash": false
