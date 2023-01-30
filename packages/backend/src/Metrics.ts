@@ -69,6 +69,13 @@ export class Metrics {
     })
   }
 
+  forTvl(updater: object) {
+    return {
+      histogram: this.tvlHistogram,
+      labels: { updater: updater.constructor.name },
+    }
+  }
+
   collectDefaultMetrics(): void {
     collectDefaultMetrics()
   }

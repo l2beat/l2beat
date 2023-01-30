@@ -30,10 +30,7 @@ export class PriceUpdater {
       this.logger.for('taskQueue'),
 
       {
-        metrics: {
-          histogram: metrics.tvlHistogram,
-          labels: { updater: this.constructor.name },
-        },
+        metrics: metrics.forTvl(this),
       },
     )
   }
