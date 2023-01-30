@@ -5,11 +5,10 @@ import { providers } from 'ethers'
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
-import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
+import { ProjectParameters } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 
@@ -55,13 +54,19 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
+
         const diff = await this.findChanges(
           projectConfig.name,
-          blockNumber,
-          timestamp,
           discovered,
           projectConfig.overrides,
         )
+
+        await this.repository.addOrUpdate({
+          projectName: projectConfig.name,
+          timestamp,
+          blockNumber,
+          discovery: discovered,
+        })
 
         if (diff.length > 0) {
           const messages = diffToMessages(projectConfig.name, diff)
@@ -77,12 +82,9 @@ export class DiscoveryWatcher {
 
   async findChanges(
     name: string,
-    blockNumber: number,
-    timestamp: UnixTime,
-    discovered: AnalyzedData[],
+    parsedDiscovery: ProjectParameters,
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
-    const parsedDiscovery = parseDiscoveryOutput(discovered)
     const committed = await this.configReader.readDiscovery(name)
     const databaseEntry = await this.repository.getLatest(name)
 
@@ -96,15 +98,6 @@ export class DiscoveryWatcher {
       parsedDiscovery.contracts,
       overrides ?? {},
     )
-
-    if (diff.length > 0) {
-      await this.repository.addOrUpdate({
-        projectName: name,
-        timestamp,
-        blockNumber,
-        discovery: parsedDiscovery,
-      })
-    }
 
     return diff
   }

@@ -1,5 +1,5 @@
 import { Logger, mock } from '@l2beat/common'
-import { EthereumAddress, UnixTime } from '@l2beat/types'
+import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
 
@@ -78,7 +78,23 @@ const DISCOVERED: AnalyzedData[] = [
   mockDiscovered(COMMITTED[1]),
 ]
 
-const expectedMessage = diffToMessages(PROJECT_A, [
+const DISCOVERED_PARSED = parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER)
+
+const [expectedMessage] = diffToMessages(PROJECT_A, [
+  {
+    address: ADDRESS_A,
+    name: NAME_A,
+    diff: [
+      {
+        key: 'values.a',
+        before: 'true',
+        after: 'false',
+      },
+    ],
+  },
+])
+
+const [expectedMessage2] = diffToMessages(PROJECT_B, [
   {
     address: ADDRESS_A,
     name: NAME_A,
@@ -101,10 +117,9 @@ describe(DiscoveryWatcher.name, () => {
 
       const configReader = mock<ConfigReader>({
         readDiscovery: mockFn()
-          .resolvesToOnce({
+          .resolvesTo({
             contracts: COMMITTED,
-          })
-          .resolvesToOnce({ contracts: [] }),
+          }),
         readAllConfigs: mockFn().resolvesTo([
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
@@ -112,7 +127,7 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryEngine = mock<DiscoveryEngine>({
-        run: mockFn().resolvesToOnce(DISCOVERED).resolvesToOnce([]),
+        run: mockFn().resolvesTo(DISCOVERED_PARSED),
       })
 
       const provider = mock<providers.AlchemyProvider>({
@@ -151,10 +166,10 @@ describe(DiscoveryWatcher.name, () => {
         [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
       ])
       expect(repository.getLatest.calls.length).toEqual(2)
-      expect(repository.addOrUpdate.calls.length).toEqual(1)
+      expect(repository.addOrUpdate.calls.length).toEqual(2)
       //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        [expectedMessage[0]],
+        [expectedMessage],[expectedMessage2],
       ])
     })
 
@@ -172,7 +187,7 @@ describe(DiscoveryWatcher.name, () => {
         getLatest: mockFn().resolvesTo([
           {
             discovery: {
-              contracts: parseDiscoveryOutput(DISCOVERED),
+              contracts: parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
             },
           },
         ]),
@@ -240,16 +255,13 @@ describe(DiscoveryWatcher.name, () => {
 
       await discoveryWatcher.findChanges(
         PROJECT_A,
-        0,
-        UnixTime.now(),
-        DISCOVERED,
+        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
         {},
       )
 
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
       ])
-      expect(repository.addOrUpdate.calls.length).toEqual(1)
       expect(repository.getLatest.calls.length).toEqual(1)
     })
   })
