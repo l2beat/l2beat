@@ -63,6 +63,5 @@ export function createStarkexCounter(
 
 /** @internal */
 export function getStarkexLastDay(timestamp: UnixTime) {
-  // StarkEx APIs have inherent delay
-  return timestamp.add(-1, 'days').add(-4, 'hours').toStartOf('day').toDays()
+  return timestamp.toStartOf('day').toDays()
 }

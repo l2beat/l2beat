@@ -35,6 +35,11 @@ export function getProductionConfig(cli: CliParameters): Config {
         connectionString: getEnv('DATABASE_URL'),
         ssl: { rejectUnauthorized: false },
       },
+      connectionPoolSize: {
+        // our heroku plan allows us for up to 400 open connections
+        min: 20,
+        max: 200,
+      },
     },
     api: {
       port: getEnv.integer('PORT'),
