@@ -21,10 +21,17 @@ export class CoingeckoQueryService {
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
+    address?: EthereumAddress,
   ): Promise<PriceHistoryPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
-    const prices = await this.queryPrices(coingeckoId, start, end, granularity)
+    const prices = await this.queryPrices(
+      coingeckoId,
+      start,
+      end,
+      granularity,
+      address,
+    )
 
     const sortedPrices = prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime(),
@@ -40,6 +47,7 @@ export class CoingeckoQueryService {
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
+    address?: EthereumAddress,
   ): Promise<Price[]> {
     if (granularity === 'daily') {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
@@ -47,6 +55,7 @@ export class CoingeckoQueryService {
         'usd',
         from,
         to,
+        address,
       )
       return data.prices
     } else {
@@ -57,6 +66,7 @@ export class CoingeckoQueryService {
             'usd',
             range.start,
             range.end,
+            address,
           ),
         ),
       )
