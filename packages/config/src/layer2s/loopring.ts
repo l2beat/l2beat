@@ -256,11 +256,8 @@ export const loopring: Layer2 = {
         name: 'ExchangeV3',
         address: discovery.getContractByName('ExchangeV3').address.toString(),
         description: 'Main ExchangeV3 contract.',
-        upgradeability: {
-          type: 'ZeppelinOs',
-          admin: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
-          implementation: '0x26d8Ba776a067C5928841985bCe342f75BAE7E82',
-        },
+        upgradeability:
+          discovery.getContractByName('ExchangeV3').upgradeability,
       },
       {
         name: 'LoopringIOExchangeOwner',

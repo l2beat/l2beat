@@ -32,27 +32,39 @@ function gatherAddressesFromUpgradeability(
   switch (item.type) {
     case 'Custom':
     case 'CustomWithoutAdmin':
-    case 'EIP1967':
-    case 'ZeppelinOs':
+    case 'EIP1967 proxy':
+    case 'ZeppelinOS proxy':
     case 'NutBerry':
-      result.push(item.implementation)
+    case 'StarkWare diamond':
+    case 'resolved delegate proxy':
+    case 'call implementation proxy':
+    case 'EIP897 proxy':
+      result.push(item.implementation.toString())
       break
-    case 'StarkWare':
-      result.push(item.implementation)
+    case 'StarkWare proxy':
+      result.push(item.implementation.toString())
       if (item.callImplementation) {
-        result.push(item.callImplementation)
+        result.push(item.callImplementation.toString())
       }
       break
-    case 'Arbitrum':
-      result.push(item.adminImplementation)
-      result.push(item.userImplementation)
+    case 'Arbitrum proxy':
+      result.push(item.adminImplementation.toString())
+      result.push(item.userImplementation.toString())
+      break
+    case 'new Arbitrum proxy':
+      result.push(item.adminImplementation.toString())
+      result.push(item.userImplementation.toString())
+      result.push(item.implementation.toString())
       break
     case 'Beacon':
       result.push(item.beacon)
       result.push(item.implementation)
       break
     case 'Reference':
-      // Ignoring type "Reference"
+    case 'immutable':
+    case 'gnosis safe':
+    case 'EIP2535 diamond proxy':
+      // Ignoring types because no (admin/user)implementation included in them
       break
     default:
       // This code triggers a typescript compile-time error if not all cases have been covered
