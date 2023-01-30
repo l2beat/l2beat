@@ -86,7 +86,11 @@ export class DiscoveryWatcher {
     const committed = await this.configReader.readDiscovery(name)
     const databaseEntry = await this.repository.getLatest(name)
 
-    const currentContracts = databaseEntry.length === 0 ? committed.contracts : databaseEntry[0].discovery.contracts
+    const currentContracts =
+      databaseEntry.length === 0
+        ? committed.contracts
+        : databaseEntry[0].discovery.contracts
+
     const diff = diffDiscovery(
       currentContracts,
       parsedDiscovery.contracts,
