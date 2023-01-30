@@ -13,8 +13,14 @@ export interface LogThrottlerOptions {
 }
 
 export class LogThrottler {
+  private readonly DEFAULT_LOG_INFO = {
+    count: 0,
+    isThrottling: false,
+    throttleCount: 0,
+  }
+
   private readonly recentLogs: Map<string, LogInfo>
-  private logger: Logger = new Logger({
+  private readonly logger: Logger = new Logger({
     logLevel: LogLevel.INFO,
     format: 'pretty',
     service: LogThrottler.name,
@@ -22,23 +28,20 @@ export class LogThrottler {
 
   constructor(private readonly options: LogThrottlerOptions) {
     this.recentLogs = new Map<string, LogInfo>()
+    setInterval(() => this.clearCount(), options.thresholdTime)
   }
 
   add(logKey: string): void {
     let logInfo = this.recentLogs.get(logKey)
 
     if (!logInfo) {
-      logInfo = {
-        count: 0,
-        isThrottling: false,
-        throttleCount: 0,
-      }
+      logInfo = this.DEFAULT_LOG_INFO
       this.recentLogs.set(logKey, logInfo)
     }
 
     this.incrementCount(logInfo)
 
-    if (logInfo.count >= this.options.threshold && !logInfo.isThrottling) {
+    if (!logInfo.isThrottling && logInfo.count >= this.options.threshold) {
       this.throttle(logKey, logInfo)
     }
   }
@@ -70,11 +73,9 @@ export class LogThrottler {
     }
 
     logInfo.count += 1
-
-    setTimeout(() => this.decrementCount(logInfo), this.options.thresholdTime)
   }
 
-  private decrementCount(logInfo: LogInfo): void {
-    logInfo.count -= 1
+  private clearCount(): void {
+    this.recentLogs.forEach((value) => (value.count = 0))
   }
 }

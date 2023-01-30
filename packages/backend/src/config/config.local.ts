@@ -37,7 +37,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       throttlerOptions: {
         threshold: 4,
         thresholdTime: 5000,
-        throttleTime: 3000,
+        throttleTime: 20000,
       },
     },
     clock: {
