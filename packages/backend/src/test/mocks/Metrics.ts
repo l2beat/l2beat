@@ -11,7 +11,10 @@ export function createMockRepoMetrics() {
 
 export function createMockTvlMetrics() {
   return mock<Metrics>({
-    tvlHistogram: createMockHistogram(),
+    forTvl: () => ({
+      labels: { updater: 'updater' },
+      histogram: createMockHistogram(),
+    }),
   })
 }
 
