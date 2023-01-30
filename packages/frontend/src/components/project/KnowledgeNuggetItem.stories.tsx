@@ -3,7 +3,7 @@ import React from 'react'
 import { KnowledgeNuggetItem } from './KnowledgeNuggetItem'
 
 export default {
-  title: 'Components/Project/KnowledgeNugget',
+  title: 'Components/Project/KnowledgeNuggets',
 }
 
 const knowledgeNuggetExample = {
