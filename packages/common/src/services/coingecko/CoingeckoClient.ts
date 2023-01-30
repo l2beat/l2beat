@@ -1,4 +1,4 @@
-import { CoingeckoId, UnixTime } from '@l2beat/types'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/types'
 
 import { RateLimiter } from '../../tools/RateLimiter'
 import { HttpClient } from '../HttpClient'
@@ -16,6 +16,7 @@ const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
 export class CoingeckoClient {
   private readonly timeoutMs = 10_000
+  private readonly newIds = new Map<string, CoingeckoId>()
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -49,7 +50,26 @@ export class CoingeckoClient {
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
+    address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData> {
+    try {
+      const id = this.newIds.get(address?.toString() ?? '') ?? coinId
+      return await this.callMarketChartRange(id, vs_currency, from, to)
+    } catch (e) {
+      if (!isCoingeckoIdError(e)) {
+        throw e
+      }
+      const id = await this.getNewCoingeckoId(coinId, address)
+      return await this.callMarketChartRange(id, vs_currency, from, to)
+    }
+  }
+
+  async callMarketChartRange(
+    coinId: CoingeckoId,
+    vs_currency: string,
+    from: UnixTime,
+    to: UnixTime,
+  ) {
     const data = await this.query(
       `/coins/${coinId.toString()}/market_chart/range`,
       {
@@ -60,7 +80,6 @@ export class CoingeckoClient {
     )
 
     const parsedData = CoinMarketChartRangeResult.parse(data)
-
     return {
       prices: parsedData.prices.map(([timestamp, price]) => ({
         date: new Date(timestamp),
@@ -79,6 +98,32 @@ export class CoingeckoClient {
     }
   }
 
+  async getNewCoingeckoId(
+    oldId: CoingeckoId,
+    address?: EthereumAddress,
+  ): Promise<CoingeckoId> {
+    if (address === undefined) {
+      throw new Error(
+        `Server responded with non-2XX result: Could not fetch the prices for ${oldId.toString()}`,
+      )
+    }
+    const list = await this.getCoinList({ includePlatform: true })
+    const coingeckoSupported = list.find((item) => {
+      const addr = item.platforms.ethereum
+      return (
+        addr?.toLocaleLowerCase() === address.toString().toLocaleLowerCase()
+      )
+    })
+    if (coingeckoSupported?.id === undefined) {
+      throw new Error(
+        `Server responded with non-2XX result: Could not fetch the prices for ${oldId.toString()}`,
+      )
+    }
+
+    this.newIds.set(address.toString(), coingeckoSupported.id)
+    return coingeckoSupported.id
+  }
+
   async query(endpoint: string, params: Record<string, string>) {
     const queryParams = this.apiKey
       ? { ...params, x_cg_pro_api_key: this.apiKey }
@@ -90,10 +135,18 @@ export class CoingeckoClient {
     }
     const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
     if (!res.ok) {
+      const body = await res.text()
       throw new Error(
-        `Server responded with non-2XX result: ${res.status} ${res.statusText}`,
+        `Server responded with non-2XX result: ${res.status} ${res.statusText} ${body}`,
       )
     }
     return res.json() as unknown
   }
+}
+
+function isCoingeckoIdError(e: unknown): boolean {
+  if (e instanceof Error) {
+    return e.message.includes('coin not found')
+  }
+  return false
 }
