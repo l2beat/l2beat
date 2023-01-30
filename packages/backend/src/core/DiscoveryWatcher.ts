@@ -86,20 +86,12 @@ export class DiscoveryWatcher {
     const committed = await this.configReader.readDiscovery(name)
     const databaseEntry = await this.repository.getLatest(name)
 
-    let diff = []
-    if (databaseEntry.length === 0) {
-      diff = diffDiscovery(
-        committed.contracts,
-        parsedDiscovery.contracts,
-        overrides ?? {},
-      )
-    } else {
-      diff = diffDiscovery(
-        databaseEntry[0].discovery.contracts,
-        parsedDiscovery.contracts,
-        overrides ?? {},
-      )
-    }
+    const currentContracts = databaseEntry.length === 0 ? committed.contracts : databaseEntry[0].discovery.contracts
+    const diff = diffDiscovery(
+      currentContracts,
+      parsedDiscovery.contracts,
+      overrides ?? {},
+    )
 
     if (diff.length > 0) {
       await this.repository.addOrUpdate({
