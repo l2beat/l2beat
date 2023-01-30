@@ -33,6 +33,10 @@ export interface ApiConfig {
 export interface DatabaseConfig {
   readonly connection: Knex.Config['connection']
   readonly freshStart: boolean
+  readonly connectionPoolSize: {
+    min: number
+    max: number
+  }
 }
 
 export interface ClockConfig {
