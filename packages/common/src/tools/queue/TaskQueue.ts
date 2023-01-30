@@ -2,10 +2,11 @@ import { json } from '@l2beat/types'
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
+import { wrapAndMeasure } from '../../utils/wrapAndMeasure'
 import { EventTracker } from '../EventTracker'
 import { getErrorMessage, getErrorStackTrace, Logger } from '../Logger'
 import { Retries } from './Retries'
-import { Job, Metrics, ShouldRetry, TaskQueueOpts } from './types'
+import { Job, ShouldRetry, TaskQueueOpts } from './types'
 export type { TaskQueueHistogram } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
@@ -158,17 +159,5 @@ export class TaskQueue<T> {
       this.busyWorkers--
       setTimeout(() => this.execute())
     }
-  }
-}
-
-function wrapAndMeasure<T extends unknown[], U>(
-  fn: (...args: T) => Promise<U>,
-  { histogram, labels }: Metrics,
-): (...args: T) => Promise<U> {
-  return async (...args: T) => {
-    const done = histogram.startTimer(labels)
-    const result = await fn(...args)
-    done(labels)
-    return result
   }
 }

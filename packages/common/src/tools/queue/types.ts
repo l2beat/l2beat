@@ -1,4 +1,6 @@
-import type { Histogram, LabelValues } from 'prom-client'
+import type { Histogram } from 'prom-client'
+
+import { Metrics } from '../../utils/wrapAndMeasure'
 
 export interface Job<T> {
   task: T
@@ -16,14 +18,10 @@ export type ShouldRetry<T> = (
 
 type HistogramLabel = 'updater'
 export type TaskQueueHistogram = Histogram<HistogramLabel>
-export interface Metrics {
-  histogram: TaskQueueHistogram
-  labels: LabelValues<HistogramLabel>
-}
 
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
-  metrics?: Metrics
+  metrics?: Metrics<HistogramLabel>
 }
