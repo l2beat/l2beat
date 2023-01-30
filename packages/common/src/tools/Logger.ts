@@ -24,7 +24,11 @@ export class Logger {
   private readonly logThrottler: LogThrottler
 
   constructor(private readonly options: LoggerOptions) {
-    this.logThrottler = new LogThrottler(5, 10000, 20000)
+    this.logThrottler = new LogThrottler({
+      threshold: 5,
+      thresholdTime: 10000,
+      throttleTime: 20000,
+    })
   }
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })

@@ -4,14 +4,16 @@ interface LogInfo {
   isThrottling: boolean
 }
 
+interface LogThrottlerOptions {
+  threshold: number
+  thresholdTime: number
+  throttleTime: number
+}
+
 export class LogThrottler {
   private readonly recentLogs: Map<string, LogInfo>
 
-  constructor(
-    private readonly threshold: number,
-    private readonly thresholdTimeInMs: number,
-    private readonly throttleTimeInMs: number,
-  ) {
+  constructor(private readonly options: LogThrottlerOptions) {
     this.recentLogs = new Map<string, LogInfo>()
   }
 
@@ -29,7 +31,7 @@ export class LogThrottler {
 
     this.incrementCount(logInfo)
 
-    if (logInfo.count >= this.threshold && !logInfo.isThrottling) {
+    if (logInfo.count >= this.options.threshold && !logInfo.isThrottling) {
       this.throttle(logKey, logInfo)
     }
   }
@@ -46,12 +48,12 @@ export class LogThrottler {
         console.log(
           `[LOG THROTTLER] ${logKey} was logged ${
             logInfo.throttleCount
-          } times during last ${this.throttleTimeInMs / 1000} seconds`,
+          } times during last ${this.options.throttleTime / 1000} seconds`,
         )
       }
       logInfo.isThrottling = false
       logInfo.throttleCount = 0
-    }, this.throttleTimeInMs)
+    }, this.options.throttleTime)
   }
 
   private incrementCount(logInfo: LogInfo): void {
@@ -62,7 +64,7 @@ export class LogThrottler {
 
     logInfo.count += 1
 
-    setTimeout(() => this.decrementCount(logInfo), this.thresholdTimeInMs)
+    setTimeout(() => this.decrementCount(logInfo), this.options.thresholdTime)
   }
 
   private decrementCount(logInfo: LogInfo): void {
