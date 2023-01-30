@@ -1,3 +1,5 @@
+import { Logger, LogLevel } from './Logger'
+
 interface LogInfo {
   count: number
   throttleCount: number
@@ -12,6 +14,11 @@ export interface LogThrottlerOptions {
 
 export class LogThrottler {
   private readonly recentLogs: Map<string, LogInfo>
+  private logger: Logger = new Logger({
+    logLevel: LogLevel.INFO,
+    format: 'pretty',
+    service: LogThrottler.name,
+  })
 
   constructor(private readonly options: LogThrottlerOptions) {
     this.recentLogs = new Map<string, LogInfo>()
@@ -45,10 +52,10 @@ export class LogThrottler {
 
     setTimeout(() => {
       if (logInfo.throttleCount !== 0) {
-        console.log(
-          `[LOG THROTTLER] ${logKey} was logged ${
-            logInfo.throttleCount
-          } times during last ${this.options.throttleTime / 1000} seconds`,
+        this.logger.info(
+          `"${logKey}" was logged ${logInfo.throttleCount} times during last ${
+            this.options.throttleTime / 1000
+          } seconds`,
         )
       }
       logInfo.isThrottling = false

@@ -93,7 +93,7 @@ export class Logger {
   private print(level: string, parameters: LoggerParameters) {
     const logKey = `${this.options.service ?? ''} ${
       parameters.message?.toString() ?? ''
-    }`
+    }`.trim()
 
     this.logThrottler?.add(logKey)
     if (this.logThrottler?.isThrottling(logKey)) return
