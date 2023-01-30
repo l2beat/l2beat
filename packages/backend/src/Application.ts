@@ -19,6 +19,7 @@ export class Application {
 
   constructor(config: Config) {
     const logger = new Logger({ ...config.logger, reportError })
+
     const database = new Database(
       config.database ? config.database.connection : undefined,
       config.name,

@@ -34,6 +34,11 @@ export function getLocalConfig(cli: CliParameters): Config {
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'pretty',
+      throttlerOptions: {
+        threshold: 4,
+        thresholdTime: 5000,
+        throttleTime: 20000,
+      },
     },
     clock: {
       // TODO: This should probably be configurable

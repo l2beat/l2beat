@@ -1,6 +1,7 @@
 export * from './assert'
 export * from './EventTracker'
 export * from './Logger'
+export * from './LogThrottler'
 export * from './mock'
 export * from './promiseAllPlus'
 export * from './queue/Retries'

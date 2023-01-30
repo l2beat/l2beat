@@ -2,7 +2,7 @@ import { json } from '@l2beat/types'
 import chalk from 'chalk'
 import { inspect } from 'util'
 
-import { LogThrottler } from './LogThrottler'
+import { LogThrottler, LogThrottlerOptions } from './LogThrottler'
 export enum LogLevel {
   NONE = 0,
   ERROR = 1,
@@ -14,6 +14,7 @@ export enum LogLevel {
 export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
+  throttlerOptions?: LogThrottlerOptions
   format: 'pretty' | 'json'
   reportError?: (...args: unknown[]) => void
 }
@@ -21,14 +22,12 @@ export interface LoggerOptions {
 export type LoggerParameters = Record<string, json>
 
 export class Logger {
-  private readonly logThrottler: LogThrottler
+  private readonly logThrottler: LogThrottler | undefined
 
   constructor(private readonly options: LoggerOptions) {
-    this.logThrottler = new LogThrottler({
-      threshold: 5,
-      thresholdTime: 10000,
-      throttleTime: 20000,
-    })
+    if (options.throttlerOptions) {
+      this.logThrottler = new LogThrottler(options.throttlerOptions)
+    }
   }
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
@@ -96,8 +95,8 @@ export class Logger {
       parameters.message?.toString() ?? ''
     }`
 
-    this.logThrottler.add(logKey)
-    if (this.logThrottler.isThrottling(logKey)) return
+    this.logThrottler?.add(logKey)
+    if (this.logThrottler?.isThrottling(logKey)) return
 
     switch (this.options.format) {
       case 'json':

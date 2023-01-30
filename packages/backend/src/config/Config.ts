@@ -1,4 +1,4 @@
-import { LogLevel } from '@l2beat/common'
+import { LogLevel, LogThrottlerOptions } from '@l2beat/common'
 import { Layer2TransactionApi } from '@l2beat/config'
 import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
@@ -24,6 +24,7 @@ export interface Config {
 export interface LoggerConfig {
   readonly logLevel: LogLevel
   readonly format: 'pretty' | 'json'
+  readonly throttlerOptions?: LogThrottlerOptions
 }
 
 export interface ApiConfig {
