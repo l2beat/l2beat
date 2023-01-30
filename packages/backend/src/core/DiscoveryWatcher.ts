@@ -50,28 +50,29 @@ export class DiscoveryWatcher {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
       try {
-        const discovered = await this.discoveryEngine.run(
+        const discovery = await this.discoveryEngine.run(
           projectConfig,
           blockNumber,
         )
 
         const diff = await this.findChanges(
           projectConfig.name,
-          discovered,
+          discovery,
           projectConfig.overrides,
         )
-
-        await this.repository.addOrUpdate({
-          projectName: projectConfig.name,
-          timestamp,
-          blockNumber,
-          discovery: discovered,
-        })
 
         if (diff.length > 0) {
           const messages = diffToMessages(projectConfig.name, diff)
           await this.notify(messages)
         }
+
+        await this.repository.addOrUpdate({
+          projectName: projectConfig.name,
+          timestamp,
+          blockNumber,
+          discovery,
+        })
+
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
@@ -82,7 +83,7 @@ export class DiscoveryWatcher {
 
   async findChanges(
     name: string,
-    parsedDiscovery: ProjectParameters,
+    discovery: ProjectParameters,
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
     const committed = await this.configReader.readDiscovery(name)
@@ -95,7 +96,7 @@ export class DiscoveryWatcher {
 
     const diff = diffDiscovery(
       currentContracts,
-      parsedDiscovery.contracts,
+      discovery.contracts,
       overrides ?? {},
     )
 

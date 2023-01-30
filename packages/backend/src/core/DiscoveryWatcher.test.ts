@@ -78,9 +78,13 @@ const DISCOVERED: AnalyzedData[] = [
   mockDiscovered(COMMITTED[1]),
 ]
 
-const DISCOVERED_PARSED = parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER)
+const DISCOVERED_PARSED = parseDiscoveryOutput(
+  DISCOVERED,
+  PROJECT_A,
+  BLOCK_NUMBER,
+)
 
-const [expectedMessage] = diffToMessages(PROJECT_A, [
+const [EXPECTED_MESSAGE_A] = diffToMessages(PROJECT_A, [
   {
     address: ADDRESS_A,
     name: NAME_A,
@@ -94,7 +98,7 @@ const [expectedMessage] = diffToMessages(PROJECT_A, [
   },
 ])
 
-const [expectedMessage2] = diffToMessages(PROJECT_B, [
+const [EXPECTED_MESSAGE_B] = diffToMessages(PROJECT_B, [
   {
     address: ADDRESS_A,
     name: NAME_A,
@@ -116,10 +120,9 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const configReader = mock<ConfigReader>({
-        readDiscovery: mockFn()
-          .resolvesTo({
-            contracts: COMMITTED,
-          }),
+        readDiscovery: mockFn().resolvesTo({
+          contracts: COMMITTED,
+        }),
         readAllConfigs: mockFn().resolvesTo([
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
@@ -169,7 +172,8 @@ describe(DiscoveryWatcher.name, () => {
       expect(repository.addOrUpdate.calls.length).toEqual(2)
       //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        [expectedMessage],[expectedMessage2],
+        [EXPECTED_MESSAGE_A],
+        [EXPECTED_MESSAGE_B],
       ])
     })
 
@@ -187,7 +191,11 @@ describe(DiscoveryWatcher.name, () => {
         getLatest: mockFn().resolvesTo([
           {
             discovery: {
-              contracts: parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
+              contracts: parseDiscoveryOutput(
+                DISCOVERED,
+                PROJECT_A,
+                BLOCK_NUMBER,
+              ),
             },
           },
         ]),
