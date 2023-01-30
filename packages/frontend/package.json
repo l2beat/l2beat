@@ -1,0 +1,36 @@
+{
+  "name": "@protocol-beat/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "prebuild": "yarn clean",
+    "clean": "rm -rf build",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
+    "dev": "vite",
+    "discover": "node -r esbuild-register src discover",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/react-dom": "^18.0.9",
+    "@types/react": "^18.0.26",
+    "classnames": "^2.3.2",
+    "ky": "^0.33.2",
+    "react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.0"
+  }
+}
