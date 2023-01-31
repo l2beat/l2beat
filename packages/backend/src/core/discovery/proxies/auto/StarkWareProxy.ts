@@ -31,9 +31,12 @@ async function getCallImplementation(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ) {
-  return bytes32ToAddress(
+  const callImplementation = bytes32ToAddress(
     await provider.getStorage(address, CALL_IMPLEMENTATION_SLOT),
   )
+  return callImplementation !== EthereumAddress.ZERO
+    ? callImplementation
+    : undefined
 }
 
 // Web3.solidityKeccak(['string'], ['StarkWare.Upgradibility.Delay.Slot'])
@@ -110,8 +113,7 @@ export async function detectStarkWareProxy(
 
   return {
     implementations: [implementation],
-    relatives:
-      callImplementation !== EthereumAddress.ZERO ? [callImplementation] : [],
+    relatives: callImplementation ? [callImplementation] : [],
     upgradeability: {
       type: 'StarkWare proxy',
       implementation,

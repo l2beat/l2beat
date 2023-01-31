@@ -77,7 +77,7 @@ export interface ZeppelinOSProxyUpgradeability {
 export interface StarkWareProxyUpgradeability {
   type: 'StarkWare proxy'
   implementation: EthereumAddress
-  callImplementation: EthereumAddress
+  callImplementation?: EthereumAddress
   upgradeDelay: number
   isFinal: boolean
   useConstantDelay?: boolean
