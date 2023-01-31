@@ -225,7 +225,7 @@ describe(DiscoveryWatcher.name, () => {
       //gets block number
       expect(provider.getBlockNumber.calls.length).toEqual(1)
       //reads all the configs
-      expect(configReader.readAllConfigs).toHaveBeenCalledExactlyWith([[]])
+      expect(configReader.readAllConfigs.calls.length).toEqual(0)
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
       ])
@@ -234,7 +234,7 @@ describe(DiscoveryWatcher.name, () => {
         [[PROJECT_A]],
       )
 
-      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([])
+      expect(discordClient.sendMessage.calls.length).toEqual(0)
     })
   })
 
