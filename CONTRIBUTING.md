@@ -37,10 +37,10 @@ yarn start
 
 If you want to add a new L2 project you can do that by opening a PR. To do this you need to:
 
-1. Read the specification in `packages/config/src/projects/types/Project.ts`. It contains an annotated data format for the project definition.
-2. Modify `packages/config/src/projects` by adding a new file describing your project. You can use the existing projects as reference.
-3. Add your project into `packages/config/src/projects/index.ts`. The order of the projects should be kept alphabetical.
-4. Add an 256x256 png project icon under 10KB into `packages/frontend/static/icons`.
+1. Read the specification in `packages/config/src/layer2s/types/Layer2.ts`. It contains an annotated data format for the project definition.
+2. Add a .ts file to describe your L2 project inside `packages/config/src/layer2s`. You can use the existing projects as reference.
+3. Add your project into `packages/config/src/layer2s/index.ts`. The order of the projects should be kept alphabetical.
+4. Add an 256x256 png project icon under 10KB into `packages/frontend/src/static/icons`.
 5. Open a PR :D
 
 Adding a new project in this way will automatically update both the data fetching logic as well as the frontend.
