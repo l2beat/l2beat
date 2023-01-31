@@ -55,7 +55,7 @@ export const allbridge: Bridge = {
   },
   technology: {
     canonical: false,
-    category: 'Liquidity Network',
+    category: 'Hybrid',
     destination: [
       'Aurora',
       'Avalanche',
