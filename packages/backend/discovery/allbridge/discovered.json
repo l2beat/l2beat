@@ -1,6 +1,6 @@
 {
   "name": "allbridge",
-  "blockNumber": 16526225,
+  "blockNumber": 16526407,
   "contracts": [
     {
       "name": "Bridge",
@@ -12,7 +12,10 @@
       "values": {
         "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
         "chainId": 1,
+        "DAI_POOL": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "USDC_POOL": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+        "USDT_POOL": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
         "wormholeMessenger": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
       }
     },
@@ -21,6 +24,33 @@
       "unverified": true,
       "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "code": "https://etherscan.deth.net/address/0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+      "code": "https://etherscan.deth.net/address/0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+      "code": "https://etherscan.deth.net/address/0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
+      "code": "https://etherscan.deth.net/address/0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
       "upgradeability": {
         "type": "immutable"
       }
