@@ -25,16 +25,19 @@ export const allbridge: Bridge = {
   config: {
     escrows: [
       {
-        address: '0xBBbD1BbB4f9b936C3604906D7592A644071dE884',
-        sinceTimestamp: new UnixTime(1636635220),
-        tokens: [
-          'ETH',
-          'USDC',
-          //'XRUNE',
-          'USDT',
-          'DAI',
-          'MIM',
-        ],
+        address: '0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e',
+        sinceTimestamp: new UnixTime(1662596190),
+        tokens: ['USDT'],
+      },
+      {
+        address: '0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C',
+        sinceTimestamp: new UnixTime(1669206935),
+        tokens: ['USDC'],
+      },
+      {
+        address: '0xCe01bc1be28c0784492cB44EbBDa662c3F539172',
+        sinceTimestamp: new UnixTime(1669207319),
+        tokens: ['DAI'],
       },
     ],
   },
@@ -87,7 +90,6 @@ export const allbridge: Bridge = {
         name: 'Wormhole Messenger',
         description: 'Contract used to receive messages via Wormhole AMB.',
       },
-
       {
         address: '0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e',
         name: 'USDT Pool',
