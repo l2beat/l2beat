@@ -1,4 +1,5 @@
 import { z } from 'zod'
+
 import { EthereumAddress } from './EthereumAddress'
 
 export interface ProjectParameters {

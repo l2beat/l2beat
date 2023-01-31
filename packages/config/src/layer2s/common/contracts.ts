@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
+
 import { ProjectContract, ProjectRisk } from '../../common'
 
 const UNVERIFIED_DESCRIPTION =

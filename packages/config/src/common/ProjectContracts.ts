@@ -1,4 +1,5 @@
 import { UpgradeabilityParameters } from '@l2beat/types'
+
 import { ProjectReference } from './ProjectReference'
 import { ProjectRisk } from './ProjectRisk'
 
