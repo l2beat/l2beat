@@ -1,7 +1,11 @@
 import React from 'react'
 
-import { GrayCell } from './GrayCell'
+import { Badge } from '../badge/Badge'
 
 export function NoDataCell() {
-  return <GrayCell title="We don't have data for this item">No data</GrayCell>
+  return (
+    <Badge type="gray" title="We don't have data for this item" oneSize>
+      No data
+    </Badge>
+  )
 }

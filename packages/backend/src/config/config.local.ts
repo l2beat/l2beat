@@ -43,6 +43,11 @@ export function getLocalConfig(cli: CliParameters): Config {
     database: databaseEnabled && {
       connection: getEnv('LOCAL_DB_URL'),
       freshStart: getEnv.boolean('FRESH_START', false),
+      connectionPoolSize: {
+        // defaults used by knex
+        min: 2,
+        max: 10,
+      },
     },
     api: apiEnabled && {
       port: getEnv.integer('PORT', 3000),
