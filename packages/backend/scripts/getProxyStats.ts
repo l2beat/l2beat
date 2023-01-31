@@ -56,7 +56,8 @@ async function main() {
         await checkStarkWareCallImplementation(
           provider,
           contract.address,
-          upgradeability.callImplementation.toString() ?? constants.AddressZero,
+          upgradeability.callImplementation?.toString() ??
+            constants.AddressZero,
         )
         if (upgradeability.useConstantDelay) {
           await checkStarkWareConstantUpgradeDelay(
