@@ -86,20 +86,13 @@ export class DiscoveryWatcher {
     discovery: ProjectParameters,
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
-    const committed = await this.configReader.readDiscovery(name)
     const databaseEntry = await this.repository.findLatest(name)
 
     const currentContracts = databaseEntry
       ? databaseEntry.discovery.contracts
-      : committed.contracts
+      : (await this.configReader.readDiscovery(name)).contracts
 
-    const diff = diffDiscovery(
-      currentContracts,
-      discovery.contracts,
-      overrides ?? {},
-    )
-
-    return diff
+    return diffDiscovery(currentContracts, discovery.contracts, overrides ?? {})
   }
 
   async notify(messages: string[]) {

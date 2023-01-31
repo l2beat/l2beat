@@ -225,10 +225,9 @@ describe(DiscoveryWatcher.name, () => {
       //gets block number
       expect(provider.getBlockNumber.calls.length).toEqual(1)
       //reads all the configs
-      expect(configReader.readAllConfigs.calls.length).toEqual(0)
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
-        [PROJECT_A],
-      ])
+      expect(configReader.readAllConfigs.calls.length).toEqual(1)
+      //skip reading committed file
+      expect(configReader.readDiscovery.calls.length).toEqual(0)
 
       expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledExactlyWith(
         [[PROJECT_A]],
