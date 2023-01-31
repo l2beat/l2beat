@@ -10,10 +10,10 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
-import { Discovery } from './common/Discovery'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
-const discovery = new Discovery('arbitrum')
+const discovery = new ProjectDiscovery('arbitrum')
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -261,11 +261,10 @@ export const arbitrum: Layer2 = {
     },
     {
       name: 'MultiSig participants',
-
       accounts: discovery
         .getValue<string[]>(
           discovery.getContractByAddress(
-            '0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b',
+            '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
           ).values,
           'getOwners',
         )

@@ -163,9 +163,11 @@ export const aztecconnect: Layer2 = {
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
         name: 'RollupProcessor',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0xC5b735d05c26579B701Be9bED253Bb588503B26B',
-          implementation: '0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xC5b735d05c26579B701Be9bED253Bb588503B26B'),
+          implementation: EthereumAddress(
+            '0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28',
+          ),
         },
       },
       {

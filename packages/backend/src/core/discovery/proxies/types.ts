@@ -55,6 +55,7 @@ export interface StarkWareProxyUpgradeability {
   callImplementation: EthereumAddress
   upgradeDelay: number
   isFinal: boolean
+  useConstantDelay?: boolean
 }
 
 export interface StarkWareDiamondUpgradeability {

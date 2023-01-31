@@ -34,29 +34,29 @@ async function main() {
       console.log(chalk.yellow(contract.name), contract.address)
       const upgradeability = contract.upgradeability
 
-      if (upgradeability?.type === 'EIP1967') {
+      if (upgradeability?.type === 'EIP1967 proxy') {
         await checkEip1967Implementation(
           provider,
           contract.address,
-          upgradeability.implementation,
+          upgradeability.implementation.toString(),
         )
         await checkEip1967Admin(
           provider,
           contract.address,
-          upgradeability.admin,
+          upgradeability.admin.toString(),
         )
       }
 
-      if (upgradeability?.type === 'StarkWare') {
+      if (upgradeability?.type === 'StarkWare proxy') {
         await checkStarkWareImplementation(
           provider,
           contract.address,
-          upgradeability.implementation,
+          upgradeability.implementation.toString(),
         )
         await checkStarkWareCallImplementation(
           provider,
           contract.address,
-          upgradeability.callImplementation ?? constants.AddressZero,
+          upgradeability.callImplementation.toString() ?? constants.AddressZero,
         )
         if (upgradeability.useConstantDelay) {
           await checkStarkWareConstantUpgradeDelay(

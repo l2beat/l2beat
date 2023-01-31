@@ -3,19 +3,19 @@ import {
   ProjectParameters,
 } from '@l2beat/backend/src/core/discovery/types'
 
-export class Discovery {
+export class ProjectDiscovery {
   discovery: ProjectParameters
 
   constructor(project: string) {
-    this.discovery = this.getDiscovery(project)
+    this.discovery = this.getDiscoveryJson(project)
   }
 
-  private getDiscovery(project: string): ProjectParameters {
+  private getDiscoveryJson(project: string): ProjectParameters {
     const discovery = require(`@l2beat/backend/discovery/${project}/discovered.json`)
     if (!discovery) {
       throw new Error(`Discovery file for ${project} does not exist`)
     }
-    return discovery
+    return discovery as ProjectParameters
   }
 
   getContractByName(name: string): ContractParameters {
@@ -38,6 +38,9 @@ export class Discovery {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address.toString() === address,
     )
+    if (address === '0x081D1101855bD523bA69A9794e0217F0DB6323ff') {
+      console.log(contract)
+    }
 
     if (!contract) {
       throw new Error(`No contract of ${address} found`)

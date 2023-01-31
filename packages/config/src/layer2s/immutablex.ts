@@ -86,8 +86,14 @@ export const immutablex: Layer2 = {
         name: 'StarkExchange',
         address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
         upgradeability: {
-          type: 'StarkWare',
-          implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          type: 'StarkWare proxy',
+          implementation: EthereumAddress(
+            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          ),
+          //StarkWare proxy requires callImplementation but it was not added before.
+          callImplementation: EthereumAddress(
+            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          ),
           upgradeDelay: 1209600,
           isFinal: false,
         },

@@ -11,10 +11,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
-import { Discovery } from './common/Discovery'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
-const discovery = new Discovery('loopring')
+const discovery = new ProjectDiscovery('loopring')
 
 export const loopring: Layer2 = {
   type: 'layer2',

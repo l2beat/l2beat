@@ -29,6 +29,7 @@ function gatherAddressesFromUpgradeability(
   item: ProjectUpgradeability,
 ): EthereumAddress[] {
   const result: string[] = []
+
   switch (item.type) {
     case 'Custom':
     case 'CustomWithoutAdmin':
