@@ -1,11 +1,12 @@
 import { MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
-import { AnalyzedData } from './analyzeItem'
 import { discover } from './discover'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { parseDiscoveryOutput } from './saveDiscoveryResult'
+import { ProjectParameters } from './types'
 
 export class DiscoveryEngine {
   constructor(
@@ -17,13 +18,15 @@ export class DiscoveryEngine {
   async run(
     config: DiscoveryConfig,
     blockNumber: number,
-  ): Promise<AnalyzedData[]> {
+  ): Promise<ProjectParameters> {
     const discoveryProvider = new DiscoveryProvider(
       this.provider,
       this.etherscanClient,
       blockNumber,
     )
 
-    return discover(discoveryProvider, config, this.logger)
+    const discovered = await discover(discoveryProvider, config, this.logger)
+
+    return parseDiscoveryOutput(discovered, config.name, blockNumber)
   }
 }

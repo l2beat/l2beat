@@ -79,6 +79,13 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  interface DiscoveryWatcherRow {
+    project_name: string
+    block_number: number
+    unix_timestamp: Date
+    discovery_json_blob: string
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -92,6 +99,7 @@ declare module 'knex/types/tables' {
     'activity.block': BlockTransactionCountRow
     'activity.starkex': StarkexTransactionCountRow
     'activity.daily_count_view': DailyTransactionCountRow
+    discovery_watcher: DiscoveryWatcherRow
   }
 }
 

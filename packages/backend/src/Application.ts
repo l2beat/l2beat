@@ -46,7 +46,14 @@ export class Application {
       createTvlModule(config, logger, http, database, clock, metrics),
       createActivityModule(config, logger, http, database, clock, metrics),
       createDiscoveryModule(config, logger, http),
-      createDiscoveryWatcherModule(config, logger, http, clock),
+      createDiscoveryWatcherModule(
+        config,
+        logger,
+        http,
+        database,
+        clock,
+        metrics,
+      ),
     ]
 
     const apiServer =
