@@ -12,6 +12,8 @@ interface VersionQueryResult {
 
 export interface DatabaseOpts {
   requiredMajorVersion?: number
+  minConnectionPoolSize?: number
+  maxConnectionPoolSize?: number
 }
 
 const REQUIRED_MAJOR_VERSION = 14
@@ -49,6 +51,10 @@ export class Database {
         migrationSource: new PolyglotMigrationSource(
           path.join(__dirname, '..', 'migrations'),
         ),
+      },
+      pool: {
+        min: opts?.minConnectionPoolSize,
+        max: opts?.maxConnectionPoolSize,
       },
     })
   }

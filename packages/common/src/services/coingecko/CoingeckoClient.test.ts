@@ -1,5 +1,5 @@
-import { CoingeckoId, UnixTime } from '@l2beat/types'
-import { expect } from 'earljs'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/types'
+import { expect, mockFn } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { mock } from '../../tools'
@@ -57,7 +57,7 @@ describe(CoingeckoClient.name, () => {
 
       const coingeckoClient = new CoingeckoClient(httpClient, undefined)
       await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        'Server responded with non-2XX result: 404 Not Found',
+        'Server responded with non-2XX result: 404 Not Found ',
       )
     })
 
@@ -207,6 +207,178 @@ describe(CoingeckoClient.name, () => {
         new UnixTime(1592577232),
         new UnixTime(1622577232),
       )
+    })
+
+    it('tries to obtain new id when coingecko changes it', async () => {
+      const idInConfig = 'dai'
+      const idSupportedByAPI = 'dai-supported'
+      const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
+
+      const httpClient = mock<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce(
+            new Response(JSON.stringify({ error: 'coin not found' }), {
+              status: 404,
+            }),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify([
+                {
+                  id: idSupportedByAPI,
+                  symbol: 'dai',
+                  name: 'Dai',
+                  platforms: {
+                    ethereum: tokenAddress,
+                  },
+                },
+              ]),
+              {
+                status: 200,
+              },
+            ),
+          )
+          .resolvesToOnce(
+            new Response(JSON.stringify(MOCK_PARSED_DATA), {
+              status: 200,
+            }),
+          ),
+      })
+      const apiKey = 'password'
+      const coingeckoClient = new CoingeckoClient(httpClient, apiKey)
+
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('dai'),
+        'usd',
+        new UnixTime(1592577232),
+        new UnixTime(1622577232),
+        EthereumAddress(tokenAddress),
+      )
+
+      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+      ])
+    })
+
+    it('newly obtained coingeckoId is cached', async () => {
+      const idInConfig = 'dai'
+      const idSupportedByAPI = 'dai-supported'
+      const idSupportedByAPI2 = 'dai-supported'
+      const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
+
+      const httpClient = mock<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce(
+            new Response(JSON.stringify({ error: 'coin not found' }), {
+              status: 404,
+            }),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify([
+                {
+                  id: idSupportedByAPI,
+                  symbol: 'dai',
+                  name: 'Dai',
+                  platforms: {
+                    ethereum: tokenAddress,
+                  },
+                },
+              ]),
+              {
+                status: 200,
+              },
+            ),
+          )
+          .resolvesToOnce(
+            new Response(JSON.stringify(MOCK_PARSED_DATA), {
+              status: 200,
+            }),
+          )
+          .resolvesToOnce(
+            new Response(JSON.stringify({ error: 'coin not found' }), {
+              status: 404,
+            }),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify([
+                {
+                  id: idSupportedByAPI2,
+                  symbol: 'dai',
+                  name: 'Dai',
+                  platforms: {
+                    ethereum: tokenAddress,
+                  },
+                },
+              ]),
+              {
+                status: 200,
+              },
+            ),
+          )
+          .resolvesToOnce(
+            new Response(JSON.stringify(MOCK_PARSED_DATA), {
+              status: 200,
+            }),
+          ),
+      })
+      const apiKey = 'password'
+      const coingeckoClient = new CoingeckoClient(httpClient, apiKey)
+
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('dai'),
+        'usd',
+        new UnixTime(1592577232),
+        new UnixTime(1622577232),
+        EthereumAddress(tokenAddress),
+      )
+
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('dai'),
+        'usd',
+        new UnixTime(1592577232),
+        new UnixTime(1622577232),
+        EthereumAddress(tokenAddress),
+      )
+
+      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+        [
+          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI2}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+          { timeout: 10000 },
+        ],
+      ])
     })
   })
 })

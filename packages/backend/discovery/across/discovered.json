@@ -1,6 +1,6 @@
 {
   "name": "across",
-  "blockNumber": 16154924,
+  "blockNumber": 16518232,
   "contracts": [
     {
       "name": "HubPool",
@@ -13,7 +13,7 @@
         "bondAmount": "450000000000000000",
         "bondToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "crossChainArbitrum": [
-          "0x937958992799bF4A9a656E6596FD10d7Da5c2216",
+          "0x29528780E29abb8Af95a5e5a125b94766987543F",
           "0xB88690461dDbaB6f04Dfad7df66B7725942FEb9C"
         ],
         "crossChainBoba": [
@@ -33,7 +33,6 @@
           "0x69B5c72837769eF1e7C164Abc6515DcFf217F920"
         ],
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1670682767,
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
         "liveness": 7200,
         "lpFeeRatePerSecond": 1500000000000,
@@ -43,13 +42,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x2ebe88b7f6d0929d6d22cde1f6e9056372abb448dee61c93405b4157ef73e61a",
-          "0xf3f916461ec665e7f7bc51949245c78280736010325fabbc102fb63705a866fb",
+          "0xe2a8b588af94606da26da1aaa79908e70685374af7b1748d8341443cde8811f6",
+          "0x6c1f3a3b8bfa89628832a6c006cb2e628bf050659dbc4371ef6c4fc782aa776e",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          31,
-          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           0,
-          1670662931
+          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          5,
+          1675069475
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -74,7 +73,7 @@
           "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
         ],
         "getThreshold": 3,
-        "nonce": 94,
+        "nonce": 104,
         "VERSION": "1.3.0"
       }
     },
@@ -106,12 +105,11 @@
         "type": "immutable"
       },
       "values": {
-        "getCurrentTime": 1670682767,
         "getMember": [
           "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
           "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5"
         ],
-        "numProposals": 183,
+        "numProposals": 186,
         "timerAddress": "0x0000000000000000000000000000000000000000"
       }
     },
@@ -125,7 +123,6 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1670682767,
         "governor": "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
         "owner": "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
         "timerAddress": "0x0000000000000000000000000000000000000000",
@@ -146,7 +143,7 @@
         ],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "109583601935630995301775757",
+        "totalSupply": "112637805134460837616867457",
         "totalSupplyAt": []
       }
     },
@@ -195,9 +192,7 @@
         "chainId": 1,
         "crossDomainAdmin": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1670682767,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-        "numberOfDeposits": 58161,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -235,25 +230,26 @@
     },
     {
       "name": "Arbitrum_Adapter",
-      "address": "0x937958992799bF4A9a656E6596FD10d7Da5c2216",
-      "code": "https://etherscan.deth.net/address/0x937958992799bF4A9a656E6596FD10d7Da5c2216",
+      "address": "0x29528780E29abb8Af95a5e5a125b94766987543F",
+      "code": "https://etherscan.deth.net/address/0x29528780E29abb8Af95a5e5a125b94766987543F",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "getL1CallValue": "20000000000000000",
         "l1ERC20GatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "l1Inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
-        "l2GasLimit": 2000000,
         "l2GasPrice": 5000000000,
         "l2MaxSubmissionCost": "10000000000000000",
-        "l2RefundL2Address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D"
+        "l2RefundL2Address": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
+        "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
+        "RELAY_TOKENS_L2_GAS_LIMIT": 300000
       }
     }
   ],
   "eoas": [
     "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
     "0x1f11D8B72fc1B534448436BA60B4B371276DAb33",
+    "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
     "0x69B5c72837769eF1e7C164Abc6515DcFf217F920",
     "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
     "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
@@ -325,6 +321,21 @@
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function snx() view returns (address)",
       "function snxOptimismBridge() view returns (address)"
+    ],
+    "0x29528780E29abb8Af95a5e5a125b94766987543F": [
+      "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function RELAY_MESSAGE_L2_GAS_LIMIT() view returns (uint32)",
+      "function RELAY_TOKENS_L2_GAS_LIMIT() view returns (uint32)",
+      "function getL1CallValue(uint32 l2GasLimit) pure returns (uint256)",
+      "function l1ERC20GatewayRouter() view returns (address)",
+      "function l1Inbox() view returns (address)",
+      "function l2GasPrice() view returns (uint256)",
+      "function l2MaxSubmissionCost() view returns (uint256)",
+      "function l2RefundL2Address() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
@@ -434,20 +445,6 @@
     ],
     "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": [
       "function createLpToken(address l1Token) returns (address)"
-    ],
-    "0x937958992799bF4A9a656E6596FD10d7Da5c2216": [
-      "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function getL1CallValue() pure returns (uint256)",
-      "function l1ERC20GatewayRouter() view returns (address)",
-      "function l1Inbox() view returns (address)",
-      "function l2GasLimit() view returns (uint32)",
-      "function l2GasPrice() view returns (uint256)",
-      "function l2MaxSubmissionCost() view returns (uint256)",
-      "function l2RefundL2Address() view returns (address)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
     "0xB524735356985D2f267FA010D681f061DfF03715": [
       "constructor(address _singleton)"

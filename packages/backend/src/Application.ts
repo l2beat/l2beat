@@ -23,6 +23,14 @@ export class Application {
       config.database ? config.database.connection : undefined,
       config.name,
       logger,
+      {
+        minConnectionPoolSize: config.database
+          ? config.database.connectionPoolSize.min
+          : undefined,
+        maxConnectionPoolSize: config.database
+          ? config.database.connectionPoolSize.max
+          : undefined,
+      },
     )
     const http = new HttpClient()
     const clock = new Clock(
