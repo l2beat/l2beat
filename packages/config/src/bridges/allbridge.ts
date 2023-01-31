@@ -18,12 +18,23 @@ export const allbridge: Bridge = {
       socialMedia: [
         'https://twitter.com/Allbridge_io',
         'https://allbridge.medium.com/',
-        'https://twitter.com/Allbridge_io',
       ],
     },
   },
   config: {
     escrows: [
+      {
+        address: '0xBBbD1BbB4f9b936C3604906D7592A644071dE884',
+        sinceTimestamp: new UnixTime(1636635220),
+        tokens: [
+          'ETH',
+          'USDC',
+          //'XRUNE',
+          'USDT',
+          'DAI',
+          'MIM',
+        ],
+      },
       {
         address: '0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e',
         sinceTimestamp: new UnixTime(1662596190),
@@ -78,7 +89,24 @@ export const allbridge: Bridge = {
       {
         address: '0xA314330482f325D38A83B492EF6B006224a3bea9',
         name: 'Bridge',
-        description: 'Main bridge contract.',
+        description: 'Main liquidity network bridge contract.',
+      },
+      {
+        address: '0xBBbD1BbB4f9b936C3604906D7592A644071dE884',
+        name: 'Bridge',
+        description: 'Main token bridge contract.',
+      },
+      {
+        address: '0x93746538D4519C809827205Bd1C2c7a0E15bd74b',
+        name: 'Validator',
+        description:
+          'This contract is responsible for validating incoming messages to token bridge.',
+      },
+      {
+        address: '0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6',
+        name: 'Fee Oracle',
+        description:
+          'This contract is responsible for calculating bridge fees.',
       },
       {
         address: '0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50',
