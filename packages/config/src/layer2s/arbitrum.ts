@@ -265,7 +265,7 @@ export const arbitrum: Layer2 = {
       accounts: discovery
         .getValue<string[]>(
           discovery.getContractByAddress(
-            '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+            '0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b',
           ).values,
           'getOwners',
         )

@@ -57,6 +57,6 @@ export function createZksyncCounter(
   )
 
   return new TransactionCounter(projectId, processor, () =>
-    zksyncRepository.getLastTimestamp(),
+    zksyncRepository.findLastTimestamp(),
   )
 }

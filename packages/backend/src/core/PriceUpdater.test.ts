@@ -54,7 +54,7 @@ describe(PriceUpdater.name, () => {
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(
+        findDataBoundaries: mockFn().returns(
           new Map([[AssetId.ETH, { earliest: HOUR_10, latest: HOUR_12 }]]),
         ),
         getByTimestamp: async () => prices,
@@ -81,7 +81,7 @@ describe(PriceUpdater.name, () => {
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(
+        findDataBoundaries: mockFn().returns(
           new Map([[AssetId.ETH, { earliest: HOUR_10, latest: HOUR_12 }]]),
         ),
         getByTimestamp: async () => prices,
@@ -123,7 +123,7 @@ describe(PriceUpdater.name, () => {
       ]
 
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(
+        findDataBoundaries: mockFn().returns(
           new Map([
             [tokens[0].id, { earliest: HOUR_10, latest: HOUR_12 }],
             [tokens[1].id, { earliest: HOUR_09, latest: HOUR_12 }],
@@ -153,10 +153,34 @@ describe(PriceUpdater.name, () => {
       expect(
         coingeckoQueryService.getUsdPriceHistory,
       ).toHaveBeenCalledExactlyWith([
-        [tokens[0].coingeckoId, HOUR_09.add(-7, 'days'), HOUR_09, 'hourly'],
-        [tokens[1].coingeckoId, HOUR_13.add(-7, 'days'), HOUR_13, 'hourly'],
-        [tokens[2].coingeckoId, HOUR_09.add(-7, 'days'), HOUR_13, 'hourly'],
-        [tokens[0].coingeckoId, HOUR_13.add(-7, 'days'), HOUR_13, 'hourly'],
+        [
+          tokens[0].coingeckoId,
+          HOUR_09.add(-7, 'days'),
+          HOUR_09,
+          'hourly',
+          tokens[0].address,
+        ],
+        [
+          tokens[1].coingeckoId,
+          HOUR_13.add(-7, 'days'),
+          HOUR_13,
+          'hourly',
+          tokens[1].address,
+        ],
+        [
+          tokens[2].coingeckoId,
+          HOUR_09.add(-7, 'days'),
+          HOUR_13,
+          'hourly',
+          tokens[2].address,
+        ],
+        [
+          tokens[0].coingeckoId,
+          HOUR_13.add(-7, 'days'),
+          HOUR_13,
+          'hourly',
+          tokens[0].address,
+        ],
       ])
     })
   })
@@ -170,7 +194,7 @@ describe(PriceUpdater.name, () => {
 
     beforeEach(() => {
       const priceRepository = mock<PriceRepository>({
-        calcDataBoundaries: mockFn().returns(new Map()),
+        findDataBoundaries: mockFn().returns(new Map()),
         addMany: mockFn().returns([]),
       })
       coingeckoQueryService = mock<CoingeckoQueryService>({
@@ -192,7 +216,13 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_09.add(-7, 'days'), HOUR_13, 'hourly'],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_09.add(-7, 'days'),
+            HOUR_13,
+            'hourly',
+            undefined,
+          ],
         ])
       })
     })
@@ -209,7 +239,13 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_09.add(-7, 'days'), HOUR_09, 'hourly'],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_09.add(-7, 'days'),
+            HOUR_09,
+            'hourly',
+            undefined,
+          ],
         ])
       })
 
@@ -219,7 +255,13 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_13.add(-7, 'days'), HOUR_13, 'hourly'],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_13.add(-7, 'days'),
+            HOUR_13,
+            'hourly',
+            undefined,
+          ],
         ])
       })
 
@@ -235,8 +277,20 @@ describe(PriceUpdater.name, () => {
         expect(
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenCalledExactlyWith([
-          [TOKEN_COINGECKO_ID, HOUR_09.add(-7, 'days'), HOUR_09, 'hourly'],
-          [TOKEN_COINGECKO_ID, HOUR_13.add(-7, 'days'), HOUR_13, 'hourly'],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_09.add(-7, 'days'),
+            HOUR_09,
+            'hourly',
+            undefined,
+          ],
+          [
+            TOKEN_COINGECKO_ID,
+            HOUR_13.add(-7, 'days'),
+            HOUR_13,
+            'hourly',
+            undefined,
+          ],
         ])
       })
 
@@ -283,6 +337,7 @@ describe(PriceUpdater.name, () => {
           from.add(-7, 'days'),
           from.add(2, 'hours'),
           'hourly',
+          undefined,
         ],
       ])
 

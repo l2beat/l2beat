@@ -4,7 +4,7 @@ import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 
 import { Metrics } from '../../../Metrics'
-import { BaseRepository } from '../shared/BaseRepository'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 import { NullableDict } from '../shared/types'
 
@@ -17,10 +17,7 @@ export interface StarkexTransactionCountRecord {
 export class StarkexTransactionCountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
     super(database, logger, metrics)
-    /* eslint-disable @typescript-eslint/unbound-method */
-    this.addOrUpdateMany = this.wrapAddMany(this.addOrUpdateMany)
-    this.deleteAll = this.wrapDelete(this.deleteAll)
-    /* eslint-enable @typescript-eslint/unbound-method */
+    this.autoWrap<CheckConvention<StarkexTransactionCountRepository>>(this)
   }
 
   async addOrUpdateMany(
@@ -41,7 +38,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     return await knex('activity.starkex').delete()
   }
 
-  async getLastTimestampByProjectId(
+  async findLastTimestampByProjectId(
     projectId: ProjectId,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()

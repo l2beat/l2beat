@@ -136,6 +136,39 @@ export const polygonpos: Bridge = {
     isIncomplete: true,
     addresses: [
       {
+        address: '0xA0c68C638235ee32657e8f720a23ceC1bFc77C77',
+        name: 'RootChainManager',
+        description:
+          'Main contract to manage bridge tokens, deposits and withdrawals.',
+        upgradeability: {
+          type: 'Custom',
+          implementation: '0x37D26DC2890b35924b40574BAc10552794771997',
+          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+        },
+      },
+      {
+        address: '0x28e4F3a7f651294B9564800b2D01f35189A5bFbE',
+        name: 'StateSender',
+        description:
+          'Smart contract containing logic for syncing the state of the bridge.',
+      },
+      {
+        address: '0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287',
+        name: 'RootChain',
+        description:
+          'Contract storing Polygon sidechain checkpoints. Note that validatity of these checkpoints is not verfied, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
+        upgradeability: {
+          type: 'Custom',
+          implementation: '0x536c55cFe4892E581806e10b38dFE8083551bd03',
+          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+        },
+      },
+      {
+        address: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+        name: 'Timelock',
+        description: 'Contract enforcing delay on code upgrades.',
+      },
+      {
         address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
         name: 'ERC20Predicate',
         description: 'Escrow contract for ERC20 tokens.',
@@ -154,33 +187,6 @@ export const polygonpos: Bridge = {
           implementation: '0x54006763154c764da4AF42a8c3cfc25Ea29765D5',
           admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
         },
-      },
-      {
-        address: '0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287',
-        name: 'RootChain',
-        description:
-          'Contract storing Polygon sidechain checkpoints. Note that validatity of these checkpoints is not verfied, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: '0x536c55cFe4892E581806e10b38dFE8083551bd03',
-          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
-        },
-      },
-      {
-        address: '0xA0c68C638235ee32657e8f720a23ceC1bFc77C77',
-        name: 'RootChainManager',
-        description:
-          'Main contract to manage bridge tokens, deposits and withdrawals.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: '0x37D26DC2890b35924b40574BAc10552794771997',
-          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
-        },
-      },
-      {
-        address: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
-        name: 'Timelock',
-        description: 'Contract enforcing delay on code upgrades.',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],

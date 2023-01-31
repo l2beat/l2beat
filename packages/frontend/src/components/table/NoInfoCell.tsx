@@ -1,7 +1,11 @@
 import React from 'react'
 
-import { GrayCell } from './GrayCell'
+import { Badge } from '../badge/Badge'
 
 export function NoInfoCell() {
-  return <GrayCell title="This item is still under review.">No info</GrayCell>
+  return (
+    <Badge type="gray" title="This item is still under review." oneSize>
+      No info
+    </Badge>
+  )
 }

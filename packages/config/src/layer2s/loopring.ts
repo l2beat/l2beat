@@ -292,7 +292,7 @@ export const loopring: Layer2 = {
           .getContractByName('AgentRegistry')
           .address.toString(),
         description:
-          'Agent rergistery that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
+          'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
           DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
       },
     ],
@@ -300,11 +300,11 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'Loopring Protocol 3.0 has launched',
+      name: 'Loopring zkRollup is live',
       link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
       date: '2019-12-04T00:00:00Z',
       description:
-        'Deployed new contracts, added SNARK proving and Verification Keys.',
+        'Loopring Protocol 3.0 is fully operational with support for orderbook trading on WeDex.',
     },
     {
       name: 'Loopring Protocol 3.6 Pre-release',
@@ -318,7 +318,33 @@ export const loopring: Layer2 = {
       link: 'https://medium.loopring.io/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
       date: '2020-12-02T00:00:00Z',
       description:
-        'Improved implementation, enaibling gas-free instant swaps and liquidity changes.',
+        'Improved implementation, enabling gas-free instant swaps and liquidity changes.',
+    },
+    {
+      name: 'Loopring Supports Payments',
+      link: 'https://medium.loopring.io/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
+      date: '2020-06-06T00:00:00Z',
+      description: 'Support for ERC20 transfers is live on Loopring.',
+    },
+    {
+      name: 'DeFi Port is Live on Loopring',
+      link: 'https://medium.loopring.io/loopring-l2-defi-port-cd6e811250a9',
+      date: '2022-09-27T00:00:00Z',
+      description:
+        'Dutch auctions, lending, and other DeFi functions can be performed on Loopring.',
+    },
+    {
+      name: 'Loopring Supports NFTs',
+      link: 'https://medium.loopring.io/loopring-now-supports-nfts-on-l2-29174a343d0d',
+      date: '2021-08-24T00:00:00Z',
+      description: 'Loopring supports NFT minting, trading, and transfers.',
+    },
+    {
+      name: 'Loopring DEX is online',
+      link: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+      date: '2020-02-27T00:00:00Z',
+      description:
+        'zkRollup trading is live, as Loopring launches their order book based exchange.',
     },
   ],
 }

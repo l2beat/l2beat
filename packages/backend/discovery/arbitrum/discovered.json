@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16471724,
+  "blockNumber": 16448426,
   "contracts": [
     {
       "name": "RollupProxy",
@@ -20,12 +20,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2537,
+        "firstUnresolvedNode": 2459,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 2536,
-        "latestNodeCreated": 2666,
+        "latestConfirmed": 2458,
+        "latestNodeCreated": 2598,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -90,7 +90,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 58973,
+        "batchCount": 57625,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -101,7 +101,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 418473
+        "totalDelayedMessagesRead": 411190
       }
     },
     {
@@ -273,11 +273,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 418514,
+        "delayedMessageCount": 411227,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 58973,
-        "sequencerReportedSubMessageCount": 32783230
+        "sequencerMessageCount": 57625,
+        "sequencerReportedSubMessageCount": 32086852
       }
     },
     {
